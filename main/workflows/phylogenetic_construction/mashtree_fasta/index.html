@@ -863,6 +863,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data_import/sra_fetch/" class="md-nav__link">
         
   
@@ -1690,29 +1713,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
         
   
@@ -2513,6 +2513,29 @@
   
   <span class="md-ellipsis">
     Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
     
   </span>
   
@@ -4468,6 +4491,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../find_shared_variants/" class="md-nav__link">
         
   
@@ -5566,7 +5612,7 @@
 <td>mashtree_fasta</td>
 <td><strong>assembly_fasta</strong></td>
 <td>Array[File]</td>
-<td>The set of assembly fastas</td>
+<td>The assembly files for your samples in FASTA format</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5655,7 +5701,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/mashtree:1.2.0"</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/mashtree:1.2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5664,7 +5710,7 @@
 <td>Int</td>
 <td>Genome size of the input samples</td>
 <td>5000000</td>
-<td>Ooptional</td>
+<td>Optional</td>
 </tr>
 <tr>
 <td>mashtree_task</td>
@@ -5676,18 +5722,18 @@
 </tr>
 <tr>
 <td>mashtree_task</td>
-<td><strong>mindepth</strong></td>
-<td>Int</td>
-<td>If set to zero, mashtree will run in "accurate" mode as it will chose a mindepth by itself in a slower method; this value otherwise indicates the minimum number of times a kmer must appear in order to be included</td>
-<td>5</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>mashtree_task</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>64</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mashtree_task</td>
+<td><strong>mindepth</strong></td>
+<td>Int</td>
+<td>If set to zero, mashtree will run in "accurate" mode as it will chose a mindepth by itself in a slower method; this value otherwise indicates the minimum number of times a kmer must appear in order to be included</td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5703,7 +5749,7 @@
 <td><strong>sort_order</strong></td>
 <td>String</td>
 <td>For neighbor-joining, the sort order can make a difference. Options include: "ABC" (alphabetical), "random", "input-order"</td>
-<td>"ABC"</td>
+<td>ABC</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5743,7 +5789,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5783,7 +5829,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5791,7 +5837,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5806,14 +5852,79 @@
 </table>
 </div>
 <h3 id="workflow-actions">Workflow Actions<a class="headerlink" href="#workflow-actions" title="Permanent link">&para;</a></h3>
-<p><code>MashTree_Fasta</code> is run on a set of assembly fastas and creates a phylogenetic tree and matrix. These outputs are passed to a task that will rearrange the matrix to match the order of the terminal ends in the phylogenetic tree.</p>
-<p>The optional <code>summarize_data</code> task performs the following only if all of the <code>data_summary_*</code> and <code>sample_names</code> optional variables are filled out:</p>
-<ol>
-<li>Digests a <em>comma-separated</em>  list of column names, such as <code>"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"</code>, etc. that can be found within the origin Terra data table.</li>
-<li>It will then parse through those column contents and extract each value; for example, if the <code>amrfinder_amr_genes</code> column for a sample contains these values: <code>"aph(3')-IIIa,tet(O),blaOXA-193"</code>, the <code>summarize_data</code> task will check each sample in the set to see if they also have those AMR genes detected.</li>
-<li>Outputs a .csv file that indicates presence (TRUE) or absence (empty) for each item in those columns; that is, it will check each sample in the set against the detected items in each column to see if that value was also detected.</li>
-</ol>
-<p>By default, this task appends a Phandango coloring tag to color all items from the same column the same; this can be turned off by setting the optional <code>phandango_coloring</code> variable to <code>false</code>.</p>
+<details class="task">
+<summary>MashTree_FASTA Details</summary>
+<p><code>MashTree_FASTA</code> is run on a set of assembly fastas and creates a phylogenetic tree and matrix.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">MashTree_FASTA Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_mashtree_fasta.wdl">task_mashtree_fasta.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/lskatz/mashtree">Mashtree on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/lskatz/mashtree">Mashtree on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.21105/joss.01762">Mashtree: a rapid comparison of whole genome sequence files</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary>Data summary (optional)</summary>
+<p>If you fill out the <code>data_summary_*</code> and <code>sample_names</code> optional variables, you can use the optional <code>summarize_data</code> task. The task takes a comma-separated list of column names from the Terra data table, which should each contain a list of comma-separated items. For example, <code>"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"</code> (with quotes, comma separated, no spaces) for these output columns from running TheiaProk. The task checks whether those comma-separated items are present in each row of the data table (sample), then creates a CSV file of these results. The CSV file indicates presence (TRUE) or absence (empty) for each item. By default, the task does not add a Phandango coloring tag to group items from the same column, but you can turn this on by setting <code>phandango_coloring</code> to <code>true</code>.</p>
+<details class="toggle">
+<summary><strong>Example output CSV</strong></summary>
+<div class="language-text highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-1">1</a></span>
+<span class="normal"><a href="#__codelineno-0-2">2</a></span>
+<span class="normal"><a href="#__codelineno-0-3">3</a></span>
+<span class="normal"><a href="#__codelineno-0-4">4</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1"></a>Sample_Name,aph(3&#39;)-IIa,blaCTX-M-65,blaOXA-193,tet(O)
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2"></a>sample1,TRUE,,TRUE,TRUE
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3"></a>sample2,,,FALSE,TRUE
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4"></a>sample3,,,FALSE,
+</span></code></pre></div></td></tr></table></div>
+</details>
+<details class="toggle">
+<summary><strong>Example use of Phandango coloring</strong></summary>
+<p>Data summary produced using the <code>phandango_coloring</code> option, visualized alongside Newick tree at <a href="http://jameshadfield.github.io/phandango/#/main">http://jameshadfield.github.io/phandango/#/main</a></p>
+<div class="admonition caption">
+<p class="admonition-title">Example phandango_coloring output</p>
+<p><a class="glightbox" href="../../../assets/figures/example_phandango_coloring.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="Phandango coloring example" src="../../../assets/figures/example_phandango_coloring.png" /></a></p>
+</div>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Data summary technical details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_summarize_data.wdl">task_summarize_data.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
 <div class="searchable-table">
 <table>
@@ -5898,7 +6009,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 1, 2025 15:36:51">2025-04-01</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     

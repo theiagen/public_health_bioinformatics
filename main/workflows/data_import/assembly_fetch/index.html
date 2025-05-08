@@ -989,6 +989,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sra_fetch/" class="md-nav__link">
         
   
@@ -1706,29 +1729,6 @@
             Public Data Sharing
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../public_data_sharing/fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -2663,6 +2663,29 @@
   
   <span class="md-ellipsis">
     Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
     
   </span>
   
@@ -4438,6 +4461,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
@@ -5470,25 +5516,9 @@
 <td>reference_fetch</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
-<td>The name of your sample</td>
+<td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
-</tr>
-<tr>
-<td>reference_fetch</td>
-<td><strong>assembly_fasta</strong></td>
-<td>File</td>
-<td>Assembly FASTA file for your sample</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>reference_fetch</td>
-<td><strong>ncbi_accession</strong></td>
-<td>String</td>
-<td>NCBI accession passed to the NCBI datasets task to be downloaded. Example: GCF_000006945.2 (Salmonella enterica subsp. enterica, serovar Typhimurium str. LT2 reference genome)</td>
-<td></td>
-<td>Optional</td>
 </tr>
 <tr>
 <td>ncbi_datasets_download_genome_accession</td>
@@ -5519,7 +5549,7 @@
 <td><strong>include_gbff</strong></td>
 <td>Boolean</td>
 <td>Set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations.</td>
-<td>false</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5527,7 +5557,7 @@
 <td><strong>include_gff3</strong></td>
 <td>Boolean</td>
 <td>Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations</td>
-<td>false</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5542,8 +5572,24 @@
 <td>ncbi_datasets_download_genome_accession</td>
 <td><strong>use_ncbi_virus</strong></td>
 <td>Boolean</td>
-<td>Set to true when downloading from NCBI Virus Datasets</td>
-<td>false</td>
+<td>Set to true to download from NCBI Virus Datasets</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>reference_fetch</td>
+<td><strong>assembly_fasta</strong></td>
+<td>File</td>
+<td>The assembly file for your sample in FASTA format</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>reference_fetch</td>
+<td><strong>ncbi_accession</strong></td>
+<td>String</td>
+<td>NCBI accession passed to the NCBI datasets task to be downloaded. Example: GCF_000006945.2 (Salmonella enterica subsp. enterica, serovar Typhimurium str. LT2 reference genome)</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5582,7 +5628,7 @@
 <td>referenceseeker</td>
 <td><strong>referenceseeker_ani_threshold</strong></td>
 <td>Float</td>
-<td>ANI threshold used to exclude ref genomes when ANI value less than this value.</td>
+<td>Bidirectional average nucleotide identity to use as a cut off for identifying reference assemblies with ReferenceSeeker; default value set according to <a href="https://github.com/oschwengers/referenceseeker#description">https://github.com/oschwengers/referenceseeker#description</a></td>
 <td>0.95</td>
 <td>Optional</td>
 </tr>
@@ -5590,7 +5636,7 @@
 <td>referenceseeker</td>
 <td><strong>referenceseeker_conserved_dna_threshold</strong></td>
 <td>Float</td>
-<td>Conserved DNA threshold used to exclude ref genomes when conserved DNA value is less than this value.</td>
+<td>Conserved DNA % to use as a cut off for identifying reference assemblies with ReferenceSeeker; default value set according to <a href="https://github.com/oschwengers/referenceseeker#description">https://github.com/oschwengers/referenceseeker#description</a></td>
 <td>0.69</td>
 <td>Optional</td>
 </tr>
@@ -5626,7 +5672,7 @@
 <summary>ReferenceSeeker Details (Optional)</summary>
 <h5 id="referenceseeker">ReferenceSeeker<a class="headerlink" href="#referenceseeker" title="Permanent link">&para;</a></h5>
 <p><code>ReferenceSeeker</code> uses your draft assembly to identify closely related bacterial, viral, fungal, or plasmid genome assemblies in <a href="https://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a>.</p>
-<p>Databases that can be used with ReferenceSeeker are as follows:</p>
+<p>Databases that can be used with ReferenceSeeker are as follows, and can be used by pasting the GSURI in double quotation marks <code>" "</code> into the <code>referenceseeker_db</code> optional input:</p>
 <ul>
 <li>archea:  <code>gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-archaea-refseq-205.v20210406.tar.gz</code></li>
 <li>bacterial (<strong>default</strong>): <code>gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz</code></li>
@@ -5667,7 +5713,7 @@
 </div>
 </details>
 <details class="task">
-<summary>NCBI Datasets Details</summary>
+<summary>NCBI Datasets</summary>
 <h5 id="ncbi-datasets">NCBI Datasets<a class="headerlink" href="#ncbi-datasets" title="Permanent link">&para;</a></h5>
 <p>The <a href="https://www.ncbi.nlm.nih.gov/datasets/"><code>NCBI Datasets</code></a> task downloads specified assemblies from NCBI using either the <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/">virus</a> or <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/">genome</a> (for all other genome types) package as appropriate.</p>
 <div class="admonition techdetails">
@@ -5809,7 +5855,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 18, 2025 14:48:15">2025-03-18</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     

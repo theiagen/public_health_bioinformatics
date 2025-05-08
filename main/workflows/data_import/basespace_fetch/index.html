@@ -1028,6 +1028,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../sra_fetch/" class="md-nav__link">
         
   
@@ -1745,29 +1768,6 @@
             Public Data Sharing
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../public_data_sharing/fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -2741,6 +2741,29 @@
   
   <span class="md-ellipsis">
     Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
     
   </span>
   
@@ -4555,6 +4578,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
@@ -5780,7 +5826,7 @@
 <td>basespace_fetch</td>
 <td><strong>access_token</strong></td>
 <td>String</td>
-<td>The access token is used in place of a username and password to allow the workflow to access the user account in BaseSpace from which the data is to be transferred. It is an alphanumeric string that is 32 characters in length. Example: <code>9e08a96471df44579b72abf277e113b7</code></td>
+<td>The access token is used in place of a username and password to allow the workflow to access the user account in BaseSpace from which the data is to be transferred. It is an alphanumeric string that is 32 characters in length. Example: 9e08a96471df44579b72abf277e113b7</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5788,7 +5834,7 @@
 <td>basespace_fetch</td>
 <td><strong>api_server</strong></td>
 <td>String</td>
-<td>The API server is the web address to which data transfer requests can be sent by the workflow. Use this API server if you are unsure: <code>"https://api.basespace.illumina.com"</code> (this is the default set by the command-line tool)</td>
+<td>The API server is the web address to which data transfer requests can be sent by the workflow. Use this API server if you are unsure: "https://api.basespace.illumina.com" (this is the default set by the command-line tool)</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5828,7 +5874,7 @@
 <td>fetch_bs</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>This input is the number of CPU's used in the data transfer. To facilitate the transfer of many files this runtime parameter may be increased.</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -5836,7 +5882,7 @@
 <td>fetch_bs</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>The disk size is the amount of storage in GigaBytes (GB) requested for the VM to run the data transfer task.</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -5844,7 +5890,7 @@
 <td>fetch_bs</td>
 <td><strong>docker_image</strong></td>
 <td>String</td>
-<td>The Docker image used to run BaseSpace_Fetch task.</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1</td>
 <td>Optional</td>
 </tr>
@@ -5852,7 +5898,7 @@
 <td>fetch_bs</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>The memory is the amount of RAM/memory requested for running the data transfer task.</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -5877,6 +5923,7 @@
 </div>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
 <p>The outputs of this workflow will be the fastq files imported from BaseSpace into the data table where the sample ID information had originally been uploaded.</p>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -5899,15 +5946,16 @@
 <tr>
 <td>read1</td>
 <td>File</td>
-<td>File with forward-facing reads</td>
+<td>File containing the forward reads</td>
 </tr>
 <tr>
 <td>read2</td>
 <td>File</td>
-<td>File with reverse-facing read</td>
+<td>File containing the reverse reads (not available for single-end or ONT data)</td>
 </tr>
 </tbody>
 </table>
+</div>
 
 
 
@@ -5930,7 +5978,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 18, 2025 14:48:15">2025-03-18</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     

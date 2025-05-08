@@ -863,6 +863,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data_import/sra_fetch/" class="md-nav__link">
         
   
@@ -1672,29 +1695,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
         
   
@@ -2495,6 +2495,29 @@
   
   <span class="md-ellipsis">
     Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
     
   </span>
   
@@ -4228,6 +4251,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
@@ -5293,7 +5339,7 @@
 <td>nextclade_addToRefTree</td>
 <td><strong>assembly_fasta</strong></td>
 <td>File</td>
-<td>A fasta file with query sequence(s) to be placed onto the global tree</td>
+<td>The assembly file for your sample in FASTA format</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5342,7 +5388,7 @@
 <td><strong>verbosity</strong></td>
 <td>String</td>
 <td>Set the nextclade output verbosity level. Options: off, error, warn, info, debug, trace</td>
-<td>"warn"</td>
+<td>warn</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5390,7 +5436,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5416,6 +5462,16 @@
 </thead>
 <tbody>
 <tr>
+<td>samples_to_ref_tree_analysis_date</td>
+<td>String</td>
+<td>Date of analysis</td>
+</tr>
+<tr>
+<td>samples_to_ref_tree_version</td>
+<td>String</td>
+<td>Version of the Public Health Bioinformatics (PHB) repository used</td>
+</tr>
+<tr>
 <td>treeUpdate_auspice_json</td>
 <td>File</td>
 <td>Phylogenetic tree with user placed samples</td>
@@ -5439,16 +5495,6 @@
 <td>treeUpdate_nextclade_version</td>
 <td>String</td>
 <td>Nextclade version used</td>
-</tr>
-<tr>
-<td>samples_to_ref_tree_analysis_date</td>
-<td>String</td>
-<td>Date of analysis</td>
-</tr>
-<tr>
-<td>samples_to_ref_tree_version</td>
-<td>String</td>
-<td>Version of the Public Health Bioinformatics (PHB) repository used</td>
 </tr>
 </tbody>
 </table>
@@ -5475,7 +5521,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 20, 2025 23:52:31">2025-03-20</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     

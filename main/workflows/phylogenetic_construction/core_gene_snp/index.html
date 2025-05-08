@@ -863,6 +863,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data_import/sra_fetch/" class="md-nav__link">
         
   
@@ -1690,29 +1713,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
         
   
@@ -2513,6 +2513,29 @@
   
   <span class="md-ellipsis">
     Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
     
   </span>
   
@@ -4366,6 +4389,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../find_shared_variants/" class="md-nav__link">
         
   
@@ -5384,9 +5430,65 @@
 </tr>
 <tr>
 <td>core_gene_snp_workflow</td>
+<td><strong>align</strong></td>
+<td>Boolean</td>
+<td>Boolean variable that instructs the workflow to generate core and pangenome alignments if "true". If "false", the workflow will produce only a pangenome summary.</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>core_gene_snp_workflow</td>
+<td><strong>core_tree</strong></td>
+<td>Boolean</td>
+<td>Boolean variable that instructs the workflow to create a phylogenetic tree and SNP distance matrix from the core gene alignment. Align must also be set to true.</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>core_gene_snp_workflow</td>
+<td><strong>data_summary_column_names</strong></td>
+<td>String</td>
+<td>A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix); e.g., "amrfinderplus_amr_genes,amrfinderplus_virulence_genes"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>core_gene_snp_workflow</td>
+<td><strong>data_summary_terra_project</strong></td>
+<td>String</td>
+<td>The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>core_gene_snp_workflow</td>
+<td><strong>data_summary_terra_table</strong></td>
+<td>String</td>
+<td>The name of the sample-level Terra data table that will be used for generating a data summary</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>core_gene_snp_workflow</td>
+<td><strong>data_summary_terra_workspace</strong></td>
+<td>String</td>
+<td>The name of the Terra workspace you are in. This can be found at the top of the webpage, or in the URL after the billing project.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>core_gene_snp_workflow</td>
 <td><strong>midpoint_root_tree</strong></td>
 <td>Boolean</td>
 <td>Boolean variable that will instruct the workflow to reroot the tree at the midpoint</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>core_gene_snp_workflow</td>
+<td><strong>pan_tree</strong></td>
+<td>Boolean</td>
+<td>Boolean variable that instructs the workflow to create a phylogenetic tree and SNP distance matrix from the pangenome alignment. Align must also be set to true.</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -5400,62 +5502,6 @@
 </tr>
 <tr>
 <td>core_gene_snp_workflow</td>
-<td><strong>data_summary_terra_table</strong></td>
-<td>String</td>
-<td>The name of the Terra data table that you want data pulled from</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>core_gene_snp_workflow</td>
-<td><strong>data_summary_column_names</strong></td>
-<td>String</td>
-<td>A comma-delimited list of columns in the origin data table that contains contain that you would like a presence/absence .csv matrix generated for</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>core_gene_snp_workflow</td>
-<td><strong>core_tree</strong></td>
-<td>Boolean</td>
-<td>Boolean variable that instructs the workflow to create a phylogenetic tree and SNP distance matrix from the core gene alignment. Align must also be set to true.</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>core_gene_snp_workflow</td>
-<td><strong>pan_tree</strong></td>
-<td>Boolean</td>
-<td>Boolean variable that instructs the workflow to create a phylogenetic tree and SNP distance matrix from the pangenome alignment. Align must also be set to true.</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>core_gene_snp_workflow</td>
-<td><strong>data_summary_terra_workspace</strong></td>
-<td>String</td>
-<td>The name of the current Terra workspace you are in; this can be found at the top of the webpage, or in the URL after the billing project.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>core_gene_snp_workflow</td>
-<td><strong>align</strong></td>
-<td>Boolean</td>
-<td>Boolean variable that instructs the workflow to generate core and pangenome alignments if "true". If "false", the workflow will produce only a pangenome summary.</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>core_gene_snp_workflow</td>
-<td><strong>data_summary_terra_project</strong></td>
-<td>String</td>
-<td>The billing project for the current workspace; can be found after the "#workspaces/" section in the workflow's URL</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>core_gene_snp_workflow</td>
 <td><strong>sample_names</strong></td>
 <td>Array[String]</td>
 <td>Array of sample_ids from the data table used</td>
@@ -5464,18 +5510,10 @@
 </tr>
 <tr>
 <td>core_iqtree</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>core_iqtree</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td><strong>alrt</strong></td>
+<td>String</td>
+<td>Number of replicates to use for the SH-like approximate likelihood ratio test (Minimum recommended= 1000). Follows IQ-TREE "-alrt" option</td>
+<td>1000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5488,10 +5526,26 @@
 </tr>
 <tr>
 <td>core_iqtree</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>core_iqtree</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>core_iqtree</td>
+<td><strong>iqtree_bootstraps</strong></td>
+<td>String</td>
+<td>Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.</td>
+<td>1000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5512,18 +5566,10 @@
 </tr>
 <tr>
 <td>core_iqtree</td>
-<td><strong>iqtree_bootstraps</strong></td>
-<td>String</td>
-<td>Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.</td>
-<td>1000</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>core_iqtree</td>
-<td><strong>alrt</strong></td>
-<td>String</td>
-<td>Number of replicates to perform SH-like approximate likelihood ratio test (SH-aLRT). Follows IQ-TREE "-alrt" option</td>
-<td>1000</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5560,18 +5606,10 @@
 </tr>
 <tr>
 <td>core_snp_dists</td>
-<td><strong>memory</strong></td>
+<td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>core_snp_dists</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5584,26 +5622,26 @@
 </tr>
 <tr>
 <td>core_snp_dists</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>1</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>pan_iqtree</td>
+<td>core_snp_dists</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>pan_iqtree</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td><strong>alrt</strong></td>
+<td>String</td>
+<td>Number of replicates to use for the SH-like approximate likelihood ratio test (Minimum recommended= 1000). Follows IQ-TREE "-alrt" option</td>
+<td>1000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5616,9 +5654,25 @@
 </tr>
 <tr>
 <td>pan_iqtree</td>
-<td><strong>alrt</strong></td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pan_iqtree</td>
+<td><strong>docker</strong></td>
 <td>String</td>
-<td>Number of replicates to perform SH-like approximate likelihood ratio test (SH-aLRT). Follows IQ-TREE "-alrt" option</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pan_iqtree</td>
+<td><strong>iqtree_bootstraps</strong></td>
+<td>String</td>
+<td>Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.</td>
 <td>1000</td>
 <td>Optional</td>
 </tr>
@@ -5632,14 +5686,6 @@
 </tr>
 <tr>
 <td>pan_iqtree</td>
-<td><strong>iqtree_bootstraps</strong></td>
-<td>String</td>
-<td>Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.</td>
-<td>1000</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pan_iqtree</td>
 <td><strong>iqtree_opts</strong></td>
 <td>String</td>
 <td>Additional options for IQ-TREE, see <a href="http://www.iqtree.org/doc/Command-Reference">http://www.iqtree.org/doc/Command-Reference</a></td>
@@ -5648,10 +5694,10 @@
 </tr>
 <tr>
 <td>pan_iqtree</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5720,14 +5766,6 @@
 </tr>
 <tr>
 <td>pirate</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pirate</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -5736,26 +5774,10 @@
 </tr>
 <tr>
 <td>pirate</td>
-<td><strong>nucl</strong></td>
-<td>Boolean</td>
-<td>Boolean variable that instructs pirate to create a pangenome on CDS features using nucleotide identity, rather than amino acid identity, if true.</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pirate</td>
-<td><strong>memory</strong></td>
+<td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pirate</td>
-<td><strong>panopt</strong></td>
-<td>String</td>
-<td>Additional arguments for Pirate</td>
-<td></td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5776,10 +5798,42 @@
 </tr>
 <tr>
 <td>pirate</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pirate</td>
+<td><strong>nucl</strong></td>
+<td>Boolean</td>
+<td>Boolean variable that instructs pirate to create a pangenome on CDS features using nucleotide identity, rather than amino acid identity, if true.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pirate</td>
+<td><strong>panopt</strong></td>
+<td>String</td>
+<td>Additional arguments for Pirate</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pirate</td>
 <td><strong>steps</strong></td>
 <td>String</td>
 <td>Identity thresholds to use for pangenome construction</td>
 <td>50,60,70,80,90,95,98</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>summarize_data</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5800,6 +5854,14 @@
 </tr>
 <tr>
 <td>summarize_data</td>
+<td><strong>id_column_name</strong></td>
+<td>String</td>
+<td>If the sample IDs are in a different column to samplenames, it can be passed here and it will be used instead.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>summarize_data</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -5807,27 +5869,11 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>summarize_data</td>
-<td><strong>id_column_name</strong></td>
-<td>String</td>
-<td>Use in the case your sample IDs are not in the table ID column</td>
-<td>1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>summarize_data</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>8</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>version_capture</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5983,7 +6029,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 1, 2025 15:36:51">2025-04-01</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     

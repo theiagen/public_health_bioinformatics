@@ -863,6 +863,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data_import/sra_fetch/" class="md-nav__link">
         
   
@@ -1750,29 +1773,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
         
   
@@ -2573,6 +2573,29 @@
   
   <span class="md-ellipsis">
     Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
     
   </span>
   
@@ -4384,6 +4407,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
@@ -5610,7 +5656,7 @@
 <td>theiameta_illumina_pe</td>
 <td><strong>read1</strong></td>
 <td>File</td>
-<td>Forward Illumina read in FASTQ file format</td>
+<td>Illumina forward read file in FASTQ file format (compression optional)</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5618,7 +5664,7 @@
 <td>theiameta_illumina_pe</td>
 <td><strong>read2</strong></td>
 <td>File</td>
-<td>Reverse Illumina read in FASTQ file format</td>
+<td>Illumina reverse read file in FASTQ file format (compression optional)</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5626,7 +5672,7 @@
 <td>theiameta_illumina_pe</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
-<td>Name of the sample being analyzed</td>
+<td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5778,7 +5824,7 @@
 <td>kraken2_clean</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>GB of storage to request for VM used to run the kraken2 task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -5808,15 +5854,15 @@
 </tr>
 <tr>
 <td>kraken2_raw</td>
-<td><strong>disk_dize</strong></td>
+<td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>GB of storage to request for VM used to run the kraken2 task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>kraken2_raw</td>
-<td><strong>docker</strong></td>
+<td><strong>docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
@@ -5827,7 +5873,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5946,7 +5992,7 @@
 <td>minimap2_assembly</td>
 <td><strong>query2</strong></td>
 <td>File</td>
-<td>Internal component. Do not modify.</td>
+<td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -6018,15 +6064,15 @@
 <td>read_QC_trim</td>
 <td><strong>adapters</strong></td>
 <td>File</td>
-<td>Adapter file to be trimmed by trimmomatic</td>
+<td>File with adapter sequences to be removed</td>
 <td></td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>bbduck_mem</strong></td>
+<td><strong>bbduk_memory</strong></td>
 <td>Int</td>
-<td>Memory to use with bbduck</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -6034,7 +6080,7 @@
 <td>read_QC_trim</td>
 <td><strong>call_midas</strong></td>
 <td>Boolean</td>
-<td>Optional to run Midas on input data</td>
+<td>True/False variable that determines if the MIDAS task should be called.</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -6042,15 +6088,15 @@
 <td>read_QC_trim</td>
 <td><strong>fastp_args</strong></td>
 <td>String</td>
-<td>Fastp-specific options that you might choose, see <a href="https://github.com/OpenGene/fastp">https://github.com/OpenGene/fastp</a></td>
-<td></td>
+<td>Additional arguments to use with fastp</td>
+<td>--detect_adapter_for_pe -g -5 20 -3 20</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
 <td><strong>midas_db</strong></td>
 <td>File</td>
-<td>A Midas database in .tar.gz format</td>
+<td>The database used by the MIDAS task in .tar.gz format</td>
 <td>gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</td>
 <td>Optional</td>
 </tr>
@@ -6058,7 +6104,7 @@
 <td>read_QC_trim</td>
 <td><strong>phix</strong></td>
 <td>File</td>
-<td></td>
+<td>A file containing the phix used during Illumina sequencing; used in the BBDuk task</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -6066,15 +6112,15 @@
 <td>read_QC_trim</td>
 <td><strong>read_processing</strong></td>
 <td>String</td>
-<td></td>
-<td></td>
+<td>The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp"</td>
+<td>trimmomatic</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
 <td><strong>read_qc</strong></td>
 <td>String</td>
-<td>Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality.</td>
+<td>The tool used for quality control (QC) of reads. Options are "fastq_scan" (default) and "fastqc"</td>
 <td>fastq_scan</td>
 <td>Optional</td>
 </tr>
@@ -6082,7 +6128,7 @@
 <td>read_QC_trim</td>
 <td><strong>target_organism</strong></td>
 <td>String</td>
-<td>Internal component. Do not modify.</td>
+<td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -6090,24 +6136,32 @@
 <td>read_QC_trim</td>
 <td><strong>trim_min_length</strong></td>
 <td>Int</td>
-<td></td>
-<td></td>
+<td>Specifies minimum length of each read after trimming to be kept</td>
+<td>75</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>trim_quality_trim_score</strong></td>
+<td>Int</td>
+<td>Specifies the average quality of bases in a sliding window to be kept</td>
+<td>20</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
 <td><strong>trim_window_size</strong></td>
 <td>Int</td>
-<td></td>
-<td></td>
+<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
 <td><strong>trimmomatic_args</strong></td>
 <td>String</td>
-<td></td>
-<td></td>
+<td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
+<td>-phred33</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6266,7 +6320,7 @@
 <td>semibin</td>
 <td><strong>environment</strong></td>
 <td>String</td>
-<td>Environment model to use. Options:<br>• human_gut<br>• dog_gut<br>• ocean<br>• soil<br>• cat_gut<br>• human_oral<br>• mouse_gut<br>• pig_gut<br>• built_environment<br>• wastewater<br>• chicken_caecum<br>• global</td>
+<td>Environment model to use. Options:• human_gut• dog_gut• ocean• soil• cat_gut• human_oral• mouse_gut• pig_gut• built_environment• wastewater• chicken_caecum• global</td>
 <td>global</td>
 <td>Optional</td>
 </tr>
@@ -6355,7 +6409,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6371,7 +6425,7 @@
 </div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
 <details class="task">
-<summary><code>versioning</code>: Version Capture for TheiaMeta</summary>
+<summary><code>versioning</code>: Version Capture</summary>
 <p>The <code>versioning</code> task captures the workflow version from the GitHub (code repository) version.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Version Capture Technical details</p>
@@ -6412,11 +6466,11 @@
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/ncbi/sra-human-scrubber">NCBI Scrub on GitHub</a></td>
+<td><a href="https://github.com/ncbi/sra-human-scrubber">HRRT on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/ncbi/sra-human-scrubber/blob/master/README.md">https://github.com/ncbi/sra-human-scrubber/blob/master/README.md</a></td>
+<td><a href="https://ncbiinsights.ncbi.nlm.nih.gov/2023/02/02/scrubbing-human-sequences-sra-submissions/">HRRT on NCBI</a></td>
 </tr>
 </tbody>
 </table>
@@ -6424,8 +6478,9 @@
 </details>
 <details class="task">
 <summary><code>read_QC_trim</code>: Read Quality Trimming, Adapter Removal, Quantification, and Identification</summary>
-<p><code>read_QC_trim</code> is a sub-workflow within TheiaMeta that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below.</p>
-<p><strong>Read quality trimming</strong></p>
+<p><code>read_QC_trim</code> is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the <code>read_QC_trim</code> sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.</p>
+<details class="toggle">
+<summary>Read quality trimming</summary>
 <p>Either <code>trimmomatic</code> or <code>fastp</code> can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of <code>trim_window_size</code>), cutting once the average quality within the window falls below <code>trim_quality_trim_score</code>. They will both discard the read if it is trimmed below <code>trim_minlen</code>. </p>
 <p>If fastp is selected for analysis, fastp also implements the additional read-trimming steps indicated below:</p>
 <table>
@@ -6437,24 +6492,26 @@
 </thead>
 <tbody>
 <tr>
-<td>-g</td>
+<td><code>-g</code></td>
 <td>enables polyG tail trimming</td>
 </tr>
 <tr>
-<td>-5 20</td>
+<td><code>-5 20</code></td>
 <td>enables read end-trimming</td>
 </tr>
 <tr>
-<td>-3 20</td>
+<td><code>-3 20</code></td>
 <td>enables read end-trimming</td>
 </tr>
 <tr>
-<td>--detect_adapter_for_pe</td>
+<td><code>--detect_adapter_for_pe</code></td>
 <td>enables adapter-trimming <strong>only for paired-end reads</strong></td>
 </tr>
 </tbody>
 </table>
-<p><strong>Adapter removal</strong></p>
+</details>
+<details class="toggle">
+<summary>Adapter removal</summary>
 <p>The <code>BBDuk</code> task removes adapters from sequence reads. To do this:</p>
 <ul>
 <li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/">Repair</a> from the <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.</li>
@@ -6464,14 +6521,19 @@
 <summary>What are adapters and why do they need to be removed?</summary>
 <p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
 </details>
-<p><strong>Read Quantification</strong></p>
-<p>There are two methods for read quantification to choose from: <a href="https://github.com/rpetit3/fastq-scan"><code>fastq-scan</code></a> (default) or <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"><code>fastqc</code></a>. Both quantify the forward and reverse reads in FASTQ files. In TheiaProk_Illumina_PE, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads. <code>fastqc</code> also provides a graphical visualization of the read quality.</p>
-<p><strong>Read Identification (optional)</strong></p>
+</details>
+<details class="toggle">
+<summary>Read Quantification</summary>
+<p>There are two methods for read quantification to choose from: <a href="https://github.com/rpetit3/fastq-scan"><code>fastq-scan</code></a> (default) or <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"><code>fastqc</code></a>. Both quantify the forward and reverse reads in FASTQ files. For paired-end data, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads. <code>fastqc</code> also provides a graphical visualization of the read quality.</p>
+</details>
+<details class="toggle">
+<summary>Read Identification with MIDAS (optional)</summary>
 <p>The <code>MIDAS</code> task is for the identification of reads to detect contamination with non-target taxa. This task is optional and turned off by default. It can be used by setting the <code>call_midas</code> input variable to <code>true</code>.</p>
-<p>The MIDAS reference database, located at <strong><code>gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</code></strong>, is provided as the default. It is possible to provide a custom database. More information is available <a href="https://github.com/snayfach/MIDAS/blob/master/docs/ref_db.md">here</a>.</p>
+<p>The MIDAS tool was originally designed for metagenomic sequencing data but has been co-opted for use with bacterial isolate WGS methods. It can be used to detect contamination present in raw sequencing data by estimating bacterial species abundance in bacterial isolate WGS data. If a secondary genus is detected above a relative frequency of 0.01 (1%), then the sample should fail QC and be investigated further for potential contamination.</p>
+<p>This task is similar to those used in commercial software, BioNumerics, for estimating secondary species abundance.</p>
 <details class="toggle">
 <summary>How are the MIDAS output columns determined?</summary>
-<p>Example MIDAS report in the ****<code>midas_report</code> column:</p>
+<p>Example MIDAS report in the <code>midas_report</code> column:</p>
 <table>
 <thead>
 <tr>
@@ -6521,6 +6583,43 @@
 <li>coverage: estimated genome-coverage (i.e. read-depth) of species in metagenome</li>
 <li>relative_abundance: estimated relative abundance of species in metagenome</li>
 </ul>
+<p>The value in the <code>midas_primary_genus</code> column is derived by ordering the rows in order of "relative_abundance" and identifying the genus of top species in the "species_id" column (Salmonella). The value in the <code>midas_secondary_genus</code> column is derived from the genus of the second-most prevalent genus in the "species_id" column (Citrobacter). The <code>midas_secondary_genus_abundance</code> column is the "relative_abundance" of the second-most prevalent genus (0.009477003). The <code>midas_secondary_genus_coverage</code> is the "coverage" of the second-most prevalent genus (0.995216227).</p>
+</details>
+<p><strong>MIDAS Reference Database Overview</strong></p>
+<p>The <strong>MIDAS reference database</strong> is a comprehensive tool for identifying bacterial species in metagenomic and bacterial isolate WGS data. It includes several layers of genomic data, helping detect species abundance and potential contaminants.</p>
+<div class="admonition dna">
+<p class="admonition-title">Key Components of the MIDAS Database</p>
+<ol>
+<li>
+<p><strong>Species Groups</strong>: </p>
+<ul>
+<li>MIDAS clusters bacterial genomes based on 96.5% sequence identity, forming over 5,950 species groups from 31,007 genomes. These groups align with the gold-standard species definition (95% ANI), ensuring highly accurate species identification.</li>
+</ul>
+</li>
+<li>
+<p><strong>Genomic Data Structure</strong>:</p>
+<ul>
+<li><em>Marker Genes</em>: Contains 15 universal single-copy genes used to estimate species abundance.</li>
+<li><em>Representative Genome</em>: Each species group has a selected representative genome, which minimizes genetic variation and aids in accurate SNP identification.</li>
+<li><em>Pan-genome</em>: The database includes clusters of non-redundant genes, with options for multi-level clustering (e.g., 99%, 95%, 90% identity), enabling MIDAS to identify gene content within strains at various clustering thresholds.</li>
+</ul>
+</li>
+<li>
+<p><strong>Taxonomic Annotation</strong>: </p>
+<ul>
+<li>Genomes are annotated based on consensus Latin names. Discrepancies in name assignments may occur due to factors like unclassified genomes or genus-level ambiguities.</li>
+</ul>
+</li>
+</ol>
+</div>
+<hr />
+<p><strong>Using the Default MIDAS Database</strong></p>
+<p>TheiaProk and TheiaEuk use the pre-loaded MIDAS database in Terra (see input table for current version) by default for bacterial species detection in metagenomic data, requiring no additional setup.</p>
+<div class="admonition tip">
+<p class="admonition-title">Create a Custom MIDAS Database</p>
+<p>Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the <a href="https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md">MIDAS GitHub guide on building a custom database</a>. Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workkspace and provide the link to the database in the <code>midas_db</code> input variable.</p>
+</div>
+<hr />
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">read_QC_trim Technical Details</p>
@@ -6555,15 +6654,9 @@
 </tbody>
 </table>
 </div>
-</details>
-<details class="task">
-<summary><code>kraken</code>: Taxonomic Classification</summary>
-<p>Kraken2 is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
+<p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
 <p>Kraken2 is run on the set of raw reads, provided as input, as well as the set of clean reads that are resulted from the <code>read_QC_trim</code> workflow</p>
-<div class="admonition info">
-<p class="admonition-title">Database-dependent</p>
 <p>The Kraken2 software is database-dependent and <strong>taxonomic assignments are highly sensitive to the database used</strong>. An appropriate database should contain the expected organism(s) (e.g. <em>Escherichia coli</em>) and other taxa that may be present in the reads (e.g. <em>Citrobacter freundii</em>, a common contaminant).</p>
-</div>
 <div class="admonition techdetails">
 <p class="admonition-title">Kraken2 Technical Details</p>
 <table>
@@ -6584,11 +6677,11 @@
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/DerrickWood/kraken2/wiki">https://github.com/DerrickWood/kraken2/wiki</a></td>
+<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
+<td><a href="https://link.springer.com/article/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
 </tr>
 </tbody>
 </table>
@@ -6631,10 +6724,9 @@
 </details>
 <details class="task">
 <summary><code>minimap2</code>: Assembly Correction</summary>
-<p><code>minimap2</code> is a popular aligner that is used for correcting the assembly produced by metaSPAdes. This is done by aligning the reads back to the generated assembly or a reference genome.</p>
-<p>In minimap2, "modes" are a group of preset options.</p>
+<p><code>minimap2</code> is a popular aligner that is used to align reads (or assemblies) to an assembly file. In minimap2, "modes" are a group of preset options.</p>
 <p>The mode used in this task is <code>sr</code> which is intended for "short single-end reads without splicing". The <code>sr</code> mode indicates the following parameters should be used: <code>-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no</code>. The output file is in SAM format.</p>
-<p>For more information, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
+<p>For more information regarding modes and the available options for <code>minimap2</code>, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
 <div class="admonition techdetails">
 <p class="admonition-title">minimap2 Technical Details</p>
 <table>
@@ -6737,10 +6829,9 @@
 </div>
 <details class="task">
 <summary><code>minimap2</code>: Assembly Alignment and Contig Filtering</summary>
-<p><code>minimap2</code> is a popular aligner that is used here to to map the Pilon-polished assembly to the reference genome. Any aligned contigs are retrieved and returned.</p>
-<p>In minimap2, "modes" are a group of preset options. </p>
+<p><code>minimap2</code> is a popular aligner that is used to align reads (or assemblies) to an assembly file. In minimap2, "modes" are a group of preset options.</p>
 <p>The mode used in this task is <code>asm20</code> which is intended for "long assembly to reference mapping". The <code>asm20</code> mode indicates the following parameters should be used: <code>-k19 -w10 -U50,500 --rmq -r100k -g10k -A1 -B4 -O6,26 -E2,1 -s200 -z200 -N50</code>. The output file is in PAF format.</p>
-<p>For more information, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
+<p>For more information regarding modes and the available options for <code>minimap2</code>, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
 <div class="admonition techdetails">
 <p class="admonition-title">minimap2 Technical Details</p>
 <table>
@@ -6868,15 +6959,15 @@
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/lh3/bwa">BWA on GitHub</a></td>
+<td><a href="https://github.com/lh3/bwa">https://github.com/lh3/bwa</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://bio-bwa.sourceforge.net/">BWA Manual</a></td>
+<td><a href="https://bio-bwa.sourceforge.net/">https://bio-bwa.sourceforge.net/</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://arxiv.org/abs/1303.3997">Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM</a></td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp324">Fast and accurate short read alignment with Burrows-Wheeler transform</a></td>
 </tr>
 </tbody>
 </table>
@@ -6921,10 +7012,9 @@
 </div>
 <details class="task">
 <summary><code>minimap2</code>: Read Alignment to the Assembly</summary>
-<p><code>minimap2</code> is a popular aligner that is used here to align the clean reads to the final assembly. This is done to provide additional information about the assembly.</p>
-<p>In minimap2, "modes" are a group of preset options.</p>
+<p><code>minimap2</code> is a popular aligner that is used to align reads (or assemblies) to an assembly file. In minimap2, "modes" are a group of preset options.</p>
 <p>The mode used in this task is <code>sr</code> which is intended for "short single-end reads without splicing". The <code>sr</code> mode indicates the following parameters should be used: <code>-k21 -w11 --sr --frag=yes -A2 -B8 -O12,32 -E2,1 -b0 -r100 -p.5 -N20 -f1000,5000 -n2 -m20 -s40 -g100 -2K50m --heap-sort=yes --secondary=no</code>. The output file is in SAM format.</p>
-<p>For more information, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
+<p>For more information regarding modes and the available options for <code>minimap2</code>, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
 <div class="admonition techdetails">
 <p class="admonition-title">minimap2 Technical Details</p>
 <table>
@@ -7046,12 +7136,12 @@
 <tr>
 <td>assembly_length</td>
 <td>Int</td>
-<td>The length of the assembly_fasta (see description for <code>assembly_fasta</code>) in basepairs</td>
+<td>Length of assembly (total contig length) as determined by QUAST</td>
 </tr>
 <tr>
 <td>assembly_mean_coverage</td>
 <td>Float</td>
-<td>The mean depth of coverage of the assembly_fasta (see description for <code>assembly_fasta</code>)</td>
+<td>Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the SAMtools coverage command</td>
 </tr>
 <tr>
 <td>average_read_length</td>
@@ -7081,17 +7171,12 @@
 <tr>
 <td>fastp_html_report</td>
 <td>File</td>
-<td>The report file for fastp in HTML format</td>
+<td>The HTML report made with fastp</td>
 </tr>
 <tr>
 <td>fastp_version</td>
 <td>String</td>
 <td>The version of fastp used</td>
-</tr>
-<tr>
-<td>fastq_scan_docker</td>
-<td>String</td>
-<td>The Docker image of fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_clean1_json</td>
@@ -7102,6 +7187,11 @@
 <td>fastq_scan_clean2_json</td>
 <td>File</td>
 <td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean reverse read quality and length</td>
+</tr>
+<tr>
+<td>fastq_scan_docker</td>
+<td>String</td>
+<td>The Docker image of fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_clean_pairs</td>
@@ -7206,12 +7296,12 @@
 <tr>
 <td>fastqc_version</td>
 <td>String</td>
-<td>The version of fastqc software used</td>
+<td>Version of fastqc software used</td>
 </tr>
 <tr>
 <td>kraken2_docker</td>
 <td>String</td>
-<td>The Docker image of kraken2</td>
+<td>Docker image used to run kraken2</td>
 </tr>
 <tr>
 <td>kraken2_percent_human_clean</td>
@@ -7236,7 +7326,7 @@
 <tr>
 <td>kraken2_version</td>
 <td>String</td>
-<td>The version of kraken</td>
+<td>The version of kraken2 used</td>
 </tr>
 <tr>
 <td>krona_docker</td>
@@ -7281,7 +7371,7 @@
 <tr>
 <td>midas_report</td>
 <td>File</td>
-<td>The MIDAS report file tsv file</td>
+<td>TSV report of full MIDAS results</td>
 </tr>
 <tr>
 <td>minimap2_docker</td>
@@ -7305,8 +7395,8 @@
 </tr>
 <tr>
 <td>percentage_mapped_reads</td>
-<td>Float</td>
-<td>The percentage of mapped reads to the assembly_fasta</td>
+<td>String</td>
+<td>Percentage of reads that successfully aligned to the reference genome. This value is calculated by number of mapped reads / total number of reads x 100.</td>
 </tr>
 <tr>
 <td>pilon_docker</td>
@@ -7331,12 +7421,12 @@
 <tr>
 <td>read1_clean</td>
 <td>File</td>
-<td>The clean forward reads file</td>
+<td>Forward read file after quality trimming and adapter removal</td>
 </tr>
 <tr>
 <td>read1_dehosted</td>
 <td>File</td>
-<td>The dehosted forward reads file</td>
+<td>The dehosted forward reads file; suggested read file for SRA submission</td>
 </tr>
 <tr>
 <td>read1_mapped</td>
@@ -7351,12 +7441,12 @@
 <tr>
 <td>read2_clean</td>
 <td>File</td>
-<td>The clean reverse reads file</td>
+<td>Reverse read file after quality trimming and adapter removal</td>
 </tr>
 <tr>
 <td>read2_dehosted</td>
 <td>File</td>
-<td>The dehosted reverse reads file</td>
+<td>The dehosted reverse reads file; suggested read file for SRA submission</td>
 </tr>
 <tr>
 <td>read2_mapped</td>
@@ -7376,7 +7466,7 @@
 <tr>
 <td>samtools_version</td>
 <td>String</td>
-<td>The version of samtools</td>
+<td>The version of SAMtools used to sort and index the alignment file</td>
 </tr>
 <tr>
 <td>semibin_bins</td>
@@ -7406,12 +7496,12 @@
 <tr>
 <td>trimmomatic_docker</td>
 <td>String</td>
-<td>The Docker image of trimmomatic</td>
+<td>The docker image used for the trimmomatic module in this workflow</td>
 </tr>
 <tr>
 <td>trimmomatic_version</td>
 <td>String</td>
-<td>The version of trimmomatic</td>
+<td>The version of Trimmomatic used</td>
 </tr>
 </tbody>
 </table>
@@ -7490,7 +7580,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 1, 2025 15:36:51">2025-04-01</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     

@@ -863,6 +863,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data_import/sra_fetch/" class="md-nav__link">
         
   
@@ -1588,29 +1611,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
         
   
@@ -2058,6 +2058,15 @@
   <a href="#inputs" class="md-nav__link">
     <span class="md-ellipsis">
       Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
     </span>
   </a>
   
@@ -2557,6 +2566,29 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2656,6 +2688,15 @@
   <a href="#inputs" class="md-nav__link">
     <span class="md-ellipsis">
       Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
     </span>
   </a>
   
@@ -4324,6 +4365,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
@@ -4489,6 +4553,15 @@
   <a href="#inputs" class="md-nav__link">
     <span class="md-ellipsis">
       Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
     </span>
   </a>
   
@@ -5382,6 +5455,15 @@
 </li>
         
           <li class="md-nav__item">
+  <a href="#workflow-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#outputs" class="md-nav__link">
     <span class="md-ellipsis">
       Outputs
@@ -5561,6 +5643,10 @@
 </table>
 </div>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
+<div class="admonition caption">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="kraken_pe" name="__tabbed_1" type="radio" /><input id="kraken_se" name="__tabbed_1" type="radio" /><input id="kraken_ont" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="kraken_pe">Kraken_PE</label><label for="kraken_se">Kraken_SE</label><label for="kraken_ont">Kraken_ONT</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="searchable-table">
 <table>
 <thead>
@@ -5571,45 +5657,40 @@
 <th><strong>Description</strong></th>
 <th><strong>Default Value</strong></th>
 <th><strong>Terra Status</strong></th>
-<th><strong>Workflow</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>*workflow_name</td>
+<td>workflow name</td>
 <td><strong>kraken2_db</strong></td>
 <td>File</td>
 <td>A Kraken2 database in .tar.gz format</td>
 <td></td>
 <td>Required</td>
-<td>ONT, PE, SE</td>
 </tr>
 <tr>
-<td>*workflow_name</td>
+<td>workflow name</td>
 <td><strong>read1</strong></td>
 <td>File</td>
 <td>Forward read in FASTQ file format (compression optional)</td>
 <td></td>
 <td>Required</td>
-<td>ONT, PE, SE</td>
 </tr>
 <tr>
-<td>*workflow_name</td>
+<td>workflow name</td>
 <td><strong>read2</strong></td>
 <td>File</td>
-<td>Reverse Illumina read in FASTQ file format (compression optional)</td>
-<td></td>
-<td>Required for PE only</td>
-<td>PE</td>
-</tr>
-<tr>
-<td>*workflow_name</td>
-<td><strong>samplename</strong></td>
-<td>String</td>
-<td>Name of the sample being analyzed</td>
+<td>Illumina reverse read file in FASTQ file format (compression optional)</td>
 <td></td>
 <td>Required</td>
-<td>ONT, PE, SE</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>samplename</strong></td>
+<td>String</td>
+<td>The name of the sample being analyzed</td>
+<td></td>
+<td>Required</td>
 </tr>
 <tr>
 <td>kraken2_pe or kraken2_se</td>
@@ -5618,7 +5699,6 @@
 <td>Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix</td>
 <td>classified#.fastq</td>
 <td>Optional</td>
-<td>ONT, PE, SE</td>
 </tr>
 <tr>
 <td>kraken2_pe or kraken2_se</td>
@@ -5627,16 +5707,14 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
-<td>ONT, PE, SE</td>
 </tr>
 <tr>
 <td>kraken2_pe or kraken2_se</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>GB of storage to request for VM used to run the kraken2 task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
 <td>100</td>
 <td>Optional</td>
-<td>ONT, PE, SE</td>
 </tr>
 <tr>
 <td>kraken2_pe or kraken2_se</td>
@@ -5645,7 +5723,6 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
 <td>Optional</td>
-<td>ONT, PE, SE</td>
 </tr>
 <tr>
 <td>kraken2_pe or kraken2_se</td>
@@ -5654,7 +5731,6 @@
 <td>Allows a user to supply additional kraken2 command-line arguments</td>
 <td></td>
 <td>Optional</td>
-<td>ONT, PE, SE</td>
 </tr>
 <tr>
 <td>kraken2_pe or kraken2_se</td>
@@ -5663,7 +5739,6 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>32</td>
 <td>Optional</td>
-<td>ONT, PE, SE</td>
 </tr>
 <tr>
 <td>kraken2_pe or kraken2_se</td>
@@ -5672,7 +5747,6 @@
 <td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
 <td>unclassified#.fastq</td>
 <td>Optional</td>
-<td>ONT, PE, SE</td>
 </tr>
 <tr>
 <td>krona</td>
@@ -5681,7 +5755,6 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>krona</td>
@@ -5690,7 +5763,6 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>krona</td>
@@ -5699,7 +5771,6 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/krona:2.8.1</td>
 <td>Optional</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>krona</td>
@@ -5708,61 +5779,14 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>PE, SE</td>
-</tr>
-<tr>
-<td>kraken2_recalculate_abundances</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-<td>ONT</td>
-</tr>
-<tr>
-<td>kraken2_recalculate_abundances</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-<td>ONT</td>
-</tr>
-<tr>
-<td>kraken2_recalculate_abundances</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4</td>
-<td>Optional</td>
-<td>ONT</td>
-</tr>
-<tr>
-<td>kraken2_recalculate_abundances</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
-<td>Optional</td>
-<td>ONT</td>
-</tr>
-<tr>
-<td>kraken2_recalculate_abundances</td>
-<td><strong>target_organism</strong></td>
-<td>String</td>
-<td>Target organism for the kraken2 abundance to be exported to the data table</td>
-<td></td>
-<td>Optional</td>
-<td>ONT</td>
 </tr>
 <tr>
 <td>version_capture</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
 <td>Optional</td>
-<td>ONT, PE, SE</td>
 </tr>
 <tr>
 <td>version_capture</td>
@@ -5771,12 +5795,354 @@
 <td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
 <td></td>
 <td>Optional</td>
-<td>ONT, PE, SE</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+<div class="tabbed-block">
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Terra Task Name</strong></th>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Terra Status</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>workflow name</td>
+<td><strong>kraken2_db</strong></td>
+<td>File</td>
+<td>A Kraken2 database in .tar.gz format</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>read1</strong></td>
+<td>File</td>
+<td>Forward read in FASTQ file format (compression optional)</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>samplename</strong></td>
+<td>String</td>
+<td>The name of the sample being analyzed</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>classified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix</td>
+<td>classified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>kraken2_args</strong></td>
+<td>String</td>
+<td>Allows a user to supply additional kraken2 command-line arguments</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>unclassified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
+<td>unclassified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>krona</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>krona</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>krona</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/krona:2.8.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>krona</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>timezone</strong></td>
+<td>String</td>
+<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="tabbed-block">
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Terra Task Name</strong></th>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Terra Status</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>workflow name</td>
+<td><strong>kraken2_db</strong></td>
+<td>File</td>
+<td>A Kraken2 database in .tar.gz format</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>read1</strong></td>
+<td>File</td>
+<td>Forward read in FASTQ file format (compression optional)</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>samplename</strong></td>
+<td>String</td>
+<td>The name of the sample being analyzed</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>classified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix</td>
+<td>classified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>kraken2_args</strong></td>
+<td>String</td>
+<td>Allows a user to supply additional kraken2 command-line arguments</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_pe or kraken2_se</td>
+<td><strong>unclassified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
+<td>unclassified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_recalculate_abundances</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_recalculate_abundances</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_recalculate_abundances</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_recalculate_abundances</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_recalculate_abundances</td>
+<td><strong>target_organism</strong></td>
+<td>String</td>
+<td>Target organism for the kraken2 abundance to be exported to the data table</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>timezone</strong></td>
+<td>String</td>
+<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
+<details class="task">
+<summary>Kraken2</summary>
+<p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
+<p>This workflow is database dependent, and one is required to run this task. Please see above for a list of suggested databases to provide through the <code>kraken2_db</code> input variable.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Kraken2 Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl">task_kraken2.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/DerrickWood/kraken2/">Kraken2 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://link.springer.com/article/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<div class="admonition caption">
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="kraken_pe_1" name="__tabbed_2" type="radio" /><input id="kraken_se_1" name="__tabbed_2" type="radio" /><input id="kraken_ont_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="kraken_pe_1">Kraken_PE</label><label for="kraken_se_1">Kraken_SE</label><label for="kraken_ont_1">Kraken_ONT</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="searchable-table">
 <table>
 <thead>
@@ -5787,6 +6153,16 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>kraken2_*_wf_analysis_date</td>
+<td>String</td>
+<td>Date the workflow was run</td>
+</tr>
+<tr>
+<td>kraken2_*_wf_version</td>
+<td>String</td>
+<td>Workflow version</td>
+</tr>
 <tr>
 <td>kraken2_classified_read1</td>
 <td>File</td>
@@ -5808,16 +6184,6 @@
 <td>Docker image used to run kraken2</td>
 </tr>
 <tr>
-<td>kraken2_*_wf_analysis_date</td>
-<td>String</td>
-<td>Date the workflow was run</td>
-</tr>
-<tr>
-<td>kraken2_*_wf_version</td>
-<td>String</td>
-<td>Workflow version</td>
-</tr>
-<tr>
 <td>kraken2_report</td>
 <td>File</td>
 <td>TXT document describing taxonomic prediction of every FASTQ record. This file is usually very large and cumbersome to open and view</td>
@@ -5835,12 +6201,12 @@
 <tr>
 <td>kraken2_version</td>
 <td>String</td>
-<td>kraken2 version</td>
+<td>The version of kraken2 used</td>
 </tr>
 <tr>
 <td>krona_docker</td>
 <td>String</td>
-<td>Docker image used to run krona (if PE or SE)</td>
+<td>The docker image of Krona</td>
 </tr>
 <tr>
 <td>krona_html</td>
@@ -5850,10 +6216,139 @@
 <tr>
 <td>krona_version</td>
 <td>String</td>
-<td>krona version (if PE or SE)</td>
+<td>The version of Krona</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="tabbed-block">
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kraken2_*_wf_analysis_date</td>
+<td>String</td>
+<td>Date the workflow was run</td>
+</tr>
+<tr>
+<td>kraken2_*_wf_version</td>
+<td>String</td>
+<td>Workflow version</td>
+</tr>
+<tr>
+<td>kraken2_classified_read1</td>
+<td>File</td>
+<td>FASTQ file of classified forward/R1 reads</td>
+</tr>
+<tr>
+<td>kraken2_classified_report</td>
+<td>File</td>
+<td>Standard Kraken2 output report. TXT filetype, but can be opened in Excel as a TSV file</td>
+</tr>
+<tr>
+<td>kraken2_docker</td>
+<td>String</td>
+<td>Docker image used to run kraken2</td>
+</tr>
+<tr>
+<td>kraken2_report</td>
+<td>File</td>
+<td>TXT document describing taxonomic prediction of every FASTQ record. This file is usually very large and cumbersome to open and view</td>
+</tr>
+<tr>
+<td>kraken2_unclassified_read1</td>
+<td>File</td>
+<td>FASTQ file of unclassified forward/R1 reads</td>
+</tr>
+<tr>
+<td>kraken2_version</td>
+<td>String</td>
+<td>The version of kraken2 used</td>
+</tr>
+<tr>
+<td>krona_docker</td>
+<td>String</td>
+<td>The docker image of Krona</td>
+</tr>
+<tr>
+<td>krona_html</td>
+<td>File</td>
+<td>HTML report of krona with visualisation of taxonomic classification of reads (if PE or SE)</td>
+</tr>
+<tr>
+<td>krona_version</td>
+<td>String</td>
+<td>The version of Krona</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="tabbed-block">
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kraken2_*_wf_analysis_date</td>
+<td>String</td>
+<td>Date the workflow was run</td>
+</tr>
+<tr>
+<td>kraken2_*_wf_version</td>
+<td>String</td>
+<td>Workflow version</td>
+</tr>
+<tr>
+<td>kraken2_classified_read1</td>
+<td>File</td>
+<td>FASTQ file of classified forward/R1 reads</td>
+</tr>
+<tr>
+<td>kraken2_classified_report</td>
+<td>File</td>
+<td>Standard Kraken2 output report. TXT filetype, but can be opened in Excel as a TSV file</td>
+</tr>
+<tr>
+<td>kraken2_docker</td>
+<td>String</td>
+<td>Docker image used to run kraken2</td>
+</tr>
+<tr>
+<td>kraken2_report</td>
+<td>File</td>
+<td>TXT document describing taxonomic prediction of every FASTQ record. This file is usually very large and cumbersome to open and view</td>
+</tr>
+<tr>
+<td>kraken2_unclassified_read1</td>
+<td>File</td>
+<td>FASTQ file of unclassified forward/R1 reads</td>
+</tr>
+<tr>
+<td>kraken2_version</td>
+<td>String</td>
+<td>The version of kraken2 used</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
 </div>
 <h4 id="interpretation-of-results">Interpretation of results<a class="headerlink" href="#interpretation-of-results" title="Permanent link">&para;</a></h4>
 <p>The most important outputs of the Kraken2 workflows are the <code>kraken2_report</code> files. These will include a breakdown of the number of sequences assigned to a particular taxon, and the percentage of reads assigned. <a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown#standard-kraken-output-format">A complete description of the report format can be found here</a>.</p>
@@ -5948,7 +6443,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 1, 2025 15:36:51">2025-04-01</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     

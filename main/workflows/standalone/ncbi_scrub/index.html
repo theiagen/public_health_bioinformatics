@@ -863,6 +863,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data_import/sra_fetch/" class="md-nav__link">
         
   
@@ -1580,29 +1603,6 @@
             Public Data Sharing
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../public_data_sharing/fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -2504,6 +2504,29 @@
   
   <span class="md-ellipsis">
     Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
     
   </span>
   
@@ -4246,6 +4269,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
@@ -5312,6 +5358,10 @@ There are three Kraken2 workflows:</p>
 <li><code>NCBI_Scrub_SE</code> is compatible with <strong>Illumina single-end data</strong></li>
 </ul>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
+<div class="admonition caption">
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="ncbi_scrub_pe" name="__tabbed_1" type="radio" /><input id="ncbi_scrub_se" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="ncbi_scrub_pe">NCBI_Scrub_PE</label><label for="ncbi_scrub_se">NCBI_Scrub_SE</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="searchable-table">
 <table>
 <thead>
@@ -5322,7 +5372,6 @@ There are three Kraken2 workflows:</p>
 <th><strong>Description</strong></th>
 <th><strong>Default Value</strong></th>
 <th><strong>Terra Status</strong></th>
-<th><strong>Workflow</strong></th>
 </tr>
 </thead>
 <tbody>
@@ -5330,37 +5379,33 @@ There are three Kraken2 workflows:</p>
 <td>dehost_pe or dehost_se</td>
 <td><strong>read1</strong></td>
 <td>File</td>
-<td></td>
+<td>FASTQ file containing read1 sequences</td>
 <td></td>
 <td>Required</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>dehost_pe or dehost_se</td>
 <td><strong>read2</strong></td>
 <td>File</td>
-<td></td>
+<td>FASTQ file containing read2 sequences</td>
 <td></td>
 <td>Required</td>
-<td>PE</td>
 </tr>
 <tr>
 <td>dehost_pe or dehost_se</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
-<td></td>
+<td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>dehost_pe or dehost_se</td>
 <td><strong>target_organism</strong></td>
 <td>String</td>
 <td>Target organism for Kraken2 reporting</td>
-<td>"Severe acute respiratory syndrome coronavirus 2"</td>
+<td>Severe acute respiratory syndrome coronavirus 2</td>
 <td>Optional</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>kraken2</td>
@@ -5369,7 +5414,6 @@ There are three Kraken2 workflows:</p>
 <td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>kraken2</td>
@@ -5378,7 +5422,6 @@ There are three Kraken2 workflows:</p>
 <td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
 <td>100</td>
 <td>Optional</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>kraken2</td>
@@ -5387,7 +5430,6 @@ There are three Kraken2 workflows:</p>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv</td>
 <td>Optional</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>kraken2</td>
@@ -5396,7 +5438,6 @@ There are three Kraken2 workflows:</p>
 <td>The database used to run Kraken2</td>
 <td>/kraken2-db</td>
 <td>Optional</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>kraken2</td>
@@ -5405,16 +5446,6 @@ There are three Kraken2 workflows:</p>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>PE, SE</td>
-</tr>
-<tr>
-<td>kraken2</td>
-<td><strong>read2</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Do not modify, Optional</td>
-<td>SE</td>
 </tr>
 <tr>
 <td>kraken2</td>
@@ -5423,25 +5454,6 @@ There are three Kraken2 workflows:</p>
 <td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
 <td></td>
 <td>Optional</td>
-<td>PE, SE</td>
-</tr>
-<tr>
-<td>ncbi_scrub_pe or ncbi_scrub_se</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-<td>PE, SE</td>
-</tr>
-<tr>
-<td>ncbi_scrub_pe or ncbi_scrub_se</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>ncbi_scrub_pe or</td>
@@ -5450,7 +5462,22 @@ There are three Kraken2 workflows:</p>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1</td>
 <td>Optional</td>
-<td>PE, SE</td>
+</tr>
+<tr>
+<td>ncbi_scrub_pe or ncbi_scrub_se</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_scrub_pe or ncbi_scrub_se</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
 </tr>
 <tr>
 <td>ncbi_scrub_pe or ncbi_scrub_se</td>
@@ -5459,16 +5486,14 @@ There are three Kraken2 workflows:</p>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>version_capture</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
 <td>Optional</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>version_capture</td>
@@ -5477,18 +5502,168 @@ There are three Kraken2 workflows:</p>
 <td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
 <td></td>
 <td>Optional</td>
-<td>PE, SE</td>
 </tr>
 </tbody>
 </table>
 </div>
+</div>
+<div class="tabbed-block">
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Terra Task Name</strong></th>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Terra Status</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>dehost_pe or dehost_se</td>
+<td><strong>read1</strong></td>
+<td>File</td>
+<td>FASTQ file containing read1 sequences</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>dehost_pe or dehost_se</td>
+<td><strong>samplename</strong></td>
+<td>String</td>
+<td>The name of the sample being analyzed</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>dehost_pe or dehost_se</td>
+<td><strong>target_organism</strong></td>
+<td>String</td>
+<td>Target organism for Kraken2 reporting</td>
+<td>Severe acute respiratory syndrome coronavirus 2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>kraken2_db</strong></td>
+<td>String</td>
+<td>The database used to run Kraken2</td>
+<td>/kraken2-db</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>read2</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>target_organism</strong></td>
+<td>String</td>
+<td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_scrub_pe or</td>
+<td><strong>docker</strong></td>
+<td>Int</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_scrub_pe or ncbi_scrub_se</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_scrub_pe or ncbi_scrub_se</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_scrub_pe or ncbi_scrub_se</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>timezone</strong></td>
+<td>String</td>
+<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
 <p>This workflow is composed of two tasks, one to dehost the input reads and another to screen the clean reads with kraken2 and the viral+human database.</p>
 <details class="task">
-<summary><code>ncbi_scrub</code>: human read removal tool</summary>
-<p>Briefly, the HRRT employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records and subtracts any k-mers found in non-Eukaryota RefSeq records. The remaining set of k-mers compose the database used to identify human reads by the removal tool.</p>
+<summary><code>HRRT</code>: Human Host Sequence Removal</summary>
+<p>All reads of human origin <strong>are removed</strong>, including their mates, by using NCBI's <a href="https://github.com/ncbi/sra-human-scrubber"><strong>human read removal tool (HRRT)</strong></a>. </p>
+<p>HRRT is based on the <a href="https://doi.org/10.1186/s13059-021-02490-0">SRA Taxonomy Analysis Tool</a> and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">Tool Name Technical Details</p>
+<p class="admonition-title">NCBI-Scrub Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -5514,12 +5689,12 @@ There are three Kraken2 workflows:</p>
 </div>
 </details>
 <details class="task">
-<summary><code>kraken2</code>: taxonomic profiling</summary>
-<p>Kraken2 is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
-<p>Kraken2 is run on the set of raw reads, provided as input, as well as the set of clean reads that are resulted from the <code>read_QC_trim</code> workflow</p>
+<summary>Read Identification with Kraken2</summary>
+<p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
+<p>Kraken2 is run on both the raw and clean reads.</p>
 <div class="admonition info">
 <p class="admonition-title">Database-dependent</p>
-<p>TheiaCoV automatically uses a viral-specific Kraken2 database.</p>
+<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
 </div>
 <div class="admonition techdetails">
 <p class="admonition-title">Kraken2 Technical Details</p>
@@ -5541,17 +5716,21 @@ There are three Kraken2 workflows:</p>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/DerrickWood/kraken2/wiki">https://github.com/DerrickWood/kraken2/wiki</a></td>
+<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
+<td><a href="https://link.springer.com/article/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<div class="admonition caption">
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="ncbi_scrub_pe_1" name="__tabbed_2" type="radio" /><input id="ncbi_scrub_se_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="ncbi_scrub_pe_1">NCBI_Scrub_PE</label><label for="ncbi_scrub_se_1">NCBI_Scrub_SE</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="searchable-table">
 <table>
 <thead>
@@ -5559,7 +5738,6 @@ There are three Kraken2 workflows:</p>
 <th><strong>Variable</strong></th>
 <th><strong>Type</strong></th>
 <th><strong>Description</strong></th>
-<th><strong>Workflow</strong></th>
 </tr>
 </thead>
 <tbody>
@@ -5567,64 +5745,118 @@ There are three Kraken2 workflows:</p>
 <td>kraken_human_dehosted</td>
 <td>Float</td>
 <td>Percent of human read data detected using the Kraken2 software after host removal</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>kraken_report_dehosted</td>
 <td>File</td>
 <td>Full Kraken report after host removal</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>kraken_sc2_dehosted</td>
 <td>Float</td>
 <td>Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>kraken_version_dehosted</td>
 <td>String</td>
 <td>Version of Kraken2 software used</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>ncbi_scrub_docker</td>
 <td>String</td>
-<td>Docker image used to run HRRT</td>
-<td>PE, SE</td>
+<td>The Docker image for NCBI's HRRT (human read removal tool)</td>
 </tr>
 <tr>
 <td>ncbi_scrub_human_spots_removed</td>
 <td>Int</td>
 <td>Number of spots removed (or masked)</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>ncbi_scrub_pe_analysis_date</td>
 <td>String</td>
 <td>Date of analysis</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>ncbi_scrub_pe_version</td>
 <td>String</td>
 <td>Version of HRRT software used</td>
-<td>PE, SE</td>
 </tr>
 <tr>
 <td>read1_dehosted</td>
 <td>File</td>
-<td>Dehosted forward reads</td>
-<td>PE, SE</td>
+<td>The dehosted forward reads file; suggested read file for SRA submission</td>
 </tr>
 <tr>
 <td>read2_dehosted</td>
 <td>File</td>
-<td>Dehosted reverse reads</td>
-<td>PE</td>
+<td>The dehosted reverse reads file; suggested read file for SRA submission</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="tabbed-block">
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kraken_human_dehosted</td>
+<td>Float</td>
+<td>Percent of human read data detected using the Kraken2 software after host removal</td>
+</tr>
+<tr>
+<td>kraken_report_dehosted</td>
+<td>File</td>
+<td>Full Kraken report after host removal</td>
+</tr>
+<tr>
+<td>kraken_sc2_dehosted</td>
+<td>Float</td>
+<td>Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal</td>
+</tr>
+<tr>
+<td>kraken_version_dehosted</td>
+<td>String</td>
+<td>Version of Kraken2 software used</td>
+</tr>
+<tr>
+<td>ncbi_scrub_docker</td>
+<td>String</td>
+<td>The Docker image for NCBI's HRRT (human read removal tool)</td>
+</tr>
+<tr>
+<td>ncbi_scrub_human_spots_removed</td>
+<td>Int</td>
+<td>Number of spots removed (or masked)</td>
+</tr>
+<tr>
+<td>ncbi_scrub_pe_analysis_date</td>
+<td>String</td>
+<td>Date of analysis</td>
+</tr>
+<tr>
+<td>ncbi_scrub_pe_version</td>
+<td>String</td>
+<td>Version of HRRT software used</td>
+</tr>
+<tr>
+<td>read1_dehosted</td>
+<td>File</td>
+<td>The dehosted forward reads file; suggested read file for SRA submission</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -5648,7 +5880,7 @@ There are three Kraken2 workflows:</p>
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="January 16, 2025 20:33:17">2025-01-16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     

@@ -863,6 +863,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data_import/sra_fetch/" class="md-nav__link">
         
   
@@ -1681,29 +1704,6 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
         
   
@@ -2504,6 +2504,29 @@
   
   <span class="md-ellipsis">
     Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
     
   </span>
   
@@ -4246,6 +4269,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
@@ -5325,7 +5371,7 @@
 <td>pangolin_update</td>
 <td><strong>assembly_fasta</strong></td>
 <td>File</td>
-<td>SARS-CoV-2 assembly file in FASTA format</td>
+<td>The assembly file for your sample in FASTA format</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5365,7 +5411,7 @@
 <td>pangolin_update</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
-<td>The name of the sample being analyzed.</td>
+<td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5383,86 +5429,6 @@
 <td>String</td>
 <td>The Pangolin docker image used to update the Pangolin lineage assignments.</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pangolin4</td>
-<td><strong>analysis_mode</strong></td>
-<td>String</td>
-<td>Pangolin inference engine for lineage designations (usher or pangolearn)</td>
-<td>None</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pangolin4</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pangolin4</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pangolin4</td>
-<td><strong>expanded_lineage</strong></td>
-<td>Boolean</td>
-<td>True/False that determines if a lineage should be expanded without aliases (e.g., BA.1 → B.1.1.529.1)</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pangolin4</td>
-<td><strong>max_ambig</strong></td>
-<td>Float</td>
-<td>Maximum proportion of Ns allowed for Pangolin to attempt assignment</td>
-<td>0.5</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pangolin4</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pangolin4</td>
-<td><strong>min_length</strong></td>
-<td>Int</td>
-<td>Minimum query length allowed for pangolin to attempt assignment</td>
-<td>10000</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pangolin4</td>
-<td><strong>pangolin_arguments</strong></td>
-<td>String</td>
-<td>Optional arguments for pangolin e.g. "--skip-scorpio"</td>
-<td>None</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pangolin4</td>
-<td><strong>skip_designation_cache</strong></td>
-<td>Boolean</td>
-<td>True/False that determines if the designation cache should be used</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>pangolin4</td>
-<td><strong>skip_scorpio</strong></td>
-<td>Boolean</td>
-<td>True/False that determines if scorpio should be skipped.</td>
-<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5506,11 +5472,91 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>pangolin4</td>
+<td><strong>analysis_mode</strong></td>
+<td>String</td>
+<td>Used to switch between usher and pangolearn analysis modes. Only use usher because pangolearn is no longer supported as of Pangolin v4.3 and higher versions.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pangolin4</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pangolin4</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pangolin4</td>
+<td><strong>expanded_lineage</strong></td>
+<td>Boolean</td>
+<td>True/False that determines if a lineage should be expanded without aliases (e.g., BA.1 → B.1.1.529.1)</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pangolin4</td>
+<td><strong>max_ambig</strong></td>
+<td>Float</td>
+<td>The maximum proportion of Ns allowed for pangolin to attempt an assignment</td>
+<td>0.5</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pangolin4</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pangolin4</td>
+<td><strong>min_length</strong></td>
+<td>Int</td>
+<td>Minimum query length allowed for pangolin to attempt an assignment</td>
+<td>10000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pangolin4</td>
+<td><strong>pangolin_arguments</strong></td>
+<td>String</td>
+<td>Optional arguments for pangolin e.g. ''--skip-scorpio''</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pangolin4</td>
+<td><strong>skip_designation_cache</strong></td>
+<td>Boolean</td>
+<td>A True/False option that determines if the designation cache should be used</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pangolin4</td>
+<td><strong>skip_scorpio</strong></td>
+<td>Boolean</td>
+<td>A True/False option that determines if scorpio should be skipped.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>version_capture</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5536,62 +5582,72 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>pango_lineage</strong></td>
+<td>nextclade_json</td>
+<td>File</td>
+<td>Nextclade output in JSON file format. Will be blank for Flu</td>
+</tr>
+<tr>
+<td>nextclade_tsv</td>
+<td>File</td>
+<td>Nextclade output in TSV file format. Will be blank for Flu</td>
+</tr>
+<tr>
+<td>pango_lineage</td>
 <td>String</td>
 <td>Pango lineage as determined by Pangolin</td>
 </tr>
 <tr>
-<td><strong>pango_lineage_expanded</strong></td>
+<td>pango_lineage_expanded</td>
 <td>String</td>
-<td>Pango lineage without use of aliases; e.g., BA.1 → B.1.1.529.1</td>
+<td>Pango lineage without use of aliases; e.g., "BA.1" → "B.1.1.529.1"</td>
 </tr>
 <tr>
-<td><strong>pango_lineage_log</strong></td>
+<td>pango_lineage_log</td>
 <td>File</td>
 <td>TSV file listing Pangolin lineage assignments and software versions for this sample</td>
 </tr>
 <tr>
-<td><strong>pango_lineage_report</strong></td>
+<td>pango_lineage_report</td>
 <td>File</td>
 <td>Full Pango lineage report generated by Pangolin</td>
 </tr>
 <tr>
-<td><strong>pangolin_assignment_version</strong></td>
+<td>pangolin_assignment_version</td>
 <td>String</td>
-<td>Version of the Pangolin software (e.g. PANGO or PUSHER) used for lineage assignment</td>
+<td>The version of the pangolin software (e.g. PANGO or PUSHER) used for lineage assignment</td>
 </tr>
 <tr>
-<td><strong>pangolin_conflict</strong></td>
+<td>pangolin_conflicts</td>
 <td>String</td>
 <td>Number of lineage conflicts as determined by Pangolin</td>
 </tr>
 <tr>
-<td><strong>pangolin_docker</strong></td>
+<td>pangolin_docker</td>
 <td>String</td>
-<td>The Docker container to use for the task</td>
+<td>Docker image used to run Pangolin</td>
 </tr>
 <tr>
-<td><strong>pangolin_notes</strong></td>
+<td>pangolin_notes</td>
 <td>String</td>
 <td>Lineage notes as determined by Pangolin</td>
 </tr>
 <tr>
-<td><strong>pangolin_update_analysis_date</strong></td>
+<td>pangolin_update_analysis_date</td>
 <td>String</td>
 <td>Date of analysis</td>
 </tr>
 <tr>
-<td><strong>pangolin_update_version</strong></td>
+<td>pangolin_update_version</td>
 <td>String</td>
 <td>Version of the Public Health Bioinformatics (PHB) repository used</td>
 </tr>
 <tr>
-<td><strong>pangolin_updates</strong></td>
+<td>pangolin_updates</td>
 <td>String</td>
 <td>Result of Pangolin Update (lineage changed versus unchanged) with lineage assignment and date of analysis</td>
 </tr>
 <tr>
-<td><strong>pangolin_versions</strong></td>
+<td>pangolin_versions</td>
 <td>String</td>
 <td>All Pangolin software and database versions</td>
 </tr>
@@ -5624,7 +5680,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 17, 2025 19:19:47">2025-04-17</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     

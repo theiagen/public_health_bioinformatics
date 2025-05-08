@@ -861,6 +861,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/data_import/sra_fetch/" class="md-nav__link">
         
   
@@ -1578,29 +1601,6 @@
             Public Data Sharing
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../workflows/public_data_sharing/fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -2409,6 +2409,29 @@
   
   <span class="md-ellipsis">
     Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
     
   </span>
   
@@ -4056,6 +4079,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
@@ -4985,6 +5031,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#macros" class="md-nav__link">
+    <span class="md-ellipsis">
+      Macros
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5148,6 +5203,15 @@
   
 </li>
         
+          <li class="md-nav__item">
+  <a href="#macros" class="md-nav__link">
+    <span class="md-ellipsis">
+      Macros
+    </span>
+  </a>
+  
+</li>
+        
       </ul>
     </nav>
   
@@ -5178,7 +5242,7 @@
 <h2 id="local-installation-live-previews">Local Installation &amp; Live Previews<a class="headerlink" href="#local-installation-live-previews" title="Permanent link">&para;</a></h2>
 <p>Since the documentation is built off of the <code>main</code> branch, it is highly recommended to preview your changes before making a PR. You can do this by installing the necessary packages and previewing ("serving") the documentation locally.</p>
 <p>To test your documentation changes, you will need to have the following packages installed on your local VM:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>mkdocs-material<span class="w"> </span>mkdocs-material-extensions<span class="w"> </span>mkdocs-git-revision-date-localized-plugin<span class="w"> </span>mike<span class="w"> </span>mkdocs-glightbox
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>mkdocs-material<span class="w"> </span>mkdocs-material-extensions<span class="w"> </span>mkdocs-git-revision-date-localized-plugin<span class="w"> </span>mike<span class="w"> </span>mkdocs-glightbox<span class="w"> </span>mkdocs-macros-plugin
 </span></code></pre></div>
 <p>Once installed, navigate to the top directory in PHB. The live preview server can be activated by running the following command:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mkdocs<span class="w"> </span>serve
@@ -5329,6 +5393,7 @@
 <li><code>new_workflow_template.md</code> - A template for adding a new workflow page to the documentation. You can see this template <a href="../../assets/new_workflow_template/">here</a></li>
 </ul>
 </li>
+<li><code>common_text/</code> - Contains the Markdown files for common text used in the documentation. This includes task descriptions, workflow descriptions, and other common text. This is where you will put any new task descriptions or workflow descriptions that are not specific to a single workflow. This enables modular and reusable documentation.</li>
 <li><code>contributing/</code> - Contains the Markdown files for our contribution guides, such as this file</li>
 <li><code>javascripts/</code> - Contains JavaScript files used in the documentation.<ul>
 <li><code>tablesort.js</code> - A JavaScript file used to enable table sorting in the documentation.</li>
@@ -5375,6 +5440,13 @@
 </li>
 <li>Copy the path to the workflow to <mark><strong>ALL</strong></mark> of the appropriate locations in the <code>mkdocs.yml</code> file (under the <code>nav:</code> section) in the main directory of this repository. These should be the exact same spots as in the overview tables but without additional information. This ensures the workflow can be accessed from the navigation sidebar.</li>
 </ol>
+<h3 id="macros">Macros<a class="headerlink" href="#macros" title="Permanent link">&para;</a></h3>
+<p>The documentation uses a few macros to help with the formatting of the documentation. These macros are defined in <code>macros/main.py</code> and are used in the documentation files. The following macros are available:</p>
+<ul>
+<li><code>render_tsv_table()</code> - This macro is used to create a table from a TSV file. The TSV file should be in the <code>docs/assets/</code> directory and should be formatted as a table. The macro will automatically create a table from the TSV file and insert it into the documentation.</li>
+<li><code>include_md()</code> - This macro is used to include a Markdown file in the documentation. The macro will automatically adjust the heading levels, resolve relative links, and support conditional and nested includes.</li>
+</ul>
+<p>Please see the <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/macros/README.md">macros README</a> for more information.</p>
 
 
 
@@ -5397,7 +5469,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 28, 2025 16:50:34">2025-04-28</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     

@@ -863,6 +863,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data_import/sra_fetch/" class="md-nav__link">
         
   
@@ -1682,29 +1705,6 @@
             Public Data Sharing
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../public_data_sharing/fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -2615,6 +2615,29 @@
   
   <span class="md-ellipsis">
     Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
     
   </span>
   
@@ -4366,6 +4389,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../find_shared_variants/" class="md-nav__link">
         
   
@@ -5444,9 +5490,33 @@
 <tbody>
 <tr>
 <td>clair3_variants_ont</td>
+<td><strong>read1</strong></td>
+<td>File</td>
+<td>ONT read file in FASTQ file format (compression optional)</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>reference_genome_file</strong></td>
+<td>File</td>
+<td>Reference genome in FASTA format</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
+<td><strong>samplename</strong></td>
+<td>String</td>
+<td>The name of the sample being analyzed</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>clair3_variants_ont</td>
 <td><strong>clair3_cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs to use</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -5455,7 +5525,7 @@
 <td><strong>clair3_disable_phasing</strong></td>
 <td>Boolean</td>
 <td>Disable whatshap phasing</td>
-<td>true</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5479,7 +5549,7 @@
 <td><strong>clair3_enable_gvcf</strong></td>
 <td>Boolean</td>
 <td>Output gVCF format</td>
-<td>false</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5487,7 +5557,7 @@
 <td><strong>clair3_enable_haploid_precise</strong></td>
 <td>Boolean</td>
 <td>Enable haploid precise calling, only 1/1 is considered as a variant</td>
-<td>true</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5495,7 +5565,7 @@
 <td><strong>clair3_enable_long_indel</strong></td>
 <td>Boolean</td>
 <td>Enable long indel calling</td>
-<td>false</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5503,7 +5573,7 @@
 <td><strong>clair3_include_all_contigs</strong></td>
 <td>Boolean</td>
 <td>Call variants on all contigs, should always be true for non-human samples</td>
-<td>true</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5518,7 +5588,7 @@
 <td>clair3_variants_ont</td>
 <td><strong>clair3_model</strong></td>
 <td>String</td>
-<td>Model name for variant calling (see <a href="#supported-clair3-models">supported models</a> for available options)</td>
+<td>Model name for variant calling (see supported models for available options)</td>
 <td>r941_prom_hac_g360+g422</td>
 <td>Optional</td>
 </tr>
@@ -5529,30 +5599,6 @@
 <td>Minimum variant quality score</td>
 <td>2</td>
 <td>Optional</td>
-</tr>
-<tr>
-<td>clair3_variants_ont</td>
-<td><strong>read1</strong></td>
-<td>File</td>
-<td>ONT sequencing reads in FASTQ format</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>clair3_variants_ont</td>
-<td><strong>reference_genome_file</strong></td>
-<td>File</td>
-<td>Reference genome in FASTA format</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>clair3_variants_ont</td>
-<td><strong>samplename</strong></td>
-<td>String</td>
-<td>Name of Samples</td>
-<td></td>
-<td>Required</td>
 </tr>
 <tr>
 <td>minimap2</td>
@@ -5574,8 +5620,8 @@
 <td>minimap2</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for this task.</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22"</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5590,9 +5636,9 @@
 <td>minimap2</td>
 <td><strong>query2</strong></td>
 <td>File</td>
-<td>Internal component. Do not modify</td>
-<td>None</td>
-<td>Do not modify, Optional</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
 </tr>
 <tr>
 <td>sam_to_sorted_bam</td>
@@ -5614,8 +5660,8 @@
 <td>sam_to_sorted_bam</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for this task.</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5646,8 +5692,8 @@
 <td>samtools_faidx</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for this task.</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5662,7 +5708,7 @@
 <td>version_capture</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker container for versioning</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
 <td>Optional</td>
 </tr>
@@ -5679,11 +5725,13 @@
 </div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
 <details class="task">
-<summary><code>minimap2</code>: Read Alignment</summary>
-<p><code>minimap2</code> is used with long read specific parameters (-L --cs --MD flags) to align ONT reads to the reference genome. These specialized parameters are essential for proper handling of long read error profiles, generation of detailed alignment information, and improved mapping accuracy for long reads.</p>
+<summary><code>minimap2</code>: Read Alignment Details</summary>
+<p><code>minimap2</code> is a popular aligner that is used to align reads (or assemblies) to an assembly file. In minimap2, "modes" are a group of preset options.</p>
+<p>The mode used in this task is <code>map-ont</code> with additional long-read-specific parameters (the <code>-L --cs --MD</code> flags) to align ONT reads to the reference genome. These specialized parameters are essential for proper handling of long read error profiles, generation of detailed alignment information, and improved mapping accuracy for long reads.</p>
+<p><code>map-ont</code> is the default mode for long reads and it indicates that long reads of ~10% error rates should be aligned to the reference genome. The output file is in SAM format.</p>
+<p>For more information regarding modes and the available options for <code>minimap2</code>, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
 <div class="admonition techdetails">
 <p class="admonition-title">minimap2 Technical Details</p>
-</div>
 <table>
 <thead>
 <tr>
@@ -5710,13 +5758,13 @@
 </tr>
 </tbody>
 </table>
+</div>
 </details>
 <details class="task">
 <summary><code>samtools</code>: BAM Processing</summary>
 <p>The bam processing step aligns files through several coordinate-based steps to prepare for variant calling. The task converts SAM format to BAM, sorts the BAM file by coordinate, and creates a BAM index file. This processed BAM is required for Clair3's variant calling pipeline.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">samtools Technical Details</p>
-</div>
 <table>
 <thead>
 <tr>
@@ -5743,13 +5791,13 @@
 </tr>
 </tbody>
 </table>
+</div>
 </details>
 <details class="task">
 <summary><code>samtools faidx</code>: Reference Genome Indexing</summary>
 <p><code>samtools faidx</code> creates necessary index files for the reference. This indexing step is    essential for enabling efficient random access to the reference sequence during variant calling.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">samtools Technical Details</p>
-</div>
 <table>
 <thead>
 <tr>
@@ -5776,6 +5824,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 </details>
 <details class="task">
 <summary><code>Clair3</code>: Variant Calling</summary>
@@ -5786,7 +5835,6 @@
 - Structural variants</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Clair3 Technical Details</p>
-</div>
 <table>
 <thead>
 <tr>
@@ -5813,6 +5861,7 @@
 </tr>
 </tbody>
 </table>
+</div>
 </details>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
 <div class="searchable-table">
@@ -5826,14 +5875,14 @@
 </thead>
 <tbody>
 <tr>
-<td>aligned_bam</td>
-<td>File</td>
-<td>Sorted BAM file containing the minimap2 alignments of reads to the reference genome</td>
-</tr>
-<tr>
 <td>aligned_bai</td>
 <td>File</td>
-<td>Index file for the aligned BAM</td>
+<td>Index companion file to the bam file generated during the consensus assembly process</td>
+</tr>
+<tr>
+<td>aligned_bam</td>
+<td>File</td>
+<td>Sorted BAM file containing the alignments of reads to the reference genome</td>
 </tr>
 <tr>
 <td>aligned_fai</td>
@@ -5851,14 +5900,14 @@
 <td>Name of the Clair3 model used for variant calling</td>
 </tr>
 <tr>
-<td>clair3_variants_vcf</td>
-<td>File</td>
-<td>Final merged VCF file containing high-confidence variant calls, combining results from both pileup and full-alignment approaches</td>
-</tr>
-<tr>
 <td>clair3_variants_gvcf</td>
 <td>File</td>
 <td>Optional genome VCF file containing information about all genomic positions, including non-variant sites</td>
+</tr>
+<tr>
+<td>clair3_variants_vcf</td>
+<td>File</td>
+<td>Final merged VCF file containing high-confidence variant calls, combining results from both pileup and full-alignment approaches</td>
 </tr>
 <tr>
 <td>clair3_variants_wf_version</td>
@@ -5873,7 +5922,7 @@
 <tr>
 <td>samtools_version</td>
 <td>String</td>
-<td>Version of samtools used for BAM processing</td>
+<td>The version of SAMtools used to sort and index the alignment file</td>
 </tr>
 </tbody>
 </table>
@@ -5900,7 +5949,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 16, 2025 18:29:49">2025-04-16</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     

@@ -863,6 +863,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data_import/sra_fetch/" class="md-nav__link">
         
   
@@ -1580,29 +1603,6 @@
             Public Data Sharing
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../public_data_sharing/fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -2491,6 +2491,29 @@
   
   <span class="md-ellipsis">
     Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
     
   </span>
   
@@ -4220,6 +4243,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
@@ -5275,12 +5321,12 @@
 <table>
 <thead>
 <tr>
-<th><strong>Terra Task name</strong></th>
-<th><strong>input_variable</strong></th>
+<th><strong>Terra Task Name</strong></th>
+<th><strong>Variable</strong></th>
 <th><strong>Type</strong></th>
 <th><strong>Description</strong></th>
-<th><strong>Default attribute</strong></th>
-<th><strong>Status</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Terra Status</strong></th>
 </tr>
 </thead>
 <tbody>
@@ -5288,7 +5334,7 @@
 <td>transfer_column_content</td>
 <td><strong>files_to_transfer</strong></td>
 <td>Array[File]</td>
-<td>The column that has the files you want to concatenate.</td>
+<td>The column that has the files you want to transfer.</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5296,7 +5342,7 @@
 <td>transfer_column_content</td>
 <td><strong>target_bucket</strong></td>
 <td>String</td>
-<td>The GS URI<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> of the target storage bucket. Note: <strong>Do not include spaces</strong>, but <strong>do</strong> include the <code>gs://</code> at the beginning of the bucket URI</td>
+<td>The GS URI<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> of the target storage bucket. Note: Do not include spaces, but do include the gs:// at the beginning of the bucket URI</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5320,7 +5366,7 @@
 <td>transfer_files</td>
 <td><strong>docker_image</strong></td>
 <td>String</td>
-<td>The docker image used to perform the file transfer.</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
 <td>Optional</td>
 </tr>
@@ -5352,6 +5398,7 @@
 </table>
 </div>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -5362,9 +5409,9 @@
 </thead>
 <tbody>
 <tr>
-<td>transferred_files</td>
-<td>File</td>
-<td>A list of all of the files now located at the target bucket location (GSURI)</td>
+<td>transfer_column_content_analysis_date</td>
+<td>String</td>
+<td>The date the workflow was run</td>
 </tr>
 <tr>
 <td>transfer_column_content_version</td>
@@ -5372,12 +5419,13 @@
 <td>The version of the repository the workflow is hosted in</td>
 </tr>
 <tr>
-<td>transfer_column_content_analysis_date</td>
-<td>String</td>
-<td>The date the workflow was run</td>
+<td>transferred_files</td>
+<td>File</td>
+<td>A list of all of the files now located at the target bucket location (GSURI)</td>
 </tr>
 </tbody>
 </table>
+</div>
 <div class="footnote">
 <hr />
 <ol>
@@ -5408,7 +5456,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 18, 2025 14:48:15">2025-03-18</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     

@@ -863,6 +863,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data_import/sra_fetch/" class="md-nav__link">
         
   
@@ -1580,29 +1603,6 @@
             Public Data Sharing
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -2588,6 +2588,29 @@
   
   <span class="md-ellipsis">
     Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
     
   </span>
   
@@ -4768,6 +4791,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
@@ -6262,6 +6308,14 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td>Required</td>
 </tr>
 <tr>
+<td>Terra_2_NCBI</td>
+<td><strong>submit_to_production</strong></td>
+<td>Boolean</td>
+<td>Used to indicate whether or not the workflow should submit to NCBI's production environment. If set to true, then a Production submission will occur. Otherwise, by default (false), it will perform a Test submission.</td>
+<td>FALSE</td>
+<td>Optional, Required</td>
+</tr>
+<tr>
 <td>add_biosample_accessions</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -6282,7 +6336,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"</td>
+<td>us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6314,7 +6368,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"</td>
+<td>us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6329,8 +6383,8 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td>ncbi_sftp_upload</td>
 <td><strong>additional_files</strong></td>
 <td>Array[File]</td>
-<td>Internal component; do not modify</td>
-<td>[]</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6354,7 +6408,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"</td>
+<td>us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6369,8 +6423,8 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td>ncbi_sftp_upload</td>
 <td><strong>wait_for</strong></td>
 <td>String</td>
-<td>Internal component; do not modify</td>
-<td>"1"</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6394,7 +6448,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"</td>
+<td>us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6442,7 +6496,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10"</td>
+<td>us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6457,7 +6511,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td>Terra_2_NCBI</td>
 <td><strong>input_table</strong></td>
 <td>File</td>
-<td>Internal component; do not modify</td>
+<td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -6466,23 +6520,15 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>skip_biosample</strong></td>
 <td>Boolean</td>
 <td>Boolean switch to turn on actual production level submission</td>
-<td>false</td>
+<td>FALSE</td>
 <td>Optional</td>
-</tr>
-<tr>
-<td>Terra_2_NCBI</td>
-<td><strong>submit_to_production</strong></td>
-<td>Boolean</td>
-<td>Used to indicate whether or not the workflow should submit to NCBI's production environment. If set to true, then a Production submission will occur. Otherwise, by default (false), it will perform a Test submission.</td>
-<td>false</td>
-<td>Optional, Required</td>
 </tr>
 <tr>
 <td>version_capture</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>"us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6544,71 +6590,71 @@ The "Custom" column should contain the actual column names in your Terra table (
 <table>
 <thead>
 <tr>
-<th>Variable</th>
-<th>Description</th>
-<th>Type</th>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>biosample_failures</td>
-<td>Text file listing samples that failed BioSample submission</td>
 <td>File</td>
+<td>Text file listing samples that failed BioSample submission</td>
 </tr>
 <tr>
 <td>biosample_metadata</td>
-<td>Metadata used for BioSample submission in proper BioSample formatting</td>
 <td>File</td>
+<td>Metadata used for BioSample submission in proper BioSample formatting</td>
 </tr>
 <tr>
 <td>biosample_report_xmls</td>
-<td>One or more XML files that contain the response from NCBI regarding your BioSample submission. These can be pretty cryptic, but often contain information to determine  if anything went wrong</td>
 <td>Array[File]</td>
+<td>One or more XML files that contain the response from NCBI regarding your BioSample submission. These can be pretty cryptic, but often contain information to determine  if anything went wrong</td>
 </tr>
 <tr>
 <td>biosample_status</td>
-<td>String showing whether BioSample submission was successful</td>
 <td>String</td>
+<td>String showing whether BioSample submission was successful</td>
 </tr>
 <tr>
 <td>biosample_submission_xml</td>
-<td>XML file used to submit your BioSamples to NCBI</td>
 <td>File</td>
+<td>XML file used to submit your BioSamples to NCBI</td>
 </tr>
 <tr>
 <td>excluded_samples</td>
-<td>Text file listing samples that were excluded from BioSample submission for missing required metadata</td>
 <td>File</td>
+<td>Text file listing samples that were excluded from BioSample submission for missing required metadata</td>
 </tr>
 <tr>
 <td>generated_accessions</td>
-<td>Text file mapping the BioSample accession with its sample name.</td>
 <td>File</td>
+<td>Text file mapping the BioSample accession with its sample name.</td>
 </tr>
 <tr>
 <td>sra_metadata</td>
-<td>Metadata used for SRA submission in proper SRA formatting</td>
 <td>File</td>
+<td>Metadata used for SRA submission in proper SRA formatting</td>
 </tr>
 <tr>
 <td>sra_report_xmls</td>
-<td>One or more XML files containing the response from NCBI regarding your SRA submission. These can be pretty cryptic, but often contain information to determine  if anything went wrong</td>
 <td>Array[File]</td>
+<td>One or more XML files containing the response from NCBI regarding your SRA submission. These can be pretty cryptic, but often contain information to determine  if anything went wrong</td>
 </tr>
 <tr>
 <td>sra_submission_xml</td>
-<td>XML file that was used to submit your SRA reads to NCBI</td>
 <td>File</td>
+<td>XML file that was used to submit your SRA reads to NCBI</td>
 </tr>
 <tr>
 <td>terra_2_ncbi_analysis_date</td>
-<td>Date that the workflow was run</td>
 <td>String</td>
+<td>Date that the workflow was run</td>
 </tr>
 <tr>
 <td>terra_2_ncbi_version</td>
-<td>Version of the PHB repository where the workflow is hosted</td>
 <td>String</td>
+<td>Version of the PHB repository where the workflow is hosted</td>
 </tr>
 </tbody>
 </table>
@@ -6660,7 +6706,7 @@ The "Custom" column should contain the actual column names in your Terra table (
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 1, 2025 15:36:51">2025-04-01</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     

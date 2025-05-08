@@ -858,6 +858,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/data_import/sra_fetch/" class="md-nav__link">
         
   
@@ -1575,29 +1598,6 @@
             Public Data Sharing
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../workflows/public_data_sharing/fetch_srr_accession/" class="md-nav__link">
-        
-  
-  
-  <span class="md-ellipsis">
-    Fetch_SRR_Accession
-    
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
             
               
                 
@@ -2406,6 +2406,29 @@
   
   <span class="md-ellipsis">
     Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
     
   </span>
   
@@ -4063,6 +4086,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
@@ -4957,7 +5003,7 @@
 <th><strong>Description</strong></th>
 <th><strong>Applicable Kingdom</strong></th>
 <th><strong>Workflow Level</strong></th>
-<th><strong>Command-line Compatibility</strong><sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup></th>
+<th><strong><abbr title="Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either `miniwdl` or `cromwell`.">Command-line Compatibility</abbr></strong></th>
 <th><strong>Last Known Changes</strong></th>
 <th><strong>Dockstore</strong></th>
 </tr>
@@ -5072,7 +5118,7 @@
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Dorado_Basecalling_PHB:main?tab=info">Dorado_Basecalling_PHB</a></td>
 </tr>
 <tr>
-<td><a href="../../workflows/public_data_sharing/fetch_srr_accession/"><strong>Fetch_SRR_Accession</strong></a></td>
+<td><a href="../../workflows/data_import/fetch_srr_accession/"><strong>Fetch_SRR_Accession</strong></a></td>
 <td>Provided a BioSample accession, identify any associated SRR accession(s)</td>
 <td><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></td>
 <td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
@@ -5342,22 +5388,13 @@
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Transfer_Column_Content_PHB:main?tab=info">Transfer_Column_Content_PHB</a></td>
 </tr>
 <tr>
-<td><a href="../../workflows/phylogenetic_placement/usher/"><strong>Samples_to_Ref_Tree</strong></a></td>
+<td><a href="../../workflows/phylogenetic_placement/usher/"><strong>Usher</strong></a></td>
 <td>Use UShER to rapidly and accurately place your samples on any existing phylogenetic tree</td>
 <td>Monkeypox virus, SARS-CoV-2, <abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></td>
 <td><abbr title="This workflow is run once for each sample">Sample-level</abbr>, <abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
 <td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
 <td>v2.1.0</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Usher_PHB:main?tab=info">Usher_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/genomic_characterization/vadr_update/"><strong>Usher_PHB</strong></a></td>
-<td>Update VADR assignments</td>
-<td>HAV, Influenza, Monkeypox virus, RSV-A, RSV-B, SARS-CoV-2, <abbr title="This workflow is compatible with any viral pathogen">Viral</abbr>, WNV</td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v2.1.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/VADR_Update_PHB:main?tab=info">VADR_Update_PHB</a></td>
 </tr>
 <tr>
 <td><a href="../../workflows/genomic_characterization/vadr_update/"><strong>VADR_Update</strong></a></td>
@@ -5383,14 +5420,6 @@
 <!-- definitions for workflow type column -->
 <!-- definitions for taxa column -->
 <!-- definition for command-line compatible column -->
-<div class="footnote">
-<hr />
-<ol>
-<li id="fn:1">
-<p>Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either <code>miniwdl</code> or <code>cromwell</code>.&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
-</li>
-</ol>
-</div>
 
 
 
@@ -5413,7 +5442,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 18, 2025 17:36:01">2025-04-18</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
   </span>
 
     
