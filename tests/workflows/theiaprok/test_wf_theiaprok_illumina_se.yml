@@ -247,7 +247,7 @@
     - path: miniwdl_run/call-quast/work/basic_stats/GC_content_plot.pdf
     - path: miniwdl_run/call-quast/work/basic_stats/Nx_plot.pdf
     - path: miniwdl_run/call-quast/work/basic_stats/cumulative_plot.pdf
-    - path: miniwdl_run/call-quast/work/basic_stats/test_contigs_GC_content_plot.pdf
+    - path: miniwdl_run/call-quast/work/basic_stats/test_filtered_contigs_GC_content_plot.pdf
     - path: miniwdl_run/call-quast/work/icarus.html
     - path: miniwdl_run/call-quast/work/icarus_viewers/contig_size_viewer.html
     - path: miniwdl_run/call-quast/work/quast.log
