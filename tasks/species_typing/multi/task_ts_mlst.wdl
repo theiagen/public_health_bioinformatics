@@ -120,7 +120,7 @@ task ts_mlst {
     elif [ $(wc -l ~{samplename}_ts_mlst.tsv | awk '{ print $1 }') -eq 3 ]; then
       # Extract the schemes from both rows, excluding header, if not equal to "-" or "ST-", and join them with a comma
       pubmlst_scheme="$(awk -F'\t' 'NR>1 && $2!="-" {print $2}' ~{samplename}_ts_mlst.tsv | paste -sd ', ' -)"
-      predicted_mlst="$(awk -F'\t' 'NR>1 && $3!="ST-" {print "ST" $3}' ~{samplename}_ts_mlst.tsv | paste -sd ', ' -)"
+      predicted_mlst="$(awk -F'\t' 'NR>1 && $3~/[0-9]/ {print "ST" $3}' ~{samplename}_ts_mlst.tsv | paste -sd ', ' -)"
       # Due alleles being on different columns, we need to pull all columns from the 4th column to the end, join with comma, 
       # and replace tabs with commas as we iterate
       allelic_profile="$(awk -F'\t' 'NR>1 {for(i=4; i<=NF; i++) printf("%s%s", $i, (i<NF ? "," : "\n"))}' ~{samplename}_ts_mlst.tsv | paste -sd ', ' -)"
