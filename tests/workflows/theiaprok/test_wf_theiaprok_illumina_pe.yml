@@ -377,7 +377,7 @@
     - path: miniwdl_run/call-read_QC_trim/workflow.log
       contains: ["wdl", "theiaprok_illumina_pe", "NOTICE", "done"]
     - path: miniwdl_run/call-digger_denovo/skesa/command
-    - path: miniwdl_run/call-digger_denovo/test_skesa_contigs.fasta
+    - path: miniwdl_run/call-digger_denovo/test_filtered_contigs.fasta
     - path: miniwdl_run/call-ts_mlst/command
       md5sum: c306b6501c0d41704cc559b09bd95e98
     - path: miniwdl_run/call-ts_mlst/inputs.json
