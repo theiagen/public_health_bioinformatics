@@ -1313,6 +1313,10 @@ read_QC_trim	kraken_db	File	A kraken2 database to use with the kraken2 optional 
 read_QC_trim	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB) kraken2 databases such as the "k2_standard" database	100	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 read_QC_trim	kraken_docker_image	Int	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db"	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 read_QC_trim	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+read_QC_trim	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+read_QC_trim	kraken2_recalculate_abundances_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+read_QC_trim	kraken2_recalculate_abundances_docker	Int	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+read_QC_trim	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 read_QC_trim	max_length	Int	Internal component, do not modify		Optional	TheiaProk_ONT	
 read_QC_trim	midas_db	File	Internal component, do not modify		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE	
 read_QC_trim	midas_db	File	The database used by the MIDAS task in .tar.gz format	gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz	Optional	TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
@@ -1368,6 +1372,10 @@ read_QC_trim_ont	kraken_db	File	A kraken2 database to use with the kraken2 optio
 read_QC_trim_ont	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ (ONT)	
 read_QC_trim_ont	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ (ONT)	
 read_QC_trim_ont	max_length	Int	Internal component, do not modify		Optional	Freyja_FASTQ (ONT)	
+read_QC_trim_ont	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	kraken2_recalculate_abundances_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	kraken2_recalculate_abundances_docker	Int	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"	Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ (ONT)
 read_QC_trim_ont	min_length	Int	Internal component, do not modify		Optional	Freyja_FASTQ (ONT)	
 read_QC_trim_ont	run_prefix	String	Internal component, do not modify		Optional	Freyja_FASTQ (ONT)	
 read_QC_trim_ont	target_organism	String	This string is searched for in the kraken2 outputs to extract the read percentage		Optional	Freyja_FASTQ (ONT)	
