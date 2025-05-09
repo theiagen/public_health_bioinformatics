@@ -423,7 +423,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_busco.wdl
       md5sum: 765c33e10de500e0369ce2ac96dff7bb
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_cg_pipeline.wdl
-      md5sum: 9cda5d834e663a06eb8fe1dbc6510b2e
+      md5sum: aefc03d04bb1394f62d7dc73c6d5b706
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_fastp.wdl
       md5sum: 37adc25e93c376c70357172d181ee9c8
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_fastq_scan.wdl
