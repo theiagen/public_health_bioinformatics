@@ -1667,6 +1667,7 @@ ts_mlst	min_percent_identity	Float	Minimum % identity to known MLST gene to repo
 ts_mlst	minscore	Float	Minimum score <https://github.com/tseemann/mlst#scoring-system> to assign an MLST profile	50	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 ts_mlst	nopath	Boolean	true = use mlst --nopath. If set to false, filename paths are not stripped from FILE column in output TSV	TRUE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 ts_mlst	scheme	String	Don’t autodetect the MLST scheme; force this scheme on all inputs (see https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab for accepted strings)	None	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+ts_mlst	taxonomy	String	Taxonomy produced by GAMBIT or expected_taxon used to validate specifically if "ecoli" scheme needs to be run	None	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 usher	cpu	Int	Number of CPUs to allocate to the task	8	Optional	Usher	
 usher	disk_size	Int	Amount of storage (in GB) to allocate to the task	200	Optional	Usher	
 usher	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/pathogengenomics/usher:0.6.2	Optional	Usher	
