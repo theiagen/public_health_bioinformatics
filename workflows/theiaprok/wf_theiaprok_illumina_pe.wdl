@@ -228,7 +228,7 @@ workflow theiaprok_illumina_pe {
         }
         call ts_mlst_task.ts_mlst {
           input: 
-            assembly = shovill_pe.assembly_fasta,
+            assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
             samplename = samplename,
             taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
