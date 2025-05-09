@@ -334,6 +334,8 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
     The `abricate` module, if enabled, will run abricate with the database defined in `abricate_db` to perform mass screening of contigs for antimicrobial resistance or virulence genes. It comes bundled with multiple databases: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB. It only detects acquired resistance genes, **NOT** point mutations
 
+{{ include_md("common_text/arln_stats_task.md") }}
+
 ### Taxa-Specific Tasks
 
 !!! dna ""

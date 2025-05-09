@@ -66,6 +66,11 @@ ani_mummer_docker	String	Docker image used to run the ANI_mummer task	TheiaProk_
 ani_mummer_version	String	Version of MUMmer used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ani_output_tsv	File	Full output TSV from ani-m	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ani_top_species_match	String	Species of genome with highest ANI to query FASTA	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+arln_r2_q30_raw	String	Q30% of the raw R2 FASTQ	TheiaProk_PE
+arln_r1_q30_clean	String	Q30% of the cleaned R1 FASTQ	TheiaProk_ONT, TheiaProk_PE, TheiaProk_SE
+arln_r2_q30_clean	String	Q30% of the cleaned R2 FASTQ	TheiaProk_PE
+arln_assembly_ratio	String	Assembly ratio with standard deviation, for example, 1.0147x(0.35499) is 1.0147x away from a STD of 0.35499. These stats are gathered from a statistics file created by the CDC aggregating NCBI assembly data by taxon.	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_PE, TheiaProk_SE
+arln_stats_docker_version	String	Docker version for task_arln_stats.wdl	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_PE, TheiaProk_SE
 artic_docker	String	Docker image utilized for read trimming and consensus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
 artic_version	String	Version of the Artic software utilized for read trimming and conesnsus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
 assembly_fasta	File	Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly. Contigs will be ordered from largest to smallest when IRMA is used.	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
