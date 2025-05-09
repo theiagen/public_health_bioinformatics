@@ -3,12 +3,13 @@ version 1.0
 task megahit {
   input {
     File read1
-    File read2
+    File? read2
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 16
+    Int min_contig_length = 1
     String? kmers
     String? megahit_opts
   }
@@ -22,18 +23,31 @@ task megahit {
     # get the memory required, assuming its input is GB
     memory=$(python3 -c "print(~{memory} * 1000000000)")
 
-    # run megathit
-    # may consider "--no-mercy" to increase quality in >30x samples https://github.com/voutcn/megahit/wiki/Assembly-Tips#choosing-k
-    megahit \
-      -1 ~{read1} \
-      -2 ~{read2} \
-      ~{'--k-list ' + kmers} \
-      -m ${memory} \
-      -t ~{cpu} \
-      -o megahit/ \
-      ~{megahit_opts}
+    if [ -n "~{read2}" ]; then
+      # if read2 is provided, use paired-end mode
+      megahit \
+        -1 ~{read1} \
+        -2 ~{read2} \
+        ~{'--k-list ' + kmers} \
+        --min-contig-len ~{min_contig_length} \
+        -m ${memory} \
+        -t ~{cpu} \
+        -o megahit/ \
+        ~{megahit_opts}
+    else
+      # if read2 is not provided, use single-end mode
+      megahit \
+        -r ~{read1} \
+        ~{'--k-list ' + kmers} \
+        --min-contig-len ~{min_contig_length} \
+        -m ${memory} \
+        -t ~{cpu} \
+        -o megahit/ \
+        ~{megahit_opts}
+    fi
 
     mv megahit/final.contigs.fa ~{samplename}_megahit_contigs.fasta
+
   >>>
   output {
     File assembly_fasta = "~{samplename}_megahit_contigs.fasta"
@@ -50,3 +64,53 @@ task megahit {
     preemptible: 0
   }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
