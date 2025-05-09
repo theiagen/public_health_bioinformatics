@@ -18,6 +18,7 @@ import "../../tasks/taxon_id/contamination/task_kmerfinder.wdl" as kmerfinder_ta
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/gene_typing/drug_resistance/task_gamma.wdl" as gamma_task
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
+import "../../tasks/utilities/data_handling/task_arln_stats.wdl" as arln_stats
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_workflow
 import "../utilities/wf_flye_denovo.wdl" as flye_workflow
@@ -57,6 +58,7 @@ workflow theiaprok_ont {
     Boolean call_plasmidfinder = true
     Boolean call_abricate = false
     Boolean call_gamma = false
+    Boolean call_arln_stats = false
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String bakta_db = "full" # Default: "light" or "full"
@@ -176,7 +178,8 @@ workflow theiaprok_ont {
         call ts_mlst_task.ts_mlst {
           input: 
             assembly = flye_denovo.assembly_fasta,
-            samplename = samplename
+            samplename = samplename,
+            taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
         if (genome_annotation == "prokka") {
           call prokka_task.prokka {
@@ -617,6 +620,17 @@ workflow theiaprok_ont {
               }
           }
         }
+        if (call_arln_stats) {
+          call arln_stats.arln_stats {
+            input:
+              samplename = samplename,
+              taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
+              workflow_type = "ont",
+              genome_length = quast.genome_length,
+              read1_raw = read1,
+              read1_clean = read_qc_trim.read1_clean
+          }
+        }
       }
     }
   }
@@ -1021,5 +1035,10 @@ workflow theiaprok_ont {
     String? abricate_vibrio_serogroup = merlin_magic.abricate_vibrio_serogroup 
     # export taxon table output
     String? taxon_table_status = export_taxon_table.status
+    # ARLN required outputs
+    String? arln_r1_q30_raw = arln_stats.read1_raw_q30
+    String? arln_r1_q30_clean = arln_stats.read1_clean_q30
+    String? arln_assembly_ratio = arln_stats.assembly_ratio
+    String? arln_stats_docker_version = arln_stats.docker_version
   }
 }

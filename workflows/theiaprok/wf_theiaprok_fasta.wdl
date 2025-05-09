@@ -16,6 +16,7 @@ import "../../tasks/taxon_id/contamination/task_kmerfinder.wdl" as kmerfinder_ta
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/gene_typing/drug_resistance/task_gamma.wdl" as gamma_task
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
+import "../../tasks/utilities/data_handling/task_arln_stats.wdl" as arln_stats
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 
 workflow theiaprok_fasta {
@@ -44,6 +45,7 @@ workflow theiaprok_fasta {
     Boolean call_plasmidfinder = true
     Boolean call_abricate = false
     Boolean call_gamma = false
+    Boolean call_arln_stats = false
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String bakta_db = "full" # Default: "light" or "full"
@@ -108,7 +110,8 @@ workflow theiaprok_fasta {
     call ts_mlst_task.ts_mlst {
       input: 
         assembly = assembly_fasta,
-        samplename = samplename
+        samplename = samplename,
+        taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon])
     }
     if (genome_annotation == "prokka") {
       call prokka_task.prokka {
@@ -448,6 +451,15 @@ workflow theiaprok_fasta {
         }
       }
     }
+    if (call_arln_stats) {
+      call arln_stats.arln_stats {
+        input:
+          samplename = samplename,
+          taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
+          genome_length = quast.genome_length,
+          workflow_type = "fasta"
+      }
+    }
   }   
   output {
     # Version Captures
@@ -747,5 +759,8 @@ workflow theiaprok_fasta {
     String? abricate_vibrio_serogroup = merlin_magic.abricate_vibrio_serogroup 
     # export taxon table output
     String? taxon_table_status = export_taxon_table.status
+    # ARLN required outputs
+    String? arln_assembly_ratio = arln_stats.assembly_ratio
+    String? arln_stats_docker_version = arln_stats.docker_version
   }
 }
