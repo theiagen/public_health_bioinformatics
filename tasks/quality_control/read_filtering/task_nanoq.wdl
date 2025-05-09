@@ -8,7 +8,7 @@ task nanoq {
     Int disk_size = 100
     Int max_read_length = 100000
     Int min_read_length = 500
-    Int max_read_qual = 40
+    Int max_read_qual = 100 # set arbitrarily high to capture all reads
     Int min_read_qual = 10
     Int memory = 2
     Int cpu = 2

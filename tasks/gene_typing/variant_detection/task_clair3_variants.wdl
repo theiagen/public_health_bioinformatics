@@ -19,6 +19,8 @@ task clair3_variants {
     Boolean enable_gvcf = false
     Boolean enable_long_indel = false
     Int variant_quality = 2
+    Float? snp_min_af # Minimum SNP AF required for a candidate variant.
+    Float? indel_min_af # Minimum Indel AF required for a candidate variant.
   }
   String ref_basename = basename(reference_genome_file)
   command <<<
@@ -49,23 +51,27 @@ task clair3_variants {
         --output=~{samplename} \
         --sample_name=~{samplename} \
         --qual=~{variant_quality} \
+        ~{"--snp_min_af=" + snp_min_af} \
+        ~{"--indel_min_af=" + indel_min_af} \
         ~{true="--include_all_ctgs" false="" include_all_contigs} \
         ~{true="--haploid_precise" false="" enable_haploid_precise} \
         ~{true="--no_phasing_for_fa" false="" disable_phasing} \
         ~{true="--enable_long_indel" false="" enable_long_indel} \
         ~{true="--gvcf" false="" enable_gvcf}
 
-    mv "~{samplename}/merge_output.vcf.gz" ~{samplename}_merge_output.vcf.gz
+    gunzip ~{samplename}/merge_output.vcf.gz
+    mv "~{samplename}/merge_output.vcf" ~{samplename}_merge_output.vcf
 
     # If gvcf is enabled, move the gvcf file to the output directory
     if [ "~{enable_gvcf}" == "true" ]; then
-        mv "~{samplename}/merge_output.gvcf.gz" ~{samplename}_merge_output.gvcf.gz
+      gunzip ~{samplename}/merge_output.gvcf.gz
+      mv "~{samplename}/merge_output.gvcf" ~{samplename}_merge_output.gvcf
     fi
   >>>
   output {
     String clair3_version = read_string("VERSION")
-    File clair3_variants_vcf = "~{samplename}_merge_output.vcf.gz"
-    File? clair3_variants_gvcf = "~{samplename}_merge_output.gvcf.gz"
+    File clair3_variants_vcf = "~{samplename}_merge_output.vcf"
+    File? clair3_variants_gvcf = "~{samplename}_merge_output.gvcf"
     String clair3_variants_docker_image = docker
     String clair3_model_used = clair3_model
   }

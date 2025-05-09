@@ -8,7 +8,9 @@ import "../../tasks/quality_control/read_filtering/task_fastp.wdl" as fastp_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
+import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools
 import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
+import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes
 
 workflow read_QC_trim_pe {
   meta {
@@ -30,6 +32,8 @@ workflow read_QC_trim_pe {
     Int? kraken_cpu
     File? kraken_db
     String? target_organism
+    Int taxon_id = 0
+    Boolean extract_unclassified = false
     File? adapters
     File? phix
     String? workflow_series
@@ -38,7 +42,21 @@ workflow read_QC_trim_pe {
     String? trimmomatic_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
   }
-  if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta")) {
+  if (read_qc == "fastqc") {
+    call fastqc_task.fastqc as fastqc_raw {
+      input:
+        read1 = read1,
+        read2 = read2
+    }
+  }
+  if (read_qc == "fastq_scan") {
+    call fastq_scan.fastq_scan_pe as fastq_scan_raw {
+      input:
+        read1 = read1,
+        read2 = read2,
+    }
+  }
+  if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta") || ("~{workflow_series}" == "theiaviral")) {
     call ncbi_scrub.ncbi_scrub_pe {
       input:
         samplename = samplename,
@@ -103,30 +121,6 @@ workflow read_QC_trim_pe {
       adapters = adapters,
       phix = phix
   }
-  if (read_qc == "fastqc") {
-    call fastqc_task.fastqc as fastqc_raw {
-      input:
-        read1 = read1,
-        read2 = read2
-    }
-    call fastqc_task.fastqc as fastqc_clean {
-      input:
-        read1 = bbduk.read1_clean,
-        read2 = bbduk.read2_clean
-    }
-  }
-  if (read_qc == "fastq_scan") {
-    call fastq_scan.fastq_scan_pe as fastq_scan_raw {
-      input:
-        read1 = read1,
-        read2 = read2,
-    }
-    call fastq_scan.fastq_scan_pe as fastq_scan_clean {
-      input:
-        read1 = bbduk.read1_clean,
-        read2 = bbduk.read2_clean
-    }
-  }
   if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiameta") {
     if (call_midas) {
       call midas_task.midas {
@@ -140,7 +134,7 @@ workflow read_QC_trim_pe {
   }
   if ("~{workflow_series}" == "theiaprok") {
     if ((call_kraken) && defined(kraken_db)) {
-      call kraken.kraken2_standalone {
+      call kraken.kraken2_standalone as kraken2_standalone_theiaprok {
         input:
           samplename = samplename,
           read1 = read1,
@@ -161,18 +155,60 @@ workflow read_QC_trim_pe {
         read2 = bbduk.read2_clean
     }
   }
+  if ("~{workflow_series}" == "theiaviral") {
+    call kraken.kraken2_standalone as kraken2_standalone_theiaviral {
+      input:
+        samplename = samplename,
+        read1 = bbduk.read1_clean,
+        read2 = bbduk.read2_clean,
+        kraken2_db = select_first([kraken_db]),
+        disk_size = kraken_disk_size,
+        memory = kraken_memory,
+        cpu = kraken_cpu
+    }
+    call krakentools.extract_kraken_reads as kraken2_extract {
+      input:
+        read1 = kraken2_standalone_theiaviral.kraken2_classified_read1,
+        read2 = select_first([kraken2_standalone_theiaviral.kraken2_classified_read2]),
+        taxon_id = taxon_id,
+        kraken2_output = kraken2_standalone_theiaviral.kraken2_classified_report,
+        kraken2_report = kraken2_standalone_theiaviral.kraken2_report
+    }
+    if (extract_unclassified) {
+      call cat_lanes.cat_lanes {
+        input:
+          samplename = samplename,
+          read1_lane1 = kraken2_standalone_theiaviral.kraken2_unclassified_read1,
+          read1_lane2 = select_first([kraken2_extract.extracted_read1]),
+          read2_lane1 = kraken2_standalone_theiaviral.kraken2_unclassified_read2,
+          read2_lane2 = select_first([kraken2_extract.extracted_read2])
+      }
+    }
+  }
+  if (read_qc == "fastqc") {
+    call fastqc_task.fastqc as fastqc_clean {
+      input:
+        read1 = select_first([kraken2_extract.extracted_read1, bbduk.read1_clean]),
+        read2 = select_first([kraken2_extract.extracted_read2, bbduk.read2_clean])
+    }
+  }
+  if (read_qc == "fastq_scan") {
+    call fastq_scan.fastq_scan_pe as fastq_scan_clean {
+      input:
+        read1 = select_first([kraken2_extract.extracted_read1, bbduk.read1_clean]),
+        read2 = select_first([kraken2_extract.extracted_read2, bbduk.read2_clean])
+    }
+  }
   output {
     # NCBI scrubber
     File? read1_dehosted = ncbi_scrub_pe.read1_dehosted
     File? read2_dehosted = ncbi_scrub_pe.read2_dehosted
     Int? ncbi_scrub_human_spots_removed = ncbi_scrub_pe.human_spots_removed
     String? ncbi_scrub_docker = ncbi_scrub_pe.ncbi_scrub_docker
-
     # bbduk
     File read1_clean = bbduk.read1_clean
     File read2_clean = bbduk.read2_clean
     String bbduk_docker = bbduk.bbduk_docker
-
     # fastq_scan
     Int? fastq_scan_raw1 = fastq_scan_raw.read1_seq
     Int? fastq_scan_raw2 = fastq_scan_raw.read2_seq
@@ -186,7 +222,6 @@ workflow read_QC_trim_pe {
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
     File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
     File? fastq_scan_clean2_json = fastq_scan_clean.read2_fastq_scan_json
-    
     # fastqc
     Int? fastqc_raw1 = fastqc_raw.read1_seq
     Int? fastqc_raw2 = fastqc_raw.read2_seq
@@ -200,27 +235,30 @@ workflow read_QC_trim_pe {
     File? fastqc_raw2_html = fastqc_raw.read2_fastqc_html
     File? fastqc_clean1_html = fastqc_clean.read1_fastqc_html
     File? fastqc_clean2_html = fastqc_clean.read2_fastqc_html
-    
     # kraken2 - theiacov and theiaprok
-    String kraken_version = select_first([kraken2_theiacov_raw.version, kraken2_standalone.kraken2_version, ""])
+    String kraken_version = select_first([kraken2_theiacov_raw.version, kraken2_standalone_theiaprok.kraken2_version, kraken2_standalone_theiaviral.kraken2_version, ""])
     Float? kraken_human =  kraken2_theiacov_raw.percent_human
     String? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
     String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
-    String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
+    String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone_theiaprok.kraken2_report, kraken2_standalone_theiaviral.kraken2_report,""])
     Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
     String? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism
     String? kraken_target_organism_name = target_organism
     File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
-    String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone.kraken2_docker, ""])
-    String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone.kraken2_database, kraken_db_warning, ""])
-    
+    String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone_theiaprok.kraken2_docker, kraken2_standalone_theiaviral.kraken2_docker, ""])
+    String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone_theiaprok.kraken2_database, kraken2_standalone_theiaviral.kraken2_database, kraken_db_warning, ""])
+    # kraken2 read extract - theiaviral
+    File? kraken2_extracted_read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1])
+    File? kraken2_extracted_read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])
+    String? kraken2_extracted_organism_name = kraken2_extract.organism_name
+    String? krakentools_docker = kraken2_extract.krakentools_docker
+    Boolean? kraken2_success = kraken2_extract.success
     # trimming versioning
     String? trimmomatic_version = trimmomatic_pe.version
     String? trimmomatic_docker = trimmomatic_pe.trimmomatic_docker
     String? fastp_version = fastp.version
     File? fastp_html_report = fastp.fastp_stats
-
     # midas
     String? midas_docker = midas.midas_docker
     File? midas_report = midas.midas_report
@@ -228,7 +266,6 @@ workflow read_QC_trim_pe {
     String? midas_secondary_genus = midas.midas_secondary_genus
     Float? midas_secondary_genus_abundance = midas.midas_secondary_genus_abundance
     Float? midas_secondary_genus_coverage = midas.midas_secondary_genus_coverage
-
     # readlength
     Float? average_read_length = readlength.average_read_length
   }
