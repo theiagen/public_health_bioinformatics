@@ -59,7 +59,6 @@ All input reads are processed through "[core tasks](#core-tasks-performed-for-al
 | *workflow name | **bakta_db** | String |Database selection for Bakta annotation. Options: "light" (smaller, faster), "full" (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation. | full | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_abricate** | Boolean | Set to true to enable the Abricate task | FALSE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_ani** | Boolean | Set to true to enable the ANI task | FALSE | Optional | FASTA, ONT, PE, SE |
-| *workflow name | **call_arln** | Boolean | Set to true to enable the return of ARLN required Auto PASS/FAIL outputs | FALSE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_kmerfinder** | Boolean | Set to true to enable the kmerfinder task | FALSE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_plasmidfinder** | Boolean | Set to true to enable the plasmidfinder task | TRUE | Optional | FASTA, ONT, PE, SE |
 | *workflow name | **call_resfinder** | Boolean | Set to true to enable the ResFinder task | FALSE | Optional | FASTA, ONT, PE, SE |
@@ -1897,12 +1896,6 @@ The TheiaProk workflows automatically activate taxa-specific sub-workflows after
 | ani_mummer_version | String | Version of MUMmer used | FASTA, ONT, PE, SE |
 | ani_output_tsv | File | Full output TSV from ani-m | FASTA, ONT, PE, SE |
 | ani_top_species_match | String | Species of genome with highest ANI to query FASTA | FASTA, ONT, PE, SE |
-| arln_r1_q30_raw | String | Q30% of the raw R1 FASTQ | ONT, PE, SE |
-| arln_r2_q30_raw | String | Q30% of the raw R2 FASTQ | PE |
-| arln_r1_q30_clean | String | Q30% of the cleaned R1 FASTQ | ONT, PE, SE |
-| arln_r2_q30_clean | String | Q30% of the cleaned R2 FASTQ | PE |
-| arln_assembly_ratio | String | Assembly ratio with standard deviation, for example, 1.0147x(0.35499) is 1.0147x away from a STD of 0.35499. These stats are gathered from a statistics file created by the CDC aggregating NCBI assembly data by taxon. | FASTA, ONT, PE, SE |
-| arln_stats_docker_version | String | Docker version for task_arln_stats.wdl | FASTA, ONT, PE, SE |
 | assembly_fasta | File | Fasta file outputted from Flye or Shovill | ONT, PE, SE |
 | assembly_length | Int | Length of assembly (total contig length) as determined by QUAST | FASTA, ONT, PE, SE |
 | bakta_gbff | File | Genomic GenBank format annotation file | FASTA, ONT, PE, SE |
