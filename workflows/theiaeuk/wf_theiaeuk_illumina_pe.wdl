@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/assembly/task_shovill.wdl" as shovill
+import "../../workflows/utilities/wf_digger_denovo.wdl" as digger_denovo
 import "../../tasks/quality_control/advanced_metrics/task_busco.wdl" as busco_task
 import "../../tasks/quality_control/basic_statistics/task_cg_pipeline.wdl" as cg_pipeline_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
@@ -32,6 +32,7 @@ workflow theiaeuk_illumina_pe {
     Int trim_min_length = 75
     Int trim_quality_min_score = 20
     Int trim_window_size = 10
+    Int min_contig_length = 1000
     Int busco_memory = 24
     String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
     Boolean skip_screen = false 
@@ -99,17 +100,17 @@ workflow theiaeuk_illumina_pe {
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-      call shovill.shovill_pe {
+      call digger_denovo.digger_denovo {
         input:
           samplename = samplename,
-          read1_cleaned = read_QC_trim.read1_clean,
-          read2_cleaned = read_QC_trim.read2_clean,
-          cpu = cpu,
-          memory = memory
+          read1 = read_QC_trim.read1_clean,
+          read2 = read_QC_trim.read2_clean,
+          min_contig_length = min_contig_length,
+          filter_contigs_min_length = min_contig_length
       }
       call quast_task.quast {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = digger_denovo.assembly_fasta,
           samplename = samplename,
           cpu = cpu,
           memory = memory
@@ -134,7 +135,7 @@ workflow theiaeuk_illumina_pe {
       }
       call gambit_task.gambit {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = digger_denovo.assembly_fasta,
           samplename = samplename,
           gambit_db_genomes = gambit_db_genomes,
           gambit_db_signatures = gambit_db_signatures,
@@ -143,7 +144,7 @@ workflow theiaeuk_illumina_pe {
       }
       call busco_task.busco {
         input:
-          assembly = shovill_pe.assembly_fasta,
+          assembly = digger_denovo.assembly_fasta,
           samplename = samplename,
           eukaryote = true,
           memory = busco_memory,
@@ -183,7 +184,7 @@ workflow theiaeuk_illumina_pe {
       call merlin_magic_workflow.merlin_magic {
         input:
           merlin_tag = gambit.merlin_tag,
-          assembly = shovill_pe.assembly_fasta,
+          assembly = digger_denovo.assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
           read2 = read_QC_trim.read2_clean,
@@ -250,12 +251,12 @@ workflow theiaeuk_illumina_pe {
     Float? r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength
     Float? combined_mean_readlength_raw = cg_pipeline_raw.combined_mean_readlength
     Float? combined_mean_readlength_clean = cg_pipeline_clean.combined_mean_readlength
-    # Assembly - shovill outputs and Assembly QC
-    File? assembly_fasta = shovill_pe.assembly_fasta
-    File? contigs_gfa = shovill_pe.contigs_gfa
-    File? contigs_fastg = shovill_pe.contigs_fastg
-    File? contigs_lastgraph = shovill_pe.contigs_lastgraph
-    String? shovill_pe_version = shovill_pe.shovill_version
+    # Assembly - digger_denovo outputs and Assembly QC
+    File? assembly_fasta = digger_denovo.assembly_fasta
+    File? contigs_gfa = digger_denovo.contigs_gfa
+    File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
+    String? assembler = digger_denovo.assembler_used
+    String? assembler_version = digger_denovo.assembler_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
