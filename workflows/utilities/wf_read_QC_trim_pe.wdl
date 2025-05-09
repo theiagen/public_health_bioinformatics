@@ -240,7 +240,7 @@ workflow read_QC_trim_pe {
     Float? kraken_human =  kraken2_theiacov_raw.percent_human
     String? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
     String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
-    String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone_theiaprok.kraken2_report, kraken2_standalone_theiaviral.kraken2_report,""])
+    String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone_theiaprok.kraken2_report, kraken2_standalone_theiaviral.kraken2_report, ""])
     Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
     String? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism
@@ -248,6 +248,7 @@ workflow read_QC_trim_pe {
     File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
     String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone_theiaprok.kraken2_docker, kraken2_standalone_theiaviral.kraken2_docker, ""])
     String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone_theiaprok.kraken2_database, kraken2_standalone_theiaviral.kraken2_database, kraken_db_warning, ""])
+    File kraken2_classified_report = select_first([kraken2_theiacov_raw.kraken2_classified_report, kraken2_standalone_theiaprok.kraken2_classified_report, kraken2_standalone_theiaviral.kraken2_classified_report, ""])
     # kraken2 read extract - theiaviral
     File? kraken2_extracted_read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1])
     File? kraken2_extracted_read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])

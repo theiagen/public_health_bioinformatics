@@ -12,10 +12,13 @@ task megahit {
     Int min_contig_length = 1
     String? kmers
     String? megahit_opts
+    Boolean hard_fail = true
   }
   command <<<
     # fail hard
-    set -euo pipefail
+    if ~{hard_fail}; then
+      set -euo pipefail
+    fi
 
     # get version
     megahit --version | tee VERSION
