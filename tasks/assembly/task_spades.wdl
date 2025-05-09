@@ -21,7 +21,7 @@ task spades {
     fi
 
     # get version
-    spades.py ${spades_call} --version | sed -Ee "s/SPAdes genome assembler ([^ ]+).*/\1/" | tee VERSION
+    spades.py --version | sed -Ee "s/SPAdes genome assembler ([^ ]+).*/\1/" | tee VERSION
 
     echo "DEBUG: Running SPAdes"
 
