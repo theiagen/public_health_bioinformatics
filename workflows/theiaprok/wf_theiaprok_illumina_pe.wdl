@@ -201,7 +201,7 @@ workflow theiaprok_illumina_pe {
         if (call_gamma){
           call gamma_task.gamma{
             input:
-              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename
           }
         }
