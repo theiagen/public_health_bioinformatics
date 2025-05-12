@@ -353,7 +353,7 @@
     - path: miniwdl_run/call-digger_denovo/call-skesa/command
     - path: miniwdl_run/call-digger_denovo/call-filter_contigs/work/test_filtered_contigs.fasta
     - path: miniwdl_run/call-ts_mlst/command
-      md5sum: c1dbd4ef751148419d3897fd93eb6653
+      md5sum: 12844755cb5fddccfb2403d37f3795e4
     - path: miniwdl_run/call-ts_mlst/inputs.json
       contains: ["assembly", "fasta", "sample", "test"]
     - path: miniwdl_run/call-ts_mlst/outputs.json
@@ -460,7 +460,7 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 64caaaff5910ac0036e2659434500962
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: bf8d1a172f9d9f048d7660976c715b71
+      md5sum: cbd2c42eafe8a90c7c63303fdf710bb4
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
       md5sum: 09d9f68b9ca8bf94b6145ff9bed2edd1
     - path: miniwdl_run/workflow.log
