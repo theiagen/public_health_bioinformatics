@@ -191,7 +191,7 @@ workflow theiaprok_illumina_pe {
         }
         call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
           input:
-            assembly = digger_denovo.assembly_fasta,
+            assembly = select_first([prokka.prokka_fna,bakta.bakta_fna]),
             samplename = samplename,
             protein_fasta = select_first([prokka.prokka_faa,bakta.bakta_faa]),
             gff = select_first([prokka.prokka_gff,bakta.bakta_gff3]),
