@@ -203,7 +203,8 @@ workflow theiaprok_illumina_pe {
         call ts_mlst_task.ts_mlst {
           input: 
             assembly = digger_denovo.assembly_fasta,
-            samplename = samplename
+            samplename = samplename,
+            taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
         if (genome_annotation == "prokka") {
           call prokka_task.prokka {
