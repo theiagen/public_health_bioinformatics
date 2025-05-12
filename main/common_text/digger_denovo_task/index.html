@@ -12,7 +12,7 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/shovill_task/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/digger_denovo_task/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Shovill task - Public Health Bioinformatics</title>
+        <title>Digger denovo task - Public Health Bioinformatics</title>
       
     
     
@@ -129,7 +129,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Shovill task
+              Digger denovo task
             
           </span>
         </div>
@@ -4968,18 +4968,18 @@
   
 
 
-  <h1>Shovill task</h1>
+  <h1>Digger denovo task</h1>
 
 <details class="task">
-<summary><code>shovill</code>: <em>De novo</em> Assembly</summary>
+<summary><code>digger_denovo</code>: <em>De novo</em> Assembly</summary>
 <p>De Novo assembly will be undertaken only for samples that have sufficient read quantity and quality, as determined by the <code>screen</code> task assessment of clean reads. </p>
-<p>In this workflow, assembly is performed using the <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline. This undertakes the assembly with one of four assemblers (<a href="https://github.com/ncbi/SKESA">SKESA</a> (default), <a href="https://github.com/ablab/spades">SPAdes</a>, <a href="https://github.com/dzerbino/velvet/">Velvet</a>, <a href="https://github.com/voutcn/megahit">Megahit</a>), but also performs <a href="https://github.com/tseemann/shovill#main-steps">a number of pre- and post-processing steps</a> to improve the resulting genome assembly. Shovill uses an estimated genome size (see <a href="https://github.com/tseemann/shovill#--gsize">here</a>). If this is not provided by the user as an optional input, Shovill will estimate the genome size using <a href="https://mash.readthedocs.io/en/latest/index.html">mash</a>. Adaptor trimming can be undertaken with Shovill by setting the <code>trim</code> option to "true", but this is set to "false" by default as alternative adapter trimming performed by bbduk is undertaken in the TheiaProk workflow.</p>
+<p>In this workflow, assembly is performed using the <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wdl">digger_denovo</a>, which is a hat tip to <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline. This undertakes the assembly with one of three assemblers <a href="https://github.com/ncbi/SKESA">SKESA</a> (default), <a href="https://github.com/ablab/spades">SPAdes</a>, <a href="https://github.com/voutcn/megahit">Megahit</a>, but also performs a number of post processing steps for assembly polishing and contig filtering. Pilon can optionally be run if <code>call_pilon</code> is set to true. On default, the contig filtering task is set to run, which will remove any homopolymers, contigs below a specificied length, and contigs with coverage below a specified minimum coverage. This can be turned off by setting <code>run_filter_contigs</code> to <code>false</code>. </p>
 <details class="toggle">
 <summary>What is <em>de novo</em>  assembly?</summary>
 <p><em>De novo</em>  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.</p>
 </details>
 <div class="admonition techdetails">
-<p class="admonition-title">Shovill Technical Details</p>
+<p class="admonition-title">Digger-Denovo Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -4989,16 +4989,8 @@
 </thead>
 <tbody>
 <tr>
-<td>Tasl</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_shovill.wdl#L3">task_shovill.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/tseemann/shovill">Shovill on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/tseemann/shovill">Shovill on GitHub</a></td>
+<td>SubWorkflow File</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wd">wf_digger_denovo.wdl</a></td>
 </tr>
 </tbody>
 </table>
@@ -5026,7 +5018,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 12, 2025 18:19:33">2025-05-12</span>
   </span>
 
     
@@ -5036,7 +5028,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 12, 2025 18:19:33">2025-05-12</span>
   </span>
 
     

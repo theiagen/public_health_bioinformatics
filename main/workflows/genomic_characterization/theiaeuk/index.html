@@ -5504,16 +5504,16 @@
 <th><strong>Workflow Type</strong></th>
 <th><strong>Applicable Kingdom</strong></th>
 <th><strong>Last Known Changes</strong></th>
-<th><strong>Command-line Compatibliity</strong></th>
+<th><strong>Command-line Compatibility</strong></th>
 <th><strong>Workflow Level</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
-<td><a href="../../../workflows_overview/workflows_kingdom/#mycotics">Mycotics</a></td>
-<td>PHB v3.0.1</td>
-<td>Yes</td>
+<td>Genomic Characterization</td>
+<td>Mycotics</td>
+<td>vX.X.X</td>
+<td>Some optional features incompatible, Yes</td>
 <td>Sample-level</td>
 </tr>
 </tbody>
@@ -5523,7 +5523,7 @@
 <p>All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.</p>
 <div class="admonition caption">
 <p class="admonition-title">TheiaEuk Workflow Diagram</p>
-<p><a class="glightbox" href="../../../assets/figures/TheiaEuk_Illumina_PHB_2025123.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="TheiaEuk Workflow Diagram" src="../../../assets/figures/TheiaEuk_Illumina_PHB_2025123.png" width="75%" /></a></p>
+<p><a class="glightbox" href="../../../assets/figures/TheiaEuk_Illumina_PHB_202557.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="TheiaEuk Workflow Diagram" src="../../../assets/figures/TheiaEuk_Illumina_PHB_202557.png" width="75%" /></a></p>
 </div>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
 <div class="admonition info">
@@ -5710,6 +5710,310 @@
 <td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>assembler</strong></td>
+<td>String</td>
+<td>Assembler to use (spades, skesa, megahit)</td>
+<td>skesa</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>assember_options</strong></td>
+<td>String</td>
+<td>String</td>
+<td>Assembler-specific options that you might choose for the selected assembler</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>bwa_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>6</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>bwa_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>bwa_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>bwa_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>call_pilon</strong></td>
+<td>Boolean</td>
+<td>Whether to run Pilon polishing after assembly</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>filter_contigs_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>filter_contigs_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>filter_contigs_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/shovilter:0.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>filter_contigs_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>filter_contigs_min_coverage</strong></td>
+<td>Float</td>
+<td>Minimum coverage threshold for contig filtering</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>filter_contigs_skip_coverage_filter</strong></td>
+<td>Boolean</td>
+<td>Skip filtering contigs based on coverage</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>filter_contigs_skip_homopolymer_filter</strong></td>
+<td>Boolean</td>
+<td>Skip filtering contigs containing homopolymers</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>filter_contigs_skip_length_filter</strong></td>
+<td>Boolean</td>
+<td>Skip filtering contigs based on length</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>kmers</strong></td>
+<td>String</td>
+<td>K-mer sizes for assembly (comma-separated)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>megahit_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>megahit_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>megahit_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>megahit_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>pilon_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>pilon_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>pilon_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>pilon_fix</strong></td>
+<td>String</td>
+<td>Potential issues with assembly to try and automatically fix (snps, indels, gaps, local, all, bases, none)</td>
+<td>bases</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>pilon_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>pilon_min_base_quality</strong></td>
+<td>Int</td>
+<td>Minimum base quality to keep</td>
+<td>3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>pilon_min_depth</strong></td>
+<td>Float</td>
+<td>Minimum coverage threshold for variant calling: when set to a value ≥1, it requires that absolute depth of coverage; when set to a fraction &lt;1, it requires coverage at least that fraction of the mean coverage for the region</td>
+<td>0.25</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>pilon_min_mapping_quality</strong></td>
+<td>Int</td>
+<td>Minimum mapping quality for a read to count in pileups</td>
+<td>60</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>run_filter_contigs</strong></td>
+<td>Boolean</td>
+<td>Whether to run contig filtering step</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>skesa_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>skesa_disk_size</strong></td>
+<td>Int</td>
+<td>Disk space in GB for SKESA assembler</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>skesa_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/skesa:2.4.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>skesa_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>spades_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>spades_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>spades_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>spades_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>spades_type</strong></td>
+<td>String</td>
+<td>SPAdes assembly mode (isolate, meta, rna, etc.), more can be found <a href="https://ablab.github.io/spades/running.html">here</a></td>
+<td>isolate</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6569,126 +6873,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>shovill_pe</td>
-<td><strong>assembler</strong></td>
-<td>String</td>
-<td>Assembler to use (spades, skesa, velvet or megahit), see <a href="https://github.com/tseemann/shovill#--assembler">https://github.com/tseemann/shovill#--assembler</a></td>
-<td>skesa</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>assembler_options</strong></td>
-<td>String</td>
-<td>Assembler-specific options that you might choose, see <a href="https://github.com/tseemann/shovill#--opts">https://github.com/tseemann/shovill#--opts</a></td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>depth</strong></td>
-<td>Int</td>
-<td>User specified depth of coverage for downsampling (see <a href="https://github.com/tseemann/shovill#--depth">https://github.com/tseemann/shovill#--depth</a> and <a href="https://github.com/tseemann/shovill#main-steps">https://github.com/tseemann/shovill#main-steps</a>)</td>
-<td>150</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/shovill:1.1.0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>genome_length</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>kmers</strong></td>
-<td>String</td>
-<td>User-specified Kmer length to override choice made by Shovill, see <a href="https://github.com/tseemann/shovill#--kmers">https://github.com/tseemann/shovill#--kmers</a></td>
-<td>auto</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>min_contig_length</strong></td>
-<td>Int</td>
-<td>Minimum contig length to keep in final assembly</td>
-<td>200</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>min_coverage</strong></td>
-<td>Float</td>
-<td>Minimum contig coverage to keep in final assembly</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>nocorr</strong></td>
-<td>Boolean</td>
-<td>Disable correction of minor assembly errors by Shovill (see <a href="https://github.com/tseemann/shovill#main-steps">https://github.com/tseemann/shovill#main-steps</a>)</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>noreadcorr</strong></td>
-<td>Boolean</td>
-<td>Disable correction of sequencing errors in reads by Shovill (see <a href="https://github.com/tseemann/shovill#main-steps">https://github.com/tseemann/shovill#main-steps</a>)</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>nostitch</strong></td>
-<td>Boolean</td>
-<td>Disable read stitching by Shovill (see <a href="https://github.com/tseemann/shovill#main-steps">https://github.com/tseemann/shovill#main-steps</a>)</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>shovill_pe</td>
-<td><strong>trim</strong></td>
-<td>Boolean</td>
-<td>Enable adaptor trimming (see <a href="https://github.com/tseemann/shovill#main-steps">https://github.com/tseemann/shovill#main-steps</a>)</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>theiaeuk_pe</td>
 <td><strong>busco_memory</strong></td>
 <td>Int</td>
@@ -7112,15 +7296,15 @@
 <p>These tasks assemble the reads into a <em>de novo</em> assembly and assess the quality of the assembly.</p>
 </div>
 <details class="task">
-<summary><code>shovill</code>: <em>De novo</em> Assembly</summary>
+<summary><code>digger_denovo</code>: <em>De novo</em> Assembly</summary>
 <p>De Novo assembly will be undertaken only for samples that have sufficient read quantity and quality, as determined by the <code>screen</code> task assessment of clean reads. </p>
-<p>In this workflow, assembly is performed using the <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline. This undertakes the assembly with one of four assemblers (<a href="https://github.com/ncbi/SKESA">SKESA</a> (default), <a href="https://github.com/ablab/spades">SPAdes</a>, <a href="https://github.com/dzerbino/velvet/">Velvet</a>, <a href="https://github.com/voutcn/megahit">Megahit</a>), but also performs <a href="https://github.com/tseemann/shovill#main-steps">a number of pre- and post-processing steps</a> to improve the resulting genome assembly. Shovill uses an estimated genome size (see <a href="https://github.com/tseemann/shovill#--gsize">here</a>). If this is not provided by the user as an optional input, Shovill will estimate the genome size using <a href="https://mash.readthedocs.io/en/latest/index.html">mash</a>. Adaptor trimming can be undertaken with Shovill by setting the <code>trim</code> option to "true", but this is set to "false" by default as alternative adapter trimming performed by bbduk is undertaken in the TheiaProk workflow.</p>
+<p>In this workflow, assembly is performed using the <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wdl">digger_denovo</a>, which is a hat tip to <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline. This undertakes the assembly with one of three assemblers <a href="https://github.com/ncbi/SKESA">SKESA</a> (default), <a href="https://github.com/ablab/spades">SPAdes</a>, <a href="https://github.com/voutcn/megahit">Megahit</a>, but also performs a number of post processing steps for assembly polishing and contig filtering. Pilon can optionally be run if <code>call_pilon</code> is set to true. On default, the contig filtering task is set to run, which will remove any homopolymers, contigs below a specificied length, and contigs with coverage below a specified minimum coverage. This can be turned off by setting <code>run_filter_contigs</code> to <code>false</code>. </p>
 <details class="toggle">
 <summary>What is <em>de novo</em>  assembly?</summary>
 <p><em>De novo</em>  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.</p>
 </details>
 <div class="admonition techdetails">
-<p class="admonition-title">Shovill Technical Details</p>
+<p class="admonition-title">Digger-Denovo Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -7130,16 +7314,8 @@
 </thead>
 <tbody>
 <tr>
-<td>Tasl</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_shovill.wdl#L3">task_shovill.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/tseemann/shovill">Shovill on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/tseemann/shovill">Shovill on GitHub</a></td>
+<td>SubWorkflow File</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wd">wf_digger_denovo.wdl</a></td>
 </tr>
 </tbody>
 </table>
@@ -7828,6 +8004,16 @@
 <td>JSON formatted AMR profile including BLAST results</td>
 </tr>
 <tr>
+<td>assembler</td>
+<td>String</td>
+<td>Assembler used in digger_denovo subworkflow</td>
+</tr>
+<tr>
+<td>assembler_version</td>
+<td>String</td>
+<td>Version of the assembler used in digger_denovo</td>
+</tr>
+<tr>
 <td>assembly_fasta</td>
 <td>File</td>
 <td><em>De novo</em> genome assembly in FASTA format</td>
@@ -8066,6 +8252,11 @@
 <td>fastqc_version</td>
 <td>String</td>
 <td>Version of fastqc software used</td>
+</tr>
+<tr>
+<td>filtered_contigs_metrics</td>
+<td>File</td>
+<td>File containing metrics of contigs filtered</td>
 </tr>
 <tr>
 <td>gambit_closest_genomes</td>
@@ -8332,7 +8523,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10">2025-05-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 12, 2025 18:19:33">2025-05-12</span>
   </span>
 
     
