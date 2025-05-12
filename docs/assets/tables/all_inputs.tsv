@@ -446,12 +446,13 @@ czgenepi_wrangling	disk_size	Int	Amount of storage (in GB) to allocate to the ta
 czgenepi_wrangling	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-08-2	Optional	CZGenEpi_Prep	
 czgenepi_wrangling	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	CZGenEpi_Prep	
 dehost_pe or dehost_se	target_organism	String	Target organism for Kraken2 reporting	"Severe acute respiratory syndrome coronavirus 2"	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE	
-digger_denovo	assembler	String	Assembler to use (spades, skesa, megahit)	spades	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-digger_denovo	assembly_options	String	String	Assembler-specific options that you might choose for the selected assembler	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+digger_denovo	assembler	String	Assembler to use (spades, SKESA, megahit)	SKESA	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+digger_denovo	assember_options	String	String	Assembler-specific options that you might choose for the selected assembler	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 digger_denovo	bwa_cpu	Int	Number of CPU cores for BWA alignment	6	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 digger_denovo	bwa_disk_size	Int	Disk space in GB for BWA alignment	100	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 digger_denovo	bwa_docker	String	Docker image for BWA alignment	us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 digger_denovo	bwa_memory	Int	Memory in GB for BWA alignment	16	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+digger_denovo	call_pilon	Boolean	Whether to run Pilon polishing after assembly	FALSE	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 digger_denovo	filter_contigs_cpu	Int	Number of CPU cores for contig filtering	1	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 digger_denovo	filter_contigs_disk_size	Int	Disk space in GB for contig filtering	50	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 digger_denovo	filter_contigs_docker	String	Docker image for contig filtering	us-docker.pkg.dev/general-theiagen/theiagen/shovilter:0.2	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -485,7 +486,6 @@ digger_denovo	spades_disk_size	Int	Disk space in GB for SPAdes assembler	100	Opt
 digger_denovo	spades_docker	String	Docker image for SPAdes assembler	us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 digger_denovo	spades_memory	Int	Memory in GB for SPAdes assembler	32	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 digger_denovo	spades_type	String	SPAdes assembly mode (isolate, meta, rna, etc.), more can be found [here](https://ablab.github.io/spades/running.html)	isolate	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-digger_denovo	use_pilon	Boolean	Whether to run Pilon polishing after assembly	FALSE	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 dorado_basecall	cpu	Int	Number of CPUs to allocate to the task	8	Optional	Dorado_Basecalling	
 dorado_basecall	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Dorado_Basecalling	
 dorado_basecall	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0	Optional	Dorado_Basecalling	

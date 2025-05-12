@@ -15,8 +15,8 @@ workflow digger_denovo {
     String assembler = "skesa" # Options: spades, skesa, megahit
     Int min_contig_length = 200
     String? kmers
-    Boolean use_pilon = false
-    String? assembly_options # Extra assembler options
+    Boolean call_pilon = false
+    String? assembler_options # Extra assembler options
     Boolean run_filter_contigs = true # Default: Filter contigs after assembly
     # Optional parameters for spades
     String? spades_type = "isolate"
@@ -103,7 +103,7 @@ workflow digger_denovo {
         docker = skesa_docker
     }
   }
-  if (use_pilon) {
+  if (call_pilon) {
     call task_bwa.bwa {
       input:
         read1 = read1,
