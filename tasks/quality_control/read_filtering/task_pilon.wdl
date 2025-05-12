@@ -6,6 +6,10 @@ task pilon {
     File bam
     File bai
     String samplename
+    Int? min_mapping_quality
+    Int? min_base_quality
+    Float? min_depth
+    String? fix
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0"
     Int cpu = 8
     Int memory = 32
@@ -21,7 +25,11 @@ task pilon {
     --frags ~{bam} \
     --output ~{samplename} \
     --outdir pilon \
-    --changes --vcf
+    --changes --vcf \
+    ~{'--minmq ' + min_mapping_quality} \
+    ~{'--minqual ' + min_base_quality} \
+    ~{'--mindepth ' + min_depth} \
+    ~{'--fix ' + fix}
 
   >>>
   output {
