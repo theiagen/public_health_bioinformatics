@@ -8,14 +8,14 @@ task extract_kraken_reads {
     File read2
     Int taxon_id
 
-    Int cpu = 1
+    Int cpu = 8
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe"
-    Int memory = 4
+    Int memory = 16
   }
   command <<<
     # fail hard
-    set -euo pipefail
+    #set -euo pipefail
 
     # decompress classified data if it is gzipped
     gunzip -c ~{kraken2_output} > kraken2_output_unzipped.txt

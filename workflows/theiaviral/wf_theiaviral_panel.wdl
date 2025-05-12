@@ -41,6 +41,7 @@ workflow theiaviral_panel {
     Boolean extract_unclassified = false
     Int minimum_read_number = 1000
     Boolean skip_metaviralspades = false
+
   }  
   call versioning.version_capture {
     input:
@@ -65,8 +66,8 @@ workflow theiaviral_panel {
   scatter (taxon_id in taxon_ids) {
     call krakentools_task.extract_kraken_reads as krakentools {
       input:
-        kraken2_output = read_QC_trim.kraken2_classified_report,
-        kraken2_report = read_QC_trim.kraken_report,
+        kraken2_output = kraken2.kraken2_classified_report,
+        kraken2_report = kraken2.kraken2_report,
         read1 = read_QC_trim.read1_clean,
         read2 = read_QC_trim.read2_clean,
         taxon_id = taxon_id
@@ -100,7 +101,7 @@ workflow theiaviral_panel {
           call spades_task.spades {
             input:
               read1 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
-              read2 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
+              read2 = select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2]),
               samplename =  samplename + "_" + taxon_id,
               spades_type = "metaviral"
           }
@@ -110,7 +111,7 @@ workflow theiaviral_panel {
           call megahit_task.megahit {
             input:
               read1 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
-              read2 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
+              read2 = select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2]),
               samplename =  samplename + "_" + taxon_id,
               hard_fail = false
           }
