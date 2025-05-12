@@ -446,7 +446,7 @@ czgenepi_wrangling	disk_size	Int	Amount of storage (in GB) to allocate to the ta
 czgenepi_wrangling	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-08-2	Optional	CZGenEpi_Prep	
 czgenepi_wrangling	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	CZGenEpi_Prep	
 dehost_pe or dehost_se	target_organism	String	Target organism for Kraken2 reporting	"Severe acute respiratory syndrome coronavirus 2"	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE	
-digger_denovo	assembler	String	Assembler to use (spades, SKESA, megahit)	SKESA	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+digger_denovo	assembler	String	Assembler to use (spades, skesa, megahit)	skesa	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 digger_denovo	assember_options	String	String	Assembler-specific options that you might choose for the selected assembler	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 digger_denovo	bwa_cpu	Int	Number of CPU cores for BWA alignment	6	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 digger_denovo	bwa_disk_size	Int	Disk space in GB for BWA alignment	100	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
