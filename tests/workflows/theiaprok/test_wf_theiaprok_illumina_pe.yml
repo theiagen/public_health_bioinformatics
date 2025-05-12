@@ -29,9 +29,9 @@
     - path: miniwdl_run/call-amrfinderplus_task/task.log
       contains: ["wdl", "theiaprok_illumina_pe", "amrfinderplus", "done"]
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_DB_VERSION
-      md5sum: 672ea23e1ffc90b3c64a8468292cc5d2
+      md5sum: 4c8e8048490e4bf79a0f28be40aa277c
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_VERSION
-      md5sum: 326a7d8c0e1f7435f5ae5c9153171036
+      md5sum: 1241e128796f42e12f922fc45d434ab3
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CLASSES
       md5sum: b6017eebef847ac2471107ca6197b5c5
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CORE_GENES
@@ -48,13 +48,13 @@
     - path: miniwdl_run/call-amrfinderplus_task/work/_miniwdl_inputs/0/test_contigs.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-amrfinderplus_task/work/test_amrfinder_all.tsv
-      md5sum: a5cc7b0baa9e11c9a31540800d0a740c
+      md5sum: 376a8991c8eb010ea64c796115fb9b8d
     - path: miniwdl_run/call-amrfinderplus_task/work/test_amrfinder_amr.tsv
-      md5sum: a5cc7b0baa9e11c9a31540800d0a740c
+      md5sum: 376a8991c8eb010ea64c796115fb9b8d
     - path: miniwdl_run/call-amrfinderplus_task/work/test_amrfinder_stress.tsv
-      md5sum: a5cc7b0baa9e11c9a31540800d0a740c
+      md5sum: 376a8991c8eb010ea64c796115fb9b8d
     - path: miniwdl_run/call-amrfinderplus_task/work/test_amrfinder_virulence.tsv
-      md5sum: a5cc7b0baa9e11c9a31540800d0a740c
+      md5sum: 376a8991c8eb010ea64c796115fb9b8d
     - path: miniwdl_run/call-busco/command
       md5sum: 8a4de431119daee0dfc4f2605413b095
     - path: miniwdl_run/call-busco/inputs.json
@@ -399,7 +399,7 @@
     - path: miniwdl_run/call-shovill_pe/work/out/skesa.fasta
     - path: miniwdl_run/call-shovill_pe/work/out/test_contigs.fasta
     - path: miniwdl_run/call-ts_mlst/command
-      md5sum: c306b6501c0d41704cc559b09bd95e98
+      md5sum: d877b0cc80dbd203ccc416308577415d
     - path: miniwdl_run/call-ts_mlst/inputs.json
       contains: ["assembly", "fasta", "sample", "test"]
     - path: miniwdl_run/call-ts_mlst/outputs.json
@@ -434,7 +434,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_abricate.wdl
       md5sum: c82025fcc1442b1c2a598a429cd9cdab
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
-      md5sum: 43b52fb064f937a1357272445cd4f246
+      md5sum: 8713a10fdfaa99f0a4a4556e11623f53
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_bakta.wdl
       md5sum: 96f6cb7f0c8716513a0ca74b083a745f
     - path: miniwdl_run/wdl/tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl
@@ -450,7 +450,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_busco.wdl
       md5sum: 765c33e10de500e0369ce2ac96dff7bb
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_cg_pipeline.wdl
-      md5sum: 9cda5d834e663a06eb8fe1dbc6510b2e
+      md5sum: aefc03d04bb1394f62d7dc73c6d5b706
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_fastp.wdl
       md5sum: 37adc25e93c376c70357172d181ee9c8
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_fastq_scan.wdl
@@ -502,15 +502,15 @@
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
       md5sum: 778865d83a93f11847c00004f9ab709c
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
-      md5sum: 3c0220a40e15d9c46a2323af38e08ade
+      md5sum: 587c7103b408b242c7372fdfbebbbc75
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 2aa70eab24868920f6c28843dd3b5613
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_kraken2.wdl
-      md5sum: 43dd0613df879f91a2f3144e27b38a71
+      md5sum: f8747be18ed7ebd3632ccdcd598c7b3c
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 64caaaff5910ac0036e2659434500962
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: 1b4cd31e1d46fd89e748d6bac8c3e728
+      md5sum: 0d6a56dbcd5a52859a2ff361b5f932a5
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
       contains: ["version", "QC", "output"]
     - path: miniwdl_run/workflow.log

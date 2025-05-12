@@ -24,6 +24,7 @@ nav:
                - Assembly_Fetch: workflows/data_import/assembly_fetch.md
                - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
                - Create_Terra_Table: workflows/data_import/create_terra_table.md
+               - Fetch_SRR_Accession: workflows/data_import/fetch_srr_accession.md
                - SRA_Fetch: workflows/data_import/sra_fetch.md
             - Genomic Characterization:
                - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
@@ -52,7 +53,6 @@ nav:
                - Samples_to_Ref_Tree: workflows/phylogenetic_placement/samples_to_ref_tree.md
                - Usher_PHB: workflows/phylogenetic_placement/usher.md
             - Public Data Sharing:
-               - Fetch_SRR_Accession: workflows/public_data_sharing/fetch_srr_accession.md
                - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
                - Terra_2_GISAID: workflows/public_data_sharing/terra_2_gisaid.md
                - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
@@ -84,6 +84,7 @@ nav:
                - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
                - Create_Terra_Table: workflows/data_import/create_terra_table.md
                - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
+               - Fetch_SRR_Accession: workflows/data_import/fetch_srr_accession.md
                - Kraken2: workflows/standalone/kraken2.md
                - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
                - RASUSA: workflows/standalone/rasusa.md
@@ -151,6 +152,7 @@ nav:
             - Create_Terra_Table: workflows/data_import/create_terra_table.md
             - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
             - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
+            - Fetch_SRR_Accession: workflows/data_import/fetch_srr_accession.md
             - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
             - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
             - GAMBIT_Query: workflows/standalone/gambit_query.md
@@ -187,6 +189,10 @@ nav:
      - Contributing:
         - Contributing to the Documentation: contributing/doc_contribution.md
         - Contributing to the Code: contributing/code_contribution.md
+
+not_in_nav: |
+  assets/* 
+  common_text/*
 
 theme: 
   name: material
@@ -263,6 +269,8 @@ plugins:
   - search
   - glightbox
   - mike
+  - macros:
+      module_name: macros/main
   # - section-index
 
 extra_javascript:

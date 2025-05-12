@@ -20,11 +20,6 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_tree.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Nullarbor_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_nullarbor.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
  - name: TheiaCoV_ClearLabs_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_clearlabs.wdl
@@ -310,7 +305,7 @@ workflows:
      - /tests/inputs/empty.json
  - name: AMR_Search_PHB 
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/wf_amr_search.wdl
+   primaryDescriptorPath: /workflows/standalone_modules/wf_amr_search.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
  - name: TheiaViral_ONT_PHB
