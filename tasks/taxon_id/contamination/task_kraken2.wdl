@@ -197,32 +197,52 @@ task kraken2_parse_classified {
     gunzip -c ~{kraken2_classified_report} > ~{samplename}.classifiedreads.txt
 
     python3 <<CODE 
-    import pandas as pd 
+    import csv
+    from collections import defaultdict
 
-    # load files into dataframe for parsing
-    reads_table = pd.read_csv("~{samplename}.classifiedreads.txt", names=["classified_unclassified","read_id","taxon_id","read_len","other"], header=None, delimiter="\t")
-    report_table = pd.read_csv("~{kraken2_report}", names=["percent","num_reads","num_reads_with_taxon","rank","taxon_id","name"], header=None, delimiter="\t")
+    # Define file paths using the template variables
+    reads_file = "~{samplename}.classifiedreads.txt"
+    report_file = "~{kraken2_report}"
+    output_file = "~{samplename}.report_parsed.txt"
 
-    # create dataframe to store results
-    results_table = pd.DataFrame(columns=["percent","num_basepairs","rank","taxon_id","name"])
-    
-    # calculate total basepairs
-    total_basepairs = reads_table["read_len"].sum()
+    # First pass: read report file and build taxon info dictionary
+    taxon_info = {}
+    with open(report_file, 'r') as f:
+      for line in csv.reader(f, delimiter='\t'):
+        if len(line) >= 6:
+          percent, num_reads, num_reads_with_taxon, rank, taxon_id, name = line
+          taxon_info[taxon_id] = {'rank': rank.strip(), 'name': name.strip()}
 
-    # for each taxon_id in the report table, check if exists in the classified reads output and if so get the percent, num basepairs, rank, and name
-    # write results to dataframe
-    for taxon_id in report_table["taxon_id"].unique():
-      if taxon_id in reads_table["taxon_id"].unique():
-      
-        taxon_name = report_table.loc[report_table["taxon_id"] == taxon_id, "name"].values[0].strip()
-        rank = report_table.loc[report_table["taxon_id"] == taxon_id, "rank"].values[0].strip()
-        taxon_basepairs = reads_table.loc[reads_table["taxon_id"] == taxon_id, "read_len"].sum()
-        taxon_percent = taxon_basepairs / total_basepairs * 100
-        
-        results_table = pd.concat([results_table, pd.DataFrame({"percent":taxon_percent, "num_basepairs":taxon_basepairs, "rank":rank, "taxon_id":taxon_id, "name":taxon_name}, index=[0])], ignore_index=True)
+    # Second pass: process reads file and count basepairs
+    taxon_basepairs = defaultdict(int)
+    total_basepairs = 0
+    present_taxa = set()
 
-    # write results to file
-    results_table.to_csv("~{samplename}.report_parsed.txt", sep="\t", index=False, header=False)
+    with open(reads_file, 'r') as f:
+      for line in csv.reader(f, delimiter='\t'):
+        if len(line) >= 5:
+          _, _, taxon_id, read_len, _ = line[0], line[1], line[2], line[3], line[4]
+          try:
+            read_len = int(read_len)
+            total_basepairs += read_len
+            taxon_basepairs[taxon_id] += read_len
+            present_taxa.add(taxon_id)
+          except ValueError:
+            continue
+
+    # Write results to file - following the original output format
+    with open(output_file, 'w', newline='') as f:
+      writer = csv.writer(f, delimiter='\t')
+      for taxon_id in taxon_info:
+        if taxon_id in present_taxa:
+          taxon_percent = (taxon_basepairs[taxon_id] / total_basepairs) * 100
+          writer.writerow([
+              taxon_percent,
+              taxon_basepairs[taxon_id],
+              taxon_info[taxon_id]['rank'],
+              taxon_id,
+              taxon_info[taxon_id]['name']
+          ])
     CODE
 
     # theiacov parsing blocks - percent human, sc2 and target organism

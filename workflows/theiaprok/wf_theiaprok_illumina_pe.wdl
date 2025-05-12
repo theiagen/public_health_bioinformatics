@@ -1,7 +1,6 @@
 version 1.0
 
-import "../../tasks/assembly/task_shovill.wdl" as shovill
-import "../../tasks/assembly/task_spades.wdl" as spades
+import "../../workflows/utilities/wf_digger_denovo.wdl" as digger_denovo
 import "../../tasks/gene_typing/annotation/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/annotation/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus
@@ -140,27 +139,15 @@ workflow theiaprok_illumina_pe {
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-      if (!use_spades) {
-        call shovill.shovill_pe {
-          input:
-            samplename = samplename,
-            read1_cleaned = read_QC_trim.read1_clean,
-            read2_cleaned = read_QC_trim.read2_clean,
-            genome_length = select_first([genome_length, clean_check_reads.est_genome_length, 0])
-        }
-      }
-      
-      if (use_spades) {
-        call spades.spades_pe {
-          input:
-            samplename = samplename,
-            read1_cleaned = read_QC_trim.read1_clean,
-            read2_cleaned = read_QC_trim.read2_clean
-        }
+      call digger_denovo.digger_denovo {
+        input:
+          samplename = samplename,
+          read1 = read_QC_trim.read1_clean,
+          read2 = read_QC_trim.read2_clean
       }
       call quast_task.quast {
         input:
-          assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+          assembly = digger_denovo.assembly_fasta,
           samplename = samplename
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_raw {
@@ -179,32 +166,32 @@ workflow theiaprok_illumina_pe {
       }
       call busco_task.busco {
         input:
-          assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+          assembly = digger_denovo.assembly_fasta,
           samplename = samplename
       }
       if (perform_characterization) {
         call gambit_task.gambit {
           input:
-            assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+            assembly = digger_denovo.assembly_fasta,
             samplename = samplename
         }
         if (call_ani) {
           call ani_task.animummer as ani {
             input:
-              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         if (call_kmerfinder) {
           call kmerfinder_task.kmerfinder_bacteria as kmerfinder {
             input:
-              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
           input:
-            assembly = select_first([prokka.prokka_fna, bakta.bakta_fna, spades_pe.assembly_fasta, shovill_pe.assembly_fasta]),
+            assembly = digger_denovo.assembly_fasta,
             samplename = samplename,
             protein_fasta = select_first([prokka.prokka_faa,bakta.bakta_faa]),
             gff = select_first([prokka.prokka_gff,bakta.bakta_gff3]),
@@ -221,21 +208,21 @@ workflow theiaprok_illumina_pe {
         if (call_resfinder) {
           call resfinder.resfinder as resfinder_task {
             input:
-              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename,
               organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
           }
         }
         call ts_mlst_task.ts_mlst {
           input: 
-            assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+            assembly = digger_denovo.assembly_fasta,
             samplename = samplename,
             taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
         if (genome_annotation == "prokka") {
           call prokka_task.prokka {
             input:
-              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename
           }
         }
@@ -251,7 +238,7 @@ workflow theiaprok_illumina_pe {
           } 
           call bakta_task.bakta {
             input:
-              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename,
               bakta_db_selected = select_first([bakta_custom_db, bakta_db_light, bakta_db_full])
           }
@@ -259,14 +246,14 @@ workflow theiaprok_illumina_pe {
         if (call_plasmidfinder) {
           call plasmidfinder_task.plasmidfinder {
             input:
-              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         if (call_abricate) {
           call abricate_task.abricate {
             input:
-              assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename,
               database = abricate_db
           }
@@ -309,7 +296,7 @@ workflow theiaprok_illumina_pe {
         call merlin_magic_workflow.merlin_magic {
           input:
             merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
-            assembly = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+            assembly = digger_denovo.assembly_fasta,
             samplename = samplename,
             read1 = read_QC_trim.read1_clean,
             read2 = read_QC_trim.read2_clean
@@ -380,7 +367,7 @@ workflow theiaprok_illumina_pe {
                 "ani_mummer_version": ani.ani_mummer_version,
                 "ani_output_tsv": ani.ani_output_tsv,
                 "ani_top_species_match": ani.ani_top_species_match,
-                "assembly_fasta": select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta]),
+                "assembly_fasta": digger_denovo.assembly_fasta,
                 "assembly_length": quast.genome_length,
                 "bakta_gbff": bakta.bakta_gbff,
                 "bakta_gff3": bakta.bakta_gff3,
@@ -405,9 +392,7 @@ workflow theiaprok_illumina_pe {
                 "combined_mean_q_raw": cg_pipeline_raw.combined_mean_q,
                 "combined_mean_readlength_clean": cg_pipeline_clean.combined_mean_readlength,
                 "combined_mean_readlength_raw": cg_pipeline_raw.combined_mean_readlength,
-                "contigs_fastg": shovill_pe.contigs_fastg,
-                "contigs_gfa": shovill_pe.contigs_gfa,
-                "contigs_lastgraph": shovill_pe.contigs_lastgraph,
+                "contigs_gfa": digger_denovo.contigs_gfa,
                 "county": county,
                 "ectyper_predicted_serotype": merlin_magic.ectyper_predicted_serotype,
                 "ectyper_results": merlin_magic.ectyper_results,
@@ -645,7 +630,7 @@ workflow theiaprok_illumina_pe {
                 "shigeifinder_serotype": merlin_magic.shigeifinder_serotype,
                 "shigeifinder_version_reads": merlin_magic.shigeifinder_version_reads,
                 "shigeifinder_version": merlin_magic.shigeifinder_version,
-                "shovill_pe_version": shovill_pe.shovill_version,
+                "digger_denovo_version": digger_denovo.assembler_version,
                 "sistr_allele_fasta": merlin_magic.sistr_allele_fasta,
                 "sistr_allele_json": merlin_magic.sistr_allele_json,
                 "sistr_cgmlst": merlin_magic.sistr_cgmlst,
@@ -831,12 +816,12 @@ workflow theiaprok_illumina_pe {
     String? kraken2_report = read_QC_trim.kraken_report
     String? kraken2_database = read_QC_trim.kraken_database
     String? kraken_docker = read_QC_trim.kraken_docker
-    # Assembly - shovill outputs 
-    File? assembly_fasta = select_first([spades_pe.assembly_fasta,shovill_pe.assembly_fasta])
-    File? contigs_gfa = shovill_pe.contigs_gfa
-    File? contigs_fastg = shovill_pe.contigs_fastg
-    File? contigs_lastgraph = shovill_pe.contigs_lastgraph
-    String? shovill_pe_version = shovill_pe.shovill_version
+    # Assembly - digger denovo outputs 
+    File? assembly_fasta = digger_denovo.assembly_fasta
+    File? contigs_gfa = digger_denovo.contigs_gfa
+    File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
+    String? assembler = digger_denovo.assembler_used
+    String? assembler_version = digger_denovo.assembler_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version

@@ -6,7 +6,7 @@
     "theiaprok_illumina_se.read_QC_trim.call_midas": false,
     "theiaprok_illumina_se.read_QC_trim.midas.midas_db" : "./tests/inputs/empty-for-test.txt",
     "theiaprok_illumina_se.genome_annotation": "prokka",
-    "theiaprok_illumina_se.shovill_se.assembler": "skesa",
+    "theiaprok_illumina_se.digger_denovo.assembler": "skesa",
     "theiaprok_illumina_se.merlin_magic.call_poppunk": false,
     "theiaprok_illumina_se.merlin_magic.poppunk_gps_dists_npy" : "./tests/inputs/empty-for-test.txt",
     "theiaprok_illumina_se.merlin_magic.poppunk_gps_dists_pkl" : "./tests/inputs/empty-for-test.txt",
