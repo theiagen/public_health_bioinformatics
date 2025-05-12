@@ -18,9 +18,11 @@ import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/contamination/task_kmerfinder.wdl" as kmerfinder_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
+import "../../tasks/utilities/data_handling/task_arln_stats.wdl" as arln_stats
 import "../utilities/file_handling/wf_concatenate_illumina_lanes.wdl" as concatenate_lanes_workflow
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
+
 
 workflow theiaprok_illumina_pe {
   meta {
@@ -70,6 +72,7 @@ workflow theiaprok_illumina_pe {
     Boolean call_resfinder = false
     Boolean call_plasmidfinder = true
     Boolean call_abricate = false
+    Boolean call_arln_stats = false
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String bakta_db = "full" # Default: "light" or "full"
@@ -201,7 +204,8 @@ workflow theiaprok_illumina_pe {
         call ts_mlst_task.ts_mlst {
           input: 
             assembly = shovill_pe.assembly_fasta,
-            samplename = samplename
+            samplename = samplename,
+            taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
         if (genome_annotation == "prokka") {
           call prokka_task.prokka {
@@ -711,7 +715,21 @@ workflow theiaprok_illumina_pe {
               }
           }
         }
+        if (call_arln_stats) {
+          call arln_stats.arln_stats {
+            input:
+              samplename = samplename,
+              taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
+              workflow_type = "pe",
+              genome_length = quast.genome_length,
+              read1_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
+              read2_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read2]),
+              read1_clean = read_QC_trim.read1_clean,
+              read2_clean = read_QC_trim.read2_clean,
+          }
+        }
       }
+
     }
   }
   output {
@@ -1172,5 +1190,12 @@ workflow theiaprok_illumina_pe {
     String? vibecheck_docker = merlin_magic.vibecheck_docker
     # export taxon table output
     String? taxon_table_status = export_taxon_table.status
+    # ARLN required outputs
+    String? arln_r1_q30_raw = arln_stats.read1_raw_q30
+    String? arln_r2_q30_raw = arln_stats.read2_raw_q30
+    String? arln_r1_q30_clean = arln_stats.read1_clean_q30
+    String? arln_r2_q30_clean = arln_stats.read2_clean_q30
+    String? arln_assembly_ratio = arln_stats.assembly_ratio
+    String? arln_stats_docker_version = arln_stats.docker_version
   }
 }
