@@ -346,6 +346,16 @@ workflow theiaviral_panel {
   }
  
   output {
+    # Number of assembled viruses
     Int assembled_viruses = length(export_taxon_table.status)
+    # Workflow Versioning
+    String theiaviral_panel_version = version_capture.phb_version
+    String theiaviral_pannel_analysis_date = version_capture.date
+    # Standalone Kraken2 outputs
+    String kraken2_version = kraken2.kraken2_version
+    String kraken2_database = kraken2.kraken2_database
+    String kraken2_docker = kraken2.kraken2_docker
+    File kraken2_report = kraken2.kraken2_report
+    File kraken2_classified_report = kraken2.kraken2_classified_report
   }
 }
