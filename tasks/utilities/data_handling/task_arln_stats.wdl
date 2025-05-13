@@ -41,20 +41,24 @@ task arln_stats {
       touch read2_clean_q30
     fi
 
-    # Calculate Assembly Ratio
-    if [[ "~{taxon}" == "NA" ]]; then
-      echo "Taxon (NA) not found in assembly stats file" > assem_ratio_with_stdev
+    GENUS=$(echo ~{taxon} | awk '{print $1}')
+    SPECIES=$(echo ~{taxon} | awk '{print $2}')
+    echo "$GENUS $SPECIES"
 
-    elif grep -q "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt; then
-      assem_mean=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $6}')
-      echo "${assem_mean}"
-      st_dev=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $7}' | xargs printf "%.5f\n")
-      echo "${st_dev}"
-      assem_ratio=$(python3 -c "print('{:.4f}'.format((float('${assem_mean}') * 1000000)/ ~{genome_length}))")
-      echo "${assem_ratio}x(${st_dev})" > assem_ratio_with_stdev
-    else
-      echo "Taxon not found in assembly stats file" > assem_ratio_with_stdev
-    fi
+      # Calculate Assembly Ratio
+      if [[ "~{taxon}" == "NA" || -z "$SPECIES" ]]; then
+        echo "Genus and or Species not found in assembly stats file" > assem_ratio_with_stdev
+
+      elif grep -q "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt; then
+        assem_mean=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $6}')
+        echo "${assem_mean}"
+        st_dev=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $7}' | xargs printf "%.5f\n")
+        echo "${st_dev}"
+        assem_ratio=$(python3 -c "print('{:.4f}'.format((float('${assem_mean}') * 1000000)/ ~{genome_length}))")
+        echo "${assem_ratio}x(${st_dev})" > assem_ratio_with_stdev
+      else
+        echo "Taxon not found in assembly stats file" > assem_ratio_with_stdev
+      fi
   >>>
   output {
     String? read1_raw_q30 = read_string("read1_raw_q30")
