@@ -47,7 +47,7 @@ task arln_stats {
 
       # Calculate Assembly Ratio
       if [[ "~{taxon}" == "NA" || -z "$SPECIES" ]]; then
-        echo "Genus and or Species not found in assembly stats file" > assem_ratio_with_stdev
+        echo "Genus and or Species not found in assembly stats file, check classification level." > assem_ratio_with_stdev
 
       elif grep -q "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt; then
         assem_mean=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $6}')
