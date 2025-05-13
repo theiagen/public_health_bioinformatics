@@ -3,7 +3,7 @@ version 1.0
 task gamma {
   input {
     File assembly
-    File? gamma_db 
+    File? gamma_db = "gs://theiagen-public-resources-rp/reference_data/databases/gamma/default_ResFinderDB_Combined_05-06-20.fsa"
     Int min_percent_identity = 90
     Int min_length_percent_gammas = 20
     Boolean run_gammas = false
