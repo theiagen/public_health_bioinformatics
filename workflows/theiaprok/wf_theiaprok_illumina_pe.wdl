@@ -67,7 +67,6 @@ workflow theiaprok_illumina_pe {
     Int trim_quality_min_score = 20
     Int trim_window_size = 10
     # module options
-    Boolean use_spades = false # by default use shovill
     Boolean perform_characterization = true # by default run all characterization steps
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_kmerfinder = false 
