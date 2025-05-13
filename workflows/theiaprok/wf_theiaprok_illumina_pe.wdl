@@ -74,7 +74,7 @@ workflow theiaprok_illumina_pe {
     Boolean call_resfinder = false
     Boolean call_plasmidfinder = true
     Boolean call_abricate = false
-    Boolean call_gamma = true
+    Boolean call_gamma = false
     Boolean call_arln_stats = false
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
