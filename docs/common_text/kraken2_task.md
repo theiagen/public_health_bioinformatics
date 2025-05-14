@@ -7,13 +7,23 @@
 <!-- if: kraken -->
 ??? task "Kraken2"
 <!-- endif -->
+<!-- if: theiaviral -->
+??? toggle "Read Identification"
+<!-- endif -->
+
     `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
 
 <!-- if: theiacov|freyja -->
     Kraken2 is run on both the raw and clean reads.
+<!-- endif -->
 
-    !!! info "Database-dependent"
-        This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`.
+<!-- if: theiaviral -->
+    This task runs on cleaned reads passed from the `read_QC_trim` subworkflow and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones.
+<!-- endif -->
+
+<!-- if: theiacov|freyja|theiaviral -->
+    ???+ warning "Important"
+        This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`.
 <!-- endif -->
   
 <!-- if: theiaprok -->
