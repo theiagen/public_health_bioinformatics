@@ -89,7 +89,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 {{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaprok", indent=8) }}
 {{ include_md("common_text/cg_pipeline_task.md", indent=8) }}
-{{ include_md("common_text/shovill_task.md", indent=8) }}
+{{ include_md("common_text/digger_denovo_task.md", indent=8) }}
 
     === "TheiaProk_Illumina_SE"
 
@@ -101,7 +101,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 {{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaprok", indent=8) }}
 {{ include_md("common_text/cg_pipeline_task.md", indent=8) }}
-{{ include_md("common_text/shovill_task.md", indent=8) }}
+{{ include_md("common_text/digger_denovo_task.md", indent=8) }}
 
     === "TheiaProk_ONT"
 
