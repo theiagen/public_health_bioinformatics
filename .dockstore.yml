@@ -328,3 +328,8 @@ workflows:
    primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_illumina_pe.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
+ - name: TheiaViral_Panel_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_panel.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
