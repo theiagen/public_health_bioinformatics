@@ -1810,7 +1810,6 @@ zip_files	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Zip_Column_C
 zip_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Zip_Column_Content	
 zip_files	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Zip_Column_Content	
 zip_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Zip_Column_Content	
-
 checkv_consensus	checkv_db	File	CheckV database file	"gs://theiagen-large-public-files-rp/terra/databases/checkv/checkv-db-v1.5.tar.gz"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_consensus	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_consensus	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -1963,7 +1962,7 @@ raven	memory	Int	Memory allocated for the task (in GB)	16	Optional	TheiaViral_ON
 raven	raven_identity	Float	Threshold for overlap between two reads in order to construct an edge between them	0.0	Optional	TheiaViral_ONT
 raven	raven_opts	Int	Additional parameters for Raven assembler		Optional	TheiaViral_ONT
 raven	raven_polishing_iterations	Int	Number of polishing iterations	2	Optional	TheiaViral_ONT
-theiaviral_ont	read1	File	Base-called ONT read file in FASTQ file format (compression optional)		Required	ONT
+theiaviral_ont	read1	File	Base-called ONT read file in FASTQ file format (compression optional)		Required	TheiaViral_ONT
 theiaviral_ont	samplename	String	Name of the sample being analyzed		Required	TheiaViral_ONT
 theiaviral_ont	taxon	String	Taxon ID or organism name of interest		Required	TheiaViral_ONT
 theiaviral_ont	call_porechop	Boolean	True/False to trim adapters with porechop	FALSE	Optional	TheiaViral_ONT
