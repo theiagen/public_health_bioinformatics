@@ -8,6 +8,7 @@ task consensus {
     Boolean count_orphans = true
     Int max_depth = "600000"
     Boolean disable_baq = true
+    Boolean all_positions = false
     Int min_bq = "0"
     Int min_qual = "20"
     Float? consensus_min_freq 
@@ -36,15 +37,20 @@ task consensus {
     else
       ref_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"  
     fi
-    
-    # call consensus
+
+    # call mpileup 
     samtools mpileup \
       ~{true = "--count-orphans" false = "" count_orphans} \
       -d ~{max_depth} \
       ~{true = "--no-BAQ" false = "" disable_baq} \
       -Q ~{min_bq} \
       --reference ${ref_genome} \
-      ~{bamfile} | \
+      ~{true = "-aa" false = "" all_positions} \
+      ~{bamfile} \
+      > ~{samplename}.mpileup
+
+    # call consensus
+    cat ~{samplename}.mpileup | \
     ivar consensus \
       -p ~{samplename}.consensus \
       -q ~{min_qual} \
@@ -59,6 +65,7 @@ task consensus {
   >>>
   output {
     File consensus_seq = "~{samplename}.ivar.consensus.fasta"
+    File sample_mpileup = "~{samplename}.mpileup"
     String ivar_version = read_string("IVAR_VERSION")
     String samtools_version = read_string("SAMTOOLS_VERSION")
     String pipeline_date = read_string("DATE")
