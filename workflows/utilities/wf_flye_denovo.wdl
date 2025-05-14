@@ -189,8 +189,10 @@ workflow flye_denovo {
   # Contig Filtering and Final Assembly orientation
   call task_filter_contigs.filter_contigs {
     input:
+      samplename = samplename,
       assembly_fasta = select_first([polypolish.polished_assembly, medaka.medaka_fasta, racon.polished_fasta, flye.assembly_fasta]), # Use Flye assembly if no polishing
       min_length = filter_contigs_min_length,
+      skip_coverage_filter = true,
       cpu = filter_contigs_cpu,
       memory = filter_contigs_memory,
       disk_size = filter_contigs_disk_size

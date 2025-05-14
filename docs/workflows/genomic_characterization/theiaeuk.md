@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibliity** | **Workflow Level** |
-|---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Mycotics](../../workflows_overview/workflows_kingdom.md/#mycotics) | PHB v3.0.1 | Yes | Sample-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Name", filter_values="[**TheiaEuk**](../workflows/genomic_characterization/theiaeuk.md)", columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## TheiaEuk Workflows
 
@@ -13,7 +11,7 @@
 All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
 
 !!! caption "TheiaEuk Workflow Diagram"
-    ![TheiaEuk Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PHB_2025123.png){width=75%}
+    ![TheiaEuk Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PHB_202557.png){width=75%}
 
 ### Inputs
 
@@ -63,7 +61,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 !!! tip ""
     These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
-{{ include_md("common_text/shovill_task.md") }}
+{{ include_md("common_text/digger_denovo_task.md") }}
 {{ include_md("common_text/quast_task.md") }}
 {{ include_md("common_text/cg_pipeline_task.md") }}
 
