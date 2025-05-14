@@ -207,6 +207,7 @@ workflow theiaviral_panel {
           input:
             samplename = samplename + "_" + taxon_id,
             taxon_table = output_taxon_table,
+            gambit_predicted_taxon = ncbi_identify.taxon_name,
             terra_project = terra_project,
             terra_workspace = terra_workspace,
             columns_to_export = {
@@ -347,7 +348,7 @@ workflow theiaviral_panel {
  
   output {
     # Number of assembled viruses
-    Int assembled_viruses = length(export_taxon_table.status)
+    Int assembled_viruses = length(select_all(export_taxon_table_task.status))
     # Workflow Versioning
     String theiaviral_panel_version = version_capture.phb_version
     String theiaviral_pannel_analysis_date = version_capture.date
