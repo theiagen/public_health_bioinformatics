@@ -69,7 +69,7 @@ workflow theiaviral_panel {
         kraken2_output = kraken2.kraken2_classified_report,
         kraken2_report = kraken2.kraken2_report,
         read1 = kraken2.kraken2_classified_read1,
-        read2 = kraken2.kraken2_classified_read2,
+        read2 = select_first([kraken2.kraken2_classified_read2]),
         taxon_id = taxon_id
     }
     if (krakentools.success) {
