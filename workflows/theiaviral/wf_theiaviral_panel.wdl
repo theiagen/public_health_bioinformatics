@@ -131,6 +131,7 @@ workflow theiaviral_panel {
               samplename =  samplename + "_" + taxon_id
           }
           # ANI-based reference genome selection
+          # do we want a skani failure to be a hard failure? or be like previous kraken failures?
           call skani_task.skani as skani {
             input:
               assembly_fasta = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
