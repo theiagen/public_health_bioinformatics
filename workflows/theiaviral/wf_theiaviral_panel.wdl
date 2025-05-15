@@ -68,8 +68,8 @@ workflow theiaviral_panel {
       input:
         kraken2_output = kraken2.kraken2_classified_report,
         kraken2_report = kraken2.kraken2_report,
-        read1 = read_QC_trim.read1_clean,
-        read2 = read_QC_trim.read2_clean,
+        read1 = kraken2.kraken2_classified_read1,
+        read2 = kraken2.kraken2_classified_read2,
         taxon_id = taxon_id
     }
     if (krakentools.success) {
