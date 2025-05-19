@@ -81,7 +81,8 @@ workflow theiaeuk_illumina_pe {
         read2 = select_first([rasusa_task.read2_subsampled, read2]),
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
-        trim_window_size = trim_window_size
+        trim_window_size = trim_window_size,
+        workflow_series = "theiaeuk"
     }
     if (! skip_screen) {
       call screen.check_reads as clean_check_reads {
