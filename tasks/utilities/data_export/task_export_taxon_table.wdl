@@ -48,7 +48,8 @@ task export_taxon_table {
       fi
     done
 
-    if [[ -z "${sample_table}" && -n ${other_species} ]]; then
+    if [[ -z "${sample_table}" && -n "${other_species}" ]]; then
+      echo "Assigning Other_Species"
       sample_table=${other_species}
     fi
 
