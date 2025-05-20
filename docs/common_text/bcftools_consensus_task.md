@@ -1,7 +1,7 @@
 ??? task "`bcftools_consensus`"
 
 <!-- if: theiaviral -->
-    The `bcftools_consensus` task generates a consensus genome by applying variants from the `clair3` task to a masked reference genome. It uses bcftools to filter variants based on the `min_depth` and `min_allele_freq` input parameter, left align and normalize indels, index the VCF file, and generate a consensus genome in FASTA format. Reference bases are substituted with filtered variants where applicable, preserved in regions without variant calls, and replaced with "N"s in areas masked by the `mask_low_coverage` task.
+    The `bcftools_consensus` task generates a consensus genome assembly by applying variants from the `clair3` task to a masked reference genome. It uses bcftools to filter variants based on the `min_depth` and `min_allele_freq` input parameter, left aligns and normalizes indels, indexes the VCF file, and generates a consensus genome in FASTA format. Reference bases are substituted with filtered variants where applicable, preserved in regions without variant calls, and replaced with "N"s in areas masked by the `mask_low_coverage` task.
 
     ??? dna "`min_depth`"
         This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is `10`.

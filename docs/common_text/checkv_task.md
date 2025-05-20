@@ -2,6 +2,8 @@
 
     CheckV is a fully automated command-line pipeline for assessing the quality of viral genomes, including identification of host contamination for integrated proviruses, estimating completeness for genome fragments, and identification of closed genomes.
 
+    By default, CheckV reports results on a contig-by-contig basis. The `checkv` task additionally reports both "weighted_contamination" and "weighted_completeness", which are average percents calculated across the total assembly that are weighted by contig length.
+
     !!! techdetails "CheckV Technical Details"
         |  | Links |
         | --- | --- |

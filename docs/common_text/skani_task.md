@@ -1,7 +1,7 @@
 ??? task "`skani`"
 
 <!-- if: theiaviral -->
-    The `skani` task is used to identify and select the most closely related reference genome to the input assembly generated from the `spades` or `megahit` tasks. This reference genome is selected from a comprehensive database of over 270,000 complete viral genomes. Skani uses an approximate mapping method without base-level alignment to get ANI. It is magnitudes faster than BLAST-based methods and almost as accurate.
+    The `skani` task is used to identify and select the most closely related reference genome to the input assembly generated from the `spades` or `megahit` tasks. By default, the reference genome is selected from a comprehensive database of over 270,000 complete viral genomes. Skani uses an approximate mapping method without base-level alignment to calculate average nucleotide identity (ANI). It is magnitudes faster than BLAST-based methods and almost as accurate.
 <!-- endif -->
     !!! techdetails "Skani Technical Details"
         |  | Links |

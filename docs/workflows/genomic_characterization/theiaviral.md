@@ -265,7 +265,7 @@
 
         </div>
 
-    ??? toggle "De novo Assembly and Reference Selection"
+    ??? toggle "*De novo* Assembly and Reference Selection"
 
         <div class="grid cards" markdown>
 
