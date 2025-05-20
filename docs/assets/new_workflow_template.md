@@ -46,10 +46,10 @@ _Outputs should be in alphabetical order by variable. Any additional information
 |---|---|---|
 | variable_name | Type | Description |
 
-## References 
+## References
 
 _Include this section if applicable._
 
 > reference1
-<!-- -->
+<!-- include comments to make sure the `>` blocks are separated -->
 > reference2

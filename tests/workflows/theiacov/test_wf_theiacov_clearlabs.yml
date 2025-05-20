@@ -305,13 +305,13 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 59478efddde2191ead1b46b1f121bbc9
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: dc16291a6b3fff215c4f86ab8debb8fd
+      md5sum: 92bfc4d3b72e6671fa3d6e28b8467047
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 89257604b335f49f2284b8c1c4ab58a3
+      md5sum: 0a07a35a46498ae522b3e1c16dab8483
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/clearlabs.pangolin_report.csv
-      md5sum: 176c3946127a4a3509df25ee93d1bf32
+      md5sum: 24776c3694ef177d4014375f113fb22b
     - path: miniwdl_run/call-stats_n_coverage/command
       md5sum: ac020678f99ac145b11d3dbc7b9fe9ba
     - path: miniwdl_run/call-stats_n_coverage/inputs.json
@@ -376,7 +376,7 @@
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/clearlabs.stats.txt
       md5sum: 6ad40bcca227c92fdfec23fe9a03c344
     - path: miniwdl_run/call-vadr/command
-      md5sum: 1f49b0fa676b3ea67201305139f2568c
+      md5sum: 7630874bf99e6cc163fb1f8cb7660c25
     - path: miniwdl_run/call-vadr/inputs.json
       contains: ["assembly_length_unambiguous", "genome_fasta", "fasta"]
     - path: miniwdl_run/call-vadr/outputs.json

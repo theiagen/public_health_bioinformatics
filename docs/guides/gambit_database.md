@@ -122,7 +122,7 @@ The manual creation and curation of a GAMBIT database is a complex and sometimes
 
 ### Sourcing Genomic Information
 
-A GAMBIT database can be created from genomes retrieved from a wide variety of sources, not just [GTDB](https://gtdb.ecogenomic.org/). To do so, all the automated steps in the [GAMBITdb](https://github.com/gambit-suite/gambitdb) need to be followed individually. Some officially supported databases, such as the [GAMBIT Fungal Database v0.2.0](https://www.notion.so/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=21), were created following these steps.
+A GAMBIT database can be created from genomes retrieved from a wide variety of sources, not just [GTDB](https://gtdb.ecogenomic.org/). To do so, all the automated steps in the [GAMBITdb](https://github.com/gambit-suite/gambitdb) need to be followed individually. Some officially supported databases, such as the [GAMBIT Fungal Database v0.2.0](gambit.md#gambit-fungal-database-v020), were created following these steps.
 
 #### Step 1: Download genomes to be included in the database
 
@@ -152,7 +152,7 @@ gambit dist --qs signatures.gs --square -o pw_dists.csv
 ```
 
 !!! caption narrow "GAMBIT Metadata Database Scheme"
-    ##### Figure 1 {#figure1}
+    ##### Figure 1 {% raw %} {#figure1} {% endraw %}
     ![**Figure 1:** Scheme for GAMBIT’s metadata database.](../assets/figures/GAMBIT-metadata-database.png)
 
     **Figure 1:** Scheme for GAMBIT’s metadata database
