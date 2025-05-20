@@ -59,6 +59,20 @@
 
 </div>
 
+### Workflow Diagram
+
+=== "Illumina_PE"
+
+    !!! caption "TheiaViral_Illumina_PE Workflow Diagram"
+
+        ![TheiaViral_Illumina_PE Workflow Diagram](../../assets/figures/TheiaViral_Illumina_PE.png)
+
+=== "ONT"
+
+    !!! caption "TheiaViral_ONT Workflow Diagram"
+
+        ![TheiaViral_ONT Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
+
 ### Inputs
 
 === "TheiaViral_Illumina_PE"
@@ -372,17 +386,3 @@
     {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaViral_ONT", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
 
     ///
-
-### Workflow Diagram
-
-=== "Illumina_PE"
-
-    !!! caption "TheiaViral_Illumina_PE Workflow Diagram"
-
-        ![TheiaViral_Illumina_PE Workflow Diagram](../../assets/figures/TheiaViral_Illumina_PE.png)
-
-=== "ONT"
-
-    !!! caption "TheiaViral_ONT Workflow Diagram"
-
-        ![TheiaViral_ONT Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
