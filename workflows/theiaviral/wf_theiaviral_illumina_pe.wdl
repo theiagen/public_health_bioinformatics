@@ -31,7 +31,7 @@ workflow theiaviral_illumina_pe {
     String samplename
     File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     Boolean skip_screen = true # if false, run clean read screening
-    Boolean skip_metaviralspades = false # if true, move to megahit immediately
+    Boolean call_metaviralspades = true # if false, move to megahit immediately
     Boolean skip_rasusa = false
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     Boolean extract_unclassified = false # if true, unclassified reads will be extracted from kraken2 output
@@ -93,7 +93,7 @@ workflow theiaviral_illumina_pe {
     # run de novo if no reference genome is provided so we can select a reference
     if (! defined(reference_fasta)) {
       # de novo assembly - prioritize metaviralspades
-      if (! skip_metaviralspades) {
+      if (call_metaviralspades) {
         call spades_task.spades {
           input:
             read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
