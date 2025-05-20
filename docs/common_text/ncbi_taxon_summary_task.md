@@ -7,12 +7,12 @@
         This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
 
     ???+ warning "Important"
-        - The implied taxonomic level of the input `taxon` directly affects the number of taxa reported in the summary file and the average genome size calculation.
+        - The implied taxonomic rank of the input `taxon` directly affects the number of taxa reported in the summary file and the average genome size calculation.
 
         **Examples:**
 
-        - If your input `taxon` is `"*Lyssavirus rabies*"` or taxon ID `11292` (species level), the task will retrieve genomes only for that specific species, and return the genome length for that species.
-        - If your input `taxon` is `"Rhabdoviridae"` or taxon ID `11270` (family level), the task will retrieve genomes for all species within that family and calculate an average genome length across all retrieved species.
+        - If your input `taxon` is `Lyssavirus rabies` or taxon ID `11292` (species rank), the task will retrieve genomes only for that specific species, and return the genome length for that species.
+        - If your input `taxon` is `Rhabdoviridae` or taxon ID `11270` (family rank), the task will retrieve genomes for all species within that family and calculate an average genome length across all retrieved species.
 
         This flexibility allows users to run the workflow without requiring precise knowledge of their organism's genome length. The average genome length calculation is only used to estimate coverage levels for downsampling and minor read QC steps. The average genome length is used only to estimate coverage levels for downsampling and to guide minor read quality control steps. It does not significantly affect the quality of the consensus genome or the choice of reference sequences.
 <!-- endif -->
