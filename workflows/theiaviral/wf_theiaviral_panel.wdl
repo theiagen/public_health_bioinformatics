@@ -32,8 +32,8 @@ workflow theiaviral_panel {
     String terra_project
     String terra_workspace
     String kraken_db
-    File skani_db
-    File checkv_db
+    File? skani_db
+    File? checkv_db
 
     Int min_map_quality = 20
     Int min_depth = 10
