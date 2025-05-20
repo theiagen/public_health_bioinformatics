@@ -6,7 +6,11 @@
 ??? task "`bwa` Details"
     This task aligns the cleaned short reads (Illumina) to the reference genome provided by the user.
 <!-- endif -->
+<!-- if: theiaviral -->
+??? task "`bwa`"
 
+    The `bwa` task is a wrapper for the BWA alignment tool. It utilizes the BWA-MEM algorithm to map cleaned reads to the reference genome, either selected by the `skani` task or provided by the user input `reference_fasta`. This creates a BAM file which is then sorted using the command `samtools sort`.
+<!-- endif -->
     !!! techdetails "BWA Technical Details"
     
         |  | Links |
