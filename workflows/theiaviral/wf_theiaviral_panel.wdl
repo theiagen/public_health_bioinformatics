@@ -103,14 +103,16 @@ workflow theiaviral_panel {
             skip_metaviralspades = skip_metaviralspades,
             kraken_db = kraken_db,
             skip_qc = true,
-            skip_rasusa = true,
             skip_screen = true,
             taxon = taxon_id,
             skani_db = skani_db,
             checkv_db = checkv_db,
             genome_length = ncbi_taxon_summary.avg_genome_length,
             assembly_cpu = assembly_cpu,
-            assembly_memory = assembly_memory
+            assembly_memory = assembly_memory,
+            min_map_quality = min_map_quality,
+            min_depth = min_depth,
+            min_allele_freq = min_allele_freq
         }
         # morgana magic
         call morgana_magic_wf.morgana_magic {
@@ -125,7 +127,7 @@ workflow theiaviral_panel {
         # call export_taxon_table
         call export_taxon_table_task.export_taxon_table {
           input:
-            samplename = samplename + "_" + taxon_id,
+            samplename = samplename + "_" + sub(theiaviral.ncbi_identify_taxon_name, " ", "-"),
             taxon_table = output_taxon_table,
             gambit_predicted_taxon = theiaviral.ncbi_identify_taxon_name,
             terra_project = terra_project,
