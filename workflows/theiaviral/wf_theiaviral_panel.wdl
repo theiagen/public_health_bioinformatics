@@ -39,10 +39,11 @@ workflow theiaviral_panel {
     Int min_depth = 10
     Float min_allele_freq = 0.6
 
-
     Boolean extract_unclassified = false
     Int minimum_read_number = 1000
     Boolean skip_metaviralspades = false
+    Int? assembly_cpu = 16
+    Int? assembly_memory = 64
   }  
   call versioning.version_capture {
     input:
@@ -107,7 +108,9 @@ workflow theiaviral_panel {
             taxon = taxon_id,
             skani_db = skani_db,
             checkv_db = checkv_db,
-            genome_length = ncbi_taxon_summary.avg_genome_length
+            genome_length = ncbi_taxon_summary.avg_genome_length,
+            assembly_cpu = assembly_cpu,
+            assembly_memory = assembly_memory
         }
         # morgana magic
         call morgana_magic_wf.morgana_magic {

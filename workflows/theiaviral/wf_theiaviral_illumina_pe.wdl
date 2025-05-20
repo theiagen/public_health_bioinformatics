@@ -41,6 +41,9 @@ workflow theiaviral_illumina_pe {
     Float min_allele_freq = 0.6
     # rasusa downsampling inputs
     Int? genome_length
+    #assembly resources
+    Int? assembly_cpu
+    Int? assembly_memory
   }
   # get the PHB version
   call versioning_task.version_capture {
@@ -111,7 +114,9 @@ workflow theiaviral_illumina_pe {
             read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
             read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
             samplename = samplename,
-            spades_type = "metaviral"
+            spades_type = "metaviral",
+            cpu = assembly_cpu,
+            memory = assembly_memory
         }
       }
       # fallback to megahit if metaviralspades fails to identify a complete virus
@@ -120,7 +125,9 @@ workflow theiaviral_illumina_pe {
           input:
             read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
             read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
-            samplename = samplename
+            samplename = samplename,
+            cpu = assembly_cpu,
+            memory = assembly_memory
         }
       }
       # fail gracefully if both assemblies fail
