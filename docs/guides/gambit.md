@@ -3,7 +3,7 @@
 **GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking)** determines the taxon of the query genome assembly using a ***k*-mer-based approach** to match the assembly sequence to the closest complete genome in a database.
 
 !!! dna "GAMBIT genomic distance metric correlates with sequence identity!"
-    GAMBIT uses an efficient genomic distance metric along with a curated database to identify genome assemblies in seconds. You can read more about how the distance metric is calculated in the [Technical Details](https://www.notion.so/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=21) section!
+    GAMBIT uses an efficient genomic distance metric along with a curated database to identify genome assemblies in seconds. You can read more about how the distance metric is calculated in the [Technical Details](#technical-details) section!
 
 If the **distance between the query genome assembly and the closest genome in the database is within a built-in species threshold**, GAMBIT will assign the query genome to that species. Species thresholds are determined through a combination of automated and manual curation processes based on the diversity within the taxon.
 
@@ -174,7 +174,7 @@ Options:
 #### GAMBIT GTDB Database v2.0.0
 
 ??? toggle "Database Details"
-    This database is a **major update** to the Curated v1.3.0 database. This iteration of the GAMBIT database relies upon the [Genome Taxonomy Database](https://gtdb.ecogenomic.org/) (GTDB), an initiative to establish a standardised microbial taxonomy based on genome phylogeny. The genomes used to construct the phylogeny are obtained from [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/) and [GenBank](https://www.ncbi.nlm.nih.gov/genbank/), independently quality-controlled using [CheckM](https://github.com/Ecogenomics/CheckM/wiki) before inclusion in GTDB. 
+    This database is a **major update** to the Curated v1.3.0 database. This iteration of the GAMBIT database relies upon the [Genome Taxonomy Database](https://gtdb.ecogenomic.org/) (GTDB), an initiative to establish a standardised microbial taxonomy based on genome phylogeny. The genomes used to construct the phylogeny are obtained from [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/) and [GenBank](https://www.ncbi.nlm.nih.gov/genbank/), independently quality-controlled using [CheckM](https://github.com/Ecogenomics/CheckM/wiki) before inclusion in GTDB.
 
     This database was computed from [GTDB Release 214.1](https://gtdb.ecogenomic.org/stats/r214) as of April 28th, 2023. 
 
@@ -220,7 +220,7 @@ Options:
 #### GAMBIT RefSeq Curated Database v1.3.0
 
 ??? toggle "Database Details"
-    This database is a **patch update** to the Curated v1.2.0 database. In addition to all of the species included in the v1.2.0 database below, this database replaces all species in the ***Mycobacterium, Mycolicibacterium, Mycobacteroides*, and *Mycolicibacter*** genera with the available genomes in RefSeq as of October 16th, 2023. 
+    This database is a **patch update** to the Curated v1.2.0 database. In addition to all of the species included in the v1.2.0 database below, this database replaces all species in the **_Mycobacterium_, _Mycolicibacterium_, _Mycobacteroides_, and _Mycolicibacter_** genera with the available genomes in RefSeq as of October 16th, 2023.
 
     - **Manual curation efforts**
         
@@ -264,7 +264,7 @@ Options:
             
         - Genomes added from GTDB include the following species:
           
-            [gambit-list-of-new-species-db-v1_2_0.txt](https://prod-files-secure.s3.us-west-2.amazonaws.com/be290196-9090-4f3c-a9ab-fe730ad213e0/6fb47ff9-c62a-4173-b929-1451120a23a3/gambit-list-of-new-species-db-v1_2_0.txt)
+            [gambit-list-of-new-species-db-v1_2_0.txt](../assets/files/gambit-list-of-new-species-db-v1_2_0.txt)
                 
     - **Manual curation efforts**
        
@@ -463,7 +463,7 @@ If the query genome distance is greater than the species diameter, GAMBIT attemp
 
 /// html | div[style='float: right; width: 50%; padding: 20px;']
 !!! caption "Distribution of GAMBIT distances"
-    ##### Figure 1 {#figure1}
+    ##### Figure 1 {% raw %} {#figure1} {% endraw %}
     ![**Figure 1: Distribution of GAMBIT distances within a species and to the nearest sister taxon in the GAMBIT reference database.** Three histograms are shown in each panel (each normalized independently). The green histogram represents the distribution of GAMBIT distances from each reference genome in the species to the closest genome also within the same species. The blue histogram represents the distribution of GAMBIT distances for all pairwise comparisons within the species. The red histogram represents the distribution of GAMBIT distances from each genome in the species of interest to the closest genome in the species’ closest sister taxon. The dashed blue line represents the classification threshold for that species in the GAMBIT database, which in both cases was derived from the maximum intra-species distance. Panel A shows *Klebsiella pneumoniae* and its closest sister taxon *Klebsiella variicola*, panel B shows *Neisseria gonorrhoeae* and its closest sister taxon *Neisseria meningitidis*.  ****https://doi.org/10.1371/journal.pone.0277575.g004](../assets/figures/GAMBIT-distribution-of-distances.png)
 
     **Figure 1: Distribution of GAMBIT distances within a species and to the nearest sister taxon in the GAMBIT reference database.** Three histograms are shown in each panel (each normalized independently). The green histogram represents the distribution of GAMBIT distances from each reference genome in the species to the closest genome also within the same species. The blue histogram represents the distribution of GAMBIT distances for all pairwise comparisons within the species. The red histogram represents the distribution of GAMBIT distances from each genome in the species of interest to the closest genome in the species’ closest sister taxon. The dashed blue line represents the classification threshold for that species in the GAMBIT database, which in both cases was derived from the maximum intra-species distance. Panel A shows _Klebsiella pneumoniae_ and its closest sister taxon _Klebsiella variicola_, panel B shows _Neisseria gonorrhoeae_ and its closest sister taxon _Neisseria meningitidis_. 
@@ -495,7 +495,7 @@ Spearman correlation was high in all four data sets ([Figure 2](#figure2)) (Set 
 
 /// html | div[style='float: right; width: 50%; padding: 20px;']
 !!! caption "Relationship between GAMBIT distance and ANI"
-    ##### Figure 2 {#figure2}
+    ##### Figure 2 {% raw %} {#figure2} {% endraw %}
     ![**Figure 2: Relationship between GAMBIT distance and ANI (Average Nucleotide Identity).**  The relationship is nonlinear but very close to monotonic as measured by Spearman correlation (shown in the bottom left corner of each subplot). ANI was calculated using the [FastANI](https://github.com/ParBLiSS/FastANI) tool with default parameter values. GAMBIT distances were calculated for all sets using the same parameter (k = 11, prefix = ATGAC). As FastANI only reports ANI values greater than ~80%, the fraction of total pairwise comparisons shown here were 100%, 5.5%, 7.4% and 47.4% for data sets 1–4 respectively. https://doi.org/10.1371/journal.pone.0277575.g001](../assets/figures/GAMBIT-distance-vs-ani.png)
 
     **Figure 2: Relationship between GAMBIT distance and ANI (Average Nucleotide Identity).**  The relationship is nonlinear but very close to monotonic as measured by Spearman correlation (shown in the bottom left corner of each subplot). ANI was calculated using the [FastANI](https://github.com/ParBLiSS/FastANI) tool with default parameter values. GAMBIT distances were calculated for all sets using the same parameter (k = 11, prefix = ATGAC). As FastANI only reports ANI values greater than ~80%, the fraction of total pairwise comparisons shown here were 100%, 5.5%, 7.4% and 47.4% for data sets 1–4 respectively. 
@@ -541,7 +541,7 @@ Because GAMBIT databases have built-in species thresholds, genomes are included 
     2. Utilizing a database that draws the genomes and their annotations from a specific source. For example, bacterial GAMBIT databases v1.0.0 through v1.3.0 draw their genome annotations predominantly from NCBI’s RefSeq database, whereas v2.0.0 draws all genome annotations from GTDB. Database v1.0.0 is also inclusive of all bacterial genomes that were available on RefSeq at the time of creation, whereas v2.0.0 excludes genomes that do not expand the diversity of their species.
 
 ??? toggle "How do I list taxa included in a GAMBIT database?"
-    There are several ways to retrieve the information regarding which taxa were included in a given GAMBIT database release. The easiest way is to download the taxa list file provided [on this documentation page](https://www.notion.so/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=21) for every GAMBIT database release.
+    There are several ways to retrieve the information regarding which taxa were included in a given GAMBIT database release. The easiest way is to download the taxa list file provided [on this documentation page](./gambit_database.md) for every GAMBIT database release.
 
     Additionally, there are several programmatic ways to retrieve this information directly from the GAMBIT metadata file (which typically ends in ".gdb"). Here we present a few examples: using [SQLite3](https://www.sqlite.org/), [DBeaver](https://dbeaver.io/) or the [GAMBITtools](https://github.com/gambit-suite/gambittools) software.
     
@@ -612,7 +612,7 @@ Because GAMBIT databases have built-in species thresholds, genomes are included 
 
         Type `SELECT taxa.name,COUNT(genome_annotations.taxon_id) FROM taxa LEFT JOIN genome_annotations ON genome_annotations.taxon_id = taxa.id WHERE taxa.rank LIKE 'species' GROUP BY taxa.key ORDER BY taxa.name ASC;` and check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel). 
         
-        !!! caption narrow "Number of Genomes
+        !!! caption narrow "Number of Genomes"
             ![Number of Genomes](../assets/figures/GAMBIT-dbeaver-number-genomes.png)
         
 ??? toggle "How do I get the number of genomes and the distance threshold representing a given species?"
@@ -638,7 +638,7 @@ Because GAMBIT databases have built-in species thresholds, genomes are included 
         
         Type `SELECT taxa.name,taxa.distance_threshold,COUNT(genome_annotations.taxon_id) FROM taxa LEFT JOIN genome_annotations ON genome_annotations.taxon_id = taxa.id WHERE taxa.rank LIKE 'species' GROUP BY taxa.key ORDER BY taxa.name ASC;` and check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel). 
         
-        !!! caption narrow "Number of Genomes and Distance Threshold
+        !!! caption narrow "Number of Genomes and Distance Threshold"
             ![Number Genomes and Distance Threshold](../assets/figures/GAMBIT-dbeaver-number-genomes-and-distance-threshold.png)
     
 ??? toggle "How do I create a custom GAMBIT database?"

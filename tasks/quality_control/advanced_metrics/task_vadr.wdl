@@ -12,15 +12,15 @@ task vadr {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2"
     Int min_length = 50
     Int max_length = 30000
-    Int cpu = 2
-    Int memory = 8
+    Int cpu = 4
+    Int memory = 16
     Int disk_size = 100
   }
   String out_base = basename(genome_fasta, '.fasta')
   command <<<
     set -e
 
-  if [ ~{assembly_length_unambiguous} -gt ~{skip_length} ]; then
+    if [ ~{assembly_length_unambiguous} -gt ~{skip_length} ]; then
 
       # remove terminal ambiguous nucleotides
       /opt/vadr/vadr/miniscripts/fasta-trim-terminal-ambigs.pl \

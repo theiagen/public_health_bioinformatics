@@ -171,7 +171,7 @@ You can monitor the progress of the workflow by checking the console output for 
 
 ??? tip "Tips for monitoring your workflow"
 
-    ##### Tips for monitoring workflow progress {#tips-for-monitoring}
+    ##### Tips for monitoring workflow progress {% raw %} {#tips-for-monitoring} {% endraw %}
 
     After you've started the workflow using the **`miniwdl run`** command, you'll see various messages appearing in the terminal. These messages provide information about the various steps of the workflow as they are executed. Monitoring this output is crucial for ensuring that the workflow is progressing as expected.
 
@@ -217,7 +217,7 @@ You can monitor the progress of the workflow by checking the console output for 
     Monitoring the workflow progress through the console output is an essential practice for successful execution. It allows you to track the status of individual tasks, identify errors, and ensure that your analysis is proceeding as planned. Regularly reviewing the output will help you address any issues and improve the efficiency of your bioinformatics workflow.
 
 ??? tip "What to do if you need to cancel a run"
-    ##### Canceling a Running Workflow {#canceling-a-run}
+    ##### Canceling a Running Workflow {% raw %} {#canceling-a-run} {% endraw %}
 
     Canceling a running workflow is an important step in case you need to stop the execution due to errors, unexpected behavior, or any other reason. If you're using `miniwdl` to run your workflow, here's how you can cancel a workflow run while it's in progress:
 

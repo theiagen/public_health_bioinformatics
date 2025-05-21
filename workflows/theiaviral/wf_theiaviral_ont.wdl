@@ -39,7 +39,7 @@ workflow theiaviral_ont {
     Boolean call_porechop = false
     Boolean skip_rasusa = false
     Boolean skip_screen = false
-    Boolean skip_raven = false
+    Boolean call_raven = true
   }
   # get the PHB version
   call versioning.version_capture {
@@ -121,7 +121,7 @@ workflow theiaviral_ont {
   if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
     # run de novo if no reference genome is provided so we can select a reference
     if (! defined(reference_fasta)) {
-      if (! skip_raven) {
+      if (call_raven) {
         # de novo assembly with raven
         call raven_task.raven {
           input:

@@ -34,7 +34,7 @@ workflow theiaviral_illumina_pe {
     File? checkv_db
     Boolean skip_screen = true # if false, run clean read screening
     Boolean skip_qc = false # if true, skip read QC, used for running with TheiaViral_Panel
-    Boolean skip_metaviralspades = false # if true, move to megahit immediately
+    Boolean call_metaviralspades = true # if false, move to megahit immediately
     Boolean skip_rasusa = false
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     Boolean extract_unclassified = false # if true, unclassified reads will be extracted from kraken2 output
@@ -46,6 +46,9 @@ workflow theiaviral_illumina_pe {
     #assembly resources
     Int? assembly_cpu
     Int? assembly_memory
+
+
+    # expose all optional inputs at this level to allow for modification in theiaviral_panel
   }
   # get the PHB version
   call versioning.version_capture {
@@ -69,30 +72,32 @@ workflow theiaviral_illumina_pe {
         kraken_db = kraken_db,
         workflow_series = "theiaviral"
     }
-  } 
-  if (! skip_rasusa) {
-    # get genome length if it is not provided
-    if (! defined(genome_length)) {
-      call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
+    if (! skip_rasusa) {
+      # get genome length if it is not provided
+      if (! defined(genome_length)) {
+        call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
+          input:
+            taxon = taxon
+        }
+      }
+      # downsample reads to a specific coverage
+      call rasusa_task.rasusa as rasusa {
         input:
-          taxon = taxon
+          read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
+          read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
+          samplename = samplename,
+          genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
       }
     }
-    # downsample reads to a specific coverage
-    call rasusa_task.rasusa as rasusa {
-      input:
-        read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
-        read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
-        samplename = samplename,
-        genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
-    }
-  }
+  } 
+  File read1_selected = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1])
+  File read2_selected = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]) 
   # clean read screening
   if (! skip_screen) {
     call read_screen_task.check_reads as clean_check_reads {
       input:
-        read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+        read1 = read1_selected,
+        read2 = read2_selected,
         workflow_series = "theiaviral",
         expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
@@ -101,11 +106,11 @@ workflow theiaviral_illumina_pe {
     # run de novo if no reference genome is provided so we can select a reference
     if (! defined(reference_fasta)) {
       # de novo assembly - prioritize metaviralspades
-      if (! skip_metaviralspades) {
+      if (call_metaviralspades) {
         call spades_task.spades {
           input:
-            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
-            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
+            read1 = read1_selected,
+            read2 = read2_selected,
             samplename = samplename,
             spades_type = "metaviral",
             cpu = assembly_cpu,
@@ -116,8 +121,8 @@ workflow theiaviral_illumina_pe {
       if (select_first([spades.spades_status, "FAIL"]) == "FAIL") {
         call megahit_task.megahit {
           input:
-            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
-            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
+            read1 = read1_selected,
+            read2 = read2_selected,
             samplename = samplename,
             cpu = assembly_cpu,
             memory = assembly_memory
@@ -154,8 +159,8 @@ workflow theiaviral_illumina_pe {
     call bwa_task.bwa {
       input:
         samplename = samplename,
-        read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
-        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
+        read1 = read1_selected,
+        read2 = read2_selected,
         reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
     }
     # consensus calling via ivar
@@ -165,7 +170,7 @@ workflow theiaviral_illumina_pe {
         samplename = samplename,
         reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
         min_qual = min_map_quality,
-        consensus_min_depth = select_first([min_depth, 10]),
+        consensus_min_depth = min_depth,
         consensus_min_freq = min_allele_freq,
         all_positions = true
     }
@@ -178,7 +183,7 @@ workflow theiaviral_illumina_pe {
         min_qual = min_map_quality,
         organism = "",
         variant_min_freq = min_allele_freq,
-        variant_min_depth = select_first([min_depth, 10])
+        variant_min_depth = min_depth
     }
     # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
     call assembly_metrics_task.stats_n_coverage as read_mapping_stats {

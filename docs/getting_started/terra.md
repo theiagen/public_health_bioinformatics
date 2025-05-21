@@ -68,7 +68,7 @@ Workflows are available for updating the Pangolin and VADR assignments made to S
 
 Phylogenetic trees are constructed to assess the evolutionary relationships between sequences in the tree. These evolutionary relationships are often used as a proxy for epidemiological relationships, and sometimes for inferring transmission between isolation sources. 
 
-There are various methods for constructing phylogenetic trees, depending on the sequencing data being used, the organism being analyzed and how it evolved, what you would like to infer from the tree, and the computational resources available for the tree construction. Theiagen has a number of workflows for constructing phylogenetic trees. For full details of these workflows, please see [Guide to Phylogenetics](https://www.notion.so/Guide-to-Phylogenetics-c997fe59e3f0423aa8a73eeccccd1b92?pvs=21) which includes advice on the appropriate tree-building workflows and phylogenetic visualization approaches.
+There are various methods for constructing phylogenetic trees, depending on the sequencing data being used, the organism being analyzed and how it evolved, what you would like to infer from the tree, and the computational resources available for the tree construction. Theiagen has a number of workflows for constructing phylogenetic trees. For full details of these workflows, please see [Guide to Phylogenetics](../guides/phylogenetics.md) which includes advice on the appropriate tree-building workflows and phylogenetic visualization approaches.
 
 !!! example "SOPs for ==phylogenetic construction=="
     | SOP | SOP Version | PHB Version Compatibility |
@@ -78,7 +78,7 @@ There are various methods for constructing phylogenetic trees, depending on the 
 
 ### Phylogenetic placement
 
-Phylogenetic placement is used to place your own sequences onto an existing phylogenetic tree. This may be used to find the closest relatives to your sequence(s). More details, including phylogenetic visualization approaches can be found in [Guide to Phylogenetics](https://www.notion.so/Guide-to-Phylogenetics-c997fe59e3f0423aa8a73eeccccd1b92?pvs=21)  
+Phylogenetic placement is used to place your own sequences onto an existing phylogenetic tree. This may be used to find the closest relatives to your sequence(s). More details, including phylogenetic visualization approaches can be found in [Guide to Phylogenetics](../guides/phylogenetics.md).  
 
 ## Public Data Sharing
 
