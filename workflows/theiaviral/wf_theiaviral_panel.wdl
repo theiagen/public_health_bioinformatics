@@ -41,7 +41,7 @@ workflow theiaviral_panel {
 
     Boolean extract_unclassified = false
     Int minimum_read_number = 1000
-    Boolean skip_metaviralspades = false
+    Boolean call_metaviralspades = false
     Int? assembly_cpu = 16
     Int? assembly_memory = 64
   }  
@@ -100,7 +100,7 @@ workflow theiaviral_panel {
             read1 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
             read2 = select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2]),
             samplename = samplename + "_" + taxon_id,
-            skip_metaviralspades = skip_metaviralspades,
+            call_metaviralspades = call_metaviralspades,
             kraken_db = kraken_db,
             skip_qc = true,
             skip_screen = true,
