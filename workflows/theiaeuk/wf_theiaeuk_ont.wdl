@@ -20,7 +20,7 @@ workflow theiaeuk_ont {
     Int dragonflye_cpu = 8
     Int dragonflye_memory = 32
     Int dragonflye_disk_size = 100
-    String medaka_model = "r941_min_hac_g507"
+    String medaka_model = "r1041_e82_400bps_sup_v5.0.0"
     Int busco_memory = 24
     String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
     File gambit_db_genomes = "gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb"
