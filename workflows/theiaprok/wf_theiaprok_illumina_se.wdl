@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/assembly/task_shovill.wdl" as shovill
+import "../../workflows/utilities/wf_digger_denovo.wdl" as digger_denovo
 import "../../tasks/gene_typing/annotation/task_bakta.wdl" as bakta_task
 import "../../tasks/gene_typing/annotation/task_prokka.wdl" as prokka_task
 import "../../tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl" as amrfinderplus
@@ -18,6 +18,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/contamination/task_kmerfinder.wdl" as kmerfinder_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
+import "../../tasks/utilities/data_handling/task_arln_stats.wdl" as arln_stats
 import "../utilities/file_handling/wf_concatenate_illumina_lanes.wdl" as concatenate_lanes_workflow
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../utilities/wf_read_QC_trim_se.wdl" as read_qc
@@ -66,6 +67,7 @@ workflow theiaprok_illumina_se {
     Boolean call_resfinder = false
     Boolean call_plasmidfinder = true
     Boolean call_abricate = false
+    Boolean call_arln_stats = false
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String bakta_db = "full" # Default: "light" or "full"
@@ -123,15 +125,14 @@ workflow theiaprok_illumina_se {
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-      call shovill.shovill_se {
+      call digger_denovo.digger_denovo {
         input:
           samplename = samplename,
-          read1_cleaned = read_QC_trim.read1_clean,
-          genome_length = select_first([genome_length, clean_check_reads.est_genome_length, 0])
+          read1 = read_QC_trim.read1_clean
       }
       call quast_task.quast {
         input:
-          assembly = shovill_se.assembly_fasta,
+          assembly = digger_denovo.assembly_fasta,
           samplename = samplename
       }
       call cg_pipeline.cg_pipeline as cg_pipeline_raw {
@@ -148,52 +149,53 @@ workflow theiaprok_illumina_se {
       }
       call busco_task.busco {
           input:
-          assembly = shovill_se.assembly_fasta,
+          assembly = digger_denovo.assembly_fasta,
           samplename = samplename
       }
       if (perform_characterization) {
         call gambit_task.gambit {
           input:
-            assembly = shovill_se.assembly_fasta,
+            assembly = digger_denovo.assembly_fasta,
             samplename = samplename
         }      
         if (call_ani) {
           call ani_task.animummer as ani {
             input:
-              assembly = shovill_se.assembly_fasta,
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         if (call_kmerfinder) {
           call kmerfinder_task.kmerfinder_bacteria as kmerfinder {
             input:
-              assembly = shovill_se.assembly_fasta,
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
           input:
-            assembly = shovill_se.assembly_fasta,
+            assembly = digger_denovo.assembly_fasta,
             samplename = samplename,
             organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
         if (call_resfinder) {
           call resfinder.resfinder as resfinder_task {
             input:
-              assembly = shovill_se.assembly_fasta,
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename,
               organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
           }
         }      
         call ts_mlst_task.ts_mlst {
           input: 
-            assembly = shovill_se.assembly_fasta,
-            samplename = samplename
+            assembly = digger_denovo.assembly_fasta,
+            samplename = samplename,
+            taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon])
         }
         if (genome_annotation == "prokka") {
           call prokka_task.prokka {
             input:
-              assembly = shovill_se.assembly_fasta,
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename
           }
         }
@@ -209,7 +211,7 @@ workflow theiaprok_illumina_se {
           } 
           call bakta_task.bakta {
             input:
-              assembly = shovill_se.assembly_fasta,
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename,
               bakta_db_selected = select_first([bakta_custom_db, bakta_db_light, bakta_db_full])
           }
@@ -217,14 +219,14 @@ workflow theiaprok_illumina_se {
         if (call_plasmidfinder) {
           call plasmidfinder_task.plasmidfinder {
             input:
-              assembly = shovill_se.assembly_fasta,
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename
           }
         }
         if (call_abricate) {
           call abricate_task.abricate {
             input:
-              assembly = shovill_se.assembly_fasta,
+              assembly = digger_denovo.assembly_fasta,
               samplename = samplename,
               database = abricate_db
           }
@@ -257,7 +259,7 @@ workflow theiaprok_illumina_se {
         call merlin_magic_workflow.merlin_magic {
           input:
             merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
-            assembly = shovill_se.assembly_fasta,
+            assembly = digger_denovo.assembly_fasta,
             samplename = samplename,
             read1 = read_QC_trim.read1_clean,
             paired_end = false
@@ -298,7 +300,12 @@ workflow theiaprok_illumina_se {
                 "agrvate_docker": merlin_magic.agrvate_docker,
                 "agrvate_results": merlin_magic.agrvate_results,
                 "agrvate_summary": merlin_magic.agrvate_summary,
-                "agrvate_version": merlin_magic.agrvate_version,
+                "agrvate_version": merlin_magic.agrvate_version,    
+                "amr_search_csv": merlin_magic.amr_results_csv,
+                "amr_search_docker": merlin_magic.amr_search_docker,
+                "amr_search_results": merlin_magic.amr_search_results,
+                "amr_search_results_pdf": merlin_magic.amr_results_pdf,
+                "amr_search_version": merlin_magic.amr_search_version,
                 "amrfinderplus_all_report": amrfinderplus_task.amrfinderplus_all_report,
                 "amrfinderplus_amr_betalactam_betalactam_genes": amrfinderplus_task.amrfinderplus_amr_betalactam_betalactam_genes,
                 "amrfinderplus_amr_betalactam_carbapenem_genes": amrfinderplus_task.amrfinderplus_amr_betalactam_carbapenem_genes,
@@ -323,7 +330,7 @@ workflow theiaprok_illumina_se {
                 "ani_mummer_version": ani.ani_mummer_version,
                 "ani_output_tsv": ani.ani_output_tsv,
                 "ani_top_species_match": ani.ani_top_species_match,
-                "assembly_fasta": shovill_se.assembly_fasta,
+                "assembly_fasta": digger_denovo.assembly_fasta,
                 "assembly_length": quast.genome_length,
                 "bakta_gbff": bakta.bakta_gbff,
                 "bakta_gff3": bakta.bakta_gff3,
@@ -342,7 +349,7 @@ workflow theiaprok_illumina_se {
                 "cg_pipeline_report_raw": cg_pipeline_raw.cg_pipeline_report,
                 "city": city,
                 "collection_date": collection_date,
-                "contigs_gfa": shovill_se.contigs_gfa,
+                "contigs_gfa": digger_denovo.contigs_gfa,
                 "county": county,
                 "ectyper_predicted_serotype": merlin_magic.ectyper_predicted_serotype,
                 "ectyper_results": merlin_magic.ectyper_results,
@@ -551,7 +558,7 @@ workflow theiaprok_illumina_se {
                 "shigeifinder_serotype": merlin_magic.shigeifinder_serotype,
                 "shigeifinder_version_reads": merlin_magic.shigeifinder_version_reads,
                 "shigeifinder_version": merlin_magic.shigeifinder_version,
-                "shovill_se_version": shovill_se.shovill_version,
+                "assembler_version": digger_denovo.assembler_version,
                 "sistr_allele_fasta": merlin_magic.sistr_allele_fasta,
                 "sistr_allele_json": merlin_magic.sistr_allele_json,
                 "sistr_antigenic_formula": merlin_magic.sistr_antigenic_formula,
@@ -636,6 +643,17 @@ workflow theiaprok_illumina_se {
           }
           }
         }
+        if (call_arln_stats) {
+          call arln_stats.arln_stats {
+            input:
+              samplename = samplename,
+              taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
+              workflow_type = "se",
+              genome_length = quast.genome_length,
+              read1_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
+              read1_clean = read_QC_trim.read1_clean
+          }
+        }
       }
     }
   }
@@ -691,10 +709,12 @@ workflow theiaprok_illumina_se {
     String? kraken2_report = read_QC_trim.kraken_report
     String? kraken2_docker = read_QC_trim.kraken_docker
     String? kraken2_database = read_QC_trim.kraken_database
-    #Assembly - shovill outputs
-    File? assembly_fasta = shovill_se.assembly_fasta
-    File? contigs_gfa = shovill_se.contigs_gfa
-    String? shovill_se_version = shovill_se.shovill_version
+    #Assembly - digger_denovo outputs
+    File? assembly_fasta = digger_denovo.assembly_fasta
+    File? contigs_gfa = digger_denovo.contigs_gfa
+    File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
+    String? assembler = digger_denovo.assembler_used
+    String? assembler_version = digger_denovo.assembler_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
@@ -1051,5 +1071,10 @@ workflow theiaprok_illumina_se {
     String? abricate_vibrio_serogroup = merlin_magic.abricate_vibrio_serogroup
     # export taxon table output
     String? taxon_table_status = export_taxon_table.status
+    # ARLN required outputs
+    String? arln_r1_q30_raw = arln_stats.read1_raw_q30
+    String? arln_r1_q30_clean = arln_stats.read1_clean_q30
+    String? arln_assembly_ratio = arln_stats.assembly_ratio
+    String? arln_stats_docker_version = arln_stats.docker_version
   }
 }

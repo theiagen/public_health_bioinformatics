@@ -5,7 +5,7 @@
   "theiaprok_illumina_pe.skip_screen": true,
   "theiaprok_illumina_pe.read_QC_trim.call_midas": false,
   "theiaprok_illumina_pe.genome_annotation": "prokka",
-  "theiaprok_illumina_pe.shovill_pe.assembler": "skesa",
+  "theiaprok_illumina_pe.digger_denovo.assembler": "skesa",
   "theiaprok_illumina_pe.merlin_magic.call_poppunk": false,
   "theiaprok_illumina_pe.gambit.gambit_db_signatures" : "./tests/inputs/completely-empty-for-test.txt",
   "theiaprok_illumina_pe.gambit.gambit_db_genomes" : "./tests/inputs/completely-empty-for-test.txt"

@@ -30,11 +30,11 @@ task amr_search {
         ~{samplename}
   >>>
   output {
-    File json_output = "~{samplename}_paarsnp_results.jsn"
-    File output_csv = "~{samplename}_amr_results.csv"
-    File output_pdf = "~{samplename}_amr_results.pdf"
-    File output_version = "output_amr_version.txt"
-    String amr_search_docker = docker
+    File amr_search_json_output = "~{samplename}_paarsnp_results.jsn"
+    File amr_search_output_csv = "~{samplename}_amr_results.csv"
+    File amr_search_output_pdf = "~{samplename}_amr_results.pdf"
+    String amr_search_version = read_string("output_amr_version.txt")
+    String amr_search_docker_image = docker
   }
 
   runtime {
