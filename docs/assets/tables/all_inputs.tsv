@@ -1900,7 +1900,7 @@ theiaviral_illumina_pe	min_depth	Int	Minimum read depth required for a variant t
 theiaviral_illumina_pe	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_Illumina_PE
 theiaviral_illumina_pe	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	"family"	Optional	TheiaViral_Illumina_PE
 theiaviral_illumina_pe	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_Illumina_PE
-theiaviral_illumina_pe	skip_metaviralspades	Boolean	True/False to skip assembly with Metaviralspades and instead use MEGAHIT	FALSE	Optional	TheiaViral_Illumina_PE
+theiaviral_illumina_pe	call_metaviralspades	Boolean	True/False to call assembly with Metaviralspades and use MEGAHIT as fallback	TRUE	Optional	TheiaViral_Illumina_PE
 theiaviral_illumina_pe	skip_rasusa	Boolean	True/False to skip read subsampling with Rasusa	FALSE	Optional	TheiaViral_Illumina_PE
 theiaviral_illumina_pe	skip_screen	Boolean	True/False to skip read screening check prior to analysis	FALSE	Optional	TheiaViral_Illumina_PE
 bcftools_consensus	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_ONT
@@ -1985,5 +1985,5 @@ theiaviral_ont	min_map_quality	Int	Minimum mapping quality required for read ali
 theiaviral_ont	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	"family"	Optional	TheiaViral_ONT
 theiaviral_ont	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_ONT
 theiaviral_ont	skip_rasusa	Boolean	True/False to skip read subsampling with Rasusa	FALSE	Optional	TheiaViral_ONT
-theiaviral_ont	skip_raven	Boolean	True/False to skip assembly with Raven and instead use Flye	FALSE	Optional	TheiaViral_ONT
+theiaviral_ont	skip_raven	Boolean	True/False to call assembly with Raven and use Flye as fallback	TRUE	Optional	TheiaViral_ONT
 theiaviral_ont	skip_screen	Boolean	True/False to skip read screening check prior to analysis	FALSE	Optional	TheiaViral_ONT

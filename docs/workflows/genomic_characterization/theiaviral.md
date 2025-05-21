@@ -31,6 +31,20 @@
 
     </div>
 
+### Workflow Diagram
+
+=== "Illumina_PE"
+
+    !!! caption "TheiaViral_Illumina_PE Workflow Diagram"
+
+        ![TheiaViral_Illumina_PE Workflow Diagram](../../assets/figures/TheiaViral_Illumina_PE.png)
+
+=== "ONT"
+
+    !!! caption "TheiaViral_ONT Workflow Diagram"
+
+        ![TheiaViral_ONT Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
+
 ## TheiaViral Workflows for Different Input Types
 
 <div class="grid cards " markdown>
@@ -74,6 +88,20 @@
     {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaViral_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
 
     ///
+
+
+#### Input notes
+
+<div class="grid cards " markdown>
+- ??? warning "`read_extraction_rank`"
+    By default, the `read_extraction_rank` parameter is set to "family", which indicates that reads will be extracted if they are classified as the taxonomic family of the input `taxon`, including all descendant taxa of the family. Read classification may not resolve to the rank of the input `taxon`, so these reads may be classified at higher ranks. For example, some *Lyssavirus rabies* (species) reads may only be resolved to *Lyssavirus* (genus), so they would not be extracted if the `read_extraction_rank` is set to "species". Setting the `read_extraction_rank` above the inputted `taxon`'s rank can therefore dramatically increase the number of reads recovered, at the potential cost of including other viruses. This likely is not a problem for scarcely represented lineages, e.g. a sample that is expected to include *Lyssavirus rabies* is unlikely to contain other viruses of the corresponding family, Rhabdoviridae, within the same sample. However, setting a `read_extraction_rank` far beyond the input `taxon` rank can be problematic when multiple representatives of the same viral family are included in similar abundance within the same sample. 
+    To further refine the desired `read_extraction_rank`, please review the corresponding classification reports of the respective classification software (kraken2 for Illumina and Metabuli for ONT)
+</div>
+
+<div class="grid cards " markdown>
+- ??? warning "`min_allele_freq`, `min_depth`, and `min_map_quality`"
+    These parameters have a direct effect on the variants that will ultimately be reported in the consensus assembly. `min_allele_freq` determines the minimum proportion of an allelic variant to be reported in the consensus assembly. `min_depth` and `min_map_quality` affect how "N" is reported in the consensus, i.e. depth below `min_depth` is reported as "N" and reads with mapping quality below `min_map_quality` are not included in depth calculations.      
+</div>
 
 ### All Tasks
 
@@ -373,16 +401,6 @@
 
     ///
 
-### Workflow Diagram
+### Acknowlegments
 
-=== "Illumina_PE"
-
-    !!! caption "TheiaViral_Illumina_PE Workflow Diagram"
-
-        ![TheiaViral_Illumina_PE Workflow Diagram](../../assets/figures/TheiaViral_Illumina_PE.png)
-
-=== "ONT"
-
-    !!! caption "TheiaViral_ONT Workflow Diagram"
-
-        ![TheiaViral_ONT Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
+We would like to thank Danny Park at the BROAD institute and Jared Johnson at the Washington State Department of Public Health for correspondence during the development of TheiaViral. TheiaViral was built referencing [viral-assemble](https://github.com/broadinstitute/viral-assemble/), [VAPER](https://github.com/DOH-JDJ0303/vaper), and [Artic](https://github.com/artic-network/fieldbioinformatics).
