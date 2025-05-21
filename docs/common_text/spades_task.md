@@ -17,6 +17,10 @@
         - `quast_denovo`
         - `skani`
         - `ncbi_datasets`
+<!-- endif -->
+
+    ???+ warning "Non-deterministic output(s)"
+        This task may yield non-deterministic outputs.
 
     !!! techdetails "MetaviralSPAdes Technical Details"
     |  | Links |
@@ -25,4 +29,3 @@
     | Software Source Code | [SPAdes on GitHub](https://github.com/ablab/spades) |
     | Software Documentation | [SPAdes Manual](https://ablab.github.io/spades/index.html) |
     | Original Publication(s) | [MetaviralSPAdes: assembly of viruses from metagenomic data](https://doi.org/10.1093/bioinformatics/btaa490) |
-<!-- endif -->

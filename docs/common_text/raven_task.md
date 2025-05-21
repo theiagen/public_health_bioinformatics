@@ -19,6 +19,12 @@
         - `ncbi_datasets`
 <!-- endif -->
 
+    ???+ warning "Error traceback"
+        Raven may fail with cryptic "segmentation fault" (segfault) errors or by failing to output an output file. It is difficult to traceback the source of these issues, though increasing the `memory` parameter may resolve some errors.
+
+    ???+ warning "Non-deterministic output(s)"
+        This task may yield non-deterministic outputs.
+
     !!! techdetails "Raven Technical Details"
         |  | Links |
         | --- | --- |

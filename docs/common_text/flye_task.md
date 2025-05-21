@@ -31,6 +31,9 @@
         - `ncbi_datasets`
 <!-- endif -->
 
+    ???+ warning "Non-deterministic output(s)"
+        This task may yield non-deterministic outputs.
+
     !!! techdetails "Flye Technical Details"
         |  | Links |
         | --- | --- |

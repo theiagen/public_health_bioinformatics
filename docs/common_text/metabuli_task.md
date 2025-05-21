@@ -2,6 +2,9 @@
 
     The `metabuli` task is used to classify and extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.
 
+    ??? `cpus` / `memory`
+        Increasing the memory and cores allocated to Metabuli can substantially increase throughput.
+
 <!-- if: theiaviral -->
     ??? dna "`extract_unclassified`"
         This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.

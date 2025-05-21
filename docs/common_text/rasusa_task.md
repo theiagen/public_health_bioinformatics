@@ -5,6 +5,9 @@
     ??? dna "`coverage`"
         This parameter specifies the target coverage for subsampling. The default value is `250`, but users can adjust it as needed.
 
+    ???+ warning "Non-deterministic output(s)"
+        This task may yield non-deterministic outputs.
+
     !!! techdetails "Rasusa Technical Details"
         |  | Links |
         | --- | --- |
