@@ -58,6 +58,16 @@ The **TheiaViral** workflows are designed for the assembly, quality assessment, 
         It is recommended to trim adapter sequencings via `dorado` basecalling prior to running TheiaViral_ONT, though `porechop` can optionally be called to trim adapters within the workflow.
 
         **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaViral_ONT workflow must be quality assessed before reporting results.**
+    
+-   <center> **TheiaViral_Panel** </center>
+
+    ---
+
+    !!! dna "Illumina Metagenomic Panel Data"
+
+        The TheiaViral_Panel workflow inputs are metagenomic reads, specifically from Illumina's Viral Surviellance Panel (VSP). Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time and storage costs.
+
+        Taxon IDs included in the `taxon_ids` input array will dictate a list of species that will be identified by the workflow. Species included in the `output_taxon_table` TSV will also dictate what assembled species will be exported to Terra workspaces. While the workflow was built with the VSP species list in mind, it will work with custom viral taxon ID sets. 
 
 </div>
 
