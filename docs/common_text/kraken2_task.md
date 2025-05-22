@@ -10,6 +10,9 @@
 <!-- if: theiaviral -->
 ??? toggle "Read Identification"
 <!-- endif -->
+<!-- if: theiaviral_panel -->
+??? task "`krakenstandalone`"
+<!-- endif -->
 
     `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
 
@@ -39,6 +42,12 @@
     Kraken2 is run on the set of raw reads, provided as input, as well as the set of clean reads that are resulted from the `read_QC_trim` workflow
 
     The Kraken2 software is database-dependent and **taxonomic assignments are highly sensitive to the database used**. An appropriate database should contain the expected organism(s) (e.g. _Escherichia coli_) and other taxa that may be present in the reads (e.g. _Citrobacter freundii_, a common contaminant).
+<!-- endif -->
+
+<!-- if: theiaviral_panel -->
+    Kraken2 is run on a set of clean reads resulting from the `read_QC_trim` workflow utilizing the `krakenstandalone` task
+
+    The Kraken2 software is database-dependent and **taxonomic assignments are highly sensitive to the database used**. Please use the Kraken viral database available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral_20240112.tar.gz` or other sufficient viral databases. Database selection is highly influential on results. 
 <!-- endif -->
 
     !!! techdetails "Kraken2 Technical Details"
