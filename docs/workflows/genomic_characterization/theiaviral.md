@@ -418,7 +418,7 @@
 <div class="grid cards " markdown>
 ??? question "How is *de novo* assembly quality evaluated?"
     
-    TheiaViral uses QUAST to acquire basic contiguity statistics and CheckV to assess viral genome completeness and contamination. Additionally, the reference selection software, Skani, can provide a quantitative comparison between the *de novo* assembly and the best reference genome. To evaluate *de novoI assembly quality, the following outputs should be evaluated:
+    *De novo* assembly quality evaluation focuses on the completeness and contiguity of the genome. While a ground truth genome does not truly exist for quality comparison, reference genome selection can help contextualize quality if the reference is sufficiently similar to the *de novo* assembly. TheiaViral uses QUAST to acquire basic contiguity statistics and CheckV to assess viral genome completeness and contamination. Additionally, the reference selection software, Skani, can provide a quantitative comparison between the *de novo* assembly and the best reference genome.
 
     <br>
 
@@ -451,6 +451,8 @@
 ??? question "How is consensus assembly quality evaluated?" 
 
     Consensus assemblies are derived from a reference genome, so quality assessment focuses on coverage and variant quality. Bases with insufficient coverage are denoted as "N". Additionally, the size and contiguity of a TheiaViral consensus assembly is expected to approximate the reference genome, so any discrepancy here is likely due to inferred structural variation.
+
+    <br>
 
     **Completeness and contamination**
     <br>
