@@ -34,7 +34,7 @@
 <div class="grid cards " markdown>
 ??? warning "Segmented viruses"
 
-    TheiaViral does not have specific mechanisms for handling segmented viruses (e.g. influenza and hantavirus), which may affect reference selection and consensus assembly. If your usage includes segmented viruses, please contact us to discuss best practices. 
+    TheiaViral has not been extensively tested with segmented viruses (e.g. influenza and hantavirus). Reference selection and consensus assembly may be affected by these lineages. We are excited to incorporate further testing of these lineages, so please reach out to discuss your data and how parameter adjustment may improve your results.
 </div>
 
 ### Workflow Diagram
