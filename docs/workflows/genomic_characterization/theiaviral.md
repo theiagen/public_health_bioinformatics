@@ -77,20 +77,6 @@
 
 </div>
 
-### Workflow Diagram
-
-=== "Illumina_PE"
-
-    !!! caption "TheiaViral_Illumina_PE Workflow Diagram"
-
-        ![TheiaViral_Illumina_PE Workflow Diagram](../../assets/figures/TheiaViral_Illumina_PE.png)
-
-=== "ONT"
-
-    !!! caption "TheiaViral_ONT Workflow Diagram"
-
-        ![TheiaViral_ONT Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
-
 ### Inputs
 
 ???+ dna_blue "`taxon` _required_ input parameter"
