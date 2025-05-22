@@ -266,7 +266,7 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
 
 {{ include_md("common_text/nextclade_task.md", condition="theiaviral", indent=4) }}
 
-=== "TheiaViral_Pannel"
+=== "TheiaViral_Panel"
 
     ??? toggle "Versioning"
 
@@ -403,7 +403,7 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
         -   {{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=12) }}
 
         </div>
-        
+
 ### Outputs
 
 === "TheiaViral_Illumina_PE"
