@@ -80,7 +80,7 @@ def define_env(env):
         sort_by = [(col, False) if isinstance(col, str) else col for col in sort_by]
 
       for col, reverse in reversed(sort_by):
-          rows.sort(key=lambda r: r.get(col.lower, ''), reverse=reverse)
+          rows.sort(key=lambda r: r.get(col, ''), reverse=reverse)
 
     indent_str = ' ' * indent
 

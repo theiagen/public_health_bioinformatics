@@ -308,3 +308,13 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_amr_search.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
+ - name: TheiaViral_ONT_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_ont.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: TheiaViral_Illumina_PE_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_illumina_pe.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json

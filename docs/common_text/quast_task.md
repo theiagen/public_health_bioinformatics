@@ -1,4 +1,4 @@
-??? task  "`quast`: Assembly Quality Assessment"
+??? task "`quast`: Assembly Quality Assessment"
 
     QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics without a reference being necessary. It includes useful metrics such as number of contigs, length of the largest contig and N50. 
 
