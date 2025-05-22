@@ -453,6 +453,8 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
 
     Consensus assemblies are derived from a reference genome, so quality assessment focuses on coverage and variant quality. Bases with insufficient coverage are denoted as "N". Additionally, the size and contiguity of a TheiaViral consensus assembly is expected to approximate the reference genome, so any discrepancy here is likely due to inferred structural variation.
 
+    <br>
+
     **Completeness and contamination**
     <br>
     
