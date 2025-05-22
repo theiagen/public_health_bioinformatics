@@ -547,3 +547,9 @@
     !!! caption "TheiaViral_ONT Workflow Diagram"
 
         ![TheiaViral_ONT Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
+
+=== "Panel"
+
+    !!! caption "TheiaViral_Panel Workflow Diagram"
+
+        ![TheiaViral_ONT Workflow Diagram](../../assets/figures/TheiaViral_Panel.png)
