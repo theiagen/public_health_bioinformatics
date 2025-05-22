@@ -316,13 +316,13 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
 
         <div class="grid cards" markdown>
 
-        -   {{ include_md("common_text/raven_task.md", condition="theiaviral", indent=12) }}
+        -   {{ include_md("common_text/spades_task.md", condition="theiaviral", indent=12) }}
 
         </div>
 
         <div class="grid cards" markdown>
 
-        -   {{ include_md("common_text/flye_task.md", condition="theiaviral", indent=12, replacements={'`flye_read_type`' : '`read_type`'}) }}
+        -   {{ include_md("common_text/megahit_task.md", condition="theiaviral", indent=12) }}
 
         </div>
 
@@ -342,13 +342,7 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
 
         <div class="grid cards" markdown>
 
-        -   {{ include_md("common_text/minimap2_task.md", condition="long_read_flags", indent=12, replacements={'??? task "`minimap2`: Read Alignment Details"' : '??? task "`minimap2`"'}) }}
-
-        </div>
-
-        <div class="grid cards" markdown>
-
-        -   {{ include_md("common_text/parse_mapping_task.md", condition="theiaviral_sam_to_sorted_bam", indent=12) }}
+        -   {{ include_md("common_text/bwa_task.md", condition="theiaviral", indent=12) }}
 
         </div>
 
@@ -358,29 +352,17 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
 
         </div>
 
-        <div class="grid cards" markdown>
-
-        -   {{ include_md("common_text/fasta_utilities_task.md", condition="theiaviral", indent=12) }}
-
-        </div>
-
     ??? toggle "Variant Calling and Consensus Generation"
 
         <div class="grid cards" markdown>
 
-        -   {{ include_md("common_text/clair3_task.md", condition="theiaviral", indent=12) }}
+        -   {{ include_md("common_text/ivar_variants_task.md", condition="theiaviral", indent=12) }}
 
         </div>
 
         <div class="grid cards" markdown>
 
-        -   {{ include_md("common_text/parse_mapping_task.md", condition="theiaviral_mask_low_coverage", indent=12) }}
-
-        </div>
-
-        <div class="grid cards" markdown>
-
-        -   {{ include_md("common_text/bcftools_consensus_task.md", condition="theiaviral", indent=12) }}
+        -   {{ include_md("common_text/ivar_consensus_task.md", condition="theiaviral", indent=12) }}
 
         </div>
 
