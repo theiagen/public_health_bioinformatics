@@ -84,6 +84,12 @@
     {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaViral_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
 
     ///
+=== "TheiaViral_Panel"
+    /// html | div[class="searchable-table"]
+
+    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaViral_Panel", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+
+    ///
 
 ### All Tasks
 
@@ -367,6 +373,144 @@
 
         </div>
 
+=== "TheiaViral_Pannel"
+
+    ??? toggle "Versioning"
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/versioning_task.md", condition="theiaviral", indent=12) }}
+
+        </div>
+    
+    ??? toggle "Taxonomic Identification"
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/ncbi_taxon_summary_task.md", condition="theiaviral", indent=12) }}
+
+        </div>
+    
+    ??? toggle "Read Quality Control, Trimming, and Filtering"
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaviral", indent=12) }}
+
+        </div>
+
+    ??? toggle "Read Extraction and Classification"
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/kraken2_task.md", condition="theiaviral_panel", indent=12) }}
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/krakentools_task.md", condition="theiaviral", indent=12) }}
+
+        </div>        
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/fastq_scan_task.md", condition="theiaviral", indent=12) }}
+
+        </div>
+
+    ??? toggle "*De novo* Assembly and Reference Selection"
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/raven_task.md", condition="theiaviral", indent=12) }}
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/flye_task.md", condition="theiaviral", indent=12, replacements={'`flye_read_type`' : '`read_type`'}) }}
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/skani_task.md", condition="theiaviral", indent=12) }}
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=12) }}
+
+        </div>
+
+    ??? toggle "Reference Mapping"
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/minimap2_task.md", condition="long_read_flags", indent=12, replacements={'??? task "`minimap2`: Read Alignment Details"' : '??? task "`minimap2`"'}) }}
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/parse_mapping_task.md", condition="theiaviral_sam_to_sorted_bam", indent=12) }}
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=12, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/fasta_utilities_task.md", condition="theiaviral", indent=12) }}
+
+        </div>
+
+    ??? toggle "Variant Calling and Consensus Generation"
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/clair3_task.md", condition="theiaviral", indent=12) }}
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/parse_mapping_task.md", condition="theiaviral_mask_low_coverage", indent=12) }}
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/bcftools_consensus_task.md", condition="theiaviral", indent=12) }}
+
+        </div>
+
+    ??? toggle "Assembly Evaluation and Consensus Quality Control"
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/quast_task.md", condition="theiaviral", indent=12, replacements={'??? task "`quast`: Assembly Quality Assessment"' : '??? task "`quast_denovo`"'}) }}
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/checkv_task.md", condition="theiaviral", indent=12, replacements={'??? task "`checkv`"' : '??? task "`checkv_denovo` & `checkv_consensus`"'}) }}
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=12) }}
+
+        </div>
+        
 ### Outputs
 
 === "TheiaViral_Illumina_PE"
