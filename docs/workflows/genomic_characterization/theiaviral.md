@@ -454,6 +454,7 @@
 
     **Completeness and contamination**
     <br>
+    
     - `checkv_consensus_weighted_completeness`: The weighted completeness is ideally 100%.
 
     **Consensus variant calls**
