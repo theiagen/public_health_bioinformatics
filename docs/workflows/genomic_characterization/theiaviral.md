@@ -75,7 +75,7 @@
 
         It is recommended to trim adapter sequencings via `dorado` basecalling prior to running TheiaViral_ONT, though `porechop` can optionally be called to trim adapters within the workflow.
 
-        **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaViral_ONT workflow must be quality assessed before reporting results.**
+        **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaViral_ONT workflow must be quality assessed before reporting results. We recommend using the Dorado base-calling **
 
 </div>
 
@@ -99,9 +99,20 @@
 #### Input notes
 
 <div class="grid cards " markdown>
-- ??? warning "`read_extraction_rank`"
-    By default, the `read_extraction_rank` parameter is set to "family", which indicates that reads will be extracted if they are classified as the taxonomic family of the input `taxon`, including all descendant taxa of the family. Read classification may not resolve to the rank of the input `taxon`, so these reads may be classified at higher ranks. For example, some *Lyssavirus rabies* (species) reads may only be resolved to *Lyssavirus* (genus), so they would not be extracted if the `read_extraction_rank` is set to "species". Setting the `read_extraction_rank` above the inputted `taxon`'s rank can therefore dramatically increase the number of reads recovered, at the potential cost of including other viruses. This likely is not a problem for scarcely represented lineages, e.g. a sample that is expected to include *Lyssavirus rabies* is unlikely to contain other viruses of the corresponding family, Rhabdoviridae, within the same sample. However, setting a `read_extraction_rank` far beyond the input `taxon` rank can be problematic when multiple representatives of the same viral family are included in similar abundance within the same sample. 
-    To further refine the desired `read_extraction_rank`, please review the corresponding classification reports of the respective classification software (kraken2 for Illumina and Metabuli for ONT)
+- ??? warning "`taxon`"
+    `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Checkout the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) to ensure inputs are compatible.
+
+</div>
+
+<div class="grid cards " markdown>
+- ??? warning "`read_extraction_rank`" 
+    By default, the `read_extraction_rank` parameter is set to "family", which indicates that reads will be extracted if they are classified as the taxonomic family of the input `taxon`, including all descendant taxa of the family. Read classification may not resolve to the rank of the input `taxon`, so these reads may be classified at higher ranks. For example, some *Lyssavirus rabies* (species) reads may only be resolved to *Lyssavirus* (genus), so they would not be extracted if the `read_extraction_rank` is set to "species". Setting the `read_extraction_rank` above the inputted `taxon`'s rank can therefore dramatically increase the number of reads recovered, at the potential cost of including other viruses. This likely is not a problem for scarcely represented lineages, e.g. a sample that is expected to include *Lyssavirus rabies* is unlikely to contain other viruses of the corresponding family, Rhabdoviridae, within the same sample. However, setting a `read_extraction_rank` far beyond the input `taxon` rank can be problematic when multiple representatives of the same viral family are included in similar abundance within the same sample. To further refine the desired `read_extraction_rank`, please review the corresponding classification reports of the respective classification software (kraken2 for Illumina and Metabuli for ONT) 
+</div>
+
+<div class="grid cards " markdown>
+- ??? warning "`extract_unclassified`"
+    By default, the `extract_unclassified` parameter is set to "false", which indicates that unclassified reads will not be included in all tasks downstream of read quality control. This is desirable in instances where the focal `taxon` is well-represented and sufficiently similar to what is present in the classification software's database because erroneous, unrelated reads are omitted from downstream analysis. On the other hand, some unclassified reads may be derived from the focal `taxon`, which could negatively affect *de novo* assembly, reference selection, and consensus assembly if these reads are omitted. Desired reads remaining unclassified may be a more prominent problem in Illumina samples due to the decreased read size. Additionally, because the default kraken2 and Metabuli databases are derived from RefSeq, the potential for a read to be classified is dependent on the focal `taxon` representation within that database. We found that *Lyssavirus rabies* Illumina data may generate higher quality assemblies when `extract_unclassified` is set to "true". 
+
 </div>
 
 <div class="grid cards " markdown>
@@ -412,7 +423,7 @@
 
     *De novo* genomes are generated from scratch without a reference to guide read assembly, while consensus genomes are generated by mapping reads to a reference and replacing reference positions with identified variants (structural and nucleotide). *De novo* assemblies are thus not biased by requiring reads map to the reference, though they may be more fragmented. Consensus assembly can generate more robust assemblies from lower coverage samples if the reference genome is sufficient quality and sufficiently closely related to the inputted sequence, though consensus assembly may not perform well in instances of significant structural variation. TheiaViral uses *de novo* assemblies as an intermediate to acquire the best reference genome for consensus assembly.     
     
-    We generally recommend TheiaViral users focus on the consensus assembly as the desired assembly output. While we chose the best *de novo* assemblers for TheiaViral based on internal benchmarking, the consensus assembly will often be higher quality than the *de novo* assembly unless the read inputs largely comprise one virus, have high depth of coverage, and/or are derived from a virus with high potential for recombination. TheiaViral does conduct assembly contiguity and viral completeness quality control for *de novo* assemblies, so if the *de novo* meets quality control standards, it can certainly be used for downstream analysis.
+    We generally recommend TheiaViral users focus on the consensus assembly as the desired assembly output. While we chose the best *de novo* assemblers for TheiaViral based on internal benchmarking, the consensus assembly will often be higher quality than the *de novo* assembly. However, the *de novo* assembly can approach or exceed consensus quality if the read inputs largely comprise one virus, have high depth of coverage, and/or are derived from a virus with high potential for recombination. TheiaViral does conduct assembly contiguity and viral completeness quality control for *de novo* assemblies, so if the *de novo* meets quality control standards, it can certainly be used for downstream analysis.
 </div>
 
 <div class="grid cards " markdown>
@@ -469,7 +480,7 @@
     <br>
 
     - `consensus_qc_percent_reference_coverage`: The percent reference coverage is ideally 100%.
-    - `read_mapping_cov_hist`: The read mapping coverage histogram ideally depicts normally distributed coverage, which may indicate uniform coverage across the reference genome.
+    - `read_mapping_cov_hist`: The read mapping coverage histogram ideally depicts normally distributed coverage, which may indicate uniform coverage across the reference genome. However, uniform coverage is unlikely with repetitive regions that approach/exceed read length.
     - `read_mapping_coverage`: The average read mapping coverage is ideally as high as possible.
     - `read_mapping_meanbaseq`: The average mean mapping base quality is ideally as high as possible.
     - `read_mapping_meanmapq`: The average mean mapping alignment quality is ideally as high as possible.
