@@ -373,7 +373,7 @@
 
         </div>
 
-=== "TheiaViral_Pannel"
+=== "TheiaViral_Panel"
 
     ??? toggle "Versioning"
 
@@ -510,7 +510,7 @@
         -   {{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=12) }}
 
         </div>
-        
+
 ### Outputs
 
 === "TheiaViral_Illumina_PE"
@@ -524,6 +524,13 @@
     /// html | div[class="searchable-table"]
 
     {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaViral_ONT", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+
+    ///
+
+=== "TheiaViral_Panel"
+    /// html | div[class="searchable-table"]
+
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaViral_Panel", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
 
     ///
 
