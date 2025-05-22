@@ -434,7 +434,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_fastq_scan.wdl
       contains: ["version", "fastq_scan", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_mummer_ani.wdl
-      md5sum: 7549f9f7815655fccab1eeea6bb89fd5
+      md5sum: 07c7106ec3620e5852036b5b6bbcf13b
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl
       contains: ["version", "scrub", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/comparisons/task_qc_check_phb.wdl

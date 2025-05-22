@@ -54,7 +54,6 @@ task animummer {
     else
       ## parse out highest percentBases aligned
       # remove the header for extracting information
-      tail -n+2 ~{samplename}.ani-mummer.out.tsv > ~{samplename}.ani-mummer.noheader.tsv
       cut -f 5 ~{samplename}.ani-mummer.out.tsv | sort -nr | head -n 1 | tee ANI_HIGHEST_PERCENT_BASES_ALIGNED.txt
       ANI_HIGHEST_PERCENT_BASES_ALIGNED=$(cat ANI_HIGHEST_PERCENT_BASES_ALIGNED.txt)
 
