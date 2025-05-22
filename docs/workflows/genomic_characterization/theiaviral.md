@@ -100,7 +100,7 @@
 
 <div class="grid cards " markdown>
 - ??? warning "`taxon`"
-    `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi).
+    `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) and do not have to be species (see `read_extraction_rank` below).
 
 </div>
 
@@ -111,7 +111,7 @@
 
 <div class="grid cards " markdown>
 - ??? warning "`extract_unclassified`"
-    By default, the `extract_unclassified` parameter is set to "false", which indicates that unclassified reads will not be included in all tasks downstream of read quality control. This is desirable in instances where the focal `taxon` is well-represented and sufficiently similar to what is present in the classification software's database because erroneous, unrelated reads are omitted from downstream analysis. On the other hand, some unclassified reads may be derived from the focal `taxon`, which could negatively affect *de novo* assembly, reference selection, and consensus assembly if these reads are omitted. Desired reads remaining unclassified may be a more prominent problem in Illumina samples due to the decreased read size. Additionally, because the default kraken2 and Metabuli databases are derived from RefSeq, the potential for a read to be classified is dependent on the focal `taxon` representation within that database. We found that *Lyssavirus rabies* Illumina data may generate higher quality assemblies when `extract_unclassified` is set to "true". 
+    By default, the `extract_unclassified` parameter is set to "false", which indicates that unclassified reads will not be included in all tasks downstream of read quality control. This is desirable in instances where the focal `taxon` is well-represented and sufficiently similar to what is present in the classification software's database. Excluding unclassified reads can be desirable because reads that are unrelated to focal `taxon` are omitted from downstream analysis. On the other hand, some unclassified reads may be derived from the focal `taxon`, which could negatively affect coverage and depth. The default kraken2 and Metabuli databases are derived from RefSeq, so the potential for a read to be classified is dependent on focal `taxon` representation within RefSeq. As an example, we found that *Lyssavirus rabies* Illumina data may generate higher quality assemblies when `extract_unclassified` is set to "true", perhaps due to its minor representation in RefSeq.
 
 </div>
 
