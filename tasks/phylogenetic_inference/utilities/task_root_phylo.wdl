@@ -20,22 +20,22 @@ task root_phylo {
     set -euo pipefail
 
     # grab the TheiaPhylo version
-    TheiaPhylo.py --version | tee VERSION
+    theiaphylo.py --version | tee VERSION
 
     # set bash variable to check for population in conditionals
     outgroups=~{outgroups}
 
     # prepare an output file path
-    rooted_tree=$(sed -Ee 's/(.*)\.[^\.]+$/\1.rooted.nwk/' <<< ${tree})
+    rooted_tree=~{tree}.rooted.nwk
 
     # root if outgroups are provided
     if [[ -n ${outgroups} ]]; then
-      TheiaPhylo.py ${tree} \
+      theiaphylo.py ${tree} \
         --outgroup ~{outgroups} \
         --output ${rooted_tree}
     # root at the midpoint
     elif ~{midpoint}; then
-      TheiaPhylo.py ${tree} \
+      theiaphylo.py ${tree} \
         --midpoint \
         --output ${rooted_tree}
   >>>
@@ -49,6 +49,6 @@ task root_phylo {
   }
   output {
     String theiaphylo_version = read_string("VERSION")
-    File rooted_tree = "${rooted_tree}"
+    File rooted_tree = "~{tree}.rooted.nwk"
   }
 }
