@@ -27,8 +27,8 @@ task phylovalidate {
     tree2_clean=~{tree2}.clean
 
     # clean the trees, report if they are bifurcating
-    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree1} > ${tree1_clean} 2>&1 | cut -f 2 -d ' ' > TREE1_BIFURCATING
-    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree2} > ${tree2_clean} 2>&1 | cut -f 2 -d ' ' > TREE2_BIFURCATING
+    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree1} > ${tree1_clean} 2> >(cut -f 2 -d ' ' > TREE1_BIFURCATING)
+    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree2} > ${tree2_clean} 2> >(cut -f 2 -d ' ' > TREE2_BIFURCATINGH
 
     # set bash variables to check them for population in conditionals
     max_distance=~{max_distance}
