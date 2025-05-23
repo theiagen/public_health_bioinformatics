@@ -24,40 +24,19 @@ PhyloCompare can automatically root upon outgroup tips or the midpoint. If more 
 
 ### Inputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-Please note that all string inputs **must** be enclosed in quotation marks; for example, "tip1,tip2" or "tip1".
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="PhyloCompare", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| phylocompare | **tree1_path** | String | Path to a newick-formatted phylogenetic tree in an accessible bucket |  | Required |
-| phylocompare | **tree2_path** | String | Path to a newick-formatted phylogenetic tree in an accessible bucket |  | Required |
-| phylocompare | **max_distance** | Float | Maximum tolerable distance in validation | 0.0 | Optional |
-| phylocompare | **midpoint** | Boolean | Root phylogenies at their midpoint | false | Optional |
-| phylocompare | **outgroups** | String | Comma-delimited list of outgroup tip(s) to root upon. Multiple outgroup tips will root on the branch descended from their most recent common ancestor | | Optional |
-| phylovalidate | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| phylovalidate | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| phylovalidate | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.0 | Optional |
-| phylovalidate | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
-
-</div>
+///
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| phb_version | String | PHB version |
-| phylo_distance | String | Distance between the phylogenies, or "None" if distance was unable to be calculated |
-| phylo_flag | String | Flags raised that may confound distance calculation |
-| phylocompare_report | File | Text file of the calculated distances |
-| phylocompare_version | String | Version of PhyloCompare python script |
-| phylo_validation | String | "PASS" if distance < `max_distance` and "FAIL" if distance > `max_distance` or could not be calculated |
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="PhyloCompare", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///
 
 ## References
 
