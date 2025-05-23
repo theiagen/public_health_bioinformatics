@@ -1795,5 +1795,5 @@ phylocompare	midpoint	Boolean	Root phylogenies at their midpoint	FALSE	Optional	
 phylocompare	outgroups	String	Comma-delimited list of outgroup tip(s) to root upon. Multiple outgroup tips will root on the branch descended from their most recent common ancestor		Optional	PhyloCompare
 phylovalidate	cpu	Int	Number of CPUs to allocate to the task	1	Optional	PhyloCompare
 phylovalidate	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	PhyloCompare
-phylovalidate	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.5	Optional	PhyloCompare
+phylovalidate	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.6	Optional	PhyloCompare
 phylovalidate	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional 	PhyloCompare
