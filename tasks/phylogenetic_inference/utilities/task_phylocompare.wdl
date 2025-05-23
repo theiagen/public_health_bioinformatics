@@ -27,10 +27,8 @@ task phylovalidate {
     Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree2} | cut -f 2 -d ' ' > TREE2_BIFURCATING
 
     # set new tree PATHs
-    tree1_clean=$(sed -Ee 's/(.*)\.([^\.]+)$/\1.clean.\2/' <<< ~{tree1})
-    tree2_clean=$(sed -Ee 's/(.*)\.([^\.]+)$/\1.clean.\2/' <<< ~{tree2})
-    echo ${tree1_clean} > TREE1_CLEAN
-    echo ${tree2_clean} > TREE2_CLEAN
+    tree1_clean=~{tree1}.clean
+    tree2_clean=~{tree2}.clean
 
     # set bash variables to check them for population in conditionals
     max_distance=~{max_distance}
@@ -85,8 +83,8 @@ task phylovalidate {
   output {
     String phylocompare_version = read_string("VERSION")
     File summary_report = "phylo_distances.txt"
-    File tree1_clean = read_string("TREE1_CLEAN")
-    File tree2_clean = read_string("TREE2_CLEAN")
+    File tree1_clean = "~{tree1}.clean"
+    File tree2_clean = "~{tree2}.clean"
     String phylo_distance = read_float("PHYLOCOMPARE_DISTANCE")
     String phylo_validation = read_string("PHYLOVALIDATE")
     String phylo_flag = read_string("PHYLOCOMPARE_FLAG")
