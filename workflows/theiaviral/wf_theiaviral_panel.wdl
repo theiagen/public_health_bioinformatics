@@ -38,6 +38,7 @@ workflow theiaviral_panel {
     Int min_map_quality = 20
     Int min_depth = 10
     Float min_allele_freq = 0.6
+    String read_extraction_rank = "species"
 
     Boolean extract_unclassified = false
     Int minimum_read_number = 1000
@@ -112,7 +113,8 @@ workflow theiaviral_panel {
             assembly_memory = assembly_memory,
             min_map_quality = min_map_quality,
             min_depth = min_depth,
-            min_allele_freq = min_allele_freq
+            min_allele_freq = min_allele_freq,
+            read_extraction_rank = read_extraction_rank
         }
         # morgana magic
         call morgana_magic_wf.morgana_magic {
