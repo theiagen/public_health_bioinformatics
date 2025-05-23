@@ -30,12 +30,12 @@ task root_phylo {
 
     # root if outgroups are provided
     if [[ -n ${outgroups} ]]; then
-      theiaphylo ${tree} \
+      theiaphylo ~{tree} \
         --outgroup ~{outgroups} \
         --output ${rooted_tree}
     # root at the midpoint
     elif ~{midpoint}; then
-      theiaphylo ${tree} \
+      theiaphylo ~{tree} \
         --midpoint \
         --output ${rooted_tree}
     fi
