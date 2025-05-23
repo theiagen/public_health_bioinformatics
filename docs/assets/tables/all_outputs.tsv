@@ -1020,3 +1020,5 @@ phylo_flag	String	Flags raised that may confound distance calculation	PhyloCompa
 phylocompare_report	File	Text file of the calculated distances	PhyloCompare
 phylocompare_version	String	Version of PhyloCompare python script	PhyloCompare
 phylo_validation	String	"PASS" if distance < `max_distance` and "FAIL" if distance > `max_distance` or could not be calculated	PhyloCompare
+tree1_final	File	Final tree file for the first tree	PhyloCompare
+tree2_final	File	Final tree file for the second tree	PhyloCompare
