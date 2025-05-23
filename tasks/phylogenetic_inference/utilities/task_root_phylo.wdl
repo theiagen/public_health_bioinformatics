@@ -38,6 +38,7 @@ task root_phylo {
       theiaphylo.py ${tree} \
         --midpoint \
         --output ${rooted_tree}
+    fi
   >>>
   runtime {
     docker: docker 
