@@ -6,7 +6,7 @@ task phylovalidate {
     File tree2
     Float? max_distance
     
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.6"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.7-dev"
     Int disk_size = 10
     Int memory = 4
     Int cpu = 1
@@ -20,7 +20,7 @@ task phylovalidate {
     set -euo pipefail
 
     # grab the phylocompare version
-    phylocompare.py --version | tee VERSION
+    phylocompare --version | tee VERSION
 
     # clean the trees, report if they are bifurcating
     Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree1} | cut -f 2 -d ' ' > TREE1_BIFURCATING
