@@ -34,7 +34,7 @@ task phylovalidate {
     max_distance=~{max_distance}
 
     # run comparison
-    phylocompare.py ${tree1_clean} ${tree2_clean} \
+    phylocompare ${tree1_clean} ${tree2_clean} \
         --debug
 
     # extract the distance

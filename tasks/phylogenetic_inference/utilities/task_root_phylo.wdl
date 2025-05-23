@@ -20,7 +20,7 @@ task root_phylo {
     set -euo pipefail
 
     # grab the TheiaPhylo version
-    theiaphylo.py --version | tee VERSION
+    theiaphylo --version | tee VERSION
 
     # set bash variable to check for population in conditionals
     outgroups=~{outgroups}
@@ -30,12 +30,12 @@ task root_phylo {
 
     # root if outgroups are provided
     if [[ -n ${outgroups} ]]; then
-      theiaphylo.py ${tree} \
+      theiaphylo ${tree} \
         --outgroup ~{outgroups} \
         --output ${rooted_tree}
     # root at the midpoint
     elif ~{midpoint}; then
-      theiaphylo.py ${tree} \
+      theiaphylo ${tree} \
         --midpoint \
         --output ${rooted_tree}
     fi
