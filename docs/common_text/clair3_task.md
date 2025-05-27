@@ -16,7 +16,7 @@
         - `"ont_guppy5"`
         - `"r941_prom_sup_g5014"`
         - `"r941_prom_hac_g360+g422"`
-        - `"r941_prom_hac_g238"
+        - `"r941_prom_hac_g238"`
         - `"r1041_e82_400bps_sup_v500"`
         - `"r1041_e82_400bps_hac_v500"`
         - `"r1041_e82_400bps_sup_v410"`
