@@ -720,11 +720,7 @@ workflow merlin_magic {
           samplename = samplename,
           snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_cauris_ont.snippy_variants_results]),
           reference = cladetyper.annotated_reference,
-          query_gene = select_first([
-            snippy_query_gene,
-            if (assembly_only && ont_data) then "FKS1,ERG11,FUR1" 
-            else "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase"
-          ]),
+          query_gene = select_first([snippy_query_gene,"FKS1,ERG11,FUR1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase"]),
           docker = snippy_gene_query_docker_image
       }
     }
