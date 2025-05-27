@@ -188,15 +188,15 @@ workflow read_QC_trim_pe {
   if (read_qc == "fastqc") {
     call fastqc_task.fastqc as fastqc_clean {
       input:
-        read1 = select_first([kraken2_extract.extracted_read1, bbduk.read1_clean]),
-        read2 = select_first([kraken2_extract.extracted_read2, bbduk.read2_clean])
+        read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, bbduk.read1_clean]),
+        read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, bbduk.read2_clean])
     }
   }
   if (read_qc == "fastq_scan") {
     call fastq_scan.fastq_scan_pe as fastq_scan_clean {
       input:
-        read1 = select_first([kraken2_extract.extracted_read1, bbduk.read1_clean]),
-        read2 = select_first([kraken2_extract.extracted_read2, bbduk.read2_clean])
+        read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, bbduk.read1_clean]),
+        read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, bbduk.read2_clean])
     }
   }
   output {
