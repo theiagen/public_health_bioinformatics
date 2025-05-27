@@ -211,9 +211,9 @@ workflow theiaviral_illumina_pe {
     String? theiaviral_illumina_pe_version = version_capture.phb_version
     String? theiaviral_illumina_pe_date = version_capture.date
     # ncbi datasets - taxon identification
-    String ncbi_identify_taxon_id = ncbi_identify.taxon_id
-    String ncbi_identify_taxon_name = ncbi_identify.taxon_name
-    String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
+    String? ncbi_identify_taxon_id = ncbi_identify.taxon_id
+    String? ncbi_identify_taxon_name = ncbi_identify.taxon_name
+    String? ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
     String ncbi_datasets_version = ncbi_identify.ncbi_datasets_version
     String ncbi_datasets_docker = ncbi_identify.ncbi_datasets_docker    
     # ncbi datasets - taxon summary
