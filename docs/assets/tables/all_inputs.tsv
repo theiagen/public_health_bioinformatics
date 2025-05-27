@@ -8,7 +8,7 @@ augur	assembly_fastas	Array[File]	The assembly files for your samples in FASTA f
 augur	build_name	String	Name to give to the Augur build		Required	Augur	
 augur_prep	assembly	File	The assembly file for your sample in FASTA format		Required	Augur_Prep	
 basespace_fetch	access_token	String	The access token is used in place of a username and password to allow the workflow to access the user account in BaseSpace from which the data is to be transferred. It is an alphanumeric string that is 32 characters in length. Example: 9e08a96471df44579b72abf277e113b7		Required	BaseSpace_Fetch	
-basespace_fetch	api_server	String	The API server is the web address to which data transfer requests can be sent by the workflow. Use this API server if you are unsure: "https://api.basespace.illumina.com" (this is the default set by the command-line tool)	https://api.basespace.illumina.com	Required	BaseSpace_Fetch	
+basespace_fetch	api_server	String	The API server is the web address to which data transfer requests can be sent by the workflow.	"https://api.basespace.illumina.com"	Required	BaseSpace_Fetch	
 basespace_fetch	basespace_collection	String	The collection ID is the BaseSpace Run or Project where the data to be transferred is stored.		Required	BaseSpace_Fetch	
 basespace_fetch	basespace_sample_name	String	The BaseSpace sample name is the sample identifier used in BaseSpace. This identifier is set on the sample sheet at the onset of an Illumina sequencing run.		Required	BaseSpace_Fetch	
 basespace_fetch	sample_name	String	The sample name is the sample identifier used in the Terra.bio data table corresponding to the metadata associated with the sample to be transferred from BaseSpace		Required	BaseSpace_Fetch	
