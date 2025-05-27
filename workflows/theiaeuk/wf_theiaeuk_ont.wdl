@@ -172,19 +172,19 @@ workflow theiaeuk_ont {
     String? cladetyper_docker_image = merlin_magic.cladetyper_docker_image
     String? cladetype_annotated_ref = merlin_magic.cladetype_annotated_ref
     # Snippy variants outputs
-    String? snippy_variants_version = merlin_magic.snippy_variants_version
-    String? snippy_variants_query = merlin_magic.snippy_variants_query
-    String? snippy_variants_query_check = merlin_magic.snippy_variants_query_check
-    String? snippy_variants_hits = merlin_magic.snippy_variants_hits
-    String? snippy_variants_gene_query_results = merlin_magic.snippy_variants_gene_query_results
-    String? snippy_variants_outdir_tarball = merlin_magic.snippy_variants_outdir_tarball
-    String? snippy_variants_results = merlin_magic.snippy_variants_results
-    String? snippy_variants_bam = merlin_magic.snippy_variants_bam
-    String? snippy_variants_bai = merlin_magic.snippy_variants_bai
-    String? snippy_variants_summary = merlin_magic.snippy_variants_summary
-    String? snippy_variants_num_reads_aligned = merlin_magic.snippy_variants_num_reads_aligned
-    String? snippy_variants_coverage_tsv = merlin_magic.snippy_variants_coverage_tsv
-    String? snippy_variants_num_variants = merlin_magic.snippy_variants_num_variants
-    String? snippy_variants_percent_ref_coverage = merlin_magic.snippy_variants_percent_ref_coverage
+    String? theiaeuk_snippy_variants_version = merlin_magic.snippy_variants_version
+    String? theiaeuk_snippy_variants_query = merlin_magic.snippy_variants_query
+    String? theiaeuk_snippy_variants_query_check = merlin_magic.snippy_variants_query_check
+    String? theiaeuk_snippy_variants_hits = merlin_magic.snippy_variants_hits
+    String? theiaeuk_snippy_variants_gene_query_results = merlin_magic.snippy_variants_gene_query_results
+    String? theiaeuk_snippy_variants_outdir_tarball = merlin_magic.snippy_variants_outdir_tarball
+    String? theiaeuk_snippy_variants_results = merlin_magic.snippy_variants_results
+    String? theiaeuk_snippy_variants_bam = merlin_magic.snippy_variants_bam
+    String? theiaeuk_snippy_variants_bai = merlin_magic.snippy_variants_bai
+    String? theiaeuk_snippy_variants_summary = merlin_magic.snippy_variants_summary
+    String? theiaeuk_snippy_variants_num_reads_aligned = merlin_magic.snippy_variants_num_reads_aligned
+    String? theiaeuk_snippy_variants_coverage_tsv = merlin_magic.snippy_variants_coverage_tsv
+    String? theiaeuk_snippy_variants_num_variants = merlin_magic.snippy_variants_num_variants
+    String? theiaeuk_snippy_variants_percent_ref_coverage = merlin_magic.snippy_variants_percent_ref_coverage
   }
 }
