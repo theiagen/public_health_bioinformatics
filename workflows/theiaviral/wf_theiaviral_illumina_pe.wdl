@@ -30,7 +30,7 @@ workflow theiaviral_illumina_pe {
     String read_extraction_rank = "family"
     String samplename
     File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
-    Boolean skip_screen = true # if false, run clean read screening
+    Boolean skip_screen = false # if false, run clean read screening
     Boolean call_metaviralspades = true # if false, move to megahit immediately
     Boolean skip_rasusa = false
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
