@@ -144,7 +144,7 @@ workflow theiaviral_panel {
             terra_workspace = terra_workspace,
             columns_to_export = {
               "samplename": samplename + "_" + taxon_id,
-              "taxon_name": theiaviral.ncbi_identify_taxon_name,
+              "taxon_name": ncbi_identify.taxon_name,
               "assembly_fasta": select_first([theiaviral.assembly_consensus_fasta]),
               "read1": select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
               "read2": select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
