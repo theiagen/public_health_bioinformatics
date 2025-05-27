@@ -100,7 +100,7 @@ workflow theiaviral_panel {
         # get the taxon id
         call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
           input:
-            taxon = taxon,
+            taxon = taxon_id,
             rank = read_extraction_rank
         }
         call theiaviral_illumina_pe.theiaviral_illumina_pe as theiaviral {
