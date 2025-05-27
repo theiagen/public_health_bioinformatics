@@ -214,8 +214,8 @@ workflow theiaviral_illumina_pe {
     String? ncbi_identify_taxon_id = ncbi_identify.taxon_id
     String? ncbi_identify_taxon_name = ncbi_identify.taxon_name
     String? ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
-    String ncbi_datasets_version = ncbi_identify.ncbi_datasets_version
-    String ncbi_datasets_docker = ncbi_identify.ncbi_datasets_docker    
+    String? ncbi_datasets_version = ncbi_identify.ncbi_datasets_version
+    String? ncbi_datasets_docker = ncbi_identify.ncbi_datasets_docker    
     # ncbi datasets - taxon summary
     File? ncbi_taxon_summary_tsv = ncbi_taxon_summary.taxon_summary_tsv
     Int? ncbi_taxon_summary_avg_genome_length = ncbi_taxon_summary.avg_genome_length
