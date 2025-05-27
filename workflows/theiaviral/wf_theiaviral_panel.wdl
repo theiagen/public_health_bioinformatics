@@ -130,15 +130,15 @@ workflow theiaviral_panel {
             assembly_fasta = select_first([theiaviral.assembly_consensus_fasta]),
             read1 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
             read2 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
-            taxon_name = theiaviral.ncbi_identify_taxon_name,
+            taxon_name = ncbi_identify.taxon_name,
             seq_method = "panel"
           }
         # call export_taxon_table
         call export_taxon_table_task.export_taxon_table {
           input:
-            samplename = samplename + "_" + sub(theiaviral.ncbi_identify_taxon_name, " ", "-"),
+            samplename = samplename + "_" + sub(ncbi_identify.taxon_name, " ", "-"),
             taxon_table = output_taxon_table,
-            gambit_predicted_taxon = theiaviral.ncbi_identify_taxon_name,
+            gambit_predicted_taxon = ncbi_identify.taxon_name,
             terra_project = terra_project,
             terra_workspace = terra_workspace,
             columns_to_export = {
