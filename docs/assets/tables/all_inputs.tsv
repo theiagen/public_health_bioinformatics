@@ -503,10 +503,10 @@ dorado_trim	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Dorado_Bas
 dorado_trim	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Dorado_Basecalling	
 dorado_trim	docker	String	The Docker container to use for the task. This is not the most up-to-date image since there is a bug with this Dorado subcommand in v0.9.0	us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.3	Optional	Dorado_Basecalling	
 dorado_trim	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Dorado_Basecalling	
-download_terra_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch	
-download_terra_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch	
-download_terra_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch	
-download_terra_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch	
+download_terra_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA  
+download_terra_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA	
+download_terra_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA	
+download_terra_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA  
 export_taxon_tables	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 export_taxon_tables	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 export_taxon_tables	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
@@ -1788,3 +1788,35 @@ zip_files	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Zip_Column_C
 zip_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Zip_Column_Content	
 zip_files	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Zip_Column_Content	
 zip_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Zip_Column_Content	
+Terra_2_ENA	ena_password	String	ENA password to authenticate submission		Required	Terra_2_ENA	
+Terra_2_ENA	ena_username	String	ENA username to authenticate submission		Required	Terra_2_ENA	
+Terra_2_ENA	sample_id_column	String	The column name in the Terra data table containing sample IDs		Required	Terra_2_ENA	
+Terra_2_ENA	sample_type	String	Type of sample being submitted ("prokaryotic_pathogen" or "virus_pathogen")		Required	Terra_2_ENA	
+Terra_2_ENA	samples	Array[String]	Array of sample IDs to submit		Required	Terra_2_ENA	
+Terra_2_ENA	study_accession	String	ENA study accession number to associate submissions with		Required	Terra_2_ENA	
+Terra_2_ENA	terra_project_name	String	The Terra project containing the data table		Required	Terra_2_ENA	
+Terra_2_ENA	terra_table_name	String	The name of the Terra data table containing sample data		Required	Terra_2_ENA	
+Terra_2_ENA	terra_workspace_name	String	The Terra workspace containing the data table		Required	Terra_2_ENA	
+Terra_2_ENA	allow_missing	Boolean	Whether to allow missing values in metadata	FALSE	Optional	Terra_2_ENA	
+Terra_2_ENA	column_mappings	File	TSV file mapping Terra table columns to ENA submission fields		Optional	Terra_2_ENA	
+register_ena_samples	batch_size	Int	Number of samples to process in each batch	100	Optional	Terra_2_ENA	
+register_ena_samples	center	String	Name of submitting center		Optional	Terra_2_ENA	
+register_ena_samples	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Terra_2_ENA	
+register_ena_samples	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Terra_2_ENA	
+register_ena_samples	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra_to_ena:0.5	Optional	Terra_2_ENA	
+register_ena_samples	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Terra_2_ENA	
+submit_ena_data	bam_column	String	Column name containing BAM file paths	"bam_file"	Optional	Terra_2_ENA	
+submit_ena_data	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Terra_2_ENA	
+submit_ena_data	cram_column	String	Column name containing CRAM file paths	"cram_file"	Optional	Terra_2_ENA	
+submit_ena_data	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Terra_2_ENA	
+submit_ena_data	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra_to_ena:0.5	Optional	Terra_2_ENA	
+submit_ena_data	experiment_name	String	Name for the ENA experiment		Optional	Terra_2_ENA	
+submit_ena_data	instrument	String	Sequencing instrument used		Optional	Terra_2_ENA	
+submit_ena_data	library_selection	String	Method used to select the library	"RANDOM"	Optional	Terra_2_ENA	
+submit_ena_data	library_source	String	Source of the sequencing library	"GENOMIC"	Optional	Terra_2_ENA	
+submit_ena_data	library_strategy	String	Sequencing strategy used	"WGS"	Optional	Terra_2_ENA	
+submit_ena_data	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Terra_2_ENA	
+submit_ena_data	platform	String	Sequencing platform used	"ILLUMINA"	Optional	Terra_2_ENA	
+submit_ena_data	read1_column	String	Column name containing read1 file paths	"read1"	Optional	Terra_2_ENA	
+submit_ena_data	read2_column	String	Column name containing read2 file paths	"read2"	Optional	Terra_2_ENA	
+submit_ena_data	test_submit	Boolean	If true, performs a test submission of metadata		Optional	Terra_2_ENA	
