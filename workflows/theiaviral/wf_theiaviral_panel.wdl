@@ -8,6 +8,7 @@ import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
 import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
+import "../../tasks/taxon_id/task_identify_taxon_id.wdl" as identify_taxon_id_task
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus
 import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as variant_call_task
@@ -38,7 +39,7 @@ workflow theiaviral_panel {
     Int min_map_quality = 20
     Int min_depth = 10
     Float min_allele_freq = 0.6
-    String read_extraction_rank = "species"
+    String? read_extraction_rank
 
     Boolean extract_unclassified = false
     Int minimum_read_number = 1000
@@ -96,11 +97,18 @@ workflow theiaviral_panel {
           input:
             taxon = taxon_id
         }
+        # get the taxon id
+        call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
+          input:
+            taxon = taxon,
+            rank = read_extraction_rank
+        }
         call theiaviral_illumina_pe.theiaviral_illumina_pe as theiaviral {
           input:
             read1 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
             read2 = select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2]),
             samplename = samplename + "_" + taxon_id,
+            taxon = ncbi_identify.taxon_name,
             call_metaviralspades = call_metaviralspades,
             kraken_db = kraken_db,
             skip_qc = true,
