@@ -36,8 +36,20 @@ task ncbi_datasets_download_genome_accession {
       cp -v ncbi_dataset/data/genomic.fna ./~{ncbi_accession}.fasta
       cp -v ncbi_dataset/data/data_report.jsonl ./~{ncbi_accession}.data_report.jsonl
 
+      # acquire the taxon id for the accession
+      datasets summary virus genome accession \
+        ~{ncbi_accession} --as-json-lines | \
+      dataformat tsv virus-genome --fields virus-name,virus-tax-id | \
+      tail -n+2 > accession_taxonomy.tsv
+
+      cut -f 1 accession_taxonomy.tsv > TAXON_NAME
+      cut -f 2 accession_taxonomy.tsv > TAXON_ID
+
     # otherwise, use the datasets download' sub-command
     else
+
+      touch TAXON_NAME
+      touch TAXON_ID
       #### download FASTA file using ncbi_accession ####
       # '--assembly-version latest' ensures the most recent version is downloaded, not previous versions
       # NOTE: I have noticed that occasionally the same command may fail one moment with the error below and succeed the second time. usually.
@@ -76,6 +88,8 @@ task ncbi_datasets_download_genome_accession {
     File? ncbi_datasets_gff3 = "~{ncbi_accession}.gff"
     File? ncbi_datasets_gbff = "~{ncbi_accession}.gbff"
     File ncbi_datasets_assembly_data_report_json = "~{ncbi_accession}.data_report.jsonl"
+    String? taxon_name = read_string("TAXON_NAME")
+    String? taxon_id = read_string("TAXON_ID")
     String ncbi_datasets_version = read_string("DATASETS_VERSION")
     String ncbi_datasets_docker = docker
   }
@@ -86,5 +100,53 @@ task ncbi_datasets_download_genome_accession {
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3
+  }
+}
+
+task ncbi_datasets_viral_taxon_summary {
+  input {
+    String taxon # can be taxon id (int) or organism name (string)
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1" # not the latest version, but it's hard to keep up w/ the frequent releases
+    Int cpu = 1
+    Int memory = 4
+    Int disk_size = 50
+  }
+  command <<<
+    set -euo pipefail
+
+    date | tee DATE
+    datasets --version | sed 's|datasets version: ||' | tee DATASETS_VERSION
+
+    datasets summary virus genome taxon ~{'"' + taxon + '"'} \
+      --limit 100 \
+      --complete-only \
+      --refseq \
+      --as-json-lines | \
+    dataformat tsv virus-genome \
+      --fields accession,completeness,is-annotated,length,sourcedb,virus-name,virus-tax-id \
+       > ncbi_viral_genome_summary.tsv
+
+    # take the average of of all genome lengths across each row
+    awk -F'\t' '{
+      if (NR > 1) { sum += $4; count++ }
+    }
+    END {
+      if (count) { print int(sum / count) } else { print "No matching taxon id found" }
+    }' ncbi_viral_genome_summary.tsv > AVG_GENOME_LENGTH
+
+  >>>
+  output {
+    File taxon_summary_tsv = "ncbi_viral_genome_summary.tsv"
+    Int avg_genome_length = read_string("AVG_GENOME_LENGTH")
+    String ncbi_datasets_version = read_string("DATASETS_VERSION")
+    String ncbi_datasets_docker = docker
+  }
+  runtime {
+    memory: "~{memory} GB"
+    cpu: cpu
+    docker: docker
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 1
   }
 }
