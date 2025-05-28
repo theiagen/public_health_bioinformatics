@@ -10,7 +10,7 @@ title: Workflows by Kingdom
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Applicable Kingdom", filter_values="Any taxa", columns=["Name", "Description", "Applicable Kingdom", "Workflow Level", "Command-line Compatibility", "Last Known Changes", "Dockstore"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Applicable Kingdom", filter_values="[Any taxa](../../workflows_overview/workflows_kingdom.md#any-taxa)", columns=["Name", "Description", "Workflow Type", "Workflow Level", "Command-line Compatibility", "Last Known Changes", "Dockstore"], replacements={"../../workflows_overview/": ""}) }}
 
 ///
 
@@ -18,7 +18,7 @@ title: Workflows by Kingdom
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Applicable Kingdom", filter_values="Bacteria", columns=["Name", "Description", "Applicable Kingdom", "Workflow Level", "Command-line Compatibility", "Last Known Changes", "Dockstore"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Applicable Kingdom", filter_values="[Bacteria](../../workflows_overview/workflows_kingdom.md#bacteria)", columns=["Name", "Description", "Workflow Type", "Workflow Level", "Command-line Compatibility", "Last Known Changes", "Dockstore"], replacements={"../../workflows_overview/": ""}) }}
 
 ///
 
@@ -26,7 +26,7 @@ title: Workflows by Kingdom
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Applicable Kingdom", filter_values="Mycotics", columns=["Name", "Description", "Applicable Kingdom", "Workflow Level", "Command-line Compatibility", "Last Known Changes", "Dockstore"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Applicable Kingdom", filter_values="[Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics)", columns=["Name", "Description", "Workflow Type", "Workflow Level", "Command-line Compatibility", "Last Known Changes", "Dockstore"], replacements={"../../workflows_overview/": ""}) }}
 
 ///
 
@@ -34,7 +34,7 @@ title: Workflows by Kingdom
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Applicable Kingdom", filter_values="Viral", columns=["Name", "Description", "Applicable Kingdom", "Workflow Level", "Command-line Compatibility", "Last Known Changes", "Dockstore"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Applicable Kingdom", filter_values="[Viral](../../workflows_overview/workflows_kingdom.md#viral)", columns=["Name", "Description", "Workflow Type", "Workflow Level", "Command-line Compatibility", "Last Known Changes", "Dockstore"], replacements={"../../workflows_overview/": ""}) }}
 
 ///
 
