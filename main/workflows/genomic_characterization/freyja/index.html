@@ -6326,8 +6326,8 @@
 </thead>
 <tbody>
 <tr>
-<td>Genomic Characterization</td>
-<td>SARS-CoV-2, Viral</td>
+<td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
+<td>SARS-CoV-2, <a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
 <td>vX.X.X</td>
 <td>Yes</td>
 <td>Sample-level, Set-level</td>
@@ -7558,6 +7558,38 @@
 </tr>
 <tr>
 <td>read_QC_trim_ont</td>
+<td><strong>kraken2_recalculate_abundances_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim_ont</td>
+<td><strong>kraken2_recalculate_abundances_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim_ont</td>
+<td><strong>kraken2_recalculate_abundances_docker</strong></td>
+<td>Int</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim_ont</td>
+<td><strong>kraken2_recalculate_abundances_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim_ont</td>
 <td><strong>kraken_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -7594,38 +7626,6 @@
 <td>Int</td>
 <td>Internal component, do not modify</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim_ont</td>
-<td><strong>kraken2_recalculate_abundances_cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim_ont</td>
-<td><strong>kraken2_recalculate_abundances_disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim_ont</td>
-<td><strong>kraken2_recalculate_abundances_docker</strong></td>
-<td>Int</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim_ont</td>
-<td><strong>kraken2_recalculate_abundances_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8308,11 +8308,6 @@
 <td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean reverse read quality and length</td>
 </tr>
 <tr>
-<td>fastq_scan_num_reads_clean_pairs</td>
-<td><strong>String</strong></td>
-<td>The number of read pairs after cleaning as calculated by fastq_scan</td>
-</tr>
-<tr>
 <td>fastq_scan_num_reads_clean1</td>
 <td><strong>Int</strong></td>
 <td>The number of forward reads after cleaning as calculated by fastq_scan</td>
@@ -8323,9 +8318,9 @@
 <td>The number of reverse reads after cleaning as calculated by fastq_scan</td>
 </tr>
 <tr>
-<td>fastq_scan_num_reads_raw_pairs</td>
+<td>fastq_scan_num_reads_clean_pairs</td>
 <td><strong>String</strong></td>
-<td>The number of input read pairs as calculated by fastq_scan</td>
+<td>The number of read pairs after cleaning as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_raw1</td>
@@ -8336,6 +8331,11 @@
 <td>fastq_scan_num_reads_raw2</td>
 <td><strong>Int</strong></td>
 <td>The number of input reserve reads as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_raw_pairs</td>
+<td><strong>String</strong></td>
+<td>The number of input read pairs as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_raw1_json</td>
@@ -8368,11 +8368,6 @@
 <td>The Docker container used for fastqc</td>
 </tr>
 <tr>
-<td>fastqc_num_reads_clean_pairs</td>
-<td><strong>String</strong></td>
-<td>The number of read pairs after cleaning by fastqc</td>
-</tr>
-<tr>
 <td>fastqc_num_reads_clean1</td>
 <td><strong>Int</strong></td>
 <td>The number of forward reads after cleaning by fastqc</td>
@@ -8383,9 +8378,9 @@
 <td>The number of reverse reads after cleaning by fastqc</td>
 </tr>
 <tr>
-<td>fastqc_num_reads_raw_pairs</td>
+<td>fastqc_num_reads_clean_pairs</td>
 <td><strong>String</strong></td>
-<td>The number of input read pairs by fastqc before cleaning</td>
+<td>The number of read pairs after cleaning by fastqc</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_raw1</td>
@@ -8396,6 +8391,11 @@
 <td>fastqc_num_reads_raw2</td>
 <td><strong>Int</strong></td>
 <td>The number of input reverse reads by fastqc before cleaning</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_raw_pairs</td>
+<td><strong>String</strong></td>
+<td>The number of input read pairs by fastqc before cleaning</td>
 </tr>
 <tr>
 <td>fastqc_raw1_html</td>

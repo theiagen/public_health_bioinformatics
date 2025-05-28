@@ -5307,8 +5307,8 @@
 <tbody>
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#phylogenetic-placement">Phylogenetic Placement</a></td>
-<td><a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
-<td>PHB v2.1.0</td>
+<td>Monkeypox virus, SARS-CoV-2, <a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
+<td>v2.1.0</td>
 <td>Yes</td>
 <td>Sample-level, Set-level</td>
 </tr>
@@ -5352,46 +5352,6 @@
 <td>Required</td>
 </tr>
 <tr>
-<td>nextclade_add_ref</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>nextclade_add_ref</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>nextclade_add_ref</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>nextclade_add_ref</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>nextclade_add_ref</td>
-<td><strong>verbosity</strong></td>
-<td>String</td>
-<td>Set the nextclade output verbosity level. Options: off, error, warn, info, debug, trace</td>
-<td>warn</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>nextclade_addToRefTree</td>
 <td><strong>dataset_tag</strong></td>
 <td>String</td>
@@ -5429,6 +5389,46 @@
 <td>File</td>
 <td>An optional phylogenetic reference tree file which serves as a target for phylogenetic placement</td>
 <td>Uses the reference tree associated with the specified nextclade dataset name</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nextclade_add_ref</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nextclade_add_ref</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nextclade_add_ref</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nextclade_add_ref</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nextclade_add_ref</td>
+<td><strong>verbosity</strong></td>
+<td>String</td>
+<td>Set the nextclade output verbosity level. Options: off, error, warn, info, debug, trace</td>
+<td>warn</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5521,7 +5521,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10 UTC">2025-05-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 28, 2025 13:36:02 UTC">2025-05-28</span>
   </span>
 
     

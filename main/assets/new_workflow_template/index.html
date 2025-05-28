@@ -5045,7 +5045,7 @@
 
 <h1 id="workflow-name">Workflow Name<a class="headerlink" href="#workflow-name" title="Permanent link">&para;</a></h1>
 <h2 id="quick-facts">Quick Facts<a class="headerlink" href="#quick-facts" title="Permanent link">&para;</a></h2>
-<p><em>Please see the descriptions provided in our documentation contribution guide <a href="../../contributing/doc_contribution/#new-page">here</a></em></p>
+<p><em>Use the following render_tsv_table macro call that is provided in code below to generate the <strong>quick facts table</strong>, replacing the fields marked with <code>&lt;&gt;</code> with the appropriate values. Please note that the macro</em> <strong>result</strong> <em>is seen on the web browser, not the macro call itself.</em></p>
 <table>
 <thead>
 <tr>
@@ -5058,22 +5058,25 @@
 </thead>
 <tbody>
 <tr>
-<td><a href="../../workflows_overview/workflows_type.md/#link-to-workflow-type">Link to Workflow Type</a></td>
-<td><a href="../../workflows_overview/workflows_kingdom.md/#link-to-applicable-kingdom">Link to Applicable Kingdom</a></td>
-<td>PHB &lt;vX.X.X&gt;</td>
-<td>&lt;command-line compatibility&gt;</td>
-<td>&lt;workflow level on terra (set or sample)&gt;</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
 <h2 id="workflow_name_on_terra">Workflow_Name_On_Terra<a class="headerlink" href="#workflow_name_on_terra" title="Permanent link">&para;</a></h2>
-<p><em>Please provide a description of the workflow.</em></p>
+<p><em>Please provide a description of the workflow in complete sentences.</em></p>
 <div class="admonition caption">
 <p class="admonition-title">Workflow Name Diagram</p>
-<p><em>If a workflow diagram is available, add it here. If not, remove this caption. See <a href="../../workflows/genomic_characterization/theiacov/#theiacov-workflow-series">the page for TheiaCoV</a> for an example.</em></p>
+<p><em>If a workflow diagram is available, add it here. If not, remove this caption admonition. See <a href="../../workflows/genomic_characterization/theiacov/#theiacov-workflow-series">the page for TheiaCoV</a> for an example.</em></p>
 </div>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
-<p><em>Input should be ordered as they appear on Terra. Any additional information regarding the inputs, such as suggestions or guidelines should be found <strong>before</strong> the table. See <a href="../../workflows/phylogenetic_construction/snippy_streamline/#inputs">the page for Snippy_Streamline</a> for an example.</em></p>
+<p><em>Any additional information regarding the inputs, such as suggestions or guidelines should be found <strong>before</strong> the table. See <a href="../../workflows/phylogenetic_construction/snippy_streamline/#inputs">the page for Snippy_Streamline</a> for an example.</em></p>
+<p><em>Add your inputs anywhere in the <code>assets/tables/all_inputs.tsv</code> table. If your workflow has the same type of input as a different workflow, check the inputs table to see if that input already exists. If so, add your workflow name to comma-delimited list for that input in the appropriate column.</em></p>
+<p><em>Use the following macro call to generate the inputs table. Adjust the fields marked with <code>&lt;&gt;</code> with the appropriate values.  Please note that the macro</em> <strong>result</strong> <em>is seen on the web browser, not the macro call itself.</em></p>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -5087,22 +5090,37 @@
 </thead>
 <tbody>
 <tr>
-<td>task_name</td>
-<td><strong>variable_name</strong></td>
-<td>Type</td>
-<td>Description</td>
-<td>Default Value (leave blank if no default)</td>
-<td>Required/Optional</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
+</div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
 <p><em>Feel free to separate this section into subsections, like "Read QC" and "Alignment" if there are multiple tasks per subsection for easier navigation and readability. See <a href="../../workflows/genomic_characterization/theiameta/#workflow-tasks">the page for TheiaMeta</a> for an example.</em></p>
+<p><em>If your workflow uses a task that is modular and can be used in other contexts, please add that information to the <code>docs/common_text</code> directory in a new page (see a template in the <code>/common_text/template_task.md</code> file) and use the following macro call to include it here. Adjust the fields marked with <code>&lt;&gt;</code> with the appropriate values. Please note that the macro</em> <strong>result</strong> <em>is seen on the web browser, not the macro call itself.</em></p>
 <details class="task">
-<summary><code>tool_name</code>: Description of tool</summary>
-<p><em>Please provide a description of the task and the tool used</em></p>
+<summary><code>&lt;tool_name&gt;</code>: &lt;brief description&gt;</summary>
+<p><em>Provide sufficient information about your task here so that users can understand how to use the task, what actions it performs, and any important considerations or requirements. Use admonitions as appropriate to highlight important information, tips, or technical details.</em></p>
+<p><em>Be sure any links within this file are written relative to the destination file. For example, if this file is in <code>docs/common_text/</code> but is being included in <code>docs/workflows/standalone/</code> and you want to link to a task in <code>docs/assets/figures/</code>, <strong>the link should be written as <code>[link_name](../../assets/figures/link_destination.md)</code></strong>.</em></p>
+<p><em>If your task is used slighly differently in different contexts, you can provide conditionals inside of comments.</em></p>
+<p><em>To include any conditional information in the destination page, add the <code>condition="condition_name"</code> parameter to the <code>include_md</code> macro call on the destination page. Please note that the <code>if: &lt;condition_name&gt;</code> and <code>endif</code> syntax within the markdown comment (<code>&lt;!-- --&gt;</code>) is required for a conditional statement to work.</em> </p>
+<p><em>Here is an example:</em></p>
+<!-- if: condition -->
+<p><code>&lt;!-- if: &lt;condition_name&gt; --&gt;</code></p>
+<div class="admonition tip">
+<p class="admonition-title">Conditional Content</p>
+<p><em>This is content that is only shown if &lt;condition_name&gt; is provided. See the <code>kraken_task.md</code> common_text file for examples on conditional usage.</em> </p>
+</div>
+<p><code>&lt;!-- endif --&gt;</code></p>
+<!-- endif -->
 <div class="admonition techdetails">
-<p class="admonition-title">Tool Name Technical Details</p>
+<p class="admonition-title"><tool_name> Technical Details</p>
+<p><em>This section is required for all tasks. If the Software Source Code, Software Documentation, and/or Original Publication(s) fields are not applicable, they may be removed.</em></p>
 <table>
 <thead>
 <tr>
@@ -5113,26 +5131,28 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td>[link to task on GitHub]</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/&lt;link_to_task_wdl&gt;.wdl"><link_to_task_wdl>.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td>[link to tool's source code]</td>
+<td><a href="link to source code"><tool name></a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td>[link to tool's documentation]</td>
+<td><a href="link to source code documnetation"><tool name></a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td>[link to tool's publication]</td>
+<td><a href="link to publication"><publication name></a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
-<p><em>Outputs should be in alphabetical order by variable. Any additional information regarding the outputs, such as interpretation suggestions or more details, should be found <strong>after</strong> the table. See <a href="../../workflows/standalone/kraken2/#outputs">the page for Kraken2</a> for an example.</em></p>
+<p><em>Add your outputs to the <code>assets/tables/all_outputs.tsv</code> table. Location doesn't matter. If your workflow has the same type of output as a different workflow, check the output table to see if that output already exists. If so, add your workflow name to comma-delimited list in the appropriate column.</em></p>
+<p><em>Use the following macro call to generate the outputs table. Adjust the fields marked with <code>&lt;&gt;</code> with the appropriate values. Please note that the macro</em> <strong>result</strong> <em>is seen on the web browser, not the macro call itself.</em></p>
+<div class="searchable-table">
 <table>
 <thead>
 <tr>
@@ -5143,12 +5163,14 @@
 </thead>
 <tbody>
 <tr>
-<td>variable_name</td>
-<td>Type</td>
-<td>Description</td>
+<td></td>
+<td></td>
+<td></td>
 </tr>
 </tbody>
 </table>
+</div>
+<p><em>Any additional information regarding the outputs, such as interpretation suggestions or more details, should be found <strong>after</strong> the table. See <a href="../../workflows/standalone/kraken2/#outputs">the page for Kraken2</a> for an example.</em></p>
 <h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h2>
 <p><em>Include this section if applicable.</em></p>
 <blockquote>
@@ -5180,7 +5202,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10 UTC">2025-05-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 28, 2025 13:36:02 UTC">2025-05-28</span>
   </span>
 
     

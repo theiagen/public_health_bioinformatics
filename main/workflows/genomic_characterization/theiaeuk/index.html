@@ -5510,8 +5510,8 @@
 </thead>
 <tbody>
 <tr>
-<td>Genomic Characterization</td>
-<td>Mycotics</td>
+<td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
+<td><a href="../../../workflows_overview/workflows_kingdom/#mycotics">Mycotics</a></td>
 <td>vX.X.X</td>
 <td>Some optional features incompatible, Yes</td>
 <td>Sample-level</td>
@@ -5714,18 +5714,18 @@
 </tr>
 <tr>
 <td>digger_denovo</td>
-<td><strong>assembler</strong></td>
-<td>String</td>
-<td>Assembler to use (spades, skesa, megahit)</td>
-<td>skesa</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>digger_denovo</td>
 <td><strong>assember_options</strong></td>
 <td>String</td>
 <td>String</td>
 <td>Assembler-specific options that you might choose for the selected assembler</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>assembler</strong></td>
+<td>String</td>
+<td>Assembler to use (spades, skesa, megahit)</td>
+<td>skesa</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8149,11 +8149,6 @@
 <td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean reverse read quality and length</td>
 </tr>
 <tr>
-<td>fastq_scan_num_reads_clean_pairs</td>
-<td>String</td>
-<td>The number of read pairs after cleaning as calculated by fastq_scan</td>
-</tr>
-<tr>
 <td>fastq_scan_num_reads_clean1</td>
 <td>Int</td>
 <td>The number of forward reads after cleaning as calculated by fastq_scan</td>
@@ -8164,9 +8159,9 @@
 <td>The number of reverse reads after cleaning as calculated by fastq_scan</td>
 </tr>
 <tr>
-<td>fastq_scan_num_reads_raw_pairs</td>
+<td>fastq_scan_num_reads_clean_pairs</td>
 <td>String</td>
-<td>The number of input read pairs as calculated by fastq_scan</td>
+<td>The number of read pairs after cleaning as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_raw1</td>
@@ -8177,6 +8172,11 @@
 <td>fastq_scan_num_reads_raw2</td>
 <td>Int</td>
 <td>The number of input reserve reads as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_raw_pairs</td>
+<td>String</td>
+<td>The number of input read pairs as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_raw1_json</td>
@@ -8209,11 +8209,6 @@
 <td>The Docker container used for fastqc</td>
 </tr>
 <tr>
-<td>fastqc_num_reads_clean_pairs</td>
-<td>String</td>
-<td>The number of read pairs after cleaning by fastqc</td>
-</tr>
-<tr>
 <td>fastqc_num_reads_clean1</td>
 <td>Int</td>
 <td>The number of forward reads after cleaning by fastqc</td>
@@ -8224,9 +8219,9 @@
 <td>The number of reverse reads after cleaning by fastqc</td>
 </tr>
 <tr>
-<td>fastqc_num_reads_raw_pairs</td>
+<td>fastqc_num_reads_clean_pairs</td>
 <td>String</td>
-<td>The number of input read pairs by fastqc before cleaning</td>
+<td>The number of read pairs after cleaning by fastqc</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_raw1</td>
@@ -8237,6 +8232,11 @@
 <td>fastqc_num_reads_raw2</td>
 <td>Int</td>
 <td>The number of input reverse reads by fastqc before cleaning</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_raw_pairs</td>
+<td>String</td>
+<td>The number of input read pairs by fastqc before cleaning</td>
 </tr>
 <tr>
 <td>fastqc_raw1_html</td>
@@ -8354,26 +8354,6 @@
 <td>Version of RASUSA used for the analysis</td>
 </tr>
 <tr>
-<td>read_screen_clean</td>
-<td>String</td>
-<td>PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure</td>
-</tr>
-<tr>
-<td>read_screen_clean_tsv</td>
-<td>File</td>
-<td>Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
-</tr>
-<tr>
-<td>read_screen_raw</td>
-<td>String</td>
-<td>PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure</td>
-</tr>
-<tr>
-<td>read_screen_raw_tsv</td>
-<td>File</td>
-<td>Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
-</tr>
-<tr>
 <td>read1_clean</td>
 <td>File</td>
 <td>Forward read file after quality trimming and adapter removal</td>
@@ -8392,6 +8372,26 @@
 <td>read2_subsampled</td>
 <td>File</td>
 <td>Read2 FASTQ files downsampled to desired coverage</td>
+</tr>
+<tr>
+<td>read_screen_clean</td>
+<td>String</td>
+<td>PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure</td>
+</tr>
+<tr>
+<td>read_screen_clean_tsv</td>
+<td>File</td>
+<td>Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
+</tr>
+<tr>
+<td>read_screen_raw</td>
+<td>String</td>
+<td>PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure</td>
+</tr>
+<tr>
+<td>read_screen_raw_tsv</td>
+<td>File</td>
+<td>Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
 </tr>
 <tr>
 <td>seq_platform</td>
