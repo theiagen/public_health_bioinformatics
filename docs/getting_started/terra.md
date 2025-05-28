@@ -12,6 +12,10 @@
 
         This diagram shows the Theiagen workflows (green boxes) available for analysis of genomic data in public health and the workflows that may be used consecutively (arrows). The blue boxes describe the major functions that these workflows undertake. The yellow boxes show functions that may be undertaken independently of workflows on Terra.
 
+!!! example "SOPs for ==getting started in Terra=="
+
+    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Pathogen/Category", filter_values="Getting Started", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=4) }}
+
 ## Data Import to Terra
 
 To start using Terra for data analysis, you will first need to import your data into your workspace. There are multiple ways to do this:
@@ -25,10 +29,7 @@ To start using Terra for data analysis, you will first need to import your data 
 
 !!! example "SOPs for ==importing data into a Terra workspace=="
 
-    | SOP | SOP Version | PHB Version Compatibility | 
-    |---|---|---|
-    | [Uploading Data, Creating Metadata Tables and TSV files, and Importing Workflows](../assets/sops/TG-TER-03_GettingStartedInTerra_v3.pdf) | v3 | v1.3.0, v2+ |
-    | [Linking BaseSpace and Importing BaseSpace Reads to Terra](../assets/sops/TG-TER-04_BaseSpaceFetch_v2.pdf) | v3 | v1.3.0, v2+ |
+    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Pathogen/Category", filter_values="Data Import", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=4) }}
 
 ## Genome assembly, QC, and characterization
 
@@ -38,20 +39,12 @@ The TheiaX workflows are used for genome assembly, quality control, and characte
 
 !!! example "SOPs for the ==TheiaX workflows=="
 
-    ??? toggle "For analyzing ==SARS-CoV-2=="
-        | SOP | SOP Version | PHB Version Compatibility | 
-        |---|---|---|
-        | [Analyze SARS-COV-2 using TheiaCoV_Illumina_PE_PHB](../assets/sops/TG-SC2-PE_SC2_TheiaCoV_IlluminaPE_v3.pdf) | v3 | v2+ |
-        | [Analyze SARS-COV-2 using TheiaCoV_Illumina_SE_PHB](../assets/sops/TG-SC2-SE_SC2_TheiaCoV_IlluminaSE_v3.pdf) | v3 | v2+ |
-        | [Analyze SARS-COV-2 using TheiaCoV_ClearLabs](../assets/sops/TG-SC2-CL_SC2_ClearLabs_v3.pdf) | v3 | v2+ |
-        | [Analyze SARS-COV-2 using TheiaCoV_ONT](../assets/sops/TG-SC2-ONT_Analyzing_SC2_Using_TheiaCov_ONT_PHB_v2.pdf) | v2 | v1.x+ |
-        | [Analyzing SARS-CoV-2 using TheiaCoV_FASTA](../assets/sops/TG-SC2-FST_Analyzing_SC2_Using_TheiaCoV_FASTA_PHB_v2.pdf) | v2 | v1.x+ |
+    ??? toggle "For analyzing with ==TheiaCoV=="
+        {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Workflow", filter_values="TheiaCoV", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=8) }}
 
-    ??? toggle "For analyzing ==influenza=="
-        | SOP | SOP Version | PHB Version Compatibility | 
-        |---|---|---|
-        | [Analyzing Flu Data in Terra using TheiaCov_Illumina_PE and Augur Workflows](../assets/sops/TG-FLU-PE_SOP_Flu_IlluminaPE_v1.pdf) | v1 | v1.x+ |
-
+    ??? toggle "For analyzing with ==TheiaProk=="
+        {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Workflow", filter_values="TheiaProk", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=8) }}
+    
 ### Quality evaluation
 
 The TheiaX workflows will generate various quality metrics. These should be evaluated relative to quality thresholds that have been agreed upon within your laboratory or sequencing program and define the sufficient quality characteristics for a genome and sequence data to be used. For the [TheiaCoV Workflow Series](../workflows/genomic_characterization/theiacov.md), [TheiaProk Workflow Series](../workflows/genomic_characterization/theiaprok.md), and [TheiaEuk Workflow Series](../workflows/genomic_characterization/theiaeuk.md) workflows, this quality evaluation may be undertaken using the optional `QC_check` task. Full instructions for the use of this task may be found on the relevant workflow page. Some quality metrics are not evaluated by the `QC_check` task and should be evaluated manually.
@@ -71,10 +64,7 @@ Phylogenetic trees are constructed to assess the evolutionary relationships betw
 There are various methods for constructing phylogenetic trees, depending on the sequencing data being used, the organism being analyzed and how it evolved, what you would like to infer from the tree, and the computational resources available for the tree construction. Theiagen has a number of workflows for constructing phylogenetic trees. For full details of these workflows, please see [Guide to Phylogenetics](../guides/phylogenetics.md) which includes advice on the appropriate tree-building workflows and phylogenetic visualization approaches.
 
 !!! example "SOPs for ==phylogenetic construction=="
-    | SOP | SOP Version | PHB Version Compatibility |
-    |---|---|---|
-    | [Analyzing Flu Data in Terra using TheiaCov_Illumina_PE and Augur Workflows](../assets/sops/TG-FLU-PE_SOP_Flu_IlluminaPE_v1.pdf) | v1 | v1.x+ |
-    | [Analyzing Phylogenetic Relationships in Terra using Theiagen’s Augur Workflows](../assets/sops/TG-AUGUR-01_Augur_v1.pdf) | v1 | v1.x+ |
+    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Pathogen/Category", filter_values="Phylogenetic construction", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=4) }}
 
 ### Phylogenetic placement
 
@@ -83,16 +73,9 @@ Phylogenetic placement is used to place your own sequences onto an existing phyl
 ## Public Data Sharing
 
 !!! example "SOPs for ==data submissions=="
-    | SOP | SOP Version | PHB Version Compatibility |
-    |---|---|---|
-    | [Submitting SC2 Sequence Data to GISAID using Theiagen’s Terra 2 GISAID Workflow](../assets/sops/TG-GISAID-01_Terra2GISAID_v2.pdf) | v2 | v2+ |
+    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Pathogen/Category", filter_values="Public data sharing", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=4) }}
 
-## SARS-CoV-2 Metagenomic Analysis
+## Wastewater Metagenomic Analysis
 
-!!! example "SOPs for ==SARS-CoV-2 metagenomic data analysis=="
-    | SOP | SOP Version | PHB Version Compatibility |
-    |---|---|---|
-    | [Analyzing SARS-CoV-2 Metagenomic Samples using Freyja FASTQ](../assets/sops/TG-FREY-01_FreyjaFASTQ_v2.pdf) | v2 | v2+ |
-    | [Plotting SARS-CoV-2 Metagenomic Sample Data using Freyja Plot](../assets/sops/TG-FREY-02_FreyjaPlot_v3.pdf) | v3 | v2+ |
-    | [Creating a Dashboard Visualization of SARS-CoV-2 Metagenomic Samples using Freyja Dashboard](../assets/sops/TG-FREY-03-SOP_FreyjaDashboard_v2.pdf) | v2 | v2+ |
-    | [Creating Static Reference Files for Freyja Analysis in Terra using Freyja Update](../assets/sops/TG-FREY-04_FreyjaUpdate_v2.pdf) | v2 | v2+ |
+!!! example "SOPs for ==wastewater metagenomic data analysis=="
+    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Workflow", filter_values="Freyja", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=4) }}
