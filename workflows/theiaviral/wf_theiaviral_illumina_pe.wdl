@@ -62,14 +62,14 @@ workflow theiaviral_illumina_pe {
       kraken_db = kraken_db,
       workflow_series = "theiaviral"
   }
-  if (! skip_rasusa) {
-    # get genome length if it is not provided
-    if (! defined(genome_length)) {
+  # get genome length if it is not provided
+  if (! defined(genome_length)) {
       call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
         input:
           taxon = taxon
-      }
     }
+  }
+  if (! skip_rasusa) {
     # downsample reads to a specific coverage
     call rasusa_task.rasusa as rasusa {
       input:
