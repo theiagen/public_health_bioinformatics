@@ -173,6 +173,9 @@ task nextclade_add_ref {
     # track version & print to log
     nextclade --version | tee NEXTCLADE_VERSION
 
+    # make the directory incase the dataset doesnt exist
+    mkdir nextclade_dataset_dir/
+
     echo "DEBUG: downloading nextclade dataset..."
     nextclade dataset get \
       --name="~{dataset_name}" \
