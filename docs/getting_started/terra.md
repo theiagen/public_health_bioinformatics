@@ -12,9 +12,12 @@
 
         This diagram shows the Theiagen workflows (green boxes) available for analysis of genomic data in public health and the workflows that may be used consecutively (arrows). The blue boxes describe the major functions that these workflows undertake. The yellow boxes show functions that may be undertaken independently of workflows on Terra.
 
-!!! example "SOPs for ==getting started in Terra=="
+!!! info "Find more SOPs"
+    You can see all available SOPs on our [Available SOPs](../guides/sops.md) page. We have provided links to the relevant and **most recent** SOPs in the sections below, but please note that this page offers an incomplete listing.
 
-    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Pathogen/Category", filter_values="Getting Started", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=4) }}
+!!! example "Current SOPs for ==getting started in Terra=="
+
+    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filters={"Pathogen/Category": "Getting Started", "Current or prior wf version?": "Current"}, columns=["SOP", "SOP version", "PHB version compatibility", "Pathogen/Category"], indent=4) }}
 
 ## Data Import to Terra
 
@@ -23,13 +26,13 @@ To start using Terra for data analysis, you will first need to import your data 
 - **Using Terra’s native features to upload data from your local computer or link to data that’s already in a Google bucket**
 - Data import workflows
     - Using the [SRA_Fetch](../workflows/data_import/sra_fetch.md) workflow to import publicly available data from any repository in the [INSDC](https://www.insdc.org/) (including with [SRA](https://www.ncbi.nlm.nih.gov/sra), [ENA](https://www.ebi.ac.uk/ena/browser/home) and [DRA](https://www.ddbj.nig.ac.jp/dra/index-e.html))
-    - Using the [Assembly_Fetch ](../workflows/data_import/assembly_fetch.md) workflow to import publicly available genome assemblies from [NCBI](https://www.ncbi.nlm.nih.gov/datasets/)
+    - Using the [Assembly_Fetch](../workflows/data_import/assembly_fetch.md) workflow to import publicly available genome assemblies from [NCBI](https://www.ncbi.nlm.nih.gov/datasets/)
     - Using the [BaseSpace_Fetch](../workflows/data_import/basespace_fetch.md) workflow to import data from your [Illumina BaseSpace](https://basespace.illumina.com/) account
     - Using the [Create_Terra_Table](../workflows/data_import/create_terra_table.md) workflow to help create your data table after manual upload to your Terra workspace (or a Google Cloud Storage Bucket)
 
-!!! example "SOPs for ==importing data into a Terra workspace=="
+!!! example "Current SOPs for ==importing data into a Terra workspace=="
 
-    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Pathogen/Category", filter_values="Data Import", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filters={"Pathogen/Category": "Data Import", "Current or prior wf version?": "Current"}, columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category"], indent=4) }}
 
 ## Genome assembly, QC, and characterization
 
@@ -37,13 +40,13 @@ To start using Terra for data analysis, you will first need to import your data 
 
 The TheiaX workflows are used for genome assembly, quality control, and characterization. The [TheiaCoV Workflow Series](../workflows/genomic_characterization/theiacov.md), [TheiaProk Workflow Series](../workflows/genomic_characterization/theiaprok.md), and [TheiaEuk Workflow Series](../workflows/genomic_characterization/theiaeuk.md) workflows are intended for viral, bacterial, and fungal pathogens, respectively. [TheiaMeta Workflow Series](../workflows/genomic_characterization/theiameta.md)  is intended for the analysis of a single taxon from metagenomic data.
 
-!!! example "SOPs for the ==TheiaX workflows=="
+!!! example "Current SOPs for the ==TheiaX workflows=="
 
     ??? toggle "For analyzing with ==TheiaCoV=="
-        {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Workflow", filter_values="TheiaCoV", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filters={"Workflow": "TheiaCoV", "Current or prior wf version?": "Current"}, columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category"], indent=8) }}
 
     ??? toggle "For analyzing with ==TheiaProk=="
-        {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Workflow", filter_values="TheiaProk", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filters={"Workflow": "TheiaProk", "Current or prior wf version?": "Current"}, columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category"], indent=8) }}
     
 ### Quality evaluation
 
@@ -59,23 +62,23 @@ Workflows are available for updating the Pangolin and VADR assignments made to S
 
 ### Phylogenetic construction
 
-Phylogenetic trees are constructed to assess the evolutionary relationships between sequences in the tree. These evolutionary relationships are often used as a proxy for epidemiological relationships, and sometimes for inferring transmission between isolation sources. 
+Phylogenetic trees are constructed to assess the evolutionary relationships between sequences in the tree. These evolutionary relationships are often used as a proxy for epidemiological relationships, and sometimes for inferring transmission between isolation sources.
 
-There are various methods for constructing phylogenetic trees, depending on the sequencing data being used, the organism being analyzed and how it evolved, what you would like to infer from the tree, and the computational resources available for the tree construction. Theiagen has a number of workflows for constructing phylogenetic trees. For full details of these workflows, please see [Guide to Phylogenetics](../guides/phylogenetics.md) which includes advice on the appropriate tree-building workflows and phylogenetic visualization approaches.
+There are various methods for constructing phylogenetic trees, depending on the sequencing data being used, the organism being analyzed and how it evolved, what you would like to infer from the tree, and the computational resources available for the tree construction. Theiagen has a number of workflows for constructing phylogenetic trees. For full details of these workflows, please see [Guide to Phylogenetics](../guides/phylogenetics.md), which includes advice on the appropriate tree-building workflows and phylogenetic visualization approaches.
 
-!!! example "SOPs for ==phylogenetic construction=="
-    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Pathogen/Category", filter_values="Phylogenetic construction", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=4) }}
+!!! example "Current SOPs for ==phylogenetic construction=="
+    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filters={"Pathogen/Category": "Phylogenetic construction", "Current or prior wf version?": "Current"}, columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category"], indent=4) }}
 
 ### Phylogenetic placement
 
-Phylogenetic placement is used to place your own sequences onto an existing phylogenetic tree. This may be used to find the closest relatives to your sequence(s). More details, including phylogenetic visualization approaches can be found in [Guide to Phylogenetics](../guides/phylogenetics.md).  
+Phylogenetic placement is used to place your own sequences onto an existing phylogenetic tree. This may be used to find the closest relatives to your sequence(s). More details, including phylogenetic visualization approaches, can be found in [Guide to Phylogenetics](../guides/phylogenetics.md).  
 
 ## Public Data Sharing
 
-!!! example "SOPs for ==data submissions=="
-    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Pathogen/Category", filter_values="Public data sharing", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=4) }}
+!!! example "Current SOPs for ==data submissions=="
+    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filters={"Pathogen/Category": "Public data sharing", "Current or prior wf version?": "Current"}, columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category"], indent=4) }}
 
 ## Wastewater Metagenomic Analysis
 
-!!! example "SOPs for ==wastewater metagenomic data analysis=="
-    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filter_column="Workflow", filter_values="Freyja", columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"], indent=4) }}
+!!! example "Current SOPs for ==wastewater metagenomic data analysis=="
+    {{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filters={"Workflow": "Freyja", "Current or prior wf version?": "Current"}, columns=["SOP", "Workflow", "SOP version", "PHB version compatibility", "Pathogen/Category"], indent=4) }}

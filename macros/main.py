@@ -3,6 +3,7 @@ import os
 import re
 import fnmatch
 import ast
+import pandas as pd
 from pathlib import Path
 from urllib.parse import urljoin
 from shlex import split as shlex_split
@@ -18,14 +19,15 @@ def define_env(env):
   """
   
   @env.macro
-  def render_tsv_table(filename=None, filter_column=None, filter_values=None, columns=None, sort_by=None, input_table=False, indent=0):
+  def render_tsv_table(filename=None, filter_column=None, filter_values=None, filters=None, columns=None, sort_by=None, input_table=False, indent=0):
     """
     Render a TSV file as a Markdown table with optional filtering, sorting, and column selection.
 
     Parameters:
       filename (str): Path to the TSV file.
-      filter_column (str, optional): Column name to filter rows by.
-      filter_values (str | list, optional): Comma-separated or list of accepted values.
+      filter_column (str, optional): Column name to filter rows by (legacy, use filters instead).
+      filter_values (str | list, optional): Comma-separated or list of accepted values (legacy, use filters instead).
+      filters (dict, optional): Dictionary mapping column names to filter values or lists of values.
       columns (list[str], optional): List of column names or wildcard patterns to display.
       sort_by (str | list[tuple], optional): Column(s) to sort rows by, optionally as (col, reverse) pairs.
       input_table (bool): If True, bold the second column of each row.
@@ -37,19 +39,29 @@ def define_env(env):
     if not filename:
       return "**Error:** `filename` is required."
     
-    # Normalize filter_values list if provided as a comma-separated string
-    if filter_values:
+    # Initialize the filters dictionary
+    filters_dict = {}
+    
+    # Handle legacy filter_column and filter_values parameters
+    if filter_column and filter_values:
       if isinstance(filter_values, str):
-          filter_values = [v.strip() for v in filter_values.split(',')]
-    else:
-      filter_values = None  # Disable filtering
+        filter_values = [v.strip() for v in filter_values.split(',')]
+      filters_dict[filter_column] = filter_values
+    
+    # Add/override with the new filters parameter if provided
+    if filters:
+      for col, values in filters.items():
+        if isinstance(values, str):
+          filters_dict[col] = [v.strip() for v in values.split(',')]
+        else:
+          filters_dict[col] = values
       
     with open(filename, newline='') as csvfile:
       reader = csv.DictReader(csvfile, delimiter='\t')
       all_headers = reader.fieldnames
 
-      # Check if the filter_column exists in the headers
-      filter_column_exists = filter_column in all_headers if filter_column else False
+      # Check which filter columns exist in the headers
+      filter_columns_exist = {col: col in all_headers for col in filters_dict}
 
       # Match column patterns using wildcards
       if columns:
@@ -62,25 +74,56 @@ def define_env(env):
       else:
         headers = all_headers
 
-      # Filter rows by filter_column (if specified and filter_column exists)
+      # Filter rows based on multiple filter columns
       rows = []
       for row in reader:
-        if filter_column_exists:
-          row_values = [v.strip() for v in row[filter_column].split(',')]
-          if not filter_values or any(fv in row_values for fv in filter_values):
-            rows.append(row)
-        else:
+        include_row = True
+        
+        # Apply each filter if the column exists
+        for filter_col, filter_vals in filters_dict.items():
+          if filter_columns_exist.get(filter_col, False):
+            # Skip this filter if no values specified
+            if not filter_vals:
+              continue
+              
+            # Split comma-separated values in the cell
+            row_values = [v.strip() for v in row[filter_col].split(',')]
+            
+            # Check if any filter value matches any value in the cell (exact matching only)
+            match_found = False
+            for search_term in filter_vals:
+              if any(search_term == field for field in row_values):
+                match_found = True
+                break
+            
+            if not match_found:
+              include_row = False
+              break
+        
+        if include_row:
           rows.append(row)
-
-    # Optional sorting
+          
+    
     if sort_by:
       if isinstance(sort_by, str):
         sort_by = [(sort_by, False)] # default to ascending sort order        
       elif isinstance(sort_by, list):
         sort_by = [(col, False) if isinstance(col, str) else col for col in sort_by]
+      
 
-      for col, reverse in reversed(sort_by):
-          rows.sort(key=lambda r: r.get(col.lower, ''), reverse=reverse)
+      row_df = pd.DataFrame(rows)
+      
+      cols, reverses = zip(*sort_by)
+      reverses = [not reverse for reverse in reverses]  # Convert to ascending order
+
+      row_df = row_df.sort_values(by=list(cols), ascending=reverses, na_position='last', kind='stable', ignore_index=True)
+      
+      rows = row_df.to_dict(orient='records')
+      
+    # # Optional sorting
+    # if sort_by:
+    #   for col, reverse in reversed(sort_by):
+    #     rows.sort(key=lambda r: r.get(col, ''), reverse=bool(reverse))
 
     indent_str = ' ' * indent
 
