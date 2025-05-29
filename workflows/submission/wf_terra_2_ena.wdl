@@ -58,13 +58,16 @@ workflow Terra_2_ENA {
     # ENA registration output
     File ena_accessions = register_ena_samples.accessions
     File ena_metadata_accessions = register_ena_samples.metadata_accessions
-    File ena_submission_summary = register_ena_samples.submission_summary
-    File ena_submission_log = register_ena_samples.submission_log
-    String ena_success = register_ena_samples.success
+    File ena_registration_summary = register_ena_samples.registration_summary
+    File ena_registration_log = register_ena_samples.registration_log
+    String ena_registration_success = register_ena_samples.registration_success
     # ENA data preparation output
     File prepped_ena_data = submit_ena_data.prepped_ena_data
     File ena_file_paths_json = submit_ena_data.file_paths_json
     File ena_excluded_samples = submit_ena_data.excluded_samples
+    File? ena_submission_report = submit_ena_data.submission_report_file
+    Array[File]? ena_submission_manifest_files = submit_ena_data.manifest_files
+    File? ena_submission_failed_validation_file = submit_ena_data.manifest_all_errors
     String ena_docker_image = submit_ena_data.docker_image
     # Versioning
     String Terra_2_ENA_version = version_capture.phb_version

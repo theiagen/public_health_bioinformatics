@@ -1020,9 +1020,12 @@ ena_docker_image	String	Docker image used for ENA submission processing	Terra_2_
 ena_excluded_samples	File	Text file listing samples that were excluded from ENA submission	Terra_2_ENA
 ena_file_paths_json	File	JSON file containing paths to the files submitted to ENA	Terra_2_ENA
 ena_metadata_accessions	File	File containing metadata and their corresponding accessions from ENA	Terra_2_ENA
-ena_submission_log	File	Log file detailing the ENA submission process	Terra_2_ENA
-ena_submission_summary	File	Summary file of the ENA submission results	Terra_2_ENA
-ena_success	String	String indicating whether the ENA submission was successful	Terra_2_ENA
+ena_registration_log	File	Log file detailing the ENA registration process	Terra_2_ENA
+ena_registration_summary	File	Summary file of the ENA registration results	Terra_2_ENA
+ena_registration_success	String	String indicating whether the ENA registration was successful	Terra_2_ENA
+ena_submission_report	File	Report file containing the results of the ENA submission	Terra_2_ENA
+ena_submission_manifest_files	Array[File]	Array of manifest files used for ENA submission. Each file corresponds to a sample and contains metadata and file paths	Terra_2_ENA
+ena_submission_failed_validation_file	File	File containing samples that failed validation during ENA submission	Terra_2_ENA
 prepped_ena_data	File	Prepared data formatted for ENA submission	Terra_2_ENA
 Terra_2_ENA_analysis_date	String	Date the Terra to ENA workflow was run	Terra_2_ENA
 Terra_2_ENA_version	String	Version of the Terra to ENA workflow used	Terra_2_ENA

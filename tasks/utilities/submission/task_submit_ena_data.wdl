@@ -86,11 +86,8 @@ task submit_ena_data {
     File file_paths_json = "file_paths.json"
     File excluded_samples = "excluded_samples.tsv"
     # bulk_webincli.py output
-    Array[File]? submission_report_files = glob("submission/*.report")
-    Array[File]? submission_reads = glob("submission/reads/*")
+    File? submission_report_file = "submissions/webin-cli.report"
     Array[File]? manifest_files = glob("manifests/Manifest_*.txt")
-    Array[File]? manifest_log_err_files = glob("manifests/*-report/*.err")
-    Array[File]? manifest_log_out_files = glob("manifests/*-report/*.out")
     File? manifest_all_errors = "failed_validation.txt"
     String docker_image = docker
   }

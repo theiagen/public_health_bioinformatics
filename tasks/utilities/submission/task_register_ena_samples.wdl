@@ -39,9 +39,9 @@ task register_ena_samples {
   output {
       File accessions = "accessions.tsv"
       File metadata_accessions = "metadata_with_accessions.tsv"
-      File submission_summary = "submission_summary.txt"
-      File submission_log = "submission.log"
-      String success = read_string("success.txt")
+      File registration_summary = "submission_summary.txt"
+      File registration_log = "submission.log"
+      String registration_success = read_string("success.txt")
       String docker_image = docker
   }
   runtime {
