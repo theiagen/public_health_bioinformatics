@@ -21,11 +21,37 @@ task skani {
     # get version
     skani --version | tee VERSION
 
+    # check if the fasta has contigs greater than 500 bp (otherwise skani will fail)
+    echo "DEBUG: Checking assembly for contigs > 500 bp"
+    sed -E 's/^>([^ ]+).*$/>\1/' ~{assembly_fasta} | \
+      awk -F "|" '/^>/ {close(F); ID=$1; gsub("^>", "", ID); F=ID"_extracted.fasta"} {print >> F}'
+    compatible_fasta=0
+    for fasta in *_extracted.fasta; do
+      fa_length=$(grep -v '^>' $fasta | tr -d '\n' | wc -m)
+      if [[ $fa_length -gt 500 ]]; then
+        compatible_fasta=1
+        echo "DEBUG: fasta has contigs > 500 bp"
+        break
+      fi
+    done
+
+    # concatenate all contigs to spoof skani
+    if [[ $compatible_fasta -eq 0 ]]; then
+      echo "DEBUG: No contigs greater than 500 bp; concatenating supercontig for search"
+      echo ">concatenated_supercontig" > concatenated.fasta
+      for fasta in *_extracted.fasta; do
+        grep -v '^>' $fasta >> concatenated.fasta
+      done
+      assembly_fasta="concatenated.fasta"
+    else
+      assembly_fasta=~{assembly_fasta}
+    fi
+
     # run skani
     echo "DEBUG: Running Skani"
     skani search \
       -d ${untarred_skani_db} \
-      -q ~{assembly_fasta} \
+      -q ${assembly_fasta} \
       -s 50 \
       --no-learned-ani \
       --robust \
