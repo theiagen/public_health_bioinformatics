@@ -31,6 +31,7 @@ task skani {
       if [[ $fa_length -gt 500 ]]; then
         compatible_fasta=1
         echo "DEBUG: fasta has contigs > 500 bp"
+        touch SKANI_WARNING
         break
       fi
     done
@@ -38,6 +39,7 @@ task skani {
     # concatenate all contigs to spoof skani
     if [[ $compatible_fasta -eq 0 ]]; then
       echo "DEBUG: No contigs greater than 500 bp; concatenating supercontig for search"
+      echo "All contigs < 500 bp" > SKANI_WARNING
       echo ">concatenated_supercontig" > concatenated.fasta
       for fasta in *_extracted.fasta; do
         grep -v '^>' $fasta >> concatenated.fasta
@@ -91,6 +93,7 @@ task skani {
     Float skani_top_ref_coverage = read_float("TOP_REF_COVERAGE")
     Float skani_top_score = read_float("TOP_SCORE")
     String skani_database = skani_db
+    String skani_warning = read_string("SKANI_WARNING")
     String skani_version = read_string("VERSION")
     String skani_docker = docker
   }
