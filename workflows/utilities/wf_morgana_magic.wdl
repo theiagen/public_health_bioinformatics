@@ -136,8 +136,8 @@ workflow morgana_magic {
         memory = nextclade_output_parser_memory
     }
   }
-  if organism_parameters.standardized_organism == "rabies" {
-    call nextclade_task.nextclade_v3 {
+  if (organism_parameters.standardized_organism == "rabies") {
+    call nextclade_task.nextclade_v3 as nextclade_v3_rabies {
       input:
         genome_fasta = assembly_fasta,
         custom_input_dataset = organism_parameters.nextclade_pathogen_json,
@@ -150,15 +150,16 @@ workflow morgana_magic {
         docker = nextclade_docker_image,
         memory = nextclade_memory
     }
-    call nextclade_task.nextclade_output_parser {
+    call nextclade_task.nextclade_output_parser as nextclade_parser_rabies {
       input:
-        nextclade_tsv = nextclade_v3.nextclade_tsv,
+        nextclade_tsv = nextclade_v3_rabies.nextclade_tsv,
         organism = organism_parameters.standardized_organism,
         cpu = nextclade_output_parser_cpu,
         disk_size = nextclade_output_parser_disk_size,
         docker = nextclade_output_parser_docker,
         memory = nextclade_output_parser_memory
     }
+  }
   output {
     String organism = organism_parameters.standardized_organism
     # Pangolin outputs
