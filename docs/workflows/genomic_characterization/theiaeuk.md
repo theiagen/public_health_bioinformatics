@@ -2,11 +2,11 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Name", filter_values="[**TheiaEuk**](../workflows/genomic_characterization/theiaeuk.md)", columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Name", filter_values="[**TheiaEuk Workflow Series**](../workflows/genomic_characterization/theiaeuk.md)", columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## TheiaEuk Workflows
 
-**The TheiaEuk_Illumina_PE workflow is for the assembly, quality assessment, and characterization of fungal genomes.** It is designed to accept Illumina paired-end sequencing data as the primary input. **It is currently intended only for ==haploid== fungal genomes like _Candidozyma auris_.** Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.
+**The TheiaEuk workflows are for the assembly, quality assessment, and characterization of fungal genomes.** It is designed to accept Illumina paired-end sequencing data or base-called ONT reads as the primary input. **It is currently intended only for ==haploid== fungal genomes like _Candidozyma auris_.** Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.
 
 All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
 
@@ -15,17 +15,32 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
 ### Inputs
 
-!!! info "Input read data"
+!!! dna ""
+    ??? toggle "TheiaEuk_Illumina_PE Input Read Data"
 
-    The TheiaEuk_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) prior to Terra upload to minimize data upload time.
+        The TheiaEuk_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time.
 
-    By default, the workflow anticipates 2 x 150bp reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
+        By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
-/// html | div[class="searchable-table"]
+    ??? toggle "TheiaEuk_ONT Input Read Data"
 
-{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaEuk_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+        The TheiaEuk_ONT workflow takes in base-called ONT read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before uploading to Terra to minimize data upload time.
 
-///
+        **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaEuk_ONT workflow must be quality assessed before reporting results.**
+
+!!! caption ""
+    === "TheiaEuk_Illumina_PE"
+        /// html | div[class="searchable-table"]
+
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaEuk_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
+
+    === "TheiaEuk_ONT"
+        /// html | div[class="searchable-table"]
+
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaEuk_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
+
 
 ### Workflow Tasks
 
@@ -33,37 +48,32 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
 #### Core tasks
 
-!!! tip ""
-    These tasks are performed regardless of organism. They perform read trimming and various quality control steps.
+!!! dna ""
+    These tasks are performed regardless of organism. They include tasks that are performed regardless of and specific for the input data type. They perform read trimming and assembly appropriate to the input data type.
 
-{{ include_md("common_text/versioning_task.md") }}
-{{ include_md("common_text/read_screen_task.md", condition="theiaeuk") }}
+{{ include_md("common_text/versioning_task.md", condition="theiaprok") }}
 
-??? task "`Rasusa`: Read subsampling (optional, on by default)"
+!!! caption ""
+    === "TheiaEuk_Illumina_PE"
 
-    The Rasusa task performs subsampling of the raw reads. By default, this task will subsample reads to a depth of 150X using the estimated genome length produced during the preceding raw read screen. The user can prevent the task from being launched by setting the `call_rasusa`variable to false. 
+{{ include_md("common_text/read_screen_task.md", condition="theiaeuk", indent=8) }}
+{{ include_md("common_text/rasusa_task.md", indent=8)}}
+{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaeuk", indent=8) }}
+{{ include_md("common_text/qc_check_task.md", condition="theiaeuk", indent=8) }}
+        !!! dna ""
+                    These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
-    The user can also provide an estimated genome length for the task to use for subsampling using the `genome_size` variable. In addition, the read depth can be modified using the `subsample_coverage` variable.
-        
-    !!! techdetails "Rasusa Technical Details"
+{{ include_md("common_text/digger_denovo_task.md", indent=8) }}
+{{ include_md("common_text/quast_task.md", indent=8) }}
+{{ include_md("common_text/cg_pipeline_task.md", indent=8) }}
 
-        |  | Links |
-        | --- | --- |
-        | Task | [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) |
-        | Software Source Code | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
-        | Software Documentation | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
-        | Original Publication(s) | [Rasusa: Randomly subsample sequencing reads to a specified coverage](https://doi.org/10.21105/joss.03941) |
+    === "TheiaEuk_ONT"
 
-{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaprok") }}
+{{ include_md("common_text/read_qc_trim_ont.md", condition="theiaprok", indent=8) }}
 
-#### Assembly tasks
-
-!!! tip ""
-    These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
-
-{{ include_md("common_text/digger_denovo_task.md") }}
-{{ include_md("common_text/quast_task.md") }}
-{{ include_md("common_text/cg_pipeline_task.md") }}
+        !!! dna ""
+            These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
+{{ include_md("common_text/flye_denovo_task.md", indent=8) }}
 
 #### Organism-agnostic characterization
 
@@ -72,7 +82,6 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
 {{ include_md("common_text/gambit_task.md") }}
 {{ include_md("common_text/busco_task.md") }}
-{{ include_md("common_text/qc_check_task.md", condition="theiaeuk")}}
 
 #### Organism-specific characterization
 
@@ -218,8 +227,15 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
 ### Outputs
 
-/// html | div[class="searchable-table"]
+!!! caption ""
+    === "TheiaEuk_Illumina_PE"
+        /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaEuk_Illumina_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaEuk_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
 
-///
+    === "TheiaEuk_ONT"
+        /// html | div[class="searchable-table"]
+
+        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaEuk_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///

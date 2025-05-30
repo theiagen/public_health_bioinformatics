@@ -5,6 +5,11 @@ workflows:
    primaryDescriptorPath: /workflows/theiaeuk/wf_theiaeuk_illumina_pe.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: TheiaEuk_ONT_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaeuk/wf_theiaeuk_ont.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Cauris_CladeTyper_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiaeuk/wf_cauris_cladetyper.wdl

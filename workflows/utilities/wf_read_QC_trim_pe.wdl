@@ -138,7 +138,7 @@ workflow read_QC_trim_pe {
       }
     }
   }
-  if ("~{workflow_series}" == "theiaprok") {
+  if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk") {
     if ((call_kraken) && defined(kraken_db)) {
       call kraken.kraken2_standalone {
         input:
