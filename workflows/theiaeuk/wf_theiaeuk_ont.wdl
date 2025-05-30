@@ -170,6 +170,12 @@ workflow theiaeuk_ont {
     String? cladetyper_version = merlin_magic.cladetyper_version
     String? cladetyper_docker_image = merlin_magic.cladetyper_docker_image
     String? cladetype_annotated_ref = merlin_magic.cladetype_annotated_ref
+    # AMR Search outputs
+    File? amr_search_results = merlin_magic.amr_search_results
+    File? amr_search_csv = merlin_magic.amr_results_csv
+    File? amr_search_results_pdf = merlin_magic.amr_results_pdf
+    String? amr_search_docker = merlin_magic.amr_search_docker
+    String? amr_search_version = merlin_magic.amr_search_version  
     # Snippy variants outputs
     String? theiaeuk_snippy_variants_version = merlin_magic.snippy_variants_version
     String? theiaeuk_snippy_variants_query = merlin_magic.snippy_variants_query
