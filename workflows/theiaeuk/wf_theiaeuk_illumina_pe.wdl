@@ -82,8 +82,7 @@ workflow theiaeuk_illumina_pe {
         read2 = select_first([rasusa_task.read2_subsampled, read2]),
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
-        trim_window_size = trim_window_size,
-        workflow_series = "theiaeuk"
+        trim_window_size = trim_window_size
     }
     if (! skip_screen) {
       call screen.check_reads as clean_check_reads {
@@ -252,17 +251,12 @@ workflow theiaeuk_illumina_pe {
     Float? r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength
     Float? combined_mean_readlength_raw = cg_pipeline_raw.combined_mean_readlength
     Float? combined_mean_readlength_clean = cg_pipeline_clean.combined_mean_readlength
-    # Read QC - kraken outputs
-    String? kraken2_version = read_QC_trim.kraken_version
-    String? kraken2_report = read_QC_trim.kraken_report
-    String? kraken2_database = read_QC_trim.kraken_database
-    String? kraken_docker = read_QC_trim.kraken_docker
-    # Assembly - shovill outputs and Assembly QC
-    File? assembly_fasta = shovill_pe.assembly_fasta
-    File? contigs_gfa = shovill_pe.contigs_gfa
-    File? contigs_fastg = shovill_pe.contigs_fastg
-    File? contigs_lastgraph = shovill_pe.contigs_lastgraph
-    String? shovill_pe_version = shovill_pe.shovill_version
+    # Assembly - digger_denovo outputs and Assembly QC
+    File? assembly_fasta = digger_denovo.assembly_fasta
+    File? contigs_gfa = digger_denovo.contigs_gfa
+    File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
+    String? assembler = digger_denovo.assembler_used
+    String? assembler_version = digger_denovo.assembler_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
