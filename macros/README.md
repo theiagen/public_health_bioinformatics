@@ -18,8 +18,7 @@ This macro renders a TSV file as a Markdown table. It supports column filtering,
 | Name            | Type                  | Required | Description |
 |-----------------|-----------------------|----------|-------------|
 | `filename`      | `str`                 | Yes      | Path to the TSV file (relative to the project root). |
-| `filter_column` | `str`                 | No       | Column name to filter rows by. |
-| `filter_values` | `str` or `list[str]`  | No       | Comma-separated string or list of allowed values. Rows are shown if any value matches. |
+| `filters`       | `Dict[str: str]`      | No       | Dictionary for fields to include (filters for, not out) {"Column name": "Target Value"} |
 | `columns`       | `list[str]`           | No       | Subset of columns (supports wildcards). If not specified, all columns are shown. |
 | `sort_by`       | `str`, `list[str]`, or `list[tuple]` | No | Sort by one or more columns. Use `(column, True)` for descending sort. |
 | `input_table`   | `bool`                | No       | If `True`, bolds the second column (used for emphasizing input names). |
