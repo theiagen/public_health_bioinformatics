@@ -19,7 +19,7 @@ def define_env(env):
   """
   
   @env.macro
-  def render_tsv_table(filename=None, filter_column=None, filter_values=None, filters=None, columns=None, sort_by=None, input_table=False, indent=0):
+  def render_tsv_table(filename=None, filters=None, columns=None, sort_by=None, input_table=False, indent=0, replacements=None):
     """
     Render a TSV file as a Markdown table with optional filtering, sorting, and column selection.
 
@@ -32,6 +32,7 @@ def define_env(env):
       sort_by (str | list[tuple], optional): Column(s) to sort rows by, optionally as (col, reverse) pairs.
       input_table (bool): If True, bold the second column of each row.
       indent (int): Number of spaces to indent the rendered table.
+      replacements (dict, optional): Dictionary of placeholder → replacement text.
 
     Returns:
       str: Markdown table as a string.
@@ -42,11 +43,11 @@ def define_env(env):
     # Initialize the filters dictionary
     filters_dict = {}
     
-    # Handle legacy filter_column and filter_values parameters
-    if filter_column and filter_values:
-      if isinstance(filter_values, str):
-        filter_values = [v.strip() for v in filter_values.split(',')]
-      filters_dict[filter_column] = filter_values
+    # # Handle legacy filter_column and filter_values parameters
+    # if filter_column and filter_values:
+    #   if isinstance(filter_values, str):
+    #     filter_values = [v.strip() for v in filter_values.split(',')]
+    #   filters_dict[filter_column] = filter_values
     
     # Add/override with the new filters parameter if provided
     if filters:
@@ -136,6 +137,11 @@ def define_env(env):
         md += indent_str + '| ' + ' | '.join(f'**{row.get(h, "")}**' if index == 1 else row.get(h, '') for index, h in enumerate(headers)) + ' |\n'
       else:
         md += indent_str + '| ' + ' | '.join(row.get(h, '') for h in headers) + ' |\n'
+    
+    # implement replacements if provided
+    if replacements:
+      for old, new in replacements.items():
+        md = md.replace(old, new)
     
     return md
   
