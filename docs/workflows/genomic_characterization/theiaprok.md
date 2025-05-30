@@ -152,18 +152,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 {{ include_md("common_text/gambit_task.md") }}
 
-??? task "`KmerFinder`: Taxon Assignment (optional)"
-
-    The `KmerFinder` method predicts prokaryotic species based on the number of overlapping (co-occurring) *k*-mers, i.e., 16-mers, between the query genome and genomes in a reference database.
-
-    !!! techdetails "KmerFinder Technical Details"        
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_kmerfinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kmerfinder.wdl) |
-        | Software Source Code | https://bitbucket.org/genomicepidemiology/kmerfinder |
-        | Software Documentation | https://cge.food.dtu.dk/services/KmerFinder/instructions.php |
-        | Original Publication(s) | [**Benchmarking of Methods for Genomic Taxonomy**](https://journals.asm.org/doi/full/10.1128/jcm.02981-13?rfr_dat=cr_pub++0pubmed&url_ver=Z39.88-2003&rfr_id=ori%3Arid%3Acrossref.org) |
+{{ include_md("common_text/kmerfinder_task.md") }}
 
 ??? task "`AMRFinderPlus`: AMR Genotyping (default)"
 
