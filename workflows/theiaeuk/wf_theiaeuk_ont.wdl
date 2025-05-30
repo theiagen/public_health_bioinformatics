@@ -15,11 +15,6 @@ workflow theiaeuk_ont {
     String samplename
     Int genome_length = 50000000 
     String workflow_series = "theiaeuk"
-    String? assembler
-    String? assembler_options
-    Int dragonflye_cpu = 8
-    Int dragonflye_memory = 32
-    Int dragonflye_disk_size = 100
     Int busco_memory = 24
     String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
     File gambit_db_genomes = "gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb"
