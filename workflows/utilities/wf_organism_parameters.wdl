@@ -245,7 +245,7 @@ workflow organism_parameters {
   }
   if (organism == "HIV" && hiv_primer_version == "v1") {
     String hiv_v1_org_name = "HIV"
-    String hiv_v1_reference_genome = "gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.fasta"
+    String hiv_v1_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta"
     String hiv_v1_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"
     String hiv_v1_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"
     String hiv_v1_target_organism = "Human immunodeficiency virus 1"
@@ -253,7 +253,7 @@ workflow organism_parameters {
   }
   if (organism == "HIV" && hiv_primer_version == "v2") {
     String hiv_v2_org_name = "HIV"
-    String hiv_v2_reference_genome = "gs://theiagen-public-files/terra/hivgc-files/AY228557.1.headerchanged.fasta"
+    String hiv_v2_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"
     String hiv_v2_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"
     String hiv_v2_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed"
     String hiv_v2_target_organism = "Human immunodeficiency virus 1"

@@ -4,7 +4,7 @@ task midas {
   input {
     File read1
     File? read2
-    File midas_db = "gs://theiagen-large-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz"
+    File midas_db = "gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz"
     Int disk_size = 100
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/fhcrc-microbiome/midas:v1.3.2--6"
