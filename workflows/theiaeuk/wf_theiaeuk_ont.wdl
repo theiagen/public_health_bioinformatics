@@ -66,7 +66,7 @@ workflow theiaeuk_ont {
       memory = busco_memory,
       docker = busco_docker_image
   }
-
+  # call gambit to predict taxon
   call gambit.gambit {
     input:
       assembly = flye_denovo.assembly_fasta,
@@ -74,7 +74,7 @@ workflow theiaeuk_ont {
       gambit_db_genomes = gambit_db_genomes,
       gambit_db_signatures = gambit_db_signatures
   }
-
+  # call merlin magic for cladetyper and AMR search, snippy variants
    call merlin_magic_workflow.merlin_magic {
     input:
       samplename = samplename,
@@ -84,7 +84,6 @@ workflow theiaeuk_ont {
       ont_data = true,
       theiaeuk = true
   }
-
   output {
     # Version Capture
     String theiaeuk_ont_version = version_capture.phb_version
