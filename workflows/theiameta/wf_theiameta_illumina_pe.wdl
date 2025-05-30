@@ -21,7 +21,7 @@ workflow theiameta_illumina_pe {
     File read2
     String samplename
     File? reference
-    File kraken2_db = "gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_08gb_20230605.tar.gz"
+    File kraken2_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_08gb_20230605.tar.gz"
     Boolean output_additional_files = false
   }
   call kraken_task.kraken2_standalone as kraken2_raw {

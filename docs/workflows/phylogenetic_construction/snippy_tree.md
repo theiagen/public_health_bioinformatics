@@ -43,9 +43,9 @@ Sequencing data used in the Snippy_Tree workflow must:
         Phylogenies of MTBC are typically constructed
         
         - Using the H37Rv reference genome
-            - `reference_genome_file` = gs://theiagen-public-files-rp/terra/theiaprok-files/Mtb_NC_000962.3.fasta
+            - `reference_genome_file` = `"gs://theiagen-public-resources-rp/reference_data/bacterial/mycobacterium/MTB-NC_000962.3.fasta"`
         - Masking repetitive regions of the genome (e.g. PE/PPE genes) that are often misaligned
-            - `snippy_core_bed` = gs://theiagen-public-files/terra/theiaprok-files/Mtb_NC_000962.3.bed
+            - `snippy_core_bed` = `"gs://theiagen-public-resources-rp/reference_data/bacterial/mycobacterium/MTB-NC_000962.3.bed"`
         - Without masking recombination because TB can be considered non-recombinant
             - `use_gubbins` = false
         - Using the core genome

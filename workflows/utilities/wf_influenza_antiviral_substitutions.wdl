@@ -14,15 +14,15 @@ workflow flu_antiviral_substitutions {
     String abricate_flu_subtype
     String irma_flu_subtype
      # Amino acid sunstitutions
-    File flu_h1_ha_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1_ha.fasta"
-    File flu_h3_ha_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3_ha.fasta"
-    File flu_n1_na_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_n1_na.fasta"
-    File flu_n2_na_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_n2_na.fasta"
-    File flu_pa_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pa.fasta"
-    File flu_pb1_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pb1.fasta"
-    File flu_pb2_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_pb2.fasta"
-    File flu_h1n1_m2_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1_m2.fasta"
-    File flu_h3n2_m2_ref = "gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_m2.fasta"
+    File flu_h1_ha_ref = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1_ha.fasta"
+    File flu_h3_ha_ref = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3_ha.fasta"
+    File flu_n1_na_ref = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n1_na.fasta"
+    File flu_n2_na_ref = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_n2_na.fasta"
+    File flu_pa_ref = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pa.fasta"
+    File flu_pb1_ref = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb1.fasta"
+    File flu_pb2_ref = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_pb2.fasta"
+    File flu_h1n1_m2_ref = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1_m2.fasta"
+    File flu_h3n2_m2_ref = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_m2.fasta"
     String? antiviral_aa_subs #user input for antiviral aa subs to be reported
   }
 # Identify AA changes for Influenza NA, PA, PB1 and PB2 segments, and associated antiviral mutations
