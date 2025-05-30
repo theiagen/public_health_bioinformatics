@@ -166,7 +166,7 @@ workflow theiaeuk_ont {
     String merlin_tag = gambit.merlin_tag
     String gambit_docker = gambit.gambit_docker
     # C. auris specific outputs for cladetyper
-    String? clade_type = merlin_magic.clade_type
+    String? cladetyper_clade = merlin_magic.clade_type
     String? cladetyper_version = merlin_magic.cladetyper_version
     String? cladetyper_docker_image = merlin_magic.cladetyper_docker_image
     String? cladetype_annotated_ref = merlin_magic.cladetype_annotated_ref
