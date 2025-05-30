@@ -8,9 +8,11 @@ The PHB repository contains workflows for the characterization, genomic epidemio
 
 All workflows in the PHB repository end with `_PHB` in order to differentiate them from earlier versions and from the original tools they incorporate.
 
-<center>[Explore our workflows](workflows_overview/workflows_type.md){ .md-button .md-button--primary }</center>
+/// html | div[style="text-align: center"]
+[Explore our workflows](workflows_overview/workflows_type.md){ .md-button .md-button--primary }
+///
 
-<div class="grid cards" markdown>
+/// html | div[class="grid cards" markdown]
 
 -   <center>[Terra Users](getting_started/terra.md){ .md-button .md-button--secondary }
 
@@ -30,7 +32,7 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
     Learn how to use our workflows on the command-line!</center>
 
-</div>
+///
 
 !!! dna "Our Open Source Philosophy"
     PHB source code is publicly available on [GitHub](https://github.com/theiagen/public_health_bioinformatics) and available under [GNU Affero General Public License v3.0](https://github.com/theiagen/public_health_bioinformatics/blob/main/LICENSE)!

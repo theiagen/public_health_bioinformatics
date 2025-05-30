@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria), [Mycotics](../../workflows_overview/workflows_kingdom.md#mycotics), [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v2.3.0 | Yes | Sample-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Name", filter_values="[**Snippy_Variants**](../workflows/phylogenetic_construction/snippy_variants.md)", columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## Snippy_Variants_PHB
 
@@ -29,71 +27,15 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 !!! info "Query String"
     The query string can be a gene or any other annotation that matches the GenBank file/output VCF **EXACTLY**
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| snippy_variants_wf | **reference_genome_file** | File | Reference genome (GenBank file or fasta) |  | Required |
-| snippy_variants_wf | **samplename** | String | Names of samples |  | Required |
-| snippy_gene_query | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional  |
-| snippy_gene_query | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional  |
-| snippy_gene_query | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional  |
-| snippy_gene_query | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional  |
-| snippy_variants | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional  |
-| snippy_variants_wf | **assembly_fasta** | File | Assembly file |  | Optional  |
-| snippy_variants_wf | **base_quality** | Int | Minimum quality for a nucleotide to be used in variant calling | 13 | Optional  |
-| snippy_variants_wf | **cpus** | Int | Number of CPUs to use | 4 | Optional  |
-| snippy_variants_wf | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0 | Optional  |
-| snippy_variants_wf | **map_qual** | Int | Minimum mapping quality to accept in variant calling, default from snippy tool is 60 |  | Optional  |
-| snippy_variants_wf | **maxsoft** | Int | Number of bases of alignment to soft-clip before discarding the alignment, default from snippy tool is 10 |  | Optional  |
-| snippy_variants_wf | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional  |
-| snippy_variants_wf | **min_coverage** | Int | Minimum read coverage of a position to identify a mutation | 10 | Optional  |
-| snippy_variants_wf | **min_frac** | Float | Minimum fraction of bases at a given position to identify a mutation, default from snippy tool is 0 | 0.9 | Optional  |
-| snippy_variants_wf | **min_quality** | Int | Minimum VCF variant call "quality" | 100 | Optional  |
-| snippy_variants_wf | **query_gene** | String | Comma-separated strings (e.g. gene names) in which to search for mutations to output to data table |  | Optional  |
-| snippy_variants_wf | **read1** | File | Forward read file |  | Optional  |
-| snippy_variants_wf | **read2** | File | Reverse read file |  | Optional  |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Snippy_Variants", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Workflow Tasks
 
-`Snippy_Variants` uses Snippy to align reads to the reference and call SNPs, MNPs and INDELs according to optional input parameters. The output includes a file of variants that is then queried using the `grep` bash command to identify any mutations in specified genes or annotations of interest. The query string MUST match the gene name or annotation as specified in the GenBank file and provided in the output variant file in the `snippy_results` column.
-
-!!! info "Quality Control Metrics"
-    Additionally, `Snippy_Variants` extracts quality control (QC) metrics from the Snippy output for each sample. These per-sample QC metrics are saved in TSV files (`snippy_variants_qc_metrics`). The QC metrics include:
-
-    - **samplename**: The name of the sample.
-    - **reads_aligned_to_reference**: The number of reads that aligned to the reference genome.
-    - **total_reads**: The total number of reads in the sample.
-    - **percent_reads_aligned**: The percentage of reads that aligned to the reference genome; also available in the `snippy_variants_percent_reads_aligned` output column.
-    - **variants_total**: The total number of variants detected between the sample and the reference genome.
-    - **percent_ref_coverage**: The percentage of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10); also available in the `snippy_variants_percent_ref_coverage` output column.
-    - **#rname**: Reference sequence name (e.g., chromosome or contig name).
-    - **startpos**: Starting position of the reference sequence.
-    - **endpos**: Ending position of the reference sequence.
-    - **numreads**: Number of reads covering the reference sequence.
-    - **covbases**: Number of bases with coverage.
-    - **coverage**: Percentage of the reference sequence covered (depth ≥ 1).
-    - **meandepth**: Mean depth of coverage over the reference sequence.
-    - **meanbaseq**: Mean base quality over the reference sequence.
-    - **meanmapq**: Mean mapping quality over the reference sequence.
-  
-    Note that the last set of columns (`#rname` to `meanmapq`) may repeat for each chromosome or contig in the reference genome.
-
-!!! tip "QC Metrics for Phylogenetic Analysis"
-    These QC metrics provide valuable insights into the quality and coverage of your sequencing data relative to the reference genome. Monitoring these metrics can help identify samples with low coverage, poor alignment, or potential issues that may affect downstream analyses, and we recommend examining them before proceeding with phylogenetic analysis if performing Snippy_Variants and Snippy_Tree separately.
-
-    These per-sample QC metrics can also be combined into a single file (`snippy_combined_qc_metrics`) in downstream workflows, such as `snippy_tree`, providing an overview of QC metrics across all samples.
-
-!!! techdetails "Snippy Variants Technical Details"
-    |  | Links |
-    | --- | --- |
-    | Task | [task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl)<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
-    | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
-    | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+{{ include_md("common_text/snippy_variants_task.md", condition="snippy_variants") }}
 
 ### Outputs
 
@@ -103,27 +45,9 @@ The `Snippy_Variants` workflow aligns single-end or paired-end reads (in FASTQ f
 !!! warning "Note on coverage calculations"
     The outputs from `samtools coverage` (found in the `snippy_variants_coverage_tsv` file) may differ from the `snippy_variants_percent_ref_coverage` due to different calculation methods. `samtools coverage` computes genome-wide coverage metrics (e.g., the proportion of bases covered at depth ≥ 1), while `snippy_variants_percent_ref_coverage` uses a user-defined minimum coverage threshold (default is 10), calculating the proportion of the reference genome with a depth greater than or equal to this threshold.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| snippy_variants_bai | File | Indexed bam file of the reads aligned to the reference |
-| snippy_variants_bam | File | Bam file of reads aligned to the reference |
-| snippy_variants_coverage_tsv | File | Coverage statistics TSV file output by the `samtools coverage` command, providing genome-wide metrics such as the proportion of bases covered (depth ≥ 1), mean depth, and other related statistics.            |
-| snippy_variants_docker | String | Docker image for snippy variants task |
-| snippy_variants_gene_query_results | File | CSV file detailing results for mutations associated with the query strings specified by the user |
-| snippy_variants_hits | String | A summary of mutations associated with the query strings specified by the user |
-| snippy_variants_num_reads_aligned | Int | Number of reads that aligned to the reference genome as calculated by samtools view -c command |
-| snippy_variants_num_variants | Int | Number of variants detected between sample and reference genome |
-| snippy_variants_outdir_tarball | File | A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree |
-| snippy_variants_percent_reads_aligned | Float | Percentage of reads aligned to the reference genome |
-| snippy_variants_percent_ref_coverage| Float | Proportion of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10). |
-| snippy_variants_qc_metrics | File | TSV file containing quality control metrics for the sample |
-| snippy_variants_query | String | Query strings specified by the user when running the workflow |
-| snippy_variants_query_check | String | Verification that query strings are found in the reference genome |
-| snippy_variants_results | File | CSV file detailing results for all mutations identified in the query sequence relative to the reference |
-| snippy_variants_summary | File | A summary TXT fie showing the number of mutations identified for each mutation type |
-| snippy_variants_version | String | Version of Snippy used |
-| snippy_variants_wf_version | String | Version of Snippy_Variants used |
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Snippy_Variants", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///
+

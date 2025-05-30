@@ -9,7 +9,7 @@ workflow basespace_fetch {
     String basespace_sample_name
     String? basespace_sample_id
     String basespace_collection_id
-    String api_server
+    String api_server = "https://api.basespace.illumina.com"
     String access_token
   }
   call basespace.fetch_bs {

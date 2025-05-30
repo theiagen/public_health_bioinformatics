@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Data Import](../../workflows_overview/workflows_type.md/#data-import) | [Any taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.2.0 | Yes | Sample-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Name", filter_values="[**Create_Terra_Table**](../workflows/data_import/create_terra_table.md)", columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## Create_Terra_Table_PHB
 
@@ -21,7 +19,7 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
 
     **_This can be changed_** by providing information in the `file_ending` optional input parameter. See below for more information.
 
-#### Finding the `data_location_path` {#data-location}
+#### Finding the `data_location_path` {% raw %} {#data-location} {% endraw %}
 
 ??? toggle "Using the Terra data uploader"
     Once you have named your new collection, you will see the collection name directly above where you can drag-and-drop your data files, or on the same line as the Upload button. Right-click the collection name and select "Copy link address." Paste the copied link into the data_location_path variable, remembering to enclose it in quotes.
@@ -42,7 +40,7 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
     !!! caption narrow "Using the Files section"
         ![Data tab](../../assets/figures/Create_Terra_Table_example2.png)
 
-#### How to determine the appropriate `file_ending` for your data {#file-ending}
+#### How to determine the appropriate `file_ending` for your data {% raw %} {#file-ending} {% endraw %}
 
 The `file_ending` should be a substring of your file names that is held in common. To include multiple file endings, please separate them with commas, as shown in the "No elements in common" section. Click on the toggles below for examples:
 
@@ -70,23 +68,11 @@ The `file_ending` should be a substring of your file names that is held in commo
 
     In this group, the desired sample names are "sample_01" and "sample_02". However, in this example, there is no common text following the sample name. Providing `"_"` would result in the same behavior as default. We can provide _two_ different patterns in the `file_ending` variable: `"_1,_2"` to capture all possible options. By doing this, "sample_01" and "sample_02" will appear in our table with the appropriate read files.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| create_terra_table | **assembly_data** | Boolean | Set to true if your data is in FASTA format; set to false if your data is FASTQ format | | Required |
-| create_terra_table | **data_location_path** | String | The full path to your data's Google bucket folder location, including the gs://; can be easily copied by right-clicking and copying the link address in the header after navigating to the folder in the "Files" section of the "Data" tab on Terra (see [above](#data-location) for examples) | | Required |
-| create_terra_table | **new_table_name** | String | The name of the new Terra table you want to create | | Required |
-| create_terra_table | **paired_end** | Boolean | Set to true if your data is paired-end FASTQ files; set to false if not | | Required |
-| create_terra_table | **terra_project** | String | The name of the Terra project where your data table will be created | | Required |
-| create_terra_table | **terra_workspace** | String | The name of the Terra workspace where your data table will be created | | Required |
-| create_terra_table | **file_ending** | String | Use to provide file ending(s) to determine what should be dropped from the filename to determine the name of the sample (see [above](#file-ending) for more information) | | Optional |
-| make_table | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| make_table | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
-| make_table | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional |
-| make_table | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Create_Terra_Table", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Outputs
 

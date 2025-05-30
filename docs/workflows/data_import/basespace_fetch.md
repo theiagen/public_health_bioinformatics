@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Data Import](../../workflows_overview/workflows_type.md/#data-import) | [Any taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v1.3.0 | Yes | Sample-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Name", filter_values="[**BaseSpace_Fetch**](../workflows/data_import/basespace_fetch.md)", columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## BaseSpace_Fetch_PHB
 
@@ -20,7 +18,7 @@ This process must be performed on a command-line before using the `BaseSpace_Fet
 
 _If you already have a command-line environment available_, you can skip ahead to [Step 2](#install-bs-cli).
 
-##### Step 1: Create a command-line environment {#create-environment}
+##### Step 1: Create a command-line environment {% raw %} {#create-environment} {% endraw %}
 
 ??? toggle "Click for more information"
 
@@ -47,7 +45,7 @@ _If you already have a command-line environment available_, you can skip ahead t
         !!! caption narrow "Environment creation in progress"
             ![environment creation](../../assets/figures/basespace_fetch/info3-creation-in-progress.png)
 
-##### Step 2: Install the BaseSpace Command-Line Tool to Retrieve the Access Token and API Server Address {#install-bs-cli}
+##### Step 2: Install the BaseSpace Command-Line Tool to Retrieve the Access Token and API Server Address {% raw %} {#install-bs-cli} {% endraw %}
 
 ??? toggle "Click for more information"
 
@@ -94,7 +92,7 @@ _If you already have a command-line environment available_, you can skip ahead t
         
 #### Preparing to retrieve a run with BaseSpace_Fetch
 
-##### Step 1: Create a Metadata Sheet from the BaseSpace SampleSheet {#prep-metadata}
+##### Step 1: Create a Metadata Sheet from the BaseSpace SampleSheet {% raw %} {#prep-metadata} {% endraw %}
 
 ??? toggle "Click for more information"
 
@@ -123,7 +121,7 @@ _If you already have a command-line environment available_, you can skip ahead t
             !!! caption narrow "Example Metadata Sheet"
                 ![example metadata sheet](../../assets/figures/basespace_fetch/step7-metadata-sheet.png)
 
-##### Step 2: Upload the metadata spreadsheet to the destination workspace in Terra.bio {#upload-metadata}
+##### Step 2: Upload the metadata spreadsheet to the destination workspace in Terra.bio {% raw %} {#upload-metadata} {% endraw %}
 
 ??? toggle "Click for more information"
 
@@ -147,32 +145,18 @@ _If you already have a command-line environment available_, you can skip ahead t
 !!! warning "Sample_Name _and_ Sample_ID"
     If the Sample_Name and Sample_ID in the BaseSpace sample sheet are different, set the `basespace_sample_id` input attribute to "`this.basespace_sample_id"`.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| basespace_fetch | **access_token** | String | The access token is used in place of a username and password to allow the workflow to access the user account in BaseSpace from which the data is to be transferred. It is an alphanumeric string that is 32 characters in length. Example: `9e08a96471df44579b72abf277e113b7` | | Required |
-| basespace_fetch | **api_server** | String | The API server is the web address to which data transfer requests can be sent by the workflow. Use this API server if you are unsure: `"https://api.basespace.illumina.com"` (this is the default set by the command-line tool) | | Required |
-| basespace_fetch | **basespace_collection** | String | The collection ID is the BaseSpace Run or Project where the data to be transferred is stored. | | Required |
-| basespace_fetch | **basespace_sample_name** | String | The BaseSpace sample name is the sample identifier used in BaseSpace. This identifier is set on the sample sheet at the onset of an Illumina sequencing run. | | Required |
-| basespace_fetch | **sample_name** | String | The sample name is the sample identifier used in the Terra.bio data table corresponding to the metadata associated with the sample to be transferred from BaseSpace | | Required |
-| basespace_fetch | **basespace_sample_id** | String | The BaseSpace sample ID is an optional additional identifier used in BaseSpace. If a sample has a BaseSpace sample ID it should be available on the sample sheet and must be included in the metadata sheet upload prior to running BaseSpace_Fetch. | | Optional |
-| fetch_bs | **cpu** | Int | This input is the number of CPU's used in the data transfer. To facilitate the transfer of many files this runtime parameter may be increased. | 2 | Optional |
-| fetch_bs | **disk_size** | Int | The disk size is the amount of storage in GigaBytes (GB) requested for the VM to run the data transfer task. | 100 | Optional |
-| fetch_bs | **docker_image** | String | The Docker image used to run BaseSpace_Fetch task. | us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1 | Optional |
-| fetch_bs | **memory** | Int | The memory is the amount of RAM/memory requested for running the data transfer task. | 8 | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0 | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="BaseSpace_Fetch", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Outputs
 
 The outputs of this workflow will be the fastq files imported from BaseSpace into the data table where the sample ID information had originally been uploaded.
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| basespace_fetch_analysis_date | String | The date the workflow was run |
-| basespace_fetch_version | String | The version of the repository the Basespace_Fetch workflow is in |
-| read1 | File | File with forward-facing reads |
-| read2 | File | File with reverse-facing read |
+/// html | div[class="searchable-table"]
+
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="BaseSpace_Fetch", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///

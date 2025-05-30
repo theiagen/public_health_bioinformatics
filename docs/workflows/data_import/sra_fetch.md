@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Data Import](../../workflows_overview/workflows_type.md/#data-import) | [Any taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.2.0 | Yes | Sample-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Name", filter_values="[**SRA_Fetch**](../workflows/data_import/sra_fetch.md)", columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## SRA_Fetch_PHB
 
@@ -24,20 +22,11 @@ Please see the [NCBI Metadata and Submission Overview](https://www.ncbi.nlm.nih.
 | EXPERIMENT | SRX# |
 | RUN  | SRR# |
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| fetch_sra_to_fastq | **sra_accession** | String | SRA, ENA, or DRA accession number | | Required |
-| fetch_sra_to_fastq | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| fetch_sra_to_fastq | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| fetch_sra_to_fastq | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0 | Optional |
-| fetch_sra_to_fastq | **fastq_dl_options** | String | Additional parameters to pass to fastq_dl from [here](https://github.com/rpetit3/fastq-dl?tab=readme-ov-file#usage) | "--provider sra" | Optional |
-| fetch_sra_to_fastq | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0 | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="SRA_Fetch", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Outputs
 
@@ -45,21 +34,11 @@ Read data are available either with full base quality scores (**SRA Normalized F
 
 Given the lack of usefulness of SRA Lite formatted FASTQ files, we try to avoid these by preferentially searching SRA directly (SRA-Lite is more probably to be the file synced to other repositories), but sometimes downloading these files is unavoidable. To make the user aware of this, a warning column is present that is populated when an SRA-Lite file is detected.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| sra_fetch_version | String | The version of the repository the SRA_Fetch workflow is in |
-| sra_fetch_analysis_date | String | The date the workflow was run |
-| read1 | File | File containing the forward reads |
-| read2 | File | File containing the reverse reads (not available for single-end or ONT data) |
-| fastq_dl_date | String | The date of the read data download |
-| fastq_dl_docker | String | The docker used |
-| fastq_dl_metadata | File | File containing metadata of the provided accession such as submission_accession, library_selection, instrument_platform, among others |
-| fastq_dl_version | String | The version of fastq-dl used |
-| fastq_dl_warning | String |  This warning field is populated if SRA-Lite files are detected. These files contain all quality encoding as Phred-30 or Phred-3. |
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="SRA_Fetch", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///
 
 ## References
 
