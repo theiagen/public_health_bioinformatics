@@ -37,7 +37,7 @@ task submit_ena_data {
     Int disk_size = 100
     Int cpu = 1
     Int memory = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra_to_ena:0.5"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra_to_ena:0.6"
   }
   command <<<
     set -euo pipefail

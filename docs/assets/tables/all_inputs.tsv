@@ -1803,13 +1803,13 @@ register_ena_samples	batch_size	Int	Number of samples to process in each batch	1
 register_ena_samples	center	String	Name of submitting center		Optional	Terra_2_ENA	
 register_ena_samples	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Terra_2_ENA	
 register_ena_samples	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Terra_2_ENA	
-register_ena_samples	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra_to_ena:0.5	Optional	Terra_2_ENA	
+register_ena_samples	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra_to_ena:0.6	Optional	Terra_2_ENA
 register_ena_samples	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Terra_2_ENA	
 submit_ena_data	bam_column	String	Column name containing BAM file paths	"bam_file"	Optional	Terra_2_ENA	
 submit_ena_data	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Terra_2_ENA	
 submit_ena_data	cram_column	String	Column name containing CRAM file paths	"cram_file"	Optional	Terra_2_ENA	
 submit_ena_data	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Terra_2_ENA	
-submit_ena_data	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra_to_ena:0.5	Optional	Terra_2_ENA	
+submit_ena_data	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra_to_ena:0.6	Optional	Terra_2_ENA
 submit_ena_data	experiment_name	String	Internal component, do not modify		Optional	Terra_2_ENA
 submit_ena_data	instrument	String	Internal component, do not modify		Optional	Terra_2_ENA
 submit_ena_data	library_selection	String	Internal component, do not modify	"RANDOM"	Optional	Terra_2_ENA
