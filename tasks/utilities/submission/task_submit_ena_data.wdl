@@ -79,6 +79,10 @@ task submit_ena_data {
       --mode "submit" \
       ~{true="--test" false="" test_submit}
 
+    # Changing the output file name because it reports both successful and failed submissions
+    if [ -f "failed_validation.txt" ]; then
+      mv failed_validation.txt webincli_results.txt
+
   >>>
   output {
     # prepare_ena_data.py output
@@ -86,9 +90,9 @@ task submit_ena_data {
     File file_paths_json = "file_paths.json"
     File excluded_samples = "excluded_samples.tsv"
     # bulk_webincli.py output
-    File? submission_report_file = "submissions/webin-cli.report"
+    Array[File]? submission_report_files = glob("submissions/*.report")
     Array[File]? manifest_files = glob("manifests/Manifest_*.txt")
-    File? manifest_all_errors = "failed_validation.txt"
+    File? webincli_results = "webincli_results.txt"
     String docker_image = docker
   }
   runtime {

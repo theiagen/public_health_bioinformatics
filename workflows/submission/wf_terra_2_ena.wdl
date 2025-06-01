@@ -65,9 +65,9 @@ workflow Terra_2_ENA {
     File prepped_ena_data = submit_ena_data.prepped_ena_data
     File ena_file_paths_json = submit_ena_data.file_paths_json
     File ena_excluded_samples = submit_ena_data.excluded_samples
-    File? ena_submission_report = submit_ena_data.submission_report_file
+    Array[File]? ena_submission_report_files = submit_ena_data.submission_report_files
     Array[File]? ena_submission_manifest_files = submit_ena_data.manifest_files
-    File? ena_submission_failed_validation_file = submit_ena_data.manifest_all_errors
+    File? ena_webincli_results = submit_ena_data.webincli_results
     String ena_docker_image = submit_ena_data.docker_image
     # Versioning
     String Terra_2_ENA_version = version_capture.phb_version
