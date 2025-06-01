@@ -20,8 +20,38 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
 ## What needs to be included in your Terra data table?
 
+### Read Data Fields
 
+<div class="grid cards" markdown>
 
+-   ???+ toggle "**Mandatory Fields**"
+
+        !!! warning "These columns are required for submission and must be included in the Terra data table. The column names must appear exactly as shown and cannot be substituted or modified using column mappings."
+
+        | Terra Column Name | Description |
+        |---|---|
+        | `read1`/`read2`/`bam_file`/`cram_file` | The path to two paired end `FASTQ` files, `BAM` file, or `CRAM` file containing sequencing data. |
+        | `experiment_name` | Unique name of the experiment. |
+        | `sequencing_platform` | The platform used to generate the sequence data. [See permitted values](https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html#platform). |
+        | `sequencing_instrument` | The instrument used to generate the sequence data. [See permitted values](https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html#instrument). |
+        | `library_source` | The source of the library. [See permitted values](https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html#source). |
+        | `library_selection` | The method used to select the library. [See permitted values](https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html#selection). |
+        | `library_strategy` | The strategy used to generate the library. [See permitted values](https://ena-docs.readthedocs.io/en/latest/submit/reads/webin-cli.html#strategy). |
+
+</div>
+
+<div class="grid cards" markdown>
+
+-   ???+ toggle "**Optional Fields**"
+
+        | Terra Column Name | Description |
+        |---|---|
+        | `insert_size` | The insert size for paired reads. |
+        | `library_description` | Free text library description. |
+
+</div>
+
+### Sample Metadata Fields
 ??? tip "Using Customized Column Names in Terra Tables"
 
     In some cases, users may have data tables in Terra with column names that differ from the field names expected by ENA. The `Terra_2_ENA` workflow allows users to supply a **custom column mapping file**, enabling them to specify how their columns map to the required/mandatory field names.
@@ -45,7 +75,7 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
     Ensure the mapping file includes all columns with custom names. Columns that match the default workflow names do not need to be included. Missing mappings for renamed columns may result in errors during execution if the column is required, and will not be found if the column is optional. The workflow will automatically map the specified column names from your Terra table to the required ENA field names as long as the mapping file is provided correctly.
 
-=== "Submitting Bacterial Read Data"
+=== "Bacterial Metadata"
 
     <div class="grid cards" markdown>
 
@@ -55,7 +85,7 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
                 If you cannot provide a value for a mandatory field within, set the `allow-missing` input parameter to `true` or alternatively, use one of the [INDSC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
 
-            | <div style="width: 160px;">Default Terra Column Name</div> | <div style="width: 140px;">ENA Field Name</div> | Description |
+            | <div style="width: 160px;">Terra Column Name</div> | <div style="width: 140px;">ENA Field Name</div> | Description |
             |---|---|---|
             | `title` | sample_title  | Title of the sample. |
             | `taxon_id` and/or `organism` | tax_id and/or scientific name  | Taxonomic identifier (NCBI taxon ID) or scientific name of the organism from which the sample was obtained. |
@@ -70,9 +100,9 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
     <div class="grid cards" markdown>
 
-    -   ???+ toggle "**Recommended Fields**"
+    -   ???+ toggle "**Optional Fields**"
 
-            | <div style="width: 190px;">Default Terra Column Name</div> | <div style="width: 190px;">ENA Field Name</div> | Description |
+            | <div style="width: 190px;">Terra Column Name</div> | <div style="width: 190px;">ENA Field Name</div> | Description |
             |---|---|---|
             | `library_description` | sample_description | Description of the sample. |
             | `lat_lon` | lat_lon | Geographical coordinates of the location where the specimen was collected. |
@@ -83,7 +113,7 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
     Reference: [ENA prokaryotic pathogen minimal sample checklist](https://www.ebi.ac.uk/ena/browser/view/ERC000028)
 
-=== "Submitting Viral Read Data"
+=== "Viral Metadata"
 
     <div class="grid cards" markdown>
 
@@ -93,28 +123,29 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
                 If you cannot provide a value for a mandatory field within, set the `allow-missing` input parameter to `true` or alternatively, use one of the [INDSC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
 
-            | <div style="width: 170px;">Default Terra Column Name</div> | <div style="width: 140px;">ENA Field Name</div> | Description |
+            | <div style="width: 170px;">Terra Column Name</div> | <div style="width: 140px;">ENA Field Name</div> | Description |
             |---|---|---|
             | `title` | sample_title  | Title of the sample. |
             | `taxon_id` and/or `organism` | tax_id and/or scientific name  | Taxonomic identifier (NCBI taxon ID) or scientific name of the organism from which the sample was obtained. |
             | `collection_date` | collection date | The date the sample was collected with the intention of sequencing, either as an instance (single point in time) or interval. In case no exact time is available, the date/time can be right truncated i.e. all of these are valid ISO8601 compliant times: 2008-01-23T19:23:10+00:00; 2008-01-23T19:23:10; 2008-01-23; 2008-01; 2008. |
+            | `collecting_institution` | collecting institution | Name of the institution to which the person collecting the specimen belongs. Format: Institute Name, Institute Address |
+            | `collector_name` | collector name | Name of the person who collected the specimen. Example: John Smith |
             | `geo_loc_name` | geographic location (country and/or sea) | The geographical origin of where the sample was collected from, with the intention of sequencing, as defined by the country or sea name. Country or sea names should be chosen from the INSDC country [list](http://insdc.org/country.html). |
             | `host_common_name` | host common name | Common name of the host, e.g. human |
-            | `host_subject_id` | host subject id | A unique identifier by which each subject can be referred to, de-identified, e.g. #131 |
             | `host_health_state` | host health state | Health status of the host at the time of sample collection. Must be one of the following: `diseased`, `healthy`, `missing: control sample`, `missing: data agreement established pre-2023`, `missing: endangered species`, `missing: human-identifiable`, `missing: lab stock`, `missing: sample group`, `missing: synthetic construct`, `missing: third party data`, `not applicable`, `not collected`, `not provided`, `restricted access`. |
-            | `host_sex` | host sex | Gender or sex of the host. Must be one of the following: `female`, `male`, `hermaphrodite`, `neuter`, `not applicable`, `not collected`, `not provided`, `other`, `missing: control sample`, `missing: data agreement established pre-2023`, `missing: endangered species`, `missing: human-identifiable`, `missing: lab stock`, `missing: sample group`, `missing: synthetic construct`, `missing: third party data`. |
             | `host_scientific_name` | host scientific name | Scientific name of the natural (as opposed to laboratory) host to the organism from which sample was obtained. |
-            | `collector_name` | collector name | Name of the person who collected the specimen. Example: John Smith |
-            | `collecting_institution` | collecting institution | Name of the institution to which the person collecting the specimen belongs. Format: Institute Name, Institute Address |
+            | `host_sex` | host sex | Gender or sex of the host. Must be one of the following: `female`, `male`, `hermaphrodite`, `neuter`, `not applicable`, `not collected`, `not provided`, `other`, `missing: control sample`, `missing: data agreement established pre-2023`, `missing: endangered species`, `missing: human-identifiable`, `missing: lab stock`, `missing: sample group`, `missing: synthetic construct`, `missing: third party data`. |
+            | `host_subject_id` | host subject id | A unique identifier by which each subject can be referred to, de-identified, e.g. #131 |
+            | `isolation_source` | isolation_source | Describes the physical, environmental and/or local geographical source of the biological sample from which the sample was derived. |
             | `isolate` | isolate | Individual isolate from which the sample was obtained. |
 
     </div>
 
     <div class="grid cards" markdown>
 
-    -   ???+ toggle "**Recommended Fields**"
+    -   ???+ toggle "**Optional Fields**"
 
-            | <div style="width: 190px;">Default Terra Column Name</div> | <div style="width: 190px;">ENA Field Name</div> | Description |
+            | <div style="width: 190px;">Terra Column Name</div> | <div style="width: 190px;">ENA Field Name</div> | Description |
             |---|---|---|
             | `latitude` | geographic location (latitude) | The geographical origin of the sample as defined by latitude. The values should be reported in decimal degrees and in WGS84 system |
             | `longitude` | geographic location (longitude) | The geographical origin of the sample as defined by longitude. The values should be reported in decimal degrees and in WGS84 system |

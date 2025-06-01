@@ -1810,13 +1810,13 @@ submit_ena_data	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Terra_
 submit_ena_data	cram_column	String	Column name containing CRAM file paths	"cram_file"	Optional	Terra_2_ENA	
 submit_ena_data	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Terra_2_ENA	
 submit_ena_data	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra_to_ena:0.5	Optional	Terra_2_ENA	
-submit_ena_data	experiment_name	String	Name for the ENA experiment		Optional	Terra_2_ENA	
-submit_ena_data	instrument	String	Sequencing instrument used		Optional	Terra_2_ENA	
-submit_ena_data	library_selection	String	Method used to select the library	"RANDOM"	Optional	Terra_2_ENA	
-submit_ena_data	library_source	String	Source of the sequencing library	"GENOMIC"	Optional	Terra_2_ENA	
-submit_ena_data	library_strategy	String	Sequencing strategy used	"WGS"	Optional	Terra_2_ENA	
+submit_ena_data	experiment_name	String	Internal component, do not modify		Optional	Terra_2_ENA
+submit_ena_data	instrument	String	Internal component, do not modify		Optional	Terra_2_ENA
+submit_ena_data	library_selection	String	Internal component, do not modify	"RANDOM"	Optional	Terra_2_ENA
+submit_ena_data	library_source	String	Internal component, do not modify	"GENOMIC"	Optional	Terra_2_ENA
+submit_ena_data	library_strategy	String	Internal component, do not modify	"WGS"	Optional	Terra_2_ENA
 submit_ena_data	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Terra_2_ENA	
-submit_ena_data	platform	String	Sequencing platform used	"ILLUMINA"	Optional	Terra_2_ENA	
+submit_ena_data	platform	String	Internal component, do not modify	"ILLUMINA"	Optional	Terra_2_ENA
 submit_ena_data	read1_column	String	Column name containing read1 file paths	"read1"	Optional	Terra_2_ENA	
 submit_ena_data	read2_column	String	Column name containing read2 file paths	"read2"	Optional	Terra_2_ENA	
 submit_ena_data	test_submit	Boolean	If true, performs a test submission of metadata		Optional	Terra_2_ENA	
