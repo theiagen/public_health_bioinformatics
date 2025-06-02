@@ -87,7 +87,7 @@ task skani {
 
   # need to account for if the genome is derived from refseq or not 
   # this will have to be modified if GCAs are added to the database as well
-  if [[ $TOP_ACCESSION == "GCF_*" ]]; then
+  if [[ $(cat TOP_ACCESSION) == "GCF_*" ]]; then
     echo false > SKANI_VIRUS
   else
     echo true > SKANI_VIRUS
