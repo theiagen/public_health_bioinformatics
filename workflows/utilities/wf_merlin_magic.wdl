@@ -839,6 +839,13 @@ workflow merlin_magic {
     File? ectyper_results = ectyper.ectyper_results
     String? ectyper_version = ectyper.ectyper_version
     String? ectyper_predicted_serotype = ectyper.ectyper_predicted_serotype
+    String? ectyper_qc_result = ectyper.ectyper_qc_result
+    String? ectyper_database_version = ectyper.ectyper_database_version
+    String? ectyper_pathotype = ectyper.ectyper_pathotype
+    String? ectyper_pathotype_count = ectyper.ectyper_pathotype_count
+    String? ectyper_pathotype_genes = ectyper.ectyper_pathotype_genes
+    String? ectyper_pathodb_version = ectyper.ectyper_pathodb_version
+    String? ectyper_stx_subtypes = ectyper.ectyper_stx_subtypes
     String? shigatyper_predicted_serotype = shigatyper.shigatyper_predicted_serotype
     String? shigatyper_ipaB_presence_absence = shigatyper.shigatyper_ipaB_presence_absence
     String? shigatyper_notes = shigatyper.shigatyper_notes
