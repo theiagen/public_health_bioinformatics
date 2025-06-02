@@ -19765,7 +19765,7 @@
 </details>
 <details class="task">
 <summary><code>KmerFinder</code>: Taxon Assignment (optional)</summary>
-<p>The <code>KmerFinder</code> method predicts prokaryotic species based on the number of overlapping (co-occurring) <em>k</em>-mers, i.e., 16-mers, between the query genome and genomes in a reference database.</p>
+<p>The <code>KmerFinder</code> method predicts prokaryotic species based on the number of overlapping (co-occurring) <em>k</em>-mers, i.e., 16-mers, between the query genome and genomes in a reference database. These <em>k</em>-mers are selected with the prefix of ATGAC as to focus on coding regions of genomes. A prediction is made by identifying which species in the training data has the highest number of 16-mers in common with the query. This match is made regardless of position. Ties will result in an alphabetical sorting of tied species and the return of the first species. This is a simpler approach than other <em>k</em>-mer based tools such as GAMBIT which utilizes a 11-mer approach while implementing thresholds to its classification algorithm allowing it to re assess at a higher level of classification if need be. </p>
 <div class="admonition techdetails">
 <p class="admonition-title">KmerFinder Technical Details</p>
 <table>
@@ -19782,15 +19782,15 @@
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td>https://bitbucket.org/genomicepidemiology/kmerfinder</td>
+<td><a href="https://bitbucket.org/genomicepidemiology/kmerfinder">KmerFinder BitBucket</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td>https://cge.food.dtu.dk/services/KmerFinder/instructions.php</td>
+<td><a href="https://cge.food.dtu.dk/services/KmerFinder/instructions.php">CGE KmerFinder Documentation</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://journals.asm.org/doi/full/10.1128/jcm.02981-13?rfr_dat=cr_pub++0pubmed&amp;url_ver=Z39.88-2003&amp;rfr_id=ori%3Arid%3Acrossref.org"><strong>Benchmarking of Methods for Genomic Taxonomy</strong></a></td>
+<td><a href="https://journals.asm.org/doi/full/10.1128/jcm.02981-13?rfr_dat=cr_pub++0pubmed&amp;url_ver=Z39.88-2003&amp;rfr_id=ori%3Arid%3Acrossref.org">Benchmarking of Methods for Genomic Taxonomy</a></td>
 </tr>
 </tbody>
 </table>
@@ -22385,7 +22385,7 @@
 <tr>
 <td>kmerfinder_template_coverage</td>
 <td>String</td>
-<td></td>
+<td>Percent of kmer coverage pertaining to the template, or reference selected</td>
 </tr>
 <tr>
 <td>kmerfinder_top_hit</td>
@@ -24280,7 +24280,7 @@
 <tr>
 <td>kmerfinder_template_coverage</td>
 <td>String</td>
-<td></td>
+<td>Percent of kmer coverage pertaining to the template, or reference selected</td>
 </tr>
 <tr>
 <td>kmerfinder_top_hit</td>
@@ -25905,7 +25905,7 @@
 <tr>
 <td>kmerfinder_template_coverage</td>
 <td>String</td>
-<td></td>
+<td>Percent of kmer coverage pertaining to the template, or reference selected</td>
 </tr>
 <tr>
 <td>kmerfinder_top_hit</td>
@@ -27175,7 +27175,7 @@
 <tr>
 <td>kmerfinder_template_coverage</td>
 <td>String</td>
-<td></td>
+<td>Percent of kmer coverage pertaining to the template, or reference selected</td>
 </tr>
 <tr>
 <td>kmerfinder_top_hit</td>
@@ -27930,7 +27930,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 28, 2025 13:36:02 UTC">2025-05-28</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 2, 2025 13:44:34 UTC">2025-06-02</span>
   </span>
 
     
