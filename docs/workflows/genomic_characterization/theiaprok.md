@@ -855,8 +855,10 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
             | Software Documentation | [srst2](https://github.com/katholt/srst2) |
             | Database Description | [Docker container](https://github.com/StaPH-B/docker-builds/tree/master/build-files/srst2/0.2.0-vibrio-230224) |
     
+{{ include_md("common_text/vibecheck_task.md", indent=4) }}
+
     ??? task "`Abricate`: Vibrio characterization"
-        
+
         The `Abricate` Vibrio characterization task detects sequences for *Vibrio* spp. characterization using genome assemblies and the abricate "vibrio" database. The sequences included in the database are as follows:
         
         | Sequence name | Sequence role | Purpose in database |
@@ -877,18 +879,6 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
             | Software Documentation | [abricate](https://github.com/tseemann/abricate) |
             | Database Description | [Docker container](https://github.com/StaPH-B/docker-builds/tree/master/build-files/abricate/1.0.1-vibrio-cholera) |
     
-    ??? task "`Vibecheck`: Vibrio cholerae classificaiton"
-        
-        The `Vibecheck` task classifies _V. cholerae_ sequences into canonical lineages (T1-T17) using variant frequency demixing. 
-        
-        !!! techdetails "Vibecheck Technical Details"
-            |  | Links |
-            | --- | --- |
-            | Task | [task_vibecheck_vibrio.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl) |
-            | Software Source Code | [Vibecheck](https://github.com/CholGen/Vibecheck) |
-            | Software Documentation | [Vibecheck](https://github.com/CholGen/Vibecheck) |
-            | Database Description | [Docker container](https://hub.docker.com/r/watronfire/vibecheck) |
-
 ### Outputs
 
 === "TheiaProk_Illumina_PE"
