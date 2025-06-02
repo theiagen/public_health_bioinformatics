@@ -9,4 +9,4 @@
         | Task | [task_kmerfinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kmerfinder.wdl) |
         | Software Source Code | [KmerFinder BitBucket](https://bitbucket.org/genomicepidemiology/kmerfinder) |
         | Software Documentation | [CGE KmerFinder Documentation](https://cge.food.dtu.dk/services/KmerFinder/instructions.php) |
-        | Original Publication(s) | [**Benchmarking of Methods for Genomic Taxonomy**](https://journals.asm.org/doi/full/10.1128/jcm.02981-13?rfr_dat=cr_pub++0pubmed&url_ver=Z39.88-2003&rfr_id=ori%3Arid%3Acrossref.org) |
+        | Original Publication(s) | [Benchmarking of Methods for Genomic Taxonomy](https://journals.asm.org/doi/full/10.1128/jcm.02981-13?rfr_dat=cr_pub++0pubmed&url_ver=Z39.88-2003&rfr_id=ori%3Arid%3Acrossref.org) |
