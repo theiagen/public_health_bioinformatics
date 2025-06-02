@@ -133,7 +133,7 @@ workflow theiaviral_illumina_pe {
       call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
         input:
           ncbi_accession = skani.skani_top_accession,
-          use_ncbi_virus = true
+          use_ncbi_virus = skani.skani_virus_download
       }
     }
     # align reads to reference

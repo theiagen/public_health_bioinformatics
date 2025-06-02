@@ -85,6 +85,13 @@ task skani {
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 21 | tee TOP_SCORE
     fi
 
+  # need to account for if the genome is derived from refseq or not 
+  # this will have to be modified if GCAs are added to the database as well
+  if [[ $TOP_ACCESSION == "GCF_*" ]]; then
+    echo false > SKANI_VIRUS
+  else
+    echo true > SKANI_VIRUS
+  fi
   >>>
   output{
     File skani_report = "~{samplename}_skani_results_sorted.tsv"
@@ -94,6 +101,7 @@ task skani {
     Float skani_top_score = read_float("TOP_SCORE")
     String skani_database = skani_db
     String skani_warning = read_string("SKANI_WARNING")
+    Boolean skani_virus_download = read_boolean("SKANI_VIRUS")
     String skani_version = read_string("VERSION")
     String skani_docker = docker
   }
