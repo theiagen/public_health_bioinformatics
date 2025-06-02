@@ -641,7 +641,7 @@ workflow merlin_magic {
           gene_max_mismatch = srst2_gene_max_mismatch,
           docker = srst2_docker_image
       }
-      if (paired_end) {
+      if (paired_end && srst2_vibrio.abricate_vibrio_serogroup == "O1") {
         call vibecheck_vibrio_task.vibecheck_vibrio {
           input:
             read1 = select_first([read1]),
