@@ -20,11 +20,9 @@ workflow theiaeuk_ont {
     File gambit_db_genomes = "gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb"
     File gambit_db_signatures = "gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs"
   }
-
   call versioning.version_capture {
     input:
   }
-
   call read_qc.read_QC_trim_ont as read_qc {
     input:
       read1 = read1,
