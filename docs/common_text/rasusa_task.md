@@ -2,7 +2,7 @@
 
     The Rasusa task performs subsampling of the raw reads. By default, this task will subsample reads to a depth of 150X using the estimated genome length produced during the preceding raw read screen. The user can prevent the task from being launched by setting the `call_rasusa`variable to false. 
 
-    The user can also provide an estimated genome length for the task to use for subsampling using the `genome_size` variable. In addition, the read depth can be modified using the `subsample_coverage` variable.
+    The user can also provide an estimated genome length for the task to use for subsampling using the `genome_length` variable. In addition, the read depth can be modified using the `subsample_coverage` variable.
         
     !!! techdetails "Rasusa Technical Details"
 
