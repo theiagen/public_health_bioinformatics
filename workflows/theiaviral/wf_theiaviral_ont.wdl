@@ -159,7 +159,7 @@ workflow theiaviral_ont {
       call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
         input:
           ncbi_accession = skani.skani_top_accession,
-          use_ncbi_virus = true
+          use_ncbi_virus = skani.skani_virus_download
       }
     }
     # align assembly to reference genome
@@ -324,6 +324,7 @@ workflow theiaviral_ont {
     Float? skani_top_score = skani.skani_top_score
     Float? skani_top_ani = skani.skani_top_ani
     Float? skani_top_ref_coverage = skani.skani_top_ref_coverage
+    String? skani_warning = skani.skani_warning
     String? skani_database = skani.skani_database
     String? skani_version = skani.skani_version
     String? skani_docker = skani.skani_docker
