@@ -80,8 +80,9 @@ task submit_ena_data {
       ~{true="--test" false="" test_submit}
 
     # Changing the output file name because it reports both successful and failed submissions
-    if [ -f "failed_validation.txt" ]; then
+    if [[ -f "failed_validation.txt" ]]; then
       mv failed_validation.txt webincli_results.txt
+    fi
 
   >>>
   output {
