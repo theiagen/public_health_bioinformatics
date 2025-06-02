@@ -10,8 +10,20 @@
 
 All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
 
-!!! caption "TheiaEuk Workflow Diagram"
-    ![TheiaEuk Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PHB_202557.png){width=75%}
+=== "TheiaEuk_Illumina_PE"
+
+    !!! caption "TheiaEuk Illumina PE Workflow Diagram"
+        ![TheiaEuk Illumina PE Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PHB_202557.png)
+
+
+=== "TheiaEuk_ONT"
+
+    !!! caption "TheiaEuk ONT Workflow Diagram"
+        ![TheiaEuk ONT Workflow Diagram](../../assets/figures/TheiaEuk_ONT.png)
+
+!!! warning "Before running TheiaEuk"
+
+    TheiaEuk_Illumina_PE relies on [Snippy](#organism-specific-characterization) to perform variant calling on the cleaned read dataset and then queries the resulting file for specific mutations that are known to confim antifugal resistance (see [Organism-specific characterization](#organism-specific-characterization) section). This behaviour has been replicated in TheiaEuk_ONT but the variant calling is performed directly on the resulting assemblies. Therefore, the read support reported is, at the moment, non-reliable. Future improvements will include improvements on this module. 
 
 ### Inputs
 
@@ -89,12 +101,14 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Many of these taxa-specific tasks do not require any additional inputs from the user.
 
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
-    Two tools are deployed when _Candidozyma auris_/_Candida auris_ is  identified.
+    Three tools are deployed when _Candidozyma auris_/_Candida auris_ is  identified.
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
 
+{{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaeuk") }}
+
     ??? task "Snippy Variants: antifungal resistance detection"
-        To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance.
+        To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance. It's important to note that unlike `amr_search`, this task reports all variants found in the searched targets. 
     
         The genes in which there are known resistance-conferring mutations for this pathogen are:
 
