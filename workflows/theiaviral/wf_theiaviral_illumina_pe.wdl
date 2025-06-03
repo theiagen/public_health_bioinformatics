@@ -269,6 +269,7 @@ workflow theiaviral_illumina_pe {
     Float? skani_top_ani = skani.skani_top_ani
     Float? skani_top_ref_coverage = skani.skani_top_ref_coverage
     String? skani_warning = skani.skani_warning
+    String? skani_skani_status = skani.skani_status
     String? skani_database = skani.skani_database
     String? skani_version = skani.skani_version
     String? skani_docker = skani.skani_docker

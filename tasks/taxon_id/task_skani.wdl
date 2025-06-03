@@ -21,6 +21,9 @@ task skani {
     # get version
     skani --version | tee VERSION
 
+    # set to PASS by default
+    echo "PASS" | tee SKANI_STATUS
+
     # check if the fasta has contigs greater than 500 bp (otherwise skani will fail)
     echo "DEBUG: Checking assembly for contigs > 500 bp"
     sed -E 's/^>([^ ]+).*$/>\1/' ~{assembly_fasta} | \
@@ -45,6 +48,15 @@ task skani {
         grep -v '^>' $fasta >> concatenated.fasta
       done
       assembly_fasta="concatenated.fasta"
+
+      # check if supercontig is greater than 500 bp
+      fa_length=$(grep -v '^>' concatenated.fasta | tr -d '\n' | wc -m)
+      if [[ $fa_length -gt 500 ]]; then
+        echo "DEBUG: The combined length of the de novo assembled contigs exceeds 500 bp. (${fa_length} bp)"
+      else
+        echo "ERROR: The combined length of the de novo assembled contigs is less than 500 bp. (${fa_length} bp)"
+        echo "FAIL" | tee SKANI_STATUS
+      fi
     else
       assembly_fasta=~{assembly_fasta}
     fi
@@ -66,6 +78,12 @@ task skani {
     echo "DEBUG: Extracting Skani results"
     new_header=$(awk 'NR==1 {OFS="\t"; print $0, "ANI_x_Ref_Coverage"}' ~{samplename}_skani_results.tsv)
 
+    # initialize output files
+    echo "N/A" | tee TOP_ACCESSION
+    echo 0 | tee TOP_ANI
+    echo 0 | tee TOP_REF_COVERAGE
+    echo 0 | tee TOP_SCORE
+
     # create a new column and sort by the product of ANI (col 3) and Align_fraction_ref (col 4)
     awk -F'\t' 'NR > 1 {OFS="\t"; new_col = sprintf("%.5f", $3 * $4 / 100); print $0, new_col}' ~{samplename}_skani_results.tsv | \
       sort -t$'\t' -k21,21nr | \
@@ -73,7 +91,7 @@ task skani {
 
     if [[ $(wc -l < ~{samplename}_skani_results_sorted.tsv) -lt 2 ]]; then
       echo "ERROR: No hits found in skani results"
-      exit 1
+      echo "FAIL" | tee SKANI_STATUS
     else
       # get the file name for the top hit in sorted skani results: 1st column, 2nd line in file
       top_hit_name=$(basename $(awk 'NR == 2 {print $1}' ~{samplename}_skani_results_sorted.tsv))
@@ -87,7 +105,7 @@ task skani {
 
   # need to account for if the genome is derived from refseq or not 
   # this will have to be modified if GCAs are added to the database as well
-  if [[ $(cat TOP_ACCESSION) == GCF_* ]]; then
+  if [[ $(cat SKANI_STATUS) == "PASS" && $(cat TOP_ACCESSION) == GCF_* ]]; then
     echo false > SKANI_VIRUS
   else
     echo true > SKANI_VIRUS
@@ -101,6 +119,7 @@ task skani {
     Float skani_top_score = read_float("TOP_SCORE")
     String skani_database = skani_db
     String skani_warning = read_string("SKANI_WARNING")
+    String skani_status = read_string("SKANI_STATUS")
     Boolean skani_virus_download = read_boolean("SKANI_VIRUS")
     String skani_version = read_string("VERSION")
     String skani_docker = docker

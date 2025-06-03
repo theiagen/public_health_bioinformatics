@@ -1091,6 +1091,7 @@ skani_top_ani	Float	Top ANI score from Skani	TheiaViral_Illumina_PE, TheiaViral_
 skani_top_ani_fasta	File	FASTA file of top ANI match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_ref_coverage	Float	Reference coverage of top match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_score	Float	Top score from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_status	String	Status of Skani analysis	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_version	String	Version of Skani used	TheiaViral_Illumina_PE, TheiaViral_ONT
 theiaviral_illumina_pe_date	String	Date of TheiaViral Illumina PE workflow run	TheiaViral_Illumina_PE
 theiaviral_illumina_pe_version	String	Version of TheiaViral Illumina PE workflow	TheiaViral_Illumina_PE
