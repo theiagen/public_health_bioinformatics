@@ -14,7 +14,6 @@ import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus
 import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as variant_call_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
-import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/task_versioning.wdl" as versioning
 
@@ -149,68 +148,72 @@ workflow theiaviral_illumina_pe {
           samplename = samplename,
           skani_db = skani_db
       }
-      # download the best reference determined from skani
-      call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
-        input:
-          ncbi_accession = skani.skani_top_accession,
-          use_ncbi_virus = true
+      # if skani cannot identify a reference genome, fail gracefully
+      if (skani.skani_status == "PASS") {
+        # download the best reference determined from skani
+        call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
+          input:
+            ncbi_accession = skani.skani_top_accession,
+            use_ncbi_virus = skani.skani_virus_download
+        }
       }
     }
-    # align reads to reference
-    call bwa_task.bwa {
-      input:
-        samplename = samplename,
-        read1 = read1_selected,
-        read2 = read2_selected,
-        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
-    }
-    # consensus calling via ivar
-    call ivar_consensus.consensus {
-      input:
-        bamfile = bwa.sorted_bam,
-        samplename = samplename,
-        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-        min_qual = min_map_quality,
-        consensus_min_depth = min_depth,
-        consensus_min_freq = min_allele_freq,
-        all_positions = true
-    }
-    # variant calling via ivar
-    call variant_call_task.variant_call as ivar_variants {
-      input:
-        mpileup = consensus.sample_mpileup,
-        samplename = samplename,
-        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-        min_qual = min_map_quality,
-        organism = "",
-        variant_min_freq = min_allele_freq,
-        variant_min_depth = min_depth
-    }
-    # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-    call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
-      input:
-        bamfile = bwa.sorted_bam,
-        samplename = samplename
-    }
-    # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
-    call consensus_qc_task.consensus_qc as consensus_qc {
-      input:
-        assembly_fasta = consensus.consensus_seq,
-        reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-        genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
-    }
-    # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
-    call checkv_task.checkv as checkv_consensus {
-      input:
-        assembly = consensus.consensus_seq,
-        samplename = samplename,
-        checkv_db = checkv_db
+    if (defined(reference_fasta) || skani.skani_status == "PASS") {
+      # align reads to reference
+      call bwa_task.bwa {
+        input:
+          samplename = samplename,
+          read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+          read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+          reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
+      }
+      # consensus calling via ivar
+      call ivar_consensus.consensus {
+        input:
+          bamfile = bwa.sorted_bam,
+          samplename = samplename,
+          reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+          min_qual = min_map_quality,
+          consensus_min_depth = min_depth,
+          consensus_min_freq = min_allele_freq,
+          all_positions = true
+      }
+      # variant calling via ivar
+      call variant_call_task.variant_call as ivar_variants {
+        input:
+          mpileup = consensus.sample_mpileup,
+          samplename = samplename,
+          reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+          min_qual = min_map_quality,
+          organism = "",
+          variant_min_freq = min_allele_freq,
+          variant_min_depth = min_depth
+      }
+      # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
+      call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
+        input:
+          bamfile = bwa.sorted_bam,
+          samplename = samplename
+      }
+      # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
+      call consensus_qc_task.consensus_qc as consensus_qc {
+        input:
+          assembly_fasta = consensus.consensus_seq,
+          reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+          genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+      }
+      # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
+      call checkv_task.checkv as checkv_consensus {
+        input:
+          assembly = consensus.consensus_seq,
+          samplename = samplename
+      }
     }
   }
   output {
     # versioning outputs
-    String? theiaviral_illumina_pe_version = version_capture.phb_version
-    String? theiaviral_illumina_pe_date = version_capture.date
+    String theiaviral_illumina_pe_version = version_capture.phb_version
+    String theiaviral_illumina_pe_date = version_capture.date
     # ncbi datasets - taxon identification
     String? ncbi_identify_taxon_id = ncbi_identify.taxon_id
     String? ncbi_identify_taxon_name = ncbi_identify.taxon_name
@@ -239,14 +242,14 @@ workflow theiaviral_illumina_pe {
     String? fastp_version = read_QC_trim.fastp_version
     File? fastp_html_report = read_QC_trim.fastp_html_report
     # bbduk outputs
-    String? bbduk_docker = read_QC_trim.bbduk_docker
-    File? bbduk_read1_clean = read_QC_trim.read1_clean
-    File? bbduk_read2_clean = read_QC_trim.read2_clean
+    String bbduk_docker = read_QC_trim.bbduk_docker
+    File bbduk_read1_clean = read_QC_trim.read1_clean
+    File bbduk_read2_clean = read_QC_trim.read2_clean
     # kraken2 outputs - taxonomic classification and read extraction
-    String? kraken_version = read_QC_trim.kraken_version
-    String? kraken_docker = read_QC_trim.kraken_docker
-    String? kraken_database = read_QC_trim.kraken_database
-    String? kraken_report = read_QC_trim.kraken_report
+    String kraken_version = read_QC_trim.kraken_version
+    String kraken_docker = read_QC_trim.kraken_docker
+    String kraken_database = read_QC_trim.kraken_database
+    String kraken_report = read_QC_trim.kraken_report
     File? kraken2_extracted_read1 = read_QC_trim.kraken2_extracted_read1
     File? kraken2_extracted_read2 = read_QC_trim.kraken2_extracted_read2
     # clean read quality control
@@ -257,7 +260,7 @@ workflow theiaviral_illumina_pe {
     File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # clean read screening
     String? read_screen_clean = clean_check_reads.read_screen
-    String? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
+    File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # denovo genome assembly
     File assembly_denovo_fasta = select_first([spades.assembly_fasta, megahit.assembly_fasta, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     String? metaviralspades_status = spades.spades_status
@@ -289,6 +292,8 @@ workflow theiaviral_illumina_pe {
     Float? skani_top_score = skani.skani_top_score
     Float? skani_top_ani = skani.skani_top_ani
     Float? skani_top_ref_coverage = skani.skani_top_ref_coverage
+    String? skani_warning = skani.skani_warning
+    String? skani_status = skani.skani_status
     String? skani_database = skani.skani_database
     String? skani_version = skani.skani_version
     String? skani_docker = skani.skani_docker
