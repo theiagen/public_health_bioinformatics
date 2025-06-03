@@ -124,15 +124,17 @@ workflow theiaviral_panel {
             read_extraction_rank = read_extraction_rank
         }
         # morgana magic
-        call morgana_magic_wf.morgana_magic {
-          input:
-            samplename = samplename + "_" + taxon_id,
-            assembly_fasta = select_first([theiaviral.assembly_consensus_fasta]),
-            read1 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
-            read2 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
-            taxon_name = ncbi_identify.taxon_name,
-            seq_method = "panel"
-          }
+        if (theiaviral.skani_status == "PASS"){
+          call morgana_magic_wf.morgana_magic {
+            input:
+              samplename = samplename + "_" + taxon_id,
+              assembly_fasta = select_first([theiaviral.assembly_consensus_fasta]),
+              read1 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
+              read2 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
+              taxon_name = ncbi_identify.taxon_name,
+              seq_method = "panel"
+            }
+        }
         # call export_taxon_table
         call export_taxon_table_task.export_taxon_table {
           input:
