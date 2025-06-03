@@ -88,9 +88,12 @@ workflow theiaprok_fasta {
     }
     call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
       input:
-        assembly = assembly_fasta,
+        assembly = select_first([prokka.prokka_fna,bakta.bakta_fna]),
         samplename = samplename,
-        organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
+        protein_fasta = select_first([prokka.prokka_faa,bakta.bakta_faa]),
+        gff = select_first([prokka.prokka_gff,bakta.bakta_gff3]),
+        organism = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
+        annotation_format = genome_annotation
     }
     if (call_gamma){
       call gamma_task.gamma{
