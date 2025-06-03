@@ -323,14 +323,14 @@ workflow theiaviral_illumina_pe {
     String? fastp_version = read_QC_trim.fastp_version
     File? fastp_html_report = read_QC_trim.fastp_html_report
     # bbduk outputs
-    String? bbduk_docker = read_QC_trim.bbduk_docker
-    File? bbduk_read1_clean = read_QC_trim.read1_clean
-    File? bbduk_read2_clean = read_QC_trim.read2_clean
+    String bbduk_docker = read_QC_trim.bbduk_docker
+    File bbduk_read1_clean = read_QC_trim.read1_clean
+    File bbduk_read2_clean = read_QC_trim.read2_clean
     # kraken2 outputs - taxonomic classification and read extraction
-    String? kraken_version = read_QC_trim.kraken_version
-    String? kraken_docker = read_QC_trim.kraken_docker
-    String? kraken_database = read_QC_trim.kraken_database
-    String? kraken_report = read_QC_trim.kraken_report
+    String kraken_version = read_QC_trim.kraken_version
+    String kraken_docker = read_QC_trim.kraken_docker
+    String kraken_database = read_QC_trim.kraken_database
+    String kraken_report = read_QC_trim.kraken_report
     File? kraken2_extracted_read1 = read_QC_trim.kraken2_extracted_read1
     File? kraken2_extracted_read2 = read_QC_trim.kraken2_extracted_read2
     # clean read quality control
