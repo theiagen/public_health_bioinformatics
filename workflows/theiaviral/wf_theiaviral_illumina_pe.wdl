@@ -120,7 +120,8 @@ workflow theiaviral_illumina_pe {
       call quast_task.quast as quast_denovo {
         input:
           assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
-          samplename = samplename
+          samplename = samplename,
+          min_contig_length = 0,
       }
       # ANI-based reference genome selection
       call skani_task.skani as skani {
