@@ -131,7 +131,7 @@ workflow theiaviral_panel {
               assembly_fasta = select_first([theiaviral.assembly_consensus_fasta]),
               read1 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
               read2 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
-              taxon_name = ncbi_identify.taxon_name,
+              taxon_name = ncbi_identify.taxon_id,
               seq_method = "panel"
             }
         }
@@ -148,7 +148,7 @@ workflow theiaviral_panel {
               "taxon_name": ncbi_identify.taxon_name,
               "assembly_fasta": select_first([theiaviral.assembly_consensus_fasta]),
               "read1": select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
-              "read2": select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
+              "read2": select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2]),
               "fastq_scan_num_reads_binned1": fastq_scan_binned.read1_seq,
               "fastq_scan_num_reads_binned2": fastq_scan_binned.read2_seq,
               "fastq_scan_num_reads_binned_pairs": fastq_scan_binned.read_pairs,
