@@ -7214,24 +7214,6 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>kraken_db</strong></td>
-<td>File</td>
-<td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. Must contain human and viral sequences</td>
-<td>gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
-<td>100</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -8736,24 +8718,6 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>kraken_db</strong></td>
-<td>File</td>
-<td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. Must contain human and viral sequences</td>
-<td>gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
-<td>100</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -9973,7 +9937,7 @@
 <td><strong>reference_gff_file</strong></td>
 <td>File</td>
 <td>Reference GFF file for the organism being analyzed</td>
-<td>Default provided for mpox ("gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-files/terra/hivgc-files/AY228557.1.gff3"])</td>
+<td>Default provided for mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"])</td>
 <td>Optional</td>
 <td></td>
 </tr>
@@ -10595,24 +10559,6 @@
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
 <td>4</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_db</strong></td>
-<td>File</td>
-<td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. Must contain human and viral sequences</td>
-<td>gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
-<td>100</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -11531,7 +11477,7 @@
 <td><strong>gene_locations_bed_file</strong></td>
 <td>File</td>
 <td>Use to provide locations of interest where average coverage will be calculated</td>
-<td>Default provided for SARS-CoV-2 ("gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed")</td>
+<td>Default provided for SARS-CoV-2 ("gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed")</td>
 <td>Optional</td>
 <td></td>
 </tr>
@@ -11567,7 +11513,7 @@
 <td><strong>primer_bed_file</strong></td>
 <td>File</td>
 <td>The bed file containing the primers used when sequencing was performed</td>
-<td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-files/terra/hivgc-files/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-files/terra/hivgc-files/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
+<td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
 <td>Optional</td>
 <td></td>
 </tr>
@@ -11576,7 +11522,7 @@
 <td><strong>reference_gff_file</strong></td>
 <td>File</td>
 <td>Reference GFF file for the organism being analyzed</td>
-<td>Default provided for mpox ("gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-files/terra/hivgc-files/AY228557.1.gff3"])</td>
+<td>Default provided for mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"])</td>
 <td>Optional</td>
 <td></td>
 </tr>
@@ -12540,7 +12486,7 @@
 <td><strong>kraken2_db</strong></td>
 <td>File</td>
 <td>The database used to run Kraken2. Must contain viral and human sequences.</td>
-<td>gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
 <td>Optional</td>
 <td>sars-cov-2</td>
 </tr>
@@ -12594,7 +12540,7 @@
 <td><strong>kraken2_db</strong></td>
 <td>File</td>
 <td>The database used to run Kraken2. Must contain viral and human sequences.</td>
-<td>gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
 <td>Optional</td>
 <td>sars-cov-2</td>
 </tr>
@@ -12765,7 +12711,7 @@
 <td><strong>gene_locations_bed_file</strong></td>
 <td>File</td>
 <td>Use to provide locations of interest where average coverage will be calculated</td>
-<td>Default provided for SARS-CoV-2 ("gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed")</td>
+<td>Default provided for SARS-CoV-2 ("gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed")</td>
 <td>Optional</td>
 <td></td>
 </tr>
@@ -12801,7 +12747,7 @@
 <td><strong>primer_bed_file</strong></td>
 <td>File</td>
 <td>The bed file containing the primers used when sequencing was performed</td>
-<td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-files/terra/hivgc-files/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-files/terra/hivgc-files/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
+<td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
 <td>Optional</td>
 <td></td>
 </tr>
@@ -12810,7 +12756,7 @@
 <td><strong>reference_gff_file</strong></td>
 <td>File</td>
 <td>Reference GFF file for the organism being analyzed</td>
-<td>Default provided for mpox ("gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-files/terra/hivgc-files/AY228557.1.gff3"])</td>
+<td>Default provided for mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"])</td>
 <td>Optional</td>
 <td></td>
 </tr>
@@ -13698,7 +13644,7 @@
 <td><strong>gene_locations_bed_file</strong></td>
 <td>File</td>
 <td>Use to provide locations of interest where average coverage will be calculated</td>
-<td>Default provided for SARS-CoV-2 ("gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed")</td>
+<td>Default provided for SARS-CoV-2 ("gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed")</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13730,7 +13676,7 @@
 <td><strong>primer_bed_file</strong></td>
 <td>File</td>
 <td>The bed file containing the primers used when sequencing was performed</td>
-<td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-files/terra/hivgc-files/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-files/terra/hivgc-files/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
+<td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13746,7 +13692,7 @@
 <td><strong>reference_gff_file</strong></td>
 <td>File</td>
 <td>Reference GFF file for the organism being analyzed</td>
-<td>Default provided for mpox ("gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-files/terra/hivgc-files/AY228557.1.gff3"])</td>
+<td>Default provided for mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"])</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13959,7 +13905,7 @@
 <tr>
 <td>gene_locations_bed_file</td>
 <td>sars-cov-2</td>
-<td><code>"gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"</code></td>
 </tr>
 <tr>
 <td>genome_length_input</td>
@@ -13989,7 +13935,7 @@
 <tr>
 <td>reference_genome</td>
 <td>sars-cov-2</td>
-<td><code>"gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"</code></td>
 </tr>
 <tr>
 <td>vadr_max_length</td>
@@ -14025,7 +13971,7 @@
 <tr>
 <td>gene_locations_bed_file</td>
 <td>MPXV</td>
-<td><code>"gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed"</code></td>
 </tr>
 <tr>
 <td>genome_length_input</td>
@@ -14050,17 +13996,17 @@
 <tr>
 <td>primer_bed_file</td>
 <td>MPXV</td>
-<td><code>"gs://theiagen-public-files/terra/mpxv-files/MPXV.primer.bed"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.primer.bed"</code></td>
 </tr>
 <tr>
 <td>reference_genome</td>
 <td>MPXV</td>
-<td><code>"gs://theiagen-public-files/terra/mpxv-files/MPXV.MT903345.reference.fasta"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.MT903345.reference.fasta"</code></td>
 </tr>
 <tr>
 <td>reference_gff_file</td>
 <td>MPXV</td>
-<td><code>"gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3"</code></td>
 </tr>
 <tr>
 <td>vadr_max_length</td>
@@ -14121,13 +14067,13 @@
 <tr>
 <td>primer_bed_file</td>
 <td>WNV</td>
-<td><code>"gs://theiagen-public-files/terra/theiacov-files/WNV/WNV-L1_primer.bed"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/wnv/al/wnv/WNV-L1_primer.bed"</code></td>
 <td></td>
 </tr>
 <tr>
 <td>reference_genome</td>
 <td>WNV</td>
-<td><code>"gs://theiagen-public-files/terra/theiacov-files/WNV/NC_009942.1_wnv_L1.fasta"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/wnv/NC_009942.1_wnv_L1.fasta"</code></td>
 <td></td>
 </tr>
 <tr>
@@ -14236,7 +14182,7 @@
 <td>flu</td>
 <td>ha</td>
 <td>h1n1</td>
-<td><code>"gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.fasta"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.fasta"</code></td>
 <td></td>
 </tr>
 <tr>
@@ -14260,7 +14206,7 @@
 <td>flu</td>
 <td>ha</td>
 <td>h3n2</td>
-<td><code>"gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_ha.fasta"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.fasta"</code></td>
 <td></td>
 </tr>
 <tr>
@@ -14284,7 +14230,7 @@
 <td>flu</td>
 <td>ha</td>
 <td>victoria</td>
-<td><code>"gs://theiagen-public-files-rp/terra/flu-references/reference_vic_ha.fasta"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.fasta"</code></td>
 <td></td>
 </tr>
 <tr>
@@ -14308,7 +14254,7 @@
 <td>flu</td>
 <td>ha</td>
 <td>yamagata</td>
-<td><code>"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.fasta"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_ha.fasta"</code></td>
 <td></td>
 </tr>
 <tr>
@@ -14332,7 +14278,7 @@
 <td>flu</td>
 <td>ha</td>
 <td>h5n1</td>
-<td><code>"gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.fasta"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.fasta"</code></td>
 <td></td>
 </tr>
 <tr>
@@ -14356,7 +14302,7 @@
 <td>flu</td>
 <td>na</td>
 <td>h1n1</td>
-<td><code>"gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.fasta"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.fasta"</code></td>
 <td></td>
 </tr>
 <tr>
@@ -14380,7 +14326,7 @@
 <td>flu</td>
 <td>na</td>
 <td>h3n2</td>
-<td><code>"gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_na.fasta"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.fasta"</code></td>
 <td></td>
 </tr>
 <tr>
@@ -14404,7 +14350,7 @@
 <td>flu</td>
 <td>na</td>
 <td>victoria</td>
-<td><code>"gs://theiagen-public-files-rp/terra/flu-references/reference_vic_na.fasta"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_na.fasta"</code></td>
 <td></td>
 </tr>
 <tr>
@@ -14428,7 +14374,7 @@
 <td>flu</td>
 <td>na</td>
 <td>yamagata</td>
-<td><code>"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.fasta"</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_na.fasta"</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -14470,7 +14416,7 @@
 <tr>
 <td>reference_genome</td>
 <td>rsv_a</td>
-<td>gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_a.fasta</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta</td>
 </tr>
 <tr>
 <td>vadr_max_length</td>
@@ -14526,7 +14472,7 @@
 <tr>
 <td>reference_genome</td>
 <td>rsv_b</td>
-<td>gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.fasta</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta</td>
 </tr>
 <tr>
 <td>vadr_max_length</td>
@@ -14575,19 +14521,19 @@
 <tr>
 <td>primer_bed_file</td>
 <td>HIV-v1</td>
-<td>gs://theiagen-public-files/terra/hivgc-files/HIV-1_v1.0.primer.hyphen.bed</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed</td>
 <td>This version of HIV originates from Oregon</td>
 </tr>
 <tr>
 <td>reference_genome</td>
 <td>HIV-v1</td>
-<td>gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.fasta</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta</td>
 <td>This version of HIV originates from Oregon</td>
 </tr>
 <tr>
 <td>reference_gff_file</td>
 <td>HIV-v1</td>
-<td>gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.gff3</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3</td>
 <td>This version of HIV originates from Oregon</td>
 </tr>
 <tr>
@@ -14599,19 +14545,19 @@
 <tr>
 <td>primer_bed_file</td>
 <td>HIV-v2</td>
-<td>gs://theiagen-public-files/terra/hivgc-files/HIV-1_v2.0.primer.hyphen400.1.bed</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed</td>
 <td>This version of HIV originates from Southern Africa</td>
 </tr>
 <tr>
 <td>reference_genome</td>
 <td>HIV-v2</td>
-<td>gs://theiagen-public-files/terra/hivgc-files/AY228557.1.headerchanged.fasta</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta</td>
 <td>This version of HIV originates from Southern Africa</td>
 </tr>
 <tr>
 <td>reference_gff_file</td>
 <td>HIV-v2</td>
-<td>gs://theiagen-public-files/terra/hivgc-files/AY228557.1.gff3</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3</td>
 <td>This version of HIV originates from Southern Africa</td>
 </tr>
 </tbody>
@@ -14736,7 +14682,7 @@
 <p>Kraken2 is run on both the raw and clean reads.</p>
 <div class="admonition info">
 <p class="admonition-title">Database-dependent</p>
-<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
+<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
 </div>
 <div class="admonition techdetails">
 <p class="admonition-title">Kraken2 Technical Details</p>
@@ -14890,7 +14836,7 @@
 <p>Kraken2 is run on both the raw and clean reads.</p>
 <div class="admonition info">
 <p class="admonition-title">Database-dependent</p>
-<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
+<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
 </div>
 <div class="admonition techdetails">
 <p class="admonition-title">Kraken2 Technical Details</p>
@@ -15001,7 +14947,7 @@
 <p>Kraken2 is run on both the raw and clean reads.</p>
 <div class="admonition info">
 <p class="admonition-title">Database-dependent</p>
-<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
+<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
 </div>
 <div class="admonition techdetails">
 <p class="admonition-title">Kraken2 Technical Details</p>
@@ -18523,7 +18469,7 @@ The list of amino-acid substitutions associated with antiviral resistance includ
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 3, 2025 13:34:04 UTC">2025-06-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 3, 2025 14:08:20 UTC">2025-06-03</span>
   </span>
 
     

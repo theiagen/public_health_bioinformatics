@@ -6145,11 +6145,11 @@
 <p>Phylogenies of MTBC are typically constructed with the following options:</p>
 <ul>
 <li>Using the H37Rv reference genome<ul>
-<li><code>reference_genome_file</code> = <code>"gs://theiagen-public-files-rp/terra/theiaprok-files/Mtb_NC_000962.3.fasta"</code></li>
+<li><code>reference_genome_file</code> = <code>"gs://theiagen-public-resources-rp/reference_data/bacterial/mycobacterium/MTB-NC_000962.3.fasta"</code></li>
 </ul>
 </li>
 <li>Masking repetitive regions of the genome (e.g. PE/PPE genes) that are often misaligned<ul>
-<li><code>snippy_core_bed</code> = <code>"gs://theiagen-public-files/terra/theiaprok-files/Mtb_NC_000962.3.bed"</code></li>
+<li><code>snippy_core_bed</code> = <code>"gs://theiagen-public-resources-rp/reference_data/bacterial/mycobacterium/MTB-NC_000962.3.bed"</code></li>
 </ul>
 </li>
 <li>Without masking recombination because TB can be considered non-recombinant<ul>
@@ -6349,7 +6349,7 @@
 <td><strong>referenceseeker_db</strong></td>
 <td>File</td>
 <td>Database used by the referenceseeker tool that contains bacterial genomes from RefSeq release 205. Downloaded from the referenceseeker GitHub repository.</td>
-<td>gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-bacteria-refseq-205.v20210406.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6756,11 +6756,11 @@
 <p><code>ReferenceSeeker</code> uses your draft assembly to identify closely related bacterial, viral, fungal, or plasmid genome assemblies in <a href="https://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a>.</p>
 <p>Databases that can be used with ReferenceSeeker are as follows, and can be used by pasting the GSURI in double quotation marks <code>" "</code> into the <code>referenceseeker_db</code> optional input:</p>
 <ul>
-<li>archea:  <code>gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-archaea-refseq-205.v20210406.tar.gz</code></li>
-<li>bacterial (<strong>default</strong>): <code>gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz</code></li>
-<li>fungi: <code>gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-fungi-refseq-205.v20210406.tar.gz</code></li>
-<li>plasmids: <code>gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-plasmids-refseq-205.v20210406.tar.gz</code></li>
-<li>viral: <code>gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-viral-refseq-205.v20210406.tar.gz</code></li>
+<li>archea:  <code>gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-archaea-refseq-205.v20210406.tar.gz</code></li>
+<li>bacterial (<strong>default</strong>): <code>gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-bacteria-refseq-205.v20210406.tar.gz</code></li>
+<li>fungi: <code>gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-fungi-refseq-205.v20210406.tar.gz</code></li>
+<li>plasmids: <code>gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-plasmids-refseq-205.v20210406.tar.gz</code></li>
+<li>viral: <code>gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-viral-refseq-205.v20210406.tar.gz</code></li>
 </ul>
 <p>For ReferenceSeeker to identify a genome, it must meet user-specified thresholds for sequence coverage (<code>referenceseeker_conserved_dna_threshold</code>; default &gt;= 0.69) and identity (<code>referenceseeker_ani_threshold</code>; default &gt;= 0.95 ). </p>
 <p>A list of closely related genomes is provided in <code>referenceseeker_tsv</code>. The reference genome that ranks highest according to ANI and conserved DNA values is considered the closest match and will be downloaded, with information about this provided in the <code>assembly_fetch_referenceseeker_top_hit_ncbi_accession</code> output.</p>
@@ -7639,7 +7639,7 @@ The <code>cat_variants</code> task concatenates variant data from multiple sampl
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 3, 2025 13:34:04 UTC">2025-06-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 3, 2025 14:08:20 UTC">2025-06-03</span>
   </span>
 
     
