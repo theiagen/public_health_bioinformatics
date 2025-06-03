@@ -197,7 +197,7 @@ workflow organism_parameters {
   }
   if (organism == "rsv_a" || organism == "rsv-a" || organism == "RSV-A" || organism == "RSV_A") {
     String rsv_a_org_name = "rsv_a"
-    String rsv_a_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.fasta"
+    String rsv_a_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"
     String rsv_a_nextclade_ds_tag = "2024-11-27--02-51-00Z"
     String rsv_a_nextclade_ds_name = "nextstrain/rsv/a/EPI_ISL_412866"
     Int rsv_a_genome_len = 15500
@@ -221,7 +221,7 @@ workflow organism_parameters {
   }
   if (organism == "rsv_b" || organism == "rsv-b" || organism == "RSV-B" || organism == "RSV_B") {
     String rsv_b_org_name = "rsv_b"
-    String rsv_b_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.fasta"
+    String rsv_b_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"
     String rsv_b_nextclade_ds_tag = "2025-03-04--17-31-25Z"
     String rsv_b_nextclade_ds_name = "nextstrain/rsv/b/EPI_ISL_1653999"
     Int rsv_b_genome_len = 15500

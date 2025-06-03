@@ -259,7 +259,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | kraken_target_organism | rsv_a | "Human respiratory syncytial virus A" |
         | nextclade_dataset_name_input | rsv_a | nextstrain/rsv/a/EPI_ISL_412866 |
         | nextclade_dataset_tag_input | rsv_a | "2024-11-27--02-51-00Z" |
-        | reference_genome | rsv_a | gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.fasta |
+        | reference_genome | rsv_a | gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta |
         | vadr_max_length | rsv_a | 15500 |
         | vadr_mem | rsv_a | 32 |
         | vadr_options | rsv_a | -r --mkey rsv --xnocomp |
@@ -275,7 +275,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | kraken_target_organism | rsv_b |  "human respiratory syncytial virus" |
         | nextclade_dataset_name_input | rsv_b | nextstrain/rsv/b/EPI_ISL_1653999 |
         | nextclade_dataset_tag_input | rsv_b | "2025-03-04--17-31-25Z" |
-        | reference_genome | rsv_b | gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.fasta |
+        | reference_genome | rsv_b | gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta |
         | vadr_max_length | rsv_b | 15500 |
         | vadr_mem | rsv_b | 32 |
         | vadr_options | rsv_b | -r --mkey rsv --xnocomp |
