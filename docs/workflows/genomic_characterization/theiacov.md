@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Name", filter_values="[**TheiaCov Workflow Series**](../workflows/genomic_characterization/theiacov.md)", columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaCov Workflow Series**](../workflows/genomic_characterization/theiacov.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## TheiaCoV Workflows
 
@@ -115,37 +115,37 @@ We've provided the following information to help you set up the workflow for eac
     === "TheiaCoV_Illumina_PE"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_Illumina_PE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_Illumina_SE"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_Illumina_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_Illumina_SE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_ONT"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_ONT"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_FASTA"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_FASTA", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_FASTA"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_ClearLabs"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_ClearLabs", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_ClearLabs"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_FASTA_Batch"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaCoV_FASTA_Batch", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_FASTA_Batch"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
 ### Organism-specific parameters and logic {% raw %} {#org-specific} {% endraw %}
@@ -513,35 +513,35 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 === "TheiaCoV_Illumina_PE"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaCoV_Illumina_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaCoV_Illumina_PE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
 === "TheiaCoV_Illumina_SE"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaCoV_Illumina_SE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaCoV_Illumina_SE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
 === "TheiaCoV_ONT"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaCoV_ONT", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaCoV_ONT"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
 === "TheiaCoV_FASTA"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaCoV_FASTA", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaCoV_FASTA"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
 === "TheiaCoV_ClearLabs"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaCoV_ClearLabs", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaCoV_ClearLabs"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
@@ -551,6 +551,6 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         **TheiaCoV_FASTA_Batch_PHB** workflow will **output results to the set-level data table in addition to overwriting the Pangolin & Nextclade output columns in the sample-level data table**. Users can view the set-level workflow output TSV file called `"Datatable"` to view exactly which columns were overwritten in the sample-level data table.
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaCoV_FASTA_Batch", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaCoV_FASTA_Batch"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
