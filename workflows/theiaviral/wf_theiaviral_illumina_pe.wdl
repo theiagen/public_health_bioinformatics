@@ -14,7 +14,6 @@ import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus
 import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as variant_call_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
-import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/task_versioning.wdl" as versioning
 
@@ -188,8 +187,8 @@ workflow theiaviral_illumina_pe {
   }
   output {
     # versioning outputs
-    String? theiaviral_illumina_pe_version = version_capture.phb_version
-    String? theiaviral_illumina_pe_date = version_capture.date
+    String theiaviral_illumina_pe_version = version_capture.phb_version
+    String theiaviral_illumina_pe_date = version_capture.date
     # ncbi datasets - taxon identification
     String ncbi_identify_taxon_id = ncbi_identify.taxon_id
     String ncbi_identify_taxon_name = ncbi_identify.taxon_name
@@ -218,14 +217,14 @@ workflow theiaviral_illumina_pe {
     String? fastp_version = read_QC_trim.fastp_version
     File? fastp_html_report = read_QC_trim.fastp_html_report
     # bbduk outputs
-    String? bbduk_docker = read_QC_trim.bbduk_docker
-    File? bbduk_read1_clean = read_QC_trim.read1_clean
-    File? bbduk_read2_clean = read_QC_trim.read2_clean
+    String bbduk_docker = read_QC_trim.bbduk_docker
+    File bbduk_read1_clean = read_QC_trim.read1_clean
+    File bbduk_read2_clean = read_QC_trim.read2_clean
     # kraken2 outputs - taxonomic classification and read extraction
-    String? kraken_version = read_QC_trim.kraken_version
-    String? kraken_docker = read_QC_trim.kraken_docker
-    String? kraken_database = read_QC_trim.kraken_database
-    String? kraken_report = read_QC_trim.kraken_report
+    String kraken_version = read_QC_trim.kraken_version
+    String kraken_docker = read_QC_trim.kraken_docker
+    String kraken_database = read_QC_trim.kraken_database
+    String kraken_report = read_QC_trim.kraken_report
     File? kraken2_extracted_read1 = read_QC_trim.kraken2_extracted_read1
     File? kraken2_extracted_read2 = read_QC_trim.kraken2_extracted_read2
     # clean read quality control
@@ -236,7 +235,7 @@ workflow theiaviral_illumina_pe {
     File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # clean read screening
     String? read_screen_clean = clean_check_reads.read_screen
-    String? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
+    File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # denovo genome assembly
     File assembly_denovo_fasta = select_first([spades.assembly_fasta, megahit.assembly_fasta, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     String? metaviralspades_status = spades.spades_status
