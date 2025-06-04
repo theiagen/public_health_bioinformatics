@@ -67,7 +67,7 @@ workflow theiaviral_ont {
       input:
         samplename = samplename,
         read1 = read1,
-        host = host
+        host = select_first([host])
     }
   }
   # raw read quality check

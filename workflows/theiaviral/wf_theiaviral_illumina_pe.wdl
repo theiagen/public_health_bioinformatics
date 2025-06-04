@@ -11,11 +11,12 @@ import "../../tasks/taxon_id/task_skani.wdl" as skani_task
 import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../tasks/taxon_id/task_identify_taxon_id.wdl" as identify_taxon_id_task
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
-import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus
+import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus_task
 import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as variant_call_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/task_versioning.wdl" as versioning_task
+import "../../workflows/standalone_modules/wf_host_decontamination.wdl" as host_decontamination_wf
 
 
 workflow theiaviral_illumina_pe {
@@ -42,7 +43,7 @@ workflow theiaviral_illumina_pe {
     Int? genome_length
   }
   # get the PHB version
-  call versioning.version_capture {
+  call versioning_task.version_capture {
     input:
   }
   # get the taxon id
@@ -58,7 +59,7 @@ workflow theiaviral_illumina_pe {
         samplename = samplename,
         read1 = read1,
         read2 = read2,
-        host = host
+        host = select_first([host])
     }
   }
   # read QC, classification, extraction, and trimming
@@ -161,7 +162,7 @@ workflow theiaviral_illumina_pe {
           reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
       }
       # consensus calling via ivar
-      call ivar_consensus.consensus {
+      call ivar_consensus_task.consensus {
         input:
           bamfile = bwa.sorted_bam,
           samplename = samplename,
