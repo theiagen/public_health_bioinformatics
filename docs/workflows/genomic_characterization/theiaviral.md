@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Name", filter_values="[**TheiaViral Workflow Series**](../workflows/genomic_characterization/theiaviral.md)", columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaViral**](../workflows/genomic_characterization/theiaviral.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## TheiaViral Workflows
 
@@ -84,14 +84,14 @@
 === "TheiaViral_Illumina_PE"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaViral_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaViral_Illumina_PE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
 
     ///
 
 === "TheiaViral_ONT"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaViral_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaViral_ONT"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
 
     ///
 
@@ -404,14 +404,14 @@
 === "TheiaViral_Illumina_PE"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaViral_Illumina_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaViral_Illumina_PE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
 
     ///
 
 === "TheiaViral_ONT"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaViral_ONT", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaViral_ONT"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
 
     ///
 
