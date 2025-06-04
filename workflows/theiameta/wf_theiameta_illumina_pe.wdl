@@ -76,7 +76,7 @@ workflow theiameta_illumina_pe {
     input:
       query1 = read_QC_trim.read1_clean,
       query2 = read_QC_trim.read2_clean, 
-      reference = spades.assembly_fasta,
+      reference = select_first([spades.assembly_fasta]),
       samplename = samplename,
       mode = "sr",
       output_sam = true
@@ -88,7 +88,7 @@ workflow theiameta_illumina_pe {
   }
   call pilon_task.pilon {
     input:
-      assembly = spades.assembly_fasta,
+      assembly = select_first([spades.assembly_fasta]),
       bam = sort_bam_assembly_correction.bam,
       bai = sort_bam_assembly_correction.bai,
       samplename = samplename
