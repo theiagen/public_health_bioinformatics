@@ -182,7 +182,7 @@ workflow morgana_magic {
     String? nextclade_aa_subs_mpxv = nextclade_output_parser.nextclade_aa_subs
     String? nextclade_aa_dels_mpxv = nextclade_output_parser.nextclade_aa_dels
     String? nextclade_clade_mpxv = nextclade_output_parser.nextclade_clade
-    String? nextclade_lineage_mpsv = nextclade_output_parser.nextclade_lineage
+    String? nextclade_lineage_mpxv = nextclade_output_parser.nextclade_lineage
     String? nextclade_qc_mpxv = nextclade_output_parser.nextclade_qc
     # Nextclade outputs for rabies
     File? nextclade_json_rabies = rabies_nextclade.nextclade_json
