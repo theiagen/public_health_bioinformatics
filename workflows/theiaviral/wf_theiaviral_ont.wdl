@@ -60,7 +60,8 @@ workflow theiaviral_ont {
     call ncbi_datasets_task.ncbi_datasets_genome_summary as ncbi_taxon_summary {
       input:
         taxon = taxon,
-        use_ncbi_virus = true
+        use_ncbi_virus = true,
+        summary_limit = 100
     }
   }
   # decontaminate host reads if a host genome is provided
