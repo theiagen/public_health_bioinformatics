@@ -65,7 +65,7 @@ workflow theiaviral_illumina_pe {
         samplename = samplename,
         read1 = read1,
         read2 = read2,
-        host = host
+        host = select_first([host])
     }
   }
   # read QC, classification, extraction, and trimming
