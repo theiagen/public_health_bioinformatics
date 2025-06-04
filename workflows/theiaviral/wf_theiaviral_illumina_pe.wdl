@@ -204,16 +204,16 @@ workflow theiaviral_illumina_pe {
             assembly = consensus.consensus_seq,
             samplename = samplename
         }
-      }
-      # run morgana magic for classification
-      call morgana_magic_wf.morgana_magic {
-        input:
-          samplename = samplename,
-          assembly_fasta = select_first([consensus.consensus_seq]),
-          read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-          read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-          taxon_name = select_first([ncbi_datasets.taxon_id]),
-          seq_method = "illumina_pe"
+        # run morgana magic for classification
+        call morgana_magic_wf.morgana_magic {
+          input:
+            samplename = samplename,
+            assembly_fasta = select_first([consensus.consensus_seq]),
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+            taxon_name = select_first([ncbi_datasets.taxon_id]),
+            seq_method = "illumina_pe"
+        }
       }
     }
   }
