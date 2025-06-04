@@ -6,7 +6,7 @@ import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
 
-workflow host_decontamination_wf {
+workflow host_decontaminate_wf {
   meta {
     description: "Remove host reads from sequencing data via read mapping"
   }
@@ -83,8 +83,8 @@ workflow host_decontamination_wf {
   }
   output {
     # PHBG Version Captures
-    String host_decontamination_wf_version = version_capture.phb_version
-    String host_decontamination_wf_analysis_date = version_capture.date
+    String host_decontaminate_wf_version = version_capture.phb_version
+    String host_decontaminate_wf_analysis_date = version_capture.date
     # Datasets download outputs
     File? host_genome_fasta = select_first([dwnld_tax.ncbi_datasets_assembly_fasta, dwnld_acc.ncbi_datasets_assembly_fasta])
     File? host_genome_data_report_json = select_first([dwnld_tax.ncbi_datasets_assembly_data_report_json, dwnld_acc.ncbi_datasets_assembly_data_report_json])

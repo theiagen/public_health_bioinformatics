@@ -60,7 +60,7 @@ workflow theiaviral_illumina_pe {
   }
   # dehost reads if a host genome is provided
   if (defined(host)) {
-    call host_decontamination_wf.host_decontamination_wf as host_decontamination {
+    call host_decontaminate_wf.host_decontaminate_wf as host_decontaminate {
       input:
         samplename = samplename,
         read1 = read1,
@@ -84,8 +84,8 @@ workflow theiaviral_illumina_pe {
     # downsample reads to a specific coverage
     call rasusa_task.rasusa as rasusa {
       input:
-        read1 = select_first([host_decontamination.dehost_read1, read1]),
-        read2 = select_first([host_decontamination.dehost_read2, read2]),
+        read1 = select_first([host_decontaminate.dehost_read1, read1]),
+        read2 = select_first([host_decontaminate.dehost_read2, read2]),
         samplename = samplename,
         genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
     }
