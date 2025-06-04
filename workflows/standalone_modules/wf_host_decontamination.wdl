@@ -73,7 +73,7 @@ workflow host_decontamination_wf {
       }
     }
     call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
-      inputs:
+      input:
         bamfile = select_first([bwa.bam, parse_mapping.bam]),
         samplename = hostsample
     }
