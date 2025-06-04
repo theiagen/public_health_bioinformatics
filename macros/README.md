@@ -18,8 +18,7 @@ This macro renders a TSV file as a Markdown table. It supports column filtering,
 | Name            | Type                  | Required | Description |
 |-----------------|-----------------------|----------|-------------|
 | `filename`      | `str`                 | Yes      | Path to the TSV file (relative to the project root). |
-| `filter_column` | `str`                 | No       | Column name to filter rows by. |
-| `filter_values` | `str` or `list[str]`  | No       | Comma-separated string or list of allowed values. Rows are shown if any value matches. |
+| `filters`       | `Dict[str: str]`      | No       | Dictionary for fields to include (filters for, not out) {"Column name": "Target Value"} |
 | `columns`       | `list[str]`           | No       | Subset of columns (supports wildcards). If not specified, all columns are shown. |
 | `sort_by`       | `str`, `list[str]`, or `list[tuple]` | No | Sort by one or more columns. Use `(column, True)` for descending sort. |
 | `input_table`   | `bool`                | No       | If `True`, bolds the second column (used for emphasizing input names). |
@@ -38,7 +37,7 @@ The `columns` and `sort_by` parameters should be used for all input tables, and 
 ```md
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_Illumina_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaProk_Illumina_SE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
 
 ///
 ```
@@ -52,7 +51,7 @@ The `columns` and `sort_by` parameters should be used for all output tables, and
 ```md
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaProk_Illumina_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaProk_Illumina_PE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
 ///
 ```

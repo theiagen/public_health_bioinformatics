@@ -21,8 +21,7 @@
     This task runs on cleaned reads passed from the `read_QC_trim` subworkflow and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones.
 <!-- endif -->
 
-<!-- if: theiacov|freyja|theiaviral -->
-    ???+ warning "Important"
+    !!! info "Database-dependent"
         This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`.
 <!-- endif -->
   
