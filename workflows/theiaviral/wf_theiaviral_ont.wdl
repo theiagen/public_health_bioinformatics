@@ -38,8 +38,9 @@ workflow theiaviral_ont {
     Int min_depth = 10 # minimum depth for masking low coverage regions
     Float min_allele_freq = 0.6 # minimum allele frequency for consensus calling
     Int min_map_quality = 20 # minimum read mapping quality
+    Boolean extract_unclassified = true
     Boolean call_porechop = false
-    Boolean skip_rasusa = false
+    Boolean skip_rasusa = true 
     Boolean skip_screen = false
     Boolean call_raven = true
   }
@@ -102,7 +103,8 @@ workflow theiaviral_ont {
     input:
       read1 = ncbi_scrub_se.read1_dehosted,
       samplename = samplename,
-      taxon_id = ncbi_identify.taxon_id
+      taxon_id = ncbi_identify.taxon_id,
+      extract_unclassified = extract_unclassified
   }
   # downsample reads if the user wants, rasusa parameters are set in the task
   if (! skip_rasusa) {
