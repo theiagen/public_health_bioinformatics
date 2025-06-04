@@ -846,6 +846,7 @@ workflow merlin_magic {
     String? ectyper_pathotype_genes = ectyper.ectyper_pathotype_genes
     String? ectyper_pathodb_version = ectyper.ectyper_pathodb_version
     String? ectyper_stx_subtypes = ectyper.ectyper_stx_subtypes
+    String? ectyper_docker = ectyper.ectyper_docker
     String? shigatyper_predicted_serotype = shigatyper.shigatyper_predicted_serotype
     String? shigatyper_ipaB_presence_absence = shigatyper.shigatyper_ipaB_presence_absence
     String? shigatyper_notes = shigatyper.shigatyper_notes

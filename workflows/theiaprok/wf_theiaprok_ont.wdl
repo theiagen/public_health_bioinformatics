@@ -815,6 +815,7 @@ workflow theiaprok_ont {
     String? ectyper_pathotype_genes = merlin_magic.ectyper_pathotype_genes
     String? ectyper_pathodb_version = merlin_magic.ectyper_pathodb_version
     String? ectyper_stx_subtypes = merlin_magic.ectyper_stx_subtypes
+    String? ectyper_docker = merlin_magic.ectyper_docker
     String? shigatyper_predicted_serotype = merlin_magic.shigatyper_predicted_serotype
     String? shigatyper_ipaB_presence_absence = merlin_magic.shigatyper_ipaB_presence_absence
     String? shigatyper_notes = merlin_magic.shigatyper_notes

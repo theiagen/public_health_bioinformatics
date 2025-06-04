@@ -584,6 +584,7 @@ workflow theiaprok_fasta {
     String? ectyper_pathotype_genes = merlin_magic.ectyper_pathotype_genes
     String? ectyper_pathodb_version = merlin_magic.ectyper_pathodb_version
     String? ectyper_stx_subtypes = merlin_magic.ectyper_stx_subtypes
+    String? ectyper_docker = merlin_magic.ectyper_docker
     File? shigeifinder_report = merlin_magic.shigeifinder_report
     String? shigeifinder_docker = merlin_magic.shigeifinder_docker
     String? shigeifinder_version = merlin_magic.shigeifinder_version

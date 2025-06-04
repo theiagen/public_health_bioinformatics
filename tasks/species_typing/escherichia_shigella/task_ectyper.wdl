@@ -7,7 +7,7 @@ task ectyper {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/ectyper:1.0.0--pyhdfd78af_1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ectyper:2.0.0"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 8
@@ -62,6 +62,7 @@ task ectyper {
     String ectyper_pathotype_genes = read_string("PATHOTYPE_GENES")
     String ectyper_pathodb_version = read_string("PATHODB_VERSION")
     String ectyper_stx_subtypes = read_string("STXSUBTYPES")
+    String ectyper_docker = docker
   }
   runtime {
     docker: "~{docker}"
