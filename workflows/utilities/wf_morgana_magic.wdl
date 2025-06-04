@@ -136,8 +136,8 @@ workflow morgana_magic {
         memory = nextclade_output_parser_memory
     }
   }
-  if organism_parameters.standardized_organism == "rabies" {
-    call nextclade_task.nextclade_v3 {
+  if (organism_parameters.standardized_organism == "rabies") {
+    call nextclade_task.nextclade_v3 as rabies_nextclade {
       input:
         genome_fasta = assembly_fasta,
         custom_input_dataset = organism_parameters.nextclade_pathogen_json,
@@ -150,15 +150,16 @@ workflow morgana_magic {
         docker = nextclade_docker_image,
         memory = nextclade_memory
     }
-    call nextclade_task.nextclade_output_parser {
+    call nextclade_task.nextclade_output_parser as rabies_output_parser {
       input:
-        nextclade_tsv = nextclade_v3.nextclade_tsv,
+        nextclade_tsv = rabies_nextclade.nextclade_tsv,
         organism = organism_parameters.standardized_organism,
         cpu = nextclade_output_parser_cpu,
         disk_size = nextclade_output_parser_disk_size,
         docker = nextclade_output_parser_docker,
         memory = nextclade_output_parser_memory
     }
+  }
   output {
     String organism = organism_parameters.standardized_organism
     # Pangolin outputs
@@ -171,18 +172,18 @@ workflow morgana_magic {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs for all organisms
-    String nextclade_version = select_first([nextclade_v3.nextclade_version, flu_track.nextclade_version, ""])
-    String nextclade_docker = select_first([nextclade_v3.nextclade_docker, flu_track.nextclade_docker, ""])
+    String nextclade_version = select_first([rabies_nextclade.nextclade_version, nextclade_v3.nextclade_version, flu_track.nextclade_version, ""])
+    String nextclade_docker = select_first([rabies_nextclade.nextclade_docker, nextclade_v3.nextclade_docker, flu_track.nextclade_docker, ""])
     # Nextclade outputs for non-flu
-    File? nextclade_json = nextclade_v3.nextclade_json
-    File? auspice_json = nextclade_v3.auspice_json
-    File? nextclade_tsv = nextclade_v3.nextclade_tsv
+    File? nextclade_json = select_first([rabies_nextclade.nextclade_json, nextclade_v3.nextclade_json])
+    File? auspice_json = select_first([rabies_nextclade.auspice_json, nextclade_v3.auspice_json])
+    File? nextclade_tsv = select_first([rabies_nextclade.nextclade_tsv, nextclade_v3.nextclade_tsv])
     String nextclade_ds_tag = organism_parameters.nextclade_dataset_tag
-    String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
-    String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
-    String? nextclade_clade = nextclade_output_parser.nextclade_clade
-    String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
-    String? nextclade_qc = nextclade_output_parser.nextclade_qc
+    String? nextclade_aa_subs = select_first([rabies_output_parser.nextclade_aa_subs, nextclade_output_parser.nextclade_aa_subs])
+    String? nextclade_aa_dels = select_first([rabies_output_parser.nextclade_aa_dels, nextclade_output_parser.nextclade_aa_dels])
+    String? nextclade_clade = select_first([rabies_output_parser.nextclade_clade, nextclade_output_parser.nextclade_clade])
+    String? nextclade_lineage = select_first([rabies_output_parser.nextclade_lineage, nextclade_output_parser.nextclade_lineage])
+    String? nextclade_qc = select_first([rabies_output_parser.nextclade_qc, nextclade_output_parser.nextclade_qc])
     # Nextclade outputs for flu HA
     File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
     File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha

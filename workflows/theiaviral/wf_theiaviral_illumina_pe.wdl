@@ -17,7 +17,7 @@ import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" 
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/task_versioning.wdl" as versioning_task
 import "../../workflows/standalone_modules/wf_host_decontamination.wdl" as host_decontamination_wf
-
+import "../../workflows/utilities/wf_morgana_magic.wdl" as morgana_magic_wf
 
 workflow theiaviral_illumina_pe {
   meta {
@@ -203,6 +203,16 @@ workflow theiaviral_illumina_pe {
           samplename = samplename
       }
     }
+    # run morgana magic for classification
+    call morgana_magic_wf.morgana_magic {
+      input:
+        samplename = samplename,
+        assembly_fasta = select_first([consensus.consensus_seq]),
+        read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+        taxon_name = select_first([ncbi_datasets.taxon_id]),
+        seq_method = "illumina_pe"
+    }
   }
   output {
     # versioning outputs
@@ -306,6 +316,7 @@ workflow theiaviral_illumina_pe {
     String? skani_docker = skani.skani_docker
     # ncbi_datasets outputs - download reference genome
     File? skani_top_ani_fasta = ncbi_datasets.ncbi_datasets_assembly_fasta
+    String? reference_taxon_name = ncbi_datasets.taxon_name
     # bwa outputs - reads aligned to best reference
     String? bwa_version = bwa.bwa_version
     String? bwa_samtools_version = bwa.sam_version
@@ -352,5 +363,64 @@ workflow theiaviral_illumina_pe {
     Float? checkv_consensus_weighted_completeness = checkv_consensus.weighted_completeness
     Int? checkv_consensus_total_genes = checkv_consensus.total_genes
     String? checkv_consensus_version = checkv_consensus.checkv_version
+    # morgana magic outputs
+    String? morgana_magic_organism = morgana_magic.organism 
+    # Pangolin outputs
+    String? morgana_magic_pango_lineage = morgana_magic.pango_lineage 
+    String? morgana_magic_pango_lineage_expanded = morgana_magic.pango_lineage_expanded 
+    String? morgana_magic_pangolin_conflicts = morgana_magic.pangolin_conflicts 
+    String? morgana_magic_pangolin_notes = morgana_magic.pangolin_notes 
+    String? morgana_magic_pangolin_assignment_version = morgana_magic.pangolin_assignment_version 
+    File? morgana_magic_pango_lineage_report = morgana_magic.pango_lineage_report 
+    String? morgana_magic_pangolin_docker = morgana_magic.pangolin_docker 
+    String? morgana_magic_pangolin_versions = morgana_magic.pangolin_versions 
+    # Nextclade outputs for all organisms
+    String? morgana_magic_nextclade_version = morgana_magic.nextclade_version
+    String? morgana_magic_nextclade_docker = morgana_magic.nextclade_docker
+    # Nextclade outputs for non-flu
+    File? morgana_magic_nextclade_json = morgana_magic.nextclade_json
+    File? morgana_magic_auspice_json = morgana_magic.auspice_json
+    File? morgana_magic_nextclade_tsv = morgana_magic.nextclade_tsv
+    String? morgana_magic_nextclade_ds_tag = morgana_magic.nextclade_ds_tag
+    String? morgana_magic_nextclade_aa_subs = morgana_magic.nextclade_aa_subs
+    String? morgana_magic_nextclade_aa_dels = morgana_magic.nextclade_aa_dels
+    String? morgana_magic_nextclade_clade = morgana_magic.nextclade_clade
+    String? morgana_magic_nextclade_lineage = morgana_magic.nextclade_lineage
+    String? morgana_magic_nextclade_qc = morgana_magic.nextclade_qc
+    # Nextclade outputs for flu HA
+    File? morgana_magic_nextclade_json_flu_ha = morgana_magic.nextclade_json_flu_ha
+    File? morgana_magic_auspice_json_flu_ha = morgana_magic.auspice_json_flu_ha
+    File? morgana_magic_nextclade_tsv_flu_ha = morgana_magic.nextclade_tsv_flu_ha
+    String? morgana_magic_nextclade_ds_tag_flu_ha = morgana_magic.nextclade_ds_tag_flu_ha
+    String? morgana_magic_nextclade_aa_subs_flu_ha = morgana_magic.nextclade_aa_subs_flu_ha
+    String? morgana_magic_nextclade_aa_dels_flu_ha = morgana_magic.nextclade_aa_dels_flu_ha
+    String? morgana_magic_nextclade_clade_flu_ha = morgana_magic.nextclade_clade_flu_ha
+    String? morgana_magic_nextclade_qc_flu_ha = morgana_magic.nextclade_qc_flu_ha
+    # Nextclade outputs for flu NA
+    File? morgana_magic_nextclade_json_flu_na = morgana_magic.nextclade_json_flu_na
+    File? morgana_magic_auspice_json_flu_na = morgana_magic.auspice_json_flu_na
+    File? morgana_magic_nextclade_tsv_flu_na = morgana_magic.nextclade_tsv_flu_na
+    String? morgana_magic_nextclade_ds_tag_flu_na = morgana_magic.nextclade_ds_tag_flu_na
+    String? morgana_magic_nextclade_aa_subs_flu_na = morgana_magic.nextclade_aa_subs_flu_na
+    String? morgana_magic_nextclade_aa_dels_flu_na = morgana_magic.nextclade_aa_dels_flu_na
+    String? morgana_magic_nextclade_clade_flu_na = morgana_magic.nextclade_clade_flu_na
+    String? morgana_magic_nextclade_qc_flu_na = morgana_magic.nextclade_qc_flu_na
+    # Flu IRMA Outputs
+    String? morgana_magic_irma_version = morgana_magic.irma_version
+    String? morgana_magic_irma_docker = morgana_magic.irma_docker
+    String? morgana_magic_irma_type = morgana_magic.irma_type
+    String? morgana_magic_irma_subtype = morgana_magic.irma_subtype
+    String? morgana_magic_irma_subtype_notes = morgana_magic.irma_subtype_notes
+    # Flu GenoFLU Outputs
+    String? morgana_magic_genoflu_version = morgana_magic.genoflu_version
+    String? morgana_magic_genoflu_genotype = morgana_magic.genoflu_genotype
+    String? morgana_magic_genoflu_all_segments = morgana_magic.genoflu_all_segments
+    File? morgana_magic_genoflu_output_tsv = morgana_magic.genoflu_output_tsv
+    # Flu Abricate Outputs
+    String? morgana_magic_abricate_flu_type = morgana_magic.abricate_flu_type
+    String? morgana_magic_abricate_flu_subtype =  morgana_magic.abricate_flu_subtype
+    File? morgana_magic_abricate_flu_results = morgana_magic.abricate_flu_results
+    String? morgana_magic_abricate_flu_database =  morgana_magic.abricate_flu_database
+    String? morgana_magic_abricate_flu_version = morgana_magic.abricate_flu_version
   }
 }
