@@ -93,7 +93,7 @@ workflow theiaviral_ont {
   }
   # decontaminate host reads if a host genome is provided
   if (defined(host)) {
-    call host_decontaminate_wf.host_decontaminate_wf as host_decontaminate {
+    call host_decontaminate_wf.host_decontaminate {
       input:
         samplename = samplename,
         read1 = ncbi_scrub_se.read1_dehosted,

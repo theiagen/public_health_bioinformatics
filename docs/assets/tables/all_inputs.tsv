@@ -1987,3 +1987,6 @@ theiaviral_ont	reference_fasta	File	Reference genome in FASTA format		Optional	T
 theiaviral_ont	skip_rasusa	Boolean	True/False to skip read subsampling with Rasusa	FALSE	Optional	TheiaViral_ONT
 theiaviral_ont	skip_raven	Boolean	True/False to call assembly with Raven and use Flye as fallback	TRUE	Optional	TheiaViral_ONT
 theiaviral_ont	skip_screen	Boolean	True/False to skip read screening check prior to analysis	FALSE	Optional	TheiaViral_ONT
+theiaviral_ont	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_ONT
+theiaviral_illumina_pe	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_Illumina_PE
+host_decontaminate	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_Illumina_PE

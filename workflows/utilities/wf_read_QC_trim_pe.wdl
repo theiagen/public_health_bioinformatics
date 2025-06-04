@@ -163,7 +163,7 @@ workflow read_QC_trim_pe {
   }
   if ("~{workflow_series}" == "theiaviral") {
     if (defined(host)) {
-      call host_decontaminate_wf.host_decontaminate_wf as host_decontaminate {
+      call host_decontaminate_wf.host_decontaminate {
         input:
           samplename = samplename,
           read1 = bbduk.read1_clean,

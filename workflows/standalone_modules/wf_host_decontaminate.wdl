@@ -6,7 +6,7 @@ import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
 
-workflow host_decontaminate_wf {
+workflow host_decontaminate {
   meta {
     description: "Remove host reads from sequencing data via read mapping"
   }
