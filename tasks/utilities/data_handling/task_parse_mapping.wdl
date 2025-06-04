@@ -123,6 +123,73 @@ task sam_to_sorted_bam {
   }
 }
 
+task bam_to_fastq {
+  meta {
+    description: "Convert BAM file to FASTQ equivalent to BWA task"
+  }
+  input {
+    File bam
+    String samplename
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
+    Int disk_size = 100
+    Int cpu = 2
+    Int memory = 8   
+  }
+  command <<<
+    # Samtools verion capture
+    samtools --version | head -n1 | cut -d' ' -f2 | tee VERSION
+
+    # Get aligned and unaligned bams
+    samtools view \
+      -@ ~{cpu} \
+      -F 0x904 \
+      -b \
+      -o ~{samplename}.sorted.aligned-only.bam \
+      ~{bam}
+
+    # convert SAM to BAM that only includes unaligned reads
+    samtools view \
+      -@ ~{cpu} \
+      -f 4 \
+      -b \
+      -o ~{samplename}.sorted.unaligned-reads.bam \
+      ~{bam}
+
+    # Convert BAM to FASTQ
+    echo -e "\nGenerating FASTQs for aligned single-end reads\n"
+    samtools fastq \
+      -@ ~{cpu} \
+      -F 4 \
+      -0 ~{samplename}_R1.fastq.gz \
+      ~{samplename}.sorted.aligned-only.bam
+    echo -e "Generating FASTQs for unaligned single-end reads\n"
+    # again, lowercase 'f' is important for getting all unaligned reads
+    samtools fastq \
+      -@ ~{cpu} \
+      -f 4 \
+      -0 ~{samplename}_unaligned_R1.fastq.gz \
+      ~{samplename}.sorted.unaligned-reads.bam
+  >>>
+  output {
+    String sam_version = read_string("VERSION")
+    File sorted_bam = "~{samplename}.sorted.bam"
+    File sorted_bai = "~{samplename}.sorted.bam.bai"
+    File read1_aligned = "~{samplename}_R1.fastq.gz"
+    File read1_unaligned = "~{samplename}_unaligned_R1.fastq.gz"
+    File sorted_bam_unaligned = "~{samplename}.sorted.unaligned-reads.bam"
+    File sorted_bam_unaligned_bai = "~{samplename}.sorted.unaligned-reads.bam.bai"
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 0
+    preemptible: 0
+  }
+}
+
 task retrieve_pe_reads_bam {
   meta {
     description: "Parse minimap2 SAM file and return paired-end reads in FASTQ format"
