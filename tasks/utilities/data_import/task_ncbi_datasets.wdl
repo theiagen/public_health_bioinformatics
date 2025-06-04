@@ -34,10 +34,10 @@ task ncbi_datasets_download_genome_accession {
       # unzip the archive and copy FASTA and JSON to PWD, rename in the process so output filenames are predictable 
       unzip ~{ncbi_accession}.zip
       if [ ! -s "ncbi_dataset/data/genomic.fna" ]; then
-        echo "ERROR: no assemblies found for taxon: ~{ncbi_accession}"
-        echo "FAIL" > tee NCBIDATASETS_STATUS
+        echo "ERROR: no assemblies found for accession: ~{ncbi_accession}"
+        echo "FAIL" > NCBIDATASETS_STATUS
       else
-        echo "PASS" > tee NCBIDATASETS_STATUS
+        echo "PASS" > NCBIDATASETS_STATUS
         cp -v ncbi_dataset/data/genomic.fna ./~{ncbi_accession}.fasta
         cp -v ncbi_dataset/data/data_report.jsonl ./~{ncbi_accession}.data_report.jsonl
 
@@ -73,10 +73,10 @@ task ncbi_datasets_download_genome_accession {
       # unzip the archive and copy FASTA and JSON to PWD, rename in the process so output filenames are predictable 
       unzip ~{ncbi_accession}.zip
       if [ ! -s "ncbi_dataset/data/~{ncbi_accession}*/~{ncbi_accession}*.fna" ]; then
-        echo "ERROR: no assemblies found for taxon: ~{ncbi_accession}"
-        echo "FAIL" > tee NCBIDATASETS_STATUS
+        echo "ERROR: no assemblies found for accession: ~{ncbi_accession}"
+        echo "FAIL" > NCBIDATASETS_STATUS
       else
-        echo "PASS" > tee NCBIDATASETS_STATUS
+        echo "PASS" > NCBIDATASETS_STATUS
 
         cp -v ncbi_dataset/data/~{ncbi_accession}*/~{ncbi_accession}*.fna ./~{ncbi_accession}.fasta
         cp -v ncbi_dataset/data/assembly_data_report.jsonl ./~{ncbi_accession}.data_report.jsonl
@@ -153,11 +153,11 @@ task ncbi_datasets_download_genome_taxon {
       # report if the file is empty
       if [ ! -s "ncbi_genome_summary.tsv" ]; then
         echo "ERROR: no assemblies found for taxon: ~{taxon}"
-        echo "FAIL" > tee NCBIDATASETS_STATUS
+        echo "FAIL: no assemblies found" > NCBIDATASETS_STATUS
         echo "N/A" > NCBI_ACCESSION
       else
         ncbi_accession=$(tail -1 ncbi_genome_summary.tsv | cut -f 1)
-        echo "PASS" > tee NCBIDATASETS_STATUS
+        echo "PASS" > NCBIDATASETS_STATUS
         echo "DEBUG: ncbi_accession: ${ncbi_accession}"
         echo ncbi_accession > NCBI_ACCESSION
 
@@ -187,13 +187,13 @@ task ncbi_datasets_download_genome_taxon {
       # report if the file is empty
       if [ ! -s "ncbi_genome_summary.tsv" ]; then
         echo "ERROR: no assemblies found for taxon: ~{taxon}"
-        echo "FAIL" | tee NCBIDATASETS_STATUS
+        echo "FAIL: no assemblies found" > NCBIDATASETS_STATUS
         echo "N/A" > NCBI_ACCESSION
       else
         ncbi_accession=$(tail -1 ncbi_genome_summary.tsv | cut -f 1)
         echo "DEBUG: ncbi_accession: ${ncbi_accession}"
         echo ncbi_accession > NCBI_ACCESSION
-        echo "PASS" | tee NCBIDATASETS_STATUS
+        echo "PASS" > NCBIDATASETS_STATUS
         #### download FASTA file using ncbi_accession ####
         datasets download genome accession \
           ${ncbi_accession} \

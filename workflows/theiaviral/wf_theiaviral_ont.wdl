@@ -72,193 +72,195 @@ workflow theiaviral_ont {
         host = select_first([host])
     }
   }
-  # raw read quality check
-  call nanoplot_task.nanoplot as nanoplot_raw {
-    input:
-      read1 = select_first([host_decontamination.dehost_read1, read1]),
-      samplename = samplename,
-      est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
-  }
-  # adapter trimming
-  if (call_porechop) {
-    call porechop_task.porechop as porechop {
+  if (! defined(host) || host_decontamination.ncbi_datasets_status == "PASS") {
+    # raw read quality check
+    call nanoplot_task.nanoplot as nanoplot_raw {
       input:
         read1 = select_first([host_decontamination.dehost_read1, read1]),
+        samplename = samplename,
+        est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+    }
+    # adapter trimming
+    if (call_porechop) {
+      call porechop_task.porechop as porechop {
+        input:
+          read1 = select_first([host_decontamination.dehost_read1, read1]),
+          samplename = samplename
+      }
+    }
+    # read filtering
+    call nanoq_task.nanoq as nanoq {
+      input:
+        read1 = select_first([porechop.trimmed_reads, host_decontamination.dehost_read1, read1]),
         samplename = samplename
     }
-  }
-  # read filtering
-  call nanoq_task.nanoq as nanoq {
-    input:
-      read1 = select_first([porechop.trimmed_reads, host_decontamination.dehost_read1, read1]),
-      samplename = samplename
-  }
-  # human read scrubbing
-  call ncbi_scrub_task.ncbi_scrub_se {
-    input:
-      read1 = nanoq.filtered_read1,
-      samplename = samplename,
-  }
-  # taxonomic classification and read extraction
-  call metabuli_task.metabuli as metabuli {
-    input:
-      read1 = ncbi_scrub_se.read1_dehosted,
-      samplename = samplename,
-      taxon_id = ncbi_identify.taxon_id,
-      extract_unclassified = extract_unclassified
-  }
-  # downsample reads if the user wants, rasusa parameters are set in the task
-  if (! skip_rasusa) {
-    # rasusa downsampling reads to specified coverage level
-    call rasusa_task.rasusa as rasusa {
+    # human read scrubbing
+    call ncbi_scrub_task.ncbi_scrub_se {
       input:
-        read1 = metabuli.metabuli_read1_extract,
+        read1 = nanoq.filtered_read1,
         samplename = samplename,
-        genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
-  }
-  # extracted/filtered clean read quality check.
-  call nanoplot_task.nanoplot as nanoplot_clean {
-    input:
-      read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-      samplename = samplename,
-      est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
-  }
-  # check for minimum number of reads, basepairs, coverage, etc
-  if (! skip_screen) {
-    call screen_task.check_reads_se as clean_check_reads {
+    # taxonomic classification and read extraction
+    call metabuli_task.metabuli as metabuli {
+      input:
+        read1 = ncbi_scrub_se.read1_dehosted,
+        samplename = samplename,
+        taxon_id = ncbi_identify.taxon_id,
+        extract_unclassified = extract_unclassified
+    }
+    # downsample reads if the user wants, rasusa parameters are set in the task
+    if (! skip_rasusa) {
+      # rasusa downsampling reads to specified coverage level
+      call rasusa_task.rasusa as rasusa {
+        input:
+          read1 = metabuli.metabuli_read1_extract,
+          samplename = samplename,
+          genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+      }
+    }
+    # extracted/filtered clean read quality check.
+    call nanoplot_task.nanoplot as nanoplot_clean {
       input:
         read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-        workflow_series = "theiaviral",
-        expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+        samplename = samplename,
+        est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
-  }
-  if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-    # run de novo if no reference genome is provided so we can select a reference
-    if (! defined(reference_fasta)) {
-      if (call_raven) {
-        # de novo assembly with raven
-        call raven_task.raven {
+    # check for minimum number of reads, basepairs, coverage, etc
+    if (! skip_screen) {
+      call screen_task.check_reads_se as clean_check_reads {
+        input:
+          read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+          workflow_series = "theiaviral",
+          expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+      }
+    }
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+      # run de novo if no reference genome is provided so we can select a reference
+      if (! defined(reference_fasta)) {
+        if (call_raven) {
+          # de novo assembly with raven
+          call raven_task.raven {
+            input:
+              read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+              samplename = samplename
+          }
+        }
+        if (select_first([raven.raven_status, "FAIL"]) == "FAIL") {
+          call flye_task.flye {
+            input:
+              read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+              samplename = samplename,
+              uneven_coverage_mode = true
+          }
+        }
+        # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
+        call checkv_task.checkv as checkv_denovo {
           input:
-            read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+            assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
+            samplename = samplename
+        }
+        # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
+        call quast_task.quast as quast_denovo {
+          input:
+            assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
             samplename = samplename
         }
       }
-      if (select_first([raven.raven_status, "FAIL"]) == "FAIL") {
-        call flye_task.flye {
+      # ANI-based reference genome selection
+      call skani_task.skani as skani {
+        input:
+          assembly_fasta = select_first([reference_fasta, flye.assembly_fasta, raven.assembly_fasta]),
+          samplename = samplename
+      }
+      # if skani cannot identify a reference genome, fail gracefully
+      if (skani.skani_status == "PASS") {
+        # download the best reference determined from skani
+        call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
           input:
-            read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-            samplename = samplename,
-            uneven_coverage_mode = true
+            ncbi_accession = skani.skani_top_accession,
+            use_ncbi_virus = skani.skani_virus_download
         }
       }
-      # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
-      call checkv_task.checkv as checkv_denovo {
-        input:
-          assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
-          samplename = samplename
+      if (defined(reference_fasta) || skani.skani_status == "PASS") {
+        # align assembly to reference genome
+        call minimap2_task.minimap2 as minimap2 {
+          input:
+            query1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+            reference = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+            samplename = samplename,
+            mode = "map-ont",
+            output_sam = true,
+            long_read_flags = true
+        }
+        # generate bam file from sam output
+        call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
+          input:
+            sam = minimap2.minimap2_out,
+            samplename = samplename,
+            min_qual = min_map_quality
+        }
+        # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
+        call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
+          input:
+            bamfile = parse_mapping.bam,
+            samplename = samplename
+        }
+        # Index the reference genome for Clair3
+        call fasta_utilities_task.samtools_faidx as fasta_utilities{
+          input:
+            fasta = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
+        }
+        # variant calling with Clair3
+        call clair3_task.clair3_variants as clair3 {
+          input:
+            alignment_bam_file = parse_mapping.bam,
+            alignment_bam_file_index = parse_mapping.bai,
+            reference_genome_file = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+            reference_genome_file_index = fasta_utilities.fai,
+            sequencing_platform = "ont",
+            enable_long_indel = true,
+            samplename = samplename
+        }
+        # mask low coverage regions with Ns
+        call parse_mapping_task.mask_low_coverage {
+          input:
+            bam = parse_mapping.bam,
+            bai = parse_mapping.bai,
+            reference_fasta = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+            min_depth = min_depth
+        }
+        # create consensus genome based on variant calls
+        call bcftools_consensus_task.bcftools_consensus as bcftools_consensus {
+          input:
+            reference_fasta = mask_low_coverage.mask_reference_fasta,
+            input_vcf = clair3.clair3_variants_vcf,
+            min_depth = min_depth,
+            min_freq = min_allele_freq,
+            samplename = samplename
+        }
+        # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
+        call consensus_qc_task.consensus_qc as consensus_qc {
+          input:
+            assembly_fasta = bcftools_consensus.assembly_fasta,
+            reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+            genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+        }
+        # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
+        call checkv_task.checkv as checkv_consensus {
+          input:
+            assembly = bcftools_consensus.assembly_fasta,
+            samplename = samplename
+        }
       }
-      # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
-      call quast_task.quast as quast_denovo {
+      # run morgana magic for classification
+      call morgana_magic_wf.morgana_magic {
         input:
-          assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
-          samplename = samplename
-      }
-    }
-    # ANI-based reference genome selection
-    call skani_task.skani as skani {
-      input:
-        assembly_fasta = select_first([reference_fasta, flye.assembly_fasta, raven.assembly_fasta]),
-        samplename = samplename
-    }
-    # if skani cannot identify a reference genome, fail gracefully
-    if (skani.skani_status == "PASS") {
-      # download the best reference determined from skani
-      call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
-        input:
-          ncbi_accession = skani.skani_top_accession,
-          use_ncbi_virus = skani.skani_virus_download
-      }
-    }
-    if (defined(reference_fasta) || skani.skani_status == "PASS") {
-      # align assembly to reference genome
-      call minimap2_task.minimap2 as minimap2 {
-        input:
-          query1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-          reference = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
           samplename = samplename,
-          mode = "map-ont",
-          output_sam = true,
-          long_read_flags = true
+          assembly_fasta = select_first([bcftools_consensus.assembly_fasta]),
+          read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+          taxon_name = select_first([ncbi_datasets.taxon_id]),
+          seq_method = "nanopore"
       }
-      # generate bam file from sam output
-      call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
-        input:
-          sam = minimap2.minimap2_out,
-          samplename = samplename,
-          min_qual = min_map_quality
-      }
-      # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-      call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
-        input:
-          bamfile = parse_mapping.bam,
-          samplename = samplename
-      }
-      # Index the reference genome for Clair3
-      call fasta_utilities_task.samtools_faidx as fasta_utilities{
-        input:
-          fasta = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
-      }
-      # variant calling with Clair3
-      call clair3_task.clair3_variants as clair3 {
-        input:
-          alignment_bam_file = parse_mapping.bam,
-          alignment_bam_file_index = parse_mapping.bai,
-          reference_genome_file = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-          reference_genome_file_index = fasta_utilities.fai,
-          sequencing_platform = "ont",
-          enable_long_indel = true,
-          samplename = samplename
-      }
-      # mask low coverage regions with Ns
-      call parse_mapping_task.mask_low_coverage {
-        input:
-          bam = parse_mapping.bam,
-          bai = parse_mapping.bai,
-          reference_fasta = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-          min_depth = min_depth
-      }
-      # create consensus genome based on variant calls
-      call bcftools_consensus_task.bcftools_consensus as bcftools_consensus {
-        input:
-          reference_fasta = mask_low_coverage.mask_reference_fasta,
-          input_vcf = clair3.clair3_variants_vcf,
-          min_depth = min_depth,
-          min_freq = min_allele_freq,
-          samplename = samplename
-      }
-      # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
-      call consensus_qc_task.consensus_qc as consensus_qc {
-        input:
-          assembly_fasta = bcftools_consensus.assembly_fasta,
-          reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-          genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
-      }
-      # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
-      call checkv_task.checkv as checkv_consensus {
-        input:
-          assembly = bcftools_consensus.assembly_fasta,
-          samplename = samplename
-      }
-    }
-    # run morgana magic for classification
-    call morgana_magic_wf.morgana_magic {
-      input:
-        samplename = samplename,
-        assembly_fasta = select_first([bcftools_consensus.assembly_fasta]),
-        read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-        taxon_name = select_first([ncbi_datasets.taxon_id]),
-        seq_method = "nanopore"
     }
   }
   output {
@@ -271,15 +273,17 @@ workflow theiaviral_ont {
     String? ncbi_taxon_summary_version = ncbi_taxon_summary.ncbi_datasets_version
     String? ncbi_taxon_summary_docker = ncbi_taxon_summary.ncbi_datasets_docker
     # ncbi datasets - taxon identification
-    String ncbi_identify_taxon_id = ncbi_identify.taxon_id
-    String ncbi_identify_taxon_name = ncbi_identify.taxon_name
-    String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
-    String ncbi_identify_version = ncbi_identify.ncbi_datasets_version
-    String ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker
+    String? ncbi_identify_taxon_id = ncbi_identify.taxon_id
+    String? ncbi_identify_taxon_name = ncbi_identify.taxon_name
+    String? ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
+    String? ncbi_identify_version = ncbi_identify.ncbi_datasets_version
+    String? ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker
     # host decontamination outputs
     File? dehost_wf_dehost_read1 = host_decontamination.dehost_read1
     File? dehost_wf_host_read1 = host_decontamination.host_read1
     String? dehost_wf_host_accession = host_decontamination.host_genome_accession
+    File? dehost_wf_host_fasta = host_decontamination.host_genome_fasta
+    String? dehost_wf_download_status = host_decontamination.ncbi_datasets_status
     File? dehost_wf_host_mapping_stats = host_decontamination.host_mapping_stats
     File? dehost_wf_host_mapping_cov_hist = host_decontamination.host_mapping_cov_hist
     File? dehost_wf_host_flagstat = host_decontamination.host_flagstat
@@ -288,52 +292,52 @@ workflow theiaviral_ont {
     Float? dehost_wf_host_percent_mapped_reads = host_decontamination.host_percent_mapped_reads
     File? dehost_wf_host_mapping_metrics = host_decontamination.host_mapping_metrics
     # raw read quality control
-    File nanoplot_html_raw = nanoplot_raw.nanoplot_html
-    File nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
-    Int nanoplot_num_reads_raw1 = nanoplot_raw.num_reads
-    Float nanoplot_r1_median_readlength_raw = nanoplot_raw.median_readlength
-    Float nanoplot_r1_mean_readlength_raw = nanoplot_raw.mean_readlength
-    Float nanoplot_r1_stdev_readlength_raw = nanoplot_raw.stdev_readlength
-    Float nanoplot_r1_n50_raw = nanoplot_raw.n50
-    Float nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
-    Float nanoplot_r1_median_q_raw = nanoplot_raw.median_q
+    File? nanoplot_html_raw = nanoplot_raw.nanoplot_html
+    File? nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
+    Int? nanoplot_num_reads_raw1 = nanoplot_raw.num_reads
+    Float? nanoplot_r1_median_readlength_raw = nanoplot_raw.median_readlength
+    Float? nanoplot_r1_mean_readlength_raw = nanoplot_raw.mean_readlength
+    Float? nanoplot_r1_stdev_readlength_raw = nanoplot_raw.stdev_readlength
+    Float? nanoplot_r1_n50_raw = nanoplot_raw.n50
+    Float? nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
+    Float? nanoplot_r1_median_q_raw = nanoplot_raw.median_q
     # porechop outputs - adapter trimming
     File? porechop_trimmed_read1 = porechop.trimmed_reads
     String? porechop_version = porechop.porechop_version
     # nanoq outputs - read filtering
-    File nanoq_filtered_read1 = nanoq.filtered_read1
-    String nanoq_version = nanoq.version
+    File? nanoq_filtered_read1 = nanoq.filtered_read1
+    String? nanoq_version = nanoq.version
     # scrubbed reads
-    File ncbi_scrub_read1_dehosted = ncbi_scrub_se.read1_dehosted
-    Int ncbi_scrub_human_spots_removed = ncbi_scrub_se.human_spots_removed
-    String ncbi_scrub_docker = ncbi_scrub_se.ncbi_scrub_docker
+    File? ncbi_scrub_read1_dehosted = ncbi_scrub_se.read1_dehosted
+    Int? ncbi_scrub_human_spots_removed = ncbi_scrub_se.human_spots_removed
+    String? ncbi_scrub_docker = ncbi_scrub_se.ncbi_scrub_docker
     # metabuli outputs - taxonomic classification and read extraction
-    File metabuli_report = metabuli.metabuli_report
-    File metabuli_classified = metabuli.metabuli_classified
-    File metabuli_read1_extract = metabuli.metabuli_read1_extract
-    File metabuli_krona_report = metabuli.metabuli_krona_report
-    String metabuli_database = metabuli.metabuli_database
-    String metabuli_version = metabuli.metabuli_version
-    String metabuli_docker = metabuli.metabuli_docker
+    File? metabuli_report = metabuli.metabuli_report
+    File? metabuli_classified = metabuli.metabuli_classified
+    File? metabuli_read1_extract = metabuli.metabuli_read1_extract
+    File? metabuli_krona_report = metabuli.metabuli_krona_report
+    String? metabuli_database = metabuli.metabuli_database
+    String? metabuli_version = metabuli.metabuli_version
+    String? metabuli_docker = metabuli.metabuli_docker
     # rasusa outputs - downsampled reads
     File? rasusa_read1_subsampled = rasusa.read1_subsampled
     File? rasusa_read2_subsampled = rasusa.read2_subsampled
     String? rasusa_version = rasusa.rasusa_version
     # clean read quality control
-    File nanoplot_html_clean = nanoplot_clean.nanoplot_html
-    File nanoplot_tsv_clean = nanoplot_clean.nanoplot_tsv
-    Int nanoplot_num_reads_clean1 = nanoplot_clean.num_reads
-    Float nanoplot_r1_median_readlength_clean = nanoplot_clean.median_readlength
-    Float nanoplot_r1_mean_readlength_clean = nanoplot_clean.mean_readlength
-    Float nanoplot_r1_stdev_readlength_clean = nanoplot_clean.stdev_readlength
-    Float nanoplot_r1_n50_clean = nanoplot_clean.n50
-    Float nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
-    Float nanoplot_r1_median_q_clean = nanoplot_clean.median_q
+    File? nanoplot_html_clean = nanoplot_clean.nanoplot_html
+    File? nanoplot_tsv_clean = nanoplot_clean.nanoplot_tsv
+    Int? nanoplot_num_reads_clean1 = nanoplot_clean.num_reads
+    Float? nanoplot_r1_median_readlength_clean = nanoplot_clean.median_readlength
+    Float? nanoplot_r1_mean_readlength_clean = nanoplot_clean.mean_readlength
+    Float? nanoplot_r1_stdev_readlength_clean = nanoplot_clean.stdev_readlength
+    Float? nanoplot_r1_n50_clean = nanoplot_clean.n50
+    Float? nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
+    Float? nanoplot_r1_median_q_clean = nanoplot_clean.median_q
     # clean read screen outputs
     String? read_screen_clean = clean_check_reads.read_screen
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # raven outputs - denovo genome assembly
-    File assembly_denovo_fasta = select_first([flye.assembly_fasta, raven.assembly_fasta, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    File? assembly_denovo_fasta = select_first([flye.assembly_fasta, raven.assembly_fasta, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     String? raven_denovo_status = raven.raven_status
     String? raven_denovo_version = raven.raven_version
     String? raven_denovo_docker = raven.raven_docker
