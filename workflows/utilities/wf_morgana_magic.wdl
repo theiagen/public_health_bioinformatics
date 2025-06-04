@@ -11,7 +11,7 @@ workflow morgana_magic {
     String samplename
     File assembly_fasta
     File read1
-    File read2
+    File? read2
     String taxon_name
     String seq_method
     # consensus qc
