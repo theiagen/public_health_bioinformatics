@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Name", filter_values="[**TheiaProk Workflow Series**](../workflows/genomic_characterization/theiaprok.md)", columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaProk Workflow Series**](../workflows/genomic_characterization/theiaprok.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## TheiaProk Workflows
 
@@ -50,25 +50,25 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
     === "TheiaProk_Illumina_PE"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaProk_Illumina_PE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaProk_Illumina_SE"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_Illumina_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaProk_Illumina_SE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaProk_ONT"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaProk_ONT"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaProk_FASTA"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_FASTA", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaProk_FASTA"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
 ### Core Tasks
@@ -486,29 +486,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
     **Shigella XDR prediction.** Please see the documentation section above for ResFinder for details regarding this taxa-specific analysis. 
 
-    ??? task "`StxTyper`: Identification and typing of Shiga toxin (Stx) genes ==_using the assembly file as input_=="
-        
-        StxTyper screens bacterial genome assemblies for shiga toxin genes and subtypes them into known subtypes and also looks for novel subtypes in cases where the detected sequences diverge from the reference sequences.
-        
-        Shiga toxin is the main virulence factor of Shiga-toxin-producing E. coli (STEC), though these genes are also found in Shigella species as well as some other genera more rarely, such as Klebsiella. [Please see this review paper that describes shiga toxins in great detail.](https://doi.org/10.3390/microorganisms12040687)
-
-        !!! tip "Running StxTyper via the TheiaProk workflows"
-            The TheiaProk workflow will automatically run `stxtyper` on all E. coli and Shigella spp. samples, but ==*the user can opt-in to running the tool on any sample by setting the optional input variable `call_stxtyper` to `true` when configuring the workflow.*==
-        
-        Generally, `stxtyper` looks for _stxA_ and _stxB_ subunits that compose a complete operon. The A subunit is longer (in amino acid length) than the B subunit. Stxtyper attempts to detect these, compare them to a database of known sequences, and type them based on amino acid composition.  There typing algorithm and rules defining how to type these genes & operons will be described more completely in a publication that will be available in the future.
-        
-        The `stxtyper_report` output TSV is provided in [this output format.](https://github.com/ncbi/stxtyper/tree/v1.0.24?tab=readme-ov-file#output)
-
-        This tool has been incorporated into v4.0.3 of AMRFinderPlus and runs behind-the-scenes when the user (or in this case, the TheiaProk workflow) provides the `amrfinder --organism Escherichia --plus` options.
-
-        !!! techdetails "StxTyper Technical Details"
-
-            |  | Links |
-            | --- | --- |
-            | Task | [task_stxtyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_stxtyper.wdl) |
-            | Software Source Code | [ncbi/stxtyper GitHub repository](https://github.com/ncbi/stxtyper) |
-            | Software Documentation | [ncbi/stxtyper GitHub repository](https://github.com/ncbi/stxtyper) |
-            | Original Publication(s) | No publication currently available, as this is a new tool. One will be available in the future. |
+    {{ include_md("common_text/stxtyper_task.md") }}
 
 ??? toggle "_Haemophilus influenzae_"
     ##### _Haemophilus influenzae_ {% raw %} {#haemophilus-influenzae} {% endraw %}
@@ -855,8 +833,10 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
             | Software Documentation | [srst2](https://github.com/katholt/srst2) |
             | Database Description | [Docker container](https://github.com/StaPH-B/docker-builds/tree/master/build-files/srst2/0.2.0-vibrio-230224) |
     
+{{ include_md("common_text/vibecheck_task.md", indent=4) }}
+
     ??? task "`Abricate`: Vibrio characterization"
-        
+
         The `Abricate` Vibrio characterization task detects sequences for *Vibrio* spp. characterization using genome assemblies and the abricate "vibrio" database. The sequences included in the database are as follows:
         
         | Sequence name | Sequence role | Purpose in database |
@@ -877,44 +857,32 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
             | Software Documentation | [abricate](https://github.com/tseemann/abricate) |
             | Database Description | [Docker container](https://github.com/StaPH-B/docker-builds/tree/master/build-files/abricate/1.0.1-vibrio-cholera) |
     
-    ??? task "`Vibecheck`: Vibrio cholerae classificaiton"
-        
-        The `Vibecheck` task classifies _V. cholerae_ sequences into canonical lineages (T1-T17) using variant frequency demixing. 
-        
-        !!! techdetails "Vibecheck Technical Details"
-            |  | Links |
-            | --- | --- |
-            | Task | [task_vibecheck_vibrio.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl) |
-            | Software Source Code | [Vibecheck](https://github.com/CholGen/Vibecheck) |
-            | Software Documentation | [Vibecheck](https://github.com/CholGen/Vibecheck) |
-            | Database Description | [Docker container](https://hub.docker.com/r/watronfire/vibecheck) |
-
 ### Outputs
 
 === "TheiaProk_Illumina_PE"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaProk_Illumina_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaProk_Illumina_PE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
 === "TheiaProk_Illumina_SE"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaProk_Illumina_SE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaProk_Illumina_SE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
     
     ///
 
 === "TheiaProk_ONT"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaProk_FASTA", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaProk_FASTA"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
     
     ///
 
 === "TheiaProk_FASTA"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaProk_FASTA", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaProk_FASTA"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
