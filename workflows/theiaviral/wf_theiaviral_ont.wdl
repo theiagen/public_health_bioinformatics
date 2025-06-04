@@ -64,47 +64,47 @@ workflow theiaviral_ont {
         summary_limit = 100
     }
   }
+  # raw read quality check
+  call nanoplot_task.nanoplot as nanoplot_raw {
+    input:
+      read1 = select_first([host_decontaminate.dehost_read1, read1]),
+      samplename = samplename,
+      est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+  }
+  # adapter trimming
+  if (call_porechop) {
+    call porechop_task.porechop as porechop {
+      input:
+        read1 = select_first([host_decontaminate.dehost_read1, read1]),
+        samplename = samplename
+    }
+  }
+  # read filtering
+  call nanoq_task.nanoq as nanoq {
+    input:
+      read1 = select_first([porechop.trimmed_reads, host_decontaminate.dehost_read1, read1]),
+      samplename = samplename
+  }
+  # human read scrubbing
+  call ncbi_scrub_task.ncbi_scrub_se {
+    input:
+      read1 = nanoq.filtered_read1,
+      samplename = samplename,
+  }
   # decontaminate host reads if a host genome is provided
   if (defined(host)) {
     call host_decontaminate_wf.host_decontaminate_wf as host_decontaminate {
       input:
         samplename = samplename,
-        read1 = read1,
+        read1 = ncbi_scrub_se.read1_dehosted,
         host = select_first([host])
     }
   }
   if (! defined(host) || host_decontaminate.ncbi_datasets_status == "PASS") {
-    # raw read quality check
-    call nanoplot_task.nanoplot as nanoplot_raw {
-      input:
-        read1 = select_first([host_decontaminate.dehost_read1, read1]),
-        samplename = samplename,
-        est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
-    }
-    # adapter trimming
-    if (call_porechop) {
-      call porechop_task.porechop as porechop {
-        input:
-          read1 = select_first([host_decontaminate.dehost_read1, read1]),
-          samplename = samplename
-      }
-    }
-    # read filtering
-    call nanoq_task.nanoq as nanoq {
-      input:
-        read1 = select_first([porechop.trimmed_reads, host_decontaminate.dehost_read1, read1]),
-        samplename = samplename
-    }
-    # human read scrubbing
-    call ncbi_scrub_task.ncbi_scrub_se {
-      input:
-        read1 = nanoq.filtered_read1,
-        samplename = samplename,
-    }
     # taxonomic classification and read extraction
     call metabuli_task.metabuli as metabuli {
       input:
-        read1 = ncbi_scrub_se.read1_dehosted,
+        read1 = select_first([host_decontaminate.dehost_read1, ncbi_scrub_se.read1_dehosted]),
         samplename = samplename,
         taxon_id = ncbi_identify.taxon_id,
         extract_unclassified = extract_unclassified

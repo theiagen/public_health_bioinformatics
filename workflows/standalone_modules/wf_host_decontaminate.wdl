@@ -15,24 +15,24 @@ workflow host_decontaminate_wf {
     File read1
     File? read2
     String host
-    Boolean accession_based = false
+    Boolean is_accession = false
     Boolean refseq = true
-    Boolean complete = false
+    Boolean complete_only = false
     Int minimap2_mem = 32
   }
   call versioning.version_capture {
     input: 
   }
   String hostsample = samplename + "_host"
-  if (! accession_based) {
+  if (! is_accession) {
     call ncbi_datasets.ncbi_datasets_download_genome_taxon as dwnld_tax {
       input: 
         taxon = host,
         refseq = refseq,
-        complete = complete
+        complete = complete_only
     }
   } 
-  if (accession_based) {
+  if (is_accession) {
     call ncbi_datasets.ncbi_datasets_download_genome_accession as dwnld_acc {
       input: 
         ncbi_accession = host
