@@ -33,7 +33,7 @@ task ncbi_datasets_download_genome_accession {
 
       # unzip the archive and copy FASTA and JSON to PWD, rename in the process so output filenames are predictable 
       unzip ~{ncbi_accession}.zip
-      if [ ! -s "ncbi_dataset/data/genomic.fna" ]; then
+      if [ ! -s ncbi_dataset/data/genomic.fna ]; then
         echo "ERROR: no assemblies found for accession: ~{ncbi_accession}"
         echo "FAIL" > NCBIDATASETS_STATUS
       else
@@ -70,7 +70,7 @@ task ncbi_datasets_download_genome_accession {
 
       # unzip the archive and copy FASTA and JSON to PWD, rename in the process so output filenames are predictable 
       unzip ~{ncbi_accession}.zip
-      if [ ! -s "ncbi_dataset/data/~{ncbi_accession}*/~{ncbi_accession}*.fna" ]; then
+      if [ ! -s ncbi_dataset/data/~{ncbi_accession}*/~{ncbi_accession}*.fna ]; then
         echo "ERROR: no assemblies found for accession: ~{ncbi_accession}"
         echo "FAIL" > NCBIDATASETS_STATUS
       else
