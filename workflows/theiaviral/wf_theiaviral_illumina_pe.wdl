@@ -69,15 +69,6 @@ workflow theiaviral_illumina_pe {
       kraken_db = kraken_db,
       workflow_series = "theiaviral",
       host = host
-    }
-  # get genome length if it is not provided
-  if (! defined(genome_length)) {
-    call ncbi_datasets_task.ncbi_datasets_genome_summary as ncbi_taxon_summary {
-        input:
-          taxon = taxon,
-          use_ncbi_virus = true,
-          summary_limit = 100
-    }
   }
   # read QC, classification, extraction, and trimming
   call read_qc.read_QC_trim_pe as read_QC_trim {
