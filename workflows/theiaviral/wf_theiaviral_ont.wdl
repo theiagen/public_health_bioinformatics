@@ -281,9 +281,10 @@ workflow theiaviral_ont {
     String? ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker
     # host decontamination outputs
     File? dehost_wf_dehost_read1 = host_decontaminate.dehost_read1
-    File? dehost_wf_host_read1 = host_decontaminate.host_read1
     String? dehost_wf_host_accession = host_decontaminate.host_genome_accession
     File? dehost_wf_host_fasta = host_decontaminate.host_genome_fasta
+    File? dehost_wf_host_mapped_bam = host_decontaminate.host_mapped_sorted_bam
+    File? dehost_wf_host_mapped_bai = host_decontaminate.host_mapped_sorted_bai
     String? dehost_wf_download_status = host_decontaminate.ncbi_datasets_status
     File? dehost_wf_host_mapping_stats = host_decontaminate.host_mapping_stats
     File? dehost_wf_host_mapping_cov_hist = host_decontaminate.host_mapping_cov_hist
