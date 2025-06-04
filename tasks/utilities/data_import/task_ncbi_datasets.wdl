@@ -33,19 +33,24 @@ task ncbi_datasets_download_genome_accession {
 
       # unzip the archive and copy FASTA and JSON to PWD, rename in the process so output filenames are predictable 
       unzip ~{ncbi_accession}.zip
-      cp -v ncbi_dataset/data/genomic.fna ./~{ncbi_accession}.fasta
-      cp -v ncbi_dataset/data/data_report.jsonl ./~{ncbi_accession}.data_report.jsonl
+      if [ ! -s "ncbi_dataset/data/genomic.fna" ]; then
+        echo "ERROR: no assemblies found for taxon: ~{ncbi_accession}"
+        echo "FAIL" > tee NCBIDATASETS_STATUS
+      else
+        echo "PASS" > tee NCBIDATASETS_STATUS
+        cp -v ncbi_dataset/data/genomic.fna ./~{ncbi_accession}.fasta
+        cp -v ncbi_dataset/data/data_report.jsonl ./~{ncbi_accession}.data_report.jsonl
 
-      # acquire the taxon id for the accession
-      datasets summary virus genome accession \
-        ~{ncbi_accession} --as-json-lines | \
-      dataformat tsv virus-genome --fields virus-name,virus-tax-id | \
-      tail -n+2 > accession_taxonomy.tsv
+        # acquire the taxon id for the accession
+        datasets summary virus genome accession \
+          ~{ncbi_accession} --as-json-lines | \
+        dataformat tsv virus-genome --fields virus-name,virus-tax-id | \
+        tail -n+2 > accession_taxonomy.tsv
 
-      cut -f 1 accession_taxonomy.tsv > TAXON_NAME
-      cut -f 2 accession_taxonomy.tsv > TAXON_ID
-
-    # otherwise, use the datasets download' sub-command
+        cut -f 1 accession_taxonomy.tsv > TAXON_NAME
+        cut -f 2 accession_taxonomy.tsv > TAXON_ID
+      fi
+      # otherwise, use the datasets download' sub-command
     else
 
       touch TAXON_NAME
@@ -67,24 +72,32 @@ task ncbi_datasets_download_genome_accession {
 
       # unzip the archive and copy FASTA and JSON to PWD, rename in the process so output filenames are predictable 
       unzip ~{ncbi_accession}.zip
-      cp -v ncbi_dataset/data/~{ncbi_accession}*/~{ncbi_accession}*.fna ./~{ncbi_accession}.fasta
-      cp -v ncbi_dataset/data/assembly_data_report.jsonl ./~{ncbi_accession}.data_report.jsonl
+      if [ ! -s "ncbi_dataset/data/~{ncbi_accession}*/~{ncbi_accession}*.fna" ]; then
+        echo "ERROR: no assemblies found for taxon: ~{ncbi_accession}"
+        echo "FAIL" > tee NCBIDATASETS_STATUS
+      else
+        echo "PASS" > tee NCBIDATASETS_STATUS
 
-      # if GFF3 file exists, rename for output as a file
-      if [ $(find . -maxdepth 4 -type f -iname "*.gff" | wc -l) -gt 0 ]; then
-        echo ".gff file found, renaming output gff file ..."
-        mv -v ncbi_dataset/data/~{ncbi_accession}*/*.gff ~{ncbi_accession}.gff
-      fi
+        cp -v ncbi_dataset/data/~{ncbi_accession}*/~{ncbi_accession}*.fna ./~{ncbi_accession}.fasta
+        cp -v ncbi_dataset/data/assembly_data_report.jsonl ./~{ncbi_accession}.data_report.jsonl
 
-      # if GBFF file exists, rename for output as a file
-      if [ $(find . -maxdepth 4 -type f -iname "*.gbff" | wc -l) -gt 0 ]; then
-        echo ".gbff file found, renaming output gbff file ..."
-        mv -v ncbi_dataset/data/~{ncbi_accession}*/*.gbff ~{ncbi_accession}.gbff
+        # if GFF3 file exists, rename for output as a file
+        if [ $(find . -maxdepth 4 -type f -iname "*.gff" | wc -l) -gt 0 ]; then
+          echo ".gff file found, renaming output gff file ..."
+          mv -v ncbi_dataset/data/~{ncbi_accession}*/*.gff ~{ncbi_accession}.gff
+        fi
+
+        # if GBFF file exists, rename for output as a file
+        if [ $(find . -maxdepth 4 -type f -iname "*.gbff" | wc -l) -gt 0 ]; then
+          echo ".gbff file found, renaming output gbff file ..."
+          mv -v ncbi_dataset/data/~{ncbi_accession}*/*.gbff ~{ncbi_accession}.gbff
+        fi
       fi
     fi
   >>>
   output {
-    File ncbi_datasets_assembly_fasta = "~{ncbi_accession}.fasta"
+    File? ncbi_datasets_assembly_fasta = "~{ncbi_accession}.fasta"
+    String ncbi_datasets_status = read_string("NCBIDATASETS_STATUS")
     File? ncbi_datasets_gff3 = "~{ncbi_accession}.gff"
     File? ncbi_datasets_gbff = "~{ncbi_accession}.gbff"
     File ncbi_datasets_assembly_data_report_json = "~{ncbi_accession}.data_report.jsonl"
@@ -191,19 +204,19 @@ task ncbi_datasets_download_genome_taxon {
 
         # unzip the archive and copy FASTA and JSON to PWD, rename in the process so output filenames are predictable 
         unzip ncbi_taxon.zip
-        cp -v ncbi_dataset/data/ncbi_taxon*/ncbi_taxon*.fna ./ncbi_taxon.fasta
+        cp -v ncbi_dataset/data/${ncbi_accession}*/${ncbi_accession}*.fna ./ncbi_taxon.fasta
         cp -v ncbi_dataset/data/assembly_data_report.jsonl ./ncbi_taxon.data_report.jsonl
 
         # if GFF3 file exists, rename for output as a file
         if [ $(find . -maxdepth 4 -type f -iname "*.gff" | wc -l) -gt 0 ]; then
           echo ".gff file found, renaming output gff file ..."
-          mv -v ncbi_dataset/data/ncbi_taxon*/*.gff ncbi_taxon.gff
+          mv -v ncbi_dataset/data/${ncbi_accession}*/*.gff ncbi_taxon.gff
         fi
 
         # if GBFF file exists, rename for output as a file
         if [ $(find . -maxdepth 4 -type f -iname "*.gbff" | wc -l) -gt 0 ]; then
           echo ".gbff file found, renaming output gbff file ..."
-          mv -v ncbi_dataset/data/ncbi_taxon*/*.gbff ncbi_taxon.gbff
+          mv -v ncbi_dataset/data/${ncbi_accession}*/*.gbff ncbi_taxon.gbff
         fi
       fi
     fi
