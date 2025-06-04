@@ -58,14 +58,25 @@ workflow theiaviral_illumina_pe {
       taxon = taxon,
       rank = read_extraction_rank
   }
-  # dehost reads if a host genome is provided
-  if (defined(host)) {
-    call host_decontaminate_wf.host_decontaminate_wf as host_decontaminate {
-      input:
-        samplename = samplename,
-        read1 = read1,
-        read2 = read2,
-        host = select_first([host])
+  # read QC, classification, extraction, and trimming
+  call read_qc.read_QC_trim_pe as read_QC_trim {
+    input:
+      read1 = select_first([host_decontaminate.dehost_read1, read1]),
+      read2 = select_first([host_decontaminate.dehost_read2, read2]),
+      samplename = samplename,
+      taxon_id = ncbi_identify.taxon_id,
+      extract_unclassified = extract_unclassified,
+      kraken_db = kraken_db,
+      workflow_series = "theiaviral",
+      host = host
+    }
+  # get genome length if it is not provided
+  if (! defined(genome_length)) {
+    call ncbi_datasets_task.ncbi_datasets_genome_summary as ncbi_taxon_summary {
+        input:
+          taxon = taxon,
+          use_ncbi_virus = true,
+          summary_limit = 100
     }
   }
   # read QC, classification, extraction, and trimming
@@ -84,8 +95,8 @@ workflow theiaviral_illumina_pe {
     # downsample reads to a specific coverage
     call rasusa_task.rasusa as rasusa {
       input:
-        read1 = select_first([host_decontaminate.dehost_read1, read1]),
-        read2 = select_first([host_decontaminate.dehost_read2, read2]),
+        read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
+        read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
         samplename = samplename,
         genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
     }
@@ -152,15 +163,9 @@ workflow theiaviral_illumina_pe {
         # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
         call checkv_task.checkv as checkv_denovo {
           input:
-            assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
             samplename = samplename
-        }
-        # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
-        call quast_task.quast as quast_denovo {
-          input:
-            assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
-            samplename = samplename,
-            min_contig_length = 0,
         }
       }
     }
@@ -168,17 +173,15 @@ workflow theiaviral_illumina_pe {
       # ANI-based reference genome selection
       call skani_task.skani as skani {
         input:
-          assembly_fasta = select_first([reference_fasta, spades.assembly_fasta, megahit.assembly_fasta]),
+          assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
           samplename = samplename
       }
-      # if skani cannot identify a reference genome, fail gracefully
-      if (skani.skani_status == "PASS") {
-        # download the best reference determined from skani
-        call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
-          input:
-            ncbi_accession = skani.skani_top_accession,
-            use_ncbi_virus = skani.skani_virus_download
-        }
+      # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
+      call quast_task.quast as quast_denovo {
+        input:
+          assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
+          samplename = samplename,
+          min_contig_length = 0,
       }
       if (defined(reference_fasta) || skani.skani_status == "PASS") {
         # align reads to reference
