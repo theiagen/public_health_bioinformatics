@@ -112,7 +112,7 @@ workflow theiaviral_panel {
             call_metaviralspades = call_metaviralspades,
             kraken_db = kraken_db,
             skip_qc = true,
-            skip_screen = true,
+            skip_screen = false,
             skani_db = skani_db,
             checkv_db = checkv_db,
             genome_length = ncbi_taxon_summary.avg_genome_length,
