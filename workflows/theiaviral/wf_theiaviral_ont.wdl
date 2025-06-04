@@ -19,8 +19,9 @@ import "../../tasks/assembly/task_flye.wdl" as flye_task
 import "../../tasks/assembly/task_bcftools_consensus.wdl" as bcftools_consensus_task
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
-import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
+import "../../tasks/task_versioning.wdl" as versioning_task
+import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub_task
+import "../../workflows/standalone_modules/wf_host_decontamination.wdl" as host_decontamination_wf
 
 workflow theiaviral_ont {
   meta {
@@ -31,6 +32,7 @@ workflow theiaviral_ont {
     String taxon #taxon id OR organism name (both work)
     String read_extraction_rank = "family"
     String samplename
+    String? host # host genome to dehost reads, if desired
     File? reference_fasta
     Int? genome_length
     Int min_depth = 10 # minimum depth for masking low coverage regions
@@ -42,7 +44,7 @@ workflow theiaviral_ont {
     Boolean call_raven = true
   }
   # get the PHB version
-  call versioning.version_capture {
+  call versioning_task.version_capture {
     input:
   }
   # get the taxon id, taxon name, and taxon rank from the user provided taxon
@@ -53,15 +55,25 @@ workflow theiaviral_ont {
   }
   # estimate the average genome length for user provided taxon
   if (! defined(genome_length)) {
-    call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
+    call ncbi_datasets_task.ncbi_datasets_genome_summary as ncbi_taxon_summary {
       input:
-        taxon = taxon
+        taxon = taxon,
+        use_ncbi_virus = true
+    }
+  }
+  # decontaminate host reads if a host genome is provided
+  if (defined(host)) {
+    call host_decontamination_wf.host_decontamination_wf as host_decontamination {
+      input:
+        samplename = samplename,
+        read1 = read1,
+        host = host
     }
   }
   # raw read quality check
   call nanoplot_task.nanoplot as nanoplot_raw {
     input:
-      read1 = read1,
+      read1 = select_first([host_decontamination.dehost_read1, read1]),
       samplename = samplename,
       est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
   }
@@ -69,18 +81,18 @@ workflow theiaviral_ont {
   if (call_porechop) {
     call porechop_task.porechop as porechop {
       input:
-        read1 = read1,
+        read1 = select_first([host_decontamination.dehost_read1, read1]),
         samplename = samplename
     }
   }
   # read filtering
   call nanoq_task.nanoq as nanoq {
     input:
-      read1 = select_first([porechop.trimmed_reads, read1]),
+      read1 = select_first([porechop.trimmed_reads, host_decontamination.dehost_read1, read1]),
       samplename = samplename
   }
   # human read scrubbing
-  call ncbi_scrub.ncbi_scrub_se {
+  call ncbi_scrub_task.ncbi_scrub_se {
     input:
       read1 = nanoq.filtered_read1,
       samplename = samplename,
@@ -149,20 +161,20 @@ workflow theiaviral_ont {
           assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
           samplename = samplename
       }
-      # ANI-based reference genome selection
-      call skani_task.skani as skani {
+    }
+    # ANI-based reference genome selection
+    call skani_task.skani as skani {
+      input:
+        assembly_fasta = select_first([reference_fasta, flye.assembly_fasta, raven.assembly_fasta]),
+        samplename = samplename
+    }
+    # if skani cannot identify a reference genome, fail gracefully
+    if (skani.skani_status == "PASS") {
+      # download the best reference determined from skani
+      call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
         input:
-          assembly_fasta = select_first([flye.assembly_fasta, raven.assembly_fasta]),
-          samplename = samplename
-      }
-      # if skani cannot identify a reference genome, fail gracefully
-      if (skani.skani_status == "PASS") {
-        # download the best reference determined from skani
-        call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
-          input:
-            ncbi_accession = skani.skani_top_accession,
-            use_ncbi_virus = skani.skani_virus_download
-        }
+          ncbi_accession = skani.skani_top_accession,
+          use_ncbi_virus = skani.skani_virus_download
       }
     }
     if (defined(reference_fasta) || skani.skani_status == "PASS") {
@@ -252,6 +264,17 @@ workflow theiaviral_ont {
     String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
     String ncbi_identify_version = ncbi_identify.ncbi_datasets_version
     String ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker
+    # host decontamination outputs
+    File? dehost_wf_dehost_read1 = host_decontamination.dehost_read1
+    File? dehost_wf_host_read1 = host_decontamination.host_read1
+    String? dehost_wf_host_accession = host_decontamination.host_genome_accession
+    File? dehost_wf_host_mapping_stats = host_decontamination.host_mapping_stats
+    File? dehost_wf_host_mapping_cov_hist = host_decontamination.host_mapping_cov_hist
+    File? dehost_wf_host_flagstat = host_decontamination.host_flagstat
+    Float? dehost_wf_host_mapping_coverage = host_decontamination.host_mapping_coverage
+    Float? dehost_wf_host_mapping_mean_depth = host_decontamination.host_mapping_mean_depth
+    Float? dehost_wf_host_percent_mapped_reads = host_decontamination.host_percent_mapped_reads
+    File? dehost_wf_host_mapping_metrics = host_decontamination.host_mapping_metrics
     # raw read quality control
     File nanoplot_html_raw = nanoplot_raw.nanoplot_html
     File nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv

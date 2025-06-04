@@ -28,6 +28,7 @@ workflow theiaviral_illumina_pe {
     String taxon # taxon id OR organism name
     String read_extraction_rank = "family"
     String samplename
+    String? host # host to dehost reads, if provided
     File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     Boolean skip_screen = false # if false, run clean read screening
     Boolean call_metaviralspades = true # if false, move to megahit immediately
@@ -50,11 +51,21 @@ workflow theiaviral_illumina_pe {
       taxon = taxon,
       rank = read_extraction_rank
   }
+  # dehost reads if a host genome is provided
+  if (defined(host)) {
+    call host_decontamination_wf.host_decontamination_wf as host_decontamination {
+      input:
+        samplename = samplename,
+        read1 = read1,
+        read2 = read2,
+        host = host
+    }
+  }
   # read QC, classification, extraction, and trimming
   call read_qc.read_QC_trim_pe as read_QC_trim {
     input:
-      read1 = read1,
-      read2 = read2,
+      read1 = select_first([host_decontamination.dehost_read1, read1]),
+      read2 = select_first([host_decontamination.dehost_read2, read2]),
       samplename = samplename,
       taxon_id = ncbi_identify.taxon_id,
       extract_unclassified = extract_unclassified,
@@ -63,9 +74,10 @@ workflow theiaviral_illumina_pe {
   }
   # get genome length if it is not provided
   if (! defined(genome_length)) {
-      call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
+      call ncbi_datasets_task.ncbi_datasets_genome_summary as ncbi_taxon_summary {
         input:
-          taxon = taxon
+          taxon = taxon,
+          use_ncbi_virus = true
     }
   }
   if (! skip_rasusa) {
@@ -123,20 +135,20 @@ workflow theiaviral_illumina_pe {
           samplename = samplename,
           min_contig_length = 0,
       }
-      # ANI-based reference genome selection
-      call skani_task.skani as skani {
+    }
+    # ANI-based reference genome selection
+    call skani_task.skani as skani {
+      input:
+        assembly_fasta = select_first([reference_fasta, spades.assembly_fasta, megahit.assembly_fasta]),
+        samplename = samplename
+    }
+    # if skani cannot identify a reference genome, fail gracefully
+    if (skani.skani_status == "PASS") {
+      # download the best reference determined from skani
+      call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
         input:
-          assembly_fasta = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
-          samplename = samplename
-      }
-      # if skani cannot identify a reference genome, fail gracefully
-      if (skani.skani_status == "PASS") {
-        # download the best reference determined from skani
-        call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
-          input:
-            ncbi_accession = skani.skani_top_accession,
-            use_ncbi_virus = skani.skani_virus_download
-        }
+          ncbi_accession = skani.skani_top_accession,
+          use_ncbi_virus = skani.skani_virus_download
       }
     }
     if (defined(reference_fasta) || skani.skani_status == "PASS") {
@@ -204,6 +216,19 @@ workflow theiaviral_illumina_pe {
     # ncbi datasets - taxon summary
     File? ncbi_taxon_summary_tsv = ncbi_taxon_summary.taxon_summary_tsv
     Int? ncbi_taxon_summary_avg_genome_length = ncbi_taxon_summary.avg_genome_length
+    # host decontamination outputs
+    File? dehost_wf_dehost_read1 = host_decontamination.dehost_read1
+    File? dehost_wf_dehost_read2 = host_decontamination.dehost_read2
+    File? dehost_wf_host_read1 = host_decontamination.host_read1
+    File? dehost_wf_host_read2 = host_decontamination.host_read2
+    String? dehost_wf_host_accession = host_decontamination.host_genome_accession
+    File? dehost_wf_host_mapping_stats = host_decontamination.host_mapping_stats
+    File? dehost_wf_host_mapping_cov_hist = host_decontamination.host_mapping_cov_hist
+    File? dehost_wf_host_flagstat = host_decontamination.host_flagstat
+    Float? dehost_wf_host_mapping_coverage = host_decontamination.host_mapping_coverage
+    Float? dehost_wf_host_mapping_mean_depth = host_decontamination.host_mapping_mean_depth
+    Float? dehost_wf_host_percent_mapped_reads = host_decontamination.host_percent_mapped_reads
+    File? dehost_wf_host_mapping_metrics = host_decontamination.host_mapping_metrics
     # raw read quality control
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
@@ -311,7 +336,7 @@ workflow theiaviral_illumina_pe {
     String? ivar_variant_version = ivar_variants.ivar_version
     # Consensus assembly outputs
     File? assembly_consensus_fasta = consensus.consensus_seq
-    Int consensus_n_variant_min_depth = select_first([min_depth, 20])
+    Int consensus_n_variant_min_depth = min_depth
     String? ivar_version_consensus = consensus.ivar_version
     # Consensus QC
     Int? consensus_qc_number_N = consensus_qc.number_N
