@@ -97,7 +97,7 @@ workflow host_decontaminate_wf {
     File? dehost_read1 = bam_to_unaligned_fastq.read1_unaligned
     File? dehost_read2 = bam_to_unaligned_fastq.read2_unaligned
     File? host_bam = parse_mapping.bam
-    String? samtools_version = bam_to_fastq.sam_version
+    String? samtools_version = bam_to_unaligned_fastq.sam_version
     # Read mapping stats
     File? host_mapping_stats = read_mapping_stats.stats
     File? host_mapping_cov_hist = read_mapping_stats.cov_hist
