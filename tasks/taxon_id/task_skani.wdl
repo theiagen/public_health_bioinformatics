@@ -52,9 +52,9 @@ task skani {
       # check if supercontig is greater than 500 bp
       fa_length=$(grep -v '^>' concatenated.fasta | tr -d '\n' | wc -m)
       if [[ $fa_length -gt 500 ]]; then
-        echo "DEBUG: The combined length of the de novo assembled contigs exceeds 500 bp. (${fa_length} bp)"
+        echo "DEBUG: The combined length of the contigs exceeds 500 bp. (${fa_length} bp)"
       else
-        echo "ERROR: The combined length of the de novo assembled contigs is less than 500 bp. (${fa_length} bp)"
+        echo "ERROR: The combined length of the contigs is less than 500 bp. (${fa_length} bp)"
         echo "FAIL" | tee SKANI_STATUS
       fi
     else
@@ -79,10 +79,10 @@ task skani {
     new_header=$(awk 'NR==1 {OFS="\t"; print $0, "ANI_x_Ref_Coverage"}' ~{samplename}_skani_results.tsv)
 
     # initialize output files
-    echo "N/A" | tee TOP_ACCESSION
-    echo 0 | tee TOP_ANI
-    echo 0 | tee TOP_REF_COVERAGE
-    echo 0 | tee TOP_SCORE
+    echo "N/A" > TOP_ACCESSION
+    echo 0 > TOP_ANI
+    echo 0 > TOP_REF_COVERAGE
+    echo 0 > TOP_SCORE
 
     # create a new column and sort by the product of ANI (col 3) and Align_fraction_ref (col 4)
     awk -F'\t' 'NR > 1 {OFS="\t"; new_col = sprintf("%.5f", $3 * $4 / 100); print $0, new_col}' ~{samplename}_skani_results.tsv | \
@@ -105,7 +105,7 @@ task skani {
 
   # need to account for if the genome is derived from refseq or not 
   # this will have to be modified if GCAs are added to the database as well
-  if [[ $(cat SKANI_STATUS) == "PASS" && $(cat TOP_ACCESSION) == GCF_* ]]; then
+  if [[ $(cat TOP_ACCESSION) == GCF_* ]]; then
     echo false > SKANI_VIRUS
   else
     echo true > SKANI_VIRUS
