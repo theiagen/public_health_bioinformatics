@@ -73,6 +73,21 @@ workflow theiaviral_ont {
     call porechop_task.porechop as porechop {
       input:
         read1 = select_first([host_decontamination.dehost_read1, read1]),
+        samplename = samplename,
+        est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+    }
+    # adapter trimming
+    if (call_porechop) {
+      call porechop_task.porechop as porechop {
+        input:
+          read1 = select_first([host_decontamination.dehost_read1, read1]),
+          samplename = samplename
+      }
+    }
+    # read filtering
+    call nanoq_task.nanoq as nanoq {
+      input:
+        read1 = select_first([porechop.trimmed_reads, host_decontamination.dehost_read1, read1]),
         samplename = samplename
     }
   }
@@ -110,7 +125,7 @@ workflow theiaviral_ont {
     # rasusa downsampling reads to specified coverage level
     call rasusa_task.rasusa as rasusa {
       input:
-        read1 = metabuli.metabuli_read1_extract,
+        read1 = nanoq.filtered_read1,
         samplename = samplename,
         genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
     }
@@ -131,24 +146,60 @@ workflow theiaviral_ont {
         expected_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length]),
         skip_mash = true
     }
-  }
-  if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-    # run de novo if no reference genome is provided so we can select a reference
-    if (! defined(reference_fasta)) {
-      if (call_raven) {
-        # de novo assembly with raven
-        call raven_task.raven {
+    # check for minimum number of reads, basepairs, coverage, etc
+    if (! skip_screen) {
+      call screen_task.check_reads_se as clean_check_reads {
+        input:
+          read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+          workflow_series = "theiaviral",
+          expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+      }
+    }
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+      # run de novo if no reference genome is provided so we can select a reference
+      if (! defined(reference_fasta)) {
+        if (call_raven) {
+          # de novo assembly with raven
+          call raven_task.raven {
+            input:
+              read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+              samplename = samplename
+          }
+        }
+        if (select_first([raven.raven_status, "FAIL"]) == "FAIL") {
+          call flye_task.flye {
+            input:
+              read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+              samplename = samplename,
+              uneven_coverage_mode = true
+          }
+        }
+        # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
+        call checkv_task.checkv as checkv_denovo {
           input:
-            read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+            assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
+            samplename = samplename
+        }
+        # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
+        call quast_task.quast as quast_denovo {
+          input:
+            assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
             samplename = samplename
         }
       }
-      if (select_first([raven.raven_status, "FAIL"]) == "FAIL") {
-        call flye_task.flye {
+      # ANI-based reference genome selection
+      call skani_task.skani as skani {
+        input:
+          assembly_fasta = select_first([reference_fasta, flye.assembly_fasta, raven.assembly_fasta]),
+          samplename = samplename
+      }
+      # if skani cannot identify a reference genome, fail gracefully
+      if (skani.skani_status == "PASS") {
+        # download the best reference determined from skani
+        call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
           input:
-            read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-            samplename = samplename,
-            uneven_coverage_mode = true
+            ncbi_accession = skani.skani_top_accession,
+            use_ncbi_virus = skani.skani_virus_download
         }
       }
       # fail gracefully if both assemblies fail
@@ -302,25 +353,25 @@ workflow theiaviral_ont {
     Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.host_percent_mapped_reads
     File? dehost_wf_host_mapping_metrics = host_decontaminate.host_mapping_metrics
     # raw read quality control
-    File nanoplot_html_raw = nanoplot_raw.nanoplot_html
-    File nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
-    Int nanoplot_num_reads_raw1 = nanoplot_raw.num_reads
-    Float nanoplot_r1_median_readlength_raw = nanoplot_raw.median_readlength
-    Float nanoplot_r1_mean_readlength_raw = nanoplot_raw.mean_readlength
-    Float nanoplot_r1_stdev_readlength_raw = nanoplot_raw.stdev_readlength
-    Float nanoplot_r1_n50_raw = nanoplot_raw.n50
-    Float nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
-    Float nanoplot_r1_median_q_raw = nanoplot_raw.median_q
+    File? nanoplot_html_raw = nanoplot_raw.nanoplot_html
+    File? nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
+    Int? nanoplot_num_reads_raw1 = nanoplot_raw.num_reads
+    Float? nanoplot_r1_median_readlength_raw = nanoplot_raw.median_readlength
+    Float? nanoplot_r1_mean_readlength_raw = nanoplot_raw.mean_readlength
+    Float? nanoplot_r1_stdev_readlength_raw = nanoplot_raw.stdev_readlength
+    Float? nanoplot_r1_n50_raw = nanoplot_raw.n50
+    Float? nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
+    Float? nanoplot_r1_median_q_raw = nanoplot_raw.median_q
     # porechop outputs - adapter trimming
     File? porechop_trimmed_read1 = porechop.trimmed_reads
     String? porechop_version = porechop.porechop_version
     # nanoq outputs - read filtering
-    File nanoq_filtered_read1 = nanoq.filtered_read1
-    String nanoq_version = nanoq.version
+    File? nanoq_filtered_read1 = nanoq.filtered_read1
+    String? nanoq_version = nanoq.version
     # scrubbed reads
-    File ncbi_scrub_read1_dehosted = ncbi_scrub_se.read1_dehosted
-    Int ncbi_scrub_human_spots_removed = ncbi_scrub_se.human_spots_removed
-    String ncbi_scrub_docker = ncbi_scrub_se.ncbi_scrub_docker
+    File? ncbi_scrub_read1_dehosted = ncbi_scrub_se.read1_dehosted
+    Int? ncbi_scrub_human_spots_removed = ncbi_scrub_se.human_spots_removed
+    String? ncbi_scrub_docker = ncbi_scrub_se.ncbi_scrub_docker
     # metabuli outputs - taxonomic classification and read extraction
     File? metabuli_report = metabuli.metabuli_report
     File? metabuli_classified = metabuli.metabuli_classified

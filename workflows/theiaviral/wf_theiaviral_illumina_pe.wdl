@@ -84,8 +84,8 @@ workflow theiaviral_illumina_pe {
     # downsample reads to a specific coverage
     call rasusa_task.rasusa as rasusa {
       input:
-        read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
-        read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
+        read1 = select_first([host_decontamination.dehost_read1, read1]),
+        read2 = select_first([host_decontamination.dehost_read2, read2]),
         samplename = samplename,
         genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
     }
@@ -129,9 +129,16 @@ workflow theiaviral_illumina_pe {
             memory = assembly_memory
         }
       }
-      # fallback to megahit if metaviralspades fails to identify a complete virus
-      if (select_first([spades.spades_status, "FAIL"]) == "FAIL") {
-        call megahit_task.megahit {
+      # ANI-based reference genome selection
+      call skani_task.skani as skani {
+        input:
+          assembly_fasta = select_first([reference_fasta, spades.assembly_fasta, megahit.assembly_fasta]),
+          samplename = samplename
+      }
+      # if skani cannot identify a reference genome, fail gracefully
+      if (skani.skani_status == "PASS") {
+        # download the best reference determined from skani
+        call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
           input:
             read1 = read1_selected,
             read2 = read2_selected,
