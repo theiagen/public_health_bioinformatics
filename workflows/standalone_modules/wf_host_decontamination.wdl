@@ -63,8 +63,7 @@ workflow host_decontamination_wf {
       call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
         input:
           sam = minimap2.minimap2_out,
-          samplename = hostsample,
-          min_qual = min_map_quality
+          samplename = hostsample
       }
       call parse_mapping_task.bam_to_fastq {
         input:
@@ -74,7 +73,7 @@ workflow host_decontamination_wf {
     }
     call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
       input:
-        bamfile = select_first([bwa.bam, parse_mapping.bam]),
+        bamfile = select_first([bwa.sorted_bam, parse_mapping.bam]),
         samplename = hostsample
     }
   }
@@ -97,7 +96,7 @@ workflow host_decontamination_wf {
     File? contaminated_read2 = bwa.read2_aligned
     File? contaminated_sorted_bam = select_first([bwa.sorted_bam, bam_to_fastq.sorted_bam])
     File? contaminated_sorted_bam_index = select_first([bwa.sorted_bai, bam_to_fastq.sorted_bai])
-    String? samtools_version = select_first([bwa.samtools_version, bam_to_fastq.samtools_version])
+    String? samtools_version = select_first([bwa.sam_version, bam_to_fastq.sam_version])
     # Read mapping stats
     File? host_mapping_stats = read_mapping_stats.stats
     File? host_mapping_cov_hist = read_mapping_stats.cov_hist

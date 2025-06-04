@@ -210,7 +210,7 @@ task ncbi_datasets_download_genome_taxon {
   >>>
   output {
     File? ncbi_datasets_assembly_fasta = "ncbi_taxon.fasta"
-    String ncbi_accession = read_string("NCBI_ACCESSION")
+    String ncbi_datasets_accession = read_string("NCBI_ACCESSION")
     String ncbi_datasets_status = read_string("NCBIDATASETS_STATUS")
     File? ncbi_datasets_gff3 = "ncbi_taxon.gff"
     File? ncbi_datasets_gbff = "ncbi_taxon.gbff"
