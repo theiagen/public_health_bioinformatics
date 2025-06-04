@@ -67,7 +67,7 @@ workflow theiaviral_ont {
   # raw read quality check
   call nanoplot_task.nanoplot as nanoplot_raw {
     input:
-      read1 = select_first([host_decontaminate.dehost_read1, read1]),
+      read1 = read1,
       samplename = samplename,
       est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
   }
@@ -75,14 +75,14 @@ workflow theiaviral_ont {
   if (call_porechop) {
     call porechop_task.porechop as porechop {
       input:
-        read1 = select_first([host_decontaminate.dehost_read1, read1]),
+        read1 = read1,
         samplename = samplename
     }
   }
   # read filtering
   call nanoq_task.nanoq as nanoq {
     input:
-      read1 = select_first([porechop.trimmed_reads, host_decontaminate.dehost_read1, read1]),
+      read1 = select_first([porechop.trimmed_reads, read1]),
       samplename = samplename
   }
   # human read scrubbing

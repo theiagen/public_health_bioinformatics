@@ -55,8 +55,8 @@ workflow theiaviral_illumina_pe {
   # read QC, classification, extraction, and trimming
   call read_qc.read_QC_trim_pe as read_QC_trim {
     input:
-      read1 = select_first([host_decontaminate.dehost_read1, read1]),
-      read2 = select_first([host_decontaminate.dehost_read2, read2]),
+      read1 = read1,
+      read2 = read2,
       samplename = samplename,
       taxon_id = ncbi_identify.taxon_id,
       extract_unclassified = extract_unclassified,

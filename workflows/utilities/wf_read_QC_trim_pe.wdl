@@ -11,6 +11,7 @@ import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
 import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools
 import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
 import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes
+import "../../workflows/standalone_modules/wf_host_decontaminate.wdl" as host_decontaminate_wf
 
 workflow read_QC_trim_pe {
   meta {
@@ -45,7 +46,7 @@ workflow read_QC_trim_pe {
     Boolean host_is_accession = false
     Boolean host_refseq = true
     Boolean host_complete_only = false
-    Boolean host_decontaminate_mem = 32
+    Int host_decontaminate_mem = 32
   }
   if (read_qc == "fastqc") {
     call fastqc_task.fastqc as fastqc_raw {
