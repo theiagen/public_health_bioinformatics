@@ -53,8 +53,6 @@ task ncbi_datasets_download_genome_accession {
       # otherwise, use the datasets download' sub-command
     else
 
-      touch TAXON_NAME
-      touch TAXON_ID
       #### download FASTA file using ncbi_accession ####
       # '--assembly-version latest' ensures the most recent version is downloaded, not previous versions
       # NOTE: I have noticed that occasionally the same command may fail one moment with the error below and succeed the second time. usually.
@@ -92,6 +90,15 @@ task ncbi_datasets_download_genome_accession {
           echo ".gbff file found, renaming output gbff file ..."
           mv -v ncbi_dataset/data/~{ncbi_accession}*/*.gbff ~{ncbi_accession}.gbff
         fi
+
+        # acquire the taxon id for the accession
+        datasets summary genome accession \
+          ~{ncbi_accession} --as-json-lines | \
+        dataformat tsv genome --fields organism-name,organism-tax-id | \
+        tail -n+2 > accession_taxonomy.tsv
+
+        cut -f 1 accession_taxonomy.tsv > TAXON_NAME
+        cut -f 2 accession_taxonomy.tsv > TAXON_ID
       fi
     fi
   >>>
