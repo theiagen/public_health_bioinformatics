@@ -32,9 +32,10 @@
     </div>
 
 <div class="grid cards " markdown>
-??? warning "Segmented viruses"
+??? question "Segmented viruses"
 
-    TheiaViral has not been extensively tested with segmented viruses (e.g. influenza and hantavirus). Reference selection and consensus assembly may be affected by these lineages. We are excited to incorporate further testing of these lineages, so please reach out to discuss your data and how parameter adjustment may improve your results.
+    Segmented viruses are accounted for. The reference genome database excludes segmented viral nucleotide accessions, while including RefSeq assembly accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.
+
 </div>
 
 ### Workflow Diagram

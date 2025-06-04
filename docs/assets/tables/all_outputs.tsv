@@ -1091,6 +1091,7 @@ skani_top_ani	Float	Top ANI score from Skani	TheiaViral_Illumina_PE, TheiaViral_
 skani_top_ani_fasta	File	FASTA file of top ANI match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_ref_coverage	Float	Reference coverage of top match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_score	Float	Top score from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_warning	String	Skani warning message	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_status	String	Status of Skani analysis	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_version	String	Version of Skani used	TheiaViral_Illumina_PE, TheiaViral_ONT
 theiaviral_illumina_pe_date	String	Date of TheiaViral Illumina PE workflow run	TheiaViral_Illumina_PE
@@ -1138,3 +1139,37 @@ raven_denovo_docker	String	Docker image used for Raven	TheiaViral_ONT
 raven_denovo_version	String	Version of Raven used	TheiaViral_ONT
 theiaviral_ont_date	String	Date of TheiaViral ONT workflow run	TheiaViral_ONT
 theiaviral_ont_version	String	Version of TheiaViral ONT workflow	TheiaViral_ONT
+dehost_wf_dehost_read1	File	Reads that did not map to host	TheiaViral_ONT, TheiaViral_Illumina_PE, 
+dehost_wf_dehost_read2	File	Paired-reads that did not map to host	TheiaViral_Illumina_PE
+dehost_wf_download_status	String	Status of host genome acquisition	TheiaViral_Illumina_PE, TheiaViral_ONT
+dehost_wf_host_accession	String	Host genome accession	TheiaViral_Illumina_PE, TheiaViral_ONT
+dehost_wf_host_fasta	File	Host genome FASTA file	TheiaViral_Illumina_PE, TheiaViral_ONT
+dehost_wf_host_flagstat	File	Output from the SAMtools flagstat command to assess quality of the alignment file (BAM)	TheiaViral_Illumina_PE, TheiaViral_ONT
+dehost_wf_host_mapped_bai	File	Indexed bam file of the reads aligned to the host reference	TheiaViral_Illumina_PE, TheiaViral_ONT
+dehost_wf_host_mapped_bam	File	Sorted BAM file containing the alignments of reads to the host reference genome	TheiaViral_Illumina_PE, TheiaViral_ONT
+dehost_wf_host_mapping_cov_hist	File	Coverage histogram from host read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
+dehost_wf_host_mapping_coverage	Float	Average coverage from host read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
+dehost_wf_host_mapping_mean_depth	Float	Average depth from host read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
+dehost_wf_host_mapping_metrics	File	File of mapping metrics	TheiaViral_Illumina_PE, TheiaViral_ONT
+dehost_wf_host_mapping_stats	File	File of mapping statistics	TheiaViral_Illumina_PE, TheiaViral_ONT
+dehost_wf_host_percent_mapped_reads	Float	Percentage of reads mapped to host reference genome	TheiaViral_Illumina_PE, TheiaViral_ONT
+host_decontaminate_wf_version	String	Version of PHB used for the analysis	Host_Decontaminate
+host_decontaminate_wf_analysis_date	String	Analysis date of host decontamination	Host_Decontaminate
+dehost_read1	File	Reads that did not map to host	Host_Decontaminate
+dehost_read2	File	Paired-reads that did not map to host	Host_Decontaminate
+ncbi_datasets_status	String	Status of host genome acquisition	Host_Decontaminate
+ncbi_datasets_version	String	Version of NCBI datasets used	Host_Decontaminate
+host_genome_accession	String	Host genome accession	Host_Decontaminate
+host_genome_fasta	File	Host genome FASTA file	Host_Decontaminate
+host_genome_data_report_json	File	Datasets data report JSON	Host_Decontaminate
+host_bam	File	BAM of reads mapped to host reference genome	Host_Decontaminate
+samtools_version	String	Version of Samtools used	Host_Decontaminate
+host_flagstat	File	Output from the SAMtools flagstat command to assess quality of the alignment file (BAM)	Host_Decontaminate
+host_mapped_sorted_bai	File	Indexed bam file of the reads aligned to the host reference	Host_Decontaminate
+host_mapped_sorted_bam	File	Sorted BAM file containing the alignments of reads to the host reference genome	Host_Decontaminate
+host_mapping_cov_hist	File	Coverage histogram from host read mapping	Host_Decontaminate
+host_mapping_coverage	Float	Average coverage from host read mapping	Host_Decontaminate
+host_mapping_mean_depth	Float	Average depth from host read mapping	Host_Decontaminate
+host_mapping_metrics	File	File of mapping metrics	Host_Decontaminate
+host_mapping_stats	File	File of mapping statistics	Host_Decontaminate
+host_percent_mapped_reads	Float	Percentage of reads mapped to host reference genome	Host_Decontaminate
