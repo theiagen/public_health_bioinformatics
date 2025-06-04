@@ -137,14 +137,14 @@ workflow morgana_magic {
     }
   }
   if (organism_parameters.standardized_organism == "rabies") {
-    call nextclade_task.nextclade_v3 as rabies_nextclade {
+    call nextclade_task.nextclade_add_ref as rabies_nextclade {
       input:
         genome_fasta = assembly_fasta,
-        custom_input_dataset = organism_parameters.nextclade_pathogen_json,
-        auspice_reference_tree_json = organism_parameters.nextclade_auspice_tree,
+        reference_tree_json = organism_parameters.nextclade_auspice_tree,
         gene_annotations_gff = organism_parameters.reference_gff,
         nextclade_pathogen_json = organism_parameters.nextclade_pathogen_json,
         input_ref = organism_parameters.reference,
+        dataset_name = "theiagen_rabies",
         cpu = nextclade_cpu,
         disk_size = nextclade_disk_size,
         docker = nextclade_docker_image,
