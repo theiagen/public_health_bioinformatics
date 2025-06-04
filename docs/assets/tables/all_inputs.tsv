@@ -387,6 +387,7 @@ clean_check_reads	min_reads	Int	Minimum reads to pass read screening	50	Optional
 clean_check_reads	min_proportion	Int	Minimum read proportion to pass read screening	40	Optional	TheiaViral_Illumina_PE
 clean_check_reads	organism	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 clean_check_reads	workflow_series	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+clean_check_reads	skip_mash	Boolean	If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.	TRUE	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	
 compare_assemblies	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	
 compare_two_tsvs	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaValidate	
 compare_two_tsvs	debug_output	Boolean	Set to true to enable more outputs; useful when debugging	FALSE	Optional	TheiaValidate	
@@ -1882,6 +1883,7 @@ ncbi_taxon_summary	cpu	Int	Number of CPUs allocated for the task	1	Optional	Thei
 ncbi_taxon_summary	disk_size	Int	Disk size allocated for the task (in GB)	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_taxon_summary	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_taxon_summary	memory	Int	Memory allocated for the task (in GB)	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
+ncbi_taxon_summary	refseq	Boolean	Only query RefSeq genomes	TRUE	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -1975,7 +1977,7 @@ mask_low_coverage	memory	Int	Memory allocated for the task (in GB)	8	Optional	Th
 metabuli	cpu	Int	Number of CPUs allocated for the task	4	Optional	TheiaViral_ONT
 metabuli	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_ONT
 metabuli	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0"	Optional	TheiaViral_ONT
-metabuli	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	FALSE	Optional	TheiaViral_ONT
+metabuli	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	FALSE	Optional	
 metabuli	memory	Int	Memory allocated for the task (in GB)	8	Optional	TheiaViral_ONT
 metabuli	metabuli_db	File	Metabuli database file	"gs://theiagen-large-public-files-rp/terra/databases/metabuli/refseq_virus-v223.tar.gz"	Optional	TheiaViral_ONT
 metabuli	min_cov	Float	Minimum query coverage threshold (0.0 - 1.0)	0.0	Optional	TheiaViral_ONT
@@ -2019,6 +2021,7 @@ theiaviral_ont	skip_rasusa	Boolean	True/False to skip read subsampling with Rasu
 theiaviral_ont	skip_raven	Boolean	True/False to call assembly with Raven and use Flye as fallback	TRUE	Optional	TheiaViral_ONT
 theiaviral_ont	skip_screen	Boolean	True/False to skip read screening check prior to analysis	FALSE	Optional	TheiaViral_ONT
 theiaviral_ont	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_ONT
+theiaviral_ont	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	FALSE	Optional	TheiaViral_ONT
 theiaviral_illumina_pe	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_Illumina_PE
 host_decontaminate	host	String	Host taxon/accession to dehost reads, if provided		Required	Host_Decontaminate
 host_decontaminate	complete_only	Boolean	Only download genomes labeled "complete"	FALSE	Optional	Host_Decontaminate, TheiaViral_ONT
@@ -2028,3 +2031,40 @@ host_decontaminate	read1	File	Read 1 in FASTQ file format (compression optional)
 host_decontaminate	read2	File	Paired-end read 2 in FASTQ file format (compression optional)		Optional	Host_Decontaminate
 host_decontaminate	refseq	Boolean	Only download RefSeq genomes	TRUE	Optional	Host_Decontaminate, TheiaViral_ONT
 host_decontaminate	samplename	String	The name of the sample being analyzed		Required	Host_Decontaminate
+morgana_magic	abricate_flu_cpu	String	The name of the sample being analyzed		Required	TheiaViral_Illumina_PE, TheiaViral_ONT
+morgana_magic	abricate_flu_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	abricate_flu_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	abricate_flu_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	abricate_flu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	abricate_flu_min_percent_coverage	Int	Minimum DNA percent coverage	60	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	abricate_flu_min_percent_identity	Int	Minimum DNA percent identity	70	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	assembly_metrics_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	assembly_metrics_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	assembly_metrics_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	assembly_metrics_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	consensus_qc_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2
+morgana_magic	consensus_qc_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2
+morgana_magic	consensus_qc_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2
+morgana_magic	consensus_qc_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2
+morgana_magic	genoflu_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	genoflu_cross_reference	File	An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	genoflu_disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	genoflu_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.06	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	genoflu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	irma_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	irma_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	irma_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/irma:1.2.0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	irma_keep_ref_deletions	Boolean	True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting N's or deleting the sequence entirely. False sets this IRMA paramater to "DEL" and true sets it to "NNN"	TRUE	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	irma_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	nextclade_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	nextclade_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	nextclade_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	nextclade_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	nextclade_output_parser_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+morgana_magic	nextclade_output_parser_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+morgana_magic	nextclade_output_parser_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+morgana_magic	nextclade_output_parser_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+morgana_magic	pangolin_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	pangolin_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	pangolin_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
+morgana_magic	pangolin_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
