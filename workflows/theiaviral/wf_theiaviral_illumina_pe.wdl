@@ -382,16 +382,26 @@ workflow theiaviral_illumina_pe {
     # Nextclade outputs for all organisms
     String? morgana_magic_nextclade_version = morgana_magic.nextclade_version
     String? morgana_magic_nextclade_docker = morgana_magic.nextclade_docker
-    # Nextclade outputs for non-flu
-    File? morgana_magic_nextclade_json = morgana_magic.nextclade_json
-    File? morgana_magic_auspice_json = morgana_magic.auspice_json
-    File? morgana_magic_nextclade_tsv = morgana_magic.nextclade_tsv
     String? morgana_magic_nextclade_ds_tag = morgana_magic.nextclade_ds_tag
-    String? morgana_magic_nextclade_aa_subs = morgana_magic.nextclade_aa_subs
-    String? morgana_magic_nextclade_aa_dels = morgana_magic.nextclade_aa_dels
-    String? morgana_magic_nextclade_clade = morgana_magic.nextclade_clade
-    String? morgana_magic_nextclade_lineage = morgana_magic.nextclade_lineage
-    String? morgana_magic_nextclade_qc = morgana_magic.nextclade_qc
+    # Nextclade outputs for MPXV
+    File? morgana_magic_nextclade_json_mpxv = morgana_magic.nextclade_json_mpxv
+    File? morgana_magic_auspice_json_mpxv = morgana_magic.auspice_json_mpxv
+    File? morgana_magic_nextclade_tsv_mpxv = morgana_magic.nextclade_tsv_mpxv
+    String? morgana_magic_nextclade_ds_tag_mpxv = morgana_magic.nextclade_ds_tag_mpxv
+    String? morgana_magic_nextclade_aa_subs_mpxv = morgana_magic.nextclade_aa_subs_mpxv
+    String? morgana_magic_nextclade_aa_dels_mpxv = morgana_magic.nextclade_aa_dels_mpxv
+    String? morgana_magic_nextclade_clade_mpxv = morgana_magic.nextclade_clade_mpxv
+    String? morgana_magic_nextclade_lineage_mpxv = morgana_magic.nextclade_lineage_mpxv
+    String? morgana_magic_nextclade_qc_mpxv = morgana_magic.nextclade_qc_mpxv
+    # Nextclade outputs for Rabies
+    File? morgana_magic_nextclade_json_rabies = morgana_magic.nextclade_json_rabies
+    File? morgana_magic_auspice_json_rabies = morgana_magic.auspice_json_rabies
+    File? morgana_magic_nextclade_tsv_rabies = morgana_magic.nextclade_tsv_rabies
+    String? morgana_magic_nextclade_aa_subs_rabies = morgana_magic.nextclade_aa_subs_rabies
+    String? morgana_magic_nextclade_aa_dels_rabies = morgana_magic.nextclade_aa_dels_rabies
+    String? morgana_magic_nextclade_clade_rabies = morgana_magic.nextclade_clade_rabies
+    String? morgana_magic_nextclade_lineage_rabies = morgana_magic.nextclade_lineage_rabies
+    String? morgana_magic_nextclade_qc_rabies = morgana_magic.nextclade_qc_rabies
     # Nextclade outputs for flu HA
     File? morgana_magic_nextclade_json_flu_ha = morgana_magic.nextclade_json_flu_ha
     File? morgana_magic_auspice_json_flu_ha = morgana_magic.auspice_json_flu_ha
