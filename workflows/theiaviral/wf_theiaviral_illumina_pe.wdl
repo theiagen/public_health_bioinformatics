@@ -58,11 +58,21 @@ workflow theiaviral_illumina_pe {
       taxon = taxon,
       rank = read_extraction_rank
   }
+  # dehost reads if a host genome is provided
+  if (defined(host)) {
+    call host_decontamination_wf.host_decontamination_wf as host_decontamination {
+      input:
+        samplename = samplename,
+        read1 = read1,
+        read2 = read2,
+        host = host
+    }
+  }
   # read QC, classification, extraction, and trimming
   call read_qc.read_QC_trim_pe as read_QC_trim {
     input:
-      read1 = read1,
-      read2 = read2,
+      read1 = select_first([host_decontamination.dehost_read1, read1]),
+      read2 = select_first([host_decontamination.dehost_read2, read2]),
       samplename = samplename,
       taxon_id = ncbi_identify.taxon_id,
       extract_unclassified = extract_unclassified,

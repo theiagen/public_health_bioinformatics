@@ -72,14 +72,14 @@ workflow theiaviral_ont {
   if (call_porechop) {
     call porechop_task.porechop as porechop {
       input:
-        read1 = read1,
+        read1 = select_first([host_decontamination.dehost_read1, read1]),
         samplename = samplename
     }
   }
   # read filtering
   call nanoq_task.nanoq as nanoq {
     input:
-      read1 = select_first([porechop.trimmed_reads, read1]),
+      read1 = select_first([porechop.trimmed_reads, host_decontamination.dehost_read1, read1]),
       samplename = samplename
   }
   # human read scrubbing
