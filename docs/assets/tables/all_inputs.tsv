@@ -296,7 +296,7 @@ busco	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaEuk_Illumin
 busco	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
 busco	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 busco	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.7.1_cv1	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
-busco	eukaryote	Boolean	Assesses eukaryotic organisms, rather than prokaryotic organisms	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
+busco	eukaryote	Boolean	Assesses eukaryotic organisms, rather than prokaryotic organisms	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 busco	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 bwa	cpu	Int	Number of CPUs to allocate to the task	6	Optional	Freyja_FASTQ, TheiaMeta_Illumina_PE	
 bwa	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ, TheiaMeta_Illumina_PE	
@@ -682,12 +682,12 @@ freyja_update_refs	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Fre
 freyja_update_refs	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Freyja_Update	
 freyja_update_refs	docker	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"	Optional	Freyja_Update	
 freyja_update_refs	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	10	Optional	Freyja_Update	
-gambit	cpu	Int	Number of CPUs to allocate to the task	8	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-gambit	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-gambit	docker	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0"	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gambit	cpu	Int	Number of CPUs to allocate to the task	8	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
+gambit	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
+gambit	docker	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0"	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
 gambit	gambit_db_genomes	File	Database of metadata for assembled query genomes; requires complementary signatures file. If not provided, uses default database "/gambit-db"	"gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.0-20240628.gdb"	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 gambit	gambit_db_signatures	File	Signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.	"gs://gambit-databases-rp/2.0.0/gambit-signatures-2.0.0-20240628.gs"	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-gambit	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gambit	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 gene_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	MPXV, sars-cov-2
 gene_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	MPXV, sars-cov-2
 gene_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	MPXV, sars-cov-2
@@ -891,14 +891,14 @@ mercury_prep_n_batch	authors_sbt	File	Only for "mpox" submissions; a file that c
 mercury_prep_n_batch	organism	String	The organism that you want submission prepare for — each organism requires different metadata fields so please ensure this field is accurate. Options: "flu", "mpox"" or "sars-cov-2"	sars-cov-2	Optional	Mercury_Prep_N_Batch	
 mercury_prep_n_batch	output_name	String	Free text prefix for all output files	mercury	Optional	Mercury_Prep_N_Batch	
 mercury_prep_n_batch	skip_ncbi	Boolean	Set to true if you only want to prepare GISAID submission files	FALSE	Optional	Mercury_Prep_N_Batch	
-merlin_magic	abricate_abaum_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-merlin_magic	abricate_abaum_min_percent_coverage	Int	Minimum DNA percent coverage		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	abricate_abaum_min_percent_identity	Int	Minimum DNA percent identity; set to 95 because there is a strict threshold of 95% identity for typing purposes	95	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	abricate_vibrio_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	abricate_vibrio_min_percent_coverage	Int	Minimum DNA percent coverage	80	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	abricate_vibrio_min_percent_identity	Int	Minimum DNA percent identity	80	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	agrvate_agr_typing_only	Boolean	Set to true to skip agr operon extraction and frameshift detection	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	agrvate_docker_image	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE	
+merlin_magic	abricate_abaum_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
+merlin_magic	abricate_abaum_min_percent_coverage	Int	Minimum DNA percent coverage		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
+merlin_magic	abricate_abaum_min_percent_identity	Int	Minimum DNA percent identity; set to 95 because there is a strict threshold of 95% identity for typing purposes	95	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
+merlin_magic	abricate_vibrio_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
+merlin_magic	abricate_vibrio_min_percent_coverage	Int	Minimum DNA percent coverage	80	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
+merlin_magic	abricate_vibrio_min_percent_identity	Int	Minimum DNA percent identity	80	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
+merlin_magic	agrvate_agr_typing_only	Boolean	Set to true to skip agr operon extraction and frameshift detection	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
+merlin_magic	agrvate_docker_image	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 merlin_magic	agrvate_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
@@ -959,7 +959,7 @@ merlin_magic	lissero_min_percent_coverage	Float	Minimum percent coverage of the 
 merlin_magic	lissero_min_percent_identity	Float	Minimum percent identity to accept a match	95	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	meningotype_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/meningotype:0.8.5--pyhdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	ngmaster_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ngmaster:1.0.0	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	ont_data	Boolean	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	ont_data	Boolean	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 merlin_magic	paired_end	Boolean	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE	
 merlin_magic	pasty_docker_image	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE	
 merlin_magic	pasty_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
@@ -1359,18 +1359,18 @@ read_QC_trim	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate t
 read_QC_trim	kraken2_recalculate_abundances_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 read_QC_trim	kraken2_recalculate_abundances_docker	Int	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 read_QC_trim	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
-read_QC_trim	max_length	Int	Internal component, do not modify		Optional	TheiaProk_ONT	
+read_QC_trim	max_length	Int	Internal component, do not modify		Optional	TheiaProk_ONT, TheiaEuk_ONT
 read_QC_trim	midas_db	File	Internal component, do not modify		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE	
 read_QC_trim	midas_db	File	The database used by the MIDAS task in .tar.gz format	gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz	Optional	TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-read_QC_trim	min_length	Int	Internal component, do not modify		Optional	TheiaProk_ONT	
-read_QC_trim	nanoq_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
-read_QC_trim	nanoq_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
-read_QC_trim	nanoq_docker	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1"	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
-read_QC_trim	nanoq_max_read_length	Int	The maximum read length to keep after trimming	100000	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
-read_QC_trim	nanoq_max_read_qual	Int	The maximum read quality to keep after trimming	40	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
-read_QC_trim	nanoq_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
-read_QC_trim	nanoq_min_read_length	Int	The minimum read length to keep after trimming	500	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
-read_QC_trim	nanoq_min_read_qual	Int	The minimum read quality to keep after trimming	10	Optional	TheiaCoV_ONT, TheiaProk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+read_QC_trim	min_length	Int	Internal component, do not modify		Optional	TheiaProk_ONT, TheiaEuk_ONT
+read_QC_trim	nanoq_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaProk_ONT, TheiaEuk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+read_QC_trim	nanoq_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT, TheiaProk_ONT,TheiaEuk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+read_QC_trim	nanoq_docker	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1"	Optional	TheiaCoV_ONT, TheiaProk_ONT,TheiaEuk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+read_QC_trim	nanoq_max_read_length	Int	The maximum read length to keep after trimming	100000	Optional	TheiaCoV_ONT, TheiaProk_ONT,TheiaEuk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+read_QC_trim	nanoq_max_read_qual	Int	The maximum read quality to keep after trimming	40	Optional	TheiaCoV_ONT, TheiaProk_ONT, TheiaEuk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+read_QC_trim	nanoq_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaProk_ONT, TheiaEuk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+read_QC_trim	nanoq_min_read_length	Int	The minimum read length to keep after trimming	500	Optional	TheiaCoV_ONT, TheiaProk_ONT, TheiaEuk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+read_QC_trim	nanoq_min_read_qual	Int	The minimum read quality to keep after trimming	10	Optional	TheiaCoV_ONT, TheiaProk_ONT, TheiaEuk_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 read_QC_trim	ncbi_scrub_cpu	Int	Internal component, do not modify		Optional	TheiaProk_ONT	
 read_QC_trim	ncbi_scrub_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 read_QC_trim	ncbi_scrub_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
@@ -1380,22 +1380,22 @@ read_QC_trim	ncbi_scrub_docker	String	The Docker container to use for the task	"
 read_QC_trim	ncbi_scrub_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 read_QC_trim	ncbi_scrub_memory	Int	Internal component, do not modify		Optional	TheiaProk_ONT	
 read_QC_trim	phix	File	A file containing the phix used during Illumina sequencing; used in the BBDuk task		Optional	TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-read_QC_trim	rasusa_bases	String	Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored		Optional	TheiaProk_ONT	
+read_QC_trim	rasusa_bases	String	Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored		Optional	TheiaProk_ONT, TheiaEuk_ONT	
 read_QC_trim	rasusa_bases	String	Internal component, do not modify		Optional	TheiaCoV_ONT	
 read_QC_trim	rasusa_cpu	Int	Internal component, do not modify		Optional	TheiaCoV_ONT	
-read_QC_trim	rasusa_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaProk_ONT	
-read_QC_trim	rasusa_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaProk_ONT	
+read_QC_trim	rasusa_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaProk_ONT, TheiaEuk_ONT
+read_QC_trim	rasusa_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaProk_ONT, TheiaEuk_ONT
 read_QC_trim	rasusa_disk_size	Int	Internal component, do not modify		Optional	TheiaCoV_ONT	
-read_QC_trim	rasusa_docker	String	Internal component, do not modify		Optional	TheiaCoV_ONT	
+read_QC_trim	rasusa_docker	String	Internal component, do not modify		Optional	TheiaCoV_ONT, TheiaEuk_ONT
 read_QC_trim	rasusa_docker	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0"	Optional	TheiaProk_ONT	
 read_QC_trim	rasusa_fraction_of_reads	Float	Internal component, do not modify		Optional	TheiaCoV_ONT	
-read_QC_trim	rasusa_fraction_of_reads	Float	Subsample to a fraction of the reads - e.g., 0.5 samples half the reads		Optional	TheiaProk_ONT	
-read_QC_trim	rasusa_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_ONT	
+read_QC_trim	rasusa_fraction_of_reads	Float	Subsample to a fraction of the reads - e.g., 0.5 samples half the reads		Optional	TheiaProk_ONT, TheiaEuk_ONT
+read_QC_trim	rasusa_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_ONT, TheiaEuk_ONT
 read_QC_trim	rasusa_memory	Int	Internal component, do not modify		Optional	TheiaCoV_ONT	
 read_QC_trim	rasusa_number_of_reads	Int	Internal component, do not modify		Optional	TheiaCoV_ONT	
-read_QC_trim	rasusa_number_of_reads	Int	Subsample to a specific number of reads		Optional	TheiaProk_ONT	
+read_QC_trim	rasusa_number_of_reads	Int	Subsample to a specific number of reads		Optional	TheiaProk_ONT, TheiaEuk_ONT
 read_QC_trim	rasusa_seed	Int	Internal component, do not modify		Optional	TheiaCoV_ONT	
-read_QC_trim	rasusa_seed	Int	Random seed to use		Optional	TheiaProk_ONT	
+read_QC_trim	rasusa_seed	Int	Random seed to use		Optional	TheiaProk_ONT, TheiaEuk_ONT	
 read_QC_trim	read_processing	String	The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp"	trimmomatic	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 read_QC_trim	read_qc	String	The tool used for quality control (QC) of reads. Options are "fastq_scan" (default) and "fastqc"	fastq_scan	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 read_QC_trim	run_prefix	String	Internal component, do not modify		Optional	TheiaProk_ONT	
@@ -1406,21 +1406,21 @@ read_QC_trim	trim_quality_trim_score	Int	Specifies the average quality of bases 
 read_QC_trim	trim_window_size	Int	Specifies window size for trimming (the number of bases to average the quality across)	10	Optional	TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE	
 read_QC_trim	trimmomatic_args	String	Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.	-phred33	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 read_QC_trim	workflow_series	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE	
-read_QC_trim_ont	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	FALSE	Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
-read_QC_trim_ont	downsampling_coverage	Float	The depth to downsample to with Rasusa. Internal component. Do not modify.	150	Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
-read_QC_trim_ont	genome_length	Int	Internal component, do not modify		Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
-read_QC_trim_ont	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
-read_QC_trim_ont	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.		Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
-read_QC_trim_ont	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
-read_QC_trim_ont	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
-read_QC_trim_ont	max_length	Int	Internal component, do not modify		Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
-read_QC_trim_ont	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
-read_QC_trim_ont	kraken2_recalculate_abundances_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
-read_QC_trim_ont	kraken2_recalculate_abundances_docker	Int	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"	Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
-read_QC_trim_ont	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
-read_QC_trim_ont	min_length	Int	Internal component, do not modify		Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
-read_QC_trim_ont	run_prefix	String	Internal component, do not modify		Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT	
-read_QC_trim_ont	target_organism	String	This string is searched for in the kraken2 outputs to extract the read percentage		Optional	Freyja_FASTQ (ONT), TheiaEuk_ONT
+read_QC_trim_ont	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	FALSE	Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	downsampling_coverage	Float	The depth to downsample to with Rasusa. Internal component. Do not modify.	150	Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	genome_length	Int	Internal component, do not modify		Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.		Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	max_length	Int	Internal component, do not modify		Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	kraken2_recalculate_abundances_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	kraken2_recalculate_abundances_docker	Int	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"	Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	min_length	Int	Internal component, do not modify		Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	run_prefix	String	Internal component, do not modify		Optional	Freyja_FASTQ (ONT)
+read_QC_trim_ont	target_organism	String	This string is searched for in the kraken2 outputs to extract the read percentage		Optional	Freyja_FASTQ (ONT)
 read_QC_trim_pe	adapters	File	A FASTA file containing adapter sequences		Optional	Freyja_FASTQ (PE)
 read_QC_trim_pe	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ (PE)	
 read_QC_trim_pe	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	FALSE	Optional	Freyja_FASTQ (PE)	
@@ -1654,7 +1654,17 @@ theiaeuk_pe	min_genome_size	Int	Minimum genome size able to pass read screening	
 theiaeuk_pe	min_proportion	Int	Minimum proportion of total reads in each read file to pass read screening	50	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_pe	min_reads	Int	Minimum number of reads to pass read screening	10000	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_pe	skip_screen	Boolean	Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe genome_length optional input, OR set call_rasusa to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail.	FALSE	Optional	TheiaEuk_Illumina_PE	
-theiaeuk_pe	subsample_coverage	Float	Read depth for RASUSA task to subsample reads to	150	Optional	TheiaEuk_Illumina_PE	
+theiaeuk_pe	subsample_coverage	Float	Read depth for RASUSA task to subsample reads to	150	Optional	TheiaEuk_Illumina_PE
+theiaeuk_ont	busco_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_ONT
+theiaeuk_ont	gambit_db_genomes	File	User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db"	gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb	Optional	TheiaEuk_ONT
+theiaeuk_ont	gambit_db_signatures	File	User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.	gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs	Optional	TheiaEuk_ONT
+theiaeuk_ont	genome_length	Int	User-specified expected genome length to be used in genome statistics calculations		Optional	TheiaEuk_ONT	
+theiaeuk_ont	max_genome_size	Int	Maximum genome size able to pass read screening	50000000	Optional	TheiaEuk_Illumina_ONT
+theiaeuk_ont	min_basepairs	Int	Minimum number of base pairs able to pass read screening	45000000	Optional	TheiaEuk_ONT
+theiaeuk_ont	min_coverage	Int	Minimum genome coverage able to pass read screening	5	Optional	TheiaEuk_ONT	
+theiaeuk_ont	min_genome_size	Int	Minimum genome size able to pass read screening	9000000	Optional	TheiaEuk_ONT	
+theiaeuk_ont	min_reads	Int	Minimum number of reads to pass read screening	5000	Optional	TheiaEuk_ONT
+theiaeuk_ont	skip_screen	Boolean	Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe genome_length optional input, OR set call_rasusa to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail.	FALSE	Optional	TheiaEuk_ONT
 theiameta_illumina_pe	kraken2_db	File	A Kraken2 database in .tar.gz format	gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_08gb_20230605.tar.gz	Optional	TheiaMeta_Illumina_PE	
 theiameta_illumina_pe	output_additional_files	Boolean	Output additional files such as aligned and unaligned reads to reference	FALSE	Optional	TheiaMeta_Illumina_PE	
 theiameta_illumina_pe	reference	File	Reference file for consensus calling, in FASTA format		Optional	TheiaMeta_Illumina_PE	
@@ -1765,7 +1775,7 @@ workflow name	reference_genome	File	An optional reference genome used for consen
 workflow name	reference_gff	File	The general feature format (gff) of the reference genome.		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 workflow name	run_id	String	Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 workflow name	seq_method	String	The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task		Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
-workflow name	skip_mash	Boolean	If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.	TRUE	Optional	TheiaProk_ONT, TheiaProk_Illumina_SE	
+workflow name	skip_mash	Boolean	If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.	TRUE	Optional	TheiaProk_ONT, TheiaProk_Illumina_SE, TheiaEuk_ONT	
 workflow name	skip_mash	Boolean	If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.	FALSE	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_SE	HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2
 workflow name	skip_screen	Boolean	Set to True to skip the read screening prior to analysis	FALSE	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 workflow name	target_organism	String	The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.		Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
