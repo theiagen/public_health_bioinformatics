@@ -130,6 +130,7 @@ task bam_to_fastq {
   input {
     File bam
     String samplename
+    Boolean paired = false
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
     Int disk_size = 100
     Int cpu = 2
@@ -139,12 +140,11 @@ task bam_to_fastq {
     # Samtools verion capture
     samtools --version | head -n1 | cut -d' ' -f2 | tee VERSION
 
-    # Get aligned and unaligned bams
     samtools view \
       -@ ~{cpu} \
       -F 0x904 \
       -b \
-      -o ~{samplename}.sorted.aligned-only.bam \
+      -o ~{samplename}.sorted.aligned-reads.bam \
       ~{bam}
 
     # convert SAM to BAM that only includes unaligned reads
@@ -155,29 +155,47 @@ task bam_to_fastq {
       -o ~{samplename}.sorted.unaligned-reads.bam \
       ~{bam}
 
-    # Convert BAM to FASTQ
-    echo -e "\nGenerating FASTQs for aligned single-end reads\n"
-    samtools fastq \
-      -@ ~{cpu} \
-      -F 4 \
-      -0 ~{samplename}_R1.fastq.gz \
-      ~{samplename}.sorted.aligned-only.bam
-    echo -e "Generating FASTQs for unaligned single-end reads\n"
-    # again, lowercase 'f' is important for getting all unaligned reads
-    samtools fastq \
-      -@ ~{cpu} \
-      -f 4 \
-      -0 ~{samplename}_unaligned_R1.fastq.gz \
-      ~{samplename}.sorted.unaligned-reads.bam
+    # Get aligned and unaligned bams
+    if ~{paired}; then
+      echo -e "\nGenerating FASTQs for aligned paired-end reads"
+      samtools fastq \
+        -@ ~{cpu} \
+        -F 4 \
+        -1 ~{samplename}_R1.fastq.gz \
+        -2 ~{samplename}_R2.fastq.gz \
+        ~{samplename}.sorted.aligned-reads.bam
+      echo "Generating FASTQs for unaligned paired-end reads"
+      # note the lowercase 'f' here is imporant
+      samtools fastq \
+        -@ ~{cpu} \
+        -f 4 \
+        -1 ~{samplename}_unaligned_R1.fastq.gz \
+        -2 ~{samplename}_unaligned_R2.fastq.gz \
+        ~{samplename}.sorted.unaligned-reads.bam
+    else
+      echo -e "\nGenerating FASTQs for aligned single-end reads\n"
+      samtools fastq \
+        -@ ~{cpu} \
+        -F 4 \
+        -0 ~{samplename}_R1.fastq.gz \
+        ~{samplename}.sorted.aligned-reads.bam
+      echo -e "Generating FASTQs for unaligned single-end reads\n"
+      # again, lowercase 'f' is important for getting all unaligned reads
+      samtools fastq \
+        -@ ~{cpu} \
+        -f 4 \
+        -0 ~{samplename}_unaligned_R1.fastq.gz \
+        ~{samplename}.sorted.unaligned-reads.bam
+    fi
   >>>
   output {
     String sam_version = read_string("VERSION")
-    File sorted_bam = "~{samplename}.sorted.bam"
-    File sorted_bai = "~{samplename}.sorted.bam.bai"
     File read1_aligned = "~{samplename}_R1.fastq.gz"
+    File? read2_aligned = "~{samplename}_R2.fastq.gz"
     File read1_unaligned = "~{samplename}_unaligned_R1.fastq.gz"
+    File? read2_unaligned = "~{samplename}_unaligned_R2.fastq.gz"
+    File sorted_bam_aligned = "~{samplename}.sorted.aligned-reads.bam"
     File sorted_bam_unaligned = "~{samplename}.sorted.unaligned-reads.bam"
-    File sorted_bam_unaligned_bai = "~{samplename}.sorted.unaligned-reads.bam.bai"
   }
   runtime {
     docker: "~{docker}"
