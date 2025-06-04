@@ -25,7 +25,7 @@ workflow host_decontaminate {
   }
   String hostsample = samplename + "_host"
   if (! is_accession) {
-    call ncbi_datasets.ncbi_datasets_download_genome_taxon as dwnld_tax {
+    call ncbi_datasets.ncbi_datasets_download_genome_taxon as download_taxon {
       input: 
         taxon = host,
         refseq = refseq,
@@ -33,19 +33,19 @@ workflow host_decontaminate {
     }
   } 
   if (is_accession) {
-    call ncbi_datasets.ncbi_datasets_download_genome_accession as dwnld_acc {
+    call ncbi_datasets.ncbi_datasets_download_genome_accession as download_accession {
       input: 
         ncbi_accession = host
     }
   }
-  if (select_first([dwnld_tax.ncbi_datasets_status, dwnld_acc.ncbi_datasets_status]) == "PASS") {
+  if (select_first([download_taxon.ncbi_datasets_status, download_accession.ncbi_datasets_status]) == "PASS") {
     if (defined(read2)) {
       call minimap2_task.minimap2 as minimap2_pe {
         input:
           samplename = hostsample,
           query1 = read1,
           query2 = read2,
-          reference = select_first([dwnld_tax.ncbi_datasets_assembly_fasta, dwnld_acc.ncbi_datasets_assembly_fasta]),
+          reference = select_first([download_taxon.ncbi_datasets_assembly_fasta, download_accession.ncbi_datasets_assembly_fasta]),
           mode = "sr",
           output_sam = true,
           long_read_flags = false,
@@ -57,7 +57,7 @@ workflow host_decontaminate {
         input:
           samplename = hostsample,
           query1 = read1,
-          reference = select_first([dwnld_tax.ncbi_datasets_assembly_fasta, dwnld_acc.ncbi_datasets_assembly_fasta]),
+          reference = select_first([download_taxon.ncbi_datasets_assembly_fasta, download_accession.ncbi_datasets_assembly_fasta]),
           mode = "map-ont",
           output_sam = true,
           long_read_flags = true,
@@ -86,11 +86,11 @@ workflow host_decontaminate {
     String host_decontaminate_wf_version = version_capture.phb_version
     String host_decontaminate_wf_analysis_date = version_capture.date
     # Datasets download outputs
-    File? host_genome_fasta = select_first([dwnld_tax.ncbi_datasets_assembly_fasta, dwnld_acc.ncbi_datasets_assembly_fasta])
-    File? host_genome_data_report_json = select_first([dwnld_tax.ncbi_datasets_assembly_data_report_json, dwnld_acc.ncbi_datasets_assembly_data_report_json])
-    String? host_genome_accession = select_first([dwnld_tax.ncbi_datasets_accession, host])
-    String? ncbi_datasets_status = select_first([dwnld_tax.ncbi_datasets_status, dwnld_acc.ncbi_datasets_status])
-    String? ncbi_datasets_version = select_first([dwnld_tax.ncbi_datasets_version, dwnld_acc.ncbi_datasets_version])
+    File? host_genome_fasta = select_first([download_taxon.ncbi_datasets_assembly_fasta, download_accession.ncbi_datasets_assembly_fasta])
+    File? host_genome_data_report_json = select_first([download_taxon.ncbi_datasets_assembly_data_report_json, download_accession.ncbi_datasets_assembly_data_report_json])
+    String? host_genome_accession = select_first([download_taxon.ncbi_datasets_accession, host])
+    String? ncbi_datasets_status = select_first([download_taxon.ncbi_datasets_status, download_accession.ncbi_datasets_status])
+    String? ncbi_datasets_version = select_first([download_taxon.ncbi_datasets_version, download_accession.ncbi_datasets_version])
     # Read mapping outputs
     File? host_mapped_sorted_bam = parse_mapping.bam
     File? host_mapped_sorted_bai = parse_mapping.bai
