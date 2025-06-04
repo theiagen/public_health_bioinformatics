@@ -455,7 +455,6 @@ workflow theiaviral_ont {
     File? morgana_magic_nextclade_json_mpxv = morgana_magic.nextclade_json_mpxv
     File? morgana_magic_auspice_json_mpxv = morgana_magic.auspice_json_mpxv
     File? morgana_magic_nextclade_tsv_mpxv = morgana_magic.nextclade_tsv_mpxv
-    String? morgana_magic_nextclade_ds_tag_mpxv = morgana_magic.nextclade_ds_tag_mpxv
     String? morgana_magic_nextclade_aa_subs_mpxv = morgana_magic.nextclade_aa_subs_mpxv
     String? morgana_magic_nextclade_aa_dels_mpxv = morgana_magic.nextclade_aa_dels_mpxv
     String? morgana_magic_nextclade_clade_mpxv = morgana_magic.nextclade_clade_mpxv
