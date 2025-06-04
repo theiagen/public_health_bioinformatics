@@ -318,3 +318,8 @@ workflows:
    primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_illumina_pe.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
+ - name: Host_Decontaminate_PHB 
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_host_decontaminate.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
