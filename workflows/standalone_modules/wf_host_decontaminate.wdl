@@ -69,7 +69,7 @@ workflow host_decontaminate_wf {
         sam = select_first([minimap2_pe.minimap2_out, minimap2_ont.minimap2_out]),
         samplename = hostsample
     }
-    call parse_mapping_task.bam_to_fastq {
+    call parse_mapping_task.bam_to_unaligned_fastq {
       input:
         bam = parse_mapping.bam,
         samplename = hostsample,
@@ -92,14 +92,11 @@ workflow host_decontaminate_wf {
     String? ncbi_datasets_status = select_first([dwnld_tax.ncbi_datasets_status, dwnld_acc.ncbi_datasets_status])
     String? ncbi_datasets_version = select_first([dwnld_tax.ncbi_datasets_version, dwnld_acc.ncbi_datasets_version])
     # Read mapping outputs
-    File? complete_sorted_bam = parse_mapping.bam
-    File? complete_sorted_bai = parse_mapping.bai
-    File? dehost_read1 = bam_to_fastq.read1_unaligned
-    File? dehost_read2 = bam_to_fastq.read2_unaligned
-    File? dehost_sorted_bam = bam_to_fastq.sorted_bam_unaligned
-    File? host_read1 = bam_to_fastq.read1_aligned
-    File? host_read2 = bam_to_fastq.read2_aligned
-    File? host_sorted_bam = bam_to_fastq.sorted_bam_aligned
+    File? host_mapped_sorted_bam = parse_mapping.bam
+    File? host_mapped_sorted_bai = parse_mapping.bai
+    File? dehost_read1 = bam_to_unaligned_fastq.read1_unaligned
+    File? dehost_read2 = bam_to_unaligned_fastq.read2_unaligned
+    File? host_bam = parse_mapping.bam
     String? samtools_version = bam_to_fastq.sam_version
     # Read mapping stats
     File? host_mapping_stats = read_mapping_stats.stats
