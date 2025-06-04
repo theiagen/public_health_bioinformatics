@@ -39,7 +39,7 @@ workflow theiaviral_ont {
     Int min_depth = 10 # minimum depth for masking low coverage regions
     Float min_allele_freq = 0.6 # minimum allele frequency for consensus calling
     Int min_map_quality = 20 # minimum read mapping quality
-    Boolean extract_unclassified = true
+    Boolean extract_unclassified = false
     Boolean call_porechop = false
     Boolean skip_rasusa = true 
     Boolean skip_screen = false
