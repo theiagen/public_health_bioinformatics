@@ -14,7 +14,7 @@
 4. Genome assemblies (**TheiaProk_FASTA**)
 
 !!! caption "TheiaProk Workflow Diagram"
-    ![TheiaProk Workflow Diagram](../../assets/figures/TheiaProk.png)
+    ![TheiaProk Workflow Diagram](../../assets/figures/TheiaProk_v3.0.0.png)
 
 All input reads are processed through "[core tasks](#core-tasks)" in the TheiaProk Illumina and ONT workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaProk workflows subsequently launch default genome characterization modules for quality assessment, species identification, antimicrobial resistance gene detection, sequence typing, and more. **For some taxa identified, "taxa-specific sub-workflows" will be automatically activated, undertaking additional taxa-specific characterization steps.** When setting up each workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
 
@@ -152,18 +152,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 {{ include_md("common_text/gambit_task.md") }}
 
-??? task "`KmerFinder`: Taxon Assignment (optional)"
-
-    The `KmerFinder` method predicts prokaryotic species based on the number of overlapping (co-occurring) *k*-mers, i.e., 16-mers, between the query genome and genomes in a reference database.
-
-    !!! techdetails "KmerFinder Technical Details"        
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_kmerfinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kmerfinder.wdl) |
-        | Software Source Code | https://bitbucket.org/genomicepidemiology/kmerfinder |
-        | Software Documentation | https://cge.food.dtu.dk/services/KmerFinder/instructions.php |
-        | Original Publication(s) | [**Benchmarking of Methods for Genomic Taxonomy**](https://journals.asm.org/doi/full/10.1128/jcm.02981-13?rfr_dat=cr_pub++0pubmed&url_ver=Z39.88-2003&rfr_id=ori%3Arid%3Acrossref.org) |
+{{ include_md("common_text/kmerfinder_task.md") }}
 
 ??? task "`AMRFinderPlus`: AMR Genotyping (default)"
 
@@ -497,29 +486,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
     **Shigella XDR prediction.** Please see the documentation section above for ResFinder for details regarding this taxa-specific analysis. 
 
-    ??? task "`StxTyper`: Identification and typing of Shiga toxin (Stx) genes ==_using the assembly file as input_=="
-        
-        StxTyper screens bacterial genome assemblies for shiga toxin genes and subtypes them into known subtypes and also looks for novel subtypes in cases where the detected sequences diverge from the reference sequences.
-        
-        Shiga toxin is the main virulence factor of Shiga-toxin-producing E. coli (STEC), though these genes are also found in Shigella species as well as some other genera more rarely, such as Klebsiella. [Please see this review paper that describes shiga toxins in great detail.](https://doi.org/10.3390/microorganisms12040687)
-
-        !!! tip "Running StxTyper via the TheiaProk workflows"
-            The TheiaProk workflow will automatically run `stxtyper` on all E. coli and Shigella spp. samples, but ==*the user can opt-in to running the tool on any sample by setting the optional input variable `call_stxtyper` to `true` when configuring the workflow.*==
-        
-        Generally, `stxtyper` looks for _stxA_ and _stxB_ subunits that compose a complete operon. The A subunit is longer (in amino acid length) than the B subunit. Stxtyper attempts to detect these, compare them to a database of known sequences, and type them based on amino acid composition.  There typing algorithm and rules defining how to type these genes & operons will be described more completely in a publication that will be available in the future.
-        
-        The `stxtyper_report` output TSV is provided in [this output format.](https://github.com/ncbi/stxtyper/tree/v1.0.24?tab=readme-ov-file#output)
-
-        This tool has been incorporated into v4.0.3 of AMRFinderPlus and runs behind-the-scenes when the user (or in this case, the TheiaProk workflow) provides the `amrfinder --organism Escherichia --plus` options.
-
-        !!! techdetails "StxTyper Technical Details"
-
-            |  | Links |
-            | --- | --- |
-            | Task | [task_stxtyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_stxtyper.wdl) |
-            | Software Source Code | [ncbi/stxtyper GitHub repository](https://github.com/ncbi/stxtyper) |
-            | Software Documentation | [ncbi/stxtyper GitHub repository](https://github.com/ncbi/stxtyper) |
-            | Original Publication(s) | No publication currently available, as this is a new tool. One will be available in the future. |
+    {{ include_md("common_text/stxtyper_task.md") }}
 
 ??? toggle "_Haemophilus influenzae_"
     ##### _Haemophilus influenzae_ {% raw %} {#haemophilus-influenzae} {% endraw %}
