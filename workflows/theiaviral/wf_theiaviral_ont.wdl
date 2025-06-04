@@ -21,7 +21,7 @@ import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
 import "../../tasks/task_versioning.wdl" as versioning_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub_task
-import "../../workflows/standalone_modules/wf_host_decontamination.wdl" as host_decontamination_wf
+import "../../workflows/standalone_modules/wf_host_decontaminate.wdl" as host_decontaminate_wf
 import "../../workflows/utilities/wf_morgana_magic.wdl" as morgana_magic_wf
 
 workflow theiaviral_ont {
@@ -65,18 +65,18 @@ workflow theiaviral_ont {
   }
   # decontaminate host reads if a host genome is provided
   if (defined(host)) {
-    call host_decontamination_wf.host_decontamination_wf as host_decontamination {
+    call host_decontaminate_wf.host_decontaminate_wf as host_decontaminate {
       input:
         samplename = samplename,
         read1 = read1,
         host = select_first([host])
     }
   }
-  if (! defined(host) || host_decontamination.ncbi_datasets_status == "PASS") {
+  if (! defined(host) || host_decontaminate.ncbi_datasets_status == "PASS") {
     # raw read quality check
     call nanoplot_task.nanoplot as nanoplot_raw {
       input:
-        read1 = select_first([host_decontamination.dehost_read1, read1]),
+        read1 = select_first([host_decontaminate.dehost_read1, read1]),
         samplename = samplename,
         est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
@@ -84,14 +84,14 @@ workflow theiaviral_ont {
     if (call_porechop) {
       call porechop_task.porechop as porechop {
         input:
-          read1 = select_first([host_decontamination.dehost_read1, read1]),
+          read1 = select_first([host_decontaminate.dehost_read1, read1]),
           samplename = samplename
       }
     }
     # read filtering
     call nanoq_task.nanoq as nanoq {
       input:
-        read1 = select_first([porechop.trimmed_reads, host_decontamination.dehost_read1, read1]),
+        read1 = select_first([porechop.trimmed_reads, host_decontaminate.dehost_read1, read1]),
         samplename = samplename
     }
     # human read scrubbing
@@ -279,18 +279,18 @@ workflow theiaviral_ont {
     String? ncbi_identify_version = ncbi_identify.ncbi_datasets_version
     String? ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker
     # host decontamination outputs
-    File? dehost_wf_dehost_read1 = host_decontamination.dehost_read1
-    File? dehost_wf_host_read1 = host_decontamination.host_read1
-    String? dehost_wf_host_accession = host_decontamination.host_genome_accession
-    File? dehost_wf_host_fasta = host_decontamination.host_genome_fasta
-    String? dehost_wf_download_status = host_decontamination.ncbi_datasets_status
-    File? dehost_wf_host_mapping_stats = host_decontamination.host_mapping_stats
-    File? dehost_wf_host_mapping_cov_hist = host_decontamination.host_mapping_cov_hist
-    File? dehost_wf_host_flagstat = host_decontamination.host_flagstat
-    Float? dehost_wf_host_mapping_coverage = host_decontamination.host_mapping_coverage
-    Float? dehost_wf_host_mapping_mean_depth = host_decontamination.host_mapping_mean_depth
-    Float? dehost_wf_host_percent_mapped_reads = host_decontamination.host_percent_mapped_reads
-    File? dehost_wf_host_mapping_metrics = host_decontamination.host_mapping_metrics
+    File? dehost_wf_dehost_read1 = host_decontaminate.dehost_read1
+    File? dehost_wf_host_read1 = host_decontaminate.host_read1
+    String? dehost_wf_host_accession = host_decontaminate.host_genome_accession
+    File? dehost_wf_host_fasta = host_decontaminate.host_genome_fasta
+    String? dehost_wf_download_status = host_decontaminate.ncbi_datasets_status
+    File? dehost_wf_host_mapping_stats = host_decontaminate.host_mapping_stats
+    File? dehost_wf_host_mapping_cov_hist = host_decontaminate.host_mapping_cov_hist
+    File? dehost_wf_host_flagstat = host_decontaminate.host_flagstat
+    Float? dehost_wf_host_mapping_coverage = host_decontaminate.host_mapping_coverage
+    Float? dehost_wf_host_mapping_mean_depth = host_decontaminate.host_mapping_mean_depth
+    Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.host_percent_mapped_reads
+    File? dehost_wf_host_mapping_metrics = host_decontaminate.host_mapping_metrics
     # raw read quality control
     File? nanoplot_html_raw = nanoplot_raw.nanoplot_html
     File? nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv

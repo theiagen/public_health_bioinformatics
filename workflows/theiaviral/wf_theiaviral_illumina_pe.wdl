@@ -16,7 +16,7 @@ import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/task_versioning.wdl" as versioning_task
-import "../../workflows/standalone_modules/wf_host_decontamination.wdl" as host_decontamination_wf
+import "../../workflows/standalone_modules/wf_host_decontaminate.wdl" as host_decontaminate_wf
 import "../../workflows/utilities/wf_morgana_magic.wdl" as morgana_magic_wf
 
 workflow theiaviral_illumina_pe {
@@ -54,7 +54,7 @@ workflow theiaviral_illumina_pe {
   }
   # dehost reads if a host genome is provided
   if (defined(host)) {
-    call host_decontamination_wf.host_decontamination_wf as host_decontamination {
+    call host_decontaminate_wf.host_decontaminate_wf as host_decontaminate {
       input:
         samplename = samplename,
         read1 = read1,
@@ -62,12 +62,12 @@ workflow theiaviral_illumina_pe {
         host = select_first([host])
     }
   }
-  if (! defined(host) || host_decontamination.ncbi_datasets_status == "PASS") {
+  if (! defined(host) || host_decontaminate.ncbi_datasets_status == "PASS") {
     # read QC, classification, extraction, and trimming
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
-        read1 = select_first([host_decontamination.dehost_read1, read1]),
-        read2 = select_first([host_decontamination.dehost_read2, read2]),
+        read1 = select_first([host_decontaminate.dehost_read1, read1]),
+        read2 = select_first([host_decontaminate.dehost_read2, read2]),
         samplename = samplename,
         taxon_id = ncbi_identify.taxon_id,
         extract_unclassified = extract_unclassified,
@@ -230,20 +230,20 @@ workflow theiaviral_illumina_pe {
     File? ncbi_taxon_summary_tsv = ncbi_taxon_summary.taxon_summary_tsv
     Int? ncbi_taxon_summary_avg_genome_length = ncbi_taxon_summary.avg_genome_length
     # host decontamination outputs
-    File? dehost_wf_dehost_read1 = host_decontamination.dehost_read1
-    File? dehost_wf_dehost_read2 = host_decontamination.dehost_read2
-    File? dehost_wf_host_read1 = host_decontamination.host_read1
-    File? dehost_wf_host_read2 = host_decontamination.host_read2
-    String? dehost_wf_host_accession = host_decontamination.host_genome_accession
-    File? dehost_wf_host_fasta = host_decontamination.host_genome_fasta
-    String? dehost_wf_download_status = host_decontamination.ncbi_datasets_status
-    File? dehost_wf_host_mapping_stats = host_decontamination.host_mapping_stats
-    File? dehost_wf_host_mapping_cov_hist = host_decontamination.host_mapping_cov_hist
-    File? dehost_wf_host_flagstat = host_decontamination.host_flagstat
-    Float? dehost_wf_host_mapping_coverage = host_decontamination.host_mapping_coverage
-    Float? dehost_wf_host_mapping_mean_depth = host_decontamination.host_mapping_mean_depth
-    Float? dehost_wf_host_percent_mapped_reads = host_decontamination.host_percent_mapped_reads
-    File? dehost_wf_host_mapping_metrics = host_decontamination.host_mapping_metrics
+    File? dehost_wf_dehost_read1 = host_decontaminate.dehost_read1
+    File? dehost_wf_dehost_read2 = host_decontaminate.dehost_read2
+    File? dehost_wf_host_read1 = host_decontaminate.host_read1
+    File? dehost_wf_host_read2 = host_decontaminate.host_read2
+    String? dehost_wf_host_accession = host_decontaminate.host_genome_accession
+    File? dehost_wf_host_fasta = host_decontaminate.host_genome_fasta
+    String? dehost_wf_download_status = host_decontaminate.ncbi_datasets_status
+    File? dehost_wf_host_mapping_stats = host_decontaminate.host_mapping_stats
+    File? dehost_wf_host_mapping_cov_hist = host_decontaminate.host_mapping_cov_hist
+    File? dehost_wf_host_flagstat = host_decontaminate.host_flagstat
+    Float? dehost_wf_host_mapping_coverage = host_decontaminate.host_mapping_coverage
+    Float? dehost_wf_host_mapping_mean_depth = host_decontaminate.host_mapping_mean_depth
+    Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.host_percent_mapped_reads
+    File? dehost_wf_host_mapping_metrics = host_decontaminate.host_mapping_metrics
     # raw read quality control
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
