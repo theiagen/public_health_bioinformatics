@@ -1109,6 +1109,19 @@ minimap2	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Opt
 minimap2	docker	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22"	Optional	Freyja_FASTQ, Clair3_Variants_ONT, TheiaViral_ONT
 minimap2	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ, Clair3_Variants_ONT, TheiaViral_ONT
 minimap2	query2	File	Internal component, do not modify		Optional	Freyja_FASTQ, Clair3_Variants_ONT, TheiaViral_ONT
+minimap2_pe	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Host_Decontaminate
+minimap2_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Host_Decontaminate
+minimap2_pe	docker	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22"	Optional	Host_Decontaminate
+minimap2_pe	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Host_Decontaminate
+minimap2_pe	query2	File	Internal component, do not modify		Optional	Host_Decontaminate
+minimap2_ont	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Host_Decontaminate
+minimap2_ont	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Host_Decontaminate
+minimap2_ont	docker	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22"	Optional	Host_Decontaminate
+minimap2_ont	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Host_Decontaminate
+bam_to_unaligned_fastq	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Host_Decontaminate
+bam_to_unaligned_fastq	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Host_Decontaminate
+bam_to_unaligned_fastq	docker	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"	Optional	Host_Decontaminate
+bam_to_unaligned_fastq	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Host_Decontaminate
 minimap2_assembly	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaMeta_Illumina_PE	
 minimap2_assembly	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	
 minimap2_assembly	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22	Optional	TheiaMeta_Illumina_PE	
@@ -1139,6 +1152,20 @@ ncbi_datasets_download_genome_accession	include_gbff	Boolean	Set to true if you 
 ncbi_datasets_download_genome_accession	include_gff3	Boolean	Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations	FALSE	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	
 ncbi_datasets_download_genome_accession	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	
 ncbi_datasets_download_genome_accession	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	FALSE	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	
+download_accession	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Decontaminate
+download_accession	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate
+download_accession	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2	Optional	Host_Decontaminate	
+download_accession	include_gbff	Boolean	Set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations.	FALSE	Optional	Host_Decontaminate	
+download_accession	include_gff3	Boolean	Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations	FALSE	Optional	Host_Decontaminate
+download_accession	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate
+download_accession	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	FALSE	Optional	Host_Decontaminate
+download_taxon	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Decontaminate
+download_taxon	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate
+download_taxon	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2	Optional	Host_Decontaminate	
+download_taxon	include_gbff	Boolean	Set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations.	FALSE	Optional	Host_Decontaminate	
+download_taxon	include_gff3	Boolean	Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations	FALSE	Optional	Host_Decontaminate
+download_taxon	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate
+download_taxon	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	FALSE	Optional	Host_Decontaminate
 ncbi_scrub_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	NCBI_Scrub_PE
 ncbi_scrub_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	NCBI_Scrub_PE
 ncbi_scrub_pe	docker	Int	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1	Optional	NCBI_Scrub_PE
@@ -1419,6 +1446,10 @@ read_QC_trim	trim_window_size	Int	Specifies window size for trimming (the number
 read_QC_trim	trim_window_size	Int	Specifies window size for trimming (the number of bases to average the quality across)	4	Optional	TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE
 read_QC_trim	trimmomatic_args	String	Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.	-phred33	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 read_QC_trim	workflow_series	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE	
+read_QC_trim	host	String	Host taxon/accession to dehost reads, if provided		Optional		
+read_QC_trim	host_complete_only	Boolean	Only download genomes labeled "complete"	FALSE	Optional	TheiaViral_Illumina_PE
+read_QC_trim	host_is_accession	Boolean	Inputted "host" is an accession	FALSE	Optional	TheiaViral_Illumina_PE
+read_QC_trim	host_decontaminate_mem	Int	Memory allocated for minimap2 (in GB)	32	Optional	TheiaViral_Illumina_PE
 read_QC_trim_ont	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	FALSE	Optional	Freyja_FASTQ (ONT)	
 read_QC_trim_ont	downsampling_coverage	Float	The depth to downsample to with Rasusa. Internal component. Do not modify.	150	Optional	Freyja_FASTQ (ONT)	
 read_QC_trim_ont	genome_length	Int	Internal component, do not modify		Optional	Freyja_FASTQ (ONT)	
@@ -1716,8 +1747,8 @@ vadr	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32 (RSV-A, 
 vadr	min_length	Int	Minimum length subsequence to possibly replace Ns for the fasta-trim-terminal-ambigs.pl VADR script	50	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, VADR_Update	MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 vadr	skip_length	Int	Minimum assembly length (unambiguous) to run VADR	10000	Optional	TheiaCoV_ClearLabs, VADR_Update	MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 vadr	vadr_opts	String	Options for the v-annotate.pl VADR script	 "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"	Optional	TheiaCoV_ClearLabs, VADR_Update	
-version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	Concatenate_Column_Content, Transfer_Column_Content, Zip_Column_Content, Assembly_Fetch, BaseSpace_Fetch, SRA_Fetch, Freyja_FASTQ, Freyja_Plot, Freyja_Dashboard, Pangolin_Update, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_FASTA, TheiaCoV_ClearLabs, TheiaCoV_FASTA_Batch, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, VADR_Update, Augur_Prep, Clair3_Variants_ONT, Core_Gene_SNP, CZGenEpi_Prep, Find_Shared_Variants, kSNP3, kSNP4, Lyve_SET, MashTree_FASTA, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, Sample_to_Ref_Tree, Usher, Fetch_SRR_Accession, Mercury_Prep_N_Batch, Terra_2_GISAID, Terra_2_NCBI, Cauris_Cladetyper, Concatenate_Illumina_Lanes, Dorado_Basecalling, Kraken_ONT, Kraken_PE, Kraken_SE, AMRFinderPlus, NCBI_Scrub_PE, NCBI_Scrub_SE, RASUSA, Rename_FASTQ, TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_ONT	
-version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	Concatenate_Column_Content, Transfer_Column_Content, Zip_Column_Content, Assembly_Fetch, BaseSpace_Fetch, SRA_Fetch, Freyja_FASTQ, Freyja_Plot, Freyja_Dashboard, Pangolin_Update, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_FASTA, TheiaCoV_ClearLabs, TheiaCoV_FASTA_Batch, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, VADR_Update, Augur_Prep, Clair3_Variants_ONT, Core_Gene_SNP, CZGenEpi_Prep, Find_Shared_Variants, kSNP3, kSNP4, Lyve_SET, MashTree_FASTA, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, Sample_to_Ref_Tree, Usher, Fetch_SRR_Accession, Mercury_Prep_N_Batch, Terra_2_GISAID, Terra_2_NCBI, Cauris_Cladetyper, Concatenate_Illumina_Lanes, Dorado_Basecalling, Kraken_ONT, Kraken_PE, Kraken_SE, AMRFinderPlus, NCBI_Scrub_PE, NCBI_Scrub_SE, RASUSA, Rename_FASTQ, TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_ONT	
+version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	Concatenate_Column_Content, Transfer_Column_Content, Zip_Column_Content, Assembly_Fetch, BaseSpace_Fetch, SRA_Fetch, Freyja_FASTQ, Freyja_Plot, Freyja_Dashboard, Pangolin_Update, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_FASTA, TheiaCoV_ClearLabs, TheiaCoV_FASTA_Batch, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, VADR_Update, Augur_Prep, Clair3_Variants_ONT, Core_Gene_SNP, CZGenEpi_Prep, Find_Shared_Variants, kSNP3, kSNP4, Lyve_SET, MashTree_FASTA, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, Sample_to_Ref_Tree, Usher, Fetch_SRR_Accession, Mercury_Prep_N_Batch, Terra_2_GISAID, Terra_2_NCBI, Cauris_Cladetyper, Concatenate_Illumina_Lanes, Dorado_Basecalling, Kraken_ONT, Kraken_PE, Kraken_SE, AMRFinderPlus, NCBI_Scrub_PE, NCBI_Scrub_SE, RASUSA, Rename_FASTQ, TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_ONT, Host_Decontaminate
+version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	Concatenate_Column_Content, Transfer_Column_Content, Zip_Column_Content, Assembly_Fetch, BaseSpace_Fetch, SRA_Fetch, Freyja_FASTQ, Freyja_Plot, Freyja_Dashboard, Pangolin_Update, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_FASTA, TheiaCoV_ClearLabs, TheiaCoV_FASTA_Batch, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, VADR_Update, Augur_Prep, Clair3_Variants_ONT, Core_Gene_SNP, CZGenEpi_Prep, Find_Shared_Variants, kSNP3, kSNP4, Lyve_SET, MashTree_FASTA, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, Sample_to_Ref_Tree, Usher, Fetch_SRR_Accession, Mercury_Prep_N_Batch, Terra_2_GISAID, Terra_2_NCBI, Cauris_Cladetyper, Concatenate_Illumina_Lanes, Dorado_Basecalling, Kraken_ONT, Kraken_PE, Kraken_SE, AMRFinderPlus, NCBI_Scrub_PE, NCBI_Scrub_SE, RASUSA, Rename_FASTQ, TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_ONT, Host_Decontaminate
 wg_reorder_matrix	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Snippy_Tree	
 wg_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Tree	
 wg_reorder_matrix	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1	Optional	Snippy_Tree	
@@ -1866,10 +1897,10 @@ rasusa	memory	Int	Memory allocated for the task (in GB)	8	Optional	TheiaViral_Il
 rasusa	num	Int	Subsample to a specific number of reads		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 rasusa	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT
 rasusa	seed	Int	Random seed for reproducibility		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
-read_mapping_stats	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
-read_mapping_stats	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
-read_mapping_stats	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
-read_mapping_stats	memory	Int	Memory allocated for the task (in GB)	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
+read_mapping_stats	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, Host_Decontaminate
+read_mapping_stats	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, Host_Decontaminate
+read_mapping_stats	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, Host_Decontaminate
+read_mapping_stats	memory	Int	Memory allocated for the task (in GB)	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, Host_Decontaminate
 megahit	cpu	Int	Number of CPUs allocated for the task	4	Optional	TheiaViral_Illumina_PE
 megahit	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE
 megahit	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9"	Optional	TheiaViral_Illumina_PE
@@ -1958,10 +1989,10 @@ nanoq	max_read_qual	Int	Maximum read quality to keep	10	Optional	TheiaViral_ONT
 nanoq	memory	Int	Memory allocated for the task (in GB)	2	Optional	TheiaViral_ONT
 nanoq	min_read_length	Int	Minimum read length to keep	500	Optional	TheiaViral_ONT
 nanoq	min_read_qual	Int	Minimum read quality to keep	10	Optional	TheiaViral_ONT
-parse_mapping	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_ONT
-parse_mapping	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_ONT
-parse_mapping	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"	Optional	TheiaViral_ONT
-parse_mapping	memory	Int	Memory allocated for the task (in GB)	8	Optional	TheiaViral_ONT
+parse_mapping	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_ONT, Host_Decontaminate
+parse_mapping	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_ONT, Host_Decontaminate
+parse_mapping	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"	Optional	TheiaViral_ONT, Host_Decontaminate
+parse_mapping	memory	Int	Memory allocated for the task (in GB)	8	Optional	TheiaViral_ONT, Host_Decontaminate
 porechop	cpu	Int	Number of CPUs allocated for the task	4	Optional	TheiaViral_ONT
 porechop	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_ONT
 porechop	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/porechop:0.2.4"	Optional	TheiaViral_ONT
@@ -1989,4 +2020,11 @@ theiaviral_ont	skip_raven	Boolean	True/False to call assembly with Raven and use
 theiaviral_ont	skip_screen	Boolean	True/False to skip read screening check prior to analysis	FALSE	Optional	TheiaViral_ONT
 theiaviral_ont	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_ONT
 theiaviral_illumina_pe	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_Illumina_PE
-host_decontaminate	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_Illumina_PE
+host_decontaminate	host	String	Host taxon/accession to dehost reads, if provided		Required	Host_Decontaminate
+host_decontaminate	complete_only	Boolean	Only download genomes labeled "complete"	FALSE	Optional	Host_Decontaminate, TheiaViral_ONT
+host_decontaminate	is_accession	Boolean	Inputted "host" is an accession	FALSE	Optional	Host_Decontaminate, TheiaViral_ONT
+host_decontaminate	minimap2_mem	Int	Memory allocated for minimap2 (in GB)	32	Optional	Host_Decontaminate, TheiaViral_ONT
+host_decontaminate	read1	File	Read 1 in FASTQ file format (compression optional)		Required	Host_Decontaminate
+host_decontaminate	read2	File	Paired-end read 2 in FASTQ file format (compression optional)		Optional	Host_Decontaminate
+host_decontaminate	refseq	Boolean	Only download RefSeq genomes	TRUE	Optional	Host_Decontaminate, TheiaViral_ONT
+host_decontaminate	samplename	String	The name of the sample being analyzed		Required	Host_Decontaminate
