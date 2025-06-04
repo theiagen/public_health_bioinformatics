@@ -42,6 +42,7 @@ workflow theiaviral_panel {
     String? read_extraction_rank
 
     Boolean extract_unclassified = false
+    Boolean skip_theiaviral_screen = true
     Int minimum_read_number = 1000
     Boolean call_metaviralspades = false
     Int? assembly_cpu = 16
@@ -112,7 +113,7 @@ workflow theiaviral_panel {
             call_metaviralspades = call_metaviralspades,
             kraken_db = kraken_db,
             skip_qc = true,
-            skip_screen = false,
+            skip_screen = skip_theiaviral_screen,
             skani_db = skani_db,
             checkv_db = checkv_db,
             genome_length = ncbi_taxon_summary.avg_genome_length,
