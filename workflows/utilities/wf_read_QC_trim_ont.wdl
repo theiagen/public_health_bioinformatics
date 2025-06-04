@@ -173,7 +173,6 @@ workflow read_QC_trim_ont {
         memory = nanoq_memory 
     }
     if ("~{workflow_series}" == "theiaprok") {
-      # tiptoft for plasmid detection
       if (call_kraken && defined(kraken_db)) {
         call kraken2.kraken2_standalone as kraken2_se {
           input:
@@ -190,9 +189,10 @@ workflow read_QC_trim_ont {
             kraken2_report = kraken2_se.kraken2_report,
             kraken2_classified_report = kraken2_se.kraken2_classified_report
         } 
-      } if ((call_kraken) && ! defined(kraken_db)) {
-          String kraken_db_warning = "Kraken database not defined"
-        }
+      } 
+    if ((call_kraken) && ! defined(kraken_db)) {
+        String kraken_db_warning = "Kraken database not defined"
+      }
     }
   }
   output { 

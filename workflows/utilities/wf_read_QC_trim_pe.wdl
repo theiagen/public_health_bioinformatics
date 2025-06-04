@@ -150,7 +150,8 @@ workflow read_QC_trim_pe {
           memory = kraken_memory,
           cpu = kraken_cpu
       }
-    }  if ((call_kraken) && ! defined(kraken_db)) {
+    }  
+    if ((call_kraken) && ! defined(kraken_db)) {
       String kraken_db_warning = "Kraken database not defined"
     }
   }
