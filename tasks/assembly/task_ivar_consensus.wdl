@@ -49,6 +49,7 @@ task consensus {
       contig_name=$(basename $contig ".refcontig.fasta")
       echo "DEBUG: Extracting alignments to reference contig: $contig_name"
       samtools view ~{bamfile} ${contig_name} -b -o ${contig_name}.bam
+      samtools index ${contig_name}.bam
 
       if [[ ! -s ${contig_name}.bam ]]; then
         echo "WARNING: No reads aligned to reference contig ${contig_name}. Skipping consensus generation for this contig."
