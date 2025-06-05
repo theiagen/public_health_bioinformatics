@@ -89,7 +89,7 @@ workflow host_decontaminate {
     File? host_genome_fasta = select_first([download_taxon.ncbi_datasets_assembly_fasta, download_accession.ncbi_datasets_assembly_fasta, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File? host_genome_data_report_json = select_first([download_taxon.ncbi_datasets_assembly_data_report_json, download_accession.ncbi_datasets_assembly_data_report_json, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
     String? host_genome_accession = select_first([download_taxon.ncbi_datasets_accession, host])
-    String? ncbi_datasets_status = select_first([download_taxon.ncbi_datasets_status, download_accession.ncbi_datasets_status])
+    String ncbi_datasets_status = select_first([download_taxon.ncbi_datasets_status, download_accession.ncbi_datasets_status])
     String? ncbi_datasets_version = select_first([download_taxon.ncbi_datasets_version, download_accession.ncbi_datasets_version])
     # Read mapping outputs
     File? host_mapped_sorted_bam = parse_mapping.bam
