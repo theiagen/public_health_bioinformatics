@@ -34,6 +34,8 @@
     "theiaprok_illumina_pe.merlin_magic.cladetyper_ref_clade4_annotated" : "./tests/inputs/empty-for-test.txt",
     "theiaprok_illumina_pe.merlin_magic.cladetyper_ref_clade5" : "./tests/inputs/empty-for-test.txt",
     "theiaprok_illumina_pe.merlin_magic.cladetyper_ref_clade5_annotated" : "./tests/inputs/empty-for-test.txt",
+    "theiaprok_illumina_pe.merlin_magic.snippy_reference_afumigatus" : "./tests/inputs/empty-for-test.txt",
+    "theiaprok_illumina_pe.merlin_magic.snippy_reference_cryptoneo" : "./tests/inputs/empty-for-test.txt",
     "theiaprok_illumina_pe.bakta_db": "full",
     "theiaprok_illumina_pe.gambit.gambit_db_signatures" : "./tests/inputs/completely-empty-for-test.txt",
     "theiaprok_illumina_pe.gambit.gambit_db_genomes" : "./tests/inputs/completely-empty-for-test.txt",

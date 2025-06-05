@@ -201,10 +201,10 @@ workflow theiaprok_illumina_se {
         }
         if (genome_annotation == "bakta") {  
           if (bakta_db == "light") {  
-            File bakta_db_light = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_light_2025-01-23.tar.gz"  
+            File bakta_db_light = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_light_2025-01-23.tar.gz"  
           }  
           if (bakta_db == "full") {  
-            File bakta_db_full = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_full_2024-01-23.tar.gz"            
+            File bakta_db_full = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_full_2024-01-23.tar.gz"            
           }  
           if (!(bakta_db == "light" || bakta_db == "full")) {  
               File bakta_custom_db = bakta_db  
