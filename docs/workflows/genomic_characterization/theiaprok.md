@@ -20,26 +20,26 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 ### Inputs
 
-!!! dna ""
-    ??? toggle "TheiaProk_Illumina_PE Input Read Data"
+!!! dna "Input Data"
+    === "TheiaProk_Illumina_PE"
 
         The TheiaProk_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time.
 
         By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
-    ??? toggle "TheiaProk_Illumina_SE Input Read Data"
+    === "TheiaProk_Illumina_SE"
 
         TheiaProk_Illumina_SE takes in Illumina single-end reads. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. Theiagen highly recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before uploading to Terra to minimize data upload time & save on storage costs.
 
         By default, the workflow anticipates **1 x 35 bp** reads  (i.e. the input reads were generated using a 70-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate longer read data.
 
-    ??? toggle "TheiaProk_ONT Input Read Data"
+    === "TheiaProk_ONT"
 
         The TheiaProk_ONT workflow takes in base-called ONT read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before uploading to Terra to minimize data upload time.
 
         **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaProk_ONT workflow must be quality assessed before reporting results.**
 
-    ??? toggle "TheiaProk_FASTA Input Assembly Data"
+    === "TheiaProk_FASTA"
 
         The TheiaProk_FASTA workflow takes in assembly files in FASTA format.
 
