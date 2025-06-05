@@ -125,8 +125,20 @@
 
 
 <div class="grid cards " markdown>
-??? warning "`taxon`"
-    `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) and do not have to be species (see `read_extraction_rank` below).
+??? warning "`extract_unclassified`"
+    By default, the `extract_unclassified` parameter is set to "false", which indicates that reads that are not classified by Kraken2 (Illumina) or Metabuli (ONT) will not be included in all tasks downstream of read quality control. This is desirable in when the `taxon` input is sufficiently sampled in the classification database, contaminant viruses are also classified well, and host reads are removed prior to classification or map well to the human genome. On the other hand, setting `extract_unclassified` to "true" may be desirable to include unclassified reads that may be derived from the focal `taxon`, particularly if host reads have been scrubbed with via the `host` input parameter. The default Kraken2 and Metabuli databases are derived from RefSeq, so the potential for a read to be classified is dependent on input `taxon` representation within RefSeq. As an example, we found that *Lyssavirus rabies* Illumina data may generate higher quality assemblies when `extract_unclassified` is set to "true", perhaps due to its broad diversity relative to minor representation in RefSeq.
+
+</div>
+
+<div class="grid cards " markdown>
+??? warning "`host`"
+    The `host` input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon or accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task `is_accession` (ONT) or Read QC Trim PE `host_is_accession` (Illumina) boolean populated as "true".
+
+</div>
+
+<div class="grid cards " markdown>
+??? warning "`min_allele_freq`, `min_depth`, and `min_map_quality`"
+    These parameters have a direct effect on the variants that will ultimately be reported in the consensus assembly. `min_allele_freq` determines the minimum proportion of an allelic variant to be reported in the consensus assembly. `min_depth` and `min_map_quality` affect how "N" is reported in the consensus, i.e. depth below `min_depth` is reported as "N" and reads with mapping quality below `min_map_quality` are not included in depth calculations.      
 </div>
 
 <div class="grid cards " markdown>
@@ -135,15 +147,10 @@
 </div>
 
 <div class="grid cards " markdown>
-??? warning "`extract_unclassified`"
-    By default, the `extract_unclassified` parameter is set to "false", which indicates that unclassified reads will not be included in all tasks downstream of read quality control. This is desirable in instances where the focal `taxon` is well-represented and sufficiently similar to what is present in the classification software's database. Excluding unclassified reads can be desirable because reads that are unrelated to the focal `taxon` are omitted from downstream analysis. On the other hand, some unclassified reads may be derived from the focal `taxon`, which could negatively affect coverage and depth. The default kraken2 and Metabuli databases are derived from RefSeq, so the potential for a read to be classified is dependent on focal `taxon` representation within RefSeq. As an example, we found that *Lyssavirus rabies* Illumina data may generate higher quality assemblies when `extract_unclassified` is set to "true", perhaps due to its minor representation in RefSeq.
-
+??? warning "`taxon`"
+    `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) and do not have to be species (see `read_extraction_rank` below).
 </div>
 
-<div class="grid cards " markdown>
-??? warning "`min_allele_freq`, `min_depth`, and `min_map_quality`"
-    These parameters have a direct effect on the variants that will ultimately be reported in the consensus assembly. `min_allele_freq` determines the minimum proportion of an allelic variant to be reported in the consensus assembly. `min_depth` and `min_map_quality` affect how "N" is reported in the consensus, i.e. depth below `min_depth` is reported as "N" and reads with mapping quality below `min_map_quality` are not included in depth calculations.      
-</div>
 
 ### All Tasks
 
