@@ -3,13 +3,13 @@
 
     The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the `screen` task if any thresholds are not met:
 
-<!-- if: theiacov|theiaprok|theiaeuk -->
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
     2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
     3. Number of basepairs: A sample will fail the read screening if there are fewer than `min_basepairs` basepairs
     4. Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than `min_genome_size` or bigger than `max_genome_size`.
     5. Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage`.
 
+<!-- if: theiacov|theiaprok|theiaeuk -->
     Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the `skip_screen` variable to true.
 
     Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.
