@@ -74,7 +74,6 @@ You can expect a careful review of every PR and feedback as needed before mergin
 - **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
 - **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
 - **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
-- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage)) - Project Administration, Software, Supervision
 - **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
 - **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
@@ -89,6 +88,7 @@ We would like to gratefully acknowledge the following individuals from the publi
 - **James Otieno** ([@jrotieno](https://github.com/jrotieno))*
 - **Robert Petit** ([@rpetit3](https://github.com/rpetit3))*
 - **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe))*
+- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage))*
 - **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty))*
 - **Nate Matteson** ([@watronfire](https://github.com/watronfire))
 - **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
