@@ -34,7 +34,7 @@
 <div class="grid cards " markdown>
 ??? question "Segmented viruses"
 
-    Segmented viruses are accounted for. The reference genome database excludes segmented viral nucleotide accessions, while including RefSeq assembly accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.
+    Segmented viruses are accounted for in TheiaViral. The reference genome database excludes segmented viral nucleotide accessions, while including RefSeq assembly accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.
 
 </div>
 
@@ -98,8 +98,20 @@
 
 
 <div class="grid cards " markdown>
-??? warning "`taxon`"
-    `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) and do not have to be species (see `read_extraction_rank` below).
+??? warning "`extract_unclassified`"
+    By default, the `extract_unclassified` parameter is set to "false", which indicates that reads that are not classified by Kraken2 (Illumina) or Metabuli (ONT) will not be included in all tasks downstream of read quality control. This is desirable in when the `taxon` input is sufficiently sampled in the classification database, contaminant viruses are also classified well, and host reads are removed prior to classification or map well to the human genome. On the other hand, setting `extract_unclassified` to "true" may be desirable to include unclassified reads that may be derived from the focal `taxon`, particularly if host reads have been scrubbed with via the `host` input parameter. The default Kraken2 and Metabuli databases are derived from RefSeq, so the potential for a read to be classified is dependent on input `taxon` representation within RefSeq. As an example, we found that *Lyssavirus rabies* Illumina data may generate higher quality assemblies when `extract_unclassified` is set to "true", perhaps due to its broad diversity relative to minor representation in RefSeq.
+
+</div>
+
+<div class="grid cards " markdown>
+??? warning "`host`"
+    The `host` input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon or accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task `is_accession` (ONT) or Read QC Trim PE `host_is_accession` (Illumina) boolean populated as "true".
+
+</div>
+
+<div class="grid cards " markdown>
+??? warning "`min_allele_freq`, `min_depth`, and `min_map_quality`"
+    These parameters have a direct effect on the variants that will ultimately be reported in the consensus assembly. `min_allele_freq` determines the minimum proportion of an allelic variant to be reported in the consensus assembly. `min_depth` and `min_map_quality` affect how "N" is reported in the consensus, i.e. depth below `min_depth` is reported as "N" and reads with mapping quality below `min_map_quality` are not included in depth calculations.      
 </div>
 
 <div class="grid cards " markdown>
@@ -108,15 +120,10 @@
 </div>
 
 <div class="grid cards " markdown>
-??? warning "`extract_unclassified`"
-    By default, the `extract_unclassified` parameter is set to "false", which indicates that unclassified reads will not be included in all tasks downstream of read quality control. This is desirable in instances where the focal `taxon` is well-represented and sufficiently similar to what is present in the classification software's database. Excluding unclassified reads can be desirable because reads that are unrelated to the focal `taxon` are omitted from downstream analysis. On the other hand, some unclassified reads may be derived from the focal `taxon`, which could negatively affect coverage and depth. The default kraken2 and Metabuli databases are derived from RefSeq, so the potential for a read to be classified is dependent on focal `taxon` representation within RefSeq. As an example, we found that *Lyssavirus rabies* Illumina data may generate higher quality assemblies when `extract_unclassified` is set to "true", perhaps due to its minor representation in RefSeq.
-
+??? warning "`taxon`"
+    `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) and do not have to be species (see `read_extraction_rank` below).
 </div>
 
-<div class="grid cards " markdown>
-??? warning "`min_allele_freq`, `min_depth`, and `min_map_quality`"
-    These parameters have a direct effect on the variants that will ultimately be reported in the consensus assembly. `min_allele_freq` determines the minimum proportion of an allelic variant to be reported in the consensus assembly. `min_depth` and `min_map_quality` affect how "N" is reported in the consensus, i.e. depth below `min_depth` is reported as "N" and reads with mapping quality below `min_map_quality` are not included in depth calculations.      
-</div>
 
 ### All Tasks
 
@@ -285,6 +292,12 @@
         <div class="grid cards" markdown>
 
         -   {{ include_md("common_text/ncbi_scrub_task.md", condition="theiaviral", indent=12, replacements={'??? task "`HRRT`: Human Host Sequence Removal"' : '??? task "`ncbi_scrub_se`"'}) }}
+
+        </div>
+
+        <div class="grid cards" markdown>
+
+        -   {{ include_md("common_text/host_decontaminate.md", condition="theiaviral", indent=12) }}
 
         </div>
 
@@ -485,6 +498,167 @@
     - `read_mapping_percentage_mapped_reads`: The percent of mapped reads is ideally 100% of the reads classified as the lineage of interest. Some unclassified reads may also map, which may indicate they were erroneously unclassified. Alternatively, these reads could have been erroneously mapped.
 </div>
 
+<div class="grid cards " markdown>
+??? question "Why did the workflow complete without generating a consensus?" 
+
+    TheiaViral is designed to "soft fail" when specific steps do not succeed due to input data quality. This means the workflow will be reported as successful, with an output that delineates the step that failed. If the workflow fails, please look for the following outputs in this order (sorted by timing of failure, latest first):
+
+    - `skani_status`: If this output is populated with something other than "PASS" and `skani_top_accession` is populated with "N/A", this indicates that Skani did not identify a sufficiently similar reference genome. The Skani database comprises a broad array of NCBI viral genomes, so a failure here likely indicates poor read quality because viral contigs are not found in the *de novo* assembly or are too small. It may be useful to BLAST whatever contigs do exist in the *de novo* to determine if there is contamination that can be removed via the `host` input parameter. Additionally, review CheckV *de novo* outputs to assess if viral contigs were retrieved. Finally, consider setting `extract_unclassified` to "true", using a higher `read_extraction_rank` if it will not introduce contaminant viruses, and invoking a `host` input to remove host reads if host contigs are present.
+    - `megahit_status` / `flye_status`: If this output is populated with something other than "PASS", it indicates the fallback assembler did not successfully complete. The fallback assemblers are permissive, so failure here likely indicates poor read quality. Review read QC to check read quality, particularly following read classification. If read classification is dispensing with a significant number of reads, consider `extract_unclassified`, `read_extraction_rank`, and `host` input adjustment. Otherwise, sequencing quality may be poor.
+    - `metaviralspades_status` / `raven_denovo_status`: If this output is populated with something other than "PASS", it indicates the default assembler did not successfully complete or extract viral contigs (MetaviralSPAdes). On their own, these statuses do not correspond directly to workflow failure because fallback *de novo* assemblers are implemented for both TheiaViral workflows.
+    - `read_screen_clean`: If this output is populated with something other than "PASS", it indicates the reads did not pass the imposed thresholds. Either the reads are poor quality or the thresholds are too stringent, in which case the thresholds can be relaxed or `skip_screen` can be set to "true".
+    - `dehost_wf_download_status`: If this output is populated with something other than "PASS", it indicates a host genome could not be retrieved for decontamination. See the `host` input explanation for more information and review the `download_accession`/`download_taxonomy` task output logs for advanced error parsing.
+
+
+</div>
+
+### Taxa-Specific Tasks
+
+    ??? toggle "Rabies Defaults"
+        <div class="searchable-table" markdown="block">
+
+        | **Overwrite Variable Name** | **Organism** | **Default Value** |
+        |---|---|---|
+        | gene_locations_bed_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed"` |
+        | genome_length_input | MPXV | `197200` |
+        | kraken_target_organism_input | MPXV | `"Monkeypox virus"` |
+        | nextclade_dataset_name_input | MPXV | `"nextstrain/mpox/lineage-b.1"` |
+        | nextclade_dataset_tag_input | MPXV | `"2024-11-19--14-18-53Z"` |
+        | primer_bed_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.primer.bed"` |
+        | reference_genome | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.MT903345.reference.fasta"` |
+        | reference_gff_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3"` |
+        | vadr_max_length | MPXV | `210000` |
+        | vadr_mem | MPXV | `8` |
+        | vadr_options | MPXV | `"--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"` |
+        
+        </div>
+
+
+    ??? toggle "Mpox Defaults"
+        <div class="searchable-table" markdown="block">
+
+        | **Overwrite Variable Name** | **Organism** | **Default Value** |
+        |---|---|---|
+        | gene_locations_bed_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed"` |
+        | genome_length_input | MPXV | `197200` |
+        | kraken_target_organism_input | MPXV | `"Monkeypox virus"` |
+        | nextclade_dataset_name_input | MPXV | `"nextstrain/mpox/lineage-b.1"` |
+        | nextclade_dataset_tag_input | MPXV | `"2024-11-19--14-18-53Z"` |
+        | primer_bed_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.primer.bed"` |
+        | reference_genome | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.MT903345.reference.fasta"` |
+        | reference_gff_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3"` |
+        | vadr_max_length | MPXV | `210000` |
+        | vadr_mem | MPXV | `8` |
+        | vadr_options | MPXV | `"--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"` |
+        
+        </div>
+
+    ??? toggle "WNV Defaults"
+        <div class="searchable-table" markdown="block">
+
+        | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
+        |---|---|---|---|
+        | genome_length_input | WNV | `11000` | |
+        | kraken_target_organism_input | WNV | `"West Nile virus`" | |
+        | nextclade_dataset_name_input | WNV | `"NA"` | TheiaCoV's Nextclade currently does not support WNV |
+        | nextclade_dataset_tag_input | WNV | `"NA"` | TheiaCoV's Nextclade currently does not support WNV |
+        | primer_bed_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/al/wnv/WNV-L1_primer.bed"` |  |
+        | reference_genome | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/NC_009942.1_wnv_L1.fasta"` |  |
+        | vadr_max_length | WNV | `11000` |  |
+        | vadr_mem | WNV | `8` |  |
+        | vadr_options | WNV | `"--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"` |  |
+
+        </div>
+
+    ??? toggle "Flu Defaults"
+        <div class="searchable-table" markdown="block">
+
+        | **Overwrite Variable Name** | **Organism** | **Flu Segment** | **Flu Subtype** | **Default Value** | **Notes** |
+        |---|---|---|---|---|---|
+        | flu_segment | flu | all | all | N/A | TheiaCoV will attempt to automatically assign a flu segment  |
+        | flu_subtype | flu | all | all | N/A | TheiaCoV will attempt to automatically assign a flu subtype |
+        | genome_length_input | flu | all | all | `13500` |  |
+        | vadr_max_length | flu | all | all | `13500` |  |
+        | vadr_mem | flu | all | all | `8` |  |
+        | vadr_options | flu | all | all | `"--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"` |  |
+        | nextclade_dataset_name_input | flu | ha | h1n1 | `"nextstrain/flu/h1n1pdm/ha/MW626062"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h1n1 | `"2025-01-22--09-54-14Z"` |  |
+        | reference_genome | flu | ha | h1n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.fasta"` |  |
+        | nextclade_dataset_name_input | flu | ha | h3n2 | `"nextstrain/flu/h3n2/ha/EPI1857216"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h3n2 | `"2025-01-22--09-54-14Z"` |  |
+        | reference_genome | flu | ha | h3n2 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.fasta"` |  |
+        | nextclade_dataset_name_input | flu | ha | victoria | `"nextstrain/flu/vic/ha/KX058884"` |  |
+        | nextclade_dataset_tag_input | flu | ha | victoria | `"2025-01-22--09-54-14Z"` |  |
+        | reference_genome | flu | ha | victoria | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.fasta"` |  |
+        | nextclade_dataset_name_input | flu | ha | yamagata | `"nextstrain/flu/yam/ha/JN993010"` |  |
+        | nextclade_dataset_tag_input | flu | ha | yamagata | `"2024-01-30--16-34-55Z"` |  |
+        | reference_genome | flu | ha | yamagata | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_ha.fasta"` |  |
+        | nextclade_dataset_name_input | flu | ha | h5n1 | `"community/moncla-lab/iav-h5/ha/all-clades"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h5n1 | `"2025-01-30--18-05-53Z"` |  |
+        | reference_genome | flu | ha | h5n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.fasta"` |  |
+        | nextclade_dataset_name_input | flu | na | h1n1 | `"nextstrain/flu/h1n1pdm/na/MW626056"` |  |
+        | nextclade_dataset_tag_input | flu | na | h1n1 | `"2025-03-26--11-47-13"` |  |
+        | reference_genome | flu | na | h1n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.fasta"` |  |
+        | nextclade_dataset_name_input | flu | na | h3n2 | `"nextstrain/flu/h3n2/na/EPI1857215"` |  |
+        | nextclade_dataset_tag_input | flu | na | h3n2 | `"2025-01-22--09-54-14Z"` |  |
+        | reference_genome | flu | na | h3n2 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.fasta"` |  |
+        | nextclade_dataset_name_input | flu | na | victoria | `"nextstrain/flu/vic/na/CY073894"` |  |
+        | nextclade_dataset_tag_input | flu | na | victoria | `"2025-03-26--11-47-13Z"` |  |
+        | reference_genome | flu | na | victoria | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_na.fasta"` |  |
+        | nextclade_dataset_name_input | flu | na | yamagata | `"NA"` |  |
+        | nextclade_dataset_tag_input | flu | na | yamagata | `"NA"` |  |
+        | reference_genome | flu | na | yamagata | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_na.fasta"` |  |
+
+        </div>
+
+    ??? toggle "RSV-A Defaults"
+        <div class="searchable-table" markdown="block">
+
+        | **Overwrite Variable Name** | **Organism** | **Default Value** |
+        |---|---|---|
+        | genome_length_input | rsv_a | 16000 |
+        | kraken_target_organism | rsv_a | "Human respiratory syncytial virus A" |
+        | nextclade_dataset_name_input | rsv_a | nextstrain/rsv/a/EPI_ISL_412866 |
+        | nextclade_dataset_tag_input | rsv_a | "2024-11-27--02-51-00Z" |
+        | reference_genome | rsv_a | gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta |
+        | vadr_max_length | rsv_a | 15500 |
+        | vadr_mem | rsv_a | 32 |
+        | vadr_options | rsv_a | -r --mkey rsv --xnocomp |
+
+        </div>
+
+    ??? toggle "RSV-B Defaults"
+        <div class="searchable-table" markdown="block">
+
+        | **Overwrite Variable Name** | **Organism** | **Default Value** |
+        |---|---|---|
+        | genome_length_input | rsv_b | 16000 |
+        | kraken_target_organism | rsv_b |  "human respiratory syncytial virus" |
+        | nextclade_dataset_name_input | rsv_b | nextstrain/rsv/b/EPI_ISL_1653999 |
+        | nextclade_dataset_tag_input | rsv_b | "2025-03-04--17-31-25Z" |
+        | reference_genome | rsv_b | gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta |
+        | vadr_max_length | rsv_b | 15500 |
+        | vadr_mem | rsv_b | 32 |
+        | vadr_options | rsv_b | -r --mkey rsv --xnocomp |
+
+        </div>
+
+    ??? toggle "HIV Defaults"
+        <div class="searchable-table" markdown="block">
+
+        | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
+        |---|---|---|---|
+        | kraken_target_organism_input | HIV | Human immunodeficiency virus 1 |  |
+        | genome_length_input | HIV-v1 | 9181 | This version of HIV originates from Oregon |
+        | primer_bed_file | HIV-v1 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed | This version of HIV originates from Oregon |
+        | reference_genome | HIV-v1 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta | This version of HIV originates from Oregon |
+        | reference_gff_file | HIV-v1 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3 | This version of HIV originates from Oregon |
+        | genome_length_input | HIV-v2 | 9840 | This version of HIV originates from Southern Africa |
+        | primer_bed_file | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed | This version of HIV originates from Southern Africa |
+        | reference_genome | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta | This version of HIV originates from Southern Africa |
+        | reference_gff_file | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3 | This version of HIV originates from Southern Africa |
+
+        </div>
 
 ### Acknowlegments
 
