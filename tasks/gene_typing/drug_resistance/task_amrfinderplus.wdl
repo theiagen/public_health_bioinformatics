@@ -181,10 +181,10 @@ task amrfinderplus_nuc {
     echo "${betalactam_methicillin_genes}" > BETA_LACTAM_METHICILLIN_GENES
   >>>
   output {
-    File amrfinderplus_all_report = "~{samplename}_amrfinder_all.tsv"
-    File amrfinderplus_amr_report = "~{samplename}_amrfinder_amr.tsv"
-    File amrfinderplus_stress_report = "~{samplename}_amrfinder_stress.tsv"
-    File amrfinderplus_virulence_report = "~{samplename}_amrfinder_virulence.tsv"
+    String amrfinderplus_all_report = "~{samplename}_amrfinder_all.tsv"
+    String amrfinderplus_amr_report = "~{samplename}_amrfinder_amr.tsv"
+    String amrfinderplus_stress_report = "~{samplename}_amrfinder_stress.tsv"
+    String amrfinderplus_virulence_report = "~{samplename}_amrfinder_virulence.tsv"
     String amrfinderplus_amr_core_genes = read_string("AMR_CORE_GENES")
     String amrfinderplus_amr_plus_genes = read_string("AMR_PLUS_GENES")
     String amrfinderplus_stress_genes = read_string("STRESS_GENES")

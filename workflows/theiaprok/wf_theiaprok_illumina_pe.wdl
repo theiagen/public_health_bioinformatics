@@ -874,10 +874,10 @@ workflow theiaprok_illumina_pe {
     String? kmerfinder_template_coverage = kmerfinder.kmerfinder_template_coverage
     String? kmerfinder_database = kmerfinder.kmerfinder_database
     # NCBI-AMRFinderPlus Outputs
-    File? amrfinderplus_all_report = select_first([amrfinderplus_task.amrfinderplus_all_report, amrfinderplus_task_gff.amrfinderplus_all_report, ""])
-    File? amrfinderplus_amr_report = select_first([amrfinderplus_task.amrfinderplus_amr_report, amrfinderplus_task_gff.amrfinderplus_amr_report, ""])
-    File? amrfinderplus_stress_report = select_first([amrfinderplus_task.amrfinderplus_stress_report, amrfinderplus_task_gff.amrfinderplus_stress_report, ""])
-    File? amrfinderplus_virulence_report = select_first([amrfinderplus_task.amrfinderplus_virulence_report, amrfinderplus_task_gff.amrfinderplus_virulence_report, ""])
+    String? amrfinderplus_all_report = select_first([amrfinderplus_task.amrfinderplus_all_report, amrfinderplus_task_gff.amrfinderplus_all_report, ""])
+    String? amrfinderplus_amr_report = select_first([amrfinderplus_task.amrfinderplus_amr_report, amrfinderplus_task_gff.amrfinderplus_amr_report, ""])
+    String? amrfinderplus_stress_report = select_first([amrfinderplus_task.amrfinderplus_stress_report, amrfinderplus_task_gff.amrfinderplus_stress_report, ""])
+    String? amrfinderplus_virulence_report = select_first([amrfinderplus_task.amrfinderplus_virulence_report, amrfinderplus_task_gff.amrfinderplus_virulence_report, ""])
     String? amrfinderplus_amr_core_genes = select_first([amrfinderplus_task.amrfinderplus_amr_core_genes, amrfinderplus_task_gff.amrfinderplus_amr_core_genes, ""])
     String? amrfinderplus_amr_plus_genes = select_first([amrfinderplus_task.amrfinderplus_amr_plus_genes, amrfinderplus_task_gff.amrfinderplus_amr_plus_genes, ""])
     String? amrfinderplus_stress_genes = select_first([amrfinderplus_task.amrfinderplus_stress_genes, amrfinderplus_task_gff.amrfinderplus_stress_genes, ""])
