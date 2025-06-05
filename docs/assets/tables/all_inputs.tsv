@@ -146,6 +146,10 @@ theiaprok_fasta	assembly_fasta	File	The assembly file for your sample in FASTA f
 theiaprok_illumina_pe	read1	File	Illumina forward read file in FASTQ file format (compression optional)		Required	TheiaProk_Illumina_PE	
 theiaprok_illumina_pe	read2	File	Illumina reverse read file in FASTQ file format (compression optional)		Required	TheiaProk_Illumina_PE	
 theiaprok_illumina_se	read1	File	Illumina forward read file in FASTQ file format (compression optional)		Required	TheiaProk_Illumina_SE	
+theiaprok_illumina_pe	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	FALSE	Optional	TheiaProk_Illumina_PE
+theiaprok_fasta	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	FALSE	Optional	TheiaProk_FASTA
+theiaprok_illumina_se	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	FALSE	Optional	TheiaProk_Illumina_SE
+theiaprok_ont	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	FALSE	Optional	TheiaProk_ONT
 theiaprok_ont	read1	File	ONT read file in FASTQ file format (compression optional)		Required	TheiaProk_ONT	
 theiavalidate	columns_to_compare	String	A comma-separated list of the columns the user wants to compare. Do not include whitespace.		Required	TheiaValidate	
 theiavalidate	output_prefix	String	The prefix for the output files		Required	TheiaValidate	
@@ -220,6 +224,8 @@ amrfinderplus_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the ta
 amrfinderplus_task	min_percent_coverage	Float	Minimum proportion of reference gene covered for a BLAST-based hit (Methods BLAST or PARTIAL)." Attribute should be a float ranging from 0-1, such as 0.6 (equal to 60% coverage)	0.5	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 amrfinderplus_task	min_percent_identity	Float	"Minimum identity for a blast-based hit hit (Methods BLAST or PARTIAL). -1 means use a curated threshold if it exists and 0.9 otherwise. Setting this value to something other than -1 will override any curated similarity cutoffs." Attribute should be a float ranging from 0-1, such as 0.95 (equal to 95% identity)	0.9	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 amrfinderplus_task	separate_betalactam_genes	Boolean	Report beta-Lactam AMR genes separated out by all beta-lactam and the respective beta-lactam subclasses	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+amrfinderplus_task	protein_fasta	File	Protein FASTA from annotation software such as Prokka or Bakta. Utilized when amrfinder_use_gff is set to true		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+amrfinderplus_task	gff	File	GFF file provided by Prokka or Bakta when amrfinder_use_gff is set to true. This file is used to determine the location of AMR genes in the genome.		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ani	ani_threshold	Float	ANI value threshold must be surpassed in order to output the ani_top_species_match. If a genome does not surpass this threshold (and the percent_bases_aligned_threshold) then the ani_top_species_match output String will show a warning instead of a genus & species.	80	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 ani	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 ani	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
