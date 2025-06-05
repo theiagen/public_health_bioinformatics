@@ -46,6 +46,7 @@
     - path: miniwdl_run/call-amrfinderplus_task/work/VIRULENCE_GENES
       md5sum: 9c9c511ab5bfade46f0db1b2ee5b4666
     - path: miniwdl_run/call-amrfinderplus_task/work/_miniwdl_inputs/0/test_filtered_contigs.fasta
+      md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-amrfinderplus_task/work/test_amrfinder_all.tsv
       md5sum: 376a8991c8eb010ea64c796115fb9b8d
     - path: miniwdl_run/call-amrfinderplus_task/work/test_amrfinder_amr.tsv
@@ -481,9 +482,9 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 2aa70eab24868920f6c28843dd3b5613
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_kraken2.wdl
-      md5sum: f8747be18ed7ebd3632ccdcd598c7b3c
+      md5sum: 735bf70c5a5cf92e43477e4e291ccf14
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
-      md5sum: 64caaaff5910ac0036e2659434500962
+      md5sum: 481f5fbce5aa1abf93acd912797821cc
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
       md5sum: 47c31ab7577c6a9602fab6bce61aea79
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
