@@ -367,7 +367,7 @@ kmerfinder_database	String	Database used to run KmerFinder	TheiaProk_FASTA, Thei
 kmerfinder_docker	String	Docker image used to run KmerFinder	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 kmerfinder_query_coverage	String	KmerFinder’s query coverage of the top hit result	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 kmerfinder_results_tsv	File	Output TSV file created by KmerFinder	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-kmerfinder_template_coverage	String		TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+kmerfinder_template_coverage	String	Percent of kmer coverage pertaining to the template, or reference selected	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 kmerfinder_top_hit	String	Top hit species of KmerFinder	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 kraken_human	Float	Percent of human read data detected using the Kraken2 software	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE
 kraken_human_dehosted	Float	Percent of human read data detected using the Kraken2 software after host removal	NCBI_Scrub_PE, NCBI_Scrub_SE, Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE

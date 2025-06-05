@@ -36,6 +36,17 @@ task tbp_parser {
     Int memory = 4
   }
   command <<<
+    # explicitly set covereage regions bed file defaults for wgs/tngs data
+    if [[ -z "~{coverage_regions_bed}" ]]; then
+      if [[ "~{tngs_data}" == "true" ]]; then
+        coverage_regions_bed="/tbp-parser/data/tngs-primer-regions.bed"
+      else
+        coverage_regions_bed="/tbp-parser/data/tbdb-modified-regions.bed"
+      fi
+    else
+      coverage_regions_bed="~{coverage_regions_bed}"
+    fi
+
     # get version
     python3 /tbp-parser/tbp_parser/tbp_parser.py --version | tee VERSION
 
@@ -48,7 +59,7 @@ task tbp_parser {
       ~{"--min_frequency " + min_frequency} \
       ~{"--min_read_support " + min_read_support} \
       ~{"--min_percent_coverage " + min_percent_coverage} \
-      ~{"--coverage_regions " + coverage_regions_bed} \
+      --coverage_regions $coverage_regions_bed \
       ~{"--tngs_expert_regions " + expert_rule_regions_bed} \
       ~{"--rrs_frequency " + rrs_frequency} \
       ~{"--rrs_read_support " + rrs_read_support} \
@@ -65,12 +76,20 @@ task tbp_parser {
     echo 0.0 > GENOME_PC
     echo 0.0 > AVG_DEPTH
 
-    # get genome percent coverage for the entire reference genome length over min_depth
-    genome=$(samtools depth -J ~{tbprofiler_bam} | awk -F "\t" -v min_depth=~{min_depth} '{if ($3 >= min_depth) print;}' | wc -l )
-    python3 -c "print ( ($genome / 4411532 ) * 100 )" | tee GENOME_PC
-
-    # get genome average depth
-    samtools depth -J ~{tbprofiler_bam} | awk -F "\t" '{sum+=$3} END { if (NR > 0) print sum/NR; else print 0 }' | tee AVG_DEPTH
+    if [[ "~{tngs_data}" == "true" ]]; then
+      # get cumulative percent coverage for all primer regions over min_depth
+      cumulative_primer_region_length=$(samtools depth -a -J ~{tbprofiler_bam} -b "$coverage_regions_bed" | wc -l)
+      genome=$(samtools depth -a -J ~{tbprofiler_bam} -b "$coverage_regions_bed" | awk -F "\t" -v min_depth=~{min_depth} '{if ($3 >= min_depth) print;}' | wc -l )
+      python3 -c "print ( ($genome / $cumulative_primer_region_length ) * 100 )" | tee GENOME_PC
+      # get average depth for all primer regions
+      samtools depth -a -J ~{tbprofiler_bam} -b "$coverage_regions_bed" | awk -F "\t" '{sum+=$3} END { if (NR > 0) print sum/NR; else print 0 }' | tee AVG_DEPTH
+    else
+      # get genome percent coverage for the entire reference genome length over min_depth
+      genome=$(samtools depth -a -J ~{tbprofiler_bam} | awk -F "\t" -v min_depth=~{min_depth} '{if ($3 >= min_depth) print;}' | wc -l )
+      python3 -c "print ( ($genome / 4411532 ) * 100 )" | tee GENOME_PC
+      # get genome average depth
+      samtools depth -a -J ~{tbprofiler_bam} | awk -F "\t" '{sum+=$3} END { if (NR > 0) print sum/NR; else print 0 }' | tee AVG_DEPTH
+    fi
 
     # add sample id to the beginning of the coverage report
     awk '{s=(NR==1)?"Sample_accession_number,":"~{samplename},"; $0=s$0}1' ~{samplename}.percent_gene_coverage.csv > tmp.csv && mv -f tmp.csv ~{samplename}.percent_gene_coverage.csv

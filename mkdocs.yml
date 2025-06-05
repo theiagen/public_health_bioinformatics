@@ -12,6 +12,7 @@ nav:
         - With the Command-Line: getting_started/commandline.md
         - With Terra.bio: getting_started/terra.md
         - Workflow Failure Philosophy: getting_started/philosophy.md
+     - Available SOPs: guides/sops.md
      - Guides:
         - Guide to GAMBIT: guides/gambit.md
         - Guide to GAMBIT Database Creation: guides/gambit_database.md

@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Name", filter_values="[**Kraken2**](../workflows/standalone/kraken2.md)", columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Kraken2**](../workflows/standalone/kraken2.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## Kraken2 Workflows
 
@@ -32,13 +32,13 @@ Besides the data input types, there are minimal differences between these two wo
 
 | Database name | Database Description | Suggested Applications | GCP URI (for usage in Terra) | Source | Database Size (GB) | Date of Last Update |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Kalamari v5.1** | Kalamari is a database of complete public assemblies, that has been fine-tuned for enteric pathogens and is backed by trusted institutions. [Full list available here ( in chromosomes.tsv and plasmids.tsv)](https://github.com/lskatz/Kalamari/tree/master/src) | Single-isolate enteric bacterial pathogen analysis (Salmonella, Escherichia, Shigella, Listeria, Campylobacter, Vibrio, Yersinia) | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2.kalamari_5.1.tar.gz`** | ‣ | 1.5 | 18/5/2022 |
-| **standard 8GB** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core) capped at 8GB | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_standard_08gb_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 7.5 | 12/1/2024 |
-| **standard 16GB** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core) capped at 16GB | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_standard_16gb_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 15 | 12/1/2024 |
-| **standard** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core)  | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_standard_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 72 | 18/4/2023 |
-| **viral** | RefSeq viral | Viral metagenomics | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_viral_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 0.6 | 12/1/2024 |
-| **EuPathDB48** | Eukaryotic pathogen genomes with contaminants removed. [Full list available here](https://genome-idx.s3.amazonaws.com/kraken/k2_eupathdb48_20201113/EuPathDB48_Contents.txt) | Eukaryotic organisms (Candida spp., Aspergillus spp., etc) | **`gs://theiagen-public-files-rp/terra/theiaprok-files/k2_eupathdb48_20201113.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 30.3 | 13/11/2020 |
-| **EuPathDB48** | Eukaryotic pathogen genomes with contaminants removed. [Full list available here](https://genome-idx.s3.amazonaws.com/kraken/k2_eupathdb48_20201113/EuPathDB48_Contents.txt) | Eukaryotic organisms (Candida spp., Aspergillus spp., etc) | **`gs://theiagen-large-public-files-rp/terra/databases/kraken/k2_eupathdb48_20230407.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 11 | 7/4/2023 |
+| **Kalamari v5.1** | Kalamari is a database of complete public assemblies, that has been fine-tuned for enteric pathogens and is backed by trusted institutions. [Full list available here ( in chromosomes.tsv and plasmids.tsv)](https://github.com/lskatz/Kalamari/tree/master/src) | Single-isolate enteric bacterial pathogen analysis (Salmonella, Escherichia, Shigella, Listeria, Campylobacter, Vibrio, Yersinia) | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2.kalamari_5.1.tar.gz`** | ‣ | 1.5 | 18/5/2022 |
+| **standard 8GB** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core) capped at 8GB | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_08gb_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 7.5 | 12/1/2024 |
+| **standard 16GB** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core) capped at 16GB | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_16gb_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 15 | 12/1/2024 |
+| **standard** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core)  | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 72 | 18/4/2023 |
+| **viral** | RefSeq viral | Viral metagenomics | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 0.6 | 12/1/2024 |
+| **EuPathDB48** | Eukaryotic pathogen genomes with contaminants removed. [Full list available here](https://genome-idx.s3.amazonaws.com/kraken/k2_eupathdb48_20201113/EuPathDB48_Contents.txt) | Eukaryotic organisms (Candida spp., Aspergillus spp., etc) | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_eupathdb48_20201113.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 30.3 | 13/11/2020 |
+| **EuPathDB48** | Eukaryotic pathogen genomes with contaminants removed. [Full list available here](https://genome-idx.s3.amazonaws.com/kraken/k2_eupathdb48_20201113/EuPathDB48_Contents.txt) | Eukaryotic organisms (Candida spp., Aspergillus spp., etc) | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_eupathdb48_20230407.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 11 | 7/4/2023 |
 
 </div>
 
@@ -48,19 +48,19 @@ Besides the data input types, there are minimal differences between these two wo
     === "Kraken_PE"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Kraken_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Kraken_PE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "Kraken_SE"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Kraken_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Kraken_SE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "Kraken_ONT"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Kraken_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Kraken_ONT"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
 ### Workflow Tasks
@@ -73,21 +73,21 @@ Besides the data input types, there are minimal differences between these two wo
     === "Kraken_PE"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Kraken_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Kraken_PE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
 
         ///
 
     === "Kraken_SE"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Kraken_SE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Kraken_SE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
 
         ///
 
     === "Kraken_ONT"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Kraken_ONT", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Kraken_ONT"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
 
         ///
 
