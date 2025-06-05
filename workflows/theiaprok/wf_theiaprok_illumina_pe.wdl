@@ -205,8 +205,7 @@ workflow theiaprok_illumina_pe {
               input:
                   assembly = digger_denovo.assembly_fasta,
                   samplename = samplename,
-                  organism = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
-                  annotation_format = genome_annotation
+                  organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
           }
         }
         if (call_gamma){
