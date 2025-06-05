@@ -62,12 +62,12 @@ task amrfinderplus_nuc {
         ~{'--name ' + samplename} \
         ~{'--nucleotide ' + assembly} \
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
-        ~{'--threads ' + cpu} \
         ~{'--coverage_min ' + min_percent_coverage} \
         ~{'--ident_min ' + min_percent_identity} \
         ~{'--protein ' + protein_fasta} \
         ~{'--gff ' + gff} \
-        ~{'--annotation_format '+ annotation_format}
+        ~{'--annotation_format '+ annotation_format} \
+        --threads ~{cpu} \
     else 
       echo "Either the organism (~{organism}) is not recognized by NCBI-AMRFinderPlus or the user did not supply an organism as input."
       echo "Skipping the use of amrfinder --organism optional parameter."
@@ -76,12 +76,12 @@ task amrfinderplus_nuc {
         ~{'--name ' + samplename} \
         ~{'--nucleotide ' + assembly} \
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
-        ~{'--threads ' + cpu} \
         ~{'--coverage_min ' + min_percent_coverage} \
         ~{'--ident_min ' + min_percent_identity} \       
         ~{'--protein ' + protein_fasta} \
         ~{'--gff ' + gff} \
-        ~{'--annotation_format '+ annotation_format}
+        ~{'--annotation_format '+ annotation_format} \
+        --threads ~{cpu}
     fi
 
     # remove mutations where Element subtype is "POINT"
