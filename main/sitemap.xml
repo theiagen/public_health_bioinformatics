@@ -2,390 +2,390 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/assets/new_workflow_template/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/arln_stats_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/busco_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/bwa_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/cauris_cladetyper/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/centroid_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/cg_pipeline_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/concatenate_illumina_lanes_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/data_summary_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/digger_denovo_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/flye_denovo_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/gambit_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/gubbins_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/iqtree2_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/kmerfinder_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/kraken2_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/ksnp_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/minimap2_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/ncbi_datasets_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/ncbi_scrub_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/primer_trim_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/qc_check_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/quast_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/read_qc_trim_illumina/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/read_qc_trim_ont/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/read_screen_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/referenceseeker_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/shared_variants_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/snippy_core_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/snippy_qc_concatenation_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/snippy_variants_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/snp_dists_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/snp_sites_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/stxtyper_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/template_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/ts_mlst_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/versioning_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/vibecheck_task/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/contributing/code_contribution/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/contributing/doc_contribution/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/getting_started/commandline/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/getting_started/philosophy/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/getting_started/terra/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/guides/custom_organisms/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/guides/gambit/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/guides/gambit_database/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/guides/phylogenetics/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/guides/sops/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/data_export/concatenate_column_content/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/data_export/transfer_column_content/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/data_export/zip_column_content/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/data_import/assembly_fetch/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/data_import/basespace_fetch/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/data_import/create_terra_table/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/data_import/fetch_srr_accession/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/data_import/sra_fetch/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/genomic_characterization/freyja/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/genomic_characterization/pangolin_update/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/genomic_characterization/theiacov/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/genomic_characterization/theiaeuk/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/genomic_characterization/theiameta/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/genomic_characterization/theiaprok/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/genomic_characterization/vadr_update/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/augur/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/clair3_variants/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/core_gene_snp/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/czgenepi_prep/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/find_shared_variants/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/ksnp3/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/ksnp4/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/lyve_set/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/mashtree_fasta/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/snippy_streamline/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/snippy_streamline_fasta/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/snippy_tree/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_construction/snippy_variants/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_placement/samples_to_ref_tree/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/phylogenetic_placement/usher/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/public_data_sharing/mercury_prep_n_batch/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/public_data_sharing/terra_2_gisaid/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/public_data_sharing/terra_2_ncbi/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/amr_search/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/cauris_cladetyper/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/concatenate_illumina_lanes/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/dorado_basecalling/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/gambit_query/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/kraken2/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/ncbi_amrfinderplus/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/ncbi_scrub/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/rasusa/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/rename_fastq/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/tbprofiler_tngs/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/theiavalidate/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows_overview/workflows_alphabetically/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows_overview/workflows_kingdom/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows_overview/workflows_type/</loc>
-         <lastmod>2025-06-03</lastmod>
+         <lastmod>2025-06-05</lastmod>
     </url>
 </urlset>
