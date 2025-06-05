@@ -10,7 +10,7 @@ task amrfinderplus_nuc {
     # --indent_min Minimum DNA %identity [0-1]; default is 0.9 (90%) or curated threshold if it exists
     # --mincov Minimum DNA %coverage [0-1]; default is 0.5 (50%)
     String? organism 
-    String annotation_format
+    String? annotation_format
     Float? min_percent_identity
     Float? min_percent_coverage
     Boolean detailed_drug_class = false
