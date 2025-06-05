@@ -193,8 +193,8 @@ workflow theiaprok_illumina_pe {
           input:
             assembly = if amrfinder_use_gff then select_first([prokka.prokka_fna,bakta.bakta_fna]) else digger_denovo.assembly_fasta,
             samplename = samplename,
-            protein_fasta = if amrfinder_use_gff then select_first([prokka.prokka_faa,bakta.bakta_faa]) else "",
-            gff = if amrfinder_use_gff then select_first([prokka.prokka_gff,bakta.bakta_gff3]) else "",
+            protein_fasta = if amrfinder_use_gff then select_first([prokka.prokka_faa,bakta.bakta_faa]) else null,
+            gff = if amrfinder_use_gff then select_first([prokka.prokka_gff,bakta.bakta_gff3]) else null,
             organism = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
             annotation_format = genome_annotation
         }
