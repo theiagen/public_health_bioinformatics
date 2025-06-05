@@ -34,7 +34,7 @@
 <div class="grid cards " markdown>
 ??? question "Segmented viruses"
 
-    Segmented viruses are accounted for. The reference genome database excludes segmented viral nucleotide accessions, while including RefSeq assembly accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.
+    Segmented viruses are accounted for in TheiaViral. The reference genome database excludes segmented viral nucleotide accessions, while including RefSeq assembly accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.
 
 </div>
 
