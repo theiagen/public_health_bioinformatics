@@ -270,8 +270,8 @@ workflow read_QC_trim_pe {
     String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone_theiaprok.kraken2_docker, kraken2_standalone_theiaviral.kraken2_docker, ""])
     String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone_theiaprok.kraken2_database, kraken2_standalone_theiaviral.kraken2_database, kraken_db_warning, ""])
     # kraken2 read extract - theiaviral
-    File? kraken2_extracted_read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1])
-    File? kraken2_extracted_read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])
+    File? kraken2_extracted_read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
+    File? kraken2_extracted_read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
     String? kraken2_extracted_organism_name = kraken2_extract.organism_name
     String? krakentools_docker = kraken2_extract.krakentools_docker
     Boolean? kraken2_success = kraken2_extract.success
