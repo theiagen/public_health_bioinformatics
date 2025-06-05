@@ -154,112 +154,119 @@ workflow theiaviral_ont {
               uneven_coverage_mode = true
           }
         }
-        # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
-        call checkv_task.checkv as checkv_denovo {
-          input:
-            assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
-            samplename = samplename
-        }
-        # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
-        call quast_task.quast as quast_denovo {
-          input:
-            assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
-            samplename = samplename
-        }
-      }
-      # ANI-based reference genome selection
-      call skani_task.skani as skani {
-        input:
-          assembly_fasta = select_first([reference_fasta, flye.assembly_fasta, raven.assembly_fasta]),
-          samplename = samplename
-      }
-      # if skani cannot identify a reference genome, fail gracefully
-      if (skani.skani_status == "PASS") {
-        # download the best reference determined from skani
-        call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
-          input:
-            ncbi_accession = skani.skani_top_accession,
-            use_ncbi_virus = skani.skani_virus_download
+        # fail gracefully if both assemblies fail
+        if (select_first([flye.flye_status, raven.raven_status, "FAIL"]) == "PASS") {
+          # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
+          call checkv_task.checkv as checkv_denovo {
+            input:
+              assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
+              samplename = samplename
+          }
+          # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
+          call quast_task.quast as quast_denovo {
+            input:
+              assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
+              samplename = samplename
+          }
         }
       }
-      if (defined(reference_fasta) || skani.skani_status == "PASS") {
-        # align assembly to reference genome
-        call minimap2_task.minimap2 as minimap2 {
+      if (defined(reference_fasta) || select_first([flye.flye_status, raven.raven_status, "FAIL"]) == "PASS") {
+        # ANI-based reference genome selection
+        call skani_task.skani as skani {
           input:
-            query1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-            reference = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-            samplename = samplename,
-            mode = "map-ont",
-            output_sam = true,
-            long_read_flags = true
-        }
-        # generate bam file from sam output
-        call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
-          input:
-            sam = minimap2.minimap2_out,
-            samplename = samplename,
-            min_qual = min_map_quality
-        }
-        # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-        call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
-          input:
-            bamfile = parse_mapping.bam,
+            assembly_fasta = select_first([reference_fasta, flye.assembly_fasta, raven.assembly_fasta]),
             samplename = samplename
         }
-        # Index the reference genome for Clair3
-        call fasta_utilities_task.samtools_faidx as fasta_utilities{
-          input:
-            fasta = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
+        # if skani cannot identify a reference genome, fail gracefully
+        if (skani.skani_status == "PASS") {
+          # download the best reference determined from skani
+          call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
+            input:
+              ncbi_accession = skani.skani_top_accession,
+              use_ncbi_virus = skani.skani_virus_download
+          }
         }
-        # variant calling with Clair3
-        call clair3_task.clair3_variants as clair3 {
-          input:
-            alignment_bam_file = parse_mapping.bam,
-            alignment_bam_file_index = parse_mapping.bai,
-            reference_genome_file = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-            reference_genome_file_index = fasta_utilities.fai,
-            sequencing_platform = "ont",
-            enable_long_indel = true,
-            samplename = samplename
-        }
-        # mask low coverage regions with Ns
-        call parse_mapping_task.mask_low_coverage {
-          input:
-            bam = parse_mapping.bam,
-            bai = parse_mapping.bai,
-            reference_fasta = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-            min_depth = min_depth
-        }
-        # create consensus genome based on variant calls
-        call bcftools_consensus_task.bcftools_consensus as bcftools_consensus {
-          input:
-            reference_fasta = mask_low_coverage.mask_reference_fasta,
-            input_vcf = clair3.clair3_variants_vcf,
-            min_depth = min_depth,
-            min_freq = min_allele_freq,
-            samplename = samplename
-        }
-        # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
-        call consensus_qc_task.consensus_qc as consensus_qc {
-          input:
-            assembly_fasta = bcftools_consensus.assembly_fasta,
-            reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-            genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
-        }
-        # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
-        call checkv_task.checkv as checkv_consensus {
-          input:
-            assembly = bcftools_consensus.assembly_fasta,
-            samplename = samplename
-        }
-        # run morgana magic for classification
-        call morgana_magic_wf.morgana_magic {
-          input:
-            samplename = samplename,
-            assembly_fasta = select_first([bcftools_consensus.assembly_fasta]),
-            read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-            taxon_name = select_first([ncbi_datasets.taxon_id]),
-            seq_method = "nanopore"
+        if (defined(reference_fasta) || skani.skani_status == "PASS") {
+          # align assembly to reference genome
+          call minimap2_task.minimap2 as minimap2 {
+            input:
+              query1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+              reference = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+              samplename = samplename,
+              mode = "map-ont",
+              output_sam = true,
+              long_read_flags = true
+          }
+          # generate bam file from sam output
+          call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
+            input:
+              sam = minimap2.minimap2_out,
+              samplename = samplename,
+              min_qual = min_map_quality
+          }
+          # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
+          call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
+            input:
+              bamfile = parse_mapping.bam,
+              samplename = samplename
+          }
+          # Index the reference genome for Clair3
+          call fasta_utilities_task.samtools_faidx as fasta_utilities{
+            input:
+              fasta = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
+          }
+          # variant calling with Clair3
+          call clair3_task.clair3_variants as clair3 {
+            input:
+              alignment_bam_file = parse_mapping.bam,
+              alignment_bam_file_index = parse_mapping.bai,
+              reference_genome_file = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+              reference_genome_file_index = fasta_utilities.fai,
+              sequencing_platform = "ont",
+              enable_long_indel = true,
+              samplename = samplename
+          }
+          # mask low coverage regions with Ns
+          call parse_mapping_task.mask_low_coverage {
+            input:
+              bam = parse_mapping.bam,
+              bai = parse_mapping.bai,
+              reference_fasta = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+              min_depth = min_depth
+          }
+          # create consensus genome based on variant calls
+          call bcftools_consensus_task.bcftools_consensus as bcftools_consensus {
+            input:
+              reference_fasta = mask_low_coverage.mask_reference_fasta,
+              input_vcf = clair3.clair3_variants_vcf,
+              min_depth = min_depth,
+              min_freq = min_allele_freq,
+              samplename = samplename
+          }
+          # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
+          call consensus_qc_task.consensus_qc as consensus_qc {
+            input:
+              assembly_fasta = bcftools_consensus.assembly_fasta,
+              reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+              genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+          }
+          # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
+          call checkv_task.checkv as checkv_consensus {
+            input:
+              assembly = bcftools_consensus.assembly_fasta,
+              samplename = samplename
+          }
+          # run morgana magic for classification
+          if (defined(ncbi_datasets.ncbi_datasets_status)) {
+            call morgana_magic_wf.morgana_magic {
+              input:
+                samplename = samplename,
+                assembly_fasta = select_first([bcftools_consensus.assembly_fasta]),
+                read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+                taxon_name = select_first([ncbi_datasets.taxon_id]),
+                seq_method = "nanopore"
+            }
+          }
         }
       }
     }
