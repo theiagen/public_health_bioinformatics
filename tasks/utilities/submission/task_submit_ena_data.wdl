@@ -32,7 +32,7 @@ task submit_ena_data {
     # Allow continuing even if some samples have missing metadata
     # Default is to fail if any samples are missing required metadata, unless this flag is set
     Boolean? allow_missing
-    Boolean test_submit = false
+    Boolean submit_to_production = false
 
     Int disk_size = 100
     Int cpu = 1
@@ -77,7 +77,7 @@ task submit_ena_data {
       --spreadsheet "prepped_ena_data.tsv" \
       --directory . \
       --mode "submit" \
-      ~{true="--test" false="" test_submit}
+      ~{true="" false="--test" submit_to_production}
 
     # Changing the output file name because it reports both successful and failed submissions
     if [[ -f "failed_validation.txt" ]]; then

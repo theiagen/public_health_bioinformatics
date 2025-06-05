@@ -14,6 +14,8 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
 ## Pre-requisites
 
+!!! warning "Before running the `Terra_2_ENA` workflow, make sure you have registered a study and are using the correct study accession number"
+
 - To submit data into ENA you must first register a study to contain and manage it. Studies (also referred to as projects) can be registered through the Webin Portal. [Log in](https://www.ebi.ac.uk/ena/submit/webin/login) with your Webin credentials and select the ‘Register Study’ button to bring up the interface. Once registration is complete, you will be assigned accession numbers. You may return to the dashboard and select the ‘Studies Report’ button to review registered studies.
 
 - Additionally, before submitting most types of data to ENA, samples must be [registered](https://ena-docs.readthedocs.io/en/latest/submit/samples.html#). To register samples, ensure that your Terra data table includes all the samples you intend to submit, along with their raw read data (`FASTQ`, `BAM`, or `CRAM` format) and associated metadata. To meet ENA’s requirements, each sample must include a minimum set of metadata. See below for the mandatory and recommended metadata fields, as well as the default column names used to identify them in your Terra data table.
@@ -170,6 +172,8 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 ## Workflow Inputs
 
 It's important to note that the `Terra_2_ENA` workflow is designed to run on set-level data tables. This means that the workflow will process all samples within a set together, rather than handling each sample individually. The `samples` input variable expects an array of sample IDs, corresponding to a set table. In most cases, set tables are generated automatically when running a workflow. However, if you need to create one manually, refer to this guide on [how to create a set table](https://support.terra.bio/hc/en-us/articles/6660506445339-How-to-make-a-set-table).
+
+!!! warning "The `submit_to_production` input parameter is set to `false` by default. This means that the workflow will not submit data to the production ENA server unless you explicitly set it to `true`. This is useful for testing purposes, allowing you to validate your data without making actual submissions."
 
 /// html | div[class="searchable-table"]
 
