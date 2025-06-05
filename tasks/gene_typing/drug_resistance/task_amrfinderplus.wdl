@@ -67,7 +67,7 @@ task amrfinderplus_nuc {
         ~{'--protein ' + protein_fasta} \
         ~{'--gff ' + gff} \
         ~{'--annotation_format '+ annotation_format} \
-        --threads ~{cpu} \
+        --threads ~{cpu}
     else 
       echo "Either the organism (~{organism}) is not recognized by NCBI-AMRFinderPlus or the user did not supply an organism as input."
       echo "Skipping the use of amrfinder --organism optional parameter."
