@@ -444,72 +444,72 @@ workflow theiaviral_ont {
     Int? checkv_consensus_total_genes = checkv_consensus.total_genes
     String? checkv_consensus_version = checkv_consensus.checkv_version
     # morgana magic outputs
-    String? morgana_magic_organism = morgana_magic.organism 
+    String? organism = morgana_magic.organism 
     # Pangolin outputs
-    String? morgana_magic_pango_lineage = morgana_magic.pango_lineage
-    String? morgana_magic_pango_lineage_expanded = morgana_magic.pango_lineage_expanded
-    String? morgana_magic_pangolin_conflicts = morgana_magic.pangolin_conflicts
-    String? morgana_magic_pangolin_notes = morgana_magic.pangolin_notes
-    String? morgana_magic_pangolin_assignment_version = morgana_magic.pangolin_assignment_version
-    File? morgana_magic_pango_lineage_report = morgana_magic.pango_lineage_report
-    String? morgana_magic_pangolin_docker = morgana_magic.pangolin_docker
-    String? morgana_magic_pangolin_versions = morgana_magic.pangolin_versions
+    String? pango_lineage = morgana_magic.pango_lineage
+    String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded
+    String? pangolin_conflicts = morgana_magic.pangolin_conflicts
+    String? pangolin_notes = morgana_magic.pangolin_notes
+    String? pangolin_assignment_version = morgana_magic.pangolin_assignment_version
+    File? pango_lineage_report = morgana_magic.pango_lineage_report
+    String? pangolin_docker = morgana_magic.pangolin_docker
+    String? pangolin_versions = morgana_magic.pangolin_versions
     # Nextclade outputs for all organisms
-    String? morgana_magic_nextclade_version = morgana_magic.nextclade_version
-    String? morgana_magic_nextclade_docker = morgana_magic.nextclade_docker
-    String? morgana_magic_nextclade_ds_tag = morgana_magic.nextclade_ds_tag
+    String? nextclade_version = morgana_magic.nextclade_version
+    String? nextclade_docker = morgana_magic.nextclade_docker
+    String? nextclade_ds_tag = morgana_magic.nextclade_ds_tag
     # Nextclade outputs for MPXV
-    File? morgana_magic_nextclade_json_mpxv = morgana_magic.nextclade_json_mpxv
-    File? morgana_magic_auspice_json_mpxv = morgana_magic.auspice_json_mpxv
-    File? morgana_magic_nextclade_tsv_mpxv = morgana_magic.nextclade_tsv_mpxv
-    String? morgana_magic_nextclade_aa_subs_mpxv = morgana_magic.nextclade_aa_subs_mpxv
-    String? morgana_magic_nextclade_aa_dels_mpxv = morgana_magic.nextclade_aa_dels_mpxv
-    String? morgana_magic_nextclade_clade_mpxv = morgana_magic.nextclade_clade_mpxv
-    String? morgana_magic_nextclade_lineage_mpxv = morgana_magic.nextclade_lineage_mpxv
-    String? morgana_magic_nextclade_qc_mpxv = morgana_magic.nextclade_qc_mpxv
+    File? nextclade_json_mpxv = morgana_magic.nextclade_json_mpxv
+    File? auspice_json_mpxv = morgana_magic.auspice_json_mpxv
+    File? nextclade_tsv_mpxv = morgana_magic.nextclade_tsv_mpxv
+    String? nextclade_aa_subs_mpxv = morgana_magic.nextclade_aa_subs_mpxv
+    String? nextclade_aa_dels_mpxv = morgana_magic.nextclade_aa_dels_mpxv
+    String? nextclade_clade_mpxv = morgana_magic.nextclade_clade_mpxv
+    String? nextclade_lineage_mpxv = morgana_magic.nextclade_lineage_mpxv
+    String? nextclade_qc_mpxv = morgana_magic.nextclade_qc_mpxv
     # Nextclade outputs for Rabies
-    File? morgana_magic_nextclade_json_rabies = morgana_magic.nextclade_json_rabies
-    File? morgana_magic_auspice_json_rabies = morgana_magic.auspice_json_rabies
-    File? morgana_magic_nextclade_tsv_rabies = morgana_magic.nextclade_tsv_rabies
-    String? morgana_magic_nextclade_aa_subs_rabies = morgana_magic.nextclade_aa_subs_rabies
-    String? morgana_magic_nextclade_aa_dels_rabies = morgana_magic.nextclade_aa_dels_rabies
-    String? morgana_magic_nextclade_clade_rabies = morgana_magic.nextclade_clade_rabies
-    String? morgana_magic_nextclade_lineage_rabies = morgana_magic.nextclade_lineage_rabies
-    String? morgana_magic_nextclade_qc_rabies = morgana_magic.nextclade_qc_rabies
+    File? nextclade_json_rabies = morgana_magic.nextclade_json_rabies
+    File? auspice_json_rabies = morgana_magic.auspice_json_rabies
+    File? nextclade_tsv_rabies = morgana_magic.nextclade_tsv_rabies
+    String? nextclade_aa_subs_rabies = morgana_magic.nextclade_aa_subs_rabies
+    String? nextclade_aa_dels_rabies = morgana_magic.nextclade_aa_dels_rabies
+    String? nextclade_clade_rabies = morgana_magic.nextclade_clade_rabies
+    String? nextclade_lineage_rabies = morgana_magic.nextclade_lineage_rabies
+    String? nextclade_qc_rabies = morgana_magic.nextclade_qc_rabies
     # Nextclade outputs for flu HA
-    File? morgana_magic_nextclade_json_flu_ha = morgana_magic.nextclade_json_flu_ha
-    File? morgana_magic_auspice_json_flu_ha = morgana_magic.auspice_json_flu_ha
-    File? morgana_magic_nextclade_tsv_flu_ha = morgana_magic.nextclade_tsv_flu_ha
-    String? morgana_magic_nextclade_ds_tag_flu_ha = morgana_magic.nextclade_ds_tag_flu_ha
-    String? morgana_magic_nextclade_aa_subs_flu_ha = morgana_magic.nextclade_aa_subs_flu_ha
-    String? morgana_magic_nextclade_aa_dels_flu_ha = morgana_magic.nextclade_aa_dels_flu_ha
-    String? morgana_magic_nextclade_clade_flu_ha = morgana_magic.nextclade_clade_flu_ha
-    String? morgana_magic_nextclade_qc_flu_ha = morgana_magic.nextclade_qc_flu_ha
+    File? nextclade_json_flu_ha = morgana_magic.nextclade_json_flu_ha
+    File? auspice_json_flu_ha = morgana_magic.auspice_json_flu_ha
+    File? nextclade_tsv_flu_ha = morgana_magic.nextclade_tsv_flu_ha
+    String? nextclade_ds_tag_flu_ha = morgana_magic.nextclade_ds_tag_flu_ha
+    String? nextclade_aa_subs_flu_ha = morgana_magic.nextclade_aa_subs_flu_ha
+    String? nextclade_aa_dels_flu_ha = morgana_magic.nextclade_aa_dels_flu_ha
+    String? nextclade_clade_flu_ha = morgana_magic.nextclade_clade_flu_ha
+    String? nextclade_qc_flu_ha = morgana_magic.nextclade_qc_flu_ha
     # Nextclade outputs for flu NA
-    File? morgana_magic_nextclade_json_flu_na = morgana_magic.nextclade_json_flu_na
-    File? morgana_magic_auspice_json_flu_na = morgana_magic.auspice_json_flu_na
-    File? morgana_magic_nextclade_tsv_flu_na = morgana_magic.nextclade_tsv_flu_na
-    String? morgana_magic_nextclade_ds_tag_flu_na = morgana_magic.nextclade_ds_tag_flu_na
-    String? morgana_magic_nextclade_aa_subs_flu_na = morgana_magic.nextclade_aa_subs_flu_na
-    String? morgana_magic_nextclade_aa_dels_flu_na = morgana_magic.nextclade_aa_dels_flu_na
-    String? morgana_magic_nextclade_clade_flu_na = morgana_magic.nextclade_clade_flu_na
-    String? morgana_magic_nextclade_qc_flu_na = morgana_magic.nextclade_qc_flu_na
+    File? nextclade_json_flu_na = morgana_magic.nextclade_json_flu_na
+    File? auspice_json_flu_na = morgana_magic.auspice_json_flu_na
+    File? nextclade_tsv_flu_na = morgana_magic.nextclade_tsv_flu_na
+    String? nextclade_ds_tag_flu_na = morgana_magic.nextclade_ds_tag_flu_na
+    String? nextclade_aa_subs_flu_na = morgana_magic.nextclade_aa_subs_flu_na
+    String? nextclade_aa_dels_flu_na = morgana_magic.nextclade_aa_dels_flu_na
+    String? nextclade_clade_flu_na = morgana_magic.nextclade_clade_flu_na
+    String? nextclade_qc_flu_na = morgana_magic.nextclade_qc_flu_na
     # Flu IRMA Outputs
-    String? morgana_magic_irma_version = morgana_magic.irma_version
-    String? morgana_magic_irma_docker = morgana_magic.irma_docker
-    String? morgana_magic_irma_type = morgana_magic.irma_type
-    String? morgana_magic_irma_subtype = morgana_magic.irma_subtype
-    String? morgana_magic_irma_subtype_notes = morgana_magic.irma_subtype_notes
+    String? irma_version = morgana_magic.irma_version
+    String? irma_docker = morgana_magic.irma_docker
+    String? irma_type = morgana_magic.irma_type
+    String? irma_subtype = morgana_magic.irma_subtype
+    String? irma_subtype_notes = morgana_magic.irma_subtype_notes
     # Flu GenoFLU Outputs
-    String? morgana_magic_genoflu_version = morgana_magic.genoflu_version
-    String? morgana_magic_genoflu_genotype = morgana_magic.genoflu_genotype
-    String? morgana_magic_genoflu_all_segments = morgana_magic.genoflu_all_segments
-    File? morgana_magic_genoflu_output_tsv = morgana_magic.genoflu_output_tsv
+    String? genoflu_version = morgana_magic.genoflu_version
+    String? genoflu_genotype = morgana_magic.genoflu_genotype
+    String? genoflu_all_segments = morgana_magic.genoflu_all_segments
+    File? genoflu_output_tsv = morgana_magic.genoflu_output_tsv
     # Flu Abricate Outputs
-    String? morgana_magic_abricate_flu_type = morgana_magic.abricate_flu_type
-    String? morgana_magic_abricate_flu_subtype =  morgana_magic.abricate_flu_subtype
-    File? morgana_magic_abricate_flu_results = morgana_magic.abricate_flu_results
-    String? morgana_magic_abricate_flu_database =  morgana_magic.abricate_flu_database
-    String? morgana_magic_abricate_flu_version = morgana_magic.abricate_flu_version
+    String? abricate_flu_type = morgana_magic.abricate_flu_type
+    String? abricate_flu_subtype =  morgana_magic.abricate_flu_subtype
+    File? abricate_flu_results = morgana_magic.abricate_flu_results
+    String? abricate_flu_database =  morgana_magic.abricate_flu_database
+    String? abricate_flu_version = morgana_magic.abricate_flu_version
   }
 }
