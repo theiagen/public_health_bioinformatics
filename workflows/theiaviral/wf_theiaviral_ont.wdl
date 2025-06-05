@@ -174,29 +174,25 @@ workflow theiaviral_ont {
               uneven_coverage_mode = true
           }
         }
-        # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
-        call checkv_task.checkv as checkv_denovo {
-          input:
-            assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
-            samplename = samplename
-        }
-        # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
-        call quast_task.quast as quast_denovo {
-          input:
-            assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
-            samplename = samplename
+        # fail gracefully if both assemblies fail
+        if (select_first([flye.flye_status, raven.raven_status, "FAIL"]) == "PASS") {
+          # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
+          call checkv_task.checkv as checkv_denovo {
+            input:
+              assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
+              samplename = samplename
+          }
+          # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
+          call quast_task.quast as quast_denovo {
+            input:
+              assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
+              samplename = samplename
+          }
         }
       }
-      # ANI-based reference genome selection
-      call skani_task.skani as skani {
-        input:
-          assembly_fasta = select_first([reference_fasta, flye.assembly_fasta, raven.assembly_fasta]),
-          samplename = samplename
-      }
-      # if skani cannot identify a reference genome, fail gracefully
-      if (skani.skani_status == "PASS") {
-        # download the best reference determined from skani
-        call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
+      if (defined(reference_fasta) || select_first([flye.flye_status, raven.raven_status, "FAIL"]) == "PASS") {
+        # ANI-based reference genome selection
+        call skani_task.skani as skani {
           input:
             ncbi_accession = skani.skani_top_accession,
             use_ncbi_virus = skani.skani_virus_download
@@ -258,10 +254,14 @@ workflow theiaviral_ont {
             bamfile = parse_mapping.bam,
             samplename = samplename
         }
-        # Index the reference genome for Clair3
-        call fasta_utilities_task.samtools_faidx as fasta_utilities{
-          input:
-            fasta = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
+        # if skani cannot identify a reference genome, fail gracefully
+        if (skani.skani_status == "PASS") {
+          # download the best reference determined from skani
+          call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
+            input:
+              ncbi_accession = skani.skani_top_accession,
+              use_ncbi_virus = skani.skani_virus_download
+          }
         }
         # variant calling with Clair3
         call clair3_task.clair3_variants as clair3 {
