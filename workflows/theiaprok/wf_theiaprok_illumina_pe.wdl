@@ -199,13 +199,14 @@ workflow theiaprok_illumina_pe {
               organism = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
               annotation_format = genome_annotation
           }
-        } else {
+        } 
+        if (!amrfinder_use_gff) {
           call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
-            input:
-              assembly = digger_denovo.assembly_fasta,
-              samplename = samplename,
-              organism = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
-              annotation_format = genome_annotation
+              input:
+                  assembly = digger_denovo.assembly_fasta,
+                  samplename = samplename,
+                  organism = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
+                  annotation_format = genome_annotation
           }
         }
         if (call_gamma){
