@@ -24,16 +24,16 @@ task gamma {
       GAMMA-S.py ~{assembly} \
         ~{gamma_db} \
         ~{samplename} \
-        $(if ~{extended_output}; then echo "-e"; fi) \
+        ~{true="--gff" false="" output_gff} \
         -m ~{min_length_percent_gammas} \
         -i ~{min_percent_identity}
     else
       GAMMA.py ~{assembly} \
         ~{gamma_db} \
         ~{samplename} \
-        $(if ~{output_gff}; then echo "--gff"; fi) \
-        $(if ~{output_fasta}; then echo "--fasta"; fi) \
-        $(if ~{extended_output}; then echo "-e"; fi) \
+        ~{true="--gff" false="" output_gff} \
+        ~{true="--fasta" false="" output_fasta} \
+        ~{true="-e" false="" extended_output} \
         -i ~{min_percent_identity} \
         --name 
     fi

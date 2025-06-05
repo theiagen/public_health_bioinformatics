@@ -63,6 +63,7 @@ workflow theiaprok_illumina_se {
     Int trim_window_size = 4
     # module options
     Boolean perform_characterization = true # by default run all characterization steps
+    Boolean amrfinder_use_gff = false # by default use nucleotide fasta for amrfinderplus, but user can set this to true if they want to use a gff and protein fasta file
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_kmerfinder = false 
     Boolean call_resfinder = false
@@ -176,10 +177,10 @@ workflow theiaprok_illumina_se {
         }
         call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
           input:
-            assembly = select_first([prokka.prokka_fna,bakta.bakta_fna]),
+            assembly = if amrfinder_use_gff then select_first([prokka.prokka_fna,bakta.bakta_fna]) else digger_denovo.assembly_fasta,
             samplename = samplename,
-            protein_fasta = select_first([prokka.prokka_faa,bakta.bakta_faa]),
-            gff = select_first([prokka.prokka_gff,bakta.bakta_gff3]),
+            protein_fasta = if amrfinder_use_gff then select_first([prokka.prokka_faa,bakta.bakta_faa]) else null,
+            gff = if amrfinder_use_gff then select_first([prokka.prokka_gff,bakta.bakta_gff3]) else null,
             organism = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
             annotation_format = genome_annotation
         }

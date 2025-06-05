@@ -78,7 +78,7 @@ task amrfinderplus_nuc {
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
         ~{'--threads ' + cpu} \
         ~{'--coverage_min ' + min_percent_coverage} \
-        ~{'--ident_min ' + min_percent_identity}        
+        ~{'--ident_min ' + min_percent_identity} \       
         ~{'--protein ' + protein_fasta} \
         ~{'--gff ' + gff} \
         ~{'--annotation_format '+ annotation_format}
