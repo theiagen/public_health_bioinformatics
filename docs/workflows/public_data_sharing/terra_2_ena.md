@@ -169,6 +169,8 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
 ## Workflow Inputs
 
+It's important to note that the `Terra_2_ENA` workflow is designed to run on set-level data tables. This means that the workflow will process all samples within a set together, rather than handling each sample individually. The `samples` input variable expects an array of sample IDs, corresponding to a set table. In most cases, set tables are generated automatically when running a workflow. However, if you need to create one manually, refer to this guide on [how to create a set table](https://support.terra.bio/hc/en-us/articles/6660506445339-How-to-make-a-set-table).
+
 /// html | div[class="searchable-table"]
 
 {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Terra_2_ENA", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}

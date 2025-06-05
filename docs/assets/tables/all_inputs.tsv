@@ -1819,4 +1819,4 @@ submit_ena_data	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	
 submit_ena_data	platform	String	Internal component, do not modify	"ILLUMINA"	Optional	Terra_2_ENA
 submit_ena_data	read1_column	String	Column name containing read1 file paths	"read1"	Optional	Terra_2_ENA	
 submit_ena_data	read2_column	String	Column name containing read2 file paths	"read2"	Optional	Terra_2_ENA	
-submit_ena_data	test_submit	Boolean	If true, performs a test submission of metadata		Optional	Terra_2_ENA	
+submit_ena_data	test_submit	Boolean	If true, performs a test submission of metadata	FALSE	Optional	Terra_2_ENA

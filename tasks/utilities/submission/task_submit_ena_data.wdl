@@ -32,7 +32,7 @@ task submit_ena_data {
     # Allow continuing even if some samples have missing metadata
     # Default is to fail if any samples are missing required metadata, unless this flag is set
     Boolean? allow_missing
-    Boolean? test_submit
+    Boolean test_submit = false
 
     Int disk_size = 100
     Int cpu = 1
