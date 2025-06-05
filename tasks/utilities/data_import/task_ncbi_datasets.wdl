@@ -166,7 +166,7 @@ task ncbi_datasets_download_genome_taxon {
         ncbi_accession=$(tail -1 ncbi_genome_summary.tsv | cut -f 1)
         echo "PASS" > NCBIDATASETS_STATUS
         echo "DEBUG: ncbi_accession: ${ncbi_accession}"
-        echo ncbi_accession > NCBI_ACCESSION
+        echo $ncbi_accession > NCBI_ACCESSION
 
         # FYI the --include flag options is different for the virus sub-command. Does not include gbff or gff3 files
         datasets download virus genome accession \
@@ -199,7 +199,7 @@ task ncbi_datasets_download_genome_taxon {
       else
         ncbi_accession=$(tail -1 ncbi_genome_summary.tsv | cut -f 1)
         echo "DEBUG: ncbi_accession: ${ncbi_accession}"
-        echo ncbi_accession > NCBI_ACCESSION
+        echo $ncbi_accession > NCBI_ACCESSION
         echo "PASS" > NCBIDATASETS_STATUS
         #### download FASTA file using ncbi_accession ####
         datasets download genome accession \

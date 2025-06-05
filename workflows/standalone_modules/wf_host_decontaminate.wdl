@@ -86,8 +86,8 @@ workflow host_decontaminate {
     String host_decontaminate_wf_version = version_capture.phb_version
     String host_decontaminate_wf_analysis_date = version_capture.date
     # Datasets download outputs
-    File? host_genome_fasta = select_first([download_taxon.ncbi_datasets_assembly_fasta, download_accession.ncbi_datasets_assembly_fasta])
-    File? host_genome_data_report_json = select_first([download_taxon.ncbi_datasets_assembly_data_report_json, download_accession.ncbi_datasets_assembly_data_report_json])
+    File? host_genome_fasta = select_first([download_taxon.ncbi_datasets_assembly_fasta, download_accession.ncbi_datasets_assembly_fasta, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    File? host_genome_data_report_json = select_first([download_taxon.ncbi_datasets_assembly_data_report_json, download_accession.ncbi_datasets_assembly_data_report_json, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
     String? host_genome_accession = select_first([download_taxon.ncbi_datasets_accession, host])
     String? ncbi_datasets_status = select_first([download_taxon.ncbi_datasets_status, download_accession.ncbi_datasets_status])
     String? ncbi_datasets_version = select_first([download_taxon.ncbi_datasets_version, download_accession.ncbi_datasets_version])
