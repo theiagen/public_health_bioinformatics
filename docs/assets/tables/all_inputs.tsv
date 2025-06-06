@@ -1105,6 +1105,7 @@ merlin_magic	virulencefinder_min_percent_identity	Float	Internal component, do n
 merlin_magic	virulencefinder_min_percent_identity	Float	The threshold for minimum blast identity		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 metaspades	kmers	String	Kmer list to use with metaspades. If not provided metaspades automatically sets this value		Optional	TheiaMeta_Illumina_PE	
 metaspades	metaspades_opts	String	Additional arguments to pass to metaspades task		Optional	TheiaMeta_Illumina_PE	
+metaspades_memory	memory	Int	Memory allocated for the task (in GB)	32	Optional	TheiaMeta_Illumina_PE
 minimap2	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ, Clair3_Variants_ONT, TheiaViral_ONT
 minimap2	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ, Clair3_Variants_ONT, TheiaViral_ONT
 minimap2	docker	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22"	Optional	Freyja_FASTQ, Clair3_Variants_ONT, TheiaViral_ONT
