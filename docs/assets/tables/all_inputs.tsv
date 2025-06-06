@@ -1915,7 +1915,7 @@ skani	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_Illumi
 skani	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani	memory	Int	Memory allocated for the task (in GB)	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
-skani	skani_db	File	Skani database file	"gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20250530.tar"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani	skani_db	File	Skani database file	"gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20250606.tar"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 spades	cpu	Int	Number of CPUs allocated for the task	4	Optional	TheiaViral_Illumina_PE
 spades	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE
 spades	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0"	Optional	TheiaViral_Illumina_PE
