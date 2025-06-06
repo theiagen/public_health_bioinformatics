@@ -3,8 +3,10 @@ version 1.0
 task amrfinderplus_nuc {
   input {
     File assembly
+    File? annotation_assembly
     File? protein_fasta
     File? gff
+    Boolean? use_gff = false
     String samplename
     # Parameters 
     # --indent_min Minimum DNA %identity [0-1]; default is 0.9 (90%) or curated threshold if it exists
@@ -56,31 +58,53 @@ task amrfinderplus_nuc {
     
     # if amrfinder_organism variable is set, use --organism flag, otherwise do not use --organism flag
     if [[ -v amrfinder_organism ]] ; then
-      # always use --plus flag, others may be left out if param is optional and not supplied 
-      amrfinder --plus \
-        --organism "${amrfinder_organism}" \
-        ~{'--name ' + samplename} \
-        ~{'--nucleotide ' + assembly} \
-        ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
-        ~{'--threads ' + cpu} \
-        ~{'--protein ' + protein_fasta} \
-        ~{'--gff ' + gff} \
-        ~{'--annotation_format '+ annotation_format} \
-        ~{'--coverage_min ' + min_percent_coverage} \
-        ~{'--ident_min ' + min_percent_identity}
+      # always use --plus flag, others may be left out if param is optional and not supplied
+      if [[ "~{use_gff}" == "true" ]]; then
+        amrfinder --plus \
+          --organism "${amrfinder_organism}" \
+          ~{'--name ' + samplename} \
+          ~{'--nucleotide ' + annotation_assembly} \
+          ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
+          ~{'--threads ' + cpu} \
+          ~{'--protein ' + protein_fasta} \
+          ~{'--gff ' + gff} \
+          ~{'--annotation_format '+ annotation_format} \
+          ~{'--coverage_min ' + min_percent_coverage} \
+          ~{'--ident_min ' + min_percent_identity}
+      else
+        amrfinder --plus \
+          --organism "${amrfinder_organism}" \
+          ~{'--name ' + samplename} \
+          ~{'--nucleotide ' + assembly} \
+          ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
+          ~{'--threads ' + cpu} \
+          ~{'--coverage_min ' + min_percent_coverage} \
+          ~{'--ident_min ' + min_percent_identity}
+      fi
     else 
       echo "Either the organism (~{organism}) is not recognized by NCBI-AMRFinderPlus or the user did not supply an organism as input."
       echo "Skipping the use of amrfinder --organism optional parameter."
-      amrfinder --plus \
-        ~{'--name ' + samplename} \
-        ~{'--nucleotide ' + assembly} \
-        ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
-        ~{'--threads ' + cpu} \
-        ~{'--protein ' + protein_fasta} \
-        ~{'--gff ' + gff} \
-        ~{'--annotation_format '+ annotation_format} \
-        ~{'--coverage_min ' + min_percent_coverage} \
-        ~{'--ident_min ' + min_percent_identity}      
+      # always use --plus flag, others may be left out if param is optional and not supplied
+      if [[ "~{use_gff}" == "true" ]]; then
+        amrfinder --plus \
+          ~{'--name ' + samplename} \
+          ~{'--nucleotide ' + annotation_assembly} \
+          ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
+          ~{'--threads ' + cpu} \
+          ~{'--protein ' + protein_fasta} \
+          ~{'--gff ' + gff} \
+          ~{'--annotation_format '+ annotation_format} \
+          ~{'--coverage_min ' + min_percent_coverage} \
+          ~{'--ident_min ' + min_percent_identity}
+      else
+        amrfinder --plus \
+          ~{'--name ' + samplename} \
+          ~{'--nucleotide ' + assembly} \
+          ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
+          ~{'--threads ' + cpu} \
+          ~{'--coverage_min ' + min_percent_coverage} \
+          ~{'--ident_min ' + min_percent_identity}
+      fi      
     fi
 
     # remove mutations where Element subtype is "POINT"
