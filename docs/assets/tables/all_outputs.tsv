@@ -1088,7 +1088,6 @@ quast_denovo_genome_length	Int	Genome length of de novo assembly from QUAST	Thei
 quast_denovo_largest_contig	Int	Size of largest contig in de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo_n50_value	Int	N50 value of de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo_number_contigs	Int	Number of contigs in de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
-quast_denovo_pipeline_date	String	Date of QUAST analysis	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo_report	File	QUAST report for de novo assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo_uncalled_bases	Int	Number of uncalled bases in de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo_version	String	Version of QUAST used	TheiaViral_Illumina_PE, TheiaViral_ONT
