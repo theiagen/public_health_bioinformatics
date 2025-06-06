@@ -781,25 +781,25 @@ workflow theiaprok_illumina_se {
     String? kmerfinder_template_coverage = kmerfinder.kmerfinder_template_coverage
     String? kmerfinder_database = kmerfinder.kmerfinder_database
     # NCBI-AMRFinderPlus Outputs
-    File? amrfinderplus_all_report = select_first([amrfinderplus_task.amrfinderplus_all_report, amrfinderplus_task_gff.amrfinderplus_all_report])
-    File? amrfinderplus_amr_report = select_first([amrfinderplus_task.amrfinderplus_amr_report, amrfinderplus_task_gff.amrfinderplus_amr_report])
-    File? amrfinderplus_stress_report = select_first([amrfinderplus_task.amrfinderplus_stress_report, amrfinderplus_task_gff.amrfinderplus_stress_report])
-    File? amrfinderplus_virulence_report = select_first([amrfinderplus_task.amrfinderplus_virulence_report, amrfinderplus_task_gff.amrfinderplus_virulence_report])
-    String? amrfinderplus_amr_core_genes = select_first([amrfinderplus_task.amrfinderplus_amr_core_genes, amrfinderplus_task_gff.amrfinderplus_amr_core_genes])
-    String? amrfinderplus_amr_plus_genes = select_first([amrfinderplus_task.amrfinderplus_amr_plus_genes, amrfinderplus_task_gff.amrfinderplus_amr_plus_genes])
-    String? amrfinderplus_stress_genes = select_first([amrfinderplus_task.amrfinderplus_stress_genes, amrfinderplus_task_gff.amrfinderplus_stress_genes])
-    String? amrfinderplus_virulence_genes = select_first([amrfinderplus_task.amrfinderplus_virulence_genes, amrfinderplus_task_gff.amrfinderplus_virulence_genes])
-    String? amrfinderplus_amr_classes = select_first([amrfinderplus_task.amrfinderplus_amr_classes, amrfinderplus_task_gff.amrfinderplus_amr_classes])
-    String? amrfinderplus_amr_subclasses = select_first([amrfinderplus_task.amrfinderplus_amr_subclasses, amrfinderplus_task_gff.amrfinderplus_amr_subclasses])
-    String? amrfinderplus_version = select_first([amrfinderplus_task.amrfinderplus_version, amrfinderplus_task_gff.amrfinderplus_version])
-    String? amrfinderplus_db_version = select_first([amrfinderplus_task.amrfinderplus_db_version, amrfinderplus_task_gff.amrfinderplus_db_version])
+    File? amrfinderplus_all_report = select_first([amrfinderplus_task.amrfinderplus_all_report, amrfinderplus_task_gff.amrfinderplus_all_report, ""])
+    File? amrfinderplus_amr_report = select_first([amrfinderplus_task.amrfinderplus_amr_report, amrfinderplus_task_gff.amrfinderplus_amr_report, ""])
+    File? amrfinderplus_stress_report = select_first([amrfinderplus_task.amrfinderplus_stress_report, amrfinderplus_task_gff.amrfinderplus_stress_report, ""])
+    File? amrfinderplus_virulence_report = select_first([amrfinderplus_task.amrfinderplus_virulence_report, amrfinderplus_task_gff.amrfinderplus_virulence_report, ""])
+    String? amrfinderplus_amr_core_genes = select_first([amrfinderplus_task.amrfinderplus_amr_core_genes, amrfinderplus_task_gff.amrfinderplus_amr_core_genes, ""])
+    String? amrfinderplus_amr_plus_genes = select_first([amrfinderplus_task.amrfinderplus_amr_plus_genes, amrfinderplus_task_gff.amrfinderplus_amr_plus_genes, ""])
+    String? amrfinderplus_stress_genes = select_first([amrfinderplus_task.amrfinderplus_stress_genes, amrfinderplus_task_gff.amrfinderplus_stress_genes, ""])
+    String? amrfinderplus_virulence_genes = select_first([amrfinderplus_task.amrfinderplus_virulence_genes, amrfinderplus_task_gff.amrfinderplus_virulence_genes, ""])
+    String? amrfinderplus_amr_classes = select_first([amrfinderplus_task.amrfinderplus_amr_classes, amrfinderplus_task_gff.amrfinderplus_amr_classes, ""])
+    String? amrfinderplus_amr_subclasses = select_first([amrfinderplus_task.amrfinderplus_amr_subclasses, amrfinderplus_task_gff.amrfinderplus_amr_subclasses, ""])
+    String? amrfinderplus_version = select_first([amrfinderplus_task.amrfinderplus_version, amrfinderplus_task_gff.amrfinderplus_version, ""])
+    String? amrfinderplus_db_version = select_first([amrfinderplus_task.amrfinderplus_db_version, amrfinderplus_task_gff.amrfinderplus_db_version, ""])
     # NCBI-AMRFinderPlus Outputs for BETA-LACTAM genes
-    String? amrfinderplus_amr_betalactam_genes = select_first([amrfinderplus_task.amrfinderplus_amr_betalactam_genes, amrfinderplus_task_gff.amrfinderplus_amr_betalactam_genes])
-    String? amrfinderplus_amr_betalactam_betalactam_genes = select_first([amrfinderplus_task.amrfinderplus_amr_betalactam_betalactam_genes, amrfinderplus_task_gff.amrfinderplus_amr_betalactam_betalactam_genes])
-    String? amrfinderplus_amr_betalactam_carbapenem_genes = select_first([amrfinderplus_task.amrfinderplus_amr_betalactam_carbapenem_genes, amrfinderplus_task_gff.amrfinderplus_amr_betalactam_carbapenem_genes])
-    String? amrfinderplus_amr_betalactam_cephalosporin_genes = select_first([amrfinderplus_task.amrfinderplus_amr_betalactam_cephalosporin_genes, amrfinderplus_task_gff.amrfinderplus_amr_betalactam_cephalosporin_genes])
-    String? amrfinderplus_amr_betalactam_cephalothin_genes = select_first([amrfinderplus_task.amrfinderplus_amr_betalactam_cephalothin_genes, amrfinderplus_task_gff.amrfinderplus_amr_betalactam_cephalothin_genes])
-    String? amrfinderplus_amr_betalactam_methicillin_genes = select_first([amrfinderplus_task.amrfinderplus_amr_betalactam_methicillin_genes, amrfinderplus_task_gff.amrfinderplus_amr_betalactam_methicillin_genes])
+    String? amrfinderplus_amr_betalactam_genes = select_first([amrfinderplus_task.amrfinderplus_amr_betalactam_genes, amrfinderplus_task_gff.amrfinderplus_amr_betalactam_genes, ""])
+    String? amrfinderplus_amr_betalactam_betalactam_genes = select_first([amrfinderplus_task.amrfinderplus_amr_betalactam_betalactam_genes, amrfinderplus_task_gff.amrfinderplus_amr_betalactam_betalactam_genes, ""])
+    String? amrfinderplus_amr_betalactam_carbapenem_genes = select_first([amrfinderplus_task.amrfinderplus_amr_betalactam_carbapenem_genes, amrfinderplus_task_gff.amrfinderplus_amr_betalactam_carbapenem_genes, ""])
+    String? amrfinderplus_amr_betalactam_cephalosporin_genes = select_first([amrfinderplus_task.amrfinderplus_amr_betalactam_cephalosporin_genes, amrfinderplus_task_gff.amrfinderplus_amr_betalactam_cephalosporin_genes, ""])
+    String? amrfinderplus_amr_betalactam_cephalothin_genes = select_first([amrfinderplus_task.amrfinderplus_amr_betalactam_cephalothin_genes, amrfinderplus_task_gff.amrfinderplus_amr_betalactam_cephalothin_genes, ""])
+    String? amrfinderplus_amr_betalactam_methicillin_genes = select_first([amrfinderplus_task.amrfinderplus_amr_betalactam_methicillin_genes, amrfinderplus_task_gff.amrfinderplus_amr_betalactam_methicillin_genes, ""])
     # GAMMA Outputs
     File? gamma_results = gamma.gamma_results
     File? gamma_gff = gamma.gamma_gff
