@@ -175,7 +175,7 @@ workflow read_QC_trim_pe {
           minimap2_mem = host_decontaminate_mem
       }
     }
-    if (! defined(host) || host_decontaminate.ncbi_datasets_status == "PASS") {
+    if (! defined(host) || select_first([host_decontaminate.ncbi_datasets_status, "FAIL"]) == "PASS"]) {
       call kraken.kraken2_standalone as kraken2_standalone_theiaviral {
         input:
           samplename = samplename,
