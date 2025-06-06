@@ -65,11 +65,11 @@ workflow theiameta_illumina_pe {
       kraken2_report = kraken2_clean.kraken2_report,
       samplename = samplename
   }
-  call metaspades_pe.metaspades_pe {
+  call metaspades_task.metaspades_pe {
     input:
       read1_cleaned = read_QC_trim.read1_clean,
       read2_cleaned = read_QC_trim.read2_clean,
-      samplename = samplename,
+      samplename = samplename
   }
   call minimap2_task.minimap2 as minimap2_assembly_correction {
     input:
