@@ -326,11 +326,11 @@ workflow theiaviral_illumina_pe {
     File? bwa_read1_aligned = bwa.read1_aligned
     File? bwa_read2_aligned = bwa.read2_aligned
     File? bwa_sorted_bam = bwa.sorted_bam
-    File? bwa_aligned_bai = bwa.sorted_bai
+    File? bwa_sorted_bai = bwa.sorted_bai
     File? bwa_read1_unaligned = bwa.read1_unaligned
     File? bwa_read2_unaligned = bwa.read2_unaligned
-    File? sorted_bam_unaligned = bwa.sorted_bam_unaligned
-    File? sorted_bam_unaligned_bai = bwa.sorted_bam_unaligned_bai
+    File? bwa_sorted_bam_unaligned = bwa.sorted_bam_unaligned
+    File? bwa_sorted_bam_unaligned_bai = bwa.sorted_bam_unaligned_bai
     # Read mapping stats
     File? read_mapping_report = read_mapping_stats.metrics_txt
     File? read_mapping_statistics = read_mapping_stats.stats

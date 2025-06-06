@@ -1856,12 +1856,12 @@ zip_files	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Zip_Column_C
 zip_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Zip_Column_Content	
 zip_files	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Zip_Column_Content	
 zip_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Zip_Column_Content	
-checkv_consensus	checkv_db	File	CheckV database file	"gs://theiagen-large-public-files-rp/terra/databases/checkv/checkv-db-v1.5.tar.gz"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
+checkv_consensus	checkv_db	File	CheckV database file	"gs://theiagen-public-resources-rp/reference_data/databases/checkv/checkv-db-v1.5.tar.gz"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_consensus	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_consensus	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_consensus	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_consensus	memory	Int	Memory allocated for the task (in GB)	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
-checkv_denovo	checkv_db	File	CheckV database file	"gs://theiagen-large-public-files-rp/terra/databases/checkv/checkv-db-v1.5.tar.gz"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
+checkv_denovo	checkv_db	File	CheckV database file	"gs://theiagen-public-resources-rp/reference_data/databases/checkv/checkv-db-v1.5.tar.gz"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_denovo	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_denovo	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_denovo	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -1916,7 +1916,7 @@ skani	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_Illumi
 skani	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani	memory	Int	Memory allocated for the task (in GB)	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
-skani	skani_db	File	Skani database file	"gs://theiagen-large-public-files-rp/terra/databases/skani/skani_db_20250325.tar"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani	skani_db	File	Skani database file	"gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20250530.tar"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 spades	cpu	Int	Number of CPUs allocated for the task	4	Optional	TheiaViral_Illumina_PE
 spades	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE
 spades	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0"	Optional	TheiaViral_Illumina_PE
@@ -1982,11 +1982,11 @@ metabuli	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	The
 metabuli	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0"	Optional	TheiaViral_ONT
 metabuli	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	FALSE	Optional	
 metabuli	memory	Int	Memory allocated for the task (in GB)	16	Optional	TheiaViral_ONT
-metabuli	metabuli_db	File	Metabuli database file	"gs://theiagen-large-public-files-rp/terra/databases/metabuli/refseq_virus-v223.tar.gz"	Optional	TheiaViral_ONT
-metabuli	min_cov	Float	Minimum query coverage threshold (0.0 - 1.0)	0.0	Optional	TheiaViral_ONT
+metabuli	metabuli_db	File	Metabuli database file	"gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz"	Optional	TheiaViral_ONT
+metabuli	min_percent_coverage	Float	Minimum query coverage threshold (0.0 - 1.0)	0.0	Optional	TheiaViral_ONT
 metabuli	min_score	Float	Minimum sequenece similarity score (0.0 - 1.0)	0.0	Optional	TheiaViral_ONT
 metabuli	min_sp_score	Float	Minimum score for species- or lower-level classification	0.0	Optional	TheiaViral_ONT
-metabuli	taxonomy_path	File	Path to taxonomy file	"gs://theiagen-large-public-files-rp/terra/databases/metabuli/new_taxdump.tar.gz"	Optional	TheiaViral_ONT
+metabuli	taxonomy_path	File	Path to taxonomy file	"gs://theiagen-public-resources-rp/reference_data/databases/metabuli/new_taxdump.tar.gz"	Optional	TheiaViral_ONT
 nanoq	cpu	Int	Number of CPUs allocated for the task	1	Optional	TheiaViral_ONT
 nanoq	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_ONT
 nanoq	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1"	Optional	TheiaViral_ONT

@@ -858,8 +858,10 @@ sonneityping_mykrobe_report_csv	File	CSV report from mykrobe via sonneityper (se
 sonneityping_mykrobe_report_json	File	JSON report from mykrobe via sonneityper (see <https://github.com/Mykrobe-tools/mykrobe/wiki/AMR-prediction-output#json-file>)	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 sonneityping_mykrobe_version	String	Version of sonneityping used	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 sonneityping_species	String	Species call from Mykrobe via sonneityping	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-sorted_bam_unaligned	File	A BAM file that only contains reads that did not align to the reference	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
-sorted_bam_unaligned_bai	File	Index companion file to a BAM file that only contains reads that did not align to the reference	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
+sorted_bam_unaligned	File	A BAM file that only contains reads that did not align to the reference	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+sorted_bam_unaligned_bai	File	Index companion file to a BAM file that only contains reads that did not align to the reference	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+bwa_sorted_bam_unaligned	File	A BAM file that only contains reads that did not align to the reference	TheiaViral_Illumina_PE
+bwa_sorted_bam_unaligned_bai	File	Index companion file to a BAM file that only contains reads that did not align to the reference	TheiaViral_Illumina_PE
 spatyper_docker	String	spatyper docker image used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 spatyper_repeats	String	order of identified repeats	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 spatyper_tsv	File	TSV report with spatyper results	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -1043,6 +1045,7 @@ bwa_read2_aligned	File	Reverse reads aligned to reference	TheiaViral_Illumina_PE
 bwa_read2_unaligned	File	Reverse reads not aligned to reference	TheiaViral_Illumina_PE
 bwa_samtools_version	String	Version of samtools used by BWA	TheiaViral_Illumina_PE
 bwa_sorted_bam	File	Sorted BAM file of reads aligned to reference	TheiaViral_Illumina_PE
+bwa_sorted_bai	File	Sorted BAM index file of reads aligned to reference	TheiaViral_Illumina_PE
 checkv_consensus_contamination	Float	Contamination estimate for consensus assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_consensus_summary	File	Summary report from CheckV for consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_consensus_total_genes	Int	Number of genes detected in consensus assembly by CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
