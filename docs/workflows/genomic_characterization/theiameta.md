@@ -47,7 +47,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
     !!! warning "Common errors with SPAdes v4+"
 
-        We found that MetaSPAdes v4+ can raise segmentation fault errors using our validation set of metagenomic samples, so an v3 of MetaSPAdes is called by TheiaMeta. A newer version can be called by referencing a more recent container (e.g. "us-docker.pkg.dev/general-theiagen/staphb/spades:4.2.0") via the `metaspades_pe` `docker` input.
+        We found that MetaSPAdes v4+ can raise segmentation fault errors using our validation set of metagenomic samples, so MetaSPAdes v3+ is called by TheiaMeta. A newer version can be called by referencing a more recent container (e.g. "us-docker.pkg.dev/general-theiagen/staphb/spades:4.2.0") via the `metaspades_pe` `docker` input.
 
     !!! techdetails "MetaSPAdes Technical Details"
         
