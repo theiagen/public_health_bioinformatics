@@ -350,6 +350,7 @@ workflow theiaviral_ont {
     String? raven_denovo_status = raven.raven_status
     String? raven_denovo_version = raven.raven_version
     String? raven_denovo_docker = raven.raven_docker
+    String? flye_denovo_status = flye.flye_status
     String? flye_denovo_version = flye.flye_version
     String? flye_denovo_docker = flye.flye_docker
     File? flye_denovo_info = flye.assembly_info

@@ -1066,6 +1066,7 @@ kraken2_extracted_read1	File	Forward reads extracted by taxonomic classification
 kraken2_extracted_read2	File	Reverse reads extracted by taxonomic classification	TheiaViral_Illumina_PE
 kraken_database	File	Database used for Kraken classification	TheiaViral_Illumina_PE
 kraken_docker	String	Docker image used for Kraken	TheiaViral_Illumina_PE
+megahit_status	String	Status of the MEGAHIT assembly	TheiaViral_Illumina_PE
 megahit_docker	String	Docker image used for MEGAHIT	TheiaViral_Illumina_PE
 megahit_version	String	Version of MEGAHIT used	TheiaViral_Illumina_PE
 metaviralspades_docker	String	Docker image used for MetaviralSPAdes	TheiaViral_Illumina_PE
@@ -1125,6 +1126,7 @@ clair3_vcf	File	Variant calls in VCF format from Clair3	TheiaViral_ONT
 fasta_utilities_fai	File	FASTA index file	TheiaViral_ONT
 fasta_utilities_samtools_docker	String	Docker image used for samtools in fasta utilities	TheiaViral_ONT
 fasta_utilities_samtools_version	String	Version of samtools used in fasta utilities	TheiaViral_ONT
+flye_denovo_status	String	Status of Flye assembly	TheiaViral_ONT
 flye_denovo_docker	String	Docker image used for Flye	TheiaViral_ONT
 flye_denovo_info	File	Information file from Flye assembly	TheiaViral_ONT
 flye_denovo_version	String	Version of Flye used	TheiaViral_ONT

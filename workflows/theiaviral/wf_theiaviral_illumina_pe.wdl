@@ -285,6 +285,7 @@ workflow theiaviral_illumina_pe {
     String? metaviralspades_status = spades.spades_status
     String? metaviralspades_version = spades.spades_version
     String? metaviralspades_docker = spades.spades_docker
+    String? megahit_status = megahit.megahit_status
     String? megahit_version = megahit.megahit_version
     String? megahit_docker = megahit.megahit_docker
     # checkv_denovo outputs - denovo assembly quality control
