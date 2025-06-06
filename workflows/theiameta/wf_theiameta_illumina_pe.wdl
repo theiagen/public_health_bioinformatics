@@ -23,6 +23,7 @@ workflow theiameta_illumina_pe {
     File? reference
     File kraken2_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_08gb_20230605.tar.gz"
     Boolean output_additional_files = false
+    Int spades_memory = 32
   }
   call kraken_task.kraken2_standalone as kraken2_raw {
     input:
@@ -70,7 +71,8 @@ workflow theiameta_illumina_pe {
       read1 = read_QC_trim.read1_clean,
       read2 = read_QC_trim.read2_clean,
       samplename = samplename,
-      spades_type = 'meta'
+      spades_type = 'meta',
+      memory = spades_memory
   }
   call minimap2_task.minimap2 as minimap2_assembly_correction {
     input:
