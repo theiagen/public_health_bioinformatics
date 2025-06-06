@@ -62,26 +62,25 @@ task amrfinderplus_nuc {
         ~{'--name ' + samplename} \
         ~{'--nucleotide ' + assembly} \
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
-        ~{'--coverage_min ' + min_percent_coverage} \
-        ~{'--ident_min ' + min_percent_identity} \
+        ~{'--threads ' + cpu} \
         ~{'--protein ' + protein_fasta} \
         ~{'--gff ' + gff} \
         ~{'--annotation_format '+ annotation_format} \
-        --threads ~{cpu}
+        ~{'--coverage_min ' + min_percent_coverage} \
+        ~{'--ident_min ' + min_percent_identity}
     else 
       echo "Either the organism (~{organism}) is not recognized by NCBI-AMRFinderPlus or the user did not supply an organism as input."
       echo "Skipping the use of amrfinder --organism optional parameter."
-      # always use --plus flag, others may be left out if param is optional and not supplied 
       amrfinder --plus \
         ~{'--name ' + samplename} \
         ~{'--nucleotide ' + assembly} \
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
-        ~{'--coverage_min ' + min_percent_coverage} \
-        ~{'--ident_min ' + min_percent_identity} \       
+        ~{'--threads ' + cpu} \
         ~{'--protein ' + protein_fasta} \
         ~{'--gff ' + gff} \
         ~{'--annotation_format '+ annotation_format} \
-        --threads ~{cpu}
+        ~{'--coverage_min ' + min_percent_coverage} \
+        ~{'--ident_min ' + min_percent_identity}      
     fi
 
     # remove mutations where Element subtype is "POINT"
