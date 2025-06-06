@@ -46,11 +46,20 @@ task megahit {
         ~{megahit_opts}
     fi
 
+    if [ ! -s megahit/final.contigs.fa ]; then
+      echo "DEBUG: Megahit assembly failed. No output generated."
+      echo "FAIL" > STATUS
+    else
+      echo "DEBUG: Megahit assembly completed successfully."
+      echo "PASS" > STATUS
+    fi
+
     mv megahit/final.contigs.fa ~{samplename}_megahit_contigs.fasta
 
   >>>
   output {
     File assembly_fasta = "~{samplename}_megahit_contigs.fasta"
+    String megahit_status = read_string("STATUS")
     String megahit_version = read_string("VERSION")
     String megahit_docker = '~{docker}'
   }
