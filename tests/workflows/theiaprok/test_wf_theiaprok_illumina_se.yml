@@ -17,7 +17,7 @@
     - wf_theiaprok_illumina_se_miniwdl
   files:
     - path: miniwdl_run/call-amrfinderplus_task/command
-      md5sum: 52a0207b303d954ed2be3d61ab53dfeb
+      md5sum: e2fb16459ecd30a2cc1a94e079c1bb97
     - path: miniwdl_run/call-amrfinderplus_task/inputs.json
       contains: ["assembly", "fasta", "organism", "test"]
     - path: miniwdl_run/call-amrfinderplus_task/outputs.json
@@ -384,7 +384,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_abricate.wdl
       md5sum: c82025fcc1442b1c2a598a429cd9cdab
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
-      md5sum: cccb2d67bbb050e830265a1da70a98b0
+      md5sum: 5f5fd2a0c7d83262c1f44ccca070e752
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_bakta.wdl
       md5sum: 96f6cb7f0c8716513a0ca74b083a745f
     - path: miniwdl_run/wdl/tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl
@@ -450,13 +450,13 @@
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
       md5sum: 587c7103b408b242c7372fdfbebbbc75
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
-      md5sum: 2aa70eab24868920f6c28843dd3b5613
+      md5sum: 37767f39c4824fac4888ad53c7f1148d
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_kraken2.wdl
       md5sum: 735bf70c5a5cf92e43477e4e291ccf14
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 481f5fbce5aa1abf93acd912797821cc
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: 547c82afbee95b80f5be6afe772ff1e3
+      md5sum: 3dbc77595371af44700c21f5f8c0f7a6
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
       md5sum: 09d9f68b9ca8bf94b6145ff9bed2edd1
     - path: miniwdl_run/workflow.log
