@@ -157,7 +157,7 @@ workflow theiaprok_ont {
         }
         call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
           input:
-            assembly = digger_denovo.assembly_fasta,
+            assembly = flye_denovo.assembly_fasta,
             annotation_assembly = select_first([prokka.prokka_fna,bakta.bakta_fna]),
             samplename = samplename,
             protein_fasta = select_first([prokka.prokka_faa,bakta.bakta_faa]),
