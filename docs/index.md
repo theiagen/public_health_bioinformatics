@@ -44,10 +44,16 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 When undertaking genomic analysis using the command-line, via Terra, or other data visualization platforms, it is essential to consider the necessary and appropriate workflows and resources for your analysis. To help you make these choices, take a look at the relationship between the most commonly used Theiagen workflows.
 
 !!! caption "Analysis Approaches for Genomic Data"
-    ![The relationship between the various PHB workflows](assets/figures/Workflow_Relationships.png#only-light){data-description="This diagram shows the Theiagen workflows (green boxes) available for analysis of genomic data in public health and the workflows that may be used consecutively (arrows). The blue boxes describe the major functions that these workflows undertake. The yellow boxes show functions that may be undertaken independently of workflows on Terra."}
-    ![The relationship between the various PHB workflows](assets/figures/Workflow_Relationships_dark.png#only-dark){data-description="This diagram shows the Theiagen workflows (green boxes) available for analysis of genomic data in public health and the workflows that may be used consecutively (arrows). The blue boxes describe the major functions that these workflows undertake. The yellow boxes show functions that may be undertaken independently of workflows on Terra."}
 
-    This diagram shows the Theiagen workflows (green boxes) available for analysis of genomic data in public health and the workflows that may be used consecutively (arrows). The blue boxes describe the major functions that these workflows undertake. The yellow boxes show functions that may be undertaken independently of workflows on Terra.
+    === "General Workflow Relationships"
+        ![The relationship between the various PHB workflows](assets/figures/WorkflowRelationships_2025-06-06.png){data-description="This diagram shows the available workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped into boxes that represent the major types of analysis that they perform. The arrows between the boxes represent the relationships between the workflows, showing which workflows may be used consecutively, while the large arrow underlying everything indicates the general process of analysis."}
+
+        This diagram shows the available workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped into boxes that represent the major types of analysis that they perform. The arrows between the boxes represent the relationships between the workflows, showing which workflows may be used consecutively, while the large arrow underlying everything indicates the general process of analysis.
+
+    === "Available Standalone Workflows"
+        ![All available standalone workflows can be used to supplement the major workflows](assets/figures/WorkflowRelationships_Standalone_2025-06-06.png){data-description="This diagram shows the available standalone workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped by colors that represent the major types of analysis that they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives."}
+
+        This diagram shows the available _standalone_ workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped by colors that represent the major types of analysis that they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives.
 
 ### PHB development is a cycle
 
