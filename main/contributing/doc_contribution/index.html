@@ -5265,7 +5265,7 @@
 <h2 id="local-installation-live-previews">Local Installation &amp; Live Previews<a class="headerlink" href="#local-installation-live-previews" title="Permanent link">&para;</a></h2>
 <p>Since the documentation is built off of the <code>main</code> branch, it is highly recommended to preview your changes before making a PR. You can do this by installing the necessary packages and previewing ("serving") the documentation locally.</p>
 <p>To test your documentation changes, you will need to have the following packages installed on your local VM:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>mkdocs-material<span class="w"> </span>mkdocs-material-extensions<span class="w"> </span>mkdocs-git-revision-date-localized-plugin<span class="w"> </span>mike<span class="w"> </span>mkdocs-glightbox<span class="w"> </span>mkdocs-macros-plugin
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>pip<span class="w"> </span>install<span class="w"> </span>mkdocs-material<span class="w"> </span>mkdocs-material-extensions<span class="w"> </span>mkdocs-git-revision-date-localized-plugin<span class="w"> </span>mike<span class="w"> </span>mkdocs-glightbox<span class="w"> </span>mkdocs-macros-plugin<span class="w"> </span>pandas
 </span></code></pre></div>
 <p>Once installed, navigate to the top directory in PHB. The live preview server can be activated by running the following command:</p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>mkdocs<span class="w"> </span>serve
@@ -5280,7 +5280,7 @@
 </ul>
 <h3 id="helpful-websites">Helpful Websites<a class="headerlink" href="#helpful-websites" title="Permanent link">&para;</a></h3>
 <ul>
-<li><a href="https://tableconvert.com/excel-to-markdown">Excel to Markdown Table</a> - This website will convert an Excel table into markdown format, which can be copied and pasted into your markdown file.</li>
+<li><a href="https://tableconvert.com/excel-to-markdown">Excel to Markdown Table</a> - This website will convert an Excel table into markdown format, which can be copied and pasted into your markdown file. Currently, we recommend using the <code>render_tsv_table()</code> macro (described below) to import TSV files, but this is a good alternative if you want to create a smaller table from scratch.</li>
 <li><a href="https://squidfunk.github.io/mkdocs-material/reference/">Material for MkDocs Reference</a> - This is the official reference for the Material for MkDocs theme, which will help you understand how to use the theme's features.</li>
 <li><a href="https://www.deadlinkchecker.com/">Dead Link Check</a> - This website will scan your website to ensure that all links are working correctly. This will only work on the deployed version of the documentation, not the local version.</li>
 </ul>
@@ -5320,7 +5320,7 @@
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>    This is a note. Observe I am indented with four spaces.
 </span></code></pre></div>
 <p>Please see the <a href="https://squidfunk.github.io/mkdocs-material/reference/admonitions/">Admonition documentation</a> for more information on how to change the title, enable toggles, and more.</p>
-<p>The following custom callout types are supported <em>in addition to the standard admonitions supported by our theme</em> <a href="https://squidfunk.github.io/mkdocs-material/reference/admonitions/#supported-types">more information here</a>:</p>
+<p>The following custom callout types are supported <em>in addition to the standard admonitions supported by our theme</em> <a href="https://squidfunk.github.io/mkdocs-material/reference/admonitions/#supported-types">more information on the standard admonitions here</a>:</p>
 <div class="admonition dna">
 <p class="admonition-title">Dna</p>
 <p>This is a DNA admonition. Admire the cute green DNA emoji. You can create this with the <code>!!! dna</code> syntax.</p>
@@ -5489,7 +5489,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 28, 2025 13:36:02 UTC">2025-05-28</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 9, 2025 15:35:01 UTC">2025-06-09</span>
   </span>
 
     
