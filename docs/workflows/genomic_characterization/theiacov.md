@@ -160,13 +160,13 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
-        | gene_locations_bed_file | sars-cov-2 | `"gs://theiagen-public-files-rp/terra/sars-cov-2-files/sc2_gene_locations.bed"` |
+        | gene_locations_bed_file | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"` |
         | genome_length_input | sars-cov-2 | `29903` |
         | kraken_target_organism_input | sars-cov-2 | `"Severe acute respiratory syndrome coronavirus 2"` |
         | nextclade_dataset_name_input | sars-cov-2 | `"nextstrain/sars-cov-2/wuhan-hu-1/orfs"` |
         | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.33 "`|
         | nextclade_dataset_tag_input | sars-cov-2 | `"2025-03-26--11-47-13Z"` |
-        | reference_genome | sars-cov-2 | `"gs://theiagen-public-files-rp/terra/augur-sars-cov-2-references/MN908947.fasta"` |
+        | reference_genome | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"` |
         | vadr_max_length | sars-cov-2 | `30000` |
         | vadr_mem | sars-cov-2 | `8` |
         | vadr_options | sars-cov-2 | `"--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"` |
@@ -178,14 +178,14 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
-        | gene_locations_bed_file | MPXV | `"gs://theiagen-public-files/terra/mpxv-files/mpox_gene_locations.bed"` |
+        | gene_locations_bed_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed"` |
         | genome_length_input | MPXV | `197200` |
         | kraken_target_organism_input | MPXV | `"Monkeypox virus"` |
         | nextclade_dataset_name_input | MPXV | `"nextstrain/mpox/lineage-b.1"` |
         | nextclade_dataset_tag_input | MPXV | `"2024-11-19--14-18-53Z"` |
-        | primer_bed_file | MPXV | `"gs://theiagen-public-files/terra/mpxv-files/MPXV.primer.bed"` |
-        | reference_genome | MPXV | `"gs://theiagen-public-files/terra/mpxv-files/MPXV.MT903345.reference.fasta"` |
-        | reference_gff_file | MPXV | `"gs://theiagen-public-files/terra/mpxv-files/Mpox-MT903345.1.reference.gff3"` |
+        | primer_bed_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.primer.bed"` |
+        | reference_genome | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.MT903345.reference.fasta"` |
+        | reference_gff_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3"` |
         | vadr_max_length | MPXV | `210000` |
         | vadr_mem | MPXV | `8` |
         | vadr_options | MPXV | `"--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"` |
@@ -201,8 +201,8 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | kraken_target_organism_input | WNV | `"West Nile virus`" | |
         | nextclade_dataset_name_input | WNV | `"NA"` | TheiaCoV's Nextclade currently does not support WNV |
         | nextclade_dataset_tag_input | WNV | `"NA"` | TheiaCoV's Nextclade currently does not support WNV |
-        | primer_bed_file | WNV | `"gs://theiagen-public-files/terra/theiacov-files/WNV/WNV-L1_primer.bed"` |  |
-        | reference_genome | WNV | `"gs://theiagen-public-files/terra/theiacov-files/WNV/NC_009942.1_wnv_L1.fasta"` |  |
+        | primer_bed_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/al/wnv/WNV-L1_primer.bed"` |  |
+        | reference_genome | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/NC_009942.1_wnv_L1.fasta"` |  |
         | vadr_max_length | WNV | `11000` |  |
         | vadr_mem | WNV | `8` |  |
         | vadr_options | WNV | `"--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"` |  |
@@ -222,31 +222,31 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_options | flu | all | all | `"--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"` |  |
         | nextclade_dataset_name_input | flu | ha | h1n1 | `"nextstrain/flu/h1n1pdm/ha/MW626062"` |  |
         | nextclade_dataset_tag_input | flu | ha | h1n1 | `"2025-01-22--09-54-14Z"` |  |
-        | reference_genome | flu | ha | h1n1 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.fasta"` |  |
+        | reference_genome | flu | ha | h1n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | h3n2 | `"nextstrain/flu/h3n2/ha/EPI1857216"` |  |
         | nextclade_dataset_tag_input | flu | ha | h3n2 | `"2025-01-22--09-54-14Z"` |  |
-        | reference_genome | flu | ha | h3n2 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_ha.fasta"` |  |
+        | reference_genome | flu | ha | h3n2 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | victoria | `"nextstrain/flu/vic/ha/KX058884"` |  |
         | nextclade_dataset_tag_input | flu | ha | victoria | `"2025-01-22--09-54-14Z"` |  |
-        | reference_genome | flu | ha | victoria | `"gs://theiagen-public-files-rp/terra/flu-references/reference_vic_ha.fasta"` |  |
+        | reference_genome | flu | ha | victoria | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | yamagata | `"nextstrain/flu/yam/ha/JN993010"` |  |
         | nextclade_dataset_tag_input | flu | ha | yamagata | `"2024-01-30--16-34-55Z"` |  |
-        | reference_genome | flu | ha | yamagata | `"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.fasta"` |  |
+        | reference_genome | flu | ha | yamagata | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | h5n1 | `"community/moncla-lab/iav-h5/ha/all-clades"` |  |
         | nextclade_dataset_tag_input | flu | ha | h5n1 | `"2025-01-30--18-05-53Z"` |  |
-        | reference_genome | flu | ha | h5n1 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.fasta"` |  |
+        | reference_genome | flu | ha | h5n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | h1n1 | `"nextstrain/flu/h1n1pdm/na/MW626056"` |  |
         | nextclade_dataset_tag_input | flu | na | h1n1 | `"2025-03-26--11-47-13"` |  |
-        | reference_genome | flu | na | h1n1 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.fasta"` |  |
+        | reference_genome | flu | na | h1n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | h3n2 | `"nextstrain/flu/h3n2/na/EPI1857215"` |  |
         | nextclade_dataset_tag_input | flu | na | h3n2 | `"2025-01-22--09-54-14Z"` |  |
-        | reference_genome | flu | na | h3n2 | `"gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_na.fasta"` |  |
+        | reference_genome | flu | na | h3n2 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | victoria | `"nextstrain/flu/vic/na/CY073894"` |  |
         | nextclade_dataset_tag_input | flu | na | victoria | `"2025-03-26--11-47-13Z"` |  |
-        | reference_genome | flu | na | victoria | `"gs://theiagen-public-files-rp/terra/flu-references/reference_vic_na.fasta"` |  |
+        | reference_genome | flu | na | victoria | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | yamagata | `"NA"` |  |
         | nextclade_dataset_tag_input | flu | na | yamagata | `"NA"` |  |
-        | reference_genome | flu | na | yamagata | `"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.fasta"` |  |
+        | reference_genome | flu | na | yamagata | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_na.fasta"` |  |
 
         </div>
 
@@ -259,7 +259,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | kraken_target_organism | rsv_a | "Human respiratory syncytial virus A" |
         | nextclade_dataset_name_input | rsv_a | nextstrain/rsv/a/EPI_ISL_412866 |
         | nextclade_dataset_tag_input | rsv_a | "2024-11-27--02-51-00Z" |
-        | reference_genome | rsv_a | gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_a.fasta |
+        | reference_genome | rsv_a | gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta |
         | vadr_max_length | rsv_a | 15500 |
         | vadr_mem | rsv_a | 32 |
         | vadr_options | rsv_a | -r --mkey rsv --xnocomp |
@@ -275,7 +275,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | kraken_target_organism | rsv_b |  "human respiratory syncytial virus" |
         | nextclade_dataset_name_input | rsv_b | nextstrain/rsv/b/EPI_ISL_1653999 |
         | nextclade_dataset_tag_input | rsv_b | "2025-03-04--17-31-25Z" |
-        | reference_genome | rsv_b | gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.fasta |
+        | reference_genome | rsv_b | gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta |
         | vadr_max_length | rsv_b | 15500 |
         | vadr_mem | rsv_b | 32 |
         | vadr_options | rsv_b | -r --mkey rsv --xnocomp |
@@ -289,13 +289,13 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         |---|---|---|---|
         | kraken_target_organism_input | HIV | Human immunodeficiency virus 1 |  |
         | genome_length_input | HIV-v1 | 9181 | This version of HIV originates from Oregon |
-        | primer_bed_file | HIV-v1 | gs://theiagen-public-files/terra/hivgc-files/HIV-1_v1.0.primer.hyphen.bed | This version of HIV originates from Oregon |
-        | reference_genome | HIV-v1 | gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.fasta | This version of HIV originates from Oregon |
-        | reference_gff_file | HIV-v1 | gs://theiagen-public-files/terra/hivgc-files/NC_001802.1.gff3 | This version of HIV originates from Oregon |
+        | primer_bed_file | HIV-v1 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed | This version of HIV originates from Oregon |
+        | reference_genome | HIV-v1 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta | This version of HIV originates from Oregon |
+        | reference_gff_file | HIV-v1 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3 | This version of HIV originates from Oregon |
         | genome_length_input | HIV-v2 | 9840 | This version of HIV originates from Southern Africa |
-        | primer_bed_file | HIV-v2 | gs://theiagen-public-files/terra/hivgc-files/HIV-1_v2.0.primer.hyphen400.1.bed | This version of HIV originates from Southern Africa |
-        | reference_genome | HIV-v2 | gs://theiagen-public-files/terra/hivgc-files/AY228557.1.headerchanged.fasta | This version of HIV originates from Southern Africa |
-        | reference_gff_file | HIV-v2 | gs://theiagen-public-files/terra/hivgc-files/AY228557.1.gff3 | This version of HIV originates from Southern Africa |
+        | primer_bed_file | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed | This version of HIV originates from Southern Africa |
+        | reference_genome | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta | This version of HIV originates from Southern Africa |
+        | reference_gff_file | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3 | This version of HIV originates from Southern Africa |
 
         </div>
 

@@ -296,7 +296,7 @@ Options:
 #### GAMBIT RefSeq Curated Database v1.1.0
 
 ??? toggle "Database Details"
-    This database is a **patch update** to the RefSeq Curated v1.0.0 database. In addition to all of the species included in the v1.0.0 database below, this database replaces all species in the **Enterobacter, Legionella, and Vibrio genera** with the available genomes in RefSeq as of April 17th, 2023. 
+    This database is a **patch update** to the RefSeq Curated v1.0.0 database. In addition to all of the species included in the v1.0.0 database below, this database replaces all species in the **Enterobacter, Legionella, and Vibrio genera** with the available genomes in RefSeq as of April 17th, 2023.
 
     **Database Files**
 
@@ -362,7 +362,7 @@ Options:
 #### GAMBIT Fungal Database v1.0.0
 
 ??? toggle "Database Details"
-    The GAMBIT Fungal Database v1.0.0 database was constructed based on the available genomes in RefSeq/GenBank as of December 13th, 2024. For inclusion in the database, species were required to have at least two genomes in GenBank and at least one genome representing the species in RefSeq. 
+    The GAMBIT Fungal Database v1.0.0 database was constructed based on the available genomes in RefSeq/GenBank as of December 13th, 2024. For inclusion in the database, species were required to have at least two genomes in GenBank and at least one genome representing the species in RefSeq.
 
     1. Species with a diameter of zero were excluded;
     2. Species with three or fewer genomes and a diameter greater than 0.75 were excluded.
@@ -415,13 +415,13 @@ Options:
 
     **GS URI (for [Terra.bio](https://terra.bio) usage):**
 
-    - `gs://theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.db`
-    - `gs://theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.h5`
+    - `gs://gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.db`
+    - `gs://gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.h5`
 
     **HTTPS URL (for local download):**
 
-    - <https://storage.cloud.google.com/theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.db>
-    - <https://storage.cloud.google.com/theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.h5>
+    - <https://storage.cloud.google.com/gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.db>
+    - <https://storage.cloud.google.com/gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.h5>
 
     **Taxa included in the GAMBIT database**
 
