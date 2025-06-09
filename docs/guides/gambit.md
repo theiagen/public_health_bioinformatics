@@ -241,7 +241,7 @@ Options:
     **HTTPS URL (for local download):**
 
     - <https://storage.cloud.google.com/gambit-databases-rp/1.3.0/gambit-metadata-1.3-231016.gdb>
-    - <https://storage.googleapis.com/gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs>
+    - <https://storage.cloud.google.com/gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs>
 
     **Taxa included in the GAMBIT database**
 
@@ -420,8 +420,8 @@ Options:
 
     **HTTPS URL (for local download):**
 
-    - <https://storage.googleapis.com/theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.db>
-    - <https://storage.googleapis.com/theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.h5>
+    - <https://storage.cloud.google.com/theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.db>
+    - <https://storage.cloud.google.com/theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.h5>
 
     **Taxa included in the GAMBIT database**
 
