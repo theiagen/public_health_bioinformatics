@@ -287,6 +287,11 @@ freyja_sc2_lineage_metadata_file	File	Lineage metadata JSON file used for SARS-C
 freyja_summarized	String	Sum of all lineage abundances in a particular WHO designation identified by Freyja and parsed from freyja_demixed file	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
 freyja_variants	File	The TSV file containing the variants identified by Freyja	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
 freyja_version	String	version of Freyja used	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
+gamma_results	File	The .gamma file reporting gene matches	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+gamma_gff	File	The GFF file reporting gene matches if boolean was set to true	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+gamma_fasta	File	The FASTA file reporting gene matches if boolean was set to true	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+gamma_docker	String	The Docker container used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+gamma_version	String	The version of GAMMA used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 gambit_closest_genomes	File	CSV file listing genomes in the GAMBIT database that are most similar to the query assembly	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 gambit_db_version	String	Version of the GAMBIT database used	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 gambit_docker	String	GAMBIT Docker used	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE

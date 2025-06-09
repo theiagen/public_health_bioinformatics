@@ -687,6 +687,17 @@ freyja_update_refs	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Fre
 freyja_update_refs	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Freyja_Update	
 freyja_update_refs	docker	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"	Optional	Freyja_Update	
 freyja_update_refs	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	10	Optional	Freyja_Update	
+gamma	gamma_db	String	Multifasta sequence database GAMMA is to use for gene matching	"gs://theiagen-public-resources-rp/reference_data/databases/gamma/default_ResFinderDB_Combined_05-06-20.fsa"	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	min_percent_identity	Int	Threshold of identity for gene matches in percent	90	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	min_length_percent	Int	Threshold of match length percent used by GAMMA-s	20	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	run_gammas	Boolean	Turns on GAMMA-S which runs GAMMA on nucleotide sequences rather than translating input sequences and matches	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	output_gff	Boolean	Allows GAMMA to output gene matches in GFF format	TRUE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	output_fasta	Boolean	Allows GAMMA to output gene matches in FASTA format	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	extend_output	Boolean	GAMMA will provide the extended output when set to true	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	docker	String	Docker container used for the task	"us-docker.pkg.dev/general-theiagen/staphb/gamma:2.2"	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 gambit	cpu	Int	Number of CPUs to allocate to the task	8	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 gambit	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 gambit	docker	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0"	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	

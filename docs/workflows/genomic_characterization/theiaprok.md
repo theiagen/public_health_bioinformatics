@@ -156,6 +156,8 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 {{ include_md("common_text/amrfinderplus_task.md") }}
 
+{{ include_md("common_text/gamma_task.md") }}
+
 ??? task "`ResFinder`: AMR Genotyping & Shigella XDR phenotype prediction (alternative)"
 
     The `ResFinder` task is an alternative to using AMRFinderPlus for detection and identification of AMR genes and resistance-associated mutations.
