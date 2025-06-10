@@ -165,7 +165,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | kraken_target_organism_input | sars-cov-2 | `"Severe acute respiratory syndrome coronavirus 2"` |
         | nextclade_dataset_name_input | sars-cov-2 | `"nextstrain/sars-cov-2/wuhan-hu-1/orfs"` |
         | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.33 "`|
-        | nextclade_dataset_tag_input | sars-cov-2 | `"2025-06-09--15-42-38Z"` |
+        | nextclade_dataset_tag_input | sars-cov-2 | `"2025-06-10--16-01-10Z"` |
         | reference_genome | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"` |
         | vadr_max_length | sars-cov-2 | `30000` |
         | vadr_mem | sars-cov-2 | `8` |

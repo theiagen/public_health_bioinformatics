@@ -52,7 +52,7 @@ workflow organism_parameters {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"
     String sc2_gene_locations_bed = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"
-    String sc2_nextclade_ds_tag = "2025-06-09--15-42-38Z"
+    String sc2_nextclade_ds_tag = "2025-06-10--16-01-10Z"
     String sc2_nextclade_ds_name = "nextstrain/sars-cov-2/wuhan-hu-1/orfs"
     String sc2_kraken_target_organism = "Severe acute respiratory syndrome coronavirus 2"
     String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.33"
