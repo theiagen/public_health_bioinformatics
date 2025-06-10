@@ -94,9 +94,10 @@ workflow theiaviral_panel {
           read2 = select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2])
       }
       if (fastq_scan_binned.read1_seq > minimum_read_number) {
-        call ncbi_datasets_task.ncbi_datasets_viral_taxon_summary as ncbi_taxon_summary {
+        call ncbi_datasets_task.ncbi_datasets_genome_summary as ncbi_taxon_summary {
           input:
-            taxon = taxon_id
+            taxon = taxon_id,
+            use_ncbi_virus = true
         }
         # get the taxon id
         call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
@@ -109,7 +110,7 @@ workflow theiaviral_panel {
             read1 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
             read2 = select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2]),
             samplename = samplename + "_" + taxon_id,
-            taxon = ncbi_identify.taxon_name,
+            taxon = taxon_id,
             call_metaviralspades = call_metaviralspades,
             kraken_db = kraken_db,
             skip_qc = true,
@@ -194,11 +195,11 @@ workflow theiaviral_panel {
               "bwa_read1_aligned": theiaviral.bwa_read1_aligned,
               "bwa_read2_aligned": theiaviral.bwa_read2_aligned,
               "bwa_sorted_bam": theiaviral.bwa_sorted_bam,
-              "bwa_sorted_bai": theiaviral.bwa_aligned_bai,
+              "bwa_sorted_bai": theiaviral.bwa_sorted_bai,
               "bwa_read1_unaligned": theiaviral.bwa_read1_unaligned,
               "bwa_read2_unaligned": theiaviral.bwa_read2_unaligned,
-              "bwa_sorted_bam_unaligned": theiaviral.sorted_bam_unaligned,
-              "bwa_sorted_bai_unaligned": theiaviral.sorted_bam_unaligned_bai,
+              "bwa_sorted_bam_unaligned": theiaviral.bwa_sorted_bam_unaligned,
+              "bwa_sorted_bai_unaligned": theiaviral.bwa_sorted_bam_unaligned_bai,
               "ivar_tsv": theiaviral.ivar_tsv,
               "ivar_vcf": theiaviral.ivar_vcf,
               "ivar_variant_version": theiaviral.ivar_variant_version,
@@ -235,15 +236,15 @@ workflow theiaviral_panel {
               "pangolin_versions": morgana_magic.pangolin_versions,
               "nextclade_version": morgana_magic.nextclade_version,
               "nextclade_docker": morgana_magic.nextclade_docker,
-              "nextclade_json": morgana_magic.nextclade_json,
-              "auspice_json": morgana_magic.auspice_json,
-              "nextclade_tsv": morgana_magic.nextclade_tsv,
+              "nextclade_json_mpxv": morgana_magic.nextclade_json_mpxv,
+              "auspice_json_mpxv": morgana_magic.auspice_json_mpxv,
+              "nextclade_tsv_mpxv": morgana_magic.nextclade_tsv_mpxv,
               "nextclade_ds_tag": morgana_magic.nextclade_ds_tag,
-              "nextclade_aa_subs": morgana_magic.nextclade_aa_subs,
-              "nextclade_aa_dels": morgana_magic.nextclade_aa_dels,
-              "nextclade_clade": morgana_magic.nextclade_clade,
-              "nextclade_lineage": morgana_magic.nextclade_lineage,
-              "nextclade_qc": morgana_magic.nextclade_qc,
+              "nextclade_aa_subs_mpxv": morgana_magic.nextclade_aa_subs_mpxv,
+              "nextclade_aa_dels_mpxv": morgana_magic.nextclade_aa_dels_mpxv,
+              "nextclade_clade_mpxv": morgana_magic.nextclade_clade_mpxv,
+              "nextclade_lineage_mpxv": morgana_magic.nextclade_lineage_mpxv,
+              "nextclade_qc_mpxv": morgana_magic.nextclade_qc_mpxv,
               "nextclade_json_flu_ha": morgana_magic.nextclade_json_flu_ha,
               "auspice_json_flu_ha": morgana_magic.auspice_json_flu_ha,
               "nextclade_tsv_flu_ha": morgana_magic.nextclade_tsv_flu_ha,

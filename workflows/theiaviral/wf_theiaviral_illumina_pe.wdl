@@ -132,7 +132,8 @@ workflow theiaviral_illumina_pe {
           call checkv_task.checkv as checkv_denovo {
             input:
               assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
-              samplename = samplename
+              samplename = samplename,
+              checkv_db = checkv_db
           }
           # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
           call quast_task.quast as quast_denovo {
@@ -148,7 +149,8 @@ workflow theiaviral_illumina_pe {
         call skani_task.skani as skani {
           input:
             assembly_fasta = select_first([reference_fasta, spades.assembly_fasta, megahit.assembly_fasta]),
-            samplename = samplename
+            samplename = samplename,
+            skani_db = skani_db
         }
         # if skani cannot identify a reference genome, fail gracefully
         if (skani.skani_status == "PASS") {
@@ -207,7 +209,8 @@ workflow theiaviral_illumina_pe {
           call checkv_task.checkv as checkv_consensus {
             input:
               assembly = consensus.consensus_seq,
-              samplename = samplename
+              samplename = samplename,
+              checkv_db = checkv_db
           }
           # run morgana magic for classification
           if (defined(ncbi_datasets.ncbi_datasets_status)) {
