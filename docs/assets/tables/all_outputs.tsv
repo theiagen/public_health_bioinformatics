@@ -193,6 +193,13 @@ dorado_trim_version	String	Version of Dorado used in the `dorado_trim` task	Dora
 ectyper_predicted_serotype	String	Serotype predicted by ECTyper	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ectyper_results	File	TSV file of evidence for ECTyper predicted serotype (see <https://github.com/phac-nml/ecoli_serotyping#report-format>)	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ectyper_version	String	Version of ECTyper used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+ectyper_qc_result	String	QC pass or fail for the sample analyzed	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+ectyper_database_version    String	Version of the ECTyper database used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+ectyper_pathotype    String	Samples pathotype predicted by ECTyper	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+ectyper_pathotype_count    Int	Number of pathotypes predicted by ECTyper	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+ectyper_pathotype_genes    String	Pathotype genes observed by ECTyper	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+ectyper_pathodb_version    String	Version of the ECTyper pathotype database used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+ectyper_stx_subtypes    String	Shiga toxin subtypes predicted by ECTyper	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 emmtypingtool_docker	String	Docker image for emm-typing-tool	TheiaProk_Illumina_PE
 emmtypingtool_emm_type	String	emm-type predicted	TheiaProk_Illumina_PE
 emmtypingtool_results_xml	File	XML file with emm-typing-tool resuls	TheiaProk_Illumina_PE
