@@ -227,7 +227,7 @@ workflow merlin_magic {
     Int? tbp_parser_min_depth
     Float? tbp_parser_min_frequency
     Int? tbp_parser_min_read_support
-    Int? tbp_parser_min_percent_coverage
+    Float? tbp_parser_min_percent_coverage
     File? tbp_parser_coverage_regions_bed
     Boolean? tbp_parser_debug
     Boolean? tbp_parser_add_cs_lims
