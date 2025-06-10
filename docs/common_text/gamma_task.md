@@ -6,7 +6,7 @@
 
     GAMMA also allows for the usage of only nucleotide sequences rather than translated sequences. Using GAMMA-S, enabled with the boolean `run_gammas`, will find the best matches from a multifasta database without translating sequences. 
 
-    !!! techdetails "AMRFinderPlus Technical Details"
+    !!! techdetails "GAMMA Technical Details"
         
         |  | Links |
         | --- | --- |
