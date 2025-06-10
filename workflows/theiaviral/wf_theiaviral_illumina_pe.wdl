@@ -259,7 +259,8 @@ workflow theiaviral_illumina_pe {
           call checkv_task.checkv as checkv_consensus {
             input:
               assembly = consensus.consensus_seq,
-              samplename = samplename
+              samplename = samplename,
+              checkv_db = checkv_db
           }
           # run morgana magic for classification
           if (defined(ncbi_datasets.ncbi_datasets_status)) {
