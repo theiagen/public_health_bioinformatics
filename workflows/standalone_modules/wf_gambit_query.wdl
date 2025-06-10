@@ -27,5 +27,6 @@ workflow gambit_query {
     String gambit_version = gambit.gambit_version
     String gambit_db_version = gambit.gambit_db_version
     String gambit_docker = gambit.gambit_docker
+    String gambit_top_genome_description = gambit.gambit_top_genome_description
   }
 }

@@ -52,6 +52,12 @@ task gambit {
     next_taxon = item['next_taxon']
     closest = item['closest_genomes'][0]
 
+    with open('TOP_GENOME_DESCRIPTION', 'w') as tf:
+      if closest['genome']['description'] is not None:
+        tf.write(closest['genome']['description'])
+      else:
+        tf.write('NA')
+
     with open('CLOSEST_DISTANCE', 'w') as f:
       f.write(fmt_dist(closest['distance']))
 
@@ -157,6 +163,7 @@ task gambit {
     String gambit_db_version = read_string("GAMBIT_DB_VERSION")
     String merlin_tag = read_string("MERLIN_TAG")
     String gambit_docker = docker
+    String gambit_top_genome_description = read_string("TOP_GENOME_DESCRIPTION")
   }
   runtime {
     docker: "~{docker}"
