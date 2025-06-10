@@ -241,7 +241,7 @@ Options:
     **HTTPS URL (for local download):**
 
     - <https://storage.cloud.google.com/gambit-databases-rp/1.3.0/gambit-metadata-1.3-231016.gdb>
-    - <https://storage.googleapis.com/gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs>
+    - <https://storage.cloud.google.com/gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs>
 
     **Taxa included in the GAMBIT database**
 
@@ -296,7 +296,7 @@ Options:
 #### GAMBIT RefSeq Curated Database v1.1.0
 
 ??? toggle "Database Details"
-    This database is a **patch update** to the RefSeq Curated v1.0.0 database. In addition to all of the species included in the v1.0.0 database below, this database replaces all species in the **Enterobacter, Legionella, and Vibrio genera** with the available genomes in RefSeq as of April 17th, 2023. 
+    This database is a **patch update** to the RefSeq Curated v1.0.0 database. In addition to all of the species included in the v1.0.0 database below, this database replaces all species in the **Enterobacter, Legionella, and Vibrio genera** with the available genomes in RefSeq as of April 17th, 2023.
 
     **Database Files**
 
@@ -362,7 +362,7 @@ Options:
 #### GAMBIT Fungal Database v1.0.0
 
 ??? toggle "Database Details"
-    The GAMBIT Fungal Database v1.0.0 database was constructed based on the available genomes in RefSeq/GenBank as of December 13th, 2024. For inclusion in the database, species were required to have at least two genomes in GenBank and at least one genome representing the species in RefSeq. 
+    The GAMBIT Fungal Database v1.0.0 database was constructed based on the available genomes in RefSeq/GenBank as of December 13th, 2024. For inclusion in the database, species were required to have at least two genomes in GenBank and at least one genome representing the species in RefSeq.
 
     1. Species with a diameter of zero were excluded;
     2. Species with three or fewer genomes and a diameter greater than 0.75 were excluded.
@@ -415,13 +415,13 @@ Options:
 
     **GS URI (for [Terra.bio](https://terra.bio) usage):**
 
-    - `gs://theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.db`
-    - `gs://theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.h5`
+    - `gs://gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.db`
+    - `gs://gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.h5`
 
     **HTTPS URL (for local download):**
 
-    - <https://storage.googleapis.com/theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.db>
-    - <https://storage.googleapis.com/theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.h5>
+    - <https://storage.cloud.google.com/gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.db>
+    - <https://storage.cloud.google.com/gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.h5>
 
     **Taxa included in the GAMBIT database**
 
@@ -463,7 +463,7 @@ If the query genome distance is greater than the species diameter, GAMBIT attemp
 
 /// html | div[style='float: right; width: 50%; padding: 20px;']
 !!! caption "Distribution of GAMBIT distances"
-    ##### Figure 1 {#figure1}
+    ##### Figure 1 {% raw %} {#figure1} {% endraw %}
     ![**Figure 1: Distribution of GAMBIT distances within a species and to the nearest sister taxon in the GAMBIT reference database.** Three histograms are shown in each panel (each normalized independently). The green histogram represents the distribution of GAMBIT distances from each reference genome in the species to the closest genome also within the same species. The blue histogram represents the distribution of GAMBIT distances for all pairwise comparisons within the species. The red histogram represents the distribution of GAMBIT distances from each genome in the species of interest to the closest genome in the species’ closest sister taxon. The dashed blue line represents the classification threshold for that species in the GAMBIT database, which in both cases was derived from the maximum intra-species distance. Panel A shows *Klebsiella pneumoniae* and its closest sister taxon *Klebsiella variicola*, panel B shows *Neisseria gonorrhoeae* and its closest sister taxon *Neisseria meningitidis*.  ****https://doi.org/10.1371/journal.pone.0277575.g004](../assets/figures/GAMBIT-distribution-of-distances.png)
 
     **Figure 1: Distribution of GAMBIT distances within a species and to the nearest sister taxon in the GAMBIT reference database.** Three histograms are shown in each panel (each normalized independently). The green histogram represents the distribution of GAMBIT distances from each reference genome in the species to the closest genome also within the same species. The blue histogram represents the distribution of GAMBIT distances for all pairwise comparisons within the species. The red histogram represents the distribution of GAMBIT distances from each genome in the species of interest to the closest genome in the species’ closest sister taxon. The dashed blue line represents the classification threshold for that species in the GAMBIT database, which in both cases was derived from the maximum intra-species distance. Panel A shows _Klebsiella pneumoniae_ and its closest sister taxon _Klebsiella variicola_, panel B shows _Neisseria gonorrhoeae_ and its closest sister taxon _Neisseria meningitidis_. 
@@ -495,7 +495,7 @@ Spearman correlation was high in all four data sets ([Figure 2](#figure2)) (Set 
 
 /// html | div[style='float: right; width: 50%; padding: 20px;']
 !!! caption "Relationship between GAMBIT distance and ANI"
-    ##### Figure 2 {#figure2}
+    ##### Figure 2 {% raw %} {#figure2} {% endraw %}
     ![**Figure 2: Relationship between GAMBIT distance and ANI (Average Nucleotide Identity).**  The relationship is nonlinear but very close to monotonic as measured by Spearman correlation (shown in the bottom left corner of each subplot). ANI was calculated using the [FastANI](https://github.com/ParBLiSS/FastANI) tool with default parameter values. GAMBIT distances were calculated for all sets using the same parameter (k = 11, prefix = ATGAC). As FastANI only reports ANI values greater than ~80%, the fraction of total pairwise comparisons shown here were 100%, 5.5%, 7.4% and 47.4% for data sets 1–4 respectively. https://doi.org/10.1371/journal.pone.0277575.g001](../assets/figures/GAMBIT-distance-vs-ani.png)
 
     **Figure 2: Relationship between GAMBIT distance and ANI (Average Nucleotide Identity).**  The relationship is nonlinear but very close to monotonic as measured by Spearman correlation (shown in the bottom left corner of each subplot). ANI was calculated using the [FastANI](https://github.com/ParBLiSS/FastANI) tool with default parameter values. GAMBIT distances were calculated for all sets using the same parameter (k = 11, prefix = ATGAC). As FastANI only reports ANI values greater than ~80%, the fraction of total pairwise comparisons shown here were 100%, 5.5%, 7.4% and 47.4% for data sets 1–4 respectively. 

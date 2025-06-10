@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v3.0.0 | Yes; some optional features incompatible | Set-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Snippy_Streamline_FASTA**](../workflows/phylogenetic_construction/snippy_streamline_fasta.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## Snippy_Streamline_FASTA_PHB
 
@@ -66,87 +64,19 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
         Phylogenies of MTBC are typically constructed with the following options:
         
         - Using the H37Rv reference genome
-            - `reference_genome_file` = `"gs://theiagen-public-files-rp/terra/theiaprok-files/Mtb_NC_000962.3.fasta"`
+            - `reference_genome_file` = `"gs://theiagen-public-resources-rp/reference_data/bacterial/mycobacterium/MTB-NC_000962.3.fasta"`
         - Masking repetitive regions of the genome (e.g. PE/PPE genes) that are often misaligned
-            - `snippy_core_bed` = `"gs://theiagen-public-files/terra/theiaprok-files/Mtb_NC_000962.3.bed"`
+            - `snippy_core_bed` = `"gs://theiagen-public-resources-rp/reference_data/bacterial/mycobacterium/MTB-NC_000962.3.bed"`
         - Without masking recombination because TB can be considered non-recombinant
             - `use_gubbins` = false
         - Using the core genome
             - `core_genome` = true (as default)
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| snippy_streamline_fasta | **assembly_fasta** | Array[File] | The assembly files for your samples |  | Required |
-| snippy_streamline_fasta | **samplenames** | Array[String] | The names of your samples |  | Required |
-| snippy_streamline_fasta | **tree_name** | String | String of your choice to prefix output files |  | Required |
-| centroid | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| centroid | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| centroid | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/centroid:0.1.0 | Optional |
-| centroid | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
-| ncbi_datasets_download_genome_accession | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| ncbi_datasets_download_genome_accession | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
-| ncbi_datasets_download_genome_accession | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2 | Optional |
-| ncbi_datasets_download_genome_accession | **include_gff3** | Boolean | When set to true, outputs a gff3 file (Genbank file) | FALSE | Optional |
-| ncbi_datasets_download_genome_accession | **include_gbff** | Boolean | When set to true, outputs a gbff file (Annotation file); if true, this file will be used as the reference for Snippy_Variants and Snippy_Tree | FALSE | Optional |
-| ncbi_datasets_download_genome_accession | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
-| ncbi_datasets_download_genome_accession | **use_ncbi_virus** | Boolean | When set to true will download from NCBI Virus Datasets | FALSE | Optional |
-| referenceseeker | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| referenceseeker | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 200 | Optional |
-| referenceseeker | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0 | Optional |
-| referenceseeker | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| referenceseeker | **referenceseeker_ani_threshold** | Float | Bidirectional average nucleotide identity to use as a cut off for identifying reference assemblies with ReferenceSeeker; default value set according to <https://github.com/oschwengers/referenceseeker#description> | 0.95 | Optional |
-| referenceseeker | **referenceseeker_conserved_dna_threshold** | Float | Conserved DNA % to use as a cut off for identifying reference assemblies with ReferenceSeeker; default value set according to <https://github.com/oschwengers/referenceseeker#description> | 0.69 | Optional |
-| referenceseeker | **referenceseeker_db** | File | Database to use with ReferenceSeeker | gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz | Optional |
-| snippy_streamline_fasta | **reference_genome_file** | File | Reference genome in FASTA or GENBANK format (must be the same reference used in Snippy_Variants workflow); provide this if you want to skip the detection of a suitable reference |  | Optional |
-| snippy_streamline_fasta | **use_centroid_as_reference** | Booolean | Set to true if you want to use the centroid sample as the reference sample instead of using the centroid to detect a suitable one | false  | Optional |
-| snippy_tree_wf | **call_shared_variants** | Boolean | Activates the shared variants analysis task | TRUE | Optional |
-| snippy_tree_wf | **core_genome** | Boolean | When "true", workflow generates core genome phylogeny; when "false", whole genome is used | TRUE | Optional |
-| snippy_tree_wf | **data_summary_column_names** | String | A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix) |  | Optional |
-| snippy_tree_wf | **data_summary_terra_project** | String | The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL |  | Optional |
-| snippy_tree_wf | **data_summary_terra_table** | String | The name of the sample-level Terra data table that will be used for generating a data summary |  | Optional |
-| snippy_tree_wf | **data_summary_terra_workspace** | String | The name of the Terra workspace you are in. This can be found at the top of the webpage, or in the URL after the billing project. |  | Optional |
-| snippy_tree_wf | **gubbins_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| snippy_tree_wf | **gubbins_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| snippy_tree_wf | **gubbins_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/biocontainers/gubbins:3.3--py310pl5321h8472f5a_0 | Optional |
-| snippy_tree_wf | **gubbins_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
-| snippy_tree_wf | **iqtree2_bootstraps** | String | Number of replicates for <http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation> (Minimum recommended= 1000) | 1000 | Optional |
-| snippy_tree_wf | **iqtree2_cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| snippy_tree_wf | **iqtree2_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| snippy_tree_wf | **iqtree2_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.1.2 | Optional |
-| snippy_tree_wf | **iqtree2_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
-| snippy_tree_wf | **iqtree2_model** | String | Nucelotide substitution model to use when generating the final tree with IQTree2. By default, IQtree runs its ModelFinder algorithm to identify the model it thinks best fits your dataset |  | Optional |
-| snippy_tree_wf | **iqtree2_opts** | String | Additional options to pass to IQTree2 |  | Optional |
-| snippy_tree_wf | **midpoint_root_tree** | Boolean | A True/False option that determines whether the tree used in the SNP matrix re-ordering task should be re-rooted or not. Options: true of false | TRUE | Optional |
-| snippy_tree_wf | **phandango_coloring** | Boolean | Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true. | FALSE | Optional |
-| snippy_tree_wf | **snippy_core_bed** | File | User-provided bed file to mask out regions of the genome when creating multiple sequence alignments |  | Optional |
-| snippy_tree_wf | **snippy_core_cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
-| snippy_tree_wf | **snippy_core_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| snippy_tree_wf | **snippy_core_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0 | Optional |
-| snippy_tree_wf | **snippy_core_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| snippy_tree_wf | **snp_dists_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2 | Optional |
-| snippy_tree_wf | **snp_sites_cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| snippy_tree_wf | **snp_sites_disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| snippy_tree_wf | **snp_sites_docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1 | Optional |
-| snippy_tree_wf | **snp_sites_memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
-| snippy_tree_wf | **use_gubbins** | Boolean | When "true", workflow removes recombination with gubbins tasks; when "false", gubbins is not used | TRUE | Optional |
-| snippy_variants_wf | **base_quality** | Int | Minimum quality for a nucleotide to be used in variant calling | 13 | Optional |
-| snippy_variants_wf | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| snippy_variants_wf | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0 | Optional |
-| snippy_variants_wf | **map_qual** | Int | Minimum mapping quality to accept in variant calling |  | Optional |
-| snippy_variants_wf | **maxsoft** | Int | Number of bases of alignment to soft-clip before discarding the alignment |  | Optional |
-| snippy_variants_wf | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| snippy_variants_wf | **min_coverage** | Int | Minimum read coverage of a position to identify a mutation | 10 | Optional |
-| snippy_variants_wf | **min_frac** | Float | Minimum fraction of bases at a given position to identify a mutation | 0.9 | Optional |
-| snippy_variants_wf | **min_quality** | Int | Minimum VCF variant call "quality" | 100 | Optional |
-| snippy_variants_wf | **query_gene** | String | Indicate a particular gene of interest |  | Optional |
-| snippy_variants_wf | **read1** | File | Internal component, do not modify.  |  | Do Not Modify, Optional |
-| snippy_variants_wf | **read2** | File | Internal component, do not modify.  |  | Do Not Modify, Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Snippy_Streamline_FASTA"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Workflow Tasks
 
@@ -155,55 +85,9 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 !!! dna ""
     The following tasks perform automatic reference selection (if no reference genome is provided by the user and `assembly_fasta` is provided).
 
-??? task "Centroid"
-    ##### Centroid {#centroid}
-
-    Centroid selects the most central genome among a list of assemblies by computing pairwise mash distances. In `Snippy_Streamline`, this centroid assembly is then used to find a closely related reference genome that can be used to generate the tree.  In order to use `Centroid`, should complete the `samplenames` input. 
-
-    !!! techdetails "`centroid` Technical Details"
-        |  | Links |
-        | --- | --- |
-        | Task | [task_centroid.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_centroid.wdl) |
-        | Software Source Code | <https://github.com/theiagen/centroid> |
-        | Software Documentation | <https://github.com/theiagen/centroid> |
-
-??? task "ReferenceSeeker"
-    ##### ReferenceSeeker {#referenceseeker}
-
-    `ReferenceSeeker` uses your draft assembly to identify closely related bacterial, viral, fungal, or plasmid genome assemblies in [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/).
-
-    Databases for use with ReferenceSeeker are as follows, and can be used by pasting the gs uri in double quotation marks `" "` into the `referenceseeker_db` optional input:
-
-    - archea:  `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-archaea-refseq-205.v20210406.tar.gz`
-    - bacterial (**default**): `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-bacteria-refseq-205.v20210406.tar.gz`
-    - fungi: `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-fungi-refseq-205.v20210406.tar.gz`
-    - plasmids: `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-plasmids-refseq-205.v20210406.tar.gz`
-    - viral: `gs://theiagen-public-files-rp/terra/theiaprok-files/referenceseeker-viral-refseq-205.v20210406.tar.gz`
-
-    For ReferenceSeeker to identify a genome, it must meet user-specified thresholds for sequence coverage (`referenceseeker_conserved_dna_threshold`) and identity (`referenceseeker_ani_threshold`). The default values for these are set according to community standards (conserved DNA >= 69 % and ANI >= 95 %). A list of closely related genomes is provided in `referenceseeker_tsv`. The reference genome that ranks highest according to ANI and conserved DNA values is considered the closest match and will be downloaded, with information about this provided in the `snippy_referenceseeker_top_hit_ncbi_accession` output.
-
-    !!! techdetails "`referenceseeker` Technical Details"
-        |  | Links |
-        | --- | --- |
-        | Task | [task_referenceseeker.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_referenceseeker.wdl) |
-        | Software Source Code | <https://github.com/oschwengers/referenceseeker> |
-        | Software Documentation | <https://github.com/oschwengers/referenceseeker> |
-        | Original Publication(s) | [ReferenceSeeker: rapid determination of appropriate reference genomes](https://joss.theoj.org/papers/10.21105/joss.01994) |
-
-??? task "NCBI Datasets"
-    ##### NCBI Datasets {#ncbi-datasets}
-
-    The [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/) task downloads specified assemblies from NCBI using either the [virus](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) or [genome](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/) (for all other genome types) package as appropriate.
-
-    !!! dna "`include_gbff` behavior"
-        If `include_gbff` is set to `true`, the gbff file will be used as the reference for `Snippy_Variants` and `Snippy_Tree`. If `include_gbff` is set to `false`, the fasta file will be used as the reference for `Snippy_Variants` and `Snippy_Tree`. Tree topology should not differ, though annotations may.
-
-    !!! techdetails "NCBI Datasets Technical Details"
-        |  | Links |
-        | --- | --- |
-        | Task | [task_ncbi_datasets.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl) |
-        | Software Source Code | <https://github.com/ncbi/datasets> |
-        | Software Documentation | <https://github.com/ncbi/datasets> |
+{{ include_md("common_text/centroid_task.md") }}
+{{ include_md("common_text/referenceseeker_task.md") }}
+{{ include_md("common_text/ncbi_datasets_task.md", condition="snippy") }}
 
 #### Variant Calling
 
@@ -212,41 +96,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
     **Please see the full documentation for [Snippy_Variants](./snippy_variants.md) for more information.**
 
-??? task "Snippy_Variants"
-    ##### Snippy_Variants {#snippy_variants}
-
-    `Snippy_Variants` aligns the assemblies for each sample against the reference genome to call SNPs, MNPs and INDELs according to optional input parameters. 
-
-    Optionally, if the user provides a value for `query_gene`, the variant file will be searched for any mutations in the specified regions or annotations. The query string MUST match the gene name or annotation as specified in the GenBank file and the output variant file.
-
-    ??? toggle "QC Metrics from Snippy_Variants"
-        !!! warning 
-            The following QC metrics may not be applicable to your dataset as they are geared towards read data, not assemblies. Use these metrics with caution.
-
-        This task also extracts QC metrics from the Snippy output for each sample and saves them in per-sample TSV files (`snippy_variants_qc_metrics`). These per-sample QC metrics include the following columns:
-
-        - **samplename**: The name of the sample.
-        - **reads_aligned_to_reference**: The number of reads that aligned to the reference genome.
-        - **total_reads**: The total number of reads in the sample.
-        - **percent_reads_aligned**: The percentage of reads that aligned to the reference genome.
-        - **variants_total**: The total number of variants detected between the sample and the reference genome.
-        - **percent_ref_coverage**: The percentage of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10).
-        - **#rname**: Reference sequence name (e.g., chromosome or contig name).
-        - **startpos**: Starting position of the reference sequence.
-        - **endpos**: Ending position of the reference sequence.
-        - **numreads**: Number of reads covering the reference sequence.
-        - **covbases**: Number of bases with coverage.
-        - **coverage**: Percentage of the reference sequence covered (depth ≥ 1).
-        - **meandepth**: Mean depth of coverage over the reference sequence.
-        - **meanbaseq**: Mean base quality over the reference sequence.
-        - **meanmapq**: Mean mapping quality over the reference sequence.
-
-    !!! techdetails "Snippy Variants Technical Details"
-        |  | Links |
-        | --- | --- |
-        | Task | [task_snippy_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_variants.wdl)<br>[task_snippy_gene_query.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl) |
-        | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
-        | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
+{{ include_md("common_text/snippy_variants_task.md", condition="snippy_streamline") }}
 
 #### Phylogenetic Construction
 
@@ -258,242 +108,22 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 !!! tip "Gubbins Nucleotide Substitution Model"
     In Snippy Streamline, the nucleotide substitution model used by gubbins will always be **GTR+GAMMA**.
 
-??? task "Snippy"
-
-    ##### Snippy {#snippy_task}
-
-    Snippy is used to generate a whole-genome multiple sequence alignment (fasta file) of reads from all the samples we'd like in our tree. 
-
-    When generating the multiple sequence alignment, a bed file can be provided by users to mask certain areas of the genome in the alignment. This is particularly relevant for masking known repetitive regions in _Mycobacterium tuberculosis_  genomes, or masking known regions containing phage sequences.
-
-    !!! info "Why do I see `snippy_core` in Terra?"
-        In Terra, this task is named "snippy_core" after the name of the command in the original Snippy tool. Despite the name, this command is NOT being used to make a core genome, but instead a multiple sequence alignment of the whole genome (without any sections masked using a bed file).
-        
-    !!! techdetails "Snippy Technical Details"
-    
-        |  | Links |
-        | --- | --- |
-        | Task | [task_snippy_core.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snippy_core.wdl) |
-        | Software Source Code | [Snippy on GitHub](https://github.com/tseemann/snippy) |
-        | Software Documentation | [Snippy on GitHub](https://github.com/tseemann/snippy) |
-
-??? task "Gubbins (optional)"
-
-    ##### Gubbins (optional) {#gubbins_task}
-
-    **_Most optional inputs are hidden in Snippy_Streamline for simplification of the workflow. If you would like to use Gubbins with additional options, please use the `Snippy_Tree` workflow._**
-
-    !!! tip ""
-        In Snippy Streamline, the nucleotide substitution model used by gubbins will always be GTR+GAMMA.
-
-    !!! tip "Turn on Gubbins with `use_gubbins`"
-        Gubbins runs when the `use_gubbins` option is set to `true` (default=true).
-    
-    **G**enealogies **U**nbiased **B**y recom**B**inations **I**n **N**ucleotide **S**equences (Gubbins) identifies and masks genomic regions that are predicted to have arisen via recombination. It works by iteratively identifying loci containing elevated densities of SNPs and constructing phylogenies based on the putative single nucleotide variants outside these regions (for more details, see [here](https://github.com/nickjcroucher/gubbins/blob/v3.3/docs/gubbins_manual.md#description-of-the-algorithm)). By default, these phylogenies are constructed using RaxML and a GTR-GAMMA nucleotide substitution model, which will be the most suitable model for most bacterial phylogenetics. 
-
-    Gubbins is the industry standard for masking recombination from bacterial genomes when building phylogenies, but limitations to recombination removal exist. Gubbins cannot distinguish recombination from high densities of SNPs that may result from assembly or alignment errors, mutational hotspots, or regions of the genome with relaxed selection. The tool is also intended only to find recombinant regions that are short relative to the length of the genome, so large regions of recombination may not be masked. These factors should be considered when interpreting resulting phylogenetic trees, but overwhelmingly Gubbins improves our ability to understand ancestral relationships between bacterial genomes.
-
-    !!! techdetails "Gubbins Technical Details"
-                
-        |  | Links |
-        | --- | --- |
-        | Task | [task_gubbins.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_gubbins.wdl) |
-        | Software Source Code | [Gubbins on GitHub](https://github.com/nickjcroucher/gubbins) |
-        | Software Documentation | [Gubbins v3.3 manual](https://github.com/nickjcroucher/gubbins/blob/v3.3/docs/gubbins_manual.md) |
-        | Original Publication(s) | [Rapid phylogenetic analysis of large samples of recombinant bacterial whole genome sequences using Gubbins](https://academic.oup.com/nar/article/43/3/e15/2410982) |
-
-??? task "SNP-sites (optional)"
-
-    ##### SNP-sites (optional) {#snp_sites_task}
-
-    !!! tip "Turn on SNP-Sites with `core_genome`"
-        SNP-sites runs when the `core_genome` option is set to true.
-
-    SNP-sites is used to filter out invariant sites in the whole-genome alignment, thereby creating a core genome alignment for phylogenetic inference. The output is a fasta file containing the core genome of each sample only. If Gubbins has been used, this output fasta will not contain any sites that are predicted to have arisen via recombination.
-
-    !!! techdetails "SNP-sites technical details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_snp_sites.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snp_sites.wdl) |
-        | Software Source Code | [SNP-sites on GitHub](https://github.com/sanger-pathogens/snp-sites) |
-        | Software Documentation | [SNP-sites on GitHub](https://github.com/sanger-pathogens/snp-sites) |
-        | Original Publication(s) | [SNP-sites: rapid efficient extraction of SNPs from multi-FASTA alignments](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000056) |
-
-??? task "IQTree2"
-
-    ##### IQTree2 {#iqtree2_task}
-
-    IQTree2 is used to build the final phylogeny. It uses the alignment generated in the previous steps of the workflow. The contents of this alignment will depend on whether any sites were masked with recombination.
-
-    The phylogeny is generated using the maximum-likelihood method and a specified nucleotide substitution model. By default, the Snippy_Tree workflow will run Model Finder to determine the most appropriate nucleotide substitution model for your data, but you may specify the nucleotide substitution model yourself using the `iqtree2_model` optional input (see [here](http://www.iqtree.org/doc/Substitution-Models) for available models).
-
-    IQTree will perform assessments of the tree using the Shimodaira–Hasegawa approximate likelihood-ratio test ([SH-aLRT test](https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false)), and ultrafast bootstrapping with [UFBoot2](https://academic.oup.com/mbe/article/35/2/518/4565479), a quicker but less biased alternative to standard bootstrapping. A clade should not typically be trusted if it has less than 80% support from the SH-aLRT test and less than 95% support with ultrafast bootstrapping.
-
-    !!! tip "Nucleotide substitution model"
-        When `core_genome`= `true`, the default nucleotide substitution model is set to the General Time Reverside model with Gamma distribution (GTR+G). 
-        
-        When the user sets `core_genome`= `false`, the default nucleotide substitution model is set to the General Time Reversible model with invariant sites and Gamma distribution (`GTR+I+G`).
-                
-    !!! techdetails "IQTree2 technical details"
-                    
-        |  | Links |
-        | --- | --- |
-        | Task | [task_iqtree2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_iqtree2.wdl) |
-        | Software Source Code | [IQ-TREE on GitHub](https://github.com/iqtree/iqtree2) |
-        | Software Documentation | [IQTree documentation](http://www.iqtree.org/doc/) for the latest version (not necessarily the version used in this workflow) |
-        | Original Publication(s) | [IQ-TREE 2: New Models and Efficient Methods for Phylogenetic Inference in the Genomic Era](https://academic.oup.com/mbe/article/37/5/1530/5721363)<br>[New Algorithms and Methods to Estimate Maximum-Likelihood Phylogenies: Assessing the Performance of PhyML 3.0](https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false)<br>[Ultrafast Approximation for Phylogenetic Bootstrap](https://academic.oup.com/mbe/article/30/5/1188/997508?login=false)<br> [UFBoot2: Improving the Ultrafast Bootstrap Approximation](https://academic.oup.com/mbe/article/35/2/518/4565479?login=false)<br>[ModelFinder: fast model selection for accurate phylogenetic estimates](https://www.nature.com/articles/nmeth.4285) |
-
-??? task "SNP-dists"
-
-    ##### SNP-dists {#snp_dists_task}
-
-    `SNP-dists` computes pairwise SNP distances between genomes. It takes the same alignment of genomes used to generate your phylogenetic tree and produces a matrix of pairwise SNP distances between sequences. This means that if you generated pairwise core-genome phylogeny, the output will consist of pairwise core-genome SNP (cgSNP) distances. Otherwise, these will be whole-genome SNP distances. Regardless of whether core-genome or whole-genome SNPs, this SNP distance matrix will exclude all SNPs in masked regions (i.e. masked with a bed file or gubbins). 
-
-    The SNP-distance output can be visualized using software such as [Phandango](http://jameshadfield.github.io/phandango/#/main) to explore the relationships between the genomic sequences. The task can optionally add a Phandango coloring tag (:c1) to the column names in the output matrix to ensure that all columns are colored with the same color scheme throughout by setting `phandango_coloring` to `true`.
-
-    !!! techdetails "SNP-dists Technical Details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_snp_dists.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_snp_dists.wdl) |
-        | Software Source Code | [SNP-dists on GitHub](https://github.com/tseemann/snp-dists) |
-        | Software Documentation | [SNP-dists on GitHub](https://github.com/tseemann/snp-dists) |
-
-??? task "Data summary (optional)"
-
-    ##### Data Summary (optional) {#data_summary_task}
-
-    If you fill out the `data_summary_*` and `sample_names` optional variables, you can use the optional `summarize_data` task. The task takes a comma-separated list of column names from the Terra data table, which should each contain a list of comma-separated items. For example, `"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"` (with quotes, comma separated, no spaces) for these output columns from running TheiaProk. The task checks whether those comma-separated items are present in each row of the data table (sample), then creates a CSV file of these results. The CSV file indicates presence (TRUE) or absence (empty) for each item. By default, the task does not add a Phandango coloring tag to group items from the same column, but you can turn this on by setting `phandango_coloring` to `true`.
-
-    ??? toggle "**Example output CSV**"
-
-        ```text linenums="1"
-        Sample_Name,aph(3')-IIa,blaCTX-M-65,blaOXA-193,tet(O)
-        sample1,TRUE,,TRUE,TRUE
-        sample2,,,FALSE,TRUE
-        sample3,,,FALSE,
-        ```
-
-    ??? toggle "**Example use of Phandango coloring**"
-
-        Data summary produced using the `phandango_coloring` option, visualized alongside Newick tree at <http://jameshadfield.github.io/phandango/#/main>
-
-        !!! caption "Example phandango_coloring output"
-            ![Phandango coloring example](../../assets/figures/example_phandango_coloring.png)
-
-    !!! techdetails "Data summary technical details"
-
-        |  | Links |
-        | --- | --- |
-        | Task | [task_summarize_data.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_summarize_data.wdl) |
-
-??? task "Concatenate Variants (optional)"
-
-    ##### Concatenate Variants (optional) {#concatenate_variants_task}
-
-    ==This task activates when `call_shared_variants` is true.==
-
-    The `cat_variants` task concatenates variant data from multiple samples into a single file `concatenated_variants`. It is very similar to the `cat_files` task, but also adds a column to the output file that indicates the sample associated with each row of data.
-
-    The `concatenated_variants` file will be in the following format:
-
-    | samplename | CHROM | POS | TYPE | REF | ALT | EVIDENCE | FTYPE | STRAND | NT_POS | AA_POS | EFFECT | LOCUS_TAG | GENE | PRODUCT |
-    | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-    | sample1 | PEKT02000007 | 5224 | snp | C | G | G:21 C:0 |  |  |  |  |  |  |  |  |
-    | sample2 | PEKT02000007 | 34112 | snp | C | G | G:32 C:0 | CDS | + | 153/1620 | 51/539 | missense_variant c.153C>G p.His51Gln | B9J08_002604 | hypothetical protein |  |
-    | sample3 | PEKT02000007 | 34487 | snp | T | A | A:41 T:0 | CDS | + | 528/1620 | 176/539 | missense_variant c.528T>A p.Asn176Lys | B9J08_002604 | hypothetical protein |  |
-
-    !!! techdetails "Technical Details"
-    
-        |  | Links |
-        | --- | --- |
-        | Task | [task_cat_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_cat_files.wdl) |
-
-??? task "Shared Variants Task (Optional)"
-
-    ##### Shared Variants (optional) {#shared_variants_task}
-
-    ==This task activates when `call_shared_variants` is true.==
-
-    The `shared_variants` task takes in the `concatenated_variants` output from the `cat_variants` task and reshapes the data so that variants are rows and samples are columns. For each variant, samples where the variant was detected are populated with a "1" and samples were **either the variant was not detected or there was insufficient coverage to call variants** are populated with a "0". The resulting table is available as the `shared_variants_table` output.
-
-    The `shared_variants_table` file will be in the following format:
-
-    | CHROM | POS | TYPE | REF | ALT | FTYPE | STRAND | NT_POS | AA_POS | EFFECT | LOCUS_TAG | GENE | PRODUCT | sample1 | sample2 | sample3 |
-    | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-    | PEKT02000007 | 2693938 | snp | T | C | CDS | - | 1008/3000 | 336/999 | synonymous_variant c.1008A>G p.Lys336Lys | B9J08_003879 | NA | chitin synthase 1 | 1 | 1 | 0 |
-    | PEKT02000007 | 2529234 | snp | G | C | CDS | + | 282/336 | 94/111 | missense_variant c.282G>C p.Lys94Asn | B9J08_003804 | NA | cytochrome c | 1 | 1 | 1 |
-    | PEKT02000002 | 1043926 | snp | A | G | CDS | - | 542/1464 | 181/487 | missense_variant c.542T>C p.Ile181Thr | B9J08_000976 | NA | dihydrolipoyl dehydrogenase | 1 | 1 | 0 |
-    
-    !!! techdetails "Technical Details"
-        |  | Links |
-        | --- | --- |
-        | Task | [task_shared_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_shared_variants.wdl) |
-
-??? task "Snippy_Variants QC Metrics Concatenation"
-
-    The per-sample QC metrics generated in `Snippy_Variants` are combined into a single file (`snippy_combined_qc_metrics`). The combined QC metrics file includes the same columns as above for all samples. Note that the last set of columns (`#rname` to `meanmapq`) may repeat for each chromosome or contig in the reference genome.
-
-    The combined QC metrics file includes the same columns as the sample-level file (see [above](#variant-calling) for more details). Note that the last set of columns (`#rname` to `meanmapq`) may repeat for each chromosome or contig in the reference genome.
-
-    !!! tip "QC Metrics for Phylogenetic Analysis"
-        These QC metrics provide valuable insights into the quality and coverage of your sequencing data relative to the reference genome. Monitoring these metrics can help identify samples with low coverage, poor alignment, or potential issues that may affect downstream analyses.
-
-    !!! techdetails "Technical Details"
-        |  | Links |
-        | --- | --- |
-        | Task | [task_cat_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_cat_files.wdl) |
+{{ include_md("common_text/snippy_core_task.md", condition="snippy_streamline") }}
+{{ include_md("common_text/gubbins_task.md", condition="snippy_streamline") }}
+{{ include_md("common_text/snp_sites_task.md")}}
+{{ include_md("common_text/iqtree2_task.md")}}
+{{ include_md("common_text/snp_dists_task.md", condition="snippy")}}
+{{ include_md("common_text/data_summary_task.md", condition="snippy")}}
+{{ include_md("common_text/shared_variants_task.md", condition="snippy")}}
+{{ include_md("common_text/snippy_qc_concatenation_task.md")}}
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| snippy_centroid_docker | String | Docker file used for Centroid |
-| snippy_centroid_fasta | File | FASTA file for the centroid sample |
-| snippy_centroid_mash_tsv | File | TSV file containing mash distances computed by centroid |
-| snippy_centroid_samplename | String | Name of the centroid sample |
-| snippy_centroid_version | String | Centroid version used |
-| snippy_cg_snp_matrix | File | CSV file of core genome pairwise SNP distances between samples, calculated from the final alignment  |
-| snippy_combined_qc_metrics | File | Combined QC metrics file containing concatenated QC metrics from all samples. |
-| snippy_concatenated_variants | File | The concatenated variants file |
-| snippy_filtered_metadata | File | TSV recording the columns of the Terra data table that were used in the summarize_data task |
-| snippy_final_alignment | File | Final alignment (FASTA file) used to generate the tree (either after snippy alignment, gubbins recombination removal, and/or core site selection with SNP-sites) |
-| snippy_final_tree | File | Final phylogenetic tree produced by Snippy_Streamline |
-| snippy_gubbins_branch_stats | File | CSV file showing <https://github.com/nickjcroucher/gubbins/blob/master/docs/gubbins_manual.md#output-statistics> for each branch of the tree   |
-| snippy_gubbins_docker | String | Docker file used for Gubbins |
-| snippy_gubbins_recombination_gff | File | Recombination statistics in GFF format; these can be viewed in Phandango against the phylogenetic tree |
-| snippy_gubbins_version | String | Gubbins version used |
-| snippy_iqtree2_docker | String | Docker file used for IQTree2 |
-| snippy_iqtree2_model_used | String | Nucleotide substitution model used by IQTree2 |
-| snippy_iqtree2_version | String | IQTree2 version used |
-| snippy_msa_snps_summary | File | CSV file showing <https://github.com/nickjcroucher/gubbins/blob/master/docs/gubbins_manual.md#output-statistics> for each branch of the tree   |
-| snippy_ncbi_datasets_docker | String | Docker file used for NCBI datasets |
-| snippy_ncbi_datasets_version | String | NCBI datasets version used |
-| snippy_ref | File | Reference genome used by Snippy |
-| snippy_ref_metadata_json | File | Metadata associated with the refence genome used by Snippy, in JSON format |
-| snippy_referenceseeker_database | String | ReferenceSeeker database used |
-| snippy_referenceseeker_docker | String | Docker file used for ReferenceSeeker |
-| snippy_referenceseeker_top_hit_ncbi_accession | String | NCBI Accession for the top hit identified by referenceseeker |
-| snippy_referenceseeker_tsv | File | TSV file of the top hits between the query genome and the Reference Seeker database |
-| snippy_referenceseeker_version | String | ReferenceSeeker version used |
-| snippy_snp_dists_docker | String | Docker file used for SNP-dists |
-| snippy_snp_dists_version | String | SNP-dists version used |
-| snippy_snp_sites_docker | String | Docker file used for SNP-sites |
-| snippy_snp_sites_version | String | SNP-sites version used |
-| snippy_streamline_analysis_date | String | Date of workflow run |
-| snippy_streamline_version | String | Version of Snippy_Streamline used |
-| snippy_summarized_data | File | CSV presence/absence matrix generated by the summarize_data task (within Snippy_Tree workflow) from the list of columns provided |
-| snippy_tree_snippy_docker | String | Docker file used for Snippy in the Snippy_Tree subworkfow |
-| snippy_tree_snippy_version | String | Version of Snippy_Tree subworkflow used |
-| snippy_variants_outdir_tarball | Array[File] | A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree |
-| snippy_variants_snippy_docker | Array[String] | Docker file used for Snippy in the Snippy_Variants subworkfow |
-| snippy_variants_snippy_version | Array[String] | Version of Snippy_Tree subworkflow used |
-| snippy_wg_snp_matrix | File | CSV file of whole genome pairwise SNP distances between samples, calculated from the final alignment |
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Snippy_Streamline_FASTA"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
-</div>
+///
 
 ## References
 

@@ -5,7 +5,7 @@ task stxtyper {
     File assembly
     String samplename
     Boolean enable_debugging = false # Additional messages are printed and files in $TMPDIR are not removed after running
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.40"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.42"
     Int disk_size = 50
     Int cpu = 1
     Int memory = 4

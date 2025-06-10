@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.1.0 | Yes | Set-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Lyve_SET**](../workflows/phylogenetic_construction/lyve_set.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## Lyve_SET_PHB
 
@@ -17,37 +15,11 @@ The Lyve_SET WDL workflow runs the [Lyve-SET](https://github.com/lskatz/lyve-SET
 
 ### Inputs
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| lyveset_workflow | **dataset_name** | String | Free text string used to label output files | | Required |
-| lyveset_workflow | **read1** | Array[File] | Array of read1 files for sample set. We recommend using cleaned rather than raw reads. | | Required |
-| lyveset_workflow | **read2** | Array[File] | Array of read2 files for sample set. We recommend using cleaned rather than raw reads. | | Required |
-| lyveset_workflow | **reference_genome** | File | Path to reference genome in a Terra-accessible Google bucket. For considerations when choosing a reference genome, see: <https://github.com/lskatz/lyve-SET/blob/master/docs/FAQ.md> | | Required |
-| lyveset | **allowedFlanking** | Int | Allowed flanking distance in base pairs. Nucleotides this close together cannot be considered as high-quality. | 0 | Optional |
-| lyveset | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| lyveset | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| lyveset | **docker_image** | String | Docker image used for running Lyve-SET | "us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f" | Optional |
-| lyveset | **downsample** | Boolean | If true, downsample all reads to 50x. Approximated according to the ref genome assembly | FALSE | Optional |
-| lyveset | **fast** | Boolean | Shorthand for `--downsample --mapper snap --nomask-phages --nomask-cliffs --sample-sites` | FALSE | Optional |
-| lyveset | **mapper** | String | Which mapper? Choices: "smalt", "snap" | "smalt" | Optional |
-| lyveset | **mask_cliffs** | Boolean | If true, search for and mask 'Cliffs' in pileups | FALSE | Optional |
-| lyveset | **mask_phages** | Boolean | If true, search for and mask phages in the reference genome | FALSE | Optional |
-| lyveset | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| lyveset | **min_alt_frac** | Float | The percent consensus that needs to be reached before a SNP is called. Otherwise, 'N' | 0.75 | Optional |
-| lyveset | **min_coverage** | Int | Minimum coverage needed before a SNP is called. Otherwise, 'N' | 10 | Optional |
-| lyveset | **nomatrix** | Boolean | If true, do not create an hqSNP matrix | FALSE | Optional |
-| lyveset | **nomsa** | Boolean | If true, do not make a multiple sequence alignment | FALSE | Optional |
-| lyveset | **notrees** | Boolean | If true, do not make phylogenies | FALSE | Optional |
-| lyveset | **presets** | String | See [presets.conf](https://github.com/lskatz/lyve-SET/blob/v1.1.4-head/config/original/presets.conf) for more information |  | Optional |
-| lyveset | **read_cleaner** | String | Which read cleaner? Choices: "none", "CGP", "BayesHammer" | "CGP" | Optional |
-| lyveset | **sample_sites** | Boolean | If true, randomly choose a genome and find SNPs in a quick and dirty way. Then on the SNP-calling stage, only interrogate those sites for SNPs for each genome (including the randomly-sampled genome). | FALSE | Optional |
-| lyveset | **snpcaller** | String | Which SNP caller? Choices: "varscan", "vcftools" | "varscan" | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Lyve_SET"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Workflow Actions
 
@@ -74,16 +46,11 @@ The following output files are populated to the Terra data table. However, pleas
 2. The workflow skipped an analysis step due to an issue with the input data
     1. For example, the workflow will not attempt to produce a phylogenetic tree if there are too few samples or if samples are too closely related
 
-| **Variable** | **Type** | **Description** | **Equivalent file from Lyve-SET pipeline** |
-| --- | --- | --- | --- |
-| lyveset_alignment_fasta | File | The output alignment file in fasta format | project/msa/out.aln.fasta |
-| lyveset_docker_image | String | Lyve_SET docker image used for analysis |  |
-| lyveset_log | File | Lyve_SET task log file |  |
-| lyveset_pairwise_matrix | File | Pairwise SNP distances matrix | project/msa/out.pairwiseMatrix.tsv |
-| lyveset_pooled_snps_vcf | File | SNPs vcf | project/msa/out.pooled.snps.vcf.gz |
-| lyveset_raxml_tree | File | RAxML-generated tree in newick format | project/msa/out.RAxML_bipartitions |
-| lyveset_wf_analysis_date | String | Date analysis was run |  |
-| lyveset_wf_version | String | Version of PHB used when running Lyveset_PHB |  |
+/// html | div[class="searchable-table"]
+
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Lyve_SET"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///
 
 In addition to these outputs, all of the files produced by the Lyve-SET pipeline are available in the task-level outputs, including intermediate files and individual bam and vcf files for each sample. These files can be accessed viewing the execution directory for the run.
 

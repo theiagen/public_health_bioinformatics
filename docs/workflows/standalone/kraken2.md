@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v3.0.0 | Yes | Sample-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Kraken2**](../workflows/standalone/kraken2.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## Kraken2 Workflows
 
@@ -34,68 +32,64 @@ Besides the data input types, there are minimal differences between these two wo
 
 | Database name | Database Description | Suggested Applications | GCP URI (for usage in Terra) | Source | Database Size (GB) | Date of Last Update |
 | --- | --- | --- | --- | --- | --- | --- |
-| **Kalamari v5.1** | Kalamari is a database of complete public assemblies, that has been fine-tuned for enteric pathogens and is backed by trusted institutions. [Full list available here ( in chromosomes.tsv and plasmids.tsv)](https://github.com/lskatz/Kalamari/tree/master/src) | Single-isolate enteric bacterial pathogen analysis (Salmonella, Escherichia, Shigella, Listeria, Campylobacter, Vibrio, Yersinia) | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/kraken2.kalamari_5.1.tar.gz`** | ‣ | 1.5 | 18/5/2022 |
-| **standard 8GB** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core) capped at 8GB | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_standard_08gb_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 7.5 | 12/1/2024 |
-| **standard 16GB** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core) capped at 16GB | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_standard_16gb_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 15 | 12/1/2024 |
-| **standard** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core)  | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_standard_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 72 | 18/4/2023 |
-| **viral** | RefSeq viral | Viral metagenomics | **`gs://theiagen-large-public-files-rp/terra/databases/kraken2/k2_viral_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 0.6 | 12/1/2024 |
-| **EuPathDB48** | Eukaryotic pathogen genomes with contaminants removed. [Full list available here](https://genome-idx.s3.amazonaws.com/kraken/k2_eupathdb48_20201113/EuPathDB48_Contents.txt) | Eukaryotic organisms (Candida spp., Aspergillus spp., etc) | **`gs://theiagen-public-files-rp/terra/theiaprok-files/k2_eupathdb48_20201113.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 30.3 | 13/11/2020 |
-| **EuPathDB48** | Eukaryotic pathogen genomes with contaminants removed. [Full list available here](https://genome-idx.s3.amazonaws.com/kraken/k2_eupathdb48_20201113/EuPathDB48_Contents.txt) | Eukaryotic organisms (Candida spp., Aspergillus spp., etc) | **`gs://theiagen-large-public-files-rp/terra/databases/kraken/k2_eupathdb48_20230407.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 11 | 7/4/2023 |
+| **Kalamari v5.1** | Kalamari is a database of complete public assemblies, that has been fine-tuned for enteric pathogens and is backed by trusted institutions. [Full list available here ( in chromosomes.tsv and plasmids.tsv)](https://github.com/lskatz/Kalamari/tree/master/src) | Single-isolate enteric bacterial pathogen analysis (Salmonella, Escherichia, Shigella, Listeria, Campylobacter, Vibrio, Yersinia) | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2.kalamari_5.1.tar.gz`** | ‣ | 1.5 | 18/5/2022 |
+| **standard 8GB** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core) capped at 8GB | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_08gb_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 7.5 | 12/1/2024 |
+| **standard 16GB** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core) capped at 16GB | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_16gb_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 15 | 12/1/2024 |
+| **standard** | Standard RefSeq database (archaea, bacteria, viral, plasmid, human, UniVec_Core)  | Prokaryotic or viral organisms, but for enteric pathogens, we recommend Kalamari | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 72 | 18/4/2023 |
+| **viral** | RefSeq viral | Viral metagenomics | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral_20240112.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 0.6 | 12/1/2024 |
+| **EuPathDB48** | Eukaryotic pathogen genomes with contaminants removed. [Full list available here](https://genome-idx.s3.amazonaws.com/kraken/k2_eupathdb48_20201113/EuPathDB48_Contents.txt) | Eukaryotic organisms (Candida spp., Aspergillus spp., etc) | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_eupathdb48_20201113.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 30.3 | 13/11/2020 |
+| **EuPathDB48** | Eukaryotic pathogen genomes with contaminants removed. [Full list available here](https://genome-idx.s3.amazonaws.com/kraken/k2_eupathdb48_20201113/EuPathDB48_Contents.txt) | Eukaryotic organisms (Candida spp., Aspergillus spp., etc) | **`gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_eupathdb48_20230407.tar.gz`** | <https://benlangmead.github.io/aws-indexes/k2> | 11 | 7/4/2023 |
 
 </div>
 
 ### Inputs
 
-<div class="searchable-table" markdown="1">
+!!! caption ""
+    === "Kraken_PE"
+        /// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** | **Workflow** |
-|---|---|---|---|---|---|---|
-| *workflow_name | **kraken2_db** | File | A Kraken2 database in .tar.gz format |  | Required | ONT, PE, SE |
-| *workflow_name | **read1** | File | Forward read in FASTQ file format (compression optional) |  | Required | ONT, PE, SE |
-| *workflow_name | **read2** | File | Reverse Illumina read in FASTQ file format (compression optional) |  | Required for PE only | PE |
-| *workflow_name | **samplename** | String | Name of the sample being analyzed |  | Required | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **classified_out** | String | Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix | classified#.fastq | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **disk_size** | Int | GB of storage to request for VM used to run the kraken2 task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database) | 100 | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **kraken2_args** | String | Allows a user to supply additional kraken2 command-line arguments |  | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional | ONT, PE, SE |
-| kraken2_pe or kraken2_se | **unclassified_out** | String | Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix | unclassified#.fastq | Optional | ONT, PE, SE |
-| krona | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | PE, SE |
-| krona | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | PE, SE |
-| krona | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/krona:2.8.1 | Optional | PE, SE |
-| krona | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | PE, SE |
-| kraken2_recalculate_abundances | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional | ONT |
-| kraken2_recalculate_abundances | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional | ONT |
-| kraken2_recalculate_abundances | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4 | Optional | ONT |
-| kraken2_recalculate_abundances | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional | ONT |
-| kraken2_recalculate_abundances | **target_organism** | String | Target organism for the kraken2 abundance to be exported to the data table |  | Optional | ONT |
-| version_capture | **docker** | String | The Docker container to use for the task | "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0" | Optional | ONT, PE, SE |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional | ONT, PE, SE |
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Kraken_PE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
 
-</div>
+    === "Kraken_SE"
+        /// html | div[class="searchable-table"]
+
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Kraken_SE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
+
+    === "Kraken_ONT"
+        /// html | div[class="searchable-table"]
+
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Kraken_ONT"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        ///
+
+### Workflow Tasks
+
+{{ include_md("common_text/kraken2_task.md", condition="kraken") }}
 
 ### Outputs
 
-<div class="searchable-table" markdown="1">
+!!! caption ""
+    === "Kraken_PE"
+        /// html | div[class="searchable-table"]
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| kraken2_classified_read1 | File | FASTQ file of classified forward/R1 reads |
-| kraken2_classified_read2 | File | FASTQ file of classified reverse/R2 reads (if PE) |
-| kraken2_classified_report | File | Standard Kraken2 output report. TXT filetype, but can be opened in Excel as a TSV file |
-| kraken2_docker | String | Docker image used to run kraken2 |
-| kraken2_*_wf_analysis_date | String | Date the workflow was run |
-| kraken2_*_wf_version | String | Workflow version |
-| kraken2_report | File | TXT document describing taxonomic prediction of every FASTQ record. This file is usually very large and cumbersome to open and view |
-| kraken2_unclassified_read1 | File | FASTQ file of unclassified forward/R1 reads |
-| kraken2_unclassified_read2 | File | FASTQ file of unclassified reverse/R2 reads (if PE) |
-| kraken2_version | String | kraken2 version |
-| krona_docker | String | Docker image used to run krona (if PE or SE) |
-| krona_html | File | HTML report of krona with visualisation of taxonomic classification of reads (if PE or SE) |
-| krona_version | String | krona version (if PE or SE) |
+        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Kraken_PE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
 
-</div>
+        ///
+
+    === "Kraken_SE"
+        /// html | div[class="searchable-table"]
+
+        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Kraken_SE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+
+        ///
+
+    === "Kraken_ONT"
+        /// html | div[class="searchable-table"]
+
+        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Kraken_ONT"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+
+        ///
 
 #### Interpretation of results
 
