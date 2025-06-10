@@ -9,7 +9,7 @@
     - Structural variants
 
     ??? dna "`clair3_model`"
-        This parameter specifies the clair3 model to use for variant calling. The default is set to `"r941_prom_hac_g360+g422"`, but users may select from other available models that `clair3` was trained on, which may yield better results depending on the basecaller and data type. The following models are available:
+        This parameter specifies the clair3 model to use for variant calling. The default is set to `"r1041_e82_400bps_sup_v500"`, but users may select from other available models that `clair3` was trained on, which may yield better results depending on the basecaller and data type. The following models are available:
 
         - `"ont"`
         - `"ont_guppy2"`
