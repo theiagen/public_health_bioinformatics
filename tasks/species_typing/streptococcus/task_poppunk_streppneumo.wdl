@@ -14,21 +14,21 @@ task poppunk {
     # database/reference files currently hosted on a public, requester-pays GCP bucket
     # hosting individually for speed purposes. Unzipping one big 20GB zip archive takes a long time, longer than downloading the files individually (which total 22GB uncompressed)
     # If future versions of the GPS database are released, we can update the links here or in Terra, and task should be future-proof
-    File GPS_dists_npy = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.dists.npy"
-    File GPS_dists_pkl = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.dists.pkl"
-    File GPS_h5 = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.h5"
-    File GPS_refs = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs"
-    File GPS_refs_dists_npy = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.dists.npy"
-    File GPS_refs_dists_pkl = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.dists.pkl"
-    File GPS_refs_h5 = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6.refs.h5"
-    File GPS_clusters_csv = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_clusters.csv"
-    File GPS_fit_npz = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_fit.npz"
-    File GPS_fit_pkl = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_fit.pkl"
-    File GPS_graph_gt = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_graph.gt"
-    File GPS_qcreport_txt = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_qcreport.txt"
-    File GPS_unword_clusters_csv = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_unword_clusters.csv"
-    File GPS_refs_graph_gt = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6refs_graph.gt"
-    File GPS_external_clusters_csv = "gs://theiagen-public-files-rp/terra/theiaprok-files/GPS_v6/GPS_v6_external_clusters.csv"
+    File GPS_dists_npy = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.dists.npy"
+    File GPS_dists_pkl = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.dists.pkl"
+    File GPS_h5 = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.h5"
+    File GPS_refs = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs"
+    File GPS_refs_dists_npy = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.dists.npy"
+    File GPS_refs_dists_pkl = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.dists.pkl"
+    File GPS_refs_h5 = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.h5"
+    File GPS_clusters_csv = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_clusters.csv"
+    File GPS_fit_npz = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_fit.npz"
+    File GPS_fit_pkl = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_fit.pkl"
+    File GPS_graph_gt = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_graph.gt"
+    File GPS_qcreport_txt = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_qcreport.txt"
+    File GPS_unword_clusters_csv = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_unword_clusters.csv"
+    File GPS_refs_graph_gt = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6refs_graph.gt"
+    File GPS_external_clusters_csv = "gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_external_clusters.csv"
   }
   command <<<
     # get version information

@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Data Import](../../workflows_overview/workflows_type.md/#data-import) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.3.0 | Yes | Sample-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Fetch_SRR_Accession**](../workflows/data_import/fetch_srr_accession.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## Fetch SRR Accession
 
@@ -16,7 +14,7 @@ The workflow uses the fastq-dl tool to fetch metadata from SRA and specifically 
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Fetch_SRR_Accession", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Fetch_SRR_Accession"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -38,6 +36,6 @@ This workflow has a single task that performs metadata retrieval for the specifi
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Fetch_SRR_Accession", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Fetch_SRR_Accession"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///

@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v3.0.0 | Yes | Sample-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaMeta**](../workflows/genomic_characterization/theiameta.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## TheiaMeta Workflows
 
@@ -25,7 +23,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaMeta_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaMeta_Illumina_PE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -46,6 +44,10 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
     While metagenomics has emerged as a technology of choice for analyzing bacterial populations, the assembly of metagenomic data remains challenging. A dedicated metagenomic assembly algorithm is necessary to circumvent the challenge of interpreting variation. metaSPAdes addresses various challenges of metagenomic assembly by capitalizing on computational ideas that proved to be useful in assemblies of single cells and highly polymorphic diploid genomes.
 
     `metaspades` is a _de novo_ assembler that first constructs a de Bruijn graph of all the reads using the SPAdes algorithm. Through various graph simplification procedures, paths in the assembly graph are reconstructed that correspond to long genomic fragments within the metagenome. For more details, please see the original publication.
+
+    !!! warning "Common errors with SPAdes v4+"
+
+        We found that MetaSPAdes v4+ can raise segmentation fault errors using our validation set of metagenomic samples, so MetaSPAdes v3+ is called by TheiaMeta. A newer version can be called by referencing a more recent container (e.g. "us-docker.pkg.dev/general-theiagen/staphb/spades:4.2.0") via the `metaspades_pe` `docker` input.
 
     !!! techdetails "MetaSPAdes Technical Details"
         
@@ -181,7 +183,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaMeta_Illumina_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaMeta_Illumina_PE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///
 

@@ -12,6 +12,7 @@ nav:
         - With the Command-Line: getting_started/commandline.md
         - With Terra.bio: getting_started/terra.md
         - Workflow Failure Philosophy: getting_started/philosophy.md
+     - Available SOPs: guides/sops.md
      - Guides:
         - Guide to GAMBIT: guides/gambit.md
         - Guide to GAMBIT Database Creation: guides/gambit_database.md
@@ -66,6 +67,7 @@ nav:
                - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
                - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
                - GAMBIT_Query: workflows/standalone/gambit_query.md
+               - Host_Decontaminate: workflows/standalone/host_decontaminate.md
                - Kraken2: workflows/standalone/kraken2.md
                - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
                - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
@@ -85,6 +87,7 @@ nav:
                - Create_Terra_Table: workflows/data_import/create_terra_table.md
                - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
                - Fetch_SRR_Accession: workflows/data_import/fetch_srr_accession.md
+               - Host_Decontaminate: workflows/standalone/host_decontaminate.md
                - Kraken2: workflows/standalone/kraken2.md
                - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
                - RASUSA: workflows/standalone/rasusa.md
@@ -156,6 +159,7 @@ nav:
             - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
             - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
             - GAMBIT_Query: workflows/standalone/gambit_query.md
+            - Host_Decontaminate: workflows/standalone/host_decontaminate.md
             - Kraken2: workflows/standalone/kraken2.md
             - kSNP3: workflows/phylogenetic_construction/ksnp3.md
             - kSNP4: workflows/phylogenetic_construction/ksnp4.md

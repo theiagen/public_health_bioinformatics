@@ -22,7 +22,7 @@ task variant_call {
 
     # set reference genome
     if [[ ! -z "~{reference_genome}" ]]; then
-      echo "User reference identified; ~{reference_genome} will be utilized for alignement"
+      echo "User reference identified; ~{reference_genome} will be used for alignement"
       ref_genome="~{reference_genome}"
       bwa index "~{reference_genome}"
       # move to primer_schemes dir; bwa fails if reference file not in this location
@@ -32,7 +32,7 @@ task variant_call {
     
     # set reference gff
     if [[ ! -z "~{reference_gff}" ]]; then
-      echo "User reference identified; ~{reference_gff} will be utilized for alignement"
+      echo "User reference identified; ~{reference_gff} will be used for alignement"
       ref_gff="~{reference_gff}"
       ref_gff_call="-g ${ref_gff}"
       # move to primer_schemes dir; bwa fails if reference file not in this location

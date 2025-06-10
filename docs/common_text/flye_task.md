@@ -3,7 +3,7 @@
     Flye is a _de novo_ assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerates the error rate of ONT data.
 
 <!-- if: theiaviral -->
-    It can be enabled by setting the `skip_raven` parameter to `true`. The `flye` task is used as a fallback option if the `raven` task fails during execution (see task `raven` for more details).
+    It can be enabled by setting the `call_raven` parameter to `false`. The `flye` task is used as a fallback option if the `raven` task fails during execution (see task `raven` for more details).
 <!-- endif -->
 
     ??? dna "`flye_read_type`" 

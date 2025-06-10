@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Viral](../../workflows_overview/workflows_kingdom.md/#viral) | PHB v3.0.0 | Yes | Sample-level, Set-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Augur**](../workflows/phylogenetic_construction/augur.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## Augur Workflows
 
@@ -32,7 +30,7 @@ This workflow runs on the sample level.
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Augur_Prep", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Augur_Prep"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -40,7 +38,7 @@ This workflow runs on the sample level.
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Augur_Prep", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Augur_Prep"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///
 
@@ -75,53 +73,53 @@ The Augur_PHB workflow takes in a ***set*** of SARS-CoV-2 (or any other viral 
         - proportion_wide = 0.0
 
     ??? toggle "Default values for Flu"
-        - lat_longs_tsv = `"gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv"`
+        - lat_longs_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"`
         - min_num_unambig = 900
         - min_date = 2020.0
         - pivot_interval = 1
         - narrow_bandwidth = 0.1666667
         - proportion_wide = 0.0
         ??? toggle "H1N1"
-            - auspice_config = `"gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h1n1pdm.json"`
+            - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h1n1pdm.json"`
             - HA
-                - reference_fasta = `"gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_ha.gb"`
-                - clades_tsv = `"gs://theiagen-public-files-rp/terra/flu-references/clades_h1n1pdm_ha.tsv"`
+                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.gb"`
+                - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_h1n1pdm_ha.tsv"`
             - NA
-                - reference_fasta = `"gs://theiagen-public-files-rp/terra/flu-references/reference_h1n1pdm_na.gb"`
+                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.gb"`
         ??? toggle "H3N2"
-            - auspice_config = `"gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h3n2.json"`
+            - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h3n2.json"`
             - HA
-                - reference_fasta = `"gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_ha.gb"`
-                - clades_tsv = `"gs://theiagen-public-files-rp/terra/flu-references/clades_h3n2_ha.tsv"`
+                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.gb"`
+                - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_h3n2_ha.tsv"`
             - NA
-                - reference_fasta = `"gs://theiagen-public-files-rp/terra/flu-references/reference_h3n2_na.gb"`
+                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.gb"`
         ??? toggle "Victoria"
-            - auspice_config = `"gs://theiagen-public-files-rp/terra/flu-references/auspice_config_vic.json"`
+            - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_vic.json"`
             - HA
-                - reference_fasta = `"gs://theiagen-public-files-rp/terra/flu-references/reference_vic_ha.gb"`
-                - clades_tsv = `"gs://theiagen-public-files-rp/terra/flu-references/clades_vic_ha.tsv"`
+                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.gb"`
+                - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_vic_ha.tsv"`
             - NA
-                - reference_fasta = `"gs://theiagen-public-files-rp/terra/flu-references/reference_vic_na.gb"`
+                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_na.gb"`
         ??? toggle "Yamagata"
-            - auspice_config = `"gs://theiagen-public-files-rp/terra/flu-references/auspice_config_yam.json"`
+            - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam.json"`
             - HA
-                - reference_fasta = `"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_ha.gb"`
-                - clades_tsv = `"gs://theiagen-public-files-rp/terra/flu-references/clades_yam_ha.tsv"`
+                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_ha.gb"`
+                - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_yam_ha.tsv"`
             - NA
-                - reference_fasta = `"gs://theiagen-public-files-rp/terra/flu-references/reference_yam_na.gb"`
+                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_na.gb"`
         ??? toggle "H5N1"
-            - auspice_config = `"gs://theiagen-public-files-rp/terra/flu-references/auspice_config_h5n1.json"`
+            - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h5n1.json"`
             - HA
-                - reference_fasta = `"gs://theiagen-public-files-rp/terra/flu-references/reference_h5n1_ha.gb"`
-                - clades_tsv = `"gs://theiagen-public-files-rp/terra/flu-references/h5nx-clades.tsv"`
+                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.gb"`
+                - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/h5nx-clades.tsv"`
 
     ??? toggle "Default values for MPXV"
         - min_num_unambig = 150000
-        - clades_tsv = `"gs://theiagen-public-files-rp/terra/augur-mpox-references/mpox_clades.tsv"`
-        - lat_longs_tsv = `"gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv"`
-        - reference_fasta = `"gs://theiagen-public-files-rp/terra/augur-mpox-references/NC_063383.1.reference.fasta"`
-        - reference_genbank = `"gs://theiagen-public-files-rp/terra/augur-mpox-references/NC_063383.1_reference.gb"`
-        - auspice_config = `"gs://theiagen-public-files-rp/terra/augur-mpox-references/mpox_auspice_config_mpxv.json"`
+        - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_clades.tsv"`
+        - lat_longs_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"`
+        - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/NC_063383.1.reference.fasta"`
+        - reference_genbank = `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/NC_063383.1_reference.gb"`
+        - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_auspice_config_mpxv.json"`
         - min_date = 2020.0
         - pivot_interval = 1
         - narrow_bandwidth = 0.1666667
@@ -129,11 +127,11 @@ The Augur_PHB workflow takes in a ***set*** of SARS-CoV-2 (or any other viral 
 
     ??? toggle "Default values for RSV-A"
         - min_num_unambig = 10850
-        - clades_tsv = `"gs://theiagen-public-files-rp/terra/rsv_references/rsv_a_clades.tsv"`
-        - lat_longs_tsv = `"gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv"`
-        - reference_fasta = `"gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_a.fasta"`
-        - reference_genbank = `""gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_a.gb"`
-        - auspice_config = `""gs://theiagen-public-files-rp/terra/rsv_references/rsv_auspice_config.json"`
+        - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_a_clades.tsv"`
+        - lat_longs_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"`
+        - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"`
+        - reference_genbank = `""gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.gb"`
+        - auspice_config = `""gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"`
         - min_date = 2020.0
         - pivot_interval = 1
         - narrow_bandwidth = 0.1666667
@@ -141,11 +139,11 @@ The Augur_PHB workflow takes in a ***set*** of SARS-CoV-2 (or any other viral 
 
     ??? toggle "Default values for RSV-B"
         - min_num_unambig = 10850
-        - clades_tsv = `"gs://theiagen-public-files-rp/terra/rsv_references/rsv_b_clades.tsv"`
-        - lat_longs_tsv = `"gs://theiagen-public-files-rp/terra/flu-references/lat_longs.tsv"`
-        - reference_fasta = `"gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.fasta"`
-        - reference_genbank = `""gs://theiagen-public-files-rp/terra/rsv_references/reference_rsv_b.gb"`
-        - auspice_config = `""gs://theiagen-public-files-rp/terra/rsv_references/rsv_auspice_config.json"`
+        - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_b_clades.tsv"`
+        - lat_longs_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"`
+        - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"`
+        - reference_genbank = `""gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.gb"`
+        - auspice_config = `""gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"`
         - min_date = 2020.0
         - pivot_interval = 1
         - narrow_bandwidth = 0.1666667
@@ -160,7 +158,7 @@ This workflow runs on the set level. Please note that for every task, runtime pa
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Augur", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Augur"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -204,7 +202,7 @@ The Nextstrain team hosts documentation surrounding the Augur workflow → Auspi
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Augur", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Augur"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///
 

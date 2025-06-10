@@ -28,7 +28,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox mkdocs-macros-plugin
+          pip install mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox mkdocs-macros-plugin pandas
       
       - name: Build documentation
         run: |

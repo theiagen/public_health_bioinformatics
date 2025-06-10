@@ -11,7 +11,7 @@ workflow morgana_magic {
     String samplename
     File assembly_fasta
     File read1
-    File read2
+    File? read2
     String taxon_name
     String seq_method
     # consensus qc
@@ -137,22 +137,22 @@ workflow morgana_magic {
     }
   }
   if (organism_parameters.standardized_organism == "rabies") {
-    call nextclade_task.nextclade_v3 as nextclade_v3_rabies {
+    call nextclade_task.nextclade_add_ref as rabies_nextclade {
       input:
         genome_fasta = assembly_fasta,
-        custom_input_dataset = organism_parameters.nextclade_pathogen_json,
-        auspice_reference_tree_json = organism_parameters.nextclade_auspice_tree,
+        reference_tree_json = organism_parameters.nextclade_auspice_tree,
         gene_annotations_gff = organism_parameters.reference_gff,
         nextclade_pathogen_json = organism_parameters.nextclade_pathogen_json,
         input_ref = organism_parameters.reference,
+        dataset_name = "theiagen_rabies",
         cpu = nextclade_cpu,
         disk_size = nextclade_disk_size,
         docker = nextclade_docker_image,
         memory = nextclade_memory
     }
-    call nextclade_task.nextclade_output_parser as nextclade_parser_rabies {
+    call nextclade_task.nextclade_output_parser as rabies_output_parser {
       input:
-        nextclade_tsv = nextclade_v3_rabies.nextclade_tsv,
+        nextclade_tsv = rabies_nextclade.nextclade_tsv,
         organism = organism_parameters.standardized_organism,
         cpu = nextclade_output_parser_cpu,
         disk_size = nextclade_output_parser_disk_size,
@@ -171,19 +171,28 @@ workflow morgana_magic {
     File? pango_lineage_report = pangolin4.pango_lineage_report
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
-    # Nextclade outputs for all organisms
-    String nextclade_version = select_first([nextclade_v3.nextclade_version, flu_track.nextclade_version, ""])
-    String nextclade_docker = select_first([nextclade_v3.nextclade_docker, flu_track.nextclade_docker, ""])
-    # Nextclade outputs for non-flu
-    File? nextclade_json = nextclade_v3.nextclade_json
-    File? auspice_json = nextclade_v3.auspice_json
-    File? nextclade_tsv = nextclade_v3.nextclade_tsv
-    String nextclade_ds_tag = organism_parameters.nextclade_dataset_tag
-    String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
-    String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
-    String? nextclade_clade = nextclade_output_parser.nextclade_clade
-    String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
-    String? nextclade_qc = nextclade_output_parser.nextclade_qc
+    # Nextclade outputs
+    String nextclade_version = select_first([rabies_nextclade.nextclade_version, nextclade_v3.nextclade_version, flu_track.nextclade_version, ""])
+    String nextclade_docker = select_first([rabies_nextclade.nextclade_docker, nextclade_v3.nextclade_docker, flu_track.nextclade_docker, ""])
+    String nextclade_ds_tag = select_first([organism_parameters.nextclade_dataset_tag, ""])
+    # Nextclade outputs for all MPXV
+    File? nextclade_json_mpxv = nextclade_v3.nextclade_json
+    File? auspice_json_mpxv = nextclade_v3.auspice_json
+    File? nextclade_tsv_mpxv = nextclade_v3.nextclade_tsv
+    String? nextclade_aa_subs_mpxv = nextclade_output_parser.nextclade_aa_subs
+    String? nextclade_aa_dels_mpxv = nextclade_output_parser.nextclade_aa_dels
+    String? nextclade_clade_mpxv = nextclade_output_parser.nextclade_clade
+    String? nextclade_lineage_mpxv = nextclade_output_parser.nextclade_lineage
+    String? nextclade_qc_mpxv = nextclade_output_parser.nextclade_qc
+    # Nextclade outputs for rabies
+    File? nextclade_json_rabies = rabies_nextclade.nextclade_json
+    File? auspice_json_rabies = rabies_nextclade.auspice_json
+    File? nextclade_tsv_rabies = rabies_nextclade.nextclade_tsv
+    String? nextclade_aa_subs_rabies = rabies_output_parser.nextclade_aa_subs
+    String? nextclade_aa_dels_rabies = rabies_output_parser.nextclade_aa_dels
+    String? nextclade_clade_rabies = rabies_output_parser.nextclade_clade
+    String? nextclade_lineage_rabies = rabies_output_parser.nextclade_lineage
+    String? nextclade_qc_rabies = rabies_output_parser.nextclade_qc
     # Nextclade outputs for flu HA
     File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
     File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha

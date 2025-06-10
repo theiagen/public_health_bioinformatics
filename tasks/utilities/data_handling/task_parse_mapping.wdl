@@ -123,6 +123,67 @@ task sam_to_sorted_bam {
   }
 }
 
+task bam_to_unaligned_fastq {
+  meta {
+    description: "Convert BAM file to FASTQ equivalent to BWA task"
+  }
+  input {
+    File bam
+    String samplename
+    Boolean paired = false
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
+    Int disk_size = 100
+    Int cpu = 2
+    Int memory = 8   
+  }
+  command <<<
+    # Samtools verion capture
+    samtools --version | head -n1 | cut -d' ' -f2 | tee VERSION
+
+    # Get aligned and unaligned bams
+    if ~{paired}; then
+      echo "Generating FASTQs for unaligned paired-end reads"
+      # convert SAM to BAM that only includes unaligned reads
+      # remove singletons so reads are usable downstream
+      samtools view \
+        -@ ~{cpu} \
+        -f 0x08 \
+        -b \
+        -o ~{samplename}.sorted.no_singletons.bam \
+        ~{bam}
+      # generate the fastq from the no singleton BAM
+      samtools fastq \
+        -@ ~{cpu} \
+        -f 4 \
+        -1 ~{samplename}_unaligned_R1.fastq.gz \
+        -2 ~{samplename}_unaligned_R2.fastq.gz \
+        ~{samplename}.sorted.no_singletons.bam
+    else
+      echo -e "Generating FASTQs for unaligned single-end reads\n"
+      # extract all unaligned reads
+      samtools fastq \
+        -@ ~{cpu} \
+        -f 4 \
+        -0 ~{samplename}_unaligned_R1.fastq.gz \
+        ~{bam}
+    fi
+  >>>
+  output {
+    String sam_version = read_string("VERSION")
+    File read1_unaligned = "~{samplename}_unaligned_R1.fastq.gz"
+    File? read2_unaligned = "~{samplename}_unaligned_R2.fastq.gz"
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 0
+    preemptible: 0
+  }
+}
+
 task retrieve_pe_reads_bam {
   meta {
     description: "Parse minimap2 SAM file and return paired-end reads in FASTQ format"

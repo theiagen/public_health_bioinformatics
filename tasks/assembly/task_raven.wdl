@@ -15,8 +15,6 @@ task raven {
     Int memory = 16
   }
   command <<<
-    # fail hard
-
     # date and version control
     raven --version | tee VERSION
 

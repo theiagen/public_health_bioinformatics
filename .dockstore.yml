@@ -321,5 +321,8 @@ workflows:
  - name: TheiaViral_Panel_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_panel.wdl
+ - name: Host_Decontaminate_PHB 
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_host_decontaminate.wdl
    testParameterFiles:
      - /tests/inputs/empty.json

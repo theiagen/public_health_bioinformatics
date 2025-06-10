@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v3.0.0 | Yes; some optional features incompatible | Set-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Snippy_Streamline_FASTA**](../workflows/phylogenetic_construction/snippy_streamline_fasta.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## Snippy_Streamline_FASTA_PHB
 
@@ -66,9 +64,9 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
         Phylogenies of MTBC are typically constructed with the following options:
         
         - Using the H37Rv reference genome
-            - `reference_genome_file` = `"gs://theiagen-public-files-rp/terra/theiaprok-files/Mtb_NC_000962.3.fasta"`
+            - `reference_genome_file` = `"gs://theiagen-public-resources-rp/reference_data/bacterial/mycobacterium/MTB-NC_000962.3.fasta"`
         - Masking repetitive regions of the genome (e.g. PE/PPE genes) that are often misaligned
-            - `snippy_core_bed` = `"gs://theiagen-public-files/terra/theiaprok-files/Mtb_NC_000962.3.bed"`
+            - `snippy_core_bed` = `"gs://theiagen-public-resources-rp/reference_data/bacterial/mycobacterium/MTB-NC_000962.3.bed"`
         - Without masking recombination because TB can be considered non-recombinant
             - `use_gubbins` = false
         - Using the core genome
@@ -76,7 +74,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Snippy_Streamline_FASTA", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Snippy_Streamline_FASTA"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -123,7 +121,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Snippy_Streamline_FASTA", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Snippy_Streamline_FASTA"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///
 
