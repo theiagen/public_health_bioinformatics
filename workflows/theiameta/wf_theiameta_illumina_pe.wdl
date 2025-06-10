@@ -8,7 +8,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken_task
 import "../../tasks/taxon_id/contamination/task_krona.wdl" as krona_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
-import "../../tasks/assembly/task_spades.wdl" as spades_task
+import "../../tasks/assembly/task_metaspades.wdl" as metaspades_task
 import "../../tasks/quality_control/read_filtering/task_pilon.wdl" as pilon_task
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_wf
 
@@ -65,18 +65,17 @@ workflow theiameta_illumina_pe {
       kraken2_report = kraken2_clean.kraken2_report,
       samplename = samplename
   }
-  call spades_task.spades {
+  call metaspades_task.metaspades_pe {
     input:
-      read1 = read_QC_trim.read1_clean,
-      read2 = read_QC_trim.read2_clean,
-      samplename = samplename,
-      spades_type = 'meta'
+      read1_cleaned = read_QC_trim.read1_clean,
+      read2_cleaned = read_QC_trim.read2_clean,
+      samplename = samplename
   }
   call minimap2_task.minimap2 as minimap2_assembly_correction {
     input:
       query1 = read_QC_trim.read1_clean,
       query2 = read_QC_trim.read2_clean, 
-      reference = select_first([spades.assembly_fasta]),
+      reference = metaspades_pe.assembly_fasta,
       samplename = samplename,
       mode = "sr",
       output_sam = true
@@ -88,7 +87,7 @@ workflow theiameta_illumina_pe {
   }
   call pilon_task.pilon {
     input:
-      assembly = select_first([spades.assembly_fasta]),
+      assembly = metaspades_pe.assembly_fasta,
       bam = sort_bam_assembly_correction.bam,
       bai = sort_bam_assembly_correction.bai,
       samplename = samplename
@@ -244,8 +243,8 @@ workflow theiameta_illumina_pe {
     File? midas_report = read_QC_trim.midas_report
     # Assembly - metaspades 
     File assembly_fasta = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta])
-    String metaspades_version = spades.spades_version
-    String metaspades_docker = spades.spades_docker
+    String metaspades_version = metaspades_pe.metaspades_version
+    String metaspades_docker = metaspades_pe.metaspades_docker
     # Assembly - minimap2
     String minimap2_version = minimap2_assembly_correction.minimap2_version
     String minimap2_docker = minimap2_assembly_correction.minimap2_docker

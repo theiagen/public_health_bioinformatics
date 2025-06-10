@@ -10,7 +10,7 @@ task metabuli {
     File taxonomy_path = "gs://theiagen-public-resources-rp/reference_data/databases/metabuli/new_taxdump.tar.gz"
     Float? min_score # metabuli: Min. sequence similarity score (0.0-1.0) [0.000]
     Float? min_sp_score # metabuli: Min. score for species- or lower-level classification. [0.000]
-    Float? min_cov # metabuli: Min. query coverage (0.0-1.0) [0.000]
+    Float? min_percent_coverage # metabuli: Min. query coverage (0.0-1.0) [0.000]
     Int cpu = 4
     Int memory = 16
     Int disk_size = 100
