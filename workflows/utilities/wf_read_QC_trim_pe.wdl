@@ -138,7 +138,7 @@ workflow read_QC_trim_pe {
       }
     }
   }
-  if ("~{workflow_series}" == "theiaprok") {
+  if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk") {
     if ((call_kraken) && defined(kraken_db)) {
       call kraken.kraken2_standalone as kraken2_standalone_theiaprok {
         input:
@@ -150,7 +150,8 @@ workflow read_QC_trim_pe {
           memory = kraken_memory,
           cpu = kraken_cpu
       }
-    }  if ((call_kraken) && ! defined(kraken_db)) {
+    }  
+    if ((call_kraken) && ! defined(kraken_db)) {
       String kraken_db_warning = "Kraken database not defined"
     }
   }
