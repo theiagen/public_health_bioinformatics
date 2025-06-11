@@ -124,7 +124,7 @@
 <!-- endif -->
 
 <!-- if: theiaviral -->
-{{ include_md("common_text/host_decontaminate.md", condition="theiaviral", indent=4) }}
+{{ include_md("common_text/host_decontaminate.md", condition="theiaviral", indent=4, replacements={"??? task": "??? toggle"}) }}
 
 {{ include_md("common_text/kraken2_task.md", condition="theiaviral", indent=4) }}
 
