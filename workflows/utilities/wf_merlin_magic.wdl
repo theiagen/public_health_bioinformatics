@@ -630,7 +630,7 @@ workflow merlin_magic {
   }
   if (merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae") {
     if (!assembly_only && !ont_data) {
-      call srst2_vibrio_task.srst2_vibrio {ia
+      call srst2_vibrio_task.srst2_vibrio {
         input:
           read1 = select_first([read1]),
           read2 = read2,
