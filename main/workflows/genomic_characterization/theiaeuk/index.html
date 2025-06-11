@@ -1147,15 +1147,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#assembly-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Assembly tasks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#organism-agnostic-characterization" class="md-nav__link">
     <span class="md-ellipsis">
       Organism-agnostic characterization
@@ -3563,15 +3554,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#assembly-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Assembly tasks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#organism-agnostic-characterization" class="md-nav__link">
     <span class="md-ellipsis">
       Organism-agnostic characterization
@@ -5048,15 +5030,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#assembly-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Assembly tasks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#organism-agnostic-characterization" class="md-nav__link">
     <span class="md-ellipsis">
       Organism-agnostic characterization
@@ -5455,15 +5428,6 @@
 </li>
         
           <li class="md-nav__item">
-  <a href="#assembly-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      Assembly tasks
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
   <a href="#organism-agnostic-characterization" class="md-nav__link">
     <span class="md-ellipsis">
       Organism-agnostic characterization
@@ -5542,18 +5506,48 @@
 </tbody>
 </table>
 <h2 id="theiaeuk-workflows">TheiaEuk Workflows<a class="headerlink" href="#theiaeuk-workflows" title="Permanent link">&para;</a></h2>
-<p><strong>The TheiaEuk_Illumina_PE workflow is for the assembly, quality assessment, and characterization of fungal genomes.</strong> It is designed to accept Illumina paired-end sequencing data as the primary input. <strong>It is currently intended only for <mark>haploid</mark> fungal genomes like <em>Candidozyma auris</em>.</strong> Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.</p>
+<p><strong>The TheiaEuk workflows are for the assembly, quality assessment, and characterization of fungal genomes.</strong> It is designed to accept Illumina paired-end sequencing data or base-called ONT reads as the primary input. <strong>It is currently intended only for <mark>haploid</mark> fungal genomes like <em>Candidozyma auris</em>.</strong> Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.</p>
 <p>All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="theiaeuk_illumina_pe" name="__tabbed_1" type="radio" /><input id="theiaeuk_ont" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="theiaeuk_illumina_pe">TheiaEuk_Illumina_PE</label><label for="theiaeuk_ont">TheiaEuk_ONT</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="admonition caption">
-<p class="admonition-title">TheiaEuk Workflow Diagram</p>
-<p><a class="glightbox" href="../../../assets/figures/TheiaEuk_Illumina_PHB_202557.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="TheiaEuk Workflow Diagram" src="../../../assets/figures/TheiaEuk_Illumina_PHB_202557.png" width="75%" /></a></p>
+<p class="admonition-title">TheiaEuk Illumina PE Workflow Diagram</p>
+<p><a class="glightbox" href="../../../assets/figures/TheiaEuk_Illumina_PHB_202557.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="TheiaEuk Illumina PE Workflow Diagram" src="../../../assets/figures/TheiaEuk_Illumina_PHB_202557.png" /></a></p>
+</div>
+</div>
+<div class="tabbed-block">
+<div class="admonition caption">
+<p class="admonition-title">TheiaEuk ONT Workflow Diagram</p>
+<p><a class="glightbox" href="../../../assets/figures/TheiaEuk_ONT.png" data-type="image" data-width="auto" data-height="auto" data-desc-position="bottom"><img alt="TheiaEuk ONT Workflow Diagram" src="../../../assets/figures/TheiaEuk_ONT.png" /></a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Before running TheiaEuk</p>
+<p>TheiaEuk_Illumina_PE relies on <a href="#organism-specific-characterization">Snippy</a> to perform variant calling on the cleaned read dataset and then queries the resulting file for specific mutations that are known to confim antifugal resistance (see <a href="#organism-specific-characterization">Organism-specific characterization</a> section). This behaviour has been replicated in TheiaEuk_ONT but the variant calling is performed directly on the resulting assemblies. Therefore, the read support reported is, at the moment, non-reliable. Future improvements will include improvements on this module. </p>
 </div>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
-<div class="admonition info">
-<p class="admonition-title">Input read data</p>
-<p>The TheiaEuk_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with <code>.fastq</code> or <code>.fq</code>, with the optional addition of <code>.gz</code>. When possible, Theiagen recommends zipping files with <a href="https://www.gnu.org/software/gzip/">gzip</a> prior to Terra upload to minimize data upload time.</p>
-<p>By default, the workflow anticipates 2 x 150bp reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for <code>trim_minlen</code> may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.</p>
+<div class="admonition dna">
+<p class="admonition-title">Input Read Data</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="theiaeuk_illumina_pe_1" name="__tabbed_2" type="radio" /><input id="theiaeuk_ont_1" name="__tabbed_2" type="radio" /><div class="tabbed-labels"><label for="theiaeuk_illumina_pe_1">TheiaEuk_Illumina_PE</label><label for="theiaeuk_ont_1">TheiaEuk_ONT</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>The TheiaEuk_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with <code>.fastq</code> or <code>.fq</code>, with the optional addition of <code>.gz</code>. When possible, Theiagen recommends zipping files with <a href="https://www.gnu.org/software/gzip/">gzip</a> before Terra uploads to minimize data upload time.</p>
+<p>By default, the workflow anticipates <strong>2 x 150bp</strong> reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for <code>trim_minlen</code> may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.</p>
 </div>
+<div class="tabbed-block">
+<p>The TheiaEuk_ONT workflow takes in base-called ONT read data. Read file names should end with <code>.fastq</code> or <code>.fq</code>, with the optional addition of <code>.gz</code>. When possible, Theiagen recommends zipping files with <a href="https://www.gnu.org/software/gzip/">gzip</a> before uploading to Terra to minimize data upload time.</p>
+<p><strong>The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaEuk_ONT workflow must be quality assessed before reporting results.</strong></p>
+</div>
+</div>
+</div>
+</div>
+<div class="admonition caption">
+<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="theiaeuk_illumina_pe_2" name="__tabbed_3" type="radio" /><input id="theiaeuk_ont_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="theiaeuk_illumina_pe_2">TheiaEuk_Illumina_PE</label><label for="theiaeuk_ont_2">TheiaEuk_ONT</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="searchable-table">
 <table>
 <thead>
@@ -5620,7 +5614,7 @@
 <td><strong>cg_pipe_opts</strong></td>
 <td>String</td>
 <td>Options to pass to CG-Pipeline for clean read assessment</td>
-<td>--fast</td>
+<td>#NAME?</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5660,7 +5654,7 @@
 <td><strong>cg_pipe_opts</strong></td>
 <td>String</td>
 <td>Options to pass to CG-Pipeline for raw read assessment</td>
-<td>--fast</td>
+<td>#NAME?</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6876,7 +6870,7 @@
 <td><strong>trimmomatic_args</strong></td>
 <td>String</td>
 <td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
-<td>-phred33</td>
+<td>#NAME?</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7026,11 +7020,1473 @@
 </tbody>
 </table>
 </div>
+</div>
+<div class="tabbed-block">
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Terra Task Name</strong></th>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Terra Status</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>read1</strong></td>
+<td>File</td>
+<td>ONT read file in FASTQ file format (compression optional)</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>samplename</strong></td>
+<td>String</td>
+<td>The name of the sample being analyzed</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>busco</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>busco</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clean_check_reads</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clean_check_reads</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clean_check_reads</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clean_check_reads</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clean_check_reads</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clean_check_reads</td>
+<td><strong>workflow_series</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>auto_medaka_model</strong></td>
+<td>Boolean</td>
+<td>If true, medaka will automatically select the best Medaka model for assembly</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>bandage_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>bandage_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>bandage_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>dnaapler_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>dnaapler_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>dnaapler_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>dnaapler_mode</strong></td>
+<td>String</td>
+<td>Dnaapler-specific inputs</td>
+<td>all</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>filtercontigs_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>filtercontigs_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>filtercontigs_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>filtercontigs_min_length</strong></td>
+<td>Int</td>
+<td>Minimum contig length to keep</td>
+<td>1000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_additional_parameters</strong></td>
+<td>String</td>
+<td>Any extra Flye-specific parameters</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_asm_coverage</strong></td>
+<td>Int</td>
+<td>Reduced coverage for initial disjointig assembly</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_genome_length</strong></td>
+<td>Int</td>
+<td>User-specified expected genome length to be used in genome statistics calculations</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_keep_haplotypes</strong></td>
+<td>Boolean</td>
+<td>If true keep haplotypes</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_minimum_overlap</strong></td>
+<td>Int</td>
+<td>Minimum overlap between reads</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_no_alt_contigs</strong></td>
+<td>Boolean</td>
+<td>If true, do not generate alternative contigs</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_polishing_iterations</strong></td>
+<td>Int</td>
+<td>Default polishing iterations</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_read_error_rate</strong></td>
+<td>Float</td>
+<td>Maximum expected read error rate</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_read_type</strong></td>
+<td>String</td>
+<td>Specifies the type of sequencing reads. Options: --nano-raw (default), --nano-corr, --nano-hq, --pacbio-raw, --pacbio-corr, --pacbio-hifi. Refer to Flye documentation for details on each type.</td>
+<td>#NAME?</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_scaffold</strong></td>
+<td>Boolean</td>
+<td>If true, scaffold</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>flye_uneven_coverage_mode</strong></td>
+<td>Boolean</td>
+<td></td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>illumina_read1</strong></td>
+<td>File</td>
+<td>If Illumina reads are provided, flye_denovo subworkflow will perform Illumina polishing</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>illumina_read2</strong></td>
+<td>File</td>
+<td>If Illumina reads are provided, flye_denovo subworflow will perform Illumina polishing</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>medaka_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>medaka_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>medaka_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>medaka_model</strong></td>
+<td>String</td>
+<td>In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}{device}{caller variant}_{caller_version}. See also https://github.com/nanoporetech/medaka?tab=readme-ov-file#models. If this is being run on legacy data it is likely to be r941_min_hac_g507.</td>
+<td>r1041_e82_400bps_sup_v5.0.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>polisher</strong></td>
+<td>String</td>
+<td>The polishing tool to use for assembly</td>
+<td>medaka</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>polishing_rounds</strong></td>
+<td>Int</td>
+<td>The number of polishing rounds to conduct for medaka or racon (without Illumina)</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>polypolish_careful</strong></td>
+<td>Boolean</td>
+<td>Polypolish-specific inputs</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>polypolish_cpu</strong></td>
+<td>Int</td>
+<td>Polypolish cpu</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>polypolish_disk_size</strong></td>
+<td>Int</td>
+<td>Polypolish disk size</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>polypolish_fraction_invalid</strong></td>
+<td>Float</td>
+<td>Polypolish-specific inputs</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>polypolish_fraction_valid</strong></td>
+<td>Float</td>
+<td>Polypolish-specific inputs</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>polypolish_high_percentile_threshold</strong></td>
+<td>Float</td>
+<td>Polypolish-specific inputs</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>polypolish_low_percentile_threshold</strong></td>
+<td>Float</td>
+<td>Polypolish-specific inputs</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>polypolish_maximum_errors</strong></td>
+<td>Int</td>
+<td>Polypolish-specific inputs</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>polypolish_memory</strong></td>
+<td>Int</td>
+<td>Polypolish memory</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>polypolish_minimum_depth</strong></td>
+<td>Int</td>
+<td>Polypolish-specific inputs</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>polypolish_pair_orientation</strong></td>
+<td>String</td>
+<td>Polypolish-specific inputs</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>porechop_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>porechop_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>porechop_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>porechop_trimopts</strong></td>
+<td>String</td>
+<td>Options to pass to Porechop for trimming</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>racon_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>racon_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>racon_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>read1</strong></td>
+<td>File</td>
+<td>ONT read file in FASTQ file format (compression optional)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>run_porechop</strong></td>
+<td>Boolean</td>
+<td>If true, trims reads before assembly using Porechop</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>flye_denovo</td>
+<td><strong>skip_polishing</strong></td>
+<td>Boolean</td>
+<td>If true, skips polishing</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gambit</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gambit</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gambit</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gambit</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>agrvate_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>agrvate_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>amr_search_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>amr_search_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>amr_search_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>amr_search_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>assembly_only</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>call_poppunk</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>call_shigeifinder_reads_input</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_kmer_size</strong></td>
+<td>Int</td>
+<td>Kmer size for cladtyper</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade1</strong></td>
+<td>File</td>
+<td>Provide reference for clade1</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade1_annotated</strong></td>
+<td>File</td>
+<td>Provide annoated reference for clade1</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade2</strong></td>
+<td>File</td>
+<td>Provide reference for clade2</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade2_annotated</strong></td>
+<td>File</td>
+<td>Provide annoated reference for clade2</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade3</strong></td>
+<td>File</td>
+<td>Provide reference for clade3</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade3_annotated</strong></td>
+<td>File</td>
+<td>Provide annoated reference for clade3</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade4_annotated</strong></td>
+<td>File</td>
+<td>Provide annoated reference for clade3</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade5</strong></td>
+<td>File</td>
+<td>Provide reference for clade5</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade5_annotated</strong></td>
+<td>File</td>
+<td>Provide annoated reference for clade5</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>clockwork_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtypingtool_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>hicap_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ont_data</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>paired_end</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>pasty_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>pasty_min_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>pasty_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>run_amr_search</strong></td>
+<td>Boolean</td>
+<td>If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_base_quality</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_gene_query_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_map_qual</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_maxsoft</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_min_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_min_frac</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_min_quality</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_query_gene</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_query_gene</strong></td>
+<td>String</td>
+<td>Provide a gene to search for using Snippy</td>
+<td>Default depend on detected organism</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_reference_afumigatus</strong></td>
+<td>File</td>
+<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_reference_calbicans</strong></td>
+<td>File</td>
+<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_reference_cryptoneo</strong></td>
+<td>File</td>
+<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_variants_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_gene_max_mismatch</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_max_divergence</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_min_cov</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_min_depth</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_min_edge_depth</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>staphopia_sccmec_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_config</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_debug</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_min_depth</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_min_percent_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_operator</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_output_seq_method_type</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_custom_db</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_mapper</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_min_af</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_min_depth</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_run_cdph_db</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_run_custom_db</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_variant_caller</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_variant_calling_params</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>virulencefinder_min_percent_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>virulencefinder_min_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nanoplot_clean</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nanoplot_clean</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nanoplot_clean</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nanoplot_clean</td>
+<td><strong>max_length</strong></td>
+<td>Int</td>
+<td>The maximum length of clean reads, for which reads longer than the length specified will be hidden.</td>
+<td>100000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nanoplot_clean</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nanoplot_raw</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nanoplot_raw</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nanoplot_raw</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nanoplot_raw</td>
+<td><strong>max_length</strong></td>
+<td>Int</td>
+<td>The maximum length of clean reads, for which reads longer than the length specified will be hidden.</td>
+<td>100000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nanoplot_raw</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>quast</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>quast</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>quast</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>quast</td>
+<td><strong>min_contig_length</strong></td>
+<td>Int</td>
+<td>Minimum length of contig for QUAST</td>
+<td>500</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>artic_guppyplex_cpu</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>artic_guppyplex_disk_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>max_length</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>min_length</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_max_read_length</strong></td>
+<td>Int</td>
+<td>The maximum read length to keep after trimming</td>
+<td>100000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_max_read_qual</strong></td>
+<td>Int</td>
+<td>The maximum read quality to keep after trimming</td>
+<td>40</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_min_read_length</strong></td>
+<td>Int</td>
+<td>The minimum read length to keep after trimming</td>
+<td>500</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>nanoq_min_read_qual</strong></td>
+<td>Int</td>
+<td>The minimum read quality to keep after trimming</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_bases</strong></td>
+<td>String</td>
+<td>Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_docker</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_fraction_of_reads</strong></td>
+<td>Float</td>
+<td>Subsample to a fraction of the reads - e.g., 0.5 samples half the reads</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_number_of_reads</strong></td>
+<td>Int</td>
+<td>Subsample to a specific number of reads</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_seed</strong></td>
+<td>Int</td>
+<td>Random seed to use</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>busco_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>busco_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>24</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>gambit_db_genomes</strong></td>
+<td>File</td>
+<td>User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db"</td>
+<td>gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>gambit_db_signatures</strong></td>
+<td>File</td>
+<td>User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.</td>
+<td>gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>genome_length</strong></td>
+<td>Int</td>
+<td>User-specified expected genome length to be used in genome statistics calculations</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>min_basepairs</strong></td>
+<td>Int</td>
+<td>Minimum number of base pairs able to pass read screening</td>
+<td>45000000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>min_coverage</strong></td>
+<td>Int</td>
+<td>Minimum genome coverage able to pass read screening</td>
+<td>5</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>min_genome_size</strong></td>
+<td>Int</td>
+<td>Minimum genome size able to pass read screening</td>
+<td>9000000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>min_reads</strong></td>
+<td>Int</td>
+<td>Minimum number of reads to pass read screening</td>
+<td>5000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>skip_screen</strong></td>
+<td>Boolean</td>
+<td>Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe genome_length optional input, OR set call_rasusa to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>timezone</strong></td>
+<td>String</td>
+<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>skip_mash</strong></td>
+<td>Boolean</td>
+<td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
 <p>All input reads are processed through "core tasks" in the TheiaEuk workflows. These undertake read trimming and assembly appropriate to the input data type, currently only Illumina paired-end data. TheiaEuk workflow subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" or alternatives to tasks run in the workflow by default.</p>
 <h4 id="core-tasks">Core tasks<a class="headerlink" href="#core-tasks" title="Permanent link">&para;</a></h4>
-<div class="admonition tip">
-<p>These tasks are performed regardless of organism. They perform read trimming and various quality control steps.</p>
+<div class="admonition dna">
+<p>These tasks are performed regardless of organism. They include tasks that are performed regardless of and specific for the input data type. They perform read trimming and assembly appropriate to the input data type.</p>
 </div>
 <details class="task">
 <summary><code>versioning</code>: Version Capture</summary>
@@ -7053,6 +8509,10 @@
 </table>
 </div>
 </details>
+<div class="admonition caption">
+<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="theiaeuk_illumina_pe_3" name="__tabbed_4" type="radio" /><input id="theiaeuk_ont_3" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="theiaeuk_illumina_pe_3">TheiaEuk_Illumina_PE</label><label for="theiaeuk_ont_3">TheiaEuk_ONT</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <details class="task">
 <summary><code>screen</code>: Total Raw Read Quantification and Genome Size Estimation</summary>
 <p>The <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl"><code>screen</code></a> task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses <a href="https://github.com/rpetit3/fastq-scan"><code>fastq-scan</code></a> and bash commands for quantification of reads and base pairs, and <a href="https://mash.readthedocs.io/en/latest/index.html">mash</a> sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the <code>screen</code> task if any thresholds are not met:</p>
@@ -7177,101 +8637,6 @@
 <summary>Read Quantification</summary>
 <p>There are two methods for read quantification to choose from: <a href="https://github.com/rpetit3/fastq-scan"><code>fastq-scan</code></a> (default) or <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"><code>fastqc</code></a>. Both quantify the forward and reverse reads in FASTQ files. For paired-end data, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads. <code>fastqc</code> also provides a graphical visualization of the read quality.</p>
 </details>
-<details class="toggle">
-<summary>Read Identification with MIDAS (optional)</summary>
-<p>The <code>MIDAS</code> task is for the identification of reads to detect contamination with non-target taxa. This task is optional and turned off by default. It can be used by setting the <code>call_midas</code> input variable to <code>true</code>.</p>
-<p>The MIDAS tool was originally designed for metagenomic sequencing data but has been co-opted for use with bacterial isolate WGS methods. It can be used to detect contamination present in raw sequencing data by estimating bacterial species abundance in bacterial isolate WGS data. If a secondary genus is detected above a relative frequency of 0.01 (1%), then the sample should fail QC and be investigated further for potential contamination.</p>
-<p>This task is similar to those used in commercial software, BioNumerics, for estimating secondary species abundance.</p>
-<details class="toggle">
-<summary>How are the MIDAS output columns determined?</summary>
-<p>Example MIDAS report in the <code>midas_report</code> column:</p>
-<table>
-<thead>
-<tr>
-<th>species_id</th>
-<th>count_reads</th>
-<th>coverage</th>
-<th>relative_abundance</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Salmonella_enterica_58156</td>
-<td>3309</td>
-<td>89.88006645</td>
-<td>0.855888033</td>
-</tr>
-<tr>
-<td>Salmonella_enterica_58266</td>
-<td>501</td>
-<td>11.60606061</td>
-<td>0.110519371</td>
-</tr>
-<tr>
-<td>Salmonella_enterica_53987</td>
-<td>99</td>
-<td>2.232896237</td>
-<td>0.021262881</td>
-</tr>
-<tr>
-<td>Citrobacter_youngae_61659</td>
-<td>46</td>
-<td>0.995216227</td>
-<td>0.009477003</td>
-</tr>
-<tr>
-<td>Escherichia_coli_58110</td>
-<td>5</td>
-<td>0.123668877</td>
-<td>0.001177644</td>
-</tr>
-</tbody>
-</table>
-<p>MIDAS report column descriptions:</p>
-<ul>
-<li>species_id: species identifier</li>
-<li>count_reads: number of reads mapped to marker genes</li>
-<li>coverage: estimated genome-coverage (i.e. read-depth) of species in metagenome</li>
-<li>relative_abundance: estimated relative abundance of species in metagenome</li>
-</ul>
-<p>The value in the <code>midas_primary_genus</code> column is derived by ordering the rows in order of "relative_abundance" and identifying the genus of top species in the "species_id" column (Salmonella). The value in the <code>midas_secondary_genus</code> column is derived from the genus of the second-most prevalent genus in the "species_id" column (Citrobacter). The <code>midas_secondary_genus_abundance</code> column is the "relative_abundance" of the second-most prevalent genus (0.009477003). The <code>midas_secondary_genus_coverage</code> is the "coverage" of the second-most prevalent genus (0.995216227).</p>
-</details>
-<p><strong>MIDAS Reference Database Overview</strong></p>
-<p>The <strong>MIDAS reference database</strong> is a comprehensive tool for identifying bacterial species in metagenomic and bacterial isolate WGS data. It includes several layers of genomic data, helping detect species abundance and potential contaminants.</p>
-<div class="admonition dna">
-<p class="admonition-title">Key Components of the MIDAS Database</p>
-<ol>
-<li>
-<p><strong>Species Groups</strong>: </p>
-<ul>
-<li>MIDAS clusters bacterial genomes based on 96.5% sequence identity, forming over 5,950 species groups from 31,007 genomes. These groups align with the gold-standard species definition (95% ANI), ensuring highly accurate species identification.</li>
-</ul>
-</li>
-<li>
-<p><strong>Genomic Data Structure</strong>:</p>
-<ul>
-<li><em>Marker Genes</em>: Contains 15 universal single-copy genes used to estimate species abundance.</li>
-<li><em>Representative Genome</em>: Each species group has a selected representative genome, which minimizes genetic variation and aids in accurate SNP identification.</li>
-<li><em>Pan-genome</em>: The database includes clusters of non-redundant genes, with options for multi-level clustering (e.g., 99%, 95%, 90% identity), enabling MIDAS to identify gene content within strains at various clustering thresholds.</li>
-</ul>
-</li>
-<li>
-<p><strong>Taxonomic Annotation</strong>: </p>
-<ul>
-<li>Genomes are annotated based on consensus Latin names. Discrepancies in name assignments may occur due to factors like unclassified genomes or genus-level ambiguities.</li>
-</ul>
-</li>
-</ol>
-</div>
-<hr />
-<p><strong>Using the Default MIDAS Database</strong></p>
-<p>TheiaProk and TheiaEuk use the pre-loaded MIDAS database in Terra (see input table for current version) by default for bacterial species detection in metagenomic data, requiring no additional setup.</p>
-<div class="admonition tip">
-<p class="admonition-title">Create a Custom MIDAS Database</p>
-<p>Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the <a href="https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md">MIDAS GitHub guide on building a custom database</a>. Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workkspace and provide the link to the database in the <code>midas_db</code> input variable.</p>
-</div>
-<hr />
-</details>
 <div class="admonition techdetails">
 <p class="admonition-title">read_QC_trim Technical Details</p>
 <table>
@@ -7306,8 +8671,47 @@
 </table>
 </div>
 </details>
-<h4 id="assembly-tasks">Assembly tasks<a class="headerlink" href="#assembly-tasks" title="Permanent link">&para;</a></h4>
-<div class="admonition tip">
+<details class="task">
+<summary><code>qc_check</code>: Check QC Metrics Against User-Defined Thresholds (optional)</summary>
+<p>The <code>qc_check</code> task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a <code>qc_check_table</code> TSV file. If all QC metrics meet the threshold, the <code>qc_check</code> output variable will read <code>QC_PASS</code>. Otherwise, the output will read <code>QC_NA</code> if the task could not proceed or <code>QC_ALERT</code> followed by a string indicating what metric failed.</p>
+<p>The <code>qc_check</code> task applies quality thresholds according to the sample taxa. The sample taxa is taken from the <code>gambit_predicted_taxon</code> value inferred by the GAMBIT module OR can be manually provided by the user using the <code>expected_taxon</code> workflow input.</p>
+<details class="toggle">
+<summary>Formatting the <em>qc_check_table.tsv</em></summary>
+<ul>
+<li>The first column of the qc_check_table lists the <code>organism</code> that the task will assess and the header of this column must be "<strong>taxon</strong>".</li>
+<li>Any genus or species can be included as a row of the qc_check_table. However, these taxa must <strong>uniquely</strong> match the sample taxa, meaning that the file can include multiple species from the same genus (Vibrio_cholerae and Vibrio_vulnificus), but not both a genus row and species within that genus (Vibrio and Vibrio cholerae). <strong>The taxa should be formatted with the first letter capitalized and underscores in lieu of spaces.</strong></li>
+<li>Each subsequent column indicates a QC metric and lists a threshold for each organism that will be checked. <strong>The column names must exactly match expected values, so we highly recommend copy and pasting the header from the template file below as a starting place.</strong></li>
+</ul>
+</details>
+<details class="toggle">
+<summary>Template <em>qc_check_table.tsv</em> files</summary>
+<ul>
+<li>TheiaEuk_Illumina_PE_PHB: <a href="../../../assets/files/TheiaEuk_qc_check_template.tsv">theiaeuk_qc_check_template.tsv</a></li>
+</ul>
+<div class="admonition warning">
+<p class="admonition-title">Example Purposes Only</p>
+<p>The QC threshold values shown in the file above are for example purposes only and should not be presumed to be sufficient for every dataset.</p>
+</div>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>qc_check</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check_phb.wdl">task_qc_check_phb.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<div class="admonition dna">
 <p>These tasks assemble the reads into a <em>de novo</em> assembly and assess the quality of the assembly.</p>
 </div>
 <details class="task">
@@ -7403,6 +8807,395 @@
 </table>
 </div>
 </details>
+</div>
+<div class="tabbed-block">
+<details class="task">
+<summary><code>read_QC_trim_ont</code>: Read Quality Trimming, Quantification, and Identification</summary>
+<p><code>read_QC_trim_ont</code> is a sub-workflow that filters low-quality reads and trims low-quality regions of reads. It uses several tasks, described below.</p>
+<details class="toggle">
+<summary>Read Identification with Kraken2 (optional)</summary>
+<p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
+<p>As an alternative to <code>MIDAS</code> (see above), the <code>Kraken2</code> task can also be turned on through setting the <code>call_kraken</code> input variable as <code>true</code> for the identification of reads to detect contamination with non-target taxa.</p>
+<p>A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on <a href="../../standalone/kraken2/#databases">Kraken2 standalone documentation</a>.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Kraken2 Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl">task_kraken2.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/DerrickWood/kraken2/">Kraken2 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://link.springer.com/article/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<div class="admonition dna">
+<p class="admonition-title">A note on estimated genome length</p>
+<p>By default, an estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to the information collated <a href="https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt">here</a>. This estimate can be overwritten by the user, and is used by <code>RASUSA</code>.</p>
+</div>
+<details class="toggle">
+<summary><code>nanoplot</code>: Plotting and quantifying long-read sequencing data</summary>
+<p>Nanoplot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+</details>
+<details class="toggle">
+<summary>Read subsampling</summary>
+<p>Samples are automatically randomly subsampled to 150X coverage using <code>RASUSA</code>.</p>
+</details>
+<details class="toggle">
+<summary>Plasmid prediction</summary>
+<p>Plasmids are identified using replicon sequences used for typing from <a href="https://cge.food.dtu.dk/services/PlasmidFinder/">PlasmidFinder</a>.</p>
+</details>
+<details class="toggle">
+<summary>Read filtering</summary>
+<p>Reads are filtered by length and quality using <code>nanoq</code>. By default, sequences with less than 500 basepairs and quality score lower than 10 are filtered out to improve assembly accuracy.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">read_QC_trim_ont Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sub-workflow</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl">wf_read_QC_trim_ont.wdl</a></td>
+</tr>
+<tr>
+<td>Tasks</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl">task_nanoplot.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl">task_rasusa.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl">task_nanoq.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan</a><br><a href="https://github.com/wdecoster/NanoPlot">NanoPlot</a><br><a href="https://github.com/mbhall88/rasusa">RASUSA</a><br><a href="https://github.com/esteinig/nanoq">nanoq</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https:/github.com/ncbi/sra-human-scrubber/blob/master/README.md">NCBI Scrub on GitHub</a><br><a href="https://github.com/wdecoster/NanoPlot/tree/master?tab=readme-ov-file#readme">NanoPlot documentation on GitHub</a><br><a href="https://github.com/mbhall88/rasusa">Rasusa on GitHub</a><br><a href="https://github.com/esteinig/nanoq">Nanoq on GitHub</a><br><a href="https://artic.readthedocs.io/en/latest/?badge=latest">Artic Pipeline ReadTheDocs</a><br><a href="https://github.com/DerrickWood/kraken2/wiki">Kraken2 on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911">NanoPack2: population-scale evaluation of long-read sequencing data</a><br><a href="https://doi.org/10.21105/joss.03941">Rasusa: Randomly subsample sequencing reads to a specified coverage</a><br><a href="https://doi.org/10.21105/joss.02991">Nanoq: ultra-fast quality control for nanopore reads</a><br><a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<div class="admonition dna">
+<p>These tasks assemble the reads into a <em>de novo</em> assembly and assess the quality of the assembly.</p>
+</div>
+<details class="task">
+<summary><code>Flye</code>: <em>De novo</em> Assembly</summary>
+<p><code>flye_denovo</code> is a sub-workflow that performs <em>de novo</em> assembly using Flye for ONT data and supports additional polishing and visualization steps.</p>
+<div class="admonition tip">
+<p class="admonition-title">Ensure correct medaka model is selected if performing medaka polishing</p>
+<p>In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}_{device}_{caller variant}_{caller_version}. See also <a href="https://github.com/nanoporetech/medaka?tab=readme-ov-file#models">https://github.com/nanoporetech/medaka?tab=readme-ov-file#models</a>. If <code>flye</code> is being run on legacy data the medaka model will likely be <code>r941_min_hac_g507</code>. Recently generated data will likely be suited by the default model of <code>r1041_e82_400bps_sup_v5.0.0</code>.</p>
+</div>
+<p>The detailed steps and tasks are as follows:</p>
+<details class="toggle">
+<summary><code>Porechop</code>: Read Trimming (optional; off by default)</summary>
+<p>Read trimming is optional and can be enabled by setting the <code>run_porchop</code> input variable to true.</p>
+<p>Porechop is a tool for finding and removing adapters from ONT data. Adapters on the ends of reads are trimmed, and when a read has an adapter in the middle, the read is split into two.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Porechop Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WDL Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_porechop.wdl">task_porechop.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/rrwick/Porechop">Porechop on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/rrwick/Porechop#porechop">https://github.com/rrwick/Porechop#porechop</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="toggle">
+<summary><code>Flye</code>: <em>De novo</em> Assembly</summary>
+<p>Flye is a <em>de novo</em> assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerates the error rate of ONT data.</p>
+<p><code>flye_read_type</code> specifies the type of sequencing reads being used for assembly. This parameter significantly impacts the assembly process and should match the characteristics of your input data. Below are the available options:</p>
+<ul>
+<li><code>--nano-hq</code> (default): Optimized for ONT high-quality reads, such as Guppy5+ SUP or Q20 (&lt;5% error). Recommended for ONT reads processed with Guppy5 or newer</li>
+<li><code>--nano-raw</code>: For ONT regular reads, pre-Guppy5 (&lt;20% error)</li>
+<li><code>--nano-corr</code>: ONT reads corrected with other methods (&lt;3% error)</li>
+<li><code>--pacbio-raw</code>: PacBio regular CLR reads (&lt;20% error)</li>
+<li><code>--pacbio-corr</code>: PacBio reads corrected with other methods (&lt;3% error)</li>
+<li><code>--pacbio-hifi</code>: PacBio HiFi reads (&lt;1% error)</li>
+</ul>
+<p>Refer to the Flye documentation for detailed guidance on selecting the appropriate <code>flye_read_type</code> based on your sequencing data and additional optional paramaters.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Flye Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WDL Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl">task_flye.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/fenderglass/Flye">Flye on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md">Flye Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://www.nature.com/articles/s41587-019-0072-8">Assembly of long, error-prone reads using repeat graphs</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="toggle">
+<summary><code>Bandage</code>: Graph Visualization</summary>
+<p>Bandage creates <em>de novo</em> assembly graphs containing the assembled contigs and the connections between those contigs.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Bandage Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WDL Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_bandage_plot.wdl">task_bandage_plot.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/rrwick/Bandage">Bandage on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/rrwick/Bandage#bandage">Bandage Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/31/20/3350/196114">Bandage: interactive visualization of <em>de novo</em> genome assemblies</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="toggle">
+<summary><code>Polypolish</code>: Hybrid Assembly Polishing <mark><em>for ONT and Illumina data</em></mark></summary>
+<p>If short reads are provided with the optional <code>illumina_read1</code> and <code>illumina_read2</code> inputs, Polypolish will use those short-reads to correct errors in the long-read assemblies. Uniquely, Polypolish uses the short-read alignments where each read is aligned to <em>all</em> possible locations, meaning that repeat regions will have error correction.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Polypolish Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_polypolish.wdl">task_polypolish.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/rrwick/Polypolish">Polypolish on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/rrwick/Polypolish#polypolish">Polypolish Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1371/journal.pcbi.1009802">Polypolish: short-read polishing of long-read bacterial genome assemblies</a><br><a href="https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.001254">How low can you go? Short-read polishing of Oxford Nanopore bacterial genome assemblies</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="toggle">
+<summary><code>Medaka</code>: Polishing of Flye assembly (default; optional)</summary>
+<p>Polishing is optional and can be skipped by setting the <code>skip_polishing</code> variable to true. If polishing is skipped, then neither Medaka or Racon will run.</p>
+<p>Medaka is the default assembly polisher used in TheiaProk. Racon may be used alternatively, and if so, Medaka will not run. Medaka uses the raw reads to polish the assembly and generate a consensus sequence. </p>
+<p>Importantly, Medaka requires knowing the model that was used to generate the read data. There are several ways to provide this information:</p>
+<ul>
+<li>Automatic Model Selection: Automatically determines the most appropriate Medaka model based on the input data, ensuring optimal polishing results without manual intervention. </li>
+<li>User-Specified Model Override: Allows users to specify a particular <code>Medaka model</code> if automatic selection does not yield the desired outcome or for specialized use cases.</li>
+<li>Default Model: If both automatic model selection fails and no user-specified model is provided, Medaka defaults to the predefined fallback model <code>r1041_e82_400bps_sup_v5.0.0</code>. </li>
+</ul>
+<div class="admonition info">
+<p class="admonition-title">Medaka Model Resolution Process</p>
+<p>Medaka's automatic model selection uses the <code>medaka tools resolve_model</code> command to identify the appropriate model for polishing. This process relies on metadata embedded in the input file, which is typically generated by the basecaller. If the automatic selection fails to identify a suitable model, Medaka gracefully falls back to the default model to maintain workflow continuity. <strong>Users should verify the chosen model and consider specifying a model override if necessary.</strong></p>
+</div>
+<div class="admonition techdetails">
+<p class="admonition-title">Medaka Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WDL Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_medaka.wdl">task_medaka.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/nanoporetech/medaka">Medaka on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/nanoporetech/medaka#medaka">Medaka Documentation</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="toggle">
+<summary><code>Racon</code>: Polishing of Flye assembly (alternative; optional)</summary>
+<p>Polishing is optional and can be skipped by setting the <code>skip_polishing</code> variable to true. If polishing is skipped, then neither Medaka or Racon will run.</p>
+<p><code>Racon</code> is an alternative to using <code>medaka</code> for assembly polishing, and can be run by setting the <code>polisher</code> input to "racon".  Racon is a consensus algorithm designed for refining raw de novo DNA assemblies generated from long, uncorrected sequencing reads.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Racon Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WDL Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_racon.wdl">task_racon.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/lbcb-sci/racon">Racon on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/lbcb-sci/racon#racon">Racon Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://genome.cshlp.org/content/27/5/737">Fast and accurate de novo genome assembly from long uncorrected reads</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="toggle">
+<summary><code>Filter Contigs</code>: Filter contigs below a threshold length and remove homopolymer contigs</summary>
+<p>This task filters the created contigs based on a user-defined minimum length threshold (default of 1000) and eliminates homopolymer contigs (contigs of any length that consist of a single nucleotide). This ensures high-quality assemblies by retaining only contigs that meet specified criteria. Detailed metrics on contig counts and sequence lengths before and after filtering are provided in the output.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Filter Contigs Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WDL Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_filter_contigs.wdl">task_filter_contigs.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="toggle">
+<summary><code>Dnaapler</code>: Final Assembly Orientation</summary>
+<p>Dnaapler reorients contigs to start at specific reference points. Dnaapler supports the following modes, which can be indicated by filling the <code>dnaapler_mode</code> input variable with the desired mode. The default is <code>all</code>, which reorients contigs to start with <code>dnaA</code>, <code>terL</code>, <code>repA</code>, or <code>COG1474</code>.</p>
+<ul>
+<li><strong>all</strong>: Reorients contigs to start with <code>dnaA</code>, <code>terL</code>, <code>repA</code>, or <code>COG1474</code> (<em>Default</em>)</li>
+<li><strong>chromosome</strong>: Reorients to begin with the <code>dnaA</code> chromosomal replication initiator gene, commonly used for bacterial chromosome assemblies.</li>
+<li><strong>plasmid</strong>: Reorients to start with the <code>repA</code> plasmid replication initiation gene, ideal for plasmid assemblie</li>
+<li><strong>phage</strong>: Reorients to start with the <code>terL</code> large terminase subunit gene, used for bacteriophage assemblies</li>
+<li><strong>archaea</strong>: Reorients to start with the <code>COG1474</code> archaeal Orc1/cdc6 gene, relevant for archaeal assemblies</li>
+<li><strong>custom</strong>: Reorients based on a user-specified gene in amino acid FASTA format for experimental or unique workflows</li>
+<li><strong>mystery</strong>: Reorients to start with a random CDS for exploratory purposes</li>
+<li><strong>largest</strong>: Reorients to start with the largest CDS in the assembly, often useful for poorly annotated genomes</li>
+<li><strong>nearest</strong>: Reorients to start with the first CDS nearest to the sequence start, resolving CDS breakpoints</li>
+<li><strong>bulk</strong>: Processes multiple contigs to start with the desired start gene (<code>dnaA</code>, <code>terL</code>, <code>repA</code>, or custom)</li>
+</ul>
+<div class="admonition techdetails">
+<p class="admonition-title">Dnaapler Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WDL Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_dnaapler.wdl">task_dnaapler.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/gbouras13/dnaapler">Dnaapler on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/gbouras13/dnaapler?tab=readme-ov-file#dnaapler">Dnaapler Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://joss.theoj.org/papers/10.21105/joss.05968">Dnaapler: a tool to reorient circular microbial genomes</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+</div>
+</div>
+</div>
+</div>
 <h4 id="organism-agnostic-characterization">Organism-agnostic characterization<a class="headerlink" href="#organism-agnostic-characterization" title="Permanent link">&para;</a></h4>
 <div class="admonition tip">
 <p>These tasks are performed regardless of the organism and provide quality control and taxonomic assignment.</p>
@@ -7485,53 +9278,13 @@
 </table>
 </div>
 </details>
-<details class="task">
-<summary><code>qc_check</code>: Check QC Metrics Against User-Defined Thresholds (optional)</summary>
-<p>The <code>qc_check</code> task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a <code>qc_check_table</code> TSV file. If all QC metrics meet the threshold, the <code>qc_check</code> output variable will read <code>QC_PASS</code>. Otherwise, the output will read <code>QC_NA</code> if the task could not proceed or <code>QC_ALERT</code> followed by a string indicating what metric failed.</p>
-<p>The <code>qc_check</code> task applies quality thresholds according to the sample taxa. The sample taxa is taken from the <code>gambit_predicted_taxon</code> value inferred by the GAMBIT module OR can be manually provided by the user using the <code>expected_taxon</code> workflow input.</p>
-<details class="toggle">
-<summary>Formatting the <em>qc_check_table.tsv</em></summary>
-<ul>
-<li>The first column of the qc_check_table lists the <code>organism</code> that the task will assess and the header of this column must be "<strong>taxon</strong>".</li>
-<li>Any genus or species can be included as a row of the qc_check_table. However, these taxa must <strong>uniquely</strong> match the sample taxa, meaning that the file can include multiple species from the same genus (Vibrio_cholerae and Vibrio_vulnificus), but not both a genus row and species within that genus (Vibrio and Vibrio cholerae). <strong>The taxa should be formatted with the first letter capitalized and underscores in lieu of spaces.</strong></li>
-<li>Each subsequent column indicates a QC metric and lists a threshold for each organism that will be checked. <strong>The column names must exactly match expected values, so we highly recommend copy and pasting the header from the template file below as a starting place.</strong></li>
-</ul>
-</details>
-<details class="toggle">
-<summary>Template <em>qc_check_table.tsv</em> files</summary>
-<ul>
-<li>TheiaEuk_Illumina_PE_PHB: <a href="../../../assets/files/TheiaEuk_qc_check_template.tsv">theiaeuk_qc_check_template.tsv</a></li>
-</ul>
-<div class="admonition warning">
-<p class="admonition-title">Example Purposes Only</p>
-<p>The QC threshold values shown in the file above are for example purposes only and should not be presumed to be sufficient for every dataset.</p>
-</div>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title"><code>qc_check</code> Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check_phb.wdl">task_qc_check_phb.wdl</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
 <h4 id="organism-specific-characterization">Organism-specific characterization<a class="headerlink" href="#organism-specific-characterization" title="Permanent link">&para;</a></h4>
 <div class="admonition tip">
 <p>The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using <code>GAMBIT</code>. Many of these taxa-specific tasks do not require any additional inputs from the user.</p>
 </div>
 <details class="toggle">
 <summary><em>Candidozyma auris</em> (also known as <em>Candida auris</em>)</summary>
-<p>Two tools are deployed when <em>Candidozyma auris</em>/<em>Candida auris</em> is  identified.</p>
+<p>Three tools can be deployed when <em>Candidozyma auris</em>/<em>Candida auris</em> is  identified.</p>
 <details class="task">
 <summary>Cladetyping: clade determination</summary>
 <p>A custom GAMBIT database is created using five clade-specific <em>Candidozyma auris</em> reference genomes. Sequences undergo genomic signature comparison against this database, which then enables assignment to one of the five <em>Candidozyma auris</em> clades (Clade I to Clade V) based on sequence similarity and phylogenetic relationships. This integrated approach ensures precise clade assignments, crucial for understanding the genetic diversity and epidemiology of <em>Candidozyma auris</em>.</p>
@@ -7615,8 +9368,53 @@
 </div>
 </details>
 <details class="task">
+<summary><code>amr_search</code>: Antimicrobial resistance profiling (Optional)</summary>
+<p>Set the <code>run_amr_search</code> parameter to <code>true</code> to enable this task.</p>
+<p>The AMR Search module will report only specific SNP changes in the AMR genes, like FUR1 F211L. For a complete list of mutations being queried, please refer to <a href="https://github.com/pathogenwatch-oss/amr-search"><code>amr_search</code>'s documentation</a>. </p>
+<p>This task performs <em>in silico</em> antimicrobial resistance (AMR) profiling for supported species using <strong>AMRsearch</strong>, the primary tool used by <a href="https://pathogen.watch/">Pathogenwatch</a> to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.</p>
+<p><strong>AMRsearch</strong> screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both <strong>resistance genes</strong> and <strong>mutations</strong>, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow <strong>S/I/R classification</strong> (<em>Sensitive, Intermediate, Resistant</em>).</p>
+<p><strong>Outputs:</strong></p>
+<ul>
+<li>
+<p><strong>JSON Output:</strong> Contains the complete AMR profile, including detailed <strong>resistance state</strong>, detected <strong>resistance genes/mutations</strong>, and supporting <strong>BLAST results</strong>.</p>
+</li>
+<li>
+<p><strong>CSV &amp; PDF Tables:</strong> An incorprated Python script, <code>parse_amr_json.py</code>, extracts and formats results into a <strong>CSV file</strong> and <strong>PDF summary table</strong> for easier visualization.</p>
+</li>
+</ul>
+<div class="admonition techdetails">
+<p class="admonition-title">amr_search Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_amr_search.wdl">task_amr_search.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/pathogenwatch-oss/amr-search">AMRsearch</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://cgps.gitbook.io/pathogenwatch">Pathogenwatch</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7545138/">PAARSNP: <em>rapid genotypic resistance prediction for </em>Neisseria gonorrhoeae*</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
 <summary>Snippy Variants: antifungal resistance detection</summary>
-<p>To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance.</p>
+<p>To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance. It's important to note that unlike <code>amr_search</code>, this task reports all variants found in the searched targets. </p>
 <p>The genes in which there are known resistance-conferring mutations for this pathogen are:</p>
 <ul>
 <li>FKS1</li>
@@ -7988,6 +9786,10 @@
 </details>
 </details>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
+<div class="admonition caption">
+<div class="tabbed-set tabbed-alternate" data-tabs="5:2"><input checked="checked" id="theiaeuk_illumina_pe_4" name="__tabbed_5" type="radio" /><input id="theiaeuk_ont_4" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="theiaeuk_illumina_pe_4">TheiaEuk_Illumina_PE</label><label for="theiaeuk_ont_4">TheiaEuk_ONT</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="searchable-table">
 <table>
 <thead>
@@ -8000,521 +9802,940 @@
 <tbody>
 <tr>
 <td>amr_results_csv</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>CSV formatted AMR profile</td>
 </tr>
 <tr>
-<td>amr_results_pdf</td>
-<td>File</td>
-<td>PDF formatted AMR profile</td>
-</tr>
-<tr>
 <td>amr_search_docker</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Docker image used to run AMR_Search</td>
 </tr>
 <tr>
 <td>amr_search_results</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>JSON formatted AMR profile including BLAST results</td>
 </tr>
 <tr>
+<td>amr_search_results_pdf</td>
+<td><strong>File</strong></td>
+<td>PDF formatted AMR profile</td>
+</tr>
+<tr>
 <td>assembler</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Assembler used in digger_denovo subworkflow</td>
 </tr>
 <tr>
 <td>assembler_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Version of the assembler used in digger_denovo</td>
 </tr>
 <tr>
 <td>assembly_fasta</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td><em>De novo</em> genome assembly in FASTA format</td>
 </tr>
 <tr>
 <td>assembly_length</td>
-<td>Int</td>
+<td><strong>Int</strong></td>
 <td>Length of assembly (total contig length) as determined by QUAST</td>
 </tr>
 <tr>
 <td>bbduk_docker</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The Docker image for bbduk, which was used to remove the adapters from the sequences</td>
 </tr>
 <tr>
 <td>busco_database</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>BUSCO database used</td>
 </tr>
 <tr>
 <td>busco_docker</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>BUSCO docker image used</td>
 </tr>
 <tr>
 <td>busco_report</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>A plain text summary of the results in BUSCO notation</td>
 </tr>
 <tr>
 <td>busco_results</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>BUSCO results (see relevant toggle in <a href="https://theiagen.github.io/public_health_bioinformatics/latest/workflows/genomic_characterization/theiaprok/#post-assembly-tasks-performed-for-all-taxa">this block</a>)</td>
 </tr>
 <tr>
 <td>busco_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>BUSCO software version used</td>
 </tr>
 <tr>
 <td>cg_pipeline_docker</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Docker file used for running CG-Pipeline on cleaned reads</td>
 </tr>
 <tr>
 <td>cg_pipeline_report</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage</td>
 </tr>
 <tr>
 <td>cladetyper_annotated_reference</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The annotated reference file for the identified clade, "None" if no clade was identified</td>
 </tr>
 <tr>
 <td>cladetyper_clade</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The clade assigned to the input assembly</td>
 </tr>
 <tr>
 <td>cladetyper_docker_image</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The Docker container used for the task</td>
 </tr>
 <tr>
 <td>cladetyper_gambit_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The version of GAMBIT used for the analysis</td>
 </tr>
 <tr>
 <td>combined_mean_q_clean</td>
-<td>Float</td>
+<td><strong>Float</strong></td>
 <td>Mean quality score for the combined clean reads</td>
 </tr>
 <tr>
 <td>combined_mean_q_raw</td>
-<td>Float</td>
+<td><strong>Float</strong></td>
 <td>Mean quality score for the combined raw reads</td>
 </tr>
 <tr>
 <td>combined_mean_readlength_clean</td>
-<td>Float</td>
+<td><strong>Float</strong></td>
 <td>Mean read length for the combined clean reads</td>
 </tr>
 <tr>
 <td>combined_mean_readlength_raw</td>
-<td>Float</td>
+<td><strong>Float</strong></td>
 <td>Mean read length for the combined raw reads</td>
 </tr>
 <tr>
 <td>contigs_fastg</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>Assembly graph if megahit used for genome assembly</td>
 </tr>
 <tr>
 <td>contigs_gfa</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>Assembly graph output generated by SPAdes (Illumina: PE, SE) or Flye (ONT), used to visualize and evaluate genome assembly results.</td>
 </tr>
 <tr>
 <td>contigs_lastgraph</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>Assembly graph if velvet used for genome assembly</td>
 </tr>
 <tr>
 <td>est_coverage_clean</td>
-<td>Float</td>
+<td><strong>Float</strong></td>
 <td>Estimated coverage calculated from clean reads and genome length</td>
 </tr>
 <tr>
 <td>est_coverage_raw</td>
-<td>Float</td>
+<td><strong>Float</strong></td>
 <td>Estimated coverage calculated from raw reads and genome length</td>
 </tr>
 <tr>
 <td>fastp_html_report</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>The HTML report made with fastp</td>
 </tr>
 <tr>
 <td>fastp_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The version of fastp used</td>
 </tr>
 <tr>
 <td>fastq_scan_clean1_json</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean forward read quality and length</td>
 </tr>
 <tr>
 <td>fastq_scan_clean2_json</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean reverse read quality and length</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_clean1</td>
-<td>Int</td>
+<td><strong>Int</strong></td>
 <td>The number of forward reads after cleaning as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_clean2</td>
-<td>Int</td>
+<td><strong>Int</strong></td>
 <td>The number of reverse reads after cleaning as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_clean_pairs</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The number of read pairs after cleaning as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_raw1</td>
-<td>Int</td>
+<td><strong>Int</strong></td>
 <td>The number of input forward reads as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_raw2</td>
-<td>Int</td>
+<td><strong>Int</strong></td>
 <td>The number of input reserve reads as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_num_reads_raw_pairs</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The number of input read pairs as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_raw1_json</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>The JSON file output from <code>fastq-scan</code> containing summary stats about raw forward read quality and length</td>
 </tr>
 <tr>
 <td>fastq_scan_raw2_json</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>The JSON file output from <code>fastq-scan</code> containing summary stats about raw reverse read quality and length</td>
 </tr>
 <tr>
 <td>fastq_scan_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The version of fastq_scan</td>
 </tr>
 <tr>
 <td>fastqc_clean1_html</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser</td>
 </tr>
 <tr>
 <td>fastqc_clean2_html</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>An HTML file that provides a graphical visualization of clean reverse read quality from fastqc to open in an internet browser</td>
 </tr>
 <tr>
 <td>fastqc_docker</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The Docker container used for fastqc</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_clean1</td>
-<td>Int</td>
+<td><strong>Int</strong></td>
 <td>The number of forward reads after cleaning by fastqc</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_clean2</td>
-<td>Int</td>
+<td><strong>Int</strong></td>
 <td>The number of reverse reads after cleaning by fastqc</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_clean_pairs</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The number of read pairs after cleaning by fastqc</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_raw1</td>
-<td>Int</td>
+<td><strong>Int</strong></td>
 <td>The number of input forward reads by fastqc before cleaning</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_raw2</td>
-<td>Int</td>
+<td><strong>Int</strong></td>
 <td>The number of input reverse reads by fastqc before cleaning</td>
 </tr>
 <tr>
 <td>fastqc_num_reads_raw_pairs</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The number of input read pairs by fastqc before cleaning</td>
 </tr>
 <tr>
 <td>fastqc_raw1_html</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>An HTML file that provides a graphical visualization of raw forward read quality from fastqc to open in an internet browser</td>
 </tr>
 <tr>
 <td>fastqc_raw2_html</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>An HTML file that provides a graphical visualization of raw reverse read quality from fastqc to open in an internet browser</td>
 </tr>
 <tr>
 <td>fastqc_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Version of fastqc software used</td>
 </tr>
 <tr>
 <td>filtered_contigs_metrics</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>File containing metrics of contigs filtered</td>
 </tr>
 <tr>
 <td>gambit_closest_genomes</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>CSV file listing genomes in the GAMBIT database that are most similar to the query assembly</td>
 </tr>
 <tr>
 <td>gambit_db_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Version of the GAMBIT database used</td>
 </tr>
 <tr>
 <td>gambit_docker</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>GAMBIT Docker used</td>
 </tr>
 <tr>
 <td>gambit_predicted_taxon</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Taxon predicted by GAMBIT</td>
 </tr>
 <tr>
 <td>gambit_predicted_taxon_rank</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Taxon rank of GAMBIT taxon prediction</td>
 </tr>
 <tr>
 <td>gambit_report</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>GAMBIT report in a machine-readable format</td>
 </tr>
 <tr>
 <td>gambit_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Version of GAMBIT software used</td>
 </tr>
 <tr>
 <td>n50_value</td>
-<td>Int</td>
+<td><strong>Int</strong></td>
 <td>N50 of assembly calculated by QUAST</td>
 </tr>
 <tr>
 <td>number_contigs</td>
-<td>Int</td>
+<td><strong>Int</strong></td>
 <td>Total number of contigs in assembly</td>
 </tr>
 <tr>
 <td>qc_check</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>A string that indicates whether or not the sample passes a set of pre-determined and user-provided QC thresholds</td>
 </tr>
 <tr>
 <td>qc_standard</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>The file used in the QC Check task containing the QC thresholds.</td>
 </tr>
 <tr>
 <td>quast_gc_percent</td>
-<td>Float</td>
+<td><strong>Float</strong></td>
 <td>The GC percent of your sample</td>
 </tr>
 <tr>
 <td>quast_report</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>TSV report from QUAST</td>
 </tr>
 <tr>
 <td>quast_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The version of QUAST</td>
 </tr>
 <tr>
 <td>r1_mean_q_raw</td>
-<td>Float</td>
+<td><strong>Float</strong></td>
 <td>Mean quality score of raw forward reads</td>
 </tr>
 <tr>
 <td>r1_mean_readlength_raw</td>
-<td>Float</td>
+<td><strong>Float</strong></td>
 <td>Mean read length of raw forward reads</td>
 </tr>
 <tr>
 <td>r2_mean_q_raw</td>
-<td>Float</td>
+<td><strong>Float</strong></td>
 <td>Mean quality score of raw reverse reads</td>
 </tr>
 <tr>
 <td>r2_mean_readlength_clean</td>
-<td>Float</td>
+<td><strong>Float</strong></td>
 <td>Mean read length of clean reverse reads</td>
 </tr>
 <tr>
 <td>rasusa_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Version of RASUSA used for the analysis</td>
 </tr>
 <tr>
 <td>read1_clean</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>Forward read file after quality trimming and adapter removal</td>
 </tr>
 <tr>
 <td>read1_subsampled</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>Read1 FASTQ files downsampled to desired coverage</td>
 </tr>
 <tr>
 <td>read2_clean</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>Reverse read file after quality trimming and adapter removal</td>
 </tr>
 <tr>
 <td>read2_subsampled</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>Read2 FASTQ files downsampled to desired coverage</td>
 </tr>
 <tr>
 <td>read_screen_clean</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure</td>
 </tr>
 <tr>
 <td>read_screen_clean_tsv</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
 </tr>
 <tr>
 <td>read_screen_raw</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure</td>
 </tr>
 <tr>
 <td>read_screen_raw_tsv</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
 </tr>
 <tr>
 <td>seq_platform</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Description of the sequencing methodology used to generate the input read data</td>
 </tr>
 <tr>
 <td>shovill_pe_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Shovill version used</td>
 </tr>
 <tr>
 <td>theiaeuk_illumina_pe_analysis_date</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Date of TheiaEuk PE workflow execution</td>
 </tr>
 <tr>
 <td>theiaeuk_illumina_pe_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>TheiaEuk PE workflow version used</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_bai</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>BAI file produced by the snippy module</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_bam</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>BAM file produced by the snippy module</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_coverage_tsv</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>TSV file containing coverage information for each base in the reference genome</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_gene_query_results</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>File containing all lines from variants file matching gene query terms</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_hits</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>String of all variant file entries matching gene query term</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_num_reads_aligned</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Number of reads aligned by snippy</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_num_variants</td>
-<td>Int</td>
+<td><strong>Int</strong></td>
 <td>Number of variants detected by snippy</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_outdir_tarball</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>Tar compressed file containing full snippy output directory</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_percent_ref_coverage</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Percent of reference genome covered by snippy</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_query</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The gene query term(s) used to search variant</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_query_check</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>Were the gene query terms present in the refence annotated genome file</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_reference_genome</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>The reference genome used in the alignment and variant calling</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_results</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>The variants file produced by snippy</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_summary</td>
-<td>File</td>
+<td><strong>File</strong></td>
 <td>A file summarizing the variants detected by snippy</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The version of the snippy_variants module being used</td>
 </tr>
 <tr>
 <td>trimmomatic_docker</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The docker image used for the trimmomatic module in this workflow</td>
 </tr>
 <tr>
 <td>trimmomatic_version</td>
-<td>String</td>
+<td><strong>String</strong></td>
 <td>The version of Trimmomatic used</td>
 </tr>
 </tbody>
 </table>
+</div>
+</div>
+<div class="tabbed-block">
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>amr_search_csv</td>
+<td><strong>File</strong></td>
+<td>CSV formatted AMR profile</td>
+</tr>
+<tr>
+<td>amr_search_docker</td>
+<td><strong>String</strong></td>
+<td>Docker image used to run AMR_Search</td>
+</tr>
+<tr>
+<td>amr_search_results</td>
+<td><strong>File</strong></td>
+<td>JSON formatted AMR profile including BLAST results</td>
+</tr>
+<tr>
+<td>amr_search_results_pdf</td>
+<td><strong>File</strong></td>
+<td>PDF formatted AMR profile</td>
+</tr>
+<tr>
+<td>assembly_fasta</td>
+<td><strong>File</strong></td>
+<td><em>De novo</em> genome assembly in FASTA format</td>
+</tr>
+<tr>
+<td>assembly_length</td>
+<td><strong>Int</strong></td>
+<td>Length of assembly (total contig length) as determined by QUAST</td>
+</tr>
+<tr>
+<td>bandage_plot</td>
+<td><strong>File</strong></td>
+<td>Image file (PNG) visualizing the Flye assembly graph generated by Bandage</td>
+</tr>
+<tr>
+<td>bwa_version</td>
+<td><strong>String</strong></td>
+<td>Version of BWA software used</td>
+</tr>
+<tr>
+<td>cladetyper_annotated_reference</td>
+<td><strong>String</strong></td>
+<td>The annotated reference file for the identified clade, "None" if no clade was identified</td>
+</tr>
+<tr>
+<td>cladetyper_clade</td>
+<td><strong>String</strong></td>
+<td>The clade assigned to the input assembly</td>
+</tr>
+<tr>
+<td>cladetyper_docker_image</td>
+<td><strong>String</strong></td>
+<td>The Docker container used for the task</td>
+</tr>
+<tr>
+<td>cladetyper_version</td>
+<td><strong>String</strong></td>
+<td>The version of Cladetyper used for the analysis</td>
+</tr>
+<tr>
+<td>contigs_fastg</td>
+<td><strong>File</strong></td>
+<td>Assembly graph if megahit used for genome assembly</td>
+</tr>
+<tr>
+<td>dnaapler_version</td>
+<td><strong>String</strong></td>
+<td>Version of dnaapler used</td>
+</tr>
+<tr>
+<td>est_coverage_clean</td>
+<td><strong>Float</strong></td>
+<td>Estimated coverage calculated from clean reads and genome length</td>
+</tr>
+<tr>
+<td>est_coverage_raw</td>
+<td><strong>Float</strong></td>
+<td>Estimated coverage calculated from raw reads and genome length</td>
+</tr>
+<tr>
+<td>filtered_contigs_metrics</td>
+<td><strong>File</strong></td>
+<td>File containing metrics of contigs filtered</td>
+</tr>
+<tr>
+<td>gambit_closest_genomes</td>
+<td><strong>File</strong></td>
+<td>CSV file listing genomes in the GAMBIT database that are most similar to the query assembly</td>
+</tr>
+<tr>
+<td>gambit_db_version</td>
+<td><strong>String</strong></td>
+<td>Version of the GAMBIT database used</td>
+</tr>
+<tr>
+<td>gambit_docker</td>
+<td><strong>String</strong></td>
+<td>GAMBIT Docker used</td>
+</tr>
+<tr>
+<td>gambit_predicted_taxon</td>
+<td><strong>String</strong></td>
+<td>Taxon predicted by GAMBIT</td>
+</tr>
+<tr>
+<td>gambit_predicted_taxon_rank</td>
+<td><strong>String</strong></td>
+<td>Taxon rank of GAMBIT taxon prediction</td>
+</tr>
+<tr>
+<td>gambit_report</td>
+<td><strong>File</strong></td>
+<td>GAMBIT report in a machine-readable format</td>
+</tr>
+<tr>
+<td>gambit_version</td>
+<td><strong>String</strong></td>
+<td>Version of GAMBIT software used</td>
+</tr>
+<tr>
+<td>medaka_model</td>
+<td><strong>String</strong></td>
+<td>Model used by Medaka</td>
+</tr>
+<tr>
+<td>medaka_vcf</td>
+<td><strong>File</strong></td>
+<td>A VCF file containing the identified variants</td>
+</tr>
+<tr>
+<td>medaka_version</td>
+<td><strong>String</strong></td>
+<td>Version of Medaka used</td>
+</tr>
+<tr>
+<td>n50_value</td>
+<td><strong>Int</strong></td>
+<td>N50 of assembly calculated by QUAST</td>
+</tr>
+<tr>
+<td>nanoplot_docker</td>
+<td><strong>String</strong></td>
+<td>Docker image for nanoplot</td>
+</tr>
+<tr>
+<td>nanoplot_html_clean</td>
+<td><strong>File</strong></td>
+<td>An HTML report describing the clean reads</td>
+</tr>
+<tr>
+<td>nanoplot_html_raw</td>
+<td><strong>File</strong></td>
+<td>An HTML report describing the raw reads</td>
+</tr>
+<tr>
+<td>nanoplot_num_reads_clean1</td>
+<td><strong>Int</strong></td>
+<td>Number of clean reads</td>
+</tr>
+<tr>
+<td>nanoplot_num_reads_raw1</td>
+<td><strong>Int</strong></td>
+<td>Number of raw reads</td>
+</tr>
+<tr>
+<td>nanoplot_r1_est_coverage_clean</td>
+<td><strong>Float</strong></td>
+<td>Estimated coverage on the clean reads by nanoplot</td>
+</tr>
+<tr>
+<td>nanoplot_r1_est_coverage_raw</td>
+<td><strong>Float</strong></td>
+<td>Estimated coverage on the raw reads by nanoplot</td>
+</tr>
+<tr>
+<td>nanoplot_r1_mean_q_clean</td>
+<td><strong>Float</strong></td>
+<td>Mean quality score of clean forward reads</td>
+</tr>
+<tr>
+<td>nanoplot_r1_mean_q_raw</td>
+<td><strong>Float</strong></td>
+<td>Mean quality score of raw forward reads</td>
+</tr>
+<tr>
+<td>nanoplot_r1_mean_readlength_clean</td>
+<td><strong>Float</strong></td>
+<td>Mean read length of clean forward reads</td>
+</tr>
+<tr>
+<td>nanoplot_r1_mean_readlength_raw</td>
+<td><strong>Float</strong></td>
+<td>Mean read length of raw forward reads</td>
+</tr>
+<tr>
+<td>nanoplot_r1_median_q_clean</td>
+<td><strong>Float</strong></td>
+<td>Median quality score of clean forward reads</td>
+</tr>
+<tr>
+<td>nanoplot_r1_median_q_raw</td>
+<td><strong>Float</strong></td>
+<td>Median quality score of raw forward reads</td>
+</tr>
+<tr>
+<td>nanoplot_r1_median_readlength_clean</td>
+<td><strong>Float</strong></td>
+<td>Median read length of clean forward reads</td>
+</tr>
+<tr>
+<td>nanoplot_r1_median_readlength_raw</td>
+<td><strong>Float</strong></td>
+<td>Median read length of raw forward reads</td>
+</tr>
+<tr>
+<td>nanoplot_r1_n50_clean</td>
+<td><strong>Float</strong></td>
+<td>N50 of clean forward reads</td>
+</tr>
+<tr>
+<td>nanoplot_r1_n50_raw</td>
+<td><strong>Float</strong></td>
+<td>N50 of raw forward reads</td>
+</tr>
+<tr>
+<td>nanoplot_r1_stdev_readlength_clean</td>
+<td><strong>Float</strong></td>
+<td>Standard deviation read length of clean forward reads</td>
+</tr>
+<tr>
+<td>nanoplot_r1_stdev_readlength_raw</td>
+<td><strong>Float</strong></td>
+<td>Standard deviation read length of raw forward reads</td>
+</tr>
+<tr>
+<td>nanoplot_tsv_clean</td>
+<td><strong>File</strong></td>
+<td>A TSV report describing the clean reads</td>
+</tr>
+<tr>
+<td>nanoplot_tsv_raw</td>
+<td><strong>File</strong></td>
+<td>A TSV report describing the raw reads</td>
+</tr>
+<tr>
+<td>nanoplot_version</td>
+<td><strong>String</strong></td>
+<td>Version of nanoplot used for analysis</td>
+</tr>
+<tr>
+<td>nanoq_version</td>
+<td><strong>String</strong></td>
+<td>Version of nanoq used in analysis</td>
+</tr>
+<tr>
+<td>number_contigs</td>
+<td><strong>Int</strong></td>
+<td>Total number of contigs in assembly</td>
+</tr>
+<tr>
+<td>polypolish_version</td>
+<td><strong>String</strong></td>
+<td>Version of Polypolish used</td>
+</tr>
+<tr>
+<td>porechop_version</td>
+<td><strong>String</strong></td>
+<td>Version of Porechop used</td>
+</tr>
+<tr>
+<td>quast_gc_percent</td>
+<td><strong>Float</strong></td>
+<td>The GC percent of your sample</td>
+</tr>
+<tr>
+<td>quast_report</td>
+<td><strong>File</strong></td>
+<td>TSV report from QUAST</td>
+</tr>
+<tr>
+<td>quast_version</td>
+<td><strong>String</strong></td>
+<td>The version of QUAST</td>
+</tr>
+<tr>
+<td>racon_version</td>
+<td><strong>String</strong></td>
+<td>Version of Racon used</td>
+</tr>
+<tr>
+<td>read1_clean</td>
+<td><strong>File</strong></td>
+<td>Forward read file after quality trimming and adapter removal</td>
+</tr>
+<tr>
+<td>read_screen_clean</td>
+<td><strong>String</strong></td>
+<td>PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure</td>
+</tr>
+<tr>
+<td>read_screen_clean_tsv</td>
+<td><strong>File</strong></td>
+<td>Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
+</tr>
+<tr>
+<td>read_screen_raw</td>
+<td><strong>String</strong></td>
+<td>PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure</td>
+</tr>
+<tr>
+<td>read_screen_raw_tsv</td>
+<td><strong>File</strong></td>
+<td>Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe_analysis_date</td>
+<td><strong>String</strong></td>
+<td>Date of TheiaEuk PE workflow execution</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe_version</td>
+<td><strong>String</strong></td>
+<td>TheiaEuk PE workflow version used</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_bai</td>
+<td><strong>String</strong></td>
+<td>BAI file produced by the snippy module</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_bam</td>
+<td><strong>String</strong></td>
+<td>BAM file produced by the snippy module</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_coverage_tsv</td>
+<td><strong>String</strong></td>
+<td>TSV file containing coverage information for each base in the reference genome</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_gene_query_results</td>
+<td><strong>File</strong></td>
+<td>File containing all lines from variants file matching gene query terms</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_hits</td>
+<td><strong>String</strong></td>
+<td>String of all variant file entries matching gene query term</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_num_reads_aligned</td>
+<td><strong>String</strong></td>
+<td>Number of reads aligned by snippy</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_num_variants</td>
+<td><strong>Int</strong></td>
+<td>Number of variants detected by snippy</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_outdir_tarball</td>
+<td><strong>File</strong></td>
+<td>Tar compressed file containing full snippy output directory</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_percent_ref_coverage</td>
+<td><strong>String</strong></td>
+<td>Percent of reference genome covered by snippy</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_query</td>
+<td><strong>String</strong></td>
+<td>The gene query term(s) used to search variant</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_query_check</td>
+<td><strong>String</strong></td>
+<td>Were the gene query terms present in the refence annotated genome file</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_reference_genome</td>
+<td><strong>File</strong></td>
+<td>The reference genome used in the alignment and variant calling</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_results</td>
+<td><strong>File</strong></td>
+<td>The variants file produced by snippy</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_summary</td>
+<td><strong>File</strong></td>
+<td>A file summarizing the variants detected by snippy</td>
+</tr>
+<tr>
+<td>theiaeuk_snippy_variants_version</td>
+<td><strong>String</strong></td>
+<td>The version of the snippy_variants module being used</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
 </div>
 
 
@@ -8538,7 +10759,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 3, 2025 13:34:04 UTC">2025-06-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 11, 2025 15:45:32 UTC">2025-06-11</span>
   </span>
 
     

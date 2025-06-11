@@ -6371,7 +6371,7 @@
 <td><strong>cg_pipe_opts</strong></td>
 <td>String</td>
 <td>Options to pass to CG-Pipeline for clean read assessment</td>
-<td>--fast</td>
+<td>#NAME?</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6411,7 +6411,7 @@
 <td><strong>cg_pipe_opts</strong></td>
 <td>String</td>
 <td>Options to pass to CG-Pipeline for raw read assessment</td>
-<td>--fast</td>
+<td>#NAME?</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7088,6 +7088,14 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>cauris_cladetyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>cladetyper_kmer_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
@@ -7684,14 +7692,6 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>sistr_cpu</strong></td>
-<td>Int</td>
-<td>The number of CPU cores to allocate for the task</td>
-<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8691,7 +8691,7 @@
 <td><strong>midas_db</strong></td>
 <td>File</td>
 <td>The database used by the MIDAS task in .tar.gz format</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
+<td>gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8731,7 +8731,7 @@
 <td><strong>trimmomatic_args</strong></td>
 <td>String</td>
 <td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
-<td>-phred33</td>
+<td>#NAME?</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9525,7 +9525,7 @@
 <td><strong>cg_pipe_opts</strong></td>
 <td>String</td>
 <td>Options to pass to CG-Pipeline for clean read assessment</td>
-<td>--fast</td>
+<td>#NAME?</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9573,7 +9573,7 @@
 <td><strong>cg_pipe_opts</strong></td>
 <td>String</td>
 <td>Options to pass to CG-Pipeline for raw read assessment</td>
-<td>--fast</td>
+<td>#NAME?</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10258,6 +10258,14 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>cauris_cladetyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>cladetyper_kmer_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
@@ -10854,14 +10862,6 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>sistr_cpu</strong></td>
-<td>Int</td>
-<td>The number of CPU cores to allocate for the task</td>
-<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11909,7 +11909,7 @@
 <td><strong>midas_db</strong></td>
 <td>File</td>
 <td>The database used by the MIDAS task in .tar.gz format</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
+<td>gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11949,7 +11949,7 @@
 <td><strong>trimmomatic_args</strong></td>
 <td>String</td>
 <td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
-<td>-phred33</td>
+<td>#NAME?</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13015,7 +13015,7 @@
 <td><strong>flye_read_type</strong></td>
 <td>String</td>
 <td>Specifies the type of sequencing reads. Options: --nano-raw (default), --nano-corr, --nano-hq, --pacbio-raw, --pacbio-corr, --pacbio-hifi. Refer to Flye documentation for details on each type.</td>
-<td>--nano-raw</td>
+<td>#NAME?</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13496,6 +13496,14 @@
 <td>Boolean</td>
 <td>If set to "true", activates the tbp_parser module and results in more outputs, including tbp_parser_looker_report_csv, tbp_parser_laboratorian_report_csv,  tbp_parser_lims_report_csv, tbp_parser_coverage_report, and tbp_parser_genome_percent_coverage</td>
 <td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cauris_cladetyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14104,14 +14112,6 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>sistr_cpu</strong></td>
-<td>Int</td>
-<td>The number of CPU cores to allocate for the task</td>
-<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16462,6 +16462,14 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>cauris_cladetyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>cladetyper_kmer_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
@@ -17066,14 +17074,6 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>sistr_cpu</strong></td>
-<td>Int</td>
-<td>The number of CPU cores to allocate for the task</td>
-<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20862,15 +20862,15 @@
 <details class="task">
 <summary><code>amr_search</code>: <em>Neisseria gonorrhoeae</em> antimicrobial resistance profiling</summary>
 <p>This task performs <em>in silico</em> antimicrobial resistance (AMR) profiling for <em>Neisseria gonorrhoeae</em> using <strong>AMRsearch</strong>, the primary tool used by <a href="https://pathogen.watch/">Pathogenwatch</a> to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.</p>
-<p><strong>AMRsearch</strong> screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both <strong>resistance genes</strong> and <strong>mutations</strong>, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow <strong>S/I/R classification</strong> (<em>Sensitive, Intermediate, Resistant</em>).</p>
 <p>The AMR search is conducted when <em>Neisseria gonorrhoeae</em> is identified as the taxon in <em>TheiaProk</em> workflows. The default database for <em>N. gonorrhoeae</em> is <strong>485</strong>.</p>
+<p><strong>AMRsearch</strong> screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both <strong>resistance genes</strong> and <strong>mutations</strong>, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow <strong>S/I/R classification</strong> (<em>Sensitive, Intermediate, Resistant</em>).</p>
 <p><strong>Outputs:</strong></p>
 <ul>
 <li>
 <p><strong>JSON Output:</strong> Contains the complete AMR profile, including detailed <strong>resistance state</strong>, detected <strong>resistance genes/mutations</strong>, and supporting <strong>BLAST results</strong>.</p>
 </li>
 <li>
-<p><strong>CSV &amp; PNG Tables:* Results are formatted into a </strong>CSV file<strong> and </strong>PNG summary table** for easier visualization.</p>
+<p><strong>CSV &amp; PDF Tables:</strong> An incorprated Python script, <code>parse_amr_json.py</code>, extracts and formats results into a <strong>CSV file</strong> and <strong>PDF summary table</strong> for easier visualization.</p>
 </li>
 </ul>
 <div class="admonition techdetails">
@@ -27930,7 +27930,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 9, 2025 15:35:01 UTC">2025-06-09</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 11, 2025 15:45:32 UTC">2025-06-11</span>
   </span>
 
     
