@@ -48,12 +48,11 @@ task flye {
       echo "FAIL" > STATUS
     else
       echo "DEBUG: Flye assembly completed successfully."
+      mv assembly.fasta ~{samplename}.assembly.fasta
+      mv assembly_info.txt ~{samplename}.assembly_info.txt
+      mv assembly_graph.gfa ~{samplename}.assembly_graph.gfa
       echo "PASS" > STATUS
     fi
-
-    mv assembly.fasta ~{samplename}.assembly.fasta
-    mv assembly_info.txt ~{samplename}.assembly_info.txt
-    mv assembly_graph.gfa ~{samplename}.assembly_graph.gfa
 
   >>>
   output {
