@@ -8,7 +8,7 @@ task clair3_variants {
     File reference_genome_file_index
     String sequencing_platform
     String samplename
-    String clair3_model = "r941_prom_hac_g360+g422"
+    String clair3_model = "r1041_e82_400bps_sup_v500"
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/clair3-extra-models:1.0.10"
     Int memory = 8
     Int cpu = 4

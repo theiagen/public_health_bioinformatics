@@ -38,39 +38,23 @@ task consensus {
       ref_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"  
     fi
 
-    # index bam file
-    samtools index ~{bamfile}
-
-    # create fastas for each contig in reference genome file
-    sed -E 's/^>([^ ]+).*$/>\1/' ~{reference_genome} | \
-      awk -F "|" '/^>/ {close(F); ID=$1; gsub("^>", "", ID); F=ID".refcontig.fasta"} {print >> F}'
-
-    for contig in *.refcontig.fasta; do
-      contig_name=$(basename $contig ".refcontig.fasta")
-      echo "DEBUG: Extracting alignments to reference contig: $contig_name"
-      samtools view ~{bamfile} ${contig_name} -b -o ${contig_name}.bam
-      samtools index ${contig_name}.bam
-
-      if [[ ! -s ${contig_name}.bam ]]; then
-        echo "WARNING: No reads aligned to reference contig ${contig_name}. Skipping consensus generation for this contig."
-        continue
-      fi
-
+    contig_count=$(grep -c "^>" ${ref_genome})
+    if [[ $contig_count -eq 1 ]]; then
       # call mpileup
       samtools mpileup \
         ~{true = "--count-orphans" false = "" count_orphans} \
         -d ~{max_depth} \
         ~{true = "--no-BAQ" false = "" disable_baq} \
         -Q ~{min_bq} \
-        --reference ${contig} \
+        --reference ${ref_genome} \
         ~{true = "-aa" false = "" all_positions} \
-        ${contig_name}.bam \
-        > ${contig_name}.mpileup
+        ~{bamfile} \
+        > ~{samplename}.mpileup
 
       # call consensus
-      cat ${contig_name}.mpileup | \
+      cat ~{samplename}.mpileup | \
       ivar consensus \
-        -p ${contig_name}.consensus \
+        -p ~{samplename}.consensus \
         -q ~{min_qual} \
         -t ~{consensus_min_freq} \
         -m ~{consensus_min_depth} \
@@ -78,13 +62,57 @@ task consensus {
         ~{true = "-k" false = "" skip_N}
 
       # clean up fasta header
-      echo ">${contig_name}" > ${contig_name}.consensus.fasta
-      grep -v ">" ${contig_name}.consensus.fa >> ${contig_name}.consensus.fasta
-    done
+      echo ">~{samplename}" > ~{samplename}.ivar.consensus.fasta
+      grep -v ">" ~{samplename}.consensus.fa >> ~{samplename}.ivar.consensus.fasta
 
-    # Combine all consensus sequences into a single fasta file
-    cat *.consensus.fasta > ~{samplename}.ivar.consensus.fasta
-    cat *.mpileup > ~{samplename}.mpileup
+    else
+      # index bam file
+      samtools index ~{bamfile}
+
+      # create fastas for each contig in reference genome file
+      sed -E 's/^>([^ ]+).*$/>\1/' ${ref_genome} | \
+        awk -F "|" '/^>/ {close(F); ID=$1; gsub("^>", "", ID); F=ID".refcontig.fasta"} {print >> F}'
+
+      for contig in *.refcontig.fasta; do
+        contig_name=$(basename $contig ".refcontig.fasta")
+        echo "DEBUG: Extracting alignments to reference contig: $contig_name"
+
+        # col1 = contig name, col2 = ref/contig length, col3 = num mapped reads, col4 = num unmapped reads
+        ref_length=$(samtools idxstats ~{bamfile} | grep -w ${contig_name} | cut -f 2)
+
+        # call mpileup
+        # Note: mpileup with -aa will output mpileups for all contigs, but without it, we could miss some reference positions in the contig.
+        # the -r regions flag for each contig we are only processing the contig of interest. otherwise all contig mpileups would be passed to ivar.
+        samtools mpileup \
+          ~{true = "--count-orphans" false = "" count_orphans} \
+          -d ~{max_depth} \
+          ~{true = "--no-BAQ" false = "" disable_baq} \
+          -Q ~{min_bq} \
+          --reference ${contig} \
+          ~{true = "-aa" false = "" all_positions} \
+          ~{bamfile} \
+          -r ${contig_name}:0-${ref_length} \
+          > ${contig_name}.mpileup
+
+        # call consensus
+        cat ${contig_name}.mpileup | \
+        ivar consensus \
+          -p ${contig_name}.consensus \
+          -q ~{min_qual} \
+          -t ~{consensus_min_freq} \
+          -m ~{consensus_min_depth} \
+          -n ~{char_unknown} \
+          ~{true = "-k" false = "" skip_N}
+
+        # clean up fasta header
+        echo ">~{samplename}_${contig_name}" > ${contig_name}.consensus.fasta
+        grep -v ">" ${contig_name}.consensus.fa >> ${contig_name}.consensus.fasta
+      done
+
+      # Combine all consensus sequences into a single fasta file
+      cat *.consensus.fasta > ~{samplename}.ivar.consensus.fasta
+      cat *.mpileup > ~{samplename}.mpileup
+    fi
   >>>
   output {
     File consensus_seq = "~{samplename}.ivar.consensus.fasta"

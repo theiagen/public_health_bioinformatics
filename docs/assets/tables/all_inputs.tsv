@@ -373,7 +373,7 @@ clair3_variants_ont	clair3_enable_haploid_precise	Boolean	Enable haploid precise
 clair3_variants_ont	clair3_enable_long_indel	Boolean	Enable long indel calling	FALSE	Optional	Clair3_Variants_ONT	
 clair3_variants_ont	clair3_include_all_contigs	Boolean	Call variants on all contigs, should always be true for non-human samples	TRUE	Optional	Clair3_Variants_ONT	
 clair3_variants_ont	clair3_memory	Int	Memory allocation in GB	8	Optional	Clair3_Variants_ONT	
-clair3_variants_ont	clair3_model	String	Model name for variant calling (see supported models for available options)	r941_prom_hac_g360+g422	Optional	Clair3_Variants_ONT	
+clair3_variants_ont	clair3_model	String	Model name for variant calling (see supported models for available options)	r1041_e82_400bps_sup_v500	Optional	Clair3_Variants_ONT
 clair3_variants_ont	clair3_variant_quality	Int	Minimum variant quality score	2	Optional	Clair3_Variants_ONT	
 clean_check_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 clean_check_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
@@ -1942,7 +1942,7 @@ bcftools_consensus	cpu	Int	Number of CPUs allocated for the task	2	Optional	Thei
 bcftools_consensus	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_ONT
 bcftools_consensus	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/bcftools:1.20"	Optional	TheiaViral_ONT
 bcftools_consensus	memory	Int	Memory allocated for the task (in GB)	4	Optional	TheiaViral_ONT
-clair3	clair3_model	String	Model to be used by Clair3	"r941_prom_hac_g360+g422"	Optional	TheiaViral_ONT
+clair3	clair3_model	String	Model to be used by Clair3	"r1041_e82_400bps_sup_v500"	Optional	TheiaViral_ONT
 clair3	cpu	Int	Number of CPUs allocated for the task	4	Optional	TheiaViral_ONT
 clair3	disable_phasing	Boolean	True/False that determines if variants should be called without whatshap phasing in full alignment calling	TRUE	Optional	TheiaViral_ONT
 clair3	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_ONT
