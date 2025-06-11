@@ -17,7 +17,7 @@ _Please provide a description of the workflow in complete sentences._
 
 _Any additional information regarding the inputs, such as suggestions or guidelines should be found **before** the table. See [the page for Snippy_Streamline](../workflows/phylogenetic_construction/snippy_streamline.md#inputs) for an example._
 
-_Add your inputs anywhere in the `assets/tables/all_inputs.tsv` table. If your workflow has the same type of input as a different workflow, check the inputs table to see if that input already exists. If so, add your workflow name to comma-delimited list for that input in the appropriate column._
+_Add your inputs anywhere in the `assets/tables/all_inputs.tsv` table. If your workflow has the same type of input as a different workflow, check the inputs table to see if that input already exists. If so, add your workflow name to the comma-delimited list for that input in the appropriate column._
 
 _Use the following macro call to generate the inputs table. Adjust the fields marked with `<>` with the appropriate values.  Please note that the macro_ **result** _is seen on the web browser, not the macro call itself._
 
@@ -37,7 +37,7 @@ _If your workflow uses a task that is modular and can be used in other contexts,
 
 ### Outputs
 
-_Add your outputs to the `assets/tables/all_outputs.tsv` table. Location doesn't matter. If your workflow has the same type of output as a different workflow, check the output table to see if that output already exists. If so, add your workflow name to comma-delimited list in the appropriate column._
+_Add your outputs to the `assets/tables/all_outputs.tsv` table. Location doesn't matter. If your workflow has the same type of output as a different workflow, check the output table to see if that output already exists. If so, add your workflow name to the comma-delimited list in the appropriate column._
 
 _Use the following macro call to generate the outputs table. Adjust the fields marked with `<>` with the appropriate values. Please note that the macro_ **result** _is seen on the web browser, not the macro call itself._
 
