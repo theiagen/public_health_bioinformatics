@@ -35,7 +35,7 @@ A limited number of species are currently supported and are listed below. NCBI c
 
 ### Workflow Tasks
 
-{{ include_md("common_text/amr_search_task.md") }}
+{{ include_md("common_text/amr_search_task.md", condition="amr_search") }}
 
 ### Outputs
 

@@ -4,7 +4,6 @@
 
 {{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaEuk Workflow Series**](../workflows/genomic_characterization/theiaeuk.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
-
 ## TheiaEuk Workflows
 
 **The TheiaEuk workflows are for the assembly, quality assessment, and characterization of fungal genomes.** It is designed to accept Illumina paired-end sequencing data or base-called ONT reads as the primary input. **It is currently intended only for ==haploid== fungal genomes like _Candidozyma auris_.** Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.
@@ -15,7 +14,6 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
     !!! caption "TheiaEuk Illumina PE Workflow Diagram"
         ![TheiaEuk Illumina PE Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PHB_202557.png)
-
 
 === "TheiaEuk_ONT"
 
@@ -28,14 +26,14 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
 ### Inputs
 
-!!! dna ""
-    ??? toggle "TheiaEuk_Illumina_PE Input Read Data"
+!!! dna "Input Read Data"
+    === "TheiaEuk_Illumina_PE"
 
         The TheiaEuk_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time.
 
         By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
-    ??? toggle "TheiaEuk_ONT Input Read Data"
+    === "TheiaEuk_ONT"
 
         The TheiaEuk_ONT workflow takes in base-called ONT read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before uploading to Terra to minimize data upload time.
 
@@ -53,7 +51,6 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
         {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaEuk_ONT"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
-
 
 ### Workflow Tasks
 
@@ -73,8 +70,9 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 {{ include_md("common_text/rasusa_task.md", indent=8)}}
 {{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaeuk", indent=8) }}
 {{ include_md("common_text/qc_check_task.md", condition="theiaeuk", indent=8) }}
+
         !!! dna ""
-                    These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
+            These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
 {{ include_md("common_text/digger_denovo_task.md", indent=8) }}
 {{ include_md("common_text/quast_task.md", indent=8) }}
@@ -102,7 +100,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Many of these taxa-specific tasks do not require any additional inputs from the user.
 
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
-    Three tools are deployed when _Candidozyma auris_/_Candida auris_ is  identified.
+    Three tools can be deployed when _Candidozyma auris_/_Candida auris_ is  identified.
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
 
