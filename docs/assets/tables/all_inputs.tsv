@@ -1760,6 +1760,7 @@ workflow name	call_ani	Boolean	Set to true to enable the ANI task	FALSE	Optional
 workflow name	call_kmerfinder	Boolean	Set to true to enable the kmerfinder task	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 workflow name	call_plasmidfinder	Boolean	Set to true to enable the plasmidfinder task	TRUE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 workflow name	call_resfinder	Boolean	Set to true to enable the ResFinder task	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+workflow name	call_gamma	Boolean	Set to true in order to enable GAMMA task	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 workflow name	city	String	Will be used in the "city" column in any taxon-specific tables created in the Export Taxon Tables task		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 workflow name	collection_date	String	Will be used in the "collection_date" column in any taxon-specific tables created in the Export Taxon Tables task		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 workflow name	consensus_min_freq	Float	The minimum frequency for a variant to be called a SNP in consensus genome	0.6	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
