@@ -123,7 +123,7 @@ workflow flye_denovo {
   # Bandage plot generation
   call task_bandage.bandage_plot as bandage {
     input:
-      assembly_graph_gfa = flye.assembly_graph_gfa,
+      assembly_graph_gfa = select_first([flye.assembly_graph_gfa]),
       samplename = samplename,
       cpu = bandage_cpu,
       memory = bandage_memory,
@@ -133,14 +133,14 @@ workflow flye_denovo {
   if (defined(illumina_read1) && defined(illumina_read2)) {
    call task_bwa_all.bwa_all as bwa {
      input:
-       draft_assembly_fasta = flye.assembly_fasta,
+       draft_assembly_fasta = select_first([flye.assembly_fasta]),
        read1 = select_first([illumina_read1]),
        read2 = select_first([illumina_read2]),
        samplename = samplename
     }
     call task_polypolish.polypolish {
       input:
-        assembly_fasta = flye.assembly_fasta,
+        assembly_fasta = select_first([flye.assembly_fasta]),
         read1_sam = bwa.read1_sam,
         read2_sam = bwa.read2_sam,
         samplename = samplename,
@@ -163,7 +163,7 @@ workflow flye_denovo {
     if (polisher == "medaka") {
       call task_medaka.medaka {
         input:
-          unpolished_fasta = flye.assembly_fasta,
+          unpolished_fasta = select_first([flye.assembly_fasta]),
           samplename = samplename,
           read1 = select_first([porechop.trimmed_reads, read1]),
           medaka_model = medaka_model,
@@ -176,7 +176,7 @@ workflow flye_denovo {
     if (polisher == "racon") {
       call task_racon.racon {
         input:
-          unpolished_fasta = flye.assembly_fasta,
+          unpolished_fasta = select_first([flye.assembly_fasta]),
           read1 = select_first([porechop.trimmed_reads, read1]),
           samplename = samplename,
           polishing_rounds = polish_rounds,
@@ -209,9 +209,9 @@ workflow flye_denovo {
   output { 
     File assembly_fasta = dnaapler.reoriented_fasta
     File bandage_plot = bandage.plot
-    File contigs_gfa = flye.assembly_graph_gfa
+    File? contigs_gfa = flye.assembly_graph_gfa
     File filtered_contigs_metrics = filter_contigs.assembly_filtering_metrics
-    File flye_assembly_info = flye.assembly_info
+    File? flye_assembly_info = flye.assembly_info
     String? medaka_model_used = medaka.resolved_medaka_model
     String? porechop_version = porechop.porechop_version
     String flye_version = flye.flye_version
