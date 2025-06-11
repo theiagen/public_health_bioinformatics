@@ -261,6 +261,7 @@ workflow organism_parameters {
   }
   if (organism == "Measles" || organism == "measles") {
     String measles_org_name = "measles"
+    String measles_genome_len = 16000
     String measles_nextclade_ds_tag = "2025-03-26--11-47-13Z"
     String measles_nextclade_ds_name = "nextstrain/measles/N450/WHO-2012"
   }
@@ -273,10 +274,10 @@ workflow organism_parameters {
     File gene_locations_bed = select_first([gene_locations_bed_file, sc2_gene_locations_bed, mpox_gene_locations_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"])
     File primer_bed = select_first([primer_bed_file, mpox_primer_bed_file, wnv_primer_bed_file, hiv_v1_primer_bed, hiv_v2_primer_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"])
     File reference_gff = select_first([reference_gff_file, mpox_reference_gff_file, hiv_v1_reference_gff, hiv_v2_reference_gff, "gs://theiagen-public-resources-rp/empty_files/empty.gff3"])
-    Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len, 0])
+    Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len, measles_genome_len, 0])
     # nextclade information
     String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h5n1_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, measles_nextclade_ds_tag, "NA"])
-    String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h5n1_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name,measles_nextclade_ds_name, "NA"])
+    String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h5n1_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, measles_nextclade_ds_name, "NA"])
     # pangolin options
     String pangolin_docker = select_first([pangolin_docker_image, sc2_pangolin_docker, ""])
     # vadr options

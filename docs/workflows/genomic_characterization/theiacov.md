@@ -298,7 +298,17 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | reference_gff_file | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3 | This version of HIV originates from Southern Africa |
 
         </div>
+    
+    ??? toggle "Measles Defaults"
+        <div class="searchable-table" markdown="block">
 
+        | **Overwrite Variable Name** | **Organism** | **Default Value** |
+        |---|---|---|
+        | genome_length_input | measles | `16000` |
+        | nextclade_dataset_name_input | measles | `"nextstrain/measles/N450/WHO-2012"` |
+        | nextclade_dataset_tag_input | measles | `"2025-03-26--11-47-13Z"` |
+
+        </div>                
 ### Workflow Tasks
 
 All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT, and ClearLabs workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaCoV workflows subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
