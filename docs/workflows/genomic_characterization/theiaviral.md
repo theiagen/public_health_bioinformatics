@@ -307,7 +307,7 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
     
     ??? toggle "Taxonomic Identification"
 
-        <div class="grid cards" markdown>
+{{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral", indent=8) }}
 
         -   {{ include_md("common_text/ncbi_taxon_summary_task.md", condition="theiaviral", indent=12) }}
 
@@ -315,7 +315,7 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
     
     ??? toggle "Read Quality Control, Trimming, and Filtering"
 
-        <div class="grid cards" markdown>
+{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaviral", indent=8, replacements={": Read Quality Trimming, Adapter Removal, Quantification, and Identification" : ""}) }}
 
         -   {{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaviral", indent=12) }}
 
@@ -343,77 +343,33 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
 
     ??? toggle "*De novo* Assembly and Reference Selection"
 
-        <div class="grid cards" markdown>
+{{ include_md("common_text/spades_task.md", condition="theiaviral", indent=8) }}
 
-        -   {{ include_md("common_text/spades_task.md", condition="theiaviral", indent=12) }}
+{{ include_md("common_text/megahit_task.md", condition="theiaviral", indent=8) }}
 
-        </div>
+{{ include_md("common_text/skani_task.md", condition="theiaviral", indent=8) }}
 
-        <div class="grid cards" markdown>
-
-        -   {{ include_md("common_text/megahit_task.md", condition="theiaviral", indent=12) }}
-
-        </div>
-
-        <div class="grid cards" markdown>
-
-        -   {{ include_md("common_text/skani_task.md", condition="theiaviral", indent=12) }}
-
-        </div>
-
-        <div class="grid cards" markdown>
-
-        -   {{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=12) }}
-
-        </div>
+{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=8) }}
 
     ??? toggle "Reference Mapping"
 
-        <div class="grid cards" markdown>
+{{ include_md("common_text/bwa_task.md", condition="theiaviral", indent=8) }}
 
-        -   {{ include_md("common_text/bwa_task.md", condition="theiaviral", indent=12) }}
-
-        </div>
-
-        <div class="grid cards" markdown>
-
-        -   {{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=12, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
-
-        </div>
+{{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=8, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
 
     ??? toggle "Variant Calling and Consensus Generation"
 
-        <div class="grid cards" markdown>
+{{ include_md("common_text/ivar_variants_task.md", condition="theiaviral", indent=8) }}
 
-        -   {{ include_md("common_text/ivar_variants_task.md", condition="theiaviral", indent=12) }}
-
-        </div>
-
-        <div class="grid cards" markdown>
-
-        -   {{ include_md("common_text/ivar_consensus_task.md", condition="theiaviral", indent=12) }}
-
-        </div>
+{{ include_md("common_text/ivar_consensus_task.md", condition="theiaviral", indent=8) }}
 
     ??? toggle "Assembly Evaluation and Consensus Quality Control"
 
-        <div class="grid cards" markdown>
+{{ include_md("common_text/quast_task.md", condition="theiaviral", indent=8, replacements={'??? task "`quast`: Assembly Quality Assessment"' : '??? task "`quast_denovo`"'}) }}
 
-        -   {{ include_md("common_text/quast_task.md", condition="theiaviral", indent=12, replacements={'??? task "`quast`: Assembly Quality Assessment"' : '??? task "`quast_denovo`"'}) }}
+{{ include_md("common_text/checkv_task.md", condition="theiaviral", indent=8, replacements={'??? task "`checkv`"' : '??? task "`checkv_denovo` & `checkv_consensus`"'}) }}
 
-        </div>
-
-        <div class="grid cards" markdown>
-
-        -   {{ include_md("common_text/checkv_task.md", condition="theiaviral", indent=12, replacements={'??? task "`checkv`"' : '??? task "`checkv_denovo` & `checkv_consensus`"'}) }}
-
-        </div>
-
-        <div class="grid cards" markdown>
-
-        -   {{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=12) }}
-
-        </div>
+{{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=8) }}
 
 ### Outputs
 
