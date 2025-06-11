@@ -43,7 +43,7 @@ task metabuli {
       --taxonomy-path taxdump/ \
       ~{"--min-score " + min_score} \
       ~{"--min-sp-score " + min_sp_score} \
-      ~{"--min-cov " + min_cov} \
+      ~{"--min-cov " + min_percent_coverage} \
       --threads ~{cpu} \
       --max-ram ~{memory}
 
