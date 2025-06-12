@@ -107,7 +107,7 @@ task ncbi_datasets_download_genome_accession {
     String ncbi_datasets_status = read_string("NCBIDATASETS_STATUS")
     File? ncbi_datasets_gff3 = "~{ncbi_accession}.gff"
     File? ncbi_datasets_gbff = "~{ncbi_accession}.gbff"
-    File ncbi_datasets_assembly_data_report_json = "~{ncbi_accession}.data_report.jsonl"
+    File? ncbi_datasets_assembly_data_report_json = "~{ncbi_accession}.data_report.jsonl"
     String? taxon_name = read_string("TAXON_NAME")
     String? taxon_id = read_string("TAXON_ID")
     String ncbi_datasets_version = read_string("DATASETS_VERSION")

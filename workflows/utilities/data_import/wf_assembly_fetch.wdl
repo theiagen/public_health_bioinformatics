@@ -36,8 +36,8 @@ workflow assembly_fetch {
     String? assembly_fetch_referenceseeker_docker = referenceseeker.referenceseeker_docker
     String? assembly_fetch_referenceseeker_database = referenceseeker.referenceseeker_database
     # ncbi datasets outputs
-    File assembly_fetch_ncbi_datasets_assembly_data_report_json = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_data_report_json
-    File assembly_fetch_ncbi_datasets_assembly_fasta = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta 
+    File? assembly_fetch_ncbi_datasets_assembly_data_report_json = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_data_report_json
+    File? assembly_fetch_ncbi_datasets_assembly_fasta = ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta 
     File? assembly_fetch_ncbi_datasets_gff3 = ncbi_datasets_download_genome_accession.ncbi_datasets_gff3
     File? assembly_fetch_ncbi_datasets_gff = ncbi_datasets_download_genome_accession.ncbi_datasets_gbff
     String assembly_fetch_ncbi_datasets_version = ncbi_datasets_download_genome_accession.ncbi_datasets_version
