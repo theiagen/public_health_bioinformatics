@@ -17,12 +17,13 @@ This PR closes #
 
 ## :microscope: Final Developer Checklist
 <!-- Please mark boxes [X] -->
-- [ ] I have checked my updates for any errors, typos, or rending issues. If not, please explain why or request help below.
+- [ ] I have checked my updates for any errors or typos.
+- [ ] I have checked my updates for any rending issues. If not, please explain why or request help below.
 - [ ] My updates follow the [documentation style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/doc_contribution/)
 
 ## 🎯 Reviewer Checklist
 <!--  Indicate NA when not applicable  -->
 - [ ] All changes have been confirmed to be accurate
 - [ ] You have verified all changes render correctly in the documnentation by serving it locally.
-- [ ] The changes adheres to the [documentation style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/doc_contribution/)
+- [ ] The changes adhere to the [documentation style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/doc_contribution/)
 - [ ] The PR author has addressed all comments
