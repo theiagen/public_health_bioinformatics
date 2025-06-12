@@ -42,16 +42,16 @@ You can expect a careful review of every PR and feedback as needed before mergin
 
 ### Authorship
 
-(Ordered by contribution [# of lines changed] as of 2025-03-26)
+(Ordered by contribution [# of lines changed] as of 2025-06-11)
 
 - **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision
 - **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation
 - **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation
-- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation
-- **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
 - **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
 - **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
-- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
+- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation
+- **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
 - **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
 - **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
