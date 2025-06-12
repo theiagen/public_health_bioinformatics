@@ -25,36 +25,6 @@ task check_reads {
     # just in case anything fails, throw an error
     set -euo pipefail
 
-    # convert WDL variables to bash variables so defaults can be set
-    min_reads=~{min_reads}
-    min_basepairs=~{min_basepairs}
-    min_genome_length=~{min_genome_length}
-    max_genome_length=~{max_genome_length}
-    min_coverage=~{min_coverage}
-    min_proportion=~{min_proportion}
-
-    # set defaults if they are not provided
-    if [ ~{workflow_series} == "theiaviral" ]; then
-      if [ -z ~{min_reads} ]; then
-        min_reads=50 # approximately min basepairs / 300 (which is the longest available Illumina product)
-      fi
-      if [ -z ~{min_basepairs} ]; then
-        min_basepairs=15000 # approximately 10x coverage of hepatitis delta virus
-      fi
-      if [ -z ~{min_genome_length} ]; then
-        min_genome_length=1500 # approximate size of hepatitis delta virus
-      fi
-      if [ -z ~{max_genome_length} ]; then
-        max_genome_length=2673870 # size of Pandoravirus salinus + 200 kb
-      fi
-      if [ -z ~{min_coverage} ]; then
-        min_coverage=10 # 10x coverage
-      fi
-      if [ -z ~{min_proportion} ]; then
-        min_proportion=40 # 40% of the total sequence in one read
-      fi
-    fi
-
     # populate column headers for metrics and init failure log
     metrics="read1_count\tread2_count\tread_bp\test_genome_length"
     fail_log=""
@@ -77,7 +47,7 @@ task check_reads {
     reads_total=$(expr $read1_num + $read2_num)
     echo "DEBUG: Number of reads total in R1 and R2: ${reads_total}"
 
-    if [ "${reads_total}" -le "${min_reads}" ]; then
+    if [ "${reads_total}" -le "~{min_reads}" ]; then
       fail_log+="; the total number of reads is below the minimum of ${min_reads}"
     fi
 
@@ -93,17 +63,17 @@ task check_reads {
     percent_read1=$(python3 -c "print(round(($read1_bp / ($read1_bp + $read2_bp))*100))")
     percent_read2=$(python3 -c "print(round(($read2_bp / ($read1_bp + $read2_bp))*100))")
 
-    if [ "$percent_read1" -lt "${min_proportion}" ] ; then
-      fail_log+="; more than ${min_proportion} percent of the total sequence is found in R2 (BP: $read2_bp; PERCENT: $percent_read2) compared to R1 (BP: $read1_bp; PERCENT: $percent_read1)"
+    if [ "$percent_read1" -lt "~{min_proportion}" ] ; then
+      fail_log+="; more than ~{min_proportion} percent of the total sequence is found in R2 (BP: $read2_bp; PERCENT: $percent_read2) compared to R1 (BP: $read1_bp; PERCENT: $percent_read1)"
     fi
-    if [ "$percent_read2" -lt "${min_proportion}" ] ; then
-      fail_log+="; more than ${min_proportion} percent of the total sequence is found in R1 (BP: $read1_bp; PERCENT: $percent_read1) compared to R2 (BP: $read2_bp; PERCENT: $percent_read2)"
+    if [ "$percent_read2" -lt "~{min_proportion}" ] ; then
+      fail_log+="; more than ~{min_proportion} percent of the total sequence is found in R1 (BP: $read1_bp; PERCENT: $percent_read1) compared to R2 (BP: $read2_bp; PERCENT: $percent_read2)"
     fi
 
     # check total number of basepairs 
     bp_total=$(expr $read1_bp + $read2_bp)
-    if [ "${bp_total}" -le "${min_basepairs}" ]; then
-      fail_log+="; the number of basepairs (${bp_total}) is below the minimum of ${min_basepairs}"
+    if [ "${bp_total}" -le "~{min_basepairs}" ]; then
+      fail_log+="; the number of basepairs (${bp_total}) is below the minimum of ~{min_basepairs}"
     fi
 
     #checks four and five: estimated genome length and coverage
@@ -122,10 +92,10 @@ task check_reads {
 
       # Check if second pass is needed in theiaprok
       if [ "{~workflow_series}" == "theiaprok" ]; then
-        if [ ${estimated_genome_length} -gt "${max_genome_length}" ] || [ ${estimated_genome_length} -lt "${min_genome_length}" ] ; then
+        if [ ${estimated_genome_length} -gt "~{max_genome_length}" ] || [ ${estimated_genome_length} -lt "~{min_genome_length}" ] ; then
           # Probably high coverage, try increasing number of kmer copies to 10
           M="-m 10"
-          if [ ${estimated_genome_length} -lt "${min_genome_length}" ]; then
+          if [ ${estimated_genome_length} -lt "~{min_genome_length}" ]; then
             # Probably low coverage, try decreasing the number of kmer copies to 1
             M="-m 1"
           fi
@@ -161,13 +131,13 @@ task check_reads {
     fi
 
     # check if estimated genome length is within bounds
-    if [ "${estimated_genome_length}" -ge "${max_genome_length}" ] && ( [ "~{workflow_series}" == "theiaprok" ] || [ "~{workflow_series}" == "theiaeuk" ] ) ; then
-      fail_log+="; the estimated genome length (${estimated_genome_length}) is larger than the maximum of ${max_genome_length} bps"
-    elif [ "${estimated_genome_length}" -le "${min_genome_length}" ] && ( [ "~{workflow_series}" == "theiaprok" ] || [ "~{workflow_series}" == "theiaeuk" ] ) ; then
-      fail_log+="; the estimated genome length (${estimated_genome_length}) is smaller than the minimum of ${min_genome_length} bps"
+    if [ "${estimated_genome_length}" -ge "~{max_genome_length}" ] && ( [ "~{workflow_series}" == "theiaprok" ] || [ "~{workflow_series}" == "theiaeuk" ] ) ; then
+      fail_log+="; the estimated genome length (${estimated_genome_length}) is larger than the maximum of ~{max_genome_length} bps"
+    elif [ "${estimated_genome_length}" -le "~{min_genome_length}" ] && ( [ "~{workflow_series}" == "theiaprok" ] || [ "~{workflow_series}" == "theiaeuk" ] ) ; then
+      fail_log+="; the estimated genome length (${estimated_genome_length}) is smaller than the minimum of ~{min_genome_length} bps"
     fi
-    if [ "${estimated_coverage}" -lt "${min_coverage}" ] ; then
-      fail_log+="; the estimated coverage (${estimated_coverage}) is less than the minimum of ${min_coverage}x"
+    if [ "${estimated_coverage}" -lt "~{min_coverage}" ] ; then
+      fail_log+="; the estimated coverage (${estimated_coverage}) is less than the minimum of ~{min_coverage}x"
     else
       echo ${estimated_genome_length} | tee EST_GENOME_LENGTH
       echo "DEBUG: estimated_genome_length: ${estimated_genome_length}" 
@@ -227,32 +197,6 @@ task check_reads_se {
     # just in case anything fails, throw an error
     set -euo pipefail
 
-    # convert WDL variables to bash variables so defaults can be set
-    min_reads=~{min_reads}
-    min_basepairs=~{min_basepairs}
-    min_genome_length=~{min_genome_length}
-    max_genome_length=~{max_genome_length}
-    min_coverage=~{min_coverage}
-
-    # set defaults if they are not provided
-    if [ ~{workflow_series} == "theiaviral" ]; then
-      if [ -z ~{min_reads} ]; then
-        min_reads=50
-      fi
-      if [ -z ~{min_basepairs} ]; then
-        min_basepairs=15000 # approximately 10x coverage of hepatitis delta virus
-      fi
-      if [ -z ~{min_genome_length} ]; then
-        min_genome_length=1500 # approximate size of hepatitis delta virus
-      fi
-      if [ -z ~{max_genome_length} ]; then
-        max_genome_length=2673870 # size of Pandoravirus salinus + 200 kb
-      fi
-      if [ -z ~{min_coverage} ]; then
-        min_coverage=10 # 10x coverage
-      fi
-    fi
-
     # populate column headers for metrics and init failure log
     metrics="read1_count\tread_bp\test_genome_length"
     fail_log=""
@@ -271,8 +215,8 @@ task check_reads_se {
     read1_num=$($cat_reads ~{read1} | fastq-scan | grep 'read_total' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
     echo "DEBUG: Number of reads in R1: ${read1_num}"
 
-    if [ "${read1_num}" -le "${min_reads}" ] ; then
-      fail_log+="; the number of reads (${read1_num}) is below the minimum of ${min_reads}"
+    if [ "${read1_num}" -le "~{min_reads}" ] ; then
+      fail_log+="; the number of reads (${read1_num}) is below the minimum of ~{min_reads}"
     fi
 
     # checks two and three: number of basepairs and proportion of sequence
@@ -282,8 +226,8 @@ task check_reads_se {
     read1_bp=$(eval "${cat_reads} ~{read1}" | fastq-scan | grep 'total_bp' | sed 's/[^0-9]*\([0-9]\+\).*/\1/')
     echo "DEBUG: Number of basepairs in R1: $read1_bp"
 
-    if [ "${read1_bp}" -le "${min_basepairs}" ] ; then
-      fail_log+="; the number of basepairs (${read1_bp}) is below the minimum of ${min_basepairs}"
+    if [ "${read1_bp}" -le "~{min_basepairs}" ] ; then
+      fail_log+="; the number of basepairs (${read1_bp}) is below the minimum of ~{min_basepairs}"
     fi  
 
     #checks four and five: estimated genome length and coverage
@@ -306,10 +250,10 @@ task check_reads_se {
 
         # Check if second pass is needed
         if [ "~{workflow_series}" == "theiaprok" ]; then
-          if [ ${estimated_genome_length} -gt "${max_genome_length}" ] || [ ${estimated_genome_length} -lt "${min_genome_length}" ]; then
+          if [ ${estimated_genome_length} -gt "~{max_genome_length}" ] || [ ${estimated_genome_length} -lt "~{min_genome_length}" ]; then
             # Probably high coverage, try increasing number of kmer copies to 10
             M="-m 10"
-            if [ ${estimated_genome_length} -lt "${min_genome_length}" ]; then
+            if [ ${estimated_genome_length} -lt "~{min_genome_length}" ]; then
               # Probably low coverage, try decreasing the number of kmer copies to 1
               M="-m 1"
             fi
@@ -346,13 +290,13 @@ task check_reads_se {
         estimated_genome_length=0
         estimated_coverage=0
       fi
-      if [ "${estimated_genome_length}" -ge "${max_genome_length}" ] ; then
-        fail_log+="; the estimated genome length (${estimated_genome_length}) is larger than the maximum of ${max_genome_length} bps"
-      elif [ "${estimated_genome_length}" -le "${min_genome_length}" ] ; then
-        fail_log+="; the estimated genome length (${estimated_genome_length}) is smaller than the minimum of ${min_genome_length} bps"
+      if [ "${estimated_genome_length}" -ge "~{max_genome_length}" ] ; then
+        fail_log+="; the estimated genome length (${estimated_genome_length}) is larger than the maximum of ~{max_genome_length} bps"
+      elif [ "${estimated_genome_length}" -le "~{min_genome_length}" ] ; then
+        fail_log+="; the estimated genome length (${estimated_genome_length}) is smaller than the minimum of ~{min_genome_length} bps"
       fi
-      if [ "${estimated_coverage}" -lt "${min_coverage}" ] ; then
-        fail_log+="; the estimated coverage (${estimated_coverage}) is less than the minimum of ${min_coverage}x"
+      if [ "${estimated_coverage}" -lt "~{min_coverage}" ] ; then
+        fail_log+="; the estimated coverage (${estimated_coverage}) is less than the minimum of ~{min_coverage}x"
       else
         echo $estimated_genome_length | tee EST_GENOME_LENGTH 
       fi
