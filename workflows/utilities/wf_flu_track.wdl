@@ -272,6 +272,7 @@ workflow flu_track {
   output {
     # IRMA outputs 
     String irma_version = irma.irma_version
+    String irma_status = irma.irma_status
     String irma_docker = irma.irma_docker
     Int irma_minimum_consensus_support = irma.irma_minimum_consensus_support
     String irma_type = irma.irma_type

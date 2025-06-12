@@ -407,6 +407,7 @@ workflow theiacov_illumina_pe {
     String? vadr_docker = vadr.vadr_docker
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
     # Flu IRMA Outputs
+    String? irma_status = flu_track.irma_status
     String? irma_version = flu_track.irma_version
     String? irma_docker = flu_track.irma_docker
     String? irma_type = flu_track.irma_type
