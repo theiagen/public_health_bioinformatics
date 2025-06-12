@@ -1753,7 +1753,6 @@ wg_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	
 wg_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Tree	
 workflow name	abricate_db	String	Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 workflow name	adapters	File	A FASTA file containing adapter sequences	/bbmap/resources/adapters.fa	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
-workflow name	amrfinder_use_gff	Boolean	Set to true to use GFF files for AMRFinderPlus annotation.	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 workflow name	bakta_db	String	Database selection for Bakta annotation. Options: "light" (smaller, faster), "full" (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.	full	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 workflow name	call_abricate	Boolean	Set to true to enable the Abricate task	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 workflow name	call_ani	Boolean	Set to true to enable the ANI task	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
