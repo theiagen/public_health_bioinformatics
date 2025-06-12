@@ -313,3 +313,8 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_amr_search.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
+ - name: Terra_2_ENA_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/submission/wf_terra_2_ena.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
