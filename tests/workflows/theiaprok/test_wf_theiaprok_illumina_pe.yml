@@ -468,7 +468,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl
       md5sum: 3f912c7770a4bc1768401f70a25bc050
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_shigatyper.wdl
-      md5sum: 4208b2598eaf216818c793aef86d2d76
+      md5sum: 8a70d488b1f0d48829f45eaa3f9b3f29
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl
       md5sum: 5a24623416f2ac9a0a177c01c5db2501
     - path: miniwdl_run/wdl/tasks/species_typing/salmonella/task_sistr.wdl
