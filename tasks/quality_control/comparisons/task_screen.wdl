@@ -48,7 +48,7 @@ task check_reads {
     echo "DEBUG: Number of reads total in R1 and R2: ${reads_total}"
 
     if [ "${reads_total}" -le "~{min_reads}" ]; then
-      fail_log+="; the total number of reads is below the minimum of ${min_reads}"
+      fail_log+="; the total number of reads is below the minimum of ~{min_reads}"
     fi
 
     # count number of basepairs
@@ -185,7 +185,7 @@ task check_reads_se {
     Int min_coverage = 10
     Int? expected_genome_length
 
-    Boolean skip_mash = true
+    Boolean skip_mash
     String workflow_series = "theiaviral" # default to theiaprok so we don't have to change those workflows
     
     Int cpu = 1
