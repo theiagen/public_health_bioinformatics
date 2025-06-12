@@ -207,7 +207,7 @@ amr_search	memory	Integer	Amount of memory/RAM (in GB) to allocate to the task	8
 amrfinderplus_nuc	cpu	Int	Number of CPUs to allocate to the task	8	Optional	AMRFinderPlus	
 amrfinderplus_nuc	detailed_drug_class	Boolean	If set to true, amrfinderplus_amr_classes and amrfinderplus_amr_subclasses outputs will be created	FALSE	Optional	AMRFinderPlus	
 amrfinderplus_nuc	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	AMRFinderPlus	
-amrfinderplus_nuc	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.19-2024-12-18.1	Optional	AMRFinderPlus	
+amrfinderplus_nuc	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.23-2025-06-03.1	Optional	AMRFinderPlus	
 amrfinderplus_nuc	hide_point_mutations	Boolean	If set to true, the output File amrfinderplus_all_report will not include any POINT mutations identified by AMRFinderPlus.	FALSE	Optional	AMRFinderPlus	
 amrfinderplus_nuc	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	AMRFinderPlus	
 amrfinderplus_nuc	mincov	Float	Minimum proportion of reference gene covered for a BLAST-based hit (Methods BLAST or PARTIAL). Attribute should be a float ranging from 0-1, such as 0.6 (equal to 60% coverage)	0.5	Optional	AMRFinderPlus	
@@ -216,7 +216,7 @@ amrfinderplus_nuc	organism	String	If provided, this input will override the taxo
 amrfinderplus_task	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 amrfinderplus_task	detailed_drug_class	Boolean	If set to true, amrfinderplus_amr_classes and amrfinderplus_amr_subclasses outputs will be created	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 amrfinderplus_task	disk_size	Boolean	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-amrfinderplus_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.19-2024-12-18.1	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+amrfinderplus_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.23-2025-06-03.1	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 amrfinderplus_task	hide_point_mutations	Boolean	If set to true, point mutations are not reported	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 amrfinderplus_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 amrfinderplus_task	min_percent_coverage	Float	Minimum proportion of reference gene covered for a BLAST-based hit (Methods BLAST or PARTIAL)." Attribute should be a float ranging from 0-1, such as 0.6 (equal to 60% coverage)	0.5	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
