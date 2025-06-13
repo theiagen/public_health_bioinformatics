@@ -25,7 +25,6 @@ task flye {
     Int memory = 32
   }
   command <<<
-    set -euo pipefail
     flye --version | tee VERSION
     
     # genome size parameter requires asm_coverage
@@ -44,15 +43,23 @@ task flye {
       --threads ~{cpu} \
       --out-dir .
 
-    mv assembly.fasta ~{samplename}.assembly.fasta
-    mv assembly_info.txt ~{samplename}.assembly_info.txt
-    mv assembly_graph.gfa ~{samplename}.assembly_graph.gfa
+    if [ ! -s assembly.fasta ]; then
+      echo "DEBUG: Flye assembly failed. No output generated."
+      echo "FAIL" > STATUS
+    else
+      echo "DEBUG: Flye assembly completed successfully."
+      mv assembly.fasta ~{samplename}.assembly.fasta
+      mv assembly_info.txt ~{samplename}.assembly_info.txt
+      mv assembly_graph.gfa ~{samplename}.assembly_graph.gfa
+      echo "PASS" > STATUS
+    fi
 
   >>>
   output {
-    File assembly_fasta = "~{samplename}.assembly.fasta"
-    File assembly_graph_gfa = "~{samplename}.assembly_graph.gfa" 
-    File assembly_info = "~{samplename}.assembly_info.txt" 
+    File? assembly_fasta = "~{samplename}.assembly.fasta"
+    File? assembly_graph_gfa = "~{samplename}.assembly_graph.gfa" 
+    File? assembly_info = "~{samplename}.assembly_info.txt" 
+    String flye_status = read_string("STATUS")
     String flye_version = read_string("VERSION")
     String flye_docker = "~{docker}"
   }

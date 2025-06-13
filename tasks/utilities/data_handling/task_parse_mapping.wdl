@@ -89,6 +89,7 @@ task sam_to_sorted_bam {
   input {
     File sam
     String samplename
+    Int? min_qual
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
     Int disk_size = 100
     Int cpu = 2
@@ -99,7 +100,7 @@ task sam_to_sorted_bam {
     samtools --version | head -n1 | cut -d' ' -f2 | tee VERSION
 
     # Convert SAM to BAM, and sort it based on read name
-    samtools view -Sb ~{sam} > "~{samplename}".bam
+    samtools view ~{"-q " + min_qual} -Sb ~{sam} > "~{samplename}".bam
     samtools sort "~{samplename}".bam -o "~{samplename}".sorted.bam
 
     # index sorted BAM
@@ -110,6 +111,67 @@ task sam_to_sorted_bam {
     File bai = "~{samplename}.sorted.bam.bai"
     String samtools_version = read_string("VERSION")
     String samtools_docker = "~{docker}"
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 0
+    preemptible: 0
+  }
+}
+
+task bam_to_unaligned_fastq {
+  meta {
+    description: "Convert BAM file to FASTQ equivalent to BWA task"
+  }
+  input {
+    File bam
+    String samplename
+    Boolean paired = false
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
+    Int disk_size = 100
+    Int cpu = 2
+    Int memory = 8   
+  }
+  command <<<
+    # Samtools verion capture
+    samtools --version | head -n1 | cut -d' ' -f2 | tee VERSION
+
+    # Get aligned and unaligned bams
+    if ~{paired}; then
+      echo "Generating FASTQs for unaligned paired-end reads"
+      # convert SAM to BAM that only includes unaligned reads
+      # remove singletons so reads are usable downstream
+      samtools view \
+        -@ ~{cpu} \
+        -f 0x08 \
+        -b \
+        -o ~{samplename}.sorted.no_singletons.bam \
+        ~{bam}
+      # generate the fastq from the no singleton BAM
+      samtools fastq \
+        -@ ~{cpu} \
+        -f 4 \
+        -1 ~{samplename}_unaligned_R1.fastq.gz \
+        -2 ~{samplename}_unaligned_R2.fastq.gz \
+        ~{samplename}.sorted.no_singletons.bam
+    else
+      echo -e "Generating FASTQs for unaligned single-end reads\n"
+      # extract all unaligned reads
+      samtools fastq \
+        -@ ~{cpu} \
+        -f 4 \
+        -0 ~{samplename}_unaligned_R1.fastq.gz \
+        ~{bam}
+    fi
+  >>>
+  output {
+    String sam_version = read_string("VERSION")
+    File read1_unaligned = "~{samplename}_unaligned_R1.fastq.gz"
+    File? read2_unaligned = "~{samplename}_unaligned_R2.fastq.gz"
   }
   runtime {
     docker: "~{docker}"
@@ -189,6 +251,58 @@ task calculate_coverage {
     String ref_len = read_string("REFERENCE_LENGTH")
     String sum_coverage = read_string("SUM_COVERAGE")
     String mean_depth_coverage = read_string("AVG_DEPTH_COVERAGE")
+    String bedtools_version = read_string("VERSION")
+    String bedtools_docker = docker
+  }
+  runtime {
+    docker: "~{docker}"
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    maxRetries: 0
+    preemptible: 0
+  }
+}
+
+task mask_low_coverage {
+  meta {
+    description: "Use bedtools to create a coverage mask for low coverage regions in a BAM file"
+  }
+  input {
+    File bam
+    File bai
+    File reference_fasta
+    Int min_depth
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0"
+    Int disk_size = 100
+    Int cpu = 2
+    Int memory = 8
+  }
+  command <<<
+    set -euo pipefail
+
+    # get version
+    bedtools --version | cut -d' ' -f2 | tee VERSION
+
+    # make a temporary reference fasta and make sure the header is ONLY the ">" + reference accession number.
+    # bedtools maskfasta requires the header to be the same as the reference name in the bam file
+    awk '{if (/^>/) print $1; else print}' ~{reference_fasta} > mod_reference.fasta
+
+    # report depth at all regions of a genome including regions with 0 coverage
+    bedtools genomecov -bga -ibam ~{bam} > all_coverage_regions.bed
+
+    # filter out regions that have a coverage greater than {min_depth}. Only need low coverage regions here.
+    awk -v min_depth=~{min_depth} '$4 < min_depth' all_coverage_regions.bed > low_coverage_regions.bed
+
+    # mask the low coverage regions in the reference fasta file
+    bedtools maskfasta -fi mod_reference.fasta -bed low_coverage_regions.bed \
+      -fo masked_reference.fasta
+  >>>
+  output {
+    File low_coverage_regions_bed = "low_coverage_regions.bed"
+    File all_coverage_regions_bed = "all_coverage_regions.bed"
+    File mask_reference_fasta = "masked_reference.fasta"
     String bedtools_version = read_string("VERSION")
     String bedtools_docker = docker
   }

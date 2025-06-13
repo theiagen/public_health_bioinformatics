@@ -18,7 +18,7 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
 Briefly, the main _genomic characterization_  workflows are split by pathogen type:
 
-1. **Viral** (**_TheiaCoV_** workflows)
+1. **Viral** (**_TheiaCoV_** & **_TheiaViral_** workflows)
 2. **Bacterial** (**_TheiaProk_** workflows)
 3. **Fungal** (**_TheiaEuk_** workflows)
 
