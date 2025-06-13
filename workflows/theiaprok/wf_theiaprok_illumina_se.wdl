@@ -17,6 +17,7 @@ import "../../tasks/species_typing/multi/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/contamination/task_kmerfinder.wdl" as kmerfinder_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
+import "../../tasks/gene_typing/drug_resistance/task_gamma.wdl" as gamma_task
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
 import "../../tasks/utilities/data_handling/task_arln_stats.wdl" as arln_stats
 import "../utilities/file_handling/wf_concatenate_illumina_lanes.wdl" as concatenate_lanes_workflow
@@ -62,11 +63,13 @@ workflow theiaprok_illumina_se {
     Int trim_window_size = 4
     # module options
     Boolean perform_characterization = true # by default run all characterization steps
+    Boolean amrfinder_use_gff = false # by default use nucleotide fasta for amrfinderplus, but user can set this to true if they want to use a gff and protein fasta file
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_kmerfinder = false 
     Boolean call_resfinder = false
     Boolean call_plasmidfinder = true
     Boolean call_abricate = false
+    Boolean call_gamma = false
     Boolean call_arln_stats = false
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
@@ -175,8 +178,20 @@ workflow theiaprok_illumina_se {
         call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
           input:
             assembly = digger_denovo.assembly_fasta,
+            annotation_assembly = select_first([prokka.prokka_fna,bakta.bakta_fna]),
             samplename = samplename,
-            organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
+            protein_fasta = select_first([prokka.prokka_faa,bakta.bakta_faa]),
+            gff = select_first([prokka.prokka_gff,bakta.bakta_gff3]),
+            organism = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
+            annotation_format = genome_annotation,
+            use_gff = amrfinder_use_gff
+        }
+        if (call_gamma){
+          call gamma_task.gamma{
+            input:
+              assembly = digger_denovo.assembly_fasta,
+              samplename = samplename
+          }
         }
         if (call_resfinder) {
           call resfinder.resfinder as resfinder_task {
@@ -776,6 +791,10 @@ workflow theiaprok_illumina_se {
     String? amrfinderplus_amr_betalactam_cephalosporin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalosporin_genes
     String? amrfinderplus_amr_betalactam_cephalothin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalothin_genes
     String? amrfinderplus_amr_betalactam_methicillin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_methicillin_genes
+    # GAMMA Outputs
+    File? gamma_results = gamma.gamma_results
+    File? gamma_gff = gamma.gamma_gff
+    File? gamma_fasta = gamma.gamma_fasta
     # AMR_Search
     File? amr_search_results = merlin_magic.amr_search_results
     File? amr_search_csv = merlin_magic.amr_results_csv
