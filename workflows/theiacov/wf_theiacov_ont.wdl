@@ -176,7 +176,7 @@ workflow theiacov_ont {
             genome_length = organism_parameters.genome_length
         }      
         # run organism-specific typing
-        if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b") { 
+        if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "measles") { 
           # tasks specific to either MPXV, sars-cov-2, rsv_a, or rsv_b
           call nextclade_task.nextclade_v3 {
             input:

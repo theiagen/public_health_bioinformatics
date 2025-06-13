@@ -113,7 +113,7 @@ workflow theiacov_clearlabs {
         min_depth = 20
     }
   }
-  if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2") {
+  if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "measles") {
     # tasks specific to either MPXV or sars-cov-2
     call nextclade_task.nextclade_v3 {
       input:

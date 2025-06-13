@@ -48,7 +48,7 @@ workflow theiacov_fasta_batch {
         docker = organism_parameters.pangolin_docker
     }
   }
-  if (organism == "MPXV" || organism == "sars-cov-2") {
+  if (organism == "MPXV" || organism == "sars-cov-2" || organism_parameters.standardized_organism == "measles") {
     # tasks specific to either MPXV or sars-cov-2 
     call nextclade_task.nextclade_v3 {
       input:

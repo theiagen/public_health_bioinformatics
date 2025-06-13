@@ -304,6 +304,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
+        | kraken_target_organism_input | measles | `"Measles morbillivirus"` |
         | genome_length_input | measles | `16000` |
         | nextclade_dataset_name_input | measles | `"nextstrain/measles/N450/WHO-2012"` |
         | nextclade_dataset_tag_input | measles | `"2025-03-26--11-47-13Z"` |
