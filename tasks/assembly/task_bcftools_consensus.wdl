@@ -18,24 +18,16 @@ task bcftools_consensus {
     # get version
     bcftools --version | head -1 | tee VERSION
 
-    # make sure input vcf is gzipped
-    if [[ ! "~{input_vcf}" != *.gz ]]; then
-      ext=".gz"
-      gzip ~{input_vcf}
-    else
-      ext=""
-    fi
-
     # remove low coverage variants (this is where you would remove quality too, e.g. & MIN(FMT/GQ)>MIN_QUAL)
     echo "DEBUG: Filtering variants with low coverage: ~{min_depth} and low frequency: ~{min_freq}"
     bcftools view -i 'MIN(FMT/DP)>=~{min_depth} && MIN(FMT/AF)>=~{min_freq}' \
-      ~{input_vcf}${ext} \
-      > ~{samplename}_cov_filtered_prefinal.vcf.gz
+      ~{input_vcf} \
+      > ~{samplename}_cov_filtered_prefinal.vcf
 
     # reproduce artic behavior for left-aligning and normalizing indels
     echo "Left-normalizing indels"
     bcftools norm \
-      ~{samplename}_cov_filtered_prefinal.vcf.gz \
+      ~{samplename}_cov_filtered_prefinal.vcf \
       --check-ref wx \
       --fasta-ref ~{reference_fasta} \
       --output-type z \
