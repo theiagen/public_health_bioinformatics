@@ -16,7 +16,7 @@ import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/task_versioning.wdl" as versioning_task
-import "../../workflows/utilities/wf_morgana_magic.wdl" as morgana_magic_wf
+import "../utilities/wf_morgana_magic.wdl" as morgana_magic_wf
 
 workflow theiaviral_illumina_pe {
   meta {
