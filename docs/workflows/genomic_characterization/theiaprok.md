@@ -20,26 +20,26 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 ### Inputs
 
-!!! dna ""
-    ??? toggle "TheiaProk_Illumina_PE Input Read Data"
+!!! dna "Input Data"
+    === "TheiaProk_Illumina_PE"
 
         The TheiaProk_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time.
 
         By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
-    ??? toggle "TheiaProk_Illumina_SE Input Read Data"
+    === "TheiaProk_Illumina_SE"
 
         TheiaProk_Illumina_SE takes in Illumina single-end reads. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. Theiagen highly recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before uploading to Terra to minimize data upload time & save on storage costs.
 
         By default, the workflow anticipates **1 x 35 bp** reads  (i.e. the input reads were generated using a 70-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate longer read data.
 
-    ??? toggle "TheiaProk_ONT Input Read Data"
+    === "TheiaProk_ONT"
 
         The TheiaProk_ONT workflow takes in base-called ONT read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before uploading to Terra to minimize data upload time.
 
         **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaProk_ONT workflow must be quality assessed before reporting results.**
 
-    ??? toggle "TheiaProk_FASTA Input Assembly Data"
+    === "TheiaProk_FASTA"
 
         The TheiaProk_FASTA workflow takes in assembly files in FASTA format.
 
@@ -591,28 +591,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 ??? toggle "_Neisseria_ spp."
     ##### _Neisseria_ spp. {% raw %} {#neisseria} {% endraw %}
 
-    ??? task "`amr_search`: _Neisseria gonorrhoeae_ antimicrobial resistance profiling"
-
-        This task performs *in silico* antimicrobial resistance (AMR) profiling for *Neisseria gonorrhoeae* using **AMRsearch**, the primary tool used by [Pathogenwatch](https://pathogen.watch/) to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.
-
-        **AMRsearch** screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both **resistance genes** and **mutations**, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow **S/I/R classification** (*Sensitive, Intermediate, Resistant*).
-
-        The AMR search is conducted when *Neisseria gonorrhoeae* is identified as the taxon in *TheiaProk* workflows. The default database for *N. gonorrhoeae* is **485**.
-
-        **Outputs:**
-
-        - **JSON Output:** Contains the complete AMR profile, including detailed **resistance state**, detected **resistance genes/mutations**, and supporting **BLAST results**.
-
-        - **CSV & PNG Tables:* Results are formatted into a **CSV file** and **PNG summary table** for easier visualization.
-
-        !!! techdetails "amr_search Technical Details"    
-
-            |  | Links |
-            | --- | --- |
-            | Task | [task_amr_search.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_amr_search.wdl) |
-            | Software Source Code | [AMRsearch](https://github.com/pathogenwatch-oss/amr-search) |
-            | Software Documentation | [Pathogenwatch](https://cgps.gitbook.io/pathogenwatch) |
-            | Original Publication(s) | [PAARSNP: *rapid genotypic resistance prediction for *Neisseria gonorrhoeae*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7545138/) |
+{{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaprok") }}
 
     ??? task "`ngmaster`: _Neisseria gonorrhoeae_ sequence typing"
 

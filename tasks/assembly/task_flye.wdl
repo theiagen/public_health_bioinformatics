@@ -48,18 +48,17 @@ task flye {
       echo "FAIL" > STATUS
     else
       echo "DEBUG: Flye assembly completed successfully."
+      mv assembly.fasta ~{samplename}.assembly.fasta
+      mv assembly_info.txt ~{samplename}.assembly_info.txt
+      mv assembly_graph.gfa ~{samplename}.assembly_graph.gfa
       echo "PASS" > STATUS
     fi
 
-    mv assembly.fasta ~{samplename}.assembly.fasta
-    mv assembly_info.txt ~{samplename}.assembly_info.txt
-    mv assembly_graph.gfa ~{samplename}.assembly_graph.gfa
-
   >>>
   output {
-    File assembly_fasta = "~{samplename}.assembly.fasta"
-    File assembly_graph_gfa = "~{samplename}.assembly_graph.gfa" 
-    File assembly_info = "~{samplename}.assembly_info.txt" 
+    File? assembly_fasta = "~{samplename}.assembly.fasta"
+    File? assembly_graph_gfa = "~{samplename}.assembly_graph.gfa" 
+    File? assembly_info = "~{samplename}.assembly_info.txt" 
     String flye_status = read_string("STATUS")
     String flye_version = read_string("VERSION")
     String flye_docker = "~{docker}"

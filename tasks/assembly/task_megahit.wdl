@@ -61,7 +61,7 @@ task megahit {
 
   >>>
   output {
-    File assembly_fasta = "~{samplename}_megahit_contigs.fasta"
+    File? assembly_fasta = "~{samplename}_megahit_contigs.fasta"
     String megahit_status = read_string("STATUS")
     String megahit_version = read_string("VERSION")
     String megahit_docker = '~{docker}'

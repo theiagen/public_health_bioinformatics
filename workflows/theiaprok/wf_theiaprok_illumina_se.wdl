@@ -98,7 +98,8 @@ workflow theiaprok_illumina_se {
         max_genome_length = max_genome_length,
         min_coverage = min_coverage,
         skip_mash = skip_mash,
-        expected_genome_length = genome_length
+        expected_genome_length = genome_length,
+        workflow_series = "theiaprok"
     }
   }
   if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
@@ -121,7 +122,8 @@ workflow theiaprok_illumina_se {
           max_genome_length = max_genome_length,
           min_coverage = min_coverage,
           skip_mash = skip_mash,
-          expected_genome_length = genome_length
+          expected_genome_length = genome_length,
+          workflow_series = "theiaprok"
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {

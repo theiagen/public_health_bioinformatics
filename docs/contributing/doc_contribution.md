@@ -11,7 +11,7 @@ Since the documentation is built off of the `main` branch, it is highly recommen
 To test your documentation changes, you will need to have the following packages installed on your local VM:
 
 ```bash
-pip install mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox mkdocs-macros-plugin
+pip install mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox mkdocs-macros-plugin pandas
 ```
 
 Once installed, navigate to the top directory in PHB. The live preview server can be activated by running the following command:
@@ -32,7 +32,7 @@ Here are some VSCode Extensions can help you write and edit your markdown files 
 
 ### Helpful Websites
 
-- [Excel to Markdown Table](https://tableconvert.com/excel-to-markdown) - This website will convert an Excel table into markdown format, which can be copied and pasted into your markdown file.
+- [Excel to Markdown Table](https://tableconvert.com/excel-to-markdown) - This website will convert an Excel table into markdown format, which can be copied and pasted into your markdown file. Currently, we recommend using the `render_tsv_table()` macro (described below) to import TSV files, but this is a good alternative if you want to create a smaller table from scratch.
 - [Material for MkDocs Reference](https://squidfunk.github.io/mkdocs-material/reference/) - This is the official reference for the Material for MkDocs theme, which will help you understand how to use the theme's features.
 - [Dead Link Check](https://www.deadlinkchecker.com/) - This website will scan your website to ensure that all links are working correctly. This will only work on the deployed version of the documentation, not the local version.
 
@@ -70,7 +70,7 @@ The following language conventions should be followed when writing documentation
 
     Please see the [Admonition documentation](https://squidfunk.github.io/mkdocs-material/reference/admonitions/) for more information on how to change the title, enable toggles, and more.
 
-    The following custom callout types are supported _in addition to the standard admonitions supported by our theme_ [more information here](https://squidfunk.github.io/mkdocs-material/reference/admonitions/#supported-types):
+    The following custom callout types are supported _in addition to the standard admonitions supported by our theme_ [more information on the standard admonitions here](https://squidfunk.github.io/mkdocs-material/reference/admonitions/#supported-types):
   
     !!! dna
         This is a DNA admonition. Admire the cute green DNA emoji. You can create this with the `!!! dna` syntax.
