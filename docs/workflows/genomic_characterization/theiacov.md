@@ -64,16 +64,17 @@ These workflows currently support the following organisms. The first option in t
 - **Influenza** (**`"flu"`**, `"influenza"`, `"Flu"`, `"Influenza"`)
 - **RSV-A** (**`"rsv_a"`**, `"rsv-a"`, `"RSV-A"`, `"RSV_A"`)
 - **RSV-B** (**`"rsv_b"`**, `"rsv-b"`, `"RSV-B"`, `"RSV_B"`)
+- **Measles** (**`"measles"`**, `"Measles"`, `"mev"`, `"MeV"`, `"Morbillivirus"`, `"morbillivirus"`)
 
 The compatibility of each workflow with each pathogen is shown below:
 
-|  | SARS-CoV-2 | Mpox | HIV | WNV | Influenza | RSV-A | RSV-B |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ |
-| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
-| FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
+|  | SARS-CoV-2 | Mpox | HIV | WNV | Influenza | RSV-A | RSV-B | Measles |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 
+| Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ❌ |
+| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ |
+| FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 We've provided the following information to help you set up the workflow for each organism in the form of input JSONs.
 
