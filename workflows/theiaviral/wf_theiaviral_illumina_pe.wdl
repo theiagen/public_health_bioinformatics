@@ -94,15 +94,15 @@ workflow theiaviral_illumina_pe {
         }
       }
     }
-    # clean read screening
-    if (! skip_screen) {
-      call read_screen_task.check_reads as clean_check_reads {
-        input:
-          read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-          read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-          workflow_series = "theiaviral",
-          expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
-      }
+  }
+  # clean read screening
+  if (! skip_screen) {
+    call read_screen_task.check_reads as clean_check_reads {
+      input:
+        read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
+        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
+        workflow_series = "theiaviral",
+        expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
     }
   }
   if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {

@@ -42,7 +42,7 @@ workflow theiaviral_panel {
     String? read_extraction_rank
 
     Boolean extract_unclassified = false
-    Boolean skip_theiaviral_screen = true
+    Boolean skip_theiaviral_screen = false
     Int minimum_read_number = 1000
     Boolean call_metaviralspades = false
     Int? assembly_cpu = 16
