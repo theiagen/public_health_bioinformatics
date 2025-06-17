@@ -64,16 +64,17 @@ These workflows currently support the following organisms. The first option in t
 - **Influenza** (**`"flu"`**, `"influenza"`, `"Flu"`, `"Influenza"`)
 - **RSV-A** (**`"rsv_a"`**, `"rsv-a"`, `"RSV-A"`, `"RSV_A"`)
 - **RSV-B** (**`"rsv_b"`**, `"rsv-b"`, `"RSV-B"`, `"RSV_B"`)
+- **Measles** (**`"measles"`**, `"Measles"`, `"mev"`, `"MeV"`, `"Morbillivirus"`, `"morbillivirus"`)
 
 The compatibility of each workflow with each pathogen is shown below:
 
-|  | SARS-CoV-2 | Mpox | HIV | WNV | Influenza | RSV-A | RSV-B |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ |
-| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
-| FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
+|  | SARS-CoV-2 | Mpox | HIV | WNV | Influenza | RSV-A | RSV-B | Measles |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 
+| Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ❌ |
+| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ |
+| FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 We've provided the following information to help you set up the workflow for each organism in the form of input JSONs.
 
@@ -298,7 +299,18 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | reference_gff_file | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3 | This version of HIV originates from Southern Africa |
 
         </div>
+    
+    ??? toggle "Measles Defaults"
+        <div class="searchable-table" markdown="block">
 
+        | **Overwrite Variable Name** | **Organism** | **Default Value** |
+        |---|---|---|
+        | kraken_target_organism_input | measles | `"Measles morbillivirus"` |
+        | genome_length_input | measles | `16000` |
+        | nextclade_dataset_name_input | measles | `"nextstrain/measles/N450/WHO-2012"` |
+        | nextclade_dataset_tag_input | measles | `"2025-03-26--11-47-13Z"` |
+
+        </div>                
 ### Workflow Tasks
 
 All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT, and ClearLabs workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaCoV workflows subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
