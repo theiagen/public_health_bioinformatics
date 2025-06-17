@@ -14,9 +14,6 @@ task identify_taxon_id {
     Int disk_size = 50
   }
   command <<<
-    # fail hard
-    set -euo pipefail
-
     date | tee DATE
     datasets --version | sed 's|datasets version: ||' | tee DATASETS_VERSION
 
