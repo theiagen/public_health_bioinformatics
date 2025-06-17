@@ -254,7 +254,7 @@ workflow theiaviral_ont {
             samplename = samplename,
             assembly_fasta = select_first([bcftools_consensus.assembly_fasta]),
             read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-            taxon_name = select_first([ncbi_datasets.taxon_id]),
+            taxon_name = ncbi_datasets.taxon_id,
             seq_method = "nanopore"
         }
       }
