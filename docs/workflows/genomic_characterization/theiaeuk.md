@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibliity** | **Workflow Level** |
 |---|---|---|---|---|
-| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Mycotics](../../workflows_overview/workflows_kingdom.md/#mycotics) | PHB vX.X.X | Yes | Sample-level |
+| [Genomic Characterization](../../workflows_overview/workflows_type.md/#genomic-characterization) | [Mycotics](../../workflows_overview/workflows_kingdom.md/#mycotics) | PHB v3.0.0 | Yes | Sample-level |
 
 ## TheiaEuk Workflows
 
@@ -48,6 +48,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | gambit | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | gambit | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0 | Optional |
 | merlin_magic | **agrvate_docker_image** | String | Internal component, do not modify | "us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0" | Do Not Modify, Optional |
+| merlin_magic | **amr_search** | Boolean | If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs. | False | Optional |
 | merlin_magic | **assembly_only** | Boolean | Internal component, do not modify |  | Do Not Modify, Optional |
 | merlin_magic | **call_poppunk** | Boolean | Internal component, do not modify | TRUE | Do Not Modify, Optional |
 | merlin_magic | **call_shigeifinder_reads_input** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
@@ -57,7 +58,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | merlin_magic | **paired_end** | Boolean | Internal component, do not modify |  | Do Not Modify, Optional |
 | merlin_magic | **pasty_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3 | Do Not Modify, Optional |
 | merlin_magic | **pasty_min_coverage** | Int | Internal component, do not modify | 95 | Do Not Modify, Optional |
-| merlin_magic | **pasty_min_pident** | Int | Internal component, do not modify | 95 | Do Not Modify, Optional |
+| merlin_magic | **pasty_min_percent_identity** | Int | Internal component, do not modify | 95 | Do Not Modify, Optional |
 | merlin_magic | **shigatyper_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5 | Do Not Modify, Optional |
 | merlin_magic | **shigeifinder_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5 | Do Not Modify, Optional |
 | merlin_magic | **snippy_query_gene** | String | Internal component, do not modify |  | Do Not Modify, Optional |
@@ -67,13 +68,13 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | merlin_magic | **srst2_min_depth** | Int | Internal component, do not modify | 5 | Do Not Modify, Optional |
 | merlin_magic | **srst2_min_edge_depth** | Int | Internal component, do not modify | 2 | Do Not Modify, Optional |
 | merlin_magic | **staphopia_sccmec_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0 | Do Not Modify, Optional |
-| merlin_magic | **tbp_parser_coverage_threshold** | Int | Internal component, do not modify | 100 | Do Not Modify, Optional |
+| merlin_magic | **tbp_parser_config** | File | Internal component, do not modify |  | Do Not Modify, Optional |
+| merlin_magic | **tbp_parser_min_percent_coverage** | Float | Internal component, do not modify | 100.0 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_debug** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
-| merlin_magic | **tbp_parser_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.2.2 | Do Not Modify, Optional |
+| merlin_magic | **tbp_parser_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.5 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_min_depth** | Int | Internal component, do not modify | 10 | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_operator** | String | Internal component, do not modify | "Operator not provided" | Do Not Modify, Optional |
 | merlin_magic | **tbp_parser_output_seq_method_type** | String | Internal component, do not modify | "WGS" | Do Not Modify, Optional |
-| merlin_magic | **tbp_parser_output_seq_method_type** | String | Internal component, do not modify | "Sequencing method not provided" | Do Not Modify, Optional |
 | merlin_magic | **tbprofiler_additional_outputs** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
 | merlin_magic | **tbprofiler_cov_frac_threshold** | Int | Internal component, do not modify | 1 | Do Not Modify, Optional |
 | merlin_magic | **tbprofiler_custom_db** | File | Internal component, do not modify |  | Do Not Modify, Optional |
@@ -84,10 +85,10 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 | merlin_magic | **tbprofiler_run_custom_db** | Boolean | Internal component, do not modify | FALSE | Do Not Modify, Optional |
 | merlin_magic | **tbprofiler_variant_caller** | String | Internal component, do not modify | freebayes | Do Not Modify, Optional |
 | merlin_magic | **tbprofiler_variant_calling_params** | String | Internal component, do not modify | None | Do Not Modify, Optional |
-| merlin_magic | **virulencefinder_coverage_threshold** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | merlin_magic | **virulencefinder_database** | String | Internal component, do not modify | "virulence_ecoli" | Do Not Modify, Optional |
 | merlin_magic | **virulencefinder_docker_image** | String | Internal component, do not modify | us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4 | Do Not Modify, Optional |
-| merlin_magic | **virulencefinder_identity_threshold** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
+| merlin_magic | **virulencefinder_min_percent_coverage** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
+| merlin_magic | **virulencefinder_min_percent_identity** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **ani_highest_percent** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **ani_highest_percent_bases_aligned** | Float | Internal component, do not modify |  | Do Not Modify, Optional |
 | qc_check_task | **assembly_length_unambiguous** | Int | Internal component, do not modify |  | Do Not Modify, Optional |
@@ -371,7 +372,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
     [`GAMBIT`](https://github.com/jlumpe/gambit) determines the taxon of the genome assembly using a k-mer based approach to match the assembly sequence to the closest complete genome in a database, thereby predicting its identity. Sometimes, GAMBIT can confidently designate the organism to the species level. Other times, it is more conservative and assigns it to a higher taxonomic rank.
 
-    For additional details regarding the GAMBIT tool and a list of available GAMBIT databases for analysis, please consult the [GAMBIT](https://www.notion.so/GAMBIT-7c1376b861d0486abfbc316480046bdc?pvs=21) tool documentation.
+    For additional details regarding the GAMBIT tool and a list of available GAMBIT databases for analysis, please consult the [GAMBIT](../../guides/gambit.md) tool documentation.
 
     !!! techdetails "GAMBIT Technical Details"
 

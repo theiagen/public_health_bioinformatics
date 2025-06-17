@@ -12,9 +12,9 @@ task plasmidfinder {
     String? database_path
     String? method_path
     # minimum coverage threshold
-    Float? min_coverage 
+    Float? min_percent_coverage 
     # minimum blast identity threshold
-    Float? threshold
+    Float? min_percent_identity
   }
   command <<<  
   date | tee DATE
@@ -34,8 +34,8 @@ task plasmidfinder {
   ~{'-d ' + database} \
   ~{'-p ' + database_path} \
   ~{'-mp ' + method_path} \
-  ~{'-l ' + min_coverage} \
-  ~{'-t ' + threshold} 
+  ~{'-l ' + min_percent_coverage} \
+  ~{'-t ' + min_percent_identity} 
 
   # parse outputs
   if [ ! -f results_tab.tsv ]; then

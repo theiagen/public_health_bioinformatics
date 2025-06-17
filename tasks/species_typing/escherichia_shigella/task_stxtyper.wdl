@@ -5,7 +5,7 @@ task stxtyper {
     File assembly
     String samplename
     Boolean enable_debugging = false # Additional messages are printed and files in $TMPDIR are not removed after running
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.24"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.40"
     Int disk_size = 50
     Int cpu = 1
     Int memory = 4
@@ -27,6 +27,7 @@ task stxtyper {
       --nucleotide ~{assembly} \
       --name ~{samplename} \
       --output ~{samplename}_stxtyper.tsv \
+      --threads ~{cpu} \
       ~{true='--debug' false='' enable_debugging} \
       --log ~{samplename}_stxtyper.log
 
@@ -40,9 +41,9 @@ task stxtyper {
       echo "DEBUG: No hits found in StxTyper output TSV. Exiting task with exit code 0 now."
       
       # create empty output files
-      touch stxtyper_all_hits.txt stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt  stx_novel_hits.txt
+      touch stxtyper_all_hits.txt stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt  stx_novel_hits.txt stxtyper_extended_operons.txt stxtyper_ambiguous_hits.txt
       # put "none" into all of them so task does not fail
-      echo "None" | tee stxtyper_all_hits.txt stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt stx_novel_hits.txt 
+      echo "None" | tee stxtyper_all_hits.txt stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt stx_novel_hits.txt stxtyper_extended_operons.txt stxtyper_ambiguous_hits.txt
       exit 0
     fi
     
@@ -88,11 +89,25 @@ task stxtyper {
       if [ "$(grep --silent -E 'FRAMESHIFT|INTERNAL_STOP' ~{samplename}_stxtyper.tsv; echo $?)" -gt 0 ]; then
         echo "None" > stxtyper_stx_frameshifts_or_internal_stop_hits.txt
       fi
+
+      ### extended operons
+      echo "DEBUG: Parsing extended operons..."
+      awk -F'\t' -v OFS=, '$4 == "EXTENDED" {print $3}' ~{samplename}_stxtyper.tsv | paste -sd, - | tee stxtyper_extended_operons.txt
+      if [ "$(grep --silent 'EXTENDED' ~{samplename}_stxtyper.tsv; echo $?)" -gt 0 ]; then
+        echo "None" > stxtyper_extended_operons.txt
+      fi
+
+      ### ambiguous hits
+      echo "DEBUG: Parsing ambiguous hits..."
+      awk -F'\t' -v OFS=, '$4 == "AMBIGUOUS" {print $3}' ~{samplename}_stxtyper.tsv | paste -sd, - | tee stxtyper_ambiguous_hits.txt
+      if [ "$(grep --silent 'AMBIGUOUS' ~{samplename}_stxtyper.tsv; echo $?)" -gt 0 ]; then
+        echo "None" > stxtyper_ambiguous_hits.txt
+      fi
       
       echo "DEBUG: generating stx_type_all string output now..."
       # sort and uniq so there are no duplicates; then paste into a single comma-separated line with commas
       # sed is to remove any instances of "None" from the output
-      cat stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt stx_novel_hits.txt | sed '/None/d' | sort | uniq | paste -sd, - > stxtyper_all_hits.txt
+      cat stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt stx_novel_hits.txt stxtyper_extended_operons.txt stxtyper_ambiguous_hits.txt | sed '/None/d' | sort | uniq | paste -sd, - > stxtyper_all_hits.txt
 
     fi
     echo "DEBUG: Finished parsing StxTyper output TSV."
@@ -109,6 +124,8 @@ task stxtyper {
     String stxtyper_partial_hits = read_string("stxtyper_partial_hits.txt")
     String stxtyper_frameshifts_or_internal_stop_hits =  read_string("stxtyper_stx_frameshifts_or_internal_stop_hits.txt")
     String stxtyper_novel_hits = read_string("stx_novel_hits.txt")
+    String stxtyper_extended_operons = read_string("stxtyper_extended_operons.txt")
+    String stxtyper_ambiguous_hits = read_string("stxtyper_ambiguous_hits.txt")
   }
   runtime {
     docker: "~{docker}"

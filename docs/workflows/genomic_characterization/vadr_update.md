@@ -9,7 +9,7 @@
 
 ## Vadr_Update_PHB
 
-The VADR_Update workflow updates prior VADR assessments for each sample in line with the assessment criteria in an alternative docker image. This may be useful when samples have previously been subject to VADR alerts as updates to VADR assessment criteria may mean that the sample no longer raises concern about quality. The latest docker image SARS-CoV-2 for VADR can be found [here](https://www.notion.so/Docker-Image-and-Reference-Materials-for-SARS-CoV-2-Genomic-Characterization-98328c61f5cb4f77975f512b55d09108?pvs=21).
+The VADR_Update workflow updates prior VADR assessments for each sample in line with the assessment criteria in an alternative docker image. This may be useful when samples have previously been subject to VADR alerts as updates to VADR assessment criteria may mean that the sample no longer raises concern about quality. The latest docker image SARS-CoV-2 for VADR can be found [here](https://theiagen.notion.site/Docker-Image-and-Reference-Materials-for-SARS-CoV-2-Genomic-Characterization-98328c61f5cb4f77975f512b55d09108).
 
 Various models are available for many organisms. The following table provides an overview of the recommended container to be used and what options should be passed on to VADR.
 

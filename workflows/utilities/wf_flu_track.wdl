@@ -26,6 +26,11 @@ workflow flu_track {
     # optional inputs to the tasks are available here due to Terra hiding them since they're within a subworkflow
     # IRMA inputs
     Boolean? irma_keep_ref_deletions
+    # irma_min_consensus_support is defaulted to 30 for ILMN PE, 50 for ONT and both are set at workflow level WDLs and passed into flu_track subwf
+    Int? irma_min_consensus_support
+    Int? irma_min_read_length
+    Int? irma_min_avg_consensus_allele_quality
+    Float? irma_min_ambiguous_threshold
     String? irma_docker_image
     Int? irma_memory
     Int? irma_cpu
@@ -38,6 +43,7 @@ workflow flu_track {
     String? assembly_metrics_docker
 
     # GenoFLU inputs
+    Float? genoflu_min_percent_identity
     File? genoflu_cross_reference
     Int? genoflu_cpu
     Int? genoflu_disk_size
@@ -46,7 +52,7 @@ workflow flu_track {
 
     # Abricate inputs
     Int? abricate_flu_min_percent_identity
-    Int? abricate_flu_min_coverage
+    Int? abricate_flu_min_percent_coverage
     String? abricate_flu_docker
     Int? abricate_flu_memory
     Int? abricate_flu_cpu
@@ -69,6 +75,7 @@ workflow flu_track {
     Int? nextclade_cpu
     Int? nextclade_memory
     Int? nextclade_disk_size
+    File? nextclade_custom_input_dataset
 
     # nextclade output parser inputs
     String? nextclade_output_parser_docker
@@ -83,6 +90,10 @@ workflow flu_track {
       read2 = read2,
       samplename = samplename,
       seq_method = seq_method,
+      minimum_consensus_support = irma_min_consensus_support,
+      minimum_read_length = irma_min_read_length,
+      minimum_average_consensus_allele_quality = irma_min_avg_consensus_allele_quality,
+      minimum_ambiguous_threshold = irma_min_ambiguous_threshold,
       keep_ref_deletions = irma_keep_ref_deletions,
       docker = irma_docker_image,
       memory = irma_memory,
@@ -119,13 +130,13 @@ workflow flu_track {
   String ha_na_percentage_mapped_reads = "HA: " + select_first([ha_assembly_coverage.percentage_mapped_reads, ""]) + ", NA: " + select_first([na_assembly_coverage.percentage_mapped_reads, ""])
 
   # ABRICATE will run if assembly is provided, or was generated with IRMA
-  if (defined(irma.irma_assemblies) && defined(irma.irma_assembly_fasta)){
+  if (defined(irma.irma_plurality_consensus_assemblies) && defined(irma.irma_assembly_fasta)){
     call abricate.abricate_flu {
       input:
         assembly = select_first([irma.irma_assembly_fasta]),
         samplename = samplename,
         min_percent_identity = abricate_flu_min_percent_identity,
-        min_coverage = abricate_flu_min_coverage,
+        min_percent_coverage = abricate_flu_min_percent_coverage,
         cpu = abricate_flu_cpu,
         memory = abricate_flu_memory,
         docker = abricate_flu_docker,
@@ -135,18 +146,6 @@ workflow flu_track {
     if (defined(irma.irma_subtype)) {
       # if IRMA cannot predict a subtype (like with Flu B samples), then set the flu_subtype to the abricate_flu_subtype String output (e.g. "Victoria" for Flu B)
       String algorithmic_flu_subtype = if irma.irma_subtype == "No subtype predicted by IRMA" then abricate_flu.abricate_flu_subtype else irma.irma_subtype
-    }
-    if (select_first([flu_subtype, algorithmic_flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"]) == "H5N1") {
-      call genoflu_task.genoflu {
-        input:
-          assembly_fasta = select_first([irma.irma_assembly_fasta]),
-          samplename = samplename,
-          cross_reference = genoflu_cross_reference,
-          cpu = genoflu_cpu,
-          disk_size = genoflu_disk_size,
-          docker = genoflu_docker,
-          memory = genoflu_memory
-      }
     }
     call set_organism_defaults.organism_parameters as set_flu_na_nextclade_values {
       input:
@@ -171,7 +170,7 @@ workflow flu_track {
   }       
   # if IRMA was run successfully, run the flu_antiviral substitutions task 
   # this block must be placed beneath the previous block because it is used in this subworkflow
-  if (defined(irma.irma_assemblies)) {
+  if (defined(irma.irma_plurality_consensus_assemblies)) {
     call flu_antiviral.flu_antiviral_substitutions {
       input:
         na_segment_assembly = irma.seg_na_assembly_padded,
@@ -236,15 +235,52 @@ workflow flu_track {
         disk_size = nextclade_output_parser_disk_size
     }
   }
+  # only run GenoFLU and custom nextclade dataset if the subtype is H5N1 and the clade is 2.3.4.4b as they are specific to this subtype and clade.
+  if (select_first([flu_subtype, algorithmic_flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"]) == "H5N1" && select_first([nextclade_output_parser_flu_ha.nextclade_clade, ""]) == "2.3.4.4b") {
+    call genoflu_task.genoflu {
+      input:
+        assembly_fasta = select_first([irma.irma_assembly_fasta]),
+        samplename = samplename,
+        min_percent_identity = genoflu_min_percent_identity,
+        cross_reference = genoflu_cross_reference,
+        cpu = genoflu_cpu,
+        disk_size = genoflu_disk_size,
+        docker = genoflu_docker,
+        memory = genoflu_memory
+    }
+    if (genoflu.genoflu_genotype == "B3.13" && defined(nextclade_custom_input_dataset)) {
+      call nextclade_task.nextclade_v3 as nextclade_flu_h5n1 {
+        input:
+          genome_fasta = select_first([irma.irma_assembly_fasta_concatenated]),
+          custom_input_dataset = nextclade_custom_input_dataset,
+          docker = nextclade_docker_image,
+          cpu = nextclade_cpu,
+          memory = nextclade_memory,
+          disk_size = nextclade_disk_size
+      }
+      call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_h5n1 {
+        input:
+          nextclade_tsv = nextclade_flu_h5n1.nextclade_tsv,
+          organism = standardized_organism,
+          docker = nextclade_output_parser_docker,
+          cpu = nextclade_output_parser_cpu,
+          memory = nextclade_output_parser_memory,
+          disk_size = nextclade_output_parser_disk_size
+      }
+    }
+  }
   output {
     # IRMA outputs 
     String irma_version = irma.irma_version
     String irma_docker = irma.irma_docker
+    Int irma_minimum_consensus_support = irma.irma_minimum_consensus_support
     String irma_type = irma.irma_type
     String irma_subtype = irma.irma_subtype
     String irma_subtype_notes = irma.irma_subtype_notes
     File? irma_assembly_fasta = irma.irma_assembly_fasta
+    File? irma_assembly_fasta_concatenated = irma.irma_assembly_fasta_concatenated
     File? irma_assembly_fasta_padded = irma.irma_assembly_fasta_padded
+    File? irma_assembly_fasta_concatenated_padded = irma.irma_assembly_fasta_concatenated_padded
     File? irma_ha_segment_fasta = irma.seg_ha_assembly
     File? irma_na_segment_fasta = irma.seg_na_assembly
     File? irma_pa_segment_fasta = irma.seg_pa_assembly
@@ -253,7 +289,7 @@ workflow flu_track {
     File? irma_mp_segment_fasta = irma.seg_mp_assembly
     File? irma_np_segment_fasta = irma.seg_np_assembly
     File? irma_ns_segment_fasta = irma.seg_ns_assembly
-    Array[File] irma_assemblies = irma.irma_assemblies
+    Array[File] irma_assemblies = irma.irma_plurality_consensus_assemblies
     Array[File] irma_vcfs = irma.irma_vcfs
     Array[File] irma_bams = irma.irma_bams
     File? irma_ha_bam = irma.seg_ha_bam
@@ -275,6 +311,14 @@ workflow flu_track {
     # Nextclade outputs
     String? nextclade_version = nextclade_flu_ha.nextclade_version
     String? nextclade_docker = nextclade_flu_ha.nextclade_docker
+    # Nextclade H5N1 outputs
+    File? nextclade_json_flu_h5n1 = nextclade_flu_h5n1.nextclade_json
+    File? auspice_json_flu_h5n1 = nextclade_flu_h5n1.auspice_json
+    File? nextclade_tsv_flu_h5n1 = nextclade_flu_h5n1.nextclade_tsv
+    String? nextclade_aa_subs_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_aa_subs
+    String? nextclade_aa_dels_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_aa_dels
+    String? nextclade_clade_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_clade
+    String? nextclade_qc_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_qc
     # Nextclade HA outputs
     File? nextclade_json_flu_ha = nextclade_flu_ha.nextclade_json
     File? auspice_json_flu_ha =  nextclade_flu_ha.auspice_json

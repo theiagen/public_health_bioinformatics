@@ -20,11 +20,6 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_tree.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Nullarbor_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_nullarbor.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
  - name: TheiaCoV_ClearLabs_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_clearlabs.wdl
@@ -118,6 +113,11 @@ workflows:
  - name: kSNP3_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp3.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: kSNP4_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp4.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: MashTree_FASTA_PHB
@@ -288,6 +288,11 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline_fasta.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Dorado_Basecalling_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_dorado_basecalling.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Concatenate_Illumina_Lanes_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_illumina_lanes.wdl
@@ -296,5 +301,10 @@ workflows:
  - name: Clair3_Variants_ONT_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_clair3_variants_ont.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: AMR_Search_PHB 
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/wf_amr_search.wdl
    testParameterFiles:
      - /tests/inputs/empty.json

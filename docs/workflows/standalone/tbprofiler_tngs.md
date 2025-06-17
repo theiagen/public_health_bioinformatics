@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v2.3.0 | Yes | Sample-level |
+| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB vX.X.X | Yes | Sample-level |
 
 ## TBProfiler_tNGS_PHB
 
@@ -19,11 +19,12 @@ This workflow is still in experimental research stages. Documentation is minimal
 | tbprofiler_tngs | **read1** | File | Illumina forward read file in FASTQ file format (compression optional) |  | Required |
 | tbprofiler_tngs | **read2** | File | Illumina reverse read file in FASTQ file format (compression optional) |  | Required |
 | tbprofiler_tngs | **samplename** | String | Name of sample to be analyzed |  | Required |
+| tbp_parser | **config** | File | The configuration file to use, in YAML format (overrides all other arguments except input_json and input_bam) |  | Optional |
 | tbp_parser | **coverage_regions_bed** | File | A file that contains the regions to perform coverage analysis on |  | Optional |
-| tbp_parser | **coverage_threshold** | Int | The minimum percentage of a region to exceed the minimum depth for a region to pass QC in tbp_parser | 100 | Optional |
+| tbp_parser | **min_percent_coverage** | Float | The minimum percentage of a region to exceed the minimum depth for a region to pass QC in tbp_parser | 100.0 | Optional |
 | tbp_parser | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | tbp_parser | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| tbp_parser | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.2.2 | Optional |
+| tbp_parser | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.5 | Optional |
 | tbp_parser | **etha237_frequency** | Float | Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser | 0.1 | Optional |
 | tbp_parser | **expert_rule_regions_bed** | File | A file that contains the regions where R mutations and expert rules are applied |  | Optional |
 | tbp_parser | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
@@ -48,11 +49,11 @@ This workflow is still in experimental research stages. Documentation is minimal
 | tbprofiler | **min_depth** | Int | The minimum depth for a variant to be called. | 10 | Optional |
 | tbprofiler | **ont_data** | Boolean | Internal component; do not modify |  | Do not modify, Optional |
 | tbprofiler | **tbprofiler_custom_db** | File | TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field and set tbprofiler_run_custom_db to true |  | Optional |
-| tbprofiler | **tbprofiler_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:4.4.2 | Optional |
+| tbprofiler | **tbprofiler_docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3 | Optional |
 | tbprofiler | **tbprofiler_run_custom_db** | Boolean |  | FALSE | Optional |
 | tbprofiler | **variant_caller** | String | Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler's original documentation for available options. | freebayes | Optional |
 | tbprofiler | **variant_calling_params** | String | Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler |  | Optional |
-| tbprofiler | **bases_to_crop** | Int | Indicate the number of bases to remove from the start and end of the read | 30 | Optional |
+| tbprofiler | **bases_to_crop** | Int | Indicate the number of bases to remove from the start and end of the read | 0 | Optional |
 | trimmomatic_pe | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
 | trimmomatic_pe | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
 | trimmomatic_pe | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.39 | Optional |

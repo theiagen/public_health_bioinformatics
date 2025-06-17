@@ -7,7 +7,7 @@ task ts_mlst {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-08-01"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-12-31"
     Int disk_size = 50
     Int cpu = 1
     Int memory = 2
@@ -20,7 +20,7 @@ task ts_mlst {
     Boolean nopath = true
     String? scheme
     Float? min_percent_identity
-    Float? min_coverage
+    Float? min_percent_coverage
     Float? minscore
   }
   command <<<
@@ -34,7 +34,7 @@ task ts_mlst {
       ~{true="--nopath" false="" nopath} \
       ~{'--scheme ' + scheme} \
       ~{'--minid ' + min_percent_identity} \
-      ~{'--mincov ' + min_coverage} \
+      ~{'--mincov ' + min_percent_coverage} \
       ~{'--minscore ' + minscore} \
       --novel ~{samplename}_novel_mlst_alleles.fasta \
       ~{assembly} \

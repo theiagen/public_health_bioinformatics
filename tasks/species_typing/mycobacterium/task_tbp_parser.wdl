@@ -7,6 +7,7 @@ task tbp_parser {
     File tbprofiler_bai
     String samplename
 
+    File? config
     String? sequencing_method
     String? operator
 
@@ -14,7 +15,7 @@ task tbp_parser {
     Float? min_frequency # default 0.1
     Int? min_read_support # default 10
     
-    Int? min_coverage # default 100 (--min_percent_coverage)
+    Float? min_percent_coverage # default 100 (--min_percent_coverage)
     File? coverage_regions_bed
   
     Boolean add_cycloserine_lims = false
@@ -31,7 +32,7 @@ task tbp_parser {
     
     Int cpu = 1
     Int disk_size = 100   
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.2.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.5"
     Int memory = 4
   }
   command <<<
@@ -40,12 +41,13 @@ task tbp_parser {
 
     # run tbp-parser
     python3 /tbp-parser/tbp_parser/tbp_parser.py ~{tbprofiler_json} ~{tbprofiler_bam} \
+      ~{"--config " + config} \
       ~{"--sequencing_method " + sequencing_method} \
       ~{"--operator " + operator} \
       ~{"--min_depth " + min_depth} \
       ~{"--min_frequency " + min_frequency} \
       ~{"--min_read_support " + min_read_support} \
-      ~{"--min_percent_coverage " + min_coverage} \
+      ~{"--min_percent_coverage " + min_percent_coverage} \
       ~{"--coverage_regions " + coverage_regions_bed} \
       ~{"--tngs_expert_regions " + expert_rule_regions_bed} \
       ~{"--rrs_frequency " + rrs_frequency} \
@@ -68,7 +70,7 @@ task tbp_parser {
     python3 -c "print ( ($genome / 4411532 ) * 100 )" | tee GENOME_PC
 
     # get genome average depth
-    samtools depth -J ~{tbprofiler_bam} | awk -F "\t" '{sum+=$3} END { print sum/NR }' | tee AVG_DEPTH
+    samtools depth -J ~{tbprofiler_bam} | awk -F "\t" '{sum+=$3} END { if (NR > 0) print sum/NR; else print 0 }' | tee AVG_DEPTH
 
     # add sample id to the beginning of the coverage report
     awk '{s=(NR==1)?"Sample_accession_number,":"~{samplename},"; $0=s$0}1' ~{samplename}.percent_gene_coverage.csv > tmp.csv && mv -f tmp.csv ~{samplename}.percent_gene_coverage.csv

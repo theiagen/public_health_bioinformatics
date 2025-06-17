@@ -11,9 +11,9 @@ task kaptive {
     Int memory = 8
     # Parameters
     Int start_end_margin = 10 # determines flexibility in identifying the start and end of a locus - if this value is 10, a locus match that is missing the first 8 base pairs will still count as capturing the start of the locus (default: 10) 
-    Float min_percent_identity = 90.0 # minimum required percent coverage for the gene BLAST search via tBLASTn (default: 90.0)
-    Float min_coverage = 80.0 # minimum required percent identity for the gene BLAST search via tBLASTn (default: 80.0)
-    Float low_gene_id = 95.0 # percent identity threshold for what counts as a low identity match in the gene BLAST search (default: 95.0)
+    Float min_percent_coverage = 90.0 # minimum required percent coverage for the gene BLAST search via tBLASTn (default: 90.0)
+    Float min_percent_identity = 80.0 # minimum required percent identity for the gene BLAST search via tBLASTn (default: 80.0)
+    Float low_gene_percent_identity = 95.0 # percent identity threshold for what counts as a low identity match in the gene BLAST search (default: 95.0)
     #Int min_assembly_piece = 100 # smallest piece of the assembly (measured in bases) that will be included in the output FASTA files (default: 100)
     #Int gap_fill_size = 100 # size of assembly gaps to be filled in when producing the output FASTA files
   }
@@ -32,8 +32,8 @@ task kaptive {
     -t ~{cpu} \
     ~{'--start_end_margin ' + start_end_margin} \
     ~{'--min_gene_id ' + min_percent_identity} \
-    ~{'--min_gene_cov ' + min_coverage} \
-    ~{'--low_gene_id ' + low_gene_id} \
+    ~{'--min_gene_cov ' + min_percent_coverage} \
+    ~{'--low_gene_id ' + low_gene_percent_identity} \
     --no_seq_out \
     --no_json \
     --out ~{samplename}_kaptive_out_k \
@@ -87,8 +87,8 @@ task kaptive {
     -t ~{cpu} \
     ~{'--start_end_margin ' + start_end_margin} \
     ~{'--min_gene_id ' + min_percent_identity} \
-    ~{'--min_gene_cov ' + min_coverage} \
-    ~{'--low_gene_id ' + low_gene_id} \
+    ~{'--min_gene_cov ' + min_percent_coverage} \
+    ~{'--low_gene_id ' + low_gene_percent_identity} \
     --no_seq_out \
     --no_json \
     --out ~{samplename}_kaptive_out_oc \

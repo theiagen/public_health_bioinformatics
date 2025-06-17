@@ -169,6 +169,13 @@
   max-width: initial;
 }
 
+.md-typeset .admonition.narrow {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-block; /* make the admonition width fit the content */
+}
+
 /* scrollbar and resizable columns in tables */
 table {
   overflow-y: scroll;
@@ -216,4 +223,13 @@ div.searchable-table input.table-search-input {
 [data-md-color-scheme="slate"] div.searchable-table input.table-search-input::placeholder {
   color: #bbb;
   font-style: italic;
+}
+
+/* modify heading level 5 appearance */
+.md-content h5 {
+  all: unset;
+  margin: px2em(16px, 12.8px) 0;
+  font-weight: 500;
+  font-size: px2em(12.8px);
+  letter-spacing: -0.01em;
 }

@@ -96,6 +96,7 @@ This workflow runs on the set-level.
 | mercury | **library_source** | String | Populate to overwrite `library_source` column |  | Optional |
 | mercury | **library_strategy** | String | Populate to overwrite `library_strategy` column |  | Optional |
 | mercury | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
+| mercury | **metadata_organism** | String | Populate to overwrite `organism` column |  | Optional |
 | mercury | **number_N_threshold** | Int | Only for "sars-cov-2" submissions; used to filter out any samples that contain more than the indicated number of Ns in the assembly file | 5000 | Optional |
 | mercury | **purpose_of_sequencing** | String | Populate to overwrite `purpose_of_sequencing` column |  | Optional |
 | mercury | **seq_platform** | String | Populate to overwrite `seq_platform` column |  | Optional |
@@ -110,7 +111,7 @@ This workflow runs on the set-level.
 | mercury | **using_reads_dehosted** | Boolean | When set to true will only change read1_dehosted → reads_dehosted. Takes priority over the replacement for read1_dehosted made with the using_clearlabs_data Boolean input | FALSE | Optional |
 | mercury | **vadr_alert_limit** | Int | Only for "sars-cov-2" submissions; used to filter out any samples that contain more than the indicated number of vadr alerts | 0 | Optional |
 | mercury_prep_n_batch | **authors_sbt** | File | Only for "mpox" submissions; a file that contains author information. This file can be created here: <https://submit.ncbi.nlm.nih.gov/genbank/template/submission/> |  | Optional |
-| mercury_prep_n_batch | **organism** | String | The organism that you want submission prepare for — each organism requires different metadata fields so please ensure this field is accurate. Options: "flu", "mpox"" or "sars-cov-2" | sars-cov-2 | Optional |
+| mercury_prep_n_batch | **organism** | String | The organism that you want submission prepare for — each organism requires different metadata fields so please ensure this field is accurate. Options: "flu", "mpox"" or "sars-cov-2". NOTE: See **metadata_organism** for populating the `organism` column. | sars-cov-2 | Optional |
 | mercury_prep_n_batch | **output_name** | String | Free text prefix for all output files | mercury | Optional |
 | mercury_prep_n_batch | **skip_ncbi** | Boolean | Set to true if you only want to prepare GISAID submission files | FALSE | Optional |
 | table2asn | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |

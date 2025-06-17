@@ -8,11 +8,11 @@ task amrfinderplus_nuc {
     # --indent_min Minimum DNA %identity [0-1]; default is 0.9 (90%) or curated threshold if it exists
     # --mincov Minimum DNA %coverage [0-1]; default is 0.5 (50%)
     String? organism 
-    Float? min_identity
-    Float? min_coverage
+    Float? min_percent_identity
+    Float? min_percent_coverage
     Boolean detailed_drug_class = false
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:3.12.8-2024-07-22.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.19-2024-12-18.1"
     Int disk_size = 50
     Int memory = 8
     Boolean hide_point_mutations = false
@@ -60,8 +60,8 @@ task amrfinderplus_nuc {
         ~{'--nucleotide ' + assembly} \
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
         ~{'--threads ' + cpu} \
-        ~{'--coverage_min ' + min_coverage} \
-        ~{'--ident_min ' + min_identity}
+        ~{'--coverage_min ' + min_percent_coverage} \
+        ~{'--ident_min ' + min_percent_identity}
     else 
       echo "Either the organism (~{organism}) is not recognized by NCBI-AMRFinderPlus or the user did not supply an organism as input."
       echo "Skipping the use of amrfinder --organism optional parameter."
@@ -71,8 +71,8 @@ task amrfinderplus_nuc {
         ~{'--nucleotide ' + assembly} \
         ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
         ~{'--threads ' + cpu} \
-        ~{'--coverage_min ' + min_coverage} \
-        ~{'--ident_min ' + min_identity}
+        ~{'--coverage_min ' + min_percent_coverage} \
+        ~{'--ident_min ' + min_percent_identity}
     fi
 
     # remove mutations where Element subtype is "POINT"

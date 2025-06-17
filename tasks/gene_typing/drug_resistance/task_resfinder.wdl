@@ -6,8 +6,8 @@ task resfinder {
     String samplename
     String? organism # Species in the sample, species should be entered with their full scientific names (e.g. "escherichia coli"), using quotation marks
     Boolean acquired = true # Run resfinder for acquired resistance genes
-    Float min_coverage = 0.5 # Minimum (breadth-of) coverage of ResFinder
-    Float min_id = 0.9 # Threshold for identity of ResFinder
+    Float min_percent_coverage = 0.5 # Minimum (breadth-of) coverage of ResFinder
+    Float min_percent_identity = 0.9 # Threshold for identity of ResFinder
     Boolean call_pointfinder = false # Run pointfinder for chromosomal mutations
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/resfinder:4.1.11"
     Int disk_size = 100
@@ -58,8 +58,8 @@ task resfinder {
         --outputPath . \
         --species "${resfinder_organism}" \
         ~{true="--acquired" false="" acquired} \
-        ~{'--min_cov ' + min_coverage} \
-        ~{'--threshold ' + min_id} \
+        ~{'--min_cov ' + min_percent_coverage} \
+        ~{'--threshold ' + min_percent_identity} \
         ~{true="--point" false="" call_pointfinder} 
     else 
       # pointfinder requires the use of the --species flag, so if resfinder_organism is not set, do not run pointfinder
@@ -68,8 +68,8 @@ task resfinder {
         --outputPath . \
         --species "other" \
         ~{true="--acquired" false="" acquired} \
-        ~{'--min_cov ' + min_coverage} \
-        ~{'--threshold ' + min_id}
+        ~{'--min_cov ' + min_percent_coverage} \
+        ~{'--threshold ' + min_percent_identity}
     fi
 
     # replace space in resfinder_organism with underscore

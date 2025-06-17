@@ -2,9 +2,10 @@ version 1.0
 
 task freyja_one_sample {
   input {
-    File primer_trimmed_bam
+    File bamfile
     String samplename
     File reference_genome
+    File? reference_gff
     String? freyja_pathogen
     File? freyja_barcodes
     File? freyja_lineage_metadata
@@ -17,7 +18,7 @@ task freyja_one_sample {
     Int? depth_cutoff
     Int memory = 8
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.2-11_30_2024-02-00-2024-12-02"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"
     Int disk_size = 100
   }
   command <<<
@@ -26,21 +27,19 @@ task freyja_one_sample {
   
   # update freyja reference files if specified
   if ~{update_db}; then 
-      freyja update 2>&1 | tee freyja_update.log
+      freyja update ~{"--pathogen " + freyja_pathogen} 2>&1 | tee freyja_update.log
       # check log files to ensure update did not fail
-      if grep "FileNotFoundError.*lineagePaths.*" freyja_update.log
-      then 
+      if grep "FileNotFoundError.*lineagePaths.*" freyja_update.log; then 
         echo "Error in attempting to update Freyja files. Try increasing memory"
         >&2 echo "Killed"
         exit 1
       fi
-      if grep "error" freyja_update.log
-      then
+      if grep "error" freyja_update.log; then
         grep "error" freyja_update.log | tail -1
         >&2 echo "Killed"
         exit 1
       fi
-      # can't update barcodes in freyja 1.3.2; will update known issue is closed (https://github.com/andersen-lab/Freyja/issues/33)
+
       freyja_usher_barcode_version="freyja update: $(date +"%Y-%m-%d")"
       freyja_metadata_version="freyja update: $(date +"%Y-%m-%d")"
   else
@@ -65,9 +64,10 @@ task freyja_one_sample {
   echo ${freyja_metadata_version} | tee FREYJA_METADATA
   
   # Call variants and capture sequencing depth information
-  echo "Running: freyja variants ~{primer_trimmed_bam} --variants ~{samplename}_freyja_variants.tsv --depths ~{samplename}_freyja_depths.tsv --ref ~{reference_genome}"
+  echo "Running: freyja variants ~{bamfile} --variants ~{samplename}_freyja_variants.tsv --depths ~{samplename}_freyja_depths.tsv --ref ~{reference_genome}"
   freyja variants \
-    ~{primer_trimmed_bam} \
+    ~{bamfile} \
+    ~{"--annot " + reference_gff} \
     --variants ~{samplename}_freyja_variants.tsv \
     --depths ~{samplename}_freyja_depths.tsv \
     --ref ~{reference_genome}
@@ -75,7 +75,7 @@ task freyja_one_sample {
   # Calculate Boostraps, if specified
   if ~{bootstrap}; then
     freyja boot \
-    ~{"--pathogen" + freyja_pathogen} \
+    ~{"--pathogen " + freyja_pathogen} \
     ~{"--eps " + eps} \
     ~{"--meta " + freyja_lineage_metadata} \
     ~{"--barcodes " + freyja_barcodes} \
@@ -91,6 +91,7 @@ task freyja_one_sample {
   # Demix variants 
   echo "Running: freyja demix --eps ~{eps} ${freyja_barcode} ${freyja_metadata} ~{samplename}_freyja_variants.tsv ~{samplename}_freyja_depths.tsv --output ~{samplename}_freyja_demixed.tmp"
   freyja demix \
+    ~{"--pathogen " + freyja_pathogen} \
     ~{'--eps ' + eps} \
     ~{'--meta ' + freyja_lineage_metadata} \
     ~{'--barcodes ' + freyja_barcodes} \
@@ -105,14 +106,16 @@ task freyja_one_sample {
   echo -e "\t/~{samplename}" > ~{samplename}_freyja_demixed.tsv
   tail -n+2 ~{samplename}_freyja_demixed.tmp >> ~{samplename}_freyja_demixed.tsv
 
-  if [ -f /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/usher_barcodes.feather ]; then
-    mv /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/usher_barcodes.feather usher_barcodes.feather
+  if [ "~{freyja_pathogen}" == "SARS-CoV-2" ]; then
+    if [ -f /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/usher_barcodes.feather ]; then
+      mv /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/usher_barcodes.feather usher_barcodes.feather
+    fi
+
+    if [ -f /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/curated_lineages.json ]; then
+      mv /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/curated_lineages.json curated_lineages.json
+    fi
   fi
 
-  if [ -f /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/curated_lineages.json ]; then
-    mv /opt/conda/envs/freyja-env/lib/python3.12/site-packages/freyja/data/curated_lineages.json curated_lineages.json
-  fi
-  
   #Output QC values to the Terra data table
   python <<CODE
   import csv
@@ -157,14 +160,6 @@ task freyja_one_sample {
   
   CODE
   >>>
-  runtime {
-    memory: "~{memory} GB"
-    cpu: cpu
-    docker: "~{docker}"
-    disks:  "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB" # TES
-    maxRetries: 3
-  }
   output {
     File freyja_variants = "~{samplename}_freyja_variants.tsv"
     File freyja_depths = "~{samplename}_freyja_depths.tsv"
@@ -175,9 +170,9 @@ task freyja_one_sample {
     File? freyja_bootstrap_lineages_pdf = "~{samplename}_lineages.pdf"
     File? freyja_bootstrap_summary = "~{samplename}_summarized.csv"
     File? freyja_bootstrap_summary_pdf = "~{samplename}_summarized.pdf"
-    # capture barcode file - first is user supplied, second appears if the user did not supply a barcode file
-    File freyja_barcode_file = select_first([freyja_barcodes, "usher_barcodes.feather"])
-    File freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, "curated_lineages.json"])
+    # capture barcode file if sars-cov-2
+    File? freyja_sc2_barcode_file = "usher_barcodes.feather"
+    File? freyja_sc2_lineage_metadata_file = "curated_lineages.json"
     String freyja_barcode_version = read_string("FREYJA_BARCODES")
     String freyja_metadata_version = read_string("FREYJA_METADATA")
     String freyja_version = read_string("FREYJA_VERSION")
@@ -186,5 +181,13 @@ task freyja_one_sample {
     String freyja_summarized = read_string("SUMMARIZED")
     String freyja_lineages = read_string("LINEAGES")
     String freyja_abundances = read_string("ABUNDANCES")
+  }
+  runtime {
+    memory: "~{memory} GB"
+    cpu: cpu
+    docker: "~{docker}"
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB" # TES
+    maxRetries: 3
   }
 }

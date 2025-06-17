@@ -1,8 +1,8 @@
 version 1.0
 
-task ksnp3_shared_snps {
+task ksnp_shared_snps {
   input {
-    File ksnp3_vcf_ref_genome
+    File ksnp_vcf_ref_genome
     Array[String] samplename
     String cluster_name
     Int disk_size = 100
@@ -12,7 +12,7 @@ task ksnp3_shared_snps {
     python3 <<CODE
     import pandas as pd
 
-    file_path="~{ksnp3_vcf_ref_genome}"
+    file_path="~{ksnp_vcf_ref_genome}"
     samplename_array = "~{sep=',' samplename}"
 
     # split the samplename_array into a list 

@@ -14,9 +14,9 @@ task kleborate {
     Boolean skip_resistance = false # Turn on resistance genes screening (default: no resistance gene screening)
     Boolean skip_kaptive = false # Equivalent to --kaptive_k --kaptive_
     Float min_percent_identity = 90.0 # Minimum alignment percent identity for main results (default: 90.0)
-    Float min_coverage = 80.0 #  Minimum alignment percent coverage for main results (default: 80.0)
-    Float min_spurious_identity = 80.0 # Minimum alignment percent identity for spurious results (default: 80.0)
-    Float min_spurious_coverage = 40.0 #  Minimum alignment percent coverage for spurious results (default: 40.0)
+    Float min_percent_coverage = 80.0 #  Minimum alignment percent coverage for main results (default: 80.0)
+    Float min_spurious_percent_identity = 80.0 # Minimum alignment percent identity for spurious results (default: 80.0)
+    Float min_spurious_percent_coverage = 40.0 #  Minimum alignment percent coverage for spurious results (default: 40.0)
     String min_kaptive_confidence = "Good" # {None,Low,Good,High,Very_high,Perfect} Minimum Kaptive confidence to call K/O loci - confidence levels below this will be reported as unknown (default: Good)
   }
   command <<<
@@ -31,9 +31,9 @@ task kleborate {
     ~{true="" false="--resistance" skip_resistance} \
     ~{true="" false="--kaptive" skip_kaptive} \
     ~{'--min_identity ' + min_percent_identity} \
-    ~{'--min_coverage ' + min_coverage} \
-    ~{'--min_spurious_identity ' + min_spurious_identity} \
-    ~{'--min_spurious_coverage ' + min_spurious_coverage} \
+    ~{'--min_coverage ' + min_percent_coverage} \
+    ~{'--min_spurious_identity ' + min_spurious_percent_identity} \
+    ~{'--min_spurious_coverage ' + min_spurious_percent_coverage} \
     ~{'--min_kaptive_confidence ' + min_kaptive_confidence} \
     --outfile ~{samplename}_kleborate_out.tsv \
     --assemblies ~{assembly} \

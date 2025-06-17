@@ -4,7 +4,7 @@
 
 | **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
 |---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB vX.X.X | Yes; some optional features incompatible | Set-level |
+| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Bacteria](../../workflows_overview/workflows_kingdom.md/#bacteria) | PHB v3.0.0 | Yes; some optional features incompatible | Set-level |
 
 ## Snippy_Streamline_PHB
 
@@ -19,8 +19,9 @@ The `Snippy_Streamline` workflow is an all-in-one approach to generating a refer
 
     ==In order to generate a phylogenetic tree, a reference genome is required.== This can be:
 
-    1. provided by the user
-    2. automatically selected using the `centroid` task and `reference_seeker` task to find a close reference genome to your dataset
+    1. provided by the user by filling the `reference_genome_file` input variable
+    2. the identified `centroid` genome by setting `use_centroid_as_reference` to true
+    3. automatically selected using the `centroid` task and `reference_seeker` task to find a close reference genome to your dataset by providing data in the `assembly_fasta` input variable and leaving the `reference_genome_file` and `use_centroid_as_reference` fields blank
 
     !!! warning "Automatic Reference Selection"
         If no reference genome is provided, then the user MUST fill in the `assembly_fasta` field for automatic reference genome selection.
@@ -89,6 +90,7 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
 | centroid | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 4 | Optional |
 | snippy_streamline | **assembly_fasta** | Array[File] | The assembly files for your samples (Required if a reference genome is not provided) |  | Optional |
 | snippy_streamline | **reference_genome_file** | File | Reference genome in FASTA or GENBANK format (must be the same reference used in Snippy_Variants workflow); provide this if you want to skip the detection of a suitable reference |  | Optional |
+| snippy_streamline | **use_centroid_as_reference** | Booolean | Set to true if you want to use the centroid sample as the reference sample instead of using the centroid to detect a suitable one | false  | Optional |
 | ncbi_datasets_download_genome_accession | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
 | ncbi_datasets_download_genome_accession | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 50 | Optional |
 | ncbi_datasets_download_genome_accession | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2 | Optional |
