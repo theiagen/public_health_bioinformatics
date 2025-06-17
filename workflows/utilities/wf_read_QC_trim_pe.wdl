@@ -173,7 +173,7 @@ workflow read_QC_trim_pe {
           is_accession = host_is_accession,
           refseq = host_refseq,
           complete_only = host_complete_only,
-          minimap2_mem = host_decontaminate_mem
+          minimap2_memory = host_decontaminate_mem
       }
     }
     if (! defined(host) || select_first([host_decontaminate.ncbi_datasets_status, "FAIL"]) == "PASS") {

@@ -275,7 +275,7 @@ workflow theiaviral_ont {
     String ncbi_identify_taxon_name = ncbi_identify.taxon_name
     String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
     Int ncbi_identify_avg_genome_length = ncbi_identify.avg_genome_length
-    String ncbi_identify_accession = ncbi_identify.ncbi_datasets_accession
+    String? ncbi_identify_accession = ncbi_identify.ncbi_datasets_accession
     String ncbi_identify_version = ncbi_identify.ncbi_datasets_version
     String ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker
     # host decontamination outputs

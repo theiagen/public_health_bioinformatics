@@ -97,7 +97,7 @@ task identify_taxon_id {
     String taxon_name = read_string("TAXON_NAME")
     String taxon_rank = read_string("TAXON_RANK")
     Int avg_genome_length = read_int("AVG_GENOME_LENGTH")
-    String ncbi_datasets_accession = read_string("NCBI_ACCESSION")
+    String? ncbi_datasets_accession = read_string("NCBI_ACCESSION")
     String ncbi_datasets_version = read_string("DATASETS_VERSION")
     String ncbi_datasets_docker = docker
   }

@@ -1,7 +1,16 @@
 ??? task "`skani`"
 
+    The `skani` task is used to identify and select the most closely related reference genome to the *de novo* assembly. Skani uses an approximate mapping method without base-level alignment to calculate average nucleotide identity (ANI). It is magnitudes faster than BLAST-based methods and almost as accurate.
+
 <!-- if: theiaviral -->
-    The `skani` task is used to identify and select the most closely related reference genome to the input assembly generated from the `spades` or `megahit` tasks. By default, the reference genome is selected from a comprehensive database of [over 270,000 complete viral genomes](https://ftp.ncbi.nlm.nih.gov/genomes/Viruses/AllNuclMetadata/) (excluding SARS-CoV-2). Skani uses an approximate mapping method without base-level alignment to calculate average nucleotide identity (ANI). It is magnitudes faster than BLAST-based methods and almost as accurate.
+    By default, the reference genome is selected from a database of approximately 200,000 complete viral genomes. This database was constructed with the following methodology:
+    
+    1. Extracting all [complete NCBI viral genomes](https://ftp.ncbi.nlm.nih.gov/genomes/Viruses/AllNuclMetadata/), excluding RefSeq accessions (redundancy), SARS-CoV-2 accessions, and segmented families (Orthomyxoviridae, Hantaviridae, Arenaviridae, and Phenuiviridae)
+    
+    2. Adding complete RefSeq segmented viral assembly accessions, which represent segments as individual contigs within the FASTA
+
+    3. Adding one SARS-CoV-2 genome for each [major pangolin lineages](https://github.com/cov-lineages/lineages-website/raw/refs/heads/master/_data/lineage_data.full.json)
+    
 <!-- endif -->
     !!! techdetails "Skani Technical Details"
         |  | Links |
