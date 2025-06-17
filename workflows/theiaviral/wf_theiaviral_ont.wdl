@@ -53,23 +53,15 @@ workflow theiaviral_ont {
   call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
     input:
       taxon = taxon,
-      rank = read_extraction_rank
-  }
-  # estimate the average genome length for user provided taxon
-  if (! defined(genome_length)) {
-    call ncbi_datasets_task.ncbi_datasets_genome_summary as ncbi_taxon_summary {
-      input:
-        taxon = taxon,
-        use_ncbi_virus = true,
-        summary_limit = 100
-    }
+      rank = read_extraction_rank,
+      use_ncbi_virus = true,
   }
   # raw read quality check
   call nanoplot_task.nanoplot as nanoplot_raw {
     input:
       read1 = read1,
       samplename = samplename,
-      est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+      est_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
   }
   # adapter trimming
   if (call_porechop) {
@@ -116,7 +108,7 @@ workflow theiaviral_ont {
         input:
           read1 = metabuli.metabuli_read1_extract,
           samplename = samplename,
-          genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+          genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
       }
     }
     # extracted/filtered clean read quality check.
@@ -124,7 +116,7 @@ workflow theiaviral_ont {
       input:
         read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
         samplename = samplename,
-        est_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+        est_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
     }
     # check for minimum number of reads, basepairs, coverage, etc
     if (! skip_screen) {
@@ -132,7 +124,7 @@ workflow theiaviral_ont {
         input:
           read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
           workflow_series = "theiaviral",
-          expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length]),
+          expected_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length]),
           skip_mash = true
       }
     }
@@ -249,7 +241,7 @@ workflow theiaviral_ont {
             input:
               assembly_fasta = bcftools_consensus.assembly_fasta,
               reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-              genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+              genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
           }
           # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
           call checkv_task.checkv as checkv_consensus {
@@ -276,15 +268,13 @@ workflow theiaviral_ont {
     # versioning outputs
     String theiaviral_ont_version = version_capture.phb_version
     String theiaviral_ont_date = version_capture.date
-    # ncbi datasets - taxon summary
-    File? ncbi_taxon_summary_tsv = ncbi_taxon_summary.taxon_summary_tsv
-    Int? ncbi_taxon_summary_avg_genome_length = ncbi_taxon_summary.avg_genome_length
-    String? ncbi_taxon_summary_version = ncbi_taxon_summary.ncbi_datasets_version
-    String? ncbi_taxon_summary_docker = ncbi_taxon_summary.ncbi_datasets_docker
     # ncbi datasets - taxon identification
+    File ncbi_identify_taxon_summary_tsv = ncbi_identify.taxon_summary_tsv
+    File ncbi_identify_genome_summary_tsv = ncbi_identify.genome_summary_tsv
     String? ncbi_identify_taxon_id = ncbi_identify.taxon_id
     String? ncbi_identify_taxon_name = ncbi_identify.taxon_name
     String? ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
+    Int ncbi_identify_avg_genome_length = ncbi_identify.avg_genome_length
     String? ncbi_identify_version = ncbi_identify.ncbi_datasets_version
     String? ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker
     # host decontamination outputs
