@@ -98,7 +98,7 @@ workflow theiaviral_ont {
       input:
         read1 = select_first([host_decontaminate.dehost_read1, ncbi_scrub_se.read1_dehosted]),
         samplename = samplename,
-        taxon_id = ncbi_identify.taxon_id,
+        taxon_id = select_first([ncbi_identify.taxon_id]),
         extract_unclassified = extract_unclassified
     }
     # downsample reads if the user wants, rasusa parameters are set in the task
@@ -271,9 +271,9 @@ workflow theiaviral_ont {
     # ncbi datasets - taxon identification
     File ncbi_identify_taxon_summary_tsv = ncbi_identify.taxon_summary_tsv
     File ncbi_identify_genome_summary_tsv = ncbi_identify.genome_summary_tsv
-    String ncbi_identify_taxon_id = ncbi_identify.taxon_id
-    String ncbi_identify_taxon_name = ncbi_identify.taxon_name
-    String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
+    String? ncbi_identify_taxon_id = ncbi_identify.taxon_id
+    String? ncbi_identify_taxon_name = ncbi_identify.taxon_name
+    String? ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
     Int ncbi_identify_avg_genome_length = ncbi_identify.avg_genome_length
     String? ncbi_identify_accession = ncbi_identify.ncbi_datasets_accession
     String ncbi_identify_version = ncbi_identify.ncbi_datasets_version

@@ -9,7 +9,7 @@
     
     2. Adding complete RefSeq segmented viral assembly accessions, which represent segments as individual contigs within the FASTA
 
-    3. Adding one SARS-CoV-2 genome for each [major pangolin lineages](https://github.com/cov-lineages/lineages-website/raw/refs/heads/master/_data/lineage_data.full.json)
+    3. Adding one SARS-CoV-2 genome for each [major pangolin lineage](https://github.com/cov-lineages/lineages-website/raw/refs/heads/master/_data/lineage_data.full.json)
     
 <!-- endif -->
     !!! techdetails "Skani Technical Details"
