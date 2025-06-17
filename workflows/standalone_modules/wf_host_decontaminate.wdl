@@ -19,7 +19,7 @@ workflow host_decontaminate {
     Boolean is_accession = false
     Boolean refseq = true
     Boolean complete_only = false
-    Int minimap2_mem = 32
+    Int minimap2_memory = 32
   }
   call versioning.version_capture {
     input: 
@@ -51,7 +51,7 @@ workflow host_decontaminate {
           mode = "sr",
           output_sam = true,
           long_read_flags = false,
-          memory = minimap2_mem
+          memory = minimap2_memory
       }
     }
     if (! defined(read2)) {
@@ -63,7 +63,7 @@ workflow host_decontaminate {
           mode = "map-ont",
           output_sam = true,
           long_read_flags = true,
-          memory = minimap2_mem
+          memory = minimap2_memory
       }
     }
     call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
