@@ -64,143 +64,141 @@ workflow theiaviral_illumina_pe {
       workflow_series = "theiaviral",
       host = host
   }
-  if (! defined(host) || read_QC_trim.dehost_wf_download_status == "PASS") {
-    if (! skip_rasusa) {
-      # downsample reads to a specific coverage
-      call rasusa_task.rasusa as rasusa {
-        input:
-          read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
-          read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
-          samplename = samplename,
-          genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
-      }
+  if (! skip_rasusa) {
+    # downsample reads to a specific coverage
+    call rasusa_task.rasusa as rasusa {
+      input:
+        read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
+        read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
+        samplename = samplename,
+        genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
     }
-    # clean read screening
-    if (! skip_screen) {
-      call read_screen_task.check_reads as clean_check_reads {
-        input:
-          read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-          read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-          workflow_series = "theiaviral",
-          expected_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
-      }
+  }
+  # clean read screening
+  if (! skip_screen) {
+    call read_screen_task.check_reads as clean_check_reads {
+      input:
+        read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+        workflow_series = "theiaviral",
+        expected_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
     }
-    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-      # run de novo if no reference genome is provided so we can select a reference
-      if (! defined(reference_fasta)) {
-        # de novo assembly - prioritize metaviralspades
-        if (call_metaviralspades) {
-          call spades_task.spades {
-            input:
-              read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-              read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-              samplename = samplename,
-              spades_type = "metaviral"
-          }
-        }
-        # fallback to megahit if metaviralspades fails to identify a complete virus
-        if (select_first([spades.spades_status, "FAIL"]) == "FAIL") {
-          call megahit_task.megahit {
-            input:
-              read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-              read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-              samplename = samplename
-          }
-        }
-        # fail gracefully if both assemblies fail
-        if (select_first([megahit.megahit_status, spades.spades_status, "FAIL"]) == "PASS") {
-          # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
-          call checkv_task.checkv as checkv_denovo {
-            input:
-              assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
-              samplename = samplename
-          }
-          # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
-          call quast_task.quast as quast_denovo {
-            input:
-              assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
-              samplename = samplename,
-              min_contig_length = 0,
-          }
-        }
-      }
-      if (defined(reference_fasta) || select_first([megahit.megahit_status, spades.spades_status, "FAIL"]) == "PASS") {
-        # ANI-based reference genome selection
-        call skani_task.skani as skani {
+  }
+  if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+    # run de novo if no reference genome is provided so we can select a reference
+    if (! defined(reference_fasta)) {
+      # de novo assembly - prioritize metaviralspades
+      if (call_metaviralspades) {
+        call spades_task.spades {
           input:
-            assembly_fasta = select_first([reference_fasta, spades.assembly_fasta, megahit.assembly_fasta]),
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+            samplename = samplename,
+            spades_type = "metaviral"
+        }
+      }
+      # fallback to megahit if metaviralspades fails to identify a complete virus
+      if (select_first([spades.spades_status, "FAIL"]) == "FAIL") {
+        call megahit_task.megahit {
+          input:
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
             samplename = samplename
         }
-        # if skani cannot identify a reference genome, fail gracefully
-        if (skani.skani_status == "PASS") {
-          # download the best reference determined from skani
-          call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
-            input:
-              ncbi_accession = skani.skani_top_accession,
-              use_ncbi_virus = skani.skani_virus_download
-          }
+      }
+      # fail gracefully if both assemblies fail
+      if (select_first([megahit.megahit_status, spades.spades_status, "FAIL"]) == "PASS") {
+        # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
+        call checkv_task.checkv as checkv_denovo {
+          input:
+            assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
+            samplename = samplename
         }
-        if (defined(reference_fasta) || skani.skani_status == "PASS") {
-          # align reads to reference
-          call bwa_task.bwa {
+        # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
+        call quast_task.quast as quast_denovo {
+          input:
+            assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
+            samplename = samplename,
+            min_contig_length = 0,
+        }
+      }
+    }
+    if (defined(reference_fasta) || select_first([megahit.megahit_status, spades.spades_status, "FAIL"]) == "PASS") {
+      # ANI-based reference genome selection
+      call skani_task.skani as skani {
+        input:
+          assembly_fasta = select_first([reference_fasta, spades.assembly_fasta, megahit.assembly_fasta]),
+          samplename = samplename
+      }
+      # if skani cannot identify a reference genome, fail gracefully
+      if (skani.skani_status == "PASS") {
+        # download the best reference determined from skani
+        call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
+          input:
+            ncbi_accession = skani.skani_top_accession,
+            use_ncbi_virus = skani.skani_virus_download
+        }
+      }
+      if (defined(reference_fasta) || skani.skani_status == "PASS") {
+        # align reads to reference
+        call bwa_task.bwa {
+          input:
+            samplename = samplename,
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+            reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
+        }
+        # consensus calling via ivar
+        call ivar_consensus_task.consensus {
+          input:
+            bamfile = bwa.sorted_bam,
+            samplename = samplename,
+            reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+            min_qual = min_map_quality,
+            consensus_min_depth = min_depth,
+            consensus_min_freq = min_allele_freq,
+            all_positions = true
+        }
+        # variant calling via ivar
+        call variant_call_task.variant_call as ivar_variants {
+          input:
+            mpileup = consensus.sample_mpileup,
+            samplename = samplename,
+            reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+            min_qual = min_map_quality,
+            organism = "",
+            variant_min_freq = min_allele_freq,
+            variant_min_depth = min_depth
+        }
+        # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
+        call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
+          input:
+            bamfile = bwa.sorted_bam,
+            samplename = samplename
+        }
+        # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
+        call consensus_qc_task.consensus_qc as consensus_qc {
+          input:
+            assembly_fasta = consensus.consensus_seq,
+            reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+            genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
+        }
+        # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
+        call checkv_task.checkv as checkv_consensus {
+          input:
+            assembly = consensus.consensus_seq,
+            samplename = samplename
+        }
+        # run morgana magic for classification
+        if (ncbi_datasets.ncbi_datasets_status == "PASS") {
+          call morgana_magic_wf.morgana_magic {
             input:
               samplename = samplename,
+              assembly_fasta = select_first([consensus.consensus_seq]),
               read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
               read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-              reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
-          }
-          # consensus calling via ivar
-          call ivar_consensus_task.consensus {
-            input:
-              bamfile = bwa.sorted_bam,
-              samplename = samplename,
-              reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-              min_qual = min_map_quality,
-              consensus_min_depth = min_depth,
-              consensus_min_freq = min_allele_freq,
-              all_positions = true
-          }
-          # variant calling via ivar
-          call variant_call_task.variant_call as ivar_variants {
-            input:
-              mpileup = consensus.sample_mpileup,
-              samplename = samplename,
-              reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-              min_qual = min_map_quality,
-              organism = "",
-              variant_min_freq = min_allele_freq,
-              variant_min_depth = min_depth
-          }
-          # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-          call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
-            input:
-              bamfile = bwa.sorted_bam,
-              samplename = samplename
-          }
-          # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
-          call consensus_qc_task.consensus_qc as consensus_qc {
-            input:
-              assembly_fasta = consensus.consensus_seq,
-              reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-              genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
-          }
-          # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
-          call checkv_task.checkv as checkv_consensus {
-            input:
-              assembly = consensus.consensus_seq,
-              samplename = samplename
-          }
-          # run morgana magic for classification
-          if (ncbi_datasets.ncbi_datasets_status == "PASS") {
-            call morgana_magic_wf.morgana_magic {
-              input:
-                samplename = samplename,
-                assembly_fasta = select_first([consensus.consensus_seq]),
-                read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-                read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-                taxon_name = select_first([ncbi_datasets.taxon_id]),
-                seq_method = "illumina_pe"
-            }
+              taxon_name = select_first([ncbi_datasets.taxon_id]),
+              seq_method = "illumina_pe"
           }
         }
       }
@@ -213,11 +211,11 @@ workflow theiaviral_illumina_pe {
     # ncbi datasets - taxon identification
     File ncbi_identify_taxon_summary_tsv = ncbi_identify.taxon_summary_tsv
     File ncbi_identify_genome_summary_tsv = ncbi_identify.genome_summary_tsv
-    String? ncbi_identify_taxon_id = ncbi_identify.taxon_id
-    String? ncbi_identify_taxon_name = ncbi_identify.taxon_name
-    String? ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
+    String ncbi_identify_taxon_id = ncbi_identify.taxon_id
+    String ncbi_identify_taxon_name = ncbi_identify.taxon_name
+    String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
     Int ncbi_identify_avg_genome_length = ncbi_identify.avg_genome_length
-    String? ncbi_identify_accession = ncbi_identify.ncbi_datasets_accession
+    String ncbi_identify_accession = ncbi_identify.ncbi_datasets_accession
     String ncbi_datasets_version = ncbi_identify.ncbi_datasets_version
     String ncbi_datasets_docker = ncbi_identify.ncbi_datasets_docker    
     # raw read quality control
