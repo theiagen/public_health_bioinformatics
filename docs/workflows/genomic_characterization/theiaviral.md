@@ -137,8 +137,6 @@
 
 {{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/ncbi_taxon_summary_task.md", condition="theiaviral", indent=8) }}
-
     ??? toggle "Read Quality Control, Trimming, Filtering, Identification and Extraction"
 
 {{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaviral", indent=8, replacements={": Read Quality Trimming, Adapter Removal, Quantification, and Identification" : ""}) }}
@@ -186,8 +184,6 @@
     ??? toggle "Taxonomic Identification"
 
 {{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral", indent=8) }}
-
-{{ include_md("common_text/ncbi_taxon_summary_task.md", condition="theiaviral", indent=8) }}
 
     ??? toggle "Read Quality Control, Trimming, and Filtering"
 

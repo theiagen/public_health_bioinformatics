@@ -1154,8 +1154,6 @@ nanoq_filtered_read1	File	Filtered reads from NanoQ	TheiaViral_ONT
 ncbi_identify_docker	String	Docker image used for NCBI identify	TheiaViral_ONT
 ncbi_identify_version	String	Version of NCBI identify tool used	TheiaViral_ONT
 ncbi_scrub_read1_dehosted	File	Dehosted reads after NCBI scrub	TheiaViral_ONT
-ncbi_taxon_summary_docker	String	Docker image used for NCBI taxon summary	TheiaViral_ONT
-ncbi_taxon_summary_version	String	Version of NCBI taxon summary tool used	TheiaViral_ONT
 parse_mapping_samtools_docker	String	Docker image used for samtools in parse mapping	TheiaViral_ONT
 parse_mapping_samtools_version	String	Version of samtools used in parse mapping	TheiaViral_ONT
 porechop_trimmed_read1	File	Trimmed reads from Porechop	TheiaViral_ONT
