@@ -87,7 +87,7 @@ task identify_taxon_id {
       }
       END {
         if (count) { printf "%.0f", sum / count } else { print "No matching taxon id found" }
-      }' ncbi_genome_summary.tsv > AVG_GENOME_LENGTH
+      }' ncbi_genome_summary.tsv | grep -Po "\d+" > AVG_GENOME_LENGTH
     fi
   >>>
   output {
