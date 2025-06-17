@@ -30,7 +30,8 @@
             | --- | --- |
             | Task | [task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)<br>[task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl) |
             | Software Source Code | [Trimmomatic](https://github.com/usadellab/Trimmomatic)<br>[fastp on Github](https://github.com/OpenGene/fastp) |
-            | Software Documentation | [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic)<br>[fastp](https://github.com/OpenGene/fastp)
+            | Software Documentation | [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic)<br>[fastp](https://github.com/OpenGene/fastp) |
+            | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)<br>[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false) |
 
     ??? toggle "Adapter removal"
 
@@ -47,7 +48,7 @@
             | --- | --- |
             | Task | [task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl) |
             | Software Source Code | [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) |
-            | Software Documentation | [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)
+            | Software Documentation | [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/) |
         
     ??? toggle "Read Quantification"
 
@@ -118,6 +119,15 @@
             Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the [MIDAS GitHub guide on building a custom database](https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md). Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workkspace and provide the link to the database in the `midas_db` input variable.
 
         ---
+
+        !!! techdetails "MIDAS Technical Details"
+            |  | Links |
+            | --- | --- |
+            | Task | [task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl) |
+            | Software Source Code | [MIDAS](https://github.com/snayfach/MIDAS)
+            | Software Documentation | [MIDAS](https://github.com/snayfach/MIDAS)
+            | Original Publication(s) | [An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195) |
+
 <!-- endif -->
 <!-- if: theiacov -->
 {{ include_md("common_text/kraken2_task.md", condition="theiacov", indent=4, replacements={"??? task": "??? toggle"}) }}
