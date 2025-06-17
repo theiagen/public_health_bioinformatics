@@ -56,7 +56,8 @@ workflow theiaviral_illumina_pe {
   call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
     input:
       taxon = taxon,
-      rank = read_extraction_rank
+      rank = read_extraction_rank,
+      use_ncbi_virus = true
   }
   # read QC, classification, extraction, and trimming
   call read_qc.read_QC_trim_pe as read_QC_trim {
@@ -100,7 +101,7 @@ workflow theiaviral_illumina_pe {
           read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
           read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
           samplename = samplename,
-          genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+          genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
       }
     }
   } 

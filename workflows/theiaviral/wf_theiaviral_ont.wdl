@@ -152,7 +152,7 @@ workflow theiaviral_ont {
         input:
           read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
           workflow_series = "theiaviral",
-          expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length]),
+          expected_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length]),
           skip_mash = true
       }
     }
