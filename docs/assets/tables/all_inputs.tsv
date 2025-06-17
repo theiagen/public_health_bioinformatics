@@ -2042,7 +2042,7 @@ theiaviral_illumina_pe	host	String	Host taxon/accession to dehost reads, if prov
 host_decontaminate	host	String	Host taxon/accession to dehost reads, if provided		Required	Host_Decontaminate
 host_decontaminate	complete_only	Boolean	Only download genomes labeled "complete"	FALSE	Optional	Host_Decontaminate, TheiaViral_ONT
 host_decontaminate	is_accession	Boolean	Inputted "host" is an accession	FALSE	Optional	Host_Decontaminate, TheiaViral_ONT
-host_decontaminate	minimap2_mem	Int	Memory allocated for minimap2 (in GB)	32	Optional	Host_Decontaminate, TheiaViral_ONT
+host_decontaminate	minimap2_memory	Int	Memory allocated for minimap2 (in GB)	32	Optional	Host_Decontaminate, TheiaViral_ONT
 host_decontaminate	read1	File	Read 1 in FASTQ file format (compression optional)		Required	Host_Decontaminate
 host_decontaminate	read2	File	Paired-end read 2 in FASTQ file format (compression optional)		Optional	Host_Decontaminate
 host_decontaminate	read2	File	Internal componenet, do not modify		Optional	TheiaViral_ONT
