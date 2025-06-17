@@ -146,54 +146,13 @@ workflow theiaviral_ont {
         expected_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length]),
         skip_mash = true
     }
-    # check for minimum number of reads, basepairs, coverage, etc
-    if (! skip_screen) {
-      call screen_task.check_reads_se as clean_check_reads {
-        input:
-          read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-          workflow_series = "theiaviral",
-          expected_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length]),
-          skip_mash = true
-      }
-    }
-    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-      # run de novo if no reference genome is provided so we can select a reference
-      if (! defined(reference_fasta)) {
-        if (call_raven) {
-          # de novo assembly with raven
-          call raven_task.raven {
-            input:
-              read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-              samplename = samplename
-          }
-        }
-        if (select_first([raven.raven_status, "FAIL"]) == "FAIL") {
-          call flye_task.flye {
-            input:
-              read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-              samplename = samplename,
-              uneven_coverage_mode = true
-          }
-        }
-        # fail gracefully if both assemblies fail
-        if (select_first([flye.flye_status, raven.raven_status, "FAIL"]) == "PASS") {
-          # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
-          call checkv_task.checkv as checkv_denovo {
-            input:
-              assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
-              samplename = samplename
-          }
-          # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
-          call quast_task.quast as quast_denovo {
-            input:
-              assembly = select_first([flye.assembly_fasta, raven.assembly_fasta]),
-              samplename = samplename
-          }
-        }
-      }
-      if (defined(reference_fasta) || select_first([flye.flye_status, raven.raven_status, "FAIL"]) == "PASS") {
-        # ANI-based reference genome selection
-        call skani_task.skani as skani {
+  }
+  if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+    # run de novo if no reference genome is provided so we can select a reference
+    if (! defined(reference_fasta)) {
+      if (call_raven) {
+        # de novo assembly with raven
+        call raven_task.raven {
           input:
             ncbi_accession = skani.skani_top_accession,
             use_ncbi_virus = skani.skani_virus_download
@@ -255,14 +214,13 @@ workflow theiaviral_ont {
             bamfile = parse_mapping.bam,
             samplename = samplename
         }
-        # if skani cannot identify a reference genome, fail gracefully
-        if (skani.skani_status == "PASS") {
-          # download the best reference determined from skani
-          call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
-            input:
-              ncbi_accession = skani.skani_top_accession,
-              use_ncbi_virus = skani.skani_virus_download
-          }
+      }
+      if (select_first([raven.raven_status, "FAIL"]) == "FAIL") {
+        call flye_task.flye {
+          input:
+            read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
+            samplename = samplename,
+            uneven_coverage_mode = true
         }
         # variant calling with Clair3
         call clair3_task.clair3_variants as clair3 {
@@ -333,11 +291,11 @@ workflow theiaviral_ont {
     # ncbi datasets - taxon identification
     File ncbi_identify_taxon_summary_tsv = ncbi_identify.taxon_summary_tsv
     File ncbi_identify_genome_summary_tsv = ncbi_identify.genome_summary_tsv
-    String? ncbi_identify_taxon_id = ncbi_identify.taxon_id
-    String? ncbi_identify_taxon_name = ncbi_identify.taxon_name
-    String? ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
+    String ncbi_identify_taxon_id = ncbi_identify.taxon_id
+    String ncbi_identify_taxon_name = ncbi_identify.taxon_name
+    String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
     Int ncbi_identify_avg_genome_length = ncbi_identify.avg_genome_length
-    String? ncbi_identify_accession = ncbi_identify.ncbi_datasets_accession
+    String ncbi_identify_accession = ncbi_identify.ncbi_datasets_accession
     String ncbi_identify_version = ncbi_identify.ncbi_datasets_version
     String ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker
     # host decontamination outputs
