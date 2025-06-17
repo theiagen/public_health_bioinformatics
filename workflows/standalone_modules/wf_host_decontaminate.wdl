@@ -34,53 +34,58 @@ workflow host_decontaminate {
         summary_limit = 1,
         use_ncbi_virus = false
     }
+    if (ncbi_identify.ncbi_datasets_accession == "N/A") {
+      String ncbi_identify_status = "FAIL"
+    }
   }
-  call ncbi_datasets.ncbi_datasets_download_genome_accession as download_accession {
-    input:
-      ncbi_accession = select_first([ncbi_identify.ncbi_datasets_accession, host]),
-      use_ncbi_virus = false
-  }
-  if (download_accession.ncbi_datasets_status == "PASS") {
-    if (defined(read2)) {
-      call minimap2_task.minimap2 as minimap2_pe {
-        input:
-          samplename = hostsample,
-          query1 = read1,
-          query2 = read2,
-          reference = select_first([download_accession.ncbi_datasets_assembly_fasta]),
-          mode = "sr",
-          output_sam = true,
-          long_read_flags = false,
-          memory = minimap2_memory
+  if (is_accession || select_first([ncbi_identify.ncbi_datasets_accession, "N/A"]) != "N/A") {
+    call ncbi_datasets.ncbi_datasets_download_genome_accession as download_accession {
+      input:
+        ncbi_accession = select_first([ncbi_identify.ncbi_datasets_accession, host]),
+        use_ncbi_virus = false
+    }
+    if (download_accession.ncbi_datasets_status == "PASS") {
+      if (defined(read2)) {
+        call minimap2_task.minimap2 as minimap2_pe {
+          input:
+            samplename = hostsample,
+            query1 = read1,
+            query2 = read2,
+            reference = select_first([download_accession.ncbi_datasets_assembly_fasta]),
+            mode = "sr",
+            output_sam = true,
+            long_read_flags = false,
+            memory = minimap2_memory
+        }
       }
-    }
-    if (! defined(read2)) {
-      call minimap2_task.minimap2 as minimap2_ont {
-        input:
-          samplename = hostsample,
-          query1 = read1,
-          reference = select_first([download_accession.ncbi_datasets_assembly_fasta]),
-          mode = "map-ont",
-          output_sam = true,
-          long_read_flags = true,
-          memory = minimap2_memory
+      if (! defined(read2)) {
+        call minimap2_task.minimap2 as minimap2_ont {
+          input:
+            samplename = hostsample,
+            query1 = read1,
+            reference = select_first([download_accession.ncbi_datasets_assembly_fasta]),
+            mode = "map-ont",
+            output_sam = true,
+            long_read_flags = true,
+            memory = minimap2_memory
+        }
       }
-    }
-    call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
-      input:
-        sam = select_first([minimap2_pe.minimap2_out, minimap2_ont.minimap2_out]),
-        samplename = hostsample
-    }
-    call parse_mapping_task.bam_to_unaligned_fastq {
-      input:
-        bam = parse_mapping.bam,
-        samplename = hostsample,
-        paired = defined(read2)
-    }
-    call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
-      input:
-        bamfile = parse_mapping.bam,
-        samplename = hostsample
+      call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
+        input:
+          sam = select_first([minimap2_pe.minimap2_out, minimap2_ont.minimap2_out]),
+          samplename = hostsample
+      }
+      call parse_mapping_task.bam_to_unaligned_fastq {
+        input:
+          bam = parse_mapping.bam,
+          samplename = hostsample,
+          paired = defined(read2)
+      }
+      call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
+        input:
+          bamfile = parse_mapping.bam,
+          samplename = hostsample
+      }
     }
   }
   output {
@@ -91,8 +96,8 @@ workflow host_decontaminate {
     File? host_genome_fasta = download_accession.ncbi_datasets_assembly_fasta
     File? host_genome_data_report_json = download_accession.ncbi_datasets_assembly_data_report_json
     String host_genome_accession = select_first([ncbi_identify.ncbi_datasets_accession, host])
-    String ncbi_datasets_status = download_accession.ncbi_datasets_status
-    String ncbi_datasets_version = download_accession.ncbi_datasets_version
+    String ncbi_datasets_status = select_first([ncbi_identify_status, download_accession.ncbi_datasets_status])
+    String ncbi_datasets_version = select_first([download_accession.ncbi_datasets_version, ncbi_identify.ncbi_datasets_version])
     # Read mapping outputs
     File? host_mapped_sorted_bam = parse_mapping.bam
     File? host_mapped_sorted_bai = parse_mapping.bai
