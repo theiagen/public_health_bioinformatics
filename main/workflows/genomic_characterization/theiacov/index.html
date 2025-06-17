@@ -5739,6 +5739,7 @@
 <li><strong>Influenza</strong> (<strong><code>"flu"</code></strong>, <code>"influenza"</code>, <code>"Flu"</code>, <code>"Influenza"</code>)</li>
 <li><strong>RSV-A</strong> (<strong><code>"rsv_a"</code></strong>, <code>"rsv-a"</code>, <code>"RSV-A"</code>, <code>"RSV_A"</code>)</li>
 <li><strong>RSV-B</strong> (<strong><code>"rsv_b"</code></strong>, <code>"rsv-b"</code>, <code>"RSV-B"</code>, <code>"RSV_B"</code>)</li>
+<li><strong>Measles</strong> (<strong><code>"measles"</code></strong>, <code>"Measles"</code>, <code>"mev"</code>, <code>"MeV"</code>, <code>"Morbillivirus"</code>, <code>"morbillivirus"</code>)</li>
 </ul>
 <p>The compatibility of each workflow with each pathogen is shown below:</p>
 <table>
@@ -5752,11 +5753,13 @@
 <th>Influenza</th>
 <th>RSV-A</th>
 <th>RSV-B</th>
+<th>Measles</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Illumina_PE</td>
+<td>✅</td>
 <td>✅</td>
 <td>✅</td>
 <td>✅</td>
@@ -5774,10 +5777,12 @@
 <td>❌</td>
 <td>✅</td>
 <td>✅</td>
+<td>❌</td>
 </tr>
 <tr>
 <td>ClearLabs</td>
 <td>✅</td>
+<td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
@@ -5794,12 +5799,14 @@
 <td>✅</td>
 <td>✅</td>
 <td>✅</td>
+<td>❌</td>
 </tr>
 <tr>
 <td>FASTA</td>
 <td>✅</td>
 <td>✅</td>
 <td>❌</td>
+<td>✅</td>
 <td>✅</td>
 <td>✅</td>
 <td>✅</td>
@@ -5862,7 +5869,7 @@
 <td>Illumina forward read file in FASTQ file format (compression optional)</td>
 <td></td>
 <td>Required</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>theiacov_illumina_pe</td>
@@ -5871,7 +5878,7 @@
 <td>Illumina reverse read file in FASTQ file format (compression optional)</td>
 <td></td>
 <td>Required</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>workflow name</td>
@@ -5880,7 +5887,7 @@
 <td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>clean_check_reads</td>
@@ -5889,7 +5896,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>clean_check_reads</td>
@@ -5898,7 +5905,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>clean_check_reads</td>
@@ -5907,7 +5914,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>clean_check_reads</td>
@@ -5916,7 +5923,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -5925,7 +5932,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>1</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -5934,7 +5941,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -5943,7 +5950,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -5952,7 +5959,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>flu_track</td>
@@ -6411,7 +6418,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>6</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6420,7 +6427,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6429,7 +6436,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6438,7 +6445,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6447,7 +6454,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6456,7 +6463,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6465,7 +6472,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6474,7 +6481,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6483,7 +6490,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6492,7 +6499,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6501,7 +6508,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6510,7 +6517,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6519,7 +6526,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6528,7 +6535,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6537,7 +6544,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6546,7 +6553,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6555,7 +6562,7 @@
 <td>True/False variable that determines if regions with depth less than minimum depth should not be added to the consensus sequence</td>
 <td>FALSE</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6564,7 +6571,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6573,7 +6580,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6582,7 +6589,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6591,7 +6598,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6600,7 +6607,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6609,7 +6616,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6618,7 +6625,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -6627,7 +6634,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_output_parser</td>
@@ -6636,7 +6643,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_output_parser</td>
@@ -6645,7 +6652,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_output_parser</td>
@@ -6654,7 +6661,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_output_parser</td>
@@ -6663,7 +6670,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -6672,7 +6679,7 @@
 <td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -6681,7 +6688,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -6690,7 +6697,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -6699,7 +6706,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -6708,7 +6715,7 @@
 <td>A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -6717,7 +6724,7 @@
 <td>A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -6726,7 +6733,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -6735,7 +6742,7 @@
 <td>General dataset configuration file. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -6744,7 +6751,7 @@
 <td>other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)</td>
 <td>warn</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -6753,7 +6760,7 @@
 <td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -7086,7 +7093,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -7095,7 +7102,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -7104,7 +7111,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -7113,7 +7120,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -7122,7 +7129,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -7131,7 +7138,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -7140,7 +7147,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -7149,7 +7156,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -7158,7 +7165,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -7167,7 +7174,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -7176,7 +7183,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -7185,7 +7192,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>quasitools_illumina_pe</td>
@@ -7230,7 +7237,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>raw_check_reads</td>
@@ -7239,7 +7246,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>raw_check_reads</td>
@@ -7248,7 +7255,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>raw_check_reads</td>
@@ -7257,7 +7264,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -7266,7 +7273,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -7275,7 +7282,7 @@
 <td>True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the <code>kraken_db</code> variable must be provided.</td>
 <td>FALSE</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -7293,7 +7300,7 @@
 <td>Additional arguments to use with fastp</td>
 <td>--detect_adapter_for_pe -g -5 20 -3 20</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -7302,7 +7309,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -7311,7 +7318,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -7735,7 +7742,7 @@
 <td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>clean_check_reads</td>
@@ -7744,7 +7751,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>clean_check_reads</td>
@@ -7753,7 +7760,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>clean_check_reads</td>
@@ -7762,7 +7769,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>clean_check_reads</td>
@@ -7771,7 +7778,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -7780,7 +7787,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>1</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -7789,7 +7796,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -7798,7 +7805,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -7807,7 +7814,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -7816,7 +7823,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>flu_track</td>
@@ -7933,7 +7940,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>6</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -7942,7 +7949,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -7951,7 +7958,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -7960,7 +7967,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -7969,7 +7976,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -7978,7 +7985,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -7987,7 +7994,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -7996,7 +8003,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8005,7 +8012,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8014,7 +8021,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8023,7 +8030,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8032,7 +8039,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8041,7 +8048,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8050,7 +8057,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8059,7 +8066,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8068,7 +8075,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8077,7 +8084,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8086,7 +8093,7 @@
 <td>True/False variable that determines if regions with depth less than minimum depth should not be added to the consensus sequence</td>
 <td>FALSE</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8095,7 +8102,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8104,7 +8111,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8113,7 +8120,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8122,7 +8129,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8131,7 +8138,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8140,7 +8147,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8149,7 +8156,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>ivar_consensus</td>
@@ -8158,7 +8165,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -8167,7 +8174,7 @@
 <td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -8176,7 +8183,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -8185,7 +8192,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -8194,7 +8201,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -8203,7 +8210,7 @@
 <td>A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -8212,7 +8219,7 @@
 <td>A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -8221,7 +8228,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -8230,7 +8237,7 @@
 <td>General dataset configuration file. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -8239,7 +8246,7 @@
 <td>other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)</td>
 <td>warn</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -8248,7 +8255,7 @@
 <td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -8284,7 +8291,7 @@
 <td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
 <td>Default provided for mpox (Monkeypox virus), WNV (West Nile virus), and HIV (Human immunodeficiency virus 1)</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -8626,7 +8633,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -8635,7 +8642,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -8644,7 +8651,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -8653,7 +8660,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -8662,7 +8669,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -8671,7 +8678,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -8680,7 +8687,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -8689,7 +8696,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -8698,7 +8705,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -8707,7 +8714,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -8716,7 +8723,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -8725,7 +8732,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>raw_check_reads</td>
@@ -8734,7 +8741,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>raw_check_reads</td>
@@ -8743,7 +8750,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>raw_check_reads</td>
@@ -8752,7 +8759,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>raw_check_reads</td>
@@ -8761,7 +8768,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -8770,7 +8777,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -8779,7 +8786,7 @@
 <td>True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the <code>kraken_db</code> variable must be provided.</td>
 <td>FALSE</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -8806,7 +8813,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -8815,7 +8822,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -9230,7 +9237,7 @@
 <td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>clean_check_reads</td>
@@ -9239,7 +9246,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>clean_check_reads</td>
@@ -9248,7 +9255,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>clean_check_reads</td>
@@ -9257,7 +9264,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>clean_check_reads</td>
@@ -9266,7 +9273,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus</td>
@@ -9320,7 +9327,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>1</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -9329,7 +9336,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -9338,7 +9345,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -9347,7 +9354,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>flu_track</td>
@@ -9869,7 +9876,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_output_parser</td>
@@ -9878,7 +9885,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_output_parser</td>
@@ -9887,7 +9894,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_output_parser</td>
@@ -9896,7 +9903,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -9905,7 +9912,7 @@
 <td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -9914,7 +9921,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -9923,7 +9930,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -9932,7 +9939,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -9941,7 +9948,7 @@
 <td>A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -9950,7 +9957,7 @@
 <td>A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -9959,7 +9966,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -9968,7 +9975,7 @@
 <td>General dataset configuration file. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -9977,7 +9984,7 @@
 <td>other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)</td>
 <td>warn</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -9986,7 +9993,7 @@
 <td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -10022,7 +10029,7 @@
 <td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
 <td>Default provided for mpox (Monkeypox virus), WNV (West Nile virus), and HIV (Human immunodeficiency virus 1)</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -10373,7 +10380,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -10382,7 +10389,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -10391,7 +10398,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -10400,7 +10407,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -10409,7 +10416,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -10418,7 +10425,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -10427,7 +10434,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -10436,7 +10443,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -10445,7 +10452,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -10454,7 +10461,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -10463,7 +10470,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -10472,7 +10479,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>quasitools_ont</td>
@@ -10526,7 +10533,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>raw_check_reads</td>
@@ -10535,7 +10542,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>raw_check_reads</td>
@@ -10544,7 +10551,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>raw_check_reads</td>
@@ -10553,7 +10560,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -10598,7 +10605,7 @@
 <td>True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the <code>kraken_db</code> variable must be provided.</td>
 <td>FALSE</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -10652,7 +10659,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -10661,7 +10668,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -10670,7 +10677,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -11274,7 +11281,7 @@
 <td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>workflow name</td>
@@ -11301,7 +11308,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>1</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -11310,7 +11317,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -11319,7 +11326,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -11328,7 +11335,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>flu_track</td>
@@ -11481,7 +11488,7 @@
 <td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -11490,7 +11497,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -11499,7 +11506,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -11508,7 +11515,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -11517,7 +11524,7 @@
 <td>A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -11526,7 +11533,7 @@
 <td>A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -11535,7 +11542,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -11544,7 +11551,7 @@
 <td>General dataset configuration file. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -11553,7 +11560,7 @@
 <td>other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)</td>
 <td>warn</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -11562,7 +11569,7 @@
 <td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -11589,7 +11596,7 @@
 <td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
 <td>Default provided for mpox (Monkeypox virus), WNV (West Nile virus), and HIV (Human immunodeficiency virus 1)</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -11976,7 +11983,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -11985,7 +11992,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -11994,7 +12001,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -12003,7 +12010,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -12012,7 +12019,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -12021,7 +12028,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -12030,7 +12037,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -12039,7 +12046,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -12048,7 +12055,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -12057,7 +12064,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -12066,7 +12073,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -12075,7 +12082,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>vadr</td>
@@ -12274,7 +12281,7 @@
 <td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus</td>
@@ -12319,7 +12326,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>1</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -12328,7 +12335,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -12337,7 +12344,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -12346,7 +12353,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -12355,7 +12362,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>fastq_scan_clean_reads</td>
@@ -12697,7 +12704,7 @@
 <td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -12706,7 +12713,7 @@
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -12715,7 +12722,7 @@
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -12724,7 +12731,7 @@
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -12733,7 +12740,7 @@
 <td>A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -12742,7 +12749,7 @@
 <td>A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -12751,7 +12758,7 @@
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -12760,7 +12767,7 @@
 <td>General dataset configuration file. See here for more info: https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html</td>
 <td>Inherited from nextclade dataset</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -12769,7 +12776,7 @@
 <td>other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)</td>
 <td>warn</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -12778,7 +12785,7 @@
 <td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -13201,7 +13208,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -13210,7 +13217,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -13219,7 +13226,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -13228,7 +13235,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -13237,7 +13244,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -13246,7 +13253,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -13255,7 +13262,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -13264,7 +13271,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -13273,7 +13280,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -13282,7 +13289,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -13291,7 +13298,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -13300,7 +13307,7 @@
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>stats_n_coverage</td>
@@ -14655,6 +14662,42 @@
 </tbody>
 </table>
 </div>
+</details>
+<details class="toggle">
+<summary>Measles Defaults</summary>
+<div class="searchable-table" markdown="block">
+<table>
+<thead>
+<tr>
+<th><strong>Overwrite Variable Name</strong></th>
+<th><strong>Organism</strong></th>
+<th><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>kraken_target_organism_input</td>
+<td>measles</td>
+<td><code>"Measles morbillivirus"</code></td>
+</tr>
+<tr>
+<td>genome_length_input</td>
+<td>measles</td>
+<td><code>16000</code></td>
+</tr>
+<tr>
+<td>nextclade_dataset_name_input</td>
+<td>measles</td>
+<td><code>"nextstrain/measles/N450/WHO-2012"</code></td>
+</tr>
+<tr>
+<td>nextclade_dataset_tag_input</td>
+<td>measles</td>
+<td><code>"2025-03-26--11-47-13Z"</code></td>
+</tr>
+</tbody>
+</table>
+<p></div>                </p>
 </details>
 </div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
@@ -18561,7 +18604,7 @@ The list of amino-acid substitutions associated with antiviral resistance includ
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 10, 2025 22:36:42 UTC">2025-06-10</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 17, 2025 15:58:00 UTC">2025-06-17</span>
   </span>
 
     
