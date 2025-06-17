@@ -271,13 +271,13 @@ workflow theiaviral_ont {
     # ncbi datasets - taxon identification
     File ncbi_identify_taxon_summary_tsv = ncbi_identify.taxon_summary_tsv
     File ncbi_identify_genome_summary_tsv = ncbi_identify.genome_summary_tsv
-    String? ncbi_identify_taxon_id = ncbi_identify.taxon_id
-    String? ncbi_identify_taxon_name = ncbi_identify.taxon_name
-    String? ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
+    String ncbi_identify_taxon_id = ncbi_identify.taxon_id
+    String ncbi_identify_taxon_name = ncbi_identify.taxon_name
+    String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
     Int ncbi_identify_avg_genome_length = ncbi_identify.avg_genome_length
     String ncbi_identify_accession = ncbi_identify.ncbi_datasets_accession
-    String? ncbi_identify_version = ncbi_identify.ncbi_datasets_version
-    String? ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker
+    String ncbi_identify_version = ncbi_identify.ncbi_datasets_version
+    String ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker
     # host decontamination outputs
     File? dehost_wf_dehost_read1 = host_decontaminate.dehost_read1
     String? dehost_wf_host_accession = host_decontaminate.host_genome_accession
@@ -293,25 +293,25 @@ workflow theiaviral_ont {
     Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.host_percent_mapped_reads
     File? dehost_wf_host_mapping_metrics = host_decontaminate.host_mapping_metrics
     # raw read quality control
-    File? nanoplot_html_raw = nanoplot_raw.nanoplot_html
-    File? nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
-    Int? nanoplot_num_reads_raw1 = nanoplot_raw.num_reads
-    Float? nanoplot_r1_median_readlength_raw = nanoplot_raw.median_readlength
-    Float? nanoplot_r1_mean_readlength_raw = nanoplot_raw.mean_readlength
-    Float? nanoplot_r1_stdev_readlength_raw = nanoplot_raw.stdev_readlength
-    Float? nanoplot_r1_n50_raw = nanoplot_raw.n50
-    Float? nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
-    Float? nanoplot_r1_median_q_raw = nanoplot_raw.median_q
+    File nanoplot_html_raw = nanoplot_raw.nanoplot_html
+    File nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
+    Int nanoplot_num_reads_raw1 = nanoplot_raw.num_reads
+    Float nanoplot_r1_median_readlength_raw = nanoplot_raw.median_readlength
+    Float nanoplot_r1_mean_readlength_raw = nanoplot_raw.mean_readlength
+    Float nanoplot_r1_stdev_readlength_raw = nanoplot_raw.stdev_readlength
+    Float nanoplot_r1_n50_raw = nanoplot_raw.n50
+    Float nanoplot_r1_mean_q_raw = nanoplot_raw.mean_q
+    Float nanoplot_r1_median_q_raw = nanoplot_raw.median_q
     # porechop outputs - adapter trimming
     File? porechop_trimmed_read1 = porechop.trimmed_reads
     String? porechop_version = porechop.porechop_version
     # nanoq outputs - read filtering
-    File? nanoq_filtered_read1 = nanoq.filtered_read1
-    String? nanoq_version = nanoq.version
+    File nanoq_filtered_read1 = nanoq.filtered_read1
+    String nanoq_version = nanoq.version
     # scrubbed reads
-    File? ncbi_scrub_read1_dehosted = ncbi_scrub_se.read1_dehosted
-    Int? ncbi_scrub_human_spots_removed = ncbi_scrub_se.human_spots_removed
-    String? ncbi_scrub_docker = ncbi_scrub_se.ncbi_scrub_docker
+    File ncbi_scrub_read1_dehosted = ncbi_scrub_se.read1_dehosted
+    Int ncbi_scrub_human_spots_removed = ncbi_scrub_se.human_spots_removed
+    String ncbi_scrub_docker = ncbi_scrub_se.ncbi_scrub_docker
     # metabuli outputs - taxonomic classification and read extraction
     File? metabuli_report = metabuli.metabuli_report
     File? metabuli_classified = metabuli.metabuli_classified
