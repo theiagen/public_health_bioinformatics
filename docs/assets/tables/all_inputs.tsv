@@ -1172,13 +1172,6 @@ download_accession	include_gbff	Boolean	Set to true if you would like the GenBan
 download_accession	include_gff3	Boolean	Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations	FALSE	Optional	Host_Decontaminate
 download_accession	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate
 download_accession	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	FALSE	Optional	Host_Decontaminate
-download_taxon	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Decontaminate
-download_taxon	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate
-download_taxon	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2	Optional	Host_Decontaminate	
-download_taxon	include_gbff	Boolean	Set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations.	FALSE	Optional	Host_Decontaminate	
-download_taxon	include_gff3	Boolean	Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations	FALSE	Optional	Host_Decontaminate
-download_taxon	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate
-download_taxon	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	FALSE	Optional	Host_Decontaminate
 ncbi_scrub_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	NCBI_Scrub_PE
 ncbi_scrub_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	NCBI_Scrub_PE
 ncbi_scrub_pe	docker	Int	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1	Optional	NCBI_Scrub_PE

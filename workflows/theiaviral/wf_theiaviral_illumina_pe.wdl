@@ -191,7 +191,7 @@ workflow theiaviral_illumina_pe {
               samplename = samplename
           }
           # run morgana magic for classification
-          if (defined(ncbi_datasets.ncbi_datasets_status)) {
+          if (ncbi_datasets.ncbi_datasets_status == "PASS") {
             call morgana_magic_wf.morgana_magic {
               input:
                 samplename = samplename,
@@ -217,6 +217,7 @@ workflow theiaviral_illumina_pe {
     String ncbi_identify_taxon_name = ncbi_identify.taxon_name
     String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
     Int ncbi_identify_avg_genome_length = ncbi_identify.avg_genome_length
+    String ncbi_identify_accession = ncbi_identify.ncbi_datasets_accession
     String ncbi_datasets_version = ncbi_identify.ncbi_datasets_version
     String ncbi_datasets_docker = ncbi_identify.ncbi_datasets_docker    
     # raw read quality control

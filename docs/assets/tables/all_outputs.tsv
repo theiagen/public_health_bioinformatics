@@ -1086,6 +1086,7 @@ ncbi_identify_read_extraction_rank	String	Taxonomic rank used for read extractio
 ncbi_identify_taxon_id	String	NCBI taxonomy ID of identified organism	TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_identify_taxon_name	String	Name of identified taxon	TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_identify_avg_genome_length	Int	Average genome length from NCBI taxon summary	TheiaViral_Illumina_PE, TheiaViral_ONT
+ncbi_identify_accession	String	NCBI accession ID of identified taxon	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo_docker	String	Docker image used for QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo_gc_percent	Float	GC percentage of de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo_genome_length	Int	Genome length of de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
