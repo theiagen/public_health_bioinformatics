@@ -8,9 +8,11 @@ The PHB repository contains workflows for the characterization, genomic epidemio
 
 All workflows in the PHB repository end with `_PHB` in order to differentiate them from earlier versions and from the original tools they incorporate.
 
-<center>[Explore our workflows](workflows_overview/workflows_type.md){ .md-button .md-button--primary }</center>
+/// html | div[style="text-align: center"]
+[Explore our workflows](workflows_overview/workflows_type.md){ .md-button .md-button--primary }
+///
 
-<div class="grid cards " markdown>
+/// html | div[class="grid cards" markdown]
 
 -   <center>[Terra Users](getting_started/terra.md){ .md-button .md-button--secondary }
 
@@ -18,7 +20,7 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
     Learn how to use our workflows on Terra!</center>
 
--   <center>[v3.0.0 Release Notes](https://theiagen.notion.site/public-health-bioinformatics-v3-0-0-major-release-notes){ .md-button .md-button--secondary }
+-   <center>[v3.0.1 Release Notes](https://theiagen.notion.site/public-health-bioinformatics-v3-0-1-patch-release-notes){ .md-button .md-button--secondary }
 
     ---
 
@@ -30,7 +32,7 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
     Learn how to use our workflows on the command-line!</center>
 
-</div>
+///
 
 !!! dna "Our Open Source Philosophy"
     PHB source code is publicly available on [GitHub](https://github.com/theiagen/public_health_bioinformatics) and available under [GNU Affero General Public License v3.0](https://github.com/theiagen/public_health_bioinformatics/blob/main/LICENSE)!
@@ -42,10 +44,16 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 When undertaking genomic analysis using the command-line, via Terra, or other data visualization platforms, it is essential to consider the necessary and appropriate workflows and resources for your analysis. To help you make these choices, take a look at the relationship between the most commonly used Theiagen workflows.
 
 !!! caption "Analysis Approaches for Genomic Data"
-    ![The relationship between the various PHB workflows](assets/figures/Workflow_Relationships.png#only-light){data-description="This diagram shows the Theiagen workflows (green boxes) available for analysis of genomic data in public health and the workflows that may be used consecutively (arrows). The blue boxes describe the major functions that these workflows undertake. The yellow boxes show functions that may be undertaken independently of workflows on Terra."}
-    ![The relationship between the various PHB workflows](assets/figures/Workflow_Relationships_dark.png#only-dark){data-description="This diagram shows the Theiagen workflows (green boxes) available for analysis of genomic data in public health and the workflows that may be used consecutively (arrows). The blue boxes describe the major functions that these workflows undertake. The yellow boxes show functions that may be undertaken independently of workflows on Terra."}
 
-    This diagram shows the Theiagen workflows (green boxes) available for analysis of genomic data in public health and the workflows that may be used consecutively (arrows). The blue boxes describe the major functions that these workflows undertake. The yellow boxes show functions that may be undertaken independently of workflows on Terra.
+    === "General Workflow Relationships"
+        ![The relationship between the various PHB workflows](assets/figures/WorkflowRelationships_2025-06-06.png){data-description="This diagram shows the available workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped into boxes that represent the major types of analysis that they perform. The arrows between the boxes represent the relationships between the workflows, showing which workflows may be used consecutively, while the large arrow underlying everything indicates the general process of analysis."}
+
+        This diagram shows the available workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped into boxes that represent the major types of analysis that they perform. The arrows between the boxes represent the relationships between the workflows, showing which workflows may be used consecutively, while the large arrow underlying everything indicates the general process of analysis.
+
+    === "Available Standalone Workflows"
+        ![All available standalone workflows can be used to supplement the major workflows](assets/figures/WorkflowRelationships_Standalone_2025-06-06.png){data-description="This diagram shows the available standalone workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped by colors that represent the major types of analysis that they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives."}
+
+        This diagram shows the available _standalone_ workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped by colors that represent the major types of analysis that they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives.
 
 ### PHB development is a cycle
 
@@ -72,7 +80,6 @@ You can expect a careful review of every PR and feedback as needed before mergin
 - **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
 - **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
 - **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
-- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage)) - Project Administration, Software, Supervision
 - **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
 - **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
@@ -87,6 +94,7 @@ We would like to gratefully acknowledge the following individuals from the publi
 - **James Otieno** ([@jrotieno](https://github.com/jrotieno))*
 - **Robert Petit** ([@rpetit3](https://github.com/rpetit3))*
 - **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe))*
+- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage))*
 - **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty))*
 - **Nate Matteson** ([@watronfire](https://github.com/watronfire))
 - **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))

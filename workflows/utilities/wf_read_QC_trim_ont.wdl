@@ -46,6 +46,12 @@ workflow read_QC_trim_ont {
     Int? kraken_disk_size
     String? kraken_docker_image
     Int? kraken_memory
+
+    # parse classified reads inputs
+    Int? kraken2_recalculate_abundances_cpu
+    Int? kraken2_recalculate_abundances_disk_size
+    String? kraken2_recalculate_abundances_docker
+    Int? kraken2_recalculate_abundances_memory
   
     # rasusa downsampling inputs
     Float downsampling_coverage = 150
@@ -106,7 +112,11 @@ workflow read_QC_trim_ont {
         samplename = samplename,
         kraken2_report = kraken2_raw.kraken_report,
         kraken2_classified_report = kraken2_raw.kraken2_classified_report,
-        target_organism = target_organism
+        target_organism = target_organism,
+        disk_size = kraken2_recalculate_abundances_disk_size,
+        memory = kraken2_recalculate_abundances_memory,
+        cpu = kraken2_recalculate_abundances_cpu,
+        docker = kraken2_recalculate_abundances_docker
     }  
     call kraken2.kraken2_theiacov as kraken2_dehosted {
       input:
@@ -124,30 +134,14 @@ workflow read_QC_trim_ont {
         samplename = samplename,
         kraken2_report = kraken2_dehosted.kraken_report,
         kraken2_classified_report = kraken2_dehosted.kraken2_classified_report,
-        target_organism = target_organism
+        target_organism = target_organism,
+        disk_size = kraken2_recalculate_abundances_disk_size,
+        memory = kraken2_recalculate_abundances_memory,
+        cpu = kraken2_recalculate_abundances_cpu,
+        docker = kraken2_recalculate_abundances_docker
     } 
   }
-  if ("~{workflow_series}" == "theiaprok") {
-    if ((call_kraken) && defined(kraken_db)) {
-      call kraken2.kraken2_standalone as kraken2_se {
-        input:
-          samplename = samplename,
-          read1 = read1,
-          kraken2_db = select_first([kraken_db]),
-          disk_size = kraken_disk_size,
-          memory = kraken_memory,
-          cpu = kraken_cpu,
-          docker = kraken_docker_image
-      }
-      call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
-        input:
-          samplename = samplename,
-          kraken2_report = kraken2_se.kraken2_report,
-          kraken2_classified_report = kraken2_se.kraken2_classified_report
-      }
-    } if ((call_kraken) && ! defined(kraken_db)) {
-      String kraken_db_warning = "Kraken database not defined"
-    }
+  if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk") {
     # rasusa for random downsampling
     call rasusa_task.rasusa {
       input:
@@ -163,9 +157,8 @@ workflow read_QC_trim_ont {
         memory = rasusa_memory,
         num = rasusa_number_of_reads,
         seed = rasusa_seed
-
     }
-    # nanoq/filtlong (default min length 500)
+    # nanoq for filtering
     call nanoq_task.nanoq {
       input:
         read1 = rasusa.read1_subsampled,
@@ -177,7 +170,29 @@ workflow read_QC_trim_ont {
         min_read_length = nanoq_min_read_length,
         max_read_qual = nanoq_max_read_qual,
         min_read_qual = nanoq_min_read_qual,
-        memory = nanoq_memory        
+        memory = nanoq_memory 
+    }
+    if ("~{workflow_series}" == "theiaprok") {
+      if (call_kraken && defined(kraken_db)) {
+        call kraken2.kraken2_standalone as kraken2_se {
+          input:
+            samplename = samplename,
+            read1 = read1,
+            kraken2_db = select_first([kraken_db]),
+            disk_size = kraken_disk_size,
+            memory = kraken_memory,
+            cpu = kraken_cpu
+        }
+        call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
+          input:
+            samplename = samplename,
+            kraken2_report = kraken2_se.kraken2_report,
+            kraken2_classified_report = kraken2_se.kraken2_classified_report
+        } 
+      } 
+    if ((call_kraken) && ! defined(kraken_db)) {
+        String kraken_db_warning = "Kraken database not defined"
+      }
     }
   }
   output { 

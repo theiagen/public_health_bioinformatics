@@ -4,9 +4,7 @@ title: Concatenate_Column_Content
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Exporting Data From Terra](../../workflows_overview/workflows_type.md/#exporting-data-from-terra) | [Any taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.1.0 | Yes | Set-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Concatenate_Column_Content**](../workflows/data_export/concatenate_column_content.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## Concatenate_Column_Content_PHB
 
@@ -21,29 +19,19 @@ This workflow runs on the _set_ level.
 
     Please note that this workflow **cannot** produce Excel files. If you need an Excel file, you can convert the output file to Excel using a program like Microsoft Excel or Google Sheets.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| concatenate_column_content | **concatenated_file_name** | String | The name of the output file. **_Include the extension_**, such as ".fasta" or ".txt". |  | Required |
-| concatenate_column_content | **files_to_cat** | Array[File] | The column that has the files you want to concatenate. |  | Required |
-| cat_files | **cpu** | Int | Number of CPUs to allocate to the task | 2 | Optional |
-| cat_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| cat_files | **docker_image** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional |
-| cat_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 8 | Optional |
-| cat_files | **skip_extra_headers** | Boolean | If the files you are concatenating have identical headers, you can include only the first instance of the header and skip all of the others so they do not appear duplicated in the concatenated file. To activate this, set to true. | false | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0 | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) |  | Optional |
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Concatenate_Column_Content"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Outputs
 
 !!! info "Prevent Output Overwriting"
     Please note that if you run this workflow on the _same_ Terra set, the results will overwrite each other. We recommend either (1) renaming the output variable, or (2) creating a new set every time you run the workflow. Multiple sets containing the same samples can be created as long as the set names are unique.
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| concatenated_files | File | The file containing all of the items from the column you selected. |
-| concatenate_column_content_version | String | The version of the repository the workflow is hosted in |
-| concatenate_column_content_analysis_date | String | The date the workflow was run |
+/// html | div[class="searchable-table"]
+
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Concatenate_Column_Content"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///

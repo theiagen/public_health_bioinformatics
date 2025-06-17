@@ -221,7 +221,7 @@
     - path: miniwdl_run/call-nextclade_v3/task.log
       contains: ["wdl", "theiacov_clearlabs", "nextclade", "done"]
     - path: miniwdl_run/call-nextclade_v3/work/NEXTCLADE_VERSION
-      md5sum: 72e36f488d0291ef87e547a0aef4a784
+      md5sum: 0e19f9e53f57a0e65b0394fcf7fd01f4
     - path: miniwdl_run/call-nextclade_v3/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_v3/work/clearlabs.medaka.consensus.nextclade.auspice.json
@@ -234,7 +234,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/genome_annotation.gff3
       md5sum: ca7fb34cad6558bc07fcef587743b934
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
-      md5sum: ba38cbbfac4c2d962cff8e3090cd4b3f
+      md5sum: 124180fd4f44ae6b60c7902ce6446cdb
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/reference.fasta
       md5sum: c7ce05f28e4ec0322c96f24e064ef55c
     - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
@@ -305,13 +305,13 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 59478efddde2191ead1b46b1f121bbc9
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: dc16291a6b3fff215c4f86ab8debb8fd
+      md5sum: 92bfc4d3b72e6671fa3d6e28b8467047
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 89257604b335f49f2284b8c1c4ab58a3
+      md5sum: 0a07a35a46498ae522b3e1c16dab8483
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/clearlabs.pangolin_report.csv
-      md5sum: 176c3946127a4a3509df25ee93d1bf32
+      md5sum: 24776c3694ef177d4014375f113fb22b
     - path: miniwdl_run/call-stats_n_coverage/command
       md5sum: ac020678f99ac145b11d3dbc7b9fe9ba
     - path: miniwdl_run/call-stats_n_coverage/inputs.json

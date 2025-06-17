@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Standalone](../../workflows_overview/workflows_type.md/#standalone) | [Any Taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | v3.0.0 | Yes | Sample-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Dorado_Basecalling**](../workflows/standalone/dorado_basecalling.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## Dorado_Basecalling_PHB
 
@@ -121,48 +119,11 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
 
     If the number of chunks is MORE than the number of pod5 files identified, the number of chunks will be set to the number of identified pod5 files.
 
-<div class="searchable-table" markdown="1">
+/// html | div[class="searchable-table"]
 
-| **Terra Task Name** | **Variable** | **Type** | **Description** | **Default Value** | **Terra Status** |
-|---|---|---|---|---|---|
-| dorado_basecalling | **kit_name** | String | Sequencing kit name used (e.g., `SQK-RPB114-24`); see [above](#supported-kit-names) for all available options. |  | Required |
-| dorado_basecalling | **new_table_name** | String | The desired name for a newly created Terra table that will contain the basecalled FASTQ files. This value should be the name as you want the table to appear as in the sidebar on the lefthand side of the Terra Data tab. |  | Required |
-| dorado_basecalling | **output_file_prefix** | String | Prefix for naming output FASTQ files |  | Required |
-| dorado_basecalling | **pod5_bucket_path** | String | GCS path of the bucket containing POD5 files. |  | Required |
-| dorado_basecalling | **terra_project** | String | The name of your Terra project. You can find this information in the URL of the webpage of your Terra dashboard. For example, if your URL contains `#workspaces/example/my_workspace/` then your project name is `example` |  | Required |
-| dorado_basecalling | **terra_workspace** | String | The name of your Terra workspace where your samples can be found. For example, if your URL contains `#workspaces/example/my_workspace/` then your workspace name is `my_workspace` |  | Required |
-| chunk_files | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| chunk_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
-| chunk_files | **docker** | Int | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1 | Optional |
-| chunk_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| create_table_from_array | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| create_table_from_array | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
-| create_table_from_array | **docker** | Int | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21 | Optional |
-| create_table_from_array | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| dorado_basecall | **cpu** | Int | Number of CPUs to allocate to the task | 8 | Optional |
-| dorado_basecall | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| dorado_basecall | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0 | Optional |
-| dorado_basecall | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 32 | Optional |
-| dorado_basecalling | **custom_primers** | File | A FASTA file containing custom primer sequences for PCR primer trimming during demultiplexing. |  | Optional |
-| dorado_basecalling | **demux_no_trim** | Boolean | Set to `true` to disable barcode trimming during demultiplexing. | false | Optional |
-| dorado_basecalling | **dorado_model** | String | The model to use during basecalling ('sup' for super accuracy, 'hac' for high accuracy, or 'fast' for high speed). Users may also specify a full model name (see [above](#model-type-selection) for more details). | "sup" | Optional |
-| dorado_basecalling | **number_chunks** | Int | The number of chunks to split the input files into for basecalling; increasing chunk size can decrease runtime, though too high of a chunk size will be detrimental instead of beneficial due to resource allocation and quota limits | 4 | Optional |
-| dorado_demux | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| dorado_demux | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| dorado_demux | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0 | Optional |
-| dorado_demux | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| dorado_trim | **cpu** | Int | Number of CPUs to allocate to the task | 4 | Optional |
-| dorado_trim | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 100 | Optional |
-| dorado_trim | **docker** | String | The Docker container to use for the task. This is not the most up-to-date image since there is a bug with this Dorado subcommand in v0.9.0 | us-docker.pkg.dev/general-theiagen/staphb/dorado:0.8.3 | Optional |
-| dorado_trim | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 16 | Optional |
-| find_files | **cpu** | Int | Number of CPUs to allocate to the task | 1 | Optional |
-| find_files | **disk_size** | Int | Amount of storage (in GB) to allocate to the task | 25 | Optional |
-| find_files | **memory** | Int | Amount of memory/RAM (in GB) to allocate to the task | 2 | Optional |
-| find_files | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine | Optional |
-| version_capture | **docker** | String | The Docker container to use for the task | us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0 | Optional |
-| version_capture | **timezone** | String | Set the time zone to get an accurate date of analysis (uses UTC by default) | | Optional |
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Dorado_Basecalling"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
-</div>
+///
 
 ### Workflow Tasks
 
@@ -261,17 +222,11 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
 
 Please note that if you run this workflow with the `"Run workflow with inputs defined by file paths"` option selected in Terra, these outputs will not be visible in a Terra table, but can be found in the Job Manager.
 
-| **Variable** | **Type** | **Description** |
-|---|---|---|
-| **dorado_basecall_docker** | String | Docker image used in the `dorado_basecall` task |
-| **dorado_basecall_version** | String | Version of Dorado used in the `dorado_basecall` task |
-| **dorado_basecalling_analysis_date** | String | Date of Dorado analysis |
-| **dorado_basecalling_phb_version** | String | Version of PHB used for the analysis |
-| **dorado_demux_version** | String | Version of Dorado used in the `dorado_demux` task |
-| **dorado_model_used** | String | Model used for basecalling |
-| **dorado_trim_version** | String | Version of Dorado used in the `dorado_trim` task |
-| **fastq_files** | Array[File] | FASTQ files produced from basecalling and demultiplexing |
-| **terra_table_tsv** | File | TSV file used when uploading the Terra table of FASTQ files |
+/// html | div[class="searchable-table"]
+
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Dorado_Basecalling"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+
+///
 
 ## References
 
