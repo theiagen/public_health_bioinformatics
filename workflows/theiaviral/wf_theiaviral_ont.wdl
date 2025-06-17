@@ -249,7 +249,7 @@ workflow theiaviral_ont {
             samplename = samplename
         }
         # run morgana magic for classification
-        if (defined(ncbi_datasets.ncbi_datasets_status)) {
+        if (defined(ncbi_datasets.taxon_id)) {
           call morgana_magic_wf.morgana_magic {
             input:
               samplename = samplename,
@@ -282,7 +282,6 @@ workflow theiaviral_ont {
     File? dehost_wf_host_fasta = host_decontaminate.host_genome_fasta
     File? dehost_wf_host_mapped_bam = host_decontaminate.host_mapped_sorted_bam
     File? dehost_wf_host_mapped_bai = host_decontaminate.host_mapped_sorted_bai
-    String? dehost_wf_download_status = host_decontaminate.ncbi_datasets_status
     File? dehost_wf_host_mapping_stats = host_decontaminate.host_mapping_stats
     File? dehost_wf_host_mapping_cov_hist = host_decontaminate.host_mapping_cov_hist
     File? dehost_wf_host_flagstat = host_decontaminate.host_flagstat

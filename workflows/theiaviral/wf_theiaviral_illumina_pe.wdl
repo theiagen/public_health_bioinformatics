@@ -190,7 +190,7 @@ workflow theiaviral_illumina_pe {
             samplename = samplename
         }
         # run morgana magic for classification
-        if (ncbi_datasets.ncbi_datasets_status == "PASS") {
+        if (defined(ncbi_datasets.taxon_id)) {
           call morgana_magic_wf.morgana_magic {
             input:
               samplename = samplename,
@@ -238,7 +238,6 @@ workflow theiaviral_illumina_pe {
     File? dehost_wf_host_mapped_bam = read_QC_trim.dehost_wf_host_mapped_bam 
     File? dehost_wf_host_mapped_bai = read_QC_trim.dehost_wf_host_mapped_bai 
     File? dehost_wf_host_fasta = read_QC_trim.dehost_wf_host_fasta 
-    String? dehost_wf_download_status = read_QC_trim.dehost_wf_download_status 
     File? dehost_wf_host_mapping_stats = read_QC_trim.dehost_wf_host_mapping_stats 
     File? dehost_wf_host_mapping_cov_hist = read_QC_trim.dehost_wf_host_mapping_cov_hist 
     File? dehost_wf_host_flagstat = read_QC_trim.dehost_wf_host_flagstat 

@@ -295,7 +295,6 @@ workflow read_QC_trim_pe {
     File? dehost_wf_host_mapped_bam = host_decontaminate.host_mapped_sorted_bam
     File? dehost_wf_host_mapped_bai = host_decontaminate.host_mapped_sorted_bai
     File? dehost_wf_host_fasta = host_decontaminate.host_genome_fasta
-    String? dehost_wf_download_status = host_decontaminate.ncbi_datasets_status
     File? dehost_wf_host_mapping_stats = host_decontaminate.host_mapping_stats
     File? dehost_wf_host_mapping_cov_hist = host_decontaminate.host_mapping_cov_hist
     File? dehost_wf_host_flagstat = host_decontaminate.host_flagstat

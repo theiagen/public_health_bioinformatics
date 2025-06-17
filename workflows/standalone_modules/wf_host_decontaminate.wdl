@@ -89,7 +89,6 @@ workflow host_decontaminate {
     File? host_genome_fasta = download_accession.ncbi_datasets_assembly_fasta
     File? host_genome_data_report_json = download_accession.ncbi_datasets_assembly_data_report_json
     String host_genome_accession = select_first([ncbi_identify.ncbi_datasets_accession, host])
-    String ncbi_datasets_status = download_accession.ncbi_datasets_status
     String ncbi_datasets_version = download_accession.ncbi_datasets_version
     # Read mapping outputs
     File? host_mapped_sorted_bam = parse_mapping.bam

@@ -16,6 +16,9 @@ task ncbi_datasets_download_genome_accession {
     volatile: true
   }
   command <<<
+    # fail hard
+    set -euo pipefail
+
     date | tee DATE
     datasets --version | sed 's|datasets version: ||' | tee DATASETS_VERSION
 
@@ -35,9 +38,8 @@ task ncbi_datasets_download_genome_accession {
       unzip ~{ncbi_accession}.zip
       if [ ! -s ncbi_dataset/data/genomic.fna ]; then
         echo "ERROR: no assemblies found for accession: ~{ncbi_accession}"
-        echo "FAIL" > NCBIDATASETS_STATUS
+        exit 1
       else
-        echo "PASS" > NCBIDATASETS_STATUS
         cp -v ncbi_dataset/data/genomic.fna ./~{ncbi_accession}.fasta
         cp -v ncbi_dataset/data/data_report.jsonl ./~{ncbi_accession}.data_report.jsonl
 
@@ -72,10 +74,8 @@ task ncbi_datasets_download_genome_accession {
       unzip ~{ncbi_accession}.zip
       if [ ! -s ncbi_dataset/data/~{ncbi_accession}*/~{ncbi_accession}*.fna ]; then
         echo "ERROR: no assemblies found for accession: ~{ncbi_accession}"
-        echo "FAIL" > NCBIDATASETS_STATUS
+        exit 1
       else
-        echo "PASS" > NCBIDATASETS_STATUS
-
         cp -v ncbi_dataset/data/~{ncbi_accession}*/~{ncbi_accession}*.fna ./~{ncbi_accession}.fasta
         cp -v ncbi_dataset/data/assembly_data_report.jsonl ./~{ncbi_accession}.data_report.jsonl
 
@@ -104,7 +104,6 @@ task ncbi_datasets_download_genome_accession {
   >>>
   output {
     File? ncbi_datasets_assembly_fasta = "~{ncbi_accession}.fasta"
-    String ncbi_datasets_status = read_string("NCBIDATASETS_STATUS")
     File? ncbi_datasets_gff3 = "~{ncbi_accession}.gff"
     File? ncbi_datasets_gbff = "~{ncbi_accession}.gbff"
     File? ncbi_datasets_assembly_data_report_json = "~{ncbi_accession}.data_report.jsonl"
