@@ -85,9 +85,6 @@ workflow host_decontaminate {
       samplename = hostsample
   }
   output {
-    # PHB Version Captures
-    String host_decontaminate_wf_version = version_capture.phb_version
-    String host_decontaminate_wf_analysis_date = version_capture.date
     # Datasets download outputs
     File? host_genome_fasta = download_accession.ncbi_datasets_assembly_fasta
     File? host_genome_data_report_json = download_accession.ncbi_datasets_assembly_data_report_json
