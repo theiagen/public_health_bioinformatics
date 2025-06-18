@@ -105,7 +105,7 @@
 
 <div class="grid cards " markdown>
 ??? warning "`host`"
-    The `host` input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon or accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task `is_accession` (ONT) or Read QC Trim PE `host_is_accession` (Illumina) boolean populated as "true".
+    The `host` input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task `is_accession` (ONT) or Read QC Trim PE `host_is_accession` (Illumina) boolean populated as "true".
 
 </div>
 
@@ -240,6 +240,14 @@
 {{ include_md("common_text/checkv_task.md", condition="theiaviral", indent=8, replacements={'??? task "`checkv`"' : '??? task "`checkv_denovo` & `checkv_consensus`"'}) }}
 
 {{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=8) }}
+
+#### Taxa-Specific Tasks
+
+The TheiaViral workflows automatically activate taxa-specific sub-workflows after the identification of relevant taxa using the taxon ID of the reference genome. 
+
+??? toggle "_Lyssavirus rabies_"
+    
+    {{ include_md("common_text/nextclade_task.md", condition="theiaviral", indent=8) }}
 
 ### Outputs
 
