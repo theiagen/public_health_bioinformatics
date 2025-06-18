@@ -21,8 +21,8 @@ import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
 import "../../tasks/task_versioning.wdl" as versioning_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub_task
-import "../../workflows/standalone_modules/wf_host_decontaminate.wdl" as host_decontaminate_wf
-import "../../workflows/utilities/wf_morgana_magic.wdl" as morgana_magic_wf
+import "../utilities/wf_host_decontaminate.wdl" as host_decontaminate_wf
+import "../utilities/wf_morgana_magic.wdl" as morgana_magic_wf
 
 workflow theiaviral_ont {
   meta {

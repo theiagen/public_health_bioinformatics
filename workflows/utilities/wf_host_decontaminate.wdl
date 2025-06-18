@@ -1,6 +1,5 @@
 version 1.0
 
-import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
@@ -21,10 +20,8 @@ workflow host_decontaminate {
     Boolean complete_only = false
     Int minimap2_memory = 32
   }
-  call versioning.version_capture {
-    input: 
-  }
   String hostsample = samplename + "_host"
+  # gather an accession from a taxon input
   if (! is_accession) {
     call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
       input:
@@ -35,11 +32,13 @@ workflow host_decontaminate {
         use_ncbi_virus = false
     }
   }
+  # download accession
   call ncbi_datasets.ncbi_datasets_download_genome_accession as download_accession {
     input:
       ncbi_accession = select_first([ncbi_identify.ncbi_datasets_accession, host]),
       use_ncbi_virus = false
   }
+  # run paired-end mode
   if (defined(read2)) {
     call minimap2_task.minimap2 as minimap2_pe {
       input:
@@ -53,6 +52,7 @@ workflow host_decontaminate {
         memory = minimap2_memory
     }
   }
+  # run ONT mode (Illumina single-end reads are not supported)
   if (! defined(read2)) {
     call minimap2_task.minimap2 as minimap2_ont {
       input:
@@ -65,17 +65,20 @@ workflow host_decontaminate {
         memory = minimap2_memory
     }
   }
+  # extract BAM
   call parse_mapping_task.sam_to_sorted_bam as parse_mapping {
     input:
       sam = select_first([minimap2_pe.minimap2_out, minimap2_ont.minimap2_out]),
       samplename = hostsample
   }
+  # extract unaligned reads from BAM (those that don't map to host)
   call parse_mapping_task.bam_to_unaligned_fastq {
     input:
       bam = parse_mapping.bam,
       samplename = hostsample,
       paired = defined(read2)
   }
+  # calculate read mapping statistics
   call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
     input:
       bamfile = parse_mapping.bam,

@@ -11,7 +11,7 @@ import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
 import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools
 import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
 import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes
-import "../standalone_modules/wf_host_decontaminate.wdl" as host_decontaminate_wf
+import "../utilities/wf_host_decontaminate.wdl" as host_decontaminate_wf
 
 workflow read_QC_trim_pe {
   meta {
