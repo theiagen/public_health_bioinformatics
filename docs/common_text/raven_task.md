@@ -31,4 +31,4 @@
         | Task | [task_raven.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_raven.wdl) |
         | Software Source Code | [Raven on GitHub](https://github.com/lbcb-sci/raven)
         | Software Documentation | [Raven Documentation](https://github.com/lbcb-sci/raven/blob/master/README.md)
-        | Original Publication(s) | [Raven Paper](https://doi.org/10.1038/s43588-021-00073-4) |
+        | Original Publication(s) | [Time- and memory-efficient genome assembly with Raven](https://doi.org/10.1038/s43588-021-00073-4) |

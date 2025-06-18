@@ -11,7 +11,7 @@ import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
 import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools
 import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
 import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes
-import "../../workflows/standalone_modules/wf_host_decontaminate.wdl" as host_decontaminate_wf
+import "../standalone_modules/wf_host_decontaminate.wdl" as host_decontaminate_wf
 
 workflow read_QC_trim_pe {
   meta {
@@ -173,37 +173,35 @@ workflow read_QC_trim_pe {
           is_accession = host_is_accession,
           refseq = host_refseq,
           complete_only = host_complete_only,
-          minimap2_mem = host_decontaminate_mem
+          minimap2_memory = host_decontaminate_mem
       }
     }
-    if (! defined(host) || select_first([host_decontaminate.ncbi_datasets_status, "FAIL"]) == "PASS") {
-      call kraken.kraken2_standalone as kraken2_standalone_theiaviral {
+    call kraken.kraken2_standalone as kraken2_standalone_theiaviral {
+      input:
+        samplename = samplename,
+        read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
+        read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean]),
+        kraken2_db = select_first([kraken_db]),
+        disk_size = kraken_disk_size,
+        memory = kraken_memory,
+        cpu = kraken_cpu
+    }
+    call krakentools.extract_kraken_reads as kraken2_extract {
+      input:
+        read1 = kraken2_standalone_theiaviral.kraken2_classified_read1,
+        read2 = select_first([kraken2_standalone_theiaviral.kraken2_classified_read2]),
+        taxon_id = taxon_id,
+        kraken2_output = kraken2_standalone_theiaviral.kraken2_classified_report,
+        kraken2_report = kraken2_standalone_theiaviral.kraken2_report
+    }
+    if (extract_unclassified) {
+      call cat_lanes.cat_lanes {
         input:
           samplename = samplename,
-          read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
-          read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean]),
-          kraken2_db = select_first([kraken_db]),
-          disk_size = kraken_disk_size,
-          memory = kraken_memory,
-          cpu = kraken_cpu
-      }
-      call krakentools.extract_kraken_reads as kraken2_extract {
-        input:
-          read1 = kraken2_standalone_theiaviral.kraken2_classified_read1,
-          read2 = select_first([kraken2_standalone_theiaviral.kraken2_classified_read2]),
-          taxon_id = taxon_id,
-          kraken2_output = kraken2_standalone_theiaviral.kraken2_classified_report,
-          kraken2_report = kraken2_standalone_theiaviral.kraken2_report
-      }
-      if (extract_unclassified) {
-        call cat_lanes.cat_lanes {
-          input:
-            samplename = samplename,
-            read1_lane1 = kraken2_standalone_theiaviral.kraken2_unclassified_read1,
-            read1_lane2 = select_first([kraken2_extract.extracted_read1]),
-            read2_lane1 = kraken2_standalone_theiaviral.kraken2_unclassified_read2,
-            read2_lane2 = select_first([kraken2_extract.extracted_read2])
-        }
+          read1_lane1 = kraken2_standalone_theiaviral.kraken2_unclassified_read1,
+          read1_lane2 = select_first([kraken2_extract.extracted_read1]),
+          read2_lane1 = kraken2_standalone_theiaviral.kraken2_unclassified_read2,
+          read2_lane2 = select_first([kraken2_extract.extracted_read2])
       }
     }
   }
@@ -298,7 +296,6 @@ workflow read_QC_trim_pe {
     File? dehost_wf_host_mapped_bam = host_decontaminate.host_mapped_sorted_bam
     File? dehost_wf_host_mapped_bai = host_decontaminate.host_mapped_sorted_bai
     File? dehost_wf_host_fasta = host_decontaminate.host_genome_fasta
-    String? dehost_wf_download_status = host_decontaminate.ncbi_datasets_status
     File? dehost_wf_host_mapping_stats = host_decontaminate.host_mapping_stats
     File? dehost_wf_host_mapping_cov_hist = host_decontaminate.host_mapping_cov_hist
     File? dehost_wf_host_flagstat = host_decontaminate.host_flagstat

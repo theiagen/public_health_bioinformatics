@@ -16,7 +16,7 @@ import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/task_versioning.wdl" as versioning_task
-import "../../workflows/utilities/wf_morgana_magic.wdl" as morgana_magic_wf
+import "../utilities/wf_morgana_magic.wdl" as morgana_magic_wf
 
 workflow theiaviral_illumina_pe {
   meta {
@@ -54,12 +54,13 @@ workflow theiaviral_illumina_pe {
   call versioning_task.version_capture {
     input:
   }
-  if (! skip_qc) {
+  if (!skip_qc){
     # get the taxon id
     call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
       input:
         taxon = taxon,
-        rank = read_extraction_rank
+        rank = read_extraction_rank,
+        use_ncbi_virus = true
     }
     # read QC, classification, extraction, and trimming
     call read_qc.read_QC_trim_pe as read_QC_trim {
@@ -73,25 +74,14 @@ workflow theiaviral_illumina_pe {
         workflow_series = "theiaviral",
         host = host
     }
-    if (! defined(host) || read_QC_trim.dehost_wf_download_status == "PASS") {
-      # get genome length if it is not provided
-      if (! defined(genome_length)) {
-        call ncbi_datasets_task.ncbi_datasets_genome_summary as ncbi_taxon_summary {
-            input:
-              taxon = taxon,
-              use_ncbi_virus = true,
-              summary_limit = 100
-        }
-      }
-      if (! skip_rasusa) {
-        # downsample reads to a specific coverage
-        call rasusa_task.rasusa as rasusa {
-          input:
-            read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
-            read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
-            samplename = samplename,
-            genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
-        }
+    if (! skip_rasusa) {
+      # downsample reads to a specific coverage
+      call rasusa_task.rasusa as rasusa {
+        input:
+          read1 = select_first([read_QC_trim.kraken2_extracted_read1]),
+          read2 = select_first([read_QC_trim.kraken2_extracted_read2]),
+          samplename = samplename,
+          genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
       }
     }
   }
@@ -99,10 +89,10 @@ workflow theiaviral_illumina_pe {
   if (! skip_screen) {
     call read_screen_task.check_reads as clean_check_reads {
       input:
-        read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
-        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
+        read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
         workflow_series = "theiaviral",
-        expected_genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+        expected_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
     }
   }
   if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
@@ -112,8 +102,8 @@ workflow theiaviral_illumina_pe {
       if (call_metaviralspades) {
         call spades_task.spades {
           input:
-            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
-            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
             samplename = samplename,
             spades_type = "metaviral"
         }
@@ -122,8 +112,8 @@ workflow theiaviral_illumina_pe {
       if (select_first([spades.spades_status, "FAIL"]) == "FAIL") {
         call megahit_task.megahit {
           input:
-            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
-            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
             samplename = samplename
         }
       }
@@ -133,8 +123,7 @@ workflow theiaviral_illumina_pe {
         call checkv_task.checkv as checkv_denovo {
           input:
             assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
-            samplename = samplename,
-            checkv_db = checkv_db
+            samplename = samplename
         }
         # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
         call quast_task.quast as quast_denovo {
@@ -150,8 +139,7 @@ workflow theiaviral_illumina_pe {
       call skani_task.skani as skani {
         input:
           assembly_fasta = select_first([reference_fasta, spades.assembly_fasta, megahit.assembly_fasta]),
-          samplename = samplename,
-          skani_db = skani_db
+          samplename = samplename
       }
       # if skani cannot identify a reference genome, fail gracefully
       if (skani.skani_status == "PASS") {
@@ -204,26 +192,23 @@ workflow theiaviral_illumina_pe {
           input:
             assembly_fasta = consensus.consensus_seq,
             reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-            genome_length = select_first([genome_length, ncbi_taxon_summary.avg_genome_length])
+            genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
         }
         # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
         call checkv_task.checkv as checkv_consensus {
           input:
             assembly = consensus.consensus_seq,
-            samplename = samplename,
-            checkv_db = checkv_db
+            samplename = samplename
         }
         # run morgana magic for classification
-        if (defined(ncbi_datasets.ncbi_datasets_status)) {
-          call morgana_magic_wf.morgana_magic {
-            input:
-              samplename = samplename,
-              assembly_fasta = select_first([consensus.consensus_seq]),
-              read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
-              read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
-              taxon_name = select_first([ncbi_datasets.taxon_id]),
-              seq_method = "illumina_pe"
-          }
+        call morgana_magic_wf.morgana_magic {
+          input:
+            samplename = samplename,
+            assembly_fasta = select_first([consensus.consensus_seq]),
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+            taxon_name = select_first([ncbi_datasets.taxon_id]),
+            seq_method = "illumina_pe"
         }
       }
     }
@@ -233,14 +218,15 @@ workflow theiaviral_illumina_pe {
     String theiaviral_illumina_pe_version = version_capture.phb_version
     String theiaviral_illumina_pe_date = version_capture.date
     # ncbi datasets - taxon identification
-    String? ncbi_identify_taxon_id = ncbi_identify.taxon_id
-    String? ncbi_identify_taxon_name = ncbi_identify.taxon_name
-    String? ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
-    String? ncbi_datasets_version = ncbi_identify.ncbi_datasets_version
-    String? ncbi_datasets_docker = ncbi_identify.ncbi_datasets_docker    
-    # ncbi datasets - taxon summary
-    File? ncbi_taxon_summary_tsv = ncbi_taxon_summary.taxon_summary_tsv
-    Int? ncbi_taxon_summary_avg_genome_length = ncbi_taxon_summary.avg_genome_length
+    File ncbi_identify_taxon_summary_tsv = ncbi_identify.taxon_summary_tsv
+    File ncbi_identify_genome_summary_tsv = ncbi_identify.genome_summary_tsv
+    String ncbi_identify_taxon_id = ncbi_identify.taxon_id
+    String ncbi_identify_taxon_name = ncbi_identify.taxon_name
+    String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
+    Int ncbi_identify_avg_genome_length = ncbi_identify.avg_genome_length
+    String ncbi_identify_accession = ncbi_identify.ncbi_datasets_accession
+    String ncbi_datasets_version = ncbi_identify.ncbi_datasets_version
+    String ncbi_datasets_docker = ncbi_identify.ncbi_datasets_docker    
     # raw read quality control
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
@@ -261,7 +247,6 @@ workflow theiaviral_illumina_pe {
     File? dehost_wf_host_mapped_bam = read_QC_trim.dehost_wf_host_mapped_bam 
     File? dehost_wf_host_mapped_bai = read_QC_trim.dehost_wf_host_mapped_bai 
     File? dehost_wf_host_fasta = read_QC_trim.dehost_wf_host_fasta 
-    String? dehost_wf_download_status = read_QC_trim.dehost_wf_download_status 
     File? dehost_wf_host_mapping_stats = read_QC_trim.dehost_wf_host_mapping_stats 
     File? dehost_wf_host_mapping_cov_hist = read_QC_trim.dehost_wf_host_mapping_cov_hist 
     File? dehost_wf_host_flagstat = read_QC_trim.dehost_wf_host_flagstat 

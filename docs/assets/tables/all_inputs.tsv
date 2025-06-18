@@ -1218,13 +1218,6 @@ download_accession	include_gbff	Boolean	Set to true if you would like the GenBan
 download_accession	include_gff3	Boolean	Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations	FALSE	Optional	Host_Decontaminate
 download_accession	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate
 download_accession	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	FALSE	Optional	Host_Decontaminate
-download_taxon	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Decontaminate
-download_taxon	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate
-download_taxon	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2	Optional	Host_Decontaminate	
-download_taxon	include_gbff	Boolean	Set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations.	FALSE	Optional	Host_Decontaminate	
-download_taxon	include_gff3	Boolean	Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations	FALSE	Optional	Host_Decontaminate
-download_taxon	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate
-download_taxon	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	FALSE	Optional	Host_Decontaminate
 ncbi_scrub_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	NCBI_Scrub_PE
 ncbi_scrub_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	NCBI_Scrub_PE
 ncbi_scrub_pe	docker	Int	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1	Optional	NCBI_Scrub_PE
@@ -1950,12 +1943,9 @@ ncbi_identify	cpu	Int	Number of CPUs allocated for the task	1	Optional	TheiaVira
 ncbi_identify	disk_size	Int	Disk size allocated for the task (in GB)	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_identify	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_identify	memory	Int	Memory allocated for the task (in GB)	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
-ncbi_taxon_summary	cpu	Int	Number of CPUs allocated for the task	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-ncbi_taxon_summary	disk_size	Int	Disk size allocated for the task (in GB)	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-ncbi_taxon_summary	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-ncbi_taxon_summary	memory	Int	Memory allocated for the task (in GB)	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-ncbi_taxon_summary	refseq	Boolean	Only query RefSeq genomes	TRUE	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-ncbi_taxon_summary	complete	Boolean	Only query genomes labeled complete	TRUE	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+ncbi_identify	refseq	Boolean	Only query RefSeq genomes	TRUE	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+ncbi_identify	complete	Boolean	Only query genomes labeled complete	TRUE	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+ncbi_identify	summary_limit	Int	Maximum number of genomes to return in the summary	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
 quast_denovo	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -2118,7 +2108,7 @@ theiaviral_illumina_pe	host	String	Host taxon/accession to dehost reads, if prov
 host_decontaminate	host	String	Host taxon/accession to dehost reads, if provided		Required	Host_Decontaminate
 host_decontaminate	complete_only	Boolean	Only download genomes labeled "complete"	FALSE	Optional	Host_Decontaminate, TheiaViral_ONT
 host_decontaminate	is_accession	Boolean	Inputted "host" is an accession	FALSE	Optional	Host_Decontaminate, TheiaViral_ONT
-host_decontaminate	minimap2_mem	Int	Memory allocated for minimap2 (in GB)	32	Optional	Host_Decontaminate, TheiaViral_ONT
+host_decontaminate	minimap2_memory	Int	Memory allocated for minimap2 (in GB)	32	Optional	Host_Decontaminate, TheiaViral_ONT
 host_decontaminate	read1	File	Read 1 in FASTQ file format (compression optional)		Required	Host_Decontaminate
 host_decontaminate	read2	File	Paired-end read 2 in FASTQ file format (compression optional)		Optional	Host_Decontaminate
 host_decontaminate	read2	File	Internal componenet, do not modify		Optional	TheiaViral_ONT

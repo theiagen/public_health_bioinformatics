@@ -1,7 +1,7 @@
 <!-- if: theiaviral -->
 ??? task "`ncbi_identify`"
 
-    The `ncbi_identify` task uses [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxonomy and desired taxonomic rank. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including **read classification and targeted read extraction**.
+    The `ncbi_identify` task uses [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxonomy and desired taxonomic rank. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including **read classification and targeted read extraction**. This task also generates a comprehensive summary file of all successful hits to the input `taxon`, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input `taxon`.
 
     ??? dna "`taxon`"
         This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
