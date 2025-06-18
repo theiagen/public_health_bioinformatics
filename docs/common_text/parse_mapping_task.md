@@ -1,7 +1,7 @@
 ??? task "`parse_mapping`"
 
 <!-- if: sam_to_sorted_bam-->
-    The `sam_to_sorted_bam` sub-task converts the output SAM file from the `minimap2` task and converts it to a BAM file. It then sorts the BAM file by coordinate, and creates a BAM index file. This processed BAM is required for the `clair3` variant calling task.
+    The `sam_to_sorted_bam` sub-task converts the output SAM file from the `minimap2` task and converts it to a BAM file. It then sorts the BAM file by coordinate, and creates a BAM index file.
 
     ??? dna "`min_map_quality`"
         This parameter accepts an integer value to set the minimum mapping quality for variant calling and subsequent consensus sequence generation. The default value is `20`.

@@ -4,27 +4,15 @@
 
     The detailed steps and tasks are as follows:
 
-    ??? toggle "Taxonomic Identification"
+{{ include_md("common_text/ncbi_identify_task.md", indent=4, replacements={'??? task "`ncbi_identify`"' : '??? toggle "Taxonomic Identification"'}) }}
 
-{{ include_md("common_text/ncbi_identify_task.md", condition="host_decontaminate", indent=8) }}
+{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=4, replacements={'??? task "NCBI Datasets"' : '??? toggle "Download Accession"'}) }}
 
-    ??? toggle "Download Accession"
+{{ include_md("common_text/minimap2_task.md", condition="only_map_ont", indent=4, replacements={'??? task "`minimap2`: Read Alignment Details"' : '??? toggle "Map Reads to Host"'}) }}
 
-{{ include_md("common_text/ncbi_identify_task.md", condition="host_decontaminate", indent=8) }}
-
-    ??? Toggle "Map Reads to Host"
-
-{{ include_md("common_text/minimap2_task.md", condition="host_decontaminate", indent=8) }}
-
-    ??? Toggle "Extract Unaligned Reads"
-
-{{ include_md("common_text/parse_mapping_task.md", condition="sam_to_sorted_bam", indent=8) }}
-
-{{ include_md("common_text/parse_mapping_task.md", condition="bam_to_unaligned_fastq", indent=8) }}
+{{ include_md("common_text/parse_mapping_task.md", condition="bam_to_unaligned_fastq", indent=4, replacements={'??? task "`parse_mapping`"' : '??? toggle "Extract Unaligned Reads"'}) }}
     
-    ??? Toggle "Host Read Mapping Statistics"
-
-{{ include_md("common_text/assembly_metrics_task.md", indent=8)}}
+{{ include_md("common_text/assembly_metrics_task.md", indent=4, replacements={'??? task "`assembly_metrics`"' : '??? toggle "Host Read Mapping Statistics"'}) }}
 
     !!! techdetails "Host Decontaminate Technical Details"
         |  | Links |

@@ -6,7 +6,7 @@
 
 ## TheiaViral Workflows
 
-**TheiaViral** workflows assemble, quality assess, and characterize viral genomes from diverse data sources, including metagenomic samples. TheiaViral workflows can generate consensus assemblies of recalcitrant viruses, including diverse or recombinant lineages, such as rabies virus and norovirus, through a three-step approach: 1) generating an intermediate *de novo* assembly from taxonomy-filtered reads, 2) selecting the best reference from a database of 270,000+ complete viral genomes using average nucleotide identity, and 3) producing a final consensus assembly through reference-based read mapping and variant calling. While some sequencing methods, such as tiled amplicon sequencing, are incompatible with *de novo* assembly, TheiaViral may still be able to select a high-quality reference genome and generate a consensus assembly using these data sources. Targeted viral characterization is currently ongoing.
+**TheiaViral** workflows assemble, quality assess, and characterize viral genomes from diverse data sources, including metagenomic samples. TheiaViral workflows can generate consensus assemblies of recalcitrant viruses, including diverse or recombinant lineages, such as rabies virus and norovirus, through a three-step approach: 1) generating an intermediate *de novo* assembly from taxonomy-filtered reads, 2) selecting the best reference from a database of ~200,000 complete viral genomes using average nucleotide identity, and 3) producing a final consensus assembly through reference-based read mapping and variant calling. While some sequencing methods, such as tiled amplicon sequencing, are incompatible with *de novo* assembly, TheiaViral may still be able to select a high-quality reference genome and generate a consensus assembly using these data sources. Targeted viral characterization is currently ongoing and functional for *Lyssavirus rabies*.
 
 ??? question "What are the main differences between the TheiaViral and TheiaCov workflows?"
 
@@ -135,13 +135,11 @@
 
     ??? toggle "Taxonomic Identification"
 
-{{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/ncbi_identify_task.md", indent=8) }}
 
     ??? toggle "Read Quality Control, Trimming, Filtering, Identification and Extraction"
 
 {{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaviral", indent=8, replacements={": Read Quality Trimming, Adapter Removal, Quantification, and Identification" : ""}) }}
-
-{{ include_md("common_text/host_decontaminate.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/rasusa_task.md", condition="theiaviral", indent=8, replacements={'??? task "`Rasusa`: Read subsampling (optional, on by default)"' : '??? task "`rasusa`"'}) }}
 
@@ -155,7 +153,7 @@
 
 {{ include_md("common_text/skani_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=8, replacements={'??? task "NCBI Datasets"' : '??? task "`ncbi_datasets`"'}) }}
 
     ??? toggle "Reference Mapping"
 
@@ -185,7 +183,7 @@
 
     ??? toggle "Taxonomic Identification"
 
-{{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/ncbi_identify_task.md", indent=8) }}
 
     ??? toggle "Read Quality Control, Trimming, and Filtering"
 
@@ -197,7 +195,7 @@
 
 {{ include_md("common_text/ncbi_scrub_task.md", condition="theiaviral", indent=8, replacements={'??? task "`HRRT`: Human Host Sequence Removal"' : '??? task "`ncbi_scrub_se`"'}) }}
 
-{{ include_md("common_text/host_decontaminate.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/host_decontaminate.md", condition="theiaviral", indent=8, replacements={'??? task "`host_decontaminate`: Host read decontamination"' : '??? task "`host_decontaminate`"'}) }}
 
 {{ include_md("common_text/rasusa_task.md", condition="theiaviral", indent=8, replacements={'??? task "`Rasusa`: Read subsampling (optional, on by default)"' : '??? task "`rasusa`"'}) }}
 
@@ -215,7 +213,7 @@
 
 {{ include_md("common_text/skani_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=8, replacements={'??? task "NCBI Datasets"' : '??? task "`ncbi_datasets`"'}) }}
 
     ??? toggle "Reference Mapping"
 
@@ -248,9 +246,8 @@
 The TheiaViral workflows automatically activate taxa-specific sub-workflows after the identification of relevant taxa using the taxon ID of the reference genome. 
 
 ??? toggle "*Lyssavirus rabies*"
-    
-{{ include_md("common_text/nextclade_task.md", condition="theiaviral", indent=8) }}
 
+{{ include_md("common_text/nextclade_task.md", condition="theiaviral", indent=4) }}
 
 ### Outputs
 

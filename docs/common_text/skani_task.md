@@ -18,4 +18,4 @@
         | Task | [task_skani.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_skani.wdl) |
         | Software Source Code | [Skani on GitHub](https://github.com/bluenote-1577/skani) |
         | Software Documentation | [Skani Documentation](https://github.com/bluenote-1577/skani/blob/main/README.md) |
-        | Original Publication(s) | [Skani Paper](https://doi.org/10.1038/s41592-023-02018-3) |
+        | Original Publication(s) | [Fast and robust metagenomic sequence comparison through sparse chaining with skani](https://doi.org/10.1038/s41592-023-02018-3) |

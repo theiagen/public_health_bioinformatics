@@ -1,5 +1,9 @@
 ??? task "`porechop`"
 
+<!-- if: theiaprok|theiaeuk  -->
+    Read trimming is optional and can be enabled by setting the `run_porchop` input variable to true.
+<!-- endif -->
+
     Porechop is a tool for finding and removing adapters from ONT data. Adapters on the ends of reads are trimmed, and when a read has an adapter in the middle, the read is split into two.
 
 <!-- if: theiaviral -->

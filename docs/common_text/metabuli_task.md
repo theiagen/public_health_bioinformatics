@@ -19,4 +19,4 @@
     | Task | [task_metabuli.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_metabuli.wdl) |
     | Software Source Code | [Metabuli on GitHub](https://github.com/steineggerlab/Metabuli) |
     | Software Documentation | [Metabuli Documentation](https://github.com/steineggerlab/Metabuli/blob/master/README.md) |
-    | Original Publication(s) | [Metabuli Paper](https://doi.org/10.1038/s41592-024-02273-y) |
+    | Original Publication(s) | [Metabuli: sensitive and specific metagenomic classification via joint analysis of amino acid and DNA](https://doi.org/10.1038/s41592-024-02273-y) |
