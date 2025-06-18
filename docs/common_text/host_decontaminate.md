@@ -18,9 +18,16 @@
 
         {{ include_md("common_text/minimap2_task.md", condition="host_decontaminate", indent=8) }}
 
+    ??? Toggle "Extract Unaligned Reads"
+
+        {{ include_md("common_text/parse_mapping_task.md", condition="sam_to_sorted_bam", indent=8) }}
+
+        {{ include_md("common_text/parse_mapping_task.md", condition="bam_to_unaligned_fastq", indent=8) }}
     
+    ??? Toggle "Host Read Mapping Statistics"
 
-
+        {{ include_md("common_text/assembly_metrics_task.md",
+        indent=8)}}
 
     !!! techdetails "Host Decontaminate Technical Details"
         |  | Links |

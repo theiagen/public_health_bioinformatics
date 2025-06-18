@@ -219,7 +219,7 @@
 
 {{ include_md("common_text/minimap2_task.md", condition="long_read_flags", indent=8, replacements={'??? task "`minimap2`: Read Alignment Details"' : '??? task "`minimap2`"'}) }}
 
-{{ include_md("common_text/parse_mapping_task.md", condition="theiaviral_sam_to_sorted_bam", indent=8) }}
+{{ include_md("common_text/parse_mapping_task.md", condition="sam_to_sorted_bam", indent=8) }}
 
 {{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=8, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
 
