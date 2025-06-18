@@ -89,8 +89,8 @@ workflow theiaviral_illumina_pe {
   if (! skip_screen) {
     call read_screen_task.check_reads as clean_check_reads {
       input:
-        read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+        read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
+        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
         workflow_series = "theiaviral",
         expected_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
     }
@@ -102,8 +102,8 @@ workflow theiaviral_illumina_pe {
       if (call_metaviralspades) {
         call spades_task.spades {
           input:
-            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
             samplename = samplename,
             spades_type = "metaviral"
         }
@@ -112,8 +112,8 @@ workflow theiaviral_illumina_pe {
       if (select_first([spades.spades_status, "FAIL"]) == "FAIL") {
         call megahit_task.megahit {
           input:
-            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
             samplename = samplename
         }
       }
@@ -208,8 +208,8 @@ workflow theiaviral_illumina_pe {
           input:
             samplename = samplename,
             assembly_fasta = select_first([consensus.consensus_seq]),
-            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
             taxon_name = select_first([ncbi_datasets.taxon_id]),
             seq_method = "illumina_pe"
         }
@@ -221,15 +221,15 @@ workflow theiaviral_illumina_pe {
     String theiaviral_illumina_pe_version = version_capture.phb_version
     String theiaviral_illumina_pe_date = version_capture.date
     # ncbi datasets - taxon identification
-    File ncbi_identify_taxon_summary_tsv = ncbi_identify.taxon_summary_tsv
-    File ncbi_identify_genome_summary_tsv = ncbi_identify.genome_summary_tsv
-    String ncbi_identify_taxon_id = ncbi_identify.taxon_id
-    String ncbi_identify_taxon_name = ncbi_identify.taxon_name
-    String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
-    Int ncbi_identify_avg_genome_length = ncbi_identify.avg_genome_length
-    String ncbi_identify_accession = ncbi_identify.ncbi_datasets_accession
-    String ncbi_datasets_version = ncbi_identify.ncbi_datasets_version
-    String ncbi_datasets_docker = ncbi_identify.ncbi_datasets_docker    
+    File? ncbi_identify_taxon_summary_tsv = ncbi_identify.taxon_summary_tsv
+    File? ncbi_identify_genome_summary_tsv = ncbi_identify.genome_summary_tsv
+    String? ncbi_identify_taxon_id = ncbi_identify.taxon_id
+    String? ncbi_identify_taxon_name = ncbi_identify.taxon_name
+    String? ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
+    Int? ncbi_identify_avg_genome_length = ncbi_identify.avg_genome_length
+    String? ncbi_identify_accession = ncbi_identify.ncbi_datasets_accession
+    String? ncbi_datasets_version = ncbi_identify.ncbi_datasets_version
+    String? ncbi_datasets_docker = ncbi_identify.ncbi_datasets_docker    
     # raw read quality control
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
