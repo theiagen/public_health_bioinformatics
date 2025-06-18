@@ -94,16 +94,12 @@ workflow theiaviral_panel {
           read2 = select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2])
       }
       if (fastq_scan_binned.read1_seq > minimum_read_number) {
-        call ncbi_datasets_task.ncbi_datasets_genome_summary as ncbi_taxon_summary {
-          input:
-            taxon = taxon_id,
-            use_ncbi_virus = true
-        }
-        # get the taxon id
+        # get the taxon information from ncbi
         call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
           input:
             taxon = taxon_id,
-            rank = read_extraction_rank
+            rank = read_extraction_rank,
+            use_ncbi_virus = true
         }
         call theiaviral_illumina_pe.theiaviral_illumina_pe as theiaviral {
           input:
@@ -117,7 +113,7 @@ workflow theiaviral_panel {
             skip_screen = skip_theiaviral_screen,
             skani_db = skani_db,
             checkv_db = checkv_db,
-            genome_length = ncbi_taxon_summary.avg_genome_length,
+            genome_length = ncbi_identify.avg_genome_length,
             assembly_cpu = assembly_cpu,
             assembly_memory = assembly_memory,
             min_map_quality = min_map_quality,
@@ -146,8 +142,8 @@ workflow theiaviral_panel {
               "fastq_scan_version": fastq_scan_binned.version,
               "fastq_scan_binned1_json": fastq_scan_binned.read1_fastq_scan_json,
               "fastq_scan_binned2_json": fastq_scan_binned.read2_fastq_scan_json,
-              "ncbi_taxon_summary_tsv": ncbi_taxon_summary.taxon_summary_tsv,
-              "ncbi_taxon_summary_avg_genome_length": ncbi_taxon_summary.avg_genome_length,
+              "ncbi_taxon_summary_tsv": ncbi_identify.taxon_summary_tsv,
+              "ncbi_taxon_summary_avg_genome_length": ncbi_identify.avg_genome_length,
               "assembly_denovo_fasta": theiaviral.assembly_denovo_fasta,
               "metaviralspades_status": theiaviral.metaviralspades_status,
               "metaviralspades_version": theiaviral.metaviralspades_version,
