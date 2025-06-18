@@ -106,9 +106,9 @@ task skani {
   # need to account for if the genome is derived from refseq or not 
   # this will have to be modified if GCAs are added to the database as well
   if [[ $(cat TOP_ACCESSION) == GCF_* ]]; then
-    echo false > SKANI_VIRUS
+    echo false > SKANI_DATASETS_VIRUS
   else
-    echo true > SKANI_VIRUS
+    echo true > SKANI_DATASETS_VIRUS
   fi
   >>>
   output{
@@ -120,7 +120,7 @@ task skani {
     String skani_database = skani_db
     String skani_warning = read_string("SKANI_WARNING")
     String skani_status = read_string("SKANI_STATUS")
-    Boolean skani_virus_download = read_boolean("SKANI_VIRUS")
+    Boolean skani_virus_download = read_boolean("SKANI_DATASETS_VIRUS")
     String skani_version = read_string("VERSION")
     String skani_docker = docker
   }
