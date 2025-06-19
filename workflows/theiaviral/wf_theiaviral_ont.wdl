@@ -53,8 +53,7 @@ workflow theiaviral_ont {
   call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
     input:
       taxon = taxon,
-      rank = read_extraction_rank,
-      use_ncbi_virus = true,
+      rank = read_extraction_rank
   }
   # raw read quality check
   call nanoplot_task.nanoplot as nanoplot_raw {

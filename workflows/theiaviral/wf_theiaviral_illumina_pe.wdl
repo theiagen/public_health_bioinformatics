@@ -49,8 +49,7 @@ workflow theiaviral_illumina_pe {
   call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
     input:
       taxon = taxon,
-      rank = read_extraction_rank,
-      use_ncbi_virus = true
+      rank = read_extraction_rank
   }
   # read QC, classification, extraction, and trimming
   call read_qc.read_QC_trim_pe as read_QC_trim {
