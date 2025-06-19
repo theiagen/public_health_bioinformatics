@@ -235,7 +235,7 @@
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/_miniwdl_inputs/0/SRR13687078.primertrim.sorted.bam
     # variant call
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/command
-      md5sum: da7011aeb44b10f39201559c18f2b866
+      md5sum: 11c5f21266f5a581a3accff96bd90b08
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/inputs.json
       contains: ["mpileup", "variant_min_freq", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/outputs.json
@@ -264,7 +264,7 @@
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/_miniwdl_inputs/0/SRR13687078.primertrim.sorted.bam
     # consensus
     - path: miniwdl_run/call-ivar_consensus/call-consensus/command
-      md5sum: 89e10c8cf1368912456d477a3cb30dbf
+      md5sum: 9b26c53c61e07fdf26eb61ff125887dd
     - path: miniwdl_run/call-ivar_consensus/call-consensus/inputs.json
       contains: ["bamfile", "samplename", "min_depth"]
     - path: miniwdl_run/call-ivar_consensus/call-consensus/outputs.json
