@@ -261,7 +261,6 @@
       md5sum: 6e4cb2a08eb4c481d33084d41ce6855c
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/unique_variants.tsv
       md5sum: 921b668f54392a4da96177ded87420cf
-    - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/_miniwdl_inputs/0/SRR13687078.primertrim.sorted.bam
     # consensus
     - path: miniwdl_run/call-ivar_consensus/call-consensus/command
       md5sum: 9b26c53c61e07fdf26eb61ff125887dd
