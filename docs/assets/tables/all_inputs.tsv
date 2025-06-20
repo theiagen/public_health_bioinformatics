@@ -1930,6 +1930,7 @@ ncbi_identify	docker	String	Docker image used for the task	"us-docker.pkg.dev/ge
 ncbi_identify	memory	Int	Memory allocated for the task (in GB)	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_identify	refseq	Boolean	Only query RefSeq genomes	TRUE	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_identify	complete	Boolean	Only query genomes labeled complete	TRUE	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
+ncbi_identify	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	FALSE	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_identify	summary_limit	Int	Maximum number of genomes to return in the summary	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
