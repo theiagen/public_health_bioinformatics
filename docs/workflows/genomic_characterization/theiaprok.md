@@ -111,7 +111,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
             These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
 {{ include_md("common_text/read_qc_trim_ont.md", condition="theiaprok", indent=8) }}
-{{ include_md("common_text/flye_denovo_task.md", indent=8) }}
+{{ include_md("common_text/flye_denovo_task.md", condition="theiaprok", indent=8) }}
 
     === "TheiaProk_FASTA"
         !!! dna ""

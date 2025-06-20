@@ -5,14 +5,15 @@ task check_reads {
     File read1
     File read2
 
-    Int min_reads
-    Int min_basepairs
-    Int min_genome_length
-    Int max_genome_length
-    Int min_coverage
-    Int min_proportion
+    # set theiaviral defaults
+    Int min_reads = 50
+    Int min_basepairs = 15000
+    Int min_genome_length = 1500
+    Int max_genome_length = 2673870
+    Int min_coverage = 10
+    Int min_proportion = 40
     
-    String workflow_series = "theiaprok" # default to theiaprok so we don't have to change those workflows
+    String workflow_series = "theiaviral"
     Int? expected_genome_length # user-provided
     
     Int cpu = 1
@@ -176,15 +177,16 @@ task check_reads_se {
   input {
     File read1
 
-    Int min_reads
-    Int min_basepairs
-    Int min_genome_length
-    Int max_genome_length
-    Int min_coverage
+    # set theiaviral defaults
+    Int min_reads = 50
+    Int min_basepairs = 15000
+    Int min_genome_length = 1500
+    Int max_genome_length = 2673870
+    Int min_coverage = 10
     Int? expected_genome_length
 
     Boolean skip_mash
-    String workflow_series = "theiaprok" # default to theiaprok so we don't have to change those workflows
+    String workflow_series = "theiaviral" # default to theiaprok so we don't have to change those workflows
     
     Int cpu = 1
     Int disk_size = 100 

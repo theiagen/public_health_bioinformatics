@@ -16,6 +16,9 @@ task ncbi_datasets_download_genome_accession {
     volatile: true
   }
   command <<<
+    # fail hard
+    set -euo pipefail
+
     date | tee DATE
     datasets --version | sed 's|datasets version: ||' | tee DATASETS_VERSION
 
@@ -36,8 +39,17 @@ task ncbi_datasets_download_genome_accession {
       cp -v ncbi_dataset/data/genomic.fna ./~{ncbi_accession}.fasta
       cp -v ncbi_dataset/data/data_report.jsonl ./~{ncbi_accession}.data_report.jsonl
 
-    # otherwise, use the datasets download' sub-command
+      # acquire the taxon id for the accession
+      datasets summary virus genome accession \
+        ~{ncbi_accession} --as-json-lines | \
+      dataformat tsv virus-genome --fields virus-name,virus-tax-id | \
+      tail -n+2 > accession_taxonomy.tsv
+
+      cut -f 1 accession_taxonomy.tsv > TAXON_NAME
+      cut -f 2 accession_taxonomy.tsv > TAXON_ID
+      # otherwise, use the datasets download' sub-command
     else
+
       #### download FASTA file using ncbi_accession ####
       # '--assembly-version latest' ensures the most recent version is downloaded, not previous versions
       # NOTE: I have noticed that occasionally the same command may fail one moment with the error below and succeed the second time. usually.
@@ -69,6 +81,15 @@ task ncbi_datasets_download_genome_accession {
         echo ".gbff file found, renaming output gbff file ..."
         mv -v ncbi_dataset/data/~{ncbi_accession}*/*.gbff ~{ncbi_accession}.gbff
       fi
+
+      # acquire the taxon id for the accession
+      datasets summary genome accession \
+        ~{ncbi_accession} --as-json-lines | \
+      dataformat tsv genome --fields organism-name,organism-tax-id | \
+      tail -n+2 > accession_taxonomy.tsv
+
+      cut -f 1 accession_taxonomy.tsv > TAXON_NAME
+      cut -f 2 accession_taxonomy.tsv > TAXON_ID
     fi
   >>>
   output {
@@ -76,6 +97,8 @@ task ncbi_datasets_download_genome_accession {
     File? ncbi_datasets_gff3 = "~{ncbi_accession}.gff"
     File? ncbi_datasets_gbff = "~{ncbi_accession}.gbff"
     File ncbi_datasets_assembly_data_report_json = "~{ncbi_accession}.data_report.jsonl"
+    String taxon_name = read_string("TAXON_NAME")
+    String taxon_id = read_string("TAXON_ID")
     String ncbi_datasets_version = read_string("DATASETS_VERSION")
     String ncbi_datasets_docker = docker
   }

@@ -84,7 +84,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
         !!! dna ""
             These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
-{{ include_md("common_text/flye_denovo_task.md", indent=8) }}
+{{ include_md("common_text/flye_denovo_task.md", condition="theiaeuk", indent=8) }}
 
 #### Organism-agnostic characterization
 
