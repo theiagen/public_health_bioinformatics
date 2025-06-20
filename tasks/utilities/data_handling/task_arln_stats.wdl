@@ -66,13 +66,13 @@ task arln_stats {
       echo "${ref_assem_st_dev}"
       echo "${ref_gc_st_dev}"
       # Metrics Ratios
-      assem_ratio=$(python3 -c "print(~{genome_length} / (float('${assem_mean}') * 1000000))")
-      gc_ratio=$(python3 -c "print(~{gc_percent} / float('${gc_mean}'))")
+      assem_ratio=$(python3 -c "print('{:.5f}'.format(~{genome_length} / (float('${assem_mean}') * 1000000)))")
+      gc_ratio=$(python3 -c "print('{:.5f}'.format(~{gc_percent} / float('${gc_mean}')))")
       echo "${assem_ratio}"
       echo "${gc_ratio}"
       # Calculate Z-score, {observed}-{expected}/{stdev}
-      assem_zscore=$(python3 -c "print((~{genome_length} - (float('${assem_mean}') * 1000000)) / (float('${ref_assem_st_dev}') * 1000000))")
-      gc_zscore=$(python3 -c "print((~{gc_percent} - float('${gc_mean}')) / float('${ref_gc_st_dev}'))")
+      assem_zscore=$(python3 -c "print('{:.5f}'.format((~{genome_length} - (float('${assem_mean}') * 1000000)) / (float('${ref_assem_st_dev}') * 1000000)))")
+      gc_zscore=$(python3 -c "print('{:.5f}'.format((~{gc_percent} - float('${gc_mean}')) / float('${ref_gc_st_dev}')))")
       # Ratios
       echo "${assem_ratio}" > ASSEMBLY_RATIO
       echo "${gc_ratio}" > GC_RATIO
