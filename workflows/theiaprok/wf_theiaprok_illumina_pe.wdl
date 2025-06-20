@@ -734,6 +734,7 @@ workflow theiaprok_illumina_pe {
               taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
               workflow_type = "pe",
               genome_length = quast.genome_length,
+              gc_percent = quast.gc_percent,
               read1_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
               read2_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read2]),
               read1_clean = read_QC_trim.read1_clean,
@@ -1214,6 +1215,11 @@ workflow theiaprok_illumina_pe {
     String? arln_r1_q30_clean = arln_stats.read1_clean_q30
     String? arln_r2_q30_clean = arln_stats.read2_clean_q30
     String? arln_assembly_ratio = arln_stats.assembly_ratio
+    String? arln_taxon_assembly_ratio_stdev = arln_stats.taxon_assembly_ratio_stdev
+    String? arln_gc_percent_ratio  = arln_stats.gc_percent_ratio
+    String? arln_taxon_gc_percent_stdev = arln_stats.taxon_gc_percent_stdev
+    String? arln_gc_zscore = arln_stats.gc_zscore
+    String? arln_assembly_zscore = arln_stats.assembly_zscore
     String? arln_stats_docker_version = arln_stats.docker_version
   }
 }

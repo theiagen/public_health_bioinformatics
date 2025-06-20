@@ -463,6 +463,7 @@ workflow theiaprok_fasta {
           samplename = samplename,
           taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
           genome_length = quast.genome_length,
+          gc_percent = quast.gc_percent,
           workflow_type = "fasta"
       }
     }

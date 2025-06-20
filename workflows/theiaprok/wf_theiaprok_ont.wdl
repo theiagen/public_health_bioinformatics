@@ -633,6 +633,7 @@ workflow theiaprok_ont {
               taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
               workflow_type = "ont",
               genome_length = quast.genome_length,
+              gc_percent = quast.gc_percent,
               read1_raw = read1,
               read1_clean = read_qc_trim.read1_clean
           }
