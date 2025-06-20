@@ -768,6 +768,11 @@ workflow theiaprok_fasta {
     String? taxon_table_status = export_taxon_table.status
     # ARLN required outputs
     String? arln_assembly_ratio = arln_stats.assembly_ratio
+    String? arln_taxon_assembly_ratio_stdev = arln_stats.taxon_assembly_ratio_stdev
+    String? arln_gc_percent_ratio  = arln_stats.gc_percent_ratio
+    String? arln_taxon_gc_percent_stdev = arln_stats.taxon_gc_percent_stdev
+    String? arln_gc_zscore = arln_stats.gc_zscore
+    String? arln_assembly_zscore = arln_stats.assembly_zscore
     String? arln_stats_docker_version = arln_stats.docker_version
   }
 }

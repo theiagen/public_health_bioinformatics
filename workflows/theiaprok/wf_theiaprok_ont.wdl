@@ -1046,6 +1046,11 @@ workflow theiaprok_ont {
     String? arln_r1_q30_raw = arln_stats.read1_raw_q30
     String? arln_r1_q30_clean = arln_stats.read1_clean_q30
     String? arln_assembly_ratio = arln_stats.assembly_ratio
+    String? arln_taxon_assembly_ratio_stdev = arln_stats.taxon_assembly_ratio_stdev
+    String? arln_gc_percent_ratio  = arln_stats.gc_percent_ratio
+    String? arln_taxon_gc_percent_stdev = arln_stats.taxon_gc_percent_stdev
+    String? arln_gc_zscore = arln_stats.gc_zscore
+    String? arln_assembly_zscore = arln_stats.assembly_zscore
     String? arln_stats_docker_version = arln_stats.docker_version
   }
 }
