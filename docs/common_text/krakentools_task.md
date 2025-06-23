@@ -3,7 +3,7 @@
     The `task_krakentools.wdl` task extracts reads from the Kraken2 output file. It uses the [KrakenTools](https://github.com/jenniferlu717/KrakenTools) package to extract reads classified at any user-specified taxon ID.
 
 <!-- if: theiaviral -->
-    ??? dna "`extract_unclassified`"
+    ??? dna "`extract_unclassified` input parameter"
         This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
 
     ???+ warning "Important"

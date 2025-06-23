@@ -3,7 +3,7 @@
 <!-- if: sam_to_sorted_bam-->
     The `sam_to_sorted_bam` sub-task converts the output SAM file from the `minimap2` task and converts it to a BAM file. It then sorts the BAM file by coordinate, and creates a BAM index file.
 
-    ??? dna "`min_map_quality`"
+    ??? dna "`min_map_quality` input parameter"
         This parameter accepts an integer value to set the minimum mapping quality for variant calling and subsequent consensus sequence generation. The default value is `20`.
 <!-- endif -->
 
@@ -14,7 +14,7 @@
 <!-- if: theiaviral_mask_low_coverage-->
     The `mask_low_coverage` sub-task is used to mask low coverage regions in the `reference_fasta` file to improve the accuracy of the final consensus genome. Coverage thresholds are defined by the `min_depth` parameter, which specifies the minimum read depth required for a base to be retained. Bases falling below this threshold are replaced with "N"s to clearly mark low confidence regions. The masked reference is then combined with variants from the `clair3` task to produce the final consensus genome.
 
-    ??? dna "`min_depth`"
+    ??? dna "`min_depth` input parameter"
         This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is `10`.
 <!-- endif -->
 

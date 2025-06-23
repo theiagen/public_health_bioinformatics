@@ -1,5 +1,7 @@
 ??? task "NCBI Datasets"
+<!-- if: snippy|assembly_fetch -->
     ##### NCBI Datasets
+<!-- endif -->
 
     The [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/) task downloads specified assemblies from NCBI using either the [virus](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) or [genome](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/) (for all other genome types) package as appropriate.
 

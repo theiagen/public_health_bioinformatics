@@ -8,7 +8,7 @@
 
 **TheiaViral** workflows assemble, quality assess, and characterize viral genomes from diverse data sources, including metagenomic samples. TheiaViral workflows can generate consensus assemblies of recalcitrant viruses, including diverse or recombinant lineages, such as rabies virus and norovirus, through a three-step approach: 1) generating an intermediate *de novo* assembly from taxonomy-filtered reads, 2) selecting the best reference from a database of ~200,000 complete viral genomes using average nucleotide identity, and 3) producing a final consensus assembly through reference-based read mapping and variant calling. Reference genomes can be directly provided to TheiaViral to bypass *de novo* assembly, which enables compatibility with tiled amplicon sequencing data. Targeted viral characterization is currently ongoing and functional for *Lyssavirus rabies*.
 
-??? question "What are the main differences between the TheiaViral and TheiaCov workflows?"
+???+ question "What are the main differences between the TheiaViral and TheiaCov workflows?"
 
     <div class="grid cards" markdown>
 
@@ -31,22 +31,19 @@
 
     </div>
 
-<div class="grid cards " markdown>
-??? question "Segmented viruses"
+???+ question "Segmented viruses"
 
     Segmented viruses are accounted for in TheiaViral. The reference genome database excludes segmented viral nucleotide accessions, while including RefSeq assembly accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.
 
-</div>
-
 ### Workflow Diagram
 
-=== "Illumina_PE"
+=== "TheiaViral_Illumina_PE"
 
     !!! caption "TheiaViral_Illumina_PE Workflow Diagram"
 
         ![TheiaViral_Illumina_PE Workflow Diagram](../../assets/figures/TheiaViral_Illumina_PE.png)
 
-=== "ONT"
+=== "TheiaViral_ONT"
 
     !!! caption "TheiaViral_ONT Workflow Diagram"
 
@@ -76,11 +73,35 @@
 
         It is recommended to trim adapter sequencings via `dorado` basecalling prior to running TheiaViral_ONT, though `porechop` can optionally be called to trim adapters within the workflow.
 
-        **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaViral_ONT workflow must be quality assessed before reporting results. We recommend using the Dorado base-calling **
+        **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaViral_ONT workflow must be quality assessed before reporting results. We recommend using the [Dorado_Basecalling_PHB](../../standalone/dorado_basecalling.md) workflow if applicable.**
 
 </div>
 
 ### Inputs
+
+???+ dna_blue "`taxon` _required_ input parameter"
+    `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) and do not have to be species-level (see `read_extraction_rank` below).
+
+/// html | div[style='float: left; width: 50%; padding-right: 10px;']
+
+??? dna "`host` optional input parameter"
+    The `host` input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task `is_accession` (ONT) or Read QC Trim PE `host_is_accession` (Illumina) boolean populated as "true".
+
+??? dna "`extract_unclassified` optional input parameter"
+    By default, the `extract_unclassified` parameter is set to "false", which indicates that reads that are not classified by Kraken2 (Illumina) or Metabuli (ONT) will not be included in all tasks downstream of read quality control. This is desirable in when the `taxon` input is sufficiently sampled in the classification database, contaminant viruses are also classified well, and host reads are removed prior to classification or map well to the human genome. On the other hand, setting `extract_unclassified` to "true" may be desirable to include unclassified reads that may be derived from the focal `taxon`, particularly if host reads have been scrubbed with via the `host` input parameter. The default Kraken2 and Metabuli databases are derived from RefSeq, so the potential for a read to be classified is dependent on input `taxon` representation within RefSeq. As an example, we found that *Lyssavirus rabies* Illumina data may generate higher quality assemblies when `extract_unclassified` is set to "true", perhaps due to its broad diversity relative to minor representation in RefSeq.
+///
+
+/// html | div[style='float: right; width: 50%; padding-left: 10px;']
+
+??? dna "`min_allele_freq`, `min_depth`, and `min_map_quality` optional input parameters"
+    These parameters have a direct effect on the variants that will ultimately be reported in the consensus assembly. `min_allele_freq` determines the minimum proportion of an allelic variant to be reported in the consensus assembly. `min_depth` and `min_map_quality` affect how "N" is reported in the consensus, i.e. depth below `min_depth` is reported as "N" and reads with mapping quality below `min_map_quality` are not included in depth calculations.
+
+??? dna "`read_extraction_rank` optional input parameter"
+    By default, the `read_extraction_rank` parameter is set to "family", which indicates that reads will be extracted if they are classified as the taxonomic family of the input `taxon`, including all descendant taxa of the family. Read classification may not resolve to the rank of the input `taxon`, so these reads may be classified at higher ranks. For example, some *Lyssavirus rabies* (species) reads may only be resolved to *Lyssavirus* (genus), so they would not be extracted if the `read_extraction_rank` is set to "species". Setting the `read_extraction_rank` above the inputted `taxon`'s rank can therefore dramatically increase the number of reads recovered, at the potential cost of including other viruses. This likely is not a problem for scarcely represented lineages, e.g. a sample that is expected to include *Lyssavirus rabies* is unlikely to contain other viruses of the corresponding family, Rhabdoviridae, within the same sample. However, setting a `read_extraction_rank` far beyond the input `taxon` rank can be problematic when multiple representatives of the same viral family are included in similar abundance within the same sample. To further refine the desired `read_extraction_rank`, please review the corresponding classification reports of the respective classification software (kraken2 for Illumina and Metabuli for ONT)
+///
+
+/// html | div[style='clear: both;']
+///
 
 === "TheiaViral_Illumina_PE"
     /// html | div[class="searchable-table"]
@@ -96,42 +117,13 @@
 
     ///
 
-
-<div class="grid cards " markdown>
-??? warning "`extract_unclassified`"
-    By default, the `extract_unclassified` parameter is set to "false", which indicates that reads that are not classified by Kraken2 (Illumina) or Metabuli (ONT) will not be included in all tasks downstream of read quality control. This is desirable in when the `taxon` input is sufficiently sampled in the classification database, contaminant viruses are also classified well, and host reads are removed prior to classification or map well to the human genome. On the other hand, setting `extract_unclassified` to "true" may be desirable to include unclassified reads that may be derived from the focal `taxon`, particularly if host reads have been scrubbed with via the `host` input parameter. The default Kraken2 and Metabuli databases are derived from RefSeq, so the potential for a read to be classified is dependent on input `taxon` representation within RefSeq. As an example, we found that *Lyssavirus rabies* Illumina data may generate higher quality assemblies when `extract_unclassified` is set to "true", perhaps due to its broad diversity relative to minor representation in RefSeq.
-
-</div>
-
-<div class="grid cards " markdown>
-??? warning "`host`"
-    The `host` input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task `is_accession` (ONT) or Read QC Trim PE `host_is_accession` (Illumina) boolean populated as "true".
-
-</div>
-
-<div class="grid cards " markdown>
-??? warning "`min_allele_freq`, `min_depth`, and `min_map_quality`"
-    These parameters have a direct effect on the variants that will ultimately be reported in the consensus assembly. `min_allele_freq` determines the minimum proportion of an allelic variant to be reported in the consensus assembly. `min_depth` and `min_map_quality` affect how "N" is reported in the consensus, i.e. depth below `min_depth` is reported as "N" and reads with mapping quality below `min_map_quality` are not included in depth calculations.      
-</div>
-
-<div class="grid cards " markdown>
-??? warning "`read_extraction_rank`" 
-    By default, the `read_extraction_rank` parameter is set to "family", which indicates that reads will be extracted if they are classified as the taxonomic family of the input `taxon`, including all descendant taxa of the family. Read classification may not resolve to the rank of the input `taxon`, so these reads may be classified at higher ranks. For example, some *Lyssavirus rabies* (species) reads may only be resolved to *Lyssavirus* (genus), so they would not be extracted if the `read_extraction_rank` is set to "species". Setting the `read_extraction_rank` above the inputted `taxon`'s rank can therefore dramatically increase the number of reads recovered, at the potential cost of including other viruses. This likely is not a problem for scarcely represented lineages, e.g. a sample that is expected to include *Lyssavirus rabies* is unlikely to contain other viruses of the corresponding family, Rhabdoviridae, within the same sample. However, setting a `read_extraction_rank` far beyond the input `taxon` rank can be problematic when multiple representatives of the same viral family are included in similar abundance within the same sample. To further refine the desired `read_extraction_rank`, please review the corresponding classification reports of the respective classification software (kraken2 for Illumina and Metabuli for ONT) 
-</div>
-
-<div class="grid cards " markdown>
-??? warning "`taxon`"
-    `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) and do not have to be species (see `read_extraction_rank` below).
-</div>
-
-
 ### All Tasks
 
 === "TheiaViral_Illumina_PE"
 
     ??? toggle "Versioning"
 
-{{ include_md("common_text/versioning_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/versioning_task.md", indent=8) }}
 
     ??? toggle "Taxonomic Identification"
 
@@ -146,6 +138,15 @@
 {{ include_md("common_text/read_screen_task.md", condition="theiaviral", indent=8, replacements={'??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"' : '??? task "`clean_check_reads`"'}) }}
 
     ??? toggle "*De novo* Assembly and Reference Selection"
+        ???+ warning "These tasks are only performed if no reference genome is provided"
+            In this workflow, *de novo* assembly is primarily used to facilitate the selection of a closely related reference genome, though high quality *de novo* assemblies can be used for downstream analysis. If the user provides an input `reference_fasta`, the following assembly generation, assembly evaluation, and reference selections tasks will be **skipped**:
+           
+            - `spades`
+            - `megahit`
+            - `checkv_denovo`
+            - `quast_denovo`
+            - `skani`
+            - `ncbi_datasets`
 
 {{ include_md("common_text/spades_task.md", condition="theiaviral", indent=8) }}
 
@@ -207,6 +208,16 @@
 
     ??? toggle "*De novo* Assembly and Reference Selection"
 
+        ???+ warning "These tasks are only performed if no reference genome is provided"
+            In this workflow, *de novo* assembly is used solely to facilitate the selection of a closely related reference genome. If the user provides an input `reference_fasta`, the following assembly generation, assembly evaluation, and reference selections tasks will be **skipped**:
+
+            - `raven`
+            - `flye`
+            - `checkv_denovo`
+            - `quast_denovo`
+            - `skani`
+            - `ncbi_datasets`
+
 {{ include_md("common_text/raven_task.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/flye_task.md", condition="theiaviral", indent=8, replacements={'`flye_read_type`' : '`read_type`'}) }}
@@ -243,7 +254,7 @@
 
 #### Taxa-Specific Tasks
 
-The TheiaViral workflows automatically activate taxa-specific sub-workflows after the identification of relevant taxa using the taxon ID of the reference genome. 
+The TheiaViral workflows automatically activate taxa-specific sub-workflows after the identification of relevant taxa using the taxon ID of the reference genome.
 
 ??? toggle "*Lyssavirus rabies*"
 
@@ -265,20 +276,15 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
 
     ///
 
-<div class="grid cards " markdown>
 ??? question "What are the differences between the *de novo* and consensus assemblies?"
 
     *De novo* genomes are generated from scratch without a reference to guide read assembly, while consensus genomes are generated by mapping reads to a reference and replacing reference positions with identified variants (structural and nucleotide). *De novo* assemblies are thus not biased by requiring reads map to the reference, though they may be more fragmented. Consensus assembly can generate more robust assemblies from lower coverage samples if the reference genome is sufficient quality and sufficiently closely related to the inputted sequence, though consensus assembly may not perform well in instances of significant structural variation. TheiaViral uses *de novo* assemblies as an intermediate to acquire the best reference genome for consensus assembly.     
     
     **We generally recommend TheiaViral users focus on the consensus assembly as the desired assembly output**. While we chose the best *de novo* assemblers for TheiaViral based on internal benchmarking, the consensus assembly will often be higher quality than the *de novo* assembly. However, the *de novo* assembly can approach or exceed consensus quality if the read inputs largely comprise one virus, have high depth of coverage, and/or are derived from a virus with high potential for recombination. TheiaViral does conduct assembly contiguity and viral completeness quality control for *de novo* assemblies, so *de novo* assembly that meets quality control standards can certainly be used for downstream analysis.
-</div>
 
-<div class="grid cards " markdown>
 ??? question "How is *de novo* assembly quality evaluated?"
-    
-    *De novo* assembly quality evaluation focuses on the completeness and contiguity of the genome. While a ground truth genome does not truly exist for quality comparison, reference genome selection can help contextualize quality if the reference is sufficiently similar to the *de novo* assembly. TheiaViral uses QUAST to acquire basic contiguity statistics and CheckV to assess viral genome completeness and contamination. Additionally, the reference selection software, Skani, can provide a quantitative comparison between the *de novo* assembly and the best reference genome.
 
-    <br>
+    *De novo* assembly quality evaluation focuses on the completeness and contiguity of the genome. While a ground truth genome does not truly exist for quality comparison, reference genome selection can help contextualize quality if the reference is sufficiently similar to the *de novo* assembly. TheiaViral uses QUAST to acquire basic contiguity statistics and CheckV to assess viral genome completeness and contamination. Additionally, the reference selection software, Skani, can provide a quantitative comparison between the *de novo* assembly and the best reference genome.
 
     **Completeness and contamination**
     <br> 
@@ -302,15 +308,10 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
     - `skani_top_ani`: The percent average nucleotide identity (ANI) for the top Skani hit is ideally 100% if the sequenced virus is highly similar to a reference genome. However, if the virus is divergent, ANI is not a good indication of assembly quality.
     - `skani_top_ref_coverage`: The percent reference coverage for the top Skani hit is ideally 100% if the sequenced virus has not undergone significant recombination/structural variation. 
     - `skani_top_score`: The score for the top Skani hit is the ANI x Reference coverage and is ideally 100% if the sequenced virus is not substantially divergent from the reference dataset.
-</div>
 
-
-<div class="grid cards " markdown>
-??? question "How is consensus assembly quality evaluated?" 
+??? question "How is consensus assembly quality evaluated?"
 
     Consensus assemblies are derived from a reference genome, so quality assessment focuses on coverage and variant quality. Bases with insufficient coverage are denoted as "N". Additionally, the size and contiguity of a TheiaViral consensus assembly is expected to approximate the reference genome, so any discrepancy here is likely due to inferred structural variation.
-
-    <br>
 
     **Completeness and contamination**
     <br>
@@ -332,9 +333,7 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
     - `read_mapping_meanbaseq`: The average mean mapping base quality is ideally as high as possible.
     - `read_mapping_meanmapq`: The average mean mapping alignment quality is ideally as high as possible.
     - `read_mapping_percentage_mapped_reads`: The percent of mapped reads is ideally 100% of the reads classified as the lineage of interest. Some unclassified reads may also map, which may indicate they were erroneously unclassified. Alternatively, these reads could have been erroneously mapped.
-</div>
 
-<div class="grid cards " markdown>
 ??? question "Why did the workflow complete without generating a consensus?" 
 
     TheiaViral is designed to "soft fail" when specific steps do not succeed due to input data quality. This means the workflow will be reported as successful, with an output that delineates the step that failed. If the workflow fails, please look for the following outputs in this order (sorted by timing of failure, latest first):
@@ -344,10 +343,6 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
     - `metaviralspades_status` / `raven_denovo_status`: If this output is populated with something other than "PASS", it indicates the default assembler did not successfully complete or extract viral contigs (MetaviralSPAdes). On their own, these statuses do not correspond directly to workflow failure because fallback *de novo* assemblers are implemented for both TheiaViral workflows.
     - `read_screen_clean`: If this output is populated with something other than "PASS", it indicates the reads did not pass the imposed thresholds. Either the reads are poor quality or the thresholds are too stringent, in which case the thresholds can be relaxed or `skip_screen` can be set to "true".
     - `dehost_wf_download_status`: If this output is populated with something other than "PASS", it indicates a host genome could not be retrieved for decontamination. See the `host` input explanation for more information and review the `download_accession`/`download_taxonomy` task output logs for advanced error parsing.
-
-
-</div>
-
 
 ### Acknowlegments
 

@@ -11,10 +11,10 @@
 {{ include_md("common_text/minimap2_task.md", condition="only_map_ont", indent=4, replacements={'??? task "`minimap2`: Read Alignment Details"' : '??? toggle "Map Reads to Host"'}) }}
 
 {{ include_md("common_text/parse_mapping_task.md", condition="bam_to_unaligned_fastq", indent=4, replacements={'??? task "`parse_mapping`"' : '??? toggle "Extract Unaligned Reads"'}) }}
-    
+
 {{ include_md("common_text/assembly_metrics_task.md", indent=4, replacements={'??? task "`assembly_metrics`"' : '??? toggle "Host Read Mapping Statistics"'}) }}
 
     !!! techdetails "Host Decontaminate Technical Details"
         |  | Links |
         | --- | --- |
-        | SubWorkflow File | [wf_host_decontaminate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_host_decontaminate.wdl) |
+        | Subworkflow File | [wf_host_decontaminate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_host_decontaminate.wdl) |
