@@ -44,15 +44,14 @@ task arln_stats {
 
     GENUS=$(echo ~{taxon} | awk '{print $1}')
     SPECIES=$(echo ~{taxon} | awk '{print $2}')
-    echo "$GENUS $SPECIES"
+    echo "Genus and species: $GENUS $SPECIES"
 
     # Calculate Assembly Ratio
     if [[ "~{taxon}" == "NA" || -z "$SPECIES" || -z "$GENUS" ]]; then
       echo "Full taxonomy not available" > ASSEMBLY_RATIO
       echo "Full taxonomy not available" > TAXON_ASSEMBLY_RATIO_STDEV
-      echo "Full taxonomy not available" > GC_RATIO
       echo "Full taxonomy not available" > TAXON_GC_ST_DEV
-      echo "Full taxonomy not available" > GC_ZSCORE
+      echo "Full taxonomy not available" > TAXON_GC_MEAN
       echo "Full taxonomy not available" > ASSEMBLY_ZSCORE
     elif grep -q "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt; then
       # NCBI Stats Assem Means
@@ -63,33 +62,28 @@ task arln_stats {
       # NCBI Stats StDevs
       ref_assem_st_dev=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $7}' | xargs printf "%.5f\n")
       ref_gc_st_dev=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $13}' | xargs printf "%.5f\n")
-      echo "${ref_assem_st_dev}"
-      echo "${ref_gc_st_dev}"
+      echo "Assembly standard deviation of taxonomy: ${ref_assem_st_dev}"
+      echo "GC standard deviation of taxonomy: ${ref_gc_st_dev}"
       # Metrics Ratios
       assem_ratio=$(python3 -c "print('{:.5f}'.format(~{genome_length} / (float('${assem_mean}') * 1000000)))")
-      gc_ratio=$(python3 -c "print('{:.5f}'.format(~{gc_percent} / float('${gc_mean}')))")
-      echo "${assem_ratio}"
-      echo "${gc_ratio}"
+      echo "Calculated assembly ratio: ${assem_ratio}"
       # Calculate Z-score, {observed}-{expected}/{stdev}
       assem_zscore=$(python3 -c "print('{:.5f}'.format((~{genome_length} - (float('${assem_mean}') * 1000000)) / (float('${ref_assem_st_dev}') * 1000000)))")
-      gc_zscore=$(python3 -c "print('{:.5f}'.format((~{gc_percent} - float('${gc_mean}')) / float('${ref_gc_st_dev}')))")
       # Ratios
       echo "${assem_ratio}" > ASSEMBLY_RATIO
-      echo "${gc_ratio}" > GC_RATIO
       # StDev
       echo "${ref_assem_st_dev}" > TAXON_ASSEMBLY_RATIO_STDEV
       echo "${ref_gc_st_dev}" > TAXON_GC_ST_DEV
       # Zscore 
       echo "${assem_zscore}" > ASSEMBLY_ZSCORE
-      echo "${gc_zscore}" > GC_ZSCORE 
-
+      # Mean
+      echo "${gc_mean}" > TAXON_GC_MEAN
     else
       echo "Taxon not found in stats file" > ASSEMBLY_RATIO
       echo "Taxon not found in stats file" > TAXON_ASSEMBLY_RATIO_STDEV
-      echo "Taxon not found in stats file" > GC_RATIO
       echo "Taxon not found in stats file" > TAXON_GC_ST_DEV
-      echo "Taxon not found in stats file" > GC_ZSCORE
-      echo "Taxon not found in stats file" > ASSEMBLY_ZSCORE
+      echo "Taxon not found in stats file" > TAXON_GC_MEAN
+      echo "Taxon not found in stats file" > ASSEMBLY_ZSCOREw
     fi
   >>>
   output {
@@ -99,9 +93,8 @@ task arln_stats {
     String read2_clean_q30 = read_string("read2_clean_q30")
     String assembly_ratio = read_string("ASSEMBLY_RATIO")
     String taxon_assembly_ratio_stdev = read_string("TAXON_ASSEMBLY_RATIO_STDEV")
-    String gc_percent_ratio = read_string("GC_RATIO")
     String taxon_gc_percent_stdev = read_string("TAXON_GC_ST_DEV")
-    String gc_zscore = read_string("GC_ZSCORE")
+    String taxon_gc_mean = read_string("TAXON_GC_MEAN")
     String assembly_zscore = read_string("ASSEMBLY_ZSCORE")
     String docker_version = docker
   }

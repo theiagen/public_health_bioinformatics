@@ -1216,9 +1216,8 @@ workflow theiaprok_illumina_pe {
     String? arln_r2_q30_clean = arln_stats.read2_clean_q30
     String? arln_assembly_ratio = arln_stats.assembly_ratio
     String? arln_taxon_assembly_ratio_stdev = arln_stats.taxon_assembly_ratio_stdev
-    String? arln_gc_percent_ratio  = arln_stats.gc_percent_ratio
     String? arln_taxon_gc_percent_stdev = arln_stats.taxon_gc_percent_stdev
-    String? arln_gc_zscore = arln_stats.gc_zscore
+    String? arln_taxon_gc_mean = arln_stats.taxon_gc_mean
     String? arln_assembly_zscore = arln_stats.assembly_zscore
     String? arln_stats_docker_version = arln_stats.docker_version
   }
