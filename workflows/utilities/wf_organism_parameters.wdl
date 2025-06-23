@@ -269,10 +269,10 @@ workflow organism_parameters {
   # set rabies nextclade parameters
   if (organism == "rabies" || organism == "Lyssavirus rabies" || organism == "lyssavirus" || organism == "Lyssavirus" || organism == "Rabies" || organism == "11292" || organism == "11286") {
     String rabies_org_name = "rabies"
-    File rabies_nextclade_gff = "gs://theiagen-public-resources-rp/reference_data/viral/rabies/nextclade/genome_annotation.gff3"
-    File rabies_pathogen_json = "gs://theiagen-public-resources-rp/reference_data/viral/rabies/nextclade/pathogen.json"
-    File rabies_nextclade_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rabies/nextclade/reference.fasta"
-    File rabies_nextclade_tree = "gs://theiagen-public-resources-rp/reference_data/viral/rabies/nextclade/tree.json"
+    File rabies_nextclade_gff = "gs://theiagen-public-resources-rp/reference_data/viral/rabies/nextclade/rabies_genome_annotation.20250623.gff3"
+    File rabies_pathogen_json = "gs://theiagen-public-resources-rp/reference_data/viral/rabies/nextclade/rabies_pathogen.20250623.json"
+    File rabies_nextclade_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rabies/nextclade/rabies_reference.20250623.fasta"
+    File rabies_nextclade_tree = "gs://theiagen-public-resources-rp/reference_data/viral/rabies/nextclade/rabies_tree.20250623.json"
   }
   output {
     # standardized organism flag
