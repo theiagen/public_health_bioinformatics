@@ -25,7 +25,6 @@ task flye {
     Int memory = 32
   }
   command <<<
-    set -euo pipefail
     flye --version | tee VERSION
     
     # genome size parameter requires asm_coverage
