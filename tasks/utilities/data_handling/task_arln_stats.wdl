@@ -77,6 +77,7 @@ task arln_stats {
       # Zscore 
       echo "${assem_zscore}" > ASSEMBLY_ZSCORE
       # Mean
+      gc_mean=$(printf "%.5f" ${gc_mean})
       echo "${gc_mean}" > TAXON_GC_MEAN
     else
       echo "Taxon not found in stats file" > ASSEMBLY_RATIO
