@@ -42,7 +42,10 @@ task bcftools_consensus {
     bcftools consensus \
       ~{samplename}_filtered.vcf.gz \
       --fasta-ref ~{reference_fasta} \
-      --output ~{samplename}_consensus.fasta
+      --output ~{samplename}_temp.fasta
+
+    # prepend samplename to fasta headers
+    sed -e 's/^>/>'~{samplename}'_/' ~{samplename}_temp.fasta > ~{samplename}_consensus.fasta
 
     # decompress the vcf file
     gunzip ~{samplename}_filtered.vcf.gz
