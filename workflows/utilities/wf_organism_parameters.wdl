@@ -13,6 +13,7 @@ workflow organism_parameters {
     # flu information
     String flu_segment = "N/A"
     String flu_subtype = "N/A"
+    String flu_genoflu_genotype = "N/A"
 
     # sequencing & reference information
     File? primer_bed_file
@@ -194,6 +195,12 @@ workflow organism_parameters {
         String yam_na_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam.json"
       }
     }
+    if (flu_genoflu_genotype == "B3.13") {
+      String b3_13_custom_nextclade_dataset = "gs://theiagen-public-resources-rp/reference_data/viral/flu/nextclade_avian-flu_h5n1-cattle-outbreak_h5n1-b3.13_2025-06-24.json"
+    }
+    if (flu_genoflu_genotype == "D1.1") {
+      String d1_1_custom_nextclade_dataset = "gs://theiagen-public-resources-rp/reference_data/viral/flu/nextclade_avian-flu_h5n1-d1.1_2025-06-24.json"
+    }
   }
   if (organism == "rsv_a" || organism == "rsv-a" || organism == "RSV-A" || organism == "RSV_A") {
     String rsv_a_org_name = "rsv_a"
@@ -279,6 +286,7 @@ workflow organism_parameters {
     # nextclade information
     String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h5n1_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, measles_nextclade_ds_tag, "NA"])
     String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h5n1_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, measles_nextclade_ds_name, "NA"])
+    File nextclade_custom_dataset = select_first([b3_13_custom_nextclade_dataset, d1_1_custom_nextclade_dataset, "gs://theiagen-public-resources-rp/empty_files/empty.json"])
     # pangolin options
     String pangolin_docker = select_first([pangolin_docker_image, sc2_pangolin_docker, ""])
     # vadr options
