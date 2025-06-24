@@ -34,7 +34,7 @@ workflow theiaviral_illumina_pe {
     Boolean call_metaviralspades = true # if false, move to megahit immediately
     Boolean skip_rasusa = true 
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
-    Boolean extract_unclassified = false # if true, unclassified reads will be extracted from kraken2 output
+    Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
     Int min_depth = 10
     Int min_map_quality = 20
     Float min_allele_freq = 0.6

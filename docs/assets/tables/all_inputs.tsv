@@ -1973,7 +1973,7 @@ theiaviral_illumina_pe	read1	File	llumina forward read file in FASTQ file format
 theiaviral_illumina_pe	read2	File	llumina reverse read file in FASTQ file format (compression optional)		Required	TheiaViral_Illumina_PE
 theiaviral_illumina_pe	samplename	String	Nme of the sample being analyzed		Required	TheiaViral_Illumina_PE
 theiaviral_illumina_pe	taxon	String	Taxon ID or organism name of interest		Required	TheiaViral_Illumina_PE
-theiaviral_illumina_pe	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	FALSE	Optional	TheiaViral_Illumina_PE
+theiaviral_illumina_pe	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	TRUE	Optional	TheiaViral_Illumina_PE
 theiaviral_illumina_pe	genome_length	Int	Expected genome length of taxon of interest		Optional	TheiaViral_Illumina_PE
 theiaviral_illumina_pe	kraken_db	File	Kraken2 database file	"gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"	Optional	TheiaViral_Illumina_PE
 theiaviral_illumina_pe	min_allele_freq	Float	Minimum allele frequency required for a variant to populate the consensus sequence	0.6	Optional	TheiaViral_Illumina_PE
@@ -2025,7 +2025,7 @@ mask_low_coverage	memory	Int	Memory allocated for the task (in GB)	8	Optional	Th
 metabuli	cpu	Int	Number of CPUs allocated for the task	4	Optional	TheiaViral_ONT
 metabuli	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_ONT
 metabuli	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0"	Optional	TheiaViral_ONT
-metabuli	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	FALSE	Optional	
+metabuli	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	TRUE	Optional	
 metabuli	memory	Int	Memory allocated for the task (in GB)	16	Optional	TheiaViral_ONT
 metabuli	metabuli_db	File	Metabuli database file	"gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz"	Optional	TheiaViral_ONT
 metabuli	min_percent_coverage	Float	Minimum query coverage threshold (0.0 - 1.0)	0.0	Optional	TheiaViral_ONT
