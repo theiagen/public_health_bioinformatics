@@ -1,4 +1,4 @@
-Hello, and thank you for contributing to Theiagen's Public Health Bioinformatics repository! 
+Hello, and thank you for contributing to Theiagen's Public Health Bioinformatics repository!
 
 Please go to the "PREVIEW" tab to select the appropriate template for your PR.
 

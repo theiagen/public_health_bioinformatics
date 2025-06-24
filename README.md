@@ -42,6 +42,14 @@ You can expect a careful review of every PR and feedback as needed before mergin
 
 ### Authorship
 
+<!-- 
+A Public Service Announcement regarding calculating the contribution math:
+
+Andrew Hale added a .txt database file to docs/assets that artifically inflates his line 
+count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract 
+55,316 from his line count when updating this list. okay thanks byee
+-->
+
 (Ordered by contribution [# of lines changed] as of 2025-06-11)
 
 - **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision
