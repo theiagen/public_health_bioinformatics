@@ -204,8 +204,8 @@ Options:
 
     **HTTPS URL (for local download):**
 
-    - <https://storage.googleapis.com/gambit-databases-rp/2.0.0/gambit-metadata-2.0.1-20250505.gdb>
-    - <https://storage.googleapis.com/gambit-databases-rp/2.0.0/gambit-signatures-2.0.1-20250505.gs>
+    - <https://storage.cloud.google.com/gambit-databases-rp/2.0.0/gambit-metadata-2.0.1-20250505.gdb>
+    - <https://storage.cloud.google.com/gambit-databases-rp/2.0.0/gambit-signatures-2.0.1-20250505.gs>
 
 #### GAMBIT GTDB Database v2.0.0
 
