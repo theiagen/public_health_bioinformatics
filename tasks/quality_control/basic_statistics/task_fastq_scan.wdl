@@ -8,7 +8,7 @@ task fastq_scan_pe {
     String read2_name = basename(basename(basename(read2, ".gz"), ".fastq"), ".fq")
     Int disk_size = 50
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3"
-    Int memory = 2
+    Int memory = 4
     Int cpu = 1
   }
   command <<<

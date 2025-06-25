@@ -6,39 +6,9 @@
 
     The detailed steps and tasks are as follows:
 
-    ??? toggle "`Porechop`: Read Trimming (optional; off by default)"
-        Read trimming is optional and can be enabled by setting the `run_porchop` input variable to true.
+{{ include_md("common_text/porechop_task.md", indent=4, replacements={'??? task "`porechop`"' : '??? toggle "`Porechop`: Read Trimming (optional; off by default)"'}) }}
 
-        Porechop is a tool for finding and removing adapters from ONT data. Adapters on the ends of reads are trimmed, and when a read has an adapter in the middle, the read is split into two.
-
-        !!! techdetails "Porechop Technical Details"
-            |  | Links |
-            | --- | --- |
-            | WDL Task | [task_porechop.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_porechop.wdl) |
-            | Software Source Code | [Porechop on GitHub](https://github.com/rrwick/Porechop) |
-            | Software Documentation | [https://github.com/rrwick/Porechop#porechop](https://github.com/rrwick/Porechop#porechop) |
-
-    ??? toggle "`Flye`: _De novo_ Assembly"
-        Flye is a _de novo_ assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerates the error rate of ONT data.
-
-        `flye_read_type` specifies the type of sequencing reads being used for assembly. This parameter significantly impacts the assembly process and should match the characteristics of your input data. Below are the available options:
-
-        - `--nano-hq` (default): Optimized for ONT high-quality reads, such as Guppy5+ SUP or Q20 (<5% error). Recommended for ONT reads processed with Guppy5 or newer
-        - `--nano-raw`: For ONT regular reads, pre-Guppy5 (<20% error)
-        - `--nano-corr`: ONT reads corrected with other methods (<3% error)
-        - `--pacbio-raw`: PacBio regular CLR reads (<20% error)
-        - `--pacbio-corr`: PacBio reads corrected with other methods (<3% error)
-        - `--pacbio-hifi`: PacBio HiFi reads (<1% error)
-        
-        Refer to the Flye documentation for detailed guidance on selecting the appropriate `flye_read_type` based on your sequencing data and additional optional paramaters.
-
-        !!! techdetails "Flye Technical Details"
-            |  | Links |
-            | --- | --- |
-            | WDL Task | [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl) |
-            | Software Source Code | [Flye on GitHub](https://github.com/fenderglass/Flye) |
-            | Software Documentation | [Flye Documentation](https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md) |
-            | Original Publication(s) | [Assembly of long, error-prone reads using repeat graphs](https://www.nature.com/articles/s41587-019-0072-8) |
+{{ include_md("common_text/flye_task.md", indent=4, replacements={'??? task "`flye`"' : '??? toggle "`Flye`: _De novo_ Assembly"'}) }}
 
     ??? toggle "`Bandage`: Graph Visualization"
         Bandage creates _de novo_ assembly graphs containing the assembled contigs and the connections between those contigs.
