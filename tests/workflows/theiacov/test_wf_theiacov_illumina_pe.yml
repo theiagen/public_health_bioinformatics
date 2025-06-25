@@ -235,9 +235,9 @@
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/_miniwdl_inputs/0/SRR13687078.primertrim.sorted.bam
     # variant call
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/command
-      md5sum: da7011aeb44b10f39201559c18f2b866
+      md5sum: 11c5f21266f5a581a3accff96bd90b08
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/inputs.json
-      contains: ["bamfile", "variant_min_freq", "samplename"]
+      contains: ["mpileup", "variant_min_freq", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/outputs.json
       contains: ["variant_call", "variant_proportion"]
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/stderr.txt
@@ -249,8 +249,6 @@
       md5sum: 2edd145a24bee2b3465b82715869b561
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/PROPORTION_INTERMEDIATE
       md5sum: 897316929176464ebc9ad085f31e7284
-    - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/SAMTOOLS_VERSION
-      md5sum: 03c5ecf22fdfdb6b240ac3880281a056
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/SRR13687078.variants.tsv
       md5sum: 62866e1b035313f78e617ecd678a96fd
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/SRR13687078.variants.vcf
@@ -263,10 +261,9 @@
       md5sum: 6e4cb2a08eb4c481d33084d41ce6855c
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/unique_variants.tsv
       md5sum: 921b668f54392a4da96177ded87420cf
-    - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/_miniwdl_inputs/0/SRR13687078.primertrim.sorted.bam
     # consensus
     - path: miniwdl_run/call-ivar_consensus/call-consensus/command
-      md5sum: 89e10c8cf1368912456d477a3cb30dbf
+      md5sum: 9b26c53c61e07fdf26eb61ff125887dd
     - path: miniwdl_run/call-ivar_consensus/call-consensus/inputs.json
       contains: ["bamfile", "samplename", "min_depth"]
     - path: miniwdl_run/call-ivar_consensus/call-consensus/outputs.json

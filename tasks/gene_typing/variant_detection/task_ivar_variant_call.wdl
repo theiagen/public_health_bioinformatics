@@ -2,14 +2,11 @@ version 1.0
 
 task variant_call {
   input {
-    File bamfile
+    File mpileup
     String samplename
+    String organism = "sars-cov-2" # default to sars-cov-2 to maintain previous behavior
     File? reference_genome
     File? reference_gff 
-    Boolean count_orphans = true
-    Int max_depth = "600000"
-    Boolean disable_baq = true
-    Int min_bq = "0"
     Int min_qual = "20"
     Float? variant_min_freq 
     Int? variant_min_depth 
@@ -22,11 +19,10 @@ task variant_call {
     set -euo pipefail
     # version control
     ivar version | head -n1 | tee IVAR_VERSION
-    samtools --version | head -n1 | tee SAMTOOLS_VERSION
 
     # set reference genome
     if [[ ! -z "~{reference_genome}" ]]; then
-      echo "User reference identified; ~{reference_genome} will be utilized for alignement"
+      echo "User reference identified; ~{reference_genome} will be used for alignement"
       ref_genome="~{reference_genome}"
       bwa index "~{reference_genome}"
       # move to primer_schemes dir; bwa fails if reference file not in this location
@@ -36,28 +32,27 @@ task variant_call {
     
     # set reference gff
     if [[ ! -z "~{reference_gff}" ]]; then
-      echo "User reference identified; ~{reference_genome} will be utilized for alignement"
+      echo "User reference identified; ~{reference_gff} will be used for alignement"
       ref_gff="~{reference_gff}"
+      ref_gff_call="-g ${ref_gff}"
       # move to primer_schemes dir; bwa fails if reference file not in this location
+    elif [[ ! -z "~{organism}" ]]; then
+      # default to sars-cov-2 reference gff to preserve initial theiacov behavior
+      ref_gff="/reference/GCF_009858895.2_ASM985889v3_genomic.gff"
+      ref_gff_call="-g ${ref_gff}"
     else
-      ref_gff="/reference/GCF_009858895.2_ASM985889v3_genomic.gff"  
+      ref_gff_call=""
     fi
     
     # call variants
-    samtools mpileup \
-    ~{true = "-A" false = "" count_orphans} \
-    -d ~{max_depth} \
-    ~{true = "-B" false = "" disable_baq} \
-    -Q ~{min_bq} \
-    --reference ${ref_genome} \
-    ~{bamfile} | \
+    cat ~{mpileup} | \
     ivar variants \
-    -p ~{samplename}.variants \
-    -q ~{min_qual} \
-    -t ~{variant_min_freq} \
-    -m ~{variant_min_depth} \
-    -r ${ref_genome} \
-    -g ${ref_gff}
+      -p ~{samplename}.variants \
+      -q ~{min_qual} \
+      -t ~{variant_min_freq} \
+      -m ~{variant_min_depth} \
+      -r ${ref_genome} \
+      ${ref_gff_call}
 
     # Convert TSV to VCF
     ivar_variants_to_vcf.py ~{samplename}.variants.tsv ~{samplename}.variants.vcf
@@ -95,7 +90,6 @@ task variant_call {
     File sample_variants_tsv = "~{samplename}.variants.tsv"
     File sample_variants_vcf = "~{samplename}.variants.vcf"
     String ivar_version = read_string("IVAR_VERSION")
-    String samtools_version = read_string("SAMTOOLS_VERSION")
   }
   runtime {
     docker: docker

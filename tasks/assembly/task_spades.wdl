@@ -69,7 +69,7 @@ task spades {
     fi
   >>>
   output {
-    File assembly_fasta = "~{samplename}~{'_' + spades_type + 'spades'}_contigs.fasta"
+    File? assembly_fasta = "~{samplename}~{'_' + spades_type + 'spades'}_contigs.fasta"
     File? assembly_gfa = "~{samplename}~{'_' + spades_type + 'spades'}_contigs.gfa"
     String spades_status = read_string("STATUS")
     String spades_version = read_string("VERSION")
