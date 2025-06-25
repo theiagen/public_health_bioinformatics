@@ -1101,6 +1101,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/genomic_characterization/vadr_update/" class="md-nav__link">
         
   
@@ -1990,6 +2013,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/standalone/kraken2/" class="md-nav__link">
         
   
@@ -2462,6 +2508,29 @@
   
   <span class="md-ellipsis">
     Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
     
   </span>
   
@@ -3753,6 +3822,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_placement/usher/" class="md-nav__link">
         
   
@@ -4230,6 +4322,29 @@
   
   <span class="md-ellipsis">
     GAMBIT_Query
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
     
   </span>
   
@@ -4845,6 +4960,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/data_export/transfer_column_content/" class="md-nav__link">
         
   
@@ -5089,7 +5227,7 @@
 <summary><code>read_QC_trim</code>: Read Quality Trimming, Adapter Removal, Quantification, and Identification</summary>
 <p><code>read_QC_trim</code> is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the <code>read_QC_trim</code> sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.</p>
 </details>
-<!-- if: theiacov|freyja -->
+<!-- if: theiacov|freyja|theiaviral -->
 <div class="language-text highlight"><pre><span></span><code>??? toggle &quot;`HRRT`: Human Host Sequence Removal&quot;
 
     All reads of human origin **are removed**, including their mates, by using NCBI&#39;s [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber).
@@ -5109,14 +5247,28 @@
 
     Either `trimmomatic` or `fastp` can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of `trim_window_size`), cutting once the average quality within the window falls below `trim_quality_trim_score`. They will both discard the read if it is trimmed below `trim_minlen`.
 
-    If fastp is selected for analysis, fastp also implements the additional read-trimming steps indicated below:
+    ??? dna &quot;`read_processing` input parameter&quot;
+        This input parameter accepts either `trimmomatic` or `fastp` as an input to determine which tool should be used for read quality trimming. This is set to `trimmomatic` by default.
 
-    | **Parameter** | **Explanation** |
-    | --- | --- |
-    | `-g` | enables polyG tail trimming |
-    | `-5 20` | enables read end-trimming |
-    | `-3 20` | enables read end-trimming |
-    | `--detect_adapter_for_pe` | enables adapter-trimming **only for paired-end reads** |
+        If the `fastp` option is selected, see below for table of default parameters.
+
+        ??? toggle &quot;`fastp` default read-trimming parameters&quot;
+            | **Parameter** | **Explanation** |
+            | --- | --- |
+            | -g | enables polyG tail trimming |
+            | -5 20 | enables read end-trimming |
+            | -3 20 | enables read end-trimming |
+            | --detect_adapter_for_pe | enables adapter-trimming **only for paired-end reads** |
+
+            Additional arguments can be passed using the `fastp_args` optional parameter.
+
+    !!! techdetails &quot;Trimmomatic and fastp Technical Details&quot;
+        |  | Links |
+        | --- | --- |
+        | Task | [task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)&lt;br&gt;[task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl) |
+        | Software Source Code | [Trimmomatic](https://github.com/usadellab/Trimmomatic)&lt;br&gt;[fastp on Github](https://github.com/OpenGene/fastp) |
+        | Software Documentation | [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic)&lt;br&gt;[fastp](https://github.com/OpenGene/fastp) |
+        | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)&lt;br&gt;[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false) |
 
 ??? toggle &quot;Adapter removal&quot;
 
@@ -5125,12 +5277,29 @@
     - [Repair](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.
     - [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/)  (*&quot;Bestus Bioinformaticus&quot; Decontamination Using Kmers*) is then used to trim the adapters and filter out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html), which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.
 
-    ??? toggle &quot;What are adapters and why do they need to be removed?&quot;
+    ??? question &quot;What are adapters and why do they need to be removed?&quot;
         Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters [here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it&#39;s important to remove these sequences since they&#39;re not actually from your sample. If you don&#39;t remove them, the downstream analysis may be affected.
+
+    !!! techdetails &quot;BBDuk Technical Details&quot;
+        |  | Links |
+        | --- | --- |
+        | Task | [task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl) |
+        | Software Source Code | [BBTools](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/) |
+        | Software Documentation | [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/) |
 
 ??? toggle &quot;Read Quantification&quot;
 
     There are two methods for read quantification to choose from: [`fastq-scan`](https://github.com/rpetit3/fastq-scan) (default) or [`fastqc`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Both quantify the forward and reverse reads in FASTQ files. For paired-end data, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads. `fastqc` also provides a graphical visualization of the read quality.
+
+    ??? dna &quot;`read_qc` input parameter&quot;
+        This input parameter accepts either `&quot;fastq_scan&quot;` or `&quot;fastqc&quot;` as an input to determine which tool should be used for read quantification. This is set to `&quot;fastq-scan&quot;` by default.
+
+    !!! techdetails &quot;fastq-scan and FastQC Technical Details&quot;
+        |  | Links |
+        | --- | --- |
+        | Task | [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)&lt;br&gt;[task_fastqc.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl&quot;) |
+        | Software Source Code | [fastq-scan on Github](https://github.com/rpetit3/fastq-scan)&lt;br&gt;[fastqc on Github](https://github.com/s-andrews/FastQC) |
+        | Software Documentation | [fastq-scan](https://github.com/rpetit3/fastq-scan/blob/master/README.md)&lt;br&gt;[fastqc](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/) |
 </code></pre></div>
 <!-- if: theiaprok|theiameta -->
 <div class="language-text highlight"><pre><span></span><code>??? toggle &quot;Read Identification with MIDAS (optional)&quot;
@@ -5187,11 +5356,26 @@
         Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the [MIDAS GitHub guide on building a custom database](https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md). Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workkspace and provide the link to the database in the `midas_db` input variable.
 
     ---
+
+    !!! techdetails &quot;MIDAS Technical Details&quot;
+        |  | Links |
+        | --- | --- |
+        | Task | [task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl) |
+        | Software Source Code | [MIDAS](https://github.com/snayfach/MIDAS)
+        | Software Documentation | [MIDAS](https://github.com/snayfach/MIDAS)
+        | Original Publication(s) | [An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195) |
 </code></pre></div>
 <!-- endif -->
 <!-- if: theiacov -->
-<div class="language-text highlight"><pre><span></span><code>    `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
+<div class="language-text highlight"><pre><span></span><code>??? toggle &quot;Read Identification with Kraken2&quot;
 
+    `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
+
+    Kraken2 is run on both the raw and clean reads.
+
+
+    !!! info &quot;Database-dependent&quot;
+        This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq&#39;s viral sequence collection and human genome GRCh38. It&#39;s available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`.
 
 
 
@@ -5206,15 +5390,146 @@
 </code></pre></div>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>!!! techdetails &quot;read_QC_trim Technical Details&quot;
-    |  | Links |
-    | --- | --- |
-    | Sub-workflow | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl)&lt;br&gt;[wf_read_QC_trim_se.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl) |
-    | Tasks | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl)&lt;br&gt;[task_trimmomatic.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl)&lt;br&gt;[task_bbduk.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl)&lt;br&gt;[task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)&lt;br&gt;[task_midas.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl)&lt;br&gt;[task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl)|
-    | Software Source Code | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](https://github.com/usadellab/Trimmomatic); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2)|
-    | Software Documentation | [fastp](https://github.com/OpenGene/fastp); [Trimmomatic](http://www.usadellab.org/cms/?page=trimmomatic); [BBDuk](https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/); [fastq-scan](https://github.com/rpetit3/fastq-scan); [MIDAS](https://github.com/snayfach/MIDAS); [Kraken2](https://github.com/DerrickWood/kraken2/wiki) |
-    | Original Publication(s) | [Trimmomatic: a flexible trimmer for Illumina sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/)&lt;br&gt;[fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false)&lt;br&gt;[An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography](https://pubmed.ncbi.nlm.nih.gov/27803195/)&lt;br&gt;[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+<!-- if: theiaviral -->
+<div class="language-text highlight"><pre><span></span><code>??? toggle &quot;`host_decontaminate`: Host read decontamination&quot;
+
+    Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome acquired on-the-fly. The reference host genome can be acquired via [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon input or assembly accession. Host Decontaminate maps inputted reads to the host genome using `minimap2`, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads.
+
+    The detailed steps and tasks are as follows:
+
+    ??? toggle &quot;Taxonomic Identification&quot;
+
+        The `ncbi_identify` task uses [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user&#39;s inputted taxonomy and desired taxonomic rank. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including **read classification and targeted read extraction**. This task also generates a comprehensive summary file of all successful hits to the input `taxon`, which includes each taxon&#39;s accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input `taxon`.
+
+        ??? dna &quot;`taxon` input parameter&quot;
+            This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
+
+        ??? dna &quot;`rank` a.k.a `read_extraction_rank` input parameter&quot;
+            Valid options include: `&quot;species&quot;`, `&quot;genus&quot;`, `&quot;family&quot;`, `&quot;order&quot;`, `&quot;class&quot;`, `&quot;phylum&quot;`, `&quot;kingdom&quot;`, or `&quot;domain&quot;`. By default it is set to `&quot;family&quot;`. This parameter filters metadata to report information only at the taxonomic `rank` specified by the user, regardless of the taxonomic rank implied by the original input `taxon`.
+
+        ???+ warning &quot;Important&quot;
+            - The `rank` parameter **must** specify a taxonomic rank that is ==equal to or above== the input taxon&#39;s taxonomic rank.
+
+            **Examples:**
+
+            - If your input `taxon` is `Lyssavirus rabies` (species level) with `rank` set to `family`, the task will return information for the family of `Lyssavirus rabies`: taxon ID for Rhabdoviridae (11270), name &quot;Rhabdoviridae&quot;, and rank &quot;family&quot;.
+            - If your input `taxon` is `Lyssavirus` (genus level) with `rank` set to `species`, the task will fail because it cannot determine species information from an inputted genus.
+
+        !!! techdetails &quot;NCBI Datasets Technical Details&quot;
+            |  | Links |
+            | --- | --- |
+            | Task | [task_identify_taxon_id.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_identify_taxon_id.wdl) |
+            | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
+            | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
+            | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
+
+
+    ??? toggle &quot;Download Accession&quot;
+
+        The [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/) task downloads specified assemblies from NCBI using either the [virus](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) or [genome](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/) (for all other genome types) package as appropriate.
+
+        This task uses the accession ID output from the `skani` task to download the the most closely related reference genome to the input assembly. The downloaded reference is then used for downstream analysis, including variant calling and consensus generation.
+
+        !!! techdetails &quot;NCBI Datasets Technical Details&quot;
+            |  | Links |
+            | --- | --- |
+            | Task | [task_ncbi_datasets.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl) |
+            | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
+            | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
+            | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
+
+    ??? toggle &quot;Map Reads to Host&quot;
+
+        `minimap2` is a popular aligner that is used to align reads (or assemblies) to an assembly file. In minimap2, &quot;modes&quot; are a group of preset options.
+
+
+        The mode used in this task is `map-ont` which is the default mode for long reads and indicates that long reads of ~10% error rates should be aligned to the reference genome. The output file is in SAM format.
+
+
+
+        For more information regarding modes and the available options for `minimap2`, please see the [minimap2 manpage](https://lh3.github.io/minimap2/minimap2.html)
+
+        !!! techdetails &quot;minimap2 Technical Details&quot;
+            | | Links |
+            |---|---|
+            | Task | [task_minimap2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl) |
+            | Software Source Code | [minimap2 on GitHub](https://github.com/lh3/minimap2) |
+            | Software Documentation | [minimap2](https://lh3.github.io/minimap2) |
+            | Original Publication(s) | [Minimap2: pairwise alignment for nucleotide sequences](https://academic.oup.com/bioinformatics/article/34/18/3094/4994778) |
+
+
+    ??? toggle &quot;Extract Unaligned Reads&quot;
+
+
+        The `bam_to_unaligned_fastq` task will extract a FASTQ file of reads that failed to align, while removing unpaired reads.
+
+
+        !!! techdetails &quot;`parse_mapping` Technical Details&quot;
+            | | Links |
+            |---|---|
+            | Task | [task_parse_mapping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
+            | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
+            | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+            | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)&lt;br&gt;[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+
+    ??? toggle &quot;Host Read Mapping Statistics&quot;
+
+        The `assembly_metrics` task generates mapping statistics from a BAM file. It uses samtools to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics.
+
+        !!! techdetails &quot;`assembly_metrics` Technical Details&quot;
+            |  | Links |
+            | --- | --- |
+            | Task | [task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl) |
+            | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
+            | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+            | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)&lt;br&gt;[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
+
+    !!! techdetails &quot;Host Decontaminate Technical Details&quot;
+        |  | Links |
+        | --- | --- |
+        | Subworkflow File | [wf_host_decontaminate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_host_decontaminate.wdl) |
+
+??? toggle &quot;Read Identification&quot;
+
+    `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
+
+
+    This task runs on cleaned reads passed from the `read_QC_trim` subworkflow and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones.
+
+    !!! info &quot;Database-dependent&quot;
+        This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq&#39;s viral sequence collection and human genome GRCh38. It&#39;s available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`.
+
+
+
+
+    !!! techdetails &quot;Kraken2 Technical Details&quot;
+        |  | Links |
+        | --- | --- |
+        | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
+        | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/)  |
+        | Software Documentation | &lt;https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown&gt; |
+        | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0) |
+
+
+??? toggle &quot;Read Extraction&quot;
+
+    The `task_krakentools.wdl` task extracts reads from the Kraken2 output file. It uses the [KrakenTools](https://github.com/jenniferlu717/KrakenTools) package to extract reads classified at any user-specified taxon ID.
+
+    ??? dna &quot;`extract_unclassified` input parameter&quot;
+        This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
+
+    ???+ warning &quot;Important&quot;
+        This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all suboridante taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section for more details on the `rank` input parameter.
+
+    !!! techdetails &quot;KrakenTools Technical Details&quot;
+        |  | Links |
+        | --- | --- |
+        | Task | [task_krakentools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_krakentools.wdl) |
+        | Software Source Code | [KrakenTools on GitHub](https://github.com/jenniferlu717/KrakenTools) |
+        | Software Documentation | [KrakenTools](https://github.com/jenniferlu717/KrakenTools/blob/master/README.md) |
+        | Original Publication(s) | [Metagenome analysis using the Kraken software suite](https://doi.org/10.1126/scitranslmed.aap9489) |
 </code></pre></div>
+<!-- endif -->
 
 
 
@@ -5237,7 +5552,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10 UTC">2025-05-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
   </span>
 
     

@@ -1101,6 +1101,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/genomic_characterization/vadr_update/" class="md-nav__link">
         
   
@@ -1990,6 +2013,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/standalone/kraken2/" class="md-nav__link">
         
   
@@ -2462,6 +2508,29 @@
   
   <span class="md-ellipsis">
     Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
     
   </span>
   
@@ -3753,6 +3822,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_placement/usher/" class="md-nav__link">
         
   
@@ -4230,6 +4322,29 @@
   
   <span class="md-ellipsis">
     GAMBIT_Query
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
     
   </span>
   
@@ -4845,6 +4960,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/data_export/transfer_column_content/" class="md-nav__link">
         
   
@@ -5095,7 +5233,6 @@
 <p>The detailed steps and tasks are as follows:</p>
 <details class="toggle">
 <summary><code>Porechop</code>: Read Trimming (optional; off by default)</summary>
-<p>Read trimming is optional and can be enabled by setting the <code>run_porchop</code> input variable to true.</p>
 <p>Porechop is a tool for finding and removing adapters from ONT data. Adapters on the ends of reads are trimmed, and when a read has an adapter in the middle, the read is split into two.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Porechop Technical Details</p>
@@ -5126,16 +5263,49 @@
 <details class="toggle">
 <summary><code>Flye</code>: <em>De novo</em> Assembly</summary>
 <p>Flye is a <em>de novo</em> assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerates the error rate of ONT data.</p>
-<p><code>flye_read_type</code> specifies the type of sequencing reads being used for assembly. This parameter significantly impacts the assembly process and should match the characteristics of your input data. Below are the available options:</p>
-<ul>
-<li><code>--nano-hq</code> (default): Optimized for ONT high-quality reads, such as Guppy5+ SUP or Q20 (&lt;5% error). Recommended for ONT reads processed with Guppy5 or newer</li>
-<li><code>--nano-raw</code>: For ONT regular reads, pre-Guppy5 (&lt;20% error)</li>
-<li><code>--nano-corr</code>: ONT reads corrected with other methods (&lt;3% error)</li>
-<li><code>--pacbio-raw</code>: PacBio regular CLR reads (&lt;20% error)</li>
-<li><code>--pacbio-corr</code>: PacBio reads corrected with other methods (&lt;3% error)</li>
-<li><code>--pacbio-hifi</code>: PacBio HiFi reads (&lt;1% error)</li>
-</ul>
+<details class="dna">
+<summary><code>flye_read_type</code> input parameter</summary>
+<p>This input parameter specifies the type of sequencing reads being used for assembly. This parameter significantly impacts the assembly process and should match the characteristics of your input data. Below are the available options:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Explanation</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--nano-hq</code> (default)</td>
+<td>Optimized for ONT high-quality reads, such as Guppy5+ SUP or Q20 (&lt;5% error). Recommended for ONT reads processed with Guppy5 or newer</td>
+</tr>
+<tr>
+<td><code>--nano-raw</code></td>
+<td>For ONT regular reads, pre-Guppy5 (&lt;20% error)</td>
+</tr>
+<tr>
+<td><code>--nano-corr</code></td>
+<td>ONT reads corrected with other methods (&lt;3% error)</td>
+</tr>
+<tr>
+<td><code>--pacbio-raw</code></td>
+<td>PacBio regular CLR reads (&lt;20% error)</td>
+</tr>
+<tr>
+<td><code>--pacbio-corr</code></td>
+<td>PacBio reads corrected with other methods (&lt;3% error)</td>
+</tr>
+<tr>
+<td><code>--pacbio-hifi</code></td>
+<td>PacBio HiFi reads (&lt;1% error)</td>
+</tr>
+</tbody>
+</table>
 <p>Refer to the Flye documentation for detailed guidance on selecting the appropriate <code>flye_read_type</code> based on your sequencing data and additional optional paramaters.</p>
+</details>
+<details class="warning" open="open">
+<summary>Non-deterministic output(s)</summary>
+<p>This task may yield non-deterministic outputs.</p>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Flye Technical Details</p>
 <table>
@@ -5395,7 +5565,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10 UTC">2025-05-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
   </span>
 
     

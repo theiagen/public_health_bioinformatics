@@ -1119,6 +1119,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../genomic_characterization/vadr_update/" class="md-nav__link">
         
   
@@ -2005,6 +2028,29 @@
                 
   
   
+  
+  
+    <li class="md-nav__item">
+      <a href="../host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
     
   
   
@@ -2621,6 +2667,29 @@
   
   <span class="md-ellipsis">
     Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
     
   </span>
   
@@ -4053,6 +4122,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_placement/usher/" class="md-nav__link">
         
   
@@ -4532,6 +4624,29 @@
   
   <span class="md-ellipsis">
     GAMBIT_Query
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
     
   </span>
   
@@ -5271,6 +5386,29 @@
   
   <span class="md-ellipsis">
     TheiaValidate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
     
   </span>
   
@@ -6222,6 +6360,10 @@
 <details class="task">
 <summary>Kraken2</summary>
 <p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
+<div class="admonition info">
+<p class="admonition-title">Database-dependent</p>
+<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
+</div>
 <p>This workflow is database dependent, and one is required to run this task. Please see above for a list of suggested databases to provide through the <code>kraken2_db</code> input variable.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Kraken2 Technical Details</p>

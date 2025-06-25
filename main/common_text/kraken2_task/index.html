@@ -1101,6 +1101,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/genomic_characterization/vadr_update/" class="md-nav__link">
         
   
@@ -1990,6 +2013,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/standalone/kraken2/" class="md-nav__link">
         
   
@@ -2462,6 +2508,29 @@
   
   <span class="md-ellipsis">
     Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
     
   </span>
   
@@ -3753,6 +3822,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_placement/usher/" class="md-nav__link">
         
   
@@ -4230,6 +4322,29 @@
   
   <span class="md-ellipsis">
     GAMBIT_Query
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
     
   </span>
   
@@ -4845,6 +4960,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/data_export/transfer_column_content/" class="md-nav__link">
         
   
@@ -5100,12 +5238,25 @@
 <summary>Kraken2</summary>
 </details>
 <!-- endif -->
+<!-- if: theiaviral -->
+<details class="toggle">
+<summary>Read Identification</summary>
+</details>
+<!-- endif -->
+
 <div class="language-text highlight"><pre><span></span><code>`Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
 </code></pre></div>
 <!-- if: theiacov|freyja -->
 <div class="language-text highlight"><pre><span></span><code>Kraken2 is run on both the raw and clean reads.
+</code></pre></div>
+<!-- endif -->
 
-!!! info &quot;Database-dependent&quot;
+<!-- if: theiaviral -->
+<div class="language-text highlight"><pre><span></span><code>This task runs on cleaned reads passed from the `read_QC_trim` subworkflow and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones.
+</code></pre></div>
+<!-- endif -->
+
+<div class="language-text highlight"><pre><span></span><code>!!! info &quot;Database-dependent&quot;
     This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq&#39;s viral sequence collection and human genome GRCh38. It&#39;s available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`.
 </code></pre></div>
 <!-- endif -->
@@ -5159,7 +5310,7 @@ The Kraken2 software is database-dependent and **taxonomic assignments are highl
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 3, 2025 14:08:20 UTC">2025-06-03</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
   </span>
 
     

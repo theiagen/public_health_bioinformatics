@@ -1101,6 +1101,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/genomic_characterization/vadr_update/" class="md-nav__link">
         
   
@@ -1990,6 +2013,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/standalone/kraken2/" class="md-nav__link">
         
   
@@ -2462,6 +2508,29 @@
   
   <span class="md-ellipsis">
     Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
     
   </span>
   
@@ -3753,6 +3822,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/phylogenetic_placement/usher/" class="md-nav__link">
         
   
@@ -4230,6 +4322,29 @@
   
   <span class="md-ellipsis">
     GAMBIT_Query
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../workflows/standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
     
   </span>
   
@@ -4845,6 +4960,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../workflows/data_export/transfer_column_content/" class="md-nav__link">
         
   
@@ -5095,9 +5233,29 @@
 <li>Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than <code>min_genome_size</code> or bigger than <code>max_genome_size</code>.</li>
 <li>Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the <code>min_coverage</code>.</li>
 </ol>
-<p>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the <code>skip_screen</code> variable to true.</p>
-<p>Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.</p>
 </details>
+<!-- if: theiacov|theiaprok|theiaeuk -->
+<div class="language-text highlight"><pre><span></span><code>Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the `skip_screen` variable to true.
+
+Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.
+</code></pre></div>
+<!-- endif -->
+
+<!-- if: theiaviral -->
+<div class="language-text highlight"><pre><span></span><code>Read screening is performed only on the cleaned reads. The task may be skipped by setting the `skip_screen` variable to `true`. Default values vary between the ONT and PE workflow. The rationale for these default values can be found below:
+
+??? toggle &quot;Default Thresholds and Rationales&quot;
+    | Variable  | Description | Default Value | Rationale |
+    | --- | --- | --- | --- |
+    | `min_reads` | A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads` | 50 | Minimum number of base pairs for 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus divided by 300 (longest Illumina read length) |
+    | `min_basepairs` | A sample will fail the read screening if there are fewer than `min_basepairs` basepairs | 15000 | Greater than 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus |
+    | `min_genome_size` | A sample will fail the read screening if the estimated genome size is smaller than `min_genome_size` | 1500 |  Based on the Hepatitis delta (of the *Deltavirus* genus) genome- the smallest viral genome as of 2024-04-11 (1,700 bp) |
+    | `max_genome_size` | A sample will fail the read screening if the estimated genome size is smaller than `max_genome_size` |2673870 | Based on the *Pandoravirus salinus* genome, the biggest viral genome, (2,673,870 bp) with 2 Mbp added |
+    | `min_coverage` | A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage` | 10 | A bare-minimum coverage for genome characterization. Higher coverage would be required for high-quality phylogenetics. |
+    | `min_proportion` | A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files | 40 | Greater than 50% reads are in the read1 file; others are in the read2 file. (PE workflow only) |
+</code></pre></div>
+<!-- endif -->
+
 <!-- if: theiacov -->
 <div class="language-text highlight"><pre><span></span><code>| Variable  | Default Value | Rationale |
 | --- | --- | --- |
@@ -5138,10 +5296,13 @@
 <!-- endif -->
 
 <div class="language-text highlight"><pre><span></span><code>!!! techdetails &quot;Screen Technical Details&quot;
+</code></pre></div>
+<!-- if: theiacov|theiaprok|theiaeuk -->
+<div class="language-text highlight"><pre><span></span><code>    There is a single WDL task for read screening. The `screen` task is run twice, once for raw reads and once for clean reads.
+</code></pre></div>
+<!-- endif -->
 
-    There is a single WDL task for read screening. The `screen` task is run twice, once for raw reads and once for clean reads.
-
-    |  | Links |
+<div class="language-text highlight"><pre><span></span><code>    |  | Links |
     | --- | --- |
     | Task | [task_screen.wdl (PE sub-task)](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl#L3)&lt;br&gt;[task_screen.wdl (SE sub-task)](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl#L147) |
 </code></pre></div>
@@ -5167,7 +5328,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10 UTC">2025-05-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
   </span>
 
     

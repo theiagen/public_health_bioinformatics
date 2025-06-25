@@ -1368,6 +1368,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../vadr_update/" class="md-nav__link">
         
   
@@ -2257,6 +2280,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../../standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../standalone/kraken2/" class="md-nav__link">
         
   
@@ -2729,6 +2775,29 @@
   
   <span class="md-ellipsis">
     Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
     
   </span>
   
@@ -4269,6 +4338,29 @@
   
   
     <li class="md-nav__item">
+      <a href="../theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../phylogenetic_placement/usher/" class="md-nav__link">
         
   
@@ -4748,6 +4840,29 @@
   
   <span class="md-ellipsis">
     GAMBIT_Query
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
     
   </span>
   
@@ -5595,6 +5710,29 @@
   
   <span class="md-ellipsis">
     TheiaValidate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
     
   </span>
   
@@ -6543,7 +6681,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8775,7 +8913,7 @@
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8823,7 +8961,7 @@
 <td><strong>trimmomatic_args</strong></td>
 <td>String</td>
 <td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
-<td>#NAME?</td>
+<td>-phred33</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8888,6 +9026,54 @@
 <td>Float</td>
 <td>Minimum identity for ResFinder to identify a gene</td>
 <td>0.9</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>max_genome_length</strong></td>
+<td>Int</td>
+<td>Maximum genome length able to pass read screening.</td>
+<td>18040666</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>min_basepairs</strong></td>
+<td>Int</td>
+<td>Minimum number of base pairs able to pass read screening</td>
+<td>2241820</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>min_coverage</strong></td>
+<td>Int</td>
+<td>Minimum genome coverage able to pass read screening</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>min_genome_length</strong></td>
+<td>Int</td>
+<td>Minimum genome length able to pass read screening.</td>
+<td>100000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>min_proportion</strong></td>
+<td>Int</td>
+<td>Minimum proportion of total reads in each read file to pass read screening</td>
+<td>40</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>min_reads</strong></td>
+<td>Int</td>
+<td>Minimum number of reads to pass read screening</td>
+<td>7472</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9088,54 +9274,6 @@
 <td>Int</td>
 <td>User-specified expected genome length to be used in genome statistics calculations</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>max_genome_length</strong></td>
-<td>Int</td>
-<td>Maximum genome length able to pass read screening. For TheiaProk_ONT, screening using max_genome_length is skipped by default.</td>
-<td>18040666</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_basepairs</strong></td>
-<td>Int</td>
-<td>Minimum number of base pairs able to pass read screening</td>
-<td>2241820</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_coverage</strong></td>
-<td>Int</td>
-<td>Minimum genome coverage able to pass read screening</td>
-<td>10</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_genome_length</strong></td>
-<td>Int</td>
-<td>Minimum genome length able to pass read screening. For TheiaProk_ONT, screening using min_genome_length is skipped by default.</td>
-<td>100000</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_proportion</strong></td>
-<td>Int</td>
-<td>Minimum proportion of total reads in each read file to pass read screening</td>
-<td>40</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_reads</strong></td>
-<td>Int</td>
-<td>Minimum number of reads to pass read screening</td>
-<td>7472</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9713,7 +9851,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11993,7 +12131,7 @@
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12041,7 +12179,7 @@
 <td><strong>trimmomatic_args</strong></td>
 <td>String</td>
 <td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
-<td>#NAME?</td>
+<td>-phred33</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12106,6 +12244,46 @@
 <td>Float</td>
 <td>Minimum identity for ResFinder to identify a gene</td>
 <td>0.9</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>max_genome_length</strong></td>
+<td>Int</td>
+<td>Maximum genome length able to pass read screening.</td>
+<td>18040666</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>min_basepairs</strong></td>
+<td>Int</td>
+<td>Minimum number of base pairs able to pass read screening</td>
+<td>2241820</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>min_coverage</strong></td>
+<td>Int</td>
+<td>Minimum genome coverage able to pass read screening</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>min_genome_length</strong></td>
+<td>Int</td>
+<td>Minimum genome length able to pass read screening.</td>
+<td>100000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>min_reads</strong></td>
+<td>Int</td>
+<td>Minimum number of reads to pass read screening</td>
+<td>7472</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12306,46 +12484,6 @@
 <td>Int</td>
 <td>User-specified expected genome length to be used in genome statistics calculations</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>max_genome_length</strong></td>
-<td>Int</td>
-<td>Maximum genome length able to pass read screening. For TheiaProk_ONT, screening using max_genome_length is skipped by default.</td>
-<td>18040666</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_basepairs</strong></td>
-<td>Int</td>
-<td>Minimum number of base pairs able to pass read screening</td>
-<td>2241820</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_coverage</strong></td>
-<td>Int</td>
-<td>Minimum genome coverage able to pass read screening</td>
-<td>10</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_genome_length</strong></td>
-<td>Int</td>
-<td>Minimum genome length able to pass read screening. For TheiaProk_ONT, screening using min_genome_length is skipped by default.</td>
-<td>100000</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_reads</strong></td>
-<td>Int</td>
-<td>Minimum number of reads to pass read screening</td>
-<td>7472</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12843,7 +12981,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15379,7 +15517,7 @@
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15631,6 +15769,46 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>theiaprok_ont</td>
+<td><strong>max_genome_length</strong></td>
+<td>Int</td>
+<td>Maximum genome length able to pass read screening. For TheiaProk_ONT, screening using max_genome_length is skipped by default.</td>
+<td>18040666</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>min_basepairs</strong></td>
+<td>Int</td>
+<td>Minimum number of base pairs able to pass read screening</td>
+<td>2241820</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>min_coverage</strong></td>
+<td>Int</td>
+<td>Minimum genome coverage able to pass read screening. Screening using min_coverage is skipped by default.</td>
+<td>5</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>min_genome_length</strong></td>
+<td>Int</td>
+<td>Minimum genome length able to pass read screening. For TheiaProk_ONT, screening using min_genome_length is skipped by default.</td>
+<td>100000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>min_reads</strong></td>
+<td>Int</td>
+<td>Minimum number of reads to pass read screening</td>
+<td>5000</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>ts_mlst</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -15828,46 +16006,6 @@
 <td>Int</td>
 <td>User-specified expected genome length to be used in genome statistics calculations</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>max_genome_length</strong></td>
-<td>Int</td>
-<td>Maximum genome length able to pass read screening. For TheiaProk_ONT, screening using max_genome_length is skipped by default.</td>
-<td>18040666</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_basepairs</strong></td>
-<td>Int</td>
-<td>Minimum number of base pairs able to pass read screening</td>
-<td>2241820</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_coverage</strong></td>
-<td>Int</td>
-<td>Minimum genome coverage able to pass read screening. Screening using min_coverage is skipped by default.</td>
-<td>5</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_genome_length</strong></td>
-<td>Int</td>
-<td>Minimum genome length able to pass read screening. For TheiaProk_ONT, screening using min_genome_length is skipped by default.</td>
-<td>100000</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_reads</strong></td>
-<td>Int</td>
-<td>Minimum number of reads to pass read screening</td>
-<td>5000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18648,7 +18786,12 @@
 <details class="toggle">
 <summary>Read quality trimming</summary>
 <p>Either <code>trimmomatic</code> or <code>fastp</code> can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of <code>trim_window_size</code>), cutting once the average quality within the window falls below <code>trim_quality_trim_score</code>. They will both discard the read if it is trimmed below <code>trim_minlen</code>. </p>
-<p>If fastp is selected for analysis, fastp also implements the additional read-trimming steps indicated below:</p>
+<details class="dna">
+<summary><code>read_processing</code> input parameter</summary>
+<p>This input parameter accepts either <code>trimmomatic</code> or <code>fastp</code> as an input to determine which tool should be used for read quality trimming. This is set to <code>trimmomatic</code> by default.</p>
+<p>If the <code>fastp</code> option is selected, see below for table of default parameters.</p>
+<details class="toggle">
+<summary><code>fastp</code> default read-trimming parameters</summary>
 <table>
 <thead>
 <tr>
@@ -18658,23 +18801,55 @@
 </thead>
 <tbody>
 <tr>
-<td><code>-g</code></td>
+<td>-g</td>
 <td>enables polyG tail trimming</td>
 </tr>
 <tr>
-<td><code>-5 20</code></td>
+<td>-5 20</td>
 <td>enables read end-trimming</td>
 </tr>
 <tr>
-<td><code>-3 20</code></td>
+<td>-3 20</td>
 <td>enables read end-trimming</td>
 </tr>
 <tr>
-<td><code>--detect_adapter_for_pe</code></td>
+<td>--detect_adapter_for_pe</td>
 <td>enables adapter-trimming <strong>only for paired-end reads</strong></td>
 </tr>
 </tbody>
 </table>
+<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
+</details>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Trimmomatic and fastp Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl">task_fastp.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/usadellab/Trimmomatic">Trimmomatic</a><br><a href="https://github.com/OpenGene/fastp">fastp on Github</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic</a><br><a href="https://github.com/OpenGene/fastp">fastp</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a><br><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 <details class="toggle">
 <summary>Adapter removal</summary>
@@ -18683,14 +18858,68 @@
 <li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/">Repair</a> from the <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.</li>
 <li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>) is then used to trim the adapters and filter out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>, which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.</li>
 </ul>
-<details class="toggle">
+<details class="question">
 <summary>What are adapters and why do they need to be removed?</summary>
 <p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
 </details>
+<div class="admonition techdetails">
+<p class="admonition-title">BBDuk Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl">task_bbduk.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 <details class="toggle">
 <summary>Read Quantification</summary>
 <p>There are two methods for read quantification to choose from: <a href="https://github.com/rpetit3/fastq-scan"><code>fastq-scan</code></a> (default) or <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"><code>fastqc</code></a>. Both quantify the forward and reverse reads in FASTQ files. For paired-end data, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads. <code>fastqc</code> also provides a graphical visualization of the read quality.</p>
+<details class="dna">
+<summary><code>read_qc</code> input parameter</summary>
+<p>This input parameter accepts either <code>"fastq_scan"</code> or <code>"fastqc"</code> as an input to determine which tool should be used for read quantification. This is set to <code>"fastq-scan"</code> by default.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">fastq-scan and FastQC Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl&quot;">task_fastqc.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan on Github</a><br><a href="https://github.com/s-andrews/FastQC">fastqc on Github</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/rpetit3/fastq-scan/blob/master/README.md">fastq-scan</a><br><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">fastqc</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 <details class="toggle">
 <summary>Read Identification with MIDAS (optional)</summary>
@@ -18786,9 +19015,8 @@
 <p>Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the <a href="https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md">MIDAS GitHub guide on building a custom database</a>. Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workkspace and provide the link to the database in the <code>midas_db</code> input variable.</p>
 </div>
 <hr />
-</details>
 <div class="admonition techdetails">
-<p class="admonition-title">read_QC_trim Technical Details</p>
+<p class="admonition-title">MIDAS Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -18798,28 +19026,25 @@
 </thead>
 <tbody>
 <tr>
-<td>Sub-workflow</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl">wf_read_QC_trim_pe.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl">wf_read_QC_trim_se.wdl</a></td>
-</tr>
-<tr>
-<td>Tasks</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl">task_fastp.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl">task_bbduk.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl">task_midas.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl">task_kraken2.wdl</a></td>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl">task_midas.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/OpenGene/fastp">fastp</a>; <a href="https://github.com/usadellab/Trimmomatic">Trimmomatic</a>; <a href="https://github.com/rpetit3/fastq-scan">fastq-scan</a>; <a href="https://github.com/snayfach/MIDAS">MIDAS</a>; <a href="https://github.com/DerrickWood/kraken2">Kraken2</a></td>
+<td><a href="https://github.com/snayfach/MIDAS">MIDAS</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/OpenGene/fastp">fastp</a>; <a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic</a>; <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>; <a href="https://github.com/rpetit3/fastq-scan">fastq-scan</a>; <a href="https://github.com/snayfach/MIDAS">MIDAS</a>; <a href="https://github.com/DerrickWood/kraken2/wiki">Kraken2</a></td>
+<td><a href="https://github.com/snayfach/MIDAS">MIDAS</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a><br><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a><br><a href="https://pubmed.ncbi.nlm.nih.gov/27803195/">An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography</a><br><a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
+<td><a href="https://pubmed.ncbi.nlm.nih.gov/27803195">An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography</a></td>
 </tr>
 </tbody>
 </table>
 </div>
+</details>
 </details>
 <details class="task">
 <summary><code>CG-Pipeline</code>: Assessment of Read Quality, and Estimation of Genome Coverage</summary>
@@ -18991,7 +19216,12 @@
 <details class="toggle">
 <summary>Read quality trimming</summary>
 <p>Either <code>trimmomatic</code> or <code>fastp</code> can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of <code>trim_window_size</code>), cutting once the average quality within the window falls below <code>trim_quality_trim_score</code>. They will both discard the read if it is trimmed below <code>trim_minlen</code>. </p>
-<p>If fastp is selected for analysis, fastp also implements the additional read-trimming steps indicated below:</p>
+<details class="dna">
+<summary><code>read_processing</code> input parameter</summary>
+<p>This input parameter accepts either <code>trimmomatic</code> or <code>fastp</code> as an input to determine which tool should be used for read quality trimming. This is set to <code>trimmomatic</code> by default.</p>
+<p>If the <code>fastp</code> option is selected, see below for table of default parameters.</p>
+<details class="toggle">
+<summary><code>fastp</code> default read-trimming parameters</summary>
 <table>
 <thead>
 <tr>
@@ -19001,23 +19231,55 @@
 </thead>
 <tbody>
 <tr>
-<td><code>-g</code></td>
+<td>-g</td>
 <td>enables polyG tail trimming</td>
 </tr>
 <tr>
-<td><code>-5 20</code></td>
+<td>-5 20</td>
 <td>enables read end-trimming</td>
 </tr>
 <tr>
-<td><code>-3 20</code></td>
+<td>-3 20</td>
 <td>enables read end-trimming</td>
 </tr>
 <tr>
-<td><code>--detect_adapter_for_pe</code></td>
+<td>--detect_adapter_for_pe</td>
 <td>enables adapter-trimming <strong>only for paired-end reads</strong></td>
 </tr>
 </tbody>
 </table>
+<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
+</details>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Trimmomatic and fastp Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl">task_fastp.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/usadellab/Trimmomatic">Trimmomatic</a><br><a href="https://github.com/OpenGene/fastp">fastp on Github</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic</a><br><a href="https://github.com/OpenGene/fastp">fastp</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a><br><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 <details class="toggle">
 <summary>Adapter removal</summary>
@@ -19026,14 +19288,68 @@
 <li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/">Repair</a> from the <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.</li>
 <li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>) is then used to trim the adapters and filter out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>, which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.</li>
 </ul>
-<details class="toggle">
+<details class="question">
 <summary>What are adapters and why do they need to be removed?</summary>
 <p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
 </details>
+<div class="admonition techdetails">
+<p class="admonition-title">BBDuk Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl">task_bbduk.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 <details class="toggle">
 <summary>Read Quantification</summary>
 <p>There are two methods for read quantification to choose from: <a href="https://github.com/rpetit3/fastq-scan"><code>fastq-scan</code></a> (default) or <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"><code>fastqc</code></a>. Both quantify the forward and reverse reads in FASTQ files. For paired-end data, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads. <code>fastqc</code> also provides a graphical visualization of the read quality.</p>
+<details class="dna">
+<summary><code>read_qc</code> input parameter</summary>
+<p>This input parameter accepts either <code>"fastq_scan"</code> or <code>"fastqc"</code> as an input to determine which tool should be used for read quantification. This is set to <code>"fastq-scan"</code> by default.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">fastq-scan and FastQC Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl&quot;">task_fastqc.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan on Github</a><br><a href="https://github.com/s-andrews/FastQC">fastqc on Github</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/rpetit3/fastq-scan/blob/master/README.md">fastq-scan</a><br><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">fastqc</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 <details class="toggle">
 <summary>Read Identification with MIDAS (optional)</summary>
@@ -19129,9 +19445,8 @@
 <p>Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the <a href="https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md">MIDAS GitHub guide on building a custom database</a>. Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workkspace and provide the link to the database in the <code>midas_db</code> input variable.</p>
 </div>
 <hr />
-</details>
 <div class="admonition techdetails">
-<p class="admonition-title">read_QC_trim Technical Details</p>
+<p class="admonition-title">MIDAS Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -19141,28 +19456,25 @@
 </thead>
 <tbody>
 <tr>
-<td>Sub-workflow</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl">wf_read_QC_trim_pe.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl">wf_read_QC_trim_se.wdl</a></td>
-</tr>
-<tr>
-<td>Tasks</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl">task_fastp.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl">task_bbduk.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl">task_midas.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl">task_kraken2.wdl</a></td>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_midas.wdl">task_midas.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/OpenGene/fastp">fastp</a>; <a href="https://github.com/usadellab/Trimmomatic">Trimmomatic</a>; <a href="https://github.com/rpetit3/fastq-scan">fastq-scan</a>; <a href="https://github.com/snayfach/MIDAS">MIDAS</a>; <a href="https://github.com/DerrickWood/kraken2">Kraken2</a></td>
+<td><a href="https://github.com/snayfach/MIDAS">MIDAS</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/OpenGene/fastp">fastp</a>; <a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic</a>; <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>; <a href="https://github.com/rpetit3/fastq-scan">fastq-scan</a>; <a href="https://github.com/snayfach/MIDAS">MIDAS</a>; <a href="https://github.com/DerrickWood/kraken2/wiki">Kraken2</a></td>
+<td><a href="https://github.com/snayfach/MIDAS">MIDAS</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a><br><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a><br><a href="https://pubmed.ncbi.nlm.nih.gov/27803195/">An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography</a><br><a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
+<td><a href="https://pubmed.ncbi.nlm.nih.gov/27803195">An integrated metagenomics pipeline for strain profiling reveals novel patterns of bacterial transmission and biogeography</a></td>
 </tr>
 </tbody>
 </table>
 </div>
+</details>
 </details>
 <details class="task">
 <summary><code>CG-Pipeline</code>: Assessment of Read Quality, and Estimation of Genome Coverage</summary>
@@ -19312,6 +19624,10 @@
 <details class="toggle">
 <summary>Read Identification with Kraken2 (optional)</summary>
 <p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
+<div class="admonition info">
+<p class="admonition-title">Database-dependent</p>
+<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
+</div>
 <p>As an alternative to <code>MIDAS</code> (see above), the <code>Kraken2</code> task can also be turned on through setting the <code>call_kraken</code> input variable as <code>true</code> for the identification of reads to detect contamination with non-target taxa.</p>
 <p>A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on <a href="../../standalone/kraken2/#databases">Kraken2 standalone documentation</a>.</p>
 <div class="admonition techdetails">
@@ -19439,16 +19755,49 @@
 <details class="toggle">
 <summary><code>Flye</code>: <em>De novo</em> Assembly</summary>
 <p>Flye is a <em>de novo</em> assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerates the error rate of ONT data.</p>
-<p><code>flye_read_type</code> specifies the type of sequencing reads being used for assembly. This parameter significantly impacts the assembly process and should match the characteristics of your input data. Below are the available options:</p>
-<ul>
-<li><code>--nano-hq</code> (default): Optimized for ONT high-quality reads, such as Guppy5+ SUP or Q20 (&lt;5% error). Recommended for ONT reads processed with Guppy5 or newer</li>
-<li><code>--nano-raw</code>: For ONT regular reads, pre-Guppy5 (&lt;20% error)</li>
-<li><code>--nano-corr</code>: ONT reads corrected with other methods (&lt;3% error)</li>
-<li><code>--pacbio-raw</code>: PacBio regular CLR reads (&lt;20% error)</li>
-<li><code>--pacbio-corr</code>: PacBio reads corrected with other methods (&lt;3% error)</li>
-<li><code>--pacbio-hifi</code>: PacBio HiFi reads (&lt;1% error)</li>
-</ul>
+<details class="dna">
+<summary><code>flye_read_type</code> input parameter</summary>
+<p>This input parameter specifies the type of sequencing reads being used for assembly. This parameter significantly impacts the assembly process and should match the characteristics of your input data. Below are the available options:</p>
+<table>
+<thead>
+<tr>
+<th><strong>Parameter</strong></th>
+<th><strong>Explanation</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--nano-hq</code> (default)</td>
+<td>Optimized for ONT high-quality reads, such as Guppy5+ SUP or Q20 (&lt;5% error). Recommended for ONT reads processed with Guppy5 or newer</td>
+</tr>
+<tr>
+<td><code>--nano-raw</code></td>
+<td>For ONT regular reads, pre-Guppy5 (&lt;20% error)</td>
+</tr>
+<tr>
+<td><code>--nano-corr</code></td>
+<td>ONT reads corrected with other methods (&lt;3% error)</td>
+</tr>
+<tr>
+<td><code>--pacbio-raw</code></td>
+<td>PacBio regular CLR reads (&lt;20% error)</td>
+</tr>
+<tr>
+<td><code>--pacbio-corr</code></td>
+<td>PacBio reads corrected with other methods (&lt;3% error)</td>
+</tr>
+<tr>
+<td><code>--pacbio-hifi</code></td>
+<td>PacBio HiFi reads (&lt;1% error)</td>
+</tr>
+</tbody>
+</table>
 <p>Refer to the Flye documentation for detailed guidance on selecting the appropriate <code>flye_read_type</code> based on your sequencing data and additional optional paramaters.</p>
+</details>
+<details class="warning" open="open">
+<summary>Non-deterministic output(s)</summary>
+<p>This task may yield non-deterministic outputs.</p>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Flye Technical Details</p>
 <table>
@@ -28022,7 +28371,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 11, 2025 15:45:32 UTC">2025-06-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
   </span>
 
     
