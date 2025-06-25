@@ -1,6 +1,7 @@
 <!-- if: long_read_flags|only_map_ont -->
 ??? task "`minimap2`: Read Alignment Details"
 <!-- endif -->
+
     `minimap2` is a popular aligner that is used to align reads (or assemblies) to an assembly file. In minimap2, "modes" are a group of preset options.
 
 <!-- if: long_read_flags -->

@@ -21,7 +21,7 @@ task rasusa {
     #  --frac [FLOAT] Subsample to a fraction of the reads - e.g., 0.5 samples half the reads
     #  --num [INTEGER] Subsample to a specific number of reads
     String? bases
-    Float coverage 
+    Float coverage = 250
     String genome_length
     Int? seed
     Float? frac

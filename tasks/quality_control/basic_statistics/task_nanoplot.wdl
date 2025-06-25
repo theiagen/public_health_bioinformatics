@@ -43,7 +43,7 @@ task nanoplot {
     grep "median_qual" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEDIAN_QUAL
 
     # estimate coverage
-    # using math: C = N / G where N is number of bases, and G is estimated genome size 
+    # using math: C = N / G where N is number of bases, and G is estimated genome size
     python3 -c "print(round(${NUM_BASES} / ~{est_genome_length}, 2))" | tee EST_COVERAGE
   >>>
   output {
