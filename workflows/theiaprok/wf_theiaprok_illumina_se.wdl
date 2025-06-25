@@ -796,6 +796,8 @@ workflow theiaprok_illumina_se {
     File? gamma_results = gamma.gamma_results
     File? gamma_gff = gamma.gamma_gff
     File? gamma_fasta = gamma.gamma_fasta
+    String? gamma_version = gamma.gamma_version
+    String? gamma_docker = gamma.gamma_docker
     # AMR_Search
     File? amr_search_results = merlin_magic.amr_search_results
     File? amr_search_csv = merlin_magic.amr_results_csv
