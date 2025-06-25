@@ -9,9 +9,25 @@
     4. Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than `min_genome_size` or bigger than `max_genome_size`.
     5. Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage`.
 
+<!-- if: theiacov|theiaprok|theiaeuk -->
     Read screening is undertaken on both the raw and cleaned reads. The task may be skipped by setting the `skip_screen` variable to true.
 
     Default values vary between the PE, SE, and ONT workflows. The rationale for these default values can be found below. If two default values are shown, the first is for Illumina workflows and the second is for ONT.
+<!-- endif -->
+
+<!-- if: theiaviral -->
+    Read screening is performed only on the cleaned reads. The task may be skipped by setting the `skip_screen` variable to `true`. Default values vary between the ONT and PE workflow. The rationale for these default values can be found below:
+
+    ??? toggle "Default Thresholds and Rationales"
+        | Variable  | Description | Default Value | Rationale |
+        | --- | --- | --- | --- |
+        | `min_reads` | A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads` | 50 | Minimum number of base pairs for 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus divided by 300 (longest Illumina read length) |
+        | `min_basepairs` | A sample will fail the read screening if there are fewer than `min_basepairs` basepairs | 15000 | Greater than 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus |
+        | `min_genome_size` | A sample will fail the read screening if the estimated genome size is smaller than `min_genome_size` | 1500 |  Based on the Hepatitis delta (of the *Deltavirus* genus) genome- the smallest viral genome as of 2024-04-11 (1,700 bp) |
+        | `max_genome_size` | A sample will fail the read screening if the estimated genome size is smaller than `max_genome_size` |2673870 | Based on the *Pandoravirus salinus* genome, the biggest viral genome, (2,673,870 bp) with 2 Mbp added |
+        | `min_coverage` | A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage` | 10 | A bare-minimum coverage for genome characterization. Higher coverage would be required for high-quality phylogenetics. |
+        | `min_proportion` | A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files | 40 | Greater than 50% reads are in the read1 file; others are in the read2 file. (PE workflow only) |
+<!-- endif -->
 
 <!-- if: theiacov -->
     | Variable  | Default Value | Rationale |
@@ -51,8 +67,10 @@
 
     !!! techdetails "Screen Technical Details"
         
+<!-- if: theiacov|theiaprok|theiaeuk -->
         There is a single WDL task for read screening. The `screen` task is run twice, once for raw reads and once for clean reads.
-        
+<!-- endif -->
+
         |  | Links |
         | --- | --- |
         | Task | [task_screen.wdl (PE sub-task)](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl#L3)<br>[task_screen.wdl (SE sub-task)](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl#L147) |
