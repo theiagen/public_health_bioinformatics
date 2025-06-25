@@ -73,9 +73,8 @@ arln_r1_q30_clean	String	Q30% of the cleaned R1 FASTQ	TheiaProk_ONT, TheiaProk_P
 arln_r2_q30_clean	String	Q30% of the cleaned R2 FASTQ	TheiaProk_PE
 arln_assembly_ratio	String	Assembly ratio of the final assembly compared to the mean assembly length of the taxon. These stats are gathered from a statistics file created by the CDC aggregating NCBI assembly data by taxon.	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_PE, TheiaProk_SE
 arln_taxon_assembly_ratio_stdev	String	Reported assembely length standard deviation of the given taxonomy pulled from NCBI aggregated data.	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_PE, TheiaProk_SE
-arln_gc_percent_ratio	String	Ratio of the GC percent compared to the mean GC percent of the taxon.	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_PE, TheiaProk_SE
 arln_taxon_gc_percent_stdev	String	Reported GC percent standard deviation of the given taxonomy pulled from NCBI aggregated data.	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_PE, TheiaProk_SE
-arln_gc_zscore	String	ZScore of the samples GC percent to assess the uniformity of the assembly when compared to taxon means.	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_PE, TheiaProk_SE
+arln_taxon_gc_mean	String	Mean GC percent of the taxon.	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_PE, TheiaProk_SE
 arln_assembly_zscore	String	ZScore of the samples assembly length to assess the uniformity of the assembly when compared to taxon means.	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_PE, TheiaProk_SE
 arln_stats_docker_version	String	Docker version for task_arln_stats.wdl	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_PE, TheiaProk_SE
 artic_docker	String	Docker image utilized for read trimming and consensus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
