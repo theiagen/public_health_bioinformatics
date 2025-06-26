@@ -99,7 +99,7 @@ task skani {
       # get accession number from file name (and version number if it exists)
       echo $top_hit_name | awk -F'[.]' '{print $1 ($2 ~ /^[0-9]+$/ ? "."$2 : "")}' | tee TOP_ACCESSION
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 3 | tee TOP_ANI
-      head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 4 | tee TOP_QUERY_COVERAGE
+      head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 5 | tee TOP_QUERY_COVERAGE
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 21 | tee TOP_SCORE
     fi
 
