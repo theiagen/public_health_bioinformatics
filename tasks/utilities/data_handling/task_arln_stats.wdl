@@ -84,7 +84,7 @@ task arln_stats {
       echo "Taxon not found in stats file" > TAXON_ASSEMBLY_RATIO_STDEV
       echo "Taxon not found in stats file" > TAXON_GC_ST_DEV
       echo "Taxon not found in stats file" > TAXON_GC_MEAN
-      echo "Taxon not found in stats file" > ASSEMBLY_ZSCOREw
+      echo "Taxon not found in stats file" > ASSEMBLY_ZSCORE
     fi
   >>>
   output {
