@@ -13287,8 +13287,15 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <li><code>dehost_wf_download_status</code>: If this output is populated with something other than "PASS", it indicates a host genome could not be retrieved for decontamination. See the <code>host</code> input explanation for more information and review the <code>download_accession</code>/<code>download_taxonomy</code> task output logs for advanced error parsing.</li>
 </ul>
 </details>
+<details class="warning">
+<summary>Known errors associated with read quality</summary>
+<ul>
+<li>ONT workflows may fail at Metabuli if no reads are classified as the <code>taxon</code>. Check the Metabuli <code>classification.tsv</code> or <code>krona</code> report for the read extraction taxon ID to determine if any reads were classified. This error will report <code>out of memory (OOM)</code>, but increasing memory will not resolve it.</li>
+<li>Illumina workflows may fail at CheckV (<em>de novo</em>) with <code>Error: 80 hmmsearch tasks failed. Program should be rerun</code> if no viral contigs were identified in the <em>de novo</em> assembly.</li>
+</ul>
+</details>
 <h3 id="acknowlegments">Acknowlegments<a class="headerlink" href="#acknowlegments" title="Permanent link">&para;</a></h3>
-<p>We would like to thank Danny Park at the BROAD institute and Jared Johnson at the Washington State Department of Public Health for correspondence during the development of TheiaViral. TheiaViral was built referencing <a href="https://github.com/broadinstitute/viral-assemble/">viral-assemble</a>, <a href="https://github.com/DOH-JDJ0303/vaper">VAPER</a>, and <a href="https://github.com/artic-network/fieldbioinformatics">Artic</a>.</p>
+<p>We would like to thank Danny Park at the Broad institute and Jared Johnson at the Washington State Department of Public Health for correspondence during the development of TheiaViral. TheiaViral was built referencing <a href="https://github.com/broadinstitute/viral-assemble/">viral-assemble</a>, <a href="https://github.com/DOH-JDJ0303/vaper">VAPER</a>, and <a href="https://github.com/artic-network/fieldbioinformatics">Artic</a>.</p>
 
 
 
@@ -13311,7 +13318,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 26, 2025 17:32:25 UTC">2025-06-26</span>
   </span>
 
     
