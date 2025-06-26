@@ -251,6 +251,16 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         </div>
 
+        !!! tip "H5N1 Additional Defaults"
+            If the sample is designated as H5N1 by either ABRicate or IRMA, an H5N1-specific Nextclade task will run with the following datasets depending on the GenoFLU genotype. 
+            
+            Alternatively, if a `nextclade_custom_input_dataset` variable is provided (available under the `flu_track` task name), the workflow will run that custom dataset on all H5N1 samples, regardless of the GenoFLU genotype.
+
+            | **Overwrite Variable Name** | **GenoFLU Genotype** | **Default Value** | **Notes** |
+            |---|---|---|---|
+            | nextclade_custom_input_dataset | B3.13 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/nextclade_avian-flu_h5n1-cattle-outbreak_h5n1-b3.13_2025-06-24.json"` | Extracted from [nextclade/avian-flu/h5n1-cattle-outbreak](https://nextstrain.org/avian-flu/h5n1-cattle-outbreak/genome) on 2025-06-24 |
+            | nextclade_custom_input_dataset | D1.1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/nextclade_avian-flu_h5n1-d1.1_2025-06-24.json"` | Extracted from [nextclade/avian-flu/h5n1-d1.1](https://nextstrain.org/avian-flu/h5n1-d1.1/genome) on 2025-06-24 |
+
     ??? toggle "RSV-A Defaults"
         <div class="searchable-table" markdown="block">
 
