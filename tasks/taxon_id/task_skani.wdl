@@ -76,16 +76,16 @@ task skani {
 
     # add new column header
     echo "DEBUG: Extracting Skani results"
-    new_header=$(awk 'NR==1 {OFS="\t"; print $0, "ANI_x_Ref_Coverage"}' ~{samplename}_skani_results.tsv)
+    new_header=$(awk 'NR==1 {OFS="\t"; print $0, "ANI_x_Query_Coverage"}' ~{samplename}_skani_results.tsv)
 
     # initialize output files
     echo "N/A" > TOP_ACCESSION
     echo 0 > TOP_ANI
-    echo 0 > TOP_REF_COVERAGE
+    echo 0 > TOP_QUERY_COVERAGE
     echo 0 > TOP_SCORE
 
     # create a new column and sort by the product of ANI (col 3) and Align_fraction_ref (col 4)
-    awk -F'\t' 'NR > 1 {OFS="\t"; new_col = sprintf("%.5f", $3 * $4 / 100); print $0, new_col}' ~{samplename}_skani_results.tsv | \
+    awk -F'\t' 'NR > 1 {OFS="\t"; new_col = sprintf("%.5f", $3 * $5 / 100); print $0, new_col}' ~{samplename}_skani_results.tsv | \
       sort -t$'\t' -k21,21nr | \
       { echo "$new_header"; cat -; } > ~{samplename}_skani_results_sorted.tsv
 
@@ -99,7 +99,7 @@ task skani {
       # get accession number from file name (and version number if it exists)
       echo $top_hit_name | awk -F'[.]' '{print $1 ($2 ~ /^[0-9]+$/ ? "."$2 : "")}' | tee TOP_ACCESSION
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 3 | tee TOP_ANI
-      head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 4 | tee TOP_REF_COVERAGE
+      head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 4 | tee TOP_QUERY_COVERAGE
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 21 | tee TOP_SCORE
     fi
 
@@ -115,7 +115,7 @@ task skani {
     File skani_report = "~{samplename}_skani_results_sorted.tsv"
     String skani_top_accession = read_string("TOP_ACCESSION")
     Float skani_top_ani = read_float("TOP_ANI")
-    Float skani_top_ref_coverage = read_float("TOP_REF_COVERAGE")
+    Float skani_top_query_coverage = read_float("TOP_QUERY_COVERAGE")
     Float skani_top_score = read_float("TOP_SCORE")
     String skani_database = skani_db
     String skani_warning = read_string("SKANI_WARNING")

@@ -6,7 +6,7 @@
 
 ## TheiaViral Workflows
 
-**TheiaViral** workflows assemble, quality assess, and characterize viral genomes from diverse data sources, including metagenomic samples. TheiaViral workflows can generate consensus assemblies of recalcitrant viruses, including diverse or recombinant lineages, such as rabies virus and norovirus, through a three-step approach: 1) generating an intermediate *de novo* assembly from taxonomy-filtered reads, 2) selecting the best reference from a database of ~200,000 complete viral genomes using average nucleotide identity, and 3) producing a final consensus assembly through reference-based read mapping and variant calling. Reference genomes can be directly provided to TheiaViral to bypass *de novo* assembly, which enables compatibility with tiled amplicon sequencing data. Targeted viral characterization is currently ongoing and functional for *Lyssavirus rabies*.
+**TheiaViral** workflows assemble, quality assess, and characterize viral genomes from diverse data sources, including metagenomic samples. TheiaViral workflows can generate consensus assemblies of recalcitrant viruses, including diverse or recombinant lineages, such as rabies virus and norovirus, through a three-step approach: 1) generating an intermediate *de novo* assembly from taxonomy-filtered reads, 2) selecting the best reference from a database of ~200,000 viral genomes using average nucleotide identity, and 3) producing a final consensus assembly through reference-based read mapping and variant calling. Reference genomes can be directly provided to TheiaViral to bypass *de novo* assembly, which enables compatibility with tiled amplicon sequencing data. Targeted viral characterization is currently ongoing and functional for *Lyssavirus rabies*.
 
 ???+ question "What are the main differences between the TheiaViral and TheiaCov workflows?"
 
@@ -306,8 +306,8 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
     <br>
 
     - `skani_top_ani`: The percent average nucleotide identity (ANI) for the top Skani hit is ideally 100% if the sequenced virus is highly similar to a reference genome. However, if the virus is divergent, ANI is not a good indication of assembly quality.
-    - `skani_top_ref_coverage`: The percent reference coverage for the top Skani hit is ideally 100% if the sequenced virus has not undergone significant recombination/structural variation. 
-    - `skani_top_score`: The score for the top Skani hit is the ANI x Reference coverage and is ideally 100% if the sequenced virus is not substantially divergent from the reference dataset.
+    - `skani_top_query_coverage`: The percent query coverage for the top Skani hit is ideally 100% if the sequenced virus has not undergone significant recombination/structural variation. 
+    - `skani_top_score`: The score for the top Skani hit is the ANI x Query (*de novo* assembly) coverage and is ideally 100% if the sequenced virus is not substantially divergent from the reference dataset.
 
 ??? question "How is consensus assembly quality evaluated?"
 
