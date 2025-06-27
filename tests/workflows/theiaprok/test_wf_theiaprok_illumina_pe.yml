@@ -17,7 +17,7 @@
     - wf_theiaprok_illumina_pe_miniwdl
   files:
     - path: miniwdl_run/call-amrfinderplus_task/command
-      md5sum: 6b28a0f2f2e8c0194317dedc7bea11b5
+      md5sum: e2fb16459ecd30a2cc1a94e079c1bb97
     - path: miniwdl_run/call-amrfinderplus_task/inputs.json
       contains: ["assembly", "fasta", "organism", "test"]
     - path: miniwdl_run/call-amrfinderplus_task/outputs.json
@@ -45,8 +45,6 @@
       md5sum: 4bd51f5d569c0eafb786b26558921e3a
     - path: miniwdl_run/call-amrfinderplus_task/work/VIRULENCE_GENES
       md5sum: 9c9c511ab5bfade46f0db1b2ee5b4666
-    - path: miniwdl_run/call-amrfinderplus_task/work/_miniwdl_inputs/0/test_filtered_contigs.fasta
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-amrfinderplus_task/work/test_amrfinder_all.tsv
       md5sum: 376a8991c8eb010ea64c796115fb9b8d
     - path: miniwdl_run/call-amrfinderplus_task/work/test_amrfinder_amr.tsv
@@ -412,13 +410,13 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_abricate.wdl
       md5sum: c82025fcc1442b1c2a598a429cd9cdab
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
-      md5sum: ca2cb017355efa8281281a21311e90cb
+      md5sum: feb28bb8dfbc4c52d7062a45a043d9f5
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_bakta.wdl
       md5sum: 96f6cb7f0c8716513a0ca74b083a745f
     - path: miniwdl_run/wdl/tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl
       md5sum: 295b7a6355c2b5f0a514fce571f9bf84
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_prokka.wdl
-      md5sum: c432bcac96ef8ca767ab1ae9cb82a977
+      md5sum: 000285292df1f7c353fafcc0d5737028
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_resfinder.wdl
       md5sum: 062be12bbba315d4feee01dd10e1c782
     - path: miniwdl_run/wdl/tasks/gene_typing/variant_detection/task_snippy_variants.wdl
@@ -486,7 +484,7 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 481f5fbce5aa1abf93acd912797821cc
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: a90c7b32b1b54402a66dbb374b7437e8
+      md5sum: 7ff06936861e195fbc3568a5c452cbbb
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
       contains: ["version", "QC", "output"]
     - path: miniwdl_run/workflow.log

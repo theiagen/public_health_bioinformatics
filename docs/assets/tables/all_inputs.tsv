@@ -148,6 +148,10 @@ theiaprok_fasta	assembly_fasta	File	The assembly file for your sample in FASTA f
 theiaprok_illumina_pe	read1	File	Illumina forward read file in FASTQ file format (compression optional)		Required	TheiaProk_Illumina_PE	
 theiaprok_illumina_pe	read2	File	Illumina reverse read file in FASTQ file format (compression optional)		Required	TheiaProk_Illumina_PE	
 theiaprok_illumina_se	read1	File	Illumina forward read file in FASTQ file format (compression optional)		Required	TheiaProk_Illumina_SE	
+theiaprok_illumina_pe	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	FALSE	Optional	TheiaProk_Illumina_PE
+theiaprok_fasta	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	FALSE	Optional	TheiaProk_FASTA
+theiaprok_illumina_se	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	FALSE	Optional	TheiaProk_Illumina_SE
+theiaprok_ont	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	FALSE	Optional	TheiaProk_ONT
 theiaprok_ont	read1	File	ONT read file in FASTQ file format (compression optional)		Required	TheiaProk_ONT	
 theiavalidate	columns_to_compare	String	A comma-separated list of the columns the user wants to compare. Do not include whitespace.		Required	TheiaValidate	
 theiavalidate	output_prefix	String	The prefix for the output files		Required	TheiaValidate	
@@ -222,6 +226,9 @@ amrfinderplus_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the ta
 amrfinderplus_task	min_percent_coverage	Float	Minimum proportion of reference gene covered for a BLAST-based hit (Methods BLAST or PARTIAL)." Attribute should be a float ranging from 0-1, such as 0.6 (equal to 60% coverage)	0.5	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 amrfinderplus_task	min_percent_identity	Float	Minimum identity for a blast-based hit hit (Methods BLAST or PARTIAL). -1 means use a curated threshold if it exists and 0.9 otherwise. Setting this value to something other than -1 will override any curated similarity cutoffs. Attribute should be a float ranging from 0-1, such as 0.95 (equal to 95% identity)	0.9	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 amrfinderplus_task	separate_betalactam_genes	Boolean	Report beta-Lactam AMR genes separated out by all beta-lactam and the respective beta-lactam subclasses	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+amrfinderplus_task	protein_fasta	File	Protein FASTA from annotation software such as Prokka or Bakta. Utilized when amrfinder_use_gff is set to true		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+amrfinderplus_task	gff	File	GFF file provided by Prokka or Bakta when amrfinder_use_gff is set to true. This file is used to determine the location of AMR genes in the genome.		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+amrfinderplus_task	annotation_assembly	File	Assembly file from annotation software such as Prokka or Bakta, used for utilizing protein fasta and GFF files.		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ani	ani_threshold	Float	ANI value threshold must be surpassed in order to output the ani_top_species_match. If a genome does not surpass this threshold (and the percent_bases_aligned_threshold) then the ani_top_species_match output String will show a warning instead of a genus & species.	80	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 ani	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 ani	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
@@ -696,6 +703,17 @@ freyja_update_refs	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Fre
 freyja_update_refs	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Freyja_Update	
 freyja_update_refs	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3	Optional	Freyja_Update	
 freyja_update_refs	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	10	Optional	Freyja_Update	
+gamma	gamma_db	String	Multifasta sequence database GAMMA is to use for gene matching	"gs://theiagen-public-resources-rp/reference_data/databases/gamma/default_ResFinderDB_Combined_05-06-20.fsa"	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	min_percent_identity	Int	Threshold of identity for gene matches in percent	90	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	min_length_percent	Int	Threshold of match length percent used by GAMMA-s	20	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	run_gammas	Boolean	Turns on GAMMA-S which runs GAMMA on nucleotide sequences rather than translating input sequences and matches	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	output_gff	Boolean	Allows GAMMA to output gene matches in GFF format	TRUE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	output_fasta	Boolean	Allows GAMMA to output gene matches in FASTA format	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	extend_output	Boolean	GAMMA will provide the extended output when set to true	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	docker	String	Docker container used for the task	"us-docker.pkg.dev/general-theiagen/staphb/gamma:2.2"	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gamma	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 gambit	cpu	Int	Number of CPUs to allocate to the task	8	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
 gambit	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
 gambit	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
@@ -1783,6 +1801,7 @@ workflow name	call_ani	Boolean	Set to true to enable the ANI task	FALSE	Optional
 workflow name	call_kmerfinder	Boolean	Set to true to enable the kmerfinder task	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 workflow name	call_plasmidfinder	Boolean	Set to true to enable the plasmidfinder task	TRUE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 workflow name	call_resfinder	Boolean	Set to true to enable the ResFinder task	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+workflow name	call_gamma	Boolean	Set to true in order to enable GAMMA task	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 workflow name	city	String	Will be used in the "city" column in any taxon-specific tables created in the Export Taxon Tables task		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 workflow name	collection_date	String	Will be used in the "collection_date" column in any taxon-specific tables created in the Export Taxon Tables task		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 workflow name	consensus_min_freq	Float	The minimum frequency for a variant to be called a SNP in consensus genome	0.6	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
