@@ -1137,7 +1137,7 @@ skani_report	File	Report from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_accession	String	Top accession ID from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_ani	Float	Top ANI score from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_ani_fasta	File	FASTA file of top ANI match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
-skani_top_ref_coverage	Float	Reference coverage of top match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_top_query_coverage	Float	Query coverage of top match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_score	Float	Top score from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_warning	String	Skani warning message	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_status	String	Status of Skani analysis	TheiaViral_Illumina_PE, TheiaViral_ONT
