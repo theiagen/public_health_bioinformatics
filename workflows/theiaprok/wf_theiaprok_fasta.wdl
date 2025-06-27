@@ -438,18 +438,7 @@ workflow theiaprok_fasta {
             "virulencefinder_docker": merlin_magic.virulencefinder_docker,
             "virulencefinder_hits": merlin_magic.virulencefinder_hits,
             "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
-            "zip": zip,
-            "arln_assembly_ratio": arln_stats.assembly_ratio,
-            "arln_assembly_zscore": arln_stats.assembly_zscore,
-            "arln_stats_docker_version": arln_stats.docker_version,
-            "arln_taxon_assembly_ratio_stdev": arln_stats.taxon_assembly_ratio_stdev,
-            "arln_taxon_gc_mean": arln_stats.taxon_gc_mean,
-            "arln_taxon_gc_percent_stdev": arln_stats.taxon_gc_percent_stdev,
-            "gamma_docker": gamma.gamma_docker,
-            "gamma_fasta": gamma.gamma_fasta,
-            "gamma_gff": gamma.gamma_gff,
-            "gamma_results": gamma.gamma_results,
-            "gamma_version": gamma.gamma_version
+            "zip": zip
          }
       }
     }
