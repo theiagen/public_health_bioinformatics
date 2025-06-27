@@ -84,7 +84,7 @@ task skani {
     echo 0 > TOP_QUERY_COVERAGE
     echo 0 > TOP_SCORE
 
-    # create a new column and sort by the product of ANI (col 3) and Align_fraction_ref (col 4)
+    # create a new column and sort by the product of ANI (col 3) and Align_fraction_query (col 5)
     awk -F'\t' 'NR > 1 {OFS="\t"; new_col = sprintf("%.5f", $3 * $5 / 100); print $0, new_col}' ~{samplename}_skani_results.tsv | \
       sort -t$'\t' -k21,21nr | \
       { echo "$new_header"; cat -; } > ~{samplename}_skani_results_sorted.tsv
