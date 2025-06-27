@@ -287,7 +287,10 @@ task mask_low_coverage {
 
     # make a temporary reference fasta and make sure the header is ONLY the ">" + reference accession number.
     # bedtools maskfasta requires the header to be the same as the reference name in the bam file
-    awk '{if (/^>/) print $1; else print}' ~{reference_fasta} > mod_reference.fasta
+    awk '{if (/^>/) print $1; else print}' ~{reference_fasta} > mod_header_reference.fasta
+
+    # replace all ambiguous bases (non ATCG) with Ns while ignoring fasta header lines.
+    cat mod_header_reference.fasta | sed '/^[^>]/ s/[^AGTCagtc]/N/g' > mod_reference.fasta
 
     # report depth at all regions of a genome including regions with 0 coverage
     bedtools genomecov -bga -ibam ~{bam} > all_coverage_regions.bed
