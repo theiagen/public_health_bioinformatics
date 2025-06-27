@@ -6358,6 +6358,14 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
+<td><strong>annotation_assembly</strong></td>
+<td>File</td>
+<td>Assembly file from annotation software such as Prokka or Bakta, used for utilizing protein fasta and GFF files.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_task</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -6390,6 +6398,14 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
+<td><strong>gff</strong></td>
+<td>File</td>
+<td>GFF file provided by Prokka or Bakta when amrfinder_use_gff is set to true. This file is used to determine the location of AMR genes in the genome.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_task</td>
 <td><strong>hide_point_mutations</strong></td>
 <td>Boolean</td>
 <td>If set to true, point mutations are not reported</td>
@@ -6418,6 +6434,14 @@
 <td>Float</td>
 <td>Minimum identity for a blast-based hit hit (Methods BLAST or PARTIAL). -1 means use a curated threshold if it exists and 0.9 otherwise. Setting this value to something other than -1 will override any curated similarity cutoffs. Attribute should be a float ranging from 0-1, such as 0.95 (equal to 95% identity)</td>
 <td>0.9</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_task</td>
+<td><strong>protein_fasta</strong></td>
+<td>File</td>
+<td>Protein FASTA from annotation software such as Prokka or Bakta. Utilized when amrfinder_use_gff is set to true</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7122,6 +7146,94 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker container used for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gamma:2.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>extend_output</strong></td>
+<td>Boolean</td>
+<td>GAMMA will provide the extended output when set to true</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>gamma_db</strong></td>
+<td>String</td>
+<td>Multifasta sequence database GAMMA is to use for gene matching</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/gamma/default_ResFinderDB_Combined_05-06-20.fsa</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>min_length_percent</strong></td>
+<td>Int</td>
+<td>Threshold of match length percent used by GAMMA-s</td>
+<td>20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>min_percent_identity</strong></td>
+<td>Int</td>
+<td>Threshold of identity for gene matches in percent</td>
+<td>90</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>output_fasta</strong></td>
+<td>Boolean</td>
+<td>Allows GAMMA to output gene matches in FASTA format</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>output_gff</strong></td>
+<td>Boolean</td>
+<td>Allows GAMMA to output gene matches in GFF format</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>run_gammas</strong></td>
+<td>Boolean</td>
+<td>Turns on GAMMA-S which runs GAMMA on nucleotide sequences rather than translating input sequences and matches</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9030,6 +9142,14 @@
 </tr>
 <tr>
 <td>theiaprok_illumina_pe</td>
+<td><strong>amrfinder_use_gff</strong></td>
+<td>Boolean</td>
+<td>Whether or not to use the GFF and protein FASTA files for AMRFinderPlus</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
 <td><strong>max_genome_length</strong></td>
 <td>Int</td>
 <td>Maximum genome length able to pass read screening.</td>
@@ -9201,6 +9321,14 @@
 <td><strong>call_ani</strong></td>
 <td>Boolean</td>
 <td>Set to true to enable the ANI task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>call_gamma</strong></td>
+<td>Boolean</td>
+<td>Set to true in order to enable GAMMA task</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -9512,6 +9640,14 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
+<td><strong>annotation_assembly</strong></td>
+<td>File</td>
+<td>Assembly file from annotation software such as Prokka or Bakta, used for utilizing protein fasta and GFF files.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_task</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -9544,6 +9680,14 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
+<td><strong>gff</strong></td>
+<td>File</td>
+<td>GFF file provided by Prokka or Bakta when amrfinder_use_gff is set to true. This file is used to determine the location of AMR genes in the genome.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_task</td>
 <td><strong>hide_point_mutations</strong></td>
 <td>Boolean</td>
 <td>If set to true, point mutations are not reported</td>
@@ -9572,6 +9716,14 @@
 <td>Float</td>
 <td>Minimum identity for a blast-based hit hit (Methods BLAST or PARTIAL). -1 means use a curated threshold if it exists and 0.9 otherwise. Setting this value to something other than -1 will override any curated similarity cutoffs. Attribute should be a float ranging from 0-1, such as 0.95 (equal to 95% identity)</td>
 <td>0.9</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_task</td>
+<td><strong>protein_fasta</strong></td>
+<td>File</td>
+<td>Protein FASTA from annotation software such as Prokka or Bakta. Utilized when amrfinder_use_gff is set to true</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10292,6 +10444,94 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker container used for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gamma:2.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>extend_output</strong></td>
+<td>Boolean</td>
+<td>GAMMA will provide the extended output when set to true</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>gamma_db</strong></td>
+<td>String</td>
+<td>Multifasta sequence database GAMMA is to use for gene matching</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/gamma/default_ResFinderDB_Combined_05-06-20.fsa</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>min_length_percent</strong></td>
+<td>Int</td>
+<td>Threshold of match length percent used by GAMMA-s</td>
+<td>20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>min_percent_identity</strong></td>
+<td>Int</td>
+<td>Threshold of identity for gene matches in percent</td>
+<td>90</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>output_fasta</strong></td>
+<td>Boolean</td>
+<td>Allows GAMMA to output gene matches in FASTA format</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>output_gff</strong></td>
+<td>Boolean</td>
+<td>Allows GAMMA to output gene matches in GFF format</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>run_gammas</strong></td>
+<td>Boolean</td>
+<td>Turns on GAMMA-S which runs GAMMA on nucleotide sequences rather than translating input sequences and matches</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12248,6 +12488,14 @@
 </tr>
 <tr>
 <td>theiaprok_illumina_se</td>
+<td><strong>amrfinder_use_gff</strong></td>
+<td>Boolean</td>
+<td>Whether or not to use the GFF and protein FASTA files for AMRFinderPlus</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
 <td><strong>max_genome_length</strong></td>
 <td>Int</td>
 <td>Maximum genome length able to pass read screening.</td>
@@ -12411,6 +12659,14 @@
 <td><strong>call_ani</strong></td>
 <td>Boolean</td>
 <td>Set to true to enable the ANI task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>call_gamma</strong></td>
+<td>Boolean</td>
+<td>Set to true in order to enable GAMMA task</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -12730,6 +12986,14 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
+<td><strong>annotation_assembly</strong></td>
+<td>File</td>
+<td>Assembly file from annotation software such as Prokka or Bakta, used for utilizing protein fasta and GFF files.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_task</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -12762,6 +13026,14 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
+<td><strong>gff</strong></td>
+<td>File</td>
+<td>GFF file provided by Prokka or Bakta when amrfinder_use_gff is set to true. This file is used to determine the location of AMR genes in the genome.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_task</td>
 <td><strong>hide_point_mutations</strong></td>
 <td>Boolean</td>
 <td>If set to true, point mutations are not reported</td>
@@ -12790,6 +13062,14 @@
 <td>Float</td>
 <td>Minimum identity for a blast-based hit hit (Methods BLAST or PARTIAL). -1 means use a curated threshold if it exists and 0.9 otherwise. Setting this value to something other than -1 will override any curated similarity cutoffs. Attribute should be a float ranging from 0-1, such as 0.95 (equal to 95% identity)</td>
 <td>0.9</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_task</td>
+<td><strong>protein_fasta</strong></td>
+<td>File</td>
+<td>Protein FASTA from annotation software such as Prokka or Bakta. Utilized when amrfinder_use_gff is set to true</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13542,6 +13822,94 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker container used for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gamma:2.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>extend_output</strong></td>
+<td>Boolean</td>
+<td>GAMMA will provide the extended output when set to true</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>gamma_db</strong></td>
+<td>String</td>
+<td>Multifasta sequence database GAMMA is to use for gene matching</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/gamma/default_ResFinderDB_Combined_05-06-20.fsa</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>min_length_percent</strong></td>
+<td>Int</td>
+<td>Threshold of match length percent used by GAMMA-s</td>
+<td>20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>min_percent_identity</strong></td>
+<td>Int</td>
+<td>Threshold of identity for gene matches in percent</td>
+<td>90</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>output_fasta</strong></td>
+<td>Boolean</td>
+<td>Allows GAMMA to output gene matches in FASTA format</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>output_gff</strong></td>
+<td>Boolean</td>
+<td>Allows GAMMA to output gene matches in GFF format</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>run_gammas</strong></td>
+<td>Boolean</td>
+<td>Turns on GAMMA-S which runs GAMMA on nucleotide sequences rather than translating input sequences and matches</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15770,6 +16138,14 @@
 </tr>
 <tr>
 <td>theiaprok_ont</td>
+<td><strong>amrfinder_use_gff</strong></td>
+<td>Boolean</td>
+<td>Whether or not to use the GFF and protein FASTA files for AMRFinderPlus</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
 <td><strong>max_genome_length</strong></td>
 <td>Int</td>
 <td>Maximum genome length able to pass read screening. For TheiaProk_ONT, screening using max_genome_length is skipped by default.</td>
@@ -15933,6 +16309,14 @@
 <td><strong>call_ani</strong></td>
 <td>Boolean</td>
 <td>Set to true to enable the ANI task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>call_gamma</strong></td>
+<td>Boolean</td>
+<td>Set to true in order to enable GAMMA task</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -16180,6 +16564,14 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
+<td><strong>annotation_assembly</strong></td>
+<td>File</td>
+<td>Assembly file from annotation software such as Prokka or Bakta, used for utilizing protein fasta and GFF files.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_task</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -16212,6 +16604,14 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
+<td><strong>gff</strong></td>
+<td>File</td>
+<td>GFF file provided by Prokka or Bakta when amrfinder_use_gff is set to true. This file is used to determine the location of AMR genes in the genome.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_task</td>
 <td><strong>hide_point_mutations</strong></td>
 <td>Boolean</td>
 <td>If set to true, point mutations are not reported</td>
@@ -16240,6 +16640,14 @@
 <td>Float</td>
 <td>Minimum identity for a blast-based hit hit (Methods BLAST or PARTIAL). -1 means use a curated threshold if it exists and 0.9 otherwise. Setting this value to something other than -1 will override any curated similarity cutoffs. Attribute should be a float ranging from 0-1, such as 0.95 (equal to 95% identity)</td>
 <td>0.9</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_task</td>
+<td><strong>protein_fasta</strong></td>
+<td>File</td>
+<td>Protein FASTA from annotation software such as Prokka or Bakta. Utilized when amrfinder_use_gff is set to true</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16504,6 +16912,94 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker container used for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gamma:2.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>extend_output</strong></td>
+<td>Boolean</td>
+<td>GAMMA will provide the extended output when set to true</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>gamma_db</strong></td>
+<td>String</td>
+<td>Multifasta sequence database GAMMA is to use for gene matching</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/gamma/default_ResFinderDB_Combined_05-06-20.fsa</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>min_length_percent</strong></td>
+<td>Int</td>
+<td>Threshold of match length percent used by GAMMA-s</td>
+<td>20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>min_percent_identity</strong></td>
+<td>Int</td>
+<td>Threshold of identity for gene matches in percent</td>
+<td>90</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>output_fasta</strong></td>
+<td>Boolean</td>
+<td>Allows GAMMA to output gene matches in FASTA format</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>output_gff</strong></td>
+<td>Boolean</td>
+<td>Allows GAMMA to output gene matches in GFF format</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gamma</td>
+<td><strong>run_gammas</strong></td>
+<td>Boolean</td>
+<td>Turns on GAMMA-S which runs GAMMA on nucleotide sequences rather than translating input sequences and matches</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18379,6 +18875,14 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>theiaprok_fasta</td>
+<td><strong>amrfinder_use_gff</strong></td>
+<td>Boolean</td>
+<td>Whether or not to use the GFF and protein FASTA files for AMRFinderPlus</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>ts_mlst</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -18503,6 +19007,14 @@
 <td><strong>call_ani</strong></td>
 <td>Boolean</td>
 <td>Set to true to enable the ANI task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>call_gamma</strong></td>
+<td>Boolean</td>
+<td>Set to true in order to enable GAMMA task</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -20240,7 +20752,7 @@
 <details class="task">
 <summary><code>AMRFinderPlus</code>: AMR Genotyping (default)</summary>
 <p>NCBI's <a href="https://github.com/ncbi/amr/wiki">AMRFinderPlus</a> is the default antimicrobial resistance (AMR) detection tool used in TheiaProk. ResFinder may be used alternatively and if so, AMRFinderPlus is not run. </p>
-<p>AMRFinderPlus identifies acquired antimicrobial resistance (AMR) genes, virulence genes, and stress genes.  Such AMR genes confer resistance to antibiotics, metals, biocides, heat, or acid. For some taxa (see <a href="https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#--organism-option">here</a>), AMRFinderPlus will provide taxa-specific results including filtering out genes that are almost ubiquitous in the taxa (intrinsic genes) and identifying resistance-associated point mutations.  In TheiaProk, the taxon used by AMRFinderPlus is specified based on the <code>gambit_predicted_taxon</code> or a user-provided <code>expected_taxon</code>.</p>
+<p>AMRFinderPlus identifies acquired antimicrobial resistance (AMR) genes, virulence genes, and stress genes.  Such AMR genes confer resistance to antibiotics, metals, biocides, heat, or acid. For some taxa (see <a href="https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#--organism-option">here</a>), AMRFinderPlus will provide taxa-specific results including filtering out genes that are almost ubiquitous in the taxa (intrinsic genes) and identifying resistance-associated point mutations.  In TheiaProk, the taxon used by AMRFinderPlus is specified based on the <code>gambit_predicted_taxon</code> or a user-provided <code>expected_taxon</code>. AMRFinderPlus also has the ability to utilize a GFF and protein FASTA file which can be enabled via <code>amrfinder_use_gff</code> allowing for more accurate calls.</p>
 <p>You can check if a gene or point mutation is in the AMRFinderPlus database <a href="https://www.ncbi.nlm.nih.gov/pathogens/refgene/#">here</a>, find the sequences of reference genes <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJNA313047">here</a>, and search the query Hidden Markov Models (HMMs) used by AMRFinderPlus to identify AMR genes and some stress and virulence proteins (<a href="https://www.ncbi.nlm.nih.gov/pathogens/hmm/">here</a>). The AMRFinderPlus database is updated frequently. You can ensure you are using the most up-to-date version by specifying the docker image as a workflow input. You might like to save this docker image as a workspace data element to make this easier.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">AMRFinderPlus Technical Details</p>
@@ -20267,6 +20779,41 @@
 <tr>
 <td>Original Publication(s)</td>
 <td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8208984/">AMRFinderPlus and the Reference Gene Catalog facilitate examination of the genomic links among antimicrobial resistance, stress response, and virulence</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>GAMMA</code>: Genotyping (optional)</summary>
+<p><a href="https://github.com/rastanton/GAMMA/tree/main">GAMMA</a> (Gene Allele Mutation Microbial Assessment) is a protein identity based tool that identifies gene matches in microbial genomic data. GAMMA will also translate and annotate each match providing mutational and truncation information for identified matches. This is done much like AMRFinder, however, GAMMA uses BLAT as opposed to BLAST allowing for faster calls with comparable accuracy.  </p>
+<p>GAMMA utilizes a multifasta database of the coding sequences of genes specified by the user. This allows for GAMMA to search for AMR, hypervirulence, plasmid markers, or any prokaryotic database. The default for <code>task_gamma.wdl</code> is the GAMMA provided <a href="gs:/theiagen-public-resources-rp/reference_data/databases/gamma/default_ResFinderDB_Combined_05-06-20.fsa">ResFinder Database</a>. GAMMA will then return gene matches with mutation and truncation information as a <code>.gamma</code> file which can be accompanied with a GFF output utilizing the <code>--gff</code> flag.</p>
+<p>GAMMA also allows for the usage of only nucleotide sequences rather than translated sequences. Using GAMMA-S, enabled with the boolean <code>run_gammas</code>, will find the best matches from a multifasta database without translating sequences. </p>
+<div class="admonition techdetails">
+<p class="admonition-title">GAMMA Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/awh-oh-integration-updates-dev/tasks/gene_typing/drug_resistance/task_gamma.wdl">task_gamma.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/rastanton/GAMMA/tree/main">GAMMA on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td>https://github.com/rastanton/GAMMA/tree/main</td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/38/2/546/6355578">GAMMA: a tool for the rapid identification, classification and annotation of translated gene matches from sequencing data</a></td>
 </tr>
 </tbody>
 </table>
@@ -20642,7 +21189,7 @@
 </details>
 <details class="task">
 <summary><code>ARLN_Stats</code>: Stats required by ARLN such as assembly ratio and Q30% scores (optional)</summary>
-<p>The <code>arln_stats</code> task when enabled, will provide the user with not already provided ARLN compliant statistics used for PASS/FAIL assesment such as assembly ratio and will calculate the Q30% scores of the raw and cleaned reads, provided that these are utilized by the run workflow. TheiaProk_FASTA will not provide these results, only assembly ratio, and likewise TheiaProk_Illumina_SE and TheiaProk_ONT will only provide R1 Q30% metrics. </p>
+<p>The <code>arln_stats</code> task when enabled, will provide the user with not already provided ARLN compliant statistics used for PASS/FAIL assesment such as assembly ratio, GC perecnt statistics, and will calculate the Q30% scores of the raw and cleaned reads, provided that these are utilized by the run workflow. TheiaProk_FASTA will not provide these results, only assembly ratio, and likewise TheiaProk_Illumina_SE and TheiaProk_ONT will only provide R1 Q30% metrics.</p>
 <p>The Q30% statistics are calculated via a Python script, <a href="https://github.com/theiagen/theiagen_docker_builds/blob/main/arln_stats/1.0.0/q30.py">q30.py</a>, that is incorporated within the Docker image. The assembly ratio statistic is obtained by parsing an included <a href="../../../assets/files/NCBI_Assembly_stats_20240124.txt">NCBI_Stats</a> text file that is created by the CDC to aggregate NCBI prokayotic assembly data. The file is sorted by taxon and has statistics such as minimum, maximum, and mean assembly length, the assembly ratio, and the standard deviation for each taxon. This data is used to obtain and calculate the assembly ratio of samples passed through ARLN_Stats, much the same as CDC's Phoenix. The NCBI_Stats file will be kept up to date when there are updates to the parent NCBI dataset.</p>
 <details class="toggle">
 <summary>NCBI_Assembly_stats_20240124.txt Explained</summary>
@@ -22634,6 +23181,31 @@
 <td>Version of GAMBIT software used</td>
 </tr>
 <tr>
+<td>gamma_docker</td>
+<td>String</td>
+<td>The Docker container used</td>
+</tr>
+<tr>
+<td>gamma_fasta</td>
+<td>File</td>
+<td>The FASTA file reporting gene matches if boolean was set to true</td>
+</tr>
+<tr>
+<td>gamma_gff</td>
+<td>File</td>
+<td>The GFF file reporting gene matches if boolean was set to true</td>
+</tr>
+<tr>
+<td>gamma_results</td>
+<td>File</td>
+<td>The .gamma file reporting gene matches</td>
+</tr>
+<tr>
+<td>gamma_version</td>
+<td>String</td>
+<td>The version of GAMMA used</td>
+</tr>
+<tr>
 <td>genotyphi_final_genotype</td>
 <td>String</td>
 <td>Final genotype call from GenoTyphi</td>
@@ -24529,6 +25101,31 @@
 <td>Version of GAMBIT software used</td>
 </tr>
 <tr>
+<td>gamma_docker</td>
+<td>String</td>
+<td>The Docker container used</td>
+</tr>
+<tr>
+<td>gamma_fasta</td>
+<td>File</td>
+<td>The FASTA file reporting gene matches if boolean was set to true</td>
+</tr>
+<tr>
+<td>gamma_gff</td>
+<td>File</td>
+<td>The GFF file reporting gene matches if boolean was set to true</td>
+</tr>
+<tr>
+<td>gamma_results</td>
+<td>File</td>
+<td>The .gamma file reporting gene matches</td>
+</tr>
+<tr>
+<td>gamma_version</td>
+<td>String</td>
+<td>The version of GAMMA used</td>
+</tr>
+<tr>
 <td>genotyphi_final_genotype</td>
 <td>String</td>
 <td>Final genotype call from GenoTyphi</td>
@@ -26096,12 +26693,32 @@
 <tr>
 <td>arln_assembly_ratio</td>
 <td>String</td>
-<td>Assembly ratio with standard deviation, for example, 1.0147x(0.35499) is 1.0147x away from a STD of 0.35499. These stats are gathered from a statistics file created by the CDC aggregating NCBI assembly data by taxon.</td>
+<td>Assembly ratio of the final assembly compared to the mean assembly length of the taxon. These stats are gathered from a statistics file created by the CDC aggregating NCBI assembly data by taxon.</td>
+</tr>
+<tr>
+<td>arln_assembly_zscore</td>
+<td>String</td>
+<td>ZScore of the samples assembly length to assess the uniformity of the assembly when compared to taxon means.</td>
 </tr>
 <tr>
 <td>arln_stats_docker_version</td>
 <td>String</td>
 <td>Docker version for task_arln_stats.wdl</td>
+</tr>
+<tr>
+<td>arln_taxon_assembly_ratio_stdev</td>
+<td>String</td>
+<td>Reported assembely length standard deviation of the given taxonomy pulled from NCBI aggregated data.</td>
+</tr>
+<tr>
+<td>arln_taxon_gc_mean</td>
+<td>String</td>
+<td>Mean GC percent of the taxon.</td>
+</tr>
+<tr>
+<td>arln_taxon_gc_percent_stdev</td>
+<td>String</td>
+<td>Reported GC percent standard deviation of the given taxonomy pulled from NCBI aggregated data.</td>
 </tr>
 <tr>
 <td>assembly_length</td>
@@ -26212,6 +26829,31 @@
 <td>gambit_version</td>
 <td>String</td>
 <td>Version of GAMBIT software used</td>
+</tr>
+<tr>
+<td>gamma_docker</td>
+<td>String</td>
+<td>The Docker container used</td>
+</tr>
+<tr>
+<td>gamma_fasta</td>
+<td>File</td>
+<td>The FASTA file reporting gene matches if boolean was set to true</td>
+</tr>
+<tr>
+<td>gamma_gff</td>
+<td>File</td>
+<td>The GFF file reporting gene matches if boolean was set to true</td>
+</tr>
+<tr>
+<td>gamma_results</td>
+<td>File</td>
+<td>The .gamma file reporting gene matches</td>
+</tr>
+<tr>
+<td>gamma_version</td>
+<td>String</td>
+<td>The version of GAMMA used</td>
 </tr>
 <tr>
 <td>kaptive_k_locus</td>
@@ -27366,12 +28008,32 @@
 <tr>
 <td>arln_assembly_ratio</td>
 <td>String</td>
-<td>Assembly ratio with standard deviation, for example, 1.0147x(0.35499) is 1.0147x away from a STD of 0.35499. These stats are gathered from a statistics file created by the CDC aggregating NCBI assembly data by taxon.</td>
+<td>Assembly ratio of the final assembly compared to the mean assembly length of the taxon. These stats are gathered from a statistics file created by the CDC aggregating NCBI assembly data by taxon.</td>
+</tr>
+<tr>
+<td>arln_assembly_zscore</td>
+<td>String</td>
+<td>ZScore of the samples assembly length to assess the uniformity of the assembly when compared to taxon means.</td>
 </tr>
 <tr>
 <td>arln_stats_docker_version</td>
 <td>String</td>
 <td>Docker version for task_arln_stats.wdl</td>
+</tr>
+<tr>
+<td>arln_taxon_assembly_ratio_stdev</td>
+<td>String</td>
+<td>Reported assembely length standard deviation of the given taxonomy pulled from NCBI aggregated data.</td>
+</tr>
+<tr>
+<td>arln_taxon_gc_mean</td>
+<td>String</td>
+<td>Mean GC percent of the taxon.</td>
+</tr>
+<tr>
+<td>arln_taxon_gc_percent_stdev</td>
+<td>String</td>
+<td>Reported GC percent standard deviation of the given taxonomy pulled from NCBI aggregated data.</td>
 </tr>
 <tr>
 <td>assembly_length</td>
@@ -27482,6 +28144,31 @@
 <td>gambit_version</td>
 <td>String</td>
 <td>Version of GAMBIT software used</td>
+</tr>
+<tr>
+<td>gamma_docker</td>
+<td>String</td>
+<td>The Docker container used</td>
+</tr>
+<tr>
+<td>gamma_fasta</td>
+<td>File</td>
+<td>The FASTA file reporting gene matches if boolean was set to true</td>
+</tr>
+<tr>
+<td>gamma_gff</td>
+<td>File</td>
+<td>The GFF file reporting gene matches if boolean was set to true</td>
+</tr>
+<tr>
+<td>gamma_results</td>
+<td>File</td>
+<td>The .gamma file reporting gene matches</td>
+</tr>
+<tr>
+<td>gamma_version</td>
+<td>String</td>
+<td>The version of GAMMA used</td>
 </tr>
 <tr>
 <td>kaptive_k_locus</td>
@@ -28371,7 +29058,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 27, 2025 14:58:18 UTC">2025-06-27</span>
   </span>
 
     

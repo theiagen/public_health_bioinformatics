@@ -12,7 +12,7 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/arln_stats_task/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/amrfinderplus_task/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Arln stats task - Public Health Bioinformatics</title>
+        <title>Amrfinderplus task - Public Health Bioinformatics</title>
       
     
     
@@ -129,7 +129,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Arln stats task
+              Amrfinderplus task
             
           </span>
         </div>
@@ -5221,40 +5221,15 @@
   
 
 
-  <h1>Arln stats task</h1>
+  <h1>Amrfinderplus task</h1>
 
 <details class="task">
-<summary><code>ARLN_Stats</code>: Stats required by ARLN such as assembly ratio and Q30% scores (optional)</summary>
-<p>The <code>arln_stats</code> task when enabled, will provide the user with not already provided ARLN compliant statistics used for PASS/FAIL assesment such as assembly ratio, GC perecnt statistics, and will calculate the Q30% scores of the raw and cleaned reads, provided that these are utilized by the run workflow. TheiaProk_FASTA will not provide these results, only assembly ratio, and likewise TheiaProk_Illumina_SE and TheiaProk_ONT will only provide R1 Q30% metrics.</p>
-<p>The Q30% statistics are calculated via a Python script, <a href="https://github.com/theiagen/theiagen_docker_builds/blob/main/arln_stats/1.0.0/q30.py">q30.py</a>, that is incorporated within the Docker image. The assembly ratio statistic is obtained by parsing an included <a href="../../assets/files/NCBI_Assembly_stats_20240124.txt">NCBI_Stats</a> text file that is created by the CDC to aggregate NCBI prokayotic assembly data. The file is sorted by taxon and has statistics such as minimum, maximum, and mean assembly length, the assembly ratio, and the standard deviation for each taxon. This data is used to obtain and calculate the assembly ratio of samples passed through ARLN_Stats, much the same as CDC's Phoenix. The NCBI_Stats file will be kept up to date when there are updates to the parent NCBI dataset.</p>
-<details class="toggle">
-<summary>NCBI_Assembly_stats_20240124.txt Explained</summary>
-<p>This aggregated data file is produced by the <a href="https://github.com/CDCgov/phoenix/wiki/Pipeline-Overview#qc-of-assembled-scaffolds--500bps">CDC</a> and the columns are as follows: </p>
-<ul>
-<li>Species</li>
-<li>Assembly_Size_Min</li>
-<li>Assembly_ Size_Max</li>
-<li>Assembly_vMedian</li>
-<li>Assembly_ Size_Mean</li>
-<li>Assembly_ Size_StDev</li>
-<li>Assembly_count</li>
-<li>GC_Min</li>
-<li>GC_Max</li>
-<li>GC_Median</li>
-<li>GC_Mean</li>
-<li>GC_Stdev</li>
-<li>GC_count</li>
-<li>CDS_Min</li>
-<li>CDS_Max</li>
-<li>CDS_Median</li>
-<li>CDS_Mean</li>
-<li>CDS_Stdev</li>
-<li>CDS_count</li>
-<li>Consensus_TAXID</li>
-</ul>
-</details>
+<summary><code>AMRFinderPlus</code>: AMR Genotyping (default)</summary>
+<p>NCBI's <a href="https://github.com/ncbi/amr/wiki">AMRFinderPlus</a> is the default antimicrobial resistance (AMR) detection tool used in TheiaProk. ResFinder may be used alternatively and if so, AMRFinderPlus is not run. </p>
+<p>AMRFinderPlus identifies acquired antimicrobial resistance (AMR) genes, virulence genes, and stress genes.  Such AMR genes confer resistance to antibiotics, metals, biocides, heat, or acid. For some taxa (see <a href="https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#--organism-option">here</a>), AMRFinderPlus will provide taxa-specific results including filtering out genes that are almost ubiquitous in the taxa (intrinsic genes) and identifying resistance-associated point mutations.  In TheiaProk, the taxon used by AMRFinderPlus is specified based on the <code>gambit_predicted_taxon</code> or a user-provided <code>expected_taxon</code>. AMRFinderPlus also has the ability to utilize a GFF and protein FASTA file which can be enabled via <code>amrfinder_use_gff</code> allowing for more accurate calls.</p>
+<p>You can check if a gene or point mutation is in the AMRFinderPlus database <a href="https://www.ncbi.nlm.nih.gov/pathogens/refgene/#">here</a>, find the sequences of reference genes <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJNA313047">here</a>, and search the query Hidden Markov Models (HMMs) used by AMRFinderPlus to identify AMR genes and some stress and virulence proteins (<a href="https://www.ncbi.nlm.nih.gov/pathogens/hmm/">here</a>). The AMRFinderPlus database is updated frequently. You can ensure you are using the most up-to-date version by specifying the docker image as a workflow input. You might like to save this docker image as a workspace data element to make this easier.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">ARLN_Stats Technical Details</p>
+<p class="admonition-title">AMRFinderPlus Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -5265,7 +5240,19 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_arln_stats.wdl">task_arln_stats.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl">task_amrfinderplus.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/amr">amr on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td>https://github.com/ncbi/amr/wiki</td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8208984/">AMRFinderPlus and the Reference Gene Catalog facilitate examination of the genomic links among antimicrobial resistance, stress response, and virulence</a></td>
 </tr>
 </tbody>
 </table>
@@ -5303,7 +5290,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 9, 2025 16:17:27 UTC">2025-05-09</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 27, 2025 14:58:18 UTC">2025-06-27</span>
   </span>
 
     
