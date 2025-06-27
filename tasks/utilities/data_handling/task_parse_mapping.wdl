@@ -292,8 +292,8 @@ task mask_low_coverage {
     # replace all ambiguous bases (non ATCG) with Ns while ignoring fasta header lines.
     cat mod_header_reference.fasta | sed '/^[^>]/ s/[^AGTCagtc]/N/g' > mod_reference.fasta
 
-    # report depth at all regions of a genome including regions with 0 coverage
-    bedtools genomecov -bga -ibam ~{bam} > all_coverage_regions.bed
+    # report depth at all regions of a genome including regions with 0 coverage. include reads with deletions in coverage depth calculations.
+    bedtools genomecov -bga -ignoreD -ibam ~{bam} > all_coverage_regions.bed
 
     # filter out regions that have a coverage greater than {min_depth}. Only need low coverage regions here.
     awk -v min_depth=~{min_depth} '$4 < min_depth' all_coverage_regions.bed > low_coverage_regions.bed
