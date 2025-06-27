@@ -634,7 +634,6 @@ workflow theiaprok_illumina_pe {
                 "shigeifinder_serotype": merlin_magic.shigeifinder_serotype,
                 "shigeifinder_version_reads": merlin_magic.shigeifinder_version_reads,
                 "shigeifinder_version": merlin_magic.shigeifinder_version,
-                "digger_denovo_version": digger_denovo.assembler_version,
                 "sistr_allele_fasta": merlin_magic.sistr_allele_fasta,
                 "sistr_allele_json": merlin_magic.sistr_allele_json,
                 "sistr_cgmlst": merlin_magic.sistr_cgmlst,
@@ -725,8 +724,26 @@ workflow theiaprok_illumina_pe {
                 "virulencefinder_docker": merlin_magic.virulencefinder_docker,
                 "virulencefinder_hits": merlin_magic.virulencefinder_hits,
                 "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
-                "zip": zip
-              }
+                "zip": zip,
+                "arln_assembly_ratio": arln_stats.assembly_ratio,
+                "arln_assembly_zscore": arln_stats.assembly_zscore,
+                "arln_r1_q30_clean": arln_stats.read1_clean_q30,
+                "arln_r1_q30_raw": arln_stats.read1_raw_q30,
+                "arln_r2_q30_clean": arln_stats.read2_clean_q30,
+                "arln_r2_q30_raw": arln_stats.read2_raw_q30,
+                "arln_stats_docker_version": arln_stats.docker_version,
+                "arln_taxon_assembly_ratio_stdev": arln_stats.taxon_assembly_ratio_stdev,
+                "arln_taxon_gc_mean": arln_stats.taxon_gc_mean,
+                "arln_taxon_gc_percent_stdev": arln_stats.taxon_gc_percent_stdev,
+                "assembler": digger_denovo.assembler_used,
+                "assembler_version": digger_denovo.assembler_version,
+                "filtered_contigs_metrics": digger_denovo.filtered_contigs_metrics,
+                "gamma_docker": gamma.gamma_docker,
+                "gamma_fasta": gamma.gamma_fasta,
+                "gamma_gff": gamma.gamma_gff,
+                "gamma_results": gamma.gamma_results,
+                "gamma_version": gamma.gamma_version
+            }
           }
         }
         if (call_arln_stats) {
