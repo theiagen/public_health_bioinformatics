@@ -624,8 +624,21 @@ workflow theiaprok_ont {
                 "medaka_version": flye_denovo.medaka_version,
                 "polypolish_version": flye_denovo.polypolish_version,
                 "porechop_version": flye_denovo.porechop_version,
-                "racon_version": flye_denovo.racon_version
-              }
+                "racon_version": flye_denovo.racon_version,
+                "arln_assembly_ratio": arln_stats.assembly_ratio,
+                "arln_assembly_zscore": arln_stats.assembly_zscore,
+                "arln_r1_q30_clean": arln_stats.read1_clean_q30,
+                "arln_r1_q30_raw": arln_stats.read1_raw_q30,
+                "arln_stats_docker_version": arln_stats.docker_version,
+                "arln_taxon_assembly_ratio_stdev": arln_stats.taxon_assembly_ratio_stdev,
+                "arln_taxon_gc_mean": arln_stats.taxon_gc_mean,
+                "arln_taxon_gc_percent_stdev": arln_stats.taxon_gc_percent_stdev,
+                "gamma_docker": gamma.gamma_docker,
+                "gamma_fasta": gamma.gamma_fasta,
+                "gamma_gff": gamma.gamma_gff,
+                "gamma_results": gamma.gamma_results,
+                "gamma_version": gamma.gamma_version
+            }
           }
         }
         if (call_arln_stats) {
