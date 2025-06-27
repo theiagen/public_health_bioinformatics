@@ -318,3 +318,13 @@ workflows:
    primaryDescriptorPath: /workflows/submission/wf_terra_2_ena.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: TheiaViral_ONT_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_ont.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: TheiaViral_Illumina_PE_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_illumina_pe.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json

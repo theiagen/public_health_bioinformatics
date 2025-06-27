@@ -18,7 +18,7 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
 Briefly, the main _genomic characterization_  workflows are split by pathogen type:
 
-1. **Viral** (**_TheiaCoV_** workflows)
+1. **Viral** (**_TheiaCoV_** & **_TheiaViral_** workflows)
 2. **Bacterial** (**_TheiaProk_** workflows)
 3. **Fungal** (**_TheiaEuk_** workflows)
 
@@ -42,17 +42,25 @@ You can expect a careful review of every PR and feedback as needed before mergin
 
 ### Authorship
 
-(Ordered by contribution [# of lines changed] as of 2025-03-26)
+<!-- 
+A Public Service Announcement regarding calculating the contribution math:
+
+Andrew Hale added a .txt database file to docs/assets that artifically inflates his line 
+count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract 
+55,316 from his line count when updating this list. okay thanks byee
+-->
+
+(Ordered by contribution [# of lines changed] as of 2025-06-25)
 
 - **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision
 - **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation
 - **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
+- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
+- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
+- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
 - **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation
 - **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
-- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
-- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
-- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
-- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
 - **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
 - **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
@@ -77,7 +85,7 @@ We would like to gratefully acknowledge the following individuals from the publi
 
 ### Maintaining PHB Pipelines
 
-Theiagen Genomics has committed to maintaining these workflows for the forseeable future. These workflows are written using a standard workflow language (WDL) and uses Docker images based on the [STAPH-B Docker Builds](https://github.com/StaPH-B/docker-builds). New versions that include bug fixes and additional features are released on a quarterly bases, with urgent bug fixes released as needed. Each version is accompanied by detailed release notes to lower the barrier of pipeline upkeep from the public health community at large.
+Theiagen Genomics has committed to maintaining these workflows for the forseeable future. These workflows are written using a standard workflow language (WDL) and uses Docker images based on the [StaPH-B Docker Builds](https://github.com/StaPH-B/docker-builds). New versions that include bug fixes and additional features are released on a quarterly bases, with urgent bug fixes released as needed. Each version is accompanied by detailed release notes to lower the barrier of pipeline upkeep from the public health community at large.
 
 ### Point of Contact
 
