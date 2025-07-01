@@ -55,7 +55,7 @@ task ts_mlst {
     if [[ "$scheme" == "ecoli" || "$scheme" == "ecoli_2" || "$scheme" == "abaumannii" || "$scheme" == "abaumannii_2" ]]; then
       cp ~{samplename}_ts_mlst.tsv ~{samplename}_1.tsv
       secondary_scheme=$(if [[ "$scheme" == *_2 ]]; then echo "${scheme%_2}"; else echo "${scheme}_2"; fi)
-
+      
       # Check if secondary scheme is in DB
       if grep -q "$secondary_scheme" MLST_SCHEMES; then
         mlst \
