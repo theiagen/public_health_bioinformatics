@@ -205,7 +205,7 @@ task nextclade_add_ref {
       --output-tsv  nextclade_output.tsv \
       --output-tree nextclade_output.auspice.json \
       --output-all=. \
-      "~{sep=' ' genome_fastas}"
+      ~{sep=' ' genome_fastas}
   >>>
   runtime {
     docker: "~{docker}"
