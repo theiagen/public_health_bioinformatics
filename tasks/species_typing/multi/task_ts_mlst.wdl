@@ -74,7 +74,7 @@ task ts_mlst {
         if [[ -f "~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta" && -f "~{samplename}_novel_mlst_alleles.fasta" ]]; then
           cat ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta > ~{samplename}_novel_mlst_alleles.fasta
         elif [[ -f "~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta" ]]; then
-          mv ~{samplename}_novel_mlst_alleles.fasta
+          mv ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta
         else
           echo "No novel alleles found for concatenation"
         fi
@@ -116,7 +116,7 @@ task ts_mlst {
             if [[ -f "~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta" && -f "~{samplename}_novel_mlst_alleles.fasta" ]]; then
               cat ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta > ~{samplename}_novel_mlst_alleles.fasta
             elif [[ -f "~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta" ]]; then
-              mv ~{samplename}_novel_mlst_alleles.fasta
+              mv ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta
             else
               echo "No novel alleles found for concatenation"
             fi
