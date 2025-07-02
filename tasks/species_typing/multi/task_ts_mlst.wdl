@@ -29,6 +29,7 @@ task ts_mlst {
     # found from adapting theiaprok for ARLN functionality.
     # CDCs mlst container, used by OH, also houses ecoli_2 scheme whereas Staphb does not, hence the check of if ecoli_2 is in the DB
     # exists on lines 59 and 92. 
+    set -euo pipefail
 
     echo $(mlst --version 2>&1) | sed 's/mlst //' | tee VERSION
     
@@ -54,7 +55,7 @@ task ts_mlst {
     if [[ "$scheme" == "ecoli" || "$scheme" == "ecoli_2" || "$scheme" == "abaumannii" || "$scheme" == "abaumannii_2" ]]; then
       cp ~{samplename}_ts_mlst.tsv ~{samplename}_1.tsv
       secondary_scheme=$(if [[ "$scheme" == *_2 ]]; then echo "${scheme%_2}"; else echo "${scheme}_2"; fi)
-
+      
       # Check if secondary scheme is in DB
       if grep -q "$secondary_scheme" MLST_SCHEMES; then
         mlst \
@@ -69,7 +70,14 @@ task ts_mlst {
           >> ~{samplename}_2.tsv
 
         cat ~{samplename}_1.tsv ~{samplename}_2.tsv > ~{samplename}_ts_mlst.tsv
-        cat ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta > ~{samplename}_novel_mlst_alleles.fasta
+        # Check for the presence of novel alleles for the secondary scheme, concatentation will fail if both dont exist
+        if [[ -f "~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta" && -f "~{samplename}_novel_mlst_alleles.fasta" ]]; then
+          cat ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta > ~{samplename}_novel_mlst_alleles.fasta
+        elif [[ -f "~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta" ]]; then
+          mv ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta
+        else
+          echo "No novel alleles found for concatenation"
+        fi
       fi
 
     elif [[ "~{taxonomy}" == "Escherichia" || "~{taxonomy}" == "Escherichia coli" || "~{taxonomy}" = "Escherichia_coli" ]]; then
@@ -104,7 +112,14 @@ task ts_mlst {
             echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst.tsv
 
             cat ~{samplename}_1.tsv ~{samplename}_2.tsv >> ~{samplename}_ts_mlst.tsv
-            cat ~{samplename}_novel_mlst_alleles.fasta ~{samplename}_novel_mlst_alleles_2.fasta > ~{samplename}_novel_mlst_alleles.fasta
+            # Check for the presence of novel alleles for the secondary scheme, concatentation will fail if both dont exist
+            if [[ -f "~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta" && -f "~{samplename}_novel_mlst_alleles.fasta" ]]; then
+              cat ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta > ~{samplename}_novel_mlst_alleles.fasta
+            elif [[ -f "~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta" ]]; then
+              mv ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta
+            else
+              echo "No novel alleles found for concatenation"
+            fi
           else
             echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst.tsv
             cat ~{samplename}_1.tsv >> ~{samplename}_ts_mlst.tsv
