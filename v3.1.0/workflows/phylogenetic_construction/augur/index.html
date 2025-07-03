@@ -1,0 +1,7058 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A collection of bioinformatics workflows for genomic characterization, submission preparation, and genomic epidemiology of pathogens of public health concern.">
+      
+      
+        <meta name="author" content="Theiagen Genomics">
+      
+      
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/v3.1.0/workflows/phylogenetic_construction/augur/">
+      
+      
+        <link rel="prev" href="../../data_import/assembly_fetch/">
+      
+      
+        <link rel="next" href="../../data_import/basespace_fetch/">
+      
+      
+      <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.6.15">
+    
+    
+      
+        <title>Augur - Public Health Bioinformatics</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../../assets/stylesheets/main.342714a4.min.css">
+      
+        
+        <link rel="stylesheet" href="../../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+    
+    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+   <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"/><style>
+    html.glightbox-open { overflow: initial; height: 100%; }
+    .gslide-title { margin-top: 0px; user-select: text; }
+    .gslide-desc { color: #666; user-select: text; }
+    .gslide-image img { background: white; }
+    .gscrollbar-fixer { padding-right: 15px; }
+    .gdesc-inner { font-size: 0.75rem; }
+    body[data-md-color-scheme="slate"] .gdesc-inner { background: var(--md-default-bg-color);}
+    body[data-md-color-scheme="slate"] .gslide-title { color: var(--md-default-fg-color);}
+    body[data-md-color-scheme="slate"] .gslide-desc { color: var(--md-default-fg-color);}</style> <script src="../../../assets/javascripts/glightbox.min.js"></script></head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="light" data-md-color-primary="indigo" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#augur" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      <div data-md-color-scheme="default" data-md-component="outdated" hidden>
+        
+          <aside class="md-banner md-banner--warning">
+            <div class="md-banner__inner md-grid md-typeset">
+              
+  You're not viewing the latest version release.
+  <a href="../../../.."> 
+    <strong>Click here to go to the latest version release.</strong>
+  </a>
+
+            </div>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+          </aside>
+        
+      </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="https://www.theiagen.com" title="Public Health Bioinformatics" class="md-header__button md-logo" aria-label="Public Health Bioinformatics" data-md-component="logo">
+      
+  <img src="../../../assets/logos/Theiagen-Logo-White.png" alt="logo">
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Public Health Bioinformatics
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Augur
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="light" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to Dark Mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to Dark Mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m17.75 4.09-2.53 1.94.91 3.06-2.63-1.81-2.63 1.81.91-3.06-2.53-1.94L12.44 4l1.06-3 1.06 3zm3.5 6.91-1.64 1.25.59 1.98-1.7-1.17-1.7 1.17.59-1.98L15.75 11l2.06-.05L18.5 9l.69 1.95zm-2.28 4.95c.83-.08 1.72 1.1 1.19 1.85-.32.45-.66.87-1.08 1.27C15.17 23 8.84 23 4.94 19.07c-3.91-3.9-3.91-10.24 0-14.14.4-.4.82-.76 1.27-1.08.75-.53 1.93.36 1.85 1.19-.27 2.86.69 5.83 2.89 8.02a9.96 9.96 0 0 0 8.02 2.89m-1.64 2.02a12.08 12.08 0 0 1-7.8-3.47c-2.17-2.19-3.33-5-3.49-7.82-2.81 3.14-2.7 7.96.31 10.98 3.02 3.01 7.84 3.12 10.98.31"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="indigo"  aria-label="Switch to Light Mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to Light Mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m3.55 19.09 1.41 1.41 1.8-1.79-1.42-1.42M12 6c-3.31 0-6 2.69-6 6s2.69 6 6 6 6-2.69 6-6c0-3.32-2.69-6-6-6m8 7h3v-2h-3m-2.76 7.71 1.8 1.79 1.41-1.41-1.79-1.8M20.45 5l-1.41-1.4-1.8 1.79 1.42 1.42M13 1h-2v3h2M6.76 5.39 4.96 3.6 3.55 5l1.79 1.81zM1 13h3v-2H1m12 9h-2v3h2"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/theiagen/public_health_bioinformatics" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../../.." class="md-tabs__link">
+          
+  
+  
+  Public Health Bioinformatics
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="https://www.theiagen.com" title="Public Health Bioinformatics" class="md-nav__button md-logo" aria-label="Public Health Bioinformatics" data-md-component="logo">
+      
+  <img src="../../../assets/logos/Theiagen-Logo-White.png" alt="logo">
+
+    </a>
+    Public Health Bioinformatics
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/theiagen/public_health_bioinformatics" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    Public Health Bioinformatics
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1">
+            <span class="md-nav__icon md-icon"></span>
+            Public Health Bioinformatics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Home
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_2" id="__nav_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Getting Started
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            Getting Started
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/commandline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    With the Command-Line
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/terra/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    With Terra.bio
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../getting_started/philosophy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Workflow Failure Philosophy
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/sops/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Available SOPs
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_4" id="__nav_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Guides
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            Guides
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/gambit/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Guide to GAMBIT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/gambit_database/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Guide to GAMBIT Database Creation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/phylogenetics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Guide to Phylogenetics
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/custom_organisms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Guide to Running Custom Organisms on TheiaCoV
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_5" id="__nav_1_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Workflows
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_5_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            Workflows
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_1" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_1" id="__nav_1_5_1_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Workflows by Type
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_5_1_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_1">
+            <span class="md-nav__icon md-icon"></span>
+            Workflows by Type
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workflows_overview/workflows_type/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview Table
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_1_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_1_2" id="__nav_1_5_1_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Data Import
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_1_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_1_2">
+            <span class="md-nav__icon md-icon"></span>
+            Data Import
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/assembly_fetch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Assembly_Fetch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/basespace_fetch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BaseSpace_Fetch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/create_terra_table/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Create_Terra_Table
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/sra_fetch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SRA_Fetch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_1_3" id="__nav_1_5_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Genomic Characterization
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Genomic Characterization
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/freyja/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Freyja Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/pangolin_update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pangolin_Update
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiacov/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaCoV Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiaeuk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaEuk Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiameta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaMeta
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiaprok/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaProk Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/vadr_update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    VADR_Update
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_1_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_1_4" id="__nav_1_5_1_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Phylogenetic Construction
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_1_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_1_4">
+            <span class="md-nav__icon md-icon"></span>
+            Phylogenetic Construction
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Augur
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Augur
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#augur-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Workflows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur_prep_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_Prep_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur_Prep_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur_prep-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_Prep Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#augur_prep-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_Prep Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#augur_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Inputs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur Inputs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#augur-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Outputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpox-specific-auspice-output-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mpox-specific Auspice Output JSON
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core_gene_snp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core_Gene_SNP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../clair3_variants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Clair3_Variants_ONT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../czgenepi_prep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CZGenEpi_Prep
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../find_shared_variants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Find_Shared_Variants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ksnp3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    kSNP3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ksnp4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    kSNP4
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lyve_set/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lyve_SET
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mashtree_fasta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MashTree_FASTA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_streamline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Streamline
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_streamline_fasta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Streamline_FASTA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_tree/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Tree
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_variants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Variants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_1_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_1_5" id="__nav_1_5_1_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Phylogenetic Placement
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_1_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_1_5">
+            <span class="md-nav__icon md-icon"></span>
+            Phylogenetic Placement
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_placement/samples_to_ref_tree/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Samples_to_Ref_Tree
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_placement/usher/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Usher_PHB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_1_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_1_6" id="__nav_1_5_1_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Public Data Sharing
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            Public Data Sharing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mercury_Prep_N_Batch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ena/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terra_2_ENA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_gisaid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terra_2_GISAID
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terra_2_NCBI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_1_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_1_7" id="__nav_1_5_1_7_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Exporting Data from Terra
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_1_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_1_7">
+            <span class="md-nav__icon md-icon"></span>
+            Exporting Data from Terra
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Concatenate_Column_Content
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/transfer_column_content/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transfer_Column_Content
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/zip_column_content/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Zip_Column_Content
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_1_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_1_8" id="__nav_1_5_1_8_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Standalone
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_1_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_1_8">
+            <span class="md-nav__icon md-icon"></span>
+            Standalone
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/amr_search/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AMR_Search
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cauris_CladeTyper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/dorado_basecalling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Concatenate_Illumina_Lanes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/gambit_query/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GAMBIT_Query
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/kraken2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Kraken2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NCBI-AMRFinderPlus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NCBI-Scrub
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/rasusa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RASUSA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rename_FASTQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TBProfiler_tNGS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaValidate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_2" id="__nav_1_5_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Workflows by Kingdom
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_5_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_2">
+            <span class="md-nav__icon md-icon"></span>
+            Workflows by Kingdom
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workflows_overview/workflows_kingdom/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview Table
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_2_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_2_2" id="__nav_1_5_2_2_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Any Taxa
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_2_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_2_2">
+            <span class="md-nav__icon md-icon"></span>
+            Any Taxa
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/amr_search/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AMR_Search
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/assembly_fetch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Assembly_Fetch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/basespace_fetch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BaseSpace_Fetch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../clair3_variants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Clair3_Variants_ONT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Concatenate_Column_Content
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Concatenate_Illumina_Lanes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/create_terra_table/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Create_Terra_Table
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/dorado_basecalling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/kraken2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Kraken2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NCBI-Scrub
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/rasusa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RASUSA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rename_FASTQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/sra_fetch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SRA_Fetch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiameta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaMeta
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaValidate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/transfer_column_content/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transfer_Column_Content
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/zip_column_content/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Zip_Column_Content
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_2_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_2_3" id="__nav_1_5_2_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Bacteria
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_2_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_2_3">
+            <span class="md-nav__icon md-icon"></span>
+            Bacteria
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core_gene_snp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core_Gene_SNP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../find_shared_variants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Find_Shared_Variants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/gambit_query/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GAMBIT_Query
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ksnp3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    kSNP3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ksnp4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    kSNP4
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lyve_set/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lyve_SET
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mashtree_fasta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MashTree_FASTA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NCBI-AMRFinderPlus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_streamline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Streamline
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_streamline_fasta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Streamline_FASTA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_tree/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Tree
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_variants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Variants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TBProfiler_tNGS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ena/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terra_2_ENA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terra_2_NCBI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiaprok/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaProk Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_2_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_2_4" id="__nav_1_5_2_4_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Mycotics
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_2_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_2_4">
+            <span class="md-nav__icon md-icon"></span>
+            Mycotics
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cauris_CladeTyper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../find_shared_variants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Find_Shared_Variants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/gambit_query/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GAMBIT_Query
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ksnp3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    kSNP3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ksnp4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    kSNP4
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mashtree_fasta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MashTree_FASTA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NCBI-AMRFinderPlus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_variants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Variants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terra_2_NCBI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiaeuk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaEuk Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_2_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_2_5" id="__nav_1_5_2_5_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Viral
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="4" aria-labelledby="__nav_1_5_2_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_5_2_5">
+            <span class="md-nav__icon md-icon"></span>
+            Viral
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Augur
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Augur
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#augur-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Workflows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur_prep_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_Prep_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur_Prep_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur_prep-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_Prep Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#augur_prep-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_Prep Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#augur_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Inputs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur Inputs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#augur-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Outputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpox-specific-auspice-output-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mpox-specific Auspice Output JSON
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../czgenepi_prep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CZGenEpi_Prep
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/freyja/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Freyja Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ksnp3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    kSNP3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ksnp4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    kSNP4
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mashtree_fasta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MashTree_FASTA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mercury_Prep_N_Batch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/pangolin_update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pangolin_Update
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_placement/samples_to_ref_tree/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Samples_to_Ref_Tree
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_variants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Variants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ena/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terra_2_ENA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_gisaid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terra_2_GISAID
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terra_2_NCBI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiacov/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaCoV Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_placement/usher/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Usher_PHB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/vadr_update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    VADR_Update
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_1_5_3" id="__nav_1_5_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Workflows Alphabetically
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_5_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_1_5_3">
+            <span class="md-nav__icon md-icon"></span>
+            Workflows Alphabetically
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../workflows_overview/workflows_alphabetically/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Overview Table
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/amr_search/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    AMR_Search
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/assembly_fetch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Assembly_Fetch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    Augur
+    
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    Augur
+    
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#augur-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Workflows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur_prep_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_Prep_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur_Prep_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur_prep-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_Prep Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#augur_prep-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_Prep Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#augur_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Inputs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur Inputs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#augur-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Outputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpox-specific-auspice-output-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mpox-specific Auspice Output JSON
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/basespace_fetch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    BaseSpace_Fetch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/cauris_cladetyper/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Cauris_CladeTyper
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../clair3_variants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Clair3_Variants_ONT
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Concatenate_Column_Content
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/concatenate_illumina_lanes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Concatenate_Illumina_Lanes
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../core_gene_snp/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Core_Gene_SNP
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/create_terra_table/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Create_Terra_Table
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../czgenepi_prep/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    CZGenEpi_Prep
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/dorado_basecalling/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Dorado_Basecalling
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Fetch_SRR_Accession
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../find_shared_variants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Find_Shared_Variants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/freyja/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Freyja Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/gambit_query/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    GAMBIT_Query
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/host_decontaminate.md" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Host_Decontaminate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/kraken2/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Kraken2
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ksnp3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    kSNP3
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../ksnp4/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    kSNP4
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../lyve_set/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Lyve_SET
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../mashtree_fasta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    MashTree_FASTA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Mercury_Prep_N_Batch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NCBI-AMRFinderPlus
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/ncbi_scrub/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    NCBI-Scrub
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/pangolin_update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Pangolin_Update
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/rasusa/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    RASUSA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/rename_fastq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Rename_FASTQ
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_placement/samples_to_ref_tree/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Samples_to_Ref_Tree
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_streamline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Streamline
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_streamline_fasta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Streamline_FASTA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_tree/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Tree
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../snippy_variants/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Snippy_Variants
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_import/sra_fetch/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    SRA_Fetch
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/tbprofiler_tngs/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TBProfiler_tNGS
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ena/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terra_2_ENA
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_gisaid/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terra_2_GISAID
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Terra_2_NCBI
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiacov/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaCoV Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiaeuk/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaEuk Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiameta/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaMeta
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiaprok/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaProk Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/theiavalidate/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaValidate
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/theiaviral/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    TheiaViral Workflow Series
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/transfer_column_content/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Transfer_Column_Content
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../phylogenetic_placement/usher/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Usher_PHB
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../genomic_characterization/vadr_update/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    VADR_Update
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../data_export/zip_column_content/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Zip_Column_Content
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_6" id="__nav_1_6_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Contributing
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_6">
+            <span class="md-nav__icon md-icon"></span>
+            Contributing
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/doc_contribution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributing to the Documentation
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../contributing/code_contribution/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Contributing to the Code
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#quick-facts" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quick Facts
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#augur-workflows" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Workflows
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur Workflows">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur_prep_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_Prep_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur_Prep_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur_prep-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_Prep Inputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#augur_prep-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_Prep Outputs
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#augur_phb" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur_PHB
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur_PHB">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Inputs
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Augur Inputs">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#augur-tasks" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Workflow Tasks
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#augur-outputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      Augur Outputs
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#mpox-specific-auspice-output-json" class="md-nav__link">
+    <span class="md-ellipsis">
+      Mpox-specific Auspice Output JSON
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#references" class="md-nav__link">
+    <span class="md-ellipsis">
+      References
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="augur">Augur<a class="headerlink" href="#augur" title="Permanent link">&para;</a></h1>
+<h2 id="quick-facts">Quick Facts<a class="headerlink" href="#quick-facts" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th><strong>Workflow Type</strong></th>
+<th><strong>Applicable Kingdom</strong></th>
+<th><strong>Last Known Changes</strong></th>
+<th><strong>Command-line Compatibility</strong></th>
+<th><strong>Workflow Level</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../../workflows_overview/workflows_type/#phylogenetic-construction">Phylogenetic Construction</a></td>
+<td><a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
+<td>v3.0.0</td>
+<td>Yes</td>
+<td>Sample-level, Set-level</td>
+</tr>
+</tbody>
+</table>
+<h2 id="augur-workflows">Augur Workflows<a class="headerlink" href="#augur-workflows" title="Permanent link">&para;</a></h2>
+<p>Genomic Epidemiology is an important approach in the effort to understand and mitigate against disease transmission. An often-critical step in viral genomic epidemiology is the generation of phylogenetic trees to explore the genetic relationship between viruses on a local, regional, national or global scale. The Augur workflows, currently only targeted for viral pathogens, facilitate this process by generating files for the visualization of phylogenetic trees with accompanying metadata.</p>
+<p>Two workflows are offered: <strong>Augur_Prep_PHB</strong> and <strong>Augur_PHB</strong>. These must be run sequentially, respectively, to first prepare each individual sample for running Augur, and secondly to run Augur itself on the set of samples, generating the phylogenetic tree files with accompanying metadata. The outputs from these workflows can be visualized in <a href="https://docs.nextstrain.org/projects/auspice/en/latest/">Auspice</a> and <a href="https://github.com/yatisht/usher">UShER</a>.</p>
+<div class="admonition dna">
+<p class="admonition-title"><strong>Helpful resources for epidemiological interpretation</strong></p>
+<ul>
+<li><a href="https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-1.html">introduction to Nextstrain</a> (which includes Auspice)</li>
+<li>guide to Nextstrain <a href="https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-4.html">interactive trees</a></li>
+<li>an <a href="https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-3.html">introduction to UShER</a></li>
+<li>a video about <a href="https://www.cdc.gov/advanced-molecular-detection/php/training/module-1-3.html">how to read trees</a> if this is new to you</li>
+<li>documentation on <a href="https://github.com/pha4ge/pipeline-resources/blob/main/docs/sc2-recombinants.md">how to identify SARS-CoV-2 recombinants</a></li>
+</ul>
+</div>
+<h3 id="augur_prep_phb">Augur_Prep_PHB<a class="headerlink" href="#augur_prep_phb" title="Permanent link">&para;</a></h3>
+<p>The Augur_Prep_PHB workflow was written to prepare individual sample assemblies and their metadata for running the Augur_PHB analysis.</p>
+<h4 id="augur_prep-inputs">Augur_Prep Inputs<a class="headerlink" href="#augur_prep-inputs" title="Permanent link">&para;</a></h4>
+<p>The Augur_Prep_PHB workflow takes assembly FASTA files and associated metadata formatted in a data table. FASTA files may be generated with one of the TheiaCoV Characterization workflows and should adhere to quality control guidelines, (e.g. <a href="https://github.com/pha4ge/pipeline-resources/blob/main/docs/qc-solutions.md">QC guidelines produced by PHA4GE</a>). The metadata can be uploaded to Terra as TSV file, formatted as in <a href="https://docs.google.com/spreadsheets/d/1PF1u3R-ZGm53UiVsTlIcpg9Qk2dUJgtx/edit#gid=253517867">this example</a>.</p>
+<p>This workflow runs on the sample level.</p>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Terra Task Name</strong></th>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Terra Status</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>augur_prep</td>
+<td><strong>assembly</strong></td>
+<td>File</td>
+<td>The assembly file for your sample in FASTA format</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>augur_prep</td>
+<td><strong>collection_date</strong></td>
+<td>String</td>
+<td>Collection date of the sample</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_prep</td>
+<td><strong>continent</strong></td>
+<td>String</td>
+<td>Continent where sample was collected</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_prep</td>
+<td><strong>country</strong></td>
+<td>String</td>
+<td>Country where sample was collected</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_prep</td>
+<td><strong>county</strong></td>
+<td>String</td>
+<td>County (or smaller locality) where sample was collected</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_prep</td>
+<td><strong>nextclade_clade</strong></td>
+<td>String</td>
+<td>The Nextclade clade of the sample</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_prep</td>
+<td><strong>pango_lineage</strong></td>
+<td>String</td>
+<td>The Pangolin lineage of the sample</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_prep</td>
+<td><strong>state</strong></td>
+<td>String</td>
+<td>State (or province) where sample was collected</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>prep_augur_metadata</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>prep_augur_metadata</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>prep_augur_metadata</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>prep_augur_metadata</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>prep_augur_metadata</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>The organism to be analyzed in Augur; options: "sars-cov-2", "flu", "MPXV", "rsv-a", "rsv-b"</td>
+<td>sars-cov-2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>timezone</strong></td>
+<td>String</td>
+<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="augur_prep-outputs">Augur_Prep Outputs<a class="headerlink" href="#augur_prep-outputs" title="Permanent link">&para;</a></h4>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>augur_metadata</td>
+<td>File</td>
+<td>TSV file of the metadata provided as input to the workflow in the proper format for Augur analysis</td>
+</tr>
+<tr>
+<td>augur_prep_phb_analysis_date</td>
+<td>String</td>
+<td>Date of analysis</td>
+</tr>
+<tr>
+<td>augur_prep_phb_version</td>
+<td>String</td>
+<td>Version of the Public Health Bioinformatics (PHB) repository used</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="augur_phb">Augur_PHB<a class="headerlink" href="#augur_phb" title="Permanent link">&para;</a></h3>
+<div class="admonition info">
+<p class="admonition-title">Helpful Hint</p>
+<p>You may have to generate phylogenies multiple times, running the Augur_PHB workflow, assessing results, and amending inputs to generate a final tree with sufficient diversity and high-quality data of interest.</p>
+</div>
+<p>The Augur_PHB workflow takes a <strong>set</strong> of assembly/consensus files (FASTA format) and sample metadata files (TSV format) that have been reformatted using Augur_Prep_PHB and runs Augur to generate the phylogenetic tree files with accompanying metadata. Additionally, the workflow infers pairwise SNP distances.</p>
+<h4 id="augur-inputs">Augur Inputs<a class="headerlink" href="#augur-inputs" title="Permanent link">&para;</a></h4>
+<p>The Augur_PHB workflow takes in a <strong><em>set</em></strong> of SARS-CoV-2 (or any other viral pathogen) FASTA and metadata files. If running the workflow via Terra, individual samples will need to be added to a set before running the workflow. Input FASTAs should meet QA metrics. Sets of FASTAs with highly discordant quality metrics may result in the inaccurate inference of genetic relatedness. There <strong>must</strong> be some sequence diversity among the set of input assemblies. If insufficient diversity is present, it may be necessary to add a more divergent sequence to the set.</p>
+<div class="admonition dna">
+<p class="admonition-title">Optional Inputs</p>
+<p>There are <strong>many</strong> optional user inputs. For SARS-CoV-2, Flu, rsv-a, rsv-b, and mpxv, default values that mimic the NextStrain builds have been preselected. To use these defaults, you must write either <code>"sars-cov-2"</code>,<code>"flu"</code>, <code>"rsv-a"</code>, <code>"rsv-b"</code>, or <code>"mpxv"</code> for the <code>organism</code> variable.</p>
+<p>For Flu - it is <strong>required</strong> to set <code>flu_segment</code> to either <code>"HA"</code> or <code>"NA"</code> &amp; <code>flu_subtype</code> to either <code>"H1N1"</code> or <code>"H3N2"</code> or <code>"Victoria"</code> or <code>"Yamagata"</code> or <code>"H5N1"</code> (<code>"H5N1"</code> will only work with <code>"HA"</code>) depending on your set of samples.</p>
+</div>
+<details class="toggle" open="open">
+<summary>A Note on Optional Inputs</summary>
+<details class="toggle">
+<summary>Default values for SARS-CoV-2</summary>
+<ul>
+<li>min_num_unambig = 27000</li>
+<li>clades_tsv = <a href="https://github.com/nextstrain/ncov/tree/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/clades.tsv">defaults/clades.tsv</a></li>
+<li>lat_longs_tsv = <a href="https://github.com/nextstrain/ncov/blob/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/lat_longs.tsv">defaults/lat_longs.tsv</a></li>
+<li>reference_fasta = <a href="https://github.com/nextstrain/ncov/blob/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/reference_seq.fasta">defaults/reference_seq.fasta</a></li>
+<li>reference_genbank = <a href="https://github.com/nextstrain/ncov/blob/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/reference_seq.gb">defaults/reference_seq.gb</a></li>
+<li>auspice_config = <a href="https://github.com/nextstrain/ncov/blob/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/auspice_config.json">defaults/auspice_config.json</a></li>
+<li>min_date = 2020.0</li>
+<li>pivot_interval = 1</li>
+<li>pivot_interval_units = "weeks"</li>
+<li>narrow_bandwidth = 0.05</li>
+<li>proportion_wide = 0.0</li>
+</ul>
+</details>
+<details class="toggle">
+<summary>Default values for Flu</summary>
+<ul>
+<li>lat_longs_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"</code></li>
+<li>min_num_unambig = 900</li>
+<li>min_date = 2020.0</li>
+<li>pivot_interval = 1</li>
+<li>narrow_bandwidth = 0.1666667</li>
+<li>proportion_wide = 0.0</li>
+</ul>
+<details class="toggle">
+<summary>H1N1</summary>
+<ul>
+<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h1n1pdm.json"</code></li>
+<li>HA<ul>
+<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.gb"</code></li>
+<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_h1n1pdm_ha.tsv"</code></li>
+</ul>
+</li>
+<li>NA<ul>
+<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.gb"</code></li>
+</ul>
+</li>
+</ul>
+</details>
+<details class="toggle">
+<summary>H3N2</summary>
+<ul>
+<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h3n2.json"</code></li>
+<li>HA<ul>
+<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.gb"</code></li>
+<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_h3n2_ha.tsv"</code></li>
+</ul>
+</li>
+<li>NA<ul>
+<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.gb"</code></li>
+</ul>
+</li>
+</ul>
+</details>
+<details class="toggle">
+<summary>Victoria</summary>
+<ul>
+<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_vic.json"</code></li>
+<li>HA<ul>
+<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.gb"</code></li>
+<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_vic_ha.tsv"</code></li>
+</ul>
+</li>
+<li>NA<ul>
+<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_na.gb"</code></li>
+</ul>
+</li>
+</ul>
+</details>
+<details class="toggle">
+<summary>Yamagata</summary>
+<ul>
+<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam.json"</code></li>
+<li>HA<ul>
+<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_ha.gb"</code></li>
+<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_yam_ha.tsv"</code></li>
+</ul>
+</li>
+<li>NA<ul>
+<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_na.gb"</code></li>
+</ul>
+</li>
+</ul>
+</details>
+<details class="toggle">
+<summary>H5N1</summary>
+<ul>
+<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h5n1.json"</code></li>
+<li>HA<ul>
+<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.gb"</code></li>
+<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/h5nx-clades.tsv"</code></li>
+</ul>
+</li>
+</ul>
+</details>
+</details>
+<details class="toggle">
+<summary>Default values for MPXV</summary>
+<ul>
+<li>min_num_unambig = 150000</li>
+<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_clades.tsv"</code></li>
+<li>lat_longs_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"</code></li>
+<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/NC_063383.1.reference.fasta"</code></li>
+<li>reference_genbank = <code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/NC_063383.1_reference.gb"</code></li>
+<li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_auspice_config_mpxv.json"</code></li>
+<li>min_date = 2020.0</li>
+<li>pivot_interval = 1</li>
+<li>narrow_bandwidth = 0.1666667</li>
+<li>proportion_wide = 0.0</li>
+</ul>
+</details>
+<details class="toggle">
+<summary>Default values for RSV-A</summary>
+<ul>
+<li>min_num_unambig = 10850</li>
+<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_a_clades.tsv"</code></li>
+<li>lat_longs_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"</code></li>
+<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"</code></li>
+<li>reference_genbank = <code>""gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.gb"</code></li>
+<li>auspice_config = <code>""gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"</code></li>
+<li>min_date = 2020.0</li>
+<li>pivot_interval = 1</li>
+<li>narrow_bandwidth = 0.1666667</li>
+<li>proportion_wide = 0.0</li>
+</ul>
+</details>
+<details class="toggle">
+<summary>Default values for RSV-B</summary>
+<ul>
+<li>min_num_unambig = 10850</li>
+<li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_b_clades.tsv"</code></li>
+<li>lat_longs_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"</code></li>
+<li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"</code></li>
+<li>reference_genbank = <code>""gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.gb"</code></li>
+<li>auspice_config = <code>""gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"</code></li>
+<li>min_date = 2020.0</li>
+<li>pivot_interval = 1</li>
+<li>narrow_bandwidth = 0.1666667</li>
+<li>proportion_wide = 0.0</li>
+</ul>
+</details>
+<p>For more information regarding these optional inputs, please view <a href="https://docs.nextstrain.org/projects/augur/en/stable/usage/usage.html">Nextrain's detailed documentation on Augur</a></p>
+<div class="admonition info">
+<p class="admonition-title">What's required or not?</p>
+<p>For organisms <em>other</em> than SARS-CoV-2 or Flu, the required variables have both the "required" and "optional" tags.</p>
+</div>
+</details>
+<p>This workflow runs on the set level. Please note that for every task, runtime parameters are modifiable (cpu, disk_size, docker, and memory); most of these values have been excluded from the table below for convenience.</p>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Terra Task Name</strong></th>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Terra Status</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>augur</td>
+<td><strong>assembly_fastas</strong></td>
+<td>Array[File]</td>
+<td>The assembly files for your samples in FASTA format</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>build_name</strong></td>
+<td>String</td>
+<td>Name to give to the Augur build</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>clades_tsv</strong></td>
+<td>File</td>
+<td>TSV file containing clade mutation positions in four columns</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, an empty clades file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-clades.tsv", but will not be as useful as an organism specific clades file.</td>
+<td>Optional, Required</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>flu_segment</strong></td>
+<td>String</td>
+<td>Required if organism = "flu". The name of the segment to be analyzed; options: "HA" or "NA"</td>
+<td>HA (only used if organism = "flu")</td>
+<td>Optional, Required</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>flu_subtype</strong></td>
+<td>String</td>
+<td>Required if organism = "flu". The subtype of the flu samples being analyzed; options: "H1N1", "H3N2", "Victoria", "Yamagata", "H5N1"</td>
+<td></td>
+<td>Optional, Required</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>reference_fasta</strong></td>
+<td>File</td>
+<td>The reference FASTA file used to align the genomes and build the trees</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference fasta file must be provided otherwise the workflow fails.</td>
+<td>Optional, Required</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>reference_genbank</strong></td>
+<td>File</td>
+<td>The GenBank .gb file for the same reference genome used for the reference_fasta</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails.</td>
+<td>Optional, Required</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>auspice_config</strong></td>
+<td>File</td>
+<td>Auspice config file for customizing visualizations; takes priority over the other customization values available for augur_export</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a minimal auspice config file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-auspice-config.json", but will not be as useful as an organism specific config file.</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>build_name_updated</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>distance_tree_only</strong></td>
+<td>Boolean</td>
+<td>Create only a distance tree (skips all Augur steps after augur_tree)</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>lat_longs_tsv</strong></td>
+<td>File</td>
+<td>Tab-delimited file of geographic location names with corresponding latitude and longitude values</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized.</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>min_date</strong></td>
+<td>Float</td>
+<td>Minimum date to begin filtering or frequencies calculations</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>min_num_unambig</strong></td>
+<td>Int</td>
+<td>Minimum number of called bases in genome to pass prefilter</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>Organism used to preselect default values; options: "sars-cov-2", "flu", "mpxv", "rsv-a", "rsv-b"</td>
+<td>sars-cov-2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>sample_metadata_tsvs</strong></td>
+<td>Array[File]</td>
+<td>An array of the metadata files produced in Augur_Prep_PHB</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_align</td>
+<td><strong>fill_gaps</strong></td>
+<td>Boolean</td>
+<td>If true, gaps represent missing data rather than true indels and so are replaced by N after aligning.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_ancestral</td>
+<td><strong>infer_ambiguous</strong></td>
+<td>Boolean</td>
+<td>If true, infer nucleotides and ambiguous sites and replace with most likely</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_ancestral</td>
+<td><strong>inference</strong></td>
+<td>String</td>
+<td>Calculate joint or marginal maximum likelihood ancestral sequence states; options: "joint", "marginal"</td>
+<td>joint</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_ancestral</td>
+<td><strong>keep_ambiguous</strong></td>
+<td>Boolean</td>
+<td>If true, do not infer nucleotides at ambiguous (N) sides</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_ancestral</td>
+<td><strong>keep_overhangs</strong></td>
+<td>Boolean</td>
+<td>If true, do not infer nucleotides for gaps on either side of the alignment</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_export</td>
+<td><strong>colors_tsv</strong></td>
+<td>File</td>
+<td>Custom color definitions, one per line in TSV format with the following fields: TRAIT_TYPE TRAIT_VALUE HEX_CODE</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_export</td>
+<td><strong>description_md</strong></td>
+<td>File</td>
+<td>Markdown file with description of build and/or acknowledgements</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_export</td>
+<td><strong>include_root_sequence</strong></td>
+<td>Boolean</td>
+<td>Export an additional JSON containing the root sequence used to identify mutations</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_export</td>
+<td><strong>title</strong></td>
+<td>String</td>
+<td>Title to be displayed by Auspice</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>branch_length_inference</strong></td>
+<td>String</td>
+<td>Branch length mode of timetree to use; options: "auto", "joint", "marginal", "input"</td>
+<td>auto</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>clock_filter_iqd</strong></td>
+<td>Int</td>
+<td>Remove tips that deviate more than n_iqd interquartile ranges from the root-to-tip vs time regression</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>clock_rate</strong></td>
+<td>Float</td>
+<td>Fixed clock rate to use for time tree calculations</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>clock_std_dev</strong></td>
+<td>Float</td>
+<td>Standard deviation of the fixed clock_rate estimate</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>coalescent</strong></td>
+<td>String</td>
+<td>Coalescent time scale in units of inverse clock rate (float), optimize as scalar ("opt") or skyline ("skyline")</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>covariance</strong></td>
+<td>Boolean</td>
+<td>If true, account for covariation when estimating rates and/or rerooting</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>date_confidence</strong></td>
+<td>Boolean</td>
+<td>If true, calculate confidence intervals for node dates</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>date_inference</strong></td>
+<td>String</td>
+<td>Assign internal nodes to their marginally most likely dates; options: "joint", "marginal"</td>
+<td>marginal</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>divergence_units</strong></td>
+<td>String</td>
+<td>Units in which sequence divergences is exported; options: "mutations" or "mutations-per-site"</td>
+<td>mutations</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>gen_per_year</strong></td>
+<td>Int</td>
+<td>Number of generations per year</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>keep_polytomies</strong></td>
+<td>Boolean</td>
+<td>If true, don't attempt to resolve polytomies</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>keep_root</strong></td>
+<td>Boolean</td>
+<td>If true, do not reroot the tree; use it as-is (overrides anything specified by root)</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>precision</strong></td>
+<td>String</td>
+<td>Precision used to determine the number of grid points; options: 0 (rough) to 3 (ultra fine)</td>
+<td>auto</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>root</strong></td>
+<td>String</td>
+<td>Rooting mechanism; options: "best", "least-squares", "min_dev", "oldest", etc.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_translate</td>
+<td><strong>genes</strong></td>
+<td>File</td>
+<td>A file containing a list of genes to translate (from nucleotides to amino acids)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_tree</td>
+<td><strong>exclude_sites</strong></td>
+<td>File</td>
+<td>File of one-based sites to exclude for raw tree building (BED format in .bed files, DRM format in tab-delimited files, or one position per line)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_tree</td>
+<td><strong>method</strong></td>
+<td>String</td>
+<td>Which method to use to build the tree; options: "fasttree", "raxml", "iqtree"</td>
+<td>iqtree</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_tree</td>
+<td><strong>override_default_args</strong></td>
+<td>Boolean</td>
+<td>If true, override default tree builder arguments instead of augmenting them</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_tree</td>
+<td><strong>substitution_model</strong></td>
+<td>String</td>
+<td>The substitution model to use; only available for iqtree. Specify "auto" to run ModelTest; model options can be found here</td>
+<td>GTR</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_tree</td>
+<td><strong>tree_builder_args</strong></td>
+<td>String</td>
+<td>Additional tree builder arguments either augmenting or overriding the default arguments. FastTree defaults: "-nt -nosupport". RAxML defaults: "-f d -m GTRCAT -c 25 -p 235813". IQ-TREE defaults: "-ninit 2 -n 2 -me 0.05 -nt AUTO -redo"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mutation_context</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mutation_context</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mutation_context</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/nextstrain-mpox-mutation-context:2024-06-27</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>mutation_context</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>auspice_config</strong></td>
+<td>File</td>
+<td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>gene_locations_bed_file</strong></td>
+<td>File</td>
+<td>Use to provide locations of interest where average coverage will be calculated</td>
+<td>Default provided for SARS-CoV-2 ("gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed")</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>genome_length_input</strong></td>
+<td>Int</td>
+<td>Use to specify the expected genome length; provided by default for all supported organisms</td>
+<td>Default provided for SARS-CoV-2 (29903), mpox (197200), WNV (11000), flu (13000), RSV-A (16000), RSV-B (16000), HIV (primer versions 1 [9181] and 2 [9840])</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>hiv_primer_version</strong></td>
+<td>String</td>
+<td>The version of HIV primers used. Options are <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L156</a> and <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl#L164</a>. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
+<td>v1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>kraken_target_organism_input</strong></td>
+<td>String</td>
+<td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
+<td>Default provided for mpox (Monkeypox virus), WNV (West Nile virus), and HIV (Human immunodeficiency virus 1)</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>nextclade_dataset_name_input</strong></td>
+<td>String</td>
+<td>NextClade organism dataset name</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default is "NA".</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>nextclade_dataset_tag_input</strong></td>
+<td>String</td>
+<td>NextClade organism dataset tag</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default is "NA".</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>pangolin_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>primer_bed_file</strong></td>
+<td>File</td>
+<td>The bed file containing the primers used when sequencing was performed</td>
+<td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>reference_gff_file</strong></td>
+<td>File</td>
+<td>Reference GFF file for the organism being analyzed</td>
+<td>Default provided for mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"])</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>vadr_max_length</strong></td>
+<td>Int</td>
+<td>Maximum length for the fasta-trim-terminal-ambigs.pl VADR script</td>
+<td>Default provided for SARS-CoV-2 (30000), mpox (210000), WNV (11000), flu (0), RSV-A (15500) and RSV-B (15500).</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>vadr_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32 (RSV-A, RSV-B, WNV) and 16 (all other TheiaCoV organisms)</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>vadr_options</strong></td>
+<td>String</td>
+<td>Options for the v-annotate.pl VADR script</td>
+<td>Default provided for SARS-CoV-2 ("--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"), mpox ("--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"), WNV ("--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"), flu (""), RSV-A ("-r --mkey rsv --xnocomp"), and RSV-B ("-r --mkey rsv --xnocomp")</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>vadr_skip_length</strong></td>
+<td>Int</td>
+<td>Minimum assembly length (unambiguous) to run VADR</td>
+<td>10000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>sc2_defaults</td>
+<td><strong>nextstrain_ncov_repo_commit</strong></td>
+<td>String</td>
+<td>The version of the <a href="https://github.com/nextstrain/ncov/">https://github.com/nextstrain/ncov/</a> from which to draw default values for SARS-CoV-2.</td>
+<td>23d1243127e8838a61b7e5c1a72bc419bf8c5a0d</td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+</div>
+<details class="task">
+<summary>Workflow Tasks</summary>
+<h5 id="augur-tasks">Augur Workflow Tasks<a class="headerlink" href="#augur-tasks" title="Permanent link">&para;</a></h5>
+<p>The Augur_PHB workflow uses the inputs to generate a phylogenetic tree in JSON format that is compatible with phylogenetic tree visualization software.</p>
+<p>In Augur_PHB, the tasks below are called. For the Augur subcommands, please view the <a href="https://docs.nextstrain.org/projects/augur/en/stable/usage/usage.html">Nextstrain Augur documentation</a> for more details and explanations.</p>
+<ol>
+<li><code>cat_files</code> - concatenate all of the input fasta files together</li>
+<li><code>sc2_defaults</code> - if organism is SARS-CoV-2, establish default parameters</li>
+<li><code>flu_defaults</code> - if organism is Flu, establish default parameters</li>
+<li><code>filter_sequences_by_length</code> - remove any sequences that do not meet the quality threshold set by <code>min_num_unambig</code></li>
+<li><code>tsv_join</code> - merge the metadata files</li>
+<li><code>fasta_to_ids</code> - extract a list of remaining sequences so we know which ones were dropped</li>
+<li><code>augur_align</code> - perform MAFFT alignment on the sequences</li>
+<li><code>augur_tree</code> - create a distance tree</li>
+<li><code>augur_refine</code> - create a timetree</li>
+<li><code>augur_ancestral</code> - infer ancestral sequences</li>
+<li><code>augur_translate</code> - translate gene regions from nucleotides to amino acids</li>
+<li><code>mutation_context</code> - if organism is MPXV, calculates the mutation fraction of G-&gt;A or C-&gt;T changes</li>
+<li><code>augur_clades</code> - if clade information is provided, assign clades to nodes based on amino-acid or nucleotide signatures</li>
+<li><code>augur_export</code> - export all the results in a JSON file suitable for Auspice visualization</li>
+<li><code>snp_dists</code> - create a SNP matrix from the alignment</li>
+<li><code>reorder_matrix</code> - reorder the SNP matrix to match the distance tree</li>
+</ol>
+</details>
+<h4 id="augur-outputs">Augur Outputs<a class="headerlink" href="#augur-outputs" title="Permanent link">&para;</a></h4>
+<div class="admonition dna">
+<p class="admonition-title">Diversity dependent</p>
+<p>Note that the node &amp; branch coloring by clade or lineage assignment might be dependent on the diversity of your input dataset. This is because the clade assignment is done using the ancestrally reconstructed amino acid or nucleotide changes at the tree nodes rather than a direct sequence-to-reference mutation comparison. You may notice this happening when you get clade/lineage assignments from NextClade when running TheiaCoV workflows, but no clade/lineage assignment on the Augur Auspice tree.</p>
+<p>To get around this issue, you can upload the Augur output file <code>merged-metadata.tsv</code> to Auspice that includes the correct clade/lineage assignments to allow for coloring by Clade.</p>
+</div>
+<div class="admonition dna">
+<p class="admonition-title">Flu clade assignments</p>
+<p>Note that for flu, the clade assignment is usually mostly done for the more recent seasonal influenza viruses. Older strains may get an "unassigned" designation for clades. Therefore, it is important to counter check with the NextClade results from TheiaCoV if the lack of clade assignment is due to analyzing older sequences or sequence related.</p>
+</div>
+<p>The <code>auspice_input_json</code> is intended to be uploaded to <a href="https://auspice.us/">Auspice</a> to view the phylogenetic tree. This provides a visualization of the genetic relationships between your set of samples. The <code>metadata_merged</code> output can also be uploaded to add context to the phylogenetic visualization. The <code>combined_assemblies</code> output can be uploaded to <a href="https://genome.ucsc.edu/cgi-bin/hgPhyloPlace">UShER</a> to view the samples on a global tree of representative sequences from the public repositories.</p>
+<p>The Nextstrain team hosts documentation surrounding the Augur workflow → Auspice visualization here, which details the various components of the Auspice interface: <a href="https://docs.nextstrain.org/en/latest/learn/augur-to-auspice.html">How data is exported by Augur for visualisation in Auspice</a>.</p>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>aligned_fastas</td>
+<td>File</td>
+<td>A FASTA file of the aligned genomes</td>
+</tr>
+<tr>
+<td>augur_fasttree_version</td>
+<td>String</td>
+<td>The fasttree version used, blank if other tree method used</td>
+</tr>
+<tr>
+<td>augur_iqtree_model_used</td>
+<td>String</td>
+<td>The iqtree model used during augur tree, blank if iqtree not used</td>
+</tr>
+<tr>
+<td>augur_iqtree_version</td>
+<td>String</td>
+<td>The iqtree version used during augur tree (defualt), blank if other tree method used</td>
+</tr>
+<tr>
+<td>augur_mafft_version</td>
+<td>String</td>
+<td>The mafft version used in augur align</td>
+</tr>
+<tr>
+<td>augur_phb_analysis_date</td>
+<td>String</td>
+<td>The date the analysis was run</td>
+</tr>
+<tr>
+<td>augur_phb_version</td>
+<td>String</td>
+<td>The version of the Public Health Bioinformatics (PHB) repository used</td>
+</tr>
+<tr>
+<td>augur_raxml_version</td>
+<td>String</td>
+<td>The version of raxml used during augur tree, blank if other tree method used</td>
+</tr>
+<tr>
+<td>augur_version</td>
+<td>String</td>
+<td>Version of Augur used</td>
+</tr>
+<tr>
+<td>auspice_input_json</td>
+<td>File</td>
+<td>JSON file used as input to Auspice</td>
+</tr>
+<tr>
+<td>combined_assemblies</td>
+<td>File</td>
+<td>Concatenated FASTA file containing all samples</td>
+</tr>
+<tr>
+<td>distance_tree</td>
+<td>File</td>
+<td>The distance tree created in Newick (.nwk) format</td>
+</tr>
+<tr>
+<td>keep_list</td>
+<td>File</td>
+<td>A list of samples included in the phylogenetic tree</td>
+</tr>
+<tr>
+<td>metadata_merged</td>
+<td>File</td>
+<td>Tab-delimited text file of the merged augur_metadata input files from all samples</td>
+</tr>
+<tr>
+<td>snp_matrix</td>
+<td>File</td>
+<td>The SNP distance matrix for all samples used in the phylogenetic tree</td>
+</tr>
+<tr>
+<td>time_tree</td>
+<td>File</td>
+<td>The time tree created in Newick (.nwk) format</td>
+</tr>
+<tr>
+<td>traits_json</td>
+<td>File</td>
+<td>A JSON file containing sample traits</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h4 id="mpox-specific-auspice-output-json">Mpox-specific Auspice Output JSON<a class="headerlink" href="#mpox-specific-auspice-output-json" title="Permanent link">&para;</a></h4>
+<p>If you are building a tree for Mpox samples and set the optional input parameter <code>organism</code> to <code>"mpox"</code> , an additional step will be carried out in the Augur_PHB workflow. This additional step will calculate the mutation fraction of G→A or C→T changes. These mutations have been shown to be a characteristic of APOBEC3-type editing, which indicate adaptation of the virus to circulation among humans as was observed with the 2022 clade IIb outbreak, and more recently (2024) with the clade Ib outbreak in South Kivu, Democratic Republic of the Congo.</p>
+<p>When visualizing the output <code>auspice_input_json</code> file, there will be 2 new choices in the drop-down menu for "Color By":</p>
+<ul>
+<li>G→A or C→T fraction</li>
+<li>NGA/TCN context of G→A or C→T mutations.</li>
+</ul>
+<p>An example Mpox tree with these "Color By" options can be viewed here: <a href="https://nextstrain.org/mpox/clade-IIb?c=GA_CT_fraction">https://nextstrain.org/mpox/clade-IIb?c=GA_CT_fraction</a></p>
+<h3 id="references">References<a class="headerlink" href="#references" title="Permanent link">&para;</a></h3>
+<p>When publishing work using the Augur_PHB workflow, please reference the following:</p>
+<blockquote>
+<p>Nextstrain: Hadfield J, Megill C, Bell SM, Huddleston J, Potter B, Callender C, Sagulenko P, Bedford T, Neher RA. Nextstrain: real-time tracking of pathogen evolution. Bioinformatics. 2018 Dec 1;34(23):4121-3.</p>
+</blockquote>
+<p>When publishing work using inferences from UShER, please reference:</p>
+<blockquote>
+<p>UShER: Turakhia Y, Thornlow B, Hinrichs AS, De Maio N, Gozashti L, Lanfear R, Haussler D, Corbett-Detig R. Ultrafast Sample placement on Existing tRees (UShER) enables real-time phylogenetics for the SARS-CoV-2 pandemic. Nature Genetics. 2021 Jun;53(6):809-16.</p>
+</blockquote>
+
+
+
+
+
+
+
+  
+    
+  
+  
+    
+  
+
+
+  <aside class="md-source-file">
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Last update">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 3, 2025 14:08:20 UTC">2025-06-03</span>
+  </span>
+
+    
+    
+      
+  <span class="md-source-file__fact">
+    <span class="md-icon" title="Created">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
+    </span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 11, 2024 17:48:55 UTC">2024-09-11</span>
+  </span>
+
+    
+    
+    
+  </aside>
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+  <script>var tabs=__md_get("__tabs");if(Array.isArray(tabs))e:for(var set of document.querySelectorAll(".tabbed-set")){var labels=set.querySelector(".tabbed-labels");for(var tab of tabs)for(var label of labels.getElementsByTagName("label"))if(label.innerText.trim()===tab){var input=document.getElementById(label.htmlFor);input.checked=!0;continue e}}</script>
+
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+    <div class="md-copyright__highlight">
+      &copy; 2022-2025 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
+
+    </div>
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+        <div class="md-social">
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://github.com/theiagen" target="_blank" rel="noopener" title="github.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 496 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M165.9 397.4c0 2-2.3 3.6-5.2 3.6-3.3.3-5.6-1.3-5.6-3.6 0-2 2.3-3.6 5.2-3.6 3-.3 5.6 1.3 5.6 3.6m-31.1-4.5c-.7 2 1.3 4.3 4.3 4.9 2.6 1 5.6 0 6.2-2s-1.3-4.3-4.3-5.2c-2.6-.7-5.5.3-6.2 2.3m44.2-1.7c-2.9.7-4.9 2.6-4.6 4.9.3 2 2.9 3.3 5.9 2.6 2.9-.7 4.9-2.6 4.6-4.6-.3-1.9-3-3.2-5.9-2.9M244.8 8C106.1 8 0 113.3 0 252c0 110.9 69.8 205.8 169.5 239.2 12.8 2.3 17.3-5.6 17.3-12.1 0-6.2-.3-40.4-.3-61.4 0 0-70 15-84.7-29.8 0 0-11.4-29.1-27.8-36.6 0 0-22.9-15.7 1.6-15.4 0 0 24.9 2 38.6 25.8 21.9 38.6 58.6 27.5 72.9 20.9 2.3-16 8.8-27.1 16-33.7-55.9-6.2-112.3-14.3-112.3-110.5 0-27.5 7.6-41.3 23.6-58.9-2.6-6.5-11.1-33.3 2.6-67.9 20.9-6.5 69 27 69 27 20-5.6 41.5-8.5 62.8-8.5s42.8 2.9 62.8 8.5c0 0 48.1-33.6 69-27 13.7 34.7 5.2 61.4 2.6 67.9 16 17.7 25.8 31.5 25.8 58.9 0 96.5-58.9 104.2-114.8 110.5 9.2 7.9 17 22.9 17 46.4 0 33.7-.3 75.4-.3 83.6 0 6.5 4.6 14.4 17.3 12.1C428.2 457.8 496 362.9 496 252 496 113.3 383.5 8 244.8 8M97.2 352.9c-1.3 1-1 3.3.7 5.2 1.6 1.6 3.9 2.3 5.2 1 1.3-1 1-3.3-.7-5.2-1.6-1.6-3.9-2.3-5.2-1m-10.8-8.1c-.7 1.3.3 2.9 2.3 3.9 1.6 1 3.6.7 4.3-.7.7-1.3-.3-2.9-2.3-3.9-2-.6-3.6-.3-4.3.7m32.4 35.6c-1.6 1.3-1 4.3 1.3 6.2 2.3 2.3 5.2 2.6 6.5 1 1.3-1.3.7-4.3-1.3-6.2-2.2-2.3-5.2-2.6-6.5-1m-11.4-14.7c-1.6 1-1.6 3.6 0 5.9s4.3 3.3 5.6 2.3c1.6-1.3 1.6-3.9 0-6.2-1.4-2.3-4-3.3-5.6-2"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://twitter.com/theiagen" target="_blank" rel="noopener" title="twitter.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M459.37 151.716c.325 4.548.325 9.097.325 13.645 0 138.72-105.583 298.558-298.558 298.558-59.452 0-114.68-17.219-161.137-47.106 8.447.974 16.568 1.299 25.34 1.299 49.055 0 94.213-16.568 130.274-44.832-46.132-.975-84.792-31.188-98.112-72.772 6.498.974 12.995 1.624 19.818 1.624 9.421 0 18.843-1.3 27.614-3.573-48.081-9.747-84.143-51.98-84.143-102.985v-1.299c13.969 7.797 30.214 12.67 47.431 13.319-28.264-18.843-46.781-51.005-46.781-87.391 0-19.492 5.197-37.36 14.294-52.954 51.655 63.675 129.3 105.258 216.365 109.807-1.624-7.797-2.599-15.918-2.599-24.04 0-57.828 46.782-104.934 104.934-104.934 30.213 0 57.502 12.67 76.67 33.137 23.715-4.548 46.456-13.32 66.599-25.34-7.798 24.366-24.366 44.833-46.132 57.827 21.117-2.273 41.584-8.122 60.426-16.243-14.292 20.791-32.161 39.308-52.628 54.253"/></svg>
+    </a>
+  
+    
+    
+    
+    
+      
+      
+    
+    <a href="https://www.linkedin.com/company/theiagen" target="_blank" rel="noopener" title="www.linkedin.com" class="md-social__link">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M416 32H31.9C14.3 32 0 46.5 0 64.3v383.4C0 465.5 14.3 480 31.9 480H416c17.6 0 32-14.5 32-32.3V64.3c0-17.8-14.4-32.3-32-32.3M135.4 416H69V202.2h66.5V416zm-33.2-243c-21.3 0-38.5-17.3-38.5-38.5S80.9 96 102.2 96c21.2 0 38.5 17.3 38.5 38.5 0 21.3-17.2 38.5-38.5 38.5m282.1 243h-66.4V312c0-24.8-.5-56.7-34.5-56.7-34.6 0-39.9 27-39.9 54.9V416h-66.4V202.2h63.7v29.2h.9c8.9-16.8 30.6-34.5 62.9-34.5 67.2 0 79.7 44.3 79.7 101.9z"/></svg>
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      <script id="__config" type="application/json">{"base": "../../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "content.tooltips", "navigation.instant", "navigation.path", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.d50fe291.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
+    
+    
+      <script src="../../../assets/javascripts/bundle.56ea9cef.min.js"></script>
+      
+        <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
+      
+        <script src="../../../javascripts/tablesort.js"></script>
+      
+        <script src="../../../javascripts/table-search.js"></script>
+      
+    
+  <script id="init-glightbox">const lightbox = GLightbox({"touchNavigation": true, "loop": false, "zoomable": true, "draggable": true, "openEffect": "zoom", "closeEffect": "zoom", "slideEffect": "slide"});
+document$.subscribe(() => { lightbox.reload() });
+</script></body>
+</html>
