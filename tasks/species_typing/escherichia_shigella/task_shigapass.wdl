@@ -9,7 +9,7 @@ task shigapass_many {
     Array[String] samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/shigapass:1.5.0"
     Int disk_size = 100
-    Int cpu = 2
+    Int cpu = 4
     Int memory = 8
   }
   command <<<
@@ -45,6 +45,7 @@ task shigapass_many {
       -l ASSEMBLY_PATHS \
       -p /ShigaPass-1.5.0/SCRIPT/ShigaPass_DataBases/ \
       -t ~{cpu} \
+      -k \
       -o shigapass/
 
     echo "Finished running ShigaPass."
@@ -64,14 +65,27 @@ task shigapass_many {
       echo "ShigaPass_Flex_summary.csv does not exist, skipping renaming."
     fi
 
-    # parse shigapass TSV
-    #cut -f 5 smplename}.tsv | tail -n 1 | tee PREDICTED_SEROTYPE
+    # rename intermediate files to include subdir name to prevent duplicate file names in glob output
+    echo "Renaming intermediate files to include subdir name..."
+    for file in shigapass/*/*.txt; do
+      # get the base name of the file (e.g., ShigaPass_Flex_summary.txt)
+      base_name=$(basename "$file") 
+      # get the directory name (e.g., shigapass/ShigaPass_Flex)
+      dir_name=$(dirname "$file")
+      # create the new file name with the subdir name included
+      new_file_name="${dir_name}/$(basename "$dir_name")_${base_name%.txt}.txt"
+      # rename the file
+      mv -v "$file" "$new_file_name"
+    done 
   >>>
   output {
     File shigapass_summary = "shigapass/ShigaPass_summary.txt"
     File shigapass_summary_tsv = "shigapass/ShigaPass_summary.tsv"
     File? shigapass_flexneri_summary = "shigapass/ShigaPass_Flex_summary.txt"
     File? shigapass_flexneri_summary_tsv = "shigapass/ShigaPass_Flex_summary.tsv"
+    # keeping the intermediate files in the output for now, but may remove later. Not planning to output at workflow level.
+    # NOTE: the intermediate files are renamed to include the subdir name to prevent duplicate file names
+    Array[File] intermediate_files = glob("shigapass/*/*.txt")
     String shigapass_version = read_string("VERSION")
     String shigapass_docker = docker
   }
