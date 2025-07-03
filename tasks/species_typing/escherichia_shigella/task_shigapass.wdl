@@ -50,15 +50,18 @@ task shigapass_many {
 
     echo "Finished running ShigaPass."
 
-    # convert summary files from semi-colon separate values into TSV format
-    echo "Converting summary files to TSV format..."
+    # convert summary file from semi-colon separate values into TSV format
+    echo "Converting summary file to TSV format..."
     sed 's/;/\t/g' shigapass/ShigaPass_summary.csv > shigapass/ShigaPass_summary.tsv
-    sed 's/;/\t/g' shigapass/ShigaPass_Flex_summary.csv > shigapass/ShigaPass_Flex_summary.tsv
 
-    # renaming file to end in .txt since it is semicolon separated values sheet. Easier to open in Excel if ends in  .txt
+    # renaming file to end in .txt since it is semicolon separated values sheet. Easier to open in Excel if ends in .txt
     mv -v shigapass/ShigaPass_summary.csv shigapass/ShigaPass_summary.txt
-    # if the ShigaPass_Flex_summary.csv file exists, rename it as well
+
+    # if the ShigaPass_Flex_summary.csv file exists, convert to tabular format and rename the original file to end in .txt
     if [ -f shigapass/ShigaPass_Flex_summary.csv ]; then
+      # convert to TSV
+      sed 's/;/\t/g' shigapass/ShigaPass_Flex_summary.csv > shigapass/ShigaPass_Flex_summary.tsv
+
       echo "Renaming ShigaPass_Flex_summary.csv to ShigaPass_Flex_summary.txt"
       mv -v shigapass/ShigaPass_Flex_summary.csv shigapass/ShigaPass_Flex_summary.txt
     else
@@ -95,6 +98,7 @@ task shigapass_many {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
+    # keep at 0 since ShigaPass can take a long time on large batches (>100 samples)
     preemptible: 0
   }
 }
