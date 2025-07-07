@@ -76,7 +76,7 @@ mercury_prep_n_batch	sample_names	Array[String]	The samples you want to submit		
 mercury_prep_n_batch	terra_project_name	String	The name of your Terra project. You can find this information in the URL of the webpage of your Terra dashboard. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is example		Required	Mercury_Prep_N_Batch	
 mercury_prep_n_batch	terra_table_name	String	The name of the Terra table where your samples can be found. Do not include the entity: prefix, the _id suffix, or the _set_id suffix, just the name of the sample-level data table as listed in the sidebar on lefthand side of the Terra Data tab.		Required	Mercury_Prep_N_Batch	
 mercury_prep_n_batch	terra_workspace_name	String	The name of your Terra workspace where your samples can be found. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is my_workspace		Required	Mercury_Prep_N_Batch	
-nextclade_addToRefTree	assembly_fasta	File	The assembly file for your sample in FASTA format		Required	Sample_to_Ref_Tree	
+nextclade_addToRefTree	assembly_fastas	Array[File]	The assembly files for your samples in FASTA format		Required	Sample_to_Ref_Tree	
 nextclade_addToRefTree	nextclade_dataset_name	String	What nextclade dataset name to run nextclade on; the options are: "sars-cov-2", "flu_h1n1pdm_ha", "flu_h1n1pdm_na", "flu_h3n2_ha", "flu_h3n2_na", "flu_vic_ha", "flu_vic_na", "flu_yam_ha", "hMPXV", "hMPXV_B1", "MPXV", "rsv_a" and "rsv_b"		Required	Sample_to_Ref_Tree	
 pangolin_update	assembly_fasta	File	The assembly file for your sample in FASTA format		Required	Pangolin_Update	
 pangolin_update	old_lineage	String	The Pangolin lineage previously assigned to the sample		Required	Pangolin_Update	
