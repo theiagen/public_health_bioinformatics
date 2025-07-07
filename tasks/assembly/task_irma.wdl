@@ -71,12 +71,12 @@ task irma {
       IRMA "FLU" "~{read1}" "~{read2}" ~{samplename} --external-config irma_config.sh
     fi
 
-    # capture some IRMA log & config files; rename to use .tsv suffix instead of .txt
-    mv -v ~{samplename}/tables/READ_COUNTS.txt ~{samplename}/tables/READ_COUNTS.tsv
-    mv -v ~{samplename}/logs/run_info.txt ~{samplename}/logs/run_info.tsv
-
     # capture IRMA type
     if compgen -G "~{samplename}/*fasta"; then
+      # capture some IRMA log & config files; rename to use .tsv suffix instead of .txt
+      mv -v ~{samplename}/tables/READ_COUNTS.txt ~{samplename}/tables/READ_COUNTS.tsv
+      mv -v ~{samplename}/logs/run_info.txt ~{samplename}/logs/run_info.tsv
+
       # look at list of files that match the above pattern, grab the first one, and extract the type from the filename. We expect: ~{samplename}/B_HA.fasta
       echo "Type_"$(basename "$(echo "$(find ~{samplename}/*.fasta | head -n1)")" | cut -d_ -f1) > IRMA_TYPE
       # set irma_type bash variable which is used later
@@ -145,6 +145,8 @@ task irma {
       sed '/^>/! s/\./N/g' ~{samplename}/amended_consensus/~{samplename}.irma.consensus.fasta > padded_assemblies/~{samplename}.irma.consensus.pad.fasta
     else
       echo "No IRMA assembly generated for flu type prediction" | tee IRMA_TYPE
+      echo "No subtype predicted by IRMA" | tee IRMA_SUBTYPE
+      echo "No subtype notes" | tee IRMA_SUBTYPE_NOTES
       echo "Exiting IRMA task early since no IRMA assembly was generated."
       exit 0
     fi
@@ -264,9 +266,9 @@ task irma {
     String irma_version = read_string("VERSION")
     # tracking this for outputting min depth threshold used for calling consensus nucleotides in IRMA
     Int irma_minimum_consensus_support = minimum_consensus_support
-    File irma_read_counts_tsv = "~{samplename}/tables/READ_COUNTS.tsv"
-    File irma_run_info_tsv = "~{samplename}/logs/run_info.tsv"
-    File irma_nr_read_counts = "~{samplename}/logs/NR_COUNTS_log.txt"
+    File? irma_read_counts_tsv = "~{samplename}/tables/READ_COUNTS.tsv"
+    File? irma_run_info_tsv = "~{samplename}/logs/run_info.tsv"
+    File? irma_nr_read_counts = "~{samplename}/logs/NR_COUNTS_log.txt"
     # for now just adding bams for these segments for mean coverage calculation
     File? seg_ha_bam = "~{samplename}_HA.bam"
     File? seg_na_bam = "~{samplename}_NA.bam"

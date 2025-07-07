@@ -10,9 +10,6 @@
 <!-- if: theiaviral -->
 ??? toggle "Read Identification"
 <!-- endif -->
-<!-- if: theiaviral_panel -->
-??? task "`krakenstandalone`"
-<!-- endif -->
 
     `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
 

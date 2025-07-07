@@ -21,8 +21,8 @@ import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3_task
 import "../../tasks/task_versioning.wdl" as versioning_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub_task
-import "../../workflows/standalone_modules/wf_host_decontaminate.wdl" as host_decontaminate_wf
-import "../../workflows/utilities/wf_morgana_magic.wdl" as morgana_magic_wf
+import "../utilities/wf_host_decontaminate.wdl" as host_decontaminate_wf
+import "../utilities/wf_morgana_magic.wdl" as morgana_magic_wf
 
 workflow theiaviral_ont {
   meta {
@@ -39,7 +39,7 @@ workflow theiaviral_ont {
     Int min_depth = 10 # minimum depth for masking low coverage regions
     Float min_allele_freq = 0.6 # minimum allele frequency for consensus calling
     Int min_map_quality = 20 # minimum read mapping quality
-    Boolean extract_unclassified = false
+    Boolean extract_unclassified = true
     Boolean call_porechop = false
     Boolean skip_rasusa = true 
     Boolean skip_screen = false
@@ -53,8 +53,7 @@ workflow theiaviral_ont {
   call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
     input:
       taxon = taxon,
-      rank = read_extraction_rank,
-      use_ncbi_virus = true,
+      rank = read_extraction_rank
   }
   # raw read quality check
   call nanoplot_task.nanoplot as nanoplot_raw {
@@ -363,7 +362,7 @@ workflow theiaviral_ont {
     String? skani_top_accession = skani.skani_top_accession
     Float? skani_top_score = skani.skani_top_score
     Float? skani_top_ani = skani.skani_top_ani
-    Float? skani_top_ref_coverage = skani.skani_top_ref_coverage
+    Float? skani_top_query_coverage = skani.skani_top_query_coverage
     String? skani_warning = skani.skani_warning
     String? skani_status = skani.skani_status
     String? skani_database = skani.skani_database
@@ -431,7 +430,7 @@ workflow theiaviral_ont {
     Int? checkv_consensus_total_genes = checkv_consensus.total_genes
     String? checkv_consensus_version = checkv_consensus.checkv_version
     # morgana magic outputs
-    String? organism = morgana_magic.organism 
+    String? morgana_magic_organism = morgana_magic.organism 
     # Pangolin outputs
     String? pango_lineage = morgana_magic.pango_lineage
     String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded

@@ -34,7 +34,7 @@ This workflow runs on the sample level.
 ### Workflow Tasks
 
 {{ include_md("common_text/referenceseeker_task.md") }}
-{{ include_md("common_text/ncbi_datasets_task.md") }}
+{{ include_md("common_text/ncbi_datasets_task.md", condition="assembly_fetch") }}
 
 ### Outputs
 

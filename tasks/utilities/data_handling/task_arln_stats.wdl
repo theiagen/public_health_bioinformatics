@@ -6,6 +6,7 @@ task arln_stats {
     String taxon
     String workflow_type
     Int genome_length
+    Float gc_percent
     File? read1_raw
     File? read2_raw
     File? read1_clean
@@ -41,27 +42,61 @@ task arln_stats {
       touch read2_clean_q30
     fi
 
-    # Calculate Assembly Ratio
-    if [[ "~{taxon}" == "NA" ]]; then
-      echo "Taxon (NA) not found in assembly stats file" > assem_ratio_with_stdev
+    GENUS=$(echo ~{taxon} | awk '{print $1}')
+    SPECIES=$(echo ~{taxon} | awk '{print $2}')
+    echo "Genus and species: $GENUS $SPECIES"
 
+    # Calculate Assembly Ratio
+    if [[ "~{taxon}" == "NA" || -z "$SPECIES" || -z "$GENUS" ]]; then
+      echo "Full taxonomy not available" > ASSEMBLY_RATIO
+      echo "Full taxonomy not available" > TAXON_ASSEMBLY_RATIO_STDEV
+      echo "Full taxonomy not available" > TAXON_GC_ST_DEV
+      echo "Full taxonomy not available" > TAXON_GC_MEAN
+      echo "Full taxonomy not available" > ASSEMBLY_ZSCORE
     elif grep -q "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt; then
+      # NCBI Stats Assem Means
       assem_mean=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $6}')
-      echo "${assem_mean}"
-      st_dev=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $7}' | xargs printf "%.5f\n")
-      echo "${st_dev}"
-      assem_ratio=$(python3 -c "print('{:.4f}'.format((float('${assem_mean}') * 1000000)/ ~{genome_length}))")
-      echo "${assem_ratio}x(${st_dev})" > assem_ratio_with_stdev
+      gc_mean=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $12}')
+      echo "Assembly Mean Length: ${assem_mean}"
+      echo "GC Mean: ${gc_mean}"
+      # NCBI Stats StDevs
+      ref_assem_st_dev=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $7}' | xargs printf "%.5f\n")
+      ref_gc_st_dev=$(grep "~{taxon}" /data/NCBI_Assembly_stats_20240124.txt | awk '{print $13}' | xargs printf "%.5f\n")
+      echo "Assembly standard deviation of taxonomy: ${ref_assem_st_dev}"
+      echo "GC standard deviation of taxonomy: ${ref_gc_st_dev}"
+      # Metrics Ratios
+      assem_ratio=$(python3 -c "print('{:.5f}'.format(~{genome_length} / (float('${assem_mean}') * 1000000)))")
+      echo "Calculated assembly ratio: ${assem_ratio}"
+      # Calculate Z-score, {observed}-{expected}/{stdev}
+      assem_zscore=$(python3 -c "print('{:.5f}'.format((~{genome_length} - (float('${assem_mean}') * 1000000)) / (float('${ref_assem_st_dev}') * 1000000)))")
+      # Ratios
+      echo "${assem_ratio}" > ASSEMBLY_RATIO
+      # StDev
+      echo "${ref_assem_st_dev}" > TAXON_ASSEMBLY_RATIO_STDEV
+      echo "${ref_gc_st_dev}" > TAXON_GC_ST_DEV
+      # Zscore 
+      echo "${assem_zscore}" > ASSEMBLY_ZSCORE
+      # Mean
+      gc_mean=$(printf "%.5f" ${gc_mean})
+      echo "${gc_mean}" > TAXON_GC_MEAN
     else
-      echo "Taxon not found in assembly stats file" > assem_ratio_with_stdev
+      echo "Taxon not found in stats file" > ASSEMBLY_RATIO
+      echo "Taxon not found in stats file" > TAXON_ASSEMBLY_RATIO_STDEV
+      echo "Taxon not found in stats file" > TAXON_GC_ST_DEV
+      echo "Taxon not found in stats file" > TAXON_GC_MEAN
+      echo "Taxon not found in stats file" > ASSEMBLY_ZSCORE
     fi
   >>>
   output {
-    String? read1_raw_q30 = read_string("read1_raw_q30")
-    String? read2_raw_q30 = read_string("read2_raw_q30")
-    String? read1_clean_q30 = read_string("read1_clean_q30")
-    String? read2_clean_q30 = read_string("read2_clean_q30")
-    String assembly_ratio = read_string("assem_ratio_with_stdev")
+    String read1_raw_q30 = read_string("read1_raw_q30")
+    String read2_raw_q30 = read_string("read2_raw_q30")
+    String read1_clean_q30 = read_string("read1_clean_q30")
+    String read2_clean_q30 = read_string("read2_clean_q30")
+    String assembly_ratio = read_string("ASSEMBLY_RATIO")
+    String taxon_assembly_ratio_stdev = read_string("TAXON_ASSEMBLY_RATIO_STDEV")
+    String taxon_gc_percent_stdev = read_string("TAXON_GC_ST_DEV")
+    String taxon_gc_mean = read_string("TAXON_GC_MEAN")
+    String assembly_zscore = read_string("ASSEMBLY_ZSCORE")
     String docker_version = docker
   }
   runtime {

@@ -3,14 +3,6 @@
 <!-- if: theiaviral -->
     The `megahit` task is a wrapper for the [MEGAHIT assembler](https://github.com/voutcn/megahit), which is used for *de novo* metagenomic assembly of the cleaned reads. MEGAHIT is a fast and memory-efficient *de novo* assembler that can handle large datasets. This task is optional, turned off by default, and will only be called if MetaviralSPAdes fails. It can be enabled by setting the `skip_metaviralspades` parameter to `true`. The `megahit` task is used as a fallback option if the `spades` task fails during execution (see task `spades` for more details).
 
-    ???+ warning "Important"
-        In this workflow, *de novo* assembly is primarily used to facilitate the selection of a closely related reference genome, though high quality *de novo* assemblies can be used for downstream analysis. If the user provides an input `reference_fasta`, all subsequent assembly and reference selections tasks will be skipped, including:
-
-        - `megahit`
-        - `checkv_denovo`
-        - `quast_denovo`
-        - `skani`
-        - `ncbi_datasets`
 <!-- endif -->
 
     ???+ warning "Non-deterministic output(s)"

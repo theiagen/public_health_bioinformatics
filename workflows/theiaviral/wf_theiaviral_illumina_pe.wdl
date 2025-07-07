@@ -54,13 +54,12 @@ workflow theiaviral_illumina_pe {
   call versioning_task.version_capture {
     input:
   }
-  if (!skip_qc){
+  if (!skip_qc) {
     # get the taxon id
     call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
       input:
         taxon = taxon,
-        rank = read_extraction_rank,
-        use_ncbi_virus = true
+        rank = read_extraction_rank
     }
     # read QC, classification, extraction, and trimming
     call read_qc.read_QC_trim_pe as read_QC_trim {
@@ -89,8 +88,8 @@ workflow theiaviral_illumina_pe {
   if (! skip_screen) {
     call read_screen_task.check_reads as clean_check_reads {
       input:
-        read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
-        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
+        read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+        read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
         workflow_series = "theiaviral",
         expected_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
     }
@@ -312,7 +311,7 @@ workflow theiaviral_illumina_pe {
     String? skani_top_accession = skani.skani_top_accession
     Float? skani_top_score = skani.skani_top_score
     Float? skani_top_ani = skani.skani_top_ani
-    Float? skani_top_ref_coverage = skani.skani_top_ref_coverage
+    Float? skani_top_query_coverage = skani.skani_top_query_coverage
     String? skani_warning = skani.skani_warning
     String? skani_status = skani.skani_status
     String? skani_database = skani.skani_database
@@ -368,7 +367,7 @@ workflow theiaviral_illumina_pe {
     Int? checkv_consensus_total_genes = checkv_consensus.total_genes
     String? checkv_consensus_version = checkv_consensus.checkv_version
     # morgana magic outputs
-    String? organism = morgana_magic.organism 
+    String? morgana_magic_organism = morgana_magic.organism 
     # Pangolin outputs
     String? pango_lineage = morgana_magic.pango_lineage 
     String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded 

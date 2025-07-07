@@ -4,13 +4,13 @@
 
     This task is functional for segmented viruses by iteratively executing iVar on a contig-by-contig basis and concantenating resulting consensus contigs.
 
-    ??? dna "`min_depth`"
+    ??? dna "`min_depth` input parameter"
         This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is `10`.
 
-    ??? dna "`min_map_quality`"
+    ??? dna "`min_map_quality` input parameter"
         This parameter accepts an integer value to set the minimum mapping quality for variant calling and subsequent consensus sequence generation. The default value is `20`.
 
-    ??? dna "`min_allele_freq`"
+    ??? dna "`min_allele_freq` input parameter"
         This parameter accepts a float value to set the minimum allele frequency for variant calling and subsequent consensus sequence generation. The default value is `0.6`.
 
     !!! techdetails "iVar Technical Details"

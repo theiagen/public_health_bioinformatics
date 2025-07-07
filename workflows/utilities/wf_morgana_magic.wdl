@@ -63,9 +63,6 @@ workflow morgana_magic {
       organism = taxon_name,
       pangolin_docker_image = pangolin_docker_image
   }
-  if (organism_parameters.standardized_organism != "unsupported") { # occurs in theiameta_panel
-
-  }
   if (organism_parameters.standardized_organism == "flu") {
     call flu_track_wf.flu_track {
       input:

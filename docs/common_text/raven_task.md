@@ -5,18 +5,8 @@
 <!-- if: theiaviral -->
     Based on internal benchmarking against Flye and results reported by [Cook et al. (2024)](https://pmc.ncbi.nlm.nih.gov/articles/PMC11092197/), Raven is faster, produces more contiguous assemblies, and yields more complete genomes within TheiaViral according to CheckV quality assessment (see task `checkv` for technical details).
 
-    ??? dna "`call_raven`"
+    ??? dna "`call_raven` input parameter"
         This parameter controls whether or not the `raven` task is called by the workflow. By default, `call_raven` is set to `true` because Raven is used as the primary assembler. Raven is generally recommended for most users, but it might not perform optimally on all datasets. If users encounter issues with Raven, they can set the `call_raven` variable to `false` to bypass the `raven` task and instead *de novo* assemble using Flye (see task `flye` for details). Additionally, if the Raven task fails during execution, the workflow will automatically fall back to using Flye for *de novo* assembly.
-
-    ???+ warning "Important"
-        In this workflow, *de novo* assembly is used solely to facilitate the selection of a closely related reference genome. If the user provides an input `reference_fasta`, all subsequent assembly and reference selections tasks will be skipped, including:
-
-        - `raven`
-        - `flye`
-        - `checkv_denovo`
-        - `quast_denovo`
-        - `skani`
-        - `ncbi_datasets`
 <!-- endif -->
 
     ???+ warning "Error traceback"

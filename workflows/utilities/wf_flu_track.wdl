@@ -248,11 +248,16 @@ workflow flu_track {
         docker = genoflu_docker,
         memory = genoflu_memory
     }
-    if (genoflu.genoflu_genotype == "B3.13" && defined(nextclade_custom_input_dataset)) {
+    call set_organism_defaults.organism_parameters as set_flu_h5n1_nextclade_values {
+      input:
+        organism = standardized_organism,
+        flu_genoflu_genotype = genoflu.genoflu_genotype
+    }
+    if (genoflu.genoflu_genotype == "B3.13" || genoflu.genoflu_genotype == "D1.1" || defined(nextclade_custom_input_dataset)) {
       call nextclade_task.nextclade_v3 as nextclade_flu_h5n1 {
         input:
           genome_fasta = select_first([irma.irma_assembly_fasta_concatenated]),
-          custom_input_dataset = nextclade_custom_input_dataset,
+          custom_input_dataset = select_first([nextclade_custom_input_dataset, set_flu_h5n1_nextclade_values.nextclade_custom_dataset]),
           docker = nextclade_docker_image,
           cpu = nextclade_cpu,
           memory = nextclade_memory,

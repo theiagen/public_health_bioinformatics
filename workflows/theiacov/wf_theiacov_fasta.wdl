@@ -83,7 +83,7 @@ workflow theiacov_fasta {
         samplename = samplename
     }
   }
-  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "flu") {
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "measles") {
     if (organism_parameters.nextclade_dataset_tag != "NA") {
       call nextclade_task.nextclade_v3 {
         input:

@@ -10,7 +10,7 @@
 
         Either `trimmomatic` or `fastp` can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of `trim_window_size`), cutting once the average quality within the window falls below `trim_quality_trim_score`. They will both discard the read if it is trimmed below `trim_minlen`. 
 
-        ??? dna "`read_processing`"
+        ??? dna "`read_processing` input parameter"
             This input parameter accepts either `trimmomatic` or `fastp` as an input to determine which tool should be used for read quality trimming. This is set to `trimmomatic` by default.
 
             If the `fastp` option is selected, see below for table of default parameters.
@@ -54,7 +54,7 @@
 
         There are two methods for read quantification to choose from: [`fastq-scan`](https://github.com/rpetit3/fastq-scan) (default) or [`fastqc`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/). Both quantify the forward and reverse reads in FASTQ files. For paired-end data, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads. `fastqc` also provides a graphical visualization of the read quality.
 
-        ??? dna "`read_qc`"
+        ??? dna "`read_qc` input parameter"
             This input parameter accepts either `"fastq_scan"` or `"fastqc"` as an input to determine which tool should be used for read quantification. This is set to `"fastq-scan"` by default.
 
         !!! techdetails "fastq-scan and FastQC Technical Details"
