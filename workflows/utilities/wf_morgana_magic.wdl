@@ -136,7 +136,7 @@ workflow morgana_magic {
   if (organism_parameters.standardized_organism == "rabies") {
     call nextclade_task.nextclade_add_ref as rabies_nextclade {
       input:
-        genome_fasta = assembly_fasta,
+        genome_fastas = [assembly_fasta],
         reference_tree_json = organism_parameters.nextclade_auspice_tree,
         gene_annotations_gff = organism_parameters.reference_gff,
         nextclade_pathogen_json = organism_parameters.nextclade_pathogen_json,
