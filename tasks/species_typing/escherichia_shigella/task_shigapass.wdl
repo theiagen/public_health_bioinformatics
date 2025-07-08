@@ -78,8 +78,9 @@ task shigapass_many {
       # create the new file name with the subdir name included
       new_file_name="${dir_name}/$(basename "$dir_name")_${base_name%.txt}.txt"
       # rename the file
-      mv -v "$file" "$new_file_name"
-    done 
+      mv "$file" "$new_file_name"
+    done
+    echo "Finished renaming intermediate files. Exiting task now." 
   >>>
   output {
     File shigapass_summary = "shigapass/ShigaPass_summary.txt"
