@@ -31,7 +31,7 @@ task extract_kraken_reads {
       --include-children \
       --fastq-output \
       --output ~{taxon_id}_1.fastq \
-      --output2 ~{taxon_id}_2.fastq \
+      --output2 ~{taxon_id}_2.fastq
 
     if [ -s ~{taxon_id}_1.fastq ]; then
       echo "DEBUG: Taxon ~{taxon_id} reads extracted"
@@ -44,12 +44,19 @@ task extract_kraken_reads {
       echo "false" > CONTINUE
     fi
     
-    grep ~{taxon_id} ~{kraken2_report} | awk '{for (i=6; i <= NF; ++i) print $i}' | tr '\n' ' ' | xargs > ORGANISM_NAME
+    if grep -q "~{taxon_id}" "~{kraken2_report}"; then
+      echo "Taxon ID found in report"
+      # Extract organism name and store it
+      grep "~{taxon_id}" "~{kraken2_report}" | awk '{for (i=6; i <= NF; ++i) print $i}' | tr '\n' ' ' | xargs > ORGANISM_NAME
+    else
+      echo "DEBUG: Taxon ID not found in kraken report"
+      echo "Unknown organism" > ORGANISM_NAME
+    fi
   >>>
   output {
     File? extracted_read1 = "~{taxon_id}_1.fastq.gz"
     File? extracted_read2 = "~{taxon_id}_2.fastq.gz"
-    String organism_name = read_string("ORGANISM_NAME")
+    String? organism_name = read_string("ORGANISM_NAME")
     String krakentools_docker = docker
     Boolean success = read_boolean("CONTINUE")
   }
