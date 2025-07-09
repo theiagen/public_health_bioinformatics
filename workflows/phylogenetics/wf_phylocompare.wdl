@@ -38,12 +38,12 @@ workflow phylocompare {
   }
   output {
     String phylocompare_phb_version = version_capture.phb_version
-    String phylocompare_version = phylovalidate.phylocompare_version
-    File phylocompare_report = phylovalidate.summary_report
-    String phylocompare_distance = phylovalidate.phylovalidate_distance
-    String phylocompare_validation = phylovalidate.phylovalidate_validation
-    String phylocompare_flag = phylovalidate.phylovalidate_flag
-    File phylocompare_tree1_clean = phylovalidate.tree1_clean
-    File phylocompare_tree2_clean = phylovalidate.tree2_clean
+    String phylocompare_version = phylovalidate_task.phylocompare_version
+    File phylocompare_report = phylovalidate_task.summary_report
+    String phylocompare_distance = phylovalidate_task.phylovalidate_distance
+    String phylocompare_validation = phylovalidate_task.phylovalidate_validation
+    String phylocompare_flag = phylovalidate_task.phylovalidate_flag
+    File phylocompare_tree1_clean = phylovalidate_task.tree1_clean
+    File phylocompare_tree2_clean = phylovalidate_task.tree2_clean
   }
 }
