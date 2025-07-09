@@ -40,7 +40,7 @@ import "../../tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl" as vibechec
 # theiaeuk
 import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query
 import "../../tasks/gene_typing/variant_detection/task_snippy_variants.wdl" as snippy
-import "../../tasks/species_typing/candida/task_cauris_cladetyper.wdl" as cauris_cladetyper
+import "../../tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl" as cauris_cladetyper
 
 workflow merlin_magic {
   meta {
