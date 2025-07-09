@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filter_column="Name", filter_values="[**TheiaProk Workflow Series**](../workflows/genomic_characterization/theiaprok.md)", columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaProk Workflow Series**](../workflows/genomic_characterization/theiaprok.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## TheiaProk Workflows
 
@@ -14,32 +14,32 @@
 4. Genome assemblies (**TheiaProk_FASTA**)
 
 !!! caption "TheiaProk Workflow Diagram"
-    ![TheiaProk Workflow Diagram](../../assets/figures/TheiaProk.png)
+    ![TheiaProk Workflow Diagram](../../assets/figures/TheiaProk_v3.0.0.png)
 
 All input reads are processed through "[core tasks](#core-tasks)" in the TheiaProk Illumina and ONT workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaProk workflows subsequently launch default genome characterization modules for quality assessment, species identification, antimicrobial resistance gene detection, sequence typing, and more. **For some taxa identified, "taxa-specific sub-workflows" will be automatically activated, undertaking additional taxa-specific characterization steps.** When setting up each workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
 
 ### Inputs
 
-!!! dna ""
-    ??? toggle "TheiaProk_Illumina_PE Input Read Data"
+!!! dna "Input Data"
+    === "TheiaProk_Illumina_PE"
 
         The TheiaProk_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time.
 
         By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
-    ??? toggle "TheiaProk_Illumina_SE Input Read Data"
+    === "TheiaProk_Illumina_SE"
 
         TheiaProk_Illumina_SE takes in Illumina single-end reads. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. Theiagen highly recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before uploading to Terra to minimize data upload time & save on storage costs.
 
         By default, the workflow anticipates **1 x 35 bp** reads  (i.e. the input reads were generated using a 70-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate longer read data.
 
-    ??? toggle "TheiaProk_ONT Input Read Data"
+    === "TheiaProk_ONT"
 
         The TheiaProk_ONT workflow takes in base-called ONT read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before uploading to Terra to minimize data upload time.
 
         **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaProk_ONT workflow must be quality assessed before reporting results.**
 
-    ??? toggle "TheiaProk_FASTA Input Assembly Data"
+    === "TheiaProk_FASTA"
 
         The TheiaProk_FASTA workflow takes in assembly files in FASTA format.
 
@@ -50,25 +50,25 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
     === "TheiaProk_Illumina_PE"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_Illumina_PE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaProk_Illumina_PE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaProk_Illumina_SE"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_Illumina_SE", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaProk_Illumina_SE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaProk_ONT"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaProk_ONT"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaProk_FASTA"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="TheiaProk_FASTA", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaProk_FASTA"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
 ### Core Tasks
@@ -111,7 +111,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
             These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
 {{ include_md("common_text/read_qc_trim_ont.md", condition="theiaprok", indent=8) }}
-{{ include_md("common_text/flye_denovo_task.md", indent=8) }}
+{{ include_md("common_text/flye_denovo_task.md", condition="theiaprok", indent=8) }}
 
     === "TheiaProk_FASTA"
         !!! dna ""
@@ -152,35 +152,11 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 {{ include_md("common_text/gambit_task.md") }}
 
-??? task "`KmerFinder`: Taxon Assignment (optional)"
+{{ include_md("common_text/kmerfinder_task.md") }}
 
-    The `KmerFinder` method predicts prokaryotic species based on the number of overlapping (co-occurring) *k*-mers, i.e., 16-mers, between the query genome and genomes in a reference database.
+{{ include_md("common_text/amrfinderplus_task.md") }}
 
-    !!! techdetails "KmerFinder Technical Details"        
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_kmerfinder.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kmerfinder.wdl) |
-        | Software Source Code | https://bitbucket.org/genomicepidemiology/kmerfinder |
-        | Software Documentation | https://cge.food.dtu.dk/services/KmerFinder/instructions.php |
-        | Original Publication(s) | [**Benchmarking of Methods for Genomic Taxonomy**](https://journals.asm.org/doi/full/10.1128/jcm.02981-13?rfr_dat=cr_pub++0pubmed&url_ver=Z39.88-2003&rfr_id=ori%3Arid%3Acrossref.org) |
-
-??? task "`AMRFinderPlus`: AMR Genotyping (default)"
-
-    NCBI's [AMRFinderPlus](https://github.com/ncbi/amr/wiki) is the default antimicrobial resistance (AMR) detection tool used in TheiaProk. ResFinder may be used alternatively and if so, AMRFinderPlus is not run. 
-
-    AMRFinderPlus identifies acquired antimicrobial resistance (AMR) genes, virulence genes, and stress genes.  Such AMR genes confer resistance to antibiotics, metals, biocides, heat, or acid. For some taxa (see [here](https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#--organism-option)), AMRFinderPlus will provide taxa-specific results including filtering out genes that are almost ubiquitous in the taxa (intrinsic genes) and identifying resistance-associated point mutations.  In TheiaProk, the taxon used by AMRFinderPlus is specified based on the `gambit_predicted_taxon` or a user-provided `expected_taxon`.
-
-    You can check if a gene or point mutation is in the AMRFinderPlus database [here](https://www.ncbi.nlm.nih.gov/pathogens/refgene/#), find the sequences of reference genes [here](https://www.ncbi.nlm.nih.gov/bioproject/PRJNA313047), and search the query Hidden Markov Models (HMMs) used by AMRFinderPlus to identify AMR genes and some stress and virulence proteins ([here](https://www.ncbi.nlm.nih.gov/pathogens/hmm/)). The AMRFinderPlus database is updated frequently. You can ensure you are using the most up-to-date version by specifying the docker image as a workflow input. You might like to save this docker image as a workspace data element to make this easier.
-
-    !!! techdetails "AMRFinderPlus Technical Details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_amrfinderplus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl) |
-        | Software Source Code | [amr on GitHub](https://github.com/ncbi/amr) |
-        | Software Documentation | https://github.com/ncbi/amr/wiki |
-        | Original Publication(s) | [AMRFinderPlus and the Reference Gene Catalog facilitate examination of the genomic links among antimicrobial resistance, stress response, and virulence](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8208984/) |
+{{ include_md("common_text/gamma_task.md") }}
 
 ??? task "`ResFinder`: AMR Genotyping & Shigella XDR phenotype prediction (alternative)"
 
@@ -497,29 +473,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
     **Shigella XDR prediction.** Please see the documentation section above for ResFinder for details regarding this taxa-specific analysis. 
 
-    ??? task "`StxTyper`: Identification and typing of Shiga toxin (Stx) genes ==_using the assembly file as input_=="
-        
-        StxTyper screens bacterial genome assemblies for shiga toxin genes and subtypes them into known subtypes and also looks for novel subtypes in cases where the detected sequences diverge from the reference sequences.
-        
-        Shiga toxin is the main virulence factor of Shiga-toxin-producing E. coli (STEC), though these genes are also found in Shigella species as well as some other genera more rarely, such as Klebsiella. [Please see this review paper that describes shiga toxins in great detail.](https://doi.org/10.3390/microorganisms12040687)
-
-        !!! tip "Running StxTyper via the TheiaProk workflows"
-            The TheiaProk workflow will automatically run `stxtyper` on all E. coli and Shigella spp. samples, but ==*the user can opt-in to running the tool on any sample by setting the optional input variable `call_stxtyper` to `true` when configuring the workflow.*==
-        
-        Generally, `stxtyper` looks for _stxA_ and _stxB_ subunits that compose a complete operon. The A subunit is longer (in amino acid length) than the B subunit. Stxtyper attempts to detect these, compare them to a database of known sequences, and type them based on amino acid composition.  There typing algorithm and rules defining how to type these genes & operons will be described more completely in a publication that will be available in the future.
-        
-        The `stxtyper_report` output TSV is provided in [this output format.](https://github.com/ncbi/stxtyper/tree/v1.0.24?tab=readme-ov-file#output)
-
-        This tool has been incorporated into v4.0.3 of AMRFinderPlus and runs behind-the-scenes when the user (or in this case, the TheiaProk workflow) provides the `amrfinder --organism Escherichia --plus` options.
-
-        !!! techdetails "StxTyper Technical Details"
-
-            |  | Links |
-            | --- | --- |
-            | Task | [task_stxtyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_stxtyper.wdl) |
-            | Software Source Code | [ncbi/stxtyper GitHub repository](https://github.com/ncbi/stxtyper) |
-            | Software Documentation | [ncbi/stxtyper GitHub repository](https://github.com/ncbi/stxtyper) |
-            | Original Publication(s) | No publication currently available, as this is a new tool. One will be available in the future. |
+    {{ include_md("common_text/stxtyper_task.md") }}
 
 ??? toggle "_Haemophilus influenzae_"
     ##### _Haemophilus influenzae_ {% raw %} {#haemophilus-influenzae} {% endraw %}
@@ -624,28 +578,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 ??? toggle "_Neisseria_ spp."
     ##### _Neisseria_ spp. {% raw %} {#neisseria} {% endraw %}
 
-    ??? task "`amr_search`: _Neisseria gonorrhoeae_ antimicrobial resistance profiling"
-
-        This task performs *in silico* antimicrobial resistance (AMR) profiling for *Neisseria gonorrhoeae* using **AMRsearch**, the primary tool used by [Pathogenwatch](https://pathogen.watch/) to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.
-
-        **AMRsearch** screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both **resistance genes** and **mutations**, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow **S/I/R classification** (*Sensitive, Intermediate, Resistant*).
-
-        The AMR search is conducted when *Neisseria gonorrhoeae* is identified as the taxon in *TheiaProk* workflows. The default database for *N. gonorrhoeae* is **485**.
-
-        **Outputs:**
-
-        - **JSON Output:** Contains the complete AMR profile, including detailed **resistance state**, detected **resistance genes/mutations**, and supporting **BLAST results**.
-
-        - **CSV & PNG Tables:* Results are formatted into a **CSV file** and **PNG summary table** for easier visualization.
-
-        !!! techdetails "amr_search Technical Details"    
-
-            |  | Links |
-            | --- | --- |
-            | Task | [task_amr_search.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_amr_search.wdl) |
-            | Software Source Code | [AMRsearch](https://github.com/pathogenwatch-oss/amr-search) |
-            | Software Documentation | [Pathogenwatch](https://cgps.gitbook.io/pathogenwatch) |
-            | Original Publication(s) | [PAARSNP: *rapid genotypic resistance prediction for *Neisseria gonorrhoeae*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7545138/) |
+{{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaprok") }}
 
     ??? task "`ngmaster`: _Neisseria gonorrhoeae_ sequence typing"
 
@@ -866,8 +799,10 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
             | Software Documentation | [srst2](https://github.com/katholt/srst2) |
             | Database Description | [Docker container](https://github.com/StaPH-B/docker-builds/tree/master/build-files/srst2/0.2.0-vibrio-230224) |
     
+{{ include_md("common_text/vibecheck_task.md", indent=4) }}
+
     ??? task "`Abricate`: Vibrio characterization"
-        
+
         The `Abricate` Vibrio characterization task detects sequences for *Vibrio* spp. characterization using genome assemblies and the abricate "vibrio" database. The sequences included in the database are as follows:
         
         | Sequence name | Sequence role | Purpose in database |
@@ -888,44 +823,32 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
             | Software Documentation | [abricate](https://github.com/tseemann/abricate) |
             | Database Description | [Docker container](https://github.com/StaPH-B/docker-builds/tree/master/build-files/abricate/1.0.1-vibrio-cholera) |
     
-    ??? task "`Vibecheck`: Vibrio cholerae classificaiton"
-        
-        The `Vibecheck` task classifies _V. cholerae_ sequences into canonical lineages (T1-T17) using variant frequency demixing. 
-        
-        !!! techdetails "Vibecheck Technical Details"
-            |  | Links |
-            | --- | --- |
-            | Task | [task_vibecheck_vibrio.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl) |
-            | Software Source Code | [Vibecheck](https://github.com/CholGen/Vibecheck) |
-            | Software Documentation | [Vibecheck](https://github.com/CholGen/Vibecheck) |
-            | Database Description | [Docker container](https://hub.docker.com/r/watronfire/vibecheck) |
-
 ### Outputs
 
 === "TheiaProk_Illumina_PE"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaProk_Illumina_PE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaProk_Illumina_PE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
 === "TheiaProk_Illumina_SE"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaProk_Illumina_SE", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaProk_Illumina_SE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
     
     ///
 
 === "TheiaProk_ONT"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaProk_FASTA", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaProk_FASTA"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
     
     ///
 
 === "TheiaProk_FASTA"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="TheiaProk_FASTA", columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaProk_FASTA"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///

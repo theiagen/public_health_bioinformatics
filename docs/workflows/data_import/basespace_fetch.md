@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Data Import](../../workflows_overview/workflows_type.md/#data-import) | [Any taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v1.3.0 | Yes | Sample-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**BaseSpace_Fetch**](../workflows/data_import/basespace_fetch.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## BaseSpace_Fetch_PHB
 
@@ -110,7 +108,7 @@ _If you already have a command-line environment available_, you can skip ahead t
         !!! caption narrow "Example SampleSheet.csv"
             ![example sample sheet](../../assets/figures/basespace_fetch/step6-sample-sheet.png)
 
-    2. In Excel or an alternative spreadsheet software, set up a metadata sheet for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.googleapis.com/theiagen-public-files/terra/training_resources/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.  
+    2. In Excel or an alternative spreadsheet software, set up a metadata sheet for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.  
         1. In cell A1, enter the data table name with the "**entity:**TABLENAME**_id**" format
         2. Create a column called `basespace_sample_name` and populate this with the data found under the `Sample_Name` column in the BaseSpace sample sheet.
 
@@ -149,7 +147,7 @@ _If you already have a command-line environment available_, you can skip ahead t
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="BaseSpace_Fetch", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "BaseSpace_Fetch"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -159,6 +157,6 @@ The outputs of this workflow will be the fastq files imported from BaseSpace int
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="BaseSpace_Fetch", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "BaseSpace_Fetch"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///

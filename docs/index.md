@@ -20,7 +20,7 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
     Learn how to use our workflows on Terra!</center>
 
--   <center>[v3.0.1 Release Notes](https://theiagen.notion.site/public-health-bioinformatics-v3-0-1-patch-release-notes){ .md-button .md-button--secondary }
+-   <center>[v3.1.0 Release Notes](https://theiagen.notion.site/public-health-bioinformatics-v3-1-0-minor-release-notes){ .md-button .md-button--secondary }
 
     ---
 
@@ -44,10 +44,16 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 When undertaking genomic analysis using the command-line, via Terra, or other data visualization platforms, it is essential to consider the necessary and appropriate workflows and resources for your analysis. To help you make these choices, take a look at the relationship between the most commonly used Theiagen workflows.
 
 !!! caption "Analysis Approaches for Genomic Data"
-    ![The relationship between the various PHB workflows](assets/figures/Workflow_Relationships.png#only-light){data-description="This diagram shows the Theiagen workflows (green boxes) available for analysis of genomic data in public health and the workflows that may be used consecutively (arrows). The blue boxes describe the major functions that these workflows undertake. The yellow boxes show functions that may be undertaken independently of workflows on Terra."}
-    ![The relationship between the various PHB workflows](assets/figures/Workflow_Relationships_dark.png#only-dark){data-description="This diagram shows the Theiagen workflows (green boxes) available for analysis of genomic data in public health and the workflows that may be used consecutively (arrows). The blue boxes describe the major functions that these workflows undertake. The yellow boxes show functions that may be undertaken independently of workflows on Terra."}
 
-    This diagram shows the Theiagen workflows (green boxes) available for analysis of genomic data in public health and the workflows that may be used consecutively (arrows). The blue boxes describe the major functions that these workflows undertake. The yellow boxes show functions that may be undertaken independently of workflows on Terra.
+    === "General Workflow Relationships"
+        ![The relationship between the various PHB workflows](assets/figures/WorkflowRelationships_2025-06-06.png){data-description="This diagram shows the available workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped into boxes that represent the major types of analysis that they perform. The arrows between the boxes represent the relationships between the workflows, showing which workflows may be used consecutively, while the large arrow underlying everything indicates the general process of analysis."}
+
+        This diagram shows the available workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped into boxes that represent the major types of analysis that they perform. The arrows between the boxes represent the relationships between the workflows, showing which workflows may be used consecutively, while the large arrow underlying everything indicates the general process of analysis.
+
+    === "Available Standalone Workflows"
+        ![All available standalone workflows can be used to supplement the major workflows](assets/figures/WorkflowRelationships_Standalone_2025-06-06.png){data-description="This diagram shows the available standalone workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped by colors that represent the major types of analysis that they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives."}
+
+        This diagram shows the available _standalone_ workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped by colors that represent the major types of analysis that they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives.
 
 ### PHB development is a cycle
 
@@ -65,21 +71,28 @@ You can expect a careful review of every PR and feedback as needed before mergin
 
 ### Authorship
 
-(Ordered by contribution [# of lines changed] as of 2025-03-26)
+<!-- 
+A Public Service Announcement regarding calculating the contribution math:
 
-- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision
-- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation
-- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation
-- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation
-- **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
-- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
-- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
-- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage)) - Project Administration, Software, Supervision
-- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
-- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
-- **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
-- **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
-- **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
+Andrew Hale added a .txt database file to docs/assets that artifically inflates his line 
+count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract 
+55,316 from his line count when updating this list. okay thanks byee
+-->
+
+(Ordered by contribution [# of lines changed] as of 2025-06-25)
+
+- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision <!-- 144222 -->
+- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation <!-- 41092-->
+- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation <!-- 36760 -->
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation <!-- 17621 -->
+- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation <!-- 5775 -->
+- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation <!-- 5119 -->
+- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation <!-- 60300 - 55316 = 4984 -->
+- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation <!-- 4307 -->
+- **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision <!-- 3352 -->
+- **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision <!-- 152 -->
+- **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation <!-- 111 -->
+- **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision <!-- 0 -->
 
 ### External Contributors
 
@@ -89,6 +102,7 @@ We would like to gratefully acknowledge the following individuals from the publi
 - **James Otieno** ([@jrotieno](https://github.com/jrotieno))*
 - **Robert Petit** ([@rpetit3](https://github.com/rpetit3))*
 - **Fraser Combe** ([@fraser-combe](https://github.com/fraser-combe))*
+- **Andrew Page** ([@andrewjpage](https://github.com/andrewjpage))*
 - **Emma Doughty** ([@emmadoughty](https://github.com/emmadoughty))*
 - **Nate Matteson** ([@watronfire](https://github.com/watronfire))
 - **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))

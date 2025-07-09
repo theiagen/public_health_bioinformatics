@@ -2,9 +2,7 @@
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Phylogenetic Construction](../../workflows_overview/workflows_type.md/#phylogenetic-construction) | [Any taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v3.0.0 | Yes | Sample-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Clair3_Variants**](../workflows/phylogenetic_construction/clair3_variants.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## Clair3_Variants_ONT
 
@@ -48,7 +46,7 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Clair3_Variants_ONT", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Clair3_Variants_ONT"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -92,7 +90,7 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
     !!! techdetails "Clair3 Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_clair3.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_clair3.wdl) |
+        | Task | [task_clair3_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_clair3_variants.wdl) |
         | Software Source Code | [Clair3 on GitHub](https://github.com/HKU-BAL/Clair3) |
         | Software Documentation | [Clair3 Documentation](https://github.com/HKU-BAL/Clair3?tab=readme-ov-file#usage) |
         | Original Publication(s) | [Symphonizing pileup and full-alignment for deep learning-based long-read variant calling](https://doi.org/10.1101/2021.12.29.474431) |
@@ -101,6 +99,6 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Clair3_Variants_ONT", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Clair3_Variants_ONT"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///

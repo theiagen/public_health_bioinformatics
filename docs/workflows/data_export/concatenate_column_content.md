@@ -4,9 +4,7 @@ title: Concatenate_Column_Content
 
 ## Quick Facts
 
-| **Workflow Type** | **Applicable Kingdom** | **Last Known Changes** | **Command-line Compatibility** | **Workflow Level** |
-|---|---|---|---|---|
-| [Exporting Data From Terra](../../workflows_overview/workflows_type.md/#exporting-data-from-terra) | [Any taxa](../../workflows_overview/workflows_kingdom.md/#any-taxa) | PHB v2.1.0 | Yes | Set-level |
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Concatenate_Column_Content**](../workflows/data_export/concatenate_column_content.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
 
 ## Concatenate_Column_Content_PHB
 
@@ -23,7 +21,7 @@ This workflow runs on the _set_ level.
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filter_column="Workflow", filter_values="Concatenate_Column_Content", columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Concatenate_Column_Content"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -34,6 +32,6 @@ This workflow runs on the _set_ level.
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filter_column="Workflow", filter_values="Concatenate_Column_Content", columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Concatenate_Column_Content"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///

@@ -17,6 +17,7 @@ import "../../tasks/species_typing/multi/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/contamination/task_kmerfinder.wdl" as kmerfinder_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
+import "../../tasks/gene_typing/drug_resistance/task_gamma.wdl" as gamma_task
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
 import "../../tasks/utilities/data_handling/task_arln_stats.wdl" as arln_stats
 import "../utilities/file_handling/wf_concatenate_illumina_lanes.wdl" as concatenate_lanes_workflow
@@ -67,11 +68,13 @@ workflow theiaprok_illumina_pe {
     Int trim_window_size = 10
     # module options
     Boolean perform_characterization = true # by default run all characterization steps
+    Boolean amrfinder_use_gff = false # by default use nucleotide fasta for amrfinderplus, but user can set this to true if they want to use a gff and protein fasta file
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_kmerfinder = false 
     Boolean call_resfinder = false
     Boolean call_plasmidfinder = true
     Boolean call_abricate = false
+    Boolean call_gamma = false
     Boolean call_arln_stats = false
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
@@ -107,7 +110,8 @@ workflow theiaprok_illumina_pe {
         max_genome_length = max_genome_length,
         min_coverage = min_coverage,
         min_proportion = min_proportion,
-        expected_genome_length = genome_length
+        expected_genome_length = genome_length,
+        workflow_series = "theiaprok"
     }
   }
   if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
@@ -132,7 +136,8 @@ workflow theiaprok_illumina_pe {
           max_genome_length = max_genome_length,
           min_coverage = min_coverage,
           min_proportion = min_proportion,
-          expected_genome_length = genome_length
+          expected_genome_length = genome_length,
+          workflow_series = "theiaprok"
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
@@ -189,8 +194,20 @@ workflow theiaprok_illumina_pe {
         call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
           input:
             assembly = digger_denovo.assembly_fasta,
+            annotation_assembly = select_first([prokka.prokka_fna,bakta.bakta_fna]),
             samplename = samplename,
-            organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
+            protein_fasta = select_first([prokka.prokka_faa,bakta.bakta_faa]),
+            gff = select_first([prokka.prokka_gff,bakta.bakta_gff3]),
+            organism = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
+            annotation_format = genome_annotation,
+            use_gff = amrfinder_use_gff
+        }
+        if (call_gamma){
+          call gamma_task.gamma{
+            input:
+              assembly = digger_denovo.assembly_fasta,
+              samplename = samplename
+          }
         }
         if (call_resfinder) {
           call resfinder.resfinder as resfinder_task {
@@ -215,10 +232,10 @@ workflow theiaprok_illumina_pe {
         }
         if (genome_annotation == "bakta") {  
           if (bakta_db == "light") {  
-            File bakta_db_light = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_light_2025-01-23.tar.gz"  
+            File bakta_db_light = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_light_2025-01-23.tar.gz"  
           }  
           if (bakta_db == "full") {  
-            File bakta_db_full = "gs://theiagen-public-files-rp/terra/theiaprok-files/bakta_db_full_2024-01-23.tar.gz"            
+            File bakta_db_full = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_full_2024-01-23.tar.gz"            
           }  
           if (!(bakta_db == "light" || bakta_db == "full")) {  
               File bakta_custom_db = bakta_db  
@@ -617,7 +634,6 @@ workflow theiaprok_illumina_pe {
                 "shigeifinder_serotype": merlin_magic.shigeifinder_serotype,
                 "shigeifinder_version_reads": merlin_magic.shigeifinder_version_reads,
                 "shigeifinder_version": merlin_magic.shigeifinder_version,
-                "digger_denovo_version": digger_denovo.assembler_version,
                 "sistr_allele_fasta": merlin_magic.sistr_allele_fasta,
                 "sistr_allele_json": merlin_magic.sistr_allele_json,
                 "sistr_cgmlst": merlin_magic.sistr_cgmlst,
@@ -708,8 +724,26 @@ workflow theiaprok_illumina_pe {
                 "virulencefinder_docker": merlin_magic.virulencefinder_docker,
                 "virulencefinder_hits": merlin_magic.virulencefinder_hits,
                 "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
-                "zip": zip
-              }
+                "zip": zip,
+                "arln_assembly_ratio": arln_stats.assembly_ratio,
+                "arln_assembly_zscore": arln_stats.assembly_zscore,
+                "arln_r1_q30_clean": arln_stats.read1_clean_q30,
+                "arln_r1_q30_raw": arln_stats.read1_raw_q30,
+                "arln_r2_q30_clean": arln_stats.read2_clean_q30,
+                "arln_r2_q30_raw": arln_stats.read2_raw_q30,
+                "arln_stats_docker_version": arln_stats.docker_version,
+                "arln_taxon_assembly_ratio_stdev": arln_stats.taxon_assembly_ratio_stdev,
+                "arln_taxon_gc_mean": arln_stats.taxon_gc_mean,
+                "arln_taxon_gc_percent_stdev": arln_stats.taxon_gc_percent_stdev,
+                "assembler": digger_denovo.assembler_used,
+                "assembler_version": digger_denovo.assembler_version,
+                "filtered_contigs_metrics": digger_denovo.filtered_contigs_metrics,
+                "gamma_docker": gamma.gamma_docker,
+                "gamma_fasta": gamma.gamma_fasta,
+                "gamma_gff": gamma.gamma_gff,
+                "gamma_results": gamma.gamma_results,
+                "gamma_version": gamma.gamma_version
+            }
           }
         }
         if (call_arln_stats) {
@@ -719,6 +753,7 @@ workflow theiaprok_illumina_pe {
               taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
               workflow_type = "pe",
               genome_length = quast.genome_length,
+              gc_percent = quast.gc_percent,
               read1_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
               read2_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read2]),
               read1_clean = read_QC_trim.read1_clean,
@@ -870,6 +905,12 @@ workflow theiaprok_illumina_pe {
     String? amrfinderplus_amr_betalactam_cephalosporin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalosporin_genes
     String? amrfinderplus_amr_betalactam_cephalothin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalothin_genes
     String? amrfinderplus_amr_betalactam_methicillin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_methicillin_genes
+    # GAMMA Outputs
+    File? gamma_results = gamma.gamma_results
+    File? gamma_gff = gamma.gamma_gff
+    File? gamma_fasta = gamma.gamma_fasta
+    String? gamma_version = gamma.gamma_version
+    String? gamma_docker = gamma.gamma_docker
     # Resfinder Outputs
     File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
     File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species
@@ -1193,6 +1234,10 @@ workflow theiaprok_illumina_pe {
     String? arln_r1_q30_clean = arln_stats.read1_clean_q30
     String? arln_r2_q30_clean = arln_stats.read2_clean_q30
     String? arln_assembly_ratio = arln_stats.assembly_ratio
+    String? arln_taxon_assembly_ratio_stdev = arln_stats.taxon_assembly_ratio_stdev
+    String? arln_taxon_gc_percent_stdev = arln_stats.taxon_gc_percent_stdev
+    String? arln_taxon_gc_mean = arln_stats.taxon_gc_mean
+    String? arln_assembly_zscore = arln_stats.assembly_zscore
     String? arln_stats_docker_version = arln_stats.docker_version
   }
 }

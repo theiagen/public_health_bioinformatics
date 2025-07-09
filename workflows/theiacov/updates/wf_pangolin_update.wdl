@@ -23,8 +23,8 @@ workflow pangolin_update {
       # including these to block from terra
       flu_segment = "",
       flu_subtype = "",
-      reference_gff_file = "gs://theiagen-public-files/terra/theiacov-files/empty.gff3",
-      reference_genome = "gs://theiagen-public-files/terra/theiacov-files/empty.fasta",
+      reference_gff_file = "gs://theiagen-public-resources-rp/empty_files/empty.gff3",
+      reference_genome = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
       genome_length_input = 0,
       nextclade_dataset_tag_input = "",
       nextclade_dataset_name_input = "",     
@@ -32,8 +32,8 @@ workflow pangolin_update {
       vadr_skip_length = 0,
       vadr_mem = 0, 
       vadr_options = "",
-      primer_bed_file = "gs://theiagen-public-files/terra/theiacov-files/empty.bed",
-      gene_locations_bed_file = "gs://theiagen-public-files/terra/theiacov-files/empty.bed",
+      primer_bed_file = "gs://theiagen-public-resources-rp/empty_files/empty.bed",
+      gene_locations_bed_file = "gs://theiagen-public-resources-rp/empty_files/empty.bed",
       kraken_target_organism_input = "",
       hiv_primer_version = ""
   }

@@ -1,8 +1,13 @@
 ??? task "NCBI Datasets"
+<!-- if: snippy|assembly_fetch -->
     ##### NCBI Datasets
+<!-- endif -->
 
     The [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/) task downloads specified assemblies from NCBI using either the [virus](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/) or [genome](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/) (for all other genome types) package as appropriate.
 
+<!-- if: theiaviral -->
+    This task uses the accession ID output from the `skani` task to download the the most closely related reference genome to the input assembly. The downloaded reference is then used for downstream analysis, including variant calling and consensus generation.
+<!-- endif -->
 <!-- if: snippy -->
     !!! dna "`include_gbff` behavior"
         If `include_gbff` is set to `true`, the gbff file will be used as the reference for `Snippy_Variants` and `Snippy_Tree`. If `include_gbff` is set to `false`, the fasta file will be used as the reference for `Snippy_Variants` and `Snippy_Tree`. Tree topology should not differ, though annotations may.

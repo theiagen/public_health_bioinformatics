@@ -154,7 +154,7 @@ workflow theiacov_illumina_se {
             organism = organism_parameters.standardized_organism
         }
       }
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" ) {
+      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b") {
         # tasks specific to either MPXV or sars-cov-2
         call nextclade_task.nextclade_v3 {
           input:
@@ -266,10 +266,10 @@ workflow theiacov_illumina_se {
     File? ivar_vcf = ivar_consensus.ivar_vcf
     String? ivar_variant_proportion_intermediate = ivar_consensus.ivar_variant_proportion_intermediate
     String? ivar_variant_version = ivar_consensus.ivar_variant_version
+    String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     # Read Alignment - assembly outputs
     File? assembly_fasta = ivar_consensus.assembly_fasta
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
-    String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     # Read Alignment - consensus assembly qc outputs
     Int? consensus_n_variant_min_depth = min_depth
     File? consensus_stats = ivar_consensus.consensus_stats

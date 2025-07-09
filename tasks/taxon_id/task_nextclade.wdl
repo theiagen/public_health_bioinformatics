@@ -11,7 +11,7 @@ task nextclade_v3 {
     File? gene_annotations_gff
     File? nextclade_pathogen_json
     File? input_ref
-    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2" 
+    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5" 
     String? dataset_name
     String verbosity = "warn" # other options are: "off" "error" "info" "debug" and "trace"
     String? dataset_tag
@@ -155,12 +155,12 @@ task nextclade_add_ref {
     description: "Nextclade task to add samples to either a user specified or a nextclade reference tree."
   }
   input {
-    File genome_fasta
+    Array[File] genome_fastas
     File? reference_tree_json
     File? nextclade_pathogen_json
     File? gene_annotations_gff
     File? input_ref
-    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5"
     String dataset_name
     String? dataset_tag
     String verbosity = "warn" # other options are: "off" "error" "info" "debug" and "trace"
@@ -168,10 +168,12 @@ task nextclade_add_ref {
     Int memory = 4
     Int cpu = 2
   }
-  String basename = basename(genome_fasta, ".fasta")
   command <<<
     # track version & print to log
     nextclade --version | tee NEXTCLADE_VERSION
+
+    # make the directory incase the dataset doesnt exist
+    mkdir nextclade_dataset_dir/
 
     echo "DEBUG: downloading nextclade dataset..."
     nextclade dataset get \
@@ -199,11 +201,11 @@ task nextclade_add_ref {
       ~{"--input-pathogen-json " + nextclade_pathogen_json} \
       ~{"--input-annotation " + gene_annotations_gff} \
       ~{"--input-ref " + input_ref} \
-      --output-json "~{basename}".nextclade.json \
-      --output-tsv  "~{basename}".nextclade.tsv \
-      --output-tree "~{basename}".nextclade.auspice.json \
+      --output-json nextclade_output.json \
+      --output-tsv  nextclade_output.tsv \
+      --output-tree nextclade_output.auspice.json \
       --output-all=. \
-      "~{genome_fasta}"
+      ~{sep=' ' genome_fastas}
   >>>
   runtime {
     docker: "~{docker}"
@@ -216,9 +218,9 @@ task nextclade_add_ref {
   }
   output {
     String nextclade_version = read_string("NEXTCLADE_VERSION")
-    File nextclade_json = "~{basename}.nextclade.json"
-    File auspice_json = "~{basename}.nextclade.auspice.json"
-    File nextclade_tsv = "~{basename}.nextclade.tsv"
+    File nextclade_json = "nextclade_output.json"
+    File auspice_json = "nextclade_output.auspice.json"
+    File nextclade_tsv = "nextclade_output.tsv"
     String nextclade_docker = docker
     File netclade_ref_tree = "reference_tree.json"
   }

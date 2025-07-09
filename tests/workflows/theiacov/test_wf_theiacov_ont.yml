@@ -127,7 +127,7 @@
     - path: miniwdl_run/call-nextclade_v3/task.log
       contains: ["wdl", "theiacov_ont", "done"]
     - path: miniwdl_run/call-nextclade_v3/work/NEXTCLADE_VERSION
-      md5sum: 72e36f488d0291ef87e547a0aef4a784
+      md5sum: 0e19f9e53f57a0e65b0394fcf7fd01f4
     - path: miniwdl_run/call-nextclade_v3/work/_miniwdl_inputs/0/ont.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.aligned.fasta
@@ -209,9 +209,9 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 35aa27af5fb90d54561ee9d45a3163d5
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 92bfc4d3b72e6671fa3d6e28b8467047
+      md5sum: 06c58c7c0d183ba579c8d833875c0f40
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 0a07a35a46498ae522b3e1c16dab8483
+      md5sum: ead40108c79688ad60d8340711f067a5
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/ont.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-pangolin4/work/ont.pangolin_report.csv

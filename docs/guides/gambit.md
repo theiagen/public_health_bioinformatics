@@ -25,7 +25,7 @@ If the **distance between the query genome assembly and the closest genome in th
 
     ---
 
-    [GAMBIT Prokaryotic GTDB Database v2.0.0](#gambit-gtdb-database-v200)
+    [GAMBIT Prokaryotic GTDB Database v2.0.1](#gambit-gtdb-database-v201)
 
     [GAMBIT Fungal Database v1.0.0](#gambit-fungal-database-v100)
 
@@ -39,7 +39,7 @@ If the **distance between the query genome assembly and the closest genome in th
 
 The [**GAMBIT_Query_PHB**](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Gambit_Query_PHB) workflow performs taxon assignment of a genome assembly using the GAMBIT. It can be imported directly to [Terra.bio](https://terra.bio) via [Dockstore](https://dockstore.org).
 
-Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly and a sample name associated with the genome assembly. The default GAMBIT database used for taxonomic identification is the Prokaryotic [GAMBIT Database GTDB v2.0.0](#gambit-gtdb-database-v200), but alternate GAMBIT databases can be provided.
+Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly and a sample name associated with the genome assembly. The default GAMBIT database used for taxonomic identification is the Prokaryotic [GAMBIT Database GTDB v2.0.1](#gambit-gtdb-database-v201), but alternate GAMBIT databases can be provided.
 
 !!! dna "Gambit_Query_PHB"
     More information on **GAMBIT_Query_PHB** is available [**here**](../workflows/standalone/gambit_query.md).
@@ -62,7 +62,7 @@ Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly
 
 Additionally, GAMBIT is also part of the **TheiaProk** and **TheiaEuk** collection of workflows, the first dedicated to the analysis of prokaryotic data, and the second data to mycotics. The TheiaProk or TheiaEuk most appropriate for your type of input data can be imported from the Dockstore links on the right.
 
-In both, GAMBIT is responsible for performing the taxonomic identification of the assembled sequences, which can trigger taxa-specific submodules for further genomic characterization. For TheiaProk, the default database is the Prokaryotic [GAMBIT Database GTDB v2.0.0](#gambit-gtdb-database-v200) and for TheiaEuk, the default database is the [Fungal GAMBIT Database v1.0.0](#gambit-fungal-database-v100).
+In both, GAMBIT is responsible for performing the taxonomic identification of the assembled sequences, which can trigger taxa-specific submodules for further genomic characterization. For TheiaProk, the default database is the Prokaryotic [GAMBIT Database GTDB v2.0.1](#gambit-gtdb-database-v201) and for TheiaEuk, the default database is the [Fungal GAMBIT Database v1.0.0](#gambit-fungal-database-v100).
 
 !!! dna "TheiaProk and TheiaEuk"
     More information on TheiaProk and TheiaEuk is available on the following pages:
@@ -171,6 +171,42 @@ Options:
 
 ### GAMBIT Prokaryotic Databases
 
+#### GAMBIT GTDB Database v2.0.1
+
+??? toggle "Database Details"
+
+    This database is a **patch update** to the v2.0.0 database. This database is identical to the v2.0.0 database **except that the following genomes were removed**. 
+
+        GCF_003977345.1
+        GCF_003977375.1
+        GCF_004025385.1
+        GCF_002249045.1
+        GCF_004402105.1
+        GCF_003977405.1
+        GCF_003985005.1
+        GCF_002246205.1
+        GCF_003977245.1
+        GCF_007197595.1
+        GCF_003977285.1
+        GCF_001063095.1
+        GCF_002248705.1
+
+    These genomes currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Echerichia coli* query genomes to *Shigella* species.
+
+    **Database Files**
+
+    These database files are hosted in a public Google bucket by Theiagen Genomics:
+
+    **GS URI (for [Terra.bio](https://terra.bio) usage):**
+
+    - `gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.1-20250505.gdb`
+    - `gs://gambit-databases-rp/2.0.0/gambit-signatures-2.0.1-20250505.gs`
+
+    **HTTPS URL (for local download):**
+
+    - <https://storage.cloud.google.com/gambit-databases-rp/2.0.0/gambit-metadata-2.0.1-20250505.gdb>
+    - <https://storage.cloud.google.com/gambit-databases-rp/2.0.0/gambit-signatures-2.0.1-20250505.gs>
+
 #### GAMBIT GTDB Database v2.0.0
 
 ??? toggle "Database Details"
@@ -241,7 +277,7 @@ Options:
     **HTTPS URL (for local download):**
 
     - <https://storage.cloud.google.com/gambit-databases-rp/1.3.0/gambit-metadata-1.3-231016.gdb>
-    - <https://storage.googleapis.com/gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs>
+    - <https://storage.cloud.google.com/gambit-databases-rp/1.3.0/gambit-signatures-1.3-231016.gs>
 
     **Taxa included in the GAMBIT database**
 
@@ -296,7 +332,7 @@ Options:
 #### GAMBIT RefSeq Curated Database v1.1.0
 
 ??? toggle "Database Details"
-    This database is a **patch update** to the RefSeq Curated v1.0.0 database. In addition to all of the species included in the v1.0.0 database below, this database replaces all species in the **Enterobacter, Legionella, and Vibrio genera** with the available genomes in RefSeq as of April 17th, 2023. 
+    This database is a **patch update** to the RefSeq Curated v1.0.0 database. In addition to all of the species included in the v1.0.0 database below, this database replaces all species in the **Enterobacter, Legionella, and Vibrio genera** with the available genomes in RefSeq as of April 17th, 2023.
 
     **Database Files**
 
@@ -362,7 +398,7 @@ Options:
 #### GAMBIT Fungal Database v1.0.0
 
 ??? toggle "Database Details"
-    The GAMBIT Fungal Database v1.0.0 database was constructed based on the available genomes in RefSeq/GenBank as of December 13th, 2024. For inclusion in the database, species were required to have at least two genomes in GenBank and at least one genome representing the species in RefSeq. 
+    The GAMBIT Fungal Database v1.0.0 database was constructed based on the available genomes in RefSeq/GenBank as of December 13th, 2024. For inclusion in the database, species were required to have at least two genomes in GenBank and at least one genome representing the species in RefSeq.
 
     1. Species with a diameter of zero were excluded;
     2. Species with three or fewer genomes and a diameter greater than 0.75 were excluded.
@@ -415,13 +451,13 @@ Options:
 
     **GS URI (for [Terra.bio](https://terra.bio) usage):**
 
-    - `gs://theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.db`
-    - `gs://theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.h5`
+    - `gs://gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.db`
+    - `gs://gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.h5`
 
     **HTTPS URL (for local download):**
 
-    - <https://storage.googleapis.com/theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.db>
-    - <https://storage.googleapis.com/theiagen-public-files/terra/theiaeuk_files/gambit/221130-theiagen-fungal-v0.2.h5>
+    - <https://storage.cloud.google.com/gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.db>
+    - <https://storage.cloud.google.com/gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.h5>
 
     **Taxa included in the GAMBIT database**
 

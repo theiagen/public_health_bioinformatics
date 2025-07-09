@@ -11,7 +11,7 @@ Since the documentation is built off of the `main` branch, it is highly recommen
 To test your documentation changes, you will need to have the following packages installed on your local VM:
 
 ```bash
-pip install mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox mkdocs-macros-plugin
+pip install mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox mkdocs-macros-plugin pandas
 ```
 
 Once installed, navigate to the top directory in PHB. The live preview server can be activated by running the following command:
@@ -32,7 +32,7 @@ Here are some VSCode Extensions can help you write and edit your markdown files 
 
 ### Helpful Websites
 
-- [Excel to Markdown Table](https://tableconvert.com/excel-to-markdown) - This website will convert an Excel table into markdown format, which can be copied and pasted into your markdown file.
+- [Excel to Markdown Table](https://tableconvert.com/excel-to-markdown) - This website will convert an Excel table into markdown format, which can be copied and pasted into your markdown file. Currently, we recommend using the `render_tsv_table()` macro (described below) to import TSV files, but this is a good alternative if you want to create a smaller table from scratch.
 - [Material for MkDocs Reference](https://squidfunk.github.io/mkdocs-material/reference/) - This is the official reference for the Material for MkDocs theme, which will help you understand how to use the theme's features.
 - [Dead Link Check](https://www.deadlinkchecker.com/) - This website will scan your website to ensure that all links are working correctly. This will only work on the deployed version of the documentation, not the local version.
 
@@ -64,13 +64,13 @@ The following language conventions should be followed when writing documentation
 - Callouts/Admonitions - These features are called "call-outs" in Notion, but are "Admonitions" in MkDocs. [I highly recommend referring to the Material for MkDocs documentation page on Admonitions to learn how best to use this feature](https://squidfunk.github.io/mkdocs-material/reference/admonitions/). Use the following syntax to create a callout:
 
     ```markdown
-    !!! note
+    !!! note "Title"
         This is a note. Observe I am indented with four spaces.
     ```
 
     Please see the [Admonition documentation](https://squidfunk.github.io/mkdocs-material/reference/admonitions/) for more information on how to change the title, enable toggles, and more.
 
-    The following custom callout types are supported _in addition to the standard admonitions supported by our theme_ [more information here](https://squidfunk.github.io/mkdocs-material/reference/admonitions/#supported-types):
+    The following custom callout types are supported _in addition to the standard admonitions supported by our theme_ [more information on the standard admonitions here](https://squidfunk.github.io/mkdocs-material/reference/admonitions/#supported-types):
   
     !!! dna
         This is a DNA admonition. Admire the cute green DNA emoji. You can create this with the `!!! dna` syntax.
@@ -149,7 +149,9 @@ A brief description of the documentation structure is as follows:
         - `files/` - Contains files that are used in the documentation. This may include example outputs or templates. For workflows that contain many files (such as TheiaValidate), it is recommended to create a subdirectory for the workflow.
         - `logos/` - Contains Theiagen logos and symbols used in the documentation.
         - `metadata_formatters/` - Contains the most up-to-date metadata formatters for our submission workflows.
-        - `new_workflow_template.md` - A template for adding a new workflow page to the documentation. You can see this template [here](../assets/new_workflow_template.md)
+        - `sops/` - Contains any Standard Operating Procedures (SOPs) that correspond to workflows in the documentation.
+        - `tables/` - Contains TSV files used to generate tables in the documentation. These are used to generate the overview tables for workflows, as well as the input and output tables for workflows.
+        - `new_workflow_template.md` - A template for adding a new workflow page to the documentation. [You can see this template here](../assets/new_workflow_template.md)
     - `common_text/` - Contains the Markdown files for common text used in the documentation. This includes task descriptions, workflow descriptions, and other common text. This is where you will put any new task descriptions or workflow descriptions that are not specific to a single workflow. This enables modular and reusable documentation.
     - `contributing/` - Contains the Markdown files for our contribution guides, such as this file
     - `javascripts/` - Contains JavaScript files used in the documentation.
@@ -165,31 +167,28 @@ A brief description of the documentation structure is as follows:
 ### Adding a Page for a New Workflow {% raw %} {#new-page} {% endraw %}
 
 !!! tip "Hey, we've got a template for that!"
-    Please see our template [here](../assets/new_workflow_template.md) for ease of use. Please remove all italicized text and replace with the appropriate information. If in doubt, please refer to existing documentation.
+    [Please see our template here](../assets/new_workflow_template.md) for ease of use. Please remove all italicized text and replace with the appropriate information. If in doubt, please refer to existing documentation.
 
 If you are adding a new workflow, there are a number of things to do in order to include the page in the documentation:
 
-1. Add a page with the title of the workflow to appropriate subdirectory in `docs/workflows/`. Please use [the template](../assets/new_workflow_template.md) found in the `assets/` folder.
+1. Add a page with the title of the workflow to appropriate subdirectory in `docs/workflows/`. Please use [the template](../assets/new_workflow_template.md) found in the `assets/` folder to ensure all information is added.
 2. Collect the following information for your new workflow:
      - Workflow Name - Link the name with a relative path to the workflow page in appropriate `docs/workflows/` subdirectory
      - Workflow Description - Brief description of the workflow
-     - Applicable Kingdom - Options: "Any taxa", "Bacteria", "Mycotics", "Viral"
+     - Applicable Kingdom - Link one of the following options to the corresponding heading in the `docs/workflows_overview/workflows_kingdom.md` file. Options: "Any taxa", "Bacteria", "Mycotics", "Viral"
      - Workflow Level (_on Terra_) - Options: "Sample-level", "Set-level", or ""
+     - Workflow Type - Link one of the following options to the corresponding heading in the `docs/workflows_overview/workflows_type.md` file. Options: "Data Import", "Genomic Characterization", "Phylogenetic Construction", "Phylogenetic Placement", "Public Data Sharing", "Exporting Data from Terra", or "Standalone"; this should match the location/naming of the workflow page in `docs/workflows/`.
      - Command-line compatibility - Options: "Yes", "No", and/or "Some optional features incompatible"
      - The version where the last known changes occurred (likely the upcoming version if it is a new workflow -- if the upcoming version number is currently unknown, please use **vX.X.X**)
-     - Link to the workflow on Dockstore (if applicable) - Workflow name linked to the information tab on Dockstore.
-3. Format this information in a table (see template).
-4. Copy the previously gathered information to ==**ALL THREE**== overview tables in `docs/workflows_overview/`:
-     - `workflows_alphabetically.md` - Add the workflow in the appropriate spot based on the workflow name.
-     - `workflows_kingdom.md` - Add the workflow in the appropriate spot(s) based on the kingdom(s) the workflow is applicable to. Make sure it is added alphabetically within the appropriate subsection(s).
-     - `workflows_type.md` - Add the workflow in the appropriate spot based on the workflow type. Make sure it is added alphabetically within the appropriate subsection.
-5. Copy the path to the workflow to ==**ALL**== of the appropriate locations in the `mkdocs.yml` file (under the `nav:` section) in the main directory of this repository. These should be the exact same spots as in the overview tables but without additional information. This ensures the workflow can be accessed from the navigation sidebar.
+     - Link to the workflow on Dockstore - Link the workflow name to the information tab on Dockstore.
+3. Format this information in the `assets/tables/all_workflows.tsv` file.
+4. Copy the path to the workflow documentation page to ==**ALL**== of the appropriate locations in the `mkdocs.yml` file (under the `nav:` section) in the main directory of this repository. This ensures the workflow can be accessed from the navigation sidebar.
 
 ### Macros
 
 The documentation uses a few macros to help with the formatting of the documentation. These macros are defined in `macros/main.py` and are used in the documentation files. The following macros are available:
 
-- `render_tsv_table()` - This macro is used to create a table from a TSV file. The TSV file should be in the `docs/assets/` directory and should be formatted as a table. The macro will automatically create a table from the TSV file and insert it into the documentation.
+- `render_tsv_table()` - This macro is used to create a table from a TSV file. The TSV file should be in the `docs/assets/tables` directory and should be formatted as a TAB-DELIMITED table. The macro will automatically create a table from the TSV file and insert it into the documentation.
 - `include_md()` - This macro is used to include a Markdown file in the documentation. The macro will automatically adjust the heading levels, resolve relative links, and support conditional and nested includes.
 
 Please see the [macros README](https://github.com/theiagen/public_health_bioinformatics/blob/main/macros/README.md) for more information.

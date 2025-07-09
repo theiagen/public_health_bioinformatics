@@ -8,7 +8,7 @@ workflow nextclade_addToRefTree {
       description: "Nextclade workflow that adds samples to a curated JSON tree from Augur."
     }
     input {
-      File assembly_fasta
+      Array[File] assembly_fastas
       File? input_ref
       File? gene_annotations_gff
       File? reference_tree_json
@@ -18,7 +18,7 @@ workflow nextclade_addToRefTree {
     }
     call nextclade_analysis.nextclade_add_ref { # nextclade analysis
       input:
-        genome_fasta = assembly_fasta,
+        genome_fastas = assembly_fastas,
         reference_tree_json = reference_tree_json,
         nextclade_pathogen_json = nextclade_pathogen_json,
         gene_annotations_gff = gene_annotations_gff,

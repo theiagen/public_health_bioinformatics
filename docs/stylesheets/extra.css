@@ -54,6 +54,32 @@
   position: relative;
 }
 
+/* dna_blue admonition*/
+:root {
+  --md-admonition-icon--dna_blue: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4V2m14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4V2m-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42l1.83-1.19M7 3h10v1l-.06.5H7.06L7 4V3m.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06l.51-.44m-2.03 3h9.88l.06.5v1H7v-1l.06-.5Z"/></svg>')
+}
+.md-typeset .admonition.dna_blue,
+.md-typeset details.dna_blue {
+  border-color: rgb(43, 120, 155);
+}
+.md-typeset .dna_blue > .admonition-title,
+.md-typeset .dna_blue > summary {
+  background-color: rgba(43, 120, 155, 0.1);
+}
+.md-typeset .dna_blue > .admonition-title::before,
+.md-typeset .dna_blue > summary::before {
+  background-color: rgb(43, 105, 155);
+  -webkit-mask-image: var(--md-admonition-icon--dna_blue);
+          mask-image: var(--md-admonition-icon--dna_blue);
+}
+.md-typeset .dna_blue > h5 {
+  /* this renders the heading readable by screen readers but does not display it */
+  margin: -1px; padding: 0; border: 0;
+  visibility: hidden;
+  margin-top: -15px; /* this makes the header in the TOC jump to the top of the admonition box */
+  position: relative;
+}
+
 /* technical details admonition */
 :root {
   --md-admonition-icon--techdetails: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 22v-2h3v-3h2v3.5c0 .39-.16.74-.46 1.04-.3.3-.65.46-1.04.46H17M7 22H3.5c-.39 0-.74-.16-1.04-.46-.3-.3-.46-.65-.46-1.04V17h2v3h3v2M17 2h3.5c.39 0 .74.16 1.04.46.3.3.46.65.46 1.04V7h-2V4h-3V2M7 2v2H4v3H2V3.5c0-.39.16-.74.46-1.04.3-.3.65-.46 1.04-.46H7m3.5 4C13 6 15 8 15 10.5c0 .88-.25 1.7-.69 2.4l3.26 3.26-1.41 1.41-3.26-3.26c-.7.44-1.52.69-2.4.69C8 15 6 13 6 10.5S8 6 10.5 6m0 2a2.5 2.5 0 0 0 0 5 2.5 2.5 0 0 0 0-5Z"/></svg>')
