@@ -45,8 +45,6 @@ workflow theiaviral_panel {
     Boolean skip_theiaviral_screen = false
     Int minimum_read_number = 1000
     Boolean call_metaviralspades = false
-    Int? assembly_cpu = 16
-    Int? assembly_memory = 64
   }  
   call versioning.version_capture {
     input:
@@ -114,8 +112,6 @@ workflow theiaviral_panel {
             skani_db = skani_db,
             checkv_db = checkv_db,
             genome_length = ncbi_identify.avg_genome_length,
-            assembly_cpu = assembly_cpu,
-            assembly_memory = assembly_memory,
             min_map_quality = min_map_quality,
             min_depth = min_depth,
             min_allele_freq = min_allele_freq,
