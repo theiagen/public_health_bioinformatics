@@ -55,6 +55,8 @@ task phylovalidate {
     except ValueError:
       with open('PHYLOVALIDATE', 'w') as out:
         out.write('FAIL')
+      with open('PHYLODISTANCE', 'w') as out:
+        out.write('NA')
     with open('TREE1_BIFURCATING', 'r') as f:
       tree1_bifurcating = f.read().strip()
     with open('TREE2_BIFURCATING', 'r') as f:
@@ -81,7 +83,7 @@ task phylovalidate {
     File summary_report = "phylo_distances.txt"
     File tree1_clean = "~{tree1}.clean"
     File tree2_clean = "~{tree2}.clean"
-    String phylovalidate_distance = read_float("PHYLOCOMPARE_DISTANCE")
+    String phylovalidate_distance = read_string("PHYLOCOMPARE_DISTANCE")
     String phylovalidate_validation = read_string("PHYLOVALIDATE")
     String phylovalidate_flag = read_string("PHYLOCOMPARE_FLAG")
   }
