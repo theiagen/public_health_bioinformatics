@@ -37,13 +37,13 @@ workflow phylocompare {
         max_distance = max_distance
   }
   output {
-    String phb_version = version_capture.phb_version
+    String phylocompare_phb_version = version_capture.phb_version
     String phylocompare_version = phylovalidate.phylocompare_version
     File phylocompare_report = phylovalidate.summary_report
-    String phylo_distance = phylovalidate.phylo_distance
-    String phylo_validation = phylovalidate.phylo_validation
-    String phylo_flag = phylovalidate.phylo_flag
-    File tree1_final = phylovalidate.tree1_clean
-    File tree2_final = phylovalidate.tree2_clean
+    String phylocompare_distance = phylovalidate.phylovalidate_distance
+    String phylocompare_validation = phylovalidate.phylovalidate_validation
+    String phylocompare_flag = phylovalidate.phylovalidate_flag
+    File phylocompare_tree1_clean = phylovalidate.tree1_clean
+    File phylocompare_tree2_clean = phylovalidate.tree2_clean
   }
 }

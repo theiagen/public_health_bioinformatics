@@ -11,10 +11,6 @@ task phylovalidate {
     Int memory = 4
     Int cpu = 1
   }
-  meta {
-    # added so that call caching is always turned off
-    volatile: true
-  }
   command <<<
     # set -euo pipefail to avoid silent failure
     set -euo pipefail
@@ -85,8 +81,8 @@ task phylovalidate {
     File summary_report = "phylo_distances.txt"
     File tree1_clean = "~{tree1}.clean"
     File tree2_clean = "~{tree2}.clean"
-    String phylo_distance = read_float("PHYLOCOMPARE_DISTANCE")
-    String phylo_validation = read_string("PHYLOVALIDATE")
-    String phylo_flag = read_string("PHYLOCOMPARE_FLAG")
+    String phylovalidate_distance = read_float("PHYLOCOMPARE_DISTANCE")
+    String phylovalidate_validation = read_string("PHYLOVALIDATE")
+    String phylovalidate_flag = read_string("PHYLOCOMPARE_FLAG")
   }
 }
