@@ -17,23 +17,23 @@ workflow phylocompare {
     input:
   }
   if (defined(outgroups) || midpoint == true) {
-    call task_root_phylo.root_phylo as root1 {
+    call task_root_phylo.root_phylo as root_tree1_task {
       input:
         tree = tree1,
         outgroups = outgroups,
         midpoint = midpoint
     }
-    call task_root_phylo.root_phylo as root2 {
+    call task_root_phylo.root_phylo as root_tree2_task {
       input:
         tree = tree2,
         outgroups = outgroups,
         midpoint = midpoint
     }
   }
-  call task_phylocompare.phylovalidate {
+  call task_phylocompare.phylovalidate as phylovalidate_task {
     input:
-        tree1 = select_first([root1.rooted_tree, tree1]),
-        tree2 = select_first([root2.rooted_tree, tree2]),
+        tree1 = select_first([root_tree1_task.rooted_tree, tree1]),
+        tree2 = select_first([root_tree2_task.rooted_tree, tree2]),
         max_distance = max_distance
   }
   output {
