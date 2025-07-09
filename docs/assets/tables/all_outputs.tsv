@@ -145,7 +145,7 @@ busco_docker	String	BUSCO docker image used	TheiaEuk_Illumina_PE, TheiaProk_FAST
 busco_report	File	A plain text summary of the results in BUSCO notation	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 busco_results	String	BUSCO results (see relevant toggle in [this block](https://theiagen.github.io/public_health_bioinformatics/latest/workflows/genomic_characterization/theiaprok/#post-assembly-tasks-performed-for-all-taxa))	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 busco_version	String	BUSCO software version used	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-bwa_version	String	Version of BWA software used	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaEuk_ONT
+bwa_version	String	Version of BWA software used	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaEuk_ONT, TheiaViral_Panel
 cauris_cladetyper_wf_analysis_date	String	Date of analysis	Cauris_Cladetyper
 cauris_cladetyper_wf_version	String	Version of PHB used for the analysis	Cauris_Cladetyper
 cg_pipeline_docker	String	Docker file used for running CG-Pipeline on cleaned reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -687,7 +687,7 @@ read_screen_clean	String	PASS or FAIL result from clean read screening; FAIL acc
 read_screen_clean_tsv	File	Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_ONT, TheiaEuk_ONT
 read_screen_raw	String	PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 read_screen_raw_tsv	File	Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
-read1	File	File containing the forward reads	BaseSpace_Fetch, SRA_Fetch
+read1	File	File containing the forward reads	BaseSpace_Fetch, SRA_Fetch, TheiaViral_Panel
 read1_aligned	File	Forward read file of only aligned reads	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 read1_clean	File	Forward read file after quality trimming and adapter removal	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaEuk_ONT
 read1_concatenated	File	Concatenated forward reads	Concatenate_Illumina_Lanes
@@ -1068,6 +1068,8 @@ Terra_2_ENA_analysis_date	String	Date the Terra to ENA workflow was run	Terra_2_
 Terra_2_ENA_version	String	Version of the Terra to ENA workflow used	Terra_2_ENA
 terra_table	File	Terra table file used for submission to ENA	Terra_2_ENAassembly_consensus_fasta	File	Final consensus assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT
 assembly_denovo_fasta	File	De novo assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT
+assembly_consensus_fasta	File	Final consensus assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+assembly_denovo_fasta	File	De novo assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
 bbduk_read1_clean	File	Clean forward reads after BBDuk processing	TheiaViral_Illumina_PE
 bbduk_read2_clean	File	Clean reverse reads after BBDuk processing	TheiaViral_Illumina_PE
 bwa_aligned_bai	File	BAM index file for reads aligned to reference	TheiaViral_Illumina_PE

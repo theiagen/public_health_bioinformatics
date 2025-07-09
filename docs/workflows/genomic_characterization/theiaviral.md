@@ -446,7 +446,6 @@ The TheiaViral workflows automatically activate taxa-specific sub-workflows afte
     - `read_mapping_meanbaseq`: The average mean mapping base quality is ideally as high as possible.
     - `read_mapping_meanmapq`: The average mean mapping alignment quality is ideally as high as possible.
     - `read_mapping_percentage_mapped_reads`: The percent of mapped reads is ideally 100% of the reads classified as the lineage of interest. Some unclassified reads may also map, which may indicate they were erroneously unclassified. Alternatively, these reads could have been erroneously mapped.
-
 ??? question "Why did the workflow complete without generating a consensus?" 
 
     TheiaViral is designed to "soft fail" when specific steps do not succeed due to input data quality. This means the workflow will be reported as successful, with an output that delineates the step that failed. If the workflow fails, please look for the following outputs in this order (sorted by timing of failure, latest first):
