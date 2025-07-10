@@ -130,12 +130,12 @@ def define_env(env):
           if index == 1:
             temp_add = f'**{row.get(h, "")}**'
             if temp_add is None:
-              raise TypeError(f"Row {index} in file {filename} has 'None' value for column '{h}'")
+              raise TypeError(f"Row '{row}' in file {filename} has 'None' value for column '{h}'")
             temp_list.append(temp_add)
           else:
             temp_add = row.get(h, '')
             if temp_add is None:
-              raise TypeError(f"Row {index} in file {filename} has 'None' value for column '{h}'")
+              raise TypeError(f"Row '{row}' in file {filename} has 'None' value for column '{h}'")
             temp_list.append(temp_add)
         md += ' | '.join(temp_list) + ' |\n'
       else:
