@@ -7,6 +7,6 @@
     !!! techdetails "PhyloCompare Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_root_phylo.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_phylocompare.wdl) |
+        | Task | [task_phylocompare.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_phylocompare.wdl) |
         | Software Source Code | <https://github.com/theiagen/theiaphylo> |
         | Software Documentation | [TheiaPhylo](https://github.com/theiagen/theiaphylo/blob/main/README.md) |
