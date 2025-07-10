@@ -2138,20 +2138,20 @@ morgana_magic	pangolin_disk_size	Int	Amount of storage (in GB) to allocate to th
 morgana_magic	pangolin_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
 morgana_magic	pangolin_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
 morgana_magic	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	
-phylocompare	tree1	File	Path to a newick-formatted phylogenetic tree in an accessible bucket		Required	PhyloCompare
-phylocompare	tree2	File	Path to a newick-formatted phylogenetic tree in an accessible bucket		Required	PhyloCompare
-phylocompare	max_distance	Float	Maximum tolerable distance in validation	0.0	Optional	PhyloCompare
-phylocompare	midpoint	Boolean	Root phylogenies at their midpoint	FALSE	Optional	PhyloCompare
-phylocompare	outgroups	String	Comma-delimited list of outgroup tip(s) to root upon. Multiple outgroup tips will root on the branch descended from their most recent common ancestor		Optional	PhyloCompare
-phylovalidate_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	PhyloCompare
-phylovalidate_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	PhyloCompare
-phylovalidate_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.7	Optional	PhyloCompare
-phylovalidate_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional 	PhyloCompare
-root_tree1_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	PhyloCompare
-root_tree1_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	PhyloCompare
-root_tree1_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.7	Optional	PhyloCompare
-root_tree1_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional 	PhyloCompare
-root_tree2_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	PhyloCompare
-root_tree2_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	PhyloCompare
-root_tree2_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.7	Optional	PhyloCompare
-root_tree2_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional 	PhyloCompare
+phylocompare	tree1	File	Path to a newick-formatted phylogenetic tree in an accessible bucket		Required	PhyloCompare	
+phylocompare	tree2	File	Path to a newick-formatted phylogenetic tree in an accessible bucket		Required	PhyloCompare	
+phylocompare	max_distance	Float	Maximum tolerable distance in validation	0.0	Optional	PhyloCompare	
+phylocompare	midpoint	Boolean	Root phylogenies at their midpoint	FALSE	Optional	PhyloCompare	
+phylocompare	outgroups	String	Comma-delimited list of outgroup tip(s) to root upon. Multiple outgroup tips will root on the branch descended from their most recent common ancestor		Optional	PhyloCompare	
+phylovalidate_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	PhyloCompare	
+phylovalidate_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	PhyloCompare	
+phylovalidate_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.7	Optional	PhyloCompare	
+phylovalidate_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional 	PhyloCompare	
+root_tree1_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	PhyloCompare	
+root_tree1_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	PhyloCompare	
+root_tree1_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.7	Optional	PhyloCompare	
+root_tree1_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional 	PhyloCompare	
+root_tree2_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	PhyloCompare	
+root_tree2_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	PhyloCompare	
+root_tree2_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.7	Optional	PhyloCompare	
+root_tree2_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional 	PhyloCompare	
