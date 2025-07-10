@@ -6,7 +6,7 @@ task root_phylo {
     String? outgroups
     Boolean? midpoint = false
     
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.7-dev"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.7"
     Int disk_size = 10
     Int memory = 4
     Int cpu = 1
