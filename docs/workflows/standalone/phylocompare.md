@@ -36,6 +36,12 @@ PhyloCompare can automatically root upon outgroup tips or the midpoint. If more 
 
 ///
 
+### All Tasks
+
+{{ include_md("common_text/root_phylo_task.md", indent=0) }}
+
+{{ include_md("common_text/phylocompare_task.md", indent=0) }}
+
 ## References
 
 > - Lin, Y., Rajan, V., Moret, B. M. E. (2012). A metric for phylogenetic trees based on matching. IEEE/ACM Transactions on Computational Biology and Bioinformatics, 9(4), 1014-22, <https://doi.org/10.1109/tcbb.2011.157>
