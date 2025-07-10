@@ -6,8 +6,8 @@ import "../../tasks/phylogenetic_inference/utilities/task_root_phylo.wdl" as tas
 
 workflow phylocompare {
   input {
-    String tree1
-    String tree2
+    File tree1
+    File tree2
 
     String? outgroups
     Boolean? midpoint = false

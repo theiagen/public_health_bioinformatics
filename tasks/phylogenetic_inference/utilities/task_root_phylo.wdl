@@ -15,7 +15,6 @@ task root_phylo {
     # added so that call caching is always turned off
     volatile: true
   }
-  File tree_base = basename(tree)
   command <<<
     # set -euo pipefail to avoid silent failure
     set -euo pipefail
@@ -30,12 +29,12 @@ task root_phylo {
     if [[ -n ${outgroups} ]]; then
       phyloutils ~{tree} \
         --outgroup ~{outgroups} \
-        --output ~{tree_base}.rooted.nwk
+        --output ~{tree}.rooted.nwk
     # root at the midpoint
     elif ~{midpoint}; then
       phyloutils ~{tree} \
         --midpoint \
-        --output ~{tree_base}.rooted.nwk
+        --output ~{tree}.rooted.nwk
     fi
   >>>
   runtime {
@@ -48,6 +47,6 @@ task root_phylo {
   }
   output {
     String theiaphylo_version = read_string("VERSION")
-    File rooted_tree = "~{tree_base}.rooted.nwk"
+    File rooted_tree = "~{tree}.rooted.nwk"
   }
 }
