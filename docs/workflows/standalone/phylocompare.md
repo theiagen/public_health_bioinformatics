@@ -6,7 +6,7 @@
 
 ## PhyloCompare_PHB
 
-PhyloCompare will calculate the distance between two _newick-formatted_ phylogenies as a measure of the difference in their topologies (tip and branch arrangement). A distance of 0 indicates the phylogenies have the same topology. PhyloCompare will validate if the phylogenies exceed an inputted maximum distance. The maximum distance is 0 by default.
+PhyloCompare will calculate the distance between two _newick-formatted_ phylogenies as a measure of the difference in their topologies (tip and branch arrangement). A distance of 0 indicates the phylogenies have the same topology. PhyloCompare will validate if the phylogenies exceed an inputted maximum distance. The maximum distance is 0 by default and the phylogenies must have the same tips.
 
 It is difficult to conceptualize what a non-0 distance indicates, so please see the following citations for their interpretation. For unrooted phylogenies, PhyloCompare calculates the [Lin-Rajan-Moret distance](https://pubmed.ncbi.nlm.nih.gov/22184263/), and for rooted phylogenies, PhyloCompare calculates the [matching cluster distance](https://link.springer.com/chapter/10.1007/978-3-319-94968-0_31#:~:text=Phylogenetic%20trees%20are%20fundamental%20to%20biology%20and,is%20an%20important%20problem%20in%20computational%20phylogenetics.). The Robinson-Foulds distance is also calculated, though it is disregarded in validation (see citations for criticism).
 
