@@ -11,6 +11,8 @@ task phylovalidate {
     Int memory = 4
     Int cpu = 1
   }
+  String tree1_cleaned = basename(tree1) + ".clean"
+  String tree2_cleaned = basename(tree2) + ".clean"
   command <<<
     # set -euo pipefail to avoid silent failure
     set -euo pipefail
@@ -18,19 +20,15 @@ task phylovalidate {
     # grab the phylocompare version
     phylocompare --version | tee VERSION
 
-    # set clean tree PATHs
-    tree1_clean=~{tree1}.clean
-    tree2_clean=~{tree2}.clean
-
     # clean the trees, report if they are bifurcating
-    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree1} > ${tree1_clean} 2> >(cut -f 2 -d ' ' > TREE1_BIFURCATING)
-    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree2} > ${tree2_clean} 2> >(cut -f 2 -d ' ' > TREE2_BIFURCATING)
+    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree1} > ~{tree1_cleaned} 2> >(cut -f 2 -d ' ' > TREE1_BIFURCATING)
+    Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree2} > ~{tree2_cleaned} 2> >(cut -f 2 -d ' ' > TREE2_BIFURCATING)
 
     # set bash variables to check them for population in conditionals
     max_distance=~{max_distance}
 
     # run comparison
-    phylocompare ${tree1_clean} ${tree2_clean} \
+    phylocompare ~{tree1_cleaned} ~{tree2_cleaned} \
         --debug
 
     # extract the distance
@@ -81,8 +79,8 @@ task phylovalidate {
   output {
     String phylocompare_version = read_string("VERSION")
     File summary_report = "phylo_distances.txt"
-    File tree1_clean = "~{tree1}.clean"
-    File tree2_clean = "~{tree2}.clean"
+    File tree1_clean = "~{tree1_cleaned}"
+    File tree2_clean = "~{tree2_cleaned}"
     String phylovalidate_distance = read_string("PHYLOCOMPARE_DISTANCE")
     String phylovalidate_validation = read_string("PHYLOVALIDATE")
     String phylovalidate_flag = read_string("PHYLOCOMPARE_FLAG")

@@ -11,7 +11,7 @@ task root_phylo {
     Int memory = 4
     Int cpu = 1
   }
-  File tree_rooted = basename(tree) + ".rooted.nwk"
+  String rooted_tree_path = basename(tree) + ".rooted.nwk"
   command <<<
     # set -euo pipefail to avoid silent failure
     set -euo pipefail
@@ -26,12 +26,12 @@ task root_phylo {
     if [[ -n ${outgroups} ]]; then
       phyloutils ~{tree} \
         --outgroup ~{outgroups} \
-        --output ~{tree_rooted}
+        --output ~{rooted_tree_path}
     # root at the midpoint
     elif ~{midpoint}; then
       phyloutils ~{tree} \
         --midpoint \
-        --output ~{tree_rooted}
+        --output ~{rooted_tree_path}
     fi
   >>>
   runtime {
@@ -44,6 +44,6 @@ task root_phylo {
   }
   output {
     String theiaphylo_version = read_string("VERSION")
-    File rooted_tree = "~{tree_rooted}"
+    File rooted_tree = "~{rooted_tree_path}"
   }
 }
