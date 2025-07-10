@@ -29,7 +29,11 @@ task phylovalidate {
 
     # run comparison
     phylocompare ~{tree1_cleaned} ~{tree2_cleaned} \
-        --debug
+        --debug \
+        2> PHYLOCOMPARE_STDERR
+
+    # extract errors
+    grep -Po "ERROR.*" PHYLOCOMPARE_STDERR > PHYLOCOMPARE_ERRORS
 
     # extract the distance
     tail -1 phylo_distances.txt | cut -f 2 | tr -d ' ' > PHYLOCOMPARE_DISTANCE
@@ -59,12 +63,16 @@ task phylovalidate {
       tree1_bifurcating = f.read().strip()
     with open('TREE2_BIFURCATING', 'r') as f:
       tree2_bifurcating = f.read().strip()
+
+    phylocompare_flags = []
     if tree1_bifurcating == 'FALSE' or tree2_bifurcating == 'FALSE':
-      with open('PHYLOCOMPARE_FLAG', 'a') as out:
-        out.write('polytomy')
-    else:
-      with open('PHYLOCOMPARE_FLAG', 'a') as out:
-        out.write('')
+      phylocompare_flags.append('polytomy')
+    with open('PHYLOCOMPARE_ERRORS', 'r') as f:
+      errors = set(x.strip() for x in f)
+      if "ERROR - Error comparing trees: number of edges must be equal" in errors:
+        phylocompare_flags.append('edge_count_mismatch')
+    with open('PHYLOCOMPARE_FLAG', 'w') as out:
+      out.write(', '.join(phylocompare_flags))
     CODE
     fi
   >>>
