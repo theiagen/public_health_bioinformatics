@@ -11,7 +11,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
-import "../../tasks/utilities/data_handling/task_extract_flu_segments.wdl" as extract_flu_segments_task
+import "../../tasks/species_typing/influenza/task_extract_flu_segments.wdl" as extract_flu_segments_task
 
 workflow theiacov_fasta {
   meta {
@@ -301,6 +301,16 @@ workflow theiacov_fasta {
     # Read & Assembly Metadata
     String seq_platform = seq_method
     String assembly_method = input_assembly_method
+    # Extracted flu segments
+    File? flu_segments_fasta_concatenated = extract_flu_segments.concatenated_fasta
+    File? flu_ha_segment_fasta = extract_flu_segments.seg_ha_assembly
+    File? flu_na_segment_fasta = extract_flu_segments.seg_na_assembly
+    File? flu_pa_segment_fasta = extract_flu_segments.seg_pa_assembly
+    File? flu_pb1_segment_fasta = extract_flu_segments.seg_pb1_assembly
+    File? flu_pb2_segment_fasta = extract_flu_segments.seg_pb2_assembly
+    File? flu_mp_segment_fasta = extract_flu_segments.seg_mp_assembly
+    File? flu_np_segment_fasta = extract_flu_segments.seg_np_assembly
+    File? flu_ns_segment_fasta = extract_flu_segments.seg_ns_assembly
     # Assembly QC - consensus assembly summary statistics
     Int number_N = consensus_qc.number_N
     Int assembly_length_unambiguous = consensus_qc.number_ATCG

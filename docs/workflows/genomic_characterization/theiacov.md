@@ -530,6 +530,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | Task | [task_genoflu.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/orthomyxoviridae/task_genoflu.wdl) |
         | Software Source Code | [GenoFLU on GitHub](https://github.com/USDA-VS/GenoFLU) |
 
+{{ include_md("common_text/extract_flu_segments_task.md", indent=4) }}
+
 ### Outputs
 
 === "TheiaCoV_Illumina_PE"
