@@ -30,10 +30,10 @@ task phylovalidate {
     # run comparison
     phylocompare ~{tree1_cleaned} ~{tree2_cleaned} \
         --debug \
-        2> PHYLOCOMPARE_STDERR
+        2> >(tee -a PHYLOCOMPARE_STDERR >&2)
 
-    # extract errors
-    grep -Po "ERROR.*" PHYLOCOMPARE_STDERR > PHYLOCOMPARE_ERRORS
+    # extract errors while maintaining a 0 exit code
+    grep -Po "ERROR.*" PHYLOCOMPARE_STDERR > PHYLOCOMPARE_ERRORS || true
 
     # extract the distance
     tail -1 phylo_distances.txt | cut -f 2 | tr -d ' ' > PHYLOCOMPARE_DISTANCE
@@ -44,7 +44,6 @@ task phylovalidate {
       tree1_bifurcating = f.read().strip()
     with open('TREE2_BIFURCATING', 'r') as f:
       tree2_bifurcating = f.read().strip()
-    # report flag
     phylocompare_flags = []
     if tree1_bifurcating == 'FALSE' or tree2_bifurcating == 'FALSE':
       phylocompare_flags.append('polytomy')
@@ -56,7 +55,7 @@ task phylovalidate {
       out.write(', '.join(phylocompare_flags))
     CODE
 
-    # run the comparison
+    # run the validation
     if [[ -z ${max_distance} ]]; then
       echo "NA" > PHYLOVALIDATE
     else
@@ -73,7 +72,7 @@ task phylovalidate {
         with open('PHYLOVALIDATE', 'w') as out:
           out.write('PASS')
     # indicates that the distance is not a float, likely a None
-    except:
+    except ValueError:
       with open('PHYLOCOMPARE_DISTANCE', 'w') as out:
         out.write('>0')
       with open('PHYLOVALIDATE', 'w') as out:
