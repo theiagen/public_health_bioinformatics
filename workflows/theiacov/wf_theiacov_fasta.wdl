@@ -63,6 +63,13 @@ workflow theiacov_fasta {
     String input_assembly_method
     # qc check parameters
     File? qc_check_table
+    # GenoFLU inputs
+    Float? genoflu_min_percent_identity
+    File? genoflu_cross_reference
+    Int? genoflu_cpu
+    Int? genoflu_disk_size
+    String? genoflu_docker
+    Int? genoflu_memory
     # vadr parameters
     Int? vadr_max_length
     Int? vadr_skip_length
@@ -168,6 +175,44 @@ workflow theiacov_fasta {
           disk_size = nextclade_output_parser_disk_size
       }
     }
+    # only run GenoFLU and custom nextclade dataset if the subtype is H5N1 and the clade is 2.3.4.4b as they are specific to this subtype and clade.
+    if (select_first([flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"]) == "H5N1" && select_first([nextclade_output_parser_flu_ha.nextclade_clade, ""]) == "2.3.4.4b") {
+      call genoflu_task.genoflu {
+        input:
+          assembly_fasta = assembly_fasta,
+          samplename = samplename,
+          min_percent_identity = genoflu_min_percent_identity,
+          cross_reference = genoflu_cross_reference,
+          cpu = genoflu_cpu,
+          disk_size = genoflu_disk_size,
+          docker = genoflu_docker,
+          memory = genoflu_memory
+      }
+      call set_organism_defaults.organism_parameters as set_flu_h5n1_nextclade_values {
+        input:
+          organism = organism,
+          flu_genoflu_genotype = genoflu.genoflu_genotype
+      }
+      if (genoflu.genoflu_genotype == "B3.13" || genoflu.genoflu_genotype == "D1.1" || defined(nextclade_custom_input_dataset)) {
+        call nextclade_task.nextclade_v3 as nextclade_flu_h5n1 {
+          input:
+            genome_fasta = select_first([extract_flu_segments.concatenated_fasta, assembly_fasta]),
+            custom_input_dataset = select_first([nextclade_custom_input_dataset, set_flu_h5n1_nextclade_values.nextclade_custom_dataset]),
+            docker = nextclade_docker_image,
+            cpu = nextclade_cpu,
+            memory = nextclade_memory,
+            disk_size = nextclade_disk_size
+        }
+        call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_h5n1 {
+          input:
+            nextclade_tsv = nextclade_flu_h5n1.nextclade_tsv,
+            organism = set_flu_h5n1_nextclade_values.standardized_organism,
+            docker = nextclade_output_parser_docker,
+            cpu = nextclade_output_parser_cpu,
+            memory = nextclade_output_parser_memory,
+            disk_size = nextclade_output_parser_disk_size
+        }
+      }
     }
   }
   call set_organism_defaults.organism_parameters {
@@ -196,13 +241,6 @@ workflow theiacov_fasta {
         samplename = samplename,
         fasta = assembly_fasta,
         docker = organism_parameters.pangolin_docker
-    }
-  }
-  if (select_first([flu_subtype, abricate_subtype, "N/A"]) == "H5N1") {
-    call genoflu_task.genoflu {
-      input:
-        assembly_fasta = assembly_fasta,
-        samplename = samplename
     }
   }
   if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "measles") {
@@ -308,6 +346,14 @@ workflow theiacov_fasta {
     String? nextclade_aa_dels_flu_na = nextclade_output_parser_flu_na.nextclade_aa_dels
     String? nextclade_clade_flu_na = nextclade_output_parser_flu_na.nextclade_clade
     String? nextclade_qc_flu_na = nextclade_output_parser_flu_na.nextclade_qc
+    # Nextclade H5N1 outputs
+    File? nextclade_json_flu_h5n1 = nextclade_flu_h5n1.nextclade_json
+    File? auspice_json_flu_h5n1 = nextclade_flu_h5n1.auspice_json
+    File? nextclade_tsv_flu_h5n1 = nextclade_flu_h5n1.nextclade_tsv
+    String? nextclade_aa_subs_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_aa_subs
+    String? nextclade_aa_dels_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_aa_dels
+    String? nextclade_clade_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_clade
+    String? nextclade_qc_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_qc
     # VADR Annotation QC
     File?  vadr_alerts_list = vadr.alerts_list
     File? vadr_feature_tbl_pass = vadr.feature_tbl_pass
