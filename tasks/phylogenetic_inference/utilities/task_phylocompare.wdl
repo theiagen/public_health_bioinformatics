@@ -46,7 +46,8 @@ task phylovalidate {
     try:
       # check if the distance is greater than the max distance
       with open('PHYLOCOMPARE_DISTANCE', 'r') as f:
-        observed_distance = float(f.read().strip())
+        observed_distance_str = f.read().strip()
+      observed_distance = float(observed_distance_str)
       if observed_distance > ~{max_distance}:
         with open('PHYLOVALIDATE', 'w') as out:
           out.write('FAIL')
@@ -55,6 +56,8 @@ task phylovalidate {
           out.write('PASS')
     # indicates that the distance is not a float, likely a None
     except ValueError:
+      with open('PHYLOCOMPARE_DISTANCE', 'w') as out:
+        out.write('NA')
       with open('PHYLOVALIDATE', 'w') as out:
         out.write('FAIL')
     with open('TREE1_BIFURCATING', 'r') as f:
