@@ -12,13 +12,15 @@ It is difficult to conceptualize what a non-0 distance indicates, so please see 
 
 PhyloCompare can automatically root upon outgroup tips or the midpoint. If more than a single outgroup tip is supplied then the phylogenies will be rooted on their most recent common ancestor branch. Input multiple outgroup tips as a comma-delimited list, e.g. "tip1,tip2". 
 
-!!! warning "Tree rooting"
+??? dna "Tree rooting"
     If no rooting options are supplied PhyloCompare will determine if the trees are rooted or unrooted. 
 
     `outgroups` and `midpoint` are incompatible options and the `outgroups` input will take precedence.
 
-!!! warning "`phylocompare_flag` errors"
+??? warning "`phylocompare_flag` errors"
     The `phylocompare_flag` flags information that may confound distance calculation; e.g. "polytomy" can confound tree comparison if there are non-0 length branches descending from a polytomy, which may lead to erroneous distances if tips are reported in different order. In other words, phylogenies with the same topology may be reported with a non-0 distance if the tips within a polytomy are rearranged within the tree file.
+
+    If flags are accompanied by a ">0" `phylocompare_distance`, then this indicates no distance was calculated; e.g. the "edge_count_mismatch" flag is raised when the number of edges differs between trees and a distance could not be calculated.  
 
 ### Inputs
 

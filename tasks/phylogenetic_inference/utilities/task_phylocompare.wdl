@@ -38,6 +38,24 @@ task phylovalidate {
     # extract the distance
     tail -1 phylo_distances.txt | cut -f 2 | tr -d ' ' > PHYLOCOMPARE_DISTANCE
 
+    # populate flag
+    python3 <<CODE
+    with open('TREE1_BIFURCATING', 'r') as f:
+      tree1_bifurcating = f.read().strip()
+    with open('TREE2_BIFURCATING', 'r') as f:
+      tree2_bifurcating = f.read().strip()
+    # report flag
+    phylocompare_flags = []
+    if tree1_bifurcating == 'FALSE' or tree2_bifurcating == 'FALSE':
+      phylocompare_flags.append('polytomy')
+    with open('PHYLOCOMPARE_ERRORS', 'r') as f:
+      errors = set(x.strip() for x in f)
+      if "ERROR - Error comparing trees: number of edges must be equal" in errors:
+        phylocompare_flags.append('edge_count_mismatch')
+    with open('PHYLOCOMPARE_FLAG', 'w') as out:
+      out.write(', '.join(phylocompare_flags))
+    CODE
+
     # run the comparison
     if [[ -z ${max_distance} ]]; then
       echo "NA" > PHYLOVALIDATE
@@ -57,23 +75,9 @@ task phylovalidate {
     # indicates that the distance is not a float, likely a None
     except ValueError:
       with open('PHYLOCOMPARE_DISTANCE', 'w') as out:
-        out.write('NA')
+        out.write('>0')
       with open('PHYLOVALIDATE', 'w') as out:
         out.write('FAIL')
-    with open('TREE1_BIFURCATING', 'r') as f:
-      tree1_bifurcating = f.read().strip()
-    with open('TREE2_BIFURCATING', 'r') as f:
-      tree2_bifurcating = f.read().strip()
-
-    phylocompare_flags = []
-    if tree1_bifurcating == 'FALSE' or tree2_bifurcating == 'FALSE':
-      phylocompare_flags.append('polytomy')
-    with open('PHYLOCOMPARE_ERRORS', 'r') as f:
-      errors = set(x.strip() for x in f)
-      if "ERROR - Error comparing trees: number of edges must be equal" in errors:
-        phylocompare_flags.append('edge_count_mismatch')
-    with open('PHYLOCOMPARE_FLAG', 'w') as out:
-      out.write(', '.join(phylocompare_flags))
     CODE
     fi
   >>>
