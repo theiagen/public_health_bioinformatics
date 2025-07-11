@@ -10,6 +10,7 @@ import "../../tasks/species_typing/orthomyxoviridae/task_genoflu.wdl" as genoflu
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
+import "../../tasks/utilities/data_handling/task_extract_flu_segments.wdl" as extract_flu_segments_task
 
 workflow theiacov_fasta {
   meta {
@@ -20,7 +21,7 @@ workflow theiacov_fasta {
     File assembly_fasta
     String organism = "sars-cov-2" # options: "sars-cov-2" "MPXV" "WNV" "flu" "rsv_a" "rsv_b
     # flu options
-    String flu_segment = "HA" # options: HA or NA
+    String? flu_segment # options: HA or NA. only required if input assembly is a singular flu segment.
     String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1" "H5N1"
     # optional reference information
     File? reference_genome
@@ -59,6 +60,14 @@ workflow theiacov_fasta {
         docker = abricate_flu_docker,
         disk_size = abricate_flu_disk_size
     }
+    # if flu_segment is not defined, assume the assembly is a full flu genome
+    if (! defined(flu_segment)) {
+      call extract_flu_segments_task.extract_flu_segments {
+        input:
+          assembly_fasta = assembly_fasta,
+          flu_type = abricate_flu.abricate_flu_type,
+          flu_subtype = select_first([flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"])
+      }
     }
   }
   call set_organism_defaults.organism_parameters {
