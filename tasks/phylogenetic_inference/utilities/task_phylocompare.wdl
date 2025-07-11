@@ -57,8 +57,6 @@ task phylovalidate {
     except ValueError:
       with open('PHYLOVALIDATE', 'w') as out:
         out.write('FAIL')
-      with open('PHYLOCOMPARE_DISTANCE', 'w') as out:
-        out.write('None')
     with open('TREE1_BIFURCATING', 'r') as f:
       tree1_bifurcating = f.read().strip()
     with open('TREE2_BIFURCATING', 'r') as f:
