@@ -247,7 +247,7 @@ workflow theiacov_fasta {
     if (organism_parameters.nextclade_dataset_tag != "NA") {
       call nextclade_task.nextclade_v3 {
         input:
-          genome_fasta = assembly_fasta,
+          genome_fasta = select_first([extract_flu_segments.concatenated_fasta, assembly_fasta]),
           dataset_name = organism_parameters.nextclade_dataset_name,
           dataset_tag = organism_parameters.nextclade_dataset_tag,
           docker = nextclade_docker_image,
