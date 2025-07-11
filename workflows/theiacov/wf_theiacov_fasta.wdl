@@ -10,6 +10,7 @@ import "../../tasks/species_typing/orthomyxoviridae/task_genoflu.wdl" as genoflu
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
+import "../utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 import "../../tasks/utilities/data_handling/task_extract_flu_segments.wdl" as extract_flu_segments_task
 
 workflow theiacov_fasta {
@@ -33,6 +34,17 @@ workflow theiacov_fasta {
     Int? abricate_flu_memory
     Int? abricate_flu_cpu
     Int? abricate_flu_disk_size
+    # flu antiviral substitutions subworkflow inputs
+    File? flu_h1_ha_ref
+    File? flu_h3_ha_ref
+    File? flu_n1_na_ref
+    File? flu_n2_na_ref
+    File? flu_pa_ref
+    File? flu_pb1_ref
+    File? flu_pb2_ref
+    File? flu_h1n1_m2_ref
+    File? flu_h3n2_m2_ref
+    String? antiviral_aa_subs
     # nextclade inputs (default SC2)
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
@@ -68,6 +80,28 @@ workflow theiacov_fasta {
           flu_type = abricate_flu.abricate_flu_type,
           flu_subtype = select_first([flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"])
       }
+      call flu_antiviral.flu_antiviral_substitutions {
+        input:
+          na_segment_assembly = extract_flu_segments.seg_na_assembly,
+          ha_segment_assembly = extract_flu_segments.seg_ha_assembly,
+          pa_segment_assembly = extract_flu_segments.seg_pa_assembly,
+          pb1_segment_assembly = extract_flu_segments.seg_pb1_assembly,
+          pb2_segment_assembly = extract_flu_segments.seg_pb2_assembly,
+          mp_segment_assembly = extract_flu_segments.seg_mp_assembly,
+          abricate_flu_subtype = select_first([flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"]),
+          irma_flu_subtype = select_first([flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"]),
+          antiviral_aa_subs = antiviral_aa_subs,
+          flu_h1_ha_ref = flu_h1_ha_ref,
+          flu_h3_ha_ref = flu_h3_ha_ref,
+          flu_n1_na_ref = flu_n1_na_ref,
+          flu_n2_na_ref = flu_n2_na_ref,
+          flu_pa_ref = flu_pa_ref,
+          flu_pb1_ref = flu_pb1_ref,
+          flu_pb2_ref = flu_pb2_ref,
+          flu_h1n1_m2_ref = flu_h1n1_m2_ref,
+          flu_h3n2_m2_ref = flu_h3n2_m2_ref
+      }
+    }
     }
   }
   call set_organism_defaults.organism_parameters {
@@ -205,5 +239,19 @@ workflow theiacov_fasta {
     String? genoflu_genotype = genoflu.genoflu_genotype
     String? genoflu_all_segments = genoflu.genoflu_all_segments
     File? genoflu_output_tsv = genoflu.genoflu_output_tsv
+    # Flu Antiviral Substitution Outputs
+    String? flu_A_315675_resistance = flu_antiviral_substitutions.flu_A_315675_resistance
+    String? flu_amantadine_resistance = flu_antiviral_substitutions.flu_amantadine_resistance
+    String? flu_compound_367_resistance = flu_antiviral_substitutions.flu_compound_367_resistance
+    String? flu_favipiravir_resistance = flu_antiviral_substitutions.flu_favipiravir_resistance
+    String? flu_fludase_resistance = flu_antiviral_substitutions.flu_fludase_resistance
+    String? flu_L_742_001_resistance = flu_antiviral_substitutions.flu_L_742_001_resistance
+    String? flu_laninamivir_resistance = flu_antiviral_substitutions.flu_laninamivir_resistance
+    String? flu_peramivir_resistance = flu_antiviral_substitutions.flu_peramivir_resistance
+    String? flu_pimodivir_resistance = flu_antiviral_substitutions.flu_pimodivir_resistance
+    String? flu_rimantadine_resistance = flu_antiviral_substitutions.flu_rimantadine_resistance
+    String? flu_oseltamivir_resistance = flu_antiviral_substitutions.flu_oseltamivir_resistance
+    String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
+    String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
   }
 }
