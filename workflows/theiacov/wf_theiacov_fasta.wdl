@@ -46,8 +46,18 @@ workflow theiacov_fasta {
     File? flu_h3n2_m2_ref
     String? antiviral_aa_subs
     # nextclade inputs (default SC2)
+    String? nextclade_docker_image
+    Int? nextclade_cpu
+    Int? nextclade_memory
+    Int? nextclade_disk_size
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
+    File? nextclade_custom_input_dataset
+    # nextclade output parser inputs
+    String? nextclade_output_parser_docker
+    Int? nextclade_output_parser_cpu
+    Int? nextclade_output_parser_memory
+    Int? nextclade_output_parser_disk_size
     # sequencing values
     String seq_method
     String input_assembly_method
@@ -102,6 +112,62 @@ workflow theiacov_fasta {
           flu_h3n2_m2_ref = flu_h3n2_m2_ref
       }
     }
+    # attempt to run nextclade for flu NA segment
+    call set_organism_defaults.organism_parameters as set_flu_na_nextclade_values {
+      input:
+        organism = organism,
+        flu_segment = "NA",
+        flu_subtype = select_first([flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"])
+    }
+    if (set_flu_na_nextclade_values.nextclade_dataset_tag != "NA") {
+      call nextclade_task.nextclade_v3 as nextclade_flu_na {
+        input:
+          genome_fasta = select_first([extract_flu_segments.seg_na_assembly, assembly_fasta]),
+          dataset_name = set_flu_na_nextclade_values.nextclade_dataset_name,
+          dataset_tag = set_flu_na_nextclade_values.nextclade_dataset_tag,
+          docker = nextclade_docker_image,
+          cpu = nextclade_cpu,
+          memory = nextclade_memory,
+          disk_size = nextclade_disk_size
+      }
+      call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_na {
+        input:
+          nextclade_tsv = nextclade_flu_na.nextclade_tsv,
+          organism = set_flu_na_nextclade_values.standardized_organism,
+          docker = nextclade_output_parser_docker,
+          cpu = nextclade_output_parser_cpu,
+          memory = nextclade_output_parser_memory,
+          disk_size = nextclade_output_parser_disk_size
+      }
+    }
+    # attempt to run nextclade for flu HA segment
+    call set_organism_defaults.organism_parameters as set_flu_ha_nextclade_values {
+      input:
+        organism = organism,
+        flu_segment = "HA",
+        flu_subtype = select_first([flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"])
+    }
+    if (set_flu_ha_nextclade_values.nextclade_dataset_tag != "NA") {
+      call nextclade_task.nextclade_v3 as nextclade_flu_ha {
+        input:
+          genome_fasta = select_first([extract_flu_segments.seg_ha_assembly, assembly_fasta]),
+          dataset_name = set_flu_ha_nextclade_values.nextclade_dataset_name,
+          dataset_tag = set_flu_ha_nextclade_values.nextclade_dataset_tag,
+          docker = nextclade_docker_image,
+          cpu = nextclade_cpu,
+          memory = nextclade_memory,
+          disk_size = nextclade_disk_size
+      }
+      call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_ha {
+        input:
+          nextclade_tsv = nextclade_flu_ha.nextclade_tsv,
+          organism = set_flu_ha_nextclade_values.standardized_organism,
+          docker = nextclade_output_parser_docker,
+          cpu = nextclade_output_parser_cpu,
+          memory = nextclade_output_parser_memory,
+          disk_size = nextclade_output_parser_disk_size
+      }
+    }
     }
   }
   call set_organism_defaults.organism_parameters {
@@ -145,12 +211,20 @@ workflow theiacov_fasta {
         input:
           genome_fasta = assembly_fasta,
           dataset_name = organism_parameters.nextclade_dataset_name,
-          dataset_tag = organism_parameters.nextclade_dataset_tag
+          dataset_tag = organism_parameters.nextclade_dataset_tag,
+          docker = nextclade_docker_image,
+          cpu = nextclade_cpu,
+          memory = nextclade_memory,
+          disk_size = nextclade_disk_size
       }
       call nextclade_task.nextclade_output_parser {
         input:
           nextclade_tsv = nextclade_v3.nextclade_tsv,
-          organism = organism_parameters.standardized_organism
+          organism = organism_parameters.standardized_organism,
+          docker = nextclade_output_parser_docker,
+          cpu = nextclade_output_parser_cpu,
+          memory = nextclade_output_parser_memory,
+          disk_size = nextclade_output_parser_disk_size
       }
     }
   }
@@ -216,6 +290,24 @@ workflow theiacov_fasta {
     String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
+    # Nextclade HA outputs
+    File? nextclade_json_flu_ha = nextclade_flu_ha.nextclade_json
+    File? auspice_json_flu_ha =  nextclade_flu_ha.auspice_json
+    File? nextclade_tsv_flu_ha = nextclade_flu_ha.nextclade_tsv
+    String? nextclade_ds_tag_flu_ha = set_flu_ha_nextclade_values.nextclade_dataset_tag
+    String? nextclade_aa_subs_flu_ha = nextclade_output_parser_flu_ha.nextclade_aa_subs
+    String? nextclade_aa_dels_flu_ha = nextclade_output_parser_flu_ha.nextclade_aa_dels
+    String? nextclade_clade_flu_ha = nextclade_output_parser_flu_ha.nextclade_clade
+    String? nextclade_qc_flu_ha = nextclade_output_parser_flu_ha.nextclade_qc
+    # Nextclade NA outputs
+    File? nextclade_json_flu_na = nextclade_flu_na.nextclade_json
+    File? auspice_json_flu_na = nextclade_flu_na.auspice_json
+    File? nextclade_tsv_flu_na = nextclade_flu_na.nextclade_tsv
+    String? nextclade_ds_tag_flu_na = set_flu_na_nextclade_values.nextclade_dataset_tag
+    String? nextclade_aa_subs_flu_na = nextclade_output_parser_flu_na.nextclade_aa_subs
+    String? nextclade_aa_dels_flu_na = nextclade_output_parser_flu_na.nextclade_aa_dels
+    String? nextclade_clade_flu_na = nextclade_output_parser_flu_na.nextclade_clade
+    String? nextclade_qc_flu_na = nextclade_output_parser_flu_na.nextclade_qc
     # VADR Annotation QC
     File?  vadr_alerts_list = vadr.alerts_list
     File? vadr_feature_tbl_pass = vadr.feature_tbl_pass
