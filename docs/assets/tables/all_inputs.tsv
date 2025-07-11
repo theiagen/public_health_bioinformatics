@@ -193,7 +193,7 @@ gisaid_upload	gisaid_credentials	File	[EITHER] A tab-delimited file containing t
 Terra_2_NCBI	submit_to_production	Boolean	Used to indicate whether or not the workflow should submit to NCBI's production environment. If set to true, then a Production submission will occur. Otherwise, by default (false), it will perform a Test submission.	FALSE	Optional, Required	Terra_2_NCBI	
 usher	mutation_annotated_tree_pb	File	Required for organisms other than sars-cov-2, mpox, RSV-A or RSV-B. This is the mutation-annotated global phylogeny upon which your samples will be placed		Optional, Required	Usher	
 usher	reference_genome	File	Required for organisms other than sars-cov-2, mpox, RSV-A or RSV-B. This is the reference genome used to determine your sequence's mutations to accurately place the sample on the phylogeny.		Optional, Required	Usher	
-workflow name	flu_segment	String	Influenza genome segment being analyzed. Options: "HA" or "NA".	HA	Optional, Required	TheiaCoV_FASTA	
+theiacov_fasta	flu_segment	String	Influenza genome segment being analyzed. Only required if input assembly is a singular flu segment. Options: "HA" or "NA".		Optional, Required	TheiaCoV_FASTA	
 abricate	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 abricate	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 abricate	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
@@ -562,12 +562,12 @@ find_files	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Dorado_Base
 find_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Dorado_Basecalling	
 find_files	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine	Optional	Dorado_Basecalling	
 find_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Dorado_Basecalling	
-flu_track	abricate_flu_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
-flu_track	abricate_flu_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
-flu_track	abricate_flu_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727	Optional	TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
-flu_track	abricate_flu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
-flu_track	abricate_flu_min_percent_coverage	Int	Minimum DNA percent coverage	60	Optional	TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
-flu_track	abricate_flu_min_percent_identity	Int	Minimum DNA percent identity	70	Optional	TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
+flu_track	abricate_flu_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
+flu_track	abricate_flu_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
+flu_track	abricate_flu_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
+flu_track	abricate_flu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
+flu_track	abricate_flu_min_percent_coverage	Int	Minimum DNA percent coverage	60	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
+flu_track	abricate_flu_min_percent_identity	Int	Minimum DNA percent identity	70	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
 flu_track	antiviral_aa_subs	String	Additional list of antiviral resistance associated amino acid substitutions of interest to be searched against those called on the sample segments. They take the format of :, e.g. NA:A26V		Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
 flu_track	assembly_metrics_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_Illumina_PE	flu
 flu_track	assembly_metrics_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_Illumina_PE	flu
@@ -2138,3 +2138,34 @@ morgana_magic	pangolin_disk_size	Int	Amount of storage (in GB) to allocate to th
 morgana_magic	pangolin_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
 morgana_magic	pangolin_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	flu
 morgana_magic	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	
+theiacov_fasta	abricate_flu_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	abricate_flu_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	abricate_flu_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727	Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	abricate_flu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	abricate_flu_min_percent_coverage	Int	Minimum DNA percent coverage	60	Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	abricate_flu_min_percent_identity	Int	Minimum DNA percent identity	70	Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	flu_h1_ha_ref	File	Internal component, do not modify		Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	flu_h1n1_m2_ref	File	Internal component, do not modify		Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	flu_h3_ha_ref	File	Internal component, do not modify		Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	flu_h3n2_m2_ref	File	Internal component, do not modify		Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	flu_n1_na_ref	File	Internal component, do not modify		Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	flu_n2_na_ref	File	Internal component, do not modify		Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	flu_pa_ref	File	Internal component, do not modify		Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	flu_pb1_ref	File	Internal component, do not modify		Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	flu_pb2_ref	File	Internal component, do not modify		Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	antiviral_aa_subs	String	Additional list of antiviral resistance associated amino acid substitutions of interest to be searched against those called on the sample segments. They take the format of :, e.g. NA:A26V		Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	nextclade_docker_image	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5"	Optional	TheiaCoV_FASTA	MPXV, flu, rsv_a, rsv_b, sars-cov-2, measles
+theiacov_fasta	nextclade_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_FASTA	MPXV, flu, rsv_a, rsv_b, sars-cov-2, measles
+theiacov_fasta	nextclade_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_FASTA	MPXV, flu, rsv_a, rsv_b, sars-cov-2, measles
+theiacov_fasta	nextclade_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_FASTA	MPXV, flu, rsv_a, rsv_b, sars-cov-2, measles
+theiacov_fasta	nextclade_custom_input_dataset	File	For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.	Defaults are GenoFLU Genotype specific. Please find these default values here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	nextclade_output_parser_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_FASTA	MPXV, flu, rsv_a, rsv_b, sars-cov-2, measles
+theiacov_fasta	nextclade_output_parser_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_FASTA	MPXV, flu, rsv_a, rsv_b, sars-cov-2, measles
+theiacov_fasta	nextclade_output_parser_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim	Optional	TheiaCoV_FASTA	MPXV, flu, rsv_a, rsv_b, sars-cov-2, measles
+theiacov_fasta	nextclade_output_parser_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_FASTA	MPXV, flu, rsv_a, rsv_b, sars-cov-2, measles
+theiacov_fasta	genoflu_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	genoflu_cross_reference	File	An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py		Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	genoflu_disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	genoflu_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.06	Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	genoflu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_FASTA	flu
+theiacov_fasta	genoflu_min_percent_identity	Float	Percent identity threshold used for calling matches for each genome segment that make up the final GenoFlu genotype	98	Optional	TheiaCoV_FASTA	flu
