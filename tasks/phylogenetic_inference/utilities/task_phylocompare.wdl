@@ -73,7 +73,7 @@ task phylovalidate {
         with open('PHYLOVALIDATE', 'w') as out:
           out.write('PASS')
     # indicates that the distance is not a float, likely a None
-    except ValueError:
+    except:
       with open('PHYLOCOMPARE_DISTANCE', 'w') as out:
         out.write('>0')
       with open('PHYLOVALIDATE', 'w') as out:
