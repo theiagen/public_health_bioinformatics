@@ -7,7 +7,7 @@ task ts_mlst {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-12-31"
+    String docker = "quay.io/jvhagey/mlst@sha256:e24cec23ab7300dbb5daf4f4ccd1e4aef9d3befcedae8a14c156cba0bbd952b1"
     Int disk_size = 50
     Int cpu = 1
     Int memory = 2
@@ -113,10 +113,10 @@ task ts_mlst {
 
             cat ~{samplename}_1.tsv ~{samplename}_2.tsv >> ~{samplename}_ts_mlst.tsv
             # Check for the presence of novel alleles for the secondary scheme, concatentation will fail if both dont exist
-            if [[ -f "~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta" && -f "~{samplename}_novel_mlst_alleles.fasta" ]]; then
-              cat ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta > ~{samplename}_novel_mlst_alleles.fasta
-            elif [[ -f "~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta" ]]; then
-              mv ~{samplename}_novel_mlst_alleles_${secondary_scheme}.fasta ~{samplename}_novel_mlst_alleles.fasta
+            if [[ -f "~{samplename}_novel_mlst_alleles_2.fasta" && -f "~{samplename}_novel_mlst_alleles.fasta" ]]; then
+              cat ~{samplename}_novel_mlst_alleles_2.fasta ~{samplename}_novel_mlst_alleles.fasta > ~{samplename}_novel_mlst_alleles.fasta
+            elif [[ -f "~{samplename}_novel_mlst_alleles_2.fasta" ]]; then
+              mv ~{samplename}_novel_mlst_alleles_2.fasta ~{samplename}_novel_mlst_alleles.fasta
             else
               echo "No novel alleles found for concatenation"
             fi
