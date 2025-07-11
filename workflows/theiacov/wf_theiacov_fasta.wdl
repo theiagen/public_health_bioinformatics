@@ -25,6 +25,13 @@ workflow theiacov_fasta {
     # optional reference information
     File? reference_genome
     Int? genome_length
+    # Abricate inputs
+    Int? abricate_flu_min_percent_identity
+    Int? abricate_flu_min_percent_coverage
+    String? abricate_flu_docker
+    Int? abricate_flu_memory
+    Int? abricate_flu_cpu
+    Int? abricate_flu_disk_size
     # nextclade inputs (default SC2)
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
@@ -40,19 +47,25 @@ workflow theiacov_fasta {
     Int? vadr_memory
   }
   # only run abricate if user sets organism = "flu" AND if flu_subtype is unknown/not set by user
-  if (!defined(flu_subtype) && organism == "flu") {
+  if (organism == "flu") {
     call abricate.abricate_flu {
       input:
         assembly = assembly_fasta,
-        samplename = samplename
+        samplename = samplename,
+        min_percent_identity = abricate_flu_min_percent_identity,
+        min_percent_coverage = abricate_flu_min_percent_coverage,
+        cpu = abricate_flu_cpu,
+        memory = abricate_flu_memory,
+        docker = abricate_flu_docker,
+        disk_size = abricate_flu_disk_size
     }
-  String abricate_subtype = abricate_flu.abricate_flu_subtype
+    }
   }
   call set_organism_defaults.organism_parameters {
     input:
       organism = organism,
       flu_segment = flu_segment,
-      flu_subtype = select_first([flu_subtype, abricate_subtype, "N/A"]),
+      flu_subtype = select_first([flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"]),
       reference_genome = reference_genome,
       genome_length_input = genome_length,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
