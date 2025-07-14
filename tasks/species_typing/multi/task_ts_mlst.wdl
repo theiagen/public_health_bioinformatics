@@ -18,7 +18,8 @@ task ts_mlst {
     # --mincov [n.n]    DNA %cov to report partial allele at all [?] (default '10')
     # --minscore [n.n]  Minumum score out of 100 to match a scheme (when auto --scheme) (default '50')
     Boolean nopath = true
-    Boolean run_secondary_scheme = true # If true, will run secondary scheme if primary scheme is ecoli or abaumannii.
+    Boolean run_secondary_scheme = false # If true, will run secondary scheme if primary scheme is ecoli or abaumannii.
+    Boolean scheme_overide = false # If true, will exclude common mis-characterizations for E. coli from the scheme list; aeromonas, cfreundii, senterica
     String? scheme
     String? taxonomy
     Float? min_percent_identity
@@ -32,9 +33,10 @@ task ts_mlst {
     
     #create output header
     echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst.tsv
-
-    # If taxon is E. coli, common mis-characterizations will be excluded from the scheme list
-    if [[ "~{taxonomy}" == "Escherichia" || "~{taxonomy}" == "Escherichia coli" || "~{taxonomy}" = "Escherichia_coli" ]]; then
+    # If taxon is E. coli and scheme_override is true, common mis-characterizations will be excluded from the scheme list
+    # This is due to issues with aeromonas, cfreundii, and senterica hits being categorized first when the sample is really an E. coli
+    if [[ "~{taxonomy}" == "Escherichia" || "~{taxonomy}" == "Escherichia coli" || "~{taxonomy}" = "Escherichia_coli" && ~{scheme_overide} == true ]]; then
+      echo "Scheme Override set to true"
       echo "Taxonomy is ~{taxonomy}, excluding common mis-characterizations for E. coli from the scheme list; aeromonas, cfreundii, senterica"
       mlst \
         --threads ~{cpu} \
@@ -48,6 +50,7 @@ task ts_mlst {
         ~{assembly} \
         >> ~{samplename}_ts_mlst.tsv
     else 
+      echo "Scheme Override set to false, using default scheme list, mis characterizations involving aeromonas, cfreundii, senterica can occur when running on E. coli"
       mlst \
         --threads ~{cpu} \
         ~{true="--nopath" false="" nopath} \
@@ -60,7 +63,10 @@ task ts_mlst {
         >> ~{samplename}_ts_mlst.tsv
     fi
 
+    # There are multiple schemes of importance for some taxa, e.g. E. coli and A. baumannii,
+    # so a secondary scheme may be run if the user specifies to do so. 
     if [[ ~{run_secondary_scheme} == true ]]; then
+      echo "Secondary scheme run is true, running secondary scheme if applicable."
       #create output header
       echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst_secondary_scheme.tsv
       mlst --list > SCHEME_LIST
