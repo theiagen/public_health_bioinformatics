@@ -45,7 +45,7 @@ task ts_mlst {
         ~{'--minid ' + min_percent_identity} \
         ~{'--mincov ' + min_percent_coverage} \
         ~{'--minscore ' + minscore} \
-        --exclude 'aeromonas,cfreundii,senterica'
+        --exclude 'aeromonas,cfreundii,senterica' \
         --novel ~{samplename}_novel_mlst_alleles.fasta \
         ~{assembly} \
         >> ~{samplename}_ts_mlst.tsv
