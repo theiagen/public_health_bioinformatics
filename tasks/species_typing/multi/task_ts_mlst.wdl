@@ -70,6 +70,7 @@ task ts_mlst {
       #create output header
       echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst_secondary_scheme.tsv
       mlst --list > SCHEME_LIST
+      echo "Scheme List: $(cat SCHEME_LIST)"
       scheme=$(head -n 2 ~{samplename}_ts_mlst.tsv | tail -n 1 | cut -f2)
       echo "Scheme Initial Run: $scheme"
       secondary_scheme=$(if [[ "$scheme" == "ecoli_achtman_4" ]]; then
@@ -85,7 +86,7 @@ task ts_mlst {
         fi
       )
       echo "Secondary Scheme: $secondary_scheme"
-      if grep -q "$secondary_scheme" SCHEME_LIST; then
+      if grep -qw "$secondary_scheme" SCHEME_LIST; then
         mlst \
           --threads ~{cpu} \
           ~{true="--nopath" false="" nopath} \
@@ -122,7 +123,7 @@ task ts_mlst {
         echo "$pubmlst_scheme_secondary" | tee PUBMLST_SECONDARY_SCHEME
         echo "$allelic_profile_secondary" | tee SECONDARY_ALLELIC_PROFILE.txt
       else
-        echo "Secondary scheme $secondary_scheme not found in scheme list: $scheme_list"
+        echo "Secondary scheme $secondary_scheme not found in scheme list"
         echo "NA" | tee PREDICTED_SECONDARY_MLST
         echo "NA" | tee PUBMLST_SECONDARY_SCHEME
         echo "NA" | tee SECONDARY_ALLELIC_PROFILE.txt
