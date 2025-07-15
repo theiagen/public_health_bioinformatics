@@ -27,17 +27,17 @@ task cauris_cladetyper {
   command <<<
     gambit --version | tee VERSION
 
-    # create gambit signature file for five clades + input assembly
-    gambit signatures create -o my-signatures.h5 -k ~{kmer_size} -p ATGAC ~{ref_clade1} ~{ref_clade2} ~{ref_clade3} ~{ref_clade4} ~{ref_clade5} ~{assembly_fasta}
-    # calculate distance matrix for all six signatures
+    # create gambit signature file for six clades + input assembly
+    gambit signatures create -o my-signatures.h5 -k ~{kmer_size} -p ATGAC ~{ref_clade1} ~{ref_clade2} ~{ref_clade3} ~{ref_clade4} ~{ref_clade5} ~{ref_clade6} ~{assembly_fasta}
+    # calculate distance matrix for all seven signatures
     gambit dist --qs my-signatures.h5 --square -o ~{samplename}_matrix.csv
 
     # parse matrix to see closest clade to input assembly
-    ## sort by 7th column (distance against input sequence)
+    ## sort by 8th column (distance against input sequence)
     ## take top three columns: header, header, top hit
     ## take bottom of these three rows (top hit)
     ## grab only file name (top_clade)
-    top_clade=$(sort -k7 -t ',' "~{samplename}_matrix.csv" | head -3 | tail -n-1 | awk -F',' '{print$1}')
+    top_clade=$(sort -k8 -t ',' "~{samplename}_matrix.csv" | head -3 | tail -n-1 | awk -F',' '{print$1}')
 
     if [ "${top_clade}" == "~{ref_clade1}" ] ; then
       echo "~{ref_clade1_annotated}" > CLADEREF
