@@ -4,9 +4,9 @@
     The Cauris_Cladetyper Workflow for _Candidozyma auris_ employs GAMBIT for taxonomic identification, comparing whole genome sequencing data against reference databases to accurately classify _Candidozyma auris_ isolates.
 <!-- endif -->
 
-    A custom GAMBIT database is created using five clade-specific _Candidozyma auris_ reference genomes. Sequences undergo genomic signature comparison against this database, which then enables assignment to one of the five _Candidozyma auris_ clades (Clade I to Clade V) based on sequence similarity and phylogenetic relationships. This integrated approach ensures precise clade assignments, crucial for understanding the genetic diversity and epidemiology of _Candidozyma auris_.
+    A custom GAMBIT database is created using six clade-specific _Candidozyma auris_ reference genomes. Sequences undergo genomic signature comparison against this database, which then enables assignment to one of the six _Candidozyma auris_ clades (Clade I to Clade VI) based on sequence similarity and phylogenetic relationships. This integrated approach ensures precise clade assignments, crucial for understanding the genetic diversity and epidemiology of _Candidozyma auris_.
 
-    See more information on the reference information for the five clades below:
+    See more information on the reference information for the six clades below:
 
     | Clade | Genome Accession | Assembly Name | Strain | BioSample Accession |
     |---|---|---|---|---|
@@ -15,6 +15,11 @@
     | Clade III | GCA_002775015.1 | Cand_auris_B11221_V1 | B11221 | SAMN05379609 |
     | Clade IV | GCA_003014415.1 | Cand_auris_B11243 | B11243 | SAMN05379619 |
     | Clade V | GCA_016809505.1 | ASM1680950v1 | IFRC2087 | SAMN11570381 |
+    | Clade VI | GCA_032714025.1 | ASM3271402v1 | F1580 | SAMN36753179 |
+
+    !!! warning "Clade VI annotation"
+        
+        Clade VI does not have an available reference genome annotation at the time of adding the reference genome into Cladetyping. While Clade VI assignment is functional, downstream variant calling is not currently possible without an annotation. Users may provide a close relative annotation, such as Clade IV, though it is unknown if Clade VI variants can reliably be called with respect to such a reference. 
 
     !!! techdetails "Cauris_Cladetyper Technical Details"
 
