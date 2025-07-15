@@ -21,6 +21,8 @@ task cauris_cladetyper {
     String ref_clade4_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff"
     File ref_clade5 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta"
     String ref_clade5_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff"
+    File ref_clade6 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta"
+    String? ref_clade6_annotated
     }
   command <<<
     gambit --version | tee VERSION
@@ -52,6 +54,14 @@ task cauris_cladetyper {
     elif [ "${top_clade}" == "~{ref_clade5}" ] ; then
       echo "~{ref_clade5_annotated}" > CLADEREF
       echo "Clade5" > CLADETYPE
+    elif [ "${top_clade}" == "~{ref_clade6}" ] ; then
+      # clade 6 may not be defined
+      if [ -z "~{ref_clade6_annotated}" ] ; then
+        echo "None" > CLADEREF
+      else
+        echo "~{ref_clade6_annotated}" > CLADEREF
+      fi
+      echo "Clade6" > CLADETYPE
     else
       echo "None" > CLADEREF
       echo "" > CLADETYPE
