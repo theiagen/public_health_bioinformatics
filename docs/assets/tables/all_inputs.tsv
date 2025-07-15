@@ -373,6 +373,8 @@ cladetyper	ref_clade4	File	The reference assembly for clade 4	gs://theiagen-publ
 cladetyper	ref_clade4_annotated	String	The path to the annotated reference for clade 4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff	Optional	Cauris_Cladetyper	
 cladetyper	ref_clade5	File	The reference assembly for clade 5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta	Optional	Cauris_Cladetyper	
 cladetyper	ref_clade5_annotated	String	The path to the annotated reference for clade 5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff	Optional	Cauris_Cladetyper	
+cladetyper	ref_clade6	File	The reference assembly for clade 6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	Cauris_Cladetyper	
+cladetyper	ref_clade6_annotated	String	The path to the annotated reference for clade 6		Optional	Cauris_Cladetyper	
 clair3_variants_ont	clair3_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Clair3_Variants_ONT	
 clair3_variants_ont	clair3_disable_phasing	Boolean	Disable whatshap phasing	TRUE	Optional	Clair3_Variants_ONT	
 clair3_variants_ont	clair3_disk_size	Int	Disk size in GB	100	Optional	Clair3_Variants_ONT	
