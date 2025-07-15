@@ -35,7 +35,7 @@ task ts_mlst {
     echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst.tsv
     # If taxon is E. coli and scheme_override is true, common mis-characterizations will be excluded from the scheme list
     # This is due to issues with aeromonas, cfreundii, and senterica hits being categorized first when the sample is really an E. coli
-    if [[ ("~{taxonomy}" == "Escherichia" || "~{taxonomy}" == "Escherichia coli" || "~{taxonomy}" = "Escherichia_coli") && "~{scheme_override}" == true ]]; then
+    if [[ ("~{taxonomy}" == "Escherichia" || "~{taxonomy}" == "Escherichia coli" || "~{taxonomy}" = "Escherichia_coli") && "~{scheme_override}" == "true" ]]; then
       echo "Scheme Override set to true"
       echo "Taxonomy is ~{taxonomy}, excluding common mis-characterizations for E. coli from the scheme list; aeromonas, cfreundii, senterica"
       mlst \
@@ -65,7 +65,7 @@ task ts_mlst {
 
     # There are multiple schemes of importance for some taxa, e.g. E. coli and A. baumannii,
     # so a secondary scheme may be run if the user specifies to do so. 
-    if [[ ~{run_secondary_scheme} == true ]]; then
+    if [[ "~{run_secondary_scheme}" == "true" ]]; then
       echo "Secondary scheme run is true, running secondary scheme if applicable."
       #create output header
       echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst_secondary_scheme.tsv
