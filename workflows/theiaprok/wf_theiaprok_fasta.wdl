@@ -121,7 +121,7 @@ workflow theiaprok_fasta {
         samplename = samplename,
         taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
         run_secondary_scheme = mlst_run_secondary_scheme,
-        scheme_overide = mlst_scheme_override
+        scheme_override = mlst_scheme_override
     }
     if (genome_annotation == "prokka") {
       call prokka_task.prokka {
