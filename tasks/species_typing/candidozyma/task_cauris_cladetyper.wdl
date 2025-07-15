@@ -66,7 +66,6 @@ task cauris_cladetyper {
       echo "None" > CLADEREF
       echo "" > CLADETYPE
     fi
-
   >>>
   output {
     String gambit_version = read_string("VERSION")
