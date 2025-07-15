@@ -35,7 +35,7 @@ task ts_mlst {
     echo -e "Filename\tPubMLST_Scheme_name\tSequence_Type_(ST)\tAllele_IDs" > ~{samplename}_ts_mlst.tsv
     # If taxon is E. coli and scheme_override is true, common mis-characterizations will be excluded from the scheme list
     # This is due to issues with aeromonas, cfreundii, and senterica hits being categorized first when the sample is really an E. coli
-    if [[ ("~{taxonomy}" == "Escherichia" || "~{taxonomy}" == "Escherichia coli" || "~{taxonomy}" = "Escherichia_coli") && ~{scheme_override} == true ]]; then
+    if [[ ("~{taxonomy}" == "Escherichia" || "~{taxonomy}" == "Escherichia coli" || "~{taxonomy}" = "Escherichia_coli") && "~{scheme_override}" == true ]]; then
       echo "Scheme Override set to true"
       echo "Taxonomy is ~{taxonomy}, excluding common mis-characterizations for E. coli from the scheme list; aeromonas, cfreundii, senterica"
       mlst \
