@@ -6221,7 +6221,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#bacteria">Bacteria</a></td>
-<td>v3.1.0</td>
+<td>vX.X.X</td>
 <td>Some optional features incompatible, Yes</td>
 <td>Sample-level</td>
 </tr>
@@ -9402,6 +9402,22 @@
 <td>Int</td>
 <td>User-specified expected genome length to be used in genome statistics calculations</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>mlst_run_secondary_scheme</strong></td>
+<td>Boolean</td>
+<td>If set to true, the workflow will run a secondary scheme for E. coli and A. baumannii.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>mlst_scheme_override</strong></td>
+<td>Boolean</td>
+<td>If set to true when GAMBIT taxon is E. coli the workflow will exclude aeromonas, cfreundii, and senterica schemes as they can cause mischaracterization</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12740,6 +12756,22 @@
 <td>Int</td>
 <td>User-specified expected genome length to be used in genome statistics calculations</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>mlst_run_secondary_scheme</strong></td>
+<td>Boolean</td>
+<td>If set to true, the workflow will run a secondary scheme for E. coli and A. baumannii.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>mlst_scheme_override</strong></td>
+<td>Boolean</td>
+<td>If set to true when GAMBIT taxon is E. coli the workflow will exclude aeromonas, cfreundii, and senterica schemes as they can cause mischaracterization</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16394,6 +16426,22 @@
 </tr>
 <tr>
 <td>workflow name</td>
+<td><strong>mlst_run_secondary_scheme</strong></td>
+<td>Boolean</td>
+<td>If set to true, the workflow will run a secondary scheme for E. coli and A. baumannii.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>mlst_scheme_override</strong></td>
+<td>Boolean</td>
+<td>If set to true when GAMBIT taxon is E. coli the workflow will exclude aeromonas, cfreundii, and senterica schemes as they can cause mischaracterization</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>workflow name</td>
 <td><strong>originating_lab</strong></td>
 <td>String</td>
 <td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
@@ -19084,6 +19132,22 @@
 </tr>
 <tr>
 <td>workflow name</td>
+<td><strong>mlst_run_secondary_scheme</strong></td>
+<td>Boolean</td>
+<td>If set to true, the workflow will run a secondary scheme for E. coli and A. baumannii.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>workflow name</td>
+<td><strong>mlst_scheme_override</strong></td>
+<td>Boolean</td>
+<td>If set to true when GAMBIT taxon is E. coli the workflow will exclude aeromonas, cfreundii, and senterica schemes as they can cause mischaracterization</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>workflow name</td>
 <td><strong>originating_lab</strong></td>
 <td>String</td>
 <td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
@@ -20931,7 +20995,7 @@
 <details class="toggle">
 <summary>Taxa with multiple MLST schemes</summary>
 <p>As default, the MLST tool automatically detects the genome's taxa to select the MLST scheme. </p>
-<p>Some taxa have multiple MLST schemes, e.g. the <em>Escherichia</em> and Leptospira genera,  <em>Acinetobacter baumannii, Clostridium difficile</em> and <em>Streptococcus thermophilus.</em> Only one scheme will be used by default.</p>
+<p>Some taxa have multiple MLST schemes, e.g. the <em>Escherichia</em> and Leptospira genera,  <em>Acinetobacter baumannii, Clostridium difficile</em> and <em>Streptococcus thermophilus.</em> Only one scheme will be used by default. This can be changed for <em>Escherichia</em> and <em>Acionetobacter baumannii</em> by using <code>run_secondary_scheme</code> set to <code>true</code> allowing for MLST to run the other scheme associated with those organisms and output those results. </p>
 <p>Users may specify the scheme as an optional workflow input using the <code>scheme</code> variable of the <code>ts_mlst</code> task. Available schemes are listed <a href="https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab">here</a> and the scheme name should be provided in quotation marks ("...").</p>
 <p>If results from multiple MLST schemes are required for the same sample, TheiaProk can be run multiple times specifying non-default schemes. After the first run, output attributes for the workflow (i.e. output column names) must be amended to prevent results from being overwritten. Despite re-running the whole workflow, unmodified tasks will return cached outputs, preventing redundant computation.</p>
 </details>
@@ -24516,6 +24580,11 @@
 <td>FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk</td>
 </tr>
 <tr>
+<td>ts_mlst_predicted_secondary_st</td>
+<td>String</td>
+<td>ST predicted by secondary MLST run</td>
+</tr>
+<tr>
 <td>ts_mlst_predicted_st</td>
 <td>String</td>
 <td>ST predicted by MLST</td>
@@ -24526,9 +24595,24 @@
 <td>PubMLST scheme used byMLST</td>
 </tr>
 <tr>
+<td>ts_mlst_pubmlst_secondary_scheme</td>
+<td>String</td>
+<td>PubMLST secondary scheme used by MLST</td>
+</tr>
+<tr>
 <td>ts_mlst_results</td>
 <td>File</td>
 <td>TSV report with detailed MLST profile, including <a href="https://github.com/tseemann/mlst#missing-data">https://github.com/tseemann/mlst#missing-data</a></td>
+</tr>
+<tr>
+<td>ts_mlst_secondary_allelic_profile</td>
+<td>String</td>
+<td>Profile of alleles predicted by secondary MLST run</td>
+</tr>
+<tr>
+<td>ts_mlst_secondary_novel_alleles</td>
+<td>File</td>
+<td>FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk, from the secondary scheme run</td>
 </tr>
 <tr>
 <td>ts_mlst_version</td>
@@ -26366,6 +26450,11 @@
 <td>FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk</td>
 </tr>
 <tr>
+<td>ts_mlst_predicted_secondary_st</td>
+<td>String</td>
+<td>ST predicted by secondary MLST run</td>
+</tr>
+<tr>
 <td>ts_mlst_predicted_st</td>
 <td>String</td>
 <td>ST predicted by MLST</td>
@@ -26376,9 +26465,24 @@
 <td>PubMLST scheme used byMLST</td>
 </tr>
 <tr>
+<td>ts_mlst_pubmlst_secondary_scheme</td>
+<td>String</td>
+<td>PubMLST secondary scheme used by MLST</td>
+</tr>
+<tr>
 <td>ts_mlst_results</td>
 <td>File</td>
 <td>TSV report with detailed MLST profile, including <a href="https://github.com/tseemann/mlst#missing-data">https://github.com/tseemann/mlst#missing-data</a></td>
+</tr>
+<tr>
+<td>ts_mlst_secondary_allelic_profile</td>
+<td>String</td>
+<td>Profile of alleles predicted by secondary MLST run</td>
+</tr>
+<tr>
+<td>ts_mlst_secondary_novel_alleles</td>
+<td>File</td>
+<td>FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk, from the secondary scheme run</td>
 </tr>
 <tr>
 <td>ts_mlst_version</td>
@@ -27681,6 +27785,11 @@
 <td>FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk</td>
 </tr>
 <tr>
+<td>ts_mlst_predicted_secondary_st</td>
+<td>String</td>
+<td>ST predicted by secondary MLST run</td>
+</tr>
+<tr>
 <td>ts_mlst_predicted_st</td>
 <td>String</td>
 <td>ST predicted by MLST</td>
@@ -27691,9 +27800,24 @@
 <td>PubMLST scheme used byMLST</td>
 </tr>
 <tr>
+<td>ts_mlst_pubmlst_secondary_scheme</td>
+<td>String</td>
+<td>PubMLST secondary scheme used by MLST</td>
+</tr>
+<tr>
 <td>ts_mlst_results</td>
 <td>File</td>
 <td>TSV report with detailed MLST profile, including <a href="https://github.com/tseemann/mlst#missing-data">https://github.com/tseemann/mlst#missing-data</a></td>
+</tr>
+<tr>
+<td>ts_mlst_secondary_allelic_profile</td>
+<td>String</td>
+<td>Profile of alleles predicted by secondary MLST run</td>
+</tr>
+<tr>
+<td>ts_mlst_secondary_novel_alleles</td>
+<td>File</td>
+<td>FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk, from the secondary scheme run</td>
 </tr>
 <tr>
 <td>ts_mlst_version</td>
@@ -28996,6 +29120,11 @@
 <td>FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk</td>
 </tr>
 <tr>
+<td>ts_mlst_predicted_secondary_st</td>
+<td>String</td>
+<td>ST predicted by secondary MLST run</td>
+</tr>
+<tr>
 <td>ts_mlst_predicted_st</td>
 <td>String</td>
 <td>ST predicted by MLST</td>
@@ -29006,9 +29135,24 @@
 <td>PubMLST scheme used byMLST</td>
 </tr>
 <tr>
+<td>ts_mlst_pubmlst_secondary_scheme</td>
+<td>String</td>
+<td>PubMLST secondary scheme used by MLST</td>
+</tr>
+<tr>
 <td>ts_mlst_results</td>
 <td>File</td>
 <td>TSV report with detailed MLST profile, including <a href="https://github.com/tseemann/mlst#missing-data">https://github.com/tseemann/mlst#missing-data</a></td>
+</tr>
+<tr>
+<td>ts_mlst_secondary_allelic_profile</td>
+<td>String</td>
+<td>Profile of alleles predicted by secondary MLST run</td>
+</tr>
+<tr>
+<td>ts_mlst_secondary_novel_alleles</td>
+<td>File</td>
+<td>FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk, from the secondary scheme run</td>
 </tr>
 <tr>
 <td>ts_mlst_version</td>

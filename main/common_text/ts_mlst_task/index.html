@@ -5254,7 +5254,7 @@
 <details class="toggle">
 <summary>Taxa with multiple MLST schemes</summary>
 <p>As default, the MLST tool automatically detects the genome's taxa to select the MLST scheme. </p>
-<p>Some taxa have multiple MLST schemes, e.g. the <em>Escherichia</em> and Leptospira genera,  <em>Acinetobacter baumannii, Clostridium difficile</em> and <em>Streptococcus thermophilus.</em> Only one scheme will be used by default.</p>
+<p>Some taxa have multiple MLST schemes, e.g. the <em>Escherichia</em> and Leptospira genera,  <em>Acinetobacter baumannii, Clostridium difficile</em> and <em>Streptococcus thermophilus.</em> Only one scheme will be used by default. This can be changed for <em>Escherichia</em> and <em>Acionetobacter baumannii</em> by using <code>run_secondary_scheme</code> set to <code>true</code> allowing for MLST to run the other scheme associated with those organisms and output those results. </p>
 <p>Users may specify the scheme as an optional workflow input using the <code>scheme</code> variable of the <code>ts_mlst</code> task. Available schemes are listed <a href="https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab">here</a> and the scheme name should be provided in quotation marks ("...").</p>
 <p>If results from multiple MLST schemes are required for the same sample, TheiaProk can be run multiple times specifying non-default schemes. After the first run, output attributes for the workflow (i.e. output column names) must be amended to prevent results from being overwritten. Despite re-running the whole workflow, unmodified tasks will return cached outputs, preventing redundant computation.</p>
 </details>
@@ -5306,7 +5306,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 9, 2025 17:03:48 UTC">2025-05-09</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="July 15, 2025 18:30:49 UTC">2025-07-15</span>
   </span>
 
     
