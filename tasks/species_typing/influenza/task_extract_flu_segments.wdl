@@ -29,49 +29,53 @@ task extract_flu_segments {
       fi
     done
 
+    # set to PASS by default
+    echo "PASS" | tee SEGMENT_STATUS
+
     # make sure there are 8 segments, if not, exit with an error
     segment_count=$(wc -l < temp_segments/lengths.tsv)
     if [ "$segment_count" -ne 8 ]; then
-      echo "ERROR: Expected 8 segments, but found $segment_count. Please check the input assembly."
-      exit 1
-    fi
-
-    # sort by length in descending order (largest to smallest)
-    sort -k2,2nr temp_segments/lengths.tsv > temp_segments/sorted_lengths.tsv
-
-    # make array of segment names based on flu type and order from largest to smallest
-    if [[ ~{flu_type} == "Type_A" ]]; then
-      segment_array=("PB2" "PB1" "PA" "HA" "NP" "NA" "MP" "NS")
-    elif [[ ~{flu_type} == "Type_B" ]]; then
-      segment_array=("PB1" "PB2" "PA" "HA" "NP" "NA" "MP" "NS")
+      echo "ERROR: Expected 8 segments, but found $segment_count. Please check the input assembly." >&2
+      echo "FAIL" | tee SEGMENT_STATUS
     else
-      echo "ERROR: Invalid flu type specified. Please use 'Type_A' or 'Type_B'."
-      exit 1
+      # sort by length in descending order (largest to smallest)
+      sort -k2,2nr temp_segments/lengths.tsv > temp_segments/sorted_lengths.tsv
+
+      # make array of segment names based on flu type and order from largest to smallest
+      if [[ ~{flu_type} == "Type_A" ]]; then
+        segment_array=("PB2" "PB1" "PA" "HA" "NP" "NA" "MP" "NS")
+      elif [[ ~{flu_type} == "Type_B" ]]; then
+        segment_array=("PB1" "PB2" "PA" "HA" "NP" "NA" "MP" "NS")
+      else
+        echo "ERROR: Invalid flu type specified. Please use 'Type_A' or 'Type_B'."
+        exit 1
+      fi
+
+      # copy each segment to a new file with the corresponding name
+      i=0
+      while IFS=$'\t' read -r file seq_length; do
+        echo "Processing file: $file as segment ${segment_array[i]} with length $seq_length"
+        segment_name="~{assembly_name}_~{flu_subtype}_${segment_array[i]}.fasta"
+        cp "$file" "${segment_name}"
+        i=$((i+1))
+      done < temp_segments/sorted_lengths.tsv
+
+      # remove all newlines from the input multi FASTA file to create a single line FASTA file and remove all headers and create a new headerline
+      grep -v "^>" ~{assembly_fasta} | tr -d '\n' | sed '1i >~{assembly_name}_concatenated' > ~{assembly_name}_concatenated.fasta
+      echo "" >> ~{assembly_name}_concatenated.fasta
     fi
-
-    # copy each segment to a new file with the corresponding name
-    i=0
-    while IFS=$'\t' read -r file seq_length; do
-      echo "Processing file: $file as segment ${segment_array[i]} with length $seq_length"
-      segment_name="~{assembly_name}_~{flu_subtype}_${segment_array[i]}.fasta"
-      cp "$file" "${segment_name}"
-      i=$((i+1))
-    done < temp_segments/sorted_lengths.tsv
-
-    # remove all newlines from the input multi FASTA file to create a single line FASTA file and remove all headers and create a new headerline
-    grep -v "^>" ~{assembly_fasta} | tr -d '\n' | sed '1i >~{assembly_name}_concatenated' > ~{assembly_name}_concatenated.fasta
-    echo "" >> ~{assembly_name}_concatenated.fasta
   >>>
   output {
-    File concatenated_fasta = "~{assembly_name}_concatenated.fasta"
-    File seg_ha_assembly = "${assembly_name}_${flu_subtype}_HA.fasta"
-    File seg_na_assembly = "${assembly_name}_${flu_subtype}_NA.fasta"
-    File seg_pa_assembly = "${assembly_name}_${flu_subtype}_PA.fasta"
-    File seg_pb1_assembly = "${assembly_name}_${flu_subtype}_PB1.fasta"
-    File seg_pb2_assembly = "${assembly_name}_${flu_subtype}_PB2.fasta"
-    File seg_mp_assembly = "${assembly_name}_${flu_subtype}_MP.fasta"
-    File seg_np_assembly = "${assembly_name}_${flu_subtype}_NP.fasta"
-    File seg_ns_assembly = "${assembly_name}_${flu_subtype}_NS.fasta"
+    File? concatenated_fasta = "~{assembly_name}_concatenated.fasta"
+    File? seg_ha_assembly = "${assembly_name}_${flu_subtype}_HA.fasta"
+    File? seg_na_assembly = "${assembly_name}_${flu_subtype}_NA.fasta"
+    File? seg_pa_assembly = "${assembly_name}_${flu_subtype}_PA.fasta"
+    File? seg_pb1_assembly = "${assembly_name}_${flu_subtype}_PB1.fasta"
+    File? seg_pb2_assembly = "${assembly_name}_${flu_subtype}_PB2.fasta"
+    File? seg_mp_assembly = "${assembly_name}_${flu_subtype}_MP.fasta"
+    File? seg_np_assembly = "${assembly_name}_${flu_subtype}_NP.fasta"
+    File? seg_ns_assembly = "${assembly_name}_${flu_subtype}_NS.fasta"
+    String segment_status = read_string("SEGMENT_STATUS")
   }
   runtime {
     docker: "~{docker}"

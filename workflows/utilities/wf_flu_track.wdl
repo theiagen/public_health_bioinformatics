@@ -182,7 +182,7 @@ workflow flu_track {
   }
   # if IRMA was run successfully, run the flu_antiviral substitutions task 
   # this block must be placed beneath the previous block because it is used in this subworkflow
-  if (defined(irma.irma_plurality_consensus_assemblies) || (defined(assembly_fasta) && !defined(flu_segment))) {
+  if (defined(irma.irma_plurality_consensus_assemblies) || (extract_flu_segments.segment_status == "PASS")) {
     call flu_antiviral.flu_antiviral_substitutions {
       input:
         na_segment_assembly = select_first([irma.seg_na_assembly_padded, extract_flu_segments.seg_na_assembly]),
@@ -205,7 +205,7 @@ workflow flu_track {
         flu_h3n2_m2_ref = flu_h3n2_m2_ref
     }
   }
-  if ((defined(irma.seg_ha_assembly) || defined(extract_flu_segments.seg_ha_assembly) || (defined(assembly_fasta) && select_first([flu_segment]) == "HA")) && ! defined(do_not_run_flu_ha_nextclade)) {
+  if ((defined(irma.seg_ha_assembly) || defined(extract_flu_segments.seg_ha_assembly) || (defined(assembly_fasta) && select_first([flu_segment, ""]) == "HA")) && ! defined(do_not_run_flu_ha_nextclade)) {
     call nextclade_task.nextclade_v3 as nextclade_flu_ha {
       input:
         genome_fasta = select_first([irma.seg_ha_assembly, extract_flu_segments.seg_ha_assembly, assembly_fasta]),
@@ -226,7 +226,7 @@ workflow flu_track {
         disk_size = nextclade_output_parser_disk_size
     }
   }
-  if ((defined(irma.seg_na_assembly) || defined(extract_flu_segments.seg_na_assembly) || (defined(assembly_fasta) && select_first([flu_segment]) == "NA")) && ! defined(do_not_run_flu_na_nextclade)) {
+  if ((defined(irma.seg_na_assembly) || defined(extract_flu_segments.seg_na_assembly) || (defined(assembly_fasta) && select_first([flu_segment, ""]) == "NA")) && ! defined(do_not_run_flu_na_nextclade)) {
     call nextclade_task.nextclade_v3 as nextclade_flu_na {
       input:
         genome_fasta = select_first([irma.seg_na_assembly, extract_flu_segments.seg_na_assembly, assembly_fasta]),
