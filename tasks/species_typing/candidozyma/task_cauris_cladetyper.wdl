@@ -25,6 +25,8 @@ task cauris_cladetyper {
     String? ref_clade6_annotated
     }
   command <<<
+    set -euo pipefail
+
     gambit --version | tee VERSION
 
     # create gambit signature file for six clades + input assembly
