@@ -125,6 +125,7 @@ workflow merlin_magic {
     File? cladetyper_ref_clade5_annotated
     File? cladetyper_ref_clade6
     File? cladetyper_ref_clade6_annotated
+    Float? cladetyper_max_distance
     # ectyper options
     Int? ectyper_o_min_percent_identity
     Int? ectyper_h_min_percent_identity
@@ -686,6 +687,7 @@ workflow merlin_magic {
           ref_clade5_annotated = cladetyper_ref_clade5_annotated,
           ref_clade6 = cladetyper_ref_clade6,
           ref_clade6_annotated = cladetyper_ref_clade6_annotated,
+          max_distance = cladetyper_max_distance,
           docker = cauris_cladetyper_docker_image
       }
       # only run snippy if cladetyper retrieves an annotated_reference (e.g. non-functional for clade VI)
