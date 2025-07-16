@@ -74,6 +74,7 @@ task cauris_cladetyper {
     String gambit_cladetype = read_string("CLADETYPE")
     String annotated_reference = read_string("CLADEREF")
     String gambit_cladetyper_docker_image = docker
+    File? gambit_matrix = "~{samplename}_matrix.csv"
   }
   runtime {
     docker: docker
