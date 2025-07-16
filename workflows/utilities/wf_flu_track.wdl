@@ -1,6 +1,5 @@
 version 1.0
 
-
 import "../../tasks/assembly/task_irma.wdl" as irma_task
 import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics
@@ -8,16 +7,19 @@ import "../../tasks/species_typing/orthomyxoviridae/task_genoflu.wdl" as genoflu
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
+import "../../tasks/species_typing/influenza/task_extract_flu_segments.wdl" as extract_flu_segments_task
 
 workflow flu_track {
   meta {
     description: "This subworkflow contains all of the flu-specific modules to help organize the TheiaCoV workflows"
   }
   input {
-    File read1
+    File? assembly_fasta
+    File? read1
     File? read2
     String samplename
 
+    String? flu_segment # options: HA or NA. only required if input assembly is a singular flu segment.
     String? flu_subtype
 
     String seq_method
@@ -84,56 +86,57 @@ workflow flu_track {
     Int? nextclade_output_parser_disk_size
   }
   # IRMA will run if no assembly is provided (as in the case of TheiaCoV_FASTA)
-  call irma_task.irma {
-    input:
-      read1 = read1,
-      read2 = read2,
-      samplename = samplename,
-      seq_method = seq_method,
-      minimum_consensus_support = irma_min_consensus_support,
-      minimum_read_length = irma_min_read_length,
-      minimum_average_consensus_allele_quality = irma_min_avg_consensus_allele_quality,
-      minimum_ambiguous_threshold = irma_min_ambiguous_threshold,
-      keep_ref_deletions = irma_keep_ref_deletions,
-      docker = irma_docker_image,
-      memory = irma_memory,
-      cpu = irma_cpu,
-      disk_size = irma_disk_size
-  }
-  # can be redone later to accomodate processing of HA and NA bams together in the task, perhaps with an organism flag
-  if (defined(irma.seg_ha_bam)) {
-    call assembly_metrics.stats_n_coverage as ha_assembly_coverage {
+  if (defined(read1)) {
+    call irma_task.irma {
       input:
-        bamfile = select_first([irma.seg_ha_bam]),
+        read1 = select_first([read1]),
+        read2 = select_first([read2]),
         samplename = samplename,
-        memory = assembly_metrics_memory,
-        cpu = assembly_metrics_cpu,
-        disk_size = assembly_metrics_disk_size,
-        docker = assembly_metrics_docker
+        seq_method = seq_method,
+        minimum_consensus_support = irma_min_consensus_support,
+        minimum_read_length = irma_min_read_length,
+        minimum_average_consensus_allele_quality = irma_min_avg_consensus_allele_quality,
+        minimum_ambiguous_threshold = irma_min_ambiguous_threshold,
+        keep_ref_deletions = irma_keep_ref_deletions,
+        docker = irma_docker_image,
+        memory = irma_memory,
+        cpu = irma_cpu,
+        disk_size = irma_disk_size
     }
-  }
-  if (defined(irma.seg_na_bam)) {
-    call assembly_metrics.stats_n_coverage as na_assembly_coverage {
-      input:
-        bamfile = select_first([irma.seg_na_bam]),
-        samplename = samplename,
-        memory = assembly_metrics_memory,
-        cpu = assembly_metrics_cpu,
-        disk_size = assembly_metrics_disk_size,
-        docker = assembly_metrics_docker
+    # can be redone later to accomodate processing of HA and NA bams together in the task, perhaps with an organism flag
+    if (defined(irma.seg_ha_bam)) {
+      call assembly_metrics.stats_n_coverage as ha_assembly_coverage {
+        input:
+          bamfile = select_first([irma.seg_ha_bam]),
+          samplename = samplename,
+          memory = assembly_metrics_memory,
+          cpu = assembly_metrics_cpu,
+          disk_size = assembly_metrics_disk_size,
+          docker = assembly_metrics_docker
+      }
     }
+    if (defined(irma.seg_na_bam)) {
+      call assembly_metrics.stats_n_coverage as na_assembly_coverage {
+        input:
+          bamfile = select_first([irma.seg_na_bam]),
+          samplename = samplename,
+          memory = assembly_metrics_memory,
+          cpu = assembly_metrics_cpu,
+          disk_size = assembly_metrics_disk_size,
+          docker = assembly_metrics_docker
+      }
+    }
+    # combine HA & NA assembly coverages
+    String ha_na_assembly_coverage_string = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + ", NA: " + select_first([na_assembly_coverage.depth, ""])
+    
+    # combine HA & NA mapped reads percentages
+    String ha_na_percentage_mapped_reads = "HA: " + select_first([ha_assembly_coverage.percentage_mapped_reads, ""]) + ", NA: " + select_first([na_assembly_coverage.percentage_mapped_reads, ""])
   }
-  # combine HA & NA assembly coverages
-  String ha_na_assembly_coverage_string = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + ", NA: " + select_first([na_assembly_coverage.depth, ""])
-  
-  # combine HA & NA mapped reads percentages
-  String ha_na_percentage_mapped_reads = "HA: " + select_first([ha_assembly_coverage.percentage_mapped_reads, ""]) + ", NA: " + select_first([na_assembly_coverage.percentage_mapped_reads, ""])
-
   # ABRICATE will run if assembly is provided, or was generated with IRMA
-  if (defined(irma.irma_plurality_consensus_assemblies) && defined(irma.irma_assembly_fasta)){
+  if ((defined(irma.irma_plurality_consensus_assemblies) && defined(irma.irma_assembly_fasta)) || defined(assembly_fasta)) {
     call abricate.abricate_flu {
       input:
-        assembly = select_first([irma.irma_assembly_fasta]),
+        assembly = select_first([irma.irma_assembly_fasta, assembly_fasta]),
         samplename = samplename,
         min_percent_identity = abricate_flu_min_percent_identity,
         min_percent_coverage = abricate_flu_min_percent_coverage,
@@ -145,7 +148,7 @@ workflow flu_track {
     # check IRMA subtype content if IRMA was run
     if (defined(irma.irma_subtype)) {
       # if IRMA cannot predict a subtype (like with Flu B samples), then set the flu_subtype to the abricate_flu_subtype String output (e.g. "Victoria" for Flu B)
-      String algorithmic_flu_subtype = if irma.irma_subtype == "No subtype predicted by IRMA" then abricate_flu.abricate_flu_subtype else irma.irma_subtype
+      String algorithmic_flu_subtype = if select_first([irma.irma_subtype]) == "No subtype predicted by IRMA" then abricate_flu.abricate_flu_subtype else select_first([irma.irma_subtype])
     }
     call set_organism_defaults.organism_parameters as set_flu_na_nextclade_values {
       input:
@@ -167,20 +170,29 @@ workflow flu_track {
     if (set_flu_ha_nextclade_values.nextclade_dataset_tag == "NA") {
       Boolean do_not_run_flu_ha_nextclade = true
     }
-  }       
+  }
+  # if flu_segment is not defined, assume the assembly is a full flu genome
+  if (defined(assembly_fasta) && !defined(flu_segment)) {
+    call extract_flu_segments_task.extract_flu_segments {
+      input:
+        assembly_fasta = select_first([assembly_fasta]),
+        flu_type = select_first([abricate_flu.abricate_flu_type]),
+        flu_subtype = select_first([flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"])
+    }
+  }
   # if IRMA was run successfully, run the flu_antiviral substitutions task 
   # this block must be placed beneath the previous block because it is used in this subworkflow
-  if (defined(irma.irma_plurality_consensus_assemblies)) {
+  if (defined(irma.irma_plurality_consensus_assemblies) || (defined(assembly_fasta) && !defined(flu_segment))) {
     call flu_antiviral.flu_antiviral_substitutions {
       input:
-        na_segment_assembly = irma.seg_na_assembly_padded,
-        ha_segment_assembly = irma.seg_ha_assembly_padded,
-        pa_segment_assembly = irma.seg_pa_assembly_padded,
-        pb1_segment_assembly = irma.seg_pb1_assembly_padded,
-        pb2_segment_assembly = irma.seg_pb2_assembly_padded,
-        mp_segment_assembly = irma.seg_mp_assembly_padded,
+        na_segment_assembly = select_first([irma.seg_na_assembly_padded, extract_flu_segments.seg_na_assembly]),
+        ha_segment_assembly = select_first([irma.seg_ha_assembly_padded, extract_flu_segments.seg_ha_assembly]),
+        pa_segment_assembly = select_first([irma.seg_pa_assembly_padded, extract_flu_segments.seg_pa_assembly]),
+        pb1_segment_assembly = select_first([irma.seg_pb1_assembly_padded, extract_flu_segments.seg_pb1_assembly]),
+        pb2_segment_assembly = select_first([irma.seg_pb2_assembly_padded, extract_flu_segments.seg_pb2_assembly]),
+        mp_segment_assembly = select_first([irma.seg_mp_assembly_padded, extract_flu_segments.seg_mp_assembly]),
         abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
-        irma_flu_subtype = irma.irma_subtype,
+        irma_flu_subtype = select_first([irma.irma_subtype, ""]),
         antiviral_aa_subs = antiviral_aa_subs,
         flu_h1_ha_ref = flu_h1_ha_ref,
         flu_h3_ha_ref = flu_h3_ha_ref,
@@ -193,10 +205,10 @@ workflow flu_track {
         flu_h3n2_m2_ref = flu_h3n2_m2_ref
     }
   }
-  if (defined(irma.seg_ha_assembly) && ! defined(do_not_run_flu_ha_nextclade)) {
+  if ((defined(irma.seg_ha_assembly) || defined(extract_flu_segments.seg_ha_assembly) || (defined(assembly_fasta) && select_first([flu_segment]) == "HA")) && ! defined(do_not_run_flu_ha_nextclade)) {
     call nextclade_task.nextclade_v3 as nextclade_flu_ha {
       input:
-        genome_fasta = select_first([irma.seg_ha_assembly]),
+        genome_fasta = select_first([irma.seg_ha_assembly, extract_flu_segments.seg_ha_assembly, assembly_fasta]),
         dataset_name = select_first([set_flu_ha_nextclade_values.nextclade_dataset_name]),
         dataset_tag = select_first([set_flu_ha_nextclade_values.nextclade_dataset_tag]),
         docker = nextclade_docker_image,
@@ -214,10 +226,10 @@ workflow flu_track {
         disk_size = nextclade_output_parser_disk_size
     }
   }
-  if (defined(irma.seg_na_assembly) && ! defined(do_not_run_flu_na_nextclade)) {
+  if ((defined(irma.seg_na_assembly) || defined(extract_flu_segments.seg_na_assembly) || (defined(assembly_fasta) && select_first([flu_segment]) == "NA")) && ! defined(do_not_run_flu_na_nextclade)) {
     call nextclade_task.nextclade_v3 as nextclade_flu_na {
       input:
-        genome_fasta = select_first([irma.seg_na_assembly]),
+        genome_fasta = select_first([irma.seg_na_assembly, extract_flu_segments.seg_na_assembly, assembly_fasta]),
         dataset_name = select_first([set_flu_na_nextclade_values.nextclade_dataset_name]),
         dataset_tag = select_first([set_flu_na_nextclade_values.nextclade_dataset_tag]),
         docker = nextclade_docker_image,
@@ -239,7 +251,7 @@ workflow flu_track {
   if (select_first([flu_subtype, algorithmic_flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"]) == "H5N1" && select_first([nextclade_output_parser_flu_ha.nextclade_clade, ""]) == "2.3.4.4b") {
     call genoflu_task.genoflu {
       input:
-        assembly_fasta = select_first([irma.irma_assembly_fasta]),
+        assembly_fasta = select_first([irma.irma_assembly_fasta, assembly_fasta]),
         samplename = samplename,
         min_percent_identity = genoflu_min_percent_identity,
         cross_reference = genoflu_cross_reference,
@@ -256,7 +268,7 @@ workflow flu_track {
     if (genoflu.genoflu_genotype == "B3.13" || genoflu.genoflu_genotype == "D1.1" || defined(nextclade_custom_input_dataset)) {
       call nextclade_task.nextclade_v3 as nextclade_flu_h5n1 {
         input:
-          genome_fasta = select_first([irma.irma_assembly_fasta_concatenated]),
+          genome_fasta = select_first([irma.irma_assembly_fasta_concatenated, extract_flu_segments.concatenated_fasta, assembly_fasta]),
           custom_input_dataset = select_first([nextclade_custom_input_dataset, set_flu_h5n1_nextclade_values.nextclade_custom_dataset]),
           docker = nextclade_docker_image,
           cpu = nextclade_cpu,
@@ -276,12 +288,12 @@ workflow flu_track {
   }
   output {
     # IRMA outputs 
-    String irma_version = irma.irma_version
-    String irma_docker = irma.irma_docker
-    Int irma_minimum_consensus_support = irma.irma_minimum_consensus_support
-    String irma_type = irma.irma_type
-    String irma_subtype = irma.irma_subtype
-    String irma_subtype_notes = irma.irma_subtype_notes
+    String? irma_version = irma.irma_version
+    String? irma_docker = irma.irma_docker
+    Int? irma_minimum_consensus_support = irma.irma_minimum_consensus_support
+    String? irma_type = irma.irma_type
+    String? irma_subtype = irma.irma_subtype
+    String? irma_subtype_notes = irma.irma_subtype_notes
     File? irma_assembly_fasta = irma.irma_assembly_fasta
     File? irma_assembly_fasta_concatenated = irma.irma_assembly_fasta_concatenated
     File? irma_assembly_fasta_padded = irma.irma_assembly_fasta_padded
@@ -294,14 +306,14 @@ workflow flu_track {
     File? irma_mp_segment_fasta = irma.seg_mp_assembly
     File? irma_np_segment_fasta = irma.seg_np_assembly
     File? irma_ns_segment_fasta = irma.seg_ns_assembly
-    Array[File] irma_assemblies = irma.irma_plurality_consensus_assemblies
-    Array[File] irma_vcfs = irma.irma_vcfs
-    Array[File] irma_bams = irma.irma_bams
+    Array[File]? irma_assemblies = irma.irma_plurality_consensus_assemblies
+    Array[File]? irma_vcfs = irma.irma_vcfs
+    Array[File]? irma_bams = irma.irma_bams
     File? irma_ha_bam = irma.seg_ha_bam
     File? irma_na_bam = irma.seg_na_bam
-    String ha_na_assembly_coverage = ha_na_assembly_coverage_string
+    String? ha_na_assembly_coverage = ha_na_assembly_coverage_string
      # calulate mapped reads percentage for flu samples
-    String percentage_mapped_reads = ha_na_percentage_mapped_reads
+    String? percentage_mapped_reads = ha_na_percentage_mapped_reads
     # GenoFLU outputs
     String? genoflu_version = genoflu.genoflu_version
     String? genoflu_genotype = genoflu.genoflu_genotype
