@@ -42,9 +42,9 @@ task extract_flu_segments {
       sort -k2,2nr temp_segments/lengths.tsv > temp_segments/sorted_lengths.tsv
 
       # make array of segment names based on flu type and order from largest to smallest
-      if [[ ~{flu_type} == "Type_A" ]]; then
+      if [[ "~{flu_type}" == "Type_A" ]]; then
         segment_array=("PB2" "PB1" "PA" "HA" "NP" "NA" "MP" "NS")
-      elif [[ ~{flu_type} == "Type_B" ]]; then
+      elif [[ "~{flu_type}" == "Type_B" ]]; then
         segment_array=("PB1" "PB2" "PA" "HA" "NP" "NA" "MP" "NS")
       else
         echo "ERROR: Invalid flu type specified. Please use 'Type_A' or 'Type_B'."
