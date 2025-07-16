@@ -8,7 +8,7 @@ task extract_flu_segments {
     Int cpu = 1
     Int memory = 2
     Int disk_size = 100
-    String docker = "ubuntu"
+    String docker = "us-docker.pkg.dev/general-theiagen/ubuntu/ubuntu:jammy-20230816"
   }
   String assembly_name = basename(basename(basename(assembly_fasta, ".fasta"), ".fa"), ".fna")
   command <<<
