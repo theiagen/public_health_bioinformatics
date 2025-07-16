@@ -182,7 +182,7 @@ workflow flu_track {
   }
   # if IRMA was run successfully, run the flu_antiviral substitutions task 
   # this block must be placed beneath the previous block because it is used in this subworkflow
-  if (defined(irma.irma_plurality_consensus_assemblies) || (extract_flu_segments.segment_status == "PASS")) {
+  if (defined(irma.irma_plurality_consensus_assemblies) || (select_first([extract_flu_segments.segment_status, "FAIL"]) == "PASS")) {
     call flu_antiviral.flu_antiviral_substitutions {
       input:
         na_segment_assembly = select_first([irma.seg_na_assembly_padded, extract_flu_segments.seg_na_assembly]),
