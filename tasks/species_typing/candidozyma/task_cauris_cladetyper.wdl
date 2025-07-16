@@ -47,16 +47,17 @@ task cauris_cladetyper {
     echo "None" > CLADEREF
     echo "" > CLADETYPE
 
-    # strip extensions in accord with gambit's approach and acquire the best matching reference
     python3 <<CODE
     import os
     import sys
+    # strip extensions in accord with gambit's approach and acquire the best matching reference
     def strip_extensions(filename, extensions):
         for ext in extensions:
             if filename.endswith(ext):
                 return filename[:-len(ext)]
         return filename
 
+    # determine if minimum observed gambit distance meets threshold
     with open("MIN_DISTANCE", 'r') as raw:
         try:
             min_distance = float(raw.read().strip())
@@ -66,6 +67,8 @@ task cauris_cladetyper {
         print("Input assembly does not match any clade")
         print(f"Minimum distance {min_distance} is greater than maximum allowed distance {~{max_distance}}")
         sys.exit(0)
+
+    # identify the top clade in accord with gambit's naming scheme
     with open("TOP_CLADE", 'r') as raw:
         top_clade = raw.read().strip()
     gzip_exts = ('.gz')
@@ -87,6 +90,8 @@ task cauris_cladetyper {
             claderef = annotation[0]
             cladetype = annotation[1]
             break
+    
+    # report top clade
     with open("CLADEREF", 'w') as claderef_file:
         claderef_file.write(claderef)
     with open("CLADETYPE", 'w') as cladetype_file:
