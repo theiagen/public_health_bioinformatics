@@ -1225,3 +1225,11 @@ host_mapping_mean_depth	Float	Average depth from host read mapping	Host_Decontam
 host_mapping_metrics	File	File of mapping metrics	Host_Decontaminate
 host_mapping_stats	File	File of mapping statistics	Host_Decontaminate
 host_percent_mapped_reads	Float	Percentage of reads mapped to host reference genome	Host_Decontaminate
+phylocompare_distance	String	Distance between the phylogenies, or "None"/">0" if distance was unable to be calculated	PhyloCompare
+phylocompare_phb_version	String	The version of the Public Health Bioinformatics (PHB) repository used	PhyloCompare
+phylocompare_flag	String	Flags raised that may confound distance calculation	PhyloCompare
+phylocompare_report	File	Text file of the calculated distances	PhyloCompare
+phylocompare_version	String	Version of PhyloCompare python script	PhyloCompare
+phylocompare_validation	String	"PASS" if distance < `max_distance` and "FAIL" if distance > `max_distance` or could not be calculated	PhyloCompare
+phylocompare_tree1_clean	File	Cleaned newick file for the first tree	PhyloCompare
+phylocompare_tree2_clean	File	Cleaned newick file for the second tree	PhyloCompare
