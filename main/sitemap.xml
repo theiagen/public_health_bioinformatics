@@ -169,6 +169,10 @@
          <lastmod>2025-07-17</lastmod>
     </url>
     <url>
+         <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/phylocompare_task/</loc>
+         <lastmod>2025-07-17</lastmod>
+    </url>
+    <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/porechop_task/</loc>
          <lastmod>2025-07-17</lastmod>
     </url>
@@ -206,6 +210,10 @@
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/referenceseeker_task/</loc>
+         <lastmod>2025-07-17</lastmod>
+    </url>
+    <url>
+         <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/root_phylo_task/</loc>
          <lastmod>2025-07-17</lastmod>
     </url>
     <url>
@@ -470,6 +478,10 @@
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/ncbi_scrub/</loc>
+         <lastmod>2025-07-17</lastmod>
+    </url>
+    <url>
+         <loc>https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/phylocompare/</loc>
          <lastmod>2025-07-17</lastmod>
     </url>
     <url>
