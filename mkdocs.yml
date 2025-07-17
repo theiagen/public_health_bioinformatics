@@ -72,6 +72,7 @@ nav:
                - Kraken2: workflows/standalone/kraken2.md
                - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
                - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
+               - PhyloCompare: workflows/standalone/phylocompare.md
                - RASUSA: workflows/standalone/rasusa.md
                - Rename_FASTQ: workflows/standalone/rename_fastq.md
                - TBProfiler_tNGS: workflows/standalone/tbprofiler_tngs.md
@@ -91,6 +92,7 @@ nav:
                - Host_Decontaminate: workflows/standalone/host_decontaminate.md
                - Kraken2: workflows/standalone/kraken2.md
                - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
+               - PhyloCompare: workflows/standalone/phylocompare.md
                - RASUSA: workflows/standalone/rasusa.md
                - Rename_FASTQ: workflows/standalone/rename_fastq.md
                - SRA_Fetch: workflows/data_import/sra_fetch.md
@@ -172,6 +174,7 @@ nav:
             - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
             - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
             - Pangolin_Update: workflows/genomic_characterization/pangolin_update.md
+            - PhyloCompare: workflows/standalone/phylocompare.md
             - RASUSA: workflows/standalone/rasusa.md
             - Rename_FASTQ: workflows/standalone/rename_fastq.md
             - Samples_to_Ref_Tree: workflows/phylogenetic_placement/samples_to_ref_tree.md
