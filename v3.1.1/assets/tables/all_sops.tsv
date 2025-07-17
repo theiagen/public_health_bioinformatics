@@ -1,0 +1,36 @@
+SOP	Workflow	SOP version	PHB version compatibility	Pathogen/Category	Current or prior wf version?
+[Analyze SARS-COV-2 using TheiaCoV_Illumina_PE_PHB](../assets/sops/TG-SC2-PE_Analysis_SC2_IlluminaPE_v4.pdf)	PE, TheiaCoV	v4	v3	SC2	Current
+[Analyze SARS-COV-2 using TheiaCoV_Illumina_SE_PHB](../assets/sops/TG-SC2-SE_SC2_TheiaCoV_IlluminaSE_v4.pdf)	SE, TheiaCoV	v4	v3	SC2	Current
+[Analyzing SARS-CoV-2 using TheiaCov_ClearLabs](../assets/sops/TG-SC2-CL_SC2_ClearLabs_v4.pdf)	CL, TheiaCoV	v4	v3	SC2	Current
+[Analyze SARS-COV-2 using TheiaCoV_ONT](../assets/sops/TG-SC2-ONT_SOP_Analysis_SC2_ONT_v4.pdf)	ONT, TheiaCoV	v4	v3	SC2	Current
+[Analyze SARS-COV-2 using TheiaCoV_FASTA](../assets/sops/TG-SC2-FST_Analyzing_SC2_Using_TheiaCoV_FASTA_PHB_v2.pdf)	FASTA, TheiaCoV	v2	v1	SC2	Current
+[Uploading Data, Creating Metadata Tables and TSV files, and Importing Workflows](../assets/sops/TG-TER-03_GettingStartedInTerra_v4.pdf)	None	v4	v3	Data Import	Current
+[Linking BaseSpace and Importing BaseSpace Reads to Terra](../assets/sops/TG-TER-04_BaseSpaceFetch_v3.pdf)	BaseSpace_Fetch	v3	v3	Data Import	Current
+[Analyzing Flu Data in Terra using TheiaCov_Illumina_PE and Augur Workflows](../assets/sops/TG-FLU-PE_SOP_Flu_IlluminaPE_v1.pdf)	Augur, PE, TheiaCoV	v1	v1	Flu, Phylogenetic construction	Prior
+[Analyzing SARS-CoV-2 Metagenomic Samples using Freyja FASTQ](../assets/sops/TG-FREY-01_FreyjaFASTQ_v2.pdf)	Freyja	v2	v2	SC2	Current
+[Plotting SARS-CoV-2 Metagenomic Sample Data using Freyja Plot](../assets/sops/TG-FREY-02_FreyjaPlot_v3.pdf)	Freyja	v3	v2	SC2	Current
+[Creating a Dashboard Visualization of SARS-CoV-2 Metagenomic Samples using Freyja Dashboard](../assets/sops/TG-FREY-03-SOP_FreyjaDashboard_v2.pdf)	Freyja	v2	v2	SC2	Current
+[Creating Static Reference Files for Freyja Analysis in Terra using Freyja Update](../assets/sops/TG-FREY-04_FreyjaUpdate_v2.pdf)	Freyja	v2	v2	SC2	Current
+[Analyzing Bacterial Data in Terra using Theiagen’s TheiaProk Illumina PE Workflow](../assets/sops/TG-TP-PE_TheiaProk_IlluminaPE_v2.pdf)	PE, TheiaProk	v2	v1	Bacterial	Prior
+[Analyzing Bacterial Data in Terra using Theiagen’s TheiaProk Illumina PE Workflow](../assets/sops/TG-TP-ONT_TheiaProkONT_v2.pdf)	PE, TheiaProk	v3	v2, v3	Bacterial	Current
+[TheiaProk_ONT](../assets/sops/TG-TP-PE_TheiaProk_IlluminaPE_v2%201.pdf)	ONT, TheiaProk	v2	v1	Bacterial	Prior
+[Analyzing HAI Pathogens using Phoenix Version 1 in Terra](../assets/sops/TG-PX-V1_PhoenixV1.pdf)	Phoenix	v1	v1	HAI	Prior
+[Analyzing HAI Pathogens using Phoenix Version 2 in Terra](../assets/sops/TG-PX-V2_PhoenixV2.pdf)	Phoenix	v1	v1	HAI	Prior
+[Analyzing Phylogenetic Relationships in Terra using Theiagen’s Augur Workflows](../assets/sops/TG-AUGUR-01_Augur_v1.pdf)	Augur	v1	v1	Phylogenetic construction	Prior
+[Submitting SC2 Sequence Data to GISAID using Theiagen’s Terra 2 GISAID Workflow](../assets/sops/TG-GISAID-01_Terra2GISAID_v2.pdf)	Terra_2_GISAID	v2	v2	Public data sharing, SC2	Current
+[Comparing Terra Data Tables using Theiagen’s TheiaValidate Workflow](../assets/sops/TG-VAL-01_TheiaValidate_v1.pdf)	TheiaValidate	v1	v1, v2	Validations	Current
+[Comparing Terra Data Tables using Theiagen’s TheiaValidate Workflow](../assets/sops/TG-VAL-01_TheiaValidate_v2.pdf)	TheiaValidate	v2	v2	Validations	Prior
+[Running Theiagen’s Rasusa Workflow in Terra to Randomly Downsample Reads](../assets/sops/TG-RASUSA-01_v2.pdf)	RASUSA	v2	v1, v2	Downsampling	Current
+[Running Theiagen’s Snippy_Variants_PHB Workflow in Terra](../assets/sops/TG-SNP-01_Snippy_Variants_v1.pdf)	Snippy_Variants	v1	v2	Bacterial, Phylogenetic construction	Current
+[TheiaProk_ONT](../assets/sops/TG-TP-ONT_TheiaProkONT_v2%201.pdf)	ONT, TheiaProk	v3	v2, v3	Bacterial	Current
+[Getting Started In Terra](../assets/sops/TG-TER-03_GettingStartedInTerra_v3.pdf)	None	v3	v2, v3	Getting Started	Prior
+[Getting Started In Terra](../assets/sops/TG-TER-03_GettingStartedInTerra_v4-1.pdf)	None	v4	v2, v3	Getting Started	Current
+[Analyze SARS-COV-2 using TheiaCoV_ONT](../assets/sops/TG-SC2-ONT_Analyzing_SC2_Using_TheiaCov_ONT_PHB_v2.pdf)	ONT, TheiaCoV	v2	v1	SC2	Prior
+[Analyze SARS-COV-2 using TheiaCoV_ONT](../assets/sops/TG-SC2-ONT_SOP_Analysis_SC2_ONT_v3.pdf)	ONT, TheiaCoV	v3	v2	SC2	Prior
+[Analyzing SARS-CoV-2 using TheiaCov_ClearLabs](../assets/sops/TG-SC2-CL_SC2_ClearLabs_v3.pdf)	CL, TheiaCoV	v3	v2	SC2	Prior
+[Analyze SARS-COV-2 using TheiaCoV_Illumina_SE_PHB](../assets/sops/TG-SC2-SE_SC2_TheiaCoV_IlluminaSE_v3.pdf)	SE, TheiaCoV	v3	v2	SC2	Prior
+[Analyze SARS-COV-2 using TheiaCoV_Illumina_PE_PHB](../assets/sops/TG-SC2-PE_SC2_TheiaCoV_IlluminaPE_v3.pdf)	PE, TheiaCoV	v3	v2	SC2	Prior
+[Comparing Terra Data Tables using Theiagen’s TheiaValidate Workflow](../assets/sops/TG-VAL-01_TheiaValidate_v3.pdf)	TheiaValidate	v3	v2, v3	Validations	Current
+[Running Influenza A, H3N2 Metagenomic Samples in Terra using Theiagen’s Freyja FASTQ Workflow](../assets/sops/TG-FREY-H3N2_FreyjaFASTQ_v1.pdf)	Freyja	v1	v3	Flu	Current
+[Linking BaseSpace and Importing BaseSpace Reads to Terra](../assets/sops/TG-TER-04_BaseSpaceFetch_v2.pdf)	BaseSpace_Fetch	v2	v2	Data Import	Prior
+[Uploading Data, Creating Metadata Tables and TSV files, and Importing Workflows](../assets/sops/TG-TER-03_GettingStartedInTerra_v3.pdf)	None	v3	v1, v2	Data Import	Prior
