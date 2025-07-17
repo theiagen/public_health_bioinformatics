@@ -90,7 +90,7 @@ workflow flu_track {
     call irma_task.irma {
       input:
         read1 = select_first([read1]),
-        read2 = select_first([read2]),
+        read2 = read2,
         samplename = samplename,
         seq_method = seq_method,
         minimum_consensus_support = irma_min_consensus_support,
