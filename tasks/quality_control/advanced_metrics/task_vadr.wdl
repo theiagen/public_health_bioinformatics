@@ -7,6 +7,7 @@ task vadr {
   input {
     File genome_fasta
     String vadr_opts = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
+    File vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"
     Int assembly_length_unambiguous
     Int skip_length = 10000
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2"
@@ -18,9 +19,25 @@ task vadr {
   }
   String out_base = basename(genome_fasta, '.fasta')
   command <<<
-    set -e
+    set -euo pipefail
 
     if [ ~{assembly_length_unambiguous} -gt ~{skip_length} ]; then
+
+      # extract the model file
+      mkdir -p model_dir
+      tar -C model_dir -xzf ~{vadr_model_file}
+
+      # sometimes the model files are in a subdirectory and we need to find/move them.
+      # the .minfo file is created by the v-build.pl command and is always in a valid model directory
+      model_files_location=$(find model_dir -type f -name "*.minfo" -exec dirname {} \; -quit)
+
+      if [ -z "$model_files_location" ]; then
+        echo "ERROR: No model files found in the extracted model directory."
+        exit 1
+      fi
+
+      # vadr expects the model files to be in this directory
+      mv ${model_files_location}/* model_dir/
 
       # remove terminal ambiguous nucleotides
       /opt/vadr/vadr/miniscripts/fasta-trim-terminal-ambigs.pl \
@@ -33,6 +50,7 @@ task vadr {
       # --split and --cpu must be used in conjuction
       v-annotate.pl \
         --split --cpu ~{cpu} \
+        --mdir model_dir \
         ~{vadr_opts} \
         "~{out_base}_trimmed.fasta" \
         "~{out_base}"

@@ -62,6 +62,7 @@ workflow organism_parameters {
     Int sc2_vadr_skip_length = 10000
     String sc2_vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
     Int sc2_vadr_memory = 8
+    File sc2_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"
   }
   if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox" || organism == "Monkeypox virus" || organism == "Mpox") {
     String mpox_org_name = "MPXV"
@@ -76,6 +77,7 @@ workflow organism_parameters {
     Int mpox_vadr_max_length = 210000
     Int mpox_vadr_skip_length = 65480
     Int mpox_vadr_memory = 8
+    File mpox_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.4.2-1.tar.gz"
     Int mpox_genome_len = 197200
 
     # augur options for mpxv
@@ -100,6 +102,7 @@ workflow organism_parameters {
     Int wnv_vadr_max_length = 11000
     Int wnv_vadr_skip_length = 3000
     Int wnv_vadr_memory = 16
+    File wnv_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flavi-1.2-1.tar.gz"
     String wnv_nextclade_ds_tag = "NA"
     String wnv_nextclade_ds_name = "NA"
   }
@@ -120,6 +123,8 @@ workflow organism_parameters {
     Int flu_vadr_max_length = 13500
     Int flu_vadr_skip_length = 500
     Int flu_vadr_memory = 8
+    File flu_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"
+
 
     # setting nextclade and augur parameters
     if (flu_segment == "HA") {
@@ -213,6 +218,7 @@ workflow organism_parameters {
     Int rsv_a_vadr_max_length = 15500
     Int rsv_a_vadr_skip_length = 5000
     Int rsv_a_vadr_memory = 32
+    File rsv_a_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"
 
     # augur options for rsv-a
     File rsv_a_lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"
@@ -237,6 +243,8 @@ workflow organism_parameters {
     Int rsv_b_vadr_max_length = 15500
     Int rsv_b_vadr_skip_length = 5000
     Int rsv_b_vadr_memory = 32
+    File rsv_b_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"
+
 
     # augur options for rsv-b
     File rsv_b_lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"
@@ -272,6 +280,27 @@ workflow organism_parameters {
     String measles_genome_len = 16000
     String measles_nextclade_ds_tag = "2025-03-26--11-47-13Z"
     String measles_nextclade_ds_name = "nextstrain/measles/N450/WHO-2012"
+    String measles_vadr_options = "--mkey mev -r --indefclass 0.01"
+    Int measles_vadr_max_length = 18000
+    Int measles_vadr_skip_length = 0
+    Int measles_vadr_memory = 24
+    File measles_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mev-1.02.tar.gz"
+  }
+  if organism == "muv" || organism == "MuV" || organism == "mumps" || organism == "Mumps" || organism == "Mumps virus" || organism == "mumps virus" {
+    # vadr options for mumps
+    String mumps_vadr_options = "--mkey muv -r --indefclass 0.025"
+    Int mumps_vadr_max_length = 18000
+    Int mumps_vadr_skip_length = 0
+    Int mumps_vadr_memory = 16
+    File mumps_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-muv-1.01.tar.gz"
+  }
+  if organism == "ruv" || organism == "RuV" || organism == "rubella" || organism == "Rubella" || organism == "Rubella virus" || organism == "rubella virus" {
+    # vadr options for rubella
+    String rubella_vadr_options = "--mkey ruv -r"
+    Int rubella_vadr_max_length = 10000
+    Int rubella_vadr_skip_length = 0
+    Int rubella_vadr_memory = 16
+    File rubella_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-ruv-1.01.tar.gz"
   }
   # set rabies nextclade parameters
   if (organism == "rabies" || organism == "Lyssavirus rabies" || organism == "lyssavirus" || organism == "Lyssavirus" || organism == "Rabies" || organism == "11292" || organism == "11286") {
