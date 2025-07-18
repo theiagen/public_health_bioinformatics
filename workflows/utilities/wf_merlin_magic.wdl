@@ -40,7 +40,7 @@ import "../../tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl" as vibechec
 # theiaeuk
 import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query
 import "../../tasks/gene_typing/variant_detection/task_snippy_variants.wdl" as snippy
-import "../../tasks/species_typing/candida/task_cauris_cladetyper.wdl" as cauris_cladetyper
+import "../../tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl" as cauris_cladetyper
 
 workflow merlin_magic {
   meta {
@@ -123,6 +123,9 @@ workflow merlin_magic {
     File? cladetyper_ref_clade4_annotated
     File? cladetyper_ref_clade5
     File? cladetyper_ref_clade5_annotated
+    File? cladetyper_ref_clade6
+    File? cladetyper_ref_clade6_annotated
+    Float? cladetyper_max_distance
     # ectyper options
     Int? ectyper_o_min_percent_identity
     Int? ectyper_h_min_percent_identity
@@ -682,46 +685,52 @@ workflow merlin_magic {
           ref_clade4_annotated = cladetyper_ref_clade4_annotated,
           ref_clade5 = cladetyper_ref_clade5,
           ref_clade5_annotated = cladetyper_ref_clade5_annotated,
+          ref_clade6 = cladetyper_ref_clade6,
+          ref_clade6_annotated = cladetyper_ref_clade6_annotated,
+          max_distance = cladetyper_max_distance,
           docker = cauris_cladetyper_docker_image
       }
-      if (!assembly_only && !ont_data) {
-        call snippy.snippy_variants as snippy_cauris { # no ONT support right now
-          input:
-            reference_genome_file = cladetyper.annotated_reference,
-            read1 = select_first([read1]),
-            read2 = read2,
-            samplename = samplename,
-            map_qual = snippy_map_qual,
-            base_quality = snippy_base_quality,
-            min_coverage = snippy_min_coverage,
-            min_frac = snippy_min_frac,
-            min_quality = snippy_min_quality,
-            maxsoft = snippy_maxsoft,
-            docker = snippy_variants_docker_image
+      # only run snippy if cladetyper retrieves an annotated_reference (e.g. non-functional for clade VI)
+      if (cladetyper.annotated_reference != "None") {
+        if (!assembly_only && !ont_data) {
+          call snippy.snippy_variants as snippy_cauris { # no ONT support right now
+            input:
+              reference_genome_file = cladetyper.annotated_reference,
+              read1 = select_first([read1]),
+              read2 = read2,
+              samplename = samplename,
+              map_qual = snippy_map_qual,
+              base_quality = snippy_base_quality,
+              min_coverage = snippy_min_coverage,
+              min_frac = snippy_min_frac,
+              min_quality = snippy_min_quality,
+              maxsoft = snippy_maxsoft,
+              docker = snippy_variants_docker_image
+          }
         }
-      }
-      if (assembly_only && ont_data) {
-        call snippy.snippy_variants as snippy_cauris_ont {
-          input:
-            reference_genome_file = cladetyper.annotated_reference,
-            assembly_fasta = assembly,
-            samplename = samplename,
-            map_qual = snippy_map_qual,
-            base_quality = snippy_base_quality,
-            min_coverage = snippy_min_coverage,
-            min_frac = snippy_min_frac,
-            min_quality = snippy_min_quality,
-            maxsoft = snippy_maxsoft,
-            docker = snippy_variants_docker_image
+        if (assembly_only && ont_data) {
+          call snippy.snippy_variants as snippy_cauris_ont {
+            input:
+              reference_genome_file = cladetyper.annotated_reference,
+              assembly_fasta = assembly,
+              samplename = samplename,
+              map_qual = snippy_map_qual,
+              base_quality = snippy_base_quality,
+              min_coverage = snippy_min_coverage,
+              min_frac = snippy_min_frac,
+              min_quality = snippy_min_quality,
+              maxsoft = snippy_maxsoft,
+              docker = snippy_variants_docker_image
+          }
         }
-      }
-      call snippy_gene_query.snippy_gene_query as snippy_gene_query_cauris {
-        input:
-          samplename = samplename,
-          snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_cauris_ont.snippy_variants_results]),
-          reference = cladetyper.annotated_reference,
-          query_gene = select_first([snippy_query_gene,"FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"]),
-          docker = snippy_gene_query_docker_image
+        call snippy_gene_query.snippy_gene_query as snippy_gene_query_cauris {
+          input:
+            samplename = samplename,
+            snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_cauris_ont.snippy_variants_results]),
+            reference = cladetyper.annotated_reference,
+            query_gene = select_first([snippy_query_gene,"FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"]),
+            docker = snippy_gene_query_docker_image
+        }
       }
     }
     if (merlin_tag == "Aspergillus fumigatus") {
