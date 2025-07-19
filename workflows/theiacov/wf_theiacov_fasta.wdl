@@ -37,6 +37,7 @@ workflow theiacov_fasta {
     Int? vadr_max_length
     Int? vadr_skip_length
     String? vadr_opts
+    File? vadr_model_file
     Int? vadr_memory
   }
   # only run abricate if user sets organism = "flu" AND if flu_subtype is unknown/not set by user
@@ -60,6 +61,7 @@ workflow theiacov_fasta {
       vadr_max_length = vadr_max_length,
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_opts,
+      vadr_model_file = vadr_model_file,
       vadr_mem = vadr_memory
   }
   call consensus_qc_task.consensus_qc {
@@ -106,6 +108,7 @@ workflow theiacov_fasta {
         assembly_length_unambiguous = consensus_qc.number_ATCG,
         max_length = organism_parameters.vadr_maxlength,
         vadr_opts = organism_parameters.vadr_opts,
+        vadr_model_file = organism_parameters.vadr_model_file,
         skip_length = organism_parameters.vadr_skiplength,
         memory = organism_parameters.vadr_memory
     }

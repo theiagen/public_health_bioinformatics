@@ -1,19 +1,43 @@
 version 1.0
 
 import "../../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
+import "../../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
+import "../../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../../../tasks/task_versioning.wdl" as versioning
 
 workflow vadr_update {
   input {
     File genome_fasta
-    String docker
-    Int assembly_length_unambiguous
+    String organism = "sars-cov-2" # options: "sars-cov-2" "MPXV" "WNV" "flu" "rsv_a" "rsv_b" "measles" "mumps" "rubella"
+    # vadr parameters
+    Int? vadr_max_length
+    Int? vadr_skip_length
+    String? vadr_opts
+    File? vadr_model_file
+    Int? vadr_memory
+  }
+  call set_organism_defaults.organism_parameters {
+    organism = organism,
+    vadr_max_length = vadr_max_length,
+    vadr_skip_length = vadr_skip_length,
+    vadr_options = vadr_opts,
+    vadr_model_file = vadr_model_file,
+    vadr_mem = vadr_memory
+  }
+  call consensus_qc_task.consensus_qc {
+    input:
+      assembly_fasta = genome_fasta
   }
   call vadr_task.vadr {
     input:
-      genome_fasta = genome_fasta,
-      docker = docker,
-      assembly_length_unambiguous = assembly_length_unambiguous
+      input:
+        genome_fasta = genome_fasta,
+        assembly_length_unambiguous = consensus_qc.number_ATCG,
+        max_length = organism_parameters.vadr_maxlength,
+        vadr_opts = organism_parameters.vadr_opts,
+        vadr_model_file = organism_parameters.vadr_model_file,
+        skip_length = organism_parameters.vadr_skiplength,
+        memory = organism_parameters.vadr_memory
   }
   call versioning.version_capture {
     input:

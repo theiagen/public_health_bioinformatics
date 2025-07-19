@@ -54,6 +54,7 @@ workflow theiacov_illumina_se {
     Int? vadr_max_length
     Int? vadr_skip_length
     String? vadr_options
+    File? vadr_model_file
     Int? vadr_memory
     # pangolin parameters
     String? pangolin_docker_image
@@ -72,6 +73,7 @@ workflow theiacov_illumina_se {
       vadr_max_length = vadr_max_length,
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
+      vadr_model_file = vadr_model_file,
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image  
@@ -175,6 +177,7 @@ workflow theiacov_illumina_se {
             genome_fasta = ivar_consensus.assembly_fasta,
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             vadr_opts = organism_parameters.vadr_opts,
+            vadr_model_file = organism_parameters.vadr_model_file,
             max_length = organism_parameters.vadr_maxlength,
             skip_length = organism_parameters.vadr_skiplength,
             memory = organism_parameters.vadr_memory
