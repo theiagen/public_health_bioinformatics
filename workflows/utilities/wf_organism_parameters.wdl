@@ -32,6 +32,7 @@ workflow organism_parameters {
     Int? vadr_skip_length
     String? vadr_options
     Int? vadr_mem
+    File? vadr_model_file
 
     # pangolin parameters
     String? pangolin_docker_image
