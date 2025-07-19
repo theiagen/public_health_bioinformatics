@@ -169,8 +169,10 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | nextclade_dataset_tag_input | sars-cov-2 | `"2025-06-09--15-42-38Z"` |
         | reference_genome | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"` |
         | vadr_max_length | sars-cov-2 | `30000` |
+        | vadr_skip_length | sars-cov-2 | `10000` |
         | vadr_mem | sars-cov-2 | `8` |
         | vadr_options | sars-cov-2 | `"--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"` |
+        | vadr_model_file | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"` |
 
         </div>
 
@@ -188,8 +190,10 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | reference_genome | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.MT903345.reference.fasta"` |
         | reference_gff_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3"` |
         | vadr_max_length | MPXV | `210000` |
+        | vadr_skip_length | MPXV | `65480` |
         | vadr_mem | MPXV | `8` |
         | vadr_options | MPXV | `"--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"` |
+        | vadr_model_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.4.2-1.tar.gz"` |
         
         </div>
 
@@ -205,8 +209,10 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | primer_bed_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/al/wnv/WNV-L1_primer.bed"` |  |
         | reference_genome | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/NC_009942.1_wnv_L1.fasta"` |  |
         | vadr_max_length | WNV | `11000` |  |
+        | vadr_skip_length | WNV | `3000` |  |
         | vadr_mem | WNV | `8` |  |
         | vadr_options | WNV | `"--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"` |  |
+        | vadr_model_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flavi-1.2-1.tar.gz"` |  |
 
         </div>
 
@@ -219,8 +225,10 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | flu_subtype | flu | all | all | N/A | TheiaCoV will attempt to automatically assign a flu subtype |
         | genome_length_input | flu | all | all | `13500` |  |
         | vadr_max_length | flu | all | all | `13500` |  |
+        | vadr_skip_length | flu | all | all | `500` |  |
         | vadr_mem | flu | all | all | `8` |  |
         | vadr_options | flu | all | all | `"--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"` |  |
+        | vadr_model_file | flu | all | all | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"` |  |
         | nextclade_dataset_name_input | flu | ha | h1n1 | `"nextstrain/flu/h1n1pdm/ha/MW626062"` |  |
         | nextclade_dataset_tag_input | flu | ha | h1n1 | `"2025-01-22--09-54-14Z"` |  |
         | reference_genome | flu | ha | h1n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.fasta"` |  |
@@ -266,14 +274,16 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
-        | genome_length_input | rsv_a | 16000 |
+        | genome_length_input | rsv_a | `16000` |
         | kraken_target_organism | rsv_a | "Human respiratory syncytial virus A" |
-        | nextclade_dataset_name_input | rsv_a | nextstrain/rsv/a/EPI_ISL_412866 |
-        | nextclade_dataset_tag_input | rsv_a | "2024-11-27--02-51-00Z" |
-        | reference_genome | rsv_a | gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta |
-        | vadr_max_length | rsv_a | 15500 |
-        | vadr_mem | rsv_a | 32 |
-        | vadr_options | rsv_a | -r --mkey rsv --xnocomp |
+        | nextclade_dataset_name_input | rsv_a | `nextstrain/rsv/a/EPI_ISL_412866` |
+        | nextclade_dataset_tag_input | rsv_a | `"2024-11-27--02-51-00Z"` |
+        | reference_genome | rsv_a | `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"` |
+        | vadr_max_length | rsv_a | `15500` |
+        | vadr_skip_length | rsv_a | `5000` |
+        | vadr_mem | rsv_a | `32` |
+        | vadr_options | rsv_a | `"-r --mkey rsv --xnocomp"` |
+        | vadr_model_file | rsv_a | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"` |
 
         </div>
 
@@ -282,14 +292,15 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
-        | genome_length_input | rsv_b | 16000 |
+        | genome_length_input | rsv_b | `16000` |
         | kraken_target_organism | rsv_b |  "human respiratory syncytial virus" |
-        | nextclade_dataset_name_input | rsv_b | nextstrain/rsv/b/EPI_ISL_1653999 |
-        | nextclade_dataset_tag_input | rsv_b | "2025-03-04--17-31-25Z" |
-        | reference_genome | rsv_b | gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta |
-        | vadr_max_length | rsv_b | 15500 |
-        | vadr_mem | rsv_b | 32 |
-        | vadr_options | rsv_b | -r --mkey rsv --xnocomp |
+        | nextclade_dataset_name_input | rsv_b | `nextstrain/rsv/b/EPI_ISL_1653999` |
+        | nextclade_dataset_tag_input | rsv_b | `"2025-03-04--17-31-25Z"` |
+        | reference_genome | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"`|
+        | vadr_max_length | rsv_b | `15500` |
+        | vadr_mem | rsv_b | `32` |
+        | vadr_options | rsv_b | `"-r --mkey rsv --xnocomp"` |
+        | vadr_model_file | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"` |
 
         </div>
 
@@ -319,8 +330,38 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | genome_length_input | measles | `16000` |
         | nextclade_dataset_name_input | measles | `"nextstrain/measles/N450/WHO-2012"` |
         | nextclade_dataset_tag_input | measles | `"2025-03-26--11-47-13Z"` |
+        | vadr_max_length | measles | `18000` |
+        | vadr_skip_length | measles | `0` |
+        | vadr_mem | measles | `24` |
+        | vadr_options | measles | `"--mkey mev -r --indefclass 0.01"` |
+        | vadr_model_file | measles | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mev-1.02.tar.gz"` |
 
-        </div>                
+        </div>
+
+    ??? toggle "Mumps Defaults"
+        <div class="searchable-table" markdown="block">
+
+        | **Overwrite Variable Name** | **Organism** | **Default Value** |
+        |---|---|---|
+        | vadr_options | mumps | `"--mkey muv -r --indefclass 0.025"` |
+        | adr_max_length | mumps | `18000` |
+        | vadr_skip_length | mumps | `0` |
+        | vadr_memory | mumps | `16` |
+        | vadr_model_file | mumps | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-muv-1.01.tar.gz"` |
+
+        </div>
+
+    ??? toggle "Rubella Defaults"
+        <div class="searchable-table" markdown="block">
+
+        | **Overwrite Variable Name** | **Organism** | **Default Value** |
+        |---|---|---|
+        | vadr_options | rubella | `"--mkey ruv -r"` |
+        | vadr_max_length | rubella | `10000` |
+        | vadr_skip_length | rubella | `0` |
+        | vadr_mem | rubella | `16` |
+        | vadr_model_file | rubella | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-ruv-1.01.tar.gz"` |
+    
 ### Workflow Tasks
 
 All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT, and ClearLabs workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaCoV workflows subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
@@ -449,18 +490,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | Software Documentation | [Nextclade](https://docs.nextstrain.org/projects/nextclade/en/stable/) |
         | Original Publication(s) | [Nextclade: clade assignment, mutation calling and quality control for viral genomes.](https://doi.org/10.21105/joss.03773) |
 
-??? task "`vadr`"
-
-    VADR annotates and validates completed assembly files.
-
-    !!! techdetails "VADR Technical Details"        
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_vadr.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl) |
-        | Software Source Code | <https://github.com/ncbi/vadr> |
-        | Software Documentation | <https://github.com/ncbi/vadr/wiki> |
-        | Original Publication(s) | For SARS-CoV-2: *[Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR](https://doi.org/10.1093/nargab/lqad002)*<br> For non-SARS_CoV-2: [*VADR: validation and annotation of virus sequence submissions to GenBank*](https://doi.org/10.1186/s12859-020-3537-3) |
+{{ include_md("common_text/vadr_task.md") }}
 
 ??? task "`quasitools`"
 
