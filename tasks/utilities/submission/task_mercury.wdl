@@ -40,12 +40,13 @@ task mercury {
     String seq_platform = ""
     String gisaid_submitter = ""
     String submitter_email = ""
+    String metadata_organism = ""
   
     # runtime parameters
     Int cpu = 2
     Int disk_size = 100
     Int memory = 8
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.1.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.1.2"
   }
   meta {
     volatile: true
@@ -89,6 +90,7 @@ task mercury {
       ~{"--seq_platform '" + seq_platform + "'"} \
       ~{"--gisaid_submitter '" + gisaid_submitter + "'"} \
       ~{"--submitter_email '" + submitter_email + "'"} \
+      ~{"--metadata_organism '" + metadata_organism + "'"} \
       --debug
 
     # write out excluded samples file to the stdout
@@ -96,9 +98,13 @@ task mercury {
 
     # output to the initial Terra table with the updated metadata
     python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{terra_project_name}" --workspace "~{terra_workspace_name}" --tsv ~{output_name}_terra_table_to_upload.tsv
+
+    # provide a lowercased organism variable for use later
+    echo "~{organism}" | tr '[:upper:]' '[:lower:]' > ORGANISM_NAME
   >>>
   output {
     String mercury_version = read_string("VERSION")
+    String organism_name = read_string("ORGANISM_NAME")
     File? bankit_fasta = "~{output_name}_bankit_combined.fasta"
     File? bankit_metadata = "~{output_name}.src"
     File? biosample_metadata = "~{output_name}_biosample_metadata.tsv"

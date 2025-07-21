@@ -32,7 +32,7 @@ task tbp_parser {
     
     Int cpu = 1
     Int disk_size = 100   
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.4.5"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.6.0"
     Int memory = 4
   }
   command <<<

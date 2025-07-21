@@ -235,9 +235,9 @@
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/_miniwdl_inputs/0/SRR13687078.primertrim.sorted.bam
     # variant call
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/command
-      md5sum: da7011aeb44b10f39201559c18f2b866
+      md5sum: 11c5f21266f5a581a3accff96bd90b08
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/inputs.json
-      contains: ["bamfile", "variant_min_freq", "samplename"]
+      contains: ["mpileup", "variant_min_freq", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/outputs.json
       contains: ["variant_call", "variant_proportion"]
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/stderr.txt
@@ -249,8 +249,6 @@
       md5sum: 2edd145a24bee2b3465b82715869b561
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/PROPORTION_INTERMEDIATE
       md5sum: 897316929176464ebc9ad085f31e7284
-    - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/SAMTOOLS_VERSION
-      md5sum: 03c5ecf22fdfdb6b240ac3880281a056
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/SRR13687078.variants.tsv
       md5sum: 62866e1b035313f78e617ecd678a96fd
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/SRR13687078.variants.vcf
@@ -263,10 +261,9 @@
       md5sum: 6e4cb2a08eb4c481d33084d41ce6855c
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/unique_variants.tsv
       md5sum: 921b668f54392a4da96177ded87420cf
-    - path: miniwdl_run/call-ivar_consensus/call-variant_call/work/_miniwdl_inputs/0/SRR13687078.primertrim.sorted.bam
     # consensus
     - path: miniwdl_run/call-ivar_consensus/call-consensus/command
-      md5sum: 89e10c8cf1368912456d477a3cb30dbf
+      md5sum: 9b26c53c61e07fdf26eb61ff125887dd
     - path: miniwdl_run/call-ivar_consensus/call-consensus/inputs.json
       contains: ["bamfile", "samplename", "min_depth"]
     - path: miniwdl_run/call-ivar_consensus/call-consensus/outputs.json
@@ -364,14 +361,14 @@
     - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: e98d2fc28664c0622f6b490433286e32
     - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 92bfc4d3b72e6671fa3d6e28b8467047
+      md5sum: 06c58c7c0d183ba579c8d833875c0f40
     - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 0a07a35a46498ae522b3e1c16dab8483
+      md5sum: ead40108c79688ad60d8340711f067a5
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/SRR13687078.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade
     - path: miniwdl_run/call-nextclade_v3/command
-      md5sum: 44bbf25885ef2e2e4820ddde440f0c30
+      md5sum: 74ec4f9fdd291dd03ba4b5cf0d2b80c0
     - path: miniwdl_run/call-nextclade_v3/inputs.json
       contains: ["dataset_name", "dataset_tag", "genome_fasta"]
     - path: miniwdl_run/call-nextclade_v3/outputs.json
@@ -385,7 +382,7 @@
     - path: miniwdl_run/call-nextclade_v3/work/SRR13687078.ivar.consensus.nextclade.json
     - path: miniwdl_run/call-nextclade_v3/work/SRR13687078.ivar.consensus.nextclade.tsv
     - path: miniwdl_run/call-nextclade_v3/work/NEXTCLADE_VERSION
-      md5sum: 72e36f488d0291ef87e547a0aef4a784
+      md5sum: 0e19f9e53f57a0e65b0394fcf7fd01f4
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.aligned.fasta
       md5sum: 59893fd3ef32062d50ded18300024734
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.csv

@@ -17,6 +17,7 @@ import "../../tasks/species_typing/multi/task_ts_mlst.wdl" as ts_mlst_task
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/contamination/task_kmerfinder.wdl" as kmerfinder_task
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
+import "../../tasks/gene_typing/drug_resistance/task_gamma.wdl" as gamma_task
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
 import "../../tasks/utilities/data_handling/task_arln_stats.wdl" as arln_stats
 import "../utilities/file_handling/wf_concatenate_illumina_lanes.wdl" as concatenate_lanes_workflow
@@ -62,12 +63,16 @@ workflow theiaprok_illumina_se {
     Int trim_window_size = 4
     # module options
     Boolean perform_characterization = true # by default run all characterization steps
+    Boolean amrfinder_use_gff = false # by default use nucleotide fasta for amrfinderplus, but user can set this to true if they want to use a gff and protein fasta file
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_kmerfinder = false 
     Boolean call_resfinder = false
     Boolean call_plasmidfinder = true
     Boolean call_abricate = false
+    Boolean call_gamma = false
     Boolean call_arln_stats = false
+    Boolean mlst_scheme_override = false # If true, will force E. coli scheme to be used when Gambit predicts Escherichia coli, otherwise will return scheme MLST predicts.
+    Boolean mlst_run_secondary_scheme = false # If true, will run secondary scheme if primary scheme is of ecoli or abaumannii, these two have multiple schemes that are relevant.
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String bakta_db = "full" # Default: "light" or "full"
@@ -98,7 +103,8 @@ workflow theiaprok_illumina_se {
         max_genome_length = max_genome_length,
         min_coverage = min_coverage,
         skip_mash = skip_mash,
-        expected_genome_length = genome_length
+        expected_genome_length = genome_length,
+        workflow_series = "theiaprok"
     }
   }
   if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
@@ -121,7 +127,8 @@ workflow theiaprok_illumina_se {
           max_genome_length = max_genome_length,
           min_coverage = min_coverage,
           skip_mash = skip_mash,
-          expected_genome_length = genome_length
+          expected_genome_length = genome_length,
+          workflow_series = "theiaprok"
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
@@ -175,8 +182,20 @@ workflow theiaprok_illumina_se {
         call amrfinderplus.amrfinderplus_nuc as amrfinderplus_task {
           input:
             assembly = digger_denovo.assembly_fasta,
+            annotation_assembly = select_first([prokka.prokka_fna,bakta.bakta_fna]),
             samplename = samplename,
-            organism = select_first([expected_taxon, gambit.gambit_predicted_taxon])
+            protein_fasta = select_first([prokka.prokka_faa,bakta.bakta_faa]),
+            gff = select_first([prokka.prokka_gff,bakta.bakta_gff3]),
+            organism = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
+            annotation_format = genome_annotation,
+            use_gff = amrfinder_use_gff
+        }
+        if (call_gamma){
+          call gamma_task.gamma{
+            input:
+              assembly = digger_denovo.assembly_fasta,
+              samplename = samplename
+          }
         }
         if (call_resfinder) {
           call resfinder.resfinder as resfinder_task {
@@ -190,7 +209,9 @@ workflow theiaprok_illumina_se {
           input: 
             assembly = digger_denovo.assembly_fasta,
             samplename = samplename,
-            taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon])
+            taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
+            run_secondary_scheme = mlst_run_secondary_scheme,
+            scheme_override = mlst_scheme_override
         }
         if (genome_annotation == "prokka") {
           call prokka_task.prokka {
@@ -634,13 +655,32 @@ workflow theiaprok_illumina_se {
                 "ts_mlst_novel_alleles": ts_mlst.ts_mlst_novel_alleles,
                 "ts_mlst_predicted_st": ts_mlst.ts_mlst_predicted_st,
                 "ts_mlst_pubmlst_scheme": ts_mlst.ts_mlst_pubmlst_scheme,
+                "ts_mlst_predicted_secondary_st": ts_mlst.ts_mlst_predicted_secondary_st,
+                "ts_mlst_pubmlst_secondary_scheme": ts_mlst.ts_mlst_pubmlst_secondary_scheme,
+                "ts_mlst_secondary_allelic_profile": ts_mlst.ts_mlst_secondary_allelic_profile,
+                "ts_mlst_secondary_novel_alleles": ts_mlst.ts_mlst_secondary_novel_alleles,
                 "ts_mlst_results": ts_mlst.ts_mlst_results,
                 "ts_mlst_version": ts_mlst.ts_mlst_version,
                 "virulencefinder_docker": merlin_magic.virulencefinder_docker,
                 "virulencefinder_hits": merlin_magic.virulencefinder_hits,
                 "virulencefinder_report_tsv": merlin_magic.virulencefinder_report_tsv,
-                "zip": zip
-          }
+                "zip": zip,
+                "arln_assembly_ratio": arln_stats.assembly_ratio,
+                "arln_assembly_zscore": arln_stats.assembly_zscore,
+                "arln_r1_q30_clean": arln_stats.read1_clean_q30,
+                "arln_r1_q30_raw": arln_stats.read1_raw_q30,
+                "arln_stats_docker_version": arln_stats.docker_version,
+                "arln_taxon_assembly_ratio_stdev": arln_stats.taxon_assembly_ratio_stdev,
+                "arln_taxon_gc_mean": arln_stats.taxon_gc_mean,
+                "arln_taxon_gc_percent_stdev": arln_stats.taxon_gc_percent_stdev,
+                "assembler": digger_denovo.assembler_used,
+                "filtered_contigs_metrics": digger_denovo.filtered_contigs_metrics,
+                "gamma_docker": gamma.gamma_docker,
+                "gamma_fasta": gamma.gamma_fasta,
+                "gamma_gff": gamma.gamma_gff,
+                "gamma_results": gamma.gamma_results,
+                "gamma_version": gamma.gamma_version
+            }
           }
         }
         if (call_arln_stats) {
@@ -650,6 +690,7 @@ workflow theiaprok_illumina_se {
               taxon = select_first([gambit.gambit_predicted_taxon, expected_taxon]),
               workflow_type = "se",
               genome_length = quast.genome_length,
+              gc_percent = quast.gc_percent,
               read1_raw = select_first([concatenate_illumina_lanes.read1_concatenated, read1]),
               read1_clean = read_QC_trim.read1_clean
           }
@@ -776,6 +817,12 @@ workflow theiaprok_illumina_se {
     String? amrfinderplus_amr_betalactam_cephalosporin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalosporin_genes
     String? amrfinderplus_amr_betalactam_cephalothin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_cephalothin_genes
     String? amrfinderplus_amr_betalactam_methicillin_genes = amrfinderplus_task.amrfinderplus_amr_betalactam_methicillin_genes
+    # GAMMA Outputs
+    File? gamma_results = gamma.gamma_results
+    File? gamma_gff = gamma.gamma_gff
+    File? gamma_fasta = gamma.gamma_fasta
+    String? gamma_version = gamma.gamma_version
+    String? gamma_docker = gamma.gamma_docker
     # AMR_Search
     File? amr_search_results = merlin_magic.amr_search_results
     File? amr_search_csv = merlin_magic.amr_results_csv
@@ -802,10 +849,14 @@ workflow theiaprok_illumina_se {
     # MLST Typing
     File? ts_mlst_results = ts_mlst.ts_mlst_results
     String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
-    String? ts_mlst_version = ts_mlst.ts_mlst_version
     String? ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
     String? ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile
     File? ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles
+    String? ts_mlst_predicted_secondary_st = ts_mlst.ts_mlst_predicted_secondary_st
+    String? ts_mlst_pubmlst_secondary_scheme = ts_mlst.ts_mlst_pubmlst_secondary_scheme
+    String? ts_mlst_secondary_allelic_profile = ts_mlst.ts_mlst_secondary_allelic_profile
+    File? ts_mlst_secondary_novel_alleles = ts_mlst.ts_mlst_secondary_novel_alleles
+    String? ts_mlst_version = ts_mlst.ts_mlst_version
     String? ts_mlst_docker = ts_mlst.ts_mlst_docker
     # Prokka Results
     File? prokka_gff = prokka.prokka_gff
@@ -1083,6 +1134,10 @@ workflow theiaprok_illumina_se {
     String? arln_r1_q30_raw = arln_stats.read1_raw_q30
     String? arln_r1_q30_clean = arln_stats.read1_clean_q30
     String? arln_assembly_ratio = arln_stats.assembly_ratio
+    String? arln_taxon_assembly_ratio_stdev = arln_stats.taxon_assembly_ratio_stdev
+    String? arln_taxon_gc_percent_stdev = arln_stats.taxon_gc_percent_stdev
+    String? arln_taxon_gc_mean = arln_stats.taxon_gc_mean
+    String? arln_assembly_zscore = arln_stats.assembly_zscore
     String? arln_stats_docker_version = arln_stats.docker_version
   }
 }

@@ -15,6 +15,8 @@ task shigatyper {
     Boolean read1_is_ont = false
   }
   command <<<
+    set -euo pipefail
+    
     # get version information
     shigatyper --version | sed 's/ShigaTyper //' | tee VERSION.txt
 
@@ -40,7 +42,16 @@ task shigatyper {
 
     # rename output TSVs to be more descriptive
     mv -v ~{samplename}.tsv ~{samplename}_shigatyper_summary.tsv
-    mv -v ~{samplename}-hits.tsv ~{samplename}_shigatyper_hits.tsv
+
+    # if 0 reads map to the reference sequences, shigatyper will not produce a hits file
+    # so check for the existence of the hits file before renaming
+    if [ -f ~{samplename}-hits.tsv ]; then
+      echo "Shigatyper hits file exists, renaming..."
+      mv -v ~{samplename}-hits.tsv ~{samplename}_shigatyper_hits.tsv
+    else
+      echo "Hits file does not exist, creating empty hits file..."
+      touch ~{samplename}_shigatyper_hits.tsv
+    fi
 
     # parse summary tsv for prediction, ipaB absence/presence, and notes
     cut -f 2 ~{samplename}_shigatyper_summary.tsv | tail -n 1 > shigatyper_prediction.txt

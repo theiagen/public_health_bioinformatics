@@ -64,16 +64,17 @@ These workflows currently support the following organisms. The first option in t
 - **Influenza** (**`"flu"`**, `"influenza"`, `"Flu"`, `"Influenza"`)
 - **RSV-A** (**`"rsv_a"`**, `"rsv-a"`, `"RSV-A"`, `"RSV_A"`)
 - **RSV-B** (**`"rsv_b"`**, `"rsv-b"`, `"RSV-B"`, `"RSV_B"`)
+- **Measles** (**`"measles"`**, `"Measles"`, `"mev"`, `"MeV"`, `"Morbillivirus"`, `"morbillivirus"`)
 
 The compatibility of each workflow with each pathogen is shown below:
 
-|  | SARS-CoV-2 | Mpox | HIV | WNV | Influenza | RSV-A | RSV-B |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ |
-| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-| ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
-| FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
+|  | SARS-CoV-2 | Mpox | HIV | WNV | Influenza | RSV-A | RSV-B | Measles |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 
+| Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ❌ |
+| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+| ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ |
+| FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
 
 We've provided the following information to help you set up the workflow for each organism in the form of input JSONs.
 
@@ -164,8 +165,8 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | genome_length_input | sars-cov-2 | `29903` |
         | kraken_target_organism_input | sars-cov-2 | `"Severe acute respiratory syndrome coronavirus 2"` |
         | nextclade_dataset_name_input | sars-cov-2 | `"nextstrain/sars-cov-2/wuhan-hu-1/orfs"` |
-        | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.33 "`|
-        | nextclade_dataset_tag_input | sars-cov-2 | `"2025-03-26--11-47-13Z"` |
+        | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34 "`|
+        | nextclade_dataset_tag_input | sars-cov-2 | `"2025-06-09--15-42-38Z"` |
         | reference_genome | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"` |
         | vadr_max_length | sars-cov-2 | `30000` |
         | vadr_mem | sars-cov-2 | `8` |
@@ -182,7 +183,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | genome_length_input | MPXV | `197200` |
         | kraken_target_organism_input | MPXV | `"Monkeypox virus"` |
         | nextclade_dataset_name_input | MPXV | `"nextstrain/mpox/lineage-b.1"` |
-        | nextclade_dataset_tag_input | MPXV | `"2024-11-19--14-18-53Z"` |
+        | nextclade_dataset_tag_input | MPXV | `"2025-04-25--12-24-24Z"` |
         | primer_bed_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.primer.bed"` |
         | reference_genome | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.MT903345.reference.fasta"` |
         | reference_gff_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3"` |
@@ -250,6 +251,16 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         </div>
 
+        !!! tip "H5N1 Additional Defaults"
+            If the sample is designated as H5N1 by either ABRicate or IRMA, an H5N1-specific Nextclade task will run with the following datasets depending on the GenoFLU genotype. 
+            
+            Alternatively, if a `nextclade_custom_input_dataset` variable is provided (available under the `flu_track` task name), the workflow will run that custom dataset on all H5N1 samples, regardless of the GenoFLU genotype.
+
+            | **Overwrite Variable Name** | **GenoFLU Genotype** | **Default Value** | **Notes** |
+            |---|---|---|---|
+            | nextclade_custom_input_dataset | B3.13 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/nextclade_avian-flu_h5n1-cattle-outbreak_h5n1-b3.13_2025-06-24.json"` | Extracted from [nextclade/avian-flu/h5n1-cattle-outbreak](https://nextstrain.org/avian-flu/h5n1-cattle-outbreak/genome) on 2025-06-24 |
+            | nextclade_custom_input_dataset | D1.1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/nextclade_avian-flu_h5n1-d1.1_2025-06-24.json"` | Extracted from [nextclade/avian-flu/h5n1-d1.1](https://nextstrain.org/avian-flu/h5n1-d1.1/genome) on 2025-06-24 |
+
     ??? toggle "RSV-A Defaults"
         <div class="searchable-table" markdown="block">
 
@@ -298,7 +309,18 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | reference_gff_file | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3 | This version of HIV originates from Southern Africa |
 
         </div>
+    
+    ??? toggle "Measles Defaults"
+        <div class="searchable-table" markdown="block">
 
+        | **Overwrite Variable Name** | **Organism** | **Default Value** |
+        |---|---|---|
+        | kraken_target_organism_input | measles | `"Measles morbillivirus"` |
+        | genome_length_input | measles | `16000` |
+        | nextclade_dataset_name_input | measles | `"nextstrain/measles/N450/WHO-2012"` |
+        | nextclade_dataset_tag_input | measles | `"2025-03-26--11-47-13Z"` |
+
+        </div>                
 ### Workflow Tasks
 
 All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT, and ClearLabs workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaCoV workflows subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
