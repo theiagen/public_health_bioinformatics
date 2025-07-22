@@ -73,10 +73,26 @@ task tbprofiler {
     # Collate results
     tb-profiler collate --prefix ~{samplename}
 
-    # merge all vcf files if multiple are present
-    bcftools index ./vcf/*bcf
-    bcftools index ./vcf/*gz
-    bcftools merge --force-samples ./vcf/*bcf ./vcf/*gz > ./vcf/~{samplename}.targets.csq.merged.vcf
+    # convert any bcf files to vcf
+    for bcf_file in ./vcf/*.bcf; do
+      if [[ -f "$bcf_file" ]]; then
+          bcftools view "$bcf_file" -Ov -o "${bcf_file%.bcf}.vcf"
+      fi
+    done
+
+    # decompress any gzipped files because they may need to be recompressed with 'bgzip' specifically
+    gunzip ./vcf/*.gz
+
+    # bgzip compress and index all vcf files (must do this one file at a time)
+    for vcf_file in ./vcf/*.vcf; do
+      if [[ -f "$vcf_file" ]]; then
+        bgzip "$vcf_file"
+        bcftools index "${vcf_file}.gz"
+      fi
+    done
+
+    # merge all vcf files into a single vcf file
+    bcftools merge --force-samples --force-single $(ls ./vcf/*.vcf.gz) > ./vcf/~{samplename}.targets.csq.merged.vcf
 
     python3 <<CODE
     import csv
