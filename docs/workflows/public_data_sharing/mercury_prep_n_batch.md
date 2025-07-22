@@ -6,6 +6,9 @@
 
 ## Mercury_Prep_N_Batch_PHB
 
+!!! tip "Command-line incompatible"
+    This _workflow_ is not compatible with command-line use, but the underlying tool ([`mercury`](https://github.com/theiagen/mercury)) is. If you want to run Mercury on the command-line, please see the tool's [README](https://github.com/theiagen/mercury/blob/main/README.md) for more details.
+
 Mercury prepares and formats metadata and sequencing files **located in Google Cloud Platform (GCP) buckets** for submission to national & international databases, currently NCBI & GISAID. Mercury was initially developed to ingest read, assembly, and metadata files associated with SARS-CoV-2 amplicon reads from clinical samples and format that data for submission per the [Public Health Alliance for Genomic Epidemiology (PH4GE)'s SARS-CoV-2 Contextual Data Specifications](https://github.com/pha4ge/SARS-CoV-2-Contextual-Data-Specification).
 
 Currently, Mercury supports submission preparation for SARS-CoV-2, mpox, and influenza. These organisms have different metadata requirements, and are submitted to different repositories; the following table lists the repositories for each organism & what is supported in Mercury:
