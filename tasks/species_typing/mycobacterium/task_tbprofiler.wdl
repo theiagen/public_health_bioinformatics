@@ -91,8 +91,13 @@ task tbprofiler {
       fi
     done
 
-    # merge all vcf files into a single vcf file
-    bcftools merge --force-samples --force-single $(ls ./vcf/*.vcf.gz) > ./vcf/~{samplename}.targets.csq.merged.vcf
+    # merge all vcf files (if we can) into a single vcf file
+    vcf_count=$(ls ./vcf/*.vcf.gz 2>/dev/null | wc -l)
+    if [ "$vcf_count" -eq 1 ]; then
+      mv ./vcf/*.vcf.gz ./vcf/~{samplename}.targets.csq.merged.vcf
+    else
+      bcftools merge --force-samples $(ls ./vcf/*.vcf.gz) > ./vcf/~{samplename}.targets.csq.merged.vcf
+    fi
 
     python3 <<CODE
     import csv
