@@ -80,7 +80,7 @@ task tbprofiler {
       fi
     done
 
-    # decompress any gzipped files because they may need to be recompressed with 'bgzip' specifically
+    # decompress any gzipped files. must be recompressed with 'bgzip' specifically for bcftools merge
     gunzip ./vcf/*.gz
 
     # bgzip compress and index all vcf files (must do this one file at a time)
@@ -94,10 +94,13 @@ task tbprofiler {
     # merge all vcf files (if we can) into a single vcf file
     vcf_count=$(ls ./vcf/*.vcf.gz 2>/dev/null | wc -l)
     if [ "$vcf_count" -eq 1 ]; then
-      mv ./vcf/*.vcf.gz ./vcf/~{samplename}.targets.csq.merged.vcf
+      mv ./vcf/*.vcf.gz ./vcf/~{samplename}.targets.csq.merged.vcf.gz
     else
-      bcftools merge --force-samples $(ls ./vcf/*.vcf.gz) > ./vcf/~{samplename}.targets.csq.merged.vcf
+      bcftools merge --force-samples $(ls ./vcf/*.vcf.gz) > ./vcf/~{samplename}.targets.csq.merged.vcf.gz
     fi
+
+    # decompress the final merged vcf file for output
+    gunzip ./vcf/~{samplename}.targets.csq.merged.vcf.gz
 
     python3 <<CODE
     import csv
