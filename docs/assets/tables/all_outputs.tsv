@@ -1015,10 +1015,14 @@ trimmomatic_read2_trimmed	File	The read2 file post trimming	TBProfiler_tNGS
 trimmomatic_stats	File	The read trimming statistics	TBProfiler_tNGS
 trimmomatic_version	String	The version of Trimmomatic used	Freyja (Illumina paired-end), Freyja (Illumina single-end), TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
 ts_mlst_allelic_profile	String	Profile of MLST loci and allele numbers predicted by MLST	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+ts_mlst_secondary_allelic_profile	String	Profile of alleles predicted by secondary MLST run	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ts_mlst_docker	String	Docker image used for MLST	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ts_mlst_novel_alleles	File	FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+ts_mlst_secondary_novel_alleles	File	FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk, from the secondary scheme run	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ts_mlst_predicted_st	String	ST predicted by MLST	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+ts_mlst_predicted_secondary_st	String	ST predicted by secondary MLST run	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ts_mlst_pubmlst_scheme	String	PubMLST scheme used byMLST	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+ts_mlst_pubmlst_secondary_scheme	String	PubMLST secondary scheme used by MLST	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ts_mlst_results	File	TSV report with detailed MLST profile, including <https://github.com/tseemann/mlst#missing-data>	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ts_mlst_version	String	Version of Torsten Seeman’s MLST tool used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 upload_date	String	Date the table was uploaded to Terra	TheiaViral_Panel
@@ -1237,3 +1241,11 @@ host_mapping_mean_depth	Float	Average depth from host read mapping	Host_Decontam
 host_mapping_metrics	File	File of mapping metrics	Host_Decontaminate
 host_mapping_stats	File	File of mapping statistics	Host_Decontaminate
 host_percent_mapped_reads	Float	Percentage of reads mapped to host reference genome	Host_Decontaminate
+phylocompare_distance	String	Distance between the phylogenies, or "None"/">0" if distance was unable to be calculated	PhyloCompare
+phylocompare_phb_version	String	The version of the Public Health Bioinformatics (PHB) repository used	PhyloCompare
+phylocompare_flag	String	Flags raised that may confound distance calculation	PhyloCompare
+phylocompare_report	File	Text file of the calculated distances	PhyloCompare
+phylocompare_version	String	Version of PhyloCompare python script	PhyloCompare
+phylocompare_validation	String	"PASS" if distance < `max_distance` and "FAIL" if distance > `max_distance` or could not be calculated	PhyloCompare
+phylocompare_tree1_clean	File	Cleaned newick file for the first tree	PhyloCompare
+phylocompare_tree2_clean	File	Cleaned newick file for the second tree	PhyloCompare
