@@ -2,14 +2,15 @@ version 1.0
 
 task fastbaps {
   input {
-    File tree 
+    File fasta
+    File tree # must be rooted
     Int? levels
     String? character # symmetric, baps, optimise.symmetric, optimise.baps
     
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/fastbaps:1.0.8-dev"
     Int disk_size = 10
-    Int memory = 4
-    Int cpu = 1
+    Int memory = 8
+    Int cpu = 2
   }
   command <<<
     # set -euo pipefail to avoid silent failure
@@ -20,6 +21,7 @@ task fastbaps {
 
     # run fastbaps
     run_fastbaps \
+      --input ~{fasta} \
       --phylogeny ~{tree} \
       --threads ~{cpu} \
       ~{if defined(levels) then "--levels ~{levels}" else ""} \
@@ -35,6 +37,6 @@ task fastbaps {
   }
   output {
     String fastbaps_version = read_string("VERSION")
-    File? fastbaps_clusters = fastbaps_clusters.csv
+    File? fastbaps_clusters = "fastbaps_clusters.csv"
   }
 }
