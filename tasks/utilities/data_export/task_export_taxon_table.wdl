@@ -104,6 +104,9 @@ task export_taxon_table_vsp {
     # replace whitespace from gambit_predicted_taxon with an underscore
     sample_taxon=$(echo ~{gambit_predicted_taxon} | tr ' ' '_')
   
+# check for taxon "other" in taxon table
+    other_species=$(awk -F'\t' '$1=="other" {print $2}' ~{taxon_table})
+
     # prevent failures
     sample_table=""
     # set taxon and table vars
@@ -111,15 +114,18 @@ task export_taxon_table_vsp {
     for index in "${!taxon_array[@]}"; do
       taxon=${taxon_array[$index]}
       table=${table_array[$index]}
-      if [[ "${taxon}" == *"${sample_taxon}"* ]]; then
-        sample_table="${table}"
+      if [[ "${sample_taxon,,}" =~ "${taxon,,}" ]]; then
+        sample_table=${table}
         break
       else 
-        # if the taxon does not match any, push to other_panel_specimen table
         echo "${sample_taxon} does not match ${taxon}."
-        sample_table="other_panel_specimen"
       fi
     done
+
+    if [[ -z "${sample_table}" && -n "${other_species}" ]]; then
+      echo "Assigning Other_Species"
+      sample_table=${other_species}
+    fi
 
     if [ -n "${sample_table}" ]; then
 
