@@ -261,7 +261,7 @@ workflow theiaviral_panel {
  
   output {
     # Number of assembled viruses
-    Int assembled_viruses = length(select_all(export_taxon_table.status))
+    Int assembled_viruses = length(select_all(export_taxon_table_vsp.status))
     # Workflow Versioning
     String theiaviral_panel_version = version_capture.phb_version
     String theiaviral_pannel_analysis_date = version_capture.date
