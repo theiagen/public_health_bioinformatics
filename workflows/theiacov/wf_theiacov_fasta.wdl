@@ -217,5 +217,16 @@ workflow theiacov_fasta {
     String? flu_oseltamivir_resistance = flu_track.flu_oseltamivir_resistance
     String? flu_xofluza_resistance = flu_track.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_track.flu_zanamivir_resistance
+    # Extracted flu segments outputs
+    File? extract_segment_concatenated_fasta = flu_track.extract_segment_concatenated_fasta
+    File? extract_ha_segment_fasta = flu_track.extract_ha_segment_fasta
+    File? extract_na_segment_fasta = flu_track.extract_na_segment_fasta
+    File? extract_pa_segment_fasta = flu_track.extract_pa_segment_fasta
+    File? extract_pb1_segment_fasta = flu_track.extract_pb1_segment_fasta
+    File? extract_pb2_segment_fasta = flu_track.extract_pb2_segment_fasta
+    File? extract_mp_segment_fasta = flu_track.extract_mp_segment_fasta
+    File? extract_np_segment_fasta = flu_track.extract_np_segment_fasta
+    File? extract_ns_segment_fasta = flu_track.extract_ns_segment_fasta
+    String? extract_segment_status = flu_track.extract_segment_status
   }
 }

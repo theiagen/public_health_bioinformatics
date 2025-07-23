@@ -104,6 +104,10 @@ We've provided the following information to help you set up the workflow for eac
 
         The TheiaCoV_FASTA workflow takes in assembly files in FASTA format.
 
+        !!! warning "Note for TheiaCoV_FASTA users analyzing Influenza:"
+
+            TheiaCoV_FASTA will attempt to partition Influenza segments from the input assembly based on contig length. It accepts either a full assembly multifasta with all 8 segments (as separate contigs) or a fasta containing a single segment. Unexpected results or task failures may occur if segment lengths do not match those expected for Influenza A or B viruses.
+
     === "TheiaCoV_ClearLabs"
 
         The TheiaCoV_ClearLabs workflow takes in read data produced by the Clear Dx platform from ClearLabs. However, many users use the TheiaCoV_FASTA workflow instead of this one due to a few known issues when generating assemblies with this pipeline that are not present when using ClearLabs-generated FASTA files.

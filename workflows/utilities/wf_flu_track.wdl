@@ -368,5 +368,16 @@ workflow flu_track {
     String? flu_oseltamivir_resistance = flu_antiviral_substitutions.flu_oseltamivir_resistance
     String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
+    # Extracted flu segments outputs
+    File? extract_segment_concatenated_fasta = extract_flu_segments.concatenated_fasta
+    File? extract_ha_segment_fasta = extract_flu_segments.seg_ha_assembly
+    File? extract_na_segment_fasta = extract_flu_segments.seg_na_assembly
+    File? extract_pa_segment_fasta = extract_flu_segments.seg_pa_assembly
+    File? extract_pb1_segment_fasta = extract_flu_segments.seg_pb1_assembly
+    File? extract_pb2_segment_fasta = extract_flu_segments.seg_pb2_assembly
+    File? extract_mp_segment_fasta = extract_flu_segments.seg_mp_assembly
+    File? extract_np_segment_fasta = extract_flu_segments.seg_np_assembly
+    File? extract_ns_segment_fasta = extract_flu_segments.seg_ns_assembly
+    String? extract_segment_status = extract_flu_segments.segment_status
   }
 }
