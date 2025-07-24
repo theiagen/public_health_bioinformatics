@@ -446,7 +446,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_sonneityping.wdl
       md5sum: 9e069c6ed95805fae7f13c1883bca9a6
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
-      md5sum: 778865d83a93f11847c00004f9ab709c
+      md5sum: 653825a5ebb450dff33a2e068329cb86
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
       md5sum: 9d665d02c1c655c023910b9910dc4c2c
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
