@@ -275,7 +275,7 @@ workflow organism_parameters {
     String hiv_v2_target_organism = "Human immunodeficiency virus 1"
     Int hiv_v2_genome_len = 9840
   }
-  if (organism == "Measles" || organism == "measles" || organism == "mev" || organism == "MeV" || organism == "Morbillivirus" || organism == "morbillivirus") {
+  if (organism == "measles" || organism == "Measles" || organism == "mev" || organism == "MeV" || organism == "Morbillivirus" || organism == "morbillivirus") {
     String measles_org_name = "measles"
     String measles_kraken_target_organism = "Measles morbillivirus"
     String measles_genome_len = 16000
@@ -287,16 +287,18 @@ workflow organism_parameters {
     Int measles_vadr_memory = 24
     File measles_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mev-1.02.tar.gz"
   }
-  if organism == "muv" || organism == "MuV" || organism == "mumps" || organism == "Mumps" || organism == "Mumps virus" || organism == "mumps virus" {
+  if organism == "mumps" || organism == "MuV" || organism == "muv" || organism == "Mumps" || organism == "Mumps virus" || organism == "mumps virus" {
     # vadr options for mumps
+    String mumps_org_name = "mumps"
     String mumps_vadr_options = "--mkey muv -r --indefclass 0.025"
     Int mumps_vadr_max_length = 18000
     Int mumps_vadr_skip_length = 0
     Int mumps_vadr_memory = 16
     File mumps_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-muv-1.01.tar.gz"
   }
-  if organism == "ruv" || organism == "RuV" || organism == "rubella" || organism == "Rubella" || organism == "Rubella virus" || organism == "rubella virus" {
+  if organism == "rubella" || organism == "RuV" || organism == "ruv" || organism == "Rubella" || organism == "Rubella virus" || organism == "rubella virus" {
     # vadr options for rubella
+    String rubella_org_name = "rubella"
     String rubella_vadr_options = "--mkey ruv -r"
     Int rubella_vadr_max_length = 10000
     Int rubella_vadr_skip_length = 0

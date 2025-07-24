@@ -10,7 +10,7 @@ task vadr {
     File vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"
     Int assembly_length_unambiguous
     Int skip_length = 10000
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4"
     Int min_length = 50
     Int max_length = 30000
     Int cpu = 4

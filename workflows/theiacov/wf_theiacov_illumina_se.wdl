@@ -170,8 +170,8 @@ workflow theiacov_illumina_se {
             organism = organism_parameters.standardized_organism
         }
       }
-      if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b"){ 
-        # tasks specific to MPXV, sars-cov-2, WNV, rsv_a and rsv_b
+      if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
+        # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b, measles, mumps, and rubella
         call vadr_task.vadr {
           input:
             genome_fasta = ivar_consensus.assembly_fasta,
