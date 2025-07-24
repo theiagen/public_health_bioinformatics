@@ -17,12 +17,13 @@ workflow vadr_update {
     Int? vadr_memory
   }
   call set_organism_defaults.organism_parameters {
-    organism = organism,
-    vadr_max_length = vadr_max_length,
-    vadr_skip_length = vadr_skip_length,
-    vadr_options = vadr_opts,
-    vadr_model_file = vadr_model_file,
-    vadr_mem = vadr_memory
+    input:
+      organism = organism,
+      vadr_max_length = vadr_max_length,
+      vadr_skip_length = vadr_skip_length,
+      vadr_options = vadr_opts,
+      vadr_model = vadr_model_file,
+      vadr_mem = vadr_memory
   }
   call consensus_qc_task.consensus_qc {
     input:
@@ -30,14 +31,13 @@ workflow vadr_update {
   }
   call vadr_task.vadr {
     input:
-      input:
-        genome_fasta = genome_fasta,
-        assembly_length_unambiguous = consensus_qc.number_ATCG,
-        max_length = organism_parameters.vadr_maxlength,
-        vadr_opts = organism_parameters.vadr_opts,
-        vadr_model_file = organism_parameters.vadr_model_file,
-        skip_length = organism_parameters.vadr_skiplength,
-        memory = organism_parameters.vadr_memory
+      genome_fasta = genome_fasta,
+      assembly_length_unambiguous = consensus_qc.number_ATCG,
+      max_length = organism_parameters.vadr_maxlength,
+      vadr_opts = organism_parameters.vadr_opts,
+      vadr_model_file = organism_parameters.vadr_model_file,
+      skip_length = organism_parameters.vadr_skiplength,
+      memory = organism_parameters.vadr_memory
   }
   call versioning.version_capture {
     input:

@@ -61,7 +61,7 @@ workflow theiacov_fasta {
       vadr_max_length = vadr_max_length,
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_opts,
-      vadr_model_file = vadr_model_file,
+      vadr_model = vadr_model_file,
       vadr_mem = vadr_memory
   }
   call consensus_qc_task.consensus_qc {

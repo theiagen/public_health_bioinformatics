@@ -32,7 +32,7 @@ workflow organism_parameters {
     Int? vadr_skip_length
     String? vadr_options
     Int? vadr_mem
-    File? vadr_model_file
+    File? vadr_model
 
     # pangolin parameters
     String? pangolin_docker_image
@@ -287,7 +287,7 @@ workflow organism_parameters {
     Int measles_vadr_memory = 24
     File measles_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mev-1.02.tar.gz"
   }
-  if organism == "mumps" || organism == "MuV" || organism == "muv" || organism == "Mumps" || organism == "Mumps virus" || organism == "mumps virus" {
+  if (organism == "mumps" || organism == "MuV" || organism == "muv" || organism == "Mumps" || organism == "Mumps virus" || organism == "mumps virus") {
     # vadr options for mumps
     String mumps_org_name = "mumps"
     String mumps_vadr_options = "--mkey muv -r --indefclass 0.025"
@@ -296,7 +296,7 @@ workflow organism_parameters {
     Int mumps_vadr_memory = 16
     File mumps_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-muv-1.01.tar.gz"
   }
-  if organism == "rubella" || organism == "RuV" || organism == "ruv" || organism == "Rubella" || organism == "Rubella virus" || organism == "rubella virus" {
+  if (organism == "rubella" || organism == "RuV" || organism == "ruv" || organism == "Rubella" || organism == "Rubella virus" || organism == "rubella virus") {
     # vadr options for rubella
     String rubella_org_name = "rubella"
     String rubella_vadr_options = "--mkey ruv -r"
@@ -333,6 +333,7 @@ workflow organism_parameters {
     String pangolin_docker = select_first([pangolin_docker_image, sc2_pangolin_docker, ""])
     # vadr options
     String vadr_opts = select_first([vadr_options, sc2_vadr_options, mpox_vadr_options, wnv_vadr_options, flu_vadr_options, rsv_a_vadr_options, rsv_b_vadr_options, "NA"])
+    File vadr_model_file = select_first([vadr_model, sc2_vadr_model_file, mpox_vadr_model_file, wnv_vadr_model_file, flu_vadr_model_file, rsv_a_vadr_model_file, rsv_b_vadr_model_file, measles_vadr_model_file, mumps_vadr_model_file, rubella_vadr_model_file])
     Int vadr_maxlength = select_first([vadr_max_length, sc2_vadr_max_length, mpox_vadr_max_length, wnv_vadr_max_length, flu_vadr_max_length, rsv_a_vadr_max_length, rsv_b_vadr_max_length, 0])
     Int vadr_memory = select_first([vadr_mem, sc2_vadr_memory, mpox_vadr_memory, wnv_vadr_memory, flu_vadr_memory, rsv_a_vadr_memory, rsv_b_vadr_memory, 0])
     Int vadr_skiplength = select_first([vadr_skip_length, sc2_vadr_skip_length, mpox_vadr_skip_length, wnv_vadr_skip_length, flu_vadr_skip_length, rsv_a_vadr_skip_length, rsv_b_vadr_skip_length, 0])
