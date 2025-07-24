@@ -278,9 +278,10 @@ workflow organism_parameters {
   if (organism == "measles" || organism == "Measles" || organism == "mev" || organism == "MeV" || organism == "Morbillivirus" || organism == "morbillivirus") {
     String measles_org_name = "measles"
     String measles_kraken_target_organism = "Measles morbillivirus"
-    String measles_genome_len = 16000
+    Int measles_genome_len = 16000
     String measles_nextclade_ds_tag = "2025-03-26--11-47-13Z"
     String measles_nextclade_ds_name = "nextstrain/measles/N450/WHO-2012"
+    String measles_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/measles/NC_001498.1_measles_reference.fasta"
     String measles_vadr_options = "--mkey mev -r --indefclass 0.01"
     Int measles_vadr_max_length = 18000
     Int measles_vadr_skip_length = 0
@@ -290,6 +291,8 @@ workflow organism_parameters {
   if (organism == "mumps" || organism == "MuV" || organism == "muv" || organism == "Mumps" || organism == "Mumps virus" || organism == "mumps virus") {
     # vadr options for mumps
     String mumps_org_name = "mumps"
+    String mumps_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/mumps/NC_002200.1_mumps_reference.fasta"
+    Int mumps_genome_len = 15300
     String mumps_vadr_options = "--mkey muv -r --indefclass 0.025"
     Int mumps_vadr_max_length = 18000
     Int mumps_vadr_skip_length = 0
@@ -299,6 +302,8 @@ workflow organism_parameters {
   if (organism == "rubella" || organism == "RuV" || organism == "ruv" || organism == "Rubella" || organism == "Rubella virus" || organism == "rubella virus") {
     # vadr options for rubella
     String rubella_org_name = "rubella"
+    String rubella_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rubella/NC_001545.2_rubella_reference.fasta"
+    Int rubella_genome_len = 9800
     String rubella_vadr_options = "--mkey ruv -r"
     Int rubella_vadr_max_length = 10000
     Int rubella_vadr_skip_length = 0
@@ -318,11 +323,11 @@ workflow organism_parameters {
     String standardized_organism = select_first([sc2_org_name, mpox_org_name, wnv_org_name, flu_org_name, rsv_a_org_name, rsv_b_org_name, hiv_v1_org_name, hiv_v2_org_name, measles_org_name, rabies_org_name, organism])
     # reference genome and sequencing information
     File reference = select_first([reference_genome, sc2_reference_genome, mpox_reference_genome, wnv_reference_genome, h1n1_ha_reference, h3n2_ha_reference, vic_ha_reference, yam_ha_reference, h5n1_ha_reference, h1n1_na_reference, h3n2_na_reference, vic_na_reference, yam_na_reference, 
-    rsv_a_reference_genome, rsv_b_reference_genome, hiv_v1_reference_genome, hiv_v2_reference_genome, rabies_nextclade_genome, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    rsv_a_reference_genome, rsv_b_reference_genome, hiv_v1_reference_genome, hiv_v2_reference_genome, rabies_nextclade_genome, measles_reference_genome, mumps_reference_genome, rubella_reference_genome, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File gene_locations_bed = select_first([gene_locations_bed_file, sc2_gene_locations_bed, mpox_gene_locations_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"])
     File primer_bed = select_first([primer_bed_file, mpox_primer_bed_file, wnv_primer_bed_file, hiv_v1_primer_bed, hiv_v2_primer_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"])
     File reference_gff = select_first([reference_gff_file, mpox_reference_gff_file, hiv_v1_reference_gff, hiv_v2_reference_gff, rabies_nextclade_gff, "gs://theiagen-public-resources-rp/empty_files/empty.gff3"])
-    Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len, measles_genome_len, 0])
+    Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len, measles_genome_len, mumps_genome_len, rubella_genome_len, 0])
     # nextclade information
     String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h5n1_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, measles_nextclade_ds_tag, "NA"])
     String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h5n1_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, measles_nextclade_ds_name, "NA"])
@@ -333,7 +338,7 @@ workflow organism_parameters {
     String pangolin_docker = select_first([pangolin_docker_image, sc2_pangolin_docker, ""])
     # vadr options
     String vadr_opts = select_first([vadr_options, sc2_vadr_options, mpox_vadr_options, wnv_vadr_options, flu_vadr_options, rsv_a_vadr_options, rsv_b_vadr_options, measles_vadr_options, mumps_vadr_options, rubella_vadr_options, "NA"])
-    File vadr_model_file = select_first([vadr_model, sc2_vadr_model_file, mpox_vadr_model_file, wnv_vadr_model_file, flu_vadr_model_file, rsv_a_vadr_model_file, rsv_b_vadr_model_file, measles_vadr_model_file, mumps_vadr_model_file, rubella_vadr_model_file])
+    File vadr_model_file = select_first([vadr_model, sc2_vadr_model_file, mpox_vadr_model_file, wnv_vadr_model_file, flu_vadr_model_file, rsv_a_vadr_model_file, rsv_b_vadr_model_file, measles_vadr_model_file, mumps_vadr_model_file, rubella_vadr_model_file, ""])
     Int vadr_maxlength = select_first([vadr_max_length, sc2_vadr_max_length, mpox_vadr_max_length, wnv_vadr_max_length, flu_vadr_max_length, rsv_a_vadr_max_length, rsv_b_vadr_max_length, measles_vadr_max_length, mumps_vadr_max_length, rubella_vadr_max_length, 0])
     Int vadr_memory = select_first([vadr_mem, sc2_vadr_memory, mpox_vadr_memory, wnv_vadr_memory, flu_vadr_memory, rsv_a_vadr_memory, rsv_b_vadr_memory, measles_vadr_memory, mumps_vadr_memory, rubella_vadr_memory, 16])
     Int vadr_skiplength = select_first([vadr_skip_length, sc2_vadr_skip_length, mpox_vadr_skip_length, wnv_vadr_skip_length, flu_vadr_skip_length, rsv_a_vadr_skip_length, rsv_b_vadr_skip_length, measles_vadr_skip_length, mumps_vadr_skip_length, rubella_vadr_skip_length, 0])
