@@ -243,6 +243,6 @@ task nextclade_v3_set {
     File auspice_json = "nextclade_output.auspice.json"
     File nextclade_tsv = "nextclade_output.tsv"
     String nextclade_docker = docker
-    File netclade_ref_tree = "reference_tree.json"
+    File nextclade_ref_tree = "reference_tree.json"
   }
 }

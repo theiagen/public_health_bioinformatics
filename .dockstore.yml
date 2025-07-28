@@ -257,7 +257,7 @@ workflows:
     - /tests/inputs/empty.json
  - name: Nextclade_Batch_PHB 
    subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_batch.wdladdToRefTree
+   primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_batch.wdl
  - name: Terra_2_GISAID_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/submission/wf_terra_2_gisaid.wdl
