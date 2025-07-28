@@ -182,7 +182,6 @@ task nextclade_v3_set {
         ~{"--tag " + dataset_tag} \
         -o nextclade_dataset_dir \
         --verbosity ~{verbosity}
-
     fi
     
 
