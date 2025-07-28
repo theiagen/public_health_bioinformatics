@@ -157,7 +157,7 @@ task nextclade_v3_set {
   input {
     Array[File] genome_fastas
     File? reference_tree_json
-    File? nextclade_pathogen_json
+    File? pathogen_json
     File? gene_annotations_gff
     File? input_ref
     String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5"
@@ -218,7 +218,7 @@ task nextclade_v3_set {
     nextclade run \
       --input-dataset nextclade_dataset_dir/ \
       --input-tree ${tree_json} \
-      ~{"--input-pathogen-json " + nextclade_pathogen_json} \
+      ~{"--input-pathogen-json " + pathogen_json} \
       ~{"--input-annotation " + gene_annotations_gff} \
       ~{"--input-ref " + input_ref} \
       --output-json nextclade_output.json \

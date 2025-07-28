@@ -12,18 +12,18 @@ workflow nextclade_batch {
       File? input_ref
       File? gene_annotations_gff
       File? reference_tree_json
-      File? nextclade_pathogen_json
-      String nextclade_dataset_name
+      File? pathogen_json
+      String dataset_name
       String? dataset_tag
     }
     call nextclade_analysis.nextclade_v3_set { # nextclade analysis
       input:
         genome_fastas = assembly_fastas,
         reference_tree_json = reference_tree_json,
-        nextclade_pathogen_json = nextclade_pathogen_json,
+        pathogen_json = pathogen_json,
         gene_annotations_gff = gene_annotations_gff,
         input_ref = input_ref,
-        dataset_name = nextclade_dataset_name,
+        dataset_name = dataset_name,
         dataset_tag = dataset_tag
     }
     call versioning.version_capture {
