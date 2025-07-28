@@ -726,8 +726,8 @@ resfinder_predicted_resistance_Tmp	String	States either Resistance or No Resi
 resfinder_predicted_xdr_shigella	String	Final prediction of XDR Shigella status based on CDC definition. Explanation can be found in the description above this table.	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 resfinder_results	File	Predicted resistance genes grouped by antibiotic class	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 resfinder_seqs	File	FASTA of resistance gene sequences from user’s input sequence	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-samples_to_ref_tree_analysis_date	String	Date of analysis	Sample_to_Ref_Tree
-samples_to_ref_tree_version	String	Version of the Public Health Bioinformatics (PHB) repository used	Sample_to_Ref_Tree
+nextclade_batch_analysis_date	String	Date of analysis	Nextclade_Batch
+nextclade_batch_version	String	Version of the Public Health Bioinformatics (PHB) repository used	Nextclade_Batch
 samtools_docker	String	The Docker image of samtools	TheiaMeta_Illumina_PE
 samtools_version	String	The version of SAMtools used to sort and index the alignment file	Clair3_Variants_ONT, Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE
 samtools_version_consensus	String	The version of SAMtools used to create the pileup before running iVar consensus	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
@@ -997,11 +997,11 @@ traits_json	File	A JSON file containing sample traits	Augur
 transfer_column_content_analysis_date	String	The date the workflow was run	Transfer_Column_Content
 transfer_column_content_version	String	The version of the repository the workflow is hosted in	Transfer_Column_Content
 transferred_files	File	A list of all of the files now located at the target bucket location (GSURI)	Transfer_Column_Content
-treeUpdate_auspice_json	File	Phylogenetic tree with user placed samples	Sample_to_Ref_Tree
-treeUpdate_nextclade_docker	String	Nextclade docker image used	Sample_to_Ref_Tree
-treeUpdate_nextclade_json	File	JSON file with the results of the Nextclade analysis	Sample_to_Ref_Tree
-treeUpdate_nextclade_tsv	File	Tab-delimited file with Nextclade results	Sample_to_Ref_Tree
-treeUpdate_nextclade_version	String	Nextclade version used	Sample_to_Ref_Tree
+nextclade_batch_auspice_json	File	Phylogenetic tree with user placed samples	Nextclade_Batch
+nextclade_batch_nextclade_docker	String	Nextclade docker image used	Nextclade_Batch
+nextclade_batch_nextclade_json	File	JSON file with the results of the Nextclade analysis	Nextclade_Batch
+nextclade_batch_nextclade_tsv	File	Tab-delimited file with Nextclade results	Nextclade_Batch
+nextclade_batch_nextclade_version	String	Nextclade version used	Nextclade_Batch
 trimmomatic_docker	String	The docker image used for the trimmomatic module in this workflow	Freyja (Illumina paired-end), Freyja (Illumina single-end), TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
 trimmomatic_read1_trimmed	File	The read1 file post trimming	TBProfiler_tNGS
 trimmomatic_read2_trimmed	File	The read2 file post trimming	TBProfiler_tNGS

@@ -3,7 +3,7 @@ version 1.0
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_analysis
 
-workflow nextclade_addToRefTree {
+workflow nextclade_batch {
     meta {
       description: "Nextclade workflow that adds samples to a curated JSON tree from Augur."
     }
@@ -30,13 +30,13 @@ workflow nextclade_addToRefTree {
       input:
     }
     output {
-      String treeUpdate_nextclade_version = select_first([nextclade_v3_set.nextclade_version, ""])
-      File treeUpdate_nextclade_json = select_first([nextclade_v3_set.nextclade_json, ""])
-      File treeUpdate_auspice_json = select_first([nextclade_v3_set.auspice_json, ""])
-      File treeUpdate_nextclade_tsv = select_first([nextclade_v3_set.nextclade_tsv, ""])
-      String treeUpdate_nextclade_docker = select_first([nextclade_v3_set.nextclade_docker, ""])
+      String nextclade_batch_nextclade_version = select_first([nextclade_v3_set.nextclade_version, ""])
+      File nextclade_batch_nextclade_json = select_first([nextclade_v3_set.nextclade_json, ""])
+      File nextclade_batch_auspice_json = select_first([nextclade_v3_set.auspice_json, ""])
+      File nextclade_batch_nextclade_tsv = select_first([nextclade_v3_set.nextclade_tsv, ""])
+      String nextclade_batch_nextclade_docker = select_first([nextclade_v3_set.nextclade_docker, ""])
       # Version Capture
-      String samples_to_ref_tree_version = version_capture.phb_version
-      String samples_to_ref_tree_analysis_date = version_capture.date
+      String nextclade_batch_version = version_capture.phb_version
+      String nextclade_batch_analysis_date = version_capture.date
     }
 }

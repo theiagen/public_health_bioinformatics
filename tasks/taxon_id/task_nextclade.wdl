@@ -246,6 +246,3 @@ task nextclade_v3_set {
     File netclade_ref_tree = "reference_tree.json"
   }
 }
-reference_tree.json"
-  }
-}
