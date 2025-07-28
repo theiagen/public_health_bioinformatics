@@ -16,7 +16,7 @@ workflow nextclade_addToRefTree {
       String nextclade_dataset_name
       String? dataset_tag
     }
-    call nextclade_analysis.nextclade_add_ref { # nextclade analysis
+    call nextclade_analysis.nextclade_v3_set { # nextclade analysis
       input:
         genome_fastas = assembly_fastas,
         reference_tree_json = reference_tree_json,
@@ -30,11 +30,11 @@ workflow nextclade_addToRefTree {
       input:
     }
     output {
-      String treeUpdate_nextclade_version = select_first([nextclade_add_ref.nextclade_version, ""])
-      File treeUpdate_nextclade_json = select_first([nextclade_add_ref.nextclade_json, ""])
-      File treeUpdate_auspice_json = select_first([nextclade_add_ref.auspice_json, ""])
-      File treeUpdate_nextclade_tsv = select_first([nextclade_add_ref.nextclade_tsv, ""])
-      String treeUpdate_nextclade_docker = select_first([nextclade_add_ref.nextclade_docker, ""])
+      String treeUpdate_nextclade_version = select_first([nextclade_v3_set.nextclade_version, ""])
+      File treeUpdate_nextclade_json = select_first([nextclade_v3_set.nextclade_json, ""])
+      File treeUpdate_auspice_json = select_first([nextclade_v3_set.auspice_json, ""])
+      File treeUpdate_nextclade_tsv = select_first([nextclade_v3_set.nextclade_tsv, ""])
+      String treeUpdate_nextclade_docker = select_first([nextclade_v3_set.nextclade_docker, ""])
       # Version Capture
       String samples_to_ref_tree_version = version_capture.phb_version
       String samples_to_ref_tree_analysis_date = version_capture.date
