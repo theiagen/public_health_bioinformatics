@@ -854,6 +854,7 @@ workflow theiaprok_ont {
     String? serotypefinder_serotype = merlin_magic.serotypefinder_serotype
     File? ectyper_results = merlin_magic.ectyper_results
     String? ectyper_version = merlin_magic.ectyper_version
+    File? ectyper_warnings = merlin_magic.ectyper_warnings
     String? ectyper_predicted_serotype = merlin_magic.ectyper_predicted_serotype
     String? ectyper_qc_result = merlin_magic.ectyper_qc_result
     String? ectyper_database_version = merlin_magic.ectyper_database_version

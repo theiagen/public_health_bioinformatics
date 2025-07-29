@@ -859,6 +859,7 @@ workflow merlin_magic {
     String? serotypefinder_serotype = serotypefinder.serotypefinder_serotype
     File? ectyper_results = ectyper.ectyper_results
     String? ectyper_version = ectyper.ectyper_version
+    File? ectyper_warnings = ectyper.ectyper_warnings
     String? ectyper_predicted_serotype = ectyper.ectyper_predicted_serotype
     String? ectyper_qc_result = ectyper.ectyper_qc_result
     String? ectyper_database_version = ectyper.ectyper_database_version
