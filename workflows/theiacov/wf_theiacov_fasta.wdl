@@ -18,7 +18,7 @@ workflow theiacov_fasta {
     File assembly_fasta
     String organism = "sars-cov-2" # options: "sars-cov-2" "MPXV" "WNV" "flu" "rsv_a" "rsv_b
     # flu options
-    String? flu_segment # options: HA or NA. only required if input assembly is a singular flu segment.
+    String? flu_segment # options: HA or NA
     String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1" "H5N1"
     # optional reference information
     File? reference_genome
@@ -37,23 +37,11 @@ workflow theiacov_fasta {
     String? vadr_opts
     Int? vadr_memory
   }
-  # only run abricate if user sets organism = "flu" AND if flu_subtype is unknown/not set by user
-  if (organism == "flu") {
-    call run_flu_track.flu_track {
-      input:
-        assembly_fasta = assembly_fasta,
-        samplename = samplename,
-        standardized_organism = organism,
-        seq_method = seq_method,
-        flu_segment = flu_segment,
-        flu_subtype = flu_subtype
-    }
-  }
   call set_organism_defaults.organism_parameters {
     input:
       organism = organism,
       flu_segment = flu_segment,
-      flu_subtype = select_first([flu_subtype, flu_track.abricate_flu_subtype, "N/A"]),
+      flu_subtype = flu_subtype,
       reference_genome = reference_genome,
       genome_length_input = genome_length,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
@@ -68,6 +56,19 @@ workflow theiacov_fasta {
       assembly_fasta = assembly_fasta,
       reference_genome = organism_parameters.reference,
       genome_length = organism_parameters.genome_length
+  }
+  if (organism == "flu") {
+    call run_flu_track.flu_track {
+      input:
+        assembly_fasta = assembly_fasta,
+        samplename = samplename,
+        standardized_organism = organism,
+        seq_method = seq_method,
+        flu_subtype = flu_subtype,
+        vadr_opts = organism_parameters.vadr_opts,
+        vadr_skip_length = organism_parameters.vadr_skiplength,
+        assembly_length_unambiguous = consensus_qc.number_ATCG
+    }
   }
   if (organism_parameters.standardized_organism == "sars-cov-2") {
     call pangolin.pangolin4 {
@@ -217,16 +218,17 @@ workflow theiacov_fasta {
     String? flu_oseltamivir_resistance = flu_track.flu_oseltamivir_resistance
     String? flu_xofluza_resistance = flu_track.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_track.flu_zanamivir_resistance
-    # Extracted flu segments outputs
-    File? extract_segment_concatenated_fasta = flu_track.extract_segment_concatenated_fasta
-    File? extract_ha_segment_fasta = flu_track.extract_ha_segment_fasta
-    File? extract_na_segment_fasta = flu_track.extract_na_segment_fasta
-    File? extract_pa_segment_fasta = flu_track.extract_pa_segment_fasta
-    File? extract_pb1_segment_fasta = flu_track.extract_pb1_segment_fasta
-    File? extract_pb2_segment_fasta = flu_track.extract_pb2_segment_fasta
-    File? extract_mp_segment_fasta = flu_track.extract_mp_segment_fasta
-    File? extract_np_segment_fasta = flu_track.extract_np_segment_fasta
-    File? extract_ns_segment_fasta = flu_track.extract_ns_segment_fasta
-    String? extract_segment_status = flu_track.extract_segment_status
+    # vadr flu segments outputs
+    File? vadr_segment_concatenated_fasta = flu_track.vadr_segment_concatenated_fasta
+    File? vadr_ha_segment_fasta = flu_track.vadr_ha_segment_fasta
+    File? vadr_na_segment_fasta = flu_track.vadr_na_segment_fasta
+    File? vadr_pa_segment_fasta = flu_track.vadr_pa_segment_fasta
+    File? vadr_pb1_segment_fasta = flu_track.vadr_pb1_segment_fasta
+    File? vadr_pb2_segment_fasta = flu_track.vadr_pb2_segment_fasta
+    File? vadr_mp_segment_fasta = flu_track.vadr_mp_segment_fasta
+    File? vadr_np_segment_fasta = flu_track.vadr_np_segment_fasta
+    File? vadr_ns_segment_fasta = flu_track.vadr_ns_segment_fasta
+    String? vadr_flu_type = flu_track.vadr_flu_type
+    String? vadr_flu_subtype = flu_track.vadr_flu_subtype
   }
 }
