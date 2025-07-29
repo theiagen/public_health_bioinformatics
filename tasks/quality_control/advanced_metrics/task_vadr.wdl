@@ -60,21 +60,12 @@ task vadr {
 
         HA_SUBTYPE=""
         NA_SUBTYPE=""
-        PREV_FLU_TYPE=""
         # extract the flu type, subtype and gene segment from the classification summary
         while IFS=$'\t' read -r -a line; do
           SEQ_NAME="${line[1]}"
           MODEL="${line[6]}"
           FLU_TYPE=$(echo "${MODEL}" | cut -d'-' -f1)
           NUM_SEGMENT=$(echo "${MODEL}" | cut -d'-' -f2)
-
-          # sanity check to make sure the model doesn't flip between fluA and fluB
-          if [[ -z "${PREV_FLU_TYPE}" ]]; then
-            PREV_FLU_TYPE="${FLU_TYPE}"
-          elif [[ "${FLU_TYPE}" != "${PREV_FLU_TYPE}" ]]; then
-            echo "ERROR: VADR detected multiple flu types in the assembly. Found: '${PREV_FLU_TYPE}' and '${FLU_TYPE}'" >&2
-            exit 1
-          fi
 
           # select map based on flu type
           if [[ "${FLU_TYPE}" == "fluA" ]]; then
