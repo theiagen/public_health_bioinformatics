@@ -62,7 +62,7 @@ task ectyper {
     File ectyper_results = "~{samplename}.tsv"
     String ectyper_predicted_serotype = read_string("PREDICTED_SEROTYPE")
     String ectyper_version = read_string("VERSION")
-    String ectyper_warnings = "WARNINGS.txt"
+    File ectyper_warnings = "WARNINGS.txt"
     String ectyper_qc_result = read_string("QC_RESULT")
     String ectyper_database_version = read_string("DATABASE_VERSION")
     String ectyper_pathotype = read_string("PATHOTYPE")
