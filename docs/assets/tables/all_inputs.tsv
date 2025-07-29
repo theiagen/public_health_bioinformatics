@@ -1205,15 +1205,15 @@ ncbi_sftp_upload	disk_size	Int	Amount of storage (in GB) to allocate to the task
 ncbi_sftp_upload	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10	Optional	Terra_2_NCBI	
 ncbi_sftp_upload	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Terra_2_NCBI	
 ncbi_sftp_upload	wait_for	String	Internal component, do not modify		Optional	Terra_2_NCBI	
-nextclade_add_ref	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Nextclade_Batch	
-nextclade_add_ref	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Nextclade_Batch	
-nextclade_add_ref	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5	Optional	Nextclade_Batch	
-nextclade_add_ref	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Nextclade_Batch	
-nextclade_add_ref	verbosity	String	Set the nextclade output verbosity level. Options: off, error, warn, info, debug, trace	warn	Optional	Nextclade_Batch	
+nextclade_v3_set	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Nextclade_Batch	
+nextclade_v3_set	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Nextclade_Batch	
+nextclade_v3_set	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5	Optional	Nextclade_Batch	
+nextclade_v3_set	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Nextclade_Batch	
+nextclade_v3_set	verbosity	String	Set the nextclade output verbosity level. Options: off, error, warn, info, debug, trace	warn	Optional	Nextclade_Batch	
 nextclade_batch	dataset_tag	String	nextclade dataset tag	Uses the dataset tag associated with the nextclade docker image version	Optional	Nextclade_Batch	
-nextclade_batch	gene_annotations_gff	File	A genome annotations file for codon-aware alignment, gene translation and calling of aminoacid mutations	Uses the genome annotation associated with the nextclade dataset name	Optional	Nextclade_Batch	
-nextclade_batch	input_ref	File	An optional FASTA file containing reference sequence. This file should contain exactly 1 sequence.	Uses the reference fasta associated with the specified nextclade dataset name	Optional	Nextclade_Batch	
-nextclade_batch	pathogen_json	File	An optional pathogen JSON file containing configuration and data specific to a pathogen.	Uses the reference pathogen JSON file associated with the specified nextclade dataset name	Optional	Nextclade_Batch	
+nextclade_batch	gene_annotations_gff	File	A genome annotations file for codon-aware alignment, gene translation and calling of amino acid mutations	Uses the genome annotation associated with the nextclade dataset name	Optional	Nextclade_Batch	
+nextclade_batch	input_ref	File	An optional FASTA file containing reference sequence. This file should contain exactly 1 sequence	Uses the reference fasta associated with the specified nextclade dataset name	Optional	Nextclade_Batch	
+nextclade_batch	pathogen_json	File	An optional pathogen JSON file containing configuration and data specific to a pathogen	Uses the reference pathogen JSON file associated with the specified nextclade dataset name	Optional	Nextclade_Batch	
 nextclade_batch	reference_tree_json	File	An optional phylogenetic reference tree file which serves as a target for phylogenetic placement	Uses the reference tree associated with the specified nextclade dataset name	Optional	Nextclade_Batch	
 nextclade_output_parser	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles
 nextclade_output_parser	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles

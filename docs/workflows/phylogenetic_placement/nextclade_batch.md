@@ -6,12 +6,12 @@
 
 ## Nextclade_Batch_PHB
 
-[Nextclade](https://docs.nextstrain.org/projects/nextclade/en/stable/index.html) rapidly places new samples onto an existing reference phylogenetic tree. Phylogenetic placement is done by comparing the mutations of the query sequence (relative to the reference) with the mutations of every node and tip in the reference tree, and finding the node which has the most similar set of mutations. This operation is repeated for each query sequence, until all of them are placed onto the tree. This workflow uses the Nextstrain-maintained [nextclade datasets](https://github.com/nextstrain/nextclade_data) for manually inputted datasets or downloaded datasets (e.g. SARS-CoV-2, mpox, influenza A and B, HIV, and RSV-A and RSV-B).
+Nextclade Batch rapidly calls mutations, places samples on a reference phylogenetic tree, and rapidly genotypes batches of samples using [Nextclade](https://docs.nextstrain.org/projects/nextclade/en/stable/index.html). Phylogenetic placement is done by comparing the mutations of the query sequence (relative to the reference) with the mutations of every node and tip in the reference tree, and finding the node which has the most similar set of mutations. This operation is repeated for each query sequence, until all of them are placed onto the tree. This workflow uses the Nextstrain-maintained [nextclade datasets](https://github.com/nextstrain/nextclade_data) for manually inputted datasets or downloaded datasets (e.g. SARS-CoV-2, mpox, influenza A and B, HIV, and RSV-A and RSV-B).
 
 Contact us if you need help generating your own mutation-annotated tree, or follow the instructions available on the Augur wiki [here](https://docs.nextstrain.org/projects/augur/en/stable/index.html).
 
 !!! info "_Placement_ not _construction_"
-    This workflow is not for building a tree from scratch, but rather for the placement of new sequences onto an existing high-quality input reference tree with representative samples on it. In effect, query samples are only compared to reference samples and never to the other query samples.
+    This workflow is not for building a tree from scratch, but rather for genotyping and placement of new sequences onto an existing high-quality input reference tree with representative samples on it. In effect, query samples are only compared to reference samples and never to the other query samples.
 
 ### Inputs
 
