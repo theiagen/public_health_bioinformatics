@@ -20,6 +20,10 @@ task vadr {
   command <<<
     set -euo pipefail
 
+    # set default values for flu type and subtype
+    echo "N/A" > FLU_SUBTYPE
+    echo "N/A" > FLU_TYPE
+
     if [ ~{assembly_length_unambiguous} -gt ~{skip_length} ]; then
 
       # remove terminal ambiguous nucleotides
@@ -129,8 +133,8 @@ task vadr {
     File? outputs_tgz = "~{out_base}.vadr.tar.gz"
     File? vadr_fastas_zip_archive = "~{out_base}_vadr-fasta-files.zip"
     String vadr_docker = docker
-    String? flu_type = read_string("FLU_TYPE")
-    String? flu_subtype = read_string("FLU_SUBTYPE")
+    String flu_type = read_string("FLU_TYPE")
+    String flu_subtype = read_string("FLU_SUBTYPE")
     File? segmented_assemblies_concatenated = "~{out_base}_concatenated.fasta"
     File? seg_ha_assembly = "flu_segments/~{out_base}_HA.fasta"
     File? seg_na_assembly = "flu_segments/~{out_base}_NA.fasta"

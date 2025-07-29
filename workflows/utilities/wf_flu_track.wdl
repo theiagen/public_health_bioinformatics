@@ -373,7 +373,15 @@ workflow flu_track {
     String? flu_oseltamivir_resistance = flu_antiviral_substitutions.flu_oseltamivir_resistance
     String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
-    # vadr flu segments outputs
+    # VADR Annotation QC for flu
+    File? vadr_alerts_list = vadr.alerts_list
+    File? vadr_feature_tbl_pass = vadr.feature_tbl_pass
+    File? vadr_feature_tbl_fail = vadr.feature_tbl_fail
+    File? vadr_classification_summary_file = vadr.classification_summary_file
+    File? vadr_all_outputs_tar_gz = vadr.outputs_tgz
+    String? vadr_docker = vadr.vadr_docker
+    File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
+    String? vadr_num_alerts = vadr.num_alerts
     File? vadr_segment_concatenated_fasta = vadr.segmented_assemblies_concatenated
     File? vadr_ha_segment_fasta = vadr.seg_ha_assembly
     File? vadr_na_segment_fasta = vadr.seg_na_assembly

@@ -2,7 +2,7 @@ version 1.0
 
 import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
-import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check_phb_task
 import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
@@ -93,8 +93,8 @@ workflow theiacov_fasta {
       }
     }
   }
-  # vadr task
-  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu") {
+  # vadr task (don't need to run for flu because VADR is called in the flu_track workflow)
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" ) {
     call vadr_task.vadr {
       input:
         genome_fasta = assembly_fasta,
@@ -107,7 +107,7 @@ workflow theiacov_fasta {
   }
   # QC check task
   if (defined(qc_check_table)) {
-    call qc_check.qc_check_phb as qc_check_task {
+    call qc_check_phb_task.qc_check_phb as qc_check_phb {
       input:
         qc_check_table = qc_check_table,
         expected_taxon = organism_parameters.standardized_organism,
@@ -156,7 +156,7 @@ workflow theiacov_fasta {
     String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
     String? nextclade_qc = nextclade_output_parser.nextclade_qc
     # VADR Annotation QC
-    File?  vadr_alerts_list = vadr.alerts_list
+    File? vadr_alerts_list = vadr.alerts_list
     File? vadr_feature_tbl_pass = vadr.feature_tbl_pass
     File? vadr_feature_tbl_fail = vadr.feature_tbl_fail
     File? vadr_classification_summary_file = vadr.classification_summary_file
@@ -165,8 +165,8 @@ workflow theiacov_fasta {
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
     String? vadr_num_alerts = vadr.num_alerts
     # QC_Check Results
-    String? qc_check = qc_check_task.qc_check
-    File? qc_standard = qc_check_task.qc_standard
+    String? qc_check = qc_check_phb.qc_check
+    File? qc_standard = qc_check_phb.qc_standard
     # Flu Outputs
     String? abricate_flu_type = flu_track.abricate_flu_type
     String? abricate_flu_subtype =  flu_track.abricate_flu_subtype
@@ -218,16 +218,24 @@ workflow theiacov_fasta {
     String? flu_oseltamivir_resistance = flu_track.flu_oseltamivir_resistance
     String? flu_xofluza_resistance = flu_track.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_track.flu_zanamivir_resistance
-    # vadr flu segments outputs
-    File? vadr_segment_concatenated_fasta = flu_track.vadr_segment_concatenated_fasta
-    File? vadr_ha_segment_fasta = flu_track.vadr_ha_segment_fasta
-    File? vadr_na_segment_fasta = flu_track.vadr_na_segment_fasta
-    File? vadr_pa_segment_fasta = flu_track.vadr_pa_segment_fasta
-    File? vadr_pb1_segment_fasta = flu_track.vadr_pb1_segment_fasta
-    File? vadr_pb2_segment_fasta = flu_track.vadr_pb2_segment_fasta
-    File? vadr_mp_segment_fasta = flu_track.vadr_mp_segment_fasta
-    File? vadr_np_segment_fasta = flu_track.vadr_np_segment_fasta
-    File? vadr_ns_segment_fasta = flu_track.vadr_ns_segment_fasta
+    # VADR Annotation QC for flu
+    File?  vadr_flu_alerts_list = flu_track.vadr_alerts_list
+    File? vadr_flu_feature_tbl_pass = flu_track.vadr_feature_tbl_pass
+    File? vadr_flu_feature_tbl_fail = flu_track.vadr_feature_tbl_fail
+    File? vadr_flu_classification_summary_file = flu_track.vadr_classification_summary_file
+    File? vadr_flu_all_outputs_tar_gz = flu_track.vadr_all_outputs_tar_gz
+    String? vadr_flu_docker = flu_track.vadr_docker
+    File? vadr_flu_fastas_zip_archive = flu_track.vadr_fastas_zip_archive
+    String? vadr_flu_num_alerts = flu_track.vadr_num_alerts
+    File? vadr_flu_segment_concatenated_fasta = flu_track.vadr_segment_concatenated_fasta
+    File? vadr_flu_ha_segment_fasta = flu_track.vadr_ha_segment_fasta
+    File? vadr_flu_na_segment_fasta = flu_track.vadr_na_segment_fasta
+    File? vadr_flu_pa_segment_fasta = flu_track.vadr_pa_segment_fasta
+    File? vadr_flu_pb1_segment_fasta = flu_track.vadr_pb1_segment_fasta
+    File? vadr_flu_pb2_segment_fasta = flu_track.vadr_pb2_segment_fasta
+    File? vadr_flu_mp_segment_fasta = flu_track.vadr_mp_segment_fasta
+    File? vadr_flu_np_segment_fasta = flu_track.vadr_np_segment_fasta
+    File? vadr_flu_ns_segment_fasta = flu_track.vadr_ns_segment_fasta
     String? vadr_flu_type = flu_track.vadr_flu_type
     String? vadr_flu_subtype = flu_track.vadr_flu_subtype
   }
