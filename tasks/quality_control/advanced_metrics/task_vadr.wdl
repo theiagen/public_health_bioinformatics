@@ -41,7 +41,7 @@ task vadr {
       tar -C "~{out_base}" -czvf "~{out_base}.vadr.tar.gz" .
 
       # skip header lines and convert classification file to tsv format (21 fields)
-      tail -n +4 ~{out_base}/~{out_base}.vadr.sqc | sed -E 's/  +/\t/g' ~{out_base}/~{out_base}.vadr.sqc > ~{out_base}/~{out_base}.vadr.sqc.tsv
+      tail -n +4 ~{out_base}/~{out_base}.vadr.sqc | sed -E 's/  +/\t/g' > ~{out_base}/~{out_base}.vadr.sqc.tsv
 
       # does the assembly contain influenza segments?
       grp1_model=$(awk '/PASS/ && /flu[AB]-seg/' ~{out_base}/~{out_base}.vadr.sqc.tsv)
@@ -64,51 +64,46 @@ task vadr {
         # extract the flu type, subtype and gene segment from the classification summary
         while IFS=$'\t' read -r -a line; do
           SEQ_NAME="${line[1]}"
-          VALID_SEQ="${line[3]}"
           MODEL="${line[6]}"
+          FLU_TYPE=$(echo "${MODEL}" | cut -d'-' -f1)
+          NUM_SEGMENT=$(echo "${MODEL}" | cut -d'-' -f2)
 
-          # extract flu type and segment number from only passing sequences
-          if [[ "${VALID_SEQ}" == "PASS" ]]; then
-            FLU_TYPE=$(echo "${MODEL}" | cut -d'-' -f1)
-            NUM_SEGMENT=$(echo "${MODEL}" | cut -d'-' -f2)
-
-            # sanity check to make sure the model doesn't flip between fluA and fluB
-            if [[ -z "${PREV_FLU_TYPE}" ]]; then
-              PREV_FLU_TYPE="${FLU_TYPE}"
-            elif [[ "${FLU_TYPE}" != "${PREV_FLU_TYPE}" ]]; then
-              echo "ERROR: VADR detected multiple flu types in the assembly. Found: '${PREV_FLU_TYPE}' and '${FLU_TYPE}'" >&2
-              exit 1
-            fi
-
-            # select map based on flu type
-            if [[ "${FLU_TYPE}" == "fluA" ]]; then
-              GENE_SEGMENT=${fluA_map["${NUM_SEGMENT}"]}
-            else
-              GENE_SEGMENT=${fluB_map["${NUM_SEGMENT}"]}
-            fi
-
-            # grab HA/NA subtype if available
-            if [[ "${line[7]}" != "-" && "${MODEL}" == "fluA-seg4" ]]; then
-              HA_SUBTYPE="${line[7]}"
-            fi
-            if [[ "${line[7]}" != "-" && "${MODEL}" == "fluA-seg6" ]]; then
-              NA_SUBTYPE="${line[7]}"
-            fi
-
-            # create concatentated fasta file header
-            echo ">vadr_concatenated_flu_segments" > "~{out_base}_concatenated.fasta"
-
-            # find matching fasta file and copy it
-            for fasta in tmp_fastas/seq_*; do
-              # check if the sequence name is in the header line of the fasta file
-              if head -n 1 "${fasta}" | grep "${SEQ_NAME}"; then
-                output_segment_fasta="flu_segments/~{out_base}_${GENE_SEGMENT}.fasta"
-                cp "$fasta" "$output_segment_fasta"
-                grep -v ">" "$fasta" >> "~{out_base}_concatenated.fasta"
-                break
-              fi
-            done
+          # sanity check to make sure the model doesn't flip between fluA and fluB
+          if [[ -z "${PREV_FLU_TYPE}" ]]; then
+            PREV_FLU_TYPE="${FLU_TYPE}"
+          elif [[ "${FLU_TYPE}" != "${PREV_FLU_TYPE}" ]]; then
+            echo "ERROR: VADR detected multiple flu types in the assembly. Found: '${PREV_FLU_TYPE}' and '${FLU_TYPE}'" >&2
+            exit 1
           fi
+
+          # select map based on flu type
+          if [[ "${FLU_TYPE}" == "fluA" ]]; then
+            GENE_SEGMENT=${fluA_map["${NUM_SEGMENT}"]}
+          else
+            GENE_SEGMENT=${fluB_map["${NUM_SEGMENT}"]}
+          fi
+
+          # grab HA/NA subtype if available
+          if [[ "${line[7]}" != "-" && "${MODEL}" == "fluA-seg4" ]]; then
+            HA_SUBTYPE="${line[7]}"
+          fi
+          if [[ "${line[7]}" != "-" && "${MODEL}" == "fluA-seg6" ]]; then
+            NA_SUBTYPE="${line[7]}"
+          fi
+
+          # create concatentated fasta file header
+          echo ">vadr_concatenated_flu_segments" > "~{out_base}_concatenated.fasta"
+
+          # find matching fasta file and copy it
+          for fasta in tmp_fastas/seq_*; do
+            # check if the sequence name is in the header line of the fasta file
+            if head -n 1 "${fasta}" | grep "${SEQ_NAME}"; then
+              output_segment_fasta="flu_segments/~{out_base}_${GENE_SEGMENT}.fasta"
+              cp "$fasta" "$output_segment_fasta"
+              grep -v ">" "$fasta" >> "~{out_base}_concatenated.fasta"
+              break
+            fi
+          done
         done < ~{out_base}/~{out_base}.vadr.sqc.tsv
 
         FLU_SUBTYPE="${HA_SUBTYPE}${NA_SUBTYPE}"
