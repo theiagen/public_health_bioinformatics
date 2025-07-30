@@ -1232,3 +1232,4 @@ phylocompare_version	String	Version of PhyloCompare python script	PhyloCompare
 phylocompare_validation	String	"PASS" if distance < `max_distance` and "FAIL" if distance > `max_distance` or could not be calculated	PhyloCompare
 phylocompare_tree1_clean	File	Cleaned newick file for the first tree	PhyloCompare
 phylocompare_tree2_clean	File	Cleaned newick file for the second tree	PhyloCompare
+phylocompare_cophylo_plot	File	PDF cophylogeny plot depicting the topological difference between two phylogenies	PhyloCompare
