@@ -187,7 +187,8 @@ workflow flu_track {
   }
   # if IRMA was run successfully, run the flu_antiviral substitutions task 
   # this block must be placed beneath the previous block because it is used in this subworkflow
-  if (defined(irma.irma_plurality_consensus_assemblies) || (defined(vadr.seg_na_assembly) && defined(vadr.seg_ha_assembly) && defined(vadr.seg_pa_assembly) && defined(vadr.seg_pb1_assembly) && defined(vadr.seg_pb2_assembly) && defined(vadr.seg_mp_assembly))) {
+  if ((defined(irma.seg_na_assembly) && defined(irma.seg_ha_assembly) && defined(irma.seg_pa_assembly) && defined(irma.seg_pb1_assembly) && defined(irma.seg_pb2_assembly) && defined(irma.seg_mp_assembly)) ||
+      (defined(vadr.seg_na_assembly) && defined(vadr.seg_ha_assembly) && defined(vadr.seg_pa_assembly) && defined(vadr.seg_pb1_assembly) && defined(vadr.seg_pb2_assembly) && defined(vadr.seg_mp_assembly))) {
     call flu_antiviral.flu_antiviral_substitutions {
       input:
         na_segment_assembly = select_first([irma.seg_na_assembly_padded, vadr.seg_na_assembly]),
