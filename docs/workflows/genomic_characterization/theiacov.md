@@ -106,7 +106,7 @@ We've provided the following information to help you set up the workflow for eac
 
         !!! warning "Note for TheiaCoV_FASTA users analyzing Influenza:"
 
-            TheiaCoV_FASTA will attempt to partition Influenza segments from the input assembly based on contig length. It accepts either a full assembly multifasta with all 8 segments (as separate contigs) or a fasta containing a single segment. Unexpected results or task failures may occur if segment lengths do not match those expected for Influenza A or B viruses.
+            TheiaCoV_FASTA will use VADR to classify and partition Influenza segments from the input assembly. Unexpected results or task failures may occur if the input assembly is incomplete or contains partial segments.
 
     === "TheiaCoV_ClearLabs"
 
