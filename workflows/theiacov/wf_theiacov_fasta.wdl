@@ -107,7 +107,7 @@ workflow theiacov_fasta {
   }
   # QC check task
   if (defined(qc_check_table)) {
-    call qc_check_phb_task.qc_check_phb as qc_check_phb {
+    call qc_check_phb_task.qc_check_phb as qc_check_task {
       input:
         qc_check_table = qc_check_table,
         expected_taxon = organism_parameters.standardized_organism,
@@ -165,8 +165,8 @@ workflow theiacov_fasta {
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
     String? vadr_num_alerts = vadr.num_alerts
     # QC_Check Results
-    String? qc_check = qc_check_phb.qc_check
-    File? qc_standard = qc_check_phb.qc_standard
+    String? qc_check = qc_check_task.qc_check
+    File? qc_standard = qc_check_task.qc_standard
     # Flu Outputs
     String? abricate_flu_type = flu_track.abricate_flu_type
     String? abricate_flu_subtype =  flu_track.abricate_flu_subtype

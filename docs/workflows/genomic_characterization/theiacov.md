@@ -453,18 +453,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | Software Documentation | [Nextclade](https://docs.nextstrain.org/projects/nextclade/en/stable/) |
         | Original Publication(s) | [Nextclade: clade assignment, mutation calling and quality control for viral genomes.](https://doi.org/10.21105/joss.03773) |
 
-??? task "`vadr`"
-
-    VADR annotates and validates completed assembly files.
-
-    !!! techdetails "VADR Technical Details"        
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_vadr.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl) |
-        | Software Source Code | <https://github.com/ncbi/vadr> |
-        | Software Documentation | <https://github.com/ncbi/vadr/wiki> |
-        | Original Publication(s) | For SARS-CoV-2: *[Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR](https://doi.org/10.1093/nargab/lqad002)*<br> For non-SARS_CoV-2: [*VADR: validation and annotation of virus sequence submissions to GenBank*](https://doi.org/10.1186/s12859-020-3537-3) |
+{{ include_md("common_text/vadr_task.md") }}
 
 ??? task "`quasitools`"
 
@@ -533,8 +522,6 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | --- | --- |
         | Task | [task_genoflu.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/orthomyxoviridae/task_genoflu.wdl) |
         | Software Source Code | [GenoFLU on GitHub](https://github.com/USDA-VS/GenoFLU) |
-
-{{ include_md("common_text/extract_flu_segments_task.md") }}
 
 ### Outputs
 

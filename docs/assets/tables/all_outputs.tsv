@@ -1233,13 +1233,22 @@ phylocompare_version	String	Version of PhyloCompare python script	PhyloCompare
 phylocompare_validation	String	"PASS" if distance < `max_distance` and "FAIL" if distance > `max_distance` or could not be calculated	PhyloCompare
 phylocompare_tree1_clean	File	Cleaned newick file for the first tree	PhyloCompare
 phylocompare_tree2_clean	File	Cleaned newick file for the second tree	PhyloCompare
-extract_segment_concatenated_fasta	File	Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry	TheiaCoV_FASTA
-extract_ha_segment_fasta	File	HA (Haemagglutinin) assembly fasta file	TheiaCoV_FASTA
-extract_na_segment_fasta	File	NA (Neuraminidase) assembly fasta file	TheiaCoV_FASTA
-extract_pa_segment_fasta	File	PA (Polymerase acidic) assembly fasta file	TheiaCoV_FASTA
-extract_pb1_segment_fasta	File	PB1 (Polymerase basic 1) assembly fasta file	TheiaCoV_FASTA
-extract_pb2_segment_fasta	File	PB2 (Polymerase basic 2) assembly fasta file	TheiaCoV_FASTA
-extract_mp_segment_fasta	File	MP (Matrix Protein) assembly fasta file	TheiaCoV_FASTA
-extract_np_segment_fasta	File	NP (Nucleoprotein) assembly fasta file	TheiaCoV_FASTA
-extract_ns_segment_fasta	File	NS (Nonstructural) assembly fasta file	TheiaCoV_FASTA
-extract_segment_status	File	Segment status report indicating whether segments were successfully extracted	TheiaCoV_FASTA
+vadr_flu_alerts_list	File	A file containing all of the fatal alerts as determined by VADR	TheiaCoV_FASTA
+vadr_flu_feature_tbl_pass	File	5 column feature table output for passing sequences. See <https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files> for more complete description.	TheiaCoV_FASTA
+vadr_flu_feature_tbl_fail	File	5 column feature table output for failing sequences. See <https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files> for more complete description.	TheiaCoV_FASTA
+vadr_flu_classification_summary_file	File	Per-sequence tabular classification file. See <https://github.com/ncbi/vadr/blob/master/documentation/formats.md#explanation-of-sqc-suffixed-output-files> for more complete description.	TheiaCoV_FASTA
+vadr_flu_all_outputs_tar_gz	File	A .tar.gz file (gzip-compressed tar archive file) containing all outputs from the VADR command v-annotate.pl. This file must be uncompressed & extracted to see the many files within. See <https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files> for more complete description of all files present within the archive. Useful when deeply investigating a sample's genome & annotations.	TheiaCoV_FASTA
+vadr_flu_docker	String	Docker image used to run VADR	TheiaCoV_FASTA
+vadr_flu_fastas_zip_archive	File	Zip archive containing all fasta files created during VADR analysis	TheiaCoV_FASTA
+vadr_flu_num_alerts	String	Number of fatal alerts as determined by VADR	TheiaCoV_FASTA
+vadr_flu_segment_concatenated_fasta	File	Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry	TheiaCoV_FASTA
+vadr_flu_ha_segment_fasta	File	HA (Haemagglutinin) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_na_segment_fasta	File	NA (Neuraminidase) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_pa_segment_fasta	File	PA (Polymerase acidic) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_pb1_segment_fasta	File	PB1 (Polymerase basic 1) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_pb2_segment_fasta	File	PB2 (Polymerase basic 2) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_mp_segment_fasta	File	MP (Matrix Protein) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_np_segment_fasta	File	NP (Nucleoprotein) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_ns_segment_fasta	File	NS (Nonstructural) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_type	String	Flu type determined by VADR	TheiaCoV_FASTA
+vadr_flu_subtype	String	Flu subtype determined by VADR	TheiaCoV_FASTA
