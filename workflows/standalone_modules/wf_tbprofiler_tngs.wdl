@@ -15,12 +15,11 @@ workflow tbprofiler_tngs {
     String samplename
     Int bases_to_crop = 0
     Boolean skip_trimmomatic = false
-    Boolean ont_data = false
   }
   call versioning.version_capture {
     input:
   }
-  if (! skip_trimmomatic && ! ont_data) {
+  if (! skip_trimmomatic) {
     call trimmomatic_task.trimmomatic_pe {
       input:
         read1 = read1,
@@ -29,26 +28,17 @@ workflow tbprofiler_tngs {
         trimmomatic_base_crop = bases_to_crop
     }
   }
-  if (ont_data) {
-    call tbprofiler_task.tbprofiler as tbprofiler_ont {
-      input:
-        read1 = read1,
-        samplename = samplename
-    }
-  }
-  if (! ont_data) {
-    call tbprofiler_task.tbprofiler as tbprofiler_illumina {
-      input:
-        read1 = select_first([trimmomatic_pe.read1_trimmed, read1]),
-        read2 = select_first([trimmomatic_pe.read2_trimmed, read2]),
-        samplename = samplename
-    }
+  call tbprofiler_task.tbprofiler as tbprofiler {
+    input:
+      read1 = select_first([trimmomatic_pe.read1_trimmed, read1]),
+      read2 = select_first([trimmomatic_pe.read2_trimmed, read2, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"]),
+      samplename = samplename
   }
   call tbp_parser_task.tbp_parser {
     input:
-      tbprofiler_json = select_first([tbprofiler_illumina.tbprofiler_output_json, tbprofiler_ont.tbprofiler_output_json]),
-      tbprofiler_bam = select_first([tbprofiler_illumina.tbprofiler_output_bam, tbprofiler_ont.tbprofiler_output_bam]),
-      tbprofiler_bai = select_first([tbprofiler_illumina.tbprofiler_output_bai, tbprofiler_ont.tbprofiler_output_bai]),
+      tbprofiler_json = tbprofiler.tbprofiler_output_json,
+      tbprofiler_bam = tbprofiler.tbprofiler_output_bam,
+      tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
       samplename = samplename,
       tngs_data = true
   }
@@ -60,20 +50,20 @@ workflow tbprofiler_tngs {
     String? trimmomatic_version = trimmomatic_pe.version
     String? trimmomatic_docker = trimmomatic_pe.trimmomatic_docker
     # tbprofiler outputs
-    File tbprofiler_report_csv = select_first([tbprofiler_illumina.tbprofiler_output_csv, tbprofiler_ont.tbprofiler_output_csv])
-    File tbprofiler_report_tsv = select_first([tbprofiler_illumina.tbprofiler_output_tsv, tbprofiler_ont.tbprofiler_output_tsv])
-    File tbprofiler_report_json = select_first([tbprofiler_illumina.tbprofiler_output_json, tbprofiler_ont.tbprofiler_output_json])
-    File tbprofiler_output_alignment_bam = select_first([tbprofiler_illumina.tbprofiler_output_bam, tbprofiler_ont.tbprofiler_output_bam])
-    File tbprofiler_output_alignment_bai = select_first([tbprofiler_illumina.tbprofiler_output_bai, tbprofiler_ont.tbprofiler_output_bai])
-    String tbprofiler_version = select_first([tbprofiler_illumina.version, tbprofiler_ont.version])
-    String tbprofiler_main_lineage = select_first([tbprofiler_illumina.tbprofiler_main_lineage, tbprofiler_ont.tbprofiler_main_lineage])
-    String tbprofiler_sub_lineage = select_first([tbprofiler_illumina.tbprofiler_sub_lineage, tbprofiler_ont.tbprofiler_sub_lineage])
-    String tbprofiler_dr_type = select_first([tbprofiler_illumina.tbprofiler_dr_type, tbprofiler_ont.tbprofiler_dr_type])
-    String tbprofiler_num_dr_variants = select_first([tbprofiler_illumina.tbprofiler_num_dr_variants, tbprofiler_ont.tbprofiler_num_dr_variants])
-    String tbprofiler_num_other_variants = select_first([tbprofiler_illumina.tbprofiler_num_other_variants, tbprofiler_ont.tbprofiler_num_other_variants])
-    String tbprofiler_resistance_genes = select_first([tbprofiler_illumina.tbprofiler_resistance_genes, tbprofiler_ont.tbprofiler_resistance_genes])
-    Float tbprofiler_median_depth = select_first([tbprofiler_illumina.tbprofiler_median_depth, tbprofiler_ont.tbprofiler_median_depth])
-    Float tbprofiler_pct_reads_mapped = select_first([tbprofiler_illumina.tbprofiler_pct_reads_mapped, tbprofiler_ont.tbprofiler_pct_reads_mapped])
+    File tbprofiler_report_csv = tbprofiler.tbprofiler_output_csv
+    File tbprofiler_report_tsv = tbprofiler.tbprofiler_output_tsv
+    File tbprofiler_report_json = tbprofiler.tbprofiler_output_json
+    File tbprofiler_output_alignment_bam = tbprofiler.tbprofiler_output_bam
+    File tbprofiler_output_alignment_bai = tbprofiler.tbprofiler_output_bai
+    String tbprofiler_version = tbprofiler.version
+    String tbprofiler_main_lineage = tbprofiler.tbprofiler_main_lineage
+    String tbprofiler_sub_lineage = tbprofiler.tbprofiler_sub_lineage
+    String tbprofiler_dr_type = tbprofiler.tbprofiler_dr_type
+    String tbprofiler_num_dr_variants = tbprofiler.tbprofiler_num_dr_variants
+    String tbprofiler_num_other_variants = tbprofiler.tbprofiler_num_other_variants
+    String tbprofiler_resistance_genes = tbprofiler.tbprofiler_resistance_genes
+    Float tbprofiler_median_depth = tbprofiler.tbprofiler_median_depth
+    Float tbprofiler_pct_reads_mapped = tbprofiler.tbprofiler_pct_reads_mapped
     # tbp_parser outputs
     File tbp_parser_looker_report_csv = tbp_parser.tbp_parser_looker_report_csv
     File tbp_parser_laboratorian_report_csv = tbp_parser.tbp_parser_laboratorian_report_csv
