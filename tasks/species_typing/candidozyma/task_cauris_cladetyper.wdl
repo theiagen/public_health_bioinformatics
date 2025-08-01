@@ -12,8 +12,8 @@ task cauris_cladetyper {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0"
     Int memory = 16
 
-    File ref_clade1 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fasta"
-    String ref_clade1_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435_Cauris_B8441_V2_genomic.gbff"
+    File ref_clade1 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta"
+    String ref_clade1_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff"
     File ref_clade2 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta"
     String ref_clade2_annotated = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff"
     File ref_clade3 = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta"

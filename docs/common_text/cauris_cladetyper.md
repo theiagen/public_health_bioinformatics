@@ -10,7 +10,7 @@
 
     | Clade | Genome Accession | Assembly Name | Strain | BioSample Accession |
     |---|---|---|---|---|
-    | Clade I | GCA_002759435.2 | Cand_auris_B8441_V2 | B8441 | SAMN05379624 |
+    | Clade I | GCA_002759435.3 | Cand_auris_B8441_V3 | B8441 | SAMN05379624 |
     | Clade II | GCA_003013715.2 | ASM301371v2 | B11220 | SAMN05379608 |
     | Clade III | GCA_002775015.1 | Cand_auris_B11221_V1 | B11221 | SAMN05379609 |
     | Clade IV | GCA_003014415.1 | Cand_auris_B11243 | B11243 | SAMN05379619 |
