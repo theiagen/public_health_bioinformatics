@@ -10,7 +10,7 @@ PhyloCompare will generate a cophylogeny plot and calculate the distance between
 
 It is difficult to conceptualize what a non-0 distance indicates, so please see the following citations for their interpretation. For unrooted phylogenies, PhyloCompare calculates the [Lin-Rajan-Moret distance](https://pubmed.ncbi.nlm.nih.gov/22184263/), and for rooted phylogenies, PhyloCompare calculates the [matching cluster distance](https://link.springer.com/chapter/10.1007/978-3-319-94968-0_31#:~:text=Phylogenetic%20trees%20are%20fundamental%20to%20biology%20and,is%20an%20important%20problem%20in%20computational%20phylogenetics.). The Robinson-Foulds distance is also calculated, though it is disregarded in validation (see citations for criticism).
 
-PhyloCompare can automatically root upon outgroup tips or the midpoint. If more than a single outgroup tip is supplied then the phylogenies will be rooted on their most recent common ancestor branch. Input multiple outgroup tips as a comma-delimited list, e.g. "tip1,tip2". 
+PhyloCompare can automatically root upon an outgroup tip or the midpoint.
 
 ??? dna "Tree rooting"
     If no rooting options are supplied PhyloCompare will determine if the trees are rooted or unrooted. 
