@@ -5709,9 +5709,9 @@
 </tbody>
 </table>
 <h2 id="phylocompare_phb">PhyloCompare_PHB<a class="headerlink" href="#phylocompare_phb" title="Permanent link">&para;</a></h2>
-<p>PhyloCompare will calculate the distance between two <em>newick-formatted</em> phylogenies as a measure of the difference in their topologies (tip and branch arrangement). A distance of 0 indicates the phylogenies have the same topology. PhyloCompare will validate if the phylogenies exceed an inputted maximum distance. The maximum distance is 0 by default and the phylogenies must have the same tips.</p>
+<p>PhyloCompare will generate a cophylogeny plot and calculate the distance between two <em>newick-formatted</em> phylogenies as a measure of the difference in their topologies (tip and branch arrangement). The cophylogeny plot is a visual of the topological differences between two phylogenies. A distance of 0 indicates the phylogenies have the same topology. PhyloCompare will validate if the phylogenies exceed an inputted maximum distance. The maximum distance is 0 by default and the phylogenies must have the same tips.</p>
 <p>It is difficult to conceptualize what a non-0 distance indicates, so please see the following citations for their interpretation. For unrooted phylogenies, PhyloCompare calculates the <a href="https://pubmed.ncbi.nlm.nih.gov/22184263/">Lin-Rajan-Moret distance</a>, and for rooted phylogenies, PhyloCompare calculates the <a href="https://link.springer.com/chapter/10.1007/978-3-319-94968-0_31#:~:text=Phylogenetic%20trees%20are%20fundamental%20to%20biology%20and,is%20an%20important%20problem%20in%20computational%20phylogenetics.">matching cluster distance</a>. The Robinson-Foulds distance is also calculated, though it is disregarded in validation (see citations for criticism).</p>
-<p>PhyloCompare can automatically root upon outgroup tips or the midpoint. If more than a single outgroup tip is supplied then the phylogenies will be rooted on their most recent common ancestor branch. Input multiple outgroup tips as a comma-delimited list, e.g. "tip1,tip2". </p>
+<p>PhyloCompare can automatically root upon an outgroup tip or the midpoint.</p>
 <details class="dna">
 <summary>Tree rooting</summary>
 <p>If no rooting options are supplied PhyloCompare will determine if the trees are rooted or unrooted. </p>
@@ -5903,6 +5903,11 @@
 </thead>
 <tbody>
 <tr>
+<td>phylocompare_cophylo_plot</td>
+<td>File</td>
+<td>PDF cophylogeny plot depicting the topological difference between two phylogenies</td>
+</tr>
+<tr>
 <td>phylocompare_distance</td>
 <td>String</td>
 <td>Distance between the phylogenies, or "None"/"&gt;0" if distance was unable to be calculated</td>
@@ -6041,7 +6046,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="July 17, 2025 20:41:44 UTC">2025-07-17</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 4, 2025 17:46:28 UTC">2025-08-04</span>
   </span>
 
     
