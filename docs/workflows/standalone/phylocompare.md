@@ -30,6 +30,12 @@ PhyloCompare can automatically root upon an outgroup tip or the midpoint.
 
 ///
 
+### Workflow Tasks
+
+{{ include_md("common_text/root_phylo_task.md", indent=0) }}
+
+{{ include_md("common_text/phylocompare_task.md", indent=0) }}
+
 ### Outputs
 
 /// html | div[class="searchable-table"]
@@ -37,12 +43,6 @@ PhyloCompare can automatically root upon an outgroup tip or the midpoint.
 {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "PhyloCompare"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///
-
-### All Tasks
-
-{{ include_md("common_text/root_phylo_task.md", indent=0) }}
-
-{{ include_md("common_text/phylocompare_task.md", indent=0) }}
 
 ## References
 
