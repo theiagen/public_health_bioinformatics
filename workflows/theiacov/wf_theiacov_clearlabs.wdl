@@ -126,6 +126,9 @@ workflow theiacov_clearlabs {
       nextclade_tsv = nextclade_v3.nextclade_tsv,
       organism = organism
     }
+  }
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
+  # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b, measles, mumps, and rubella
     call vadr_task.vadr {
       input:
         genome_fasta = consensus.consensus_seq,
