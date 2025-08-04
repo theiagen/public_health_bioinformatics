@@ -10,7 +10,7 @@ workflow freyja_update {
   call update.freyja_update_refs {
     input:
   }
-  call transfer.transfer_files {
+  call transfer.transfer_freyja_files {
     input:
       updated_barcodes = freyja_update_refs.updated_barcodes,
       updated_lineages = freyja_update_refs.updated_lineages,

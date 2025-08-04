@@ -1,6 +1,6 @@
 version 1.0
 
-task transfer_files {
+task transfer_freyja_files {
   input {
     String gcp_uri
     File updated_barcodes

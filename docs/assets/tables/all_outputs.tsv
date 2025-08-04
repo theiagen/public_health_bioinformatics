@@ -30,18 +30,22 @@ agrvate_docker	String	The docker used for AgrVATE	TheiaProk_FASTA, TheiaProk_ONT
 agrvate_results	File	A gzipped tarball of all results	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 agrvate_summary	File	The summary file produced	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 agrvate_version	String	The version of AgrVATE used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-aligned_bai	File	Index companion file to the bam file generated during the consensus assembly process	Clair3_Variants_ONT, Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	Clair3_Variants_ONT, Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+aligned_bai	File	Index companion file to the bam file generated during the consensus assembly process	Clair3_Variants_ONT, TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+aligned_bai	String	Index companion file to the bam file generated during the consensus assembly process	Freyja_FASTQ
+aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	Clair3_Variants_ONT, TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+aligned_bam	String	Sorted BAM file containing the alignments of reads to the reference genome	Freyja_FASTQ
 aligned_fai	File	Index file for the reference genome	Clair3_Variants_ONT
 aligned_fastas	File	A FASTA file of the aligned genomes	Augur
-alignment_method	String	The method used to generate the alignment	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
+alignment_method	String	The method used to generate the alignment	Freyja_FASTQ
 amr_results_csv	File	CSV formatted AMR profile	AMR_Search, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 amr_results_pdf	File	PDF formatted AMR profile	AMR_Search, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 amr_search_csv	File	CSV formatted AMR profile	TheiaEuk_ONT
 amr_search_results_pdf	File	PDF formatted AMR profile	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 amr_search_docker	String	Docker image used to run AMR_Search	AMR_Search, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 amr_search_results	File	JSON formatted AMR profile including BLAST results	AMR_Search, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
-amr_search_version	String	Version of AMR_Search libraries used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+amr_search_version	String	Version of AMR_Search libraries used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, AMR_Search
+amr_search_wf_analysis_date	String	Date of analysis	AMR_Search
+amr_search_wf_version	String	Version of PHB used for analysis	AMR_Search
 amrfinderplus_all_report	File	Output TSV file from AMRFinderPlus (described <https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#fields>)	AMRFinderPlus, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 amrfinderplus_amr_betalactam_betalactam_genes	String	Beta-lactam AMR genes identified by AMRFinderPlus that are known to confer resistance to beta-lactams	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 amrfinderplus_amr_betalactam_carbapenem_genes	String	Beta-lactam AMR genes identified by AMRFinderPlus that are known to confer resistance to carbapenem	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -114,9 +118,9 @@ augur_raxml_version	String	The version of raxml used during augur tree, blank if
 augur_version	String	Version of Augur used	Augur
 auspice_input_json	File	JSON file used as input to Auspice	Augur
 auspice_json	File	Auspice-compatable JSON output generated from Nextclade analysis that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-auspice_json_flu_h5n1	File	Auspice-compatable JSON output generated from Nextclade analysis on Influenza H5N1 whole genome that includes the samples included in the "avian-flu/h5n1-cattle-outbreak" nextstrain build that is focused on B3.13 genotype and the single sample placed on this tree	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-auspice_json_flu_ha	File	Auspice-compatable JSON output generated from Nextclade analysis on Influenza HA segment that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
-auspice_json_flu_na	File	Auspice-compatable JSON output generated from Nextclade analysis on Influenza NA segment that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
+auspice_json_flu_h5n1	File	Auspice-compatable JSON output generated from Nextclade analysis on Influenza H5N1 whole genome that includes the samples included in the "avian-flu/h5n1-cattle-outbreak" nextstrain build that is focused on B3.13 genotype and the single sample placed on this tree	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+auspice_json_flu_ha	File	Auspice-compatable JSON output generated from Nextclade analysis on Influenza HA segment that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
+auspice_json_flu_na	File	Auspice-compatable JSON output generated from Nextclade analysis on Influenza NA segment that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
 auspice_json_mpxv	File	Auspice-compatable JSON output generated from Nextclade analysis on Monkeypox virus that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaViral_Illumina_PE, TheiaViral_ONT
 auspice_json_rabies	File	Auspice-compatable JSON output generated from Nextclade analysis on Rabies virus that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaViral_Illumina_PE, TheiaViral_ONT
 bakta_gbff	File	Genomic GenBank format annotation file	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -130,7 +134,7 @@ bandage_version	String	Version of Bandage used	TheiaProk_ONT
 bankit_sqn_to_email	File	**Only for mpox submission**: the sqn file that you will use to submit mpox assembly files to NCBI via email	Mercury_Prep_N_Batch
 basespace_fetch_analysis_date	String	The date the workflow was run	BaseSpace_Fetch
 basespace_fetch_version	String	The version of the repository the Basespace_Fetch workflow is in	BaseSpace_Fetch
-bbduk_docker	String	The Docker image for bbduk, which was used to remove the adapters from the sequences	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+bbduk_docker	String	The Docker image for bbduk, which was used to remove the adapters from the sequences	Freyja_FASTQ (PE), Freyja_FASTQ (SE), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
 bedtools_docker	String	The Docker image for bedtools, which was used to calculate coverage	TheiaMeta_Illumina_PE
 bedtools_version	String	The version of bedtools, which was used to calculate coverage	TheiaMeta_Illumina_PE
 biosample_failures	File	Text file listing samples that failed BioSample submission	Terra_2_NCBI
@@ -144,17 +148,17 @@ busco_docker	String	BUSCO docker image used	TheiaEuk_Illumina_PE, TheiaProk_FAST
 busco_report	File	A plain text summary of the results in BUSCO notation	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 busco_results	String	BUSCO results (see relevant toggle in [this block](https://theiagen.github.io/public_health_bioinformatics/latest/workflows/genomic_characterization/theiaprok/#post-assembly-tasks-performed-for-all-taxa))	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 busco_version	String	BUSCO software version used	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-bwa_version	String	Version of BWA software used	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaEuk_ONT
-cauris_cladetyper_wf_analysis_date	String	Date of analysis	Cauris_Cladetyper
-cauris_cladetyper_wf_version	String	Version of PHB used for the analysis	Cauris_Cladetyper
+bwa_version	String	Version of BWA software used	Freyja_FASTQ (PE), Freyja_FASTQ (SE), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaEuk_ONT
+cauris_cladetyper_wf_analysis_date	String	Date of analysis	Cauris_CladeTyper
+cauris_cladetyper_wf_version	String	Version of PHB used for the analysis	Cauris_CladeTyper
 cg_pipeline_docker	String	Docker file used for running CG-Pipeline on cleaned reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 cg_pipeline_report	File	TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage	TheiaEuk_Illumina_PE
 cg_pipeline_report_clean	File	TSV file of read metrics from clean reads, including average read length, number of reads, and estimated genome coverage	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 cg_pipeline_report_raw	File	TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-cladetyper_annotated_reference	String	The annotated reference file for the identified clade, "None" if no clade was identified	Cauris_Cladetyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
-cladetyper_clade	String	The clade assigned to the input assembly	Cauris_Cladetyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
-cladetyper_docker_image	String	The Docker container used for the task	Cauris_Cladetyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
-cladetyper_gambit_version	String	The version of GAMBIT used for the analysis	Cauris_Cladetyper, TheiaEuk_Illumina_PE
+cladetyper_annotated_reference	String	The annotated reference file for the identified clade, "None" if no clade was identified	Cauris_CladeTyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
+cladetyper_clade	String	The clade assigned to the input assembly	Cauris_CladeTyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
+cladetyper_docker_image	String	The Docker container used for the task	Cauris_CladeTyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
+cladetyper_gambit_version	String	The version of GAMBIT used for the analysis	Cauris_CladeTyper, TheiaEuk_Illumina_PE
 cladetyper_version	String	The version of Cladetyper used for the analysis	TheiaEuk_ONT
 clair3_docker_image	String	Version of the Docker container used for Clair3 variant calling	Clair3_Variants_ONT
 clair3_model_used	String	Name of the Clair3 model used for variant calling	Clair3_Variants_ONT
@@ -185,7 +189,7 @@ contigs_fastg	File	Assembly graph if megahit used for genome assembly	TheiaEuk_I
 contigs_gfa	File	Assembly graph output generated by SPAdes (Illumina: PE, SE) or Flye (ONT), used to visualize and evaluate genome assembly results.	TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 contigs_lastgraph	File	Assembly graph if velvet used for genome assembly	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
 core_gene_snp_wf_analysis_date	String	Date of analysis using Core_Gene_SNP workflow	Core_Gene_SNP
-core_gene_snp_wf_version	String	Version of PHBG used for analysis	Core_Gene_SNP
+core_gene_snp_wf_version	String	Version of PHB used for analysis	Core_Gene_SNP
 czgenepi_prep_analysis_date	String	The date the workflow was run	CZGenEpi_Prep
 czgenepi_prep_version	String	The version of PHB the workflow is in	CZGenEpi_Prep
 datatable	File	Sample-level data table TSV file that was used to update the original sample-level data table in the last step of the TheiaCoV_FASTA_Batch workflow.	TheiaCoV_FASTA_Batch
@@ -210,91 +214,100 @@ est_coverage_raw	Float	Estimated coverage calculated from raw reads and genome l
 est_percent_gene_coverage_tsv	File	Percent coverage for each gene in the organism being analyzed (depending on the organism input)	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 excluded_samples	File	A file that contains the names and reasons why a sample was excluded from submission. **For SARS-CoV-2**, there are two sections: First, a section for any samples that failed to meet pre-determined quality thresholds (`number_N` and `vadr_num_alert`). Second, a section that includes a table that describes any missing required metadata for each sample. This table has the sample name for rows and any columns that have missing metadata as headers. If a sample is missing a piece of required metadata, the corresponding cell will be blank. However, if a different sample does have metadata for that column, the associated value will appear in the corresponding cell. **For flu and mpox**, only the second section described above exists. _Please see the example below for more details_.	Mercury_Prep_N_Batch
 excluded_samples	File	Text file listing samples that were excluded from BioSample submission for missing required metadata	Terra_2_NCBI
-failed_uploads	Boolean	The metadata for any failed uploads	Terra_2_GISAID
-fastp_html_report	File	The HTML report made with fastp	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
-fastp_version	String	The version of fastp used	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+failed_uploads	File	The metadata for any failed uploads	Terra_2_GISAID
+fastp_html_report	File	The HTML report made with fastp	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+fastp_html_report	String	The HTML report made with fastp	Freyja_FASTQ (PE), Freyja_FASTQ (SE)
+fastp_version	String	The version of fastp used	Freyja_FASTQ (PE), Freyja_FASTQ (SE), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE1
 fastq_dl_date	String	The date of the read data download	SRA_Fetch
 fastq_dl_docker	String	The docker used	SRA_Fetch
-fastq_dl_metadata	File	File containing metadata of the provided accession such as submission_accession, library_selection, instrument_platform, among others	SRA_Fetch
+fastq_dl_fastq_metadata	File	File containing metadata of the provided accession such as submission_accession, library_selection, instrument_platform, among others	SRA_Fetch
 fastq_dl_version	String	The version of fastq-dl used	SRA_Fetch
 fastq_dl_warning	String	This warning field is populated if SRA-Lite files are detected. These files contain all quality encoding as Phred-30 or Phred-3.	SRA_Fetch
 fastq_files	Array[File]	FASTQ files produced from basecalling and demultiplexing	Dorado_Basecalling
-fastq_scan_clean1_json	File	The JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
-fastq_scan_clean2_json	File	The JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE
+fastq_scan_clean1_json	File	The JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+fastq_scan_clean1_json	String	The JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length	Freyja_FASTQ (PE), Freyja_FASTQ (SE)
+fastq_scan_clean2_json	File	The JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE
 fastq_scan_docker	String	The Docker image of fastq_scan	TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE
-fastq_scan_num_reads_clean_pairs	String	The number of read pairs after cleaning as calculated by fastq_scan	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
-fastq_scan_num_reads_clean1	Int	The number of forward reads after cleaning as calculated by fastq_scan	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
-fastq_scan_num_reads_clean2	Int	The number of reverse reads after cleaning as calculated by fastq_scan	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE
-fastq_scan_num_reads_raw_pairs	String	The number of input read pairs as calculated by fastq_scan	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
-fastq_scan_num_reads_raw1	Int	The number of input forward reads as calculated by fastq_scan	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
-fastq_scan_num_reads_raw2	Int	The number of input reserve reads as calculated by fastq_scan	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE
+fastq_scan_num_reads_clean_pairs	String	The number of read pairs after cleaning as calculated by fastq_scan	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
+fastq_scan_num_reads_clean1	Int	The number of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+fastq_scan_num_reads_clean1	String	The number of forward reads after cleaning as calculated by fastq_scan	Freyja_FASTQ (PE), Freyja_FASTQ (SE)
+fastq_scan_num_reads_clean2	Int	The number of reverse reads after cleaning as calculated by fastq_scan	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE
+fastq_scan_num_reads_raw_pairs	String	The number of input read pairs as calculated by fastq_scan	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
+fastq_scan_num_reads_raw1	Int	The number of input forward reads as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+fastq_scan_num_reads_raw1	String	The number of input forward reads as calculated by fastq_scan	Freyja_FASTQ (PE), Freyja_FASTQ (SE)
+fastq_scan_num_reads_raw2	Int	The number of input reserve reads as calculated by fastq_scan	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE
 fastq_scan_r1_mean_q_clean	Float	Forward read mean quality value after quality trimming and adapter removal	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 fastq_scan_r1_mean_q_raw	Float	Forward read mean quality value before quality trimming and adapter removal	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 fastq_scan_r1_mean_readlength_clean	Float	Forward read mean read length value after quality trimming and adapter removal	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 fastq_scan_r1_mean_readlength_raw	Float	Forward read mean read length value before quality trimming and adapter removal	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-fastq_scan_raw1_json	File	The JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
-fastq_scan_raw2_json	File	The JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE
-fastq_scan_version	String	The version of fastq_scan	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
-fastqc_clean1_html	File	An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-fastqc_clean2_html	File	An HTML file that provides a graphical visualization of clean reverse read quality from fastqc to open in an internet browser	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
-fastqc_docker	String	The Docker container used for fastqc	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-fastqc_num_reads_clean_pairs	String	The number of read pairs after cleaning by fastqc	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
-fastqc_num_reads_clean1	Int	The number of forward reads after cleaning by fastqc	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-fastqc_num_reads_clean2	Int	The number of reverse reads after cleaning by fastqc	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
-fastqc_num_reads_raw_pairs	String	The number of input read pairs by fastqc before cleaning	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
-fastqc_num_reads_raw1	Int	The number of input forward reads by fastqc before cleaning	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-fastqc_num_reads_raw2	Int	The number of input reverse reads by fastqc before cleaning	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
-fastqc_raw1_html	File	An HTML file that provides a graphical visualization of raw forward read quality from fastqc to open in an internet browser	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-fastqc_raw2_html	File	An HTML file that provides a graphical visualization of raw reverse read quality from fastqc to open in an internet browser	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
-fastqc_version	String	Version of fastqc software used	Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+fastq_scan_raw1_json	File	The JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+fastq_scan_raw1_json	String	The JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length	Freyja_FASTQ (PE), Freyja_FASTQ (SE)
+fastq_scan_raw2_json	File	The JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE
+fastq_scan_version	String	The version of fastq_scan	Freyja_FASTQ (PE), Freyja_FASTQ (SE), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+fastqc_clean1_html	File	An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+fastqc_clean1_html	String	An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser	Freyja_FASTQ (PE), Freyja_FASTQ (SE)
+fastqc_clean2_html	File	An HTML file that provides a graphical visualization of clean reverse read quality from fastqc to open in an internet browser	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
+fastqc_docker	String	The Docker container used for fastqc	Freyja_FASTQ (PE), Freyja_FASTQ (SE), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+fastqc_num_reads_clean_pairs	String	The number of read pairs after cleaning by fastqc	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
+fastqc_num_reads_clean1	Int	The number of forward reads after cleaning by fastqc	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+fastqc_num_reads_clean1	String	The number of forward reads after cleaning by fastqc	Freyja_FASTQ (PE), Freyja_FASTQ (SE)
+fastqc_num_reads_clean2	Int	The number of reverse reads after cleaning by fastqc	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
+fastqc_num_reads_raw_pairs	String	The number of input read pairs by fastqc before cleaning	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
+fastqc_num_reads_raw1	Int	The number of input forward reads by fastqc before cleaning	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+fastqc_num_reads_raw1	String	The number of input forward reads by fastqc before cleaning	Freyja_FASTQ (PE), Freyja_FASTQ (SE)
+fastqc_num_reads_raw2	Int	The number of input reverse reads by fastqc before cleaning	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
+fastqc_raw1_html	File	An HTML file that provides a graphical visualization of raw forward read quality from fastqc to open in an internet browser	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+fastqc_raw1_html	String	An HTML file that provides a graphical visualization of raw forward read quality from fastqc to open in an internet browser	Freyja_FASTQ (PE), Freyja_FASTQ (SE)
+fastqc_raw2_html	File	An HTML file that provides a graphical visualization of raw reverse read quality from fastqc to open in an internet browser	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
+fastqc_version	String	Version of fastqc software used	Freyja_FASTQ (PE), Freyja_FASTQ (SE), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 fetch_srr_accession_analysis_date	String	The date the fetch_srr_accession analysis was run.	Fetch_SRR_Accession
 fetch_srr_accession_version	String	The version of the fetch_srr_accession workflow.	Fetch_SRR_Accession
 filtered_contigs_metrics	File	File containing metrics of contigs filtered	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
-flu_A_315675_resistance	String	resistance mutations to A_315675	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-flu_amantadine_resistance	String	resistance mutations to amantadine	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-flu_compound_367_resistance	String	resistance mutations to compound_367	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-flu_favipiravir_resistance	String	resistance mutations to favipiravir	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-flu_fludase_resistance	String	resistance mutations to fludase	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-flu_L_742_001_resistance	String	resistance mutations to L_742_001	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-flu_laninamivir_resistance	String	resistance mutations to laninamivir	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-flu_oseltamivir_resistance	String	resistance mutations to oseltamivir (Tamiflu®)	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-flu_peramivir_resistance	String	resistance mutations to peramivir (Rapivab®)	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-flu_pimodivir_resistance	String	resistance mutations to pimodivir	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-flu_rimantadine_resistance	String	resistance mutations to rimantadine	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-flu_xofluza_resistance	String	resistance mutations to xofluza (Baloxavir marboxil)	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-flu_zanamivir_resistance	String	resistance mutations to zanamivir (Relenza®)	TheiaCoV_ONT, TheiaCoV_Illumina_PE
+flu_A_315675_resistance	String	resistance mutations to A_315675	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+flu_amantadine_resistance	String	resistance mutations to amantadine	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+flu_compound_367_resistance	String	resistance mutations to compound_367	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+flu_favipiravir_resistance	String	resistance mutations to favipiravir	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+flu_fludase_resistance	String	resistance mutations to fludase	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+flu_L_742_001_resistance	String	resistance mutations to L_742_001	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+flu_laninamivir_resistance	String	resistance mutations to laninamivir	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+flu_oseltamivir_resistance	String	resistance mutations to oseltamivir (Tamiflu®)	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+flu_peramivir_resistance	String	resistance mutations to peramivir (Rapivab®)	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+flu_pimodivir_resistance	String	resistance mutations to pimodivir	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+flu_rimantadine_resistance	String	resistance mutations to rimantadine	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+flu_xofluza_resistance	String	resistance mutations to xofluza (Baloxavir marboxil)	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+flu_zanamivir_resistance	String	resistance mutations to zanamivir (Relenza®)	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
 flye_version	String	Version of Flye software used	TheiaProk_ONT
-freyja_abundances	String	Abundances estimates identified by Freyja and parsed from freyja_demixed file	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_barcode_version	String	Name of barcode file used, or the date if update_db is true	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_bootstrap_lineages	File	A CSV that contains the 0.025, 0.05, 0.25, 0.5 (median), 0.75, 0.95, and 0.975 percentiles for each lineage	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_bootstrap_lineages_pdf	File	A boxplot of the bootstrap lineages CSV file	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_bootstrap_summary	File	A CSV that contains the 0.025, 0.05, 0.25, 0.5 (median), 0.75, 0.95, and 0.975 percentiles for each WHO designated VOI/VOC	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_bootstrap_summary_pdf	File	A boxplot of the bootstrap summary CSV file	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_coverage	Float	Coverage identified by Freyja and parsed from freyja_demixed file	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
+freyja_abundances	String	Abundances estimates identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
+freyja_barcode_version	String	Name of barcode file used, or the date if update_db is true	Freyja_FASTQ
+freyja_barcode_file	String	DESCRIPTION	Freyja_FASTQ
+freyja_bootstrap_lineages	String	A CSV that contains the 0.025, 0.05, 0.25, 0.5 (median), 0.75, 0.95, and 0.975 percentiles for each lineage	Freyja_FASTQ
+freyja_bootstrap_lineages_pdf	String	A boxplot of the bootstrap lineages CSV file	Freyja_FASTQ
+freyja_bootstrap_summary	String	A CSV that contains the 0.025, 0.05, 0.25, 0.5 (median), 0.75, 0.95, and 0.975 percentiles for each WHO designated VOI/VOC	Freyja_FASTQ
+freyja_bootstrap_summary_pdf	String	A boxplot of the bootstrap summary CSV file	Freyja_FASTQ
+freyja_coverage	Float	Coverage identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
 freyja_dashboard	File	The HTML file of the dashboard created	Freyja_Dashboard
 freyja_dashboard_metadata	File	The metadata used to create the dashboard	Freyja_Dashboard
 freyja_dashboard_version	String	The version of Freyja used	Freyja_Dashboard
 freyja_dashboard_wf_analysis_date	String	The date of analysis	Freyja_Dashboard
 freyja_dashboard_wf_version	String	The version of the Public Health Bioinformatics (PHB) repository used	Freyja_Dashboard
-freyja_demixed	File	The main output TSV; see the section directly above this table for an explanation	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
+freyja_demixed	File	The main output TSV; see the section directly above this table for an explanation	Freyja_FASTQ
 freyja_demixed_aggregate	File	A TSV file that summarizes the `freyja_demixed` outputs for all samples	Freyja_Dashboard, Freyja_Plot
-freyja_demixed_parsed	File	Parsed freyja_demixed file, containing the same information, for easy result concatenation	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_depths	File	A TSV listing the depth of every position	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_fastq_wf_analysis_date	String	Date of analysis	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_fastq_wf_version	String	The version of the Public Health Bioinformatics (PHB) repository used	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_lineages	String	Lineages in descending order identified by Freyja and parsed from freyja_demixed file	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_metadata_version	String	Name of lineage metadata file used, or the date if update_db is true	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
+freyja_demixed_parsed	File	Parsed freyja_demixed file, containing the same information, for easy result concatenation	Freyja_FASTQ
+freyja_depths	File	A TSV listing the depth of every position	Freyja_FASTQ
+freyja_fastq_wf_analysis_date	String	Date of analysis	Freyja_FASTQ
+freyja_fastq_wf_version	String	The version of the Public Health Bioinformatics (PHB) repository used	Freyja_FASTQ
+freyja_lineages	String	Lineages in descending order identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
+freyja_lineage_metadata_file	String	DESCRIPTION	Freyja_FASTQ
+freyja_metadata_version	String	Name of lineage metadata file used, or the date if update_db is true	Freyja_FASTQ
 freyja_plot	File	A PDF of the plot produced by the workflow	Freyja_Plot
 freyja_plot_metadata	File	The metadata used to create the plot	Freyja_Plot
 freyja_plot_version	String	The version of Freyja used	Freyja_Plot
 freyja_plot_wf_analysis_date	String	The date of analysis	Freyja_Plot
 freyja_plot_wf_version	String	The version of the Public Health Bioinformatics (PHB) repository used	Freyja_Plot
-freyja_resid	String	Residual of the weighted least absolute deviation problem used to estimate lineage abundances identified by Freyja and parsed from freyja_demixed file	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_sc2_barcode_file	File	Barcode feather file used for SARS-CoV-2. Can be the one provided as input or downloaded by Freyja if update_db is true	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_sc2_lineage_metadata_file	File	Lineage metadata JSON file used for SARS-CoV-2. Can be the one provided as input or downloaded by Freyja if update_db is true	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_summarized	String	Sum of all lineage abundances in a particular WHO designation identified by Freyja and parsed from freyja_demixed file	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_variants	File	The TSV file containing the variants identified by Freyja	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
-freyja_version	String	version of Freyja used	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
+freyja_resid	String	Residual of the weighted least absolute deviation problem used to estimate lineage abundances identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
+freyja_summarized	String	Sum of all lineage abundances in a particular WHO designation identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
+freyja_variants	File	The TSV file containing the variants identified by Freyja	Freyja_FASTQ
+freyja_version	String	version of Freyja used	Freyja_FASTQ
 gamma_results	File	The .gamma file reporting gene matches	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 gamma_gff	File	The GFF file reporting gene matches if boolean was set to true	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 gamma_fasta	File	The FASTA file reporting gene matches if boolean was set to true	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -352,7 +365,7 @@ ivar_variant_proportion_intermediate	String	The proportion of variants of interm
 ivar_variant_version	String	Version of iVar for running the iVar variants command	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
 ivar_vcf	File	iVar tsv output converted to VCF format	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
 ivar_version_consensus	String	Version of iVar for running the iVar consensus command	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
-ivar_version_primtrim	String	Version of iVar for running the iVar trim command	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+ivar_version_primtrim	String	Version of iVar for running the iVar trim command	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 kaptive_k_locus	String	Best matching K locus identified by Kaptive	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 kaptive_k_type	String	Best matching K type identified by Kaptive	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 kaptive_kl_confidence	String	Kaptive’s confidence in the KL match (see <https://github.com/katholt/Kaptive/wiki/Interpreting-the-results>)	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -382,19 +395,23 @@ kmerfinder_query_coverage	String	KmerFinder’s query coverage of the top hit re
 kmerfinder_results_tsv	File	Output TSV file created by KmerFinder	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 kmerfinder_template_coverage	String	Percent of kmer coverage pertaining to the template, or reference selected	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 kmerfinder_top_hit	String	Top hit species of KmerFinder	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-kraken_human	Float	Percent of human read data detected using the Kraken2 software	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE
-kraken_human_dehosted	Float	Percent of human read data detected using the Kraken2 software after host removal	NCBI_Scrub_PE, NCBI_Scrub_SE, Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE
-kraken_report	File	Full Kraken report	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE
-kraken_report_dehosted	File	Full Kraken report after host removal	NCBI_Scrub_PE, NCBI_Scrub_SE, Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE
-kraken_sc2	String	Percent of SARS-CoV-2 read data detected using the Kraken2 software	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE
-kraken_sc2_dehosted	Float	Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal	NCBI_Scrub_PE, NCBI_Scrub_SE, Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE
+kraken_human	Float	Percent of human read data detected using the Kraken2 software	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE
+kraken_human_dehosted	Float	Percent of human read data detected using the Kraken2 software after host removal	NCBI_Scrub_PE, NCBI_Scrub_SE, Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE
+kraken_report	File	Full Kraken report	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE
+kraken_report	String	Full Kraken report	Freyja_FASTQ
+kraken_report_dehosted	File	Full Kraken report after host removal	NCBI_Scrub_PE, NCBI_Scrub_SE, Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE
+kraken_sc2	String	Percent of SARS-CoV-2 read data detected using the Kraken2 software	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE
+kraken_sc2_dehosted	Float	Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE
+kraken_sc2_dehosted	String	Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal	Freyja_FASTQ
 kraken_target_organism	String	Percent of target organism read data detected using the Kraken2 software	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 kraken_target_organism_dehosted	String	Percent of target organism read data detected using the Kraken2 software after host removal	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE
 kraken_target_organism_name	String	The name of the target organism; e.g., "Monkeypox" or "Human immunodeficiency virus"	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-kraken_version	String	Version of Kraken software used	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
+kraken_version	String	Version of Kraken software used	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
 kraken_version_dehosted	String	Version of Kraken2 software used	NCBI_Scrub_PE, NCBI_Scrub_SE
-kraken2_*_wf_analysis_date	String	Date the workflow was run	Kraken_SE, Kraken_PE, Kraken_ONT
-kraken2_*_wf_version	String	Workflow version	Kraken_SE, Kraken_PE, Kraken_ONT
+kraken2_se_wf_analysis_date	String	Date the workflow was run	Kraken_SE, Kraken_ONT
+kraken2_se_wf_version	String	Workflow version	Kraken_SE, Kraken_ONT
+kraken2_pe_wf_analysis_date	String	Date the workflow was run	Kraken_PE
+kraken2_pe_wf_version	String	Workflow version	Kraken_PE
 kraken2_classified_read1	File	FASTQ file of classified forward/R1 reads	Kraken_SE, Kraken_PE, Kraken_ONT
 kraken2_classified_read2	File	FASTQ file of classified reverse/R2 reads (if PE)	Kraken_PE
 kraken2_classified_report	File	Standard Kraken2 output report. TXT filetype, but can be opened in Excel as a TSV file	Kraken_SE, Kraken_PE, Kraken_ONT
@@ -468,14 +485,14 @@ lyveset_pooled_snps_vcf	File	SNPs vcf	Lyve_SET
 lyveset_raxml_tree	File	RAxML-generated tree in newick format	Lyve_SET
 lyveset_wf_analysis_date	String	Date analysis was run	Lyve_SET
 lyveset_wf_version	String	Version of PHB used when running Lyveset_PHB	Lyve_SET
-mashtree_docker	String	The Docker image used to run the mashtree task	MashTree
-mashtree_filtered_metadata	File	Optional output file with filtered metadata that is only produced if the optional `summarize_data` task is used	MashTree
-mashtree_matrix	File	The distance matrix made	MashTree
-mashtree_summarized_data	File	CSV presence/absence matrix generated by the `summarize_data` task from the list of columns provided; formatted for Phandango if `phandango_coloring` input is `true`	MashTree
-mashtree_tree	File	The phylogenetic tree made	MashTree
-mashtree_version	String	The version of mashtree used in the workflow	MashTree
-mashtree_wf_analysis_date	String	The date the workflow was run	MashTree
-mashtree_wf_version	String	The version of PHB the workflow is hosted in	MashTree
+mashtree_docker	String	The Docker image used to run the mashtree task	MashTree_FASTA
+mashtree_filtered_metadata	File	Optional output file with filtered metadata that is only produced if the optional `summarize_data` task is used	MashTree_FASTA
+mashtree_matrix	File	The distance matrix made	MashTree_FASTA
+mashtree_summarized_data	File	CSV presence/absence matrix generated by the `summarize_data` task from the list of columns provided; formatted for Phandango if `phandango_coloring` input is `true`	MashTree_FASTA
+mashtree_tree	File	The phylogenetic tree made	MashTree_FASTA
+mashtree_version	String	The version of mashtree used in the workflow	MashTree_FASTA
+mashtree_wf_analysis_date	String	The date the workflow was run	MashTree_FASTA
+mashtree_wf_version	String	The version of PHB the workflow is hosted in	MashTree_FASTA
 meanbaseq_trim	Float	Mean quality of the nucleotide basecalls aligned to the reference genome after primer trimming	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 meanmapq_trim	Float	Mean quality of the mapped reads to the reference genome after primer trimming	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 medaka_model	String	Model used by Medaka	TheiaProk_ONT, TheiaEuk_ONT
@@ -504,77 +521,77 @@ midas_report	File	TSV report of full MIDAS results	TheiaMeta_Illumina_PE,TheiaPr
 midas_secondary_genus	String	Genus of the next most abundant species after removing all species of the most abundant genus	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 midas_secondary_genus_abundance	String	Relative abundance of secondary genus	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 midas_secondary_genus_coverage	String	Absolute coverage of secondary genus	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-minimap2_docker	String	The Docker image of minimap2	Freyja (ONT), TheiaMeta_Illumina_PE, TheiaViral_ONT
-minimap2_version	String	The version of minimap2	Freyja (ONT), TheiaMeta_Illumina_PE, TheiaViral_ONT
+minimap2_docker	String	The Docker image of minimap2	Freyja_FASTQ (ONT), TheiaMeta_Illumina_PE, TheiaViral_ONT
+minimap2_version	String	The version of minimap2	Freyja_FASTQ (ONT), TheiaMeta_Illumina_PE, TheiaViral_ONT
 n50_value	Int	N50 of assembly calculated by QUAST	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 nanoplot_docker	String	Docker image for nanoplot	TheiaCoV_ONT, TheiaProk_ONT, TheiaEuk_ONT
-nanoplot_html_clean	File	An HTML report describing the clean reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_html_raw	File	An HTML report describing the raw reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_num_reads_clean1	Int	Number of clean reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_num_reads_raw1	Int	Number of raw reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_r1_est_coverage_clean	Float	Estimated coverage on the clean reads by nanoplot	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaEuk_ONT
-nanoplot_r1_est_coverage_raw	Float	Estimated coverage on the raw reads by nanoplot	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaEuk_ONT
-nanoplot_r1_mean_q_clean	Float	Mean quality score of clean forward reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_r1_mean_q_raw	Float	Mean quality score of raw forward reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_r1_mean_readlength_clean	Float	Mean read length of clean forward reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_r1_mean_readlength_raw	Float	Mean read length of raw forward reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_r1_median_q_clean	Float	Median quality score of clean forward reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_r1_median_q_raw	Float	Median quality score of raw forward reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_r1_median_readlength_clean	Float	Median read length of clean forward reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_r1_median_readlength_raw	Float	Median read length of raw forward reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_r1_n50_clean	Float	N50 of clean forward reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_r1_n50_raw	Float	N50 of raw forward reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_r1_stdev_readlength_clean	Float	Standard deviation read length of clean forward reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_r1_stdev_readlength_raw	Float	Standard deviation read length of raw forward reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_tsv_clean	File	A TSV report describing the clean reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-nanoplot_tsv_raw	File	A TSV report describing the raw reads	Freyja (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_html_clean	File	An HTML report describing the clean reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_html_raw	File	An HTML report describing the raw reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_num_reads_clean1	Int	Number of clean reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_num_reads_raw1	Int	Number of raw reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_r1_est_coverage_clean	Float	Estimated coverage on the clean reads by nanoplot	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaEuk_ONT
+nanoplot_r1_est_coverage_raw	Float	Estimated coverage on the raw reads by nanoplot	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaEuk_ONT
+nanoplot_r1_mean_q_clean	Float	Mean quality score of clean forward reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_r1_mean_q_raw	Float	Mean quality score of raw forward reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_r1_mean_readlength_clean	Float	Mean read length of clean forward reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_r1_mean_readlength_raw	Float	Mean read length of raw forward reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_r1_median_q_clean	Float	Median quality score of clean forward reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_r1_median_q_raw	Float	Median quality score of raw forward reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_r1_median_readlength_clean	Float	Median read length of clean forward reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_r1_median_readlength_raw	Float	Median read length of raw forward reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_r1_n50_clean	Float	N50 of clean forward reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_r1_n50_raw	Float	N50 of raw forward reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_r1_stdev_readlength_clean	Float	Standard deviation read length of clean forward reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_r1_stdev_readlength_raw	Float	Standard deviation read length of raw forward reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_tsv_clean	File	A TSV report describing the clean reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoplot_tsv_raw	File	A TSV report describing the raw reads	Freyja_FASTQ (ONT), TheiaCoV_ONT, TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
 nanoplot_version	String	Version of nanoplot used for analysis	TheiaCoV_ONT, TheiaProk_ONT, TheiaEuk_ONT
-nanoq_version	String	Version of nanoq used in analysis	Freyja (ONT), TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
+nanoq_version	String	Version of nanoq used in analysis	Freyja_FASTQ (ONT), TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
 ncbi_scrub_docker	String	The Docker image for NCBI's HRRT (human read removal tool)	NCBI_Scrub_PE, NCBI_Scrub_SE,TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_scrub_human_spots_removed	Int	Number of spots removed (or masked)	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_scrub_pe_analysis_date	String	Date of analysis	NCBI_Scrub_PE, NCBI_Scrub_SE
 ncbi_scrub_pe_version	String	Version of HRRT software used	NCBI_Scrub_PE, NCBI_Scrub_SE
 nextclade_aa_dels	String	Amino-acid deletions as detected by NextClade. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-nextclade_aa_dels_flu_h5n1	String	Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for H5N1 whole genome	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-nextclade_aa_dels_flu_ha	String	Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
-nextclade_aa_dels_flu_na	String	Amino-acid deletions as detected by NextClade. Specific to Flu; it includes deletions for NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
+nextclade_aa_dels_flu_h5n1	String	Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for H5N1 whole genome	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+nextclade_aa_dels_flu_ha	String	Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
+nextclade_aa_dels_flu_na	String	Amino-acid deletions as detected by NextClade. Specific to Flu; it includes deletions for NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
 nextclade_aa_dels_mpxv	String	Amino-acid deletions as detected by Nextclade. Specific to Monkeypox	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_aa_dels_rabies	String	Amino-acid deletions as detected by Nextclade. Specific to Monkeypox	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_aa_subs_mpxv	String	Amino-acid substitutions as detected by Nextclade. Specific to Monkeypox	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_aa_subs_rabies	String	Amino-acid substitutions as detected by Nextclade. Specific to Monkeypox	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_aa_subs	String	Amino-acid substitutions as detected by Nextclade. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-nextclade_aa_subs_flu_h5n1	String	Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for H5N1 whole genome	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-nextclade_aa_subs_flu_ha	String	Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
-nextclade_aa_subs_flu_na	String	Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
+nextclade_aa_subs_flu_h5n1	String	Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for H5N1 whole genome	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+nextclade_aa_subs_flu_ha	String	Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
+nextclade_aa_subs_flu_na	String	Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
 nextclade_clade	String	Nextclade clade designation, will be blank for Flu.	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-nextclade_clade_flu_h5n1	String	Nextclade clade designation, specific to Flu 5N1 whole genome. NOTE: Output will be blank or `NA` since this nextclade dataset does assign clades	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-nextclade_clade_flu_ha	String	Nextclade clade designation, specific to Flu NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-nextclade_clade_flu_na	String	Nextclade clade designation, specific to Flu HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE
+nextclade_clade_flu_h5n1	String	Nextclade clade designation, specific to Flu 5N1 whole genome. NOTE: Output will be blank or `NA` since this nextclade dataset does assign clades	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+nextclade_clade_flu_ha	String	Nextclade clade designation, specific to Flu NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+nextclade_clade_flu_na	String	Nextclade clade designation, specific to Flu HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
 nextclade_clade_rabies	String	Nextclade clade designation, specific to Rabies	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_clade_mpxv	String	Nextclade clade designation, specific to Monkeypox	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_docker	String	Docker image used to run Nextclade	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_ds_tag	String	Dataset tag used to run Nextclade. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_ONT
-nextclade_ds_tag_flu_ha	String	Dataset tag used to run Nextclade, specific to Flu HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
-nextclade_ds_tag_flu_na	String	Dataset tag used to run Nextclade, specific to Flu NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
+nextclade_ds_tag_flu_ha	String	Dataset tag used to run Nextclade, specific to Flu HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
+nextclade_ds_tag_flu_na	String	Dataset tag used to run Nextclade, specific to Flu NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
 nextclade_json	File	Nextclade output in JSON file format. Will be blank for Flu	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_FASTA_Batch
-nextclade_json_flu_h5n1	File	Nextclade output in JSON file format, specific to Flu H5N1 whole genome	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-nextclade_json_flu_ha	File	Nextclade output in JSON file format, specific to Flu HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
-nextclade_json_flu_na	File	Nextclade output in JSON file format, specific to Flu NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
+nextclade_json_flu_h5n1	File	Nextclade output in JSON file format, specific to Flu H5N1 whole genome	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+nextclade_json_flu_ha	File	Nextclade output in JSON file format, specific to Flu HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
+nextclade_json_flu_na	File	Nextclade output in JSON file format, specific to Flu NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
 nextclade_json_rabies	File	Nextclade output in JSON file format, specific to Rabies	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_json_mpxv	File	Nextclade output in JSON file format, specific to Monkeypox	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_lineage	String	Nextclade lineage designation	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 nextclade_lineage_rabies	String	Nextclade lineage designation, specific to Rabies	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_lineage_mpxv	String	Nextclade lineage designation, specific to Monkeypox	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_qc	String	QC metric as determined by Nextclade. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-nextclade_qc_flu_h5n1	String	QC metric as determined by Nextclade, specific to Flu H5N1 whole genome	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-nextclade_qc_flu_ha	String	QC metric as determined by Nextclade, specific to Flu HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
-nextclade_qc_flu_na	String	QC metric as determined by Nextclade, specific to Flu NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
+nextclade_qc_flu_h5n1	String	QC metric as determined by Nextclade, specific to Flu H5N1 whole genome	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+nextclade_qc_flu_ha	String	QC metric as determined by Nextclade, specific to Flu HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
+nextclade_qc_flu_na	String	QC metric as determined by Nextclade, specific to Flu NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
 nextclade_qc_mpxv	String	QC metric as determined by Nextclade, specific to Monkeypox	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_qc_rabies	String	QC metric as determined by Nextclade, specific to Rabies	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_tsv	File	Nextclade output in TSV file format. Will be blank for Flu	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_FASTA_Batch
-nextclade_tsv_flu_h5n1	File	Nextclade output in TSV file format, specific to Flu H5N1 whole genome	TheiaCoV_ONT, TheiaCoV_Illumina_PE
-nextclade_tsv_flu_ha	File	Nextclade output in TSV file format, specific to Flu HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
-nextclade_tsv_flu_na	File	Nextclade output in TSV file format, specific to Flu NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
+nextclade_tsv_flu_h5n1	File	Nextclade output in TSV file format, specific to Flu H5N1 whole genome	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA
+nextclade_tsv_flu_ha	File	Nextclade output in TSV file format, specific to Flu HA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
+nextclade_tsv_flu_na	File	Nextclade output in TSV file format, specific to Flu NA segment	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
 nextclade_tsv_rabies	File	Nextclade output in TSV file format, specific to Rabies	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_tsv_mpxv	File	Nextclade output in TSV file format, specific to Monkeypox	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_version	String	The version of Nextclade software used	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
@@ -630,6 +647,7 @@ pirate_core_alignment_fasta	File	Nucleotide alignments of the core genes as crea
 pirate_core_alignment_gff	File	Annotation data for the gene family within the corresponding fasta file	Core_Gene_SNP
 pirate_core_snp_matrix	File	SNP distance matrix created from the core gene alignment	Core_Gene_SNP
 pirate_docker_image	String	Pirate docker image used	Core_Gene_SNP
+pirate_filtered_metadata	File	Filtered metadata for the core gene alignment	Core_Gene_SNP
 pirate_gene_families_ordered	File	Summary of all gene families, as estimated by Pirate	Core_Gene_SNP
 pirate_iqtree_core_tree	File	Phylogenetic tree produced by IQ-TREE from the core gene alignment	Core_Gene_SNP
 pirate_iqtree_pan_tree	File	Phylogenetic tree produced by IQ-TREE from the pangenome alignment	Core_Gene_SNP
@@ -639,7 +657,7 @@ pirate_pan_alignment_gff	File	Annotation data for the gene family within the cor
 pirate_pan_snp_matrix	File	SNP distance matrix created from the pangenome alignment	Core_Gene_SNP
 pirate_pangenome_summary	File	Summary of the number and frequency of genes in the pangenome, as estimated by Pirate	Core_Gene_SNP
 pirate_presence_absence_csv	File	A file generated by Pirate that allows many post-alignment tools created for Roary to be used on the output from Pirate	Core_Gene_SNP
-pirate_snp_dists_version	String	Version of snp-dists used	Core_Gene_SNP
+pirate_snps_dists_version	String	Version of snp-dists used	Core_Gene_SNP
 pirate_summarized_data	File	The presence/absence matrix generated by the summarize_data task from the list of columns provided	Core_Gene_SNP
 plasmidfinder_db_version	String	Version of PlasmidFnder used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 plasmidfinder_docker	String	PlasmidFinder docker image used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -653,8 +671,8 @@ poppunk_GPS_db_version	String	Version of GPSC database used	TheiaProk_FASTA, The
 poppunk_gps_external_cluster_csv	File	GPSC v6 scheme designations	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 poppunk_version	String	Version of PopPUNK used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 porechop_version	String	Version of Porechop used	TheiaProk_ONT, TheiaViral_ONT, TheiaEuk_ONT
-primer_bed_name	String	Name of the primer bed files used for primer trimming	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-primer_trimmed_read_percent	Float	Percentage of read data with primers trimmed as determined by iVar trim	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+primer_bed_name	String	Name of the primer bed files used for primer trimming	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+primer_trimmed_read_percent	Float	Percentage of read data with primers trimmed as determined by iVar trim	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 prokka_gbk	File	GenBank file produced from Prokka annotation of input FASTA	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 prokka_gff	File	Prokka output GFF3 file containing sequence and annotation (you can view this in IGV)	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 prokka_sqn	File	A Sequin file for GenBank submission	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -688,9 +706,9 @@ read_screen_raw	String	PASS or FAIL result from raw read screening; FAIL accompa
 read_screen_raw_tsv	File	Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 read1	File	File containing the forward reads	BaseSpace_Fetch, SRA_Fetch
 read1_aligned	File	Forward read file of only aligned reads	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-read1_clean	File	Forward read file after quality trimming and adapter removal	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaEuk_ONT
+read1_clean	File	Forward read file after quality trimming and adapter removal	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaEuk_ONT
 read1_concatenated	File	Concatenated forward reads	Concatenate_Illumina_Lanes
-read1_dehosted	File	The dehosted forward reads file; suggested read file for SRA submission 	Freyja (Illumina paired-end), NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE
+read1_dehosted	File	The dehosted forward reads file; suggested read file for SRA submission 	Freyja_FASTQ (PE), NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE
 read1_mapped	File	The mapped forward reads to the assembly	TheiaMeta_Illumina_PE
 read1_renamed	File	New read1 FASTQ file renamed to desired filename	Rename_FASTQ
 read1_subsampled	File	Read1 FASTQ files downsampled to desired coverage	RASUSA, TheiaEuk_Illumina_PE
@@ -699,9 +717,9 @@ read1_unaligned	File	Forward read file of unaligned reads	TheiaCoV_Illumina_PE, 
 read1_unmapped	File	The unmapped forwards reads to the assembly	TheiaMeta_Illumina_PE
 read2	File	File containing the reverse reads (not available for single-end or ONT data)	BaseSpace_Fetch, SRA_Fetch
 read2_aligned	File	Reverse read file of only aligned reads	TheiaCoV_Illumina_PE
-read2_clean	File	Reverse read file after quality trimming and adapter removal	Freyja (Illumina paired-end), TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+read2_clean	File	Reverse read file after quality trimming and adapter removal	Freyja_FASTQ (PE), TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 read2_concatenated	File	Concatenated reverse reads	Concatenate_Illumina_Lanes
-read2_dehosted	File	The dehosted reverse reads file; suggested read file for SRA submission 	Freyja (Illumina paired-end), NCBI_Scrub_PE, TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE
+read2_dehosted	File	The dehosted reverse reads file; suggested read file for SRA submission 	Freyja_FASTQ (PE), NCBI_Scrub_PE, TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE
 read2_mapped	File	The mapped reverse reads to the assembly	TheiaMeta_Illumina_PE
 read2_renamed	File	New read2 FASTQ file renamed to desired filename	Rename_FASTQ
 read2_subsampled	File	Read2 FASTQ files downsampled to desired coverage	RASUSA, TheiaEuk_Illumina_PE
@@ -729,9 +747,9 @@ resfinder_seqs	File	FASTA of resistance gene sequences from user’s input seque
 samples_to_ref_tree_analysis_date	String	Date of analysis	Sample_to_Ref_Tree
 samples_to_ref_tree_version	String	Version of the Public Health Bioinformatics (PHB) repository used	Sample_to_Ref_Tree
 samtools_docker	String	The Docker image of samtools	TheiaMeta_Illumina_PE
-samtools_version	String	The version of SAMtools used to sort and index the alignment file	Clair3_Variants_ONT, Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE
+samtools_version	String	The version of SAMtools used to sort and index the alignment file	Clair3_Variants_ONT, Freyja_FASTQ, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE
 samtools_version_consensus	String	The version of SAMtools used to create the pileup before running iVar consensus	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-samtools_version_primtrim	String	The version of SAMtools used to create the pileup before running iVar trim	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+samtools_version_primtrim	String	The version of SAMtools used to create the pileup before running iVar trim	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 samtools_version_stats	String	The version of SAMtools used to assess the quality of read mapping	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 sc2_s_gene_mean_coverage	Float	Mean read depth for the S gene in SARS-CoV-2	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 sc2_s_gene_percent_coverage	Float	Percent coverage of the S gene in SARS-CoV-2	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
@@ -826,7 +844,7 @@ snippy_referenceseeker_docker	String	Docker file used for ReferenceSeeker	Snippy
 snippy_referenceseeker_top_hit_ncbi_accession	String	NCBI Accession for the top hit identified by referenceseeker	Snippy_Streamline, Snippy_Streamline_FASTA
 snippy_referenceseeker_tsv	File	TSV file of the top hits between the query genome and the Reference Seeker database	Snippy_Streamline, Snippy_Streamline_FASTA
 snippy_referenceseeker_version	String	ReferenceSeeker version used	Snippy_Streamline, Snippy_Streamline_FASTA
-snippy_shared_snp_table	File	Table illustrating variants shared among samples	Snippy_Tree
+snippy_shared_variants_table	File	Table illustrating variants shared among samples	Snippy_Streamline_FASTA, Snippy_Streamline, Snippy_Tree
 snippy_snp_dists_docker	String	Docker file used for running SNP-dists	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree
 snippy_snp_dists_version	String	SNP-dists version used	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree
 snippy_snp_sites_docker	String	Docker file used for running SNP-sites	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree
@@ -846,10 +864,12 @@ snippy_variants_gene_query_results	File	CSV file detailing results for mutations
 snippy_variants_hits	String	A summary of mutations associated with the query strings specified by the user	Snippy_Variants
 snippy_variants_num_reads_aligned	Int	Number of reads that aligned to the reference genome as calculated by samtools view -c command	Snippy_Variants
 snippy_variants_num_variants	Int	Number of variants detected between sample and reference genome	Snippy_Variants
-snippy_variants_outdir_tarball	Array[File]	A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants
+snippy_variants_outdir_tarball	Array[File]	A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree	Snippy_Streamline, Snippy_Streamline_FASTA
 snippy_variants_outdir_tarball	File	A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree	Snippy_Variants
-snippy_variants_percent_reads_aligned	Float	Percentage of reads aligned to the reference genome	Snippy_Streamline, Snippy_Variants
-snippy_variants_percent_ref_coverage	Float	Proportion of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10).	Snippy_Streamline, Snippy_Variants
+snippy_variants_percent_reads_aligned	Array[Float]	Percentage of reads aligned to the reference genome	Snippy_Streamline
+snippy_variants_percent_reads_aligned	Float	Percentage of reads aligned to the reference genome	Snippy_Variants
+snippy_variants_percent_ref_coverage	Array[Float]	Proportion of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10).	Snippy_Streamline
+snippy_variants_percent_ref_coverage	Float	Proportion of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10).	Snippy_Variants
 snippy_variants_qc_metrics	File	TSV file containing quality control metrics for the sample	Snippy_Variants
 snippy_variants_query	String	Query strings specified by the user when running the workflow	Snippy_Variants
 snippy_variants_query_check	String	Verification that query strings are found in the reference genome	Snippy_Variants
@@ -920,7 +940,7 @@ tbp_parser_looker_report_csv	File	An output file that contains condensed informa
 tbp_parser_version	String	The version number of tbp_parser	TBProfiler_tNGS, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 tbprofiler_dr_type	String	The drug resistance category as determined by TBProfiler (sensitive, Pre-MDR, MDR, Pre-XDR, XDR)	TBProfiler_tNGS, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 tbprofiler_main_lineage	String	The Mycobacterium tuberculosis lineage assignment as made by TBProfiler	TBProfiler_tNGS, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-tbprofiler_median_depth	Float	The median depth of the H37Rv TB reference genome covered by the sample	TheiaProk_ONT, TheiaProk_Illumina_PE, TBProfiler_tNGS
+tbprofiler_median_depth	Float	The median depth of the H37Rv TB reference genome covered by the sample	TBProfiler_tNGS, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 tbprofiler_num_dr_variants	String	The total number of drug resistance conferring variants detected by TBProfiler	TBProfiler_tNGS
 tbprofiler_num_other_variants	String	The total number of non-drug resistance conferring variants detected by TBProfiler	TBProfiler_tNGS
 tbprofiler_output_alignment_bai	File	The index file associated with the binary alignment map of the input reads against the H37Rv genome	TBProfiler_tNGS
@@ -940,8 +960,8 @@ tbprofiler_tngs_wf_version	String	The version of the tbprofiler_tngs workflow us
 tbprofiler_version	String	The version of TBProfiler used for this analysis	TBProfiler_tNGS, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 terra_2_gisaid_analysis_date	String	The date of the analysis	Terra_2_GISAID
 terra_2_gisaid_version	String	The version of the PHB repository that this workflow is hosted in	Terra_2_GISAID
-terra_2_ncbi_analysis_date	String	Date that the workflow was run	Terra_2_NCBI
-terra_2_ncbi_version	String	Version of the PHB repository where the workflow is hosted	Terra_2_NCBI
+Terra_2_NCBI_analysis_date	String	Date that the workflow was run	Terra_2_NCBI
+Terra_2_NCBI_version	String	Version of the PHB repository where the workflow is hosted	Terra_2_NCBI
 terra_table_tsv	File	TSV file used when uploading the Terra table of FASTQ files	Dorado_Basecalling
 theiacov_clearlabs_analysis_date	String	Date of analysis	TheiaCoV_ClearLabs
 theiacov_clearlabs_version	String	Version of PHB used for running the workflow	TheiaCoV_ClearLabs
@@ -1002,11 +1022,11 @@ treeUpdate_nextclade_docker	String	Nextclade docker image used	Sample_to_Ref_Tre
 treeUpdate_nextclade_json	File	JSON file with the results of the Nextclade analysis	Sample_to_Ref_Tree
 treeUpdate_nextclade_tsv	File	Tab-delimited file with Nextclade results	Sample_to_Ref_Tree
 treeUpdate_nextclade_version	String	Nextclade version used	Sample_to_Ref_Tree
-trimmomatic_docker	String	The docker image used for the trimmomatic module in this workflow	Freyja (Illumina paired-end), Freyja (Illumina single-end), TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+trimmomatic_docker	String	The docker image used for the trimmomatic module in this workflow	Freyja_FASTQ (PE), Freyja_FASTQ (SE), TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
 trimmomatic_read1_trimmed	File	The read1 file post trimming	TBProfiler_tNGS
 trimmomatic_read2_trimmed	File	The read2 file post trimming	TBProfiler_tNGS
 trimmomatic_stats	File	The read trimming statistics	TBProfiler_tNGS
-trimmomatic_version	String	The version of Trimmomatic used	Freyja (Illumina paired-end), Freyja (Illumina single-end), TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+trimmomatic_version	String	The version of Trimmomatic used	Freyja_FASTQ (PE), Freyja_FASTQ (SE), TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
 ts_mlst_allelic_profile	String	Profile of MLST loci and allele numbers predicted by MLST	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ts_mlst_secondary_allelic_profile	String	Profile of alleles predicted by secondary MLST run	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ts_mlst_docker	String	Docker image used for MLST	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -1063,7 +1083,8 @@ ena_webincli_results	File	File containing the cumulative results of the ENA subm
 prepped_ena_data	File	Prepared data formatted for ENA submission	Terra_2_ENA
 Terra_2_ENA_analysis_date	String	Date the Terra to ENA workflow was run	Terra_2_ENA
 Terra_2_ENA_version	String	Version of the Terra to ENA workflow used	Terra_2_ENA
-terra_table	File	Terra table file used for submission to ENA	Terra_2_ENAassembly_consensus_fasta	File	Final consensus assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT
+terra_table	File	Terra table file used for submission to ENA	Terra_2_ENA
+assembly_consensus_fasta	File	Final consensus assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT
 assembly_denovo_fasta	File	De novo assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT
 bbduk_read1_clean	File	Clean forward reads after BBDuk processing	TheiaViral_Illumina_PE
 bbduk_read2_clean	File	Clean reverse reads after BBDuk processing	TheiaViral_Illumina_PE
@@ -1232,3 +1253,22 @@ phylocompare_version	String	Version of PhyloCompare python script	PhyloCompare
 phylocompare_validation	String	"PASS" if distance < `max_distance` and "FAIL" if distance > `max_distance` or could not be calculated	PhyloCompare
 phylocompare_tree1_clean	File	Cleaned newick file for the first tree	PhyloCompare
 phylocompare_tree2_clean	File	Cleaned newick file for the second tree	PhyloCompare
+vadr_flu_alerts_list	File	A file containing all of the fatal alerts as determined by VADR	TheiaCoV_FASTA
+vadr_flu_feature_tbl_pass	File	5 column feature table output for passing sequences. See <https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files> for more complete description.	TheiaCoV_FASTA
+vadr_flu_feature_tbl_fail	File	5 column feature table output for failing sequences. See <https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files> for more complete description.	TheiaCoV_FASTA
+vadr_flu_classification_summary_file	File	Per-sequence tabular classification file. See <https://github.com/ncbi/vadr/blob/master/documentation/formats.md#explanation-of-sqc-suffixed-output-files> for more complete description.	TheiaCoV_FASTA
+vadr_flu_all_outputs_tar_gz	File	A .tar.gz file (gzip-compressed tar archive file) containing all outputs from the VADR command v-annotate.pl. This file must be uncompressed & extracted to see the many files within. See <https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files> for more complete description of all files present within the archive. Useful when deeply investigating a sample's genome & annotations.	TheiaCoV_FASTA
+vadr_flu_docker	String	Docker image used to run VADR	TheiaCoV_FASTA
+vadr_flu_fastas_zip_archive	File	Zip archive containing all fasta files created during VADR analysis	TheiaCoV_FASTA
+vadr_flu_num_alerts	String	Number of fatal alerts as determined by VADR	TheiaCoV_FASTA
+vadr_flu_segment_concatenated_fasta	File	Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry	TheiaCoV_FASTA
+vadr_flu_ha_segment_fasta	File	HA (Haemagglutinin) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_na_segment_fasta	File	NA (Neuraminidase) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_pa_segment_fasta	File	PA (Polymerase acidic) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_pb1_segment_fasta	File	PB1 (Polymerase basic 1) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_pb2_segment_fasta	File	PB2 (Polymerase basic 2) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_mp_segment_fasta	File	MP (Matrix Protein) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_np_segment_fasta	File	NP (Nucleoprotein) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_ns_segment_fasta	File	NS (Nonstructural) assembly fasta file	TheiaCoV_FASTA
+vadr_flu_type	String	Flu type determined by VADR	TheiaCoV_FASTA
+vadr_flu_subtype	String	Flu subtype determined by VADR	TheiaCoV_FASTA
