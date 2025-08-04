@@ -51,8 +51,8 @@ nav:
                - Snippy_Tree: workflows/phylogenetic_construction/snippy_tree.md
                - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
             - Phylogenetic Placement:
-               - Samples_to_Ref_Tree: workflows/phylogenetic_placement/samples_to_ref_tree.md
-               - Usher_PHB: workflows/phylogenetic_placement/usher.md
+               - Nextclade_Batch: workflows/phylogenetic_placement/nextclade_batch.md
+               - Usher: workflows/phylogenetic_placement/usher.md
             - Public Data Sharing:
                - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
                - Terra_2_ENA: workflows/public_data_sharing/terra_2_ena.md
@@ -134,15 +134,15 @@ nav:
                - kSNP4: workflows/phylogenetic_construction/ksnp4.md
                - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
                - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
+               - Nextclade_Batch: workflows/phylogenetic_placement/nextclade_batch.md
                - Pangolin_Update: workflows/genomic_characterization/pangolin_update.md
-               - Samples_to_Ref_Tree: workflows/phylogenetic_placement/samples_to_ref_tree.md
                - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
                - Terra_2_ENA: workflows/public_data_sharing/terra_2_ena.md
                - Terra_2_GISAID: workflows/public_data_sharing/terra_2_gisaid.md
                - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
                - TheiaCoV Workflow Series: workflows/genomic_characterization/theiacov.md
                - TheiaViral Workflow Series: workflows/genomic_characterization/theiaviral.md
-               - Usher_PHB: workflows/phylogenetic_placement/usher.md
+               - Usher: workflows/phylogenetic_placement/usher.md
                - VADR_Update: workflows/genomic_characterization/vadr_update.md
         - Workflows Alphabetically: 
             - Overview Table: workflows_overview/workflows_alphabetically.md
@@ -170,11 +170,11 @@ nav:
             - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
             - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
             - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
+            - Nextclade_Batch: workflows/phylogenetic_placement/nextclade_batch.md
             - Pangolin_Update: workflows/genomic_characterization/pangolin_update.md
             - PhyloCompare: workflows/standalone/phylocompare.md
             - RASUSA: workflows/standalone/rasusa.md
             - Rename_FASTQ: workflows/standalone/rename_fastq.md
-            - Samples_to_Ref_Tree: workflows/phylogenetic_placement/samples_to_ref_tree.md
             - Snippy_Streamline: workflows/phylogenetic_construction/snippy_streamline.md
             - Snippy_Streamline_FASTA: workflows/phylogenetic_construction/snippy_streamline_fasta.md
             - Snippy_Tree: workflows/phylogenetic_construction/snippy_tree.md
@@ -191,7 +191,7 @@ nav:
             - TheiaValidate: workflows/standalone/theiavalidate.md
             - TheiaViral Workflow Series: workflows/genomic_characterization/theiaviral.md
             - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
-            - Usher_PHB: workflows/phylogenetic_placement/usher.md
+            - Usher: workflows/phylogenetic_placement/usher.md
             - VADR_Update: workflows/genomic_characterization/vadr_update.md
             - Zip_Column_Content: workflows/data_export/zip_column_content.md
      - Contributing:
