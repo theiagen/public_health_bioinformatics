@@ -120,7 +120,7 @@ task resfinder {
       grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
       grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
         echo "XDR Shigella based on predicted resistance to ceftriaxone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv"
-        echo "XDR Shigella" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
+        echo "Potentially XDR Shigella" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
       # ~{organism} does contain the word "Shigella", but one of the greps failed, meaning not all drug resistances' were predicted
       else
         echo "Not XDR Shigella" | tee RESFINDER_PREDICTED_XDR_SHIGELLA.txt
