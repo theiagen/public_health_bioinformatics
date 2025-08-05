@@ -58,7 +58,7 @@ workflow theiaviral_panel {
     Boolean extract_unclassified = false
     Boolean skip_theiaviral_screen = false
     Int minimum_read_number = 1000
-    Boolean call_metaviralspades = false
+    Boolean call_metaviralspades = true
   }  
   call versioning.version_capture {
     input:
