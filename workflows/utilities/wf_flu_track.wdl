@@ -7,7 +7,7 @@ import "../../tasks/species_typing/orthomyxoviridae/task_genoflu.wdl" as genoflu
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
-import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
+import "../../tasks/species_typing/influenza/task_vadr_flu_segments.wdl" as vadr_flu_segments_task
 
 workflow flu_track {
   meta {
@@ -84,10 +84,8 @@ workflow flu_track {
     Int? nextclade_output_parser_memory
     Int? nextclade_output_parser_disk_size
 
-    # vadr inputs
-    String? vadr_opts
-    Int? vadr_skip_length
-    Int? assembly_length_unambiguous
+    # vadr output files for extracting flu segments
+    File? vadr_outputs_tgz
   }
   # IRMA will run if no assembly is provided (as in the case of TheiaCoV_FASTA)
   if (defined(read1)) {
@@ -176,27 +174,25 @@ workflow flu_track {
     }
   }
   # assembly can be a full flu genome or various segments
-  if (defined(assembly_fasta)) {
-    call vadr_task.vadr {
+  if (defined(assembly_fasta) && defined(vadr_outputs_tgz)) {
+    call vadr_flu_segments_task.vadr_flu_segments {
       input:
         genome_fasta = select_first([assembly_fasta]),
-        assembly_length_unambiguous = select_first([assembly_length_unambiguous]),
-        vadr_opts = vadr_opts,
-        skip_length = vadr_skip_length
+        vadr_outputs_tgz = select_first([vadr_outputs_tgz])
     }
   }
   # if IRMA was run successfully, run the flu_antiviral substitutions task 
   # this block must be placed beneath the previous block because it is used in this subworkflow
   if ((defined(irma.seg_na_assembly) && defined(irma.seg_ha_assembly) && defined(irma.seg_pa_assembly) && defined(irma.seg_pb1_assembly) && defined(irma.seg_pb2_assembly) && defined(irma.seg_mp_assembly)) ||
-      (defined(vadr.seg_na_assembly) && defined(vadr.seg_ha_assembly) && defined(vadr.seg_pa_assembly) && defined(vadr.seg_pb1_assembly) && defined(vadr.seg_pb2_assembly) && defined(vadr.seg_mp_assembly))) {
+      (defined(vadr_flu_segments.seg_na_assembly) && defined(vadr_flu_segments.seg_ha_assembly) && defined(vadr_flu_segments.seg_pa_assembly) && defined(vadr_flu_segments.seg_pb1_assembly) && defined(vadr_flu_segments.seg_pb2_assembly) && defined(vadr_flu_segments.seg_mp_assembly))) {
     call flu_antiviral.flu_antiviral_substitutions {
       input:
-        na_segment_assembly = select_first([irma.seg_na_assembly_padded, vadr.seg_na_assembly]),
-        ha_segment_assembly = select_first([irma.seg_ha_assembly_padded, vadr.seg_ha_assembly]),
-        pa_segment_assembly = select_first([irma.seg_pa_assembly_padded, vadr.seg_pa_assembly]),
-        pb1_segment_assembly = select_first([irma.seg_pb1_assembly_padded, vadr.seg_pb1_assembly]),
-        pb2_segment_assembly = select_first([irma.seg_pb2_assembly_padded, vadr.seg_pb2_assembly]),
-        mp_segment_assembly = select_first([irma.seg_mp_assembly_padded, vadr.seg_mp_assembly]),
+        na_segment_assembly = select_first([irma.seg_na_assembly_padded, vadr_flu_segments.seg_na_assembly]),
+        ha_segment_assembly = select_first([irma.seg_ha_assembly_padded, vadr_flu_segments.seg_ha_assembly]),
+        pa_segment_assembly = select_first([irma.seg_pa_assembly_padded, vadr_flu_segments.seg_pa_assembly]),
+        pb1_segment_assembly = select_first([irma.seg_pb1_assembly_padded, vadr_flu_segments.seg_pb1_assembly]),
+        pb2_segment_assembly = select_first([irma.seg_pb2_assembly_padded, vadr_flu_segments.seg_pb2_assembly]),
+        mp_segment_assembly = select_first([irma.seg_mp_assembly_padded, vadr_flu_segments.seg_mp_assembly]),
         abricate_flu_subtype = select_first([abricate_flu.abricate_flu_subtype, ""]),
         irma_flu_subtype = select_first([irma.irma_subtype, ""]),
         antiviral_aa_subs = antiviral_aa_subs,
@@ -211,10 +207,10 @@ workflow flu_track {
         flu_h3n2_m2_ref = flu_h3n2_m2_ref
     }
   }
-  if ((defined(irma.seg_ha_assembly) || defined(vadr.seg_ha_assembly)) && ! defined(do_not_run_flu_ha_nextclade)) {
+  if ((defined(irma.seg_ha_assembly) || defined(vadr_flu_segments.seg_ha_assembly)) && ! defined(do_not_run_flu_ha_nextclade)) {
     call nextclade_task.nextclade_v3 as nextclade_flu_ha {
       input:
-        genome_fasta = select_first([irma.seg_ha_assembly, vadr.seg_ha_assembly]),
+        genome_fasta = select_first([irma.seg_ha_assembly, vadr_flu_segments.seg_ha_assembly]),
         dataset_name = select_first([set_flu_ha_nextclade_values.nextclade_dataset_name]),
         dataset_tag = select_first([set_flu_ha_nextclade_values.nextclade_dataset_tag]),
         docker = nextclade_docker_image,
@@ -232,10 +228,10 @@ workflow flu_track {
         disk_size = nextclade_output_parser_disk_size
     }
   }
-  if ((defined(irma.seg_na_assembly) || defined(vadr.seg_na_assembly)) && ! defined(do_not_run_flu_na_nextclade)) {
+  if ((defined(irma.seg_na_assembly) || defined(vadr_flu_segments.seg_na_assembly)) && ! defined(do_not_run_flu_na_nextclade)) {
     call nextclade_task.nextclade_v3 as nextclade_flu_na {
       input:
-        genome_fasta = select_first([irma.seg_na_assembly, vadr.seg_na_assembly]),
+        genome_fasta = select_first([irma.seg_na_assembly, vadr_flu_segments.seg_na_assembly]),
         dataset_name = select_first([set_flu_na_nextclade_values.nextclade_dataset_name]),
         dataset_tag = select_first([set_flu_na_nextclade_values.nextclade_dataset_tag]),
         docker = nextclade_docker_image,
@@ -274,7 +270,7 @@ workflow flu_track {
     if (genoflu.genoflu_genotype == "B3.13" || genoflu.genoflu_genotype == "D1.1" || defined(nextclade_custom_input_dataset)) {
       call nextclade_task.nextclade_v3 as nextclade_flu_h5n1 {
         input:
-          genome_fasta = select_first([irma.irma_assembly_fasta_concatenated, vadr.segmented_assemblies_concatenated, assembly_fasta]),
+          genome_fasta = select_first([irma.irma_assembly_fasta_concatenated, vadr_flu_segments.assembly_fasta_concatenated, assembly_fasta]),
           custom_input_dataset = select_first([nextclade_custom_input_dataset, set_flu_h5n1_nextclade_values.nextclade_custom_dataset]),
           docker = nextclade_docker_image,
           cpu = nextclade_cpu,
@@ -301,17 +297,17 @@ workflow flu_track {
     String? irma_subtype = irma.irma_subtype
     String? irma_subtype_notes = irma.irma_subtype_notes
     File? irma_assembly_fasta = irma.irma_assembly_fasta
-    File? irma_assembly_fasta_concatenated = irma.irma_assembly_fasta_concatenated
     File? irma_assembly_fasta_padded = irma.irma_assembly_fasta_padded
     File? irma_assembly_fasta_concatenated_padded = irma.irma_assembly_fasta_concatenated_padded
-    File? irma_ha_segment_fasta = irma.seg_ha_assembly
-    File? irma_na_segment_fasta = irma.seg_na_assembly
-    File? irma_pa_segment_fasta = irma.seg_pa_assembly
-    File? irma_pb1_segment_fasta = irma.seg_pb1_assembly
-    File? irma_pb2_segment_fasta = irma.seg_pb2_assembly
-    File? irma_mp_segment_fasta = irma.seg_mp_assembly
-    File? irma_np_segment_fasta = irma.seg_np_assembly
-    File? irma_ns_segment_fasta = irma.seg_ns_assembly
+    File flu_assembly_fasta_concatenated = select_first([irma.irma_assembly_fasta_concatenated, vadr_flu_segments.assembly_fasta_concatenated])
+    File flu_ha_segment_fasta = select_first([irma.seg_ha_assembly, vadr_flu_segments.seg_ha_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    File flu_na_segment_fasta = select_first([irma.seg_na_assembly, vadr_flu_segments.seg_na_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    File flu_pa_segment_fasta = select_first([irma.seg_pa_assembly, vadr_flu_segments.seg_pa_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    File flu_pb1_segment_fasta = select_first([irma.seg_pb1_assembly, vadr_flu_segments.seg_pb1_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    File flu_pb2_segment_fasta = select_first([irma.seg_pb2_assembly, vadr_flu_segments.seg_pb2_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    File flu_mp_segment_fasta = select_first([irma.seg_mp_assembly, vadr_flu_segments.seg_mp_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    File flu_np_segment_fasta = select_first([irma.seg_np_assembly, vadr_flu_segments.seg_np_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    File flu_ns_segment_fasta = select_first([irma.seg_ns_assembly, vadr_flu_segments.seg_ns_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     Array[File]? irma_assemblies = irma.irma_plurality_consensus_assemblies
     Array[File]? irma_vcfs = irma.irma_vcfs
     Array[File]? irma_bams = irma.irma_bams
@@ -374,25 +370,5 @@ workflow flu_track {
     String? flu_oseltamivir_resistance = flu_antiviral_substitutions.flu_oseltamivir_resistance
     String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
-    # VADR Annotation QC for flu
-    File? vadr_alerts_list = vadr.alerts_list
-    File? vadr_feature_tbl_pass = vadr.feature_tbl_pass
-    File? vadr_feature_tbl_fail = vadr.feature_tbl_fail
-    File? vadr_classification_summary_file = vadr.classification_summary_file
-    File? vadr_all_outputs_tar_gz = vadr.outputs_tgz
-    String? vadr_docker = vadr.vadr_docker
-    File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
-    String? vadr_num_alerts = vadr.num_alerts
-    File? vadr_segment_concatenated_fasta = vadr.segmented_assemblies_concatenated
-    File? vadr_ha_segment_fasta = vadr.seg_ha_assembly
-    File? vadr_na_segment_fasta = vadr.seg_na_assembly
-    File? vadr_pa_segment_fasta = vadr.seg_pa_assembly
-    File? vadr_pb1_segment_fasta = vadr.seg_pb1_assembly
-    File? vadr_pb2_segment_fasta = vadr.seg_pb2_assembly
-    File? vadr_mp_segment_fasta = vadr.seg_mp_assembly
-    File? vadr_np_segment_fasta = vadr.seg_np_assembly
-    File? vadr_ns_segment_fasta = vadr.seg_ns_assembly
-    String? vadr_flu_type = vadr.flu_type
-    String? vadr_flu_subtype = vadr.flu_subtype
   }
 }

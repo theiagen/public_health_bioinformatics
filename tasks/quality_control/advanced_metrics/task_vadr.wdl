@@ -20,10 +20,6 @@ task vadr {
   command <<<
     set -euo pipefail
 
-    # set default values for flu type and subtype
-    echo "N/A" > FLU_SUBTYPE
-    echo "N/A" > FLU_TYPE
-
     if [ ~{assembly_length_unambiguous} -gt ~{skip_length} ]; then
 
       # remove terminal ambiguous nucleotides
@@ -43,69 +39,6 @@ task vadr {
 
       # package everything for output
       tar -C "~{out_base}" -czvf "~{out_base}.vadr.tar.gz" .
-
-      # skip header lines and convert classification file to tsv format (21 fields)
-      tail -n +4 ~{out_base}/~{out_base}.vadr.sqc | sed -E 's/  +/\t/g' > ~{out_base}/~{out_base}.vadr.sqc.tsv
-
-      # does the assembly contain influenza segments?
-      grp1_model=$(awk '/PASS/ && /flu[AB]-seg/' ~{out_base}/~{out_base}.vadr.sqc.tsv)
-
-      if [[ -n "$grp1_model" ]]; then
-        # split the assembly fasta into segments based on headers
-        mkdir -p tmp_fastas/
-        csplit -s -z -f tmp_fastas/seq_ -b "%d" ~{genome_fasta} '/^>/' '{*}'
-
-        # create final directory for flu segments
-        mkdir -p flu_segments/
-
-        # define segment mappings using associative arrays
-        declare -A fluA_map=( ["seg1"]="PB2" ["seg2"]="PB1" ["seg3"]="PA" ["seg4"]="HA" ["seg5"]="NP" ["seg6"]="NA" ["seg7"]="MP" ["seg8"]="NS" )
-        declare -A fluB_map=( ["seg1"]="PB1" ["seg2"]="PB2" ["seg3"]="PA" ["seg4"]="HA" ["seg5"]="NP" ["seg6"]="NA" ["seg7"]="MP" ["seg8"]="NS" )
-
-        HA_SUBTYPE=""
-        NA_SUBTYPE=""
-        # extract the flu type, subtype and gene segment from the classification summary
-        while IFS=$'\t' read -r -a line; do
-          SEQ_NAME="${line[1]}"
-          MODEL="${line[6]}"
-          FLU_TYPE=$(echo "${MODEL}" | cut -d'-' -f1)
-          NUM_SEGMENT=$(echo "${MODEL}" | cut -d'-' -f2)
-
-          # select map based on flu type
-          if [[ "${FLU_TYPE}" == "fluA" ]]; then
-            GENE_SEGMENT=${fluA_map["${NUM_SEGMENT}"]}
-          else
-            GENE_SEGMENT=${fluB_map["${NUM_SEGMENT}"]}
-          fi
-
-          # grab HA/NA subtype if available
-          if [[ "${line[7]}" != "-" && "${MODEL}" == "fluA-seg4" ]]; then
-            HA_SUBTYPE="${line[7]}"
-          fi
-          if [[ "${line[7]}" != "-" && "${MODEL}" == "fluA-seg6" ]]; then
-            NA_SUBTYPE="${line[7]}"
-          fi
-
-          # create concatentated fasta file header
-          echo ">vadr_concatenated_flu_segments" > "~{out_base}_concatenated.fasta"
-
-          # find matching fasta file and copy it
-          for fasta in tmp_fastas/seq_*; do
-            # check if the sequence name is in the header line of the fasta file
-            if head -n 1 "${fasta}" | grep "${SEQ_NAME}"; then
-              output_segment_fasta="flu_segments/~{out_base}_${GENE_SEGMENT}.fasta"
-              cp "$fasta" "$output_segment_fasta"
-              grep -v ">" "$fasta" >> "~{out_base}_concatenated.fasta"
-              break
-            fi
-          done
-        done < ~{out_base}/~{out_base}.vadr.sqc.tsv
-
-        FLU_SUBTYPE="${HA_SUBTYPE}${NA_SUBTYPE}"
-        echo "${FLU_SUBTYPE}" > FLU_SUBTYPE
-        echo "${FLU_TYPE}" > FLU_TYPE
-
-      fi
 
       # package up FASTA files into zip file for output. Note: this will work whether the --out_allfasta flag is included or not (there are just more when the option is used)
       mkdir -v vadr_fasta_files
@@ -133,17 +66,6 @@ task vadr {
     File? outputs_tgz = "~{out_base}.vadr.tar.gz"
     File? vadr_fastas_zip_archive = "~{out_base}_vadr-fasta-files.zip"
     String vadr_docker = docker
-    String flu_type = read_string("FLU_TYPE")
-    String flu_subtype = read_string("FLU_SUBTYPE")
-    File? segmented_assemblies_concatenated = "~{out_base}_concatenated.fasta"
-    File? seg_ha_assembly = "flu_segments/~{out_base}_HA.fasta"
-    File? seg_na_assembly = "flu_segments/~{out_base}_NA.fasta"
-    File? seg_pa_assembly = "flu_segments/~{out_base}_PA.fasta"
-    File? seg_pb1_assembly = "flu_segments/~{out_base}_PB1.fasta"
-    File? seg_pb2_assembly = "flu_segments/~{out_base}_PB2.fasta"
-    File? seg_mp_assembly = "flu_segments/~{out_base}_MP.fasta"
-    File? seg_np_assembly = "flu_segments/~{out_base}_NP.fasta"
-    File? seg_ns_assembly = "flu_segments/~{out_base}_NS.fasta"
   }
   runtime {
     docker: "~{docker}"
