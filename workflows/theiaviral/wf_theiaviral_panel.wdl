@@ -46,7 +46,7 @@ workflow theiaviral_panel {
 
     String terra_project
     String terra_workspace
-    String kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral_20240112.tar.gz"
+    String kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     File? skani_db
     File? checkv_db
 
