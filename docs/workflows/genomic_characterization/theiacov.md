@@ -106,7 +106,7 @@ We've provided the following information to help you set up the workflow for eac
 
         !!! warning "Note for TheiaCoV_FASTA users analyzing Influenza:"
 
-            TheiaCoV_FASTA will use VADR to classify and partition Influenza segments from the input assembly. Unexpected results or task failures may occur if the input assembly is incomplete or contains partial segments.
+            TheiaCoV_FASTA will use the output of VADR to classify and partition Influenza segments from the input assembly. See `vadr_flu_segments` task for more details.
 
     === "TheiaCoV_ClearLabs"
 
@@ -403,6 +403,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
     | Pangolin | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
     | Nextclade | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ |
     | VADR | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
+    | vadr_flu_segments | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
     | Quasitools HyDRA | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
     | IRMA | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
     | Abricate | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
@@ -437,6 +438,8 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | Original Publication(s) | [Nextclade: clade assignment, mutation calling and quality control for viral genomes.](https://doi.org/10.21105/joss.03773) |
 
 {{ include_md("common_text/vadr_task.md") }}
+
+{{ include_md("common_text/vadr_flu_segments.md") }}
 
 ??? task "`quasitools`"
 
