@@ -176,6 +176,7 @@ workflow theiaviral_panel {
                 "quast_denovo_version": theiaviral.quast_denovo_version,
                 "quast_denovo_docker": theiaviral.quast_denovo_docker,
                 "skani_report": theiaviral.skani_report,
+                "skani_warning": theiaviral.skani_warning,
                 "skani_top_accession": theiaviral.skani_top_accession,
                 "skani_top_score": theiaviral.skani_top_score,
                 "skani_top_ani": theiaviral.skani_top_ani,
