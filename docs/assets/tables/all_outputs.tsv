@@ -923,8 +923,7 @@ tbp_parser_looker_report_csv	File	An output file that contains condensed informa
 tbp_parser_version	String	The version number of tbp_parser	TBProfiler_tNGS, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 tbprofiler_dr_type	String	The drug resistance category as determined by TBProfiler (sensitive, Pre-MDR, MDR, Pre-XDR, XDR)	TBProfiler_tNGS, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 tbprofiler_main_lineage	String	The Mycobacterium tuberculosis lineage assignment as made by TBProfiler	TBProfiler_tNGS, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-tbprofiler_median_coverage	Int	The median depth of coverage across the target loci	TBProfiler_tNGS
-tbprofiler_median_depth	Int	The median depth of the H37Rv TB reference genome covered by the sample	TheiaProk_ONT, TheiaProk_Illumina_PE
+tbprofiler_median_depth	Float	The median depth of the H37Rv TB reference genome covered by the sample	TheiaProk_ONT, TheiaProk_Illumina_PE, TBProfiler_tNGS
 tbprofiler_num_dr_variants	String	The total number of drug resistance conferring variants detected by TBProfiler	TBProfiler_tNGS
 tbprofiler_num_other_variants	String	The total number of non-drug resistance conferring variants detected by TBProfiler	TBProfiler_tNGS
 tbprofiler_output_alignment_bai	File	The index file associated with the binary alignment map of the input reads against the H37Rv genome	TBProfiler_tNGS
@@ -1236,6 +1235,7 @@ phylocompare_version	String	Version of PhyloCompare python script	PhyloCompare
 phylocompare_validation	String	"PASS" if distance < `max_distance` and "FAIL" if distance > `max_distance` or could not be calculated	PhyloCompare
 phylocompare_tree1_clean	File	Cleaned newick file for the first tree	PhyloCompare
 phylocompare_tree2_clean	File	Cleaned newick file for the second tree	PhyloCompare
+phylocompare_cophylo_plot	File	PDF cophylogeny plot depicting the topological difference between two phylogenies	PhyloCompare
 vadr_flu_segment_concatenated_fasta	File	Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry	TheiaCoV_FASTA
 vadr_flu_ha_segment_fasta	File	HA (Haemagglutinin) assembly fasta file	TheiaCoV_FASTA
 vadr_flu_na_segment_fasta	File	NA (Neuraminidase) assembly fasta file	TheiaCoV_FASTA
