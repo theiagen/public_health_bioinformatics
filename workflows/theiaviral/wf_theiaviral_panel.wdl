@@ -277,7 +277,8 @@ workflow theiaviral_panel {
   output {
     # Number of assembled viruses
     Int assembled_viruses = length(select_all(theiaviral.assembly_consensus_fasta))
-    String identified_organisms = select_all(ncbi_identify.taxon_name)
+    # Taxon of organisms identified
+    String identified_organisms = sep(", ", select_all(ncbi_identify.taxon_name))
     # Workflow Versioning
     String theiaviral_panel_version = version_capture.phb_version
     String theiaviral_pannel_analysis_date = version_capture.date
