@@ -106,7 +106,7 @@ We've provided the following information to help you set up the workflow for eac
 
         !!! warning "Note for TheiaCoV_FASTA users analyzing Influenza:"
 
-            TheiaCoV_FASTA will use the output of VADR to classify and partition Influenza segments from the input assembly. See `vadr_flu_segments` task for more details.
+            TheiaCoV_FASTA will use the output of VADR to classify and partition Influenza segments from the input assembly. See [`vadr_flu_segments`](#org-specific-tasks) task for more details.
 
     === "TheiaCoV_ClearLabs"
 
