@@ -32,7 +32,7 @@ workflow theiaviral_panel {
       "11082", "11089", "64320", "10804", "12092", "10407", "3052230", "12475", "291484", "11676", "11709", "68887", "1980456", "308159", "3052470", "3052490", "169173", "42097", 
       "261204", "430511", "3052489", "238817", "2259728", "47301", "1980442", "3052496", "3052499", "90961", "80935", "35305", "1221391", "38767", "11021", "38768", "2847089", 
       "3052223", "260964", "35511", "11072", "11577", "38766", "2971765", "1474807", "12538", "11079", "3052225", "11083", "11292", "11580", "11080", "45270", "11084", "11590", 
-      "11036", "11039", "1313215", "33758", "138948", "138948", "138949", "138949", "138950", "138950", "138951", "1239565", "1239570", "1239572", "1239573", "142786", "138950", 
+      "11036", "11039", "1313215", "33758", "138948", "138949", "138950", "138951", "1239565", "1239570", "1239572", "1239573", "142786", 
       "28875", "28876", "36427", "1348384", "1330524", "95341", "2849717", "1424613", "2010960", "565995", "3052302", "3052518", "3052477", "1570291", "3052307", "3052480", 
       "2169991", "33743", "3052310", "3052148", "3052314", "3052303", "3052317", "1708253", "33727", "1708252", "12542", "3052493", "378809", "186539", "11588", "2907957", 
       "3052498", "1003835", "1452514", "186540", "186541", "3052503", "1891762", "10376", "10359", "10580", "333760", "333761", "337044", "10585", "10586", "10587", "10588", 
@@ -72,7 +72,7 @@ workflow theiaviral_panel {
       kraken_db = kraken_db,
       workflow_series = "theiacov" # this will return kraken2 reports that are necessary
   }
-  call kraken2_task.kraken2_standalone as kraken2 {
+  call kraken2_task.kraken2_standalone as kraken2_post_qc {
     input:
       read1 = read_QC_trim.read1_clean,
       read2 = read_QC_trim.read2_clean,
@@ -83,10 +83,10 @@ workflow theiaviral_panel {
   scatter (taxon_id in taxon_ids) {
     call krakentools_task.extract_kraken_reads as krakentools {
       input:
-        kraken2_output = kraken2.kraken2_classified_report,
-        kraken2_report = kraken2.kraken2_report,
-        read1 = kraken2.kraken2_classified_read1,
-        read2 = select_first([kraken2.kraken2_classified_read2]),
+        kraken2_output = kraken2_post_qc.kraken2_classified_report,
+        kraken2_report = kraken2_post_qc.kraken2_report,
+        read1 = kraken2_post_qc.kraken2_classified_read1,
+        read2 = select_first([kraken2_post_qc.kraken2_classified_read2]),
         taxon_id = taxon_id
     }
     if (krakentools.success) {
@@ -94,9 +94,9 @@ workflow theiaviral_panel {
         call cat_lanes.cat_lanes {
           input:
             samplename = samplename + "_" + taxon_id,
-            read1_lane1 = kraken2.kraken2_unclassified_read1,
+            read1_lane1 = kraken2_post_qc.kraken2_unclassified_read1,
             read1_lane2 = select_first([krakentools.extracted_read1]),
-            read2_lane1 = kraken2.kraken2_unclassified_read2,
+            read2_lane1 = kraken2_post_qc.kraken2_unclassified_read2,
             read2_lane2 = select_first([krakentools.extracted_read2])
         }
       }
@@ -280,10 +280,11 @@ workflow theiaviral_panel {
     String theiaviral_panel_version = version_capture.phb_version
     String theiaviral_pannel_analysis_date = version_capture.date
     # Standalone Kraken2 outputs
-    String kraken2_version = kraken2.kraken2_version
-    String kraken2_database = kraken2.kraken2_database
-    String kraken2_docker = kraken2.kraken2_docker
-    File kraken2_report = kraken2.kraken2_report
-    File kraken2_classified_report = kraken2.kraken2_classified_report
+    String kraken2_version = kraken2_post_qc.kraken2_version
+    String kraken2_database = kraken2_post_qc.kraken2_database
+    String kraken2_docker = kraken2_post_qc.kraken2_docker
+    File kraken2_report = kraken2_post_qc.kraken2_report
+    File kraken2_classified_report = kraken2_post_qc.kraken2_classified_report
+    Float? kraken_percent_human = kraken2_post_qc.kraken2_percent_human
   }
 }
