@@ -268,7 +268,7 @@ workflow organism_parameters {
       Int hiv_v2_genome_len = 9840
     }
   }
-  if (organism == "Measles" || organism == "measles" || organism == "mev" || organism == "MeV" || organism == "Morbillivirus" || organism == "morbillivirus") {
+  if (organism == "Measles" || organism == "measles" || organism == "mev" || organism == "MeV" || organism == "Morbillivirus" || organism == "morbillivirus" || organism == "11234") {
     String measles_org_name = "measles"
     String measles_kraken_target_organism = "Measles morbillivirus"
     String measles_genome_len = 16000
