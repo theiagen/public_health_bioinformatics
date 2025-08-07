@@ -21,7 +21,7 @@ task vadr_flu_segments {
     tail -n +4 ~{out_base}/~{out_base}.vadr.sqc | sed -E 's/  +/\t/g' > ~{out_base}/~{out_base}.vadr.sqc.tsv
 
     # does the assembly contain influenza segments?
-    grp1_model=$(awk '/PASS/ && /flu[AB]-seg/' ~{out_base}/~{out_base}.vadr.sqc.tsv)
+    grp1_model=$(awk '/flu[AB]-seg/' ~{out_base}/~{out_base}.vadr.sqc.tsv)
 
     if [[ -n "$grp1_model" ]]; then
       # split the assembly fasta into segments based on headers
@@ -31,9 +31,12 @@ task vadr_flu_segments {
       # create final directory for flu segments
       mkdir -p flu_segments/
 
-      # define segment mappings using associative arrays
+      # define segment mappings using associative arrays. derived from: https://github.com/ncbi/vadr/wiki/Influenza-annotation#influenza-vadr-model-library-1
       declare -A fluA_map=( ["seg1"]="PB2" ["seg2"]="PB1" ["seg3"]="PA" ["seg4"]="HA" ["seg5"]="NP" ["seg6"]="NA" ["seg7"]="MP" ["seg8"]="NS" )
       declare -A fluB_map=( ["seg1"]="PB1" ["seg2"]="PB2" ["seg3"]="PA" ["seg4"]="HA" ["seg5"]="NP" ["seg6"]="NA" ["seg7"]="MP" ["seg8"]="NS" )
+
+      # create concatentated fasta file header
+      echo ">vadr_concatenated_flu_segments" > "~{out_base}_concatenated.fasta"
 
       # extract the flu type and gene segment from the classification summary
       while IFS=$'\t' read -r -a line; do
@@ -49,20 +52,22 @@ task vadr_flu_segments {
           GENE_SEGMENT=${fluB_map["${NUM_SEGMENT}"]}
         fi
 
-        # create concatentated fasta file header
-        echo ">vadr_concatenated_flu_segments" > "~{out_base}_concatenated.fasta"
-
         # find matching fasta file and copy it
         for fasta in tmp_fastas/seq_*; do
           # check if the sequence name is in the header line of the fasta file
           if head -n 1 "${fasta}" | grep "${SEQ_NAME}"; then
             output_segment_fasta="flu_segments/~{out_base}_${GENE_SEGMENT}.fasta"
             cp "$fasta" "$output_segment_fasta"
-            grep -v ">" "$fasta" >> "~{out_base}_concatenated.fasta"
+            # append sequence and remove header/newlines
+            grep -v ">" "$fasta" | tr -d '\n' >> "~{out_base}_concatenated.fasta"
             break
           fi
         done
       done < ~{out_base}/~{out_base}.vadr.sqc.tsv
+
+      # add final newline to the concatenated fasta
+      echo "" >> "~{out_base}_concatenated.fasta"
+
     fi
   >>>
   output {
