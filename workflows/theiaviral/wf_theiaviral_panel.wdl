@@ -68,24 +68,16 @@ workflow theiaviral_panel {
       read2 = read2,
       samplename = samplename,
       kraken_db = kraken_db,
-      workflow_series = "theiacov" # this will return kraken2 reports that are necessary
+      workflow_series = "theiaviral_panel"
   }
-  call kraken2_task.kraken2_standalone as kraken2_post_qc {
-    input:
-      read1 = read_QC_trim.read1_clean,
-      read2 = read_QC_trim.read2_clean,
-      samplename = samplename,
-      kraken2_db = kraken_db
-  }
-
   # get kraken outputs ready will have to run it outside of read qc trim to fix
   scatter (taxon_id in taxon_ids) {
     call krakentools_task.extract_kraken_reads as krakentools {
       input:
-        kraken2_output = kraken2_post_qc.kraken2_classified_report,
-        kraken2_report = kraken2_post_qc.kraken2_report,
-        read1 = kraken2_post_qc.kraken2_classified_read1,
-        read2 = select_first([kraken2_post_qc.kraken2_classified_read2]),
+        kraken2_output = select_first([read_QC_trim.kraken_classified_report]),
+        kraken2_report = select_first([read_QC_trim.kraken_report_clean]),
+        read1 = select_first([read_QC_trim.kraken_classified_read1]),
+        read2 = select_first([read_QC_trim.kraken_classified_read2]),
         taxon_id = taxon_id
     }
     if (krakentools.success) {
@@ -93,9 +85,9 @@ workflow theiaviral_panel {
         call cat_lanes.cat_lanes {
           input:
             samplename = samplename + "_" + taxon_id,
-            read1_lane1 = kraken2_post_qc.kraken2_unclassified_read1,
+            read1_lane1 = select_first([read_QC_trim.kraken_unclassified_read1]),
             read1_lane2 = select_first([krakentools.extracted_read1]),
-            read2_lane1 = kraken2_post_qc.kraken2_unclassified_read2,
+            read2_lane1 = select_first([read_QC_trim.kraken_unclassified_read2]),
             read2_lane2 = select_first([krakentools.extracted_read2])
         }
       }
@@ -158,6 +150,7 @@ workflow theiaviral_panel {
                 "metaviralspades_status": theiaviral.metaviralspades_status,
                 "metaviralspades_version": theiaviral.metaviralspades_version,
                 "metaviralspades_docker": theiaviral.metaviralspades_docker,
+                "megahit_status": theiaviral.megahit_status,
                 "megahit_version": theiaviral.megahit_version,
                 "megahit_docker": theiaviral.megahit_docker,
                 "checkv_denovo_summary": theiaviral.checkv_denovo_summary,
@@ -177,7 +170,9 @@ workflow theiaviral_panel {
                 "quast_denovo_docker": theiaviral.quast_denovo_docker,
                 "skani_report": theiaviral.skani_report,
                 "skani_warning": theiaviral.skani_warning,
+                "skani_status": theiaviral.skani_status,
                 "skani_top_accession": theiaviral.skani_top_accession,
+                "skani_top_query_coverage": theiaviral.skani_top_query_coverage,
                 "skani_top_score": theiaviral.skani_top_score,
                 "skani_top_ani": theiaviral.skani_top_ani,
                 "skani_database": theiaviral.skani_database,
@@ -282,13 +277,15 @@ workflow theiaviral_panel {
     Array[String] identified_organisms = select_all(ncbi_identify.taxon_name)
     # Workflow Versioning
     String theiaviral_panel_version = version_capture.phb_version
-    String theiaviral_pannel_analysis_date = version_capture.date
+    String theiaviral_panel_analysis_date = version_capture.date
     # Standalone Kraken2 outputs
-    String kraken2_version = kraken2_post_qc.kraken2_version
-    String kraken2_database = kraken2_post_qc.kraken2_database
-    String kraken2_docker = kraken2_post_qc.kraken2_docker
-    File kraken2_report = kraken2_post_qc.kraken2_report
-    File kraken2_classified_report = kraken2_post_qc.kraken2_classified_report
-    Float? kraken_percent_human = kraken2_post_qc.kraken2_percent_human
+    String kraken2_version = read_QC_trim.kraken_version
+    String kraken2_database = read_QC_trim.kraken_database
+    String kraken2_docker = read_QC_trim.kraken_docker
+    File kraken2_report_raw = read_QC_trim.kraken_report
+    File kraken2_report_clean = select_first([read_QC_trim.kraken_report_clean])
+    File kraken2_classified_report = select_first([read_QC_trim.kraken_classified_report])
+    Float? kraken_percent_human_raw = read_QC_trim.kraken_human
+    Float? kraken_percent_human_clean = read_QC_trim.kraken_human_clean
   }
 }
