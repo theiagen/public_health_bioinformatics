@@ -44,6 +44,7 @@ workflow theiaviral_ont {
     Boolean skip_rasusa = true 
     Boolean skip_screen = false
     Boolean call_raven = true
+    Boolean characterize_via_input = false
   }
   # get the PHB version
   call versioning_task.version_capture {
@@ -247,13 +248,19 @@ workflow theiaviral_ont {
             assembly = bcftools_consensus.assembly_fasta,
             samplename = samplename
         }
+        # set the variable for the taxon_id
+        if (characterize_via_input) {
+          String characterize_id = task_identify_taxon_id.raw_taxon_id
+        }
+        if (!characterize_via_input) {
+          String characterize_id = ncbi_identify.taxon_id
+        }
         # run morgana magic for classification
         call morgana_magic_wf.morgana_magic {
           input:
             samplename = samplename,
             assembly_fasta = select_first([bcftools_consensus.assembly_fasta]),
-            read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-            taxon_name = select_first([ncbi_datasets.taxon_id]),
+            taxon_name = characterize_id,
             seq_method = "nanopore"
         }
       }

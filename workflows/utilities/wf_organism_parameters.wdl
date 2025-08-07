@@ -49,7 +49,7 @@ workflow organism_parameters {
     Float? narrow_bandwidth
     Float? proportion_wide
   }
-  if (organism == "sars-cov-2" || organism == "SARS-CoV-2") {
+  if (organism == "sars-cov-2" || organism == "SARS-CoV-2" || organism == "2697049" || organism == "3418604") {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"
     String sc2_gene_locations_bed = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"
@@ -63,7 +63,7 @@ workflow organism_parameters {
     String sc2_vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
     Int sc2_vadr_memory = 8
   }
-  if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox" || organism == "Monkeypox virus" || organism == "Mpox") {
+  if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox" || organism == "Monkeypox virus" || organism == "Mpox" || organism == "10244") {
     String mpox_org_name = "MPXV"
     String mpox_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.MT903345.reference.fasta"
     String mpox_gene_locations_bed = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed"
@@ -90,7 +90,7 @@ workflow organism_parameters {
     Float mpox_narrow_bandwidth = 0.1666667
     Float mpox_proportion_wide = 0.0
   }  
-  if (organism == "WNV" || organism == "wnv" || organism == "West Nile virus") {
+  if (organism == "WNV" || organism == "wnv" || organism == "West Nile virus" || organism == "11082") {
     String wnv_org_name = "WNV"
     String wnv_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/wnv/NC_009942.1_wnv_L1.fasta"
     String wnv_kraken_target_organism = "West Nile virus"
@@ -103,7 +103,7 @@ workflow organism_parameters {
     String wnv_nextclade_ds_tag = "NA"
     String wnv_nextclade_ds_name = "NA"
   }
-  if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza") {
+  if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza" || organism == "11320" || organism == "11309") {
     String flu_org_name = "flu"
     Int flu_genome_len = 13500
 
@@ -202,7 +202,7 @@ workflow organism_parameters {
       String d1_1_custom_nextclade_dataset = "gs://theiagen-public-resources-rp/reference_data/viral/flu/nextclade_avian-flu_h5n1-d1.1_2025-06-24.json"
     }
   }
-  if (organism == "rsv_a" || organism == "rsv-a" || organism == "RSV-A" || organism == "RSV_A") {
+  if (organism == "rsv_a" || organism == "rsv-a" || organism == "RSV-A" || organism == "RSV_A" || organism == "208893") {
     String rsv_a_org_name = "rsv_a"
     String rsv_a_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"
     String rsv_a_nextclade_ds_tag = "2024-11-27--02-51-00Z"
@@ -226,7 +226,7 @@ workflow organism_parameters {
     Float rsv_a_narrow_bandwidth = 0.1666667
     Float rsv_a_proportion_wide = 0.0
   }
-  if (organism == "rsv_b" || organism == "rsv-b" || organism == "RSV-B" || organism == "RSV_B") {
+  if (organism == "rsv_b" || organism == "rsv-b" || organism == "RSV-B" || organism == "RSV_B" || organism == "208895") {
     String rsv_b_org_name = "rsv_b"
     String rsv_b_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"
     String rsv_b_nextclade_ds_tag = "2025-03-04--17-31-25Z"
@@ -250,21 +250,23 @@ workflow organism_parameters {
     Float rsv_b_narrow_bandwidth = 0.1666667
     Float rsv_b_proportion_wide = 0.0
   }
-  if (organism == "HIV" && hiv_primer_version == "v1") {
-    String hiv_v1_org_name = "HIV"
-    String hiv_v1_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta"
-    String hiv_v1_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"
-    String hiv_v1_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"
-    String hiv_v1_target_organism = "Human immunodeficiency virus 1"
-    Int hiv_v1_genome_len = 9181 
-  }
-  if (organism == "HIV" && hiv_primer_version == "v2") {
-    String hiv_v2_org_name = "HIV"
-    String hiv_v2_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"
-    String hiv_v2_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"
-    String hiv_v2_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed"
-    String hiv_v2_target_organism = "Human immunodeficiency virus 1"
-    Int hiv_v2_genome_len = 9840
+  if (organism == "HIV" || organism == "11676" || organism == "11709") {
+    if (hiv_primer_version == "v1" || organism == "11676") {
+      String hiv_v1_org_name = "HIV"
+      String hiv_v1_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta"
+      String hiv_v1_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"
+      String hiv_v1_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"
+      String hiv_v1_target_organism = "Human immunodeficiency virus 1"
+      Int hiv_v1_genome_len = 9181 
+    }
+    if (hiv_primer_version == "v2" || organism == "11709") {
+      String hiv_v2_org_name = "HIV"
+      String hiv_v2_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"
+      String hiv_v2_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"
+      String hiv_v2_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed"
+      String hiv_v2_target_organism = "Human immunodeficiency virus 1"
+      Int hiv_v2_genome_len = 9840
+    }
   }
   if (organism == "Measles" || organism == "measles" || organism == "mev" || organism == "MeV" || organism == "Morbillivirus" || organism == "morbillivirus") {
     String measles_org_name = "measles"

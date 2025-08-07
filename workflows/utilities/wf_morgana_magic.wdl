@@ -10,8 +10,6 @@ workflow morgana_magic {
   input {
     String samplename
     File assembly_fasta
-    File read1
-    File? read2
     String taxon_name
     String seq_method
     # consensus qc
@@ -67,8 +65,7 @@ workflow morgana_magic {
     call flu_track_wf.flu_track {
       input:
         samplename = samplename,
-        read1 = read1,
-        read2 = read2,
+        assembly_fasta = assembly_fasta,
         seq_method = seq_method,
         standardized_organism = organism_parameters.standardized_organism,
         assembly_metrics_cpu = assembly_metrics_cpu,

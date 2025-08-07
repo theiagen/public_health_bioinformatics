@@ -40,6 +40,7 @@ workflow theiaviral_illumina_pe {
     Float min_allele_freq = 0.6
     # rasusa downsampling inputs
     Int? genome_length
+    Boolean characterize_via_input = false
   }
   # get the PHB version
   call versioning_task.version_capture {
@@ -188,14 +189,19 @@ workflow theiaviral_illumina_pe {
             assembly = consensus.consensus_seq,
             samplename = samplename
         }
+        # set the variable for the taxon_id
+        if (characterize_via_input) {
+          String characterize_id = task_identify_taxon_id.raw_taxon_id
+        }
+        if (!characterize_via_input) {
+          String characterize_id = ncbi_identify.taxon_id
+        }
         # run morgana magic for classification
         call morgana_magic_wf.morgana_magic {
           input:
             samplename = samplename,
             assembly_fasta = select_first([consensus.consensus_seq]),
-            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
-            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
-            taxon_name = select_first([ncbi_datasets.taxon_id]),
+            taxon_name = characterize_id,
             seq_method = "illumina_pe"
         }
       }
@@ -290,7 +296,7 @@ workflow theiaviral_illumina_pe {
     Int? quast_denovo_largest_contig = quast_denovo.largest_contig
     Float? quast_denovo_gc_percent = quast_denovo.gc_percent
     Float? quast_denovo_uncalled_bases = quast_denovo.uncalled_bases
-    String? quast_denovo_version = quast_denovo.version
+    String? quast_denovo_version = quast_denovo.quast_version
     String? quast_denovo_docker = quast_denovo.quast_docker
     # skani outputs - ANI-based reference genome selection
     File? skani_report = skani.skani_report
