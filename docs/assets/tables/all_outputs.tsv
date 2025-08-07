@@ -16,6 +16,8 @@ abricate_results_tsv	File	<https://github.com/tseemann/abricate#output> containi
 abricate_version	String	Version of abricate used for A. baumannii plasmid typing	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 abricate_vibrio_biotype	String	Biotype classification according to tcpA gene sequence (Classical or ElTor)	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 abricate_vibrio_ctxA	String	Presence or absence of the ctxA gene	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+abricate_vibrio_database	String	DESCRIPTION	TheiaProk_FASTA
+abricate_vibrio_docker	String	DESCRIPTION	TheiaProk_FASTA
 abricate_vibrio_detailed_tsv	File	Detailed ABRicate output file	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 abricate_vibrio_ompW	String	Presence or absence of the ompW gene	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 abricate_vibrio_serogroup	String	Serotype classification as O1 (wbeN gene), O139 (wbfR gene) or not detected.	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -37,10 +39,10 @@ aligned_bam	String	Sorted BAM file containing the alignments of reads to the ref
 aligned_fai	File	Index file for the reference genome	Clair3_Variants_ONT
 aligned_fastas	File	A FASTA file of the aligned genomes	Augur
 alignment_method	String	The method used to generate the alignment	Freyja_FASTQ
-amr_results_csv	File	CSV formatted AMR profile	AMR_Search, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-amr_results_pdf	File	PDF formatted AMR profile	AMR_Search, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-amr_search_csv	File	CSV formatted AMR profile	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-amr_search_results_pdf	File	PDF formatted AMR profile	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+amr_results_csv	File	CSV formatted AMR profile	AMR_Search, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+amr_results_pdf	File	PDF formatted AMR profile	AMR_Search, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+amr_search_csv	File	CSV formatted AMR profile	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA
+amr_search_results_pdf	File	PDF formatted AMR profile	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA
 amr_search_docker	String	Docker image used to run AMR_Search	AMR_Search, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 amr_search_results	File	JSON formatted AMR profile including BLAST results	AMR_Search, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 amr_search_version	String	Version of AMR_Search libraries used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, AMR_Search, TheiaEuk_Illumina_PE, TheiaEuk_ONT
@@ -123,6 +125,7 @@ auspice_json_flu_ha	File	Auspice-compatable JSON output generated from Nextclade
 auspice_json_flu_na	File	Auspice-compatable JSON output generated from Nextclade analysis on Influenza NA segment that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
 auspice_json_mpxv	File	Auspice-compatable JSON output generated from Nextclade analysis on Monkeypox virus that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaViral_Illumina_PE, TheiaViral_ONT
 auspice_json_rabies	File	Auspice-compatable JSON output generated from Nextclade analysis on Rabies virus that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaViral_Illumina_PE, TheiaViral_ONT
+average_read_length	Float	DESCRIPTION	TheiaMeta_Illumina_PE
 bakta_gbff	File	Genomic GenBank format annotation file	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 bakta_gff3	File	Generic Feature Format Version 3 file	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 bakta_plot	File	Bakta plot output PNG file summarizing annotated genome features such as coding sequences, RNA genes, and hypothetical proteins.	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -184,7 +187,7 @@ concatenated_variants	File	The concatenated variants without presence/absence	Fi
 consensus_flagstat	File	Output from the SAMtools flagstat command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 consensus_n_variant_min_depth	Int	Minimum read depth to call variants for iVar consensus and iVar variants. Also represents the minimum consensus support threshold used by IRMA with Illumina Influenza data.	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
 consensus_stats	File	Output from the SAMtools stats command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-contig number	Int	The number of contigs in the assembly_fasta (see description for `assembly_fasta`)	TheiaMeta_Illumina_PE
+contig_number	Int	The number of contigs in the assembly_fasta (see description for `assembly_fasta`)	TheiaMeta_Illumina_PE
 contigs_fastg	File	Assembly graph if megahit used for genome assembly	TheiaProk_Illumina_PE
 contigs_gfa	File	Assembly graph output generated by SPAdes (Illumina: PE, SE) or Flye (ONT), used to visualize and evaluate genome assembly results.	TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 contigs_lastgraph	File	Assembly graph if velvet used for genome assembly	TheiaProk_Illumina_PE
@@ -209,6 +212,10 @@ emmtypingtool_docker	String	Docker image for emm-typing-tool	TheiaProk_Illumina_
 emmtypingtool_emm_type	String	emm-type predicted	TheiaProk_Illumina_PE
 emmtypingtool_results_xml	File	XML file with emm-typing-tool resuls	TheiaProk_Illumina_PE
 emmtypingtool_version	String	Version of emm-typing-tool used	TheiaProk_Illumina_PE
+emmtyper_docker	String	DESCRIPTION	TheiaProk_FASTA, TheiaProk_Illumina_PE
+emmtyper_emm_type	String	DESCRIPTION	TheiaProk_FASTA, TheiaProk_Illumina_PE
+emmtyper_results_tsv	File	DESCRIPTION	TheiaProk_FASTA, TheiaProk_Illumina_PE
+emmtyper_version	String	DESCRIPTION	TheiaProk_FASTA, TheiaProk_Illumina_PE
 est_coverage_clean	Float	Estimated coverage calculated from clean reads and genome length	TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 est_coverage_raw	Float	Estimated coverage calculated from raw reads and genome length	TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 est_percent_gene_coverage_tsv	File	Percent coverage for each gene in the organism being analyzed (depending on the organism input)	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
@@ -345,11 +352,11 @@ gisaid_cli_version	String	The verison of the GISAID CLI tool	Terra_2_GISAID
 gisaid_fasta	File	**Only for mpox and SARS-CoV-2 submission**: GISAID fasta file for upload	Mercury_Prep_N_Batch
 gisaid_logs	File	The log files regarding the submission	Terra_2_GISAID
 gisaid_metadata	File	**Only for mpox and SARS-CoV-2 submission**: GISAID metadata for upload	Mercury_Prep_N_Batch
-hicap_docker	String	Docker image used for hicap	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-hicap_genes	String	cap genes identified. genes on different contigs delimited by;. truncation shown by trailing *	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-hicap_results_tsv	File	TSV file of hicap output	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-hicap_serotype	String	hicap serotype	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-hicap_version	String	hicap version used	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+hicap_docker	String	Docker image used for hicap	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_FASTA
+hicap_genes	String	cap genes identified. genes on different contigs delimited by;. truncation shown by trailing *	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_FASTA
+hicap_results_tsv	File	TSV file of hicap output	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_FASTA
+hicap_serotype	String	hicap serotype	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_FASTA
+hicap_version	String	hicap version used	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_FASTA
 irma_assembly_fasta_concatenated	File	Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry	TheiaCoV_ONT, TheiaCoV_Illumina_PE
 irma_docker	String	Docker image used to run IRMA	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
 irma_ha_segment_fasta	File	HA (Haemagglutinin) assembly fasta file	TheiaCoV_ONT, TheiaCoV_Illumina_PE
@@ -648,7 +655,8 @@ pbptyper_predicted_1A_2B_2X	String	PBP type predicted by pbptyper	TheiaProk_FAST
 pbptyper_version	String	Version of pbptyper used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 percent_coverage	Float	The percentage coverage of the reference genome provided if one was provided	TheiaMeta_Illumina_PE
 percent_reference_coverage	Float	Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903) x 100	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-percentage_mapped_reads	String	Percentage of reads that successfully aligned to the reference genome. This value is calculated by number of mapped reads / total number of reads x 100.	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE
+percentage_mapped_reads	Float	Percentage of reads that successfully aligned to the reference genome. This value is calculated by number of mapped reads / total number of reads x 100.	TheiaMeta_Illumina_PE
+percentage_mapped_reads	String	Percentage of reads that successfully aligned to the reference genome. This value is calculated by number of mapped reads / total number of reads x 100.	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 pilon_docker	String	The Docker image for pilon	TheiaMeta_Illumina_PE
 pilon_version	String	The version of pilon	TheiaMeta_Illumina_PE
 pirate_core_alignment_fasta	File	Nucleotide alignments of the core genes as created using MAFFT within Pirate. Loci are ordered according to the gene_families.ordered file.	Core_Gene_SNP
@@ -767,9 +775,9 @@ semibin_version	String	The version of Semibin used	TheiaMeta_Illumina_PE
 seq_platform	String	Description of the sequencing methodology used to generate the input read data	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 seqsero2_note	String	Additional notes produced by SeqSero2	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 seqsero2_predicted_antigenic_profile	String	Antigenic profile predicted for Salmonella spp. by SeqSero2	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-seqsero2_predicted_contamination	String	Indicates whether contamination between Salmonella with different serotypes was predicted by SeqSero2	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+seqsero2_predicted_contamination	String	Indicates whether contamination between Salmonella with different serotypes was predicted by SeqSero2	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 seqsero2_predicted_serotype	String	Serotype predicted by SeqSero2	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-seqsero2_report	File	TSV report produced by SeqSero2	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+seqsero2_report	String	TSV report produced by SeqSero2	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 seqsero2_version	String	Version of SeqSero2 used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 seroba_ariba_identity	String	Percentage identity between the query sequence and ARIBA-predicted serotype	TheiaProk_Illumina_PE
 seroba_ariba_serotype	String	Serotype predicted by ARIBA, via SeroBA	TheiaProk_Illumina_PE

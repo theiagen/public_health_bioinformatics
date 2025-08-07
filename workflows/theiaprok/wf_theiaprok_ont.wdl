@@ -87,7 +87,7 @@ workflow theiaprok_ont {
     }
   }
   if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-    call read_qc_workflow.read_QC_trim_ont as read_qc_trim {
+    call read_qc_workflow.read_QC_trim_ont as read_QC_trim {
       input:
         samplename = samplename,
         read1 = read1,
@@ -97,7 +97,7 @@ workflow theiaprok_ont {
     if (! skip_screen) {
       call screen_task.check_reads_se as clean_check_reads {
         input:
-          read1 = read_qc_trim.read1_clean,
+          read1 = read_QC_trim.read1_clean,
           min_reads = min_reads,
           min_basepairs = min_basepairs,
           min_genome_length = min_genome_length,
@@ -111,7 +111,7 @@ workflow theiaprok_ont {
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
       call flye_workflow.flye_denovo {
         input:
-          read1 = read_qc_trim.read1_clean,
+          read1 = read_QC_trim.read1_clean,
           samplename = samplename
       }
       call quast_task.quast {
@@ -128,7 +128,7 @@ workflow theiaprok_ont {
       }
       call nanoplot_task.nanoplot as nanoplot_clean {
         input:
-          read1 = read_qc_trim.read1_clean,
+          read1 = read_QC_trim.read1_clean,
           samplename = samplename,
           est_genome_length = select_first([genome_length, quast.genome_length])
       }
@@ -258,7 +258,7 @@ workflow theiaprok_ont {
             merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
             assembly = flye_denovo.assembly_fasta,
             samplename = samplename,
-            read1 = read_qc_trim.read1_clean,
+            read1 = read_QC_trim.read1_clean,
             ont_data = true
         }
         if (defined(taxon_tables)) {
@@ -401,10 +401,10 @@ workflow theiaprok_ont {
                 "kmerfinder_results_tsv": kmerfinder.kmerfinder_results_tsv,
                 "kmerfinder_template_coverage": kmerfinder.kmerfinder_template_coverage,
                 "kmerfinder_top_hit": kmerfinder.kmerfinder_top_hit,
-                "kraken_docker": read_qc_trim.kraken_docker,
-                "kraken2_database": read_qc_trim.kraken_database,
-                "kraken2_report": read_qc_trim.kraken_report,
-                "kraken2_version": read_qc_trim.kraken_version,
+                "kraken_docker": read_QC_trim.kraken_docker,
+                "kraken2_database": read_QC_trim.kraken_database,
+                "kraken2_report": read_QC_trim.kraken_report,
+                "kraken2_version": read_QC_trim.kraken_version,
                 "legsta_predicted_sbt": merlin_magic.legsta_predicted_sbt,
                 "legsta_results": merlin_magic.legsta_results,
                 "legsta_version": merlin_magic.legsta_version,
@@ -444,7 +444,7 @@ workflow theiaprok_ont {
                 "nanoplot_tsv_clean": nanoplot_clean.nanoplot_tsv,
                 "nanoplot_tsv_raw": nanoplot_raw.nanoplot_tsv,
                 "nanoplot_version": nanoplot_raw.nanoplot_version,
-                "nanoq_version": read_qc_trim.nanoq_version,
+                "nanoq_version": read_QC_trim.nanoq_version,
                 "ngmaster_ngmast_porB_allele": merlin_magic.ngmaster_ngmast_porB_allele,
                 "ngmaster_ngmast_sequence_type": merlin_magic.ngmaster_ngmast_sequence_type,
                 "ngmaster_ngmast_tbpB_allele": merlin_magic.ngmaster_ngmast_tbpB_allele,
@@ -491,12 +491,12 @@ workflow theiaprok_ont {
                 "quast_gc_percent": quast.gc_percent,
                 "quast_report": quast.quast_report,
                 "quast_version": quast.version,
-                "rasusa_version": read_qc_trim.rasusa_version,
+                "rasusa_version": read_QC_trim.rasusa_version,
                 "read_screen_clean_tsv": clean_check_reads.read_screen_tsv,
                 "read_screen_clean": clean_check_reads.read_screen,
                 "read_screen_raw_tsv": raw_check_reads.read_screen_tsv,
                 "read_screen_raw": raw_check_reads.read_screen,
-                "read1_clean": read_qc_trim.read1_clean,
+                "read1_clean": read_QC_trim.read1_clean,
                 "read1": read1,
                 "resfinder_db_version": resfinder_task.resfinder_db_version,
                 "resfinder_docker": resfinder_task.resfinder_docker,
@@ -656,7 +656,7 @@ workflow theiaprok_ont {
               genome_length = quast.genome_length,
               gc_percent = quast.gc_percent,
               read1_raw = read1,
-              read1_clean = read_qc_trim.read1_clean
+              read1_clean = read_QC_trim.read1_clean
           }
         }
       }
@@ -674,8 +674,8 @@ workflow theiaprok_ont {
     String? read_screen_clean = clean_check_reads.read_screen
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC - nanoq outputs
-    File? read1_clean = read_qc_trim.read1_clean
-    String? nanoq_version = read_qc_trim.nanoq_version
+    File? read1_clean = read_QC_trim.read1_clean
+    String? nanoq_version = read_QC_trim.nanoq_version
     # Read QC - nanoplot raw outputs
     File? nanoplot_html_raw = nanoplot_raw.nanoplot_html
     File? nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv
@@ -702,12 +702,12 @@ workflow theiaprok_ont {
     String? nanoplot_version = nanoplot_raw.nanoplot_version
     String? nanoplot_docker = nanoplot_raw.nanoplot_docker
     # Read QC - kraken outputs
-    String? kraken2_version = read_qc_trim.kraken_version
-    String? kraken2_report = read_qc_trim.kraken_report
-    String? kraken2_database = read_qc_trim.kraken_database
-    String? kraken_docker = read_qc_trim.kraken_docker
+    String? kraken2_version = read_QC_trim.kraken_version
+    String? kraken2_report = read_QC_trim.kraken_report
+    String? kraken2_database = read_QC_trim.kraken_database
+    String? kraken_docker = read_QC_trim.kraken_docker
     # Read QC - rasusa outputs
-    String? rasusa_version = read_qc_trim.rasusa_version
+    String? rasusa_version = read_QC_trim.rasusa_version
     # Assembly - flye_denovo outputs
     File? assembly_fasta = flye_denovo.assembly_fasta
     File? contigs_gfa = flye_denovo.contigs_gfa
