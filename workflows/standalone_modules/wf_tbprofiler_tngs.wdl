@@ -14,7 +14,7 @@ workflow tbprofiler_tngs {
     File? read2
     String samplename
     Int bases_to_crop = 0
-    Boolean skip_trimmomatic = false
+    Boolean skip_trimmomatic = true
   }
   call versioning.version_capture {
     input:
