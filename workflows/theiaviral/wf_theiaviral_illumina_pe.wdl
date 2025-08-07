@@ -296,7 +296,7 @@ workflow theiaviral_illumina_pe {
     Int? quast_denovo_largest_contig = quast_denovo.largest_contig
     Float? quast_denovo_gc_percent = quast_denovo.gc_percent
     Float? quast_denovo_uncalled_bases = quast_denovo.uncalled_bases
-    String? quast_denovo_version = quast_denovo.quast_version
+    String? quast_denovo_version = quast_denovo.version
     String? quast_denovo_docker = quast_denovo.quast_docker
     # skani outputs - ANI-based reference genome selection
     File? skani_report = skani.skani_report
