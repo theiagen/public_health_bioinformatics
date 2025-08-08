@@ -35,10 +35,7 @@ task vadr_flu_segments {
       declare -A fluA_map=( ["seg1"]="PB2" ["seg2"]="PB1" ["seg3"]="PA" ["seg4"]="HA" ["seg5"]="NP" ["seg6"]="NA" ["seg7"]="MP" ["seg8"]="NS" )
       declare -A fluB_map=( ["seg1"]="PB1" ["seg2"]="PB2" ["seg3"]="PA" ["seg4"]="HA" ["seg5"]="NP" ["seg6"]="NA" ["seg7"]="MP" ["seg8"]="NS" )
 
-      # create concatentated fasta file header
-      echo ">vadr_concatenated_flu_segments" > "~{out_base}_concatenated.fasta"
-
-      # extract the flu type and gene segment from the classification summary
+      # loop through VADR classification summary and extract the available flu type/gene segments
       while IFS=$'\t' read -r -a line; do
         SEQ_NAME="${line[1]}"
         MODEL="${line[6]}"
@@ -52,10 +49,14 @@ task vadr_flu_segments {
           GENE_SEGMENT=${fluB_map["${NUM_SEGMENT}"]}
         fi
 
-        # find matching fasta file and copy it
+        echo "SEQ_NAME: ${SEQ_NAME}, MODEL: ${MODEL}, FLU_TYPE: ${FLU_TYPE}, NUM_SEGMENT: ${NUM_SEGMENT}, GENE_SEGMENT: ${GENE_SEGMENT}"
+
+        # rename the segment fasta file if the header matches the sequence name (pulled from the VADR classification summary)
         for fasta in tmp_fastas/seq_*; do
-          # check if the sequence name is in the header line of the fasta file
-          if head -n 1 "${fasta}" | grep "${SEQ_NAME}"; then
+          # check first line if it starts with '>', get only the first field without the '>'
+          HEADER_NAME=$(awk 'NR==1 && /^>/ {sub(/^>/, ""); print $1}' "${fasta}")
+
+          if [[ "${HEADER_NAME}" == "${SEQ_NAME}" ]]; then
             output_segment_fasta="flu_segments/~{out_base}_${GENE_SEGMENT}.fasta"
             cp "$fasta" "$output_segment_fasta"
             # append sequence and remove header/newlines
