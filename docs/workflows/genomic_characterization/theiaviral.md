@@ -254,12 +254,12 @@
 
 #### Taxa-Specific Tasks
 
-The TheiaViral workflows automatically activate taxa-specific sub-workflows after the identification of relevant taxa using the taxon ID of the reference genome. Genomic characterization can be forced for the user-inputted `taxon` by setting `characterize_via_input` to `true` in conjunction with an *exact* match to a taxon listed in parentheses below (case-insensitive). NOTE: it is required to force characterization via user input for RSV-A/RSV-B.
+The TheiaViral workflows activate taxa-specific sub-workflows after the identification of relevant taxa. These modules are automatically activated based on the reference genome. Genomic characterization can be forced to reference the user-inputted `taxon` by setting `characterize_via_input` boolean to `true` in conjunction with populating `taxon` with an *exact* match to a taxon listed in parentheses below (case-insensitive). NOTE: it is required to force characterization via user input for RSV-A/RSV-B.
 
-- **SARS-CoV-2** (`2697049`, `"3418604"`, `"sars-cov-2"`)
-- **Monkeypox virus** (`10244`, `"mpxv"`, `"mpox"`, `"monkeypox virus"`)
-- **Human Immunodeficiency Virus 1** (`"11676"`)
-- **Human Immunodeficiency Virus 2** (`"11709"`)
+- **SARS-CoV-2** (`"2697049"`, `"3418604"`, `"sars-cov-2"`)
+- **Monkeypox virus** (`"10244"`, `"mpxv"`, `"mpox"`, `"monkeypox virus"`)
+- **Human Immunodeficiency Virus 1** (`"11676"`, `"hiv1"`)
+- **Human Immunodeficiency Virus 2** (`"11709"`, `"hiv2"`)
 - **West Nile Virus** (`"11082"`, `"wnv"`, `"west nile virus"`)
 - **Influenza** (`"11320"`, `"11309"`, `"flu"`, `"influenza"`)
 - **RSV-A** (`"208893"`, `"hrsv-a"`)
