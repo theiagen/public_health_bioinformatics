@@ -59,16 +59,42 @@ task vadr_flu_segments {
           if [[ "${HEADER_NAME}" == "${SEQ_NAME}" ]]; then
             output_segment_fasta="flu_segments/~{out_base}_${GENE_SEGMENT}.fasta"
             cp "$fasta" "$output_segment_fasta"
-            # append sequence and remove header/newlines
-            grep -v ">" "$fasta" | tr -d '\n' >> "~{out_base}_concatenated.fasta"
-            break
           fi
         done
       done < ~{out_base}/~{out_base}.vadr.sqc.tsv
 
+      # defining the concatenated fasta header
+      CONCATENATED_HEADER=">~{out_base}_concatenated_flu_segments"
+
+      # concatenate all segments into a single fasta file in the correct order (seg1 -> seg8)
+      # need a separate loop because the VADR classification summary does not always report segments in the correct order
+      for i in {1..8}; do
+        NUM_SEGMENT="seg${i}"
+
+        # select map based on the last flu type identified by VADR. note that flu A and B cannot recombine, so the last reported flu type should be consistent across all segments
+        if [[ "${FLU_TYPE}" == "fluA" ]]; then
+          GENE_SEGMENT=${fluA_map["${NUM_SEGMENT}"]}
+        else
+          GENE_SEGMENT=${fluB_map["${NUM_SEGMENT}"]}
+        fi
+
+        SEGMENT_FASTA_FILE="flu_segments/~{out_base}_${GENE_SEGMENT}.fasta"
+        if [[ -s "$SEGMENT_FASTA_FILE" ]]; then
+          # append gene segment to the concatenated fasta header
+          CONCATENATED_HEADER="${CONCATENATED_HEADER}-${GENE_SEGMENT}"
+
+          # append sequence and remove header/newlines
+          grep -v ">" "$SEGMENT_FASTA_FILE" | tr -d '\n' >> "~{out_base}_concatenated.fasta"
+        else
+          echo "Warning: Missing segment fasta file $SEGMENT_FASTA_FILE. Does not exist or is empty. Skipping concatenation for this segment."
+        fi
+      done
+
+      # Insert the header at the beginning of the file
+      sed -i "1i${CONCATENATED_HEADER}" "~{out_base}_concatenated.fasta"
+
       # add final newline to the concatenated fasta
       echo "" >> "~{out_base}_concatenated.fasta"
-
     fi
   >>>
   output {
