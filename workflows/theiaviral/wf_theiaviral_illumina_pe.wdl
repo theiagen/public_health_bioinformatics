@@ -190,12 +190,7 @@ workflow theiaviral_illumina_pe {
             samplename = samplename
         }
         # set the variable for the taxon_id
-        if (characterize_via_input) {
-          String characterize_id = task_identify_taxon_id.raw_taxon_id
-        }
-        if (!characterize_via_input) {
-          String characterize_id = ncbi_identify.taxon_id
-        }
+        String characterize_id = if characterize_via_input then ncbi_identify.raw_taxon_id else ncbi_identify.taxon_id
         # run morgana magic for classification
         call morgana_magic_wf.morgana_magic {
           input:
