@@ -7,7 +7,7 @@ import "../../tasks/species_typing/orthomyxoviridae/task_genoflu.wdl" as genoflu
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
-import "../../tasks/species_typing/influenza/task_vadr_flu_segments.wdl" as vadr_flu_segments_task
+import "../../tasks/species_typing/orthomyxoviridae/task_vadr_flu_segments.wdl" as vadr_flu_segments_task
 
 workflow flu_track {
   meta {
