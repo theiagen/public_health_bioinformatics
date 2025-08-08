@@ -254,7 +254,7 @@
 
 #### Taxa-Specific Tasks
 
-The TheiaViral workflows activate taxa-specific sub-workflows after the identification of relevant taxa. These modules are automatically activated based on the reference genome. Genomic characterization can be forced to reference the user-inputted `taxon` by setting `characterize_via_input` boolean to `true` in conjunction with populating `taxon` with an *exact* match to a taxon listed in parentheses below (case-insensitive). NOTE: it is required to force characterization via user input for RSV-A/RSV-B.
+The TheiaViral workflows activate taxa-specific sub-workflows after the identification of relevant taxa. These modules are automatically activated by the taxon ID of the reference genome identified by Skani, even if a reference genome is provided. Genomic characterization can be forced to reference the user-inputted `taxon` instead by setting `characterize_via_input` boolean to `true` in conjunction with populating `taxon` with an *exact* match to a taxon listed in parentheses below (case-insensitive). NOTE: it is required to force characterization via user input for RSV-A/RSV-B.
 
 - **SARS-CoV-2** (`"2697049"`, `"3418604"`, `"sars-cov-2"`)
 - **Monkeypox virus** (`"10244"`, `"mpxv"`, `"mpox"`, `"monkeypox virus"`)

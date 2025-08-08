@@ -249,7 +249,7 @@ workflow theiaviral_ont {
             samplename = samplename
         }
         # set the variable for the taxon_id
-        String characterize_id = if characterize_via_input then ncbi_identify.raw_taxon_id else ncbi_identify.taxon_id
+        String characterize_id = if (characterize_via_input) then ncbi_identify.raw_taxon_id else select_first([ncbi_datasets.taxon_id, ncbi_identify.raw_taxon_id])
         # run morgana magic for classification
         call morgana_magic_wf.morgana_magic {
           input:
