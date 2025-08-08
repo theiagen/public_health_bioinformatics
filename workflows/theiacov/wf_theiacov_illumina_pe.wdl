@@ -412,15 +412,15 @@ workflow theiacov_illumina_pe {
     String? irma_type = flu_track.irma_type
     String? irma_subtype = flu_track.irma_subtype
     String? irma_subtype_notes = flu_track.irma_subtype_notes
-    File? irma_assembly_fasta_concatenated = flu_track.irma_assembly_fasta_concatenated
-    File? irma_ha_segment_fasta = flu_track.irma_ha_segment_fasta
-    File? irma_na_segment_fasta = flu_track.irma_na_segment_fasta
-    File? irma_pa_segment_fasta = flu_track.irma_pa_segment_fasta
-    File? irma_pb1_segment_fasta = flu_track.irma_pb1_segment_fasta
-    File? irma_pb2_segment_fasta = flu_track.irma_pb2_segment_fasta
-    File? irma_mp_segment_fasta = flu_track.irma_mp_segment_fasta
-    File? irma_np_segment_fasta = flu_track.irma_np_segment_fasta
-    File? irma_ns_segment_fasta = flu_track.irma_ns_segment_fasta
+    File? irma_assembly_fasta_concatenated = flu_track.flu_assembly_fasta_concatenated
+    File? irma_ha_segment_fasta = flu_track.flu_ha_segment_fasta
+    File? irma_na_segment_fasta = flu_track.flu_na_segment_fasta
+    File? irma_pa_segment_fasta = flu_track.flu_pa_segment_fasta
+    File? irma_pb1_segment_fasta = flu_track.flu_pb1_segment_fasta
+    File? irma_pb2_segment_fasta = flu_track.flu_pb2_segment_fasta
+    File? irma_mp_segment_fasta = flu_track.flu_mp_segment_fasta
+    File? irma_np_segment_fasta = flu_track.flu_np_segment_fasta
+    File? irma_ns_segment_fasta = flu_track.flu_ns_segment_fasta
     # Flu GenoFLU Outputs
     String? genoflu_version = flu_track.genoflu_version
     String? genoflu_genotype = flu_track.genoflu_genotype
