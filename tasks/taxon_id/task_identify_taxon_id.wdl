@@ -48,7 +48,7 @@ task identify_taxon_id {
       awk -F'\t' 'NR == 2 {print $3}' ncbi_taxon_summary.tsv > TAXON_NAME
       awk -F'\t' 'NR == 2 {print $5}' ncbi_taxon_summary.tsv > TAXON_RANK
 
-      awk -F'\t' 'NR == 2 {print $2}' ncbi_taxon_summary.tsv > RAW_TAXON_ID
+      awk -F'\t' 'NR == 2 {print $2}' raw_taxon_summary.tsv > RAW_TAXON_ID
     fi
 
     # get list of {summary_limit} genomes from the specified taxon and calculate average genome length
