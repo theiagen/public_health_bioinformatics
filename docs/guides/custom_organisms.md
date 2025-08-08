@@ -1,5 +1,7 @@
 # Guide to Running Custom Organisms on TheiaCoV
 
+We encourage users to refer to the [TheiaViral workflow series](../workflows/genomic_characterization/theiaviral.md) for assembling viruses that are not accounted for in TheiaCoV. 
+
 ## The TheiaCoV Workflow Series
 
 The [**TheiaCoV Workflow Series**](../workflows/genomic_characterization/theiacov.md#theiacov-workflows) is a suite of bioinformatics workflows designed for the **assembly, quality assessment, and characterization of viral genomes**. These workflows accommodate various input data types and **support multiple viral organisms**, facilitating comprehensive genomic analyses for public health applications.
@@ -21,6 +23,8 @@ The [**TheiaCoV Workflow Series**](../workflows/genomic_characterization/theiaco
     - **Influenza** (`"flu"`, `"influenza"`, `"Flu"`, `"Influenza"`)
     - **RSV-A** (`"rsv_a"`, `"rsv-a"`, `"RSV-A"`, `"RSV_A"`)
     - **RSV-B** (`"rsv_b"`, `"rsv-b"`, `"RSV-B"`, `"RSV_B"`)
+    - **Measles** (**`"measles"`**, `"Measles"`, `"mev"`, `"MeV"`, `"Morbillivirus"`, `"morbillivirus"`)
+
 
 These workflows currently support seven organisms (see above). The workflows are adaptable, with parameters that can be customized for specific organisms. Input JSON files with preset configurations for each supported virus are provided [here](../workflows/genomic_characterization/theiacov.md#theiacov-workflows), streamlining the setup process.
 
@@ -37,7 +41,7 @@ For default organisms, we provide all the necessary files for all of these proce
 
 ### Workflow Recommendations for "Custom" Viruses
 
-TheiaCoV can accomplish reference-based consensus genome assembly of some non-model, "custom", viruses in accord with Figure 2’s workflow. Running TheiaCoV on custom viruses requires inputs that may be displayed as optional in [Terra.Bio](http://terra.bio). These inputs are listed in Table 1, below. Briefly, an organism name, provided at the TheiaCoV workflow input, is required; reference genome length, assembly FASTA, and gene coordinates GFF files are required for most workflows; and a primer BED file is required for ONT data and is only needed for Illumina samples if primers are set to be trimmed.
+We encourage users to refer to the [TheiaViral workflow series](../workflows/genomic_characterization/theiaviral.md) for assembling viruses that are not accounted for in TheiaCoV. Tiled amplicon viruses may fail TheiaViral's *de novo* assembly process, though a reference genome can be provided by the user to bypass this step. The following is legacy information on running custom viruses with TheiaCoV.
 
 TheiaCoV is not designed for custom viruses, so it is important to assess the validity of resulting assemblies. The custom virus approach requires a closely related reference genome as input, or else the workflow will fail due to an insufficient quantity of reads mapping to the reference. Such errors will occur at the `ivar_consensus` task during read alignment/extraction or during post-assembly variant calling because a consensus assembly comprising degenerate nucleotides was created. These errors primarily occur due to read mapping difficulty in small (< 20 kb), recombinant, or evolutionarily diverse lineages, such as norovirus or rhinovirus. Contamination can also cause reference mapping errors, so it is important to review the Kraken2 report to ensure the taxonomic composition of the sample sufficiently comprises the expected viral lineage.
 
