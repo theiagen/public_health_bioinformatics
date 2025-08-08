@@ -1245,3 +1245,4 @@ vadr_flu_pb2_segment_fasta	File	PB2 (Polymerase basic 2) assembly fasta file	The
 vadr_flu_mp_segment_fasta	File	MP (Matrix Protein) assembly fasta file	TheiaCoV_FASTA
 vadr_flu_np_segment_fasta	File	NP (Nucleoprotein) assembly fasta file	TheiaCoV_FASTA
 vadr_flu_ns_segment_fasta	File	NS (Nonstructural) assembly fasta file	TheiaCoV_FASTA
+characterization_taxonid	String	Taxon ID used for characterization	TheiaViral_Illumina_PE, TheiaViral_ONT

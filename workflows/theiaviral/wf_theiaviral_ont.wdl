@@ -432,6 +432,7 @@ workflow theiaviral_ont {
     Int? checkv_consensus_total_genes = checkv_consensus.total_genes
     String? checkv_consensus_version = checkv_consensus.checkv_version
     # morgana magic outputs
+    String? characterization_taxonid = characterize_id
     String? morgana_magic_organism = morgana_magic.organism 
     # Pangolin outputs
     String? pango_lineage = morgana_magic.pango_lineage
