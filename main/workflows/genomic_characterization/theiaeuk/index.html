@@ -6714,7 +6714,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_human</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -6722,7 +6722,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_human_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -6730,7 +6730,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -6738,7 +6738,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -6932,7 +6932,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7025,6 +7025,14 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>kraken_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -7109,6 +7117,22 @@
 <td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>trim_min_length</strong></td>
+<td>Int</td>
+<td>Specifies minimum length of each read after trimming to be kept</td>
+<td>75</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>trim_quality_min_score</strong></td>
+<td>Int</td>
+<td>Specifies the minimum average quality of bases in a sliding window to be kept</td>
+<td>20</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7229,22 +7253,6 @@
 <td>String</td>
 <td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_min_length</strong></td>
-<td>Int</td>
-<td>Specifies minimum length of each read after trimming to be kept</td>
-<td>75</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_quality_min_score</strong></td>
-<td>Int</td>
-<td>Specifies the minimum average quality of bases in a sliding window to be kept</td>
-<td>20</td>
 <td>Optional</td>
 </tr>
 </tbody>
@@ -8675,6 +8683,14 @@
 </tr>
 <tr>
 <td>theiaeuk_ont</td>
+<td><strong>skip_mash</strong></td>
+<td>Boolean</td>
+<td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
 <td><strong>skip_screen</strong></td>
 <td>Boolean</td>
 <td>Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe genome_length optional input, OR set call_rasusa to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail.</td>
@@ -8695,14 +8711,6 @@
 <td>String</td>
 <td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>skip_mash</strong></td>
-<td>Boolean</td>
-<td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
-<td>TRUE</td>
 <td>Optional</td>
 </tr>
 </tbody>

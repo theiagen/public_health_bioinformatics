@@ -6313,7 +6313,7 @@
 <td>Required</td>
 </tr>
 <tr>
-<td>workflow name</td>
+<td>theiaprok_illumina_pe</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
 <td>The name of the sample being analyzed</td>
@@ -6526,6 +6526,14 @@
 <td>File</td>
 <td>If not set, uses all 43 genomes in RGDv2</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln</td>
+<td><strong>call_arln</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the return of ARLN required Auto PASS/FAIL outputs</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8779,7 +8787,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_human</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -8787,7 +8795,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_human_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -8795,7 +8803,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -8803,7 +8811,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -8933,7 +8941,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9030,6 +9038,14 @@
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9154,10 +9170,122 @@
 </tr>
 <tr>
 <td>theiaprok_illumina_pe</td>
+<td><strong>abricate_db</strong></td>
+<td>String</td>
+<td>Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB</td>
+<td>vfdb</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
 <td><strong>amrfinder_use_gff</strong></td>
 <td>Boolean</td>
 <td>Whether or not to use the GFF and protein FASTA files for AMRFinderPlus</td>
 <td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>bakta_db</strong></td>
+<td>String</td>
+<td>Database selection for Bakta annotation. Options: light (smaller, faster), full (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.</td>
+<td>full</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>call_abricate</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the Abricate task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>call_ani</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the ANI task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>call_gamma</strong></td>
+<td>Boolean</td>
+<td>Set to true in order to enable GAMMA task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>call_kmerfinder</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the kmerfinder task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>call_plasmidfinder</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the plasmidfinder task</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>call_resfinder</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the ResFinder task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>city</strong></td>
+<td>String</td>
+<td>Will be used in the "city" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>collection_date</strong></td>
+<td>String</td>
+<td>Will be used in the "collection_date" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>county</strong></td>
+<td>String</td>
+<td>Will be used in the "county" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>expected_taxon</strong></td>
+<td>String</td>
+<td>If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>genome_annotation</strong></td>
+<td>String</td>
+<td>If set to "bakta", TheiaProk will use Bakta rather than Prokka to annotate the genome</td>
+<td>prokka</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>genome_length</strong></td>
+<td>Int</td>
+<td>User-specified expected genome length to be used in genome statistics calculations</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9206,6 +9334,158 @@
 <td>Int</td>
 <td>Minimum number of reads to pass read screening</td>
 <td>7472</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>originating_lab</strong></td>
+<td>String</td>
+<td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>perform_characterization</strong></td>
+<td>Boolean</td>
+<td>Set to "false" if you want to only generate an assembly and relevant QC metrics and skip all characterization tasks</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>qc_check_table</strong></td>
+<td>File</td>
+<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>read1_lane2</strong></td>
+<td>File</td>
+<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>read1_lane3</strong></td>
+<td>File</td>
+<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>read1_lane4</strong></td>
+<td>File</td>
+<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>read2_lane2</strong></td>
+<td>File</td>
+<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>read2_lane3</strong></td>
+<td>File</td>
+<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>read2_lane4</strong></td>
+<td>File</td>
+<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>run_id</strong></td>
+<td>String</td>
+<td>Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>seq_method</strong></td>
+<td>String</td>
+<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>skip_screen</strong></td>
+<td>Boolean</td>
+<td>Set to True to skip the read screening prior to analysis</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>taxon_tables</strong></td>
+<td>File</td>
+<td>File indicating data table names to copy samples of a particular taxon to</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>terra_project</strong></td>
+<td>String</td>
+<td>The name of the Terra Project where you want the taxon tables written to</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>terra_workspace</strong></td>
+<td>String</td>
+<td>The name of the Terra Workspace where you want the taxon tables written to</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>trim_min_length</strong></td>
+<td>Int</td>
+<td>Specifies minimum length of each read after trimming to be kept</td>
+<td>75</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>trim_quality_min_score</strong></td>
+<td>Int</td>
+<td>Specifies the minimum average quality of bases in a sliding window to be kept</td>
+<td>20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>trim_window_size</strong></td>
+<td>Int</td>
+<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>zip</strong></td>
+<td>String</td>
+<td>Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9304,286 +9584,6 @@
 <td></td>
 <td>Optional</td>
 </tr>
-<tr>
-<td>workflow name</td>
-<td><strong>abricate_db</strong></td>
-<td>String</td>
-<td>Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB</td>
-<td>vfdb</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>bakta_db</strong></td>
-<td>String</td>
-<td>Database selection for Bakta annotation. Options: "light" (smaller, faster), "full" (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.</td>
-<td>full</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_abricate</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the Abricate task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_ani</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the ANI task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_gamma</strong></td>
-<td>Boolean</td>
-<td>Set to true in order to enable GAMMA task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_kmerfinder</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the kmerfinder task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_plasmidfinder</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the plasmidfinder task</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_resfinder</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the ResFinder task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>city</strong></td>
-<td>String</td>
-<td>Will be used in the "city" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>collection_date</strong></td>
-<td>String</td>
-<td>Will be used in the "collection_date" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>county</strong></td>
-<td>String</td>
-<td>Will be used in the "county" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>expected_taxon</strong></td>
-<td>String</td>
-<td>If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica"</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>genome_annotation</strong></td>
-<td>String</td>
-<td>If set to "bakta", TheiaProk will use Bakta rather than Prokka to annotate the genome</td>
-<td>prokka</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>genome_length</strong></td>
-<td>Int</td>
-<td>User-specified expected genome length to be used in genome statistics calculations</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>mlst_run_secondary_scheme</strong></td>
-<td>Boolean</td>
-<td>If set to true, the workflow will run a secondary scheme for E. coli and A. baumannii.</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>mlst_scheme_override</strong></td>
-<td>Boolean</td>
-<td>If set to true when GAMBIT taxon is E. coli the workflow will exclude aeromonas, cfreundii, and senterica schemes as they can cause mischaracterization. This is not recommended for general use. Please reach out if you are interested in this usage.</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>originating_lab</strong></td>
-<td>String</td>
-<td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>perform_characterization</strong></td>
-<td>Boolean</td>
-<td>Set to "false" if you want to only generate an assembly and relevant QC metrics and skip all characterization tasks</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>qc_check_table</strong></td>
-<td>File</td>
-<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>read1_lane2</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>read1_lane3</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>read1_lane4</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>read2_lane2</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>read2_lane3</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>read2_lane4</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>run_id</strong></td>
-<td>String</td>
-<td>Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>seq_method</strong></td>
-<td>String</td>
-<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>skip_screen</strong></td>
-<td>Boolean</td>
-<td>Set to True to skip the read screening prior to analysis</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>taxon_tables</strong></td>
-<td>File</td>
-<td>File indicating data table names to copy samples of a particular taxon to</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>terra_project</strong></td>
-<td>String</td>
-<td>The name of the Terra Project where you want the taxon tables written to</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>terra_workspace</strong></td>
-<td>String</td>
-<td>The name of the Terra Workspace where you want the taxon tables written to</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_min_length</strong></td>
-<td>Int</td>
-<td>Specifies minimum length of each read after trimming to be kept</td>
-<td>75</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_quality_min_score</strong></td>
-<td>Int</td>
-<td>Specifies the minimum average quality of bases in a sliding window to be kept</td>
-<td>20</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_window_size</strong></td>
-<td>Int</td>
-<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>zip</strong></td>
-<td>String</td>
-<td>Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -9611,7 +9611,7 @@
 <td>Required</td>
 </tr>
 <tr>
-<td>workflow name</td>
+<td>theiaprok_illumina_se</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
 <td>The name of the sample being analyzed</td>
@@ -9824,6 +9824,14 @@
 <td>File</td>
 <td>If not set, uses all 43 genomes in RGDv2</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln</td>
+<td><strong>call_arln</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the return of ARLN required Auto PASS/FAIL outputs</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12093,7 +12101,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_human</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -12101,7 +12109,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_human_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -12109,7 +12117,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -12117,7 +12125,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -12295,7 +12303,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12392,6 +12400,14 @@
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12516,10 +12532,122 @@
 </tr>
 <tr>
 <td>theiaprok_illumina_se</td>
+<td><strong>abricate_db</strong></td>
+<td>String</td>
+<td>Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB</td>
+<td>vfdb</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
 <td><strong>amrfinder_use_gff</strong></td>
 <td>Boolean</td>
 <td>Whether or not to use the GFF and protein FASTA files for AMRFinderPlus</td>
 <td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>bakta_db</strong></td>
+<td>String</td>
+<td>Database selection for Bakta annotation. Options: light (smaller, faster), full (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.</td>
+<td>full</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>call_abricate</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the Abricate task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>call_ani</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the ANI task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>call_gamma</strong></td>
+<td>Boolean</td>
+<td>Set to true in order to enable GAMMA task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>call_kmerfinder</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the kmerfinder task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>call_plasmidfinder</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the plasmidfinder task</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>call_resfinder</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the ResFinder task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>city</strong></td>
+<td>String</td>
+<td>Will be used in the "city" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>collection_date</strong></td>
+<td>String</td>
+<td>Will be used in the "collection_date" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>county</strong></td>
+<td>String</td>
+<td>Will be used in the "county" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>expected_taxon</strong></td>
+<td>String</td>
+<td>If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>genome_annotation</strong></td>
+<td>String</td>
+<td>If set to "bakta", TheiaProk will use Bakta rather than Prokka to annotate the genome</td>
+<td>prokka</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>genome_length</strong></td>
+<td>Int</td>
+<td>User-specified expected genome length to be used in genome statistics calculations</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12560,6 +12688,166 @@
 <td>Int</td>
 <td>Minimum number of reads to pass read screening</td>
 <td>7472</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>originating_lab</strong></td>
+<td>String</td>
+<td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>perform_characterization</strong></td>
+<td>Boolean</td>
+<td>Set to "false" if you want to only generate an assembly and relevant QC metrics and skip all characterization tasks</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>qc_check_table</strong></td>
+<td>File</td>
+<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>read1_lane2</strong></td>
+<td>File</td>
+<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>read1_lane3</strong></td>
+<td>File</td>
+<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>read1_lane4</strong></td>
+<td>File</td>
+<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>read2_lane2</strong></td>
+<td>File</td>
+<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>read2_lane3</strong></td>
+<td>File</td>
+<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>read2_lane4</strong></td>
+<td>File</td>
+<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>run_id</strong></td>
+<td>String</td>
+<td>Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>seq_method</strong></td>
+<td>String</td>
+<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>skip_mash</strong></td>
+<td>Boolean</td>
+<td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>skip_screen</strong></td>
+<td>Boolean</td>
+<td>Set to True to skip the read screening prior to analysis</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>taxon_tables</strong></td>
+<td>File</td>
+<td>File indicating data table names to copy samples of a particular taxon to</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>terra_project</strong></td>
+<td>String</td>
+<td>The name of the Terra Project where you want the taxon tables written to</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>terra_workspace</strong></td>
+<td>String</td>
+<td>The name of the Terra Workspace where you want the taxon tables written to</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>trim_min_length</strong></td>
+<td>Int</td>
+<td>Specifies minimum length of each read after trimming to be kept</td>
+<td>25</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>trim_quality_trim_score</strong></td>
+<td>Int</td>
+<td>Specifies the average quality of bases in a sliding window to be kept</td>
+<td>30</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>trim_window_size</strong></td>
+<td>Int</td>
+<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>zip</strong></td>
+<td>String</td>
+<td>Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12658,294 +12946,6 @@
 <td></td>
 <td>Optional</td>
 </tr>
-<tr>
-<td>workflow name</td>
-<td><strong>abricate_db</strong></td>
-<td>String</td>
-<td>Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB</td>
-<td>vfdb</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>bakta_db</strong></td>
-<td>String</td>
-<td>Database selection for Bakta annotation. Options: "light" (smaller, faster), "full" (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.</td>
-<td>full</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_abricate</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the Abricate task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_ani</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the ANI task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_gamma</strong></td>
-<td>Boolean</td>
-<td>Set to true in order to enable GAMMA task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_kmerfinder</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the kmerfinder task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_plasmidfinder</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the plasmidfinder task</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_resfinder</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the ResFinder task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>city</strong></td>
-<td>String</td>
-<td>Will be used in the "city" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>collection_date</strong></td>
-<td>String</td>
-<td>Will be used in the "collection_date" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>county</strong></td>
-<td>String</td>
-<td>Will be used in the "county" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>expected_taxon</strong></td>
-<td>String</td>
-<td>If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica"</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>genome_annotation</strong></td>
-<td>String</td>
-<td>If set to "bakta", TheiaProk will use Bakta rather than Prokka to annotate the genome</td>
-<td>prokka</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>genome_length</strong></td>
-<td>Int</td>
-<td>User-specified expected genome length to be used in genome statistics calculations</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>mlst_run_secondary_scheme</strong></td>
-<td>Boolean</td>
-<td>If set to true, the workflow will run a secondary scheme for E. coli and A. baumannii.</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>mlst_scheme_override</strong></td>
-<td>Boolean</td>
-<td>If set to true when GAMBIT taxon is E. coli the workflow will exclude aeromonas, cfreundii, and senterica schemes as they can cause mischaracterization. This is not recommended for general use. Please reach out if you are interested in this usage.</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>originating_lab</strong></td>
-<td>String</td>
-<td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>perform_characterization</strong></td>
-<td>Boolean</td>
-<td>Set to "false" if you want to only generate an assembly and relevant QC metrics and skip all characterization tasks</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>qc_check_table</strong></td>
-<td>File</td>
-<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>read1_lane2</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>read1_lane3</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>read1_lane4</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>read2_lane2</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>read2_lane3</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>read2_lane4</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>run_id</strong></td>
-<td>String</td>
-<td>Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>seq_method</strong></td>
-<td>String</td>
-<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>skip_mash</strong></td>
-<td>Boolean</td>
-<td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>skip_screen</strong></td>
-<td>Boolean</td>
-<td>Set to True to skip the read screening prior to analysis</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>taxon_tables</strong></td>
-<td>File</td>
-<td>File indicating data table names to copy samples of a particular taxon to</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>terra_project</strong></td>
-<td>String</td>
-<td>The name of the Terra Project where you want the taxon tables written to</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>terra_workspace</strong></td>
-<td>String</td>
-<td>The name of the Terra Workspace where you want the taxon tables written to</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_min_length</strong></td>
-<td>Int</td>
-<td>Specifies minimum length of each read after trimming to be kept</td>
-<td>25</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_quality_trim_score</strong></td>
-<td>Int</td>
-<td>Specifies the average quality of bases in a sliding window to be kept</td>
-<td>30</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_window_size</strong></td>
-<td>Int</td>
-<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>zip</strong></td>
-<td>String</td>
-<td>Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -12973,7 +12973,7 @@
 <td>Required</td>
 </tr>
 <tr>
-<td>workflow name</td>
+<td>theiaprok_ont</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
 <td>The name of the sample being analyzed</td>
@@ -15559,7 +15559,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_human</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -15567,7 +15567,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_human_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -15575,7 +15575,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -15583,7 +15583,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -15777,7 +15777,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15887,7 +15887,7 @@
 <tr>
 <td>read_QC_trim</td>
 <td><strong>kraken2_recalculate_abundances_docker</strong></td>
-<td>Int</td>
+<td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4</td>
 <td>Optional</td>
@@ -15918,8 +15918,16 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>kraken_docker_image</strong></td>
+<td><strong>kraken_disk_size</strong></td>
 <td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_docker_image</strong></td>
+<td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
 <td>Optional</td>
@@ -16182,10 +16190,122 @@
 </tr>
 <tr>
 <td>theiaprok_ont</td>
+<td><strong>abricate_db</strong></td>
+<td>String</td>
+<td>Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB</td>
+<td>vfdb</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
 <td><strong>amrfinder_use_gff</strong></td>
 <td>Boolean</td>
 <td>Whether or not to use the GFF and protein FASTA files for AMRFinderPlus</td>
 <td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>bakta_db</strong></td>
+<td>String</td>
+<td>Database selection for Bakta annotation. Options: light (smaller, faster), full (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.</td>
+<td>full</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>call_abricate</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the Abricate task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>call_ani</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the ANI task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>call_gamma</strong></td>
+<td>Boolean</td>
+<td>Set to true in order to enable GAMMA task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>call_kmerfinder</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the kmerfinder task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>call_plasmidfinder</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the plasmidfinder task</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>call_resfinder</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the ResFinder task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>city</strong></td>
+<td>String</td>
+<td>Will be used in the "city" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>collection_date</strong></td>
+<td>String</td>
+<td>Will be used in the "collection_date" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>county</strong></td>
+<td>String</td>
+<td>Will be used in the "county" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>expected_taxon</strong></td>
+<td>String</td>
+<td>If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>genome_annotation</strong></td>
+<td>String</td>
+<td>If set to "bakta", TheiaProk will use Bakta rather than Prokka to annotate the genome</td>
+<td>prokka</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>genome_length</strong></td>
+<td>Int</td>
+<td>User-specified expected genome length to be used in genome statistics calculations</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16226,6 +16346,94 @@
 <td>Int</td>
 <td>Minimum number of reads to pass read screening</td>
 <td>5000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>originating_lab</strong></td>
+<td>String</td>
+<td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>perform_characterization</strong></td>
+<td>Boolean</td>
+<td>Set to "false" if you want to only generate an assembly and relevant QC metrics and skip all characterization tasks</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>qc_check_table</strong></td>
+<td>File</td>
+<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>run_id</strong></td>
+<td>String</td>
+<td>Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>seq_method</strong></td>
+<td>String</td>
+<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>skip_mash</strong></td>
+<td>Boolean</td>
+<td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>skip_screen</strong></td>
+<td>Boolean</td>
+<td>Set to True to skip the read screening prior to analysis</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>taxon_tables</strong></td>
+<td>File</td>
+<td>File indicating data table names to copy samples of a particular taxon to</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>terra_project</strong></td>
+<td>String</td>
+<td>The name of the Terra Project where you want the taxon tables written to</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>terra_workspace</strong></td>
+<td>String</td>
+<td>The name of the Terra Workspace where you want the taxon tables written to</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>zip</strong></td>
+<td>String</td>
+<td>Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16324,222 +16532,6 @@
 <td></td>
 <td>Optional</td>
 </tr>
-<tr>
-<td>workflow name</td>
-<td><strong>abricate_db</strong></td>
-<td>String</td>
-<td>Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB</td>
-<td>vfdb</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>bakta_db</strong></td>
-<td>String</td>
-<td>Database selection for Bakta annotation. Options: "light" (smaller, faster), "full" (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.</td>
-<td>full</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_abricate</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the Abricate task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_ani</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the ANI task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_gamma</strong></td>
-<td>Boolean</td>
-<td>Set to true in order to enable GAMMA task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_kmerfinder</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the kmerfinder task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_plasmidfinder</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the plasmidfinder task</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_resfinder</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the ResFinder task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>city</strong></td>
-<td>String</td>
-<td>Will be used in the "city" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>collection_date</strong></td>
-<td>String</td>
-<td>Will be used in the "collection_date" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>county</strong></td>
-<td>String</td>
-<td>Will be used in the "county" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>expected_taxon</strong></td>
-<td>String</td>
-<td>If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica"</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>genome_annotation</strong></td>
-<td>String</td>
-<td>If set to "bakta", TheiaProk will use Bakta rather than Prokka to annotate the genome</td>
-<td>prokka</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>genome_length</strong></td>
-<td>Int</td>
-<td>User-specified expected genome length to be used in genome statistics calculations</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>mlst_run_secondary_scheme</strong></td>
-<td>Boolean</td>
-<td>If set to true, the workflow will run a secondary scheme for E. coli and A. baumannii.</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>mlst_scheme_override</strong></td>
-<td>Boolean</td>
-<td>If set to true when GAMBIT taxon is E. coli the workflow will exclude aeromonas, cfreundii, and senterica schemes as they can cause mischaracterization. This is not recommended for general use. Please reach out if you are interested in this usage.</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>originating_lab</strong></td>
-<td>String</td>
-<td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>perform_characterization</strong></td>
-<td>Boolean</td>
-<td>Set to "false" if you want to only generate an assembly and relevant QC metrics and skip all characterization tasks</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>qc_check_table</strong></td>
-<td>File</td>
-<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>run_id</strong></td>
-<td>String</td>
-<td>Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>seq_method</strong></td>
-<td>String</td>
-<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>skip_mash</strong></td>
-<td>Boolean</td>
-<td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>skip_screen</strong></td>
-<td>Boolean</td>
-<td>Set to True to skip the read screening prior to analysis</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>taxon_tables</strong></td>
-<td>File</td>
-<td>File indicating data table names to copy samples of a particular taxon to</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>terra_project</strong></td>
-<td>String</td>
-<td>The name of the Terra Project where you want the taxon tables written to</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>terra_workspace</strong></td>
-<td>String</td>
-<td>The name of the Terra Workspace where you want the taxon tables written to</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>zip</strong></td>
-<td>String</td>
-<td>Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -16567,7 +16559,7 @@
 <td>Required</td>
 </tr>
 <tr>
-<td>workflow name</td>
+<td>theiaprok_fasta</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
 <td>The name of the sample being analyzed</td>
@@ -18609,7 +18601,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_human</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -18617,7 +18609,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_human_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -18625,7 +18617,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -18633,7 +18625,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -18936,10 +18928,186 @@
 </tr>
 <tr>
 <td>theiaprok_fasta</td>
+<td><strong>abricate_db</strong></td>
+<td>String</td>
+<td>Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB</td>
+<td>vfdb</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
 <td><strong>amrfinder_use_gff</strong></td>
 <td>Boolean</td>
 <td>Whether or not to use the GFF and protein FASTA files for AMRFinderPlus</td>
 <td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>bakta_db</strong></td>
+<td>String</td>
+<td>Database selection for Bakta annotation. Options: light (smaller, faster), full (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.</td>
+<td>full</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>call_abricate</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the Abricate task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>call_ani</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the ANI task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>call_gamma</strong></td>
+<td>Boolean</td>
+<td>Set to true in order to enable GAMMA task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>call_kmerfinder</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the kmerfinder task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>call_plasmidfinder</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the plasmidfinder task</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>call_resfinder</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the ResFinder task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>city</strong></td>
+<td>String</td>
+<td>Will be used in the "city" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>collection_date</strong></td>
+<td>String</td>
+<td>Will be used in the "collection_date" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>county</strong></td>
+<td>String</td>
+<td>Will be used in the "county" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>expected_taxon</strong></td>
+<td>String</td>
+<td>If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>genome_annotation</strong></td>
+<td>String</td>
+<td>If set to "bakta", TheiaProk will use Bakta rather than Prokka to annotate the genome</td>
+<td>prokka</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>originating_lab</strong></td>
+<td>String</td>
+<td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>perform_characterization</strong></td>
+<td>Boolean</td>
+<td>Set to "false" if you want to only generate an assembly and relevant QC metrics and skip all characterization tasks</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>qc_check_table</strong></td>
+<td>File</td>
+<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>run_id</strong></td>
+<td>String</td>
+<td>Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>seq_method</strong></td>
+<td>String</td>
+<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>taxon_tables</strong></td>
+<td>File</td>
+<td>File indicating data table names to copy samples of a particular taxon to</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>terra_project</strong></td>
+<td>String</td>
+<td>The name of the Terra Project where you want the taxon tables written to</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>terra_workspace</strong></td>
+<td>String</td>
+<td>The name of the Terra Workspace where you want the taxon tables written to</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>zip</strong></td>
+<td>String</td>
+<td>Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19035,198 +19203,6 @@
 <td><strong>timezone</strong></td>
 <td>String</td>
 <td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>abricate_db</strong></td>
-<td>String</td>
-<td>Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB</td>
-<td>vfdb</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>bakta_db</strong></td>
-<td>String</td>
-<td>Database selection for Bakta annotation. Options: "light" (smaller, faster), "full" (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.</td>
-<td>full</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_abricate</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the Abricate task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_ani</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the ANI task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_gamma</strong></td>
-<td>Boolean</td>
-<td>Set to true in order to enable GAMMA task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_kmerfinder</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the kmerfinder task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_plasmidfinder</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the plasmidfinder task</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>call_resfinder</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the ResFinder task</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>city</strong></td>
-<td>String</td>
-<td>Will be used in the "city" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>collection_date</strong></td>
-<td>String</td>
-<td>Will be used in the "collection_date" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>county</strong></td>
-<td>String</td>
-<td>Will be used in the "county" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>expected_taxon</strong></td>
-<td>String</td>
-<td>If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica"</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>genome_annotation</strong></td>
-<td>String</td>
-<td>If set to "bakta", TheiaProk will use Bakta rather than Prokka to annotate the genome</td>
-<td>prokka</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>mlst_run_secondary_scheme</strong></td>
-<td>Boolean</td>
-<td>If set to true, the workflow will run a secondary scheme for E. coli and A. baumannii.</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>mlst_scheme_override</strong></td>
-<td>Boolean</td>
-<td>If set to true when GAMBIT taxon is E. coli the workflow will exclude aeromonas, cfreundii, and senterica schemes as they can cause mischaracterization. This is not recommended for general use. Please reach out if you are interested in this usage.</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>originating_lab</strong></td>
-<td>String</td>
-<td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>perform_characterization</strong></td>
-<td>Boolean</td>
-<td>Set to "false" if you want to only generate an assembly and relevant QC metrics and skip all characterization tasks</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>qc_check_table</strong></td>
-<td>File</td>
-<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>run_id</strong></td>
-<td>String</td>
-<td>Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>seq_method</strong></td>
-<td>String</td>
-<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>taxon_tables</strong></td>
-<td>File</td>
-<td>File indicating data table names to copy samples of a particular taxon to</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>terra_project</strong></td>
-<td>String</td>
-<td>The name of the Terra Project where you want the taxon tables written to</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>terra_workspace</strong></td>
-<td>String</td>
-<td>The name of the Terra Workspace where you want the taxon tables written to</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>zip</strong></td>
-<td>String</td>
-<td>Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task</td>
 <td></td>
 <td>Optional</td>
 </tr>

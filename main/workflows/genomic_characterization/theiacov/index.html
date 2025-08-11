@@ -5801,7 +5801,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td>HIV, Influenza, Monkeypox virus, RSV-A, RSV-B, SARS-CoV-2, <a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a>, WNV</td>
-<td>v3.1.0</td>
+<td>vX.X.X</td>
 <td>Some optional features incompatible, Yes</td>
 <td>Sample-level, Set-level</td>
 </tr>
@@ -5972,6 +5972,10 @@
 </div>
 <div class="tabbed-block">
 <p>The TheiaCoV_FASTA workflow takes in assembly files in FASTA format.</p>
+<div class="admonition warning">
+<p class="admonition-title">Note for TheiaCoV_FASTA users analyzing Influenza:</p>
+<p>TheiaCoV_FASTA will use the output of VADR to classify and partition Influenza segments from the input assembly. See <a href="#org-specific-tasks"><code>vadr_flu_segments</code></a> task for more details.</p>
+</div>
 </div>
 <div class="tabbed-block">
 <p>The TheiaCoV_ClearLabs workflow takes in read data produced by the Clear Dx platform from ClearLabs. However, many users use the TheiaCoV_FASTA workflow instead of this one due to a few known issues when generating assemblies with this pipeline that are not present when using ClearLabs-generated FASTA files.</p>
@@ -6019,12 +6023,21 @@
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
-<td>workflow name</td>
+<td>theiacov_illumina_pe</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
 <td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>reference_genbank</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails.</td>
+<td>Optional, Required</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
@@ -6158,6 +6171,15 @@
 <td><strong>antiviral_aa_subs</strong></td>
 <td>String</td>
 <td>Additional list of antiviral resistance associated amino acid substitutions of interest to be searched against those called on the sample segments. They take the format of :, e.g. NA:A26V</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>assembly_fasta</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
 <td>flu</td>
@@ -6443,7 +6465,7 @@
 </tr>
 <tr>
 <td>flu_track</td>
-<td><strong>nextclade_docker</strong></td>
+<td><strong>nextclade_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5</td>
@@ -6494,6 +6516,15 @@
 <td>4</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>vadr_outputs_tgz</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
 </tr>
 <tr>
 <td>gene_coverage</td>
@@ -6815,7 +6846,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>2</td>
+<td>4</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
@@ -6836,6 +6867,15 @@
 <td>2</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_v3</td>
+<td><strong>custom_input_dataset</strong></td>
+<td>File</td>
+<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>flu</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -6911,6 +6951,24 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>clades_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>flu_genoflu_genotype</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>N/A</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>flu_segment</strong></td>
 <td>String</td>
 <td>Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
@@ -6938,12 +6996,57 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>vadr_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32 (RSV-A, RSV-B, WNV) and 16 (all other TheiaCoV organisms)</td>
+<td><strong>lat_longs_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized.</td>
 <td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_date</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0.0</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_num_unambig</strong></td>
+<td>Int</td>
+<td>Minimum number of called bases in genome to pass prefilter</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>narrow_bandwidth</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.08333</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>pivot_interval</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>3</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>proportion_wide</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.2</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>pangolin4</td>
@@ -7164,7 +7267,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -7173,7 +7276,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -7382,7 +7485,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
@@ -7442,6 +7545,15 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>extract_unclassified</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>fastp_args</strong></td>
 <td>String</td>
 <td>Additional arguments to use with fastp</td>
@@ -7451,12 +7563,75 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>host</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_complete_only</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_decontaminate_mem</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>32</td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_is_accession</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_refseq</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>TRUE</td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>kraken_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_db</strong></td>
+<td>File</td>
+<td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. Must contain human and viral sequences</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
+<td>100</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -7496,12 +7671,12 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>target_organism</strong></td>
-<td>String</td>
-<td>This string is searched for in the kraken2 outputs to extract the read percentage</td>
-<td></td>
+<td><strong>taxon_id</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>0</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td></td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -7509,6 +7684,33 @@
 <td>String</td>
 <td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
 <td>-phred33</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>adapters</strong></td>
+<td>File</td>
+<td>A FASTA file containing adapter sequences</td>
+<td>/bbmap/resources/adapters.fa</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>consensus_min_freq</strong></td>
+<td>Float</td>
+<td>The minimum frequency for a variant to be called a SNP in consensus genome</td>
+<td>0.6</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>genome_length</strong></td>
+<td>Int</td>
+<td>User-specified expected genome length to be used in genome statistics calculations</td>
+<td></td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -7526,7 +7728,7 @@
 <td><strong>min_basepairs</strong></td>
 <td>Int</td>
 <td>Minimum number of base pairs able to pass read screening</td>
-<td>34000</td>
+<td>17000</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -7536,6 +7738,15 @@
 <td>Int</td>
 <td>Minimum genome coverage able to pass read screening</td>
 <td>10</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>min_depth</strong></td>
+<td>Int</td>
+<td>Minimum depth of reads required to call variants and generate a consensus genome. This value is passed to the iVar software.</td>
+<td>100</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -7562,7 +7773,205 @@
 <td><strong>min_reads</strong></td>
 <td>Int</td>
 <td>Minimum number of reads to pass read screening</td>
-<td>113</td>
+<td>57</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>nextclade_dataset_name</strong></td>
+<td>String</td>
+<td>Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>nextclade_dataset_tag</strong></td>
+<td>String</td>
+<td>Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade &amp; lineage information, etc.) that is required for running the Nextclade tool.</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE</td>
+<td>sars-cov-2</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>pangolin_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>phix</strong></td>
+<td>File</td>
+<td>File that contains the phix used</td>
+<td>/bbmap/resources/phix174_ill.ref.fa.gz</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>primer_bed</strong></td>
+<td>File</td>
+<td>The bed file containing the primers used when sequencing was performed</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>qc_check_table</strong></td>
+<td>File</td>
+<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>reference_gene_locations_bed</strong></td>
+<td>File</td>
+<td>Use to provide locations of interest where average coverage will be calculated</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>reference_genome</strong></td>
+<td>File</td>
+<td>An optional reference genome used for consensus assembly and QC</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>reference_gff</strong></td>
+<td>File</td>
+<td>The general feature format (gff) of the reference genome.</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>seq_method</strong></td>
+<td>String</td>
+<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td>ILLUMINA</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>skip_screen</strong></td>
+<td>Boolean</td>
+<td>Set to True to skip the read screening prior to analysis</td>
+<td>FALSE</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>target_organism</strong></td>
+<td>String</td>
+<td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>trim_min_length</strong></td>
+<td>Int</td>
+<td>Specifies minimum length of each read after trimming to be kept</td>
+<td>75</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>trim_primers</strong></td>
+<td>Boolean</td>
+<td>A True/False option that determines if primers should be trimmed.</td>
+<td>TRUE</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>trim_quality_min_score</strong></td>
+<td>Int</td>
+<td>Specifies the minimum average quality of bases in a sliding window to be kept</td>
+<td>30</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>trim_window_size</strong></td>
+<td>Int</td>
+<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
+<td>4</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>vadr_max_length</strong></td>
+<td>Int</td>
+<td>Maximum length of contig allowed to run VADR</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>vadr_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms)</td>
+<td>Optional</td>
+<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>vadr_options</strong></td>
+<td>String</td>
+<td>Additional options to provide to VADR</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>vadr_skip_length</strong></td>
+<td>Int</td>
+<td>Minimum assembly length (unambiguous) to run VADR</td>
+<td>10000</td>
+<td>Optional</td>
+<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
+<td><strong>variant_min_freq</strong></td>
+<td>Float</td>
+<td>Minimum frequency for a variant to be reported in ivar outputs</td>
+<td>0.6</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -7589,7 +7998,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.5.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2</td>
 <td>Optional</td>
 <td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -7620,240 +8029,6 @@
 <td>Optional</td>
 <td></td>
 </tr>
-<tr>
-<td>workflow name</td>
-<td><strong>adapters</strong></td>
-<td>File</td>
-<td>A FASTA file containing adapter sequences</td>
-<td>/bbmap/resources/adapters.fa</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>consensus_min_freq</strong></td>
-<td>Float</td>
-<td>The minimum frequency for a variant to be called a SNP in consensus genome</td>
-<td>0.6</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>genome_length</strong></td>
-<td>Int</td>
-<td>User-specified expected genome length to be used in genome statistics calculations</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_depth</strong></td>
-<td>Int</td>
-<td>Minimum depth of reads required to call variants and generate a consensus genome. This value is passed to the iVar software.</td>
-<td>100</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>nextclade_dataset_name</strong></td>
-<td>String</td>
-<td>Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>nextclade_dataset_tag</strong></td>
-<td>String</td>
-<td>Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade &amp; lineage information, etc.) that is required for running the Nextclade tool.</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>organism</strong></td>
-<td>String</td>
-<td>The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE</td>
-<td>sars-cov-2</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>pangolin_docker_image</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>phix</strong></td>
-<td>File</td>
-<td>File that contains the phix used</td>
-<td>/bbmap/resources/phix174_ill.ref.fa.gz</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>primer_bed</strong></td>
-<td>File</td>
-<td>The bed file containing the primers used when sequencing was performed</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>qc_check_table</strong></td>
-<td>File</td>
-<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
-<td></td>
-<td>Optional</td>
-<td></td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>reference_gene_locations_bed</strong></td>
-<td>File</td>
-<td>Use to provide locations of interest where average coverage will be calculated</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>reference_genome</strong></td>
-<td>File</td>
-<td>An optional reference genome used for consensus assembly and QC</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>reference_gff</strong></td>
-<td>File</td>
-<td>The general feature format (gff) of the reference genome.</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>seq_method</strong></td>
-<td>String</td>
-<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>skip_screen</strong></td>
-<td>Boolean</td>
-<td>Set to True to skip the read screening prior to analysis</td>
-<td>FALSE</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>target_organism</strong></td>
-<td>String</td>
-<td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_min_length</strong></td>
-<td>Int</td>
-<td>Specifies minimum length of each read after trimming to be kept</td>
-<td>75</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_primers</strong></td>
-<td>Boolean</td>
-<td>A True/False option that determines if primers should be trimmed.</td>
-<td>TRUE</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_quality_min_score</strong></td>
-<td>Int</td>
-<td>Specifies the minimum average quality of bases in a sliding window to be kept</td>
-<td>30</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_window_size</strong></td>
-<td>Int</td>
-<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
-<td>4</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_max_length</strong></td>
-<td>Int</td>
-<td>Maximum length of contig allowed to run VADR</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms)</td>
-<td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_options</strong></td>
-<td>String</td>
-<td>Additional options to provide to VADR</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_skip_length</strong></td>
-<td>Int</td>
-<td>Minimum assembly length (unambiguous) to run VADR</td>
-<td>10000</td>
-<td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>variant_min_freq</strong></td>
-<td>Float</td>
-<td>Minimum frequency for a variant to be reported in ivar outputs</td>
-<td>0.6</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -7883,12 +8058,21 @@
 <td>MPXV, WNV, sars-cov-2</td>
 </tr>
 <tr>
-<td>workflow name</td>
+<td>theiacov_illumina_se</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
 <td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>reference_genbank</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails.</td>
+<td>Optional, Required</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
@@ -7971,51 +8155,6 @@
 <td>2</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>flu_subtype</strong></td>
-<td>String</td>
-<td>The influenza subtype being analyzed. Used for picking nextclade datasets. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Only use to override the subtype call from IRMA and ABRicate.</td>
-<td></td>
-<td>Optional</td>
-<td>flu</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>nextclade_output_parser_cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>nextclade_output_parser_disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>50</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>nextclade_output_parser_docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>nextclade_output_parser_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
 <tr>
 <td>gene_coverage</td>
@@ -8315,6 +8454,42 @@
 <td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
+<td>nextclade_output_parser</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_output_parser</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_output_parser</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_output_parser</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
 <td>nextclade_v3</td>
 <td><strong>auspice_reference_tree_json</strong></td>
 <td>File</td>
@@ -8331,6 +8506,15 @@
 <td>2</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_v3</td>
+<td><strong>custom_input_dataset</strong></td>
+<td>File</td>
+<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>flu</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -8406,6 +8590,24 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>clades_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>flu_genoflu_genotype</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>N/A</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>flu_segment</strong></td>
 <td>String</td>
 <td>Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
@@ -8442,12 +8644,57 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>vadr_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32 (RSV-A, RSV-B, WNV) and 16 (all other TheiaCoV organisms)</td>
+<td><strong>lat_longs_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized.</td>
 <td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_date</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0.0</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_num_unambig</strong></td>
+<td>Int</td>
+<td>Minimum number of called bases in genome to pass prefilter</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>narrow_bandwidth</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.08333</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>pivot_interval</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>3</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>proportion_wide</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.2</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>pangolin4</td>
@@ -8667,17 +8914,8 @@
 </tr>
 <tr>
 <td>qc_check_task</td>
-<td><strong>kraken_human</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-<td></td>
-</tr>
-<tr>
-<td>qc_check_task</td>
 <td><strong>kraken_human_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -8686,7 +8924,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -8695,7 +8933,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -8886,7 +9124,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
@@ -8964,6 +9202,24 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>kraken_db</strong></td>
+<td>File</td>
+<td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. Must contain human and viral sequences</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
+<td>100</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -9000,19 +9256,37 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>target_organism</strong></td>
-<td>String</td>
-<td>This string is searched for in the kraken2 outputs to extract the read percentage</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
 <td><strong>trimmomatic_args</strong></td>
 <td>String</td>
 <td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
 <td>-phred33</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>adapters</strong></td>
+<td>File</td>
+<td>A FASTA file containing adapter sequences</td>
+<td>/bbmap/resources/adapters.fa</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>consensus_min_freq</strong></td>
+<td>Float</td>
+<td>The minimum frequency for a variant to be called a SNP in consensus genome</td>
+<td>0.6</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>genome_length</strong></td>
+<td>Int</td>
+<td>User-specified expected genome length to be used in genome statistics calculations</td>
+<td></td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -9030,7 +9304,7 @@
 <td><strong>min_basepairs</strong></td>
 <td>Int</td>
 <td>Minimum number of base pairs able to pass read screening</td>
-<td>34000</td>
+<td>17000</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -9040,6 +9314,15 @@
 <td>Int</td>
 <td>Minimum genome coverage able to pass read screening</td>
 <td>10</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>min_depth</strong></td>
+<td>Int</td>
+<td>Minimum depth of reads required to call variants and generate a consensus genome. This value is passed to the iVar software.</td>
+<td>100</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -9057,7 +9340,205 @@
 <td><strong>min_reads</strong></td>
 <td>Int</td>
 <td>Minimum number of reads to pass read screening</td>
-<td>113</td>
+<td>57</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>nextclade_dataset_name</strong></td>
+<td>String</td>
+<td>Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>nextclade_dataset_tag</strong></td>
+<td>String</td>
+<td>Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade &amp; lineage information, etc.) that is required for running the Nextclade tool.</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE</td>
+<td>sars-cov-2</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>pangolin_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>phix</strong></td>
+<td>File</td>
+<td>File that contains the phix used</td>
+<td>/bbmap/resources/phix174_ill.ref.fa.gz</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>primer_bed</strong></td>
+<td>File</td>
+<td>The bed file containing the primers used when sequencing was performed</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>qc_check_table</strong></td>
+<td>File</td>
+<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>reference_gene_locations_bed</strong></td>
+<td>File</td>
+<td>Use to provide locations of interest where average coverage will be calculated</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>reference_genome</strong></td>
+<td>File</td>
+<td>An optional reference genome used for consensus assembly and QC</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>reference_gff</strong></td>
+<td>File</td>
+<td>The general feature format (gff) of the reference genome.</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>seq_method</strong></td>
+<td>String</td>
+<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td>ILLUMINA</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>skip_mash</strong></td>
+<td>Boolean</td>
+<td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
+<td>FALSE</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>skip_screen</strong></td>
+<td>Boolean</td>
+<td>Set to True to skip the read screening prior to analysis</td>
+<td>FALSE</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>trim_min_length</strong></td>
+<td>Int</td>
+<td>Specifies minimum length of each read after trimming to be kept</td>
+<td>25</td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>trim_primers</strong></td>
+<td>Boolean</td>
+<td>A True/False option that determines if primers should be trimmed.</td>
+<td>TRUE</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>trim_quality_min_score</strong></td>
+<td>Int</td>
+<td>Specifies the minimum average quality of bases in a sliding window to be kept</td>
+<td>30</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>trim_window_size</strong></td>
+<td>Int</td>
+<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
+<td>4</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>vadr_max_length</strong></td>
+<td>Int</td>
+<td>Maximum length of contig allowed to run VADR</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>vadr_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms)</td>
+<td>Optional</td>
+<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>vadr_options</strong></td>
+<td>String</td>
+<td>Additional options to provide to VADR</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>vadr_skip_length</strong></td>
+<td>Int</td>
+<td>Minimum assembly length (unambiguous) to run VADR</td>
+<td>10000</td>
+<td>Optional</td>
+<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
+<td><strong>variant_min_freq</strong></td>
+<td>Float</td>
+<td>Minimum frequency for a variant to be reported in ivar outputs</td>
+<td>0.6</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -9084,7 +9565,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.5.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2</td>
 <td>Optional</td>
 <td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -9115,240 +9596,6 @@
 <td>Optional</td>
 <td></td>
 </tr>
-<tr>
-<td>workflow name</td>
-<td><strong>adapters</strong></td>
-<td>File</td>
-<td>A FASTA file containing adapter sequences</td>
-<td>/bbmap/resources/adapters.fa</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>consensus_min_freq</strong></td>
-<td>Float</td>
-<td>The minimum frequency for a variant to be called a SNP in consensus genome</td>
-<td>0.6</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>genome_length</strong></td>
-<td>Int</td>
-<td>User-specified expected genome length to be used in genome statistics calculations</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_depth</strong></td>
-<td>Int</td>
-<td>Minimum depth of reads required to call variants and generate a consensus genome. This value is passed to the iVar software.</td>
-<td>100</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>nextclade_dataset_name</strong></td>
-<td>String</td>
-<td>Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>nextclade_dataset_tag</strong></td>
-<td>String</td>
-<td>Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade &amp; lineage information, etc.) that is required for running the Nextclade tool.</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>organism</strong></td>
-<td>String</td>
-<td>The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE</td>
-<td>sars-cov-2</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>pangolin_docker_image</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>phix</strong></td>
-<td>File</td>
-<td>File that contains the phix used</td>
-<td>/bbmap/resources/phix174_ill.ref.fa.gz</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>primer_bed</strong></td>
-<td>File</td>
-<td>The bed file containing the primers used when sequencing was performed</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>qc_check_table</strong></td>
-<td>File</td>
-<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
-<td></td>
-<td>Optional</td>
-<td></td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>reference_gene_locations_bed</strong></td>
-<td>File</td>
-<td>Use to provide locations of interest where average coverage will be calculated</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>reference_genome</strong></td>
-<td>File</td>
-<td>An optional reference genome used for consensus assembly and QC</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>reference_gff</strong></td>
-<td>File</td>
-<td>The general feature format (gff) of the reference genome.</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>seq_method</strong></td>
-<td>String</td>
-<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>skip_mash</strong></td>
-<td>Boolean</td>
-<td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
-<td>FALSE</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>skip_screen</strong></td>
-<td>Boolean</td>
-<td>Set to True to skip the read screening prior to analysis</td>
-<td>FALSE</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_min_length</strong></td>
-<td>Int</td>
-<td>Specifies minimum length of each read after trimming to be kept</td>
-<td>25</td>
-<td>Optional</td>
-<td></td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_primers</strong></td>
-<td>Boolean</td>
-<td>A True/False option that determines if primers should be trimmed.</td>
-<td>TRUE</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_quality_min_score</strong></td>
-<td>Int</td>
-<td>Specifies the minimum average quality of bases in a sliding window to be kept</td>
-<td>30</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>trim_window_size</strong></td>
-<td>Int</td>
-<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
-<td>4</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_max_length</strong></td>
-<td>Int</td>
-<td>Maximum length of contig allowed to run VADR</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms)</td>
-<td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_options</strong></td>
-<td>String</td>
-<td>Additional options to provide to VADR</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_skip_length</strong></td>
-<td>Int</td>
-<td>Minimum assembly length (unambiguous) to run VADR</td>
-<td>10000</td>
-<td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>variant_min_freq</strong></td>
-<td>Float</td>
-<td>Minimum frequency for a variant to be reported in ivar outputs</td>
-<td>0.6</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -9378,12 +9625,21 @@
 <td>HIV, MPXV, WNV, flu, sars-cov-2</td>
 </tr>
 <tr>
-<td>workflow name</td>
+<td>theiacov_ont</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
 <td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>reference_genbank</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails.</td>
+<td>Optional, Required</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
@@ -9563,6 +9819,51 @@
 <td>String</td>
 <td>Additional list of antiviral resistance associated amino acid substitutions of interest to be searched against those called on the sample segments. They take the format of :, e.g. NA:A26V</td>
 <td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>assembly_fasta</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>assembly_metrics_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>assembly_metrics_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>assembly_metrics_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>assembly_metrics_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
 <td>Optional</td>
 <td>flu</td>
 </tr>
@@ -9811,7 +10112,7 @@
 </tr>
 <tr>
 <td>flu_track</td>
-<td><strong>nextclade_docker</strong></td>
+<td><strong>nextclade_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5</td>
@@ -9871,6 +10172,15 @@
 <td></td>
 <td>Optional</td>
 <td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>vadr_outputs_tgz</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
 </tr>
 <tr>
 <td>gene_coverage</td>
@@ -10057,7 +10367,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>2</td>
+<td>4</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
@@ -10078,6 +10388,15 @@
 <td>2</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_v3</td>
+<td><strong>custom_input_dataset</strong></td>
+<td>File</td>
+<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>flu</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -10153,6 +10472,24 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>clades_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>flu_genoflu_genotype</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>N/A</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>flu_segment</strong></td>
 <td>String</td>
 <td>Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
@@ -10180,12 +10517,57 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>kraken_target_organism_input</strong></td>
-<td>String</td>
-<td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
-<td>Default provided for mpox (Monkeypox virus), WNV (West Nile virus), and HIV (Human immunodeficiency virus 1)</td>
+<td><strong>lat_longs_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized.</td>
 <td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2, measles</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_date</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0.0</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_num_unambig</strong></td>
+<td>Int</td>
+<td>Minimum number of called bases in genome to pass prefilter</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>narrow_bandwidth</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.08333</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>pivot_interval</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>3</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>proportion_wide</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.2</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -10195,15 +10577,6 @@
 <td>Default provided for mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"])</td>
 <td>Optional</td>
 <td></td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>vadr_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32 (RSV-A, RSV-B, WNV) and 16 (all other TheiaCoV organisms)</td>
-<td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
 <tr>
 <td>pangolin4</td>
@@ -10423,17 +10796,8 @@
 </tr>
 <tr>
 <td>qc_check_task</td>
-<td><strong>kraken_human</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-<td></td>
-</tr>
-<tr>
-<td>qc_check_task</td>
 <td><strong>kraken_human_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -10442,7 +10806,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -10451,7 +10815,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -10687,7 +11051,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
@@ -10793,7 +11157,7 @@
 <tr>
 <td>read_QC_trim</td>
 <td><strong>kraken2_recalculate_abundances_docker</strong></td>
-<td>Int</td>
+<td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4</td>
 <td>Optional</td>
@@ -10819,8 +11183,26 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>kraken_docker_image</strong></td>
+<td><strong>kraken_db</strong></td>
+<td>File</td>
+<td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. Must contain human and viral sequences</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_disk_size</strong></td>
 <td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
+<td>100</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_docker_image</strong></td>
+<td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
 <td>Optional</td>
@@ -11016,33 +11398,6 @@
 <td></td>
 </tr>
 <tr>
-<td>set_flu_ha_nextclade_values</td>
-<td><strong>reference_gff_file</strong></td>
-<td>File</td>
-<td>Reference GFF file for flu HA</td>
-<td></td>
-<td>Optional</td>
-<td>flu</td>
-</tr>
-<tr>
-<td>set_flu_na_nextclade_values</td>
-<td><strong>reference_gff_file</strong></td>
-<td>Int</td>
-<td>Reference GFF file for flu NA</td>
-<td></td>
-<td>Optional</td>
-<td>flu</td>
-</tr>
-<tr>
-<td>set_flu_na_nextclade_values</td>
-<td><strong>vadr_mem</strong></td>
-<td>Int</td>
-<td>Memory, in GB, allocated to this task</td>
-<td>8</td>
-<td>Optional</td>
-<td>flu</td>
-</tr>
-<tr>
 <td>stats_n_coverage</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -11113,6 +11468,24 @@
 <td>8</td>
 <td>Optional</td>
 <td></td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>genome_length</strong></td>
+<td>Int</td>
+<td>User-specified expected genome length to be used in genome statistics calculations</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>irma_min_consensus_support</strong></td>
+<td>Int</td>
+<td>Minimum consensus support threshold used by IRMA with ONT data.</td>
+<td>50</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
 <tr>
 <td>theiacov_ont</td>
@@ -11125,10 +11498,19 @@
 </tr>
 <tr>
 <td>theiacov_ont</td>
+<td><strong>max_length</strong></td>
+<td>Int</td>
+<td>Maximum length for a read based on the SARS-CoV-2 primer scheme</td>
+<td>700</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
 <td><strong>min_basepairs</strong></td>
 <td>Int</td>
 <td>Minimum number of base pairs able to pass read screening</td>
-<td>34000</td>
+<td>17000</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -11149,6 +11531,177 @@
 <td>1700</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>min_length</strong></td>
+<td>Int</td>
+<td>Minimum length of a read based on the SARS-CoV-2 primer scheme</td>
+<td>400</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>min_reads</strong></td>
+<td>Int</td>
+<td>Minimum number of reads to pass read screening</td>
+<td>57</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>nextclade_dataset_name</strong></td>
+<td>String</td>
+<td>Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>nextclade_dataset_tag</strong></td>
+<td>String</td>
+<td>Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade &amp; lineage information, etc.) that is required for running the Nextclade tool.</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>normalise</strong></td>
+<td>Int</td>
+<td>Used to normalize the amount of reads to the indicated level before variant calling</td>
+<td>20000 for CL, 200 for ONT</td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE</td>
+<td>sars-cov-2</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>pangolin_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>primer_bed</strong></td>
+<td>File</td>
+<td>The bed file containing the primers used when sequencing was performed</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>qc_check_table</strong></td>
+<td>File</td>
+<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>reference_gene_locations_bed</strong></td>
+<td>File</td>
+<td>Use to provide locations of interest where average coverage will be calculated</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>reference_genome</strong></td>
+<td>File</td>
+<td>An optional reference genome used for consensus assembly and QC</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>seq_method</strong></td>
+<td>String</td>
+<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td>OXFORD_NANOPORE</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>skip_mash</strong></td>
+<td>Boolean</td>
+<td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
+<td>FALSE</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>skip_screen</strong></td>
+<td>Boolean</td>
+<td>Set to True to skip the read screening prior to analysis</td>
+<td>FALSE</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>target_organism</strong></td>
+<td>String</td>
+<td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>vadr_max_length</strong></td>
+<td>Int</td>
+<td>Maximum length of contig allowed to run VADR</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>vadr_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms)</td>
+<td>Optional</td>
+<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>vadr_options</strong></td>
+<td>String</td>
+<td>Additional options to provide to VADR</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
+<td><strong>vadr_skip_length</strong></td>
+<td>Int</td>
+<td>Minimum assembly length (unambiguous) to run VADR</td>
+<td>10000</td>
+<td>Optional</td>
+<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
 <tr>
 <td>vadr</td>
@@ -11173,7 +11726,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.5.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2</td>
 <td>Optional</td>
 <td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -11204,195 +11757,6 @@
 <td>Optional</td>
 <td></td>
 </tr>
-<tr>
-<td>workflow name</td>
-<td><strong>genome_length</strong></td>
-<td>Int</td>
-<td>User-specified expected genome length to be used in genome statistics calculations</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>max_length</strong></td>
-<td>Int</td>
-<td>Maximum length for a read based on the SARS-CoV-2 primer scheme</td>
-<td>700</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_depth</strong></td>
-<td>Int</td>
-<td>Minimum depth of reads required to call variants and generate a consensus genome. This value is passed to the iVar software.</td>
-<td>100</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>min_length</strong></td>
-<td>Int</td>
-<td>Minimum length of a read based on the SARS-CoV-2 primer scheme</td>
-<td>400</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>nextclade_dataset_name</strong></td>
-<td>String</td>
-<td>Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>nextclade_dataset_tag</strong></td>
-<td>String</td>
-<td>Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade &amp; lineage information, etc.) that is required for running the Nextclade tool.</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>normalise</strong></td>
-<td>Int</td>
-<td>Used to normalize the amount of reads to the indicated level before variant calling</td>
-<td>20000 for CL, 200 for ONT</td>
-<td>Optional</td>
-<td></td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>organism</strong></td>
-<td>String</td>
-<td>The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE</td>
-<td>sars-cov-2</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>pangolin_docker_image</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>primer_bed</strong></td>
-<td>File</td>
-<td>The bed file containing the primers used when sequencing was performed</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>qc_check_table</strong></td>
-<td>File</td>
-<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
-<td></td>
-<td>Optional</td>
-<td></td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>reference_gene_locations_bed</strong></td>
-<td>File</td>
-<td>Use to provide locations of interest where average coverage will be calculated</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>reference_genome</strong></td>
-<td>File</td>
-<td>An optional reference genome used for consensus assembly and QC</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>seq_method</strong></td>
-<td>String</td>
-<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>skip_mash</strong></td>
-<td>Boolean</td>
-<td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
-<td>FALSE</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>skip_screen</strong></td>
-<td>Boolean</td>
-<td>Set to True to skip the read screening prior to analysis</td>
-<td>FALSE</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>target_organism</strong></td>
-<td>String</td>
-<td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_max_length</strong></td>
-<td>Int</td>
-<td>Maximum length of contig allowed to run VADR</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms)</td>
-<td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_options</strong></td>
-<td>String</td>
-<td>Additional options to provide to VADR</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_skip_length</strong></td>
-<td>Int</td>
-<td>Minimum assembly length (unambiguous) to run VADR</td>
-<td>10000</td>
-<td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
 </tbody>
 </table>
 </div>
@@ -11416,7 +11780,7 @@
 <td>theiacov_fasta</td>
 <td><strong>assembly_fasta</strong></td>
 <td>File</td>
-<td>The assembly file for your sample in FASTA format</td>
+<td>Input assembly FASTA file. Must contain either all 8 influenza genome segments or a single segment provided in multi-FASTA format.</td>
 <td></td>
 <td>Required</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
@@ -11431,7 +11795,7 @@
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
 <tr>
-<td>workflow name</td>
+<td>theiacov_fasta</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
 <td>The name of the sample being analyzed</td>
@@ -11440,7 +11804,7 @@
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
-<td>workflow name</td>
+<td>theiacov_fasta</td>
 <td><strong>seq_method</strong></td>
 <td>String</td>
 <td>The sequencing methodology used to generate the input read data</td>
@@ -11449,13 +11813,13 @@
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
 <tr>
-<td>workflow name</td>
-<td><strong>flu_segment</strong></td>
-<td>String</td>
-<td>Influenza genome segment being analyzed. Options: "HA" or "NA".</td>
-<td>HA</td>
+<td>organism_parameters</td>
+<td><strong>reference_genbank</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails.</td>
 <td>Optional, Required</td>
-<td></td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>consensus_qc</td>
@@ -11549,6 +11913,132 @@
 </tr>
 <tr>
 <td>flu_track</td>
+<td><strong>antiviral_aa_subs</strong></td>
+<td>String</td>
+<td>Additional list of antiviral resistance associated amino acid substitutions of interest to be searched against those called on the sample segments. They take the format of :, e.g. NA:A26V</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>assembly_metrics_cpu</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>assembly_metrics_disk_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>assembly_metrics_docker</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>assembly_metrics_memory</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_h1_ha_ref</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_h1n1_m2_ref</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_h3_ha_ref</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_h3n2_m2_ref</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_n1_na_ref</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_n2_na_ref</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_pa_ref</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_pb1_ref</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>flu_pb2_ref</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
 <td><strong>genoflu_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -11603,6 +12093,132 @@
 </tr>
 <tr>
 <td>flu_track</td>
+<td><strong>irma_cpu</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>irma_disk_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>irma_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>irma_keep_ref_deletions</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>irma_memory</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>irma_min_ambiguous_threshold</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>irma_min_avg_consensus_allele_quality</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>irma_min_consensus_support</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>irma_min_read_length</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>nextclade_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>nextclade_custom_input_dataset</strong></td>
+<td>File</td>
+<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>nextclade_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>nextclade_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5</td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>nextclade_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
 <td><strong>nextclade_output_parser_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -11638,6 +12254,60 @@
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
 <tr>
+<td>flu_track</td>
+<td><strong>read1</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>flu_track</td>
+<td><strong>read2</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>nextclade_output_parser</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_output_parser</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_output_parser</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_output_parser</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
 <td>nextclade_v3</td>
 <td><strong>auspice_reference_tree_json</strong></td>
 <td>File</td>
@@ -11654,6 +12324,15 @@
 <td>2</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_v3</td>
+<td><strong>custom_input_dataset</strong></td>
+<td>File</td>
+<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>flu</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -11729,6 +12408,24 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>clades_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>flu_genoflu_genotype</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>N/A</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>gene_locations_bed_file</strong></td>
 <td>File</td>
 <td>Use to provide locations of interest where average coverage will be calculated</td>
@@ -11756,12 +12453,57 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>lat_longs_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized.</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_date</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0.0</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_num_unambig</strong></td>
+<td>Int</td>
+<td>Minimum number of called bases in genome to pass prefilter</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>narrow_bandwidth</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.08333</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>pangolin_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34</td>
 <td>Optional</td>
 <td></td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>pivot_interval</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>3</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -11774,19 +12516,19 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>proportion_wide</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.2</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>reference_gff_file</strong></td>
 <td>File</td>
 <td>Reference GFF file for the organism being analyzed</td>
 <td>Default provided for mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"])</td>
-<td>Optional</td>
-<td></td>
-</tr>
-<tr>
-<td>organism_parameters</td>
-<td><strong>vadr_max_length</strong></td>
-<td>Int</td>
-<td>Maximum length for the fasta-trim-terminal-ambigs.pl VADR script</td>
-<td>Default provided for SARS-CoV-2 (30000), mpox (210000), WNV (11000), flu (0), RSV-A (15500) and RSV-B (15500).</td>
 <td>Optional</td>
 <td></td>
 </tr>
@@ -12018,7 +12760,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_human</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -12027,7 +12769,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_human_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -12036,7 +12778,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -12045,7 +12787,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -12064,6 +12806,15 @@
 <td>qc_check_task</td>
 <td><strong>kraken_target_organism_dehosted</strong></td>
 <td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>meanbaseq_trim</strong></td>
+<td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -12098,7 +12849,7 @@
 </tr>
 <tr>
 <td>qc_check_task</td>
-<td><strong>minbaseq_trim</strong></td>
+<td><strong>n50_value</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -12107,7 +12858,7 @@
 </tr>
 <tr>
 <td>qc_check_task</td>
-<td><strong>n50_value</strong></td>
+<td><strong>num_reads_clean1</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -12122,6 +12873,15 @@
 <td></td>
 <td>Optional</td>
 <td></td>
+</tr>
+<tr>
+<td>qc_check_task</td>
+<td><strong>num_reads_raw1</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
 <tr>
 <td>qc_check_task</td>
@@ -12241,6 +13001,114 @@
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
+<td>theiacov_fasta</td>
+<td><strong>flu_segment</strong></td>
+<td>String</td>
+<td>Influenza genome segment being analyzed. Options: "HA" or "NA". Only required if input assembly is a singular flu segment.</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>theiacov_fasta</td>
+<td><strong>flu_subtype</strong></td>
+<td>String</td>
+<td>The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Automatically determined.</td>
+<td></td>
+<td>Optional</td>
+<td>flu</td>
+</tr>
+<tr>
+<td>theiacov_fasta</td>
+<td><strong>genome_length</strong></td>
+<td>Int</td>
+<td>User-specified expected genome length to be used in genome statistics calculations</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_fasta</td>
+<td><strong>nextclade_dataset_name</strong></td>
+<td>String</td>
+<td>Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_fasta</td>
+<td><strong>nextclade_dataset_tag</strong></td>
+<td>String</td>
+<td>Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade &amp; lineage information, etc.) that is required for running the Nextclade tool.</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_fasta</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE</td>
+<td>sars-cov-2</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_fasta</td>
+<td><strong>qc_check_table</strong></td>
+<td>File</td>
+<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>theiacov_fasta</td>
+<td><strong>reference_genome</strong></td>
+<td>File</td>
+<td>An optional reference genome used for consensus assembly and QC</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_fasta</td>
+<td><strong>vadr_max_length</strong></td>
+<td>Int</td>
+<td>Maximum length of contig allowed to run VADR</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_fasta</td>
+<td><strong>vadr_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms)</td>
+<td>Optional</td>
+<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_fasta</td>
+<td><strong>vadr_opts</strong></td>
+<td>String</td>
+<td>Additional options to provide to VADR</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_fasta</td>
+<td><strong>vadr_skip_length</strong></td>
+<td>Int</td>
+<td>Minimum assembly length (unambiguous) to run VADR</td>
+<td>10000</td>
+<td>Optional</td>
+<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
 <td>vadr</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -12263,7 +13131,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.5.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2</td>
 <td>Optional</td>
 <td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -12293,105 +13161,6 @@
 <td></td>
 <td>Optional</td>
 <td></td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>flu_subtype</strong></td>
-<td>String</td>
-<td>The influenza subtype being analyzed. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Automatically determined.</td>
-<td></td>
-<td>Optional</td>
-<td></td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>genome_length</strong></td>
-<td>Int</td>
-<td>User-specified expected genome length to be used in genome statistics calculations</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>nextclade_dataset_name</strong></td>
-<td>String</td>
-<td>Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>nextclade_dataset_tag</strong></td>
-<td>String</td>
-<td>Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade &amp; lineage information, etc.) that is required for running the Nextclade tool.</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>organism</strong></td>
-<td>String</td>
-<td>The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE</td>
-<td>sars-cov-2</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>qc_check_table</strong></td>
-<td>File</td>
-<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
-<td></td>
-<td>Optional</td>
-<td></td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>reference_genome</strong></td>
-<td>File</td>
-<td>An optional reference genome used for consensus assembly and QC</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_max_length</strong></td>
-<td>Int</td>
-<td>Maximum length of contig allowed to run VADR</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32 (RSV-A and RSV-B) and 8 (all other TheiaCoV organisms)</td>
-<td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_opts</strong></td>
-<td>String</td>
-<td>Additional options to provide to VADR</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>vadr_skip_length</strong></td>
-<td>Int</td>
-<td>Minimum assembly length (unambiguous) to run VADR</td>
-<td>10000</td>
-<td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
 </tbody>
 </table>
@@ -12431,12 +13200,21 @@
 <td>sars-cov-2</td>
 </tr>
 <tr>
-<td>workflow name</td>
+<td>theiacov_clearlabs</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
 <td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>reference_genbank</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails.</td>
+<td>Optional, Required</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
@@ -12534,7 +13312,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>50</td>
 <td>Optional</td>
 <td>sars-cov-2</td>
 </tr>
@@ -12543,7 +13321,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3</td>
 <td>Optional</td>
 <td>sars-cov-2</td>
 </tr>
@@ -12559,7 +13337,7 @@
 <tr>
 <td>fastq_scan_clean_reads</td>
 <td><strong>read1_name</strong></td>
-<td>Int</td>
+<td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -12579,7 +13357,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>50</td>
 <td>Optional</td>
 <td>sars-cov-2</td>
 </tr>
@@ -12588,7 +13366,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3</td>
 <td>Optional</td>
 <td>sars-cov-2</td>
 </tr>
@@ -12604,56 +13382,11 @@
 <tr>
 <td>fastq_scan_raw_reads</td>
 <td><strong>read1_name</strong></td>
-<td>Int</td>
+<td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
 <td>sars-cov-2</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>flu_subtype</strong></td>
-<td>String</td>
-<td>The influenza subtype being analyzed. Used for picking nextclade datasets. Options: "Yamagata", "Victoria", "H1N1", "H3N2", "H5N1". Only use to override the subtype call from IRMA and ABRicate.</td>
-<td></td>
-<td>Optional</td>
-<td>flu</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>nextclade_output_parser_cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>nextclade_output_parser_disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>50</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>nextclade_output_parser_docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>flu_track</td>
-<td><strong>nextclade_output_parser_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
 <tr>
 <td>gene_coverage</td>
@@ -12802,7 +13535,7 @@
 <tr>
 <td>kraken2_raw</td>
 <td><strong>memory</strong></td>
-<td>String</td>
+<td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
@@ -12854,6 +13587,42 @@
 <td>sars-cov-2</td>
 </tr>
 <tr>
+<td>nextclade_output_parser</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_output_parser</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_output_parser</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_output_parser</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
 <td>nextclade_v3</td>
 <td><strong>auspice_reference_tree_json</strong></td>
 <td>File</td>
@@ -12870,6 +13639,15 @@
 <td>2</td>
 <td>Optional</td>
 <td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>nextclade_v3</td>
+<td><strong>custom_input_dataset</strong></td>
+<td>File</td>
+<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>flu</td>
 </tr>
 <tr>
 <td>nextclade_v3</td>
@@ -12945,6 +13723,24 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>clades_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>flu_genoflu_genotype</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>N/A</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>flu_segment</strong></td>
 <td>String</td>
 <td>Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
@@ -12990,6 +13786,42 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>lat_longs_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized.</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_date</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0.0</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_num_unambig</strong></td>
+<td>Int</td>
+<td>Minimum number of called bases in genome to pass prefilter</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>narrow_bandwidth</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.08333</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>pangolin_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
@@ -12999,12 +13831,30 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>pivot_interval</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>3</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>primer_bed_file</strong></td>
 <td>File</td>
 <td>The bed file containing the primers used when sequencing was performed</td>
 <td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
 <td>Optional</td>
 <td></td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>proportion_wide</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.2</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2, measles</td>
 </tr>
 <tr>
 <td>organism_parameters</td>
@@ -13026,7 +13876,7 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>vadr_memory</strong></td>
+<td><strong>vadr_mem</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>32 (RSV-A, RSV-B, WNV) and 16 (all other TheiaCoV organisms)</td>
@@ -13270,7 +14120,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -13279,7 +14129,7 @@
 <tr>
 <td>qc_check_task</td>
 <td><strong>kraken_sc2_dehosted</strong></td>
-<td>String</td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -13538,6 +14388,87 @@
 <td></td>
 </tr>
 <tr>
+<td>theiacov_clearlabs</td>
+<td><strong>medaka_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3</td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>theiacov_clearlabs</td>
+<td><strong>nextclade_dataset_name</strong></td>
+<td>String</td>
+<td>Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_clearlabs</td>
+<td><strong>nextclade_dataset_tag</strong></td>
+<td>String</td>
+<td>Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade &amp; lineage information, etc.) that is required for running the Nextclade tool.</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_clearlabs</td>
+<td><strong>normalise</strong></td>
+<td>Int</td>
+<td>Used to normalize the amount of reads to the indicated level before variant calling</td>
+<td>20000 for CL, 200 for ONT</td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>theiacov_clearlabs</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE</td>
+<td>sars-cov-2</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_clearlabs</td>
+<td><strong>qc_check_table</strong></td>
+<td>File</td>
+<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>theiacov_clearlabs</td>
+<td><strong>reference_genome</strong></td>
+<td>File</td>
+<td>An optional reference genome used for consensus assembly and QC</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_clearlabs</td>
+<td><strong>seq_method</strong></td>
+<td>String</td>
+<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
+<td>OXFORD_NANOPORE</td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
+<td>theiacov_clearlabs</td>
+<td><strong>target_organism</strong></td>
+<td>String</td>
+<td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
+<td></td>
+<td>Optional</td>
+<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
+</tr>
+<tr>
 <td>vadr</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -13560,7 +14491,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.5.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2</td>
 <td>Optional</td>
 <td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -13626,87 +14557,6 @@
 <td></td>
 <td>Optional</td>
 <td></td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>medaka_docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3</td>
-<td>Optional</td>
-<td></td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>nextclade_dataset_name</strong></td>
-<td>String</td>
-<td>Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>nextclade_dataset_tag</strong></td>
-<td>String</td>
-<td>Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade &amp; lineage information, etc.) that is required for running the Nextclade tool.</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>normalise</strong></td>
-<td>Int</td>
-<td>Used to normalize the amount of reads to the indicated level before variant calling</td>
-<td>20000 for CL, 200 for ONT</td>
-<td>Optional</td>
-<td></td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>organism</strong></td>
-<td>String</td>
-<td>The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE</td>
-<td>sars-cov-2</td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>qc_check_table</strong></td>
-<td>File</td>
-<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
-<td></td>
-<td>Optional</td>
-<td></td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>reference_genome</strong></td>
-<td>File</td>
-<td>An optional reference genome used for consensus assembly and QC</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>seq_method</strong></td>
-<td>String</td>
-<td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>workflow name</td>
-<td><strong>target_organism</strong></td>
-<td>String</td>
-<td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
-<td></td>
-<td>Optional</td>
-<td>HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
 </tbody>
 </table>
@@ -13775,6 +14625,14 @@
 <td>Required</td>
 </tr>
 <tr>
+<td>organism_parameters</td>
+<td><strong>reference_genbank</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails.</td>
+<td>Optional, Required</td>
+</tr>
+<tr>
 <td>cat_files_fasta</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -13820,6 +14678,14 @@
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>nextclade_v3</td>
+<td><strong>custom_input_dataset</strong></td>
+<td>File</td>
+<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13880,6 +14746,30 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>auspice_config</strong></td>
+<td>File</td>
+<td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>clades_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>flu_genoflu_genotype</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>N/A</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>flu_segment</strong></td>
 <td>String</td>
 <td>Influenza genome segment being analyzed. Options: "HA" or "NA". Automatically determined. This input is ignored if provided for TheiaCoV_Illumina_SE and TheiaCoV_ClearLabs</td>
@@ -13928,10 +14818,58 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>lat_longs_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized.</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_date</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_num_unambig</strong></td>
+<td>Int</td>
+<td>Minimum number of called bases in genome to pass prefilter</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>narrow_bandwidth</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.08333</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>pivot_interval</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>primer_bed_file</strong></td>
 <td>File</td>
 <td>The bed file containing the primers used when sequencing was performed</td>
 <td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>proportion_wide</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13960,7 +14898,7 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>vadr_memory</strong></td>
+<td><strong>vadr_mem</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>32 (RSV-A, RSV-B, WNV) and 16 (all other TheiaCoV organisms)</td>
@@ -13972,6 +14910,22 @@
 <td>String</td>
 <td>Options for the v-annotate.pl VADR script</td>
 <td>Default provided for SARS-CoV-2 ("--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"), mpox ("--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"), WNV ("--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"), flu (""), RSV-A ("-r --mkey rsv --xnocomp"), and RSV-B ("-r --mkey rsv --xnocomp")</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>vadr_skip_length</strong></td>
+<td>Int</td>
+<td>Minimum assembly length (unambiguous) to run VADR</td>
+<td>10000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>vadr_skip_length</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>10000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15664,6 +16618,16 @@
 <td>✅</td>
 </tr>
 <tr>
+<td>vadr_flu_segments</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
 <td>Quasitools HyDRA</td>
 <td>❌</td>
 <td>❌</td>
@@ -15794,7 +16758,7 @@
 </details>
 <details class="task">
 <summary><code>vadr</code></summary>
-<p>VADR annotates and validates completed assembly files.</p>
+<p>VADR annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="./#org-specific"><em>organism-specific parameters and logic</em> section</a>. VADR is also used to characterize individual Influenza segments and will extract each segment into its own fasta file.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">VADR Technical Details</p>
 <table>
@@ -15820,6 +16784,28 @@
 <tr>
 <td>Original Publication(s)</td>
 <td>For SARS-CoV-2: <em><a href="https://doi.org/10.1093/nargab/lqad002">Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</a></em><br> For non-SARS_CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>vadr_flu_segments</code></summary>
+<p>This task processes a full or partial influenza genome assembly in multifasta format, along with the output <code>.tar.gz</code> file from a VADR run. It extracts each segment into its own fasta file and also generates a concatenated fasta containing all segments combined into a single sequence. Segment names are assigned based on the specified flu type (A or B) and the segment classification found in the <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#sqc">VADR .sqc file</a>.</p>
+<p>Note: Results may be unreliable if segment lengths deviate from those expected for Influenza A or B. For best results, the input assembly should contain all 8 segments as separate contigs. If the assembly is partial, the task will still extract available segments but may not produce a complete concatenated sequence. Empty fasta files will be created for missing segments.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">VADR Flu Segments Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/influenza/task_vadr_flu_segments.wdl">task_vadr_flu_segments.wdl</a></td>
 </tr>
 </tbody>
 </table>
@@ -16030,17 +17016,17 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 </tr>
 <tr>
 <td>aligned_bai</td>
-<td>File</td>
+<td>String</td>
 <td>Index companion file to the bam file generated during the consensus assembly process</td>
 </tr>
 <tr>
 <td>aligned_bam</td>
-<td>File</td>
+<td>String</td>
 <td>Sorted BAM file containing the alignments of reads to the reference genome</td>
 </tr>
 <tr>
 <td>assembly_fasta</td>
-<td>File</td>
+<td>String</td>
 <td>Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly. Contigs will be ordered from largest to smallest when IRMA is used.</td>
 </tr>
 <tr>
@@ -16050,7 +17036,7 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 </tr>
 <tr>
 <td>assembly_mean_coverage</td>
-<td>Float</td>
+<td>String</td>
 <td>Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the SAMtools coverage command</td>
 </tr>
 <tr>
@@ -16157,26 +17143,6 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>fastq_scan_num_reads_raw_pairs</td>
 <td>String</td>
 <td>The number of input read pairs as calculated by fastq_scan</td>
-</tr>
-<tr>
-<td>fastq_scan_r1_mean_q_clean</td>
-<td>Float</td>
-<td>Forward read mean quality value after quality trimming and adapter removal</td>
-</tr>
-<tr>
-<td>fastq_scan_r1_mean_q_raw</td>
-<td>Float</td>
-<td>Forward read mean quality value before quality trimming and adapter removal</td>
-</tr>
-<tr>
-<td>fastq_scan_r1_mean_readlength_clean</td>
-<td>Float</td>
-<td>Forward read mean read length value after quality trimming and adapter removal</td>
-</tr>
-<tr>
-<td>fastq_scan_r1_mean_readlength_raw</td>
-<td>Float</td>
-<td>Forward read mean read length value before quality trimming and adapter removal</td>
 </tr>
 <tr>
 <td>fastq_scan_raw1_json</td>
@@ -16465,7 +17431,7 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 </tr>
 <tr>
 <td>kraken_sc2_dehosted</td>
-<td>Float</td>
+<td>String</td>
 <td>Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal</td>
 </tr>
 <tr>
@@ -16490,12 +17456,12 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 </tr>
 <tr>
 <td>meanbaseq_trim</td>
-<td>Float</td>
+<td>String</td>
 <td>Mean quality of the nucleotide basecalls aligned to the reference genome after primer trimming</td>
 </tr>
 <tr>
 <td>meanmapq_trim</td>
-<td>Float</td>
+<td>String</td>
 <td>Mean quality of the mapped reads to the reference genome after primer trimming</td>
 </tr>
 <tr>
@@ -17034,26 +18000,6 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>The number of input forward reads as calculated by fastq_scan</td>
 </tr>
 <tr>
-<td>fastq_scan_r1_mean_q_clean</td>
-<td>Float</td>
-<td>Forward read mean quality value after quality trimming and adapter removal</td>
-</tr>
-<tr>
-<td>fastq_scan_r1_mean_q_raw</td>
-<td>Float</td>
-<td>Forward read mean quality value before quality trimming and adapter removal</td>
-</tr>
-<tr>
-<td>fastq_scan_r1_mean_readlength_clean</td>
-<td>Float</td>
-<td>Forward read mean read length value after quality trimming and adapter removal</td>
-</tr>
-<tr>
-<td>fastq_scan_r1_mean_readlength_raw</td>
-<td>Float</td>
-<td>Forward read mean read length value before quality trimming and adapter removal</td>
-</tr>
-<tr>
 <td>fastq_scan_raw1_json</td>
 <td>File</td>
 <td>The JSON file output from <code>fastq-scan</code> containing summary stats about raw forward read quality and length</td>
@@ -17124,9 +18070,44 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>Version of iVar for running the iVar trim command</td>
 </tr>
 <tr>
+<td>kraken_human</td>
+<td>Float</td>
+<td>Percent of human read data detected using the Kraken2 software</td>
+</tr>
+<tr>
+<td>kraken_human_dehosted</td>
+<td>Float</td>
+<td>Percent of human read data detected using the Kraken2 software after host removal</td>
+</tr>
+<tr>
+<td>kraken_report</td>
+<td>File</td>
+<td>Full Kraken report</td>
+</tr>
+<tr>
+<td>kraken_report_dehosted</td>
+<td>File</td>
+<td>Full Kraken report after host removal</td>
+</tr>
+<tr>
+<td>kraken_sc2</td>
+<td>String</td>
+<td>Percent of SARS-CoV-2 read data detected using the Kraken2 software</td>
+</tr>
+<tr>
+<td>kraken_sc2_dehosted</td>
+<td>String</td>
+<td>Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal</td>
+</tr>
+<tr>
 <td>kraken_target_organism</td>
 <td>String</td>
 <td>Percent of target organism read data detected using the Kraken2 software</td>
+</tr>
+<tr>
+<td>kraken_target_organism_dehosted</td>
+<td>String</td>
+<td>Percent of target organism read data detected using the Kraken2 software after host removal</td>
 </tr>
 <tr>
 <td>kraken_target_organism_name</td>
@@ -17287,6 +18268,11 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>read1_aligned</td>
 <td>File</td>
 <td>Forward read file of only aligned reads</td>
+</tr>
+<tr>
+<td>read1_clean</td>
+<td>File</td>
+<td>Forward read file after quality trimming and adapter removal</td>
 </tr>
 <tr>
 <td>read1_unaligned</td>
@@ -17480,7 +18466,7 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 </tr>
 <tr>
 <td>assembly_fasta</td>
-<td>File</td>
+<td>String</td>
 <td>Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly. Contigs will be ordered from largest to smallest when IRMA is used.</td>
 </tr>
 <tr>
@@ -17490,7 +18476,7 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 </tr>
 <tr>
 <td>assembly_mean_coverage</td>
-<td>Float</td>
+<td>String</td>
 <td>Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the SAMtools coverage command</td>
 </tr>
 <tr>
@@ -17730,7 +18716,7 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 </tr>
 <tr>
 <td>kraken_sc2_dehosted</td>
-<td>Float</td>
+<td>String</td>
 <td>Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal</td>
 </tr>
 <tr>
@@ -18099,6 +19085,11 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>Percentage of reads that successfully aligned to the reference genome. This value is calculated by number of mapped reads / total number of reads x 100.</td>
 </tr>
 <tr>
+<td>primer_bed_name</td>
+<td>String</td>
+<td>Name of the primer bed files used for primer trimming</td>
+</tr>
+<tr>
 <td>qc_check</td>
 <td>String</td>
 <td>A string that indicates whether or not the sample passes a set of pre-determined and user-provided QC thresholds</td>
@@ -18142,6 +19133,11 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>read1_aligned</td>
 <td>File</td>
 <td>Forward read file of only aligned reads</td>
+</tr>
+<tr>
+<td>read1_dehosted</td>
+<td>File</td>
+<td>The dehosted forward reads file; suggested read file for SRA submission</td>
 </tr>
 <tr>
 <td>read1_trimmed</td>
@@ -18294,6 +19290,86 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>Auspice-compatable JSON output generated from Nextclade analysis that includes the Nextclade default samples for clade-typing and the single sample placed on this tree</td>
 </tr>
 <tr>
+<td>auspice_json_flu_h5n1</td>
+<td>File</td>
+<td>Auspice-compatable JSON output generated from Nextclade analysis on Influenza H5N1 whole genome that includes the samples included in the "avian-flu/h5n1-cattle-outbreak" nextstrain build that is focused on B3.13 genotype and the single sample placed on this tree</td>
+</tr>
+<tr>
+<td>auspice_json_flu_ha</td>
+<td>File</td>
+<td>Auspice-compatable JSON output generated from Nextclade analysis on Influenza HA segment that includes the Nextclade default samples for clade-typing and the single sample placed on this tree</td>
+</tr>
+<tr>
+<td>auspice_json_flu_na</td>
+<td>File</td>
+<td>Auspice-compatable JSON output generated from Nextclade analysis on Influenza NA segment that includes the Nextclade default samples for clade-typing and the single sample placed on this tree</td>
+</tr>
+<tr>
+<td>flu_A_315675_resistance</td>
+<td>String</td>
+<td>resistance mutations to A_315675</td>
+</tr>
+<tr>
+<td>flu_L_742_001_resistance</td>
+<td>String</td>
+<td>resistance mutations to L_742_001</td>
+</tr>
+<tr>
+<td>flu_amantadine_resistance</td>
+<td>String</td>
+<td>resistance mutations to amantadine</td>
+</tr>
+<tr>
+<td>flu_compound_367_resistance</td>
+<td>String</td>
+<td>resistance mutations to compound_367</td>
+</tr>
+<tr>
+<td>flu_favipiravir_resistance</td>
+<td>String</td>
+<td>resistance mutations to favipiravir</td>
+</tr>
+<tr>
+<td>flu_fludase_resistance</td>
+<td>String</td>
+<td>resistance mutations to fludase</td>
+</tr>
+<tr>
+<td>flu_laninamivir_resistance</td>
+<td>String</td>
+<td>resistance mutations to laninamivir</td>
+</tr>
+<tr>
+<td>flu_oseltamivir_resistance</td>
+<td>String</td>
+<td>resistance mutations to oseltamivir (Tamiflu®)</td>
+</tr>
+<tr>
+<td>flu_peramivir_resistance</td>
+<td>String</td>
+<td>resistance mutations to peramivir (Rapivab®)</td>
+</tr>
+<tr>
+<td>flu_pimodivir_resistance</td>
+<td>String</td>
+<td>resistance mutations to pimodivir</td>
+</tr>
+<tr>
+<td>flu_rimantadine_resistance</td>
+<td>String</td>
+<td>resistance mutations to rimantadine</td>
+</tr>
+<tr>
+<td>flu_xofluza_resistance</td>
+<td>String</td>
+<td>resistance mutations to xofluza (Baloxavir marboxil)</td>
+</tr>
+<tr>
+<td>flu_zanamivir_resistance</td>
+<td>String</td>
+<td>resistance mutations to zanamivir (Relenza®)</td>
+</tr>
+<tr>
 <td>genoflu_all_segments</td>
 <td>String</td>
 <td>The genotypes for each individual flu segment</td>
@@ -18319,14 +19395,59 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>Amino-acid deletions as detected by NextClade. Will be blank for Flu</td>
 </tr>
 <tr>
+<td>nextclade_aa_dels_flu_h5n1</td>
+<td>String</td>
+<td>Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for H5N1 whole genome</td>
+</tr>
+<tr>
+<td>nextclade_aa_dels_flu_ha</td>
+<td>String</td>
+<td>Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for HA segment</td>
+</tr>
+<tr>
+<td>nextclade_aa_dels_flu_na</td>
+<td>String</td>
+<td>Amino-acid deletions as detected by NextClade. Specific to Flu; it includes deletions for NA segment</td>
+</tr>
+<tr>
 <td>nextclade_aa_subs</td>
 <td>String</td>
 <td>Amino-acid substitutions as detected by Nextclade. Will be blank for Flu</td>
 </tr>
 <tr>
+<td>nextclade_aa_subs_flu_h5n1</td>
+<td>String</td>
+<td>Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for H5N1 whole genome</td>
+</tr>
+<tr>
+<td>nextclade_aa_subs_flu_ha</td>
+<td>String</td>
+<td>Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for HA segment</td>
+</tr>
+<tr>
+<td>nextclade_aa_subs_flu_na</td>
+<td>String</td>
+<td>Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for NA segment</td>
+</tr>
+<tr>
 <td>nextclade_clade</td>
 <td>String</td>
 <td>Nextclade clade designation, will be blank for Flu.</td>
+</tr>
+<tr>
+<td>nextclade_clade_flu_h5n1</td>
+<td>String</td>
+<td>Nextclade clade designation, specific to Flu 5N1 whole genome. NOTE: Output will be blank or <code>NA</code> since this nextclade dataset does assign clades</td>
+</tr>
+<tr>
+<td>nextclade_clade_flu_ha</td>
+<td>String</td>
+<td>Nextclade clade designation, specific to Flu NA segment</td>
+</tr>
+<tr>
+<td>nextclade_clade_flu_na</td>
+<td>String</td>
+<td>Nextclade clade designation, specific to Flu HA segment</td>
 </tr>
 <tr>
 <td>nextclade_docker</td>
@@ -18339,9 +19460,34 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>Dataset tag used to run Nextclade. Will be blank for Flu</td>
 </tr>
 <tr>
+<td>nextclade_ds_tag_flu_ha</td>
+<td>String</td>
+<td>Dataset tag used to run Nextclade, specific to Flu HA segment</td>
+</tr>
+<tr>
+<td>nextclade_ds_tag_flu_na</td>
+<td>String</td>
+<td>Dataset tag used to run Nextclade, specific to Flu NA segment</td>
+</tr>
+<tr>
 <td>nextclade_json</td>
 <td>File</td>
 <td>Nextclade output in JSON file format. Will be blank for Flu</td>
+</tr>
+<tr>
+<td>nextclade_json_flu_h5n1</td>
+<td>File</td>
+<td>Nextclade output in JSON file format, specific to Flu H5N1 whole genome</td>
+</tr>
+<tr>
+<td>nextclade_json_flu_ha</td>
+<td>File</td>
+<td>Nextclade output in JSON file format, specific to Flu HA segment</td>
+</tr>
+<tr>
+<td>nextclade_json_flu_na</td>
+<td>File</td>
+<td>Nextclade output in JSON file format, specific to Flu NA segment</td>
 </tr>
 <tr>
 <td>nextclade_lineage</td>
@@ -18354,9 +19500,39 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>QC metric as determined by Nextclade. Will be blank for Flu</td>
 </tr>
 <tr>
+<td>nextclade_qc_flu_h5n1</td>
+<td>String</td>
+<td>QC metric as determined by Nextclade, specific to Flu H5N1 whole genome</td>
+</tr>
+<tr>
+<td>nextclade_qc_flu_ha</td>
+<td>String</td>
+<td>QC metric as determined by Nextclade, specific to Flu HA segment</td>
+</tr>
+<tr>
+<td>nextclade_qc_flu_na</td>
+<td>String</td>
+<td>QC metric as determined by Nextclade, specific to Flu NA segment</td>
+</tr>
+<tr>
 <td>nextclade_tsv</td>
 <td>File</td>
 <td>Nextclade output in TSV file format. Will be blank for Flu</td>
+</tr>
+<tr>
+<td>nextclade_tsv_flu_h5n1</td>
+<td>File</td>
+<td>Nextclade output in TSV file format, specific to Flu H5N1 whole genome</td>
+</tr>
+<tr>
+<td>nextclade_tsv_flu_ha</td>
+<td>File</td>
+<td>Nextclade output in TSV file format, specific to Flu HA segment</td>
+</tr>
+<tr>
+<td>nextclade_tsv_flu_na</td>
+<td>File</td>
+<td>Nextclade output in TSV file format, specific to Flu NA segment</td>
 </tr>
 <tr>
 <td>nextclade_version</td>
@@ -18484,6 +19660,51 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>5 column feature table output for passing sequences. See <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files">https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files</a> for more complete description.</td>
 </tr>
 <tr>
+<td>vadr_flu_ha_segment_fasta</td>
+<td>File</td>
+<td>HA (Haemagglutinin) assembly fasta file</td>
+</tr>
+<tr>
+<td>vadr_flu_mp_segment_fasta</td>
+<td>File</td>
+<td>MP (Matrix Protein) assembly fasta file</td>
+</tr>
+<tr>
+<td>vadr_flu_na_segment_fasta</td>
+<td>File</td>
+<td>NA (Neuraminidase) assembly fasta file</td>
+</tr>
+<tr>
+<td>vadr_flu_np_segment_fasta</td>
+<td>File</td>
+<td>NP (Nucleoprotein) assembly fasta file</td>
+</tr>
+<tr>
+<td>vadr_flu_ns_segment_fasta</td>
+<td>File</td>
+<td>NS (Nonstructural) assembly fasta file</td>
+</tr>
+<tr>
+<td>vadr_flu_pa_segment_fasta</td>
+<td>File</td>
+<td>PA (Polymerase acidic) assembly fasta file</td>
+</tr>
+<tr>
+<td>vadr_flu_pb1_segment_fasta</td>
+<td>File</td>
+<td>PB1 (Polymerase basic 1) assembly fasta file</td>
+</tr>
+<tr>
+<td>vadr_flu_pb2_segment_fasta</td>
+<td>File</td>
+<td>PB2 (Polymerase basic 2) assembly fasta file</td>
+</tr>
+<tr>
+<td>vadr_flu_segment_concatenated_fasta</td>
+<td>File</td>
+<td>Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry</td>
+</tr>
+<tr>
 <td>vadr_num_alerts</td>
 <td>String</td>
 <td>Number of fatal alerts as determined by VADR</td>
@@ -18564,6 +19785,31 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>Percent coverage for each gene in the organism being analyzed (depending on the organism input)</td>
 </tr>
 <tr>
+<td>fastq_scan_clean1_json</td>
+<td>File</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean forward read quality and length</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_clean1</td>
+<td>Int</td>
+<td>The number of forward reads after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_raw1</td>
+<td>Int</td>
+<td>The number of input forward reads as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_raw1_json</td>
+<td>File</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about raw forward read quality and length</td>
+</tr>
+<tr>
+<td>fastq_scan_version</td>
+<td>String</td>
+<td>The version of fastq_scan</td>
+</tr>
+<tr>
 <td>kraken_human</td>
 <td>Float</td>
 <td>Percent of human read data detected using the Kraken2 software</td>
@@ -18590,7 +19836,7 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 </tr>
 <tr>
 <td>kraken_sc2_dehosted</td>
-<td>Float</td>
+<td>String</td>
 <td>Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal</td>
 </tr>
 <tr>
@@ -18739,6 +19985,16 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903) x 100</td>
 </tr>
 <tr>
+<td>percentage_mapped_reads</td>
+<td>Float</td>
+<td>Percentage of reads that successfully aligned to the reference genome. This value is calculated by number of mapped reads / total number of reads x 100.</td>
+</tr>
+<tr>
+<td>primer_bed_name</td>
+<td>String</td>
+<td>Name of the primer bed files used for primer trimming</td>
+</tr>
+<tr>
 <td>qc_check</td>
 <td>String</td>
 <td>A string that indicates whether or not the sample passes a set of pre-determined and user-provided QC thresholds</td>
@@ -18752,6 +20008,11 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>read1_aligned</td>
 <td>File</td>
 <td>Forward read file of only aligned reads</td>
+</tr>
+<tr>
+<td>read1_dehosted</td>
+<td>File</td>
+<td>The dehosted forward reads file; suggested read file for SRA submission</td>
 </tr>
 <tr>
 <td>samtools_version_stats</td>
@@ -18905,7 +20166,7 @@ The list of amino-acid substitutions associated with antiviral resistance includ
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 27, 2025 16:04:22 UTC">2025-06-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 11, 2025 20:15:42 UTC">2025-08-11</span>
   </span>
 
     
