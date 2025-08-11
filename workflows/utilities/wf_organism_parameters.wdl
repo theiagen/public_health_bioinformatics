@@ -61,7 +61,7 @@ workflow organism_parameters {
     Int sc2_genome_len = 29903
     Int sc2_vadr_max_length = 30000
     Int sc2_vadr_skip_length = 10000
-    String sc2_vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
+    String sc2_vadr_options = "--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta"
     Int sc2_vadr_memory = 8
     File sc2_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"
   }
@@ -74,7 +74,7 @@ workflow organism_parameters {
     String mpox_kraken_target_organism = "Monkeypox virus"
     String mpox_primer_bed_file = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.primer.bed"
     String mpox_reference_gff_file = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3"
-    String mpox_vadr_options = "--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"
+    String mpox_vadr_options = "--mkey mpxv --glsearch --minimap2 -s -r --nomisc --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --s_overhang 150 --out_allfasta"
     Int mpox_vadr_max_length = 210000
     Int mpox_vadr_skip_length = 65480
     Int mpox_vadr_memory = 8
@@ -99,7 +99,7 @@ workflow organism_parameters {
     String wnv_kraken_target_organism = "West Nile virus"
     String wnv_primer_bed_file = "gs://theiagen-public-resources-rp/reference_data/viral/wnv/WNV-L1_primer.bed"
     Int wnv_genome_len = 11000
-    String wnv_vadr_options = "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"    
+    String wnv_vadr_options = "--mkey flavi --nomisc --noprotid --out_allfasta"
     Int wnv_vadr_max_length = 11000
     Int wnv_vadr_skip_length = 3000
     Int wnv_vadr_memory = 16
@@ -120,7 +120,7 @@ workflow organism_parameters {
     Float flu_proportion_wide = 0.0
 
     # vadr options for flu
-    String flu_vadr_options = "--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"
+    String flu_vadr_options = "--mkey flu --atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3"
     Int flu_vadr_max_length = 13500
     Int flu_vadr_skip_length = 500
     Int flu_vadr_memory = 8
@@ -215,7 +215,7 @@ workflow organism_parameters {
     String rsv_a_nextclade_ds_name = "nextstrain/rsv/a/EPI_ISL_412866"
     Int rsv_a_genome_len = 15500
     String rsv_a_kraken_target_organism = "Human respiratory syncytial virus A"
-    String rsv_a_vadr_options = "-r --mkey rsv --xnocomp"
+    String rsv_a_vadr_options = "--mkey rsv --xnocomp -r"
     Int rsv_a_vadr_max_length = 15500
     Int rsv_a_vadr_skip_length = 5000
     Int rsv_a_vadr_memory = 32
@@ -240,7 +240,7 @@ workflow organism_parameters {
     String rsv_b_nextclade_ds_name = "nextstrain/rsv/b/EPI_ISL_1653999"
     Int rsv_b_genome_len = 15500
     String rsv_b_kraken_target_organism = "human respiratory syncytial virus" 
-    String rsv_b_vadr_options = "-r --mkey rsv --xnocomp"
+    String rsv_b_vadr_options = "--mkey rsv --xnocomp -r"
     Int rsv_b_vadr_max_length = 15500
     Int rsv_b_vadr_skip_length = 5000
     Int rsv_b_vadr_memory = 32
