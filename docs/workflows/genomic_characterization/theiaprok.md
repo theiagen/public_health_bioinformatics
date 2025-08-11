@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaProk Workflow Series**](../workflows/genomic_characterization/theiaprok.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaProk Workflow Series**](../workflows/genomic_characterization/theiaprok.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level", "Dockstore"]) }}
 
 ## TheiaProk Workflows
 
@@ -13,8 +13,15 @@
 3. ONT sequencing (**TheiaProk_ONT**)
 4. Genome assemblies (**TheiaProk_FASTA**)
 
-!!! caption "TheiaProk Workflow Diagram"
-    ![TheiaProk Workflow Diagram](../../assets/figures/TheiaProk_v3.0.0.png)
+=== "TheiaProk_Illumina_PE"
+
+    !!! caption "TheiaProk Illumina PE Workflow Diagram"
+        ![TheiaProk Illumina PE Workflow Diagram](../../assets/figures/TheiaProk_v3.0.0.png)
+
+=== "TheiaProk_ONT"
+
+    !!! caption "TheiaProk ONT Workflow Diagram"
+        ![TheiaProk ONT Workflow Diagram](../../assets/figures/TheiaProk_ONT.png)
 
 All input reads are processed through "[core tasks](#core-tasks)" in the TheiaProk Illumina and ONT workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaProk workflows subsequently launch default genome characterization modules for quality assessment, species identification, antimicrobial resistance gene detection, sequence typing, and more. **For some taxa identified, "taxa-specific sub-workflows" will be automatically activated, undertaking additional taxa-specific characterization steps.** When setting up each workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
 

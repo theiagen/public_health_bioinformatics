@@ -17,7 +17,7 @@ task vadr {
     Int memory = 16
     Int disk_size = 100
   }
-  String out_base = basename(genome_fasta, '.fasta')
+  String out_base = basename(basename(basename(genome_fasta, ".fasta"), ".fa"), ".fna")
   command <<<
     set -euo pipefail
 
