@@ -53,7 +53,7 @@ workflow theiaviral_panel {
     Int min_depth = 10
     Float min_allele_freq = 0.6
     String? read_extraction_rank
-    Boolean extract_unclassified = false
+    Boolean concatenate_unclassified = false
     Boolean skip_theiaviral_screen = false
     Int minimum_read_number = 1000
     Boolean call_metaviralspades = true
@@ -81,7 +81,7 @@ workflow theiaviral_panel {
         taxon_id = taxon_id
     }
     if (krakentools.success) {
-      if (extract_unclassified) {
+      if (concatenate_unclassified) {
         call cat_lanes.cat_lanes {
           input:
             samplename = samplename + "_" + taxon_id,

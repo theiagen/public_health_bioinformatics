@@ -2077,7 +2077,7 @@ theiaviral_panel	min_depth	Int	Minimum read depth required for a variant to popu
 theiaviral_panel	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_Panel
 theiaviral_panel	assembly_cpu	Int	Number of CPUs allocated for assembly tasks	16	Optional	TheiaViral_Panel
 theiaviral_panel	assembly_memory	Int	Memory allocated for assembly tasks (in GB)	64	Optional	TheiaViral_Panel
-theiaviral_panel	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	FALSE	Optional	TheiaViral_Panel
+theiaviral_panel	concatenate_unclassified	Boolean	True/False that determines if unclassified reads should be concatenated with the taxon specific extracted reads	FALSE	Optional	TheiaViral_Panel
 theiaviral_panel	minimum_read_number	Int	Minimum number of reads required to proceed to assembly	1000	Required	TheiaViral_Panel
 theiaviral_panel	skip_theiaviral_screen	Boolean	Skip the read_screen process within TheiaViral_Illumina. This is set default to true because TheiaViral_Panel already does read screening, but can be set to false if futher screenig is wanted	TRUE	Optional	TheiaViral_Panel
 bcftools_consensus	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral_ONT
