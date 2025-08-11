@@ -29,15 +29,17 @@ workflow vadr_update {
     input:
       assembly_fasta = genome_fasta
   }
-  call vadr_task.vadr {
-    input:
-      genome_fasta = genome_fasta,
-      assembly_length_unambiguous = consensus_qc.number_ATCG,
-      max_length = organism_parameters.vadr_maxlength,
-      vadr_opts = organism_parameters.vadr_opts,
-      vadr_model_file = organism_parameters.vadr_model_file,
-      skip_length = organism_parameters.vadr_skiplength,
-      memory = organism_parameters.vadr_memory
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
+    call vadr_task.vadr {
+      input:
+        genome_fasta = genome_fasta,
+        assembly_length_unambiguous = consensus_qc.number_ATCG,
+        max_length = organism_parameters.vadr_maxlength,
+        vadr_opts = organism_parameters.vadr_opts,
+        vadr_model_file = organism_parameters.vadr_model_file,
+        skip_length = organism_parameters.vadr_skiplength,
+        memory = organism_parameters.vadr_memory
+    }
   }
   call versioning.version_capture {
     input:
@@ -52,8 +54,8 @@ workflow vadr_update {
     File? vadr_feature_tbl_fail = vadr.feature_tbl_fail
     File? vadr_classification_summary_file = vadr.classification_summary_file
     File? vadr_all_outputs_tar_gz = vadr.outputs_tgz
-    String vadr_num_alerts = vadr.num_alerts
-    String vadr_docker = vadr.vadr_docker
+    String? vadr_num_alerts = vadr.num_alerts
+    String? vadr_docker = vadr.vadr_docker
     File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
   }
 }
