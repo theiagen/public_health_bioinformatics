@@ -117,7 +117,7 @@
 
     ///
 
-### All Tasks
+### Workflow Tasks
 
 === "TheiaViral_Illumina_PE"
 

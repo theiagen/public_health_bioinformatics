@@ -1671,6 +1671,7 @@ table2asn	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Mercury_Prep
 table2asn	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Mercury_Prep_N_Batch	
 table2asn	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-table2asn:1.26.678	Optional	Mercury_Prep_N_Batch	
 table2asn	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	1	Optional	Mercury_Prep_N_Batch	
+tbp_parser	add_cycloserine_lims	Boolean	Set to true add cycloserine results to the LIMS report	FALSE	Optional	TBProfiler_tNGS	
 tbp_parser	config	File	The configuration file to use, in YAML format (overrides all other arguments except input_json and input_bam)		Optional	TBProfiler_tNGS	
 tbp_parser	coverage_regions_bed	File	A file that contains the regions to perform coverage analysis on		Optional	TBProfiler_tNGS	
 tbp_parser	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS	
@@ -1691,18 +1692,19 @@ tbp_parser	rrs_frequency	Float	Minimum frequency for a mutation in rrs to pass Q
 tbp_parser	rrs_read_support	Int	Minimum read support for a mutation in rrs to pass QC in tbp-parser	10	Optional	TBProfiler_tNGS	
 tbp_parser	sequencing_method	String	Fills out the "seq_method" field in the tbp_parser output files		Optional	TBProfiler_tNGS	
 tbp_parser	tbp_parser_debug	Boolean	Activate the debug mode on tbp_parser; increases logging outputs	FALSE	Optional	TBProfiler_tNGS	
-tbprofiler	bases_to_crop	Int	Indicate the number of bases to remove from the start and end of the read	0	Optional	TBProfiler_tNGS	
-tbprofiler	cov_frac_threshold	Int	A cutoff used to calculate the fraction of the region covered by ≤ this value	1	Optional	TBProfiler_tNGS	
+tbprofiler	additional_parameters	String	Additional parameters for TBProfiler		Optional	TBProfiler_tNGS	
+tbprofiler_tngs	bases_to_crop	Int	Indicate the number of bases to remove from the start and end of the read	0	Optional	TBProfiler_tNGS	
+tbprofiler	tbprofiler_run_cdph_db	Boolean	TBProfiler uses by default the TBDB database; set this value to "true" to use the WHO v2 database with customizations for CDPH	FALSE	Optional	TBProfiler_tNGS	
 tbprofiler	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TBProfiler_tNGS	
 tbprofiler	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TBProfiler_tNGS	
+tbprofiler	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3	Optional	TBProfiler_tNGS
 tbprofiler	mapper	String	The mapping tool used in TBProfiler to align the reads to the reference genome; see TBProfiler's original documentation for available options.	bwa	Optional	TBProfiler_tNGS	
 tbprofiler	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TBProfiler_tNGS	
 tbprofiler	min_af	Float	The minimum allele frequency to call a variant	0.1	Optional	TBProfiler_tNGS	
-tbprofiler	min_af_pred	Float	The minimum allele frequency to use a variant for resistance prediction	0.1	Optional	TBProfiler_tNGS	
 tbprofiler	min_depth	Int	The minimum depth for a variant to be called.	10	Optional	TBProfiler_tNGS	
 tbprofiler	ont_data	Boolean	Internal component, do not modify		Optional	TBProfiler_tNGS	
 tbprofiler	tbprofiler_custom_db	File	TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field and set tbprofiler_run_custom_db to true		Optional	TBProfiler_tNGS	
-tbprofiler	tbprofiler_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3	Optional	TBProfiler_tNGS	
+tbprofiler	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3	Optional	TBProfiler_tNGS	
 tbprofiler	tbprofiler_run_custom_db	Boolean		FALSE	Optional	TBProfiler_tNGS	
 tbprofiler	variant_caller	String	Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler's original documentation for available options.	freebayes	Optional	TBProfiler_tNGS	
 tbprofiler	variant_calling_params	String	Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler		Optional	TBProfiler_tNGS	
