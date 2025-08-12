@@ -30,11 +30,6 @@ agrvate_docker	String	The docker used for AgrVATE	TheiaProk_FASTA, TheiaProk_ONT
 agrvate_results	File	A gzipped tarball of all results	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 agrvate_summary	File	The summary file produced	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 agrvate_version	String	The version of AgrVATE used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-aligned_bai	File	Index companion file to the bam file generated during the consensus assembly process	Clair3_Variants_ONT, Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_SE
-aligned_bai	String	Index companion file to the bam file generated during the consensus assembly process	TheiaCoV_Illumina_PE
-aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	Clair3_Variants_ONT, Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_SE
-aligned_bam	String	Sorted BAM file containing the alignments of reads to the reference genome	TheiaCoV_Illumina_PE
-aligned_bai	File	Index companion file to the bam file generated during the consensus assembly process	Clair3_Variants_ONT, Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_SE
 aligned_bai	String	Index companion file to the bam file generated during the consensus assembly process	TheiaCoV_Illumina_PE
 aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	Clair3_Variants_ONT, Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_SE
 aligned_bam	String	Sorted BAM file containing the alignments of reads to the reference genome	TheiaCoV_Illumina_PE
@@ -1250,12 +1245,3 @@ vadr_flu_mp_segment_fasta	File	MP (Matrix Protein) assembly fasta file	TheiaCoV_
 vadr_flu_np_segment_fasta	File	NP (Nucleoprotein) assembly fasta file	TheiaCoV_FASTA
 vadr_flu_ns_segment_fasta	File	NS (Nonstructural) assembly fasta file	TheiaCoV_FASTA
 characterization_taxonid	String	Taxon ID used for characterization	TheiaViral_Illumina_PE, TheiaViral_ONT
-vadr_flu_segment_concatenated_fasta	File	Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry	TheiaCoV_FASTA
-vadr_flu_ha_segment_fasta	File	HA (Haemagglutinin) assembly fasta file	TheiaCoV_FASTA
-vadr_flu_na_segment_fasta	File	NA (Neuraminidase) assembly fasta file	TheiaCoV_FASTA
-vadr_flu_pa_segment_fasta	File	PA (Polymerase acidic) assembly fasta file	TheiaCoV_FASTA
-vadr_flu_pb1_segment_fasta	File	PB1 (Polymerase basic 1) assembly fasta file	TheiaCoV_FASTA
-vadr_flu_pb2_segment_fasta	File	PB2 (Polymerase basic 2) assembly fasta file	TheiaCoV_FASTA
-vadr_flu_mp_segment_fasta	File	MP (Matrix Protein) assembly fasta file	TheiaCoV_FASTA
-vadr_flu_np_segment_fasta	File	NP (Nucleoprotein) assembly fasta file	TheiaCoV_FASTA
-vadr_flu_ns_segment_fasta	File	NS (Nonstructural) assembly fasta file	TheiaCoV_FASTA
