@@ -37,6 +37,12 @@ workflow theiacov_clearlabs {
     String? target_organism
     # qc check parameters
     File? qc_check_table
+    # vadr parameters
+    Int? vadr_max_length
+    Int? vadr_skip_length
+    String? vadr_opts
+    File? vadr_model_file
+    Int? vadr_memory
   }
   call set_organism_defaults.organism_parameters {
     input:
@@ -44,7 +50,12 @@ workflow theiacov_clearlabs {
       reference_genome = reference_genome,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
-      kraken_target_organism_input = target_organism
+      kraken_target_organism_input = target_organism,
+      vadr_max_length = vadr_max_length,
+      vadr_skip_length = vadr_skip_length,
+      vadr_options = vadr_opts,
+      vadr_model = vadr_model_file,
+      vadr_mem = vadr_memory
   }
   call fastq_scan.fastq_scan_se as fastq_scan_raw_reads {
     input:
@@ -126,13 +137,15 @@ workflow theiacov_clearlabs {
       nextclade_tsv = nextclade_v3.nextclade_tsv,
       organism = organism
     }
-  }
-  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
-  # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b, measles, mumps, and rubella
     call vadr_task.vadr {
       input:
         genome_fasta = consensus.consensus_seq,
-        assembly_length_unambiguous = consensus_qc.number_ATCG
+        assembly_length_unambiguous = consensus_qc.number_ATCG,
+        max_length = organism_parameters.vadr_maxlength,
+        vadr_opts = organism_parameters.vadr_opts,
+        vadr_model_file = organism_parameters.vadr_model_file,
+        skip_length = organism_parameters.vadr_skiplength,
+        memory = organism_parameters.vadr_memory
     }
   }
   if (defined(qc_check_table)) {
