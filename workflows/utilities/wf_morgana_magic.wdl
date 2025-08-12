@@ -13,7 +13,7 @@ workflow morgana_magic {
     File assembly_fasta
     String taxon_name
     String seq_method
-    File? read1
+    File read1
     File? read2
     # consensus qc
     Int? consensus_qc_cpu
@@ -234,11 +234,11 @@ workflow morgana_magic {
     String? abricate_flu_database =  flu_track.abricate_flu_database
     String? abricate_flu_version = flu_track.abricate_flu_version
     # HIV Quasitools Outputs
-    String? quasitools_version = quasitools_task.quasitools_version
-    String? quasitools_date = quasitools_task.quasitools_date
-    File? quasitools_coverage_file = quasitools_task.coverage_file
-    File? quasitools_dr_report = quasitools_task.dr_report
-    File? quasitools_hydra_vcf = quasitools_task.hydra_vcf
-    File? quasitools_mutations_report = quasitools_task.mutations_report
+    String? quasitools_version = quasitools.quasitools_version
+    String? quasitools_date = quasitools.quasitools_date
+    File? quasitools_coverage_file = quasitools.coverage_file
+    File? quasitools_dr_report = quasitools.dr_report
+    File? quasitools_hydra_vcf = quasitools.hydra_vcf
+    File? quasitools_mutations_report = quasitools.mutations_report
   }
 }
