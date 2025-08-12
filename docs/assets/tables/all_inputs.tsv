@@ -2350,5 +2350,3 @@ root_tree2_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	PhyloC
 root_tree2_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	PhyloCompare	
 root_tree2_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.7	Optional	PhyloCompare	
 root_tree2_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional 	PhyloCompare	
-theiaviral_illumina_pe	characterize_via_input	Boolean	Force genomic characterization based on inputted `taxon` instead of best reference genome	false	Optional	TheiaViral_Illumina_PE
-theiaviral_ont	characterize_via_input	Boolean	Force genomic characterization based on inputted `taxon` instead of best reference genome	false	Optional	TheiaViral_ONT

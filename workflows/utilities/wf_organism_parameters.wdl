@@ -251,8 +251,8 @@ workflow organism_parameters {
     Float rsv_b_proportion_wide = 0.0
   }
   if (organism == "HIV" || organism == "11676" || organism == "11709") {
+    String hiv_org_name = "HIV"
     if (hiv_primer_version == "v1" || organism == "11676") {
-      String hiv_v1_org_name = "HIV"
       String hiv_v1_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta"
       String hiv_v1_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"
       String hiv_v1_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"
@@ -260,7 +260,6 @@ workflow organism_parameters {
       Int hiv_v1_genome_len = 9181 
     }
     if (hiv_primer_version == "v2" || organism == "11709") {
-      String hiv_v2_org_name = "HIV"
       String hiv_v2_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"
       String hiv_v2_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"
       String hiv_v2_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed"
@@ -285,7 +284,7 @@ workflow organism_parameters {
   }
   output {
     # standardized organism flag
-    String standardized_organism = select_first([sc2_org_name, mpox_org_name, wnv_org_name, flu_org_name, rsv_a_org_name, rsv_b_org_name, hiv_v1_org_name, hiv_v2_org_name, measles_org_name, rabies_org_name, organism])
+    String standardized_organism = select_first([sc2_org_name, mpox_org_name, wnv_org_name, flu_org_name, rsv_a_org_name, rsv_b_org_name, hiv_org_name, measles_org_name, rabies_org_name, organism])
     # reference genome and sequencing information
     File reference = select_first([reference_genome, sc2_reference_genome, mpox_reference_genome, wnv_reference_genome, h1n1_ha_reference, h3n2_ha_reference, vic_ha_reference, yam_ha_reference, h5n1_ha_reference, h1n1_na_reference, h3n2_na_reference, vic_na_reference, yam_na_reference, rsv_a_reference_genome, rsv_b_reference_genome, hiv_v1_reference_genome, hiv_v2_reference_genome, rabies_nextclade_genome, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File gene_locations_bed = select_first([gene_locations_bed_file, sc2_gene_locations_bed, mpox_gene_locations_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"])

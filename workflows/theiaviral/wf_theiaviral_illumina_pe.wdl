@@ -40,7 +40,6 @@ workflow theiaviral_illumina_pe {
     Float min_allele_freq = 0.6
     # rasusa downsampling inputs
     Int? genome_length
-    Boolean characterize_via_input = false
   }
   # get the PHB version
   call versioning_task.version_capture {
@@ -189,8 +188,6 @@ workflow theiaviral_illumina_pe {
             assembly = consensus.consensus_seq,
             samplename = samplename
         }
-        # set the variable for the taxon_id
-        String characterize_id = if (characterize_via_input) then ncbi_identify.raw_taxon_id else select_first([ncbi_datasets.taxon_id, ncbi_identify.raw_taxon_id])
         # run morgana magic for classification
         call morgana_magic_wf.morgana_magic {
           input:
@@ -198,7 +195,7 @@ workflow theiaviral_illumina_pe {
             read1 = read1,
             read2 = read2,
             assembly_fasta = select_first([consensus.consensus_seq]),
-            taxon_name = characterize_id,
+            taxon_name = ncbi_identify.raw_taxon_id,
             seq_method = "illumina_pe"
         }
       }
@@ -356,7 +353,6 @@ workflow theiaviral_illumina_pe {
     Int? checkv_consensus_total_genes = checkv_consensus.total_genes
     String? checkv_consensus_version = checkv_consensus.checkv_version
     # morgana magic outputs
-    String? characterization_taxonid = characterize_id
     String? morgana_magic_organism = morgana_magic.organism 
     # Pangolin outputs
     String? pango_lineage = morgana_magic.pango_lineage 
