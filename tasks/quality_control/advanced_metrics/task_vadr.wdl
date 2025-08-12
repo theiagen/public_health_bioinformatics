@@ -25,7 +25,7 @@ task vadr {
 
       # extract the model file
       mkdir -p model_dir
-      tar --strip-component=1 -C model_dir -xzf ~{vadr_model_file}
+      tar -C model_dir -xzf ~{vadr_model_file}
 
       # sometimes the model files are in a subdirectory and we need to find/move them.
       # the .minfo file is created by the v-build.pl command and is always in a valid model directory
@@ -36,8 +36,8 @@ task vadr {
         exit 1
       fi
 
-      # vadr will expect the model files to be in this outermost directory. ignore "are the same file" warnings if the files are already in the right place
-      mv ${model_files_location}/* model_dir/ 2> >(grep -v "are the same file" >&2)
+      # vadr will expect the model files to be in this outermost directory
+      mv "${model_files_location}"/* model_dir/
 
       # remove empty directory if it exists
       find model_dir -type d -empty -delete
@@ -56,7 +56,8 @@ task vadr {
         --mdir model_dir \
         ~{vadr_opts} \
         "~{out_base}_trimmed.fasta" \
-        "~{out_base}"
+        "~{out_base}" \
+        -v
 
       # package everything for output
       tar -C "~{out_base}" -czvf "~{out_base}.vadr.tar.gz" .
