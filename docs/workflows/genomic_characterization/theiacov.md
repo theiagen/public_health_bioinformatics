@@ -315,13 +315,13 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         |---|---|---|---|
         | kraken_target_organism_input | HIV | Human immunodeficiency virus 1 |  |
         | genome_length_input | HIV-v1 | 9181 | This version of HIV originates from Oregon |
-        | primer_bed_file | HIV-v1 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed | This version of HIV originates from Oregon |
-        | reference_genome | HIV-v1 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta | This version of HIV originates from Oregon |
-        | reference_gff_file | HIV-v1 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3 | This version of HIV originates from Oregon |
+        | primer_bed_file | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"` | This version of HIV originates from Oregon |
+        | reference_genome | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta"` | This version of HIV originates from Oregon |
+        | reference_gff_file | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"` | This version of HIV originates from Oregon |
         | genome_length_input | HIV-v2 | 9840 | This version of HIV originates from Southern Africa |
-        | primer_bed_file | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed | This version of HIV originates from Southern Africa |
-        | reference_genome | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta | This version of HIV originates from Southern Africa |
-        | reference_gff_file | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3 | This version of HIV originates from Southern Africa |
+        | primer_bed_file | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed"` | This version of HIV originates from Southern Africa |
+        | reference_genome | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"` | This version of HIV originates from Southern Africa |
+        | reference_gff_file | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"` | This version of HIV originates from Southern Africa |
 
         </div>
     
@@ -334,6 +334,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | genome_length_input | measles | `16000` |
         | nextclade_dataset_name_input | measles | `"nextstrain/measles/N450/WHO-2012"` |
         | nextclade_dataset_tag_input | measles | `"2025-03-26--11-47-13Z"` |
+        | reference_genome | measles | `"gs://theiagen-public-resources-rp/reference_data/viral/measles/NC_001498.1_measles_reference.fasta"` |
         | vadr_max_length | measles | `18000` |
         | vadr_skip_length | measles | `0` |
         | vadr_mem | measles | `24` |
@@ -347,10 +348,12 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
+        | reference_genome | mumps | `"gs://theiagen-public-resources-rp/reference_data/viral/mumps/NC_002200.1_mumps_reference.fasta"` |
+        | genome_length_input | mumps | `15300` |
         | vadr_options | mumps | `"--mkey muv -r --indefclass 0.025"` |
-        | adr_max_length | mumps | `18000` |
+        | vadr_max_length | mumps | `18000` |
         | vadr_skip_length | mumps | `0` |
-        | vadr_memory | mumps | `16` |
+        | vadr_mem | mumps | `16` |
         | vadr_model_file | mumps | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-muv-1.01.tar.gz"` |
 
         </div>
@@ -360,6 +363,8 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
+        | reference_genome | rubella | `"gs://theiagen-public-resources-rp/reference_data/viral/rubella/NC_001545.2_rubella_reference.fasta"` |
+        | genome_length_input | rubella | `9800` |
         | vadr_options | rubella | `"--mkey ruv -r"` |
         | vadr_max_length | rubella | `10000` |
         | vadr_skip_length | rubella | `0` |
