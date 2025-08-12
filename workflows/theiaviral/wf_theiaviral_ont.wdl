@@ -254,7 +254,8 @@ workflow theiaviral_ont {
             samplename = samplename,
             assembly_fasta = select_first([bcftools_consensus.assembly_fasta]),
             taxon_name = ncbi_identify.raw_taxon_id,
-            seq_method = "nanopore"
+            seq_method = "nanopore",
+            number_ATCG = consensus_qc.number_ATCG
         }
       }
     }
@@ -430,7 +431,16 @@ workflow theiaviral_ont {
     Int? checkv_consensus_total_genes = checkv_consensus.total_genes
     String? checkv_consensus_version = checkv_consensus.checkv_version
     # morgana magic outputs
-    String? morgana_magic_organism = morgana_magic.organism 
+    String? morgana_magic_organism = morgana_magic.organism
+    # VADR outputs
+    File? vadr_alerts_list = morgana_magic.vadr_alerts_list
+    String? vadr_num_alerts = morgana_magic.vadr_num_alerts
+    File? vadr_feature_tbl_pass = morgana_magic.vadr_feature_tbl_pass
+    File? vadr_feature_tbl_fail = morgana_magic.vadr_feature_tbl_fail
+    File? vadr_classification_summary_file = morgana_magic.vadr_classification_summary_file
+    File? vadr_all_outputs_tar_gz = morgana_magic.vadr_all_outputs_tar_gz
+    String? vadr_docker = morgana_magic.vadr_docker
+    File? vadr_fastas_zip_archive = morgana_magic.vadr_fastas_zip_archive
     # Pangolin outputs
     String? pango_lineage = morgana_magic.pango_lineage
     String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded
