@@ -44,7 +44,7 @@ workflow theiacov_clearlabs {
       reference_genome = reference_genome,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
-      kraken_target_organism_input = target_organism,
+      kraken_target_organism_input = target_organism
   }
   call fastq_scan.fastq_scan_se as fastq_scan_raw_reads {
     input:

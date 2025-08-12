@@ -338,7 +338,7 @@ workflow organism_parameters {
     String pangolin_docker = select_first([pangolin_docker_image, sc2_pangolin_docker, ""])
     # vadr options
     String vadr_opts = select_first([vadr_options, sc2_vadr_options, mpox_vadr_options, wnv_vadr_options, flu_vadr_options, rsv_a_vadr_options, rsv_b_vadr_options, measles_vadr_options, mumps_vadr_options, rubella_vadr_options, "NA"])
-    File vadr_model_file = select_first([vadr_model, sc2_vadr_model_file, mpox_vadr_model_file, wnv_vadr_model_file, flu_vadr_model_file, rsv_a_vadr_model_file, rsv_b_vadr_model_file, measles_vadr_model_file, mumps_vadr_model_file, rubella_vadr_model_file, ""])
+    File vadr_model_file = select_first([vadr_model, sc2_vadr_model_file, mpox_vadr_model_file, wnv_vadr_model_file, flu_vadr_model_file, rsv_a_vadr_model_file, rsv_b_vadr_model_file, measles_vadr_model_file, mumps_vadr_model_file, rubella_vadr_model_file, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     Int vadr_maxlength = select_first([vadr_max_length, sc2_vadr_max_length, mpox_vadr_max_length, wnv_vadr_max_length, flu_vadr_max_length, rsv_a_vadr_max_length, rsv_b_vadr_max_length, measles_vadr_max_length, mumps_vadr_max_length, rubella_vadr_max_length, 0])
     Int vadr_memory = select_first([vadr_mem, sc2_vadr_memory, mpox_vadr_memory, wnv_vadr_memory, flu_vadr_memory, rsv_a_vadr_memory, rsv_b_vadr_memory, measles_vadr_memory, mumps_vadr_memory, rubella_vadr_memory, 16])
     Int vadr_skiplength = select_first([vadr_skip_length, sc2_vadr_skip_length, mpox_vadr_skip_length, wnv_vadr_skip_length, flu_vadr_skip_length, rsv_a_vadr_skip_length, rsv_b_vadr_skip_length, measles_vadr_skip_length, mumps_vadr_skip_length, rubella_vadr_skip_length, 0])

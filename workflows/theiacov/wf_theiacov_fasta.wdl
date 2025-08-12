@@ -60,15 +60,16 @@ workflow theiacov_fasta {
       genome_length = organism_parameters.genome_length
   }
   # vadr task
-if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {    call vadr_task.vadr {
-      input:
-        genome_fasta = assembly_fasta,
-        assembly_length_unambiguous = consensus_qc.number_ATCG,
-        max_length = organism_parameters.vadr_maxlength,
-        vadr_opts = organism_parameters.vadr_opts,
-        vadr_model_file = organism_parameters.vadr_model_file,
-        skip_length = organism_parameters.vadr_skiplength,
-        memory = organism_parameters.vadr_memory
+if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
+  call vadr_task.vadr {
+    input:
+      genome_fasta = assembly_fasta,
+      assembly_length_unambiguous = consensus_qc.number_ATCG,
+      max_length = organism_parameters.vadr_maxlength,
+      vadr_opts = organism_parameters.vadr_opts,
+      vadr_model_file = organism_parameters.vadr_model_file,
+      skip_length = organism_parameters.vadr_skiplength,
+      memory = organism_parameters.vadr_memory
     }
   }
   if (organism == "flu") {
