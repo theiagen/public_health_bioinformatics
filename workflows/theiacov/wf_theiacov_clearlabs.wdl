@@ -37,12 +37,6 @@ workflow theiacov_clearlabs {
     String? target_organism
     # qc check parameters
     File? qc_check_table
-    # vadr parameters
-    Int? vadr_max_length
-    Int? vadr_skip_length
-    String? vadr_opts
-    File? vadr_model_file
-    Int? vadr_memory
   }
   call set_organism_defaults.organism_parameters {
     input:
@@ -51,11 +45,6 @@ workflow theiacov_clearlabs {
       nextclade_dataset_tag_input = nextclade_dataset_tag,
       nextclade_dataset_name_input = nextclade_dataset_name,
       kraken_target_organism_input = target_organism,
-      vadr_max_length = vadr_max_length,
-      vadr_skip_length = vadr_skip_length,
-      vadr_options = vadr_opts,
-      vadr_model = vadr_model_file,
-      vadr_mem = vadr_memory
   }
   call fastq_scan.fastq_scan_se as fastq_scan_raw_reads {
     input:
