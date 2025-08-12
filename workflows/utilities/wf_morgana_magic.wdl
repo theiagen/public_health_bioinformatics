@@ -5,7 +5,7 @@ import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangoli
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_flu_track.wdl" as flu_track_wf
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
-import "../../tasks/species_typing/lentivirus/task_quasitools.wdl"
+import "../../tasks/species_typing/lentivirus/task_quasitools.wdl" as quasitools_task
 
 workflow morgana_magic {
   input {
