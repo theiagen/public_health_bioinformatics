@@ -6,7 +6,7 @@ task phylovalidate {
     File tree2
     Float? max_distance
     
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.7"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.8"
     Int disk_size = 10
     Int memory = 4
     Int cpu = 1
@@ -31,6 +31,9 @@ task phylovalidate {
     phylocompare ~{tree1_cleaned} ~{tree2_cleaned} \
         --debug \
         2> >(tee -a PHYLOCOMPARE_STDERR >&2)
+
+    # generate a cophylogeny plot
+    Rscript /theiaphylo/theiaphylo/gen_cophylo.R ~{tree1_cleaned} ~{tree2_cleaned}
 
     # extract errors while maintaining a 0 exit code
     grep -Po "ERROR.*" PHYLOCOMPARE_STDERR > PHYLOCOMPARE_ERRORS || true
@@ -93,6 +96,7 @@ task phylovalidate {
     File summary_report = "phylo_distances.txt"
     File tree1_clean = "~{tree1_cleaned}"
     File tree2_clean = "~{tree2_cleaned}"
+    File cophylo_plot = "cophylo_plot.pdf"
     String phylovalidate_distance = read_string("PHYLOCOMPARE_DISTANCE")
     String phylovalidate_validation = read_string("PHYLOVALIDATE")
     String phylovalidate_flag = read_string("PHYLOCOMPARE_FLAG")

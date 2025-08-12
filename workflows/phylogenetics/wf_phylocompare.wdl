@@ -45,5 +45,6 @@ workflow phylocompare {
     String phylocompare_flag = phylovalidate_task.phylovalidate_flag
     File phylocompare_tree1_clean = phylovalidate_task.tree1_clean
     File phylocompare_tree2_clean = phylovalidate_task.tree2_clean
+    File phylocompare_cophylo_plot = phylovalidate_task.cophylo_plot
   }
 }
