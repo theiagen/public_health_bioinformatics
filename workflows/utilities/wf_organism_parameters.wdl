@@ -103,7 +103,7 @@ workflow organism_parameters {
     String wnv_nextclade_ds_tag = "NA"
     String wnv_nextclade_ds_name = "NA"
   }
-  if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza" || organism == "11320" || organism == "11309") {
+  if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza" || organism == "11320" || organism == "11309" || organism == "11308") {
     String flu_org_name = "flu"
     Int flu_genome_len = 13500
 
@@ -287,8 +287,7 @@ workflow organism_parameters {
     # standardized organism flag
     String standardized_organism = select_first([sc2_org_name, mpox_org_name, wnv_org_name, flu_org_name, rsv_a_org_name, rsv_b_org_name, hiv_v1_org_name, hiv_v2_org_name, measles_org_name, rabies_org_name, organism])
     # reference genome and sequencing information
-    File reference = select_first([reference_genome, sc2_reference_genome, mpox_reference_genome, wnv_reference_genome, h1n1_ha_reference, h3n2_ha_reference, vic_ha_reference, yam_ha_reference, h5n1_ha_reference, h1n1_na_reference, h3n2_na_reference, vic_na_reference, yam_na_reference, 
-    rsv_a_reference_genome, rsv_b_reference_genome, hiv_v1_reference_genome, hiv_v2_reference_genome, rabies_nextclade_genome, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    File reference = select_first([reference_genome, sc2_reference_genome, mpox_reference_genome, wnv_reference_genome, h1n1_ha_reference, h3n2_ha_reference, vic_ha_reference, yam_ha_reference, h5n1_ha_reference, h1n1_na_reference, h3n2_na_reference, vic_na_reference, yam_na_reference, rsv_a_reference_genome, rsv_b_reference_genome, hiv_v1_reference_genome, hiv_v2_reference_genome, rabies_nextclade_genome, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File gene_locations_bed = select_first([gene_locations_bed_file, sc2_gene_locations_bed, mpox_gene_locations_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"])
     File primer_bed = select_first([primer_bed_file, mpox_primer_bed_file, wnv_primer_bed_file, hiv_v1_primer_bed, hiv_v2_primer_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"])
     File reference_gff = select_first([reference_gff_file, mpox_reference_gff_file, hiv_v1_reference_gff, hiv_v2_reference_gff, rabies_nextclade_gff, "gs://theiagen-public-resources-rp/empty_files/empty.gff3"])

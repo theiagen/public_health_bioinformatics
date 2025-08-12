@@ -5,6 +5,7 @@ import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangoli
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_flu_track.wdl" as flu_track_wf
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
+import "../../tasks/species_typing/lentivirus/task_quasitools.wdl"
 
 workflow morgana_magic {
   input {
@@ -12,6 +13,8 @@ workflow morgana_magic {
     File assembly_fasta
     String taxon_name
     String seq_method
+    File? read1
+    File? read2
     # consensus qc
     Int? consensus_qc_cpu
     Int? consensus_qc_disk_size
@@ -130,6 +133,14 @@ workflow morgana_magic {
         memory = nextclade_output_parser_memory
     }
   }
+  if (organism_parameters.standardized_organism == "HIV") {
+    call quasitools_task.quasitools {
+      input:
+        read1 = read1,
+        read2 = read2,
+        samplename = samplename
+    }
+  }
   if (organism_parameters.standardized_organism == "rabies") {
     call nextclade_task.nextclade_add_ref as rabies_nextclade {
       input:
@@ -222,5 +233,12 @@ workflow morgana_magic {
     File? abricate_flu_results = flu_track.abricate_flu_results
     String? abricate_flu_database =  flu_track.abricate_flu_database
     String? abricate_flu_version = flu_track.abricate_flu_version
+    # HIV Quasitools Outputs
+    String? quasitools_version = quasitools_task.quasitools_version
+    String? quasitools_date = quasitools_task.quasitools_date
+    File? quasitools_coverage_file = quasitools_task.coverage_file
+    File? quasitools_dr_report = quasitools_task.dr_report
+    File? quasitools_hydra_vcf = quasitools_task.hydra_vcf
+    File? quasitools_mutations_report = quasitools_task.mutations_report
   }
 }

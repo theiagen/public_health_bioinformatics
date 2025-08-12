@@ -195,6 +195,8 @@ workflow theiaviral_illumina_pe {
         call morgana_magic_wf.morgana_magic {
           input:
             samplename = samplename,
+            read1 = read1,
+            read2 = read2,
             assembly_fasta = select_first([consensus.consensus_seq]),
             taxon_name = characterize_id,
             seq_method = "illumina_pe"
@@ -422,5 +424,12 @@ workflow theiaviral_illumina_pe {
     File? abricate_flu_results = morgana_magic.abricate_flu_results
     String? abricate_flu_database =  morgana_magic.abricate_flu_database
     String? abricate_flu_version = morgana_magic.abricate_flu_version
+    # HIV Quasitools Outputs
+    String? quasitools_version = morgana_magic.quasitools_version
+    String? quasitools_date = morgana_magic.quasitools_date
+    File? quasitools_coverage_file = morgana_magic.quasitools_coverage_file
+    File? quasitools_dr_report = morgana_magic.quasitools_dr_report
+    File? quasitools_hydra_vcf = morgana_magic.quasitools_hydra_vcf
+    File? quasitools_mutations_report = morgana_magic.quasitools_mutations_report
   }
 }

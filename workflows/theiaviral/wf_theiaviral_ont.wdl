@@ -249,10 +249,11 @@ workflow theiaviral_ont {
             samplename = samplename
         }
         # set the variable for the taxon_id
-        String characterize_id = if (characterize_via_input) then ncbi_identify.raw_taxon_id else select_first([ncbi_datasets.taxon_id, ncbi_identify.raw_taxon_id])
+        String characterize_id = if (characterize_via_input == true) then ncbi_identify.raw_taxon_id else select_first([ncbi_datasets.taxon_id, ncbi_identify.raw_taxon_id])
         # run morgana magic for classification
         call morgana_magic_wf.morgana_magic {
           input:
+            read1 = read1,
             samplename = samplename,
             assembly_fasta = select_first([bcftools_consensus.assembly_fasta]),
             taxon_name = characterize_id,
@@ -500,5 +501,12 @@ workflow theiaviral_ont {
     File? abricate_flu_results = morgana_magic.abricate_flu_results
     String? abricate_flu_database =  morgana_magic.abricate_flu_database
     String? abricate_flu_version = morgana_magic.abricate_flu_version
+    # HIV Quasitools Outputs
+    String? quasitools_version = morgana_magic.quasitools_version
+    String? quasitools_date = morgana_magic.quasitools_date
+    File? quasitools_coverage_file = morgana_magic.quasitools_coverage_file
+    File? quasitools_dr_report = morgana_magic.quasitools_dr_report
+    File? quasitools_hydra_vcf = morgana_magic.quasitools_hydra_vcf
+    File? quasitools_mutations_report = morgana_magic.quasitools_mutations_report
   }
 }
