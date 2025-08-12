@@ -2,9 +2,12 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaValidate**](../workflows/standalone/theiavalidate.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaValidate**](../workflows/standalone/theiavalidate.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level", "Dockstore"]) }}
 
 ## TheiaValidate_PHB
+
+!!! tip "Command-line incompatible"
+    This _workflow_ is not compatible with command-line use, but the underlying tool ([`theiavalidate`](https://github.com/theiagen/theiavalidate)) is. If you want to run TheiaValidate on the command-line, please see the tool's [README](https://github.com/theiagen/theiavalidate/blob/main/README.md) for more details.
 
 !!! caption "TheiaValidate Workflow Diagram"
     ![TheiaValidate Workflow Diagram](../../assets/figures/TheiaValidate.png)
@@ -34,7 +37,6 @@ If additional validation metrics are desired, the user has the ability to provid
 - Dates, integers, and object-type values are ignored and indicate 0 failures.
 - **<RANGE>**, which is an actual integer value such as **10**, calculates the numerical difference between _numerical_ columns. If the columns are not numerical, this function will **not** work and will lead to workflow failure. For example, if the range is 10, the test will indicate a failure if the values in the two columns are more than 10 apart (units ignored).
 - **CRITERIA1,CRITERIA2,...** checks the values for the two columns with CRITERIA1 (which must be one of the above) and _then_ with CRITERIA2, etc.; values will pass if at least one criteria is met; the separate criteria **must** be comma-delimited.
-
 
 ### File Comparisons
 
