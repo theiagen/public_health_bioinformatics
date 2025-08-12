@@ -265,6 +265,7 @@ arln_stats	read2_raw	File	Internal component, do not modify		Optional	TheiaProk_
 arln_stats	read1_clean	File	Internal component, do not modify		Optional	TheiaProk_FASTA	
 arln_stats	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/arln_stats:1.0.0	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 arln_stats	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+arln	call_arln	Boolean	Set to true to enable the return of ARLN required Auto PASS/FAIL outputs	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 assembled_reads_percent	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaMeta_Illumina_PE	
 assembled_reads_percent	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	
 assembled_reads_percent	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	TheiaMeta_Illumina_PE	
@@ -711,6 +712,8 @@ flu_track	irma_min_ambiguous_threshold	Float	Internal component, do not modify		
 flu_track	irma_min_avg_consensus_allele_quality	Int	Minimum allele coverage depth to call plurality consensus, otherwise calls "N". Setting this value too high can negatively impact final amended consensus.	10	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
 flu_track	irma_min_avg_consensus_allele_quality	Int	Internal component, do not modify		Optional	TheiaCoV_FASTA	
 flu_track	irma_min_consensus_support	Int	Internal component, do not modify		Optional	TheiaCoV_FASTA	
+flu_track	irma_min_avg_consensus_allele_quality	Int	Internal component, do not modify		Optional	TheiaCoV_FASTA	
+flu_track	irma_min_consensus_support	Int	Internal component, do not modify		Optional	TheiaCoV_FASTA	
 flu_track	irma_min_read_length	Int	Minimum read length to include reads in read gathering step in IRMA. This value should not be greater than the typical read length.	75	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
 flu_track	irma_min_read_length	Int	Internal component, do not modify		Optional	TheiaCoV_FASTA	
 flu_track	nextclade_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_FASTA	flu
@@ -724,6 +727,7 @@ flu_track	nextclade_output_parser_docker	String	The Docker container to use for 
 flu_track	nextclade_output_parser_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 flu_track	read1	File	Internal component, do not modify		Optional	TheiaCoV_FASTA	flu
 flu_track	read2	File	Internal component, do not modify		Optional	TheiaCoV_ONT, TheiaCoV_FASTA	flu
+flu_track	vadr_outputs_tgz	File	Internal component, do not modify		Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	
 flye_denovo	auto_medaka_model	Boolean	If true, medaka will automatically select the best Medaka model for assembly	TRUE	Optional	TheiaProk_ONT, TheiaEuk_ONT	
 flye_denovo	bandage_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_ONT, TheiaEuk_ONT	
 flye_denovo	bandage_disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	TheiaProk_ONT, TheiaEuk_ONT	
@@ -2281,9 +2285,9 @@ theiacov_clearlabs	medaka_docker	String	The Docker container to use for the task
 theiaprok_ont	min_basepairs	Int	Minimum number of base pairs able to pass read screening	2241820	Optional	TheiaProk_ONT
 theiaprok_illumina_pe	min_basepairs	Int	Minimum number of base pairs able to pass read screening	2241820	Optional	TheiaProk_Illumina_PE
 theiaprok_illumina_se	min_basepairs	Int	Minimum number of base pairs able to pass read screening	2241820	Optional	TheiaProk_Illumina_SE
-theiacov_ont	min_basepairs	Int	Minimum number of base pairs able to pass read screening	34000	Optional	TheiaCoV_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
-theiacov_illumina_pe	min_basepairs	Int	Minimum number of base pairs able to pass read screening	34000	Optional	TheiaCoV_Illumina_PE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
-theiacov_illumina_se	min_basepairs	Int	Minimum number of base pairs able to pass read screening	34000	Optional	TheiaCoV_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+theiacov_ont	min_basepairs	Int	Minimum number of base pairs able to pass read screening	17000	Optional	TheiaCoV_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+theiacov_illumina_pe	min_basepairs	Int	Minimum number of base pairs able to pass read screening	17000	Optional	TheiaCoV_Illumina_PE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
+theiacov_illumina_se	min_basepairs	Int	Minimum number of base pairs able to pass read screening	17000	Optional	TheiaCoV_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 theiacov_ont	min_coverage	Int	Minimum genome coverage able to pass read screening	10	Optional	TheiaCoV_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 theiacov_illumina_pe	min_coverage	Int	Minimum genome coverage able to pass read screening	10	Optional	TheiaCoV_Illumina_PE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 theiacov_illumina_se	min_coverage	Int	Minimum genome coverage able to pass read screening	10	Optional	TheiaCoV_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
