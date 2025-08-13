@@ -29,17 +29,31 @@ task vadr {
 
       # sometimes the model files are in a subdirectory and we need to find/move them.
       # the .minfo file is created by the v-build.pl command and is always in a valid model directory
-      model_files_location=$(find model_dir -type f -name "*.minfo" -exec dirname {} \; -quit)
+      model_file_paths=$(find model_dir -type f -name "*.minfo")
 
-      if [ -z "$model_files_location" ]; then
+      echo "DEBUG: Location(s) of '*.minfo' model files: "
+      echo -e "${model_file_paths} \n"
+
+      if [ -z "$model_file_paths" ]; then
         echo "ERROR: No model files found in the extracted model directory."
         exit 1
       fi
 
-      # vadr will expect the model files to be in this outermost directory
-      mv "${model_files_location}"/* model_dir/
+      # sometimes there can be multiple '*.minfo' files further nested in the model directory.
+      # get the outermost (least nested) directory containing '*.minfo' model files.
+      # then count the number of forward slashes and sort them to find the least nested path.
+      top_model_file_path=$(echo "${model_file_paths}" | awk -F "/" '{print NF-1, $0}' | sort -n | head -n1 | cut -d' ' -f2)
 
-      # remove empty directory if it exists
+      echo "DEBUG: Using least nested model file path: "
+      echo -e "${top_model_file_path} \n"
+
+      # get the directory containing the top-level model files
+      top_model_dir=$(dirname "${top_model_file_path}")
+
+      # vadr will expect the model files to be in this outermost directory
+      mv "${top_model_dir}"/* model_dir/
+
+      # remove any empty directories if they exist
       find model_dir -type d -empty -delete
 
       # remove terminal ambiguous nucleotides
