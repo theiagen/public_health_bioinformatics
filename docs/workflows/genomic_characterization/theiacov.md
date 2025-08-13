@@ -404,6 +404,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
     | **Pangolin** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
     | **Nextclade** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ |
     | **VADR** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ |
+    | **VADR Flu Segments** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
     | **Quasitools HyDRA** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
     | **IRMA** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
     | **Abricate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
