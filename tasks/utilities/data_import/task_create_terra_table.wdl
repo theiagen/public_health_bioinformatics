@@ -11,6 +11,8 @@ task create_terra_table {
     String terra_project
     String terra_workspace
 
+    String responsible_workflow = "Create_Terra_Table_PHB"
+
     Int disk_size = 25
     Int cpu = 1
     Int memory = 4
@@ -136,10 +138,10 @@ task create_terra_table {
             read1=$(echo $read1 | sed -e 's/^filelist-fullpath.txt://')
             read2=$(echo $read2 | sed -e 's/^filelist-fullpath.txt://')
             
-            echo -e "$samplename\t$read1\t$read2\t$UPLOAD_DATE\tCreate_Terra_Table_PHB" >> terra_table_to_upload.tsv 
+            echo -e "$samplename\t$read1\t$read2\t$UPLOAD_DATE\t~{responsible_workflow}" >> terra_table_to_upload.tsv 
           fi
         else
-          echo -e "$samplename\t$filepath\t$UPLOAD_DATE\tCreate_Terra_Table_PHB" >> terra_table_to_upload.tsv
+          echo -e "$samplename\t$filepath\t$UPLOAD_DATE\t~{responsible_workflow}" >> terra_table_to_upload.tsv
         fi
 
       fi

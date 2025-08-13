@@ -5,7 +5,7 @@ task cat_ont_barcodes {
     String input_bucket_path # include trailing slash if directory
     String output_bucket_path # include trailing slash if directory
     String file_extension = ".fastq.gz" # default extension for ONT barcodes
-    File barcode_renaming_file # file containing barcode renaming mappings
+    File? barcode_renaming_file # file containing barcode renaming mappings
     
     Int cpu = 2
     Int disk_size = 100
