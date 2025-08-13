@@ -123,7 +123,7 @@ workflow organism_parameters {
     String flu_vadr_options = "--mkey flu --atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3"
     Int flu_vadr_max_length = 13500
     Int flu_vadr_skip_length = 500
-    Int flu_vadr_memory = 8
+    Int flu_vadr_memory = 16
     File flu_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"
 
 
