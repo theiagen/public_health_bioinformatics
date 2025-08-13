@@ -16,8 +16,8 @@ abricate_results_tsv	File	<https://github.com/tseemann/abricate#output> containi
 abricate_version	String	Version of abricate used for A. baumannii plasmid typing	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 abricate_vibrio_biotype	String	Biotype classification according to tcpA gene sequence (Classical or ElTor)	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 abricate_vibrio_ctxA	String	Presence or absence of the ctxA gene	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-abricate_vibrio_database	String	DESCRIPTION	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-abricate_vibrio_docker	String	DESCRIPTION	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+abricate_vibrio_database	String	Database to use while running abricate	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+abricate_vibrio_docker	String	Docker file used for running abricate	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 abricate_vibrio_detailed_tsv	File	Detailed ABRicate output file	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 abricate_vibrio_ompW	String	Presence or absence of the ompW gene	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 abricate_vibrio_serogroup	String	Serotype classification as O1 (wbeN gene), O139 (wbfR gene) or not detected.	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -74,7 +74,7 @@ ani_mummer_docker	String	Docker image used to run the ANI_mummer task	TheiaProk_
 ani_mummer_version	String	Version of MUMmer used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ani_output_tsv	File	Full output TSV from ani-m	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 ani_top_species_match	String	Species of genome with highest ANI to query FASTA	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-arln_r1_q30_raw	String	DESCRIPTION	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+arln_r1_q30_raw	String	Q30% of the raw R1 FASTQ	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 arln_r2_q30_raw	String	Q30% of the raw R2 FASTQ	TheiaProk_Illumina_PE
 arln_r1_q30_clean	String	Q30% of the cleaned R1 FASTQ	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 arln_r2_q30_clean	String	Q30% of the cleaned R2 FASTQ	TheiaProk_Illumina_PE
@@ -128,7 +128,7 @@ auspice_json_flu_ha	File	Auspice-compatable JSON output generated from Nextclade
 auspice_json_flu_na	File	Auspice-compatable JSON output generated from Nextclade analysis on Influenza NA segment that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaCoV_FASTA
 auspice_json_mpxv	File	Auspice-compatable JSON output generated from Nextclade analysis on Monkeypox virus that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaViral_Illumina_PE, TheiaViral_ONT
 auspice_json_rabies	File	Auspice-compatable JSON output generated from Nextclade analysis on Rabies virus that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaViral_Illumina_PE, TheiaViral_ONT
-average_read_length	Float	DESCRIPTION	TheiaMeta_Illumina_PE
+average_read_length	Float	Average read length	TheiaMeta_Illumina_PE
 bakta_gbff	File	Genomic GenBank format annotation file	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 bakta_gff3	File	Generic Feature Format Version 3 file	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 bakta_plot	File	Bakta plot output PNG file summarizing annotated genome features such as coding sequences, RNA genes, and hypothetical proteins.	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -213,10 +213,10 @@ emmtypingtool_docker	String	Docker image for emm-typing-tool	TheiaProk_Illumina_
 emmtypingtool_emm_type	String	emm-type predicted	TheiaProk_Illumina_PE
 emmtypingtool_results_xml	File	XML file with emm-typing-tool resuls	TheiaProk_Illumina_PE
 emmtypingtool_version	String	Version of emm-typing-tool used	TheiaProk_Illumina_PE
-emmtyper_docker	String	DESCRIPTION	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-emmtyper_emm_type	String	DESCRIPTION	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-emmtyper_results_tsv	File	DESCRIPTION	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-emmtyper_version	String	DESCRIPTION	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+emmtyper_docker	String	Docker image for emmtyper 	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+emmtyper_emm_type	String	The emm-type of a Streptococcus pyogenes assembly	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+emmtyper_results_tsv	File	TSV file with emmtyper results	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+emmtyper_version	String	Version of emmtyper used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 est_coverage_clean	Float	Estimated coverage calculated from clean reads and genome length	TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 est_coverage_raw	Float	Estimated coverage calculated from raw reads and genome length	TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 est_percent_gene_coverage_tsv	File	Percent coverage for each gene in the organism being analyzed (depending on the organism input)	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
@@ -284,7 +284,7 @@ flu_zanamivir_resistance	String	resistance mutations to zanamivir (Relenza®)	Th
 flye_version	String	Version of Flye software used	TheiaProk_ONT, TheiaEuk_ONT
 freyja_abundances	String	Abundances estimates identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
 freyja_barcode_version	String	Name of barcode file used, or the date if update_db is true	Freyja_FASTQ
-freyja_barcode_file	String	DESCRIPTION	Freyja_FASTQ
+freyja_barcode_file	String	Barcode file used with Freyja	Freyja_FASTQ
 freyja_bootstrap_lineages	String	A CSV that contains the 0.025, 0.05, 0.25, 0.5 (median), 0.75, 0.95, and 0.975 percentiles for each lineage	Freyja_FASTQ
 freyja_bootstrap_lineages_pdf	String	A boxplot of the bootstrap lineages CSV file	Freyja_FASTQ
 freyja_bootstrap_summary	String	A CSV that contains the 0.025, 0.05, 0.25, 0.5 (median), 0.75, 0.95, and 0.975 percentiles for each WHO designated VOI/VOC	Freyja_FASTQ
@@ -302,7 +302,7 @@ freyja_depths	File	A TSV listing the depth of every position	Freyja_FASTQ
 freyja_fastq_wf_analysis_date	String	Date of analysis	Freyja_FASTQ
 freyja_fastq_wf_version	String	The version of the Public Health Bioinformatics (PHB) repository used	Freyja_FASTQ
 freyja_lineages	String	Lineages in descending order identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
-freyja_lineage_metadata_file	String	DESCRIPTION	Freyja_FASTQ
+freyja_lineage_metadata_file	String	Metadata file for lineages identified by Freyja	Freyja_FASTQ
 freyja_metadata_version	String	Name of lineage metadata file used, or the date if update_db is true	Freyja_FASTQ
 freyja_plot	File	A PDF of the plot produced by the workflow	Freyja_Plot
 freyja_plot_metadata	File	The metadata used to create the plot	Freyja_Plot
@@ -930,9 +930,9 @@ sra_submission_xml	File	XML file that was used to submit your SRA reads to NCBI	
 srr_accession	String	The SRR accession's associated with the input sample accession.	Fetch_SRR_Accession
 srst2_vibrio_biotype	String	Biotype classification according to tcpA gene sequence (Classical or ElTor)	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 srst2_vibrio_ctxA	String	Presence or absence of the ctxA gene	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-srst2_vibrio_database	String	DESCRIPTION	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+srst2_vibrio_database	String	Database used for srst2 analysis	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 srst2_vibrio_detailed_tsv	File	Detailed <https://github.com/katholt/srst2> output file	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-srst2_vibrio_docker	String	DESCRIPTION	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+srst2_vibrio_docker	String	Docker image used for srst2 analysis	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 srst2_vibrio_ompW	String	Presence or absence of the ompW gene	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 srst2_vibrio_serogroup	String	Serotype classification as O1 (wbeN gene), O139 (wbfR gene) or not detected.	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 srst2_vibrio_toxR	String	Presence or absence of the toxR gene	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -1223,7 +1223,7 @@ metabuli_read1_extract	File	Extracted reads from Metabuli	TheiaViral_ONT
 metabuli_report	File	Classification report from Metabuli	TheiaViral_ONT
 metabuli_version	String	Version of Metabuli used	TheiaViral_ONT
 minimap2_out	File	Output file from Minimap2 alignment	TheiaViral_ONT
-morgana_magic_organism	String	DESCRIPTION	TheiaViral_Illumina_PE, TheiaViral_ONT
+morgana_magic_organism	String	Organism identified	TheiaViral_Illumina_PE, TheiaViral_ONT
 nanoq_filtered_read1	File	Filtered reads from NanoQ	TheiaViral_ONT
 ncbi_identify_docker	String	Docker image used for NCBI identify	TheiaViral_ONT
 ncbi_identify_version	String	Version of NCBI identify tool used	TheiaViral_ONT

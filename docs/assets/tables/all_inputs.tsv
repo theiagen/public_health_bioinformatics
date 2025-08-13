@@ -88,7 +88,7 @@ pangolin_update	old_pangolin_assignment_version	String	Version of the Pangolin s
 pangolin_update	old_pangolin_docker	String	The Pangolin docker image previously used for lineage assignment.		Required	Pangolin_Update	
 pangolin_update	old_pangolin_versions	String	All pangolin software and database versions previously used for lineage assignment.		Required	Pangolin_Update	
 pangolin_update	samplename	String	The name of the sample being analyzed		Required	Pangolin_Update	
-pangolin_update	organism	String	DESCRIPTION	sars-cov-2	Optional	Pangolin_Update	
+pangolin_update	organism	String	The organism to be analyzed	sars-cov-2	Optional	Pangolin_Update	
 rasusa_workflow	coverage	Float	Use to specify the desired coverage of reads after downsampling; actual coverage of subsampled reads will not be exact and may be slightly higher; always check the estimated clean coverage after performing downstream workflows to verify coverage values, when necessary		Required	RASUSA	
 rasusa_workflow	genome_length	String	Input the approximate genome size expected in quotations; this is used to determine the number of bases required to achieve the desired coverage; acceptable metric suffixes include: b, k, m, g, and t for base, kilo, mega, giga, and tera, respectively		Required	RASUSA	
 rasusa_workflow	read1	File	FASTQ file containing read1 sequences		Required	RASUSA	
@@ -277,16 +277,15 @@ augur	min_date	Float	Minimum date to begin filtering or frequencies calculations
 augur	min_num_unambig	Int	Minimum number of called bases in genome to pass prefilter	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, the default value is 0	Optional	Augur	
 augur	organism	String	Organism used to preselect default values; options: "sars-cov-2", "flu", "mpxv", "rsv-a", "rsv-b"	sars-cov-2	Optional	Augur	
 augur	sample_metadata_tsvs	Array[File]	An array of the metadata files produced in Augur_Prep_PHB		Optional	Augur	
-augur	build_name_updated	String	DESCRIPTION	sub(build_name,	Optional	Augur	
-augur	remove_reference	Boolean	DESCRIPTION	FALSE	Optional	Augur	
-augur	skip_alignment	Boolean	DESCRIPTION	FALSE	Optional	Augur	
-augur	alignment_fasta	File	DESCRIPTION		Optional	Augur	
-augur	run_traits	Boolean	DESCRIPTION	FALSE	Optional	Augur	
-augur	augur_trait_columns	String	DESCRIPTION		Optional	Augur	
-augur	midpoint_root_tree	Boolean	DESCRIPTION	TRUE	Optional	Augur	
-augur	pivot_interval	Int	DESCRIPTION		Optional	Augur	
-augur	narrow_bandwidth	Float	DESCRIPTION		Optional	Augur	
-augur	proportion_wide	Float	DESCRIPTION		Optional	Augur	
+augur	remove_reference	Boolean	Whether or not to remove the reference in Augur	FALSE	Optional	Augur	
+augur	skip_alignment	Boolean	Whether or not to skip alignment in Augur	FALSE	Optional	Augur	
+augur	alignment_fasta	File	The alignment fasta file in Augur		Optional	Augur	
+augur	run_traits	Boolean	Whether or not to run trait analysis in Augur	FALSE	Optional	Augur	
+augur	augur_trait_columns	String	Comma-separated list of columns to use for trait analysis in Augur		Optional	Augur	
+augur	midpoint_root_tree	Boolean	Boolean variable that will instruct the workflow to reroot the tree at the midpoint	TRUE	Optional	Augur	
+augur	pivot_interval	Int	Number of units between pivots	3	Optional	Augur	
+augur	narrow_bandwidth	Float	The bandwidth for the narrow KDE	0.08333	Optional	Augur	
+augur	proportion_wide	Float	The proportion of the wide bandwidth to use in the KDE mixture model	0.2	Optional	Augur	
 augur_align	fill_gaps	Boolean	If true, gaps represent missing data rather than true indels and so are replaced by N after aligning.	FALSE	Optional	Augur	
 augur_align	memory	Int	Amount of memory (in GB) to allocate to the task	128	Optional	Augur	
 augur_align	disk_size	Int	Amount of storage (in GB) to allocate to the task	750	Optional	Augur	
@@ -344,8 +343,8 @@ augur_translate	docker	String	Docker image to use for the task	us-docker.pkg.dev
 augur_translate	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	
 augur_traits	memory	Int	Amount of memory (in GB) to allocate to the task	30	Optional	Augur	
 augur_traits	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	
-augur_traits	weights	File	DESCRIPTION		Optional	Augur	
-augur_traits	metadata_id_columns	String	DESCRIPTION		Optional	Augur	
+augur_traits	weights	File	a dictionary of key/value mappings in JSON format used to weight KDE tip frequencies		Optional	Augur	
+augur_traits	metadata_id_columns	String	names of possible metadata columns containing identifier information, ordered by priority. Only one ID column will be inferred.		Optional	Augur	
 augur_traits	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0	Optional	Augur	
 augur_traits	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Augur	
 augur_tree	exclude_sites	File	File of one-based sites to exclude for raw tree building (BED format in .bed files, DRM format in tab-delimited files, or one position per line)		Optional	Augur	
@@ -365,7 +364,7 @@ filter_sequences_by_length	memory	Int	Amount of memory (in GB) to allocate to th
 filter_sequences_by_length	disk_size	Int	Amount of storage (in GB) to allocate to the task	300	Optional	Augur	
 filter_sequences_by_length	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33	Optional	Augur	
 filter_sequences_by_length	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	
-reorder_matrix	phandango_coloring	Boolean	DESCRIPTION	FALSE	Optional	Augur	
+reorder_matrix	phandango_coloring	Boolean	Whether or not Phandango coloring will color all items from the same column the same	FALSE	Optional	Augur	
 sc2_defaults	memory	Int	Amount of memory (in GB) to allocate to the task	1	Optional	Augur	
 sc2_defaults	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	
 sc2_defaults	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0	Optional	Augur	
@@ -376,7 +375,7 @@ snp_dists	docker	String	Docker image to use for the task	us-docker.pkg.dev/gener
 snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	
 tsv_join	memory	Int	Amount of memory (in GB) to allocate to the task	7	Optional	Augur	
 tsv_join	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	
-tsv_join	out_suffix	String	DESCRIPTION	.tsv	Optional	Augur	
+tsv_join	out_suffix	String	Suffix of merged tsv files	.tsv	Optional	Augur	
 tsv_join	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33	Optional	Augur	
 tsv_join	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Augur	
 bakta	bakta_opts	String	Parameters to pass to bakta from <https://github.com/oschwengers/bakta#usage>		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
@@ -785,7 +784,7 @@ flye_denovo	racon_disk_size	Int	Amount of storage (in GB) to allocate to the tas
 flye_denovo	racon_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaProk_ONT, TheiaEuk_ONT	
 flye_denovo	run_porechop	Boolean	If true, trims reads before assembly using Porechop	FALSE	Optional	TheiaProk_ONT, TheiaEuk_ONT	
 flye_denovo	skip_polishing	Boolean	If true, skips polishing	FALSE	Optional	TheiaProk_ONT, TheiaEuk_ONT	
-freyja	adapt	Float	DESCRIPTION		Optional	Freyja_FASTQ	
+freyja	adapt	Float	adaptive lasso penalty parameter	0.0	Optional	Freyja_FASTQ	
 freyja	bootstrap	Boolean	Perform bootstrapping	FALSE	Optional	Freyja_FASTQ	
 freyja	confirmed_only	Boolean	Include only confirmed SARS-CoV-2 lineages	FALSE	Optional	Freyja_FASTQ	
 freyja	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	
@@ -804,7 +803,7 @@ freyja_dashboard_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the
 freyja_dashboard_task	mincov	Float	The minimum genome coverage used as a cut-off of data to include in the dashboard. Default is set to 60 by the freyja command-line tool (not a WDL task default, per se)		Optional	Freyja_Dashboard	
 freyja_dashboard_task	scale_by_viral_load	Boolean	If set to true, averages samples taken the same day while taking viral load into account	FALSE	Optional	Freyja_Dashboard	
 freyja_dashboard_task	thresh	Float	The minimum lineage abundance cut-off value		Optional	Freyja_Dashboard	
-freyja_fastq	freyja_pathogen	String	DESCRIPTION	SARS-CoV-2	Optional	Freyja_FASTQ	
+freyja_fastq	freyja_pathogen	String	Pathogen to be used by Freyja	SARS-CoV-2	Optional	Freyja_FASTQ	
 freyja_fastq	depth_cutoff	Int	The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS!	10	Optional	Freyja_FASTQ	
 freyja_fastq	freyja_barcodes	File	Custom barcode file. Does not need to be provided if update_db is true if the freyja_pathogen is provided.		Optional	Freyja_FASTQ	
 freyja_fastq	freyja_pathogen	String	Pathogen of interest, used if not providing the barcodes and lineage metadata files. Options: SARS-CoV-2, MPXV, H5NX, H1N1pdm, FLU-B-VIC, MEASLESN450, MEASLES, RSVa, RSVb		Optional	Freyja_FASTQ	
@@ -1039,7 +1038,7 @@ mercury	library_selection	String	Populate to overwrite library_selection column	
 mercury	library_source	String	Populate to overwrite library_source column		Optional	Mercury_Prep_N_Batch	
 mercury	library_strategy	String	Populate to overwrite library_strategy column		Optional	Mercury_Prep_N_Batch	
 mercury	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Mercury_Prep_N_Batch	
-mercury	metadata_organism	String	DESCRIPTION		Optional	Mercury_Prep_N_Batch	
+mercury	metadata_organism	String	Organism name for metadata population		Optional	Mercury_Prep_N_Batch	
 mercury	number_N_threshold	Int	Only for "sars-cov-2" submissions; used to filter out any samples that contain more than the indicated number of Ns in the assembly file	5000	Optional	Mercury_Prep_N_Batch	
 mercury	purpose_of_sequencing	String	Populate to overwrite purpose_of_sequencing column		Optional	Mercury_Prep_N_Batch	
 mercury	seq_platform	String	Populate to overwrite seq_platform column		Optional	Mercury_Prep_N_Batch	
@@ -1146,16 +1145,16 @@ merlin_magic	emmtyper_gap	Int	Internal component, do not modify		Optional	TheiaE
 merlin_magic	emmtyper_min_perfect	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT		
 merlin_magic	emmtyper_min_good	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT		
 merlin_magic	emmtyper_max_size	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT		
-merlin_magic	emmtyper_wf	String	DESCRIPTION		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	emmtyper_cluster_distance	Int	DESCRIPTION		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	emmtyper_min_percent_identity	Int	DESCRIPTION		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	emmtyper_culling_limit	Int	DESCRIPTION		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	emmtyper_mismatch	Int	DESCRIPTION		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	emmtyper_align_diff	Int	DESCRIPTION		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	emmtyper_gap	Int	DESCRIPTION		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	emmtyper_min_perfect	Int	DESCRIPTION		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	emmtyper_min_good	Int	DESCRIPTION		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	emmtyper_max_size	Int	DESCRIPTION		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	emmtyper_wf	String	Choose workflow [blast|pcr]		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	emmtyper_cluster_distance	Int	Distance between cluster of matches to consider as different clusters.		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	emmtyper_min_percent_identity	Int	 Minimal percent identity of sequence.		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	emmtyper_culling_limit	Int	Total hits to return in a position.		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	emmtyper_mismatch	Int	Threshold for number of mismatch to allow in BLAST hit.		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	emmtyper_align_diff	Int	Threshold for difference between alignment length and subject length in BLAST hit.		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	emmtyper_gap	Int	Threshold gap to allow in BLAST hit.		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	emmtyper_min_perfect	Int	Minimum size of perfect match at 3' primer end.		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	emmtyper_min_good	Int	Minimum size where there must be 2 matches for each mismatch.		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	emmtyper_max_size	Int	Maximum size of PCR product.		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	genotyphi_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 merlin_magic	genotyphi_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 merlin_magic	hicap_broken_gene_length	Int	Internal component, do not modify	60	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
@@ -1406,9 +1405,9 @@ merlin_magic	virulencefinder_min_percent_identity	Float	Internal component, do n
 merlin_magic	virulencefinder_min_percent_identity	Float	The threshold for minimum blast identity		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 metaspades_pe	memory	Int	Amount of memory (in GB) to allocate to the task	16	Optional	TheiaMeta_Illumina_PE	
 metaspades_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	
-metaspades_pe	phred_offset	Int	DESCRIPTION	33	Optional	TheiaMeta_Illumina_PE	
-metaspades_pe	metaspades_opts	String	DESCRIPTION		Optional	TheiaMeta_Illumina_PE	
-metaspades_pe	kmers	String	DESCRIPTION		Optional	TheiaMeta_Illumina_PE	
+metaspades_pe	phred_offset	Int	Phred offset to use for the task	33	Optional	TheiaMeta_Illumina_PE	
+metaspades_pe	metaspades_opts	String	Metaspades optional parameters		Optional	TheiaMeta_Illumina_PE	
+metaspades_pe	kmers	String	Kmers to use for the task		Optional	TheiaMeta_Illumina_PE	
 metaspades_pe	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/spades:3.12.0--h9ee0642_3	Optional	TheiaMeta_Illumina_PE	
 metaspades_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaMeta_Illumina_PE	
 minimap2	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ, Clair3_Variants_ONT, TheiaViral_ONT
@@ -1436,7 +1435,7 @@ minimap2_assembly	memory	Int	Amount of memory/RAM (in GB) to allocate to the tas
 minimap2_assembly	query2	File	Internal component, do not modify		Optional	TheiaMeta_Illumina_PE	
 minimap2_assembly_correction	memory	Int	Amount of memory (in GB) to allocate to the task	8	Optional	TheiaMeta_Illumina_PE	
 minimap2_assembly_correction	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	
-minimap2_assembly_correction	long_read_flags	Boolean	DESCRIPTION	FALSE	Optional	TheiaMeta_Illumina_PE	
+minimap2_assembly_correction	long_read_flags	Boolean	Use long read sequencing specific flags for alignment	FALSE	Optional	TheiaMeta_Illumina_PE	
 minimap2_assembly_correction	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22	Optional	TheiaMeta_Illumina_PE	
 minimap2_assembly_correction	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaMeta_Illumina_PE	
 minimap2_reads	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaMeta_Illumina_PE	
@@ -1570,10 +1569,10 @@ pangolin4	skip_designation_cache	Boolean	A True/False option that determines if 
 pangolin4	skip_scorpio	Boolean	A True/False option that determines if scorpio should be skipped.	FALSE	Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_FASTA_Batch	sars-cov-2
 pilon	memory	Int	Amount of memory (in GB) to allocate to the task	32	Optional	TheiaMeta_Illumina_PE	
 pilon	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	
-pilon	min_mapping_quality	Int	DESCRIPTION		Optional	TheiaMeta_Illumina_PE	
-pilon	min_base_quality	Int	DESCRIPTION		Optional	TheiaMeta_Illumina_PE	
-pilon	min_depth	Float	DESCRIPTION		Optional	TheiaMeta_Illumina_PE	
-pilon	fix	String	DESCRIPTION		Optional	TheiaMeta_Illumina_PE	
+pilon	min_mapping_quality	Int	Minimum mapping quality to consider a read for assembly		Optional	TheiaMeta_Illumina_PE	
+pilon	min_base_quality	Int	Minimum base quality to consider a base for assembly		Optional	TheiaMeta_Illumina_PE	
+pilon	min_depth	Float	Minimum depth to consider a region for assembly		Optional	TheiaMeta_Illumina_PE	
+pilon	fix	String	Additional options for fixing assembly errors (all, snps, indels, gaps)		Optional	TheiaMeta_Illumina_PE	
 pilon	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0	Optional	TheiaMeta_Illumina_PE	
 pilon	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaMeta_Illumina_PE	
 pirate	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Core_Gene_SNP	
@@ -1822,15 +1821,15 @@ read_QC_trim_ont	ncbi_scrub_disk_size	Int	Amount of storage (in GB) to allocate 
 read_QC_trim_ont	artic_guppyplex_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	Freyja_FASTQ	
 read_QC_trim_ont	rasusa_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	Freyja_FASTQ	
 read_QC_trim_ont	nanoq_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	Freyja_FASTQ	
-read_QC_trim_ont	genome_length	Int	DESCRIPTION	5000000	Optional	Freyja_FASTQ	
-read_QC_trim_ont	rasusa_bases	String	DESCRIPTION		Optional	Freyja_FASTQ	
-read_QC_trim_ont	rasusa_seed	Int	DESCRIPTION		Optional	Freyja_FASTQ	
-read_QC_trim_ont	rasusa_fraction_of_reads	Float	DESCRIPTION		Optional	Freyja_FASTQ	
-read_QC_trim_ont	rasusa_number_of_reads	Int	DESCRIPTION		Optional	Freyja_FASTQ	
-read_QC_trim_ont	nanoq_max_read_length	Int	DESCRIPTION		Optional	Freyja_FASTQ	
-read_QC_trim_ont	nanoq_min_read_length	Int	DESCRIPTION		Optional	Freyja_FASTQ	
-read_QC_trim_ont	nanoq_max_read_qual	Int	DESCRIPTION		Optional	Freyja_FASTQ	
-read_QC_trim_ont	nanoq_min_read_qual	Int	DESCRIPTION		Optional	Freyja_FASTQ	
+read_QC_trim_ont	genome_length	Int	Length of the genome	5000000	Optional	Freyja_FASTQ	
+read_QC_trim_ont	rasusa_bases	String	Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored		Optional	Freyja_FASTQ	
+read_QC_trim_ont	rasusa_seed	Int	Random seed to use		Optional	Freyja_FASTQ	
+read_QC_trim_ont	rasusa_fraction_of_reads	Float	Subsample to a fraction of the reads - e.g., 0.5 samples half the reads		Optional	Freyja_FASTQ	
+read_QC_trim_ont	rasusa_number_of_reads	Int	Subsample to a specific number of reads		Optional	Freyja_FASTQ	
+read_QC_trim_ont	nanoq_max_read_length	Int	Maximum read length to use for filtering		Optional	Freyja_FASTQ	
+read_QC_trim_ont	nanoq_min_read_length	Int	Minimum read length to use for filtering		Optional	Freyja_FASTQ	
+read_QC_trim_ont	nanoq_max_read_qual	Int	Maximum read quality to use for filtering		Optional	Freyja_FASTQ	
+read_QC_trim_ont	nanoq_min_read_qual	Int	Minimum read quality to use for filtering		Optional	Freyja_FASTQ	
 read_QC_trim_ont	ncbi_scrub_docker	String	Docker image to use for the task		Optional	Freyja_FASTQ	
 read_QC_trim_ont	artic_guppyplex_docker	String	Docker image to use for the task		Optional	Freyja_FASTQ	
 read_QC_trim_ont	kraken_docker_image	String	Docker image to use for the task		Optional	Freyja_FASTQ	
@@ -1840,14 +1839,14 @@ read_QC_trim_ont	ncbi_scrub_cpu	Int	Number of CPUs to allocate to the task		Opti
 read_QC_trim_ont	artic_guppyplex_cpu	Int	Number of CPUs to allocate to the task		Optional	Freyja_FASTQ	
 read_QC_trim_ont	rasusa_cpu	Int	Number of CPUs to allocate to the task		Optional	Freyja_FASTQ	
 read_QC_trim_ont	nanoq_cpu	Int	Number of CPUs to allocate to the task		Optional	Freyja_FASTQ	
-read_QC_trim_pe	trim_quality_min_score	Int	DESCRIPTION	30	Optional	Freyja_FASTQ	
-read_QC_trim_pe	taxon_id	Int	DESCRIPTION	0	Optional	Freyja_FASTQ	
-read_QC_trim_pe	extract_unclassified	Boolean	DESCRIPTION	FALSE	Optional	Freyja_FASTQ	
-read_QC_trim_pe	host	String	DESCRIPTION		Optional	Freyja_FASTQ	
-read_QC_trim_pe	host_is_accession	Boolean	DESCRIPTION	FALSE	Optional	Freyja_FASTQ	
-read_QC_trim_pe	host_refseq	Boolean	DESCRIPTION	TRUE	Optional	Freyja_FASTQ	
-read_QC_trim_pe	host_complete_only	Boolean	DESCRIPTION	FALSE	Optional	Freyja_FASTQ	
-read_QC_trim_pe	host_decontaminate_mem	Int	DESCRIPTION	32	Optional	Freyja_FASTQ	
+read_QC_trim_pe	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	
+read_QC_trim_pe	taxon_id	Int	Internal component, do not modify	0	Optional	Freyja_FASTQ	
+read_QC_trim_pe	extract_unclassified	Boolean	Internal component, do not modify	FALSE	Optional	Freyja_FASTQ	
+read_QC_trim_pe	host	String	Internal component, do not modify		Optional	Freyja_FASTQ	
+read_QC_trim_pe	host_is_accession	Boolean	Internal component, do not modify	FALSE	Optional	Freyja_FASTQ	
+read_QC_trim_pe	host_refseq	Boolean	Internal component, do not modify	TRUE	Optional	Freyja_FASTQ	
+read_QC_trim_pe	host_complete_only	Boolean	Internal component, do not modify	FALSE	Optional	Freyja_FASTQ	
+read_QC_trim_pe	host_decontaminate_mem	Int	Internal component, do not modify	32	Optional	Freyja_FASTQ	
 read_QC_trim_pe	adapters	File	Internal component, do not modify		Optional	Freyja_FASTQ (ONT), Freyja_FASTQ (SE)	
 read_QC_trim_pe	bbduk_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ (ONT), Freyja_FASTQ (SE)	
 read_QC_trim_pe	call_kraken	Boolean	Internal component, do not modify	FALSE	Optional	Freyja_FASTQ (ONT), Freyja_FASTQ (SE)	
@@ -2016,7 +2015,7 @@ snippy_tree_wf	snippy_core_cpu	Int	Number of CPUs to allocate to the task	8	Opti
 snippy_tree_wf	snippy_core_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	
 snippy_tree_wf	snippy_core_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	
 snippy_tree_wf	snippy_core_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	
-snippy_tree_wf	snippy_variants_qc_metrics	Array[File]	DESCRIPTION		Optional	Snippy_Tree	
+snippy_tree_wf	snippy_variants_qc_metrics	Array[File]	Files produced by the Snippy_Variants workflow used to concatenate the reports for each sample in the tree		Optional	Snippy_Tree	
 snippy_tree_wf	snp_dists_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	
 snippy_tree_wf	snp_sites_cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	
 snippy_tree_wf	snp_sites_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	
@@ -2047,7 +2046,7 @@ sort_bam_assembly_correction	cpu	Int	Number of CPUs to allocate to the task	2	Op
 sort_bam_assembly_correction	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	
 sort_bam_assembly_correction	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	TheiaMeta_Illumina_PE	
 sort_bam_assembly_correction	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaMeta_Illumina_PE	
-sort_bam_assembly_correction	min_qual	Int	DESCRIPTION		Optional	TheiaMeta_Illumina_PE	
+sort_bam_assembly_correction	min_qual	Int	Minimum quality score for reads to be included in the analysis		Optional	TheiaMeta_Illumina_PE	
 sra_tsv_to_xml	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Terra_2_NCBI	
 sra_tsv_to_xml	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Terra_2_NCBI	
 sra_tsv_to_xml	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10	Optional	Terra_2_NCBI	
@@ -2116,7 +2115,7 @@ theiaeuk_illumina_pe	busco_docker_image	String	Docker image to use for the task	
 theiaeuk_illumina_pe	busco_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	24	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_illumina_pe	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_illumina_pe	call_rasusa	Boolean	If true, RASUSA will subsample raw reads to  a specified read depth (150X by default)	TRUE	Optional	TheiaEuk_Illumina_PE	
-theiaeuk_illumina_pe	expected_taxon	String	DESCRIPTION		Optional	TheiaEuk_Illumina_PE	
+theiaeuk_illumina_pe	expected_taxon	String	If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica"		Optional	TheiaEuk_Illumina_PE	
 theiaeuk_illumina_pe	gambit_db_genomes	File	User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db"	gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_illumina_pe	gambit_db_signatures	File	User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.	gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_illumina_pe	genome_length	Int	User-specified expected genome length to be used in genome statistics calculations		Optional	TheiaEuk_Illumina_PE	
@@ -2124,18 +2123,18 @@ theiaeuk_illumina_pe	max_genome_length	Int	Maximum genome size able to pass read
 theiaeuk_illumina_pe	memory	Int	Amount of memory (in GB) to allocate to the task	16	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_illumina_pe	min_basepairs	Int	Minimum number of base pairs able to pass read screening	45000000	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_illumina_pe	min_coverage	Int	Minimum genome coverage able to pass read screening	10	Optional	TheiaEuk_Illumina_PE	
-theiaeuk_illumina_pe	min_contig_length	Int	DESCRIPTION	1000	Optional	TheiaEuk_Illumina_PE	
+theiaeuk_illumina_pe	min_contig_length	Int	Minimum contig length for assembler	1000	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_illumina_pe	min_genome_length	Int	Minimum genome size able to pass read screening	9000000	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_illumina_pe	min_proportion	Int	Minimum proportion of total reads in each read file to pass read screening	40	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_illumina_pe	min_reads	Int	Minimum number of reads to pass read screening	30000	Optional	TheiaEuk_Illumina_PE	
-theiaeuk_illumina_pe	qc_check_table	File	DESCRIPTION		Optional	TheiaEuk_Illumina_PE	
-theiaeuk_illumina_pe	read1	File	DESCRIPTION		Required	TheiaEuk_Illumina_PE	
-theiaeuk_illumina_pe	read2	File	DESCRIPTION		Required	TheiaEuk_Illumina_PE	
-theiaeuk_illumina_pe	samplename	String	DESCRIPTION		Required	TheiaEuk_Illumina_PE	
-theiaeuk_illumina_pe	seq_method	String	DESCRIPTION	ILLUMINA	Optional	TheiaEuk_Illumina_PE	
+theiaeuk_illumina_pe	qc_check_table	File	TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.		Optional	TheiaEuk_Illumina_PE	
+theiaeuk_illumina_pe	read1	File	FASTQ file containing read1 sequences		Required	TheiaEuk_Illumina_PE	
+theiaeuk_illumina_pe	read2	File	FASTQ file containing read2 sequences		Required	TheiaEuk_Illumina_PE	
+theiaeuk_illumina_pe	samplename	String	Sample name for the analysis		Required	TheiaEuk_Illumina_PE	
+theiaeuk_illumina_pe	seq_method	String	Sequencing method used for the samples	ILLUMINA	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_illumina_pe	skip_screen	Boolean	Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe genome_length optional input, OR set call_rasusa to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail.	FALSE	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_illumina_pe	subsample_coverage	Float	Read depth for RASUSA task to subsample reads to	150	Optional	TheiaEuk_Illumina_PE	
-theiaeuk_illumina_pe	trim_window_size	Int	DESCRIPTION	10	Optional	TheiaEuk_Illumina_PE	
+theiaeuk_illumina_pe	trim_window_size	Int	Size of the trimming window to use	10	Optional	TheiaEuk_Illumina_PE	
 theiaeuk_ont	busco_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	24	Optional	TheiaEuk_ONT	
 theiaeuk_ont	busco_docker_image	String	The Docker container to use for the task	"us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"	Optional	TheiaEuk_ONT	
 theiaeuk_ont	gambit_db_genomes	File	User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db"	gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb	Optional	TheiaEuk_ONT	
@@ -2314,14 +2313,14 @@ theiaprok_illumina_se	min_reads	Int	Minimum number of reads to pass read screeni
 theiacov_illumina_pe	min_reads	Int	Minimum number of reads to pass read screening	57	Optional	TheiaCoV_Illumina_PE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 theiacov_illumina_se	min_reads	Int	Minimum number of reads to pass read screening	57	Optional	TheiaCoV_Illumina_SE	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 theiacov_ont	min_reads	Int	Minimum number of reads to pass read screening	57	Optional	TheiaCoV_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
-theiaprok_fasta	mlst_scheme_override	Boolean	DESCRIPTION	FALSE	Optional	TheiaProk_FASTA	
-theiaprok_illumina_pe	mlst_scheme_override	Boolean	DESCRIPTION	FALSE	Optional	TheiaProk_Illumina_PE	
-theiaprok_illumina_se	mlst_scheme_override	Boolean	DESCRIPTION	FALSE	Optional	TheiaProk_Illumina_SE	
-theiaprok_ont	mlst_scheme_override	Boolean	DESCRIPTION	FALSE	Optional	TheiaProk_ONT	
-theiaprok_fasta	mlst_run_secondary_scheme	Boolean	DESCRIPTION	FALSE	Optional	TheiaProk_FASTA	
-theiaprok_illumina_pe	mlst_run_secondary_scheme	Boolean	DESCRIPTION	FALSE	Optional	TheiaProk_Illumina_PE	
-theiaprok_illumina_se	mlst_run_secondary_scheme	Boolean	DESCRIPTION	FALSE	Optional	TheiaProk_Illumina_SE	
-theiaprok_ont	mlst_run_secondary_scheme	Boolean	DESCRIPTION	FALSE	Optional	TheiaProk_ONT	
+theiaprok_fasta	mlst_scheme_override	Boolean	If true, will force E. coli scheme to be used when Gambit predicts Escherichia coli, otherwise will return scheme MLST predicts.	FALSE	Optional	TheiaProk_FASTA	
+theiaprok_illumina_pe	mlst_scheme_override	Boolean	If true, will force E. coli scheme to be used when Gambit predicts Escherichia coli, otherwise will return scheme MLST predicts.	FALSE	Optional	TheiaProk_Illumina_PE	
+theiaprok_illumina_se	mlst_scheme_override	Boolean	If true, will force E. coli scheme to be used when Gambit predicts Escherichia coli, otherwise will return scheme MLST predicts.	FALSE	Optional	TheiaProk_Illumina_SE	
+theiaprok_ont	mlst_scheme_override	Boolean	If true, will force E. coli scheme to be used when Gambit predicts Escherichia coli, otherwise will return scheme MLST predicts.	FALSE	Optional	TheiaProk_ONT	
+theiaprok_fasta	mlst_run_secondary_scheme	Boolean	If true, will run secondary scheme if primary scheme is of ecoli or abaumannii, these two have multiple schemes that are relevant.	FALSE	Optional	TheiaProk_FASTA	
+theiaprok_illumina_pe	mlst_run_secondary_scheme	Boolean	If true, will run secondary scheme if primary scheme is of ecoli or abaumannii, these two have multiple schemes that are relevant.	FALSE	Optional	TheiaProk_Illumina_PE	
+theiaprok_illumina_se	mlst_run_secondary_scheme	Boolean	If true, will run secondary scheme if primary scheme is of ecoli or abaumannii, these two have multiple schemes that are relevant.	FALSE	Optional	TheiaProk_Illumina_SE	
+theiaprok_ont	mlst_run_secondary_scheme	Boolean	If true, will run secondary scheme if primary scheme is of ecoli or abaumannii, these two have multiple schemes that are relevant.	FALSE	Optional	TheiaProk_ONT	
 theiacov_clearlabs	nextclade_dataset_name	String	Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_ClearLabs	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 theiacov_fasta	nextclade_dataset_name	String	Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_FASTA	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
 theiacov_ont	nextclade_dataset_name	String	Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_ONT	HIV, MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2
@@ -2528,7 +2527,7 @@ quast_denovo	cpu	Int	Number of CPUs allocated for the task	2	Optional	TheiaViral
 quast_denovo	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2"	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_denovo	memory	Int	Memory allocated for the task (in GB)	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
-quast_denovo	min_contig_length	Int	DESCRIPTION	500	Optional	TheiaViral_ONT	
+quast_denovo	min_contig_length	Int	Minimum length of contig for QUAST	500	Optional	TheiaViral_ONT	
 rasusa	bases	String	Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 rasusa	coverage	Float	The desired coverage to sub-sample the reads to. If --bases is not provided, this option and --genome-size are required	250	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 rasusa	cpu	Int	Number of CPUs allocated for the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -2618,7 +2617,6 @@ mask_low_coverage	memory	Int	Memory allocated for the task (in GB)	8	Optional	Th
 metabuli	cpu	Int	Number of CPUs allocated for the task	4	Optional	TheiaViral_ONT
 metabuli	disk_size	Int	Disk size allocated for the task (in GB)	100	Optional	TheiaViral_ONT
 metabuli	docker	String	Docker image used for the task	"us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0"	Optional	TheiaViral_ONT
-metabuli	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	TRUE	Optional	
 metabuli	memory	Int	Memory allocated for the task (in GB)	16	Optional	TheiaViral_ONT
 metabuli	metabuli_db	File	Metabuli database file	"gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz"	Optional	TheiaViral_ONT
 metabuli	min_percent_coverage	Float	Minimum query coverage threshold (0.0 - 1.0)	0.0	Optional	TheiaViral_ONT
