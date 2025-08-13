@@ -72,9 +72,9 @@ The compatibility of each workflow with each pathogen is shown below:
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ❌ |
-| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ |
 | FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 
 We've provided the following information to help you set up the workflow for each organism in the form of input JSONs.
 
@@ -391,27 +391,29 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | Software Source Code | [Artic on GitHub](https://github.com/artic-network/fieldbioinformatics) |
         | Software Documentation | [Artic pipeline](https://artic.readthedocs.io/en/latest/?badge=latest) |
 
-{{ include_md("common_text/irma_task.md")}}
+{{ include_md("common_text/irma_task.md", condition="assembly")}}
 
 #### Organism-specific characterization tasks {% raw %} {#org-specific-tasks} {% endraw %}
 
 !!! dna ""
 
-    The following tasks only run for the appropriate organism designation. The following table illustrates which characterization tools are run for the indicated organism.
+    The following tasks are organism-specific. The following table summarizes the characterization tools that are run for the indicated organism.
 
     | | **SARS-CoV-2** | **Mpox** | **West Nile Virus** | **Influenza** | **RSV-A** | **RSV-B** | **HIV** | **Measles** |
     |---|---|---|---|---|---|---|---|---|
     | **Pangolin** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
     | **Nextclade** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ |
     | **VADR** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ |
-    | **vadr_flu_segments** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
     | **Quasitools HyDRA** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
     | **IRMA** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
     | **Abricate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | **% Gene Coverage** | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **% Gene Coverage** | ✅ | ✅ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ |
     | **Antiviral Detection** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
     | **GenoFLU** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
 
+    ✅ This task runs automatically for these organisms<br>
+    ➕ This task can run for these organisms if optional parameter(s) are provided; see task description for details.<br>
+    ❌ This task will not run for these organisms
 
 === "SARS-CoV-2"
 
@@ -441,18 +443,9 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
 {{ include_md("common_text/vadr_task.md", indent=4) }}
 
-{{ include_md("common_text/vadr_flu_segments.md", indent=4) }}
+{{ include_md("common_text/vadr_flu_segments_task.md", indent=4) }}
 
-    ??? task "`irma`"
-
-        IRMA assigns types and subtype/lineages in addition to performing assembly of flu genomes. Please see the section above under "Assembly tasks" to find more information regarding this tool.
-        
-        !!! techdetails "IRMA Technical Details" 
-            |  | Links |
-            | --- | --- |
-            | Task | [task_irma.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_irma.wdl) |
-            | Software Documentation | [IRMA website](https://wonder.cdc.gov/amd/flu/irma/) |
-            | Original Publication(s) | [Viral deep sequencing needs an adaptive approach: IRMA, the iterative refinement meta-assembler](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3030-6) |
+{{ include_md("common_text/irma_task.md", indent=4, condition="task") }}
 
 {{ include_md("common_text/abricate_flu_task.md", indent=4) }}
 
