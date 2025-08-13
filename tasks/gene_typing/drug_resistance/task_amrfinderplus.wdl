@@ -130,9 +130,9 @@ task amrfinderplus_nuc {
 
     if [[ "~{detailed_drug_class}" == "true" ]]; then
       # create string outputs for AMR drug classes
-      amr_classes=$(awk -F '\t' 'BEGIN{OFS=":"} {print $7,$12}' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort  | tr '\n' ', ' | sed 's/.$//')
+      amr_classes=$(awk -F '\t' 'BEGIN{OFS=":"} {print $7,$12}' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort | tr '\n' ', ' | sed 's/.$//')
       # create string outputs for AMR drug subclasses
-      amr_subclasses=$(awk -F '\t' 'BEGIN{OFS=":"} {print $7,$13}' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort  | tr '\n' ', ' | sed 's/.$//')
+      amr_subclasses=$(awk -F '\t' 'BEGIN{OFS=":"} {print $7,$13}' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort | tr '\n' ', ' | sed 's/.$//')
     else
       amr_classes=$(awk -F '\t' '{ print $12 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort | uniq | tr '\n' ', ' | sed 's/.$//')
       amr_subclasses=$(awk -F '\t' '{ print $13 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort | uniq | tr '\n' ', ' | sed 's/.$//')
