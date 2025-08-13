@@ -103,7 +103,7 @@ workflow organism_parameters {
     String wnv_nextclade_ds_tag = "NA"
     String wnv_nextclade_ds_name = "NA"
   }
-  if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza" || organism == "11320" || organism == "11309" || organism == "11308") {
+  if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza" || organism == "11320" || organism == "11309" || organism == "11308" || organism == "11520") {
     String flu_org_name = "flu"
     Int flu_genome_len = 13500
 

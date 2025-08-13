@@ -261,7 +261,7 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
 - **Human Immunodeficiency Virus 1** (`"11676"`, `"hiv1"`)
 - **Human Immunodeficiency Virus 2** (`"11709"`, `"hiv2"`)
 - **West Nile Virus** (`"11082"`, `"wnv"`, `"west nile virus"`)
-- **Influenza** (`"11320"`, `"11309"`, `"flu"`, `"influenza"`)
+- **Influenza** (`"11320"`, `"11309"`, `"11520"`, `"flu"`, `"influenza"`)
 - **RSV-A** (`"208893"`, `"hrsv-a"`)
 - **RSV-B** (`"208895"`, `"hrsv-b"`)
 - **Measles** (`"11234"`, `"measles"`)
