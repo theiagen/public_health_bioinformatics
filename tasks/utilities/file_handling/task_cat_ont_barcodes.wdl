@@ -17,7 +17,7 @@ task cat_ont_barcodes {
 
     echo "Running concatenate-barcodes.py to concatenate ONT barcodes with extension ~{file_extension} from ~{input_bucket_path} to ~{output_bucket_path}"
 
-    python3 concatenate-barcodes.py \
+    concatenate-barcodes.py \
       ~{input_bucket_path} \
       ~{output_bucket_path} \
       --file_extension ~{file_extension} \
