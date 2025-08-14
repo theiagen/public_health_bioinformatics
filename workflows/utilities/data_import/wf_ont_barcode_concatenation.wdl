@@ -21,17 +21,19 @@ workflow ont_barcode_concatenation {
       output_bucket_path = output_bucket_path,
       file_extension = file_extension,
       barcode_renaming_file = barcode_renaming_file
-  }
-  call create_terra_table_task.create_terra_table {
-    input:
-      new_table_name = terra_table_name,
-      terra_project = terra_project,
-      terra_workspace = terra_workspace,
-      data_location_path = output_bucket_path,
-      paired_end = false,
-      assembly_data = false,
-      file_ending = file_extension,
-      responsible_workflow = "ONT_Barcode_Concatenation_PHB"
+  } 
+  if defined(cat_ont_barcodes.concatenation_log) {
+    call create_terra_table_task.create_terra_table {
+      input:
+        new_table_name = terra_table_name,
+        terra_project = terra_project,
+        terra_workspace = terra_workspace,
+        data_location_path = output_bucket_path,
+        paired_end = false,
+        assembly_data = false,
+        file_ending = file_extension,
+        responsible_workflow = "ONT_Barcode_Concatenation_PHB"
+    }
   }
   output {
   }
