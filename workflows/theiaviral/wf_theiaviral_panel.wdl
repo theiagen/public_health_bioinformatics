@@ -275,6 +275,8 @@ workflow theiaviral_panel {
     Int assembled_viruses = length(select_all(theiaviral.assembly_consensus_fasta))
     # Taxon of organisms identified
     Array[String] identified_organisms = select_all(ncbi_identify.taxon_name)
+    # All assembled FASTA files
+    Array[File] assemblies = select_all(theiaviral.assembly_consensus_fasta)
     # Workflow Versioning
     String theiaviral_panel_version = version_capture.phb_version
     String theiaviral_panel_analysis_date = version_capture.date
@@ -287,5 +289,59 @@ workflow theiaviral_panel {
     File kraken2_classified_report = select_first([read_QC_trim.kraken_classified_report])
     Float? kraken_percent_human_raw = read_QC_trim.kraken_human
     Float? kraken_percent_human_clean = read_QC_trim.kraken_human_clean
+    # fastq_scan
+    Int? fastq_scan_raw1 = read_QC_trim.fastq_scan_raw1
+    Int? fastq_scan_raw2 = read_QC_trim.fastq_scan_raw2
+    String? fastq_scan_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    Int? fastq_scan_clean1 = read_QC_trim.fastq_scan_clean1
+    Int? fastq_scan_clean2 = read_QC_trim.fastq_scan_clean2
+    String? fastq_scan_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    String? fastq_scan_version = read_QC_trim.fastq_scan_version
+    String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
+    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
+    File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
+    File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
+    File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
+    # fastqc
+    Int? fastqc_raw1 = read_QC_trim.fastq_scan_raw1
+    Int? fastqc_raw2 = read_QC_trim.fastq_scan_raw2
+    String? fastqc_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    Int? fastqc_clean1 = read_QC_trim.fastqc_clean1
+    Int? fastqc_clean2 = read_QC_trim.fastqc_clean2
+    String? fastqc_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    String? fastqc_version = read_QC_trim.fastqc_version
+    String? fastqc_docker = read_QC_trim.fastqc_docker
+    File? fastqc_raw1_html = read_QC_trim.fastqc_raw1_html
+    File? fastqc_raw2_html = read_QC_trim.fastqc_raw2_html
+    File? fastqc_clean1_html = read_QC_trim.fastqc_clean1_html
+    File? fastqc_clean2_html = read_QC_trim.fastqc_clean2_html
+    # trimming versioning
+    String? trimmomatic_version = read_QC_trim.trimmomatic_version
+    String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
+    String? fastp_version = read_QC_trim.fastp_version
+    File? fastp_html_report = read_QC_trim.fastp_html_report
+    # host decontamination outputs
+    File? dehost_wf_dehost_read1 = read_QC_trim.dehost_wf_dehost_read1
+    File? dehost_wf_dehost_read2 = read_QC_trim.dehost_wf_dehost_read2
+    String? dehost_wf_host_accession = read_QC_trim.dehost_wf_host_accession
+    File? dehost_wf_host_mapped_bam = read_QC_trim.dehost_wf_host_mapped_bam
+    File? dehost_wf_host_mapped_bai = read_QC_trim.dehost_wf_host_mapped_bai
+    File? dehost_wf_host_fasta = read_QC_trim.dehost_wf_host_fasta
+    File? dehost_wf_host_mapping_stats = read_QC_trim.dehost_wf_host_mapping_stats
+    File? dehost_wf_host_mapping_cov_hist = read_QC_trim.dehost_wf_host_mapping_cov_hist
+    File? dehost_wf_host_flagstat = read_QC_trim.dehost_wf_host_flagstat
+    Float? dehost_wf_host_mapping_coverage = read_QC_trim.dehost_wf_host_mapping_coverage
+    Float? dehost_wf_host_mapping_mean_depth = read_QC_trim.dehost_wf_host_mapping_mean_depth
+    Float? dehost_wf_host_percent_mapped_reads = read_QC_trim.dehost_wf_host_percent_mapped_reads
+    File? dehost_wf_host_mapping_metrics = read_QC_trim.dehost_wf_host_mapping_metrics
+    # NCBI scrubber
+    File? read1_dehosted = read_QC_trim.read1_dehosted
+    File? read2_dehosted = read_QC_trim.read2_dehosted
+    Int? ncbi_scrub_human_spots_removed = read_QC_trim.ncbi_scrub_human_spots_removed
+    String? ncbi_scrub_docker = read_QC_trim.ncbi_scrub_docker
+    # bbduk
+    File read1_clean = read_QC_trim.read1_clean
+    File read2_clean = read_QC_trim.read2_clean
+    String bbduk_docker = read_QC_trim.bbduk_docker
   }
 }
