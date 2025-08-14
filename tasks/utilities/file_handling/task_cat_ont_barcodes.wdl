@@ -21,7 +21,7 @@ task cat_ont_barcodes {
       ~{input_bucket_path} \
       ~{output_bucket_path} \
       --file_extension ~{file_extension} \
-      ~{"--map_file " barcode_renaming_file} \
+      ~{"--map_file " + barcode_renaming_file} \
       --gcp --verbose --recursive
     
     echo "Concatenation script completed."
