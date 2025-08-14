@@ -150,8 +150,9 @@ task resfinder {
     fi
     # ciprofloxacin
     if grep -qi "ciprofloxacin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
+      # also needs the nalidixic acid, fluroquinolone, unknown quinolone one too lol woo
       awk -F '\t' 'BEGIN{OFS=":";} {if($1 == "CIPROFLOXACIN") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
-    else
+    else 
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
     fi
     # sulfamethoxazole
