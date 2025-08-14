@@ -9,7 +9,7 @@ task cat_ont_barcodes {
     
     Int cpu = 2
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ont-barcodes:0.0.1"
     Int memory = 4
   }
   command <<<
@@ -24,11 +24,11 @@ task cat_ont_barcodes {
       ~{"--map_file " barcode_renaming_file} \
       --gcp --verbose --recursive
     
-    echo "Concatenation completed successfully."
+    echo "Concatenation script completed."
 
   >>>
   output {
-  
+    File concatenation_log = "concatenate_barcodes.log"
   }
   runtime {
     docker: "~{docker}"
