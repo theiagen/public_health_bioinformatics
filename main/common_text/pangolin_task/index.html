@@ -12,7 +12,7 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/nextclade_task/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/pangolin_task/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Nextclade task - Public Health Bioinformatics</title>
+        <title>Pangolin task - Public Health Bioinformatics</title>
       
     
     
@@ -129,7 +129,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Nextclade task
+              Pangolin task
             
           </span>
         </div>
@@ -5221,26 +5221,42 @@
   
 
 
-  <h1>Nextclade task</h1>
+  <h1>Pangolin task</h1>
 
 <details class="task">
-<summary><code>nextclade</code></summary>
-<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations. </p>
-<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
+<summary><code>pangolin</code></summary>
+<p>Pangolin (Phylogenetic Assignment of Named Global Outbreak Lineages) was developed to implement a dynamic nomenclature for designating SARS-CoV-2 lineage assignments and is used by researchers and public health agencies worldwide to track the spread and transmission of SARS-CoV-2.</p>
+<p>Pangolin aligns input sequences against an early SARS-CoV-2 reference and generates a unique hash for the alignment. The hash is checked against a designation cache to see if it matches any previously identified lineages, and is checked via <a href="https://github.com/cov-lineages/scorpio">scorpio</a> (<em>Serious Constellations of Reoccuring Phylogenetically-Independent Origin</em>) to determine if the hash matches any variant of concern (VOC) <a href="https://github.com/cov-lineages/constellations/tree/main"><em>constellations</em></a>, which are groups of functionally meaningful mutations that can independently evolve. Following a QC check, an inference pipeline is run: either <a href="https://cov-lineages.org/resources/pangolin/pangolearn.html">pangoLEARN</a> or <a href="https://github.com/yatisht/usher">UShER</a> (which is the default inference model). The final lineage report is then generated.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Pangolin Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/betacoronavirus/task_pangolin.wdl">task_pangolin.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/cov-lineages/pangolin">Pangolin on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://cov-lineages.org/resources/pangolin.html">Pangolin on cov-lineages.org</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1038/s41564-020-0770-5">A dynamic nomenclature proposal for SARS-CoV-2 lineages to assist genomic epidemiology</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
-<!-- if: theiaviral -->
-<div class="language-text highlight"><pre><span></span><code>Theiagen has implemented a full genome-based [Nextclade dataset](https://github.com/theiagen/rabies) for *L. rabies* with subclade classification resolution.
-</code></pre></div>
-<!-- endif -->
-
-<div class="language-text highlight"><pre><span></span><code>!!! techdetails &quot;Nextclade Technical Details&quot;
-    |  | Links |
-    | --- | --- |
-    | Task | [task_nextclade.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl) |
-    | Software Source Code | &lt;https://github.com/nextstrain/nextclade&gt; |
-    | Software Documentation | [Nextclade](https://docs.nextstrain.org/projects/nextclade/en/stable/) |
-    | Original Publication(s) | [Nextclade: clade assignment, mutation calling and quality control for viral genomes.](https://doi.org/10.21105/joss.03773) |
-</code></pre></div>
 
 
 
@@ -5273,7 +5289,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 14, 2025 20:58:00 UTC">2025-08-14</span>
   </span>
 
     

@@ -11251,7 +11251,8 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <summary><em>Lyssavirus rabies</em></summary>
 <details class="task">
 <summary><code>nextclade</code></summary>
-<p><a href="https://docs.nextstrain.org/projects/nextclade/en/stable/">"Nextclade is an open-source project for viral genome alignment, mutation calling, clade assignment, quality checks and phylogenetic placement."</a></p>
+<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations. </p>
+<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
 <p>Theiagen has implemented a full genome-based <a href="https://github.com/theiagen/rabies">Nextclade dataset</a> for <em>L. rabies</em> with subclade classification resolution.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Nextclade Technical Details</p>
@@ -11265,7 +11266,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl#L63">task_nextclade.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl">task_nextclade.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>

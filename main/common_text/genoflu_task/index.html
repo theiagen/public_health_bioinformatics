@@ -12,7 +12,7 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/vadr_flu_segments/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/genoflu_task/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Vadr flu segments - Public Health Bioinformatics</title>
+        <title>Genoflu task - Public Health Bioinformatics</title>
       
     
     
@@ -129,7 +129,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Vadr flu segments
+              Genoflu task
             
           </span>
         </div>
@@ -5221,14 +5221,13 @@
   
 
 
-  <h1>Vadr flu segments</h1>
+  <h1>Genoflu task</h1>
 
 <details class="task">
-<summary><code>vadr_flu_segments</code></summary>
-<p>This task processes a full or partial influenza genome assembly in multifasta format, along with the output <code>.tar.gz</code> file from a VADR run. It extracts each segment into its own fasta file and also generates a concatenated fasta containing all segments combined into a single sequence. Segment names are assigned based on the specified flu type (A or B) and the segment classification found in the <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#sqc">VADR .sqc file</a>.</p>
-<p>Note: Results may be unreliable if segment lengths deviate from those expected for Influenza A or B. For best results, the input assembly should contain all 8 segments as separate contigs. If the assembly is partial, the task will still extract available segments but may not produce a complete concatenated sequence. Empty fasta files will be created for missing segments.</p>
+<summary><code>genoflu</code></summary>
+<p>This task determines the whole-genome genotype of a H5N1 (<mark>currently only for the 2.3.4.4b clade of H5N1</mark>) flu sample by comparing each segment of the sample against a curated database of H5N1 references. Each segment is assigned a type, and the whole-genome genotype is assigned based on the combination of segment types, according to the <a href="https://github.com/USDA-VS/GenoFLU/blob/main/docs/Genotyping_reference_for_US_H5_2.3.4.4b.pdf">GenoFLU reference table</a>.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">VADR Flu Segments Technical Details</p>
+<p class="admonition-title">GenoFLU Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -5239,7 +5238,19 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/influenza/task_vadr_flu_segments.wdl">task_vadr_flu_segments.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/orthomyxoviridae/task_genoflu.wdl">task_genoflu.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/USDA-VS/GenoFLU">GenoFLU on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/USDA-VS/GenoFLU">GenoFLU on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1016/j.virol.2023.109860">H5N1 highly pathogenic avian influenza clade 2.3.4.4b in wild and domestic birds: Introductions into the United States and reassortments, December 2021-April 2022</a></td>
 </tr>
 </tbody>
 </table>
@@ -5267,7 +5278,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 11, 2025 20:15:42 UTC">2025-08-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 14, 2025 20:58:00 UTC">2025-08-14</span>
   </span>
 
     
@@ -5277,7 +5288,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 11, 2025 20:15:42 UTC">2025-08-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 14, 2025 20:58:00 UTC">2025-08-14</span>
   </span>
 
     

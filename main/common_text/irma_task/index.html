@@ -5223,42 +5223,37 @@
 
   <h1>Irma task</h1>
 
+<!-- if: assembly -->
 <details class="toggle">
 <summary><code>irma</code>: Assembly and Characterization <mark><em>for flu in TheiaCoV_Illumina_PE &amp; TheiaCoV_ONT</em></mark></summary>
-<p>Cleaned reads are assembled using <code>irma</code> which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps read to collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by <code>irma</code> will be ordered from largest to smallest assembled flu segment. <code>irma</code> also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the <code>abricate</code> task outputs which will provide this information.</p>
-<p>Due to the segmented nature of the Influenza genome and the various downstream bioinformatics tools that require the genome assembly, the IRMA task &amp; TheiaCoV workflows output various genome assembly files. Briefly they are:</p>
-<ul>
-<li><code>assembly_fasta</code> - The full genome assembly in FASTA format, with 1 FASTA entry per genome segment. There should be 8 segments in total, but depending on the quality and depth of sequence data, some segments may not be assembled and nor present in this output file.</li>
-<li><code>irma_assembly_fasta_concatenated</code> - The full genome assembly in FASTA format, but with all segments concatenated into a single FASTA entry. This is not your typical FASTA file and is purposely created to be used with a custom Nextclade dataset for the H5N1 B3.13 genotype that is based on a concatenated reference genome.</li>
-<li><code>irma_&lt;segment-abbreviation&gt;_segment_fasta</code> - Individual FASTA files that only contain the sequence for 1 segment, for example the HA segment. There are 8 of these in total.</li>
-</ul>
-<p>General statistics about the assembly are generated with the <code>consensus_qc</code> task (<a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl">task_assembly_metrics.wdl</a>).</p>
-<div class="admonition techdetails">
-<p class="admonition-title">IRMA Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_irma.wdl">task_irma.wdl</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://wonder.cdc.gov/amd/flu/irma/">IRMA website</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3030-6">Viral deep sequencing needs an adaptive approach: IRMA, the iterative refinement meta-assembler</a></td>
-</tr>
-</tbody>
-</table>
-</div>
 </details>
+<!-- endif -->
+<!-- if: task -->
+<details class="task">
+<summary><code>irma</code></summary>
+</details>
+<!-- endif -->
+
+<div class="language-text highlight"><pre><span></span><code>Cleaned reads are assembled using `irma` which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps read to collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by `irma` will be ordered from largest to smallest assembled flu segment. `irma` also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the `abricate` task outputs which will provide this information.
+</code></pre></div>
+<!-- if: assembly -->
+<div class="language-text highlight"><pre><span></span><code>Due to the segmented nature of the Influenza genome and the various downstream bioinformatics tools that require the genome assembly, the IRMA task &amp; TheiaCoV workflows output various genome assembly files. Briefly they are:
+
+- `assembly_fasta` - The full genome assembly in FASTA format, with 1 FASTA entry per genome segment. There should be 8 segments in total, but depending on the quality and depth of sequence data, some segments may not be assembled and nor present in this output file.
+- `irma_assembly_fasta_concatenated` - The full genome assembly in FASTA format, but with all segments concatenated into a single FASTA entry. This is not your typical FASTA file and is purposely created to be used with a custom Nextclade dataset for the H5N1 B3.13 genotype that is based on a concatenated reference genome.
+- `irma_&lt;segment-abbreviation&gt;_segment_fasta` - Individual FASTA files that only contain the sequence for 1 segment, for example the HA segment. There are 8 of these in total.
+
+General statistics about the assembly are generated with the `consensus_qc` task ([task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl)).
+</code></pre></div>
+<!-- endif -->
+
+<div class="language-text highlight"><pre><span></span><code>!!! techdetails &quot;IRMA Technical Details&quot; 
+    |  | Links |
+    | --- | --- |
+    | Task | [task_irma.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_irma.wdl) |
+    | Software Documentation | [IRMA website](https://wonder.cdc.gov/amd/flu/irma/) |
+    | Original Publication(s) | [Viral deep sequencing needs an adaptive approach: IRMA, the iterative refinement meta-assembler](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3030-6) |
+</code></pre></div>
 
 
 
@@ -5281,7 +5276,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 11, 2025 20:15:42 UTC">2025-08-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 14, 2025 20:58:00 UTC">2025-08-14</span>
   </span>
 
     

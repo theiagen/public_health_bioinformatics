@@ -12,7 +12,7 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/nextclade_task/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/flu_antiviral_substitutions_task/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Nextclade task - Public Health Bioinformatics</title>
+        <title>Flu antiviral substitutions task - Public Health Bioinformatics</title>
       
     
     
@@ -129,7 +129,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Nextclade task
+              Flu antiviral substitutions task
             
           </span>
         </div>
@@ -5221,26 +5221,58 @@
   
 
 
-  <h1>Nextclade task</h1>
+  <h1>Flu antiviral substitutions task</h1>
 
 <details class="task">
-<summary><code>nextclade</code></summary>
-<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations. </p>
-<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
+<summary><code>flu_antiviral_substitutions</code></summary>
+<p>This subworkflow determines if any antiviral mutations are present in the HA, NA, and MP segments of H1N1 or H3N2 flu sample, or any in non-subtype-specific PA, PB1, and PB2 segments.</p>
+<p>These mutations are identified by generating a multiple sequence alignment (MSA) between each individual flu segment and the respective reference genome using MAFFT. Amino acid mutations are then called from the MSA. The resulting mutations are compared against <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl">a list of known amino-acid substitutions associated with antiviral resistance</a> and any matches are reported. </p>
+<p>This list of amino-acid substitutions includes both substitutions reported in the scientific literature and those inferred to potentially cause antiviral resistance based on analogous antiviral mutations in other flu subtypes. <a href="../../assets/files/antiviral_resistance_flu_aa_substitutions_explanations.xlsx"><strong>A table with the explanation for each amino-acid substitution in the antiviral resistance task is available here</strong></a>.</p>
+<p>The list of known amino-acid substitutions associated with resistance can be expanded via optional user input <code>antiviral_aa_subs</code> in the format "<code>NA:V95A,HA:I97V</code>", i.e. <code>Protein:AAPositionAA</code>. </p>
+<details class="toggle">
+<summary>Currently, the default mutations considered confer resistance to the following antivirals</summary>
+<ul>
+<li>A_315675</li>
+<li>Amantadine</li>
+<li>Compound_367</li>
+<li>Favipiravir</li>
+<li>Fludase</li>
+<li>L_742_001</li>
+<li>Laninamivir</li>
+<li>Oseltamivir (tamiflu)</li>
+<li>Peramivir</li>
+<li>Pimodivir</li>
+<li>Rimantadine</li>
+<li>Xofluza</li>
+<li>Zanamivir</li>
+</ul>
 </details>
-<!-- if: theiaviral -->
-<div class="language-text highlight"><pre><span></span><code>Theiagen has implemented a full genome-based [Nextclade dataset](https://github.com/theiagen/rabies) for *L. rabies* with subclade classification resolution.
-</code></pre></div>
-<!-- endif -->
-
-<div class="language-text highlight"><pre><span></span><code>!!! techdetails &quot;Nextclade Technical Details&quot;
-    |  | Links |
-    | --- | --- |
-    | Task | [task_nextclade.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl) |
-    | Software Source Code | &lt;https://github.com/nextstrain/nextclade&gt; |
-    | Software Documentation | [Nextclade](https://docs.nextstrain.org/projects/nextclade/en/stable/) |
-    | Original Publication(s) | [Nextclade: clade assignment, mutation calling and quality control for viral genomes.](https://doi.org/10.21105/joss.03773) |
-</code></pre></div>
+<div class="admonition techdetails">
+<p class="admonition-title">Antiviral Substitutions Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Sub-workflow</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_influenza_antiviral_substitutions.wdl">wf_influenza_antiviral_substitutions.wdl</a></td>
+</tr>
+<tr>
+<td>Tasks</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_mafft.wdl">task_mafft.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl">task_flu_antiviral_subs.wdl</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/molbev/mst010">MAFFT Multiple Sequence Alignment Software Version 7: Improvements in Performance and Usability</a><br><a href="https://doi.org/10.1016/j.tibtech.2019.09.009">Next-Generation Sequencing: An Eye-Opener for the Surveillance of Antiviral Resistance in Influenza</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 
 
 
@@ -5273,7 +5305,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 14, 2025 20:58:00 UTC">2025-08-14</span>
   </span>
 
     

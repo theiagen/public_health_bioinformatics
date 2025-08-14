@@ -5920,17 +5920,6 @@
 <td>❌</td>
 </tr>
 <tr>
-<td>ClearLabs</td>
-<td>✅</td>
-<td>❌</td>
-<td>❌</td>
-<td>❌</td>
-<td>❌</td>
-<td>❌</td>
-<td>❌</td>
-<td>❌</td>
-</tr>
-<tr>
 <td>ONT</td>
 <td>✅</td>
 <td>✅</td>
@@ -5951,6 +5940,17 @@
 <td>✅</td>
 <td>✅</td>
 <td>✅</td>
+</tr>
+<tr>
+<td>ClearLabs</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
 </tr>
 </tbody>
 </table>
@@ -15101,8 +15101,9 @@
 <p>The <code>organism_parameters</code> sub-workflow is the first step in all TheiaCoV workflows. This step automatically sets the different parameters needed for each downstream tool to the appropriate value for the user-designated organism (by default, <code>"sars-cov-2"</code> is the default organism).</p>
 <div class="admonition dna">
 <p>The following tables include the relevant organism-specific parameters; <strong>all of these default values can be overwritten by providing a value for the "Overwrite Variable Name" field</strong>.</p>
-<details class="toggle">
-<summary>SARS-CoV-2 Defaults</summary>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:8"><input checked="checked" id="sars-cov-2" name="__tabbed_3" type="radio" /><input id="mpox" name="__tabbed_3" type="radio" /><input id="west-nile-virus" name="__tabbed_3" type="radio" /><input id="influenza" name="__tabbed_3" type="radio" /><input id="rsv-a" name="__tabbed_3" type="radio" /><input id="rsv-b" name="__tabbed_3" type="radio" /><input id="hiv" name="__tabbed_3" type="radio" /><input id="measles" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="sars-cov-2">SARS-CoV-2</label><label for="mpox">Mpox</label><label for="west-nile-virus">West Nile Virus</label><label for="influenza">Influenza</label><label for="rsv-a">RSV-A</label><label for="rsv-b">RSV-B</label><label for="hiv">HIV</label><label for="measles">Measles</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <div class="searchable-table" markdown="block">
 <table>
 <thead>
@@ -15166,9 +15167,8 @@
 </tbody>
 </table>
 </div>
-</details>
-<details class="toggle">
-<summary>Mpox Defaults</summary>
+</div>
+<div class="tabbed-block">
 <div class="searchable-table" markdown="block">
 <table>
 <thead>
@@ -15237,9 +15237,8 @@
 </tbody>
 </table>
 </div>
-</details>
-<details class="toggle">
-<summary>WNV Defaults</summary>
+</div>
+<div class="tabbed-block">
 <div class="searchable-table" markdown="block">
 <table>
 <thead>
@@ -15308,9 +15307,8 @@
 </tbody>
 </table>
 </div>
-</details>
-<details class="toggle">
-<summary>Flu Defaults</summary>
+</div>
+<div class="tabbed-block">
 <div class="searchable-table" markdown="block">
 <table>
 <thead>
@@ -15620,9 +15618,8 @@
 </tbody>
 </table>
 </div>
-</details>
-<details class="toggle">
-<summary>RSV-A Defaults</summary>
+</div>
+<div class="tabbed-block">
 <div class="searchable-table" markdown="block">
 <table>
 <thead>
@@ -15636,49 +15633,48 @@
 <tr>
 <td>genome_length_input</td>
 <td>rsv_a</td>
-<td>16000</td>
+<td><code>16000</code></td>
 </tr>
 <tr>
 <td>kraken_target_organism</td>
 <td>rsv_a</td>
-<td>"Human respiratory syncytial virus A"</td>
+<td><code>"Human respiratory syncytial virus A"</code></td>
 </tr>
 <tr>
 <td>nextclade_dataset_name_input</td>
 <td>rsv_a</td>
-<td>nextstrain/rsv/a/EPI_ISL_412866</td>
+<td><code>nextstrain/rsv/a/EPI_ISL_412866</code></td>
 </tr>
 <tr>
 <td>nextclade_dataset_tag_input</td>
 <td>rsv_a</td>
-<td>"2024-11-27--02-51-00Z"</td>
+<td><code>"2024-11-27--02-51-00Z"</code></td>
 </tr>
 <tr>
 <td>reference_genome</td>
 <td>rsv_a</td>
-<td>gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta</td>
+<td><code>gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta</code></td>
 </tr>
 <tr>
 <td>vadr_max_length</td>
 <td>rsv_a</td>
-<td>15500</td>
+<td><code>15500</code></td>
 </tr>
 <tr>
 <td>vadr_mem</td>
 <td>rsv_a</td>
-<td>32</td>
+<td><code>32</code></td>
 </tr>
 <tr>
 <td>vadr_options</td>
 <td>rsv_a</td>
-<td>-r --mkey rsv --xnocomp</td>
+<td><code>-r --mkey rsv --xnocomp</code></td>
 </tr>
 </tbody>
 </table>
 </div>
-</details>
-<details class="toggle">
-<summary>RSV-B Defaults</summary>
+</div>
+<div class="tabbed-block">
 <div class="searchable-table" markdown="block">
 <table>
 <thead>
@@ -15692,49 +15688,48 @@
 <tr>
 <td>genome_length_input</td>
 <td>rsv_b</td>
-<td>16000</td>
+<td><code>16000</code></td>
 </tr>
 <tr>
 <td>kraken_target_organism</td>
 <td>rsv_b</td>
-<td>"human respiratory syncytial virus"</td>
+<td><code>"human respiratory syncytial virus"</code></td>
 </tr>
 <tr>
 <td>nextclade_dataset_name_input</td>
 <td>rsv_b</td>
-<td>nextstrain/rsv/b/EPI_ISL_1653999</td>
+<td><code>nextstrain/rsv/b/EPI_ISL_1653999</code></td>
 </tr>
 <tr>
 <td>nextclade_dataset_tag_input</td>
 <td>rsv_b</td>
-<td>"2025-03-04--17-31-25Z"</td>
+<td><code>"2025-03-04--17-31-25Z"</code></td>
 </tr>
 <tr>
 <td>reference_genome</td>
 <td>rsv_b</td>
-<td>gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta</td>
+<td><code>gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta</code></td>
 </tr>
 <tr>
 <td>vadr_max_length</td>
 <td>rsv_b</td>
-<td>15500</td>
+<td><code>15500</code></td>
 </tr>
 <tr>
 <td>vadr_mem</td>
 <td>rsv_b</td>
-<td>32</td>
+<td><code>32</code></td>
 </tr>
 <tr>
 <td>vadr_options</td>
 <td>rsv_b</td>
-<td>-r --mkey rsv --xnocomp</td>
+<td><code>-r --mkey rsv --xnocomp</code></td>
 </tr>
 </tbody>
 </table>
 </div>
-</details>
-<details class="toggle">
-<summary>HIV Defaults</summary>
+</div>
+<div class="tabbed-block">
 <div class="searchable-table" markdown="block">
 <table>
 <thead>
@@ -15749,63 +15744,62 @@
 <tr>
 <td>kraken_target_organism_input</td>
 <td>HIV</td>
-<td>Human immunodeficiency virus 1</td>
+<td><code>Human immunodeficiency virus 1</code></td>
 <td></td>
 </tr>
 <tr>
 <td>genome_length_input</td>
 <td>HIV-v1</td>
-<td>9181</td>
+<td><code>9181</code></td>
 <td>This version of HIV originates from Oregon</td>
 </tr>
 <tr>
 <td>primer_bed_file</td>
 <td>HIV-v1</td>
-<td>gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed</td>
+<td><code>gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed</code></td>
 <td>This version of HIV originates from Oregon</td>
 </tr>
 <tr>
 <td>reference_genome</td>
 <td>HIV-v1</td>
-<td>gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta</td>
+<td><code>gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta</code></td>
 <td>This version of HIV originates from Oregon</td>
 </tr>
 <tr>
 <td>reference_gff_file</td>
 <td>HIV-v1</td>
-<td>gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3</td>
+<td><code>gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3</code></td>
 <td>This version of HIV originates from Oregon</td>
 </tr>
 <tr>
 <td>genome_length_input</td>
 <td>HIV-v2</td>
-<td>9840</td>
+<td><code>9840</code></td>
 <td>This version of HIV originates from Southern Africa</td>
 </tr>
 <tr>
 <td>primer_bed_file</td>
 <td>HIV-v2</td>
-<td>gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed</td>
+<td><code>gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed</code></td>
 <td>This version of HIV originates from Southern Africa</td>
 </tr>
 <tr>
 <td>reference_genome</td>
 <td>HIV-v2</td>
-<td>gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta</td>
+<td><code>gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta</code></td>
 <td>This version of HIV originates from Southern Africa</td>
 </tr>
 <tr>
 <td>reference_gff_file</td>
 <td>HIV-v2</td>
-<td>gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3</td>
+<td><code>gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3</code></td>
 <td>This version of HIV originates from Southern Africa</td>
 </tr>
 </tbody>
 </table>
 </div>
-</details>
-<details class="toggle">
-<summary>Measles Defaults</summary>
+</div>
+<div class="tabbed-block">
 <div class="searchable-table" markdown="block">
 <table>
 <thead>
@@ -15838,8 +15832,10 @@
 </tr>
 </tbody>
 </table>
-<p></div>                </p>
-</details>
+</div>
+</div>
+</div>
+</div>
 </div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">&para;</a></h3>
 <p>All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT, and ClearLabs workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaCoV workflows subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.</p>
@@ -15869,7 +15865,7 @@
 </div>
 </details>
 <div class="admonition caption">
-<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="theiacov_illumina_pe_2" name="__tabbed_3" type="radio" /><input id="theiacov_illumina_se_2" name="__tabbed_3" type="radio" /><input id="theiacov_ont_2" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="theiacov_illumina_pe_2">TheiaCoV_Illumina_PE</label><label for="theiacov_illumina_se_2">TheiaCoV_Illumina_SE</label><label for="theiacov_ont_2">TheiaCoV_ONT</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:3"><input checked="checked" id="theiacov_illumina_pe_2" name="__tabbed_4" type="radio" /><input id="theiacov_illumina_se_2" name="__tabbed_4" type="radio" /><input id="theiacov_ont_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="theiacov_illumina_pe_2">TheiaCoV_Illumina_PE</label><label for="theiacov_illumina_se_2">TheiaCoV_Illumina_SE</label><label for="theiacov_ont_2">TheiaCoV_ONT</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <details class="task">
@@ -16574,24 +16570,26 @@
 </details>
 <h4 id="org-specific-tasks">Organism-specific characterization tasks<a class="headerlink" href="#org-specific-tasks" title="Permanent link">&para;</a></h4>
 <div class="admonition dna">
-<p>The following tasks only run for the appropriate organism designation. The following table illustrates which characterization tools are run for the indicated organism.</p>
+<p>The following tasks are organism-specific. The following table summarizes the characterization tools that are run for the indicated organism.</p>
 <table>
 <thead>
 <tr>
 <th></th>
-<th>SARS-CoV-2</th>
-<th>MPXV</th>
-<th>HIV</th>
-<th>WNV</th>
-<th>Influenza</th>
-<th>RSV-A</th>
-<th>RSV-B</th>
+<th><strong>SARS-CoV-2</strong></th>
+<th><strong>Mpox</strong></th>
+<th><strong>West Nile Virus</strong></th>
+<th><strong>Influenza</strong></th>
+<th><strong>RSV-A</strong></th>
+<th><strong>RSV-B</strong></th>
+<th><strong>HIV</strong></th>
+<th><strong>Measles</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>Pangolin</td>
+<td><strong>Pangolin</strong></td>
 <td>✅</td>
+<td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
@@ -16600,37 +16598,30 @@
 <td>❌</td>
 </tr>
 <tr>
-<td>Nextclade</td>
+<td><strong>Nextclade</strong></td>
 <td>✅</td>
 <td>✅</td>
 <td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
 <td>❌</td>
-<td>✅</td>
-<td>✅</td>
 <td>✅</td>
 </tr>
 <tr>
-<td>VADR</td>
-<td>✅</td>
-<td>✅</td>
-<td>❌</td>
+<td><strong>VADR</strong></td>
 <td>✅</td>
 <td>✅</td>
 <td>✅</td>
 <td>✅</td>
-</tr>
-<tr>
-<td>vadr_flu_segments</td>
-<td>❌</td>
-<td>❌</td>
-<td>❌</td>
-<td>❌</td>
+<td>✅</td>
 <td>✅</td>
 <td>❌</td>
 <td>❌</td>
 </tr>
 <tr>
-<td>Quasitools HyDRA</td>
+<td><strong>VADR Flu Segments</strong></td>
+<td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>✅</td>
@@ -16640,61 +16631,84 @@
 <td>❌</td>
 </tr>
 <tr>
-<td>IRMA</td>
+<td><strong>Quasitools HyDRA</strong></td>
+<td>❌</td>
+<td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>✅</td>
-<td>❌</td>
 <td>❌</td>
 </tr>
 <tr>
-<td>Abricate</td>
-<td>❌</td>
+<td><strong>IRMA</strong></td>
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>✅</td>
-<td>❌</td>
-<td>❌</td>
-</tr>
-<tr>
-<td>% Gene Coverage</td>
-<td>✅</td>
-<td>✅</td>
-<td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
 </tr>
 <tr>
-<td>Antiviral Detection</td>
-<td>❌</td>
+<td><strong>Abricate</strong></td>
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>✅</td>
+<td>❌</td>
+<td>❌</td>
 <td>❌</td>
 <td>❌</td>
 </tr>
 <tr>
-<td>GenoFLU</td>
-<td>❌</td>
+<td><strong>% Gene Coverage</strong></td>
+<td>✅</td>
+<td>✅</td>
+<td>➕</td>
+<td>➕</td>
+<td>➕</td>
+<td>➕</td>
+<td>➕</td>
+<td>➕</td>
+</tr>
+<tr>
+<td><strong>Antiviral Detection</strong></td>
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>✅</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+</tr>
+<tr>
+<td><strong>GenoFLU</strong></td>
+<td>❌</td>
+<td>❌</td>
+<td>❌</td>
+<td>✅</td>
+<td>❌</td>
+<td>❌</td>
 <td>❌</td>
 <td>❌</td>
 </tr>
 </tbody>
 </table>
+<p>✅ This task runs automatically for these organisms<br>
+➕ This task can run for these organisms if optional parameter(s) are provided; see task description for details.<br>
+❌ This task will not run for these organisms</p>
 </div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:8"><input checked="checked" id="sars-cov-2_1" name="__tabbed_5" type="radio" /><input id="mpox_1" name="__tabbed_5" type="radio" /><input id="west-nile-virus_1" name="__tabbed_5" type="radio" /><input id="influenza_1" name="__tabbed_5" type="radio" /><input id="rsv-a_1" name="__tabbed_5" type="radio" /><input id="rsv-b_1" name="__tabbed_5" type="radio" /><input id="hiv_1" name="__tabbed_5" type="radio" /><input id="measles_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="sars-cov-2_1">SARS-CoV-2</label><label for="mpox_1">Mpox</label><label for="west-nile-virus_1">West Nile Virus</label><label for="influenza_1">Influenza</label><label for="rsv-a_1">RSV-A</label><label for="rsv-b_1">RSV-B</label><label for="hiv_1">HIV</label><label for="measles_1">Measles</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
 <details class="task">
 <summary><code>pangolin</code></summary>
-<p>Pangolin designates SARS-CoV-2 lineage assignments.</p>
+<p>Pangolin (Phylogenetic Assignment of Named Global Outbreak Lineages) was developed to implement a dynamic nomenclature for designating SARS-CoV-2 lineage assignments and is used by researchers and public health agencies worldwide to track the spread and transmission of SARS-CoV-2.</p>
+<p>Pangolin aligns input sequences against an early SARS-CoV-2 reference and generates a unique hash for the alignment. The hash is checked against a designation cache to see if it matches any previously identified lineages, and is checked via <a href="https://github.com/cov-lineages/scorpio">scorpio</a> (<em>Serious Constellations of Reoccuring Phylogenetically-Independent Origin</em>) to determine if the hash matches any variant of concern (VOC) <a href="https://github.com/cov-lineages/constellations/tree/main"><em>constellations</em></a>, which are groups of functionally meaningful mutations that can independently evolve. Following a QC check, an inference pipeline is run: either <a href="https://cov-lineages.org/resources/pangolin/pangolearn.html">pangoLEARN</a> or <a href="https://github.com/yatisht/usher">UShER</a> (which is the default inference model). The final lineage report is then generated.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Pangolin Technical Details</p>
 <table>
@@ -16715,7 +16729,7 @@
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://cov-lineages.org/resources/pangolin.html">Pangolin website</a></td>
+<td><a href="https://cov-lineages.org/resources/pangolin.html">Pangolin on cov-lineages.org</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
@@ -16727,7 +16741,8 @@
 </details>
 <details class="task">
 <summary><code>nextclade</code></summary>
-<p><a href="https://docs.nextstrain.org/projects/nextclade/en/stable/">"Nextclade is an open-source project for viral genome alignment, mutation calling, clade assignment, quality checks and phylogenetic placement."</a></p>
+<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations. </p>
+<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Nextclade Technical Details</p>
 <table>
@@ -16740,7 +16755,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl#L63">task_nextclade.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl">task_nextclade.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -16760,7 +16775,250 @@
 </details>
 <details class="task">
 <summary><code>vadr</code></summary>
-<p>VADR annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="./#org-specific"><em>organism-specific parameters and logic</em> section</a>. VADR is also used to characterize individual Influenza segments and will extract each segment into its own fasta file.</p>
+<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="./#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
+<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR README here</a>, including details on how to allow sequencecs to pass despite having fatal alerts.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">VADR Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td>For SARS-CoV-2: <em><a href="https://doi.org/10.1093/nargab/lqad002">Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</a></em><br> For non-SARS_CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>gene_coverage</code></summary>
+<p>This task calculates the percent of a region (typically genes) covered above a minimum depth using <code>samtools</code> and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Gene Coverage Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl">task_gene_coverage.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">SAMtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">SAMTools Manual</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/gigascience/giab008">Twelve years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<div class="tabbed-block">
+<details class="task">
+<summary><code>nextclade</code></summary>
+<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations. </p>
+<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Nextclade Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl">task_nextclade.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/nextstrain/nextclade">https://github.com/nextstrain/nextclade</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://docs.nextstrain.org/projects/nextclade/en/stable/">Nextclade</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.21105/joss.03773">Nextclade: clade assignment, mutation calling and quality control for viral genomes.</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>vadr</code></summary>
+<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="./#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
+<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR README here</a>, including details on how to allow sequencecs to pass despite having fatal alerts.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">VADR Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td>For SARS-CoV-2: <em><a href="https://doi.org/10.1093/nargab/lqad002">Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</a></em><br> For non-SARS_CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>gene_coverage</code></summary>
+<p>This task calculates the percent of a region (typically genes) covered above a minimum depth using <code>samtools</code> and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Gene Coverage Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl">task_gene_coverage.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">SAMtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">SAMTools Manual</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/gigascience/giab008">Twelve years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<div class="tabbed-block">
+<details class="task">
+<summary><code>vadr</code></summary>
+<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="./#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
+<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR README here</a>, including details on how to allow sequencecs to pass despite having fatal alerts.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">VADR Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td>For SARS-CoV-2: <em><a href="https://doi.org/10.1093/nargab/lqad002">Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</a></em><br> For non-SARS_CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<div class="tabbed-block">
+<details class="task">
+<summary><code>nextclade</code></summary>
+<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations. </p>
+<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Nextclade Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl">task_nextclade.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/nextstrain/nextclade">https://github.com/nextstrain/nextclade</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://docs.nextstrain.org/projects/nextclade/en/stable/">Nextclade</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.21105/joss.03773">Nextclade: clade assignment, mutation calling and quality control for viral genomes.</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>vadr</code></summary>
+<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="./#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
+<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR README here</a>, including details on how to allow sequencecs to pass despite having fatal alerts.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">VADR Technical Details</p>
 <table>
@@ -16814,37 +17072,8 @@
 </div>
 </details>
 <details class="task">
-<summary><code>quasitools</code></summary>
-<p><code>quasitools</code> performs genome characterization for HIV.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Quasitools Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/lentivirus/task_quasitools.wdl">task_quasitools.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/phac-nml/quasitools/">https://github.com/phac-nml/quasitools/</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://phac-nml.github.io/quasitools/hydra/">Quasitools HyDRA</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
 <summary><code>irma</code></summary>
-<p>IRMA assigns types and subtype/lineages in addition to performing assembly of flu genomes. Please see the section above under "Assembly tasks" to find more information regarding this tool.</p>
+<p>Cleaned reads are assembled using <code>irma</code> which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps read to collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by <code>irma</code> will be ordered from largest to smallest assembled flu segment. <code>irma</code> also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the <code>abricate</code> task outputs which will provide this information.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">IRMA Technical Details</p>
 <table>
@@ -16873,9 +17102,10 @@
 </details>
 <details class="task">
 <summary><code>abricate</code></summary>
-<p>Abricate assigns types and subtype/lineages for flu samples</p>
+<p>ABRicate assigns types and subtype/lineages for flu samples using a version of the <a href="https://github.com/INSaFLU/INSaFLU">INSaFLU</a> ("INSide the FLU") database <a href="https://github.com/epi2me-labs/wf-flu/tree/master/data/primer_schemes/V1/blastdb/insaflu">described here</a>. </p>
+<p>ABRicate typically works by screening contigs for the presence of acquired resistance genes, but when using the INSaFLU database, the algorithm works by assigning contigs to the most closely corresponding viral segment in the INSaFLU database, which is used to call the flu type and subtype.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">Abricate Technical Details</p>
+<p class="admonition-title">ABRicate Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -16896,26 +17126,9 @@
 <td>Software Documentation</td>
 <td><a href="https://github.com/tseemann/abricate">ABRicate on GitHub</a></td>
 </tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>gene_coverage</code></summary>
-<p>This task calculates the percent of the gene covered above a minimum depth. By default, it runs for SARS-CoV-2 and MPXV, but if a bed file is provided with regions of interest, this task will be run for other organisms as well.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Gene Coverage Technical Details</p>
-<table>
-<thead>
 <tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl">task_gene_coverage.wdl</a></td>
+<td>Original Publication(s)</td>
+<td>INSaFLU database: <em><a href="https://doi.org/10.1186/s13073-018-0555-0">INSaFLU: an automated open web-based bioinformatics suite "from-reads" for influenza whole-genome-sequencing-based surveillance</a></em></td>
 </tr>
 </tbody>
 </table>
@@ -16923,9 +17136,28 @@
 </details>
 <details class="task">
 <summary><code>flu_antiviral_substitutions</code></summary>
-<p>This sub-workflow determines which, if any, antiviral mutations are present in the sample. </p>
-<p>The assembled HA, NA, PA, PB1 and PB2 segments are compared against <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl">a list of known amino-acid substitutions associated with resistance</a> to the antivirals  A_315675, Amantadine, compound_367, Favipiravir, Fludase, L_742_001, Laninamivir, Oseltamivir (tamiflu), Peramivir, Pimodivir, Rimantadine, Xofluza, and Zanamivir. The list of known amino-acid substitutions associated with resistance can be expanded via optional user input <code>antiviral_aa_subs</code> in the format "<code>NA:V95A,HA:I97V</code>", i.e. <code>Protein:AAPositionAA</code>. 
-The list of amino-acid substitutions associated with antiviral resistance includes both substitutions reported to confer antiviral resistance in the scientific literature and those inferred to potentially cause antiviral resistance based on an analogous mutation reported to confer antiviral resistance in another flu subtype. A table with the explanation for each amino-acid substitution in the antiviral resistance task is available <a href="../../../assets/files/antiviral_resistance_flu_aa_substitutions_explanations.xlsx">here</a>.</p>
+<p>This subworkflow determines if any antiviral mutations are present in the HA, NA, and MP segments of H1N1 or H3N2 flu sample, or any in non-subtype-specific PA, PB1, and PB2 segments.</p>
+<p>These mutations are identified by generating a multiple sequence alignment (MSA) between each individual flu segment and the respective reference genome using MAFFT. Amino acid mutations are then called from the MSA. The resulting mutations are compared against <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl">a list of known amino-acid substitutions associated with antiviral resistance</a> and any matches are reported. </p>
+<p>This list of amino-acid substitutions includes both substitutions reported in the scientific literature and those inferred to potentially cause antiviral resistance based on analogous antiviral mutations in other flu subtypes. <a href="../../../assets/files/antiviral_resistance_flu_aa_substitutions_explanations.xlsx"><strong>A table with the explanation for each amino-acid substitution in the antiviral resistance task is available here</strong></a>.</p>
+<p>The list of known amino-acid substitutions associated with resistance can be expanded via optional user input <code>antiviral_aa_subs</code> in the format "<code>NA:V95A,HA:I97V</code>", i.e. <code>Protein:AAPositionAA</code>. </p>
+<details class="toggle">
+<summary>Currently, the default mutations considered confer resistance to the following antivirals</summary>
+<ul>
+<li>A_315675</li>
+<li>Amantadine</li>
+<li>Compound_367</li>
+<li>Favipiravir</li>
+<li>Fludase</li>
+<li>L_742_001</li>
+<li>Laninamivir</li>
+<li>Oseltamivir (tamiflu)</li>
+<li>Peramivir</li>
+<li>Pimodivir</li>
+<li>Rimantadine</li>
+<li>Xofluza</li>
+<li>Zanamivir</li>
+</ul>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Antiviral Substitutions Technical Details</p>
 <table>
@@ -16937,16 +17169,16 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 </thead>
 <tbody>
 <tr>
-<td>Workflow</td>
+<td>Sub-workflow</td>
 <td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_influenza_antiviral_substitutions.wdl">wf_influenza_antiviral_substitutions.wdl</a></td>
 </tr>
 <tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl">task_flu_antiviral_subs.wdl</a></td>
+<td>Tasks</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_mafft.wdl">task_mafft.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl">task_flu_antiviral_subs.wdl</a></td>
 </tr>
 <tr>
-<td>Publication</td>
-<td><a href="https://doi.org/10.1016/j.tibtech.2019.09.009">Next-Generation Sequencing: An Eye-Opener for the Surveillance of Antiviral Resistance in Influenza</a></td>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/molbev/mst010">MAFFT Multiple Sequence Alignment Software Version 7: Improvements in Performance and Usability</a><br><a href="https://doi.org/10.1016/j.tibtech.2019.09.009">Next-Generation Sequencing: An Eye-Opener for the Surveillance of Antiviral Resistance in Influenza</a></td>
 </tr>
 </tbody>
 </table>
@@ -16954,7 +17186,7 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 </details>
 <details class="task">
 <summary><code>genoflu</code></summary>
-<p>This sub-workflow determines the whole-genome genotype of an H5N1 flu sample.</p>
+<p>This task determines the whole-genome genotype of a H5N1 (<mark>currently only for the 2.3.4.4b clade of H5N1</mark>) flu sample by comparing each segment of the sample against a curated database of H5N1 references. Each segment is assigned a type, and the whole-genome genotype is assigned based on the combination of segment types, according to the <a href="https://github.com/USDA-VS/GenoFLU/blob/main/docs/Genotyping_reference_for_US_H5_2.3.4.4b.pdf">GenoFLU reference table</a>.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">GenoFLU Technical Details</p>
 <table>
@@ -16973,12 +17205,235 @@ The list of amino-acid substitutions associated with antiviral resistance includ
 <td>Software Source Code</td>
 <td><a href="https://github.com/USDA-VS/GenoFLU">GenoFLU on GitHub</a></td>
 </tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/USDA-VS/GenoFLU">GenoFLU on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1016/j.virol.2023.109860">H5N1 highly pathogenic avian influenza clade 2.3.4.4b in wild and domestic birds: Introductions into the United States and reassortments, December 2021-April 2022</a></td>
+</tr>
 </tbody>
 </table>
 </div>
 </details>
+</div>
+<div class="tabbed-block">
+<details class="task">
+<summary><code>nextclade</code></summary>
+<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations. </p>
+<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Nextclade Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl">task_nextclade.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/nextstrain/nextclade">https://github.com/nextstrain/nextclade</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://docs.nextstrain.org/projects/nextclade/en/stable/">Nextclade</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.21105/joss.03773">Nextclade: clade assignment, mutation calling and quality control for viral genomes.</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>vadr</code></summary>
+<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="./#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
+<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR README here</a>, including details on how to allow sequencecs to pass despite having fatal alerts.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">VADR Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td>For SARS-CoV-2: <em><a href="https://doi.org/10.1093/nargab/lqad002">Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</a></em><br> For non-SARS_CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<div class="tabbed-block">
+<details class="task">
+<summary><code>nextclade</code></summary>
+<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations. </p>
+<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Nextclade Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl">task_nextclade.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/nextstrain/nextclade">https://github.com/nextstrain/nextclade</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://docs.nextstrain.org/projects/nextclade/en/stable/">Nextclade</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.21105/joss.03773">Nextclade: clade assignment, mutation calling and quality control for viral genomes.</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>vadr</code></summary>
+<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="./#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
+<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR README here</a>, including details on how to allow sequencecs to pass despite having fatal alerts.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">VADR Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td>For SARS-CoV-2: <em><a href="https://doi.org/10.1093/nargab/lqad002">Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</a></em><br> For non-SARS_CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<div class="tabbed-block">
+<details class="task">
+<summary><code>quasitools</code></summary>
+<p><code>quasitools</code> performs genomic characterization for HIV by using the HyDRA module for identifying drug resistance mutations in HIV-1 samples based on the <a href="https://hivdb.stanford.edu/">Stanford HIV Drug Resistance Database</a> and the <a href="https://hivdb.stanford.edu/page/who-sdrm-list/">2009 WHO list for Surveillance of Transmitted HIVDR</a>; see also the papers linked below.</p>
+<p>The HyDRA module in quasitools maps the sample sequence against an annotated HIV-1 reference and performs variant calling. Those variants are compared to the databases described above, and any matches are reported, along with the complete list of variants. </p>
+<div class="admonition techdetails">
+<p class="admonition-title">quasitools Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/lentivirus/task_quasitools.wdl">task_quasitools.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/phac-nml/quasitools/">quasitools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://phac-nml.github.io/quasitools/hydra/">quasitools HyDRA README</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td>quasitools preprint: <em><a href="https://doi.org/10.1101/733238">quasitools: A Collection of Tools for Viral Quasispecies Analysis</a></em><br>WHO 2009 Database: <em><a href="https://doi.org/10.1371/journal.pone.0004724">Drug resistance mutations for surveillance of transmitted HIV-1 drug-resistance: 2009 update</a></em><br>Stanford Database: <em><a href="https://doi.org/10.1093/nar/gkg100">Human immunodeficiency virus reverse transcriptase and protease sequence database</a></em></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<div class="tabbed-block">
+<details class="task">
+<summary><code>nextclade</code></summary>
+<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations. </p>
+<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Nextclade Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl">task_nextclade.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/nextstrain/nextclade">https://github.com/nextstrain/nextclade</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://docs.nextstrain.org/projects/nextclade/en/stable/">Nextclade</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.21105/joss.03773">Nextclade: clade assignment, mutation calling and quality control for viral genomes.</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+</div>
+</div>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:6"><input checked="checked" id="theiacov_illumina_pe_3" name="__tabbed_4" type="radio" /><input id="theiacov_illumina_se_3" name="__tabbed_4" type="radio" /><input id="theiacov_ont_3" name="__tabbed_4" type="radio" /><input id="theiacov_fasta_2" name="__tabbed_4" type="radio" /><input id="theiacov_clearlabs_2" name="__tabbed_4" type="radio" /><input id="theiacov_fasta_batch_2" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="theiacov_illumina_pe_3">TheiaCoV_Illumina_PE</label><label for="theiacov_illumina_se_3">TheiaCoV_Illumina_SE</label><label for="theiacov_ont_3">TheiaCoV_ONT</label><label for="theiacov_fasta_2">TheiaCoV_FASTA</label><label for="theiacov_clearlabs_2">TheiaCoV_ClearLabs</label><label for="theiacov_fasta_batch_2">TheiaCoV_FASTA_Batch</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:6"><input checked="checked" id="theiacov_illumina_pe_3" name="__tabbed_6" type="radio" /><input id="theiacov_illumina_se_3" name="__tabbed_6" type="radio" /><input id="theiacov_ont_3" name="__tabbed_6" type="radio" /><input id="theiacov_fasta_2" name="__tabbed_6" type="radio" /><input id="theiacov_clearlabs_2" name="__tabbed_6" type="radio" /><input id="theiacov_fasta_batch_2" name="__tabbed_6" type="radio" /><div class="tabbed-labels"><label for="theiacov_illumina_pe_3">TheiaCoV_Illumina_PE</label><label for="theiacov_illumina_se_3">TheiaCoV_Illumina_SE</label><label for="theiacov_ont_3">TheiaCoV_ONT</label><label for="theiacov_fasta_2">TheiaCoV_FASTA</label><label for="theiacov_clearlabs_2">TheiaCoV_ClearLabs</label><label for="theiacov_fasta_batch_2">TheiaCoV_FASTA_Batch</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="searchable-table">
@@ -20168,7 +20623,7 @@ The list of amino-acid substitutions associated with antiviral resistance includ
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 11, 2025 20:16:11 UTC">2025-08-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 14, 2025 20:58:00 UTC">2025-08-14</span>
   </span>
 
     
