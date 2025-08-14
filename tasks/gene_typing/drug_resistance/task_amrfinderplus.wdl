@@ -123,29 +123,29 @@ task amrfinderplus_nuc {
     grep 'AMR' ~{samplename}_amrfinder_all.tsv >> ~{samplename}_amrfinder_amr.tsv || true
 
     # create string outputs for all genes identified in AMR, STRESS, VIRULENCE
-    amr_core_genes=$(awk -F '\t' '{ if($9 == "core") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//')
-    amr_plus_genes=$(awk -F '\t' '{ if($9 != "core") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
-    stress_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_stress.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
-    virulence_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_virulence.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
-    
+    amr_core_genes=$(awk -F '\t' '{ if($9 == "core") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//')
+    amr_plus_genes=$(awk -F '\t' '{ if($9 != "core") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort | tr '\n' ', ' | sed 's/.$//')
+    stress_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_stress.tsv | tail -n+2 | sort | tr '\n' ', ' | sed 's/.$//')
+    virulence_genes=$(awk -F '\t' '{ print $7 }' ~{samplename}_amrfinder_virulence.tsv | tail -n+2 | sort | tr '\n' ', ' | sed 's/.$//')
+
     if [[ "~{detailed_drug_class}" == "true" ]]; then
       # create string outputs for AMR drug classes
-      amr_classes=$(awk -F '\t' 'BEGIN{OFS=":"} {print $7,$12}' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
+      amr_classes=$(awk -F '\t' 'BEGIN{OFS=":"} {print $7,$12}' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort | tr '\n' ', ' | sed 's/.$//')
       # create string outputs for AMR drug subclasses
-      amr_subclasses=$(awk -F '\t' 'BEGIN{OFS=":"} {print $7,$13}' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | tr '\n' ', ' | sed 's/.$//')
+      amr_subclasses=$(awk -F '\t' 'BEGIN{OFS=":"} {print $7,$13}' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort | tr '\n' ', ' | sed 's/.$//')
     else
       amr_classes=$(awk -F '\t' '{ print $12 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort | uniq | tr '\n' ', ' | sed 's/.$//')
       amr_subclasses=$(awk -F '\t' '{ print $13 }' ~{samplename}_amrfinder_amr.tsv | tail -n+2 | sort | uniq | tr '\n' ', ' | sed 's/.$//')
     fi
 
     if [[ "~{separate_betalactam_genes}" == "true" ]]; then
-      betalactam_genes=$(awk -F '\t' '{ if($12 == "BETA-LACTAM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//') 
-      betalactam_betalactam_genes=$(awk -F '\t' '{ if($13 == "BETA-LACTAM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//') 
-      betalactam_carbapenem_genes=$(awk -F '\t' '{ if($13 == "CARBAPENEM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//')
-      betalactam_cephalosporin_genes=$(awk -F '\t' '{ if($13 == "CEPHALOSPORIN") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//')
-      betalactam_cephalothin_genes=$(awk -F '\t' '{ if($13 == "CEPHALOTHIN") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//')
-      betalactam_methicillin_genes=$(awk -F '\t' '{ if($13 == "METHICILLIN") { print $7}}' ~{samplename}_amrfinder_amr.tsv | tr '\n' ', ' | sed 's/.$//')
-      
+      betalactam_genes=$(awk -F '\t' '{ if($12 == "BETA-LACTAM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//') 
+      betalactam_betalactam_genes=$(awk -F '\t' '{ if($13 == "BETA-LACTAM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//') 
+      betalactam_carbapenem_genes=$(awk -F '\t' '{ if($13 == "CARBAPENEM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//')
+      betalactam_cephalosporin_genes=$(awk -F '\t' '{ if($13 == "CEPHALOSPORIN") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//')
+      betalactam_cephalothin_genes=$(awk -F '\t' '{ if($13 == "CEPHALOTHIN") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//')
+      betalactam_methicillin_genes=$(awk -F '\t' '{ if($13 == "METHICILLIN") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//')
+
       # if variable for list of genes is EMPTY, write string saying it is empty to float to Terra table
       if [ -z "${betalactam_genes}" ]; then
         betalactam_genes="No BETA-LACTAM genes detected by NCBI-AMRFinderPlus"
