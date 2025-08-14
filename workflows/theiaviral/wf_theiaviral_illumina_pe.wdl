@@ -192,8 +192,8 @@ workflow theiaviral_illumina_pe {
         call morgana_magic_wf.morgana_magic {
           input:
             samplename = samplename,
-            read1 = read1,
-            read2 = read2,
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
             assembly_fasta = select_first([consensus.consensus_seq]),
             taxon_name = ncbi_identify.raw_taxon_id,
             seq_method = "illumina_pe",

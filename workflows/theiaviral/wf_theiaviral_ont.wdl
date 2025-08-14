@@ -250,7 +250,7 @@ workflow theiaviral_ont {
         # run morgana magic for classification
         call morgana_magic_wf.morgana_magic {
           input:
-            read1 = read1,
+            read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
             samplename = samplename,
             assembly_fasta = select_first([bcftools_consensus.assembly_fasta]),
             taxon_name = ncbi_identify.raw_taxon_id,
