@@ -4,7 +4,7 @@
 
 _Use the following render_tsv_table macro call that is provided in code below to generate the **quick facts table**, replacing the fields marked with `<>` with the appropriate values. Please note that the macro_ **result** _is seen on the web browser, not the macro call itself._
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**<your-workflow-name\>**](../workflows/<your-workflow-type>/<your-workflow-name>.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**<your-workflow-name\>**](../workflows/<your-workflow-type>/<your-workflow-name>.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level", "Dockstore"]) }}
 
 ## Workflow_Name_On_Terra
 
