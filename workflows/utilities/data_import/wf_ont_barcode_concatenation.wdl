@@ -31,7 +31,7 @@ workflow ont_barcode_concatenation {
         data_location_path = output_bucket_path,
         paired_end = false,
         assembly_data = false,
-        file_ending = file_extension,
+        file_ending = ".all.fastq.gz",
         responsible_workflow = "ONT_Barcode_Concatenation_PHB"
     }
   }
