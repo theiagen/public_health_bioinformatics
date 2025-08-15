@@ -5790,7 +5790,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
-<td>v3.1.0</td>
+<td>vX.X.X</td>
 <td>Yes</td>
 <td>Sample-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_Illumina_PE_PHB:main?tab=info">TheiaViral_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_ONT_PHB:main?tab=info">TheiaViral_ONT_PHB</a></td>
@@ -5798,7 +5798,7 @@
 </tbody>
 </table>
 <h2 id="theiaviral-workflows">TheiaViral Workflows<a class="headerlink" href="#theiaviral-workflows" title="Permanent link">&para;</a></h2>
-<p><strong>TheiaViral</strong> workflows assemble, quality assess, and characterize viral genomes from diverse data sources, including metagenomic samples. TheiaViral workflows can generate consensus assemblies of recalcitrant viruses, including diverse or recombinant lineages, such as rabies virus and norovirus, through a three-step approach: 1) generating an intermediate <em>de novo</em> assembly from taxonomy-filtered reads, 2) selecting the best reference from a database of ~200,000 viral genomes using average nucleotide identity, and 3) producing a final consensus assembly through reference-based read mapping and variant calling. Reference genomes can be directly provided to TheiaViral to bypass <em>de novo</em> assembly, which enables compatibility with tiled amplicon sequencing data. Targeted viral characterization is currently ongoing and functional for <em>Lyssavirus rabies</em>.</p>
+<p><strong>TheiaViral</strong> workflows assemble, quality assess, and characterize viral genomes from diverse data sources, including metagenomic samples. TheiaViral workflows can generate consensus assemblies of recalcitrant viruses, including diverse or recombinant lineages, such as rabies virus and norovirus, through a three-step approach: 1) generating an intermediate <em>de novo</em> assembly from taxonomy-filtered reads, 2) selecting the best reference from a database of ~200,000 viral genomes using average nucleotide identity, and 3) producing a final consensus assembly through reference-based read mapping and variant calling. Reference genomes can be directly provided to TheiaViral to bypass <em>de novo</em> assembly, which enables compatibility with tiled amplicon sequencing data. Targeted viral characterization is functional for lineages <a href="#taxa-specific-tasks">listed below</a>.</p>
 <details class="question" open="open">
 <summary>What are the main differences between the TheiaViral and TheiaCov workflows?</summary>
 <div class="grid cards" markdown>
@@ -11246,45 +11246,19 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </div>
 </div>
 <h4 id="taxa-specific-tasks">Taxa-Specific Tasks<a class="headerlink" href="#taxa-specific-tasks" title="Permanent link">&para;</a></h4>
-<p>The TheiaViral workflows automatically activate taxa-specific sub-workflows after the identification of relevant taxa using the taxon ID of the reference genome.</p>
-<details class="toggle">
-<summary><em>Lyssavirus rabies</em></summary>
-<details class="task">
-<summary><code>nextclade</code></summary>
-<p>Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations. </p>
-<p>Clade assignment is performed via <em>phylogenetic placement</em>. Phylogenetic placement compares the mutations of the provided sequence to the mutations of each node found in a reference tree, where the root of that tree is the reference genome. The node that is most similar to the sample is used to both assign a clade designation and calculate where the sample should be placed in the phylogenetic tree.</p>
-<p>Theiagen has implemented a full genome-based <a href="https://github.com/theiagen/rabies">Nextclade dataset</a> for <em>L. rabies</em> with subclade classification resolution.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Nextclade Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl">task_nextclade.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/nextstrain/nextclade">https://github.com/nextstrain/nextclade</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://docs.nextstrain.org/projects/nextclade/en/stable/">Nextclade</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.21105/joss.03773">Nextclade: clade assignment, mutation calling and quality control for viral genomes.</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-</details>
+<p>The TheiaViral workflows activate taxa-specific sub-workflows after the identification of relevant taxa. These characterization modules are activated by populating <code>taxon</code> with an <em>exact</em> match to a taxon listed in parentheses below (case-insensitive):</p>
+<ul>
+<li><strong>SARS-CoV-2</strong> (<code>"2697049"</code>, <code>"3418604"</code>, <code>"sars-cov-2"</code>)</li>
+<li><strong>Monkeypox virus</strong> (<code>"10244"</code>, <code>"mpxv"</code>, <code>"mpox"</code>, <code>"monkeypox virus"</code>)</li>
+<li><strong>Human Immunodeficiency Virus 1</strong> (<code>"11676"</code>, <code>"hiv1"</code>)</li>
+<li><strong>Human Immunodeficiency Virus 2</strong> (<code>"11709"</code>, <code>"hiv2"</code>)</li>
+<li><strong>West Nile Virus</strong> (<code>"11082"</code>, <code>"wnv"</code>, <code>"west nile virus"</code>)</li>
+<li><strong>Influenza</strong> (<code>"11320"</code>, <code>"11309"</code>, <code>"11520"</code>, <code>"flu"</code>, <code>"influenza"</code>)</li>
+<li><strong>RSV-A</strong> (<code>"208893"</code>, <code>"hrsv-a"</code>)</li>
+<li><strong>RSV-B</strong> (<code>"208895"</code>, <code>"hrsv-b"</code>)</li>
+<li><strong>Measles</strong> (<code>"11234"</code>, <code>"measles"</code>)</li>
+<li><strong>Rabies</strong> (<code>"11286"</code>, <code>"11292"</code>, <code>"rabies"</code>, <code>"lyssavirus rabies"</code>, <code>"lyssavirus"</code>)</li>
+</ul>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">&para;</a></h3>
 <div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="theiaviral_illumina_pe_3" name="__tabbed_4" type="radio" /><input id="theiaviral_ont_3" name="__tabbed_4" type="radio" /><div class="tabbed-labels"><label for="theiaviral_illumina_pe_3">TheiaViral_Illumina_PE</label><label for="theiaviral_ont_3">TheiaViral_ONT</label></div>
 <div class="tabbed-content">
@@ -11323,6 +11297,11 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>abricate_flu_version</td>
 <td>String</td>
 <td>Version of ABRicate</td>
+</tr>
+<tr>
+<td>assembly_consensus_fasta</td>
+<td>File</td>
+<td>Final consensus assembly in FASTA format</td>
 </tr>
 <tr>
 <td>assembly_denovo_fasta</td>
@@ -11518,11 +11497,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>dehost_wf_dehost_read2</td>
 <td>File</td>
 <td>Paired-reads that did not map to host</td>
-</tr>
-<tr>
-<td>dehost_wf_download_status</td>
-<td>String</td>
-<td>Status of host genome acquisition</td>
 </tr>
 <tr>
 <td>dehost_wf_host_accession</td>
@@ -11780,6 +11754,11 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Version of MetaviralSPAdes used</td>
 </tr>
 <tr>
+<td>morgana_magic_organism</td>
+<td>String</td>
+<td>Standardized organism name used for characterization</td>
+</tr>
+<tr>
 <td>ncbi_datasets_docker</td>
 <td>String</td>
 <td>Docker image used for NCBI datasets</td>
@@ -11873,6 +11852,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>nextclade_aa_subs_rabies</td>
 <td>String</td>
 <td>Amino-acid substitutions as detected by Nextclade. Specific to Monkeypox</td>
+</tr>
+<tr>
+<td>nextclade_clade_flu_ha</td>
+<td>String</td>
+<td>Nextclade clade designation, specific to Flu NA segment</td>
+</tr>
+<tr>
+<td>nextclade_clade_flu_na</td>
+<td>String</td>
+<td>Nextclade clade designation, specific to Flu HA segment</td>
 </tr>
 <tr>
 <td>nextclade_clade_mpxv</td>
@@ -11975,9 +11964,9 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Nextclade output in TSV file format, specific to Rabies</td>
 </tr>
 <tr>
-<td>organism</td>
+<td>nextclade_version</td>
 <td>String</td>
-<td>Standardized organism name used for characterization</td>
+<td>The version of Nextclade software used</td>
 </tr>
 <tr>
 <td>pango_lineage</td>
@@ -12018,6 +12007,36 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>pangolin_versions</td>
 <td>String</td>
 <td>All Pangolin software and database versions</td>
+</tr>
+<tr>
+<td>quasitools_coverage_file</td>
+<td>File</td>
+<td>The coverage report created by Quasitools HyDRA</td>
+</tr>
+<tr>
+<td>quasitools_date</td>
+<td>String</td>
+<td>Date of Quasitools analysis</td>
+</tr>
+<tr>
+<td>quasitools_dr_report</td>
+<td>File</td>
+<td>Drug resistance report created by Quasitools HyDRA</td>
+</tr>
+<tr>
+<td>quasitools_hydra_vcf</td>
+<td>File</td>
+<td>The VCF created by Quasitools HyDRA</td>
+</tr>
+<tr>
+<td>quasitools_mutations_report</td>
+<td>File</td>
+<td>The mutation report created by Quasitools HyDRA</td>
+</tr>
+<tr>
+<td>quasitools_version</td>
+<td>String</td>
+<td>Version of Quasitools used</td>
 </tr>
 <tr>
 <td>quast_denovo_docker</td>
@@ -12135,7 +12154,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Statistics file from read mapping</td>
 </tr>
 <tr>
-<td>reference_taxon_name</td>
+<td>reference_taxon</td>
 <td>String</td>
 <td>NCBI derived taxon name from best ANI hit accession</td>
 </tr>
@@ -12214,6 +12233,46 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>String</td>
 <td>The version of Trimmomatic used</td>
 </tr>
+<tr>
+<td>vadr_alerts_list</td>
+<td>File</td>
+<td>A file containing all of the fatal alerts as determined by VADR</td>
+</tr>
+<tr>
+<td>vadr_all_outputs_tar_gz</td>
+<td>File</td>
+<td>A .tar.gz file (gzip-compressed tar archive file) containing all outputs from the VADR command v-annotate.pl. This file must be uncompressed &amp; extracted to see the many files within. See <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files">https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files</a> for more complete description of all files present within the archive. Useful when deeply investigating a sample's genome &amp; annotations.</td>
+</tr>
+<tr>
+<td>vadr_classification_summary_file</td>
+<td>File</td>
+<td>Per-sequence tabular classification file. See <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#explanation-of-sqc-suffixed-output-files">https://github.com/ncbi/vadr/blob/master/documentation/formats.md#explanation-of-sqc-suffixed-output-files</a> for more complete description.</td>
+</tr>
+<tr>
+<td>vadr_docker</td>
+<td>String</td>
+<td>Docker image used to run VADR</td>
+</tr>
+<tr>
+<td>vadr_fastas_zip_archive</td>
+<td>File</td>
+<td>Zip archive containing all fasta files created during VADR analysis</td>
+</tr>
+<tr>
+<td>vadr_feature_tbl_fail</td>
+<td>File</td>
+<td>5 column feature table output for failing sequences. See <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files">https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files</a> for more complete description.</td>
+</tr>
+<tr>
+<td>vadr_feature_tbl_pass</td>
+<td>File</td>
+<td>5 column feature table output for passing sequences. See <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files">https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files</a> for more complete description.</td>
+</tr>
+<tr>
+<td>vadr_num_alerts</td>
+<td>String</td>
+<td>Number of fatal alerts as determined by VADR</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -12253,6 +12312,11 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>abricate_flu_version</td>
 <td>String</td>
 <td>Version of ABRicate</td>
+</tr>
+<tr>
+<td>assembly_consensus_fasta</td>
+<td>File</td>
+<td>Final consensus assembly in FASTA format</td>
 </tr>
 <tr>
 <td>assembly_denovo_fasta</td>
@@ -12418,11 +12482,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>dehost_wf_dehost_read1</td>
 <td>File</td>
 <td>Reads that did not map to host</td>
-</tr>
-<tr>
-<td>dehost_wf_download_status</td>
-<td>String</td>
-<td>Status of host genome acquisition</td>
 </tr>
 <tr>
 <td>dehost_wf_host_accession</td>
@@ -12635,6 +12694,11 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>The version of minimap2</td>
 </tr>
 <tr>
+<td>morgana_magic_organism</td>
+<td>String</td>
+<td>Standardized organism name used for characterization</td>
+</tr>
+<tr>
 <td>nanoplot_html_clean</td>
 <td>File</td>
 <td>An HTML report describing the clean reads</td>
@@ -12845,6 +12909,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Amino-acid substitutions as detected by Nextclade. Specific to Monkeypox</td>
 </tr>
 <tr>
+<td>nextclade_clade_flu_ha</td>
+<td>String</td>
+<td>Nextclade clade designation, specific to Flu NA segment</td>
+</tr>
+<tr>
+<td>nextclade_clade_flu_na</td>
+<td>String</td>
+<td>Nextclade clade designation, specific to Flu HA segment</td>
+</tr>
+<tr>
 <td>nextclade_clade_mpxv</td>
 <td>String</td>
 <td>Nextclade clade designation, specific to Monkeypox</td>
@@ -12945,9 +13019,9 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Nextclade output in TSV file format, specific to Rabies</td>
 </tr>
 <tr>
-<td>organism</td>
+<td>nextclade_version</td>
 <td>String</td>
-<td>Standardized organism name used for characterization</td>
+<td>The version of Nextclade software used</td>
 </tr>
 <tr>
 <td>pango_lineage</td>
@@ -13008,6 +13082,36 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>porechop_version</td>
 <td>String</td>
 <td>Version of Porechop used</td>
+</tr>
+<tr>
+<td>quasitools_coverage_file</td>
+<td>File</td>
+<td>The coverage report created by Quasitools HyDRA</td>
+</tr>
+<tr>
+<td>quasitools_date</td>
+<td>String</td>
+<td>Date of Quasitools analysis</td>
+</tr>
+<tr>
+<td>quasitools_dr_report</td>
+<td>File</td>
+<td>Drug resistance report created by Quasitools HyDRA</td>
+</tr>
+<tr>
+<td>quasitools_hydra_vcf</td>
+<td>File</td>
+<td>The VCF created by Quasitools HyDRA</td>
+</tr>
+<tr>
+<td>quasitools_mutations_report</td>
+<td>File</td>
+<td>The mutation report created by Quasitools HyDRA</td>
+</tr>
+<tr>
+<td>quasitools_version</td>
+<td>String</td>
+<td>Version of Quasitools used</td>
 </tr>
 <tr>
 <td>quast_denovo_docker</td>
@@ -13155,7 +13259,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
 </tr>
 <tr>
-<td>reference_taxon_name</td>
+<td>reference_taxon</td>
 <td>String</td>
 <td>NCBI derived taxon name from best ANI hit accession</td>
 </tr>
@@ -13223,6 +13327,46 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>theiaviral_ont_version</td>
 <td>String</td>
 <td>Version of TheiaViral ONT workflow</td>
+</tr>
+<tr>
+<td>vadr_alerts_list</td>
+<td>File</td>
+<td>A file containing all of the fatal alerts as determined by VADR</td>
+</tr>
+<tr>
+<td>vadr_all_outputs_tar_gz</td>
+<td>File</td>
+<td>A .tar.gz file (gzip-compressed tar archive file) containing all outputs from the VADR command v-annotate.pl. This file must be uncompressed &amp; extracted to see the many files within. See <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files">https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files</a> for more complete description of all files present within the archive. Useful when deeply investigating a sample's genome &amp; annotations.</td>
+</tr>
+<tr>
+<td>vadr_classification_summary_file</td>
+<td>File</td>
+<td>Per-sequence tabular classification file. See <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#explanation-of-sqc-suffixed-output-files">https://github.com/ncbi/vadr/blob/master/documentation/formats.md#explanation-of-sqc-suffixed-output-files</a> for more complete description.</td>
+</tr>
+<tr>
+<td>vadr_docker</td>
+<td>String</td>
+<td>Docker image used to run VADR</td>
+</tr>
+<tr>
+<td>vadr_fastas_zip_archive</td>
+<td>File</td>
+<td>Zip archive containing all fasta files created during VADR analysis</td>
+</tr>
+<tr>
+<td>vadr_feature_tbl_fail</td>
+<td>File</td>
+<td>5 column feature table output for failing sequences. See <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files">https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files</a> for more complete description.</td>
+</tr>
+<tr>
+<td>vadr_feature_tbl_pass</td>
+<td>File</td>
+<td>5 column feature table output for passing sequences. See <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files">https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files</a> for more complete description.</td>
+</tr>
+<tr>
+<td>vadr_num_alerts</td>
+<td>String</td>
+<td>Number of fatal alerts as determined by VADR</td>
 </tr>
 </tbody>
 </table>
@@ -13329,7 +13473,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 11, 2025 20:16:11 UTC">2025-08-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 15, 2025 13:49:47 UTC">2025-08-15</span>
   </span>
 
     
