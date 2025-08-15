@@ -42,7 +42,7 @@ workflow theiaviral_panel {
       "31631", "162145", "12730", "2560525", "11216", "2560526", "1803956", "10798", "208893", "208895", "11320", "11520", "11552", "1335626", "147711", "147712", "463676", "2901879", 
       "2697049", "10404"
     ]
-    File? output_taxon_table
+    File output_taxon_table
 
     String terra_project
     String terra_workspace
@@ -54,7 +54,7 @@ workflow theiaviral_panel {
     Float min_allele_freq = 0.6
     String? read_extraction_rank
     Boolean concatenate_unclassified = false
-    Boolean skip_theiaviral_screen = false
+    Boolean skip_theiaviral_screen = true
     Int minimum_read_number = 1000
     Boolean call_metaviralspades = true
   }  

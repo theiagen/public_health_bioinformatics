@@ -33,7 +33,7 @@ workflow theiaviral_illumina_pe {
     File? checkv_db 
     File? skani_db
     Boolean skip_screen = false # if false, run clean read screening
-    Boolean skip_qc = false # if false, run read quality control
+    Boolean skip_qc = false # ONLY FOR VSP, if false, run read quality control
     Boolean call_metaviralspades = true # if false, move to megahit immediately
     Boolean skip_rasusa = true 
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
