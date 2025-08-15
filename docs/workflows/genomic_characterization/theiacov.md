@@ -175,7 +175,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_max_length | sars-cov-2 | `30000` |
         | vadr_skip_length | sars-cov-2 | `10000` |
         | vadr_mem | sars-cov-2 | `8` |
-        | vadr_options | sars-cov-2 | `"--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"` |
+        | vadr_options | sars-cov-2 | `"--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta"` |
         | vadr_model_file | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"` |
 
         </div>
@@ -196,7 +196,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_max_length | MPXV | `210000` |
         | vadr_skip_length | MPXV | `65480` |
         | vadr_mem | MPXV | `8` |
-        | vadr_options | MPXV | `"--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"` |
+        | vadr_options | MPXV | `"--mkey mpxv --glsearch --minimap2 -s -r --nomisc --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --s_overhang 150 --out_allfasta"` |
         | vadr_model_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.4.2-1.tar.gz"` |
         
         </div>
@@ -215,7 +215,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_max_length | WNV | `11000` |  |
         | vadr_skip_length | WNV | `3000` |  |
         | vadr_mem | WNV | `8` |  |
-        | vadr_options | WNV | `"--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"` |  |
+        | vadr_options | WNV | `"--mkey flavi --nomisc --noprotid --out_allfasta"` |  |
         | vadr_model_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flavi-1.2-1.tar.gz"` |  |
 
         </div>
@@ -231,7 +231,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_max_length | flu | all | all | `13500` |  |
         | vadr_skip_length | flu | all | all | `500` |  |
         | vadr_mem | flu | all | all | `8` |  |
-        | vadr_options | flu | all | all | `"--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"` |  |
+        | vadr_options | flu | all | all | `"--mkey flu --atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3"` |  |
         | vadr_model_file | flu | all | all | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"` |  |
         | nextclade_dataset_name_input | flu | ha | h1n1 | `"nextstrain/flu/h1n1pdm/ha/MW626062"` |  |
         | nextclade_dataset_tag_input | flu | ha | h1n1 | `"2025-01-22--09-54-14Z"` |  |
@@ -286,7 +286,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_max_length | rsv_a | `15500` |
         | vadr_skip_length | rsv_a | `5000` |
         | vadr_mem | rsv_a | `32` |
-        | vadr_options | rsv_a | `"-r --mkey rsv --xnocomp"` |
+        | vadr_options | rsv_a | `"--mkey rsv --xnocomp -r"` |
         | vadr_model_file | rsv_a | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"` |
 
         </div>
@@ -297,13 +297,13 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
         | genome_length_input | rsv_b | `16000` |
-        | kraken_target_organism | rsv_b |  "human respiratory syncytial virus" |
+        | kraken_target_organism | rsv_b | `"human respiratory syncytial virus"` |
         | nextclade_dataset_name_input | rsv_b | `nextstrain/rsv/b/EPI_ISL_1653999` |
         | nextclade_dataset_tag_input | rsv_b | `"2025-03-04--17-31-25Z"` |
-        | reference_genome | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"`|
+        | reference_genome | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"` |
         | vadr_max_length | rsv_b | `15500` |
         | vadr_mem | rsv_b | `32` |
-        | vadr_options | rsv_b | `"-r --mkey rsv --xnocomp"` |
+        | vadr_options | rsv_b | `"--mkey rsv --xnocomp -r"` |
         | vadr_model_file | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"` |
 
         </div>
@@ -313,15 +313,15 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
         |---|---|---|---|
-        | kraken_target_organism_input | HIV | `Human immunodeficiency virus 1` |  |
+        | kraken_target_organism_input | HIV | `"Human immunodeficiency virus 1"` |  |
         | genome_length_input | HIV-v1 | `9181` | This version of HIV originates from Oregon |
-        | primer_bed_file | HIV-v1 | `"`gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"`` | This version of HIV originates from Oregon |
-        | reference_genome | HIV-v1 | `"`gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta"`` | This version of HIV originates from Oregon |
-        | reference_gff_file | HIV-v1 | `"`gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"`` | This version of HIV originates from Oregon |
+        | primer_bed_file | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"` | This version of HIV originates from Oregon |
+        | reference_genome | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta"` | This version of HIV originates from Oregon |
+        | reference_gff_file | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"` | This version of HIV originates from Oregon |
         | genome_length_input | HIV-v2 | `9840` | This version of HIV originates from Southern Africa |
-        | primer_bed_file | HIV-v2 | `"`gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed"`` | This version of HIV originates from Southern Africa |
-        | reference_genome | HIV-v2 | `"`gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"`` | This version of HIV originates from Southern Africa |
-        | reference_gff_file | HIV-v2 | `"`gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"`` | This version of HIV originates from Southern Africa |
+        | primer_bed_file | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed"` | This version of HIV originates from Southern Africa |
+        | reference_genome | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"` | This version of HIV originates from Southern Africa |
+        | reference_gff_file | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"` | This version of HIV originates from Southern Africa |
 
         </div>
     
