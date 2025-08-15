@@ -29,7 +29,7 @@
         
         As default, the MLST tool automatically detects the genome's taxa to select the MLST scheme. 
         
-        Some taxa have multiple MLST schemes, e.g. the *Escherichia* and Leptospira genera,  *Acinetobacter baumannii, Clostridium difficile* and *Streptococcus thermophilus.* Only one scheme will be used by default.
+        Some taxa have multiple MLST schemes, e.g. the *Escherichia* and Leptospira genera,  *Acinetobacter baumannii, Clostridium difficile* and *Streptococcus thermophilus.* Only one scheme will be used by default. This can be changed for *Escherichia* and *Acionetobacter baumannii* by using `run_secondary_scheme` set to `true` allowing for MLST to run the other scheme associated with those organisms and output those results. 
         
         Users may specify the scheme as an optional workflow input using the `scheme` variable of the `ts_mlst` task. Available schemes are listed [here](https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab) and the scheme name should be provided in quotation marks ("...").
         

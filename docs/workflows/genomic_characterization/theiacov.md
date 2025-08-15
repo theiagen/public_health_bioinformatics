@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaCov Workflow Series**](../workflows/genomic_characterization/theiacov.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaCov Workflow Series**](../workflows/genomic_characterization/theiacov.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level", "Dockstore"]) }}
 
 ## TheiaCoV Workflows
 
@@ -24,7 +24,7 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
 
     [**Reference Materials for Mpox**](https://theiagen.notion.site/Workspace-Reference-Materials-for-MPXV-Genomic-Characterization-a34f355c68c54c0a82e926d4de607bca)
 
-    [**Reference Materials for non-default viruses**](../../guides/custom_organisms.md)
+    [**Reference Materials for non-default viruses (TheiaViral)**](../../workflows/genomic_characterization/theiaviral.md)
 
     ??? toggle "HIV Input JSONs"
         - [TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_HIV_v1_2024-04-19.json)
@@ -70,11 +70,11 @@ The compatibility of each workflow with each pathogen is shown below:
 
 |  | SARS-CoV-2 | Mpox | HIV | WNV | Influenza | RSV-A | RSV-B | Measles |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | 
+| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
 | Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ❌ |
-| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 | ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ |
 | FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 
 We've provided the following information to help you set up the workflow for each organism in the form of input JSONs.
 
@@ -103,6 +103,10 @@ We've provided the following information to help you set up the workflow for eac
     === "TheiaCoV_FASTA"
 
         The TheiaCoV_FASTA workflow takes in assembly files in FASTA format.
+
+        !!! warning "Note for TheiaCoV_FASTA users analyzing Influenza:"
+
+            TheiaCoV_FASTA will use the output of VADR to classify and partition Influenza segments from the input assembly. See [`vadr_flu_segments`](#org-specific-tasks) task for more details.
 
     === "TheiaCoV_ClearLabs"
 
@@ -156,7 +160,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 !!! dna ""
     The following tables include the relevant organism-specific parameters; **all of these default values can be overwritten by providing a value for the "Overwrite Variable Name" field**.
 
-    ??? toggle "SARS-CoV-2 Defaults"
+    === "SARS-CoV-2"
         <div class="searchable-table" markdown="block">
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
@@ -174,7 +178,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         </div>
 
-    ??? toggle "Mpox Defaults"
+    === "Mpox"
         <div class="searchable-table" markdown="block">
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
@@ -193,7 +197,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         
         </div>
 
-    ??? toggle "WNV Defaults"
+    === "West Nile Virus"
         <div class="searchable-table" markdown="block">
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
@@ -210,7 +214,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         </div>
 
-    ??? toggle "Flu Defaults"
+    === "Influenza"
         <div class="searchable-table" markdown="block">
 
         | **Overwrite Variable Name** | **Organism** | **Flu Segment** | **Flu Subtype** | **Default Value** | **Notes** |
@@ -261,56 +265,56 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
             | nextclade_custom_input_dataset | B3.13 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/nextclade_avian-flu_h5n1-cattle-outbreak_h5n1-b3.13_2025-06-24.json"` | Extracted from [nextclade/avian-flu/h5n1-cattle-outbreak](https://nextstrain.org/avian-flu/h5n1-cattle-outbreak/genome) on 2025-06-24 |
             | nextclade_custom_input_dataset | D1.1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/nextclade_avian-flu_h5n1-d1.1_2025-06-24.json"` | Extracted from [nextclade/avian-flu/h5n1-d1.1](https://nextstrain.org/avian-flu/h5n1-d1.1/genome) on 2025-06-24 |
 
-    ??? toggle "RSV-A Defaults"
+    === "RSV-A"
         <div class="searchable-table" markdown="block">
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
-        | genome_length_input | rsv_a | 16000 |
-        | kraken_target_organism | rsv_a | "Human respiratory syncytial virus A" |
-        | nextclade_dataset_name_input | rsv_a | nextstrain/rsv/a/EPI_ISL_412866 |
-        | nextclade_dataset_tag_input | rsv_a | "2024-11-27--02-51-00Z" |
-        | reference_genome | rsv_a | gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta |
-        | vadr_max_length | rsv_a | 15500 |
-        | vadr_mem | rsv_a | 32 |
-        | vadr_options | rsv_a | -r --mkey rsv --xnocomp |
+        | genome_length_input | rsv_a | `16000` |
+        | kraken_target_organism | rsv_a | `"Human respiratory syncytial virus A"` |
+        | nextclade_dataset_name_input | rsv_a | `nextstrain/rsv/a/EPI_ISL_412866` |
+        | nextclade_dataset_tag_input | rsv_a | `"2024-11-27--02-51-00Z"` |
+        | reference_genome | rsv_a | `gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta` |
+        | vadr_max_length | rsv_a | `15500` |
+        | vadr_mem | rsv_a | `32` |
+        | vadr_options | rsv_a | `-r --mkey rsv --xnocomp` |
 
         </div>
 
-    ??? toggle "RSV-B Defaults"
+    === "RSV-B"
         <div class="searchable-table" markdown="block">
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
-        | genome_length_input | rsv_b | 16000 |
-        | kraken_target_organism | rsv_b |  "human respiratory syncytial virus" |
-        | nextclade_dataset_name_input | rsv_b | nextstrain/rsv/b/EPI_ISL_1653999 |
-        | nextclade_dataset_tag_input | rsv_b | "2025-03-04--17-31-25Z" |
-        | reference_genome | rsv_b | gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta |
-        | vadr_max_length | rsv_b | 15500 |
-        | vadr_mem | rsv_b | 32 |
-        | vadr_options | rsv_b | -r --mkey rsv --xnocomp |
+        | genome_length_input | rsv_b | `16000` |
+        | kraken_target_organism | rsv_b | `"human respiratory syncytial virus"` |
+        | nextclade_dataset_name_input | rsv_b | `nextstrain/rsv/b/EPI_ISL_1653999` |
+        | nextclade_dataset_tag_input | rsv_b | `"2025-03-04--17-31-25Z"` |
+        | reference_genome | rsv_b | `gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta` |
+        | vadr_max_length | rsv_b | `15500` |
+        | vadr_mem | rsv_b | `32` |
+        | vadr_options | rsv_b | `-r --mkey rsv --xnocomp` |
 
         </div>
 
-    ??? toggle "HIV Defaults"
+    === "HIV"
         <div class="searchable-table" markdown="block">
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
         |---|---|---|---|
-        | kraken_target_organism_input | HIV | Human immunodeficiency virus 1 |  |
-        | genome_length_input | HIV-v1 | 9181 | This version of HIV originates from Oregon |
-        | primer_bed_file | HIV-v1 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed | This version of HIV originates from Oregon |
-        | reference_genome | HIV-v1 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta | This version of HIV originates from Oregon |
-        | reference_gff_file | HIV-v1 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3 | This version of HIV originates from Oregon |
-        | genome_length_input | HIV-v2 | 9840 | This version of HIV originates from Southern Africa |
-        | primer_bed_file | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed | This version of HIV originates from Southern Africa |
-        | reference_genome | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta | This version of HIV originates from Southern Africa |
-        | reference_gff_file | HIV-v2 | gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3 | This version of HIV originates from Southern Africa |
+        | kraken_target_organism_input | HIV | `Human immunodeficiency virus 1` |  |
+        | genome_length_input | HIV-v1 | `9181` | This version of HIV originates from Oregon |
+        | primer_bed_file | HIV-v1 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed` | This version of HIV originates from Oregon |
+        | reference_genome | HIV-v1 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta` | This version of HIV originates from Oregon |
+        | reference_gff_file | HIV-v1 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3` | This version of HIV originates from Oregon |
+        | genome_length_input | HIV-v2 | `9840` | This version of HIV originates from Southern Africa |
+        | primer_bed_file | HIV-v2 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed` | This version of HIV originates from Southern Africa |
+        | reference_genome | HIV-v2 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta` | This version of HIV originates from Southern Africa |
+        | reference_gff_file | HIV-v2 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3` | This version of HIV originates from Southern Africa |
 
         </div>
     
-    ??? toggle "Measles Defaults"
+    === "Measles"
         <div class="searchable-table" markdown="block">
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
@@ -320,7 +324,8 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | nextclade_dataset_name_input | measles | `"nextstrain/measles/N450/WHO-2012"` |
         | nextclade_dataset_tag_input | measles | `"2025-03-26--11-47-13Z"` |
 
-        </div>                
+        </div>
+                
 ### Workflow Tasks
 
 All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT, and ClearLabs workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaCoV workflows subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
@@ -386,149 +391,88 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
         | Software Source Code | [Artic on GitHub](https://github.com/artic-network/fieldbioinformatics) |
         | Software Documentation | [Artic pipeline](https://artic.readthedocs.io/en/latest/?badge=latest) |
 
-??? toggle "`irma`: Assembly and Characterization ==_for flu in TheiaCoV_Illumina_PE & TheiaCoV_ONT_=="
-
-    Cleaned reads are assembled using `irma` which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps read to collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by `irma` will be ordered from largest to smallest assembled flu segment. `irma` also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the `abricate` task outputs which will provide this information.
-
-    Due to the segmented nature of the Influenza genome and the various downstream bioinformatics tools that require the genome assembly, the IRMA task & TheiaCoV workflows output various genome assembly files. Briefly they are:
-
-    - `assembly_fasta` - The full genome assembly in FASTA format, with 1 FASTA entry per genome segment. There should be 8 segments in total, but depending on the quality and depth of sequence data, some segments may not be assembled and nor present in this output file.
-    - `irma_assembly_fasta_concatenated` - The full genome assembly in FASTA format, but with all segments concatenated into a single FASTA entry. This is not your typical FASTA file and is purposely created to be used with a custom Nextclade dataset for the H5N1 B3.13 genotype that is based on a concatenated reference genome.
-    - `irma_<segment-abbreviation>_segment_fasta` - Individual FASTA files that only contain the sequence for 1 segment, for example the HA segment. There are 8 of these in total.
-
-    General statistics about the assembly are generated with the `consensus_qc` task ([task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl)).
-
-    !!! techdetails "IRMA Technical Details" 
-        |  | Links |
-        | --- | --- |
-        | Task | [task_irma.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_irma.wdl) |
-        | Software Documentation | [IRMA website](https://wonder.cdc.gov/amd/flu/irma/) |
-        | Original Publication(s) | [Viral deep sequencing needs an adaptive approach: IRMA, the iterative refinement meta-assembler](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3030-6) |
+{{ include_md("common_text/irma_task.md", condition="assembly")}}
 
 #### Organism-specific characterization tasks {% raw %} {#org-specific-tasks} {% endraw %}
 
 !!! dna ""
 
-    The following tasks only run for the appropriate organism designation. The following table illustrates which characterization tools are run for the indicated organism.
+    The following tasks are organism-specific. The following table summarizes the characterization tools that are run for the indicated organism.
 
-    |  | SARS-CoV-2 | MPXV | HIV | WNV | Influenza | RSV-A | RSV-B |
-    | --- | --- | --- | --- | --- | --- | --- | --- |
-    | Pangolin | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-    | Nextclade | ✅ | ✅ | ❌ | ❌ | ✅ | ✅ | ✅ |
-    | VADR | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ |
-    | Quasitools HyDRA | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | IRMA | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
-    | Abricate | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
-    | % Gene Coverage | ✅ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ |
-    | Antiviral Detection | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
-    | GenoFLU | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ |
+    | | **SARS-CoV-2** | **Mpox** | **West Nile Virus** | **Influenza** | **RSV-A** | **RSV-B** | **HIV** | **Measles** |
+    |---|---|---|---|---|---|---|---|---|
+    | **Pangolin** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **Nextclade** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ |
+    | **VADR** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ |
+    | **VADR Flu Segments** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
+    | **Quasitools HyDRA** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
+    | **IRMA** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
+    | **Abricate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
+    | **% Gene Coverage** | ✅ | ✅ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ |
+    | **Antiviral Detection** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
+    | **GenoFLU** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
 
-??? task "`pangolin`"
+    ✅ This task runs automatically for these organisms<br>
+    ➕ This task can run for these organisms if optional parameter(s) are provided; see task description for details.<br>
+    ❌ This task will not run for these organisms
 
-    Pangolin designates SARS-CoV-2 lineage assignments.
-    
-    !!! techdetails "Pangolin Technical Details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_pangolin.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/betacoronavirus/task_pangolin.wdl) |
-        | Software Source Code | [Pangolin on GitHub](https://github.com/cov-lineages/pangolin) |
-        | Software Documentation | [Pangolin website](https://cov-lineages.org/resources/pangolin.html) |
-        | Original Publication(s) | [A dynamic nomenclature proposal for SARS-CoV-2 lineages to assist genomic epidemiology](https://doi.org/10.1038/s41564-020-0770-5) |
+=== "SARS-CoV-2"
 
-??? task "`nextclade`"
+{{ include_md("common_text/pangolin_task.md", indent=4) }}
 
-    ["Nextclade is an open-source project for viral genome alignment, mutation calling, clade assignment, quality checks and phylogenetic placement."](https://docs.nextstrain.org/projects/nextclade/en/stable/)
-    
-    !!! techdetails "Nextclade Technical Details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_nextclade.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_nextclade.wdl#L63) |
-        | Software Source Code | <https://github.com/nextstrain/nextclade> |
-        | Software Documentation | [Nextclade](https://docs.nextstrain.org/projects/nextclade/en/stable/) |
-        | Original Publication(s) | [Nextclade: clade assignment, mutation calling and quality control for viral genomes.](https://doi.org/10.21105/joss.03773) |
+{{ include_md("common_text/nextclade_task.md", indent=4) }}
 
-??? task "`vadr`"
+{{ include_md("common_text/vadr_task.md", indent=4) }}
 
-    VADR annotates and validates completed assembly files.
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
-    !!! techdetails "VADR Technical Details"        
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_vadr.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl) |
-        | Software Source Code | <https://github.com/ncbi/vadr> |
-        | Software Documentation | <https://github.com/ncbi/vadr/wiki> |
-        | Original Publication(s) | For SARS-CoV-2: *[Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR](https://doi.org/10.1093/nargab/lqad002)*<br> For non-SARS_CoV-2: [*VADR: validation and annotation of virus sequence submissions to GenBank*](https://doi.org/10.1186/s12859-020-3537-3) |
+=== "Mpox"
 
-??? task "`quasitools`"
+{{ include_md("common_text/nextclade_task.md", indent=4) }}
 
-    `quasitools` performs genome characterization for HIV.
-    
-    !!! techdetails "Quasitools Technical Details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_quasitools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/lentivirus/task_quasitools.wdl) |
-        | Software Source Code | <https://github.com/phac-nml/quasitools/> |
-        | Software Documentation | [Quasitools HyDRA](https://phac-nml.github.io/quasitools/hydra/) |
+{{ include_md("common_text/vadr_task.md", indent=4) }}
 
-??? task "`irma`"
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
-    IRMA assigns types and subtype/lineages in addition to performing assembly of flu genomes. Please see the section above under "Assembly tasks" to find more information regarding this tool.
-    
-    !!! techdetails "IRMA Technical Details" 
-        |  | Links |
-        | --- | --- |
-        | Task | [task_irma.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_irma.wdl) |
-        | Software Documentation | [IRMA website](https://wonder.cdc.gov/amd/flu/irma/) |
-        | Original Publication(s) | [Viral deep sequencing needs an adaptive approach: IRMA, the iterative refinement meta-assembler](https://bmcgenomics.biomedcentral.com/articles/10.1186/s12864-016-3030-6) |
+=== "West Nile Virus"
 
-??? task "`abricate`"
+{{ include_md("common_text/vadr_task.md", indent=4) }}
 
-    Abricate assigns types and subtype/lineages for flu samples
-    
-    !!! techdetails "Abricate Technical Details"
-        |  | Links |
-        | --- | --- |
-        | Task | [task_abricate.wdl (abricate_flu subtask)](https://github.com/theiagen/public_health_bioinformatics/blob/2dff853defc6ea540a058873f6fe6a78cc2350c7/tasks/gene_typing/drug_resistance/task_abricate.wdl#L59) |
-        | Software Source Code | [ABRicate on GitHub](https://github.com/tseemann/abricate) |
-        | Software Documentation | [ABRicate on GitHub](https://github.com/tseemann/abricate) |
+=== "Influenza"
 
-??? task "`gene_coverage`"
+{{ include_md("common_text/nextclade_task.md", indent=4) }}
 
-    This task calculates the percent of the gene covered above a minimum depth. By default, it runs for SARS-CoV-2 and MPXV, but if a bed file is provided with regions of interest, this task will be run for other organisms as well.
+{{ include_md("common_text/vadr_task.md", indent=4) }}
 
-    !!! techdetails "Gene Coverage Technical Details"        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_gene_coverage.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl) |
+{{ include_md("common_text/vadr_flu_segments_task.md", indent=4) }}
 
-??? task "`flu_antiviral_substitutions`"
+{{ include_md("common_text/irma_task.md", indent=4, condition="task") }}
 
-    This sub-workflow determines which, if any, antiviral mutations are present in the sample. 
-    
-    The assembled HA, NA, PA, PB1 and PB2 segments are compared against [a list of known amino-acid substitutions associated with resistance](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl) to the antivirals  A_315675, Amantadine, compound_367, Favipiravir, Fludase, L_742_001, Laninamivir, Oseltamivir (tamiflu), Peramivir, Pimodivir, Rimantadine, Xofluza, and Zanamivir. The list of known amino-acid substitutions associated with resistance can be expanded via optional user input `antiviral_aa_subs` in the format "`NA:V95A,HA:I97V`", i.e. `Protein:AAPositionAA`. 
-    The list of amino-acid substitutions associated with antiviral resistance includes both substitutions reported to confer antiviral resistance in the scientific literature and those inferred to potentially cause antiviral resistance based on an analogous mutation reported to confer antiviral resistance in another flu subtype. A table with the explanation for each amino-acid substitution in the antiviral resistance task is available [here](../../assets/files/antiviral_resistance_flu_aa_substitutions_explanations.xlsx).
+{{ include_md("common_text/abricate_flu_task.md", indent=4) }}
 
-    !!! techdetails "Antiviral Substitutions Technical Details"        
-        |  | Links |
-        | --- | --- |
-        | Workflow | [wf_influenza_antiviral_substitutions.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_influenza_antiviral_substitutions.wdl) |
-        | Task | [task_flu_antiviral_subs.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl) |
-        | Publication | [Next-Generation Sequencing: An Eye-Opener for the Surveillance of Antiviral Resistance in Influenza](https://doi.org/10.1016/j.tibtech.2019.09.009)
+{{ include_md("common_text/flu_antiviral_substitutions_task.md", indent=4) }}
 
-??? task "`genoflu`"
+{{ include_md("common_text/genoflu_task.md", indent=4) }}
 
-    This sub-workflow determines the whole-genome genotype of an H5N1 flu sample.
-    
-    !!! techdetails "GenoFLU Technical Details"
-        
-        |  | Links |
-        | --- | --- |
-        | Task | [task_genoflu.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/orthomyxoviridae/task_genoflu.wdl) |
-        | Software Source Code | [GenoFLU on GitHub](https://github.com/USDA-VS/GenoFLU) |
+=== "RSV-A"
+
+{{ include_md("common_text/nextclade_task.md", indent=4) }}
+
+{{ include_md("common_text/vadr_task.md", indent=4) }}
+
+=== "RSV-B"
+
+{{ include_md("common_text/nextclade_task.md", indent=4) }}
+
+{{ include_md("common_text/vadr_task.md", indent=4) }}
+
+=== "HIV"
+
+{{ include_md("common_text/quasitools_task.md", indent=4) }}
+
+=== "Measles"
+
+{{ include_md("common_text/nextclade_task.md", indent=4) }}
 
 ### Outputs
 

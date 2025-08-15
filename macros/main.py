@@ -124,7 +124,20 @@ def define_env(env):
     for row in rows:
       # add input_table specific formatting if true
       if input_table:
-        md += indent_str + '| ' + ' | '.join(f'**{row.get(h, "")}**' if index == 1 else row.get(h, '') for index, h in enumerate(headers)) + ' |\n'
+        temp_list = []
+        md += indent_str + '| '
+        for index, h in enumerate(headers):
+          if index == 1:
+            temp_add = f'**{row.get(h, "")}**'
+            if temp_add is None:
+              raise TypeError(f"Row '{row}' in file {filename} has 'None' value for column '{h}'")
+            temp_list.append(temp_add)
+          else:
+            temp_add = row.get(h, '')
+            if temp_add is None:
+              raise TypeError(f"Row '{row}' in file {filename} has 'None' value for column '{h}'")
+            temp_list.append(temp_add)
+        md += ' | '.join(temp_list) + ' |\n'
       else:
         md += indent_str + '| ' + ' | '.join(row.get(h, '') for h in headers) + ' |\n'
     

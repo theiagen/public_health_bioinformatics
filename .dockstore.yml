@@ -250,9 +250,14 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/wf_theiavalidate.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Samples_to_Ref_Tree_PHB
+ - name: PhyloCompare_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_addToRefTree.wdl
+   primaryDescriptorPath: /workflows/phylogenetics/wf_phylocompare.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: Nextclade_Batch_PHB 
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_batch.wdl
  - name: Terra_2_GISAID_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/submission/wf_terra_2_gisaid.wdl
