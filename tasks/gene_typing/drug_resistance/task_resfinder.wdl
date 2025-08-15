@@ -2,7 +2,7 @@ version 1.0
 
 task resfinder {
   input {
-    File assembly # Input fasta file
+    File assembly
     String samplename
     String? organism # Species in the sample, species should be entered with their full scientific names (e.g. "escherichia coli"), using quotation marks
     Boolean acquired = true # Run resfinder for acquired resistance genes
@@ -120,7 +120,7 @@ task resfinder {
       grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
       grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
         echo "XDR Shigella based on predicted resistance to ceftriaxone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv"
-        echo "XDR Shigella" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
+        echo "Potentially XDR Shigella" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
       # ~{organism} does contain the word "Shigella", but one of the greps failed, meaning not all drug resistances' were predicted
       else
         echo "Not XDR Shigella" | tee RESFINDER_PREDICTED_XDR_SHIGELLA.txt
@@ -132,37 +132,38 @@ task resfinder {
     # if grep does not find the drug in the RESFINDER_PREDICTED_PHENO_RESISTANCE.txt file, then set the output string to "No resistance predicted"
     # ampicillin
     if grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_AMP.txt
+      awk -F '\t' 'BEGIN{OFS=":";} { if($1 == "AMPICILLIN") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_AMP.txt
     else
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_AMP.txt
     fi
     # azithromycin
     if grep -qi "azithromycin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_AZM.txt
+      awk -F '\t' 'BEGIN{OFS=":";} { if($1 == "AZITHROMYCIN") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_AZM.txt
     else
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_AZM.txt
     fi
     # ceftriaxone
     if grep -qi "ceftriaxone" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_AXO.txt
+      awk -F '\t' 'BEGIN{OFS=":";} {if($1 == "CEFTRIAXONE") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_AXO.txt
     else
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_AXO.txt
     fi
     # ciprofloxacin
     if grep -qi "ciprofloxacin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
-    else
+      # also needs the nalidixic acid, fluroquinolone, unknown quinolone one too lol woo
+      awk -F '\t' 'BEGIN{OFS=":";} {if($1 == "CIPROFLOXACIN") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
+    else 
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
     fi
     # sulfamethoxazole
     if grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_SMX.txt
+      awk -F '\t' 'BEGIN{OFS=":";} {if($1 == "SULFAMETHOXAZOLE") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_SMX.txt
     else
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_SMX.txt
     fi
     # trimethoprim
     if grep -qi "trimethoprim" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      echo "Resistance" > RESFINDER_PREDICTED_RESISTANCE_TMP.txt
+      awk -F '\t' 'BEGIN{OFS=":";} {if($1 == "TRIMETHOPRIM") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_TMP.txt
     else
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_TMP.txt
     fi
