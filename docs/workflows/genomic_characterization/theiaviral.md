@@ -35,6 +35,8 @@
 
     Segmented viruses are accounted for in TheiaViral. The reference genome database excludes segmented viral nucleotide accessions, while including RefSeq assembly accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.
 
+**TheiaViral_Panel** workflow utilizes the assembly capabilities of **TheiaViral_Illumina_PE** to analyze samples sequenced using Illumina's Viral Surveillance Panel (VSP). Given a list of NCBI Taxonomy codes samples will have any matching reads extracted, assembled, and characterized for each code given as input. This is achieved by performing read QC on panel samples and scattering cleaned reads over the given list of taxonomy codes. Reads aligning with input taxon codes are extracted and if their count is over the binning threshold (default of 1000) the extracted reads will be passed onto **TheiaViral_Illumina_PE** to perform assembly and characterization. For each sample there may be multiple resultant assemblies. These assemblies and their subsequent characterization results are uploaded to taxon specific Terra tables. Overall sample QC and extraction information will be present in the input table. 
+
 ### Workflow Diagram
 
 === "TheiaViral_Illumina_PE"
@@ -48,6 +50,11 @@
     !!! caption "TheiaViral_ONT Workflow Diagram"
 
         ![TheiaViral_ONT Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
+
+=== "TheiaViral_Panel"
+    !!! caption "TheiaViral_Panel Workflow Diagram"
+
+        ![TheiaViral_Panel Workflow Diagram](../../assets/figures/TheiaViral_Panel_PHB.png)
 
 ## TheiaViral Workflows for Different Input Types
 
@@ -74,6 +81,14 @@
         It is recommended to trim adapter sequencings via `dorado` basecalling prior to running TheiaViral_ONT, though `porechop` can optionally be called to trim adapters within the workflow.
 
         **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaViral_ONT workflow must be quality assessed before reporting results. We recommend using the [Dorado_Basecalling_PHB](../standalone/dorado_basecalling.md) workflow if applicable.**
+
+    <center> **TheiaViral_Panel** </center>
+
+    ---
+
+    !!! dna "TheiaViral_Panel Input Data"
+
+        The TheiaViral_Panel workflow accepts Illumina VSP paired-end reads as well as normal Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time and storage costs. 
 
 </div>
 
