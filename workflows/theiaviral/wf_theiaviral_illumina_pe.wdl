@@ -203,7 +203,7 @@ workflow theiaviral_illumina_pe {
             read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
             read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
             assembly_fasta = select_first([consensus.consensus_seq]),
-            taxon_name = ncbi_identify.raw_taxon_id,
+            taxon_name = select_first([ncbi_identify.raw_taxon_id, taxon]),
             seq_method = "illumina_pe",
             number_ATCG = consensus_qc.number_ATCG
         }
