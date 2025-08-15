@@ -376,7 +376,7 @@
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/clearlabs.stats.txt
       md5sum: 6ad40bcca227c92fdfec23fe9a03c344
     - path: miniwdl_run/call-vadr/command
-      md5sum: 42c46bff92202bf77791246f195b0d04
+      md5sum: 6bf3fca92c94e677409dd4ecbf8bb0db
     - path: miniwdl_run/call-vadr/inputs.json
       contains: ["assembly_length_unambiguous", "genome_fasta", "fasta"]
     - path: miniwdl_run/call-vadr/outputs.json

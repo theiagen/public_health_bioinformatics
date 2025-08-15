@@ -7,9 +7,10 @@ task vadr {
   input {
     File genome_fasta
     String vadr_opts = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
+    File vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"
     Int assembly_length_unambiguous
     Int skip_length = 10000
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4"
     Int min_length = 50
     Int max_length = 30000
     Int cpu = 4
@@ -22,6 +23,39 @@ task vadr {
 
     if [ ~{assembly_length_unambiguous} -gt ~{skip_length} ]; then
 
+      # extract the model file
+      mkdir -p model_dir
+      tar -C model_dir -xzf ~{vadr_model_file}
+
+      # sometimes the model files are in a subdirectory and we need to find/move them.
+      # the .minfo file is created by the v-build.pl command and is always in a valid model directory
+      model_file_paths=$(find model_dir -type f -name "*.minfo")
+
+      echo "DEBUG: Location(s) of '*.minfo' model files: "
+      echo -e "${model_file_paths} \n"
+
+      if [ -z "$model_file_paths" ]; then
+        echo "ERROR: No model files found in the extracted model directory."
+        exit 1
+      fi
+
+      # sometimes there can be multiple '*.minfo' files further nested in the model directory.
+      # get the outermost (least nested) directory containing '*.minfo' model files.
+      # then count the number of forward slashes and sort them to find the least nested path.
+      top_model_file_path=$(echo "${model_file_paths}" | awk -F "/" '{print NF-1, $0}' | sort -n | head -n1 | cut -d' ' -f2)
+
+      echo "DEBUG: Using least nested model file path: "
+      echo -e "${top_model_file_path} \n"
+
+      # get the directory containing the top-level model files
+      top_model_dir=$(dirname "${top_model_file_path}")
+
+      # vadr will expect the model files to be in this outermost directory
+      mv "${top_model_dir}"/* model_dir/
+
+      # remove any empty directories if they exist
+      find model_dir -type d -empty -delete
+
       # remove terminal ambiguous nucleotides
       /opt/vadr/vadr/miniscripts/fasta-trim-terminal-ambigs.pl \
         "~{genome_fasta}" \
@@ -33,9 +67,11 @@ task vadr {
       # --split and --cpu must be used in conjuction
       v-annotate.pl \
         --split --cpu ~{cpu} \
+        --mdir model_dir \
         ~{vadr_opts} \
         "~{out_base}_trimmed.fasta" \
-        "~{out_base}"
+        "~{out_base}" \
+        -v
 
       # package everything for output
       tar -C "~{out_base}" -czvf "~{out_base}.vadr.tar.gz" .

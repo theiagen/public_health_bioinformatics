@@ -60,13 +60,14 @@ workflow morgana_magic {
       organism = taxon_name,
       pangolin_docker_image = pangolin_docker_image
   }
-  if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b") { 
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
     # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b
     call vadr_task.vadr {
       input:
         genome_fasta = assembly_fasta,
         assembly_length_unambiguous = select_first([number_ATCG]),
         vadr_opts = organism_parameters.vadr_opts,
+        vadr_model_file = organism_parameters.vadr_model_file,
         max_length = organism_parameters.vadr_maxlength,
         skip_length = organism_parameters.vadr_skiplength,
         memory = organism_parameters.vadr_memory
