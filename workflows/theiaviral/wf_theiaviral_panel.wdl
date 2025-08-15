@@ -303,12 +303,12 @@ workflow theiaviral_panel {
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # fastqc
-    Int? fastqc_raw1 = read_QC_trim.fastq_scan_raw1
-    Int? fastqc_raw2 = read_QC_trim.fastq_scan_raw2
-    String? fastqc_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    Int? fastqc_raw1 = read_QC_trim.fastqc_raw1
+    Int? fastqc_raw2 = read_QC_trim.fastqc_raw2
+    String? fastqc_raw_pairs = read_QC_trim.fastqc_raw_pairs
     Int? fastqc_clean1 = read_QC_trim.fastqc_clean1
     Int? fastqc_clean2 = read_QC_trim.fastqc_clean2
-    String? fastqc_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
+    String? fastqc_clean_pairs = read_QC_trim.fastqc_clean_pairs
     String? fastqc_version = read_QC_trim.fastqc_version
     String? fastqc_docker = read_QC_trim.fastqc_docker
     File? fastqc_raw1_html = read_QC_trim.fastqc_raw1_html
