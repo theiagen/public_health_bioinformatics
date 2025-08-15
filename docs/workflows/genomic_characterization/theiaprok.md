@@ -365,7 +365,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
     
     ??? task "Acinetobacter MLST"
         
-        Two MLST schemes are available for *Acinetobacter*. The Pasteur scheme is run by default, given [significant problems with the Oxford scheme have been described](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6510311/). Should users with to alternatively or additionally use the Oxford MLST scheme, see the section above on MLST. The Oxford scheme is activated in TheiaProk with the MLST `scheme` input as "abaumannii".
+        Two MLST schemes are available for *Acinetobacter*. The Pasteur scheme is run by default, given [significant problems with the Oxford scheme have been described](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC6510311/). Should users wish to alternatively or additionally use the Oxford MLST scheme, see the section above on MLST. The Oxford scheme is activated in TheiaProk with the MLST `scheme` input as "abaumannii".
         
     ??? task "*bla*OXA-51-like gene detection"
         

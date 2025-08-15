@@ -1,6 +1,8 @@
 ??? task "`vadr`"
 
-    VADR annotates and validates completed assembly files. For details on VADR default models/parameters, see the [*organism-specific parameters and logic* section](./theiacov.md#org-specific). VADR is also used to characterize individual Influenza segments and will extract each segment into its own fasta file.
+    VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the [*organism-specific parameters and logic* section](./theiacov.md#org-specific). It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.
+
+    As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as _alerts_, can be reported. Any identified alerts can be found in the `vadr_alerts_list` output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the [VADR README here](https://github.com/ncbi/vadr/blob/master/documentation/alerts.md), including details on how to allow sequencecs to pass despite having fatal alerts.
 
     !!! techdetails "VADR Technical Details"
 
