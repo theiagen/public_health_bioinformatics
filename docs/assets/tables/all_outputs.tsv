@@ -30,9 +30,10 @@ agrvate_docker	String	The docker used for AgrVATE	TheiaProk_FASTA, TheiaProk_ONT
 agrvate_results	File	A gzipped tarball of all results	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 agrvate_summary	File	The summary file produced	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 agrvate_version	String	The version of AgrVATE used	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-aligned_bai	String	Index companion file to the bam file generated during the consensus assembly process	TheiaCoV_Illumina_PE
-aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	Clair3_Variants_ONT, Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end), TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_SE
-aligned_bam	String	Sorted BAM file containing the alignments of reads to the reference genome	TheiaCoV_Illumina_PE
+aligned_bai	File	Index companion file to the bam file generated during the consensus assembly process	Clair3_Variants_ONT, TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_SE
+aligned_bai	String	Index companion file to the bam file generated during the consensus assembly process	Freyja_FASTQ, TheiaCoV_Illumina_PE
+aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	Clair3_Variants_ONT, TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_SE
+aligned_bam	String	Sorted BAM file containing the alignments of reads to the reference genome	Freyja_FASTQ, TheiaCoV_Illumina_PE
 aligned_fai	File	Index file for the reference genome	Clair3_Variants_ONT
 aligned_fastas	File	A FASTA file of the aligned genomes	Augur
 alignment_method	String	The method used to generate the alignment	Freyja (ONT), Freyja (Illumina paired-end), Freyja (Illumina single-end)
