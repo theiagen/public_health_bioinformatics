@@ -106,7 +106,7 @@ task mercury {
     String mercury_version = read_string("VERSION")
     String organism_name = read_string("ORGANISM_NAME")
     File? bankit_fasta = "~{output_name}_bankit_combined.fasta"
-    File? bankit_metadata = "~{output_name}.src"
+    File? bankit_metadata = "~{output_name}.tsv"
     File? biosample_metadata = "~{output_name}_biosample_metadata.tsv"
     File? excluded_samples = "~{output_name}_excluded_samples.tsv"
     File? genbank_fasta = "~{output_name}_genbank_untrimmed_combined.fasta"
