@@ -10,15 +10,15 @@ Unconcatenated ONT data is the bane of all humanity. This workflow will automati
 
 We recommend running this workflow with **"Run workflow with inputs defined by file paths"** selected in Terra. This will allow you to upload your data files and provide the necessary information for the workflow without having to specify a data table. There are no outputs for this workflow, as the data is added to either a new or existing table in your workspace.
 
-### Inputs
-
-!!! warning "Barcodes Must Be Nested Directories"
+!!! warning "Barcodes Must Be In Nested Directories"
 
     This workflow anticipates that all reads associated with a barcode are located in their own subdirectories while the `input_bucket_path` points to the parent folder containing all the barcodes that are to be processed.
 
-    For example, if you have the following directory structure:
+!!! dna "How does directory structure impact my output?"
+    If you have the following directory structure:
 
     ```
+    output_bucket_path/
     input_bucket_path/
     ├── barcode01/
     │   ├── ABC123_pass_barcode01_123abc_789xyz_0.fastq.gz
@@ -30,13 +30,44 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
     │   └── ABC123_pass_barcode02_123abc_789xyz_XXX.fastq.gz
     ├── barcodeXXX/
     │   └── ...
+    ├── random_name/
+    │   └── ...
     ├── ABC123_these_files_will_be_ignored_0.fastq.gz
     └── ABC123_these_files_will_be_ignored_1.fastq.gz
     ```
 
-    The `input_bucket_path` in would point to `gs://input_bucket_path/`, and the workflow would automatically find and concatenate all reads within each `barcode*/` subdirectory. 
+    The `input_bucket_path` in would point to `gs://input_bucket_path/`, and the workflow would automatically find and concatenate all reads within each `barcode*/` subdirectory. [Learn how to upload your files in this structure below](#data-upload). Please note: _If there are reads located in the parent directory (e.g., `ABC123_these_files_will_be_ignored_0.fastq.gz` and `ABC123_these_files_will_be_ignored_1.fastq.gz`), they will be ignored._
+
+    After concatenation, the resulting reads will appear in the `gs://output_bucket_path` under the following names:
     
-    If there are reads located in the parent directory (i.e., `input_bucket_path/`), they will be ignored.
+    ```
+    output_bucket_path/
+    ├── previously_concatenated_sample.all.fastq.gz
+    ├── barcode01.all.fastq.gz
+    ├── barcode02.all.fastq.gz
+    ├── ...
+    ├── barcodeXXX.all.fastq.gz
+    └── random_name.all.fastq.gz
+    ```
+
+    **All** data in the `output_bucket_path` will appear in the specified Terra table under the `read1` column. The sample name is taken from the text before the `.all.fastq.gz` suffix, which is the folder name the data was found in. If a file has already been uploaded but is in the `output_bucket_path`, it will be reuploaded.
+
+    | <terra_table_name\>_id | read1 | 
+    | --- | --- |
+    | previously_concatenated_sample | previously_concatenated_sample.all.fastq.gz |
+    | barcode01 | barcode01.all.fastq.gz |
+    | barcode02 | barcode02.all.fastq.gz |
+    | ... | ... |
+    | barcodeXXX | barcodeXXX.all.fastq.gz |
+    | random_name | random_name.all.fastq.gz |
+    
+    If a `barcode_renaming_file` is used (see [relevant section](#barcode-renaming) below) that maps `random_name` to `my_special_sample`, the `random_name` sample will not appear in the table or in the `output_bucket_path`, and `my_special_sample` will appear instead.
+
+    | <terra_table_name\>_id | read1 | 
+    | --- | --- |
+    | my_special_sample | my_special_sample.all.fastq.gz |
+
+### Inputs
 
 #### Uploading unconcatenated ONT reads to Terra and finding the `input_bucket_path` {% raw %} {#data-upload} {% endraw %}
 
@@ -85,7 +116,7 @@ It is recommended to also create a new folder using the method described above f
 
 By default, each concatenated file will take the name of the folder that contained the unconcatenated files. If you have specific sample names that correspond to each folder name, you can specify what you would like the concatenated files to be named as using a `barcode_renaming_file`.
 
-This file takes the following _tab-delimited_ format:
+This file takes the following _tab-delimited_ format. Do not include a header.
 
 ```
 barcode01	sample01
