@@ -12,35 +12,95 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
 
 ### Inputs
 
-!!! warning "Default Behavior"
+!!! warning "Barcodes Must Be Nested Directories"
 
-NESTED STUFF
+    This workflow anticipates that all reads associated with a barcode are located in their own subdirectories while the `input_bucket_path` points to the parent folder containing all the barcodes that are to be processed.
 
-#### Uploading unconcatenated ONT reads to Terra {% raw %} {#data-upload} {% endraw %}
+    For example, if you have the following directory structure:
+
+    ```
+    input_bucket_path/
+    ├── barcode01/
+    │   ├── ABC123_pass_barcode01_123abc_789xyz_0.fastq.gz
+    │   ├── ...
+    │   └── ABC123_pass_barcode01_123abc_789xyz_XXX.fastq.gz
+    ├── barcode02/
+    │   ├── ABC123_pass_barcode02_123abc_789xyz_0.fastq.gz
+    │   ├── ...
+    │   └── ABC123_pass_barcode02_123abc_789xyz_XXX.fastq.gz
+    ├── barcodeXXX/
+    │   └── ...
+    ├── ABC123_these_files_will_be_ignored_0.fastq.gz
+    └── ABC123_these_files_will_be_ignored_1.fastq.gz
+    ```
+
+    The `input_bucket_path` in would point to `gs://input_bucket_path/`, and the workflow would automatically find and concatenate all reads within each `barcode*/` subdirectory. 
+    
+    If there are reads located in the parent directory (i.e., `input_bucket_path/`), they will be ignored.
+
+#### Uploading unconcatenated ONT reads to Terra and finding the `input_bucket_path` {% raw %} {#data-upload} {% endraw %}
 
 Using the Terra data uploader is **not recommended**.
 
-#### Finding the `input_bucket_path` and `output_bucket_path` {% raw %} {#file-paths} {% endraw %}
+???+ dna "The following method is recommended for data upload:"
 
-You can find the file paths by ....
+    1. Navigate to your Terra workspace's Dashboard page and click on "Open bucket in browser" under the "Cloud Information" toggle on the right hand side.
+      
+        !!! caption narrow "Open bucket in browser"
+            ![Open the Google Bucket](../../assets/figures/ONT_Barcode_Concatenation_figure1.png)
+
+    2. Click on the `uploads` folder.
+
+        !!! caption narrow "Open the `uploads` folder"
+            ![Enter the uploads folder](../../assets/figures/ONT_Barcode_Concatenation_figure2.png)
+
+    3. Click on "Create folder". Name the folder a unique name that can be used to identify your run or group of data. Click on "Create" once you have entered the new folder name.
+
+        !!! caption narrow "Create a new folder"
+            ![Create a new folder](../../assets/figures/ONT_Barcode_Concatenation_figure3.png)
+
+    4. Navigate into the newly created folder by clicking on it. You can now drag and drop entire barcode directories into the browser with your new Google bucket. This process uploads the data directly into your Terra workspace.
+
+        !!! caption narrow "Drag your barcode folders onto the browser"
+            ![Upload your barcode directories](../../assets/figures/ONT_Barcode_Concatenation_figure4.png)
+
+        When your files are uploaded, you should see them appear.
+
+        !!! caption narrow "Uploaded folders should look like this"
+            ![Uploaded files](../../assets/figures/ONT_Barcode_Concatenation_figure5.png)
+
+    5. Once your files are uploaded, you can identify the `input_bucket_path` by clicking on the two squares next to the file path at the top of the screen, shown below. When pasting this into the workflow inputs, you will need to add the `gs://` prefix.
+
+        !!! caption narrow "Copy the file path"
+            ![Copy the file path](../../assets/figures/ONT_Barcode_Concatenation_figure6.png)
+
+#### Finding the `output_bucket_path` {% raw %} {#file-paths} {% endraw %}
+
+It is recommended to also create a new folder using the method described above for your `output_bucket_path`. No files should be uploaded to it.
+
+!!! warning "CAUTION! Be careful when reusing `output_bucket_path`"
+    The way this workflow currently works is that all files in the `output_bucket_path` are added to the specified Terra table. If the `output_bucket_path` is reused, all files will be re-added to Terra and the `upload_date` column will be **overwritten**.
 
 #### Creating a `barcode_renaming_file` {% raw %} {#barcode-renaming} {% endraw %}
 
-Make a file!
+By default, each concatenated file will take the name of the folder that contained the unconcatenated files. If you have specific sample names that correspond to each folder name, you can specify what you would like the concatenated files to be named as using a `barcode_renaming_file`.
+
+This file takes the following _tab-delimited_ format:
+
+```
+barcode01	sample01
+barcode02	sample02
+```
+
+The first column is the **name of the folder** and the second column is the **desired sample name**.
+
+Upload this file to your Terra bucket using the "Files" option on the Data tab, or the file icon on the right sidebar. Copy the file path into the `barcode_renaming_file` variable, and your files will be appropriate renamed.
 
 /// html | div[class="searchable-table"]
 
 {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "ONT_Barcode_Concatenation"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
-
-### Workflow Tasks
-
-_Feel free to separate this section into subsections, like "Read QC" and "Alignment" if there are multiple tasks per subsection for easier navigation and readability. See [the page for TheiaMeta](../workflows/genomic_characterization/theiameta.md#workflow-tasks) for an example._
-
-_If your workflow uses a task that is modular and can be used in other contexts, please add that information to the `docs/common_text` directory in a new page (see a template in the `/common_text/template_task.md` file) and use the following macro call to include it here. Adjust the fields marked with `<>` with the appropriate values. Please note that the macro_ **result** _is seen on the web browser, not the macro call itself._
-
-{{ include_md("common_text/template_task.md", condition="condition") }}
 
 ### Outputs
 
