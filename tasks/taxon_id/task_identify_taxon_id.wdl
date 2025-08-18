@@ -27,6 +27,10 @@ task identify_taxon_id {
     dataformat tsv taxonomy \
       --template tax-summary > ncbi_taxon_summary.tsv
 
+    datasets summary taxonomy taxon ~{'"' + taxon + '"'} \
+      --as-json-lines | \
+    dataformat tsv taxonomy --template tax-summary > raw_taxon_summary.tsv
+
     # check if the taxon summary file is empty
     if [ ! -s "ncbi_taxon_summary.tsv" ]; then
       echo "ERROR: no taxon summary found for taxon: ~{taxon} and rank: ~{rank}"
@@ -43,6 +47,8 @@ task identify_taxon_id {
       awk -F'\t' 'NR == 2 {print $2}' ncbi_taxon_summary.tsv > TAXON_ID
       awk -F'\t' 'NR == 2 {print $3}' ncbi_taxon_summary.tsv > TAXON_NAME
       awk -F'\t' 'NR == 2 {print $5}' ncbi_taxon_summary.tsv > TAXON_RANK
+
+      awk -F'\t' 'NR == 2 {print $2}' raw_taxon_summary.tsv > RAW_TAXON_ID
     fi
 
     # get list of {summary_limit} genomes from the specified taxon and calculate average genome length
@@ -96,6 +102,7 @@ task identify_taxon_id {
     String taxon_id = read_string("TAXON_ID")
     String taxon_name = read_string("TAXON_NAME")
     String taxon_rank = read_string("TAXON_RANK")
+    String raw_taxon_id = read_string("RAW_TAXON_ID")
     String avg_genome_length = read_string("AVG_GENOME_LENGTH")
     String ncbi_datasets_accession = read_string("NCBI_ACCESSION")
     String ncbi_datasets_version = read_string("DATASETS_VERSION")
