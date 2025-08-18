@@ -8,7 +8,7 @@ workflow ont_barcode_concatenation {
     String input_bucket_path
     String output_bucket_path
 
-    String terra_table_name
+    String new_table_name
     String terra_project
     String terra_workspace
 
@@ -25,7 +25,7 @@ workflow ont_barcode_concatenation {
   if (defined(cat_ont_barcodes.concatenation_log)) {
     call create_terra_table_task.create_terra_table {
       input:
-        new_table_name = terra_table_name,
+        new_table_name = new_table_name,
         terra_project = terra_project,
         terra_workspace = terra_workspace,
         data_location_path = output_bucket_path,
