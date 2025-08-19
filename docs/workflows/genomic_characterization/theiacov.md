@@ -65,16 +65,18 @@ These workflows currently support the following organisms. The first option in t
 - **RSV-A** (**`"rsv_a"`**, `"rsv-a"`, `"RSV-A"`, `"RSV_A"`)
 - **RSV-B** (**`"rsv_b"`**, `"rsv-b"`, `"RSV-B"`, `"RSV_B"`)
 - **Measles** (**`"measles"`**, `"Measles"`, `"mev"`, `"MeV"`, `"Morbillivirus"`, `"morbillivirus"`)
+- **Mumps** (**`"mumps"`**, `"Mumps"`, `"MuV"`, `"muv"`, `"Mumps virus"`, `"mumps virus"`)
+- **Rubella** (**`"rubella"`**, `"Rubella"`, `"RuV"`, `"ruv"`, `"Rubella virus"`, `"rubella virus"`)
 
 The compatibility of each workflow with each pathogen is shown below:
 
-|  | SARS-CoV-2 | Mpox | HIV | WNV | Influenza | RSV-A | RSV-B | Measles |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ❌ |
-| ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ |
-| FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+|  | SARS-CoV-2 | Mpox | HIV | WNV | Influenza | RSV-A | RSV-B | Measles | Mumps | Rubella |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ❌ | ✅ | ✅ |
+| ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ |
+| FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ✅ |
 
 We've provided the following information to help you set up the workflow for each organism in the form of input JSONs.
 
@@ -343,7 +345,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         </div>
 
-    ??? toggle "Mumps Defaults"
+    === "Mumps"
         <div class="searchable-table" markdown="block">
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
@@ -358,7 +360,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         </div>
 
-    ??? toggle "Rubella Defaults"
+    === "Rubella"
         <div class="searchable-table" markdown="block">
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
@@ -370,7 +372,9 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_skip_length | rubella | `0` |
         | vadr_mem | rubella | `16` |
         | vadr_model_file | rubella | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-ruv-1.01.tar.gz"` |
-    
+
+        </div>
+
 ### Workflow Tasks
 
 All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT, and ClearLabs workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaCoV workflows subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
@@ -444,18 +448,18 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
     The following tasks are organism-specific. The following table summarizes the characterization tools that are run for the indicated organism.
 
-    | | **SARS-CoV-2** | **Mpox** | **West Nile Virus** | **Influenza** | **RSV-A** | **RSV-B** | **HIV** | **Measles** |
-    |---|---|---|---|---|---|---|---|---|
-    | **Pangolin** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-    | **Nextclade** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ |
-    | **VADR** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ |
-    | **VADR Flu Segments** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | **Quasitools HyDRA** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
-    | **IRMA** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | **Abricate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | **% Gene Coverage** | ✅ | ✅ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ |
-    | **Antiviral Detection** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | **GenoFLU** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
+    | | **SARS-CoV-2** | **Mpox** | **West Nile Virus** | **Influenza** | **RSV-A** | **RSV-B** | **HIV** | **Measles** | **Mumps** | **Rubella** |
+    |---|---|---|---|---|---|---|---|---|---|---|
+    | **Pangolin** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **Nextclade** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ | ❌ |
+    | **VADR** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
+    | **VADR Flu Segments** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **Quasitools HyDRA** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
+    | **IRMA** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **Abricate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **% Gene Coverage** | ✅ | ✅ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ |
+    | **Antiviral Detection** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **GenoFLU** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 
     ✅ This task runs automatically for these organisms<br>
     ➕ This task can run for these organisms if optional parameter(s) are provided; see task description for details.<br>
@@ -518,6 +522,16 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 === "Measles"
 
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
+
+{{ include_md("common_text/vadr_task.md", indent=4) }}
+
+=== "Mumps"
+
+{{ include_md("common_text/vadr_task.md", indent=4) }}
+
+=== "Rubella"
+
+{{ include_md("common_text/vadr_task.md", indent=4) }}
 
 ### Outputs
 

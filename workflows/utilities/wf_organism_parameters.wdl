@@ -289,7 +289,7 @@ workflow organism_parameters {
     Int measles_vadr_memory = 24
     File measles_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mev-1.02.tar.gz"
   }
-  if (organism == "mumps" || organism == "MuV" || organism == "muv" || organism == "Mumps" || organism == "Mumps virus" || organism == "mumps virus") {
+  if (organism == "mumps" || organism == "MuV" || organism == "muv" || organism == "Mumps" || organism == "Mumps virus" || organism == "mumps virus" || organism == "2560602") {
     # vadr options for mumps
     String mumps_org_name = "mumps"
     String mumps_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/mumps/NC_002200.1_mumps_reference.fasta"
@@ -300,7 +300,7 @@ workflow organism_parameters {
     Int mumps_vadr_memory = 16
     File mumps_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-muv-1.01.tar.gz"
   }
-  if (organism == "rubella" || organism == "RuV" || organism == "ruv" || organism == "Rubella" || organism == "Rubella virus" || organism == "rubella virus") {
+  if (organism == "rubella" || organism == "RuV" || organism == "ruv" || organism == "Rubella" || organism == "Rubella virus" || organism == "rubella virus" || organism == "11041") {
     # vadr options for rubella
     String rubella_org_name = "rubella"
     String rubella_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rubella/NC_001545.2_rubella_reference.fasta"
