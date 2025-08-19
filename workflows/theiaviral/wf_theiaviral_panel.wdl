@@ -290,11 +290,11 @@ workflow theiaviral_panel {
     Float? kraken_percent_human_raw = read_QC_trim.kraken_human
     Float? kraken_percent_human_clean = read_QC_trim.kraken_human_clean
     # fastq_scan
-    Int? fastq_scan_raw1 = read_QC_trim.fastq_scan_raw1
-    Int? fastq_scan_raw2 = read_QC_trim.fastq_scan_raw2
+    Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
+    Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
     String? fastq_scan_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
-    Int? fastq_scan_clean1 = read_QC_trim.fastq_scan_clean1
-    Int? fastq_scan_clean2 = read_QC_trim.fastq_scan_clean2
+    Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
@@ -303,12 +303,12 @@ workflow theiaviral_panel {
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # fastqc
-    Int? fastqc_raw1 = read_QC_trim.fastqc_raw1
-    Int? fastqc_raw2 = read_QC_trim.fastqc_raw2
-    String? fastqc_raw_pairs = read_QC_trim.fastqc_raw_pairs
-    Int? fastqc_clean1 = read_QC_trim.fastqc_clean1
-    Int? fastqc_clean2 = read_QC_trim.fastqc_clean2
-    String? fastqc_clean_pairs = read_QC_trim.fastqc_clean_pairs
+    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
+    Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2
+    String? fastqc_num_reads_raw_pairs = read_QC_trim.fastqc_raw_pairs
+    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
+    Int? fastqc_num_reads_clean2 = read_QC_trim.fastqc_clean2
+    String? fastqc_num_reads_clean_pairs = read_QC_trim.fastqc_clean_pairs
     String? fastqc_version = read_QC_trim.fastqc_version
     String? fastqc_docker = read_QC_trim.fastqc_docker
     File? fastqc_raw1_html = read_QC_trim.fastqc_raw1_html

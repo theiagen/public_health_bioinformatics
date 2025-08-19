@@ -303,6 +303,34 @@
 
 {{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=8) }}
 
+=== "TheiaViral_Panel"
+
+    ??? toggle "Versioning"
+
+{{ include_md("common_text/versioning_task.md", condition="theiaviral", indent=8) }}
+
+    ??? toggle "Read Quality Control, Trimming, Filtering, Identification"
+
+{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaviral_panel", indent=8) }}
+
+    ??? toggle "Read Extraction and Binning"
+
+{{ include_md("common_text/krakentools_task.md", condition="theiaviral_panel", indent=8)}}
+
+    ??? toggle "Taxonomic Identification"
+
+{{ include_md("common_text/ncbi_identify_task.md", indent=8) }}
+
+    ??? toggle "Assembly and Characterization"
+
+        TheiaViral_Panel utilizes the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single VSP sample to undergo the same viral assembly as other samples. 
+
+        See TheiaViral_Illumina_PE documentation above for more details.
+
+    ??? toggle "Data Population"
+
+        Export Taxon Tables is used to publish data per binned read set to user specified tables. 
+
 #### Taxa-Specific Tasks
 
 The TheiaViral workflows activate taxa-specific sub-workflows after the identification of relevant taxa. These characterization modules are activated by populating `taxon` with an *exact* match to a taxon listed in parentheses below (case-insensitive):
