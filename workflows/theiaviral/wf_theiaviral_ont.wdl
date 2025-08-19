@@ -250,11 +250,12 @@ workflow theiaviral_ont {
         # run morgana magic for classification
         call morgana_magic_wf.morgana_magic {
           input:
+            read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
             samplename = samplename,
             assembly_fasta = select_first([bcftools_consensus.assembly_fasta]),
-            read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-            taxon_name = select_first([ncbi_datasets.taxon_id]),
-            seq_method = "nanopore"
+            taxon_name = ncbi_identify.raw_taxon_id,
+            seq_method = "nanopore",
+            number_ATCG = consensus_qc.number_ATCG
         }
       }
     }
@@ -430,7 +431,16 @@ workflow theiaviral_ont {
     Int? checkv_consensus_total_genes = checkv_consensus.total_genes
     String? checkv_consensus_version = checkv_consensus.checkv_version
     # morgana magic outputs
-    String? morgana_magic_organism = morgana_magic.organism 
+    String? morgana_magic_organism = morgana_magic.organism
+    # VADR outputs
+    File? vadr_alerts_list = morgana_magic.vadr_alerts_list
+    String? vadr_num_alerts = morgana_magic.vadr_num_alerts
+    File? vadr_feature_tbl_pass = morgana_magic.vadr_feature_tbl_pass
+    File? vadr_feature_tbl_fail = morgana_magic.vadr_feature_tbl_fail
+    File? vadr_classification_summary_file = morgana_magic.vadr_classification_summary_file
+    File? vadr_all_outputs_tar_gz = morgana_magic.vadr_all_outputs_tar_gz
+    String? vadr_docker = morgana_magic.vadr_docker
+    File? vadr_fastas_zip_archive = morgana_magic.vadr_fastas_zip_archive
     # Pangolin outputs
     String? pango_lineage = morgana_magic.pango_lineage
     String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded
@@ -497,5 +507,12 @@ workflow theiaviral_ont {
     File? abricate_flu_results = morgana_magic.abricate_flu_results
     String? abricate_flu_database =  morgana_magic.abricate_flu_database
     String? abricate_flu_version = morgana_magic.abricate_flu_version
+    # HIV Quasitools Outputs
+    String? quasitools_version = morgana_magic.quasitools_version
+    String? quasitools_date = morgana_magic.quasitools_date
+    File? quasitools_coverage_file = morgana_magic.quasitools_coverage_file
+    File? quasitools_dr_report = morgana_magic.quasitools_dr_report
+    File? quasitools_hydra_vcf = morgana_magic.quasitools_hydra_vcf
+    File? quasitools_mutations_report = morgana_magic.quasitools_mutations_report
   }
 }
