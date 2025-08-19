@@ -271,8 +271,8 @@ workflow organism_parameters {
     String measles_org_name = "measles"
     String measles_kraken_target_organism = "Measles morbillivirus"
     String measles_genome_len = 16000
-    String measles_nextclade_ds_tag = "2025-03-26--11-47-13Z"
-    String measles_nextclade_ds_name = "nextstrain/measles/N450/WHO-2012"
+    String measles_nextclade_ds_tag = "2025-08-11--19-06-01Z"
+    String measles_nextclade_ds_name = "nextstrain/measles/genome/WHO-2012"
   }
   # set rabies nextclade parameters
   if (organism == "rabies" || organism == "Lyssavirus rabies" || organism == "lyssavirus" || organism == "Lyssavirus" || organism == "Rabies" || organism == "11292" || organism == "11286") {
