@@ -1,4 +1,3 @@
-
 Variable	Type	Description	Workflow
 abricate_abaum_database	String	Database of reference A. baumannii plasmid typing genes used for plasmid typing	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 abricate_abaum_docker	String	Docker file used for running abricate	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
