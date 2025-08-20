@@ -2,9 +2,12 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Mercury_Prep_N_Batch**](../workflows/public_data_sharing/mercury_prep_n_batch.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Mercury_Prep_N_Batch**](../workflows/public_data_sharing/mercury_prep_n_batch.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level", "Dockstore"]) }}
 
 ## Mercury_Prep_N_Batch_PHB
+
+!!! tip "Command-line incompatible"
+    This _workflow_ is not compatible with command-line use, but the underlying tool ([`mercury`](https://github.com/theiagen/mercury)) is. If you want to run Mercury on the command-line, please see the tool's [README](https://github.com/theiagen/mercury/blob/main/README.md) for more details.
 
 Mercury prepares and formats metadata and sequencing files **located in Google Cloud Platform (GCP) buckets** for submission to national & international databases, currently NCBI & GISAID. Mercury was initially developed to ingest read, assembly, and metadata files associated with SARS-CoV-2 amplicon reads from clinical samples and format that data for submission per the [Public Health Alliance for Genomic Epidemiology (PH4GE)'s SARS-CoV-2 Contextual Data Specifications](https://github.com/pha4ge/SARS-CoV-2-Contextual-Data-Specification).
 

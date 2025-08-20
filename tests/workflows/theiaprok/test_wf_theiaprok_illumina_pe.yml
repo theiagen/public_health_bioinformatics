@@ -17,7 +17,7 @@
     - wf_theiaprok_illumina_pe_miniwdl
   files:
     - path: miniwdl_run/call-amrfinderplus_task/command
-      md5sum: e2fb16459ecd30a2cc1a94e079c1bb97
+      md5sum: d7aa313e58d19b8e8c9654b7da1b7a09
     - path: miniwdl_run/call-amrfinderplus_task/inputs.json
       contains: ["assembly", "fasta", "organism", "test"]
     - path: miniwdl_run/call-amrfinderplus_task/outputs.json
@@ -29,7 +29,7 @@
     - path: miniwdl_run/call-amrfinderplus_task/task.log
       contains: ["wdl", "theiaprok_illumina_pe", "amrfinderplus", "done"]
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_DB_VERSION
-      md5sum: 74a9c2b58824cdb6b0557daa2471ee52
+      md5sum: a0a3171c147e46c213d917a8ea7e41b2
     - path: miniwdl_run/call-amrfinderplus_task/work/AMRFINDER_VERSION
       md5sum: 18182ea212927c652291b844af8ba88e
     - path: miniwdl_run/call-amrfinderplus_task/work/AMR_CLASSES
@@ -410,7 +410,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_abricate.wdl
       md5sum: c82025fcc1442b1c2a598a429cd9cdab
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
-      md5sum: feb28bb8dfbc4c52d7062a45a043d9f5
+      md5sum: f1834d4b58b0021eab61d78b01fc88a1
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_bakta.wdl
       md5sum: 96f6cb7f0c8716513a0ca74b083a745f
     - path: miniwdl_run/wdl/tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl
@@ -474,7 +474,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_sonneityping.wdl
       md5sum: 9e069c6ed95805fae7f13c1883bca9a6
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
-      md5sum: 778865d83a93f11847c00004f9ab709c
+      md5sum: 653825a5ebb450dff33a2e068329cb86
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
       md5sum: 9d665d02c1c655c023910b9910dc4c2c
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl

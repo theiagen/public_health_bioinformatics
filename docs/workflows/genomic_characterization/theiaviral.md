@@ -2,11 +2,11 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaViral**](../workflows/genomic_characterization/theiaviral.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaViral**](../workflows/genomic_characterization/theiaviral.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level", "Dockstore"]) }}
 
 ## TheiaViral Workflows
 
-**TheiaViral** workflows assemble, quality assess, and characterize viral genomes from diverse data sources, including metagenomic samples. TheiaViral workflows can generate consensus assemblies of recalcitrant viruses, including diverse or recombinant lineages, such as rabies virus and norovirus, through a three-step approach: 1) generating an intermediate *de novo* assembly from taxonomy-filtered reads, 2) selecting the best reference from a database of ~200,000 viral genomes using average nucleotide identity, and 3) producing a final consensus assembly through reference-based read mapping and variant calling. Reference genomes can be directly provided to TheiaViral to bypass *de novo* assembly, which enables compatibility with tiled amplicon sequencing data. Targeted viral characterization is currently ongoing and functional for *Lyssavirus rabies*.
+**TheiaViral** workflows assemble, quality assess, and characterize viral genomes from diverse data sources, including metagenomic samples. TheiaViral workflows can generate consensus assemblies of recalcitrant viruses, including diverse or recombinant lineages, such as rabies virus and norovirus, through a three-step approach: 1) generating an intermediate *de novo* assembly from taxonomy-filtered reads, 2) selecting the best reference from a database of ~200,000 viral genomes using average nucleotide identity, and 3) producing a final consensus assembly through reference-based read mapping and variant calling. Reference genomes can be directly provided to TheiaViral to bypass *de novo* assembly, which enables compatibility with tiled amplicon sequencing data. Targeted viral characterization is functional for lineages [listed below](#taxa-specific-tasks).
 
 ???+ question "What are the main differences between the TheiaViral and TheiaCov workflows?"
 
@@ -117,7 +117,7 @@
 
     ///
 
-### All Tasks
+### Workflow Tasks
 
 === "TheiaViral_Illumina_PE"
 
@@ -254,11 +254,18 @@
 
 #### Taxa-Specific Tasks
 
-The TheiaViral workflows automatically activate taxa-specific sub-workflows after the identification of relevant taxa using the taxon ID of the reference genome.
+The TheiaViral workflows activate taxa-specific sub-workflows after the identification of relevant taxa. These characterization modules are activated by populating `taxon` with an *exact* match to a taxon listed in parentheses below (case-insensitive):
 
-??? toggle "*Lyssavirus rabies*"
-
-{{ include_md("common_text/nextclade_task.md", condition="theiaviral", indent=4) }}
+- **SARS-CoV-2** (`"2697049"`, `"3418604"`, `"sars-cov-2"`)
+- **Monkeypox virus** (`"10244"`, `"mpxv"`, `"mpox"`, `"monkeypox virus"`)
+- **Human Immunodeficiency Virus 1** (`"11676"`, `"hiv1"`)
+- **Human Immunodeficiency Virus 2** (`"11709"`, `"hiv2"`)
+- **West Nile Virus** (`"11082"`, `"wnv"`, `"west nile virus"`)
+- **Influenza** (`"11320"`, `"11309"`, `"11520"`, `"flu"`, `"influenza"`)
+- **RSV-A** (`"208893"`, `"hrsv-a"`)
+- **RSV-B** (`"208895"`, `"hrsv-b"`)
+- **Measles** (`"11234"`, `"measles"`)
+- **Rabies** (`"11286"`, `"11292"`, `"rabies"`, `"lyssavirus rabies"`, `"lyssavirus"`)
 
 ### Outputs
 
