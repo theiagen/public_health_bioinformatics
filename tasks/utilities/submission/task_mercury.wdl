@@ -46,7 +46,7 @@ task mercury {
     Int cpu = 2
     Int disk_size = 100
     Int memory = 8
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.1.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.1.3"
   }
   meta {
     volatile: true
