@@ -36,7 +36,7 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
     └── ABC123_these_files_will_be_ignored_1.fastq.gz
     ```
 
-    The `input_bucket_path` in would point to `gs://input_bucket_path/`, and the workflow would automatically find and concatenate all reads within each `barcode*/` subdirectory. [Learn how to upload your files in this structure below](#data-upload). Please note: _If there are reads located in the parent directory (e.g., `ABC123_these_files_will_be_ignored_0.fastq.gz` and `ABC123_these_files_will_be_ignored_1.fastq.gz`), they will be ignored._
+    The `input_bucket_path` in would point to `gs://input_bucket_path/`, and the workflow would automatically find and concatenate all reads within each subdirectory (both `barcode*/` and `random_name/`). [Learn how to upload your files in this structure below](#data-upload). Please note: _If there are reads located in the parent directory (e.g., `ABC123_these_files_will_be_ignored_0.fastq.gz` and `ABC123_these_files_will_be_ignored_1.fastq.gz`), they will be ignored._
 
     After concatenation, the resulting reads will appear in the `gs://output_bucket_path` under the following names:
     
@@ -125,7 +125,7 @@ barcode02	sample02
 
 The first column is the **name of the folder** and the second column is the **desired sample name**.
 
-Upload this file to your Terra bucket using the "Files" option on the Data tab, or the file icon on the right sidebar. Copy the file path into the `barcode_renaming_file` variable, and your files will be appropriate renamed.
+Upload this file to your Terra bucket using either the Data Uploader or by clicking on the file icon on the right sidebar. Copy the file path into the `barcode_renaming_file` variable, and your files will be appropriate renamed.
 
 /// html | div[class="searchable-table"]
 
