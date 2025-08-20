@@ -1049,7 +1049,7 @@ nextclade_batch_nextclade_docker	String	Nextclade docker image used	Nextclade_Ba
 nextclade_batch_nextclade_json	File	JSON file with the results of the Nextclade analysis	Nextclade_Batch
 nextclade_batch_nextclade_tsv	File	Tab-delimited file with Nextclade results	Nextclade_Batch
 nextclade_batch_nextclade_version	String	Nextclade version used	Nextclade_Batch
-trimmomatic_docker	String	The docker image used for the trimmomatic module in this workflow	Freyja (Illumina paired-end), Freyja (Illumina single-end), TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+trimmomatic_docker	String	The docker image used for the trimmomatic module in this workflow	Freyja_FASTQ (PE), Freyja_FASTQ (SE), TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
 trimmomatic_read1_trimmed	File	The read1 file post trimming	TBProfiler_tNGS
 trimmomatic_read2_trimmed	File	The read2 file post trimming	TBProfiler_tNGS
 trimmomatic_stats	File	The read trimming statistics	TBProfiler_tNGS
@@ -1239,7 +1239,7 @@ raven_denovo_version	String	Version of Raven used	TheiaViral_ONT
 raven_denovo_status	String	Status of Raven assembly	TheiaViral_ONT
 theiaviral_ont_date	String	Date of TheiaViral ONT workflow run	TheiaViral_ONT
 theiaviral_ont_version	String	Version of TheiaViral ONT workflow	TheiaViral_ONT
-dehost_wf_dehost_read1	File	Reads that did not map to host	TheiaViral_ONT, TheiaViral_Illumina_PE, 
+dehost_wf_dehost_read1	File	Reads that did not map to host	TheiaViral_ONT, TheiaViral_Illumina_PE
 dehost_wf_dehost_read2	File	Paired-reads that did not map to host	TheiaViral_Illumina_PE
 dehost_wf_host_accession	String	Host genome accession	TheiaViral_Illumina_PE, TheiaViral_ONT
 dehost_wf_host_fasta	File	Host genome FASTA file	TheiaViral_Illumina_PE, TheiaViral_ONT

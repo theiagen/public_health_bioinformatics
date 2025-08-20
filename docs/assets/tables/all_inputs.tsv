@@ -464,9 +464,9 @@ cladetyper	ref_clade4	File	The reference assembly for clade 4	gs://theiagen-publ
 cladetyper	ref_clade4_annotated	String	The path to the annotated reference for clade 4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff	Optional	Cauris_CladeTyper	
 cladetyper	ref_clade5	File	The reference assembly for clade 5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta	Optional	Cauris_CladeTyper	
 cladetyper	ref_clade5_annotated	String	The path to the annotated reference for clade 5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff	Optional	Cauris_CladeTyper	
-cladetyper	ref_clade6	File	The reference assembly for clade 6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	Cauris_Cladetyper	
-cladetyper	ref_clade6_annotated	String	The path to the annotated reference for clade 6		Optional	Cauris_Cladetyper	
-cladetyper	max_distance	Float	The maximum GAMBIT distance to report a clade hit	0.1	Optional	Cauris_Cladetyper	
+cladetyper	ref_clade6	File	The reference assembly for clade 6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	Cauris_CladeTyper	
+cladetyper	ref_clade6_annotated	String	The path to the annotated reference for clade 6		Optional	Cauris_CladeTyper	
+cladetyper	max_distance	Float	The maximum GAMBIT distance to report a clade hit	0.1	Optional	Cauris_CladeTyper	
 clair3_variants_ont	clair3_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Clair3_Variants_ONT	
 clair3_variants_ont	clair3_disable_phasing	Boolean	Disable whatshap phasing	TRUE	Optional	Clair3_Variants_ONT	
 clair3_variants_ont	clair3_disk_size	Int	Disk size in GB	100	Optional	Clair3_Variants_ONT	
@@ -712,8 +712,6 @@ flu_track	irma_memory	Int	Internal component, do not modify		Optional	TheiaCoV_F
 flu_track	irma_min_ambiguous_threshold	Float	Minimum called Single Nucleotide Variant (SNV) frequency for mixed based calls in the output consensus assembly (AKA amended consensus).	0.2	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
 flu_track	irma_min_ambiguous_threshold	Float	Internal component, do not modify		Optional	TheiaCoV_FASTA	
 flu_track	irma_min_avg_consensus_allele_quality	Int	Minimum allele coverage depth to call plurality consensus, otherwise calls "N". Setting this value too high can negatively impact final amended consensus.	10	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
-flu_track	irma_min_avg_consensus_allele_quality	Int	Internal component, do not modify		Optional	TheiaCoV_FASTA	
-flu_track	irma_min_consensus_support	Int	Internal component, do not modify		Optional	TheiaCoV_FASTA	
 flu_track	irma_min_avg_consensus_allele_quality	Int	Internal component, do not modify		Optional	TheiaCoV_FASTA	
 flu_track	irma_min_consensus_support	Int	Internal component, do not modify		Optional	TheiaCoV_FASTA	
 flu_track	irma_min_read_length	Int	Minimum read length to include reads in read gathering step in IRMA. This value should not be greater than the typical read length.	75	Optional	TheiaCoV_ONT, TheiaCoV_Illumina_PE	flu
