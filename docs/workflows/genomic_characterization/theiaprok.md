@@ -393,7 +393,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
             | Software Documentation | https://bitbucket.org/genomicepidemiology/serotypefinder/src/master/ |
             | Original Publication(s) | [Rapid and Easy In Silico Serotyping of Escherichia coli Isolates by Use of Whole-Genome Sequencing Data](https://journals.asm.org/doi/10.1128/JCM.00008-15) |
         
-{{ include_md("common_text/ectyper_task.md", condition="theiaprok")}}
+{{ include_md("common_text/ectyper_task.md")}}
 
     `VirulenceFinder` identifies virulence genes in total or partial sequenced isolates of bacteria. Currently, only *E. coli* is supported in TheiaProk workflows. 
 
