@@ -102,8 +102,10 @@ task mercury {
     # provide a lowercased organism variable for use later
     echo "~{organism}" | tr '[:upper:]' '[:lower:]' > ORGANISM_NAME
 
-    # change bankit_metadata to tsv
-    mv ~{output_name}.src ~{output_name}.tsv
+    # change bankit_metadata to tsv if exists
+    if [ -f ~{output_name}.src ]; then
+      mv ~{output_name}.src ~{output_name}.tsv
+    fi
   >>>
   output {
     String mercury_version = read_string("VERSION")
