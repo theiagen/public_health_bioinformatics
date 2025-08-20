@@ -98,31 +98,33 @@ task resfinder {
     # convert all letters in first column (antibiotic) to uppercase. For readability of output string
     awk -F '\t' 'BEGIN{OFS="\t"} { $1=toupper($1) } 1' ~{samplename}_pheno_table.headerless.tsv > ~{samplename}_pheno_table.headerless.uppercase.tsv
 
-    # if column 3 shows 'Resistant', then print list of drugs followed by the genes/point mutations responsible
+    # if column 3 shows 'Resistant', then print list of drugs followed by the genes/point mutations responsible - alphabetized
     awk -F '\t' 'BEGIN{OFS=":"; ORS="; "} { if($3 == "Resistant") {print $1,$5}}' ~{samplename}_pheno_table.headerless.uppercase.tsv \
-    | sed 's/..$//' > RESFINDER_PREDICTED_PHENO_RESISTANCE.txt
+    | sed 's/..$//' | tr ';' '\n' | sort | tr '\n' ';' > RESFINDER_PREDICTED_PHENO_RESISTANCE.txt
 
     # check for XDR Shigella status, based on CDC definition here: https://emergency.cdc.gov/han/2023/han00486.asp
     # requirements:
     # organism input (i.e. gambit_predicted_taxon) must contain "Shigella"
-    # predicted resistance to antimicrobials must include ALL: "ceftriaxone", "azithromycin", "ciprofloxacin", "trimethoprim", "sulfamethoxazole", and "ampicillin"
+    # predicted resistance to antimicrobials must include ALL: "ampicillin", "azithromycin", "ceftriaxone", "ciprofloxacin", "sulfamethoxazole", and "trimethoprim"
     if [[ "~{organism}" != *"Shigella"* ]]; then
       echo 'Either the input gambit_predicted_taxon does not contain "Shigella" or the user did not supply the organism as an input string to the workflow.'
       echo "Skipping XDR Shigella check."
       echo "Not Shigella based on gambit_predicted_taxon or user input" | tee RESFINDER_PREDICTED_XDR_SHIGELLA.txt
-    # if organism input string DOES contain the word "Shigella", check for resistance predictions to 6 drugs in XDR definition
-    elif [[ "~{organism}" == *"Shigella"* ]]; then
+
+     elif [[ "~{organism}" == *"Shigella"* ]]; then
+      # if organism input string DOES contain the word "Shigella", check for resistance predictions to 6 drugs in XDR definition
       # nested if: if grep finds the all drugs, set output to XDR shigella, but if not, set it to "Not XDR Shigella"
-      if grep -qi "ceftriaxone" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
-      grep -qi "azithromycin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
-      grep -qi "ciprofloxacin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
-      grep -qi "trimethoprim" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
-      grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
-      grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-        echo "XDR Shigella based on predicted resistance to ceftriaxone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv"
+      if grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+          grep -qi "azithromycin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+          grep -qi "ceftriaxone" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+          grep -qi "ciprofloxacin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+          grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt && \
+          grep -qi "trimethoprim" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
+        echo "XDR Shigella based on predicted resistance to ampicillin, azithromycin, ceftriaxone, ciprofloxacin, sulfamethoxazole, and trimethoprim. Please verify by reviewing ~{samplename}_pheno_table.tsv and ~{samplename}_ResFinder_results_tab.tsv"
         echo "Potentially XDR Shigella" > RESFINDER_PREDICTED_XDR_SHIGELLA.txt
-      # ~{organism} does contain the word "Shigella", but one of the greps failed, meaning not all drug resistances' were predicted
+      
       else
+        # ~{organism} does contain the word "Shigella", but one of the greps failed, meaning not all drug resistances' were predicted
         echo "Not XDR Shigella" | tee RESFINDER_PREDICTED_XDR_SHIGELLA.txt
       fi
     fi
@@ -130,38 +132,39 @@ task resfinder {
     # set output strings for Resistance or no Resistance predicted for each of 6 drugs
     # if grep finds the drug in the RESFINDER_PREDICTED_PHENO_RESISTANCE.txt file, then set the output string to "Resistance"
     # if grep does not find the drug in the RESFINDER_PREDICTED_PHENO_RESISTANCE.txt file, then set the output string to "No resistance predicted"
-    # ampicillin
+    
     if grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       awk -F '\t' 'BEGIN{OFS=":";} { if($1 == "AMPICILLIN") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_AMP.txt
     else
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_AMP.txt
     fi
-    # azithromycin
+    
     if grep -qi "azithromycin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       awk -F '\t' 'BEGIN{OFS=":";} { if($1 == "AZITHROMYCIN") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_AZM.txt
     else
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_AZM.txt
     fi
-    # ceftriaxone
+    
     if grep -qi "ceftriaxone" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       awk -F '\t' 'BEGIN{OFS=":";} {if($1 == "CEFTRIAXONE") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_AXO.txt
     else
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_AXO.txt
     fi
-    # ciprofloxacin
+    
     if grep -qi "ciprofloxacin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       # also needs the nalidixic acid, fluroquinolone, unknown quinolone one too lol woo
       awk -F '\t' 'BEGIN{OFS=":";} {if($1 == "CIPROFLOXACIN") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
-    else 
+      # parse the nalidixic acid, fluroquinolone, unknown quinolone fields and also add the pointfinder results stuff
+    else
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
     fi
-    # sulfamethoxazole
+    
     if grep -qi "sulfamethoxazole" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       awk -F '\t' 'BEGIN{OFS=":";} {if($1 == "SULFAMETHOXAZOLE") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_SMX.txt
     else
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_SMX.txt
     fi
-    # trimethoprim
+    
     if grep -qi "trimethoprim" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       awk -F '\t' 'BEGIN{OFS=":";} {if($1 == "TRIMETHOPRIM") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_TMP.txt
     else
