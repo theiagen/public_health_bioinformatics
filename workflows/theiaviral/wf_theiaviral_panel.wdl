@@ -127,13 +127,14 @@ workflow theiaviral_panel {
           # call export_taxon_table
           call export_taxon_table_task.export_taxon_table_vsp {
             input:
-              samplename = samplename + "_" + sub(source_table_name, " ", "-"),
+              samplename = samplename + "_" + sub(ncbi_identify.taxon_name, " ", "-"),
               taxon_table = output_taxon_table,
               gambit_predicted_taxon = ncbi_identify.taxon_name,
               terra_project = terra_project,
               terra_workspace = terra_workspace,
               columns_to_export = {
                 "samplename": samplename + "_" + taxon_id,
+                "source_table": source_table_name,
                 "taxon_name": ncbi_identify.taxon_name,
                 "assembly_fasta": theiaviral.assembly_consensus_fasta,
                 "read1": select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
