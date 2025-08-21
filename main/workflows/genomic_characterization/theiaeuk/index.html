@@ -5730,7 +5730,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#mycotics">Mycotics</a></td>
-<td>v3.1.0</td>
+<td>vX.X.X</td>
 <td>Some optional features incompatible, Yes</td>
 <td>Sample-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaEuk_Illumina_PE_PHB:main?tab=info">TheiaEuk_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaEuk_ONT_PHB:main?tab=info">TheiaEuk_ONT_PHB</a></td>
@@ -5846,15 +5846,7 @@
 <td><strong>cg_pipe_opts</strong></td>
 <td>String</td>
 <td>Options to pass to CG-Pipeline for clean read assessment</td>
-<td>#NAME?</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>cg_pipeline_clean</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>4</td>
+<td>--fast</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5886,15 +5878,7 @@
 <td><strong>cg_pipe_opts</strong></td>
 <td>String</td>
 <td>Options to pass to CG-Pipeline for raw read assessment</td>
-<td>#NAME?</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>cg_pipeline_raw</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>4</td>
+<td>--fast</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5943,14 +5927,6 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>clean_check_reads</td>
-<td><strong>organism</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6282,27 +6258,59 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>gambit</td>
-<td><strong>gambit_db_genomes</strong></td>
-<td>File</td>
-<td>Database of metadata for assembled query genomes; requires complementary signatures file. If not provided, uses default database "/gambit-db"</td>
-<td>gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.1-20250505.gdb</td>
+<td>merlin_magic</td>
+<td><strong>abricate_abaum_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>gambit</td>
-<td><strong>gambit_db_signatures</strong></td>
-<td>File</td>
-<td>Signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.</td>
-<td>gs://gambit-databases-rp/2.0.0/gambit-signatures-2.0.1-20250505.gs</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>gambit</td>
-<td><strong>memory</strong></td>
+<td>merlin_magic</td>
+<td><strong>abricate_abaum_min_percent_coverage</strong></td>
 <td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>abricate_abaum_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>abricate_vibrio_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>abricate_vibrio_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>abricate_vibrio_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>agrvate_agr_typing_only</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6364,6 +6372,190 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>call_shigeifinder_reads_input</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>call_stxtyper</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>call_tbp_parser</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_kmer_size</strong></td>
+<td>Int</td>
+<td>Kmer size for cladtyper</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_max_distance</strong></td>
+<td>Float</td>
+<td>The maximum GAMBIT distance to report a <em>C. auris</em> clade hit</td>
+<td>0.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade1</strong></td>
+<td>File</td>
+<td>Reference genome FASTA for <em>Candidozyma auris</em> clade1</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fasta</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade1_annotated</strong></td>
+<td>File</td>
+<td>Reference GBFF annotation for <em>C. auris</em> clade1</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435_Cauris_B8441_V2_genomic.gbff</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade2</strong></td>
+<td>File</td>
+<td>Reference genome FASTA for <em>C. auris</em> clade2</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade2_annotated</strong></td>
+<td>File</td>
+<td>Reference GBFF annotation for <em>C. auris</em> clade2</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade3</strong></td>
+<td>File</td>
+<td>Reference genome FASTA for <em>C. auris</em> clade3</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade3_annotated</strong></td>
+<td>File</td>
+<td>Reference GBFF annotation for <em>C. auris</em> clade3</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade4</strong></td>
+<td>File</td>
+<td>Reference genome FASTA for <em>C. auris</em> clade4</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade4_annotated</strong></td>
+<td>File</td>
+<td>Reference GBFF annotation for <em>C. auris</em> clade4</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade5</strong></td>
+<td>File</td>
+<td>Reference genome FASTA for <em>C. auris</em> clade5</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade5_annotated</strong></td>
+<td>File</td>
+<td>Reference GBFF annotation for <em>C. auris</em> clade5</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade6</strong></td>
+<td>File</td>
+<td>Reference genome FASTA for <em>C. auris</em> clade6</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade6_annotated</strong></td>
+<td>File</td>
+<td>Reference GBFF annotation for <em>C. auris</em> clade6</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_h_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_h_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_o_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_o_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_print_alleles</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_verify</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -7829,6 +8021,62 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>abricate_abaum_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>abricate_abaum_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>abricate_abaum_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>abricate_vibrio_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>abricate_vibrio_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>abricate_vibrio_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>agrvate_agr_typing_only</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>agrvate_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
@@ -7901,6 +8149,22 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>call_stxtyper</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>call_tbp_parser</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>cladetyper_kmer_size</strong></td>
 <td>Int</td>
 <td>Kmer size for cladtyper</td>
@@ -7909,73 +8173,105 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>cladetyper_max_distance</strong></td>
+<td>Float</td>
+<td>The maximum GAMBIT distance to report a <em>C. auris</em> clade hit</td>
+<td>0.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade1</strong></td>
 <td>File</td>
-<td>Provide reference for clade1</td>
-<td></td>
+<td>Reference genome FASTA for <em>Candidozyma auris</em> clade1</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade1_annotated</strong></td>
 <td>File</td>
-<td>Provide annoated reference for clade1</td>
-<td></td>
+<td>Reference GBFF annotation for <em>C. auris</em> clade1</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435_Cauris_B8441_V2_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade2</strong></td>
 <td>File</td>
-<td>Provide reference for clade2</td>
-<td></td>
+<td>Reference genome FASTA for <em>C. auris</em> clade2</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade2_annotated</strong></td>
 <td>File</td>
-<td>Provide annoated reference for clade2</td>
-<td></td>
+<td>Reference GBFF annotation for <em>C. auris</em> clade2</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade3</strong></td>
 <td>File</td>
-<td>Provide reference for clade3</td>
-<td></td>
+<td>Reference genome FASTA for <em>C. auris</em> clade3</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade3_annotated</strong></td>
 <td>File</td>
-<td>Provide annoated reference for clade3</td>
-<td></td>
+<td>Reference GBFF annotation for <em>C. auris</em> clade3</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade4</strong></td>
+<td>File</td>
+<td>Reference genome FASTA for <em>C. auris</em> clade4</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade4_annotated</strong></td>
 <td>File</td>
-<td>Provide annoated reference for clade3</td>
-<td></td>
+<td>Reference GBFF annotation for <em>C. auris</em> clade4</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade5</strong></td>
 <td>File</td>
-<td>Provide reference for clade5</td>
-<td></td>
+<td>Reference genome FASTA for <em>C. auris</em> clade5</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade5_annotated</strong></td>
 <td>File</td>
-<td>Provide annoated reference for clade5</td>
+<td>Reference GBFF annotation for <em>C. auris</em> clade5</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade6</strong></td>
+<td>File</td>
+<td>Reference genome FASTA for <em>C. auris</em> clade6</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade6_annotated</strong></td>
+<td>File</td>
+<td>Reference GBFF annotation for <em>C. auris</em> clade6</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -7985,6 +8281,62 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_h_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_h_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_o_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_o_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_print_alleles</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ectyper_verify</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9624,8 +9976,8 @@
 <p>Three tools can be deployed when <em>Candidozyma auris</em>/<em>Candida auris</em> is  identified.</p>
 <details class="task">
 <summary>Cladetyping: clade determination</summary>
-<p>A custom GAMBIT database is created using five clade-specific <em>Candidozyma auris</em> reference genomes. Sequences undergo genomic signature comparison against this database, which then enables assignment to one of the five <em>Candidozyma auris</em> clades (Clade I to Clade V) based on sequence similarity and phylogenetic relationships. This integrated approach ensures precise clade assignments, crucial for understanding the genetic diversity and epidemiology of <em>Candidozyma auris</em>.</p>
-<p>See more information on the reference information for the five clades below:</p>
+<p>A custom GAMBIT database is created using six clade-specific <em>Candidozyma auris</em> reference genomes. Sequences undergo genomic signature comparison against this database, which then enables assignment to one of the six <em>Candidozyma auris</em> clades (Clade I to Clade VI) based on sequence similarity and phylogenetic relationships. This integrated approach ensures precise clade assignments, crucial for understanding the genetic diversity and epidemiology of <em>Candidozyma auris</em>.</p>
+<p>See more information on the reference information for the six clades below:</p>
 <table>
 <thead>
 <tr>
@@ -9639,8 +9991,8 @@
 <tbody>
 <tr>
 <td>Clade I</td>
-<td>GCA_002759435.2</td>
-<td>Cand_auris_B8441_V2</td>
+<td>GCA_002759435.3</td>
+<td>Cand_auris_B8441_V3</td>
 <td>B8441</td>
 <td>SAMN05379624</td>
 </tr>
@@ -9672,8 +10024,19 @@
 <td>IFRC2087</td>
 <td>SAMN11570381</td>
 </tr>
+<tr>
+<td>Clade VI</td>
+<td>GCA_032714025.1</td>
+<td>ASM3271402v1</td>
+<td>F1580</td>
+<td>SAMN36753179</td>
+</tr>
 </tbody>
 </table>
+<div class="admonition warning">
+<p class="admonition-title">Clade VI annotation</p>
+<p>Clade VI does not have an available reference genome annotation at the time of adding the reference genome into Cladetyping. While Clade VI assignment is functional, downstream variant calling is not currently possible without an annotation. Users may provide a close relative annotation, such as Clade IV, though it is unknown if Clade VI variants can reliably be called with respect to such a reference. </p>
+</div>
 <div class="admonition techdetails">
 <p class="admonition-title">Cauris_Cladetyper Technical Details</p>
 <table>
@@ -9686,7 +10049,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/candida/task_cauris_cladetyper.wdl">task_cauris_cladetyper.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl">task_cauris_cladetyper.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -10220,7 +10583,7 @@
 <tr>
 <td>cladetyper_annotated_reference</td>
 <td><strong>String</strong></td>
-<td>The annotated reference file for the identified clade, "None" if no clade was identified</td>
+<td>The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted</td>
 </tr>
 <tr>
 <td>cladetyper_clade</td>
@@ -10710,7 +11073,7 @@
 <tr>
 <td>cladetyper_annotated_reference</td>
 <td><strong>String</strong></td>
-<td>The annotated reference file for the identified clade, "None" if no clade was identified</td>
+<td>The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted</td>
 </tr>
 <tr>
 <td>cladetyper_clade</td>

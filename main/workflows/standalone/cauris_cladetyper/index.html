@@ -5634,7 +5634,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#standalone">Standalone</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#mycotics">Mycotics</a></td>
-<td>v3.0.0</td>
+<td>vX.X.X</td>
 <td>Yes</td>
 <td>Sample-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Cauris_CladeTyper_PHB:main?tab=info">Cauris_CladeTyper_PHB</a></td>
@@ -5642,7 +5642,7 @@
 </tbody>
 </table>
 <h2 id="cauris_cladetyper_phb">Cauris_CladeTyper_PHB<a class="headerlink" href="#cauris_cladetyper_phb" title="Permanent link">&para;</a></h2>
-<p>The Cauris_CladeTyper_PHB Workflow is designed to assign the clade to <em>Candidozyma auris</em> (also known as <em>Candida auris</em>) WGS assemblies based on their genomic sequence similarity to the five clade-specific reference files. Clade typing is essential for understanding the epidemiology and evolutionary dynamics of this emerging multidrug-resistant fungal pathogen.</p>
+<p>The Cauris_CladeTyper_PHB Workflow is designed to assign the clade to <em>Candidozyma auris</em> (also known as <em>Candida auris</em>) WGS assemblies based on their genomic sequence similarity to the six clade-specific reference files. Clade typing is essential for understanding the epidemiology and evolutionary dynamics of this emerging multidrug-resistant fungal pathogen.</p>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">&para;</a></h3>
 <div class="searchable-table">
 <table>
@@ -5703,6 +5703,14 @@
 <td>Int</td>
 <td>The kmer size to use for generating the GAMBIT signatures file; see GAMBIT documentation for more details</td>
 <td>11</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>max_distance</strong></td>
+<td>Float</td>
+<td>The maximum GAMBIT distance to report a clade hit</td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5794,6 +5802,22 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>cladetyper</td>
+<td><strong>ref_clade6</strong></td>
+<td>File</td>
+<td>The reference assembly for clade 6</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cladetyper</td>
+<td><strong>ref_clade6_annotated</strong></td>
+<td>String</td>
+<td>The path to the annotated reference for clade 6</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>version_capture</td>
 <td><strong>docker</strong></td>
 <td>String</td>
@@ -5816,8 +5840,8 @@
 <details class="task">
 <summary>Cladetyping: clade determination</summary>
 <p>The Cauris_Cladetyper Workflow for <em>Candidozyma auris</em> employs GAMBIT for taxonomic identification, comparing whole genome sequencing data against reference databases to accurately classify <em>Candidozyma auris</em> isolates.</p>
-<p>A custom GAMBIT database is created using five clade-specific <em>Candidozyma auris</em> reference genomes. Sequences undergo genomic signature comparison against this database, which then enables assignment to one of the five <em>Candidozyma auris</em> clades (Clade I to Clade V) based on sequence similarity and phylogenetic relationships. This integrated approach ensures precise clade assignments, crucial for understanding the genetic diversity and epidemiology of <em>Candidozyma auris</em>.</p>
-<p>See more information on the reference information for the five clades below:</p>
+<p>A custom GAMBIT database is created using six clade-specific <em>Candidozyma auris</em> reference genomes. Sequences undergo genomic signature comparison against this database, which then enables assignment to one of the six <em>Candidozyma auris</em> clades (Clade I to Clade VI) based on sequence similarity and phylogenetic relationships. This integrated approach ensures precise clade assignments, crucial for understanding the genetic diversity and epidemiology of <em>Candidozyma auris</em>.</p>
+<p>See more information on the reference information for the six clades below:</p>
 <table>
 <thead>
 <tr>
@@ -5831,8 +5855,8 @@
 <tbody>
 <tr>
 <td>Clade I</td>
-<td>GCA_002759435.2</td>
-<td>Cand_auris_B8441_V2</td>
+<td>GCA_002759435.3</td>
+<td>Cand_auris_B8441_V3</td>
 <td>B8441</td>
 <td>SAMN05379624</td>
 </tr>
@@ -5864,8 +5888,19 @@
 <td>IFRC2087</td>
 <td>SAMN11570381</td>
 </tr>
+<tr>
+<td>Clade VI</td>
+<td>GCA_032714025.1</td>
+<td>ASM3271402v1</td>
+<td>F1580</td>
+<td>SAMN36753179</td>
+</tr>
 </tbody>
 </table>
+<div class="admonition warning">
+<p class="admonition-title">Clade VI annotation</p>
+<p>Clade VI does not have an available reference genome annotation at the time of adding the reference genome into Cladetyping. While Clade VI assignment is functional, downstream variant calling is not currently possible without an annotation. Users may provide a close relative annotation, such as Clade IV, though it is unknown if Clade VI variants can reliably be called with respect to such a reference. </p>
+</div>
 <div class="admonition techdetails">
 <p class="admonition-title">Cauris_Cladetyper Technical Details</p>
 <table>
@@ -5878,7 +5913,7 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/candida/task_cauris_cladetyper.wdl">task_cauris_cladetyper.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl">task_cauris_cladetyper.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
@@ -5920,7 +5955,7 @@
 <tr>
 <td>cladetyper_annotated_reference</td>
 <td>String</td>
-<td>The annotated reference file for the identified clade, "None" if no clade was identified</td>
+<td>The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted</td>
 </tr>
 <tr>
 <td>cladetyper_clade</td>
@@ -5970,7 +6005,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 11, 2025 20:16:11 UTC">2025-08-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 21, 2025 21:47:20 UTC">2025-08-21</span>
   </span>
 
     
