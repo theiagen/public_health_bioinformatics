@@ -43,6 +43,7 @@ workflow theiaviral_panel {
       "2697049", "10404"
     ]
     File output_taxon_table
+    String source_table_name
 
     String terra_project
     String terra_workspace
@@ -126,7 +127,7 @@ workflow theiaviral_panel {
           # call export_taxon_table
           call export_taxon_table_task.export_taxon_table_vsp {
             input:
-              samplename = samplename + "_" + sub(ncbi_identify.taxon_name, " ", "-"),
+              samplename = samplename + "_" + sub(source_table_name, " ", "-"),
               taxon_table = output_taxon_table,
               gambit_predicted_taxon = ncbi_identify.taxon_name,
               terra_project = terra_project,
