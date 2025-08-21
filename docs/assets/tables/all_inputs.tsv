@@ -2662,14 +2662,10 @@ theiaviral_ont	read_extraction_rank	String	Taxonomic rank to use for read extrac
 theiaviral_ont	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_ONT	general
 theiaviral_ont	skip_rasusa	Boolean	True/False to skip read subsampling with Rasusa	TRUE	Optional	TheiaViral_ONT	general
 theiaviral_ont	skip_screen	Boolean	True/False to skip read screening check prior to analysis	FALSE	Optional	TheiaViral_ONT	general
-transfer_files	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Transfer_Column_Content	runtime
-transfer_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Transfer_Column_Content	runtime
-transfer_files	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine	Optional	Transfer_Column_Content	docker
-transfer_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Transfer_Column_Content	runtime
-transfer_freyja_files	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_Update	runtime
-transfer_freyja_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Freyja_Update	runtime
-transfer_freyja_files	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Freyja_Update	docker
-transfer_freyja_files	memory	Int	Amount of memory (in GB) to allocate to the task	2	Optional	Freyja_Update	runtime
+transfer_files	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Transfer_Column_Content, Freyja_Update	runtime
+transfer_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Transfer_Column_Content, Freyja_Update	runtime
+transfer_files	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine	Optional	Transfer_Column_Content, Freyja_Update	docker
+transfer_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Transfer_Column_Content, Freyja_Update	runtime
 trim_genbank_fastas	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Mercury_Prep_N_Batch	runtime
 trim_genbank_fastas	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Mercury_Prep_N_Batch	runtime
 trim_genbank_fastas	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/vadr:1.3	Optional	Mercury_Prep_N_Batch	docker

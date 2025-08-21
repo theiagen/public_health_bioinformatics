@@ -1,6 +1,6 @@
 version 1.0
 
-task transfer_freyja_files {
+task transfer_files {
   input {
     String gcp_uri
     File updated_barcodes
@@ -9,7 +9,7 @@ task transfer_freyja_files {
     Int disk_size = 25
     Int memory = 2
     Int cpu = 1
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine"
   }
   command <<<
   # transfer_files to specified gcp_uri
