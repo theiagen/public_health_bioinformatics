@@ -350,14 +350,14 @@ centroid	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Stream
 centroid	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Snippy_Streamline, Snippy_Streamline_FASTA	
 centroid	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/centroid:0.1.0	Optional	Snippy_Streamline, Snippy_Streamline_FASTA	
 centroid	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Snippy_Streamline, Snippy_Streamline_FASTA	
-cg_pipeline_clean	cg_pipe_opts	String	Options to pass to CG-Pipeline for clean read assessment	#NAME?	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-cg_pipeline_clean	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+cg_pipeline_clean	cg_pipe_opts	String	Options to pass to CG-Pipeline for clean read assessment	"--fast"	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+cg_pipeline_clean	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 cg_pipeline_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 cg_pipeline_clean	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 cg_pipeline_clean	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 cg_pipeline_clean	read2	File	Internal component, do not modify		Optional	TheiaProk_Illumina_SE	
-cg_pipeline_raw	cg_pipe_opts	String	Options to pass to CG-Pipeline for raw read assessment	#NAME?	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-cg_pipeline_raw	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+cg_pipeline_raw	cg_pipe_opts	String	Options to pass to CG-Pipeline for raw read assessment	"--fast"	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+cg_pipeline_raw	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 cg_pipeline_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 cg_pipeline_raw	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 cg_pipeline_raw	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
@@ -388,6 +388,9 @@ cladetyper	ref_clade4	File	The reference assembly for clade 4	gs://theiagen-publ
 cladetyper	ref_clade4_annotated	String	The path to the annotated reference for clade 4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff	Optional	Cauris_Cladetyper	
 cladetyper	ref_clade5	File	The reference assembly for clade 5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta	Optional	Cauris_Cladetyper	
 cladetyper	ref_clade5_annotated	String	The path to the annotated reference for clade 5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff	Optional	Cauris_Cladetyper	
+cladetyper	ref_clade6	File	The reference assembly for clade 6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	Cauris_Cladetyper	
+cladetyper	ref_clade6_annotated	String	The path to the annotated reference for clade 6		Optional	Cauris_Cladetyper	
+cladetyper	max_distance	Float	The maximum GAMBIT distance to report a clade hit	0.1	Optional	Cauris_Cladetyper	
 clair3_variants_ont	clair3_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Clair3_Variants_ONT	
 clair3_variants_ont	clair3_disable_phasing	Boolean	Disable whatshap phasing	TRUE	Optional	Clair3_Variants_ONT	
 clair3_variants_ont	clair3_disk_size	Int	Disk size in GB	100	Optional	Clair3_Variants_ONT	
@@ -409,7 +412,7 @@ clean_check_reads	min_coverage	Int	Minimum coverage to pass read screening	10	Op
 clean_check_reads	min_genome_length	Int	Minimum genome length to pass read screening	1500	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 clean_check_reads	min_reads	Int	Minimum reads to pass read screening	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT
 clean_check_reads	min_proportion	Int	Minimum read proportion to pass read screening	40	Optional	TheiaViral_Illumina_PE
-clean_check_reads	organism	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
+clean_check_reads	organism	String	Internal component, do not modify		Optional	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 clean_check_reads	workflow_series	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT
 clean_check_reads	skip_mash	Boolean	If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.	TRUE	Optional	TheiaViral_ONT	
 compare_assemblies	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	
@@ -748,9 +751,9 @@ gamma	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optiona
 gambit	cpu	Int	Number of CPUs to allocate to the task	8	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
 gambit	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
 gambit	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
-gambit	gambit_db_genomes	File	Database of metadata for assembled query genomes; requires complementary signatures file. If not provided, uses default database "/gambit-db"	gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.1-20250505.gdb	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-gambit	gambit_db_signatures	File	Signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.	gs://gambit-databases-rp/2.0.0/gambit-signatures-2.0.1-20250505.gs	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-gambit	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Gambit_Query, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
+gambit	gambit_db_genomes	File	Database of metadata for assembled query genomes; requires complementary signatures file. If not provided, uses default database "/gambit-db"	gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.1-20250505.gdb	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gambit	gambit_db_signatures	File	Signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.	gs://gambit-databases-rp/2.0.0/gambit-signatures-2.0.1-20250505.gs	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+gambit	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Gambit_Query, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
 gene_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	MPXV, sars-cov-2
 gene_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	MPXV, sars-cov-2
 gene_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	MPXV, sars-cov-2
@@ -961,6 +964,13 @@ merlin_magic	abricate_vibrio_docker_image	String	The Docker container to use for
 merlin_magic	abricate_vibrio_min_percent_coverage	Int	Minimum DNA percent coverage	80	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	abricate_vibrio_min_percent_identity	Int	Minimum DNA percent identity	80	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	agrvate_agr_typing_only	Boolean	Set to true to skip agr operon extraction and frameshift detection	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	abricate_abaum_docker_image	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
+merlin_magic	abricate_abaum_min_percent_coverage	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
+merlin_magic	abricate_abaum_min_percent_identity	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
+merlin_magic	abricate_vibrio_docker_image	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
+merlin_magic	abricate_vibrio_min_percent_coverage	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
+merlin_magic	abricate_vibrio_min_percent_identity	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
+merlin_magic	agrvate_agr_typing_only	Boolean	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
 merlin_magic	agrvate_docker_image	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
 merlin_magic	agrvate_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
 merlin_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
@@ -973,7 +983,9 @@ merlin_magic	call_poppunk	Boolean	Internal component, do not modify		Optional	Th
 merlin_magic	call_shigeifinder_reads_input	Boolean	If set to "true", the ShigEiFinder task will run again but using read files as input instead of the assembly file. Input is shown but not used for TheiaProk_FASTA.	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	call_shigeifinder_reads_input	Boolean	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
 merlin_magic	call_stxtyper	Boolean	If set to "true", the StxTyper task will run on all samples regardless of the gambit_predicted_taxon output. Useful if you suspect a non-E.coli or non-Shigella sample contains stx genes.	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	call_stxtyper	Boolean	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 merlin_magic	call_tbp_parser	Boolean	If set to "true", activates the tbp_parser module and results in more outputs, including tbp_parser_looker_report_csv, tbp_parser_laboratorian_report_csv,  tbp_parser_lims_report_csv, tbp_parser_coverage_report, and tbp_parser_genome_percent_coverage	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	call_tbp_parser	Boolean	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
 merlin_magic	cauris_cladetyper_docker_image	String	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	cladetyper_kmer_size	Int	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	cladetyper_ref_clade1	File	*Provide an empty file if running TheiaProk on the command-line		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
@@ -986,18 +998,24 @@ merlin_magic	cladetyper_ref_clade4	File	*Provide an empty file if running TheiaP
 merlin_magic	cladetyper_ref_clade4_annotated	File	*Provide an empty file if running TheiaProk on the command-line		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	cladetyper_ref_clade5	File	*Provide an empty file if running TheiaProk on the command-line		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	cladetyper_ref_clade5_annotated	File	*Provide an empty file if running TheiaProk on the command-line		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	cladetyper_ref_clade6	File	The reference assembly for clade 6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE		
+merlin_magic	cladetyper_ref_clade6_annotated	String	The path to the annotated reference for clade 6		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE		
 merlin_magic	cauris_cladetyper_docker_image	String	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
-merlin_magic	cladetyper_kmer_size	Int	Kmer size for cladtyper		Optional	TheiaEuk_ONT	
-merlin_magic	cladetyper_ref_clade1	File	Provide reference for clade1		Optional	TheiaEuk_ONT	
-merlin_magic	cladetyper_ref_clade1_annotated	File	Provide annoated reference for clade1		Optional	TheiaEuk_ONT	
-merlin_magic	cladetyper_ref_clade2	File	Provide reference for clade2		Optional	TheiaEuk_ONT	
-merlin_magic	cladetyper_ref_clade2_annotated	File	Provide annoated reference for clade2		Optional	TheiaEuk_ONT	
-merlin_magic	cladetyper_ref_clade3	File	Provide reference for clade3		Optional	 TheiaEuk_ONT	
-merlin_magic	cladetyper_ref_clade3_annotated	File	Provide annoated reference for clade3		Optional	TheiaEuk_ONT	
-merlin_magic	cladetyper_ref_clade4	File	Provide reference for clade4	Optional	TheiaEuk_ONT		
-merlin_magic	cladetyper_ref_clade4_annotated	File	Provide annoated reference for clade3		Optional	TheiaEuk_ONT	
-merlin_magic	cladetyper_ref_clade5	File	Provide reference for clade5		Optional	TheiaEuk_ONT	
-merlin_magic	cladetyper_ref_clade5_annotated	File	Provide annoated reference for clade5		Optional	TheiaEuk_ONT	
+merlin_magic	cladetyper_kmer_size	Int	Kmer size for cladtyper		Optional	TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_ref_clade1	File	Reference genome FASTA for *Candidozyma auris* clade1	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fasta	Optional	TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_ref_clade1_annotated	File	Reference GBFF annotation for *C. auris* clade1	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435_Cauris_B8441_V2_genomic.gbff	Optional	TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_ref_clade2	File	Reference genome FASTA for *C. auris* clade2	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta	Optional	TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_ref_clade2_annotated	File	Reference GBFF annotation for *C. auris* clade2	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff	Optional	TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_ref_clade3	File	Reference genome FASTA for *C. auris* clade3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta	Optional	 TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_ref_clade3_annotated	File	Reference GBFF annotation for *C. auris* clade3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff	Optional	TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_ref_clade4	File	Reference genome FASTA for *C. auris* clade4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta	Optional	TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_ref_clade4_annotated	File	Reference GBFF annotation for *C. auris* clade4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff	Optional	TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_ref_clade5	File	Reference genome FASTA for *C. auris* clade5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta	Optional	TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_ref_clade5_annotated	File	Reference GBFF annotation for *C. auris* clade5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff	Optional	TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_ref_clade6	File	Reference genome FASTA for *C. auris* clade6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_ref_clade6_annotated	File	Reference GBFF annotation for *C. auris* clade6		Optional	TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_max_distance	Float	The maximum GAMBIT distance to report a *C. auris* clade hit	0.1	Optional	TheiaEuk_ONT, TheiaEuk_Illumina_PE	
+merlin_magic	cladetyper_max_distance	Float	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	clockwork_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaEuk_ONT	
 merlin_magic	ectyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/ectyper:1.0.0--pyhdfd78af_1	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	ectyper_h_min_percent_coverage	Int	Minumum percent coverage required for an H antigen allele match	50	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
@@ -1006,6 +1024,13 @@ merlin_magic	ectyper_o_min_percent_coverage	Int	Minumum percent coverage require
 merlin_magic	ectyper_o_min_percent_identity	Int	Percent identity required for an O antigen allele match	90	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	ectyper_print_alleles	Boolean	Set to true to print the allele sequences as the final column	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	ectyper_verify	Boolean	Set to true to enable E. coli species verification	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
+merlin_magic	ectyper_docker_image	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
+merlin_magic	ectyper_h_min_percent_coverage	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
+merlin_magic	ectyper_h_min_percent_identity	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
+merlin_magic	ectyper_o_min_percent_coverage	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
+merlin_magic	ectyper_o_min_percent_identity	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
+merlin_magic	ectyper_print_alleles	Boolean	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
+merlin_magic	ectyper_verify	Boolean	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
 merlin_magic	emmtypingtool_docker_image	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	
 merlin_magic	emmtypingtool_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
 merlin_magic	genotyphi_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	
