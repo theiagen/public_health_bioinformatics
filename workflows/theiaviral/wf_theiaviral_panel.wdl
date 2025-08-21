@@ -55,7 +55,7 @@ workflow theiaviral_panel {
     String? read_extraction_rank
     Boolean concatenate_unclassified = false
     Boolean skip_theiaviral_screen = true
-    Int minimum_read_number = 1000
+    Int min_read_count = 1000
     Boolean call_metaviralspades = true
   }  
   call versioning.version_capture {
@@ -96,7 +96,7 @@ workflow theiaviral_panel {
           read1 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
           read2 = select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2])
       }
-      if (fastq_scan_binned.read1_seq > minimum_read_number) {
+      if (fastq_scan_binned.read1_seq > min_read_count) {
         # get the taxon information from ncbi
         call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
           input:

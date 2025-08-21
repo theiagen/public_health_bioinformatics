@@ -145,8 +145,8 @@
         ??? dna "`concatenate_unclassified` optional parameter"
             By default, `concatenate_unclassified` is set to false, which indicates that reads that are not classified by Kraken2 will be included with reads classified as the input `taxon`. The classification software most often does not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. If extracted data is lacking and assemblies are not generated setting this parameter to true will add to the read count making assemblies more probable, however, could introduce reads that are not aligned with the identified `taxon`.
         
-        ??? dna "`minimum_read_number` _required_ parameter"
-            By default, `minimum_read_number` is set to 1000, being the number of reads needed to pass the binning threshold to proceed onto assembly and characterization via **TheiaViral_Illumina_PE**
+        ??? dna "`min_read_count` _required_ parameter"
+            By default, `min_read_count` is set to 1000, being the number of reads needed to pass the binning threshold to proceed onto assembly and characterization via **TheiaViral_Illumina_PE**
 
 === "TheiaViral_Illumina_PE"
     /// html | div[class="searchable-table"]
