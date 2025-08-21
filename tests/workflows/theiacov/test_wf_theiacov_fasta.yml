@@ -133,10 +133,10 @@
     - path: miniwdl_run/call-pangolin4/work/fasta.pangolin_report.csv
       md5sum: 67fa55d26d7335b84ab23de4659cf3e2
     - path: miniwdl_run/call-vadr/command
-      md5sum: 0b8d8120e4ab46e303aebcd86c6ee64a
+      md5sum: f50993ba11c1699a5fcb81b980db504b
     - path: miniwdl_run/call-vadr/inputs.json
     - path: miniwdl_run/call-vadr/outputs.json
-      md5sum: 2c3f4a10237310b40ceb46c6b05d1bf1
+      md5sum: 6e1be64e10df33bab1884368cd3320db
     - path: miniwdl_run/call-vadr/stderr.txt
     - path: miniwdl_run/call-vadr/stderr.txt.offset
     - path: miniwdl_run/call-vadr/stdout.txt

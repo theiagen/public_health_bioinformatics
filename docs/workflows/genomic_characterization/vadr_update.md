@@ -4,21 +4,21 @@
 
 {{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**VADR_Update**](../workflows/genomic_characterization/vadr_update.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level", "Dockstore"]) }}
 
-## Vadr_Update_PHB
+## VADR_Update_PHB
 
-The VADR_Update workflow updates prior VADR assessments for each sample in line with the assessment criteria in an alternative docker image. This may be useful when samples have previously been subject to VADR alerts as updates to VADR assessment criteria may mean that the sample no longer raises concern about quality. The latest docker image SARS-CoV-2 for VADR can be found [here](https://theiagen.notion.site/Docker-Image-and-Reference-Materials-for-SARS-CoV-2-Genomic-Characterization-98328c61f5cb4f77975f512b55d09108).
+VADR_Update_PHB is a standalone workflow dedicated to running VADR. By default, the workflow uses a slimmed-down docker image running VADR (v1.6.4), which requires models to be provided separately. The table below outlines the recommended models and VADR parameters for use in the workflow.
 
-Various models are available for many organisms. The following table provides an overview of the recommended container to be used and what options should be passed on to VADR.
-
-| **Organism** | **docker** | **vadr_opts** | max_length |
+| **Organism** | **vadr_model_file** | **vadr_opts** | **max_length** |
 | --- | --- | --- | --- |
-| sars-cov-2 | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3" | "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta" | 30000 |
-| MPXV | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3" | "--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150" | 210000 |
-| WNV | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3" | "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta" | 11000 |
-| flu | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3" | "--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu" | 13500 |
-| rsv_a | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3" | "-r --mkey rsv --xnocomp" | 15500 |
-| rsv_b | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3" | "-r --mkey rsv --xnocomp" | 15500 |
-| HAV | "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav" | "-r -xnocomp -mkey hav.vadr" | 10500 |
+| sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"` | `"--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta"` | `30000` |
+| MPXV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.4.2-1.tar.gz"` | `"--mkey mpxv --glsearch --minimap2 -s -r --nomisc --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --s_overhang 150 --out_allfasta"` | `210000` |
+| WNV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flavi-1.2-1.tar.gz"` | `"--mkey flavi --nomisc --noprotid --out_allfasta"` | `11000` |
+| flu | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"` | `"--mkey flu --atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3"` | `13500` |
+| rsv_a | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"` | `"--mkey rsv --xnocomp -r"` | `15500` |
+| rsv_b | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"` | `"--mkey rsv --xnocomp -r"` | `15500` |
+| measles | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mev-1.02.tar.gz"` | `"--mkey mev -r --indefclass 0.01"` | `18000` |
+| mumps | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-muv-1.01.tar.gz"` | `"--mkey muv -r --indefclass 0.025"` | `18000` |
+| rubella | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-ruv-1.01.tar.gz"` | `"--mkey ruv -r"` | `10000` |
 
 ### Inputs
 

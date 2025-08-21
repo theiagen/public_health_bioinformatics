@@ -6,5 +6,6 @@
     "theiacov_illumina_pe.reference_genome": "tests/data/theiacov/reference/MN908947.fasta",
     "theiacov_illumina_pe.reference_gff": "tests/inputs/completely-empty-for-test.txt",
     "theiacov_illumina_pe.reference_gene_locations_bed": "tests/inputs/sc2_gene_locations.bed",
-    "theiacov_illumina_pe.read_QC_trim.kraken_db": "tests/data/theiacov/databases/github_kraken2_test_db.tar.gz"
+    "theiacov_illumina_pe.read_QC_trim.kraken_db": "tests/data/theiacov/databases/github_kraken2_test_db.tar.gz",
+    "theiacov_illumina_pe.vadr_model_file": "tests/data/theiacov/databases/vadr-models-sarscov2-1.3-2.tar.gz"
 }
