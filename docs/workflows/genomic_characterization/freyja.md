@@ -99,21 +99,21 @@ This workflow runs on the sample level.
 === "Illumina paired-end input data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Freyja_FASTQ (PE)"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (PE)"]}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
 
     ///
 
 === "Illumina single-end input data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Freyja_FASTQ (SE)"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (SE)"]}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
     
     ///
 
 === "ONT input data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Freyja_FASTQ (ONT)"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (ONT)"]}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
     
     ///
 
@@ -168,24 +168,24 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 !!! tip "Click "Ignore empty outputs""
     When running the Freyja_FASTQ_PHB workflow, it is recommended to select the "Ignore empty outputs" option in the Terra UI. This will hide the output columns that will not be generated for your input data type.
 
-=== "Illumina paired-end input data"
+=== "Illumina paired-end output data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": "Freyja (Illumina paired-end)"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (PE)"]}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
-=== "Illumina single-end input data"
+=== "Illumina single-end output data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": "Freyja (Illumina single-end)"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (SE)"]}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
-=== "ONT input data"
+=== "ONT output data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": "Freyja (ONT)"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (ONT)"]}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
