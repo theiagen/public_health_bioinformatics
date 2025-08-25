@@ -185,7 +185,9 @@ task resfinder {
     String resfinder_predicted_resistance_Amp = read_string("RESFINDER_PREDICTED_RESISTANCE_AMP.txt")
     String resfinder_predicted_resistance_Azm = read_string("RESFINDER_PREDICTED_RESISTANCE_AZM.txt")
     String resfinder_predicted_resistance_Axo = read_string("RESFINDER_PREDICTED_RESISTANCE_AXO.txt")
-    String resfinder_predicted_resistance_Cip = read_string("RESFINDER_PREDICTED_RESISTANCE_CIP.txt")
+    String resfinder_predicted_resistance_fq = read_string("RESFINDER_PREDICTED_RESISTANCE_CIP.txt") # fluoroquinolone
+    Int resfinder_predicted_resistance_fq_mechanisms # count of fq mutations in previous output
+    
     String resfinder_predicted_resistance_Smx = read_string("RESFINDER_PREDICTED_RESISTANCE_SMX.txt")
     String resfinder_predicted_resistance_Tmp = read_string("RESFINDER_PREDICTED_RESISTANCE_TMP.txt")
     String resfinder_docker = "~{docker}"
