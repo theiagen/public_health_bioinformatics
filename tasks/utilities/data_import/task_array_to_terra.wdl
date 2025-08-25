@@ -43,7 +43,7 @@ task create_table_from_array {
     UPLOAD_DATE=$(date -I)
 
     # loop through array of files and extract their basename to add to the terra table
-  for file in ~{sep=" " file_paths}; do
+    for file in ~{sep=" " file_paths}; do
       file_basename=$(basename "$file" ~{file_ending})
 
       echo -e "${file_basename}\t${file//*\/cromwell_root/gs:\/}\t${UPLOAD_DATE}\t~{data_source}\t${column_content}" >> terra_table_to_upload.tsv
