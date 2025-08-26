@@ -2357,7 +2357,7 @@ ont_barcode_concatenation	terra_table_name	String	The name of the Terra table yo
 ont_barcode_concatenation	terra_workspace	String	"The name of the Terra workspace where your data table will be located	"		Required	ONT_Barcode_Concatenation	
 cat_ont_barcodes	cpu	Int	Number of CPUs to allocate to the task	2	Optional	ONT_Barcode_Concatenation	
 cat_ont_barcodes	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	ONT_Barcode_Concatenation	
-cat_ont_barcodes	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ont-barcodes:0.0.1	Optional	ONT_Barcode_Concatenation	
+cat_ont_barcodes	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ont-barcodes:0.0.2	Optional	ONT_Barcode_Concatenation	
 cat_ont_barcodes	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	ONT_Barcode_Concatenation	
 create_terra_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	ONT_Barcode_Concatenation	
 create_terra_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	ONT_Barcode_Concatenation	
