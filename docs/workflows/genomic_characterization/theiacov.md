@@ -170,7 +170,7 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | kraken_target_organism_input | sars-cov-2 | `"Severe acute respiratory syndrome coronavirus 2"` |
         | nextclade_dataset_name_input | sars-cov-2 | `"nextstrain/sars-cov-2/wuhan-hu-1/orfs"` |
         | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34 "`|
-        | nextclade_dataset_tag_input | sars-cov-2 | `"2025-06-09--15-42-38Z"` |
+        | nextclade_dataset_tag_input | sars-cov-2 | `"2025-08-02--08-55-17Z"` |
         | reference_genome | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"` |
         | vadr_max_length | sars-cov-2 | `30000` |
         | vadr_mem | sars-cov-2 | `8` |
@@ -226,28 +226,28 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | vadr_mem | flu | all | all | `8` |  |
         | vadr_options | flu | all | all | `"--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"` |  |
         | nextclade_dataset_name_input | flu | ha | h1n1 | `"nextstrain/flu/h1n1pdm/ha/MW626062"` |  |
-        | nextclade_dataset_tag_input | flu | ha | h1n1 | `"2025-01-22--09-54-14Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h1n1 | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | ha | h1n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | h3n2 | `"nextstrain/flu/h3n2/ha/EPI1857216"` |  |
-        | nextclade_dataset_tag_input | flu | ha | h3n2 | `"2025-01-22--09-54-14Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h3n2 | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | ha | h3n2 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | victoria | `"nextstrain/flu/vic/ha/KX058884"` |  |
-        | nextclade_dataset_tag_input | flu | ha | victoria | `"2025-01-22--09-54-14Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | victoria | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | ha | victoria | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | yamagata | `"nextstrain/flu/yam/ha/JN993010"` |  |
         | nextclade_dataset_tag_input | flu | ha | yamagata | `"2024-01-30--16-34-55Z"` |  |
         | reference_genome | flu | ha | yamagata | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | h5n1 | `"community/moncla-lab/iav-h5/ha/all-clades"` |  |
-        | nextclade_dataset_tag_input | flu | ha | h5n1 | `"2025-01-30--18-05-53Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h5n1 | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | ha | h5n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | h1n1 | `"nextstrain/flu/h1n1pdm/na/MW626056"` |  |
-        | nextclade_dataset_tag_input | flu | na | h1n1 | `"2025-03-26--11-47-13"` |  |
+        | nextclade_dataset_tag_input | flu | na | h1n1 | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | na | h1n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | h3n2 | `"nextstrain/flu/h3n2/na/EPI1857215"` |  |
-        | nextclade_dataset_tag_input | flu | na | h3n2 | `"2025-01-22--09-54-14Z"` |  |
+        | nextclade_dataset_tag_input | flu | na | h3n2 | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | na | h3n2 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | victoria | `"nextstrain/flu/vic/na/CY073894"` |  |
-        | nextclade_dataset_tag_input | flu | na | victoria | `"2025-03-26--11-47-13Z"` |  |
+        | nextclade_dataset_tag_input | flu | na | victoria | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | na | victoria | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | yamagata | `"NA"` |  |
         | nextclade_dataset_tag_input | flu | na | yamagata | `"NA"` |  |
@@ -321,8 +321,8 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         |---|---|---|
         | kraken_target_organism_input | measles | `"Measles morbillivirus"` |
         | genome_length_input | measles | `16000` |
-        | nextclade_dataset_name_input | measles | `"nextstrain/measles/N450/WHO-2012"` |
-        | nextclade_dataset_tag_input | measles | `"2025-03-26--11-47-13Z"` |
+        | nextclade_dataset_name_input | measles | `"nextstrain/measles/genome/WHO-2012"` |
+        | nextclade_dataset_tag_input | measles | `"2025-08-11--19-06-01Z"` |
 
         </div>
                 
