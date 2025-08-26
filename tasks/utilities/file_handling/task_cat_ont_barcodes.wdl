@@ -9,7 +9,7 @@ task cat_ont_barcodes {
     
     Int cpu = 2
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ont-barcodes:0.0.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ont-barcodes:0.0.2"
     Int memory = 4
   }
   command <<<
@@ -22,7 +22,7 @@ task cat_ont_barcodes {
       ~{output_bucket_path} \
       --file_extension ~{file_extension} \
       ~{"--map_file " + barcode_renaming_file} \
-      --gcp --verbose --recursive
+      --gcp --verbose
     
     echo "Concatenation script completed."
 
