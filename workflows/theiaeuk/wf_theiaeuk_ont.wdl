@@ -46,7 +46,7 @@ workflow theiaeuk_ont {
     }
   }
   if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-    call read_qc.read_QC_trim_ont as read_qc_trim {
+    call read_qc.read_QC_trim_ont as read_QC_trim {
       input:
         read1 = read1,
         samplename = samplename,
@@ -56,7 +56,7 @@ workflow theiaeuk_ont {
     if (! skip_screen) {
       call screen_task.check_reads_se as clean_check_reads {
         input:
-          read1 = read_qc_trim.read1_clean,
+          read1 = read_QC_trim.read1_clean,
           min_reads = min_reads,
           min_basepairs = min_basepairs,
           min_genome_length = min_genome_length,
@@ -69,7 +69,7 @@ workflow theiaeuk_ont {
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
       call flye_workflow.flye_denovo {
         input:
-          read1 = read_qc_trim.read1_clean,
+          read1 = read_QC_trim.read1_clean,
           samplename = samplename
       }
       #call quast on the assembly
@@ -88,7 +88,7 @@ workflow theiaeuk_ont {
       # nanoplot for cleaned reads
       call nanoplot_task.nanoplot as nanoplot_clean {
         input:
-          read1 = read_qc_trim.read1_clean,
+          read1 = read_QC_trim.read1_clean,
           samplename = samplename,
           est_genome_length = select_first([genome_length, quast.genome_length])
       }
@@ -131,9 +131,9 @@ workflow theiaeuk_ont {
     String? read_screen_clean = clean_check_reads.read_screen
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC outputs
-    File? read1_clean = read_qc_trim.read1_clean
-    String? nanoq_version = read_qc_trim.nanoq_version
-    Int? est_genome_length = read_qc_trim.est_genome_length
+    File? read1_clean = read_QC_trim.read1_clean
+    String? nanoq_version = read_QC_trim.nanoq_version
+    Int? est_genome_length = read_QC_trim.est_genome_length
     # Assembly - flye_denovo outputs
     File? assembly_fasta = flye_denovo.assembly_fasta
     File? contigs_gfa = flye_denovo.contigs_gfa
