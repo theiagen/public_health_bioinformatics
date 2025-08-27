@@ -127,7 +127,7 @@
     - path: miniwdl_run/call-nextclade_v3/task.log
       contains: ["wdl", "theiacov_ont", "done"]
     - path: miniwdl_run/call-nextclade_v3/work/NEXTCLADE_VERSION
-      md5sum: 0e19f9e53f57a0e65b0394fcf7fd01f4
+      md5sum: 18af3f93175b428112831635db79f32a
     - path: miniwdl_run/call-nextclade_v3/work/_miniwdl_inputs/0/ont.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-nextclade_v3/work/nextclade.aligned.fasta
