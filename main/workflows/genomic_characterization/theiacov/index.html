@@ -5880,6 +5880,8 @@
 <li><strong>RSV-A</strong> (<strong><code>"rsv_a"</code></strong>, <code>"rsv-a"</code>, <code>"RSV-A"</code>, <code>"RSV_A"</code>)</li>
 <li><strong>RSV-B</strong> (<strong><code>"rsv_b"</code></strong>, <code>"rsv-b"</code>, <code>"RSV-B"</code>, <code>"RSV_B"</code>)</li>
 <li><strong>Measles</strong> (<strong><code>"measles"</code></strong>, <code>"Measles"</code>, <code>"mev"</code>, <code>"MeV"</code>, <code>"Morbillivirus"</code>, <code>"morbillivirus"</code>)</li>
+<li><strong>Mumps</strong> (<strong><code>"mumps"</code></strong>, <code>"Mumps"</code>, <code>"MuV"</code>, <code>"muv"</code>, <code>"Mumps virus"</code>, <code>"mumps virus"</code>)</li>
+<li><strong>Rubella</strong> (<strong><code>"rubella"</code></strong>, <code>"Rubella"</code>, <code>"RuV"</code>, <code>"ruv"</code>, <code>"Rubella virus"</code>, <code>"rubella virus"</code>)</li>
 </ul>
 <p>The compatibility of each workflow with each pathogen is shown below:</p>
 <table>
@@ -5894,11 +5896,15 @@
 <th>RSV-A</th>
 <th>RSV-B</th>
 <th>Measles</th>
+<th>Mumps</th>
+<th>Rubella</th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>Illumina_PE</td>
+<td>✅</td>
+<td>✅</td>
 <td>✅</td>
 <td>✅</td>
 <td>✅</td>
@@ -5917,7 +5923,9 @@
 <td>❌</td>
 <td>✅</td>
 <td>✅</td>
-<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>ONT</td>
@@ -5928,7 +5936,9 @@
 <td>✅</td>
 <td>✅</td>
 <td>✅</td>
-<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>FASTA</td>
@@ -5940,10 +5950,14 @@
 <td>✅</td>
 <td>✅</td>
 <td>✅</td>
+<td>✅</td>
+<td>✅</td>
 </tr>
 <tr>
 <td>ClearLabs</td>
 <td>✅</td>
+<td>❌</td>
+<td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
@@ -7952,6 +7966,15 @@
 </tr>
 <tr>
 <td>theiacov_illumina_pe</td>
+<td><strong>vadr_model_file</strong></td>
+<td>File</td>
+<td>DESCRIPTION</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>theiacov_illumina_pe</td>
 <td><strong>vadr_options</strong></td>
 <td>String</td>
 <td>Additional options to provide to VADR</td>
@@ -8000,7 +8023,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4</td>
 <td>Optional</td>
 <td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -9519,6 +9542,15 @@
 </tr>
 <tr>
 <td>theiacov_illumina_se</td>
+<td><strong>vadr_model_file</strong></td>
+<td>File</td>
+<td>DESCRIPTION</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>theiacov_illumina_se</td>
 <td><strong>vadr_options</strong></td>
 <td>String</td>
 <td>Additional options to provide to VADR</td>
@@ -9567,7 +9599,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4</td>
 <td>Optional</td>
 <td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -11689,6 +11721,15 @@
 </tr>
 <tr>
 <td>theiacov_ont</td>
+<td><strong>vadr_model_file</strong></td>
+<td>File</td>
+<td>DESCRIPTION</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>theiacov_ont</td>
 <td><strong>vadr_options</strong></td>
 <td>String</td>
 <td>Additional options to provide to VADR</td>
@@ -11728,7 +11769,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4</td>
 <td>Optional</td>
 <td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -13094,6 +13135,15 @@
 </tr>
 <tr>
 <td>theiacov_fasta</td>
+<td><strong>vadr_model_file</strong></td>
+<td>File</td>
+<td>DESCRIPTION</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>theiacov_fasta</td>
 <td><strong>vadr_opts</strong></td>
 <td>String</td>
 <td>Additional options to provide to VADR</td>
@@ -13133,7 +13183,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4</td>
 <td>Optional</td>
 <td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -13887,10 +13937,19 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>vadr_model</strong></td>
+<td>File</td>
+<td>DESCRIPTION</td>
+<td></td>
+<td>Optional</td>
+<td></td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>vadr_options</strong></td>
 <td>String</td>
 <td>Options for the v-annotate.pl VADR script</td>
-<td>Default provided for SARS-CoV-2 ("--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"), mpox ("--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"), WNV ("--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"), flu (""), RSV-A ("-r --mkey rsv --xnocomp"), and RSV-B ("-r --mkey rsv --xnocomp")</td>
+<td>--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta</td>
 <td>Optional</td>
 <td></td>
 </tr>
@@ -14493,25 +14552,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav-flu2</td>
-<td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>vadr</td>
-<td><strong>max_length</strong></td>
-<td>Int</td>
-<td>Maximum length for the fasta-trim-terminal-ambigs.pl VADR script</td>
-<td>30000</td>
-<td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>vadr</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32 (RSV-A, RSV-B, and WNV) and 16 (all other TheiaCoV organisms)</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4</td>
 <td>Optional</td>
 <td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
 </tr>
@@ -14523,24 +14564,6 @@
 <td>50</td>
 <td>Optional</td>
 <td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>vadr</td>
-<td><strong>skip_length</strong></td>
-<td>Int</td>
-<td>Minimum assembly length (unambiguous) to run VADR</td>
-<td>10000</td>
-<td>Optional</td>
-<td>MPXV, WNV, flu, rsv_a, rsv_b, sars-cov-2</td>
-</tr>
-<tr>
-<td>vadr</td>
-<td><strong>vadr_opts</strong></td>
-<td>String</td>
-<td>Options for the v-annotate.pl VADR script</td>
-<td>"--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"</td>
-<td>Optional</td>
-<td></td>
 </tr>
 <tr>
 <td>version_capture</td>
@@ -14908,10 +14931,18 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>vadr_model</strong></td>
+<td>File</td>
+<td>DESCRIPTION</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>vadr_options</strong></td>
 <td>String</td>
 <td>Options for the v-annotate.pl VADR script</td>
-<td>Default provided for SARS-CoV-2 ("--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"), mpox ("--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"), WNV ("--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"), flu (""), RSV-A ("-r --mkey rsv --xnocomp"), and RSV-B ("-r --mkey rsv --xnocomp")</td>
+<td>--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15101,7 +15132,7 @@
 <p>The <code>organism_parameters</code> sub-workflow is the first step in all TheiaCoV workflows. This step automatically sets the different parameters needed for each downstream tool to the appropriate value for the user-designated organism (by default, <code>"sars-cov-2"</code> is the default organism).</p>
 <div class="admonition dna">
 <p>The following tables include the relevant organism-specific parameters; <strong>all of these default values can be overwritten by providing a value for the "Overwrite Variable Name" field</strong>.</p>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:8"><input checked="checked" id="sars-cov-2" name="__tabbed_3" type="radio" /><input id="mpox" name="__tabbed_3" type="radio" /><input id="west-nile-virus" name="__tabbed_3" type="radio" /><input id="influenza" name="__tabbed_3" type="radio" /><input id="rsv-a" name="__tabbed_3" type="radio" /><input id="rsv-b" name="__tabbed_3" type="radio" /><input id="hiv" name="__tabbed_3" type="radio" /><input id="measles" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="sars-cov-2">SARS-CoV-2</label><label for="mpox">Mpox</label><label for="west-nile-virus">West Nile Virus</label><label for="influenza">Influenza</label><label for="rsv-a">RSV-A</label><label for="rsv-b">RSV-B</label><label for="hiv">HIV</label><label for="measles">Measles</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:10"><input checked="checked" id="sars-cov-2" name="__tabbed_3" type="radio" /><input id="mpox" name="__tabbed_3" type="radio" /><input id="west-nile-virus" name="__tabbed_3" type="radio" /><input id="influenza" name="__tabbed_3" type="radio" /><input id="rsv-a" name="__tabbed_3" type="radio" /><input id="rsv-b" name="__tabbed_3" type="radio" /><input id="hiv" name="__tabbed_3" type="radio" /><input id="measles" name="__tabbed_3" type="radio" /><input id="mumps" name="__tabbed_3" type="radio" /><input id="rubella" name="__tabbed_3" type="radio" /><div class="tabbed-labels"><label for="sars-cov-2">SARS-CoV-2</label><label for="mpox">Mpox</label><label for="west-nile-virus">West Nile Virus</label><label for="influenza">Influenza</label><label for="rsv-a">RSV-A</label><label for="rsv-b">RSV-B</label><label for="hiv">HIV</label><label for="measles">Measles</label><label for="mumps">Mumps</label><label for="rubella">Rubella</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="searchable-table" markdown="block">
@@ -15155,6 +15186,11 @@
 <td><code>30000</code></td>
 </tr>
 <tr>
+<td>vadr_skip_length</td>
+<td>sars-cov-2</td>
+<td><code>10000</code></td>
+</tr>
+<tr>
 <td>vadr_mem</td>
 <td>sars-cov-2</td>
 <td><code>8</code></td>
@@ -15162,7 +15198,12 @@
 <tr>
 <td>vadr_options</td>
 <td>sars-cov-2</td>
-<td><code>"--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"</code></td>
+<td><code>"--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta"</code></td>
+</tr>
+<tr>
+<td>vadr_model_file</td>
+<td>sars-cov-2</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"</code></td>
 </tr>
 </tbody>
 </table>
@@ -15225,6 +15266,11 @@
 <td><code>210000</code></td>
 </tr>
 <tr>
+<td>vadr_skip_length</td>
+<td>MPXV</td>
+<td><code>65480</code></td>
+</tr>
+<tr>
 <td>vadr_mem</td>
 <td>MPXV</td>
 <td><code>8</code></td>
@@ -15232,7 +15278,12 @@
 <tr>
 <td>vadr_options</td>
 <td>MPXV</td>
-<td><code>"--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"</code></td>
+<td><code>"--mkey mpxv --glsearch --minimap2 -s -r --nomisc --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --s_overhang 150 --out_allfasta"</code></td>
+</tr>
+<tr>
+<td>vadr_model_file</td>
+<td>MPXV</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.4.2-1.tar.gz"</code></td>
 </tr>
 </tbody>
 </table>
@@ -15293,6 +15344,12 @@
 <td></td>
 </tr>
 <tr>
+<td>vadr_skip_length</td>
+<td>WNV</td>
+<td><code>3000</code></td>
+<td></td>
+</tr>
+<tr>
 <td>vadr_mem</td>
 <td>WNV</td>
 <td><code>8</code></td>
@@ -15301,7 +15358,13 @@
 <tr>
 <td>vadr_options</td>
 <td>WNV</td>
-<td><code>"--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"</code></td>
+<td><code>"--mkey flavi --nomisc --noprotid --out_allfasta"</code></td>
+<td></td>
+</tr>
+<tr>
+<td>vadr_model_file</td>
+<td>WNV</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flavi-1.2-1.tar.gz"</code></td>
 <td></td>
 </tr>
 </tbody>
@@ -15355,6 +15418,14 @@
 <td></td>
 </tr>
 <tr>
+<td>vadr_skip_length</td>
+<td>flu</td>
+<td>all</td>
+<td>all</td>
+<td><code>500</code></td>
+<td></td>
+</tr>
+<tr>
 <td>vadr_mem</td>
 <td>flu</td>
 <td>all</td>
@@ -15367,7 +15438,15 @@
 <td>flu</td>
 <td>all</td>
 <td>all</td>
-<td><code>"--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"</code></td>
+<td><code>"--mkey flu --atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3"</code></td>
+<td></td>
+</tr>
+<tr>
+<td>vadr_model_file</td>
+<td>flu</td>
+<td>all</td>
+<td>all</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"</code></td>
 <td></td>
 </tr>
 <tr>
@@ -15653,12 +15732,17 @@
 <tr>
 <td>reference_genome</td>
 <td>rsv_a</td>
-<td><code>gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"</code></td>
 </tr>
 <tr>
 <td>vadr_max_length</td>
 <td>rsv_a</td>
 <td><code>15500</code></td>
+</tr>
+<tr>
+<td>vadr_skip_length</td>
+<td>rsv_a</td>
+<td><code>5000</code></td>
 </tr>
 <tr>
 <td>vadr_mem</td>
@@ -15668,7 +15752,12 @@
 <tr>
 <td>vadr_options</td>
 <td>rsv_a</td>
-<td><code>-r --mkey rsv --xnocomp</code></td>
+<td><code>"--mkey rsv --xnocomp -r"</code></td>
+</tr>
+<tr>
+<td>vadr_model_file</td>
+<td>rsv_a</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"</code></td>
 </tr>
 </tbody>
 </table>
@@ -15708,7 +15797,7 @@
 <tr>
 <td>reference_genome</td>
 <td>rsv_b</td>
-<td><code>gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"</code></td>
 </tr>
 <tr>
 <td>vadr_max_length</td>
@@ -15723,7 +15812,12 @@
 <tr>
 <td>vadr_options</td>
 <td>rsv_b</td>
-<td><code>-r --mkey rsv --xnocomp</code></td>
+<td><code>"--mkey rsv --xnocomp -r"</code></td>
+</tr>
+<tr>
+<td>vadr_model_file</td>
+<td>rsv_b</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"</code></td>
 </tr>
 </tbody>
 </table>
@@ -15744,7 +15838,7 @@
 <tr>
 <td>kraken_target_organism_input</td>
 <td>HIV</td>
-<td><code>Human immunodeficiency virus 1</code></td>
+<td><code>"Human immunodeficiency virus 1"</code></td>
 <td></td>
 </tr>
 <tr>
@@ -15756,19 +15850,19 @@
 <tr>
 <td>primer_bed_file</td>
 <td>HIV-v1</td>
-<td><code>gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"</code></td>
 <td>This version of HIV originates from Oregon</td>
 </tr>
 <tr>
 <td>reference_genome</td>
 <td>HIV-v1</td>
-<td><code>gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta"</code></td>
 <td>This version of HIV originates from Oregon</td>
 </tr>
 <tr>
 <td>reference_gff_file</td>
 <td>HIV-v1</td>
-<td><code>gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"</code></td>
 <td>This version of HIV originates from Oregon</td>
 </tr>
 <tr>
@@ -15780,19 +15874,19 @@
 <tr>
 <td>primer_bed_file</td>
 <td>HIV-v2</td>
-<td><code>gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed"</code></td>
 <td>This version of HIV originates from Southern Africa</td>
 </tr>
 <tr>
 <td>reference_genome</td>
 <td>HIV-v2</td>
-<td><code>gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"</code></td>
 <td>This version of HIV originates from Southern Africa</td>
 </tr>
 <tr>
 <td>reference_gff_file</td>
 <td>HIV-v2</td>
-<td><code>gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3</code></td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"</code></td>
 <td>This version of HIV originates from Southern Africa</td>
 </tr>
 </tbody>
@@ -15829,6 +15923,136 @@
 <td>nextclade_dataset_tag_input</td>
 <td>measles</td>
 <td><code>"2025-08-11--19-06-01Z"</code></td>
+</tr>
+<tr>
+<td>reference_genome</td>
+<td>measles</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/measles/NC_001498.1_measles_reference.fasta"</code></td>
+</tr>
+<tr>
+<td>vadr_max_length</td>
+<td>measles</td>
+<td><code>18000</code></td>
+</tr>
+<tr>
+<td>vadr_skip_length</td>
+<td>measles</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td>vadr_mem</td>
+<td>measles</td>
+<td><code>24</code></td>
+</tr>
+<tr>
+<td>vadr_options</td>
+<td>measles</td>
+<td><code>"--mkey mev -r --indefclass 0.01"</code></td>
+</tr>
+<tr>
+<td>vadr_model_file</td>
+<td>measles</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mev-1.02.tar.gz"</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="tabbed-block">
+<div class="searchable-table" markdown="block">
+<table>
+<thead>
+<tr>
+<th><strong>Overwrite Variable Name</strong></th>
+<th><strong>Organism</strong></th>
+<th><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reference_genome</td>
+<td>mumps</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/mumps/NC_002200.1_mumps_reference.fasta"</code></td>
+</tr>
+<tr>
+<td>genome_length_input</td>
+<td>mumps</td>
+<td><code>15300</code></td>
+</tr>
+<tr>
+<td>vadr_options</td>
+<td>mumps</td>
+<td><code>"--mkey muv -r --indefclass 0.025"</code></td>
+</tr>
+<tr>
+<td>vadr_max_length</td>
+<td>mumps</td>
+<td><code>18000</code></td>
+</tr>
+<tr>
+<td>vadr_skip_length</td>
+<td>mumps</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td>vadr_mem</td>
+<td>mumps</td>
+<td><code>16</code></td>
+</tr>
+<tr>
+<td>vadr_model_file</td>
+<td>mumps</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-muv-1.01.tar.gz"</code></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="tabbed-block">
+<div class="searchable-table" markdown="block">
+<table>
+<thead>
+<tr>
+<th><strong>Overwrite Variable Name</strong></th>
+<th><strong>Organism</strong></th>
+<th><strong>Default Value</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>reference_genome</td>
+<td>rubella</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/viral/rubella/NC_001545.2_rubella_reference.fasta"</code></td>
+</tr>
+<tr>
+<td>genome_length_input</td>
+<td>rubella</td>
+<td><code>9800</code></td>
+</tr>
+<tr>
+<td>vadr_options</td>
+<td>rubella</td>
+<td><code>"--mkey ruv -r"</code></td>
+</tr>
+<tr>
+<td>vadr_max_length</td>
+<td>rubella</td>
+<td><code>10000</code></td>
+</tr>
+<tr>
+<td>vadr_skip_length</td>
+<td>rubella</td>
+<td><code>0</code></td>
+</tr>
+<tr>
+<td>vadr_mem</td>
+<td>rubella</td>
+<td><code>16</code></td>
+</tr>
+<tr>
+<td>vadr_model_file</td>
+<td>rubella</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-ruv-1.01.tar.gz"</code></td>
 </tr>
 </tbody>
 </table>
@@ -16583,12 +16807,16 @@
 <th><strong>RSV-B</strong></th>
 <th><strong>HIV</strong></th>
 <th><strong>Measles</strong></th>
+<th><strong>Mumps</strong></th>
+<th><strong>Rubella</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td><strong>Pangolin</strong></td>
 <td>✅</td>
+<td>❌</td>
+<td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
@@ -16607,6 +16835,8 @@
 <td>✅</td>
 <td>❌</td>
 <td>✅</td>
+<td>❌</td>
+<td>❌</td>
 </tr>
 <tr>
 <td><strong>VADR</strong></td>
@@ -16617,7 +16847,9 @@
 <td>✅</td>
 <td>✅</td>
 <td>❌</td>
-<td>❌</td>
+<td>✅</td>
+<td>✅</td>
+<td>✅</td>
 </tr>
 <tr>
 <td><strong>VADR Flu Segments</strong></td>
@@ -16625,6 +16857,8 @@
 <td>❌</td>
 <td>❌</td>
 <td>✅</td>
+<td>❌</td>
+<td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
@@ -16640,6 +16874,8 @@
 <td>❌</td>
 <td>✅</td>
 <td>❌</td>
+<td>❌</td>
+<td>❌</td>
 </tr>
 <tr>
 <td><strong>IRMA</strong></td>
@@ -16647,6 +16883,8 @@
 <td>❌</td>
 <td>❌</td>
 <td>✅</td>
+<td>❌</td>
+<td>❌</td>
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
@@ -16662,11 +16900,15 @@
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
+<td>❌</td>
+<td>❌</td>
 </tr>
 <tr>
 <td><strong>% Gene Coverage</strong></td>
 <td>✅</td>
 <td>✅</td>
+<td>➕</td>
+<td>➕</td>
 <td>➕</td>
 <td>➕</td>
 <td>➕</td>
@@ -16684,6 +16926,8 @@
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
+<td>❌</td>
+<td>❌</td>
 </tr>
 <tr>
 <td><strong>GenoFLU</strong></td>
@@ -16695,6 +16939,8 @@
 <td>❌</td>
 <td>❌</td>
 <td>❌</td>
+<td>❌</td>
+<td>❌</td>
 </tr>
 </tbody>
 </table>
@@ -16702,7 +16948,7 @@
 ➕ This task can run for these organisms if optional parameter(s) are provided; see task description for details.<br>
 ❌ This task will not run for these organisms</p>
 </div>
-<div class="tabbed-set tabbed-alternate" data-tabs="5:8"><input checked="checked" id="sars-cov-2_1" name="__tabbed_5" type="radio" /><input id="mpox_1" name="__tabbed_5" type="radio" /><input id="west-nile-virus_1" name="__tabbed_5" type="radio" /><input id="influenza_1" name="__tabbed_5" type="radio" /><input id="rsv-a_1" name="__tabbed_5" type="radio" /><input id="rsv-b_1" name="__tabbed_5" type="radio" /><input id="hiv_1" name="__tabbed_5" type="radio" /><input id="measles_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="sars-cov-2_1">SARS-CoV-2</label><label for="mpox_1">Mpox</label><label for="west-nile-virus_1">West Nile Virus</label><label for="influenza_1">Influenza</label><label for="rsv-a_1">RSV-A</label><label for="rsv-b_1">RSV-B</label><label for="hiv_1">HIV</label><label for="measles_1">Measles</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:10"><input checked="checked" id="sars-cov-2_1" name="__tabbed_5" type="radio" /><input id="mpox_1" name="__tabbed_5" type="radio" /><input id="west-nile-virus_1" name="__tabbed_5" type="radio" /><input id="influenza_1" name="__tabbed_5" type="radio" /><input id="rsv-a_1" name="__tabbed_5" type="radio" /><input id="rsv-b_1" name="__tabbed_5" type="radio" /><input id="hiv_1" name="__tabbed_5" type="radio" /><input id="measles_1" name="__tabbed_5" type="radio" /><input id="mumps_1" name="__tabbed_5" type="radio" /><input id="rubella_1" name="__tabbed_5" type="radio" /><div class="tabbed-labels"><label for="sars-cov-2_1">SARS-CoV-2</label><label for="mpox_1">Mpox</label><label for="west-nile-virus_1">West Nile Virus</label><label for="influenza_1">Influenza</label><label for="rsv-a_1">RSV-A</label><label for="rsv-b_1">RSV-B</label><label for="hiv_1">HIV</label><label for="measles_1">Measles</label><label for="mumps_1">Mumps</label><label for="rubella_1">Rubella</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <details class="task">
@@ -17424,6 +17670,112 @@
 <tr>
 <td>Original Publication(s)</td>
 <td><a href="https://doi.org/10.21105/joss.03773">Nextclade: clade assignment, mutation calling and quality control for viral genomes.</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>vadr</code></summary>
+<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="./#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
+<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR README here</a>, including details on how to allow sequencecs to pass despite having fatal alerts.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">VADR Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td>For SARS-CoV-2: <em><a href="https://doi.org/10.1093/nargab/lqad002">Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</a></em><br> For non-SARS_CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<div class="tabbed-block">
+<details class="task">
+<summary><code>vadr</code></summary>
+<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="./#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
+<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR README here</a>, including details on how to allow sequencecs to pass despite having fatal alerts.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">VADR Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td>For SARS-CoV-2: <em><a href="https://doi.org/10.1093/nargab/lqad002">Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</a></em><br> For non-SARS_CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<div class="tabbed-block">
+<details class="task">
+<summary><code>vadr</code></summary>
+<p>VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the <a href="./#org-specific"><em>organism-specific parameters and logic</em> section</a>. It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.</p>
+<p>As part of the analysis of the assemblies, more than 70 types of unexpected characteristics, also known as <em>alerts</em>, can be reported. Any identified alerts can be found in the <code>vadr_alerts_list</code> output. Fatal alerts indicate that the sample is unlikely to be accepted to GenBank; non-fatal alerts are designated as passing sequences, but may still require further investigation. A full description of the potential alerts can be found on the <a href="https://github.com/ncbi/vadr/blob/master/documentation/alerts.md">VADR README here</a>, including details on how to allow sequencecs to pass despite having fatal alerts.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">VADR Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_vadr.wdl">task_vadr.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/vadr">https://github.com/ncbi/vadr</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/vadr/wiki">https://github.com/ncbi/vadr/wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td>For SARS-CoV-2: <em><a href="https://doi.org/10.1093/nargab/lqad002">Faster SARS-CoV-2 sequence validation and annotation for GenBank using VADR</a></em><br> For non-SARS_CoV-2: <a href="https://doi.org/10.1186/s12859-020-3537-3"><em>VADR: validation and annotation of virus sequence submissions to GenBank</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -18367,6 +18719,11 @@
 </thead>
 <tbody>
 <tr>
+<td>aligned_bai</td>
+<td>File</td>
+<td>Index companion file to the bam file generated during the consensus assembly process</td>
+</tr>
+<tr>
 <td>aligned_bam</td>
 <td>File</td>
 <td>Sorted BAM file containing the alignments of reads to the reference genome</td>
@@ -18895,6 +19252,11 @@
 <td>abricate_flu_version</td>
 <td>String</td>
 <td>Version of ABRicate</td>
+</tr>
+<tr>
+<td>aligned_bai</td>
+<td>File</td>
+<td>Index companion file to the bam file generated during the consensus assembly process</td>
 </tr>
 <tr>
 <td>aligned_bam</td>
@@ -20172,6 +20534,11 @@
 </thead>
 <tbody>
 <tr>
+<td>aligned_bai</td>
+<td>File</td>
+<td>Index companion file to the bam file generated during the consensus assembly process</td>
+</tr>
+<tr>
 <td>aligned_bam</td>
 <td>File</td>
 <td>Sorted BAM file containing the alignments of reads to the reference genome</td>
@@ -20608,7 +20975,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 26, 2025 14:55:19 UTC">2025-08-26</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 28, 2025 20:06:39 UTC">2025-08-28</span>
   </span>
 
     

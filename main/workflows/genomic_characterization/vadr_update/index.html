@@ -1203,11 +1203,11 @@
         <li class="md-nav__item">
   <a href="#vadr_update_phb" class="md-nav__link">
     <span class="md-ellipsis">
-      Vadr_Update_PHB
+      VADR_Update_PHB
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Vadr_Update_PHB">
+    <nav class="md-nav" aria-label="VADR_Update_PHB">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -4031,11 +4031,11 @@
         <li class="md-nav__item">
   <a href="#vadr_update_phb" class="md-nav__link">
     <span class="md-ellipsis">
-      Vadr_Update_PHB
+      VADR_Update_PHB
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Vadr_Update_PHB">
+    <nav class="md-nav" aria-label="VADR_Update_PHB">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -5278,11 +5278,11 @@
         <li class="md-nav__item">
   <a href="#vadr_update_phb" class="md-nav__link">
     <span class="md-ellipsis">
-      Vadr_Update_PHB
+      VADR_Update_PHB
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Vadr_Update_PHB">
+    <nav class="md-nav" aria-label="VADR_Update_PHB">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -5496,11 +5496,11 @@
         <li class="md-nav__item">
   <a href="#vadr_update_phb" class="md-nav__link">
     <span class="md-ellipsis">
-      Vadr_Update_PHB
+      VADR_Update_PHB
     </span>
   </a>
   
-    <nav class="md-nav" aria-label="Vadr_Update_PHB">
+    <nav class="md-nav" aria-label="VADR_Update_PHB">
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
@@ -5562,67 +5562,78 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td>HAV, Influenza, Monkeypox virus, RSV-A, RSV-B, SARS-CoV-2, <a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a>, WNV</td>
-<td>v3.0.1</td>
+<td>vX.X.X</td>
 <td>Yes</td>
 <td>Sample-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/VADR_Update_PHB:main?tab=info">VADR_Update_PHB</a></td>
 </tr>
 </tbody>
 </table>
-<h2 id="vadr_update_phb">Vadr_Update_PHB<a class="headerlink" href="#vadr_update_phb" title="Permanent link">&para;</a></h2>
-<p>The VADR_Update workflow updates prior VADR assessments for each sample in line with the assessment criteria in an alternative docker image. This may be useful when samples have previously been subject to VADR alerts as updates to VADR assessment criteria may mean that the sample no longer raises concern about quality. The latest docker image SARS-CoV-2 for VADR can be found <a href="https://theiagen.notion.site/Docker-Image-and-Reference-Materials-for-SARS-CoV-2-Genomic-Characterization-98328c61f5cb4f77975f512b55d09108">here</a>.</p>
-<p>Various models are available for many organisms. The following table provides an overview of the recommended container to be used and what options should be passed on to VADR.</p>
+<h2 id="vadr_update_phb">VADR_Update_PHB<a class="headerlink" href="#vadr_update_phb" title="Permanent link">&para;</a></h2>
+<p>VADR_Update_PHB is a standalone workflow dedicated to running VADR. By default, the workflow uses a slimmed-down docker image running VADR (v1.6.4), which requires models to be provided separately. The table below outlines the recommended models and VADR parameters for use in the workflow.</p>
 <table>
 <thead>
 <tr>
 <th><strong>Organism</strong></th>
-<th><strong>docker</strong></th>
+<th><strong>vadr_model_file</strong></th>
 <th><strong>vadr_opts</strong></th>
-<th>max_length</th>
+<th><strong>max_length</strong></th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td>sars-cov-2</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3"</td>
-<td>"--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"</td>
-<td>30000</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"</code></td>
+<td><code>"--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta"</code></td>
+<td><code>30000</code></td>
 </tr>
 <tr>
 <td>MPXV</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3"</td>
-<td>"--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"</td>
-<td>210000</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.4.2-1.tar.gz"</code></td>
+<td><code>"--mkey mpxv --glsearch --minimap2 -s -r --nomisc --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --s_overhang 150 --out_allfasta"</code></td>
+<td><code>210000</code></td>
 </tr>
 <tr>
 <td>WNV</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3"</td>
-<td>"--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"</td>
-<td>11000</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flavi-1.2-1.tar.gz"</code></td>
+<td><code>"--mkey flavi --nomisc --noprotid --out_allfasta"</code></td>
+<td><code>11000</code></td>
 </tr>
 <tr>
 <td>flu</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3"</td>
-<td>"--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"</td>
-<td>13500</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"</code></td>
+<td><code>"--mkey flu --atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3"</code></td>
+<td><code>13500</code></td>
 </tr>
 <tr>
 <td>rsv_a</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3"</td>
-<td>"-r --mkey rsv --xnocomp"</td>
-<td>15500</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"</code></td>
+<td><code>"--mkey rsv --xnocomp -r"</code></td>
+<td><code>15500</code></td>
 </tr>
 <tr>
 <td>rsv_b</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3"</td>
-<td>"-r --mkey rsv --xnocomp"</td>
-<td>15500</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"</code></td>
+<td><code>"--mkey rsv --xnocomp -r"</code></td>
+<td><code>15500</code></td>
 </tr>
 <tr>
-<td>HAV</td>
-<td>"us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.3-hav"</td>
-<td>"-r -xnocomp -mkey hav.vadr"</td>
-<td>10500</td>
+<td>measles</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mev-1.02.tar.gz"</code></td>
+<td><code>"--mkey mev -r --indefclass 0.01"</code></td>
+<td><code>18000</code></td>
+</tr>
+<tr>
+<td>mumps</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-muv-1.01.tar.gz"</code></td>
+<td><code>"--mkey muv -r --indefclass 0.025"</code></td>
+<td><code>18000</code></td>
+</tr>
+<tr>
+<td>rubella</td>
+<td><code>"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-ruv-1.01.tar.gz"</code></td>
+<td><code>"--mkey ruv -r"</code></td>
+<td><code>10000</code></td>
 </tr>
 </tbody>
 </table>
@@ -5644,27 +5655,235 @@
 <tbody>
 <tr>
 <td>vadr_update</td>
-<td><strong>assembly_length_unambiguous</strong></td>
-<td>Int</td>
-<td>Number of unambiguous basecalls within the consensus assembly</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>vadr_update</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>vadr_update</td>
 <td><strong>genome_fasta</strong></td>
 <td>File</td>
 <td>Consensus genome assembly</td>
 <td></td>
 <td>Required</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>reference_genbank</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails.</td>
+<td>Optional, Required</td>
+</tr>
+<tr>
+<td>consensus_qc</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>consensus_qc</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>consensus_qc</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>consensus_qc</td>
+<td><strong>genome_length</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>consensus_qc</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>consensus_qc</td>
+<td><strong>reference_genome</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>auspice_config</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>clades_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>flu_genoflu_genotype</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>N/A</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>flu_segment</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>N/A</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>flu_subtype</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>N/A</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>gene_locations_bed_file</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Default provided for SARS-CoV-2 ("gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed")</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>genome_length_input</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>Default provided for SARS-CoV-2 (29903), mpox (197200), WNV (11000), flu (13000), RSV-A (16000), RSV-B (16000), HIV (primer versions 1 [9181] and 2 [9840])</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>hiv_primer_version</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>v1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>kraken_target_organism_input</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>Default provided for mpox (Monkeypox virus), WNV (West Nile virus), and HIV (Human immunodeficiency virus 1)</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>lat_longs_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized.</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_date</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_num_unambig</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>narrow_bandwidth</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.08333</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>nextclade_dataset_name_input</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default is "NA".</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>nextclade_dataset_tag_input</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default is "NA".</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>pangolin_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>pivot_interval</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>primer_bed_file</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>proportion_wide</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td>0.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>reference_genome</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>reference_gff_file</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Default provided for mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"])</td>
+<td>Optional</td>
 </tr>
 <tr>
 <td>vadr</td>
@@ -5684,18 +5903,10 @@
 </tr>
 <tr>
 <td>vadr</td>
-<td><strong>max_length</strong></td>
-<td>Int</td>
-<td>Maximum length for the fasta-trim-terminal-ambigs.pl VADR script</td>
-<td>30000</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>vadr</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32 (RSV-A, RSV-B, and WNV) and 16 (all other TheiaCoV organisms)</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5707,19 +5918,51 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>vadr</td>
-<td><strong>skip_length</strong></td>
-<td>Int</td>
-<td>Minimum assembly length (unambiguous) to run VADR</td>
-<td>10000</td>
+<td>vadr_update</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>Target organism for VADR</td>
+<td>sars-cov-2</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>vadr</td>
+<td>vadr_update</td>
+<td><strong>vadr_max_length</strong></td>
+<td>Int</td>
+<td>Maximum length for the fasta-trim-terminal-ambigs.pl VADR script</td>
+<td>30000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>vadr_update</td>
+<td><strong>vadr_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>vadr_update</td>
+<td><strong>vadr_model_file</strong></td>
+<td>File</td>
+<td>Path to the a tar + gzipped VADR model file</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>vadr_update</td>
 <td><strong>vadr_opts</strong></td>
 <td>String</td>
 <td>Options for the v-annotate.pl VADR script</td>
 <td>"--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>vadr_update</td>
+<td><strong>vadr_skip_length</strong></td>
+<td>Int</td>
+<td>Minimum assembly length (unambiguous) to run VADR</td>
+<td>10000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5758,6 +6001,16 @@
 <td>A file containing all of the fatal alerts as determined by VADR</td>
 </tr>
 <tr>
+<td>vadr_all_outputs_tar_gz</td>
+<td>File</td>
+<td>A .tar.gz file (gzip-compressed tar archive file) containing all outputs from the VADR command v-annotate.pl. This file must be uncompressed &amp; extracted to see the many files within. See <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files">https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files</a> for more complete description of all files present within the archive. Useful when deeply investigating a sample's genome &amp; annotations.</td>
+</tr>
+<tr>
+<td>vadr_classification_summary_file</td>
+<td>File</td>
+<td>Per-sequence tabular classification file. See <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#explanation-of-sqc-suffixed-output-files">https://github.com/ncbi/vadr/blob/master/documentation/formats.md#explanation-of-sqc-suffixed-output-files</a> for more complete description.</td>
+</tr>
+<tr>
 <td>vadr_docker</td>
 <td>String</td>
 <td>Docker image used to run VADR</td>
@@ -5766,6 +6019,16 @@
 <td>vadr_fastas_zip_archive</td>
 <td>File</td>
 <td>Zip archive containing all fasta files created during VADR analysis</td>
+</tr>
+<tr>
+<td>vadr_feature_tbl_fail</td>
+<td>File</td>
+<td>5 column feature table output for failing sequences. See <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files">https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files</a> for more complete description.</td>
+</tr>
+<tr>
+<td>vadr_feature_tbl_pass</td>
+<td>File</td>
+<td>5 column feature table output for passing sequences. See <a href="https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files">https://github.com/ncbi/vadr/blob/master/documentation/formats.md#format-of-v-annotatepl-output-files</a> for more complete description.</td>
 </tr>
 <tr>
 <td>vadr_num_alerts</td>
@@ -5807,7 +6070,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"/></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 11, 2025 20:16:11 UTC">2025-08-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 28, 2025 20:06:39 UTC">2025-08-28</span>
   </span>
 
     
