@@ -266,6 +266,8 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
 - **RSV-B** (`"208895"`, `"hrsv-b"`)
 - **Measles** (`"11234"`, `"measles"`)
 - **Rabies** (`"11286"`, `"11292"`, `"rabies"`, `"lyssavirus rabies"`, `"lyssavirus"`)
+- **Mumps** (`"2560602"`, `"mumps virus"`, `"Mumps orthorubulavirus"`)
+- **Rubella** (`"11041"`, `"rubella virus"`, `"Rubella virus"`)
 
 ### Outputs
 
