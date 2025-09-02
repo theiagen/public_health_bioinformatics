@@ -1,6 +1,6 @@
     ??? task "`ECTyper`: Serotyping"
         
-        [ECTyper](https://github.com/phac-nml/ecoli_serotyping) is a serotyping module for *E. coli*. In TheiaProk, we are using assembly files as input.
+        [ECTyper](https://github.com/phac-nml/ecoli_serotyping) is a serotyping module for *E. coli*. In TheiaProk, we are using assembly files as input. ECTyper provides species identification and quality control for *E. coli* allowiung for complete reports on serotyping, Shiga toxin typing, and pathotyping. Pathotype is identified using an ECTyper internal typing database that looks at toxin and pathotype signature marker sequences. Pathotypes are used to group *E. coli* specimens based on their identified pathogenicity. 
         
         !!! techdetails "ECTyper Technical Details"
             
