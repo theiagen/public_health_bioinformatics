@@ -70,12 +70,28 @@ task fetch_bs {
     # rename FASTQ files to add back in underscores that Illumina/Basespace changed into hyphens
     echo "Concatenating and renaming FASTQ files to add back underscores in basespace_sample_name"
     # setting a new bash variable to use for renaming during concatenation of FASTQs
-    SAMPLENAME_HYPHEN_INSTEAD_OF_UNDERSCORES=$(echo $sample_identifier | sed 's|_|-|g' | sed 's|\.|-|g')
+    for elm in ./dataset_${dataset_id}/*.fastq.gz; do
+      if [[ $(echo "$elm" | cut -d '/' -f 3) =~ [-] && $sample_identifier =~ [_] ]]; then
+        echo "Basespace sample name for $(echo "$elm" | cut -d '/' -f 3) contains dashes, input sample identifier $sample_identifier contains underscores, renaming identifier..."
+        SAMPLENAME_RENAMED=$(echo $sample_identifier | sed 's|_|-|g' | sed 's|\.|-|g')
+      fi
+      if [[ $(echo "$elm" | cut -d '/' -f 3) =~ [_] && $sample_identifier =~ [-] ]]; then
+        echo "Basespace sample name for $(echo "$elm" | cut -d '/' -f 3) contains underscores, input sample identifier $sample_identifier contains dashes, renaming identifier..."
+        SAMPLENAME_RENAMED=$(echo $sample_identifier | sed 's|-|_|g')
+      fi
+      if [[ ($(echo "$elm" | cut -d '/' -f 3) =~ [_] && $sample_identifier =~ [_]) || ($(echo "$elm" | cut -d '/' -f 3) =~ [-] && $sample_identifier =~ [-]) ]]; then
+        echo "Both Basespace sample name and input sample identifier for $(echo "$elm" | cut -d '/' -f 3) contain matching separators..."
+        SAMPLENAME_RENAMED=$sample_identifier
+      fi
+    done
+
+    echo "Renamed identifier: $SAMPLENAME_RENAMED"
 
     #Combine non-empty read files into single file without BaseSpace filename cruft
     ##FWD Read
     lane_count=0
-    for fwd_read in ./dataset_*/${SAMPLENAME_HYPHEN_INSTEAD_OF_UNDERSCORES}_*R1_*.fastq.gz; do
+    for fwd_read in ./dataset_*/${SAMPLENAME_RENAMED}_*R1_*.fastq.gz; do
+      echo "Processing forward read: $fwd_read"
       if [[ -s $fwd_read ]]; then
         echo "cat fwd reads: cat $fwd_read >> ~{sample_name}_R1.fastq.gz" 
         cat $fwd_read >> ~{sample_name}_R1.fastq.gz
@@ -83,7 +99,7 @@ task fetch_bs {
       fi
     done
     ##REV Read
-    for rev_read in ./dataset_*/${SAMPLENAME_HYPHEN_INSTEAD_OF_UNDERSCORES}_*R2_*.fastq.gz; do
+    for rev_read in ./dataset_*/${SAMPLENAME_RENAMED}_*R2_*.fastq.gz; do
       if [[ -s $rev_read ]]; then 
         echo "cat rev reads: cat $rev_read >> ~{sample_name}_R2.fastq.gz" 
         cat $rev_read >> ~{sample_name}_R2.fastq.gz
