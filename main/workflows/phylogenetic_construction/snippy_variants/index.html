@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -6014,16 +6086,16 @@
 <td>snippy_variants_wf</td>
 <td><strong>map_qual</strong></td>
 <td>Int</td>
-<td>Minimum mapping quality to accept in variant calling, default from snippy tool is 60</td>
-<td></td>
+<td>Minimum mapping quality to accept in variant calling</td>
+<td>60</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>snippy_variants_wf</td>
 <td><strong>maxsoft</strong></td>
 <td>Int</td>
-<td>Number of bases of alignment to soft-clip before discarding the alignment, default from snippy tool is 10</td>
-<td></td>
+<td>Number of bases of alignment to soft-clip before discarding the alignment</td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6046,8 +6118,8 @@
 <td>snippy_variants_wf</td>
 <td><strong>min_frac</strong></td>
 <td>Float</td>
-<td>Minimum fraction of bases at a given position to identify a mutation, default from snippy tool is 0</td>
-<td>0.9</td>
+<td>Minimum fraction of bases at a given position to identify a mutation</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6218,11 +6290,6 @@
 <td>snippy_variants_num_variants</td>
 <td>Int</td>
 <td>Number of variants detected between sample and reference genome</td>
-</tr>
-<tr>
-<td>snippy_variants_outdir_tarball</td>
-<td>Array[File]</td>
-<td>A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree</td>
 </tr>
 <tr>
 <td>snippy_variants_outdir_tarball</td>

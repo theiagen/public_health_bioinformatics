@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5768,12 +5840,28 @@
 </thead>
 <tbody>
 <tr>
-<td>reference_fetch</td>
+<td>assembly_fetch</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
 <td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
+</tr>
+<tr>
+<td>assembly_fetch</td>
+<td><strong>assembly_fasta</strong></td>
+<td>File</td>
+<td>The assembly file for your sample in FASTA format</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>assembly_fetch</td>
+<td><strong>ncbi_accession</strong></td>
+<td>String</td>
+<td>NCBI accession passed to the NCBI datasets task to be downloaded. Example: GCF_000006945.2 (Salmonella enterica subsp. enterica, serovar Typhimurium str. LT2 reference genome)</td>
+<td></td>
+<td>Optional</td>
 </tr>
 <tr>
 <td>ncbi_datasets_download_genome_accession</td>
@@ -5796,7 +5884,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5829,22 +5917,6 @@
 <td>Boolean</td>
 <td>Set to true to download from NCBI Virus Datasets</td>
 <td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>reference_fetch</td>
-<td><strong>assembly_fasta</strong></td>
-<td>File</td>
-<td>The assembly file for your sample in FASTA format</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>reference_fetch</td>
-<td><strong>ncbi_accession</strong></td>
-<td>String</td>
-<td>NCBI accession passed to the NCBI datasets task to be downloaded. Example: GCF_000006945.2 (Salmonella enterica subsp. enterica, serovar Typhimurium str. LT2 reference genome)</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>

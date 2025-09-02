@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -6060,14 +6132,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>compare_assemblies</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>kraken2_clean</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -6096,7 +6160,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6117,7 +6181,7 @@
 </tr>
 <tr>
 <td>kraken2_raw</td>
-<td><strong>docker_image</strong></td>
+<td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
@@ -6136,7 +6200,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>4</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6168,7 +6232,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>4</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6196,11 +6260,59 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>metaspades</td>
+<td>metaspades_pe</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>metaspades_pe</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>metaspades_pe</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/spades:3.12.0--h9ee0642_3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>metaspades_pe</td>
+<td><strong>kmers</strong></td>
+<td>String</td>
+<td>Kmers to use for the task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>metaspades_pe</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>metaspades_pe</td>
 <td><strong>metaspades_opts</strong></td>
 <td>String</td>
-<td>Additional arguments to pass to metaspades task</td>
+<td>Metaspades optional parameters</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>metaspades_pe</td>
+<td><strong>phred_offset</strong></td>
+<td>Int</td>
+<td>Phred offset to use for the task</td>
+<td>33</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6244,6 +6356,46 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>minimap2_assembly_correction</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>minimap2_assembly_correction</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>minimap2_assembly_correction</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>minimap2_assembly_correction</td>
+<td><strong>long_read_flags</strong></td>
+<td>Boolean</td>
+<td>Use long read sequencing specific flags for alignment</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>minimap2_assembly_correction</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>minimap2_reads</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -6273,6 +6425,70 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pilon</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pilon</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pilon</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pilon</td>
+<td><strong>fix</strong></td>
+<td>String</td>
+<td>Additional options for fixing assembly errors (all, snps, indels, gaps)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pilon</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pilon</td>
+<td><strong>min_base_quality</strong></td>
+<td>Int</td>
+<td>Minimum base quality to consider a base for assembly</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pilon</td>
+<td><strong>min_depth</strong></td>
+<td>Float</td>
+<td>Minimum depth to consider a region for assembly</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>pilon</td>
+<td><strong>min_mapping_quality</strong></td>
+<td>Int</td>
+<td>Minimum mapping quality to consider a read for assembly</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6333,10 +6549,66 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>extract_unclassified</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>fastp_args</strong></td>
 <td>String</td>
 <td>Additional arguments to use with fastp</td>
 <td>--detect_adapter_for_pe -g -5 20 -3 20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_complete_only</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_decontaminate_mem</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_is_accession</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_refseq</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6377,6 +6649,14 @@
 <td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>taxon_id</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6432,7 +6712,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/seqkit:2.3.1</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/seqkit:2.4.0--h9ee0642_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6537,6 +6817,14 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>sam_to_sorted_bam</td>
+<td><strong>min_qual</strong></td>
+<td>Int</td>
+<td>Minimum quality score for reads to be included in the analysis</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6628,11 +6916,19 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>sort_bam_assembly_correction</td>
+<td><strong>min_qual</strong></td>
+<td>Int</td>
+<td>Minimum quality score for reads to be included in the analysis</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>theiameta_illumina_pe</td>
 <td><strong>kraken2_db</strong></td>
 <td>File</td>
 <td>A Kraken2 database in .tar.gz format</td>
-<td>gs://theiagen-public-files-rp/terra/theiaprok-files/k2_standard_08gb_20230605.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_08gb_20230605.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7486,6 +7782,11 @@
 <td>Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the SAMtools coverage command</td>
 </tr>
 <tr>
+<td>average_read_length</td>
+<td>Float</td>
+<td>Average read length</td>
+</tr>
+<tr>
 <td>bbduk_docker</td>
 <td>String</td>
 <td>The Docker image for bbduk, which was used to remove the adapters from the sequences</td>
@@ -7501,7 +7802,7 @@
 <td>The version of bedtools, which was used to calculate coverage</td>
 </tr>
 <tr>
-<td>contig number</td>
+<td>contig_number</td>
 <td>Int</td>
 <td>The number of contigs in the assembly_fasta (see description for <code>assembly_fasta</code>)</td>
 </tr>
@@ -7732,7 +8033,7 @@
 </tr>
 <tr>
 <td>percentage_mapped_reads</td>
-<td>String</td>
+<td>Float</td>
 <td>Percentage of reads that successfully aligned to the reference genome. This value is calculated by number of mapped reads / total number of reads x 100.</td>
 </tr>
 <tr>

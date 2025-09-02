@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -6092,7 +6164,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6141,6 +6213,38 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>concatenate_qc_metrics</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>concatenate_qc_metrics</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>concatenate_qc_metrics</td>
+<td><strong>docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>concatenate_qc_metrics</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6314,7 +6418,7 @@
 <tr>
 <td>snippy_tree_wf</td>
 <td><strong>iqtree2_bootstraps</strong></td>
-<td>String</td>
+<td>Int</td>
 <td>Number of replicates for <a href="http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation">http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation</a> (Minimum recommended= 1000)</td>
 <td>1000</td>
 <td>Optional</td>
@@ -6425,6 +6529,14 @@
 </tr>
 <tr>
 <td>snippy_tree_wf</td>
+<td><strong>snippy_variants_qc_metrics</strong></td>
+<td>Array[File]</td>
+<td>Files produced by the Snippy_Variants workflow used to concatenate the reports for each sample in the tree</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>snippy_tree_wf</td>
 <td><strong>snp_dists_docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
@@ -6461,14 +6573,6 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>snippy_tree_wf</td>
-<td><strong>tree_name_updated</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6540,7 +6644,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7161,7 +7265,7 @@ The <code>cat_variants</code> task concatenates variant data from multiple sampl
 <td>Reference genome (FASTA or GenBank file) used for generating phylogeny</td>
 </tr>
 <tr>
-<td>snippy_shared_snp_table</td>
+<td>snippy_shared_variants_table</td>
 <td>File</td>
 <td>Table illustrating variants shared among samples</td>
 </tr>

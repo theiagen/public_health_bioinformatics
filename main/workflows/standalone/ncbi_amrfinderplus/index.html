@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5783,10 +5855,26 @@
 </tr>
 <tr>
 <td>amrfinderplus_nuc</td>
+<td><strong>annotation_assembly</strong></td>
+<td>File</td>
+<td>Assembly file from annotation software such as Prokka or Bakta, used for utilizing protein fasta and GFF files.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_nuc</td>
+<td><strong>annotation_format</strong></td>
+<td>String</td>
+<td>The format of the annotation files</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_nuc</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>8</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5802,7 +5890,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5810,7 +5898,15 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.23-2025-06-03.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.23-2025-07-16.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_nuc</td>
+<td><strong>gff</strong></td>
+<td>File</td>
+<td>GFF file provided by Prokka or Bakta when amrfinder_use_gff is set to true. This file is used to determine the location of AMR genes in the genome.</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5826,12 +5922,12 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>amrfinderplus_nuc</td>
-<td><strong>mincov</strong></td>
+<td><strong>min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum proportion of reference gene covered for a BLAST-based hit (Methods BLAST or PARTIAL). Attribute should be a float ranging from 0-1, such as 0.6 (equal to 60% coverage)</td>
 <td>0.5</td>
@@ -5839,7 +5935,7 @@
 </tr>
 <tr>
 <td>amrfinderplus_nuc</td>
-<td><strong>minid</strong></td>
+<td><strong>min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum identity for a blast-based hit hit (Methods BLAST or PARTIAL). -1 means use a curated threshold if it exists and 0.9 otherwise. Setting this value to something other than -1 will override any curated similarity cutoffs. Attribute should be a float ranging from 0-1, such as 0.95 (equal to 95% identity)</td>
 <td>0.9</td>
@@ -5851,6 +5947,30 @@
 <td>String</td>
 <td>If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica"</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_nuc</td>
+<td><strong>protein_fasta</strong></td>
+<td>File</td>
+<td>Protein FASTA from annotation software such as Prokka or Bakta. Utilized when amrfinder_use_gff is set to true</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_nuc</td>
+<td><strong>separate_betalactam_genes</strong></td>
+<td>Boolean</td>
+<td>Report beta-Lactam AMR genes separated out by all beta-lactam and the respective beta-lactam subclasses</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>amrfinderplus_nuc</td>
+<td><strong>use_gff</strong></td>
+<td>Boolean</td>
+<td>Whether or not to use the GFF and protein FASTA files for AMRFinderPlus</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>

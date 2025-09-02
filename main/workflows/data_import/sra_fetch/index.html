@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5648,7 +5720,7 @@
 <tbody>
 <tr>
 <td>fetch_sra_to_fastq</td>
-<td><strong>sra_accession</strong></td>
+<td><strong>accession</strong></td>
 <td>String</td>
 <td>SRA, ENA, or DRA accession number</td>
 <td></td>
@@ -5672,7 +5744,7 @@
 </tr>
 <tr>
 <td>fetch_sra_to_fastq</td>
-<td><strong>docker_image</strong></td>
+<td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0</td>
@@ -5680,10 +5752,10 @@
 </tr>
 <tr>
 <td>fetch_sra_to_fastq</td>
-<td><strong>fastq_dl_options</strong></td>
+<td><strong>fastq_dl_opts</strong></td>
 <td>String</td>
 <td>Additional parameters to pass to fastq_dl from here</td>
-<td>#NAME?</td>
+<td>--provider sra</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5737,7 +5809,7 @@
 <td>The docker used</td>
 </tr>
 <tr>
-<td>fastq_dl_metadata</td>
+<td>fastq_dl_fastq_metadata</td>
 <td>File</td>
 <td>File containing metadata of the provided accession such as submission_accession, library_selection, instrument_platform, among others</td>
 </tr>

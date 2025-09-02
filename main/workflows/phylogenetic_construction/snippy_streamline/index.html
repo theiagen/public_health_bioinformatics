@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -6493,7 +6565,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:14.13.2</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6603,7 +6675,7 @@
 <tr>
 <td>snippy_streamline</td>
 <td><strong>use_centroid_as_reference</strong></td>
-<td>Booolean</td>
+<td>Boolean</td>
 <td>Set to true if you want to use the centroid sample as the reference sample instead of using the centroid to detect a suitable one</td>
 <td>FALSE</td>
 <td>Optional</td>
@@ -6691,7 +6763,7 @@
 <tr>
 <td>snippy_tree_wf</td>
 <td><strong>iqtree2_bootstraps</strong></td>
-<td>String</td>
+<td>Int</td>
 <td>Number of replicates for <a href="http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation">http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation</a> (Minimum recommended= 1000)</td>
 <td>1000</td>
 <td>Optional</td>
@@ -6850,6 +6922,14 @@
 </tr>
 <tr>
 <td>snippy_variants_wf</td>
+<td><strong>assembly_fasta</strong></td>
+<td>File</td>
+<td>The assembly file for your sample in FASTA format</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>snippy_variants_wf</td>
 <td><strong>base_quality</strong></td>
 <td>Int</td>
 <td>Minimum quality for a nucleotide to be used in variant calling</td>
@@ -6876,16 +6956,16 @@
 <td>snippy_variants_wf</td>
 <td><strong>map_qual</strong></td>
 <td>Int</td>
-<td>Minimum mapping quality to accept in variant calling, default from snippy tool is 60</td>
-<td></td>
+<td>Minimum mapping quality to accept in variant calling</td>
+<td>60</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>snippy_variants_wf</td>
 <td><strong>maxsoft</strong></td>
 <td>Int</td>
-<td>Number of bases of alignment to soft-clip before discarding the alignment, default from snippy tool is 10</td>
-<td></td>
+<td>Number of bases of alignment to soft-clip before discarding the alignment</td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6908,8 +6988,8 @@
 <td>snippy_variants_wf</td>
 <td><strong>min_frac</strong></td>
 <td>Float</td>
-<td>Minimum fraction of bases at a given position to identify a mutation, default from snippy tool is 0</td>
-<td>0.9</td>
+<td>Minimum fraction of bases at a given position to identify a mutation</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7764,6 +7844,11 @@ The <code>cat_variants</code> task concatenates variant data from multiple sampl
 <td>ReferenceSeeker version used</td>
 </tr>
 <tr>
+<td>snippy_shared_variants_table</td>
+<td>File</td>
+<td>Table illustrating variants shared among samples</td>
+</tr>
+<tr>
 <td>snippy_snp_dists_docker</td>
 <td>String</td>
 <td>Docker file used for running SNP-dists</td>
@@ -7815,12 +7900,12 @@ The <code>cat_variants</code> task concatenates variant data from multiple sampl
 </tr>
 <tr>
 <td>snippy_variants_percent_reads_aligned</td>
-<td>Float</td>
+<td>Array[Float]</td>
 <td>Percentage of reads aligned to the reference genome</td>
 </tr>
 <tr>
 <td>snippy_variants_percent_ref_coverage</td>
-<td>Float</td>
+<td>Array[Float]</td>
 <td>Proportion of the reference genome covered by reads with a depth greater than or equal to the <code>min_coverage</code> threshold (default is 10).</td>
 </tr>
 <tr>

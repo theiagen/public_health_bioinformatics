@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5904,7 +5976,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5968,7 +6040,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>4</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6008,7 +6080,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6016,6 +6088,14 @@
 <td><strong>previous_ksnp4_snps</strong></td>
 <td>File</td>
 <td>File with existing SNPs for the current run to be appended to.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ksnp4_workflow</td>
+<td><strong>cluster_name_updated</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -6056,7 +6136,7 @@
 <td><strong>midpoint_root_tree</strong></td>
 <td>Boolean</td>
 <td>If true, midpoint root the final tree</td>
-<td>FALSE</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6072,7 +6152,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>

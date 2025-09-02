@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5626,9 +5698,57 @@
 <tbody>
 <tr>
 <td>czgenepi_prep</td>
+<td><strong>assembly_fasta_column_name</strong></td>
+<td>String</td>
+<td>The column name where the sample's assembly file can be found</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>czgenepi_prep</td>
+<td><strong>collection_date_column_name</strong></td>
+<td>String</td>
+<td>The column name where the sample's collection date can be found</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>czgenepi_prep</td>
+<td><strong>continent_column_name</strong></td>
+<td>String</td>
+<td>The column name where the sample's originating continent can be found</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>czgenepi_prep</td>
+<td><strong>country_column_name</strong></td>
+<td>String</td>
+<td>The column name where the sample's originating country can be found</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>czgenepi_prep</td>
+<td><strong>county_column_name</strong></td>
+<td>String</td>
+<td>The column name where the samples' originating county can be found</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>czgenepi_prep</td>
 <td><strong>sample_names</strong></td>
 <td>Array[String]</td>
 <td>The array of sample ids you want to prepare for CZ GEN EPI</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>czgenepi_prep</td>
+<td><strong>state_column_name</strong></td>
+<td>String</td>
+<td>The column name where the sample's originating state can be found</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5658,62 +5778,6 @@
 </tr>
 <tr>
 <td>czgenepi_prep</td>
-<td><strong>assembly_fasta_column_name</strong></td>
-<td>String</td>
-<td>The column name where the sample's assembly file can be found</td>
-<td>assembly_fasta</td>
-<td>Optional, Required</td>
-</tr>
-<tr>
-<td>czgenepi_prep</td>
-<td><strong>collection_date_column_name</strong></td>
-<td>String</td>
-<td>The column name where the sample's collection date can be found</td>
-<td>collection_date</td>
-<td>Optional, Required</td>
-</tr>
-<tr>
-<td>czgenepi_prep</td>
-<td><strong>continent_column_name</strong></td>
-<td>String</td>
-<td>The column name where the sample's originating continent can be found</td>
-<td>continent</td>
-<td>Optional, Required</td>
-</tr>
-<tr>
-<td>czgenepi_prep</td>
-<td><strong>country_column_name</strong></td>
-<td>String</td>
-<td>The column name where the sample's originating country can be found</td>
-<td>country</td>
-<td>Optional, Required</td>
-</tr>
-<tr>
-<td>czgenepi_prep</td>
-<td><strong>county_column_name</strong></td>
-<td>String</td>
-<td>The column name where the samples' originating county can be found</td>
-<td>county</td>
-<td>Optional, Required</td>
-</tr>
-<tr>
-<td>czgenepi_prep</td>
-<td><strong>private_id_column_name</strong></td>
-<td>String</td>
-<td>The column name where the Private ID for the sample can be found</td>
-<td>terra_table_name_id</td>
-<td>Optional, Required</td>
-</tr>
-<tr>
-<td>czgenepi_prep</td>
-<td><strong>state_column_name</strong></td>
-<td>String</td>
-<td>The column name where the sample's originating state can be found</td>
-<td>state</td>
-<td>Optional, Required</td>
-</tr>
-<tr>
-<td>czgenepi_prep</td>
 <td><strong>genbank_accession_column_name</strong></td>
 <td>String</td>
 <td>The column name where the genbank accession for the sample can be found</td>
@@ -5734,6 +5798,14 @@
 <td>String</td>
 <td>The organism for data preparation. Options: "mpox" or "sars-cov-2"</td>
 <td>sars-cov-2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>czgenepi_prep</td>
+<td><strong>private_id_column_name</strong></td>
+<td>String</td>
+<td>The column name where the Private ID for the sample can be found</td>
+<td>terra_table_name_id</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5840,12 +5912,12 @@
 </thead>
 <tbody>
 <tr>
-<td>concatenate_czgenepi_fasta</td>
+<td>concatenated_czgenepi_fasta</td>
 <td>File</td>
 <td>The concatenated fasta file with the renamed headers (the headers are renamed to account for clearlabs data which has unique headers)</td>
 </tr>
 <tr>
-<td>concatenate_czgenepi_metadata</td>
+<td>concatenated_czgenepi_metadata</td>
 <td>File</td>
 <td>The concatenated metadata that was extracted from the terra table using the specified columns</td>
 </tr>

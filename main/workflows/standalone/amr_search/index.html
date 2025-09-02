@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5735,7 +5807,7 @@
 <tr>
 <td>amr_search</td>
 <td><strong>cpu</strong></td>
-<td>Integer</td>
+<td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
@@ -5743,7 +5815,7 @@
 <tr>
 <td>amr_search</td>
 <td><strong>disk_size</strong></td>
-<td>Integer</td>
+<td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
@@ -5753,15 +5825,31 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.0</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>amr_search</td>
 <td><strong>memory</strong></td>
-<td>Integer</td>
+<td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>timezone</strong></td>
+<td>String</td>
+<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
+<td></td>
 <td>Optional</td>
 </tr>
 </tbody>
@@ -5841,6 +5929,21 @@
 <td>amr_search_results</td>
 <td>File</td>
 <td>JSON formatted AMR profile including BLAST results</td>
+</tr>
+<tr>
+<td>amr_search_version</td>
+<td>String</td>
+<td>Version of AMR_Search libraries used</td>
+</tr>
+<tr>
+<td>amr_search_wf_analysis_date</td>
+<td>String</td>
+<td>Date of analysis</td>
+</tr>
+<tr>
+<td>amr_search_wf_version</td>
+<td>String</td>
+<td>Version of PHB used for analysis</td>
 </tr>
 </tbody>
 </table>

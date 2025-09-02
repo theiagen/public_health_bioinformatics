@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -6372,14 +6444,6 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
-<td><strong>annotation_assembly</strong></td>
-<td>File</td>
-<td>Assembly file from annotation software such as Prokka or Bakta, used for utilizing protein fasta and GFF files.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>amrfinderplus_task</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -6397,7 +6461,7 @@
 <tr>
 <td>amrfinderplus_task</td>
 <td><strong>disk_size</strong></td>
-<td>Boolean</td>
+<td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
@@ -6407,15 +6471,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.23-2025-06-03.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>amrfinderplus_task</td>
-<td><strong>gff</strong></td>
-<td>File</td>
-<td>GFF file provided by Prokka or Bakta when amrfinder_use_gff is set to true. This file is used to determine the location of AMR genes in the genome.</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.23-2025-07-16.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6452,14 +6508,6 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
-<td><strong>protein_fasta</strong></td>
-<td>File</td>
-<td>Protein FASTA from annotation software such as Prokka or Bakta. Utilized when amrfinder_use_gff is set to true</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>amrfinderplus_task</td>
 <td><strong>separate_betalactam_genes</strong></td>
 <td>Boolean</td>
 <td>Report beta-Lactam AMR genes separated out by all beta-lactam and the respective beta-lactam subclasses</td>
@@ -6471,7 +6519,7 @@
 <td><strong>ani_threshold</strong></td>
 <td>Float</td>
 <td>ANI value threshold must be surpassed in order to output the ani_top_species_match. If a genome does not surpass this threshold (and the percent_bases_aligned_threshold) then the ani_top_species_match output String will show a warning instead of a genus &amp; species.</td>
-<td>80</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6519,7 +6567,7 @@
 <td><strong>percent_bases_aligned_threshold</strong></td>
 <td>Float</td>
 <td>Threshold regarding the proportion of bases aligned between the query genome and reference genome. If a genome does not surpass this threshold (and the ani_threshold) then the ani_top_species_match output String will show a warning instead of a genus &amp; species.</td>
-<td>70</td>
+<td>70.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6531,11 +6579,35 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>arln</td>
-<td><strong>call_arln</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the return of ARLN required Auto PASS/FAIL outputs</td>
-<td>FALSE</td>
+<td>arln_stats</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/arln_stats:1.0.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6567,7 +6639,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>200</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6575,7 +6647,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/bakta:1.5.1--pyhdfd78af_0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6583,7 +6655,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>24</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6598,7 +6670,7 @@
 <td>bakta</td>
 <td><strong>proteins</strong></td>
 <td>Boolean</td>
-<td></td>
+<td>THIS VARIABLE IS BUGGED PLEASE DO NOT DO ANYTHING HERE</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -6655,7 +6727,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>4</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6663,7 +6735,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6679,7 +6751,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6695,7 +6767,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>4</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6703,7 +6775,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6719,7 +6791,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6755,35 +6827,19 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>clean_check_reads</td>
-<td><strong>organism</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>clean_check_reads</td>
-<td><strong>workflow_series</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>digger_denovo</td>
-<td><strong>assember_options</strong></td>
-<td>String</td>
-<td>String</td>
-<td>Assembler-specific options that you might choose for the selected assembler</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>digger_denovo</td>
 <td><strong>assembler</strong></td>
 <td>String</td>
 <td>Assembler to use (spades, skesa, megahit)</td>
 <td>skesa</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>assembler_options</strong></td>
+<td>String</td>
+<td>Assembler-specific options that you might choose for the selected assembler</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6863,7 +6919,7 @@
 <td><strong>filter_contigs_min_coverage</strong></td>
 <td>Float</td>
 <td>Minimum coverage threshold for contig filtering</td>
-<td>2</td>
+<td>2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7030,7 +7086,7 @@
 <td>digger_denovo</td>
 <td><strong>skesa_disk_size</strong></td>
 <td>Int</td>
-<td>Disk space in GB for SKESA assembler</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
 </tr>
@@ -7091,7 +7147,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -7099,7 +7155,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
@@ -7107,7 +7163,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
@@ -7115,7 +7171,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -7127,7 +7183,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>8</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7135,7 +7191,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>20</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7167,7 +7223,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7190,13 +7246,13 @@
 <td>gamma</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker container used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/gamma:2.2</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>gamma</td>
-<td><strong>extend_output</strong></td>
+<td><strong>extended_output</strong></td>
 <td>Boolean</td>
 <td>GAMMA will provide the extended output when set to true</td>
 <td>FALSE</td>
@@ -7205,7 +7261,7 @@
 <tr>
 <td>gamma</td>
 <td><strong>gamma_db</strong></td>
-<td>String</td>
+<td>File</td>
 <td>Multifasta sequence database GAMMA is to use for gene matching</td>
 <td>gs://theiagen-public-resources-rp/reference_data/databases/gamma/default_ResFinderDB_Combined_05-06-20.fsa</td>
 <td>Optional</td>
@@ -7220,7 +7276,7 @@
 </tr>
 <tr>
 <td>gamma</td>
-<td><strong>min_length_percent</strong></td>
+<td><strong>min_length_percent_gammas</strong></td>
 <td>Int</td>
 <td>Threshold of match length percent used by GAMMA-s</td>
 <td>20</td>
@@ -7239,7 +7295,7 @@
 <td><strong>output_fasta</strong></td>
 <td>Boolean</td>
 <td>Allows GAMMA to output gene matches in FASTA format</td>
-<td>FALSE</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7293,7 +7349,7 @@
 <tr>
 <td>kmerfinder</td>
 <td><strong>kmerfinder_db</strong></td>
-<td>String</td>
+<td>File</td>
 <td>Bacterial database for KmerFinder</td>
 <td>gs://theiagen-public-resources-rp/reference_data/databases/kmerfinder/kmerfinder_bacteria_20230911.tar.gz</td>
 <td>Optional</td>
@@ -7406,8 +7462,8 @@
 <td>merlin_magic</td>
 <td><strong>assembly_only</strong></td>
 <td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Set to true if only analyzing input assembly</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7447,15 +7503,7 @@
 <td><strong>cauris_cladetyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>cauris_cladetyper_docker_image</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7471,7 +7519,7 @@
 <td><strong>cladetyper_max_distance</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7565,7 +7613,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade6_annotated</strong></td>
-<td>String</td>
+<td>File</td>
 <td>The path to the annotated reference for clade 6</td>
 <td></td>
 <td>Optional</td>
@@ -7633,6 +7681,94 @@
 <td>Set to true to enable E. coli species verification</td>
 <td>FALSE</td>
 <td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_align_diff</strong></td>
+<td>Int</td>
+<td>Threshold for difference between alignment length and subject length in BLAST hit.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_cluster_distance</strong></td>
+<td>Int</td>
+<td>Distance between cluster of matches to consider as different clusters.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_culling_limit</strong></td>
+<td>Int</td>
+<td>Total hits to return in a position.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/emmtyper:0.2.0--py_0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_gap</strong></td>
+<td>Int</td>
+<td>Threshold gap to allow in BLAST hit.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_max_size</strong></td>
+<td>Int</td>
+<td>Maximum size of PCR product.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_good</strong></td>
+<td>Int</td>
+<td>Minimum size where there must be 2 matches for each mismatch.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Minimal percent identity of sequence.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_perfect</strong></td>
+<td>Int</td>
+<td>Minimum size of perfect match at 3' primer end.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_mismatch</strong></td>
+<td>Int</td>
+<td>Threshold for number of mismatch to allow in BLAST hit.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_wf</strong></td>
+<td>String</td>
+<td>Choose workflow [blast</td>
+<td>pcr]</td>
+<td></td>
 </tr>
 <tr>
 <td>merlin_magic</td>
@@ -7708,9 +7844,9 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>kaptive_min_coverage</strong></td>
+<td><strong>kaptive_min_percent_coverage</strong></td>
 <td>Float</td>
-<td>Minimum required percent identity for the gene BLAST search via tBLASTn</td>
+<td>Minimum required percent coverage for the gene BLAST search via tBLASTn</td>
 <td>80</td>
 <td>Optional</td>
 </tr>
@@ -7718,7 +7854,7 @@
 <td>merlin_magic</td>
 <td><strong>kaptive_min_percent_identity</strong></td>
 <td>Float</td>
-<td>Minimum required percent coverage for the gene BLAST search via tBLASTn</td>
+<td>Minimum required percent identity for the gene BLAST search via tBLASTn</td>
 <td>90</td>
 <td>Optional</td>
 </tr>
@@ -7798,8 +7934,8 @@
 <td>merlin_magic</td>
 <td><strong>legsta_docker_image</strong></td>
 <td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7846,16 +7982,16 @@
 <td>merlin_magic</td>
 <td><strong>ont_data</strong></td>
 <td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Set to true if your data is ONT FASTQ files</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>paired_end</strong></td>
 <td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Set to true if your data is paired-end FASTQ files</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8084,9 +8220,17 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>sistr_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>sistr_disk_size</strong></td>
 <td>Int</td>
-<td>The disk size (in GB) to allocate for the task</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -8102,7 +8246,7 @@
 <td>merlin_magic</td>
 <td><strong>sistr_memory</strong></td>
 <td>Int</td>
-<td>The amount of memory (in GB) to allocate for the task.</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>32</td>
 <td>Optional</td>
 </tr>
@@ -8182,24 +8326,16 @@
 <td>merlin_magic</td>
 <td><strong>snippy_reference_afumigatus</strong></td>
 <td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>snippy_reference_calbicans</strong></td>
-<td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>Internal component, do not modify</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>snippy_reference_cryptoneo</strong></td>
 <td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>Internal component, do not modify</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8268,14 +8404,6 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>srst2_min_coverage</strong></td>
-<td>Int</td>
-<td>Minimum breadth of coverage for SRST2 to call a gene as present</td>
-<td>80</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
 <td><strong>srst2_min_depth</strong></td>
 <td>Int</td>
 <td>Minimum depth of coverage for SRST2 to call a gene as present</td>
@@ -8288,6 +8416,14 @@
 <td>Int</td>
 <td>Minimum edge depth for SRST2 to call a gene as present</td>
 <td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Minimum breadth of coverage for SRST2 to call a gene as present</td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8405,7 +8541,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>tbp_parser_min_frequency</strong></td>
-<td>Int</td>
+<td>Float</td>
 <td>The minimum frequency for a mutation to pass QC</td>
 <td>0.1</td>
 <td>Optional</td>
@@ -8413,7 +8549,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>tbp_parser_min_percent_coverage</strong></td>
-<td>Int</td>
+<td>Float</td>
 <td>The minimum coverage for a region to pass QC in tbp_parser</td>
 <td>100</td>
 <td>Optional</td>
@@ -8439,7 +8575,7 @@
 <td><strong>tbp_parser_output_seq_method_type</strong></td>
 <td>String</td>
 <td>Fills out the "seq_method" field in the tbp_parser output files</td>
-<td>Sequencing method not provided</td>
+<td>WGS</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8488,6 +8624,14 @@
 <td>Boolean</td>
 <td>Set to true to enable tNGS-specific parameters and runs in tbp-parser</td>
 <td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_additional_parameters</strong></td>
+<td>String</td>
+<td>Additional parameters for TBProfiler</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8567,7 +8711,7 @@
 <td><strong>theiaeuk</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8581,7 +8725,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>vibecheck_lineage_barcodes</strong></td>
-<td>String</td>
+<td>File</td>
 <td>Feather formatted lineage barcodes to use instead of default O1 barcodes</td>
 <td></td>
 <td>Optional</td>
@@ -8995,22 +9139,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>raw_check_reads</td>
-<td><strong>organism</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>raw_check_reads</td>
-<td><strong>workflow_series</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>read_QC_trim</td>
 <td><strong>adapters</strong></td>
 <td>File</td>
@@ -9044,10 +9172,58 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>extract_unclassified</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>fastp_args</strong></td>
 <td>String</td>
 <td>Additional arguments to use with fastp</td>
 <td>--detect_adapter_for_pe -g -5 20 -3 20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_complete_only</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_decontaminate_mem</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_is_accession</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_refseq</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9070,7 +9246,7 @@
 <td>read_QC_trim</td>
 <td><strong>kraken_disk_size</strong></td>
 <td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -9120,6 +9296,14 @@
 <td>String</td>
 <td>This string is searched for in the kraken2 outputs to extract the read percentage</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>taxon_id</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9231,6 +9415,14 @@
 <td><strong>call_ani</strong></td>
 <td>Boolean</td>
 <td>Set to true to enable the ANI task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>call_arln_stats</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the return of ARLN required Auto PASS/FAIL outputs</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -9364,6 +9556,22 @@
 </tr>
 <tr>
 <td>theiaprok_illumina_pe</td>
+<td><strong>mlst_run_secondary_scheme</strong></td>
+<td>Boolean</td>
+<td>If true, will run secondary scheme if primary scheme is of ecoli or abaumannii, these two have multiple schemes that are relevant.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
+<td><strong>mlst_scheme_override</strong></td>
+<td>Boolean</td>
+<td>If true, will force E. coli scheme to be used when Gambit predicts Escherichia coli, otherwise will return scheme MLST predicts.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_pe</td>
 <td><strong>originating_lab</strong></td>
 <td>String</td>
 <td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
@@ -9447,7 +9655,7 @@
 <td><strong>seq_method</strong></td>
 <td>String</td>
 <td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
+<td>ILLUMINA</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9471,7 +9679,7 @@
 <td><strong>terra_project</strong></td>
 <td>String</td>
 <td>The name of the Terra Project where you want the taxon tables written to</td>
-<td></td>
+<td>NA</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9479,7 +9687,7 @@
 <td><strong>terra_workspace</strong></td>
 <td>String</td>
 <td>The name of the Terra Workspace where you want the taxon tables written to</td>
-<td></td>
+<td>NA</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9503,7 +9711,7 @@
 <td><strong>trim_window_size</strong></td>
 <td>Int</td>
 <td>Specifies window size for trimming (the number of bases to average the quality across)</td>
-<td>4</td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9583,14 +9791,6 @@
 <td><strong>scheme</strong></td>
 <td>String</td>
 <td>Don’t autodetect the MLST scheme; force this scheme on all inputs (see <a href="https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab">https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab</a> for accepted strings)</td>
-<td>None</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ts_mlst</td>
-<td><strong>taxonomy</strong></td>
-<td>String</td>
-<td>Taxonomy produced by GAMBIT or expected_taxon used to validate specifically if "ecoli" scheme needs to be run</td>
 <td>None</td>
 <td>Optional</td>
 </tr>
@@ -9694,14 +9894,6 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
-<td><strong>annotation_assembly</strong></td>
-<td>File</td>
-<td>Assembly file from annotation software such as Prokka or Bakta, used for utilizing protein fasta and GFF files.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>amrfinderplus_task</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -9719,7 +9911,7 @@
 <tr>
 <td>amrfinderplus_task</td>
 <td><strong>disk_size</strong></td>
-<td>Boolean</td>
+<td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
@@ -9729,15 +9921,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.23-2025-06-03.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>amrfinderplus_task</td>
-<td><strong>gff</strong></td>
-<td>File</td>
-<td>GFF file provided by Prokka or Bakta when amrfinder_use_gff is set to true. This file is used to determine the location of AMR genes in the genome.</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.23-2025-07-16.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9774,14 +9958,6 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
-<td><strong>protein_fasta</strong></td>
-<td>File</td>
-<td>Protein FASTA from annotation software such as Prokka or Bakta. Utilized when amrfinder_use_gff is set to true</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>amrfinderplus_task</td>
 <td><strong>separate_betalactam_genes</strong></td>
 <td>Boolean</td>
 <td>Report beta-Lactam AMR genes separated out by all beta-lactam and the respective beta-lactam subclasses</td>
@@ -9793,7 +9969,7 @@
 <td><strong>ani_threshold</strong></td>
 <td>Float</td>
 <td>ANI value threshold must be surpassed in order to output the ani_top_species_match. If a genome does not surpass this threshold (and the percent_bases_aligned_threshold) then the ani_top_species_match output String will show a warning instead of a genus &amp; species.</td>
-<td>80</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9841,7 +10017,7 @@
 <td><strong>percent_bases_aligned_threshold</strong></td>
 <td>Float</td>
 <td>Threshold regarding the proportion of bases aligned between the query genome and reference genome. If a genome does not surpass this threshold (and the ani_threshold) then the ani_top_species_match output String will show a warning instead of a genus &amp; species.</td>
-<td>70</td>
+<td>70.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9853,11 +10029,51 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>arln</td>
-<td><strong>call_arln</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the return of ARLN required Auto PASS/FAIL outputs</td>
-<td>FALSE</td>
+<td>arln_stats</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/arln_stats:1.0.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>5</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>read2_clean</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>read2_raw</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9889,7 +10105,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>200</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9897,7 +10113,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/bakta:1.5.1--pyhdfd78af_0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9905,7 +10121,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>24</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9920,7 +10136,7 @@
 <td>bakta</td>
 <td><strong>proteins</strong></td>
 <td>Boolean</td>
-<td></td>
+<td>THIS VARIABLE IS BUGGED PLEASE DO NOT DO ANYTHING HERE</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -9977,7 +10193,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>4</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9985,7 +10201,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10001,7 +10217,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10025,7 +10241,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>4</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10033,7 +10249,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10049,7 +10265,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10093,27 +10309,35 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>clean_check_reads</td>
-<td><strong>organism</strong></td>
-<td>String</td>
+<td>concatenate_illumina_lanes</td>
+<td><strong>read2_lane1</strong></td>
+<td>File</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>clean_check_reads</td>
-<td><strong>workflow_series</strong></td>
-<td>String</td>
+<td>concatenate_illumina_lanes</td>
+<td><strong>read2_lane2</strong></td>
+<td>File</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>digger_denovo</td>
-<td><strong>assember_options</strong></td>
-<td>String</td>
-<td>String</td>
-<td>Assembler-specific options that you might choose for the selected assembler</td>
+<td>concatenate_illumina_lanes</td>
+<td><strong>read2_lane3</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>concatenate_illumina_lanes</td>
+<td><strong>read2_lane4</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10122,6 +10346,14 @@
 <td>String</td>
 <td>Assembler to use (spades, skesa, megahit)</td>
 <td>skesa</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>assembler_options</strong></td>
+<td>String</td>
+<td>Assembler-specific options that you might choose for the selected assembler</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10201,7 +10433,7 @@
 <td><strong>filter_contigs_min_coverage</strong></td>
 <td>Float</td>
 <td>Minimum coverage threshold for contig filtering</td>
-<td>2</td>
+<td>2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10350,6 +10582,14 @@
 </tr>
 <tr>
 <td>digger_denovo</td>
+<td><strong>read2</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
 <td><strong>run_filter_contigs</strong></td>
 <td>Boolean</td>
 <td>Whether to run contig filtering step</td>
@@ -10368,7 +10608,7 @@
 <td>digger_denovo</td>
 <td><strong>skesa_disk_size</strong></td>
 <td>Int</td>
-<td>Disk space in GB for SKESA assembler</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
 </tr>
@@ -10429,7 +10669,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -10437,7 +10677,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
@@ -10445,7 +10685,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
@@ -10453,7 +10693,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -10465,7 +10705,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>8</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10473,7 +10713,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>20</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10505,7 +10745,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10528,13 +10768,13 @@
 <td>gamma</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker container used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/gamma:2.2</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>gamma</td>
-<td><strong>extend_output</strong></td>
+<td><strong>extended_output</strong></td>
 <td>Boolean</td>
 <td>GAMMA will provide the extended output when set to true</td>
 <td>FALSE</td>
@@ -10543,7 +10783,7 @@
 <tr>
 <td>gamma</td>
 <td><strong>gamma_db</strong></td>
-<td>String</td>
+<td>File</td>
 <td>Multifasta sequence database GAMMA is to use for gene matching</td>
 <td>gs://theiagen-public-resources-rp/reference_data/databases/gamma/default_ResFinderDB_Combined_05-06-20.fsa</td>
 <td>Optional</td>
@@ -10558,7 +10798,7 @@
 </tr>
 <tr>
 <td>gamma</td>
-<td><strong>min_length_percent</strong></td>
+<td><strong>min_length_percent_gammas</strong></td>
 <td>Int</td>
 <td>Threshold of match length percent used by GAMMA-s</td>
 <td>20</td>
@@ -10577,7 +10817,7 @@
 <td><strong>output_fasta</strong></td>
 <td>Boolean</td>
 <td>Allows GAMMA to output gene matches in FASTA format</td>
-<td>FALSE</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10631,7 +10871,7 @@
 <tr>
 <td>kmerfinder</td>
 <td><strong>kmerfinder_db</strong></td>
-<td>String</td>
+<td>File</td>
 <td>Bacterial database for KmerFinder</td>
 <td>gs://theiagen-public-resources-rp/reference_data/databases/kmerfinder/kmerfinder_bacteria_20230911.tar.gz</td>
 <td>Optional</td>
@@ -10744,8 +10984,8 @@
 <td>merlin_magic</td>
 <td><strong>assembly_only</strong></td>
 <td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Set to true if only analyzing input assembly</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10785,15 +11025,7 @@
 <td><strong>cauris_cladetyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>cauris_cladetyper_docker_image</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10809,7 +11041,7 @@
 <td><strong>cladetyper_max_distance</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10903,7 +11135,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade6_annotated</strong></td>
-<td>String</td>
+<td>File</td>
 <td>The path to the annotated reference for clade 6</td>
 <td></td>
 <td>Optional</td>
@@ -10971,6 +11203,94 @@
 <td>Set to true to enable E. coli species verification</td>
 <td>FALSE</td>
 <td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_align_diff</strong></td>
+<td>Int</td>
+<td>Threshold for difference between alignment length and subject length in BLAST hit.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_cluster_distance</strong></td>
+<td>Int</td>
+<td>Distance between cluster of matches to consider as different clusters.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_culling_limit</strong></td>
+<td>Int</td>
+<td>Total hits to return in a position.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/emmtyper:0.2.0--py_0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_gap</strong></td>
+<td>Int</td>
+<td>Threshold gap to allow in BLAST hit.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_max_size</strong></td>
+<td>Int</td>
+<td>Maximum size of PCR product.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_good</strong></td>
+<td>Int</td>
+<td>Minimum size where there must be 2 matches for each mismatch.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Minimal percent identity of sequence.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_perfect</strong></td>
+<td>Int</td>
+<td>Minimum size of perfect match at 3' primer end.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_mismatch</strong></td>
+<td>Int</td>
+<td>Threshold for number of mismatch to allow in BLAST hit.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_wf</strong></td>
+<td>String</td>
+<td>Choose workflow [blast</td>
+<td>pcr]</td>
+<td></td>
 </tr>
 <tr>
 <td>merlin_magic</td>
@@ -11046,9 +11366,9 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>kaptive_min_coverage</strong></td>
+<td><strong>kaptive_min_percent_coverage</strong></td>
 <td>Float</td>
-<td>Minimum required percent identity for the gene BLAST search via tBLASTn</td>
+<td>Minimum required percent coverage for the gene BLAST search via tBLASTn</td>
 <td>80</td>
 <td>Optional</td>
 </tr>
@@ -11056,7 +11376,7 @@
 <td>merlin_magic</td>
 <td><strong>kaptive_min_percent_identity</strong></td>
 <td>Float</td>
-<td>Minimum required percent coverage for the gene BLAST search via tBLASTn</td>
+<td>Minimum required percent identity for the gene BLAST search via tBLASTn</td>
 <td>90</td>
 <td>Optional</td>
 </tr>
@@ -11136,8 +11456,8 @@
 <td>merlin_magic</td>
 <td><strong>legsta_docker_image</strong></td>
 <td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11184,8 +11504,8 @@
 <td>merlin_magic</td>
 <td><strong>ont_data</strong></td>
 <td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Set to true if your data is ONT FASTQ files</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11422,9 +11742,17 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>sistr_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>sistr_disk_size</strong></td>
 <td>Int</td>
-<td>The disk size (in GB) to allocate for the task</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -11440,7 +11768,7 @@
 <td>merlin_magic</td>
 <td><strong>sistr_memory</strong></td>
 <td>Int</td>
-<td>The amount of memory (in GB) to allocate for the task.</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>32</td>
 <td>Optional</td>
 </tr>
@@ -11520,24 +11848,16 @@
 <td>merlin_magic</td>
 <td><strong>snippy_reference_afumigatus</strong></td>
 <td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>snippy_reference_calbicans</strong></td>
-<td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>Internal component, do not modify</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>snippy_reference_cryptoneo</strong></td>
 <td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>Internal component, do not modify</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11606,14 +11926,6 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>srst2_min_coverage</strong></td>
-<td>Int</td>
-<td>Minimum breadth of coverage for SRST2 to call a gene as present</td>
-<td>80</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
 <td><strong>srst2_min_depth</strong></td>
 <td>Int</td>
 <td>Minimum depth of coverage for SRST2 to call a gene as present</td>
@@ -11626,6 +11938,14 @@
 <td>Int</td>
 <td>Minimum edge depth for SRST2 to call a gene as present</td>
 <td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Minimum breadth of coverage for SRST2 to call a gene as present</td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11743,7 +12063,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>tbp_parser_min_frequency</strong></td>
-<td>Int</td>
+<td>Float</td>
 <td>The minimum frequency for a mutation to pass QC</td>
 <td>0.1</td>
 <td>Optional</td>
@@ -11751,7 +12071,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>tbp_parser_min_percent_coverage</strong></td>
-<td>Int</td>
+<td>Float</td>
 <td>The minimum coverage for a region to pass QC in tbp_parser</td>
 <td>100</td>
 <td>Optional</td>
@@ -11777,7 +12097,7 @@
 <td><strong>tbp_parser_output_seq_method_type</strong></td>
 <td>String</td>
 <td>Fills out the "seq_method" field in the tbp_parser output files</td>
-<td>Sequencing method not provided</td>
+<td>WGS</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11826,6 +12146,14 @@
 <td>Boolean</td>
 <td>Set to true to enable tNGS-specific parameters and runs in tbp-parser</td>
 <td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_additional_parameters</strong></td>
+<td>String</td>
+<td>Additional parameters for TBProfiler</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11904,6 +12232,38 @@
 <td>merlin_magic</td>
 <td><strong>theiaeuk</strong></td>
 <td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_lineage_barcodes</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_skip_subsampling</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_subsampling_fraction</strong></td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -12381,22 +12741,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>raw_check_reads</td>
-<td><strong>organism</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>raw_check_reads</td>
-<td><strong>workflow_series</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>read_QC_trim</td>
 <td><strong>adapters</strong></td>
 <td>File</td>
@@ -12456,7 +12800,7 @@
 <td>read_QC_trim</td>
 <td><strong>kraken_disk_size</strong></td>
 <td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -12622,6 +12966,14 @@
 </tr>
 <tr>
 <td>theiaprok_illumina_se</td>
+<td><strong>call_arln_stats</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the return of ARLN required Auto PASS/FAIL outputs</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
 <td><strong>call_gamma</strong></td>
 <td>Boolean</td>
 <td>Set to true in order to enable GAMMA task</td>
@@ -12742,6 +13094,22 @@
 </tr>
 <tr>
 <td>theiaprok_illumina_se</td>
+<td><strong>mlst_run_secondary_scheme</strong></td>
+<td>Boolean</td>
+<td>If true, will run secondary scheme if primary scheme is of ecoli or abaumannii, these two have multiple schemes that are relevant.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
+<td><strong>mlst_scheme_override</strong></td>
+<td>Boolean</td>
+<td>If true, will force E. coli scheme to be used when Gambit predicts Escherichia coli, otherwise will return scheme MLST predicts.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_illumina_se</td>
 <td><strong>originating_lab</strong></td>
 <td>String</td>
 <td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
@@ -12790,30 +13158,6 @@
 </tr>
 <tr>
 <td>theiaprok_illumina_se</td>
-<td><strong>read2_lane2</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaprok_illumina_se</td>
-<td><strong>read2_lane3</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaprok_illumina_se</td>
-<td><strong>read2_lane4</strong></td>
-<td>File</td>
-<td>If provided, the Concatenate_Illumina_Lanes subworkflow will concatenate all files from the same lane before doing any subsequent analysis</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaprok_illumina_se</td>
 <td><strong>run_id</strong></td>
 <td>String</td>
 <td>Will be used in the "run_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
@@ -12825,7 +13169,7 @@
 <td><strong>seq_method</strong></td>
 <td>String</td>
 <td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
+<td>ILLUMINA</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12833,7 +13177,7 @@
 <td><strong>skip_mash</strong></td>
 <td>Boolean</td>
 <td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
-<td>TRUE</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12857,7 +13201,7 @@
 <td><strong>terra_project</strong></td>
 <td>String</td>
 <td>The name of the Terra Project where you want the taxon tables written to</td>
-<td></td>
+<td>NA</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12865,7 +13209,7 @@
 <td><strong>terra_workspace</strong></td>
 <td>String</td>
 <td>The name of the Terra Workspace where you want the taxon tables written to</td>
-<td></td>
+<td>NA</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12878,7 +13222,7 @@
 </tr>
 <tr>
 <td>theiaprok_illumina_se</td>
-<td><strong>trim_quality_trim_score</strong></td>
+<td><strong>trim_quality_min_score</strong></td>
 <td>Int</td>
 <td>Specifies the average quality of bases in a sliding window to be kept</td>
 <td>30</td>
@@ -12969,14 +13313,6 @@
 <td><strong>scheme</strong></td>
 <td>String</td>
 <td>Don’t autodetect the MLST scheme; force this scheme on all inputs (see <a href="https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab">https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab</a> for accepted strings)</td>
-<td>None</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ts_mlst</td>
-<td><strong>taxonomy</strong></td>
-<td>String</td>
-<td>Taxonomy produced by GAMBIT or expected_taxon used to validate specifically if "ecoli" scheme needs to be run</td>
 <td>None</td>
 <td>Optional</td>
 </tr>
@@ -13080,14 +13416,6 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
-<td><strong>annotation_assembly</strong></td>
-<td>File</td>
-<td>Assembly file from annotation software such as Prokka or Bakta, used for utilizing protein fasta and GFF files.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>amrfinderplus_task</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -13105,7 +13433,7 @@
 <tr>
 <td>amrfinderplus_task</td>
 <td><strong>disk_size</strong></td>
-<td>Boolean</td>
+<td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
@@ -13115,15 +13443,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.23-2025-06-03.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>amrfinderplus_task</td>
-<td><strong>gff</strong></td>
-<td>File</td>
-<td>GFF file provided by Prokka or Bakta when amrfinder_use_gff is set to true. This file is used to determine the location of AMR genes in the genome.</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.23-2025-07-16.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13160,14 +13480,6 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
-<td><strong>protein_fasta</strong></td>
-<td>File</td>
-<td>Protein FASTA from annotation software such as Prokka or Bakta. Utilized when amrfinder_use_gff is set to true</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>amrfinderplus_task</td>
 <td><strong>separate_betalactam_genes</strong></td>
 <td>Boolean</td>
 <td>Report beta-Lactam AMR genes separated out by all beta-lactam and the respective beta-lactam subclasses</td>
@@ -13179,7 +13491,7 @@
 <td><strong>ani_threshold</strong></td>
 <td>Float</td>
 <td>ANI value threshold must be surpassed in order to output the ani_top_species_match. If a genome does not surpass this threshold (and the percent_bases_aligned_threshold) then the ani_top_species_match output String will show a warning instead of a genus &amp; species.</td>
-<td>80</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13227,7 +13539,7 @@
 <td><strong>percent_bases_aligned_threshold</strong></td>
 <td>Float</td>
 <td>Threshold regarding the proportion of bases aligned between the query genome and reference genome. If a genome does not surpass this threshold (and the ani_threshold) then the ani_top_species_match output String will show a warning instead of a genus &amp; species.</td>
-<td>70</td>
+<td>70.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13239,11 +13551,51 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>arln</td>
-<td><strong>call_arln</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the return of ARLN required Auto PASS/FAIL outputs</td>
-<td>FALSE</td>
+<td>arln_stats</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/arln_stats:1.0.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>5</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>read2_clean</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>read2_raw</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13275,7 +13627,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>200</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13283,7 +13635,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/bakta:1.5.1--pyhdfd78af_0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13291,7 +13643,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>24</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13306,7 +13658,7 @@
 <td>bakta</td>
 <td><strong>proteins</strong></td>
 <td>Boolean</td>
-<td></td>
+<td>THIS VARIABLE IS BUGGED PLEASE DO NOT DO ANYTHING HERE</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -13383,23 +13735,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>clean_check_reads</td>
-<td><strong>organism</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>clean_check_reads</td>
-<td><strong>workflow_series</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -13407,7 +13743,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
@@ -13415,7 +13751,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
@@ -13423,7 +13759,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -13496,7 +13832,7 @@
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>filtercontigs_cpu</strong></td>
+<td><strong>filter_contigs_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
 <td>1</td>
@@ -13504,7 +13840,7 @@
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>filtercontigs_disk_size</strong></td>
+<td><strong>filter_contigs_disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>10</td>
@@ -13512,7 +13848,7 @@
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>filtercontigs_memory</strong></td>
+<td><strong>filter_contigs_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
@@ -13520,7 +13856,7 @@
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>filtercontigs_min_length</strong></td>
+<td><strong>filter_contigs_min_length</strong></td>
 <td>Int</td>
 <td>Minimum contig length to keep</td>
 <td>1000</td>
@@ -13618,15 +13954,15 @@
 <td>flye_denovo</td>
 <td><strong>flye_read_type</strong></td>
 <td>String</td>
-<td>Specifies the type of sequencing reads. Options: --nano-raw (default), --nano-corr, --nano-hq, --pacbio-raw, --pacbio-corr, --pacbio-hifi. Refer to Flye documentation for details on each type.</td>
-<td>#NAME?</td>
+<td>Specifies the type of sequencing reads. Options: --nano-hq (default), --nano-corr, --nano-raw, --pacbio-raw, --pacbio-corr, --pacbio-hifi. Refer to Flye documentation for details on each type.</td>
+<td>--nano-hq</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>flye_denovo</td>
 <td><strong>flye_scaffold</strong></td>
 <td>Boolean</td>
-<td>If true, scaffold</td>
+<td>If true, scaffolding is enabled using graph</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -13634,7 +13970,7 @@
 <td>flye_denovo</td>
 <td><strong>flye_uneven_coverage_mode</strong></td>
 <td>Boolean</td>
-<td></td>
+<td>sets the --meta option in the case of uneven coverage (or metagenomics)</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -13650,7 +13986,7 @@
 <td>flye_denovo</td>
 <td><strong>illumina_read2</strong></td>
 <td>File</td>
-<td>If Illumina reads are provided, flye_denovo subworflow will perform Illumina polishing</td>
+<td>If Illumina reads are provided, flye_denovo subworkflow will perform Illumina polishing</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -13688,18 +14024,18 @@
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>polisher</strong></td>
-<td>String</td>
-<td>The polishing tool to use for assembly</td>
-<td>medaka</td>
+<td><strong>polish_rounds</strong></td>
+<td>Int</td>
+<td>The number of polishing rounds to conduct for medaka or racon (without Illumina)</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>polishing_rounds</strong></td>
-<td>Int</td>
-<td>The number of polishing rounds to conduct for medaka or racon (without Illumina)</td>
-<td>1</td>
+<td><strong>polisher</strong></td>
+<td>String</td>
+<td>The polishing tool to use for assembly</td>
+<td>medaka</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13714,7 +14050,7 @@
 <td>flye_denovo</td>
 <td><strong>polypolish_cpu</strong></td>
 <td>Int</td>
-<td>Polypolish cpu</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>1</td>
 <td>Optional</td>
 </tr>
@@ -13722,7 +14058,7 @@
 <td>flye_denovo</td>
 <td><strong>polypolish_disk_size</strong></td>
 <td>Int</td>
-<td>Polypolish disk size</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -13770,7 +14106,7 @@
 <td>flye_denovo</td>
 <td><strong>polypolish_memory</strong></td>
 <td>Int</td>
-<td>Polypolish memory</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -13848,14 +14184,6 @@
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>read1</strong></td>
-<td>File</td>
-<td>ONT read file in FASTQ file format (compression optional)</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flye_denovo</td>
 <td><strong>run_porechop</strong></td>
 <td>Boolean</td>
 <td>If true, trims reads before assembly using Porechop</td>
@@ -13875,7 +14203,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>8</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13883,7 +14211,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>20</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13915,7 +14243,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13938,13 +14266,13 @@
 <td>gamma</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker container used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/gamma:2.2</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>gamma</td>
-<td><strong>extend_output</strong></td>
+<td><strong>extended_output</strong></td>
 <td>Boolean</td>
 <td>GAMMA will provide the extended output when set to true</td>
 <td>FALSE</td>
@@ -13953,7 +14281,7 @@
 <tr>
 <td>gamma</td>
 <td><strong>gamma_db</strong></td>
-<td>String</td>
+<td>File</td>
 <td>Multifasta sequence database GAMMA is to use for gene matching</td>
 <td>gs://theiagen-public-resources-rp/reference_data/databases/gamma/default_ResFinderDB_Combined_05-06-20.fsa</td>
 <td>Optional</td>
@@ -13968,7 +14296,7 @@
 </tr>
 <tr>
 <td>gamma</td>
-<td><strong>min_length_percent</strong></td>
+<td><strong>min_length_percent_gammas</strong></td>
 <td>Int</td>
 <td>Threshold of match length percent used by GAMMA-s</td>
 <td>20</td>
@@ -13987,7 +14315,7 @@
 <td><strong>output_fasta</strong></td>
 <td>Boolean</td>
 <td>Allows GAMMA to output gene matches in FASTA format</td>
-<td>FALSE</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14041,7 +14369,7 @@
 <tr>
 <td>kmerfinder</td>
 <td><strong>kmerfinder_db</strong></td>
-<td>String</td>
+<td>File</td>
 <td>Bacterial database for KmerFinder</td>
 <td>gs://theiagen-public-resources-rp/reference_data/databases/kmerfinder/kmerfinder_bacteria_20230911.tar.gz</td>
 <td>Optional</td>
@@ -14154,8 +14482,8 @@
 <td>merlin_magic</td>
 <td><strong>assembly_only</strong></td>
 <td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Set to true if only analyzing input assembly</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14195,15 +14523,7 @@
 <td><strong>cauris_cladetyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>cauris_cladetyper_docker_image</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14219,7 +14539,7 @@
 <td><strong>cladetyper_max_distance</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14313,7 +14633,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade6_annotated</strong></td>
-<td>String</td>
+<td>File</td>
 <td>The path to the annotated reference for clade 6</td>
 <td></td>
 <td>Optional</td>
@@ -14381,6 +14701,94 @@
 <td>Set to true to enable E. coli species verification</td>
 <td>FALSE</td>
 <td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_align_diff</strong></td>
+<td>Int</td>
+<td>Threshold for difference between alignment length and subject length in BLAST hit.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_cluster_distance</strong></td>
+<td>Int</td>
+<td>Distance between cluster of matches to consider as different clusters.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_culling_limit</strong></td>
+<td>Int</td>
+<td>Total hits to return in a position.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/emmtyper:0.2.0--py_0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_gap</strong></td>
+<td>Int</td>
+<td>Threshold gap to allow in BLAST hit.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_max_size</strong></td>
+<td>Int</td>
+<td>Maximum size of PCR product.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_good</strong></td>
+<td>Int</td>
+<td>Minimum size where there must be 2 matches for each mismatch.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Minimal percent identity of sequence.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_perfect</strong></td>
+<td>Int</td>
+<td>Minimum size of perfect match at 3' primer end.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_mismatch</strong></td>
+<td>Int</td>
+<td>Threshold for number of mismatch to allow in BLAST hit.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_wf</strong></td>
+<td>String</td>
+<td>Choose workflow [blast</td>
+<td>pcr]</td>
+<td></td>
 </tr>
 <tr>
 <td>merlin_magic</td>
@@ -14456,9 +14864,9 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>kaptive_min_coverage</strong></td>
+<td><strong>kaptive_min_percent_coverage</strong></td>
 <td>Float</td>
-<td>Minimum required percent identity for the gene BLAST search via tBLASTn</td>
+<td>Minimum required percent coverage for the gene BLAST search via tBLASTn</td>
 <td>80</td>
 <td>Optional</td>
 </tr>
@@ -14466,7 +14874,7 @@
 <td>merlin_magic</td>
 <td><strong>kaptive_min_percent_identity</strong></td>
 <td>Float</td>
-<td>Minimum required percent coverage for the gene BLAST search via tBLASTn</td>
+<td>Minimum required percent identity for the gene BLAST search via tBLASTn</td>
 <td>90</td>
 <td>Optional</td>
 </tr>
@@ -14546,8 +14954,8 @@
 <td>merlin_magic</td>
 <td><strong>legsta_docker_image</strong></td>
 <td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14594,8 +15002,8 @@
 <td>merlin_magic</td>
 <td><strong>paired_end</strong></td>
 <td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Set to true if your data is paired-end FASTQ files</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14832,9 +15240,17 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>sistr_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>sistr_disk_size</strong></td>
 <td>Int</td>
-<td>The disk size (in GB) to allocate for the task</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -14850,7 +15266,7 @@
 <td>merlin_magic</td>
 <td><strong>sistr_memory</strong></td>
 <td>Int</td>
-<td>The amount of memory (in GB) to allocate for the task.</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>32</td>
 <td>Optional</td>
 </tr>
@@ -14920,26 +15336,26 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>snippy_reference_afumigatus</strong></td>
-<td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td><strong>snippy_query_gene</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>snippy_reference_calbicans</strong></td>
+<td><strong>snippy_reference_afumigatus</strong></td>
 <td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>Internal component, do not modify</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>snippy_reference_cryptoneo</strong></td>
 <td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>Internal component, do not modify</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15008,14 +15424,6 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>srst2_min_coverage</strong></td>
-<td>Int</td>
-<td>Minimum breadth of coverage for SRST2 to call a gene as present</td>
-<td>80</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
 <td><strong>srst2_min_depth</strong></td>
 <td>Int</td>
 <td>Minimum depth of coverage for SRST2 to call a gene as present</td>
@@ -15028,6 +15436,14 @@
 <td>Int</td>
 <td>Minimum edge depth for SRST2 to call a gene as present</td>
 <td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Minimum breadth of coverage for SRST2 to call a gene as present</td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15145,7 +15561,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>tbp_parser_min_frequency</strong></td>
-<td>Int</td>
+<td>Float</td>
 <td>The minimum frequency for a mutation to pass QC</td>
 <td>0.1</td>
 <td>Optional</td>
@@ -15153,7 +15569,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>tbp_parser_min_percent_coverage</strong></td>
-<td>Int</td>
+<td>Float</td>
 <td>The minimum coverage for a region to pass QC in tbp_parser</td>
 <td>100</td>
 <td>Optional</td>
@@ -15179,7 +15595,7 @@
 <td><strong>tbp_parser_output_seq_method_type</strong></td>
 <td>String</td>
 <td>Fills out the "seq_method" field in the tbp_parser output files</td>
-<td>Sequencing method not provided</td>
+<td>WGS</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15228,6 +15644,14 @@
 <td>Boolean</td>
 <td>Set to true to enable tNGS-specific parameters and runs in tbp-parser</td>
 <td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_additional_parameters</strong></td>
+<td>String</td>
+<td>Additional parameters for TBProfiler</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15306,6 +15730,38 @@
 <td>merlin_magic</td>
 <td><strong>theiaeuk</strong></td>
 <td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_lineage_barcodes</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_skip_subsampling</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_subsampling_fraction</strong></td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -15879,22 +16335,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>raw_check_reads</td>
-<td><strong>organism</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>raw_check_reads</td>
-<td><strong>workflow_series</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>read_QC_trim</td>
 <td><strong>artic_guppyplex_cpu</strong></td>
 <td>Int</td>
@@ -15994,7 +16434,7 @@
 <td>read_QC_trim</td>
 <td><strong>kraken_disk_size</strong></td>
 <td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -16099,7 +16539,7 @@
 <td><strong>ncbi_scrub_cpu</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16107,7 +16547,7 @@
 <td><strong>ncbi_scrub_disk_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16115,7 +16555,7 @@
 <td><strong>ncbi_scrub_docker</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16123,7 +16563,7 @@
 <td><strong>ncbi_scrub_memory</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16193,6 +16633,14 @@
 <tr>
 <td>read_QC_trim</td>
 <td><strong>run_prefix</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>target_organism</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -16299,6 +16747,14 @@
 <td><strong>call_ani</strong></td>
 <td>Boolean</td>
 <td>Set to true to enable the ANI task</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>call_arln_stats</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the return of ARLN required Auto PASS/FAIL outputs</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -16424,6 +16880,22 @@
 </tr>
 <tr>
 <td>theiaprok_ont</td>
+<td><strong>mlst_run_secondary_scheme</strong></td>
+<td>Boolean</td>
+<td>If true, will run secondary scheme if primary scheme is of ecoli or abaumannii, these two have multiple schemes that are relevant.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
+<td><strong>mlst_scheme_override</strong></td>
+<td>Boolean</td>
+<td>If true, will force E. coli scheme to be used when Gambit predicts Escherichia coli, otherwise will return scheme MLST predicts.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_ont</td>
 <td><strong>originating_lab</strong></td>
 <td>String</td>
 <td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
@@ -16459,7 +16931,7 @@
 <td><strong>seq_method</strong></td>
 <td>String</td>
 <td>The sequencing methodology used to generate the input read data; for TheiaProk workflows, this input will be used in the "seq_id" column in any taxon-specific tables created in the Export Taxon Tables task</td>
-<td></td>
+<td>ONT</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16491,7 +16963,7 @@
 <td><strong>terra_project</strong></td>
 <td>String</td>
 <td>The name of the Terra Project where you want the taxon tables written to</td>
-<td></td>
+<td>NA</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16499,7 +16971,7 @@
 <td><strong>terra_workspace</strong></td>
 <td>String</td>
 <td>The name of the Terra Workspace where you want the taxon tables written to</td>
-<td></td>
+<td>NA</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16579,14 +17051,6 @@
 <td><strong>scheme</strong></td>
 <td>String</td>
 <td>Don’t autodetect the MLST scheme; force this scheme on all inputs (see <a href="https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab">https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab</a> for accepted strings)</td>
-<td>None</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ts_mlst</td>
-<td><strong>taxonomy</strong></td>
-<td>String</td>
-<td>Taxonomy produced by GAMBIT or expected_taxon used to validate specifically if "ecoli" scheme needs to be run</td>
 <td>None</td>
 <td>Optional</td>
 </tr>
@@ -16690,14 +17154,6 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
-<td><strong>annotation_assembly</strong></td>
-<td>File</td>
-<td>Assembly file from annotation software such as Prokka or Bakta, used for utilizing protein fasta and GFF files.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>amrfinderplus_task</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -16715,7 +17171,7 @@
 <tr>
 <td>amrfinderplus_task</td>
 <td><strong>disk_size</strong></td>
-<td>Boolean</td>
+<td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
@@ -16725,15 +17181,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.23-2025-06-03.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>amrfinderplus_task</td>
-<td><strong>gff</strong></td>
-<td>File</td>
-<td>GFF file provided by Prokka or Bakta when amrfinder_use_gff is set to true. This file is used to determine the location of AMR genes in the genome.</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.23-2025-07-16.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16770,14 +17218,6 @@
 </tr>
 <tr>
 <td>amrfinderplus_task</td>
-<td><strong>protein_fasta</strong></td>
-<td>File</td>
-<td>Protein FASTA from annotation software such as Prokka or Bakta. Utilized when amrfinder_use_gff is set to true</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>amrfinderplus_task</td>
 <td><strong>separate_betalactam_genes</strong></td>
 <td>Boolean</td>
 <td>Report beta-Lactam AMR genes separated out by all beta-lactam and the respective beta-lactam subclasses</td>
@@ -16789,7 +17229,7 @@
 <td><strong>ani_threshold</strong></td>
 <td>Float</td>
 <td>ANI value threshold must be surpassed in order to output the ani_top_species_match. If a genome does not surpass this threshold (and the percent_bases_aligned_threshold) then the ani_top_species_match output String will show a warning instead of a genus &amp; species.</td>
-<td>80</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16837,7 +17277,7 @@
 <td><strong>percent_bases_aligned_threshold</strong></td>
 <td>Float</td>
 <td>Threshold regarding the proportion of bases aligned between the query genome and reference genome. If a genome does not surpass this threshold (and the ani_threshold) then the ani_top_species_match output String will show a warning instead of a genus &amp; species.</td>
-<td>70</td>
+<td>70.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16849,11 +17289,67 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>arln</td>
-<td><strong>call_arln</strong></td>
-<td>Boolean</td>
-<td>Set to true to enable the return of ARLN required Auto PASS/FAIL outputs</td>
-<td>FALSE</td>
+<td>arln_stats</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/arln_stats:1.0.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>5</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>read1_clean</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>read1_raw</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>read2_clean</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>arln_stats</td>
+<td><strong>read2_raw</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16885,7 +17381,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>200</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16893,7 +17389,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/bakta:1.5.1--pyhdfd78af_0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16901,7 +17397,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>24</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16916,7 +17412,7 @@
 <td>bakta</td>
 <td><strong>proteins</strong></td>
 <td>Boolean</td>
-<td></td>
+<td>THIS VARIABLE IS BUGGED PLEASE DO NOT DO ANYTHING HERE</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -16961,7 +17457,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -16969,7 +17465,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
@@ -16977,7 +17473,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
@@ -16985,7 +17481,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>export_taxon_tables</td>
+<td>export_taxon_table</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -16997,7 +17493,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>8</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17005,7 +17501,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>20</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17037,7 +17533,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17060,13 +17556,13 @@
 <td>gamma</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker container used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/gamma:2.2</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>gamma</td>
-<td><strong>extend_output</strong></td>
+<td><strong>extended_output</strong></td>
 <td>Boolean</td>
 <td>GAMMA will provide the extended output when set to true</td>
 <td>FALSE</td>
@@ -17075,7 +17571,7 @@
 <tr>
 <td>gamma</td>
 <td><strong>gamma_db</strong></td>
-<td>String</td>
+<td>File</td>
 <td>Multifasta sequence database GAMMA is to use for gene matching</td>
 <td>gs://theiagen-public-resources-rp/reference_data/databases/gamma/default_ResFinderDB_Combined_05-06-20.fsa</td>
 <td>Optional</td>
@@ -17090,7 +17586,7 @@
 </tr>
 <tr>
 <td>gamma</td>
-<td><strong>min_length_percent</strong></td>
+<td><strong>min_length_percent_gammas</strong></td>
 <td>Int</td>
 <td>Threshold of match length percent used by GAMMA-s</td>
 <td>20</td>
@@ -17109,7 +17605,7 @@
 <td><strong>output_fasta</strong></td>
 <td>Boolean</td>
 <td>Allows GAMMA to output gene matches in FASTA format</td>
-<td>FALSE</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17163,7 +17659,7 @@
 <tr>
 <td>kmerfinder</td>
 <td><strong>kmerfinder_db</strong></td>
-<td>String</td>
+<td>File</td>
 <td>Bacterial database for KmerFinder</td>
 <td>gs://theiagen-public-resources-rp/reference_data/databases/kmerfinder/kmerfinder_bacteria_20230911.tar.gz</td>
 <td>Optional</td>
@@ -17309,15 +17805,7 @@
 <td><strong>cauris_cladetyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>cauris_cladetyper_docker_image</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17333,7 +17821,7 @@
 <td><strong>cladetyper_max_distance</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17427,7 +17915,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade6_annotated</strong></td>
-<td>String</td>
+<td>File</td>
 <td>The path to the annotated reference for clade 6</td>
 <td></td>
 <td>Optional</td>
@@ -17495,6 +17983,94 @@
 <td>Set to true to enable E. coli species verification</td>
 <td>FALSE</td>
 <td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_align_diff</strong></td>
+<td>Int</td>
+<td>Threshold for difference between alignment length and subject length in BLAST hit.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_cluster_distance</strong></td>
+<td>Int</td>
+<td>Distance between cluster of matches to consider as different clusters.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_culling_limit</strong></td>
+<td>Int</td>
+<td>Total hits to return in a position.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/emmtyper:0.2.0--py_0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_gap</strong></td>
+<td>Int</td>
+<td>Threshold gap to allow in BLAST hit.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_max_size</strong></td>
+<td>Int</td>
+<td>Maximum size of PCR product.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_good</strong></td>
+<td>Int</td>
+<td>Minimum size where there must be 2 matches for each mismatch.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Minimal percent identity of sequence.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_perfect</strong></td>
+<td>Int</td>
+<td>Minimum size of perfect match at 3' primer end.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_mismatch</strong></td>
+<td>Int</td>
+<td>Threshold for number of mismatch to allow in BLAST hit.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_wf</strong></td>
+<td>String</td>
+<td>Choose workflow [blast</td>
+<td>pcr]</td>
+<td></td>
 </tr>
 <tr>
 <td>merlin_magic</td>
@@ -17570,9 +18146,9 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>kaptive_min_coverage</strong></td>
+<td><strong>kaptive_min_percent_coverage</strong></td>
 <td>Float</td>
-<td>Minimum required percent identity for the gene BLAST search via tBLASTn</td>
+<td>Minimum required percent coverage for the gene BLAST search via tBLASTn</td>
 <td>80</td>
 <td>Optional</td>
 </tr>
@@ -17580,7 +18156,7 @@
 <td>merlin_magic</td>
 <td><strong>kaptive_min_percent_identity</strong></td>
 <td>Float</td>
-<td>Minimum required percent coverage for the gene BLAST search via tBLASTn</td>
+<td>Minimum required percent identity for the gene BLAST search via tBLASTn</td>
 <td>90</td>
 <td>Optional</td>
 </tr>
@@ -17660,8 +18236,8 @@
 <td>merlin_magic</td>
 <td><strong>legsta_docker_image</strong></td>
 <td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17708,8 +18284,8 @@
 <td>merlin_magic</td>
 <td><strong>ont_data</strong></td>
 <td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Set to true if your data is ONT FASTQ files</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17954,9 +18530,17 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>sistr_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>sistr_disk_size</strong></td>
 <td>Int</td>
-<td>The disk size (in GB) to allocate for the task</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -17972,7 +18556,7 @@
 <td>merlin_magic</td>
 <td><strong>sistr_memory</strong></td>
 <td>Int</td>
-<td>The amount of memory (in GB) to allocate for the task.</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>32</td>
 <td>Optional</td>
 </tr>
@@ -18052,24 +18636,16 @@
 <td>merlin_magic</td>
 <td><strong>snippy_reference_afumigatus</strong></td>
 <td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>snippy_reference_calbicans</strong></td>
-<td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>Internal component, do not modify</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>snippy_reference_cryptoneo</strong></td>
 <td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>Internal component, do not modify</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18138,14 +18714,6 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>srst2_min_coverage</strong></td>
-<td>Int</td>
-<td>Minimum breadth of coverage for SRST2 to call a gene as present</td>
-<td>80</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
 <td><strong>srst2_min_depth</strong></td>
 <td>Int</td>
 <td>Minimum depth of coverage for SRST2 to call a gene as present</td>
@@ -18158,6 +18726,14 @@
 <td>Int</td>
 <td>Minimum edge depth for SRST2 to call a gene as present</td>
 <td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Minimum breadth of coverage for SRST2 to call a gene as present</td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18275,7 +18851,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>tbp_parser_min_frequency</strong></td>
-<td>Int</td>
+<td>Float</td>
 <td>The minimum frequency for a mutation to pass QC</td>
 <td>0.1</td>
 <td>Optional</td>
@@ -18283,7 +18859,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>tbp_parser_min_percent_coverage</strong></td>
-<td>Int</td>
+<td>Float</td>
 <td>The minimum coverage for a region to pass QC in tbp_parser</td>
 <td>100</td>
 <td>Optional</td>
@@ -18309,7 +18885,7 @@
 <td><strong>tbp_parser_output_seq_method_type</strong></td>
 <td>String</td>
 <td>Fills out the "seq_method" field in the tbp_parser output files</td>
-<td>Sequencing method not provided</td>
+<td>WGS</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18358,6 +18934,14 @@
 <td>Boolean</td>
 <td>Set to true to enable tNGS-specific parameters and runs in tbp-parser</td>
 <td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_additional_parameters</strong></td>
+<td>String</td>
+<td>Additional parameters for TBProfiler</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18436,6 +19020,38 @@
 <td>merlin_magic</td>
 <td><strong>theiaeuk</strong></td>
 <td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_lineage_barcodes</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_skip_subsampling</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_subsampling_fraction</strong></td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -19066,6 +19682,14 @@
 </tr>
 <tr>
 <td>theiaprok_fasta</td>
+<td><strong>call_arln_stats</strong></td>
+<td>Boolean</td>
+<td>Set to true to enable the return of ARLN required Auto PASS/FAIL outputs</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
 <td><strong>call_gamma</strong></td>
 <td>Boolean</td>
 <td>Set to true in order to enable GAMMA task</td>
@@ -19138,6 +19762,22 @@
 </tr>
 <tr>
 <td>theiaprok_fasta</td>
+<td><strong>mlst_run_secondary_scheme</strong></td>
+<td>Boolean</td>
+<td>If true, will run secondary scheme if primary scheme is of ecoli or abaumannii, these two have multiple schemes that are relevant.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
+<td><strong>mlst_scheme_override</strong></td>
+<td>Boolean</td>
+<td>If true, will force E. coli scheme to be used when Gambit predicts Escherichia coli, otherwise will return scheme MLST predicts.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaprok_fasta</td>
 <td><strong>originating_lab</strong></td>
 <td>String</td>
 <td>Will be used in the "originating_lab" column in any taxon-specific tables created in the Export Taxon Tables task</td>
@@ -19189,7 +19829,7 @@
 <td><strong>terra_project</strong></td>
 <td>String</td>
 <td>The name of the Terra Project where you want the taxon tables written to</td>
-<td></td>
+<td>NA</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19197,7 +19837,7 @@
 <td><strong>terra_workspace</strong></td>
 <td>String</td>
 <td>The name of the Terra Workspace where you want the taxon tables written to</td>
-<td></td>
+<td>NA</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19277,14 +19917,6 @@
 <td><strong>scheme</strong></td>
 <td>String</td>
 <td>Don’t autodetect the MLST scheme; force this scheme on all inputs (see <a href="https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab">https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab</a> for accepted strings)</td>
-<td>None</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ts_mlst</td>
-<td><strong>taxonomy</strong></td>
-<td>String</td>
-<td>Taxonomy produced by GAMBIT or expected_taxon used to validate specifically if "ecoli" scheme needs to be run</td>
 <td>None</td>
 <td>Optional</td>
 </tr>
@@ -22766,9 +23398,19 @@
 <td>Presence or absence of the ctxA gene</td>
 </tr>
 <tr>
+<td>abricate_vibrio_database</td>
+<td>String</td>
+<td>Database to use while running abricate</td>
+</tr>
+<tr>
 <td>abricate_vibrio_detailed_tsv</td>
 <td>File</td>
 <td>Detailed ABRicate output file</td>
+</tr>
+<tr>
+<td>abricate_vibrio_docker</td>
+<td>String</td>
+<td>Docker file used for running abricate</td>
 </tr>
 <tr>
 <td>abricate_vibrio_ompW</td>
@@ -22836,14 +23478,9 @@
 <td>The version of AgrVATE used</td>
 </tr>
 <tr>
-<td>amr_results_csv</td>
+<td>amr_search_csv</td>
 <td>File</td>
 <td>CSV formatted AMR profile</td>
-</tr>
-<tr>
-<td>amr_results_pdf</td>
-<td>File</td>
-<td>PDF formatted AMR profile</td>
 </tr>
 <tr>
 <td>amr_search_docker</td>
@@ -22854,6 +23491,11 @@
 <td>amr_search_results</td>
 <td>File</td>
 <td>JSON formatted AMR profile including BLAST results</td>
+</tr>
+<tr>
+<td>amr_search_results_pdf</td>
+<td>File</td>
+<td>PDF formatted AMR profile</td>
 </tr>
 <tr>
 <td>amr_search_version</td>
@@ -22981,6 +23623,56 @@
 <td>Species of genome with highest ANI to query FASTA</td>
 </tr>
 <tr>
+<td>arln_assembly_ratio</td>
+<td>String</td>
+<td>Assembly ratio of the final assembly compared to the mean assembly length of the taxon. These stats are gathered from a statistics file created by the CDC aggregating NCBI assembly data by taxon.</td>
+</tr>
+<tr>
+<td>arln_assembly_zscore</td>
+<td>String</td>
+<td>ZScore of the samples assembly length to assess the uniformity of the assembly when compared to taxon means.</td>
+</tr>
+<tr>
+<td>arln_r1_q30_clean</td>
+<td>String</td>
+<td>Q30% of the cleaned R1 FASTQ</td>
+</tr>
+<tr>
+<td>arln_r1_q30_raw</td>
+<td>String</td>
+<td>Q30% of the raw R1 FASTQ</td>
+</tr>
+<tr>
+<td>arln_r2_q30_clean</td>
+<td>String</td>
+<td>Q30% of the cleaned R2 FASTQ</td>
+</tr>
+<tr>
+<td>arln_r2_q30_raw</td>
+<td>String</td>
+<td>Q30% of the raw R2 FASTQ</td>
+</tr>
+<tr>
+<td>arln_stats_docker_version</td>
+<td>String</td>
+<td>Docker version for task_arln_stats.wdl</td>
+</tr>
+<tr>
+<td>arln_taxon_assembly_ratio_stdev</td>
+<td>String</td>
+<td>Reported assembely length standard deviation of the given taxonomy pulled from NCBI aggregated data.</td>
+</tr>
+<tr>
+<td>arln_taxon_gc_mean</td>
+<td>String</td>
+<td>Mean GC percent of the taxon.</td>
+</tr>
+<tr>
+<td>arln_taxon_gc_percent_stdev</td>
+<td>String</td>
+<td>Reported GC percent standard deviation of the given taxonomy pulled from NCBI aggregated data.</td>
+</tr>
+<tr>
 <td>assembler</td>
 <td>String</td>
 <td>Assembler used in digger_denovo subworkflow</td>
@@ -23106,19 +23798,9 @@
 <td>Mean read length for the combined raw reads</td>
 </tr>
 <tr>
-<td>contigs_fastg</td>
-<td>File</td>
-<td>Assembly graph if megahit used for genome assembly</td>
-</tr>
-<tr>
 <td>contigs_gfa</td>
 <td>File</td>
 <td>Assembly graph output generated by SPAdes (Illumina: PE, SE) or Flye (ONT), used to visualize and evaluate genome assembly results.</td>
-</tr>
-<tr>
-<td>contigs_lastgraph</td>
-<td>File</td>
-<td>Assembly graph if velvet used for genome assembly</td>
 </tr>
 <tr>
 <td>ectyper_predicted_serotype</td>
@@ -23134,6 +23816,26 @@
 <td>ectyper_version</td>
 <td>String</td>
 <td>Version of ECTyper used</td>
+</tr>
+<tr>
+<td>emmtyper_docker</td>
+<td>String</td>
+<td>Docker image for emmtyper</td>
+</tr>
+<tr>
+<td>emmtyper_emm_type</td>
+<td>String</td>
+<td>The emm-type of a Streptococcus pyogenes assembly</td>
+</tr>
+<tr>
+<td>emmtyper_results_tsv</td>
+<td>File</td>
+<td>TSV file with emmtyper results</td>
+</tr>
+<tr>
+<td>emmtyper_version</td>
+<td>String</td>
+<td>Version of emmtyper used</td>
 </tr>
 <tr>
 <td>emmtypingtool_docker</td>
@@ -23398,7 +24100,7 @@
 <tr>
 <td>hicap_genes</td>
 <td>String</td>
-<td>cap genes identified. genes on different contigs delimited by;. truncation shown by trailing *</td>
+<td>cap genes identified. genes on different contigs delimited by;. truncation shown by trailing *</td>
 </tr>
 <tr>
 <td>hicap_results_tsv</td>
@@ -23561,19 +24263,19 @@
 <td>Kraken2 database used for the taxonomic assignment</td>
 </tr>
 <tr>
-<td>kraken2_docker</td>
-<td>String</td>
-<td>Docker image used to run kraken2</td>
-</tr>
-<tr>
 <td>kraken2_report</td>
-<td>File</td>
+<td>String</td>
 <td>TXT document describing taxonomic prediction of every FASTQ record. This file is usually very large and cumbersome to open and view</td>
 </tr>
 <tr>
 <td>kraken2_version</td>
 <td>String</td>
 <td>The version of kraken2 used</td>
+</tr>
+<tr>
+<td>kraken_docker</td>
+<td>String</td>
+<td>Docker image used for Kraken</td>
 </tr>
 <tr>
 <td>legsta_predicted_sbt</td>
@@ -23677,12 +24379,12 @@
 </tr>
 <tr>
 <td>midas_secondary_genus_abundance</td>
-<td>String</td>
+<td>Float</td>
 <td>Relative abundance of secondary genus</td>
 </tr>
 <tr>
 <td>midas_secondary_genus_coverage</td>
-<td>String</td>
+<td>Float</td>
 <td>Absolute coverage of secondary genus</td>
 </tr>
 <tr>
@@ -23961,9 +24663,19 @@
 <td>Forward read file after quality trimming and adapter removal</td>
 </tr>
 <tr>
+<td>read1_concatenated</td>
+<td>File</td>
+<td>Concatenated forward reads</td>
+</tr>
+<tr>
 <td>read2_clean</td>
 <td>File</td>
 <td>Reverse read file after quality trimming and adapter removal</td>
+</tr>
+<tr>
+<td>read2_concatenated</td>
+<td>File</td>
+<td>Concatenated reverse reads</td>
 </tr>
 <tr>
 <td>read_screen_clean</td>
@@ -24092,7 +24804,7 @@
 </tr>
 <tr>
 <td>seqsero2_report</td>
-<td>File</td>
+<td>String</td>
 <td>TSV report produced by SeqSero2</td>
 </tr>
 <tr>
@@ -24281,11 +24993,6 @@
 <td>ShigEiFinder version used using read files as inputs</td>
 </tr>
 <tr>
-<td>shovill_pe_version</td>
-<td>String</td>
-<td>Shovill version used</td>
-</tr>
-<tr>
 <td>sistr_allele_fasta</td>
 <td>File</td>
 <td>FASTA file of novel cgMLST alleles from SISTR</td>
@@ -24426,9 +25133,19 @@
 <td>Presence or absence of the ctxA gene</td>
 </tr>
 <tr>
+<td>srst2_vibrio_database</td>
+<td>String</td>
+<td>Database used for srst2 analysis</td>
+</tr>
+<tr>
 <td>srst2_vibrio_detailed_tsv</td>
 <td>File</td>
 <td>Detailed <a href="https://github.com/katholt/srst2">https://github.com/katholt/srst2</a> output file</td>
+</tr>
+<tr>
+<td>srst2_vibrio_docker</td>
+<td>String</td>
+<td>Docker image used for srst2 analysis</td>
 </tr>
 <tr>
 <td>srst2_vibrio_ompW</td>
@@ -24826,9 +25543,19 @@
 <td>Presence or absence of the ctxA gene</td>
 </tr>
 <tr>
+<td>abricate_vibrio_database</td>
+<td>String</td>
+<td>Database to use while running abricate</td>
+</tr>
+<tr>
 <td>abricate_vibrio_detailed_tsv</td>
 <td>File</td>
 <td>Detailed ABRicate output file</td>
+</tr>
+<tr>
+<td>abricate_vibrio_docker</td>
+<td>String</td>
+<td>Docker file used for running abricate</td>
 </tr>
 <tr>
 <td>abricate_vibrio_ompW</td>
@@ -24896,14 +25623,9 @@
 <td>The version of AgrVATE used</td>
 </tr>
 <tr>
-<td>amr_results_csv</td>
+<td>amr_search_csv</td>
 <td>File</td>
 <td>CSV formatted AMR profile</td>
-</tr>
-<tr>
-<td>amr_results_pdf</td>
-<td>File</td>
-<td>PDF formatted AMR profile</td>
 </tr>
 <tr>
 <td>amr_search_docker</td>
@@ -24914,6 +25636,11 @@
 <td>amr_search_results</td>
 <td>File</td>
 <td>JSON formatted AMR profile including BLAST results</td>
+</tr>
+<tr>
+<td>amr_search_results_pdf</td>
+<td>File</td>
+<td>PDF formatted AMR profile</td>
 </tr>
 <tr>
 <td>amr_search_version</td>
@@ -25041,6 +25768,46 @@
 <td>Species of genome with highest ANI to query FASTA</td>
 </tr>
 <tr>
+<td>arln_assembly_ratio</td>
+<td>String</td>
+<td>Assembly ratio of the final assembly compared to the mean assembly length of the taxon. These stats are gathered from a statistics file created by the CDC aggregating NCBI assembly data by taxon.</td>
+</tr>
+<tr>
+<td>arln_assembly_zscore</td>
+<td>String</td>
+<td>ZScore of the samples assembly length to assess the uniformity of the assembly when compared to taxon means.</td>
+</tr>
+<tr>
+<td>arln_r1_q30_clean</td>
+<td>String</td>
+<td>Q30% of the cleaned R1 FASTQ</td>
+</tr>
+<tr>
+<td>arln_r1_q30_raw</td>
+<td>String</td>
+<td>Q30% of the raw R1 FASTQ</td>
+</tr>
+<tr>
+<td>arln_stats_docker_version</td>
+<td>String</td>
+<td>Docker version for task_arln_stats.wdl</td>
+</tr>
+<tr>
+<td>arln_taxon_assembly_ratio_stdev</td>
+<td>String</td>
+<td>Reported assembely length standard deviation of the given taxonomy pulled from NCBI aggregated data.</td>
+</tr>
+<tr>
+<td>arln_taxon_gc_mean</td>
+<td>String</td>
+<td>Mean GC percent of the taxon.</td>
+</tr>
+<tr>
+<td>arln_taxon_gc_percent_stdev</td>
+<td>String</td>
+<td>Reported GC percent standard deviation of the given taxonomy pulled from NCBI aggregated data.</td>
+</tr>
+<tr>
 <td>assembler</td>
 <td>String</td>
 <td>Assembler used in digger_denovo subworkflow</td>
@@ -25154,6 +25921,26 @@
 <td>ectyper_version</td>
 <td>String</td>
 <td>Version of ECTyper used</td>
+</tr>
+<tr>
+<td>emmtyper_docker</td>
+<td>String</td>
+<td>Docker image for emmtyper</td>
+</tr>
+<tr>
+<td>emmtyper_emm_type</td>
+<td>String</td>
+<td>The emm-type of a Streptococcus pyogenes assembly</td>
+</tr>
+<tr>
+<td>emmtyper_results_tsv</td>
+<td>File</td>
+<td>TSV file with emmtyper results</td>
+</tr>
+<tr>
+<td>emmtyper_version</td>
+<td>String</td>
+<td>Version of emmtyper used</td>
 </tr>
 <tr>
 <td>est_coverage_clean</td>
@@ -25338,7 +26125,7 @@
 <tr>
 <td>hicap_genes</td>
 <td>String</td>
-<td>cap genes identified. genes on different contigs delimited by;. truncation shown by trailing *</td>
+<td>cap genes identified. genes on different contigs delimited by;. truncation shown by trailing *</td>
 </tr>
 <tr>
 <td>hicap_results_tsv</td>
@@ -25507,7 +26294,7 @@
 </tr>
 <tr>
 <td>kraken2_report</td>
-<td>File</td>
+<td>String</td>
 <td>TXT document describing taxonomic prediction of every FASTQ record. This file is usually very large and cumbersome to open and view</td>
 </tr>
 <tr>
@@ -25617,12 +26404,12 @@
 </tr>
 <tr>
 <td>midas_secondary_genus_abundance</td>
-<td>String</td>
+<td>Float</td>
 <td>Relative abundance of secondary genus</td>
 </tr>
 <tr>
 <td>midas_secondary_genus_coverage</td>
-<td>String</td>
+<td>Float</td>
 <td>Absolute coverage of secondary genus</td>
 </tr>
 <tr>
@@ -25876,6 +26663,16 @@
 <td>Mean read length of raw forward reads</td>
 </tr>
 <tr>
+<td>read1_clean</td>
+<td>File</td>
+<td>Forward read file after quality trimming and adapter removal</td>
+</tr>
+<tr>
+<td>read1_concatenated</td>
+<td>File</td>
+<td>Concatenated forward reads</td>
+</tr>
+<tr>
 <td>read_screen_clean</td>
 <td>String</td>
 <td>PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure</td>
@@ -26002,7 +26799,7 @@
 </tr>
 <tr>
 <td>seqsero2_report</td>
-<td>File</td>
+<td>String</td>
 <td>TSV report produced by SeqSero2</td>
 </tr>
 <tr>
@@ -26161,11 +26958,6 @@
 <td>ShigEiFinder version used using read files as inputs</td>
 </tr>
 <tr>
-<td>shovill_se_version</td>
-<td>String</td>
-<td>Shovill version used</td>
-</tr>
-<tr>
 <td>sistr_allele_fasta</td>
 <td>File</td>
 <td>FASTA file of novel cgMLST alleles from SISTR</td>
@@ -26306,9 +27098,19 @@
 <td>Presence or absence of the ctxA gene</td>
 </tr>
 <tr>
+<td>srst2_vibrio_database</td>
+<td>String</td>
+<td>Database used for srst2 analysis</td>
+</tr>
+<tr>
 <td>srst2_vibrio_detailed_tsv</td>
 <td>File</td>
 <td>Detailed <a href="https://github.com/katholt/srst2">https://github.com/katholt/srst2</a> output file</td>
+</tr>
+<tr>
+<td>srst2_vibrio_docker</td>
+<td>String</td>
+<td>Docker image used for srst2 analysis</td>
 </tr>
 <tr>
 <td>srst2_vibrio_ompW</td>
@@ -26426,11 +27228,6 @@
 <td>A file containing the breadth of coverage across each target loci</td>
 </tr>
 <tr>
-<td>tbp_parser_docker</td>
-<td>String</td>
-<td>The docker image and version tag for the tbp_parser tool</td>
-</tr>
-<tr>
 <td>tbp_parser_genome_percent_coverage</td>
 <td>Float</td>
 <td>The percent breadth of coverage across the entire genome</td>
@@ -26449,11 +27246,6 @@
 <td>tbp_parser_looker_report_csv</td>
 <td>File</td>
 <td>An output file that contains condensed information suitable for generating a dashboard in Google's Looker studio.</td>
-</tr>
-<tr>
-<td>tbp_parser_version</td>
-<td>String</td>
-<td>The version number of tbp_parser</td>
 </tr>
 <tr>
 <td>tbprofiler_dr_type</td>
@@ -26666,9 +27458,19 @@
 <td>Presence or absence of the ctxA gene</td>
 </tr>
 <tr>
+<td>abricate_vibrio_database</td>
+<td>String</td>
+<td>Database to use while running abricate</td>
+</tr>
+<tr>
 <td>abricate_vibrio_detailed_tsv</td>
 <td>File</td>
 <td>Detailed ABRicate output file</td>
+</tr>
+<tr>
+<td>abricate_vibrio_docker</td>
+<td>String</td>
+<td>Docker file used for running abricate</td>
 </tr>
 <tr>
 <td>abricate_vibrio_ompW</td>
@@ -26736,14 +27538,9 @@
 <td>The version of AgrVATE used</td>
 </tr>
 <tr>
-<td>amr_results_csv</td>
+<td>amr_search_csv</td>
 <td>File</td>
 <td>CSV formatted AMR profile</td>
-</tr>
-<tr>
-<td>amr_results_pdf</td>
-<td>File</td>
-<td>PDF formatted AMR profile</td>
 </tr>
 <tr>
 <td>amr_search_docker</td>
@@ -26754,6 +27551,11 @@
 <td>amr_search_results</td>
 <td>File</td>
 <td>JSON formatted AMR profile including BLAST results</td>
+</tr>
+<tr>
+<td>amr_search_results_pdf</td>
+<td>File</td>
+<td>PDF formatted AMR profile</td>
 </tr>
 <tr>
 <td>amr_search_version</td>
@@ -26986,6 +27788,26 @@
 <td>Version of ECTyper used</td>
 </tr>
 <tr>
+<td>emmtyper_docker</td>
+<td>String</td>
+<td>Docker image for emmtyper</td>
+</tr>
+<tr>
+<td>emmtyper_emm_type</td>
+<td>String</td>
+<td>The emm-type of a Streptococcus pyogenes assembly</td>
+</tr>
+<tr>
+<td>emmtyper_results_tsv</td>
+<td>File</td>
+<td>TSV file with emmtyper results</td>
+</tr>
+<tr>
+<td>emmtyper_version</td>
+<td>String</td>
+<td>Version of emmtyper used</td>
+</tr>
+<tr>
 <td>gambit_closest_genomes</td>
 <td>File</td>
 <td>CSV file listing genomes in the GAMBIT database that are most similar to the query assembly</td>
@@ -27044,6 +27866,31 @@
 <td>gamma_version</td>
 <td>String</td>
 <td>The version of GAMMA used</td>
+</tr>
+<tr>
+<td>hicap_docker</td>
+<td>String</td>
+<td>Docker image used for hicap</td>
+</tr>
+<tr>
+<td>hicap_genes</td>
+<td>String</td>
+<td>cap genes identified. genes on different contigs delimited by;. truncation shown by trailing *</td>
+</tr>
+<tr>
+<td>hicap_results_tsv</td>
+<td>File</td>
+<td>TSV file of hicap output</td>
+</tr>
+<tr>
+<td>hicap_serotype</td>
+<td>String</td>
+<td>hicap serotype</td>
+</tr>
+<tr>
+<td>hicap_version</td>
+<td>String</td>
+<td>hicap version used</td>
 </tr>
 <tr>
 <td>kaptive_k_locus</td>
@@ -27591,18 +28438,13 @@
 <td>Antigenic profile predicted for Salmonella spp. by SeqSero2</td>
 </tr>
 <tr>
-<td>seqsero2_predicted_contamination</td>
-<td>String</td>
-<td>Indicates whether contamination between Salmonella with different serotypes was predicted by SeqSero2</td>
-</tr>
-<tr>
 <td>seqsero2_predicted_serotype</td>
 <td>String</td>
 <td>Serotype predicted by SeqSero2</td>
 </tr>
 <tr>
 <td>seqsero2_report</td>
-<td>File</td>
+<td>String</td>
 <td>TSV report produced by SeqSero2</td>
 </tr>
 <tr>
@@ -28001,9 +28843,19 @@
 <td>Presence or absence of the ctxA gene</td>
 </tr>
 <tr>
+<td>abricate_vibrio_database</td>
+<td>String</td>
+<td>Database to use while running abricate</td>
+</tr>
+<tr>
 <td>abricate_vibrio_detailed_tsv</td>
 <td>File</td>
 <td>Detailed ABRicate output file</td>
+</tr>
+<tr>
+<td>abricate_vibrio_docker</td>
+<td>String</td>
+<td>Docker file used for running abricate</td>
 </tr>
 <tr>
 <td>abricate_vibrio_ompW</td>
@@ -28071,14 +28923,9 @@
 <td>The version of AgrVATE used</td>
 </tr>
 <tr>
-<td>amr_results_csv</td>
+<td>amr_search_csv</td>
 <td>File</td>
 <td>CSV formatted AMR profile</td>
-</tr>
-<tr>
-<td>amr_results_pdf</td>
-<td>File</td>
-<td>PDF formatted AMR profile</td>
 </tr>
 <tr>
 <td>amr_search_docker</td>
@@ -28089,6 +28936,11 @@
 <td>amr_search_results</td>
 <td>File</td>
 <td>JSON formatted AMR profile including BLAST results</td>
+</tr>
+<tr>
+<td>amr_search_results_pdf</td>
+<td>File</td>
+<td>PDF formatted AMR profile</td>
 </tr>
 <tr>
 <td>amr_search_version</td>
@@ -28321,6 +29173,26 @@
 <td>Version of ECTyper used</td>
 </tr>
 <tr>
+<td>emmtyper_docker</td>
+<td>String</td>
+<td>Docker image for emmtyper</td>
+</tr>
+<tr>
+<td>emmtyper_emm_type</td>
+<td>String</td>
+<td>The emm-type of a Streptococcus pyogenes assembly</td>
+</tr>
+<tr>
+<td>emmtyper_results_tsv</td>
+<td>File</td>
+<td>TSV file with emmtyper results</td>
+</tr>
+<tr>
+<td>emmtyper_version</td>
+<td>String</td>
+<td>Version of emmtyper used</td>
+</tr>
+<tr>
 <td>gambit_closest_genomes</td>
 <td>File</td>
 <td>CSV file listing genomes in the GAMBIT database that are most similar to the query assembly</td>
@@ -28379,6 +29251,31 @@
 <td>gamma_version</td>
 <td>String</td>
 <td>The version of GAMMA used</td>
+</tr>
+<tr>
+<td>hicap_docker</td>
+<td>String</td>
+<td>Docker image used for hicap</td>
+</tr>
+<tr>
+<td>hicap_genes</td>
+<td>String</td>
+<td>cap genes identified. genes on different contigs delimited by;. truncation shown by trailing *</td>
+</tr>
+<tr>
+<td>hicap_results_tsv</td>
+<td>File</td>
+<td>TSV file of hicap output</td>
+</tr>
+<tr>
+<td>hicap_serotype</td>
+<td>String</td>
+<td>hicap serotype</td>
+</tr>
+<tr>
+<td>hicap_version</td>
+<td>String</td>
+<td>hicap version used</td>
 </tr>
 <tr>
 <td>kaptive_k_locus</td>
@@ -28926,18 +29823,13 @@
 <td>Antigenic profile predicted for Salmonella spp. by SeqSero2</td>
 </tr>
 <tr>
-<td>seqsero2_predicted_contamination</td>
-<td>String</td>
-<td>Indicates whether contamination between Salmonella with different serotypes was predicted by SeqSero2</td>
-</tr>
-<tr>
 <td>seqsero2_predicted_serotype</td>
 <td>String</td>
 <td>Serotype predicted by SeqSero2</td>
 </tr>
 <tr>
 <td>seqsero2_report</td>
-<td>File</td>
+<td>String</td>
 <td>TSV report produced by SeqSero2</td>
 </tr>
 <tr>

@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5662,14 +5734,6 @@
 <td>Required</td>
 </tr>
 <tr>
-<td>organism_parameters</td>
-<td><strong>reference_genbank</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails.</td>
-<td>Optional, Required</td>
-</tr>
-<tr>
 <td>consensus_qc</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -5762,7 +5826,7 @@
 <td><strong>gene_locations_bed_file</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td>Default provided for SARS-CoV-2 ("gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed") and mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed")</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5770,7 +5834,7 @@
 <td><strong>genome_length_input</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td>Default provided for SARS-CoV-2 (29903), mpox (197200), WNV (11000), flu (13000), RSV-A (16000), RSV-B (16000), HIV (primer versions 1 [9181] and 2 [9840])</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5786,7 +5850,7 @@
 <td><strong>kraken_target_organism_input</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td>Default provided for mpox (Monkeypox virus), WNV (West Nile virus), and HIV (Human immunodeficiency virus 1)</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5794,7 +5858,7 @@
 <td><strong>lat_longs_tsv</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized.</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5802,7 +5866,7 @@
 <td><strong>min_date</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0.0</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5810,7 +5874,7 @@
 <td><strong>min_num_unambig</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5818,7 +5882,7 @@
 <td><strong>narrow_bandwidth</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td>0.08333</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5826,7 +5890,7 @@
 <td><strong>nextclade_dataset_name_input</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default is "NA".</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5834,7 +5898,7 @@
 <td><strong>nextclade_dataset_tag_input</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default is "NA".</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5842,7 +5906,7 @@
 <td><strong>pangolin_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5850,7 +5914,7 @@
 <td><strong>pivot_interval</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td>3</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5858,7 +5922,7 @@
 <td><strong>primer_bed_file</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td>REQUIRED FOR SARS-CoV-2, MPOX, WNV, RSV-A &amp; RSV-B. Provided by default only for HIV primer versions 1 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed" and 2 ("gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed")</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5866,7 +5930,15 @@
 <td><strong>proportion_wide</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td>0.2</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>reference_genbank</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5882,7 +5954,7 @@
 <td><strong>reference_gff_file</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td>Default provided for mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"])</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5937,8 +6009,8 @@
 <td>vadr_update</td>
 <td><strong>vadr_memory</strong></td>
 <td>Int</td>
-<td>Amount of memory (in GB) to allocate to the task</td>
-<td></td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
 <td>Optional</td>
 </tr>
 <tr>

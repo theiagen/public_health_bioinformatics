@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -6572,6 +6644,14 @@ The "Custom" column should contain the actual column names in your Terra table (
 </tr>
 <tr>
 <td>Terra_2_NCBI</td>
+<td><strong>column_mapping_file</strong></td>
+<td>File</td>
+<td>TSV file mapping Terra table columns to NCBI submission fields</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>Terra_2_NCBI</td>
 <td><strong>input_table</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
@@ -6591,7 +6671,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6607,7 +6687,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6615,7 +6695,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>2</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6695,7 +6775,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>wait_for</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6703,7 +6783,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6719,7 +6799,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6727,7 +6807,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>2</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6735,15 +6815,15 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>read1_column_name</strong></td>
 <td>String</td>
 <td>The column header of the read1 column</td>
-<td></td>
+<td>read1</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>prune_table</td>
 <td><strong>read2_column_name</strong></td>
 <td>String</td>
-<td>The column header of the read1 column</td>
-<td></td>
+<td>The column header of the read2 column</td>
+<td>read2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6751,7 +6831,7 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6852,6 +6932,16 @@ The "Custom" column should contain the actual column names in your Terra table (
 </thead>
 <tbody>
 <tr>
+<td>Terra_2_NCBI_analysis_date</td>
+<td>String</td>
+<td>Date that the workflow was run</td>
+</tr>
+<tr>
+<td>Terra_2_NCBI_version</td>
+<td>String</td>
+<td>Version of the PHB repository where the workflow is hosted</td>
+</tr>
+<tr>
 <td>biosample_failures</td>
 <td>File</td>
 <td>Text file listing samples that failed BioSample submission</td>
@@ -6900,16 +6990,6 @@ The "Custom" column should contain the actual column names in your Terra table (
 <td>sra_submission_xml</td>
 <td>File</td>
 <td>XML file that was used to submit your SRA reads to NCBI</td>
-</tr>
-<tr>
-<td>terra_2_ncbi_analysis_date</td>
-<td>String</td>
-<td>Date that the workflow was run</td>
-</tr>
-<tr>
-<td>terra_2_ncbi_version</td>
-<td>String</td>
-<td>Version of the PHB repository where the workflow is hosted</td>
 </tr>
 </tbody>
 </table>

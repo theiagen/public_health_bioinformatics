@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5631,7 +5703,7 @@ There are three Kraken2 workflows:</p>
 </thead>
 <tbody>
 <tr>
-<td>dehost_pe or dehost_se</td>
+<td>dehost_pe</td>
 <td><strong>read1</strong></td>
 <td>File</td>
 <td>FASTQ file containing read1 sequences</td>
@@ -5639,7 +5711,7 @@ There are three Kraken2 workflows:</p>
 <td>Required</td>
 </tr>
 <tr>
-<td>dehost_pe or dehost_se</td>
+<td>dehost_pe</td>
 <td><strong>read2</strong></td>
 <td>File</td>
 <td>FASTQ file containing read2 sequences</td>
@@ -5647,7 +5719,7 @@ There are three Kraken2 workflows:</p>
 <td>Required</td>
 </tr>
 <tr>
-<td>dehost_pe or dehost_se</td>
+<td>dehost_pe</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
 <td>The name of the sample being analyzed</td>
@@ -5655,7 +5727,7 @@ There are three Kraken2 workflows:</p>
 <td>Required</td>
 </tr>
 <tr>
-<td>dehost_pe or dehost_se</td>
+<td>dehost_pe</td>
 <td><strong>target_organism</strong></td>
 <td>String</td>
 <td>Target organism for Kraken2 reporting</td>
@@ -5683,15 +5755,15 @@ There are three Kraken2 workflows:</p>
 <td><strong>docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>kraken2</td>
 <td><strong>kraken2_db</strong></td>
-<td>String</td>
+<td>File</td>
 <td>The database used to run Kraken2</td>
-<td>/kraken2-db</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5700,14 +5772,6 @@ There are three Kraken2 workflows:</p>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2</td>
-<td><strong>target_organism</strong></td>
-<td>String</td>
-<td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5729,7 +5793,7 @@ There are three Kraken2 workflows:</p>
 <tr>
 <td>ncbi_scrub_pe</td>
 <td><strong>docker</strong></td>
-<td>Int</td>
+<td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1</td>
 <td>Optional</td>
@@ -5777,7 +5841,7 @@ There are three Kraken2 workflows:</p>
 </thead>
 <tbody>
 <tr>
-<td>dehost_pe or dehost_se</td>
+<td>dehost_se</td>
 <td><strong>read1</strong></td>
 <td>File</td>
 <td>FASTQ file containing read1 sequences</td>
@@ -5785,7 +5849,7 @@ There are three Kraken2 workflows:</p>
 <td>Required</td>
 </tr>
 <tr>
-<td>dehost_pe or dehost_se</td>
+<td>dehost_se</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
 <td>The name of the sample being analyzed</td>
@@ -5793,7 +5857,7 @@ There are three Kraken2 workflows:</p>
 <td>Required</td>
 </tr>
 <tr>
-<td>dehost_pe or dehost_se</td>
+<td>dehost_se</td>
 <td><strong>target_organism</strong></td>
 <td>String</td>
 <td>Target organism for Kraken2 reporting</td>
@@ -5821,15 +5885,15 @@ There are three Kraken2 workflows:</p>
 <td><strong>docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.0.8-beta_hv</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>kraken2</td>
 <td><strong>kraken2_db</strong></td>
-<td>String</td>
+<td>File</td>
 <td>The database used to run Kraken2</td>
-<td>/kraken2-db</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5845,14 +5909,6 @@ There are three Kraken2 workflows:</p>
 <td><strong>read2</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2</td>
-<td><strong>target_organism</strong></td>
-<td>String</td>
-<td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -6092,12 +6148,12 @@ There are three Kraken2 workflows:</p>
 <td>Number of spots removed (or masked)</td>
 </tr>
 <tr>
-<td>ncbi_scrub_pe_analysis_date</td>
+<td>ncbi_scrub_se_analysis_date</td>
 <td>String</td>
 <td>Date of analysis</td>
 </tr>
 <tr>
-<td>ncbi_scrub_pe_version</td>
+<td>ncbi_scrub_se_version</td>
 <td>String</td>
 <td>Version of HRRT software used</td>
 </tr>

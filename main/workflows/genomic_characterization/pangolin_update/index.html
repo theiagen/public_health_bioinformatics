@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5671,6 +5743,94 @@
 <td>Required</td>
 </tr>
 <tr>
+<td>organism_parameters</td>
+<td><strong>auspice_config</strong></td>
+<td>File</td>
+<td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>clades_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>flu_genoflu_genotype</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>N/A</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>lat_longs_tsv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_date</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>min_num_unambig</strong></td>
+<td>Int</td>
+<td>Minimum number of called bases in genome to pass prefilter</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>narrow_bandwidth</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>pivot_interval</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>proportion_wide</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>reference_genbank</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
+<td><strong>vadr_model</strong></td>
+<td>File</td>
+<td>Path to the a tar + gzipped VADR model file</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>pangolin4</td>
 <td><strong>analysis_mode</strong></td>
 <td>String</td>
@@ -5767,6 +5927,14 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>pangolin_update</td>
+<td><strong>organism</strong></td>
+<td>String</td>
+<td>The organism to be analyzed</td>
+<td>sars-cov-2</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>pangolin_update_log</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -5802,7 +5970,7 @@
 <td>pangolin_update_log</td>
 <td><strong>timezone</strong></td>
 <td>String</td>
-<td></td>
+<td>Set the time zone to get an accurate date of update (uses UTC by default)</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -5836,16 +6004,6 @@
 </tr>
 </thead>
 <tbody>
-<tr>
-<td>nextclade_json</td>
-<td>File</td>
-<td>Nextclade output in JSON file format. Will be blank for Flu</td>
-</tr>
-<tr>
-<td>nextclade_tsv</td>
-<td>File</td>
-<td>Nextclade output in TSV file format. Will be blank for Flu</td>
-</tr>
 <tr>
 <td>pango_lineage</td>
 <td>String</td>

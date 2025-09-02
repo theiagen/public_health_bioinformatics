@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5948,7 +6020,7 @@
 <td>Required</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_pe</td>
 <td><strong>classified_out</strong></td>
 <td>String</td>
 <td>Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix</td>
@@ -5956,7 +6028,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_pe</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -5964,7 +6036,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_pe</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
@@ -5972,7 +6044,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_pe</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
@@ -5980,7 +6052,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_pe</td>
 <td><strong>kraken2_args</strong></td>
 <td>String</td>
 <td>Allows a user to supply additional kraken2 command-line arguments</td>
@@ -5988,7 +6060,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_pe</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -5996,7 +6068,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_pe</td>
 <td><strong>unclassified_out</strong></td>
 <td>String</td>
 <td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
@@ -6008,7 +6080,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>4</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6094,7 +6166,7 @@
 <td>Required</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_se</td>
 <td><strong>classified_out</strong></td>
 <td>String</td>
 <td>Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix</td>
@@ -6102,7 +6174,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_se</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -6110,7 +6182,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_se</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
@@ -6118,7 +6190,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_se</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
@@ -6126,7 +6198,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_se</td>
 <td><strong>kraken2_args</strong></td>
 <td>String</td>
 <td>Allows a user to supply additional kraken2 command-line arguments</td>
@@ -6134,7 +6206,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_se</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -6142,7 +6214,15 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_pe or kraken2_se</td>
+<td>kraken2_se</td>
+<td><strong>read2</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_se</td>
 <td><strong>unclassified_out</strong></td>
 <td>String</td>
 <td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
@@ -6154,7 +6234,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>4</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6238,62 +6318,6 @@
 <td>The name of the sample being analyzed</td>
 <td></td>
 <td>Required</td>
-</tr>
-<tr>
-<td>kraken2_pe or kraken2_se</td>
-<td><strong>classified_out</strong></td>
-<td>String</td>
-<td>Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix</td>
-<td>classified#.fastq</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2_pe or kraken2_se</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2_pe or kraken2_se</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2_pe or kraken2_se</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2_pe or kraken2_se</td>
-<td><strong>kraken2_args</strong></td>
-<td>String</td>
-<td>Allows a user to supply additional kraken2 command-line arguments</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2_pe or kraken2_se</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2_pe or kraken2_se</td>
-<td><strong>unclassified_out</strong></td>
-<td>String</td>
-<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
-<td>unclassified#.fastq</td>
-<td>Optional</td>
 </tr>
 <tr>
 <td>kraken2_recalculate_abundances</td>
@@ -6333,6 +6357,70 @@
 <td>String</td>
 <td>Target organism for the kraken2 abundance to be exported to the data table</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_se</td>
+<td><strong>classified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix</td>
+<td>classified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_se</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_se</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_se</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_se</td>
+<td><strong>kraken2_args</strong></td>
+<td>String</td>
+<td>Allows a user to supply additional kraken2 command-line arguments</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_se</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_se</td>
+<td><strong>read2</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_se</td>
+<td><strong>unclassified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
+<td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6413,16 +6501,6 @@
 </thead>
 <tbody>
 <tr>
-<td>kraken2_*_wf_analysis_date</td>
-<td>String</td>
-<td>Date the workflow was run</td>
-</tr>
-<tr>
-<td>kraken2_*_wf_version</td>
-<td>String</td>
-<td>Workflow version</td>
-</tr>
-<tr>
 <td>kraken2_classified_read1</td>
 <td>File</td>
 <td>FASTQ file of classified forward/R1 reads</td>
@@ -6441,6 +6519,16 @@
 <td>kraken2_docker</td>
 <td>String</td>
 <td>Docker image used to run kraken2</td>
+</tr>
+<tr>
+<td>kraken2_pe_wf_analysis_date</td>
+<td>String</td>
+<td>Date the workflow was run</td>
+</tr>
+<tr>
+<td>kraken2_pe_wf_version</td>
+<td>String</td>
+<td>Workflow version</td>
 </tr>
 <tr>
 <td>kraken2_report</td>
@@ -6493,16 +6581,6 @@
 </thead>
 <tbody>
 <tr>
-<td>kraken2_*_wf_analysis_date</td>
-<td>String</td>
-<td>Date the workflow was run</td>
-</tr>
-<tr>
-<td>kraken2_*_wf_version</td>
-<td>String</td>
-<td>Workflow version</td>
-</tr>
-<tr>
 <td>kraken2_classified_read1</td>
 <td>File</td>
 <td>FASTQ file of classified forward/R1 reads</td>
@@ -6521,6 +6599,16 @@
 <td>kraken2_report</td>
 <td>File</td>
 <td>TXT document describing taxonomic prediction of every FASTQ record. This file is usually very large and cumbersome to open and view</td>
+</tr>
+<tr>
+<td>kraken2_se_wf_analysis_date</td>
+<td>String</td>
+<td>Date the workflow was run</td>
+</tr>
+<tr>
+<td>kraken2_se_wf_version</td>
+<td>String</td>
+<td>Workflow version</td>
 </tr>
 <tr>
 <td>kraken2_unclassified_read1</td>
@@ -6563,16 +6651,6 @@
 </thead>
 <tbody>
 <tr>
-<td>kraken2_*_wf_analysis_date</td>
-<td>String</td>
-<td>Date the workflow was run</td>
-</tr>
-<tr>
-<td>kraken2_*_wf_version</td>
-<td>String</td>
-<td>Workflow version</td>
-</tr>
-<tr>
 <td>kraken2_classified_read1</td>
 <td>File</td>
 <td>FASTQ file of classified forward/R1 reads</td>
@@ -6591,6 +6669,16 @@
 <td>kraken2_report</td>
 <td>File</td>
 <td>TXT document describing taxonomic prediction of every FASTQ record. This file is usually very large and cumbersome to open and view</td>
+</tr>
+<tr>
+<td>kraken2_se_wf_analysis_date</td>
+<td>String</td>
+<td>Date the workflow was run</td>
+</tr>
+<tr>
+<td>kraken2_se_wf_version</td>
+<td>String</td>
+<td>Workflow version</td>
 </tr>
 <tr>
 <td>kraken2_unclassified_read1</td>

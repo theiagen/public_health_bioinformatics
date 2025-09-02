@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5794,26 +5866,26 @@
 </thead>
 <tbody>
 <tr>
-<td>theiaeuk_pe</td>
+<td>theiaeuk_illumina_pe</td>
 <td><strong>read1</strong></td>
 <td>File</td>
-<td>Illumina forward read file in FASTQ file format (compression optional)</td>
+<td>FASTQ file containing read1 sequences</td>
 <td></td>
 <td>Required</td>
 </tr>
 <tr>
-<td>theiaeuk_pe</td>
+<td>theiaeuk_illumina_pe</td>
 <td><strong>read2</strong></td>
 <td>File</td>
-<td>Illumina reverse read file in FASTQ file format (compression optional)</td>
+<td>FASTQ file containing read2 sequences</td>
 <td></td>
 <td>Required</td>
 </tr>
 <tr>
-<td>theiaeuk_pe</td>
+<td>theiaeuk_illumina_pe</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
-<td>The name of the sample being analyzed</td>
+<td>Sample name for the analysis</td>
 <td></td>
 <td>Required</td>
 </tr>
@@ -5834,14 +5906,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>busco</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>cg_pipeline_clean</td>
 <td><strong>cg_pipe_opts</strong></td>
 <td>String</td>
@@ -5854,7 +5918,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5863,14 +5927,6 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>cg_pipeline_clean</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5886,7 +5942,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5930,27 +5986,19 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>clean_check_reads</td>
-<td><strong>workflow_series</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>digger_denovo</td>
-<td><strong>assember_options</strong></td>
-<td>String</td>
-<td>String</td>
-<td>Assembler-specific options that you might choose for the selected assembler</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>digger_denovo</td>
 <td><strong>assembler</strong></td>
 <td>String</td>
 <td>Assembler to use (spades, skesa, megahit)</td>
 <td>skesa</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>digger_denovo</td>
+<td><strong>assembler_options</strong></td>
+<td>String</td>
+<td>Assembler-specific options that you might choose for the selected assembler</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6030,7 +6078,7 @@
 <td><strong>filter_contigs_min_coverage</strong></td>
 <td>Float</td>
 <td>Minimum coverage threshold for contig filtering</td>
-<td>2</td>
+<td>2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6181,7 +6229,7 @@
 <td>digger_denovo</td>
 <td><strong>skesa_disk_size</strong></td>
 <td>Int</td>
-<td>Disk space in GB for SKESA assembler</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
 </tr>
@@ -6246,7 +6294,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>20</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6278,7 +6326,7 @@
 <td><strong>abricate_abaum_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6294,7 +6342,7 @@
 <td><strong>abricate_vibrio_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6302,7 +6350,7 @@
 <td><strong>abricate_vibrio_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6357,8 +6405,8 @@
 <td>merlin_magic</td>
 <td><strong>assembly_only</strong></td>
 <td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Set to true if only analyzing input assembly</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6366,7 +6414,7 @@
 <td><strong>call_poppunk</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6374,7 +6422,7 @@
 <td><strong>call_shigeifinder_reads_input</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6382,7 +6430,7 @@
 <td><strong>call_stxtyper</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6390,7 +6438,15 @@
 <td><strong>call_tbp_parser</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cauris_cladetyper_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6507,6 +6563,14 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>clockwork_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>ectyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
@@ -6563,8 +6627,112 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>emmtyper_align_diff</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_cluster_distance</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_culling_limit</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_gap</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_max_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_good</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_perfect</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_mismatch</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_wf</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>emmtypingtool_docker_image</strong></td>
 <td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>genotyphi_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>hicap_broken_gene_length</strong></td>
+<td>Int</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -6579,7 +6747,119 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>ont_data</strong></td>
+<td><strong>hicap_min_broken_gene_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>hicap_min_gene_percent_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>hicap_min_gene_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kaptive_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kaptive_low_gene_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kaptive_min_percent_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kaptive_min_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kaptive_start_end_margin</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_min_kaptive_confidence</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_min_percent_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_min_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_min_spurious_percent_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_min_spurious_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_skip_kaptive</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -6587,10 +6867,74 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>paired_end</strong></td>
+<td><strong>kleborate_skip_resistance</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>legsta_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>lissero_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>lissero_min_percent_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>lissero_min_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>meningotype_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ngmaster_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ont_data</strong></td>
+<td>Boolean</td>
+<td>Set to true if your data is ONT FASTQ files</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>paired_end</strong></td>
+<td>Boolean</td>
+<td>Set to true if your data is paired-end FASTQ files</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6603,7 +6947,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>pasty_min_coverage</strong></td>
+<td><strong>pasty_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -6619,10 +6963,186 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>pbptyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>pbptyper_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>pbptyper_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_clusters_csv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_dists_npy</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_dists_pkl</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_external_clusters_csv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_fit_npz</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_fit_pkl</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_graph_gt</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_h5</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_qcreport_txt</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_refs</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_refs_dists_npy</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_refs_dists_pkl</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_refs_graph_gt</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_refs_h5</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_unword_clusters_csv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>run_amr_search</strong></td>
 <td>Boolean</td>
 <td>If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs.</td>
 <td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>seqsero2_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>seroba_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>serotypefinder_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6643,6 +7163,102 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>sistr_cpu</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sistr_disk_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sistr_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sistr_memory</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sistr_use_full_cgmlst_db</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_base_quality</strong></td>
+<td>Int</td>
+<td>Minimum quality for a nucleotide to be used in variant calling</td>
+<td>13</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_gene_query_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_map_qual</strong></td>
+<td>Int</td>
+<td>Minimum mapping quality to accept in variant calling</td>
+<td>60</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_maxsoft</strong></td>
+<td>Int</td>
+<td>Number of bases of alignment to soft-clip before discarding the alignment</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_min_coverage</strong></td>
+<td>Int</td>
+<td>Minimum read coverage of a position to identify a mutation</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_min_frac</strong></td>
+<td>Float</td>
+<td>Minimum fraction of bases at a given position to identify a mutation</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_min_quality</strong></td>
+<td>Int</td>
+<td>Minimum VCF variant call "quality"</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>snippy_query_gene</strong></td>
 <td>String</td>
 <td>Provide a gene to search for using Snippy</td>
@@ -6651,10 +7267,74 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>snippy_reference_afumigatus</strong></td>
+<td>File</td>
+<td>Snippy reference for Aspergillus fumigatus</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_reference_cryptoneo</strong></td>
+<td>File</td>
+<td>Snippy reference for Cryptococcus neoformans</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_variants_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sonneityping_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sonneityping_mykrobe_opts</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>spatyper_do_enrich</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>spatyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>srst2_gene_max_mismatch</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>2000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6662,15 +7342,7 @@
 <td><strong>srst2_max_divergence</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>srst2_min_cov</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>20</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6678,7 +7350,7 @@
 <td><strong>srst2_min_depth</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6686,7 +7358,15 @@
 <td><strong>srst2_min_edge_depth</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6699,7 +7379,63 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>stxtyper_cpu</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>stxtyper_disk_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>stxtyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>stxtyper_enable_debug</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>stxtyper_memory</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_add_cs_lims</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>tbp_parser_config</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_coverage_regions_bed</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -6723,6 +7459,22 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>tbp_parser_etha237_frequency</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_expert_rule_regions_bed</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>tbp_parser_min_depth</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
@@ -6731,8 +7483,24 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>tbp_parser_min_frequency</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>tbp_parser_min_percent_coverage</strong></td>
 <td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_min_read_support</strong></td>
+<td>Int</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -6750,6 +7518,62 @@
 <td><strong>tbp_parser_output_seq_method_type</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
+<td>WGS</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_rpob449_frequency</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_rrl_frequency</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_rrl_read_support</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_rrs_frequency</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_rrs_read_support</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_tngs_data</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_additional_parameters</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -6757,6 +7581,14 @@
 <td>merlin_magic</td>
 <td><strong>tbprofiler_custom_db</strong></td>
 <td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_docker_image</strong></td>
+<td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -6790,7 +7622,7 @@
 <td><strong>tbprofiler_run_cdph_db</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6798,7 +7630,7 @@
 <td><strong>tbprofiler_run_custom_db</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6813,6 +7645,38 @@
 <td>merlin_magic</td>
 <td><strong>tbprofiler_variant_calling_params</strong></td>
 <td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_lineage_barcodes</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_skip_subsampling</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_subsampling_fraction</strong></td>
+<td>Float</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -7154,22 +8018,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>raw_check_reads</td>
-<td><strong>organism</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>raw_check_reads</td>
-<td><strong>workflow_series</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>read_QC_trim</td>
 <td><strong>adapters</strong></td>
 <td>File</td>
@@ -7198,7 +8046,15 @@
 <td><strong>call_midas</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>extract_unclassified</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7207,6 +8063,54 @@
 <td>String</td>
 <td>Additional arguments to use with fastp</td>
 <td>--detect_adapter_for_pe -g -5 20 -3 20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_complete_only</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_decontaminate_mem</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_is_accession</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_refseq</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7221,7 +8125,7 @@
 <td>read_QC_trim</td>
 <td><strong>kraken_disk_size</strong></td>
 <td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB) kraken2 databases such as the "k2_standard" database</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -7238,7 +8142,7 @@
 <td><strong>midas_db</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7275,26 +8179,10 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>trim_min_length</strong></td>
+<td><strong>taxon_id</strong></td>
 <td>Int</td>
-<td>Specifies minimum length of each read after trimming to be kept</td>
-<td>75</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>trim_quality_min_score</strong></td>
-<td>Int</td>
-<td>Specifies the average quality of bases in a sliding window to be kept</td>
-<td>20</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>trim_window_size</strong></td>
-<td>Int</td>
-<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
-<td>10</td>
+<td>Internal component, do not modify</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7315,6 +8203,166 @@
 </tr>
 <tr>
 <td>theiaeuk_illumina_pe</td>
+<td><strong>busco_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>busco_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>24</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>call_rasusa</strong></td>
+<td>Boolean</td>
+<td>If true, RASUSA will subsample raw reads to  a specified read depth (150X by default)</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>expected_taxon</strong></td>
+<td>String</td>
+<td>If provided, this input will override the taxonomic assignment made by GAMBIT and launch the relevant taxon-specific submodules. It will also modify the organism flag used by AMRFinderPlus. Example format: "Salmonella enterica"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>gambit_db_genomes</strong></td>
+<td>File</td>
+<td>User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db"</td>
+<td>gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>gambit_db_signatures</strong></td>
+<td>File</td>
+<td>User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.</td>
+<td>gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>genome_length</strong></td>
+<td>Int</td>
+<td>User-specified expected genome length to be used in genome statistics calculations</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>max_genome_length</strong></td>
+<td>Int</td>
+<td>Maximum genome size able to pass read screening</td>
+<td>178000000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>min_basepairs</strong></td>
+<td>Int</td>
+<td>Minimum number of base pairs able to pass read screening</td>
+<td>45000000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>min_contig_length</strong></td>
+<td>Int</td>
+<td>Minimum contig length for assembler</td>
+<td>1000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>min_coverage</strong></td>
+<td>Int</td>
+<td>Minimum genome coverage able to pass read screening</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>min_genome_length</strong></td>
+<td>Int</td>
+<td>Minimum genome size able to pass read screening</td>
+<td>9000000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>min_proportion</strong></td>
+<td>Int</td>
+<td>Minimum proportion of total reads in each read file to pass read screening</td>
+<td>40</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>min_reads</strong></td>
+<td>Int</td>
+<td>Minimum number of reads to pass read screening</td>
+<td>30000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>qc_check_table</strong></td>
+<td>File</td>
+<td>TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>seq_method</strong></td>
+<td>String</td>
+<td>Sequencing method used for the samples</td>
+<td>ILLUMINA</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>skip_screen</strong></td>
+<td>Boolean</td>
+<td>Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe genome_length optional input, OR set call_rasusa to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>subsample_coverage</strong></td>
+<td>Float</td>
+<td>Read depth for RASUSA task to subsample reads to</td>
+<td>150</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
 <td><strong>trim_min_length</strong></td>
 <td>Int</td>
 <td>Specifies minimum length of each read after trimming to be kept</td>
@@ -7330,107 +8378,11 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>theiaeuk_pe</td>
-<td><strong>busco_memory</strong></td>
+<td>theiaeuk_illumina_pe</td>
+<td><strong>trim_window_size</strong></td>
 <td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_pe</td>
-<td><strong>call_rasusa</strong></td>
-<td>Boolean</td>
-<td>If true, RASUSA will subsample raw reads to  a specified read depth (150X by default)</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_pe</td>
-<td><strong>gambit_db_genomes</strong></td>
-<td>File</td>
-<td>User-provided database of assembled query genomes; requires complementary signatures file. If not provided, uses default database, "/gambit-db"</td>
-<td>gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_pe</td>
-<td><strong>gambit_db_signatures</strong></td>
-<td>File</td>
-<td>User-provided signatures file; requires complementary genomes file. If not specified, the file from the docker container will be used.</td>
-<td>gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_pe</td>
-<td><strong>genome_length</strong></td>
-<td>Int</td>
-<td>User-specified expected genome length to be used in genome statistics calculations</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_pe</td>
-<td><strong>max_genome_size</strong></td>
-<td>Int</td>
-<td>Maximum genome size able to pass read screening</td>
-<td>50000000</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_pe</td>
-<td><strong>min_basepairs</strong></td>
-<td>Int</td>
-<td>Minimum number of base pairs able to pass read screening</td>
-<td>2241820</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_pe</td>
-<td><strong>min_coverage</strong></td>
-<td>Int</td>
-<td>Minimum genome coverage able to pass read screening</td>
+<td>Size of the trimming window to use</td>
 <td>10</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_pe</td>
-<td><strong>min_genome_size</strong></td>
-<td>Int</td>
-<td>Minimum genome size able to pass read screening</td>
-<td>100000</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_pe</td>
-<td><strong>min_proportion</strong></td>
-<td>Int</td>
-<td>Minimum proportion of total reads in each read file to pass read screening</td>
-<td>50</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_pe</td>
-<td><strong>min_reads</strong></td>
-<td>Int</td>
-<td>Minimum number of reads to pass read screening</td>
-<td>10000</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_pe</td>
-<td><strong>skip_screen</strong></td>
-<td>Boolean</td>
-<td>Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe genome_length optional input, OR set call_rasusa to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail.</td>
-<td>FALSE</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_pe</td>
-<td><strong>subsample_coverage</strong></td>
-<td>Float</td>
-<td>Read depth for RASUSA task to subsample reads to</td>
-<td>150</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7533,18 +8485,10 @@
 </tr>
 <tr>
 <td>clean_check_reads</td>
-<td><strong>organism</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>clean_check_reads</td>
 <td><strong>workflow_series</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>theiaviral</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7613,7 +8557,7 @@
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>filtercontigs_cpu</strong></td>
+<td><strong>filter_contigs_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
 <td>1</td>
@@ -7621,7 +8565,7 @@
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>filtercontigs_disk_size</strong></td>
+<td><strong>filter_contigs_disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>10</td>
@@ -7629,7 +8573,7 @@
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>filtercontigs_memory</strong></td>
+<td><strong>filter_contigs_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
@@ -7637,7 +8581,7 @@
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>filtercontigs_min_length</strong></td>
+<td><strong>filter_contigs_min_length</strong></td>
 <td>Int</td>
 <td>Minimum contig length to keep</td>
 <td>1000</td>
@@ -7735,15 +8679,15 @@
 <td>flye_denovo</td>
 <td><strong>flye_read_type</strong></td>
 <td>String</td>
-<td>Specifies the type of sequencing reads. Options: --nano-raw (default), --nano-corr, --nano-hq, --pacbio-raw, --pacbio-corr, --pacbio-hifi. Refer to Flye documentation for details on each type.</td>
-<td>#NAME?</td>
+<td>Specifies the type of sequencing reads. Options: --nano-hq (default), --nano-corr, --nano-raw, --pacbio-raw, --pacbio-corr, --pacbio-hifi. Refer to Flye documentation for details on each type.</td>
+<td>--nano-hq</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>flye_denovo</td>
 <td><strong>flye_scaffold</strong></td>
 <td>Boolean</td>
-<td>If true, scaffold</td>
+<td>If true, scaffolding is enabled using graph</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -7751,7 +8695,7 @@
 <td>flye_denovo</td>
 <td><strong>flye_uneven_coverage_mode</strong></td>
 <td>Boolean</td>
-<td></td>
+<td>sets the --meta option in the case of uneven coverage (or metagenomics)</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -7767,7 +8711,7 @@
 <td>flye_denovo</td>
 <td><strong>illumina_read2</strong></td>
 <td>File</td>
-<td>If Illumina reads are provided, flye_denovo subworflow will perform Illumina polishing</td>
+<td>If Illumina reads are provided, flye_denovo subworkflow will perform Illumina polishing</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -7805,18 +8749,18 @@
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>polisher</strong></td>
-<td>String</td>
-<td>The polishing tool to use for assembly</td>
-<td>medaka</td>
+<td><strong>polish_rounds</strong></td>
+<td>Int</td>
+<td>The number of polishing rounds to conduct for medaka or racon (without Illumina)</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>polishing_rounds</strong></td>
-<td>Int</td>
-<td>The number of polishing rounds to conduct for medaka or racon (without Illumina)</td>
-<td>1</td>
+<td><strong>polisher</strong></td>
+<td>String</td>
+<td>The polishing tool to use for assembly</td>
+<td>medaka</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7831,7 +8775,7 @@
 <td>flye_denovo</td>
 <td><strong>polypolish_cpu</strong></td>
 <td>Int</td>
-<td>Polypolish cpu</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>1</td>
 <td>Optional</td>
 </tr>
@@ -7839,7 +8783,7 @@
 <td>flye_denovo</td>
 <td><strong>polypolish_disk_size</strong></td>
 <td>Int</td>
-<td>Polypolish disk size</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -7887,7 +8831,7 @@
 <td>flye_denovo</td>
 <td><strong>polypolish_memory</strong></td>
 <td>Int</td>
-<td>Polypolish memory</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -7965,14 +8909,6 @@
 </tr>
 <tr>
 <td>flye_denovo</td>
-<td><strong>read1</strong></td>
-<td>File</td>
-<td>ONT read file in FASTQ file format (compression optional)</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>flye_denovo</td>
 <td><strong>run_porechop</strong></td>
 <td>Boolean</td>
 <td>If true, trims reads before assembly using Porechop</td>
@@ -7992,7 +8928,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>8</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8000,7 +8936,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>20</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8016,7 +8952,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8040,7 +8976,7 @@
 <td><strong>abricate_abaum_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8056,7 +8992,7 @@
 <td><strong>abricate_vibrio_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8064,7 +9000,7 @@
 <td><strong>abricate_vibrio_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8125,18 +9061,10 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>assembly_only</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
 <td><strong>call_poppunk</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8144,7 +9072,7 @@
 <td><strong>call_shigeifinder_reads_input</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8152,7 +9080,7 @@
 <td><strong>call_stxtyper</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8160,7 +9088,15 @@
 <td><strong>call_tbp_parser</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cauris_cladetyper_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8279,8 +9215,8 @@
 <td>merlin_magic</td>
 <td><strong>clockwork_docker_image</strong></td>
 <td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8341,8 +9277,112 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>emmtyper_align_diff</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_cluster_distance</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_culling_limit</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_gap</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_max_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_good</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_min_perfect</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_mismatch</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>emmtyper_wf</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>emmtypingtool_docker_image</strong></td>
 <td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>genotyphi_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>hicap_broken_gene_length</strong></td>
+<td>Int</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -8357,8 +9397,176 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>ont_data</strong></td>
+<td><strong>hicap_min_broken_gene_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>hicap_min_gene_percent_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>hicap_min_gene_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kaptive_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kaptive_low_gene_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kaptive_min_percent_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kaptive_min_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kaptive_start_end_margin</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_min_kaptive_confidence</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_min_percent_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_min_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_min_spurious_percent_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_min_spurious_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_skip_kaptive</strong></td>
 <td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>kleborate_skip_resistance</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>legsta_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>lissero_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>lissero_min_percent_coverage</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>lissero_min_percent_identity</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>meningotype_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>ngmaster_docker_image</strong></td>
+<td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -8367,8 +9575,8 @@
 <td>merlin_magic</td>
 <td><strong>paired_end</strong></td>
 <td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Set to true if your data is paired-end FASTQ files</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8381,7 +9589,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>pasty_min_coverage</strong></td>
+<td><strong>pasty_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -8397,6 +9605,174 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>pbptyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>pbptyper_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>pbptyper_min_percent_identity</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_clusters_csv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_dists_npy</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_dists_pkl</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_external_clusters_csv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_fit_npz</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_fit_pkl</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_graph_gt</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_h5</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_qcreport_txt</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_refs</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_refs_dists_npy</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_refs_dists_pkl</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_refs_graph_gt</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_refs_h5</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>poppunk_gps_unword_clusters_csv</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>read1</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>read2</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>run_amr_search</strong></td>
 <td>Boolean</td>
 <td>If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs.</td>
@@ -8405,66 +9781,138 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>snippy_base_quality</strong></td>
+<td><strong>seqsero2_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>seroba_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>serotypefinder_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>shigatyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>shigeifinder_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sistr_cpu</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sistr_disk_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sistr_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sistr_memory</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sistr_use_full_cgmlst_db</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>snippy_base_quality</strong></td>
+<td>Int</td>
+<td>Minimum quality for a nucleotide to be used in variant calling</td>
+<td>13</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>snippy_gene_query_docker_image</strong></td>
 <td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>snippy_map_qual</strong></td>
 <td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Minimum mapping quality to accept in variant calling</td>
+<td>60</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>snippy_maxsoft</strong></td>
 <td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Number of bases of alignment to soft-clip before discarding the alignment</td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>snippy_min_coverage</strong></td>
 <td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Minimum read coverage of a position to identify a mutation</td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>snippy_min_frac</strong></td>
 <td>Float</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Minimum fraction of bases at a given position to identify a mutation</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>snippy_min_quality</strong></td>
 <td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>snippy_query_gene</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Minimum VCF variant call "quality"</td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8479,29 +9927,61 @@
 <td>merlin_magic</td>
 <td><strong>snippy_reference_afumigatus</strong></td>
 <td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>snippy_reference_calbicans</strong></td>
-<td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>Snippy reference for Aspergillus fumigatus</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>snippy_reference_cryptoneo</strong></td>
 <td>File</td>
-<td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>Snippy reference for Cryptococcus neoformans</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>snippy_variants_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sonneityping_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>sonneityping_mykrobe_opts</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>spatyper_do_enrich</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>spatyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -8512,7 +9992,7 @@
 <td><strong>srst2_gene_max_mismatch</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>2000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8520,15 +10000,7 @@
 <td><strong>srst2_max_divergence</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>srst2_min_cov</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>20</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8536,7 +10008,7 @@
 <td><strong>srst2_min_depth</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8544,7 +10016,15 @@
 <td><strong>srst2_min_edge_depth</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>srst2_min_percent_coverage</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8557,7 +10037,63 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>stxtyper_cpu</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>stxtyper_disk_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>stxtyper_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>stxtyper_enable_debug</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>stxtyper_memory</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_add_cs_lims</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>tbp_parser_config</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_coverage_regions_bed</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -8581,6 +10117,22 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>tbp_parser_etha237_frequency</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_expert_rule_regions_bed</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>tbp_parser_min_depth</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
@@ -8589,8 +10141,24 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>tbp_parser_min_frequency</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>tbp_parser_min_percent_coverage</strong></td>
 <td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_min_read_support</strong></td>
+<td>Int</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -8608,6 +10176,62 @@
 <td><strong>tbp_parser_output_seq_method_type</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
+<td>WGS</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_rpob449_frequency</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_rrl_frequency</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_rrl_read_support</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_rrs_frequency</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_rrs_read_support</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_tngs_data</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_additional_parameters</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -8615,6 +10239,14 @@
 <td>merlin_magic</td>
 <td><strong>tbprofiler_custom_db</strong></td>
 <td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_docker_image</strong></td>
+<td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
@@ -8648,7 +10280,7 @@
 <td><strong>tbprofiler_run_cdph_db</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8656,7 +10288,7 @@
 <td><strong>tbprofiler_run_custom_db</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8670,6 +10302,54 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>tbprofiler_variant_calling_params</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_lineage_barcodes</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_skip_subsampling</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>vibecheck_subsampling_fraction</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>virulencefinder_database</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>virulencefinder_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -8773,6 +10453,14 @@
 </tr>
 <tr>
 <td>quast</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>quast</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
@@ -8804,6 +10492,46 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>raw_check_reads</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>raw_check_reads</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>raw_check_reads</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/bactopia/gather_samples:2.0.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>raw_check_reads</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>raw_check_reads</td>
+<td><strong>workflow_series</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>theiaviral</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>read_QC_trim</td>
 <td><strong>artic_guppyplex_cpu</strong></td>
 <td>Int</td>
@@ -8814,6 +10542,110 @@
 <tr>
 <td>read_QC_trim</td>
 <td><strong>artic_guppyplex_disk_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>artic_guppyplex_docker</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>artic_guppyplex_memory</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>call_kraken</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>downsampling_coverage</strong></td>
+<td>Float</td>
+<td>The desired coverage to sub-sample the reads to with RASUSA</td>
+<td>150</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken2_recalculate_abundances_cpu</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken2_recalculate_abundances_disk_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken2_recalculate_abundances_docker</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken2_recalculate_abundances_memory</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_cpu</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_db</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_disk_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_docker_image</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -8901,6 +10733,38 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>ncbi_scrub_cpu</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>ncbi_scrub_disk_size</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>ncbi_scrub_docker</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>ncbi_scrub_memory</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>rasusa_bases</strong></td>
 <td>String</td>
 <td>Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored</td>
@@ -8964,6 +10828,22 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>read_QC_trim</td>
+<td><strong>run_prefix</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>target_organism</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>theiaeuk_ont</td>
 <td><strong>busco_docker_image</strong></td>
 <td>String</td>
@@ -9000,7 +10880,15 @@
 <td><strong>genome_length</strong></td>
 <td>Int</td>
 <td>User-specified expected genome length to be used in genome statistics calculations</td>
-<td></td>
+<td>50000000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>max_genome_length</strong></td>
+<td>Int</td>
+<td>Maximum genome size able to pass read screening</td>
+<td>178000000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9021,7 +10909,7 @@
 </tr>
 <tr>
 <td>theiaeuk_ont</td>
-<td><strong>min_genome_size</strong></td>
+<td><strong>min_genome_length</strong></td>
 <td>Int</td>
 <td>Minimum genome size able to pass read screening</td>
 <td>9000000</td>
@@ -9049,6 +10937,14 @@
 <td>Boolean</td>
 <td>Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe genome_length optional input, OR set call_rasusa to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail.</td>
 <td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_ont</td>
+<td><strong>workflow_series</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>theiaeuk</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10501,7 +12397,7 @@
 </thead>
 <tbody>
 <tr>
-<td>amr_results_csv</td>
+<td>amr_search_csv</td>
 <td><strong>File</strong></td>
 <td>CSV formatted AMR profile</td>
 </tr>
@@ -10519,6 +12415,11 @@
 <td>amr_search_results_pdf</td>
 <td><strong>File</strong></td>
 <td>PDF formatted AMR profile</td>
+</tr>
+<tr>
+<td>amr_search_version</td>
+<td><strong>String</strong></td>
+<td>Version of AMR_Search libraries used</td>
 </tr>
 <tr>
 <td>assembler</td>
@@ -10576,7 +12477,12 @@
 <td>Docker file used for running CG-Pipeline on cleaned reads</td>
 </tr>
 <tr>
-<td>cg_pipeline_report</td>
+<td>cg_pipeline_report_clean</td>
+<td><strong>File</strong></td>
+<td>TSV file of read metrics from clean reads, including average read length, number of reads, and estimated genome coverage</td>
+</tr>
+<tr>
+<td>cg_pipeline_report_raw</td>
 <td><strong>File</strong></td>
 <td>TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage</td>
 </tr>
@@ -10621,19 +12527,9 @@
 <td>Mean read length for the combined raw reads</td>
 </tr>
 <tr>
-<td>contigs_fastg</td>
-<td><strong>File</strong></td>
-<td>Assembly graph if megahit used for genome assembly</td>
-</tr>
-<tr>
 <td>contigs_gfa</td>
 <td><strong>File</strong></td>
 <td>Assembly graph output generated by SPAdes (Illumina: PE, SE) or Flye (ONT), used to visualize and evaluate genome assembly results.</td>
-</tr>
-<tr>
-<td>contigs_lastgraph</td>
-<td><strong>File</strong></td>
-<td>Assembly graph if velvet used for genome assembly</td>
 </tr>
 <tr>
 <td>est_coverage_clean</td>
@@ -10861,9 +12757,9 @@
 <td>Mean quality score of raw reverse reads</td>
 </tr>
 <tr>
-<td>r2_mean_readlength_clean</td>
+<td>r2_mean_readlength_raw</td>
 <td><strong>Float</strong></td>
-<td>Mean read length of clean reverse reads</td>
+<td>Mean read length of raw reverse reads</td>
 </tr>
 <tr>
 <td>rasusa_version</td>
@@ -10916,11 +12812,6 @@
 <td>Description of the sequencing methodology used to generate the input read data</td>
 </tr>
 <tr>
-<td>shovill_pe_version</td>
-<td><strong>String</strong></td>
-<td>Shovill version used</td>
-</tr>
-<tr>
 <td>theiaeuk_illumina_pe_analysis_date</td>
 <td><strong>String</strong></td>
 <td>Date of TheiaEuk PE workflow execution</td>
@@ -10947,7 +12838,7 @@
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_gene_query_results</td>
-<td><strong>File</strong></td>
+<td><strong>String</strong></td>
 <td>File containing all lines from variants file matching gene query terms</td>
 </tr>
 <tr>
@@ -10962,12 +12853,12 @@
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_num_variants</td>
-<td><strong>Int</strong></td>
+<td><strong>String</strong></td>
 <td>Number of variants detected by snippy</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_outdir_tarball</td>
-<td><strong>File</strong></td>
+<td><strong>String</strong></td>
 <td>Tar compressed file containing full snippy output directory</td>
 </tr>
 <tr>
@@ -10987,17 +12878,17 @@
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_reference_genome</td>
-<td><strong>File</strong></td>
+<td><strong>String</strong></td>
 <td>The reference genome used in the alignment and variant calling</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_results</td>
-<td><strong>File</strong></td>
+<td><strong>String</strong></td>
 <td>The variants file produced by snippy</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_summary</td>
-<td><strong>File</strong></td>
+<td><strong>String</strong></td>
 <td>A file summarizing the variants detected by snippy</td>
 </tr>
 <tr>
@@ -11051,6 +12942,11 @@
 <td>PDF formatted AMR profile</td>
 </tr>
 <tr>
+<td>amr_search_version</td>
+<td><strong>String</strong></td>
+<td>Version of AMR_Search libraries used</td>
+</tr>
+<tr>
 <td>assembly_fasta</td>
 <td><strong>File</strong></td>
 <td><em>De novo</em> genome assembly in FASTA format</td>
@@ -11066,12 +12962,42 @@
 <td>Image file (PNG) visualizing the Flye assembly graph generated by Bandage</td>
 </tr>
 <tr>
+<td>bandage_version</td>
+<td><strong>String</strong></td>
+<td>Version of Bandage used</td>
+</tr>
+<tr>
+<td>busco_database</td>
+<td><strong>String</strong></td>
+<td>BUSCO database used</td>
+</tr>
+<tr>
+<td>busco_docker</td>
+<td><strong>String</strong></td>
+<td>BUSCO docker image used</td>
+</tr>
+<tr>
+<td>busco_report</td>
+<td><strong>File</strong></td>
+<td>A plain text summary of the results in BUSCO notation</td>
+</tr>
+<tr>
+<td>busco_results</td>
+<td><strong>String</strong></td>
+<td>BUSCO results (see relevant toggle in <a href="https://theiagen.github.io/public_health_bioinformatics/latest/workflows/genomic_characterization/theiaprok/#post-assembly-tasks-performed-for-all-taxa">this block</a>)</td>
+</tr>
+<tr>
+<td>busco_version</td>
+<td><strong>String</strong></td>
+<td>BUSCO software version used</td>
+</tr>
+<tr>
 <td>bwa_version</td>
 <td><strong>String</strong></td>
 <td>Version of BWA software used</td>
 </tr>
 <tr>
-<td>cladetyper_annotated_reference</td>
+<td>cladetype_annotated_ref</td>
 <td><strong>String</strong></td>
 <td>The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted</td>
 </tr>
@@ -11091,9 +13017,9 @@
 <td>The version of Cladetyper used for the analysis</td>
 </tr>
 <tr>
-<td>contigs_fastg</td>
+<td>contigs_gfa</td>
 <td><strong>File</strong></td>
-<td>Assembly graph if megahit used for genome assembly</td>
+<td>Assembly graph output generated by SPAdes (Illumina: PE, SE) or Flye (ONT), used to visualize and evaluate genome assembly results.</td>
 </tr>
 <tr>
 <td>dnaapler_version</td>
@@ -11111,12 +13037,27 @@
 <td>Estimated coverage calculated from raw reads and genome length</td>
 </tr>
 <tr>
+<td>est_genome_length</td>
+<td><strong>Int</strong></td>
+<td>Estimated genome length</td>
+</tr>
+<tr>
 <td>filtered_contigs_metrics</td>
 <td><strong>File</strong></td>
 <td>File containing metrics of contigs filtered</td>
 </tr>
 <tr>
-<td>gambit_closest_genomes</td>
+<td>flye_assembly_info</td>
+<td><strong>String</strong></td>
+<td>Information file from Flye assembly</td>
+</tr>
+<tr>
+<td>flye_version</td>
+<td><strong>String</strong></td>
+<td>Version of Flye software used</td>
+</tr>
+<tr>
+<td>gambit_closest_genomes_file</td>
 <td><strong>File</strong></td>
 <td>CSV file listing genomes in the GAMBIT database that are most similar to the query assembly</td>
 </tr>
@@ -11131,6 +13072,16 @@
 <td>GAMBIT Docker used</td>
 </tr>
 <tr>
+<td>gambit_next_taxon</td>
+<td><strong>String</strong></td>
+<td>Next taxon predicted by GAMBIT</td>
+</tr>
+<tr>
+<td>gambit_next_taxon_rank</td>
+<td><strong>String</strong></td>
+<td>Next taxon rank predicted by GAMBIT</td>
+</tr>
+<tr>
 <td>gambit_predicted_taxon</td>
 <td><strong>String</strong></td>
 <td>Taxon predicted by GAMBIT</td>
@@ -11141,7 +13092,7 @@
 <td>Taxon rank of GAMBIT taxon prediction</td>
 </tr>
 <tr>
-<td>gambit_report</td>
+<td>gambit_report_file</td>
 <td><strong>File</strong></td>
 <td>GAMBIT report in a machine-readable format</td>
 </tr>
@@ -11156,14 +13107,14 @@
 <td>Model used by Medaka</td>
 </tr>
 <tr>
-<td>medaka_vcf</td>
-<td><strong>File</strong></td>
-<td>A VCF file containing the identified variants</td>
-</tr>
-<tr>
 <td>medaka_version</td>
 <td><strong>String</strong></td>
 <td>Version of Medaka used</td>
+</tr>
+<tr>
+<td>merlin_tag</td>
+<td><strong>String</strong></td>
+<td>Merlin tag for the assembly</td>
 </tr>
 <tr>
 <td>n50_value</td>
@@ -11346,14 +13297,14 @@
 <td>Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
 </tr>
 <tr>
-<td>theiaeuk_illumina_pe_analysis_date</td>
+<td>theiaeuk_ont_analysis_date</td>
 <td><strong>String</strong></td>
-<td>Date of TheiaEuk PE workflow execution</td>
+<td>Date of TheiaEuk_ONT workflow execution</td>
 </tr>
 <tr>
-<td>theiaeuk_illumina_pe_version</td>
+<td>theiaeuk_ont_version</td>
 <td><strong>String</strong></td>
-<td>TheiaEuk PE workflow version used</td>
+<td>TheiaEuk_ONT workflow version used</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_bai</td>
@@ -11372,7 +13323,7 @@
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_gene_query_results</td>
-<td><strong>File</strong></td>
+<td><strong>String</strong></td>
 <td>File containing all lines from variants file matching gene query terms</td>
 </tr>
 <tr>
@@ -11387,12 +13338,12 @@
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_num_variants</td>
-<td><strong>Int</strong></td>
+<td><strong>String</strong></td>
 <td>Number of variants detected by snippy</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_outdir_tarball</td>
-<td><strong>File</strong></td>
+<td><strong>String</strong></td>
 <td>Tar compressed file containing full snippy output directory</td>
 </tr>
 <tr>
@@ -11411,18 +13362,13 @@
 <td>Were the gene query terms present in the refence annotated genome file</td>
 </tr>
 <tr>
-<td>theiaeuk_snippy_variants_reference_genome</td>
-<td><strong>File</strong></td>
-<td>The reference genome used in the alignment and variant calling</td>
-</tr>
-<tr>
 <td>theiaeuk_snippy_variants_results</td>
-<td><strong>File</strong></td>
+<td><strong>String</strong></td>
 <td>The variants file produced by snippy</td>
 </tr>
 <tr>
 <td>theiaeuk_snippy_variants_summary</td>
-<td><strong>File</strong></td>
+<td><strong>String</strong></td>
 <td>A file summarizing the variants detected by snippy</td>
 </tr>
 <tr>

@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5987,7 +6059,7 @@
 <td>checkv_consensus</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -5995,7 +6067,7 @@
 <td>checkv_consensus</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -6003,7 +6075,7 @@
 <td>checkv_consensus</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3</td>
 <td>Optional</td>
 </tr>
@@ -6011,7 +6083,7 @@
 <td>checkv_consensus</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -6027,7 +6099,7 @@
 <td>checkv_denovo</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -6035,7 +6107,7 @@
 <td>checkv_denovo</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -6043,7 +6115,7 @@
 <td>checkv_denovo</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3</td>
 <td>Optional</td>
 </tr>
@@ -6051,7 +6123,7 @@
 <td>checkv_denovo</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -6161,6 +6233,14 @@
 </tr>
 <tr>
 <td>consensus</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>consensus</td>
 <td><strong>disable_baq</strong></td>
 <td>Boolean</td>
 <td>True/False that determines if base alignment quality (BAQ) computation should be disabled during samtools mpileup before consensus generation</td>
@@ -6180,7 +6260,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6197,6 +6277,14 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>consensus</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6251,7 +6339,7 @@
 <td>ivar_variants</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -6259,7 +6347,7 @@
 <td>ivar_variants</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -6267,7 +6355,7 @@
 <td>ivar_variants</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan</td>
 <td>Optional</td>
 </tr>
@@ -6275,7 +6363,7 @@
 <td>ivar_variants</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -6291,7 +6379,7 @@
 <td>megahit</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -6299,7 +6387,7 @@
 <td>megahit</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -6307,7 +6395,7 @@
 <td>megahit</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9</td>
 <td>Optional</td>
 </tr>
@@ -6331,7 +6419,7 @@
 <td>megahit</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
 <td>Optional</td>
 </tr>
@@ -6421,38 +6509,6 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>consensus_qc_cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>consensus_qc_disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>consensus_qc_docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>consensus_qc_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6635,7 +6691,7 @@
 <td>ncbi_datasets</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>1</td>
 <td>Optional</td>
 </tr>
@@ -6643,7 +6699,7 @@
 <td>ncbi_datasets</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
 </tr>
@@ -6651,7 +6707,7 @@
 <td>ncbi_datasets</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1</td>
 <td>Optional</td>
 </tr>
@@ -6675,7 +6731,7 @@
 <td>ncbi_datasets</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -6691,7 +6747,7 @@
 <td>ncbi_identify</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>1</td>
 <td>Optional</td>
 </tr>
@@ -6699,7 +6755,7 @@
 <td>ncbi_identify</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
 </tr>
@@ -6707,7 +6763,7 @@
 <td>ncbi_identify</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1</td>
 <td>Optional</td>
 </tr>
@@ -6715,7 +6771,7 @@
 <td>ncbi_identify</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -6747,7 +6803,7 @@
 <td>quast_denovo</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -6755,7 +6811,7 @@
 <td>quast_denovo</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -6763,7 +6819,7 @@
 <td>quast_denovo</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2</td>
 <td>Optional</td>
 </tr>
@@ -6771,7 +6827,7 @@
 <td>quast_denovo</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -6795,7 +6851,7 @@
 <td>rasusa</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -6803,7 +6859,7 @@
 <td>rasusa</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -6811,7 +6867,7 @@
 <td>rasusa</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0</td>
 <td>Optional</td>
 </tr>
@@ -6827,7 +6883,7 @@
 <td>rasusa</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -6868,7 +6924,7 @@
 <td><strong>call_kraken</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6876,7 +6932,7 @@
 <td><strong>call_midas</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6885,14 +6941,6 @@
 <td>String</td>
 <td>Additional arguments to use with fastp</td>
 <td>--detect_adapter_for_pe -g -5 20 -3 20</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>host</strong></td>
-<td>String</td>
-<td>Host taxon/accession to dehost reads, if provided</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6921,6 +6969,14 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>host_refseq</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>TRUE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>kraken_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -6929,10 +6985,26 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>kraken_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>midas_db</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7000,26 +7072,10 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>read_QC_trim_pe</td>
-<td><strong>kraken_disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim_pe</td>
-<td><strong>midas_db</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>read_mapping_stats</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -7027,7 +7083,7 @@
 <td>read_mapping_stats</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -7035,7 +7091,7 @@
 <td>read_mapping_stats</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
 <td>Optional</td>
 </tr>
@@ -7043,7 +7099,7 @@
 <td>read_mapping_stats</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -7051,7 +7107,7 @@
 <td>skani</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -7059,7 +7115,7 @@
 <td>skani</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -7067,7 +7123,7 @@
 <td>skani</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2</td>
 <td>Optional</td>
 </tr>
@@ -7075,7 +7131,7 @@
 <td>skani</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -7084,14 +7140,14 @@
 <td><strong>skani_db</strong></td>
 <td>File</td>
 <td>Skani database file</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20250606.tar</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20250613.tar</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>spades</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -7099,7 +7155,7 @@
 <td>spades</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -7107,7 +7163,7 @@
 <td>spades</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0</td>
 <td>Optional</td>
 </tr>
@@ -7123,7 +7179,7 @@
 <td>spades</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
 <td>Optional</td>
 </tr>
@@ -7228,7 +7284,7 @@
 <td><strong>skip_rasusa</strong></td>
 <td>Boolean</td>
 <td>True/False to skip read subsampling with Rasusa</td>
-<td>FALSE</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7301,7 +7357,7 @@
 <td>bcftools_consensus</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -7309,7 +7365,7 @@
 <td>bcftools_consensus</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -7317,7 +7373,7 @@
 <td>bcftools_consensus</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/bcftools:1.20</td>
 <td>Optional</td>
 </tr>
@@ -7325,7 +7381,7 @@
 <td>bcftools_consensus</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -7341,7 +7397,7 @@
 <td>checkv_consensus</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -7349,7 +7405,7 @@
 <td>checkv_consensus</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -7357,7 +7413,7 @@
 <td>checkv_consensus</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3</td>
 <td>Optional</td>
 </tr>
@@ -7365,7 +7421,7 @@
 <td>checkv_consensus</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -7381,7 +7437,7 @@
 <td>checkv_denovo</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -7389,7 +7445,7 @@
 <td>checkv_denovo</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -7397,7 +7453,7 @@
 <td>checkv_denovo</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3</td>
 <td>Optional</td>
 </tr>
@@ -7405,7 +7461,7 @@
 <td>checkv_denovo</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -7421,7 +7477,7 @@
 <td>clair3</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -7437,7 +7493,7 @@
 <td>clair3</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -7445,7 +7501,7 @@
 <td>clair3</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/clair3-extra-models:1.0.10</td>
 <td>Optional</td>
 </tr>
@@ -7485,7 +7541,7 @@
 <td>clair3</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -7493,7 +7549,7 @@
 <td>clair3</td>
 <td><strong>snp_min_af</strong></td>
 <td>Float</td>
-<td>Minimum SNP AF required for a candidate variant</td>
+<td>Minimum SNP allele frequency required for a candidate variant. Lowering the value might increase a bit of sensitivity in trade of speed and accuracy</td>
 <td>0.08</td>
 <td>Optional</td>
 </tr>
@@ -7578,14 +7634,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>clean_check_reads</td>
-<td><strong>skip_mash</strong></td>
-<td>Boolean</td>
-<td>If true, skips estimation of genome size and coverage using mash in read screening steps. As a result, providing true also prevents screening using these parameters.</td>
-<td>TRUE</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>consensus_qc</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -7621,7 +7669,7 @@
 <td>fasta_utilities</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>1</td>
 <td>Optional</td>
 </tr>
@@ -7629,24 +7677,24 @@
 <td>fasta_utilities</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
-<td>10</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>fasta_utilities</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/seqkit:2.4.0--h9ee0642_0</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>fasta_utilities</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
-<td>2</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7669,7 +7717,7 @@
 <td>flye</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -7677,7 +7725,7 @@
 <td>flye</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -7685,7 +7733,7 @@
 <td>flye</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/flye:2.9.4</td>
 <td>Optional</td>
 </tr>
@@ -7717,7 +7765,7 @@
 <td>flye</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>32</td>
 <td>Optional</td>
 </tr>
@@ -7781,7 +7829,7 @@
 <td>host_decontaminate</td>
 <td><strong>minimap2_memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for minimap2 (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>32</td>
 <td>Optional</td>
 </tr>
@@ -7789,7 +7837,7 @@
 <td>host_decontaminate</td>
 <td><strong>read2</strong></td>
 <td>File</td>
-<td>Internal componenet, do not modify</td>
+<td>Internal component, do not modify</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -7805,7 +7853,7 @@
 <td>mask_low_coverage</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -7813,7 +7861,7 @@
 <td>mask_low_coverage</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -7821,7 +7869,7 @@
 <td>mask_low_coverage</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0</td>
 <td>Optional</td>
 </tr>
@@ -7829,7 +7877,7 @@
 <td>mask_low_coverage</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -7837,7 +7885,7 @@
 <td>metabuli</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -7845,7 +7893,7 @@
 <td>metabuli</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -7853,7 +7901,7 @@
 <td>metabuli</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0</td>
 <td>Optional</td>
 </tr>
@@ -7861,7 +7909,7 @@
 <td>metabuli</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
 <td>Optional</td>
 </tr>
@@ -7878,7 +7926,7 @@
 <td><strong>min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum query coverage threshold (0.0 - 1.0)</td>
-<td>0.0</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7886,7 +7934,7 @@
 <td><strong>min_score</strong></td>
 <td>Float</td>
 <td>Minimum sequenece similarity score (0.0 - 1.0)</td>
-<td>0.0</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7894,7 +7942,7 @@
 <td><strong>min_sp_score</strong></td>
 <td>Float</td>
 <td>Minimum score for species- or lower-level classification</td>
-<td>0.0</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8027,38 +8075,6 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
-<td><strong>consensus_qc_cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>consensus_qc_disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>consensus_qc_docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>consensus_qc_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
 <td><strong>genoflu_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -8325,15 +8341,15 @@
 <td>nanoq</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
-<td>1</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>nanoq</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -8341,7 +8357,7 @@
 <td>nanoq</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1</td>
 <td>Optional</td>
 </tr>
@@ -8358,14 +8374,14 @@
 <td><strong>max_read_qual</strong></td>
 <td>Int</td>
 <td>Maximum read quality to keep</td>
-<td>10</td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>nanoq</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -8389,7 +8405,7 @@
 <td>ncbi_datasets</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>1</td>
 <td>Optional</td>
 </tr>
@@ -8397,7 +8413,7 @@
 <td>ncbi_datasets</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
 </tr>
@@ -8405,7 +8421,7 @@
 <td>ncbi_datasets</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1</td>
 <td>Optional</td>
 </tr>
@@ -8429,7 +8445,7 @@
 <td>ncbi_datasets</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -8445,7 +8461,7 @@
 <td>ncbi_identify</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>1</td>
 <td>Optional</td>
 </tr>
@@ -8453,7 +8469,7 @@
 <td>ncbi_identify</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
 <td>Optional</td>
 </tr>
@@ -8461,7 +8477,7 @@
 <td>ncbi_identify</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1</td>
 <td>Optional</td>
 </tr>
@@ -8469,7 +8485,7 @@
 <td>ncbi_identify</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -8533,7 +8549,7 @@
 <td>parse_mapping</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -8541,7 +8557,7 @@
 <td>parse_mapping</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -8549,7 +8565,7 @@
 <td>parse_mapping</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17</td>
 <td>Optional</td>
 </tr>
@@ -8557,7 +8573,7 @@
 <td>parse_mapping</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -8565,7 +8581,7 @@
 <td>porechop</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -8573,7 +8589,7 @@
 <td>porechop</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -8581,7 +8597,7 @@
 <td>porechop</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/porechop:0.2.4</td>
 <td>Optional</td>
 </tr>
@@ -8589,7 +8605,7 @@
 <td>porechop</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
 <td>Optional</td>
 </tr>
@@ -8605,7 +8621,7 @@
 <td>quast_denovo</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -8613,7 +8629,7 @@
 <td>quast_denovo</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -8621,7 +8637,7 @@
 <td>quast_denovo</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2</td>
 <td>Optional</td>
 </tr>
@@ -8629,8 +8645,16 @@
 <td>quast_denovo</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>quast_denovo</td>
+<td><strong>min_contig_length</strong></td>
+<td>Int</td>
+<td>Minimum length of contig for QUAST</td>
+<td>500</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8653,7 +8677,7 @@
 <td>rasusa</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -8661,7 +8685,7 @@
 <td>rasusa</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -8669,7 +8693,7 @@
 <td>rasusa</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0</td>
 <td>Optional</td>
 </tr>
@@ -8685,7 +8709,7 @@
 <td>rasusa</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -8717,7 +8741,7 @@
 <td>raven</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -8725,7 +8749,7 @@
 <td>raven</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -8733,7 +8757,7 @@
 <td>raven</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/raven:1.8.3</td>
 <td>Optional</td>
 </tr>
@@ -8741,7 +8765,7 @@
 <td>raven</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
 <td>Optional</td>
 </tr>
@@ -8750,13 +8774,13 @@
 <td><strong>raven_identity</strong></td>
 <td>Float</td>
 <td>Threshold for overlap between two reads in order to construct an edge between them</td>
-<td>0.0</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>raven</td>
 <td><strong>raven_opts</strong></td>
-<td>Int</td>
+<td>String</td>
 <td>Additional parameters for Raven assembler</td>
 <td></td>
 <td>Optional</td>
@@ -8773,7 +8797,7 @@
 <td>read_mapping_stats</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -8781,7 +8805,7 @@
 <td>read_mapping_stats</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -8789,7 +8813,7 @@
 <td>read_mapping_stats</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
 <td>Optional</td>
 </tr>
@@ -8797,7 +8821,7 @@
 <td>read_mapping_stats</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
 <td>Optional</td>
 </tr>
@@ -8805,7 +8829,7 @@
 <td>skani</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
-<td>Number of CPUs allocated for the task</td>
+<td>Number of CPUs to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -8813,7 +8837,7 @@
 <td>skani</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Disk size allocated for the task (in GB)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
@@ -8821,7 +8845,7 @@
 <td>skani</td>
 <td><strong>docker</strong></td>
 <td>String</td>
-<td>Docker image used for the task</td>
+<td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2</td>
 <td>Optional</td>
 </tr>
@@ -8829,7 +8853,7 @@
 <td>skani</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
-<td>Memory allocated for the task (in GB)</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
@@ -8838,7 +8862,7 @@
 <td><strong>skani_db</strong></td>
 <td>File</td>
 <td>Skani database file</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20250606.tar</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20250613.tar</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8862,7 +8886,7 @@
 <td><strong>extract_unclassified</strong></td>
 <td>Boolean</td>
 <td>True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads</td>
-<td>FALSE</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8926,7 +8950,7 @@
 <td><strong>skip_rasusa</strong></td>
 <td>Boolean</td>
 <td>True/False to skip read subsampling with Rasusa</td>
-<td>FALSE</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11346,11 +11370,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Clean reverse reads after BBDuk processing</td>
 </tr>
 <tr>
-<td>bwa_aligned_bai</td>
-<td>File</td>
-<td>BAM index file for reads aligned to reference</td>
-</tr>
-<tr>
 <td>bwa_read1_aligned</td>
 <td>File</td>
 <td>Forward reads aligned to reference</td>
@@ -11402,7 +11421,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </tr>
 <tr>
 <td>checkv_consensus_contamination</td>
-<td>Float</td>
+<td>File</td>
 <td>Contamination estimate for consensus assembly from CheckV</td>
 </tr>
 <tr>
@@ -11432,7 +11451,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </tr>
 <tr>
 <td>checkv_denovo_contamination</td>
-<td>Float</td>
+<td>File</td>
 <td>Contamination estimate for de novo assembly from CheckV</td>
 </tr>
 <tr>
@@ -11577,7 +11596,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </tr>
 <tr>
 <td>fastq_scan_clean_pairs</td>
-<td>Int</td>
+<td>String</td>
 <td>Number of read pairs after cleaning</td>
 </tr>
 <tr>
@@ -11617,7 +11636,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </tr>
 <tr>
 <td>fastq_scan_raw_pairs</td>
-<td>Int</td>
+<td>String</td>
 <td>Number of raw read pairs</td>
 </tr>
 <tr>
@@ -11707,7 +11726,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </tr>
 <tr>
 <td>kraken_database</td>
-<td>File</td>
+<td>String</td>
 <td>Database used for Kraken classification</td>
 </tr>
 <tr>
@@ -11717,7 +11736,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </tr>
 <tr>
 <td>kraken_report</td>
-<td>File</td>
+<td>String</td>
 <td>Full Kraken report</td>
 </tr>
 <tr>
@@ -11759,6 +11778,11 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>morgana_magic_organism</td>
 <td>String</td>
 <td>Standardized organism name used for characterization</td>
+</tr>
+<tr>
+<td>morgana_magic_organism</td>
+<td>String</td>
+<td>Organism identified</td>
 </tr>
 <tr>
 <td>ncbi_datasets_docker</td>
@@ -11821,6 +11845,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for HA segment</td>
 </tr>
 <tr>
+<td>nextclade_aa_dels_flu_ha</td>
+<td>String</td>
+<td>Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for HA segment</td>
+</tr>
+<tr>
+<td>nextclade_aa_dels_flu_na</td>
+<td>String</td>
+<td>Amino-acid deletions as detected by NextClade. Specific to Flu; it includes deletions for NA segment</td>
+</tr>
+<tr>
 <td>nextclade_aa_dels_flu_na</td>
 <td>String</td>
 <td>Amino-acid deletions as detected by NextClade. Specific to Flu; it includes deletions for NA segment</td>
@@ -11839,6 +11873,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>nextclade_aa_subs_flu_ha</td>
 <td>String</td>
 <td>Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for HA segment</td>
+</tr>
+<tr>
+<td>nextclade_aa_subs_flu_ha</td>
+<td>String</td>
+<td>Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for HA segment</td>
+</tr>
+<tr>
+<td>nextclade_aa_subs_flu_na</td>
+<td>String</td>
+<td>Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for NA segment</td>
 </tr>
 <tr>
 <td>nextclade_aa_subs_flu_na</td>
@@ -11929,6 +11973,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>nextclade_qc_flu_ha</td>
 <td>String</td>
 <td>QC metric as determined by Nextclade, specific to Flu HA segment</td>
+</tr>
+<tr>
+<td>nextclade_qc_flu_ha</td>
+<td>String</td>
+<td>QC metric as determined by Nextclade, specific to Flu HA segment</td>
+</tr>
+<tr>
+<td>nextclade_qc_flu_na</td>
+<td>String</td>
+<td>QC metric as determined by Nextclade, specific to Flu NA segment</td>
 </tr>
 <tr>
 <td>nextclade_qc_flu_na</td>
@@ -12077,7 +12131,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </tr>
 <tr>
 <td>quast_denovo_uncalled_bases</td>
-<td>Int</td>
+<td>Float</td>
 <td>Number of uncalled bases in de novo assembly from QUAST</td>
 </tr>
 <tr>
@@ -12156,13 +12210,23 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Statistics file from read mapping</td>
 </tr>
 <tr>
-<td>reference_taxon</td>
+<td>read_screen_clean</td>
+<td>String</td>
+<td>PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure</td>
+</tr>
+<tr>
+<td>read_screen_clean_tsv</td>
+<td>File</td>
+<td>Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
+</tr>
+<tr>
+<td>reference_taxon_name</td>
 <td>String</td>
 <td>NCBI derived taxon name from best ANI hit accession</td>
 </tr>
 <tr>
 <td>skani_database</td>
-<td>File</td>
+<td>String</td>
 <td>Database used for Skani</td>
 </tr>
 <tr>
@@ -12372,7 +12436,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </tr>
 <tr>
 <td>checkv_consensus_contamination</td>
-<td>Float</td>
+<td>File</td>
 <td>Contamination estimate for consensus assembly from CheckV</td>
 </tr>
 <tr>
@@ -12402,7 +12466,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </tr>
 <tr>
 <td>checkv_denovo_contamination</td>
-<td>Float</td>
+<td>File</td>
 <td>Contamination estimate for de novo assembly from CheckV</td>
 </tr>
 <tr>
@@ -12652,7 +12716,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </tr>
 <tr>
 <td>metabuli_database</td>
-<td>File</td>
+<td>String</td>
 <td>Database used for Metabuli</td>
 </tr>
 <tr>
@@ -12699,6 +12763,11 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>morgana_magic_organism</td>
 <td>String</td>
 <td>Standardized organism name used for characterization</td>
+</tr>
+<tr>
+<td>morgana_magic_organism</td>
+<td>String</td>
+<td>Organism identified</td>
 </tr>
 <tr>
 <td>nanoplot_html_clean</td>
@@ -12876,6 +12945,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for HA segment</td>
 </tr>
 <tr>
+<td>nextclade_aa_dels_flu_ha</td>
+<td>String</td>
+<td>Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for HA segment</td>
+</tr>
+<tr>
+<td>nextclade_aa_dels_flu_na</td>
+<td>String</td>
+<td>Amino-acid deletions as detected by NextClade. Specific to Flu; it includes deletions for NA segment</td>
+</tr>
+<tr>
 <td>nextclade_aa_dels_flu_na</td>
 <td>String</td>
 <td>Amino-acid deletions as detected by NextClade. Specific to Flu; it includes deletions for NA segment</td>
@@ -12894,6 +12973,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>nextclade_aa_subs_flu_ha</td>
 <td>String</td>
 <td>Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for HA segment</td>
+</tr>
+<tr>
+<td>nextclade_aa_subs_flu_ha</td>
+<td>String</td>
+<td>Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for HA segment</td>
+</tr>
+<tr>
+<td>nextclade_aa_subs_flu_na</td>
+<td>String</td>
+<td>Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for NA segment</td>
 </tr>
 <tr>
 <td>nextclade_aa_subs_flu_na</td>
@@ -12984,6 +13073,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>nextclade_qc_flu_ha</td>
 <td>String</td>
 <td>QC metric as determined by Nextclade, specific to Flu HA segment</td>
+</tr>
+<tr>
+<td>nextclade_qc_flu_ha</td>
+<td>String</td>
+<td>QC metric as determined by Nextclade, specific to Flu HA segment</td>
+</tr>
+<tr>
+<td>nextclade_qc_flu_na</td>
+<td>String</td>
+<td>QC metric as determined by Nextclade, specific to Flu NA segment</td>
 </tr>
 <tr>
 <td>nextclade_qc_flu_na</td>
@@ -13152,7 +13251,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </tr>
 <tr>
 <td>quast_denovo_uncalled_bases</td>
-<td>Int</td>
+<td>Float</td>
 <td>Number of uncalled bases in de novo assembly from QUAST</td>
 </tr>
 <tr>
@@ -13267,7 +13366,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </tr>
 <tr>
 <td>skani_database</td>
-<td>File</td>
+<td>String</td>
 <td>Database used for Skani</td>
 </tr>
 <tr>

@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5774,7 +5846,7 @@
 <td><strong>tbp_parser_debug</strong></td>
 <td>Boolean</td>
 <td>Activate the debug mode on tbp_parser; increases logging outputs</td>
-<td>FALSE</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5799,14 +5871,6 @@
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>tbprofiler</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5853,8 +5917,8 @@
 <td>tbprofiler</td>
 <td><strong>ont_data</strong></td>
 <td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td></td>
+<td>Specifies nanopore specific tbprofiler parameters</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5877,7 +5941,7 @@
 <td>tbprofiler</td>
 <td><strong>tbprofiler_run_custom_db</strong></td>
 <td>Boolean</td>
-<td></td>
+<td>Set to true to use your own custom database. The <code>tbprofiler_custom_db</code> variable MUST be filled if this value is set to true</td>
 <td>FALSE</td>
 <td>Optional</td>
 </tr>
@@ -5886,7 +5950,7 @@
 <td><strong>variant_caller</strong></td>
 <td>String</td>
 <td>Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler's original documentation for available options.</td>
-<td>freebayes</td>
+<td>gatk</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -5942,7 +6006,7 @@
 <td><strong>trimmomatic_args</strong></td>
 <td>String</td>
 <td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
-<td>#NAME?</td>
+<td>-phred33</td>
 <td>Optional</td>
 </tr>
 <tr>

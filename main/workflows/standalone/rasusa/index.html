@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -5735,14 +5807,6 @@
 </tr>
 <tr>
 <td>rasusa_workflow</td>
-<td><strong>read2</strong></td>
-<td>File</td>
-<td>FASTQ file containing read2 sequences</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>rasusa_workflow</td>
 <td><strong>samplename</strong></td>
 <td>String</td>
 <td>The name of the sample being analyzed</td>
@@ -5810,6 +5874,14 @@
 <td><strong>seed</strong></td>
 <td>Int</td>
 <td>Use to assign a name to the "random seed" that is used by the subsampler; i.e. this allows the exact same subsample to be produced from the same input file/s in subsequent runs when providing the seed identifier; do not input values for random downsampling</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>rasusa_workflow</td>
+<td><strong>read2</strong></td>
+<td>File</td>
+<td>FASTQ file containing read2 sequences</td>
 <td></td>
 <td>Optional</td>
 </tr>

@@ -504,6 +504,47 @@
   
   
   
+    
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_1_3" id="__nav_1_3_label" tabindex="0">
+            
+  
+  
+  <span class="md-ellipsis">
+    Other Resources
+    
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_1_3">
+            <span class="md-nav__icon md-icon"></span>
+            Other Resources
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
     <li class="md-nav__item">
       <a href="../../../guides/sops/" class="md-nav__link">
         
@@ -516,6 +557,37 @@
   
 
       </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../../guides/versions/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    Database and Docker Versions
+    
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -6257,7 +6329,7 @@
 <tr>
 <td>augur</td>
 <td><strong>assembly_fastas</strong></td>
-<td>Array[File]</td>
+<td>Array[File]+</td>
 <td>The assembly files for your samples in FASTA format</td>
 <td></td>
 <td>Required</td>
@@ -6276,14 +6348,6 @@
 <td>File</td>
 <td>TSV file containing clade mutation positions in four columns</td>
 <td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, an empty clades file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-clades.tsv", but will not be as useful as an organism specific clades file.</td>
-<td>Optional, Required</td>
-</tr>
-<tr>
-<td>augur</td>
-<td><strong>flu_segment</strong></td>
-<td>String</td>
-<td>Required if organism = "flu". The name of the segment to be analyzed; options: "HA" or "NA"</td>
-<td>HA (only used if organism = "flu")</td>
 <td>Optional, Required</td>
 </tr>
 <tr>
@@ -6312,6 +6376,22 @@
 </tr>
 <tr>
 <td>augur</td>
+<td><strong>alignment_fasta</strong></td>
+<td>File</td>
+<td>The alignment fasta file in Augur</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>augur_trait_columns</strong></td>
+<td>String</td>
+<td>Comma-separated list of columns to use for trait analysis in Augur</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
 <td><strong>auspice_config</strong></td>
 <td>File</td>
 <td>Auspice config file for customizing visualizations; takes priority over the other customization values available for augur_export</td>
@@ -6331,7 +6411,15 @@
 <td><strong>distance_tree_only</strong></td>
 <td>Boolean</td>
 <td>Create only a distance tree (skips all Augur steps after augur_tree)</td>
-<td>TRUE</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>flu_segment</strong></td>
+<td>String</td>
+<td>Required if organism = "flu". The name of the segment to be analyzed; options: "HA" or "NA"</td>
+<td>HA</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6340,6 +6428,14 @@
 <td>File</td>
 <td>Tab-delimited file of geographic location names with corresponding latitude and longitude values</td>
 <td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized.</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>midpoint_root_tree</strong></td>
+<td>Boolean</td>
+<td>Boolean variable that will instruct the workflow to reroot the tree at the midpoint</td>
+<td>TRUE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6360,10 +6456,50 @@
 </tr>
 <tr>
 <td>augur</td>
+<td><strong>narrow_bandwidth</strong></td>
+<td>Float</td>
+<td>The bandwidth for the narrow KDE</td>
+<td>0.08333</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
 <td><strong>organism</strong></td>
 <td>String</td>
 <td>Organism used to preselect default values; options: "sars-cov-2", "flu", "mpxv", "rsv-a", "rsv-b"</td>
 <td>sars-cov-2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>pivot_interval</strong></td>
+<td>Int</td>
+<td>Number of units between pivots</td>
+<td>3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>proportion_wide</strong></td>
+<td>Float</td>
+<td>The proportion of the wide bandwidth to use in the KDE mixture model</td>
+<td>0.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>remove_reference</strong></td>
+<td>Boolean</td>
+<td>Whether or not to remove the reference in Augur</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur</td>
+<td><strong>run_traits</strong></td>
+<td>Boolean</td>
+<td>Whether or not to run trait analysis in Augur</td>
+<td>FALSE</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6375,11 +6511,75 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>augur</td>
+<td><strong>skip_alignment</strong></td>
+<td>Boolean</td>
+<td>Whether or not to skip alignment in Augur</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_align</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>64</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_align</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>750</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_align</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>augur_align</td>
 <td><strong>fill_gaps</strong></td>
 <td>Boolean</td>
 <td>If true, gaps represent missing data rather than true indels and so are replaced by N after aligning.</td>
 <td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_align</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>128</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_ancestral</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_ancestral</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_ancestral</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6415,11 +6615,59 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>augur_ancestral</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_clades</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_clades</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_clades</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_clades</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>augur_export</td>
 <td><strong>colors_tsv</strong></td>
 <td>File</td>
-<td>Custom color definitions, one per line in TSV format with the following fields: TRAIT_TYPE TRAIT_VALUE HEX_CODE</td>
+<td>Custom color defintiions, one per line in the format TRAIT_TYPE\tTRAIT_VALUE\tHEX_CODE</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_export</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6432,6 +6680,22 @@
 </tr>
 <tr>
 <td>augur_export</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_export</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_export</td>
 <td><strong>include_root_sequence</strong></td>
 <td>Boolean</td>
 <td>Export an additional JSON containing the root sequence used to identify mutations</td>
@@ -6440,9 +6704,17 @@
 </tr>
 <tr>
 <td>augur_export</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>64</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_export</td>
 <td><strong>title</strong></td>
 <td>String</td>
-<td>Title to be displayed by Auspice</td>
+<td>The title to be displayed by auspice</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -6496,6 +6768,14 @@
 </tr>
 <tr>
 <td>augur_refine</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
 <td><strong>date_confidence</strong></td>
 <td>Boolean</td>
 <td>If true, calculate confidence intervals for node dates</td>
@@ -6512,10 +6792,26 @@
 </tr>
 <tr>
 <td>augur_refine</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
 <td><strong>divergence_units</strong></td>
 <td>String</td>
 <td>Units in which sequence divergences is exported; options: "mutations" or "mutations-per-site"</td>
 <td>mutations</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6544,10 +6840,18 @@
 </tr>
 <tr>
 <td>augur_refine</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_refine</td>
 <td><strong>precision</strong></td>
-<td>String</td>
-<td>Precision used to determine the number of grid points; options: 0 (rough) to 3 (ultra fine)</td>
-<td>auto</td>
+<td>Int</td>
+<td>Precision used by TreeTime to determine the number of grid points that are used for the evaluation of the branch length interpolation objects. Values range from 0 (rough) to 3 (ultra fine) and default to 'auto'</td>
+<td>auto'</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6559,11 +6863,115 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>augur_traits</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_traits</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_traits</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_traits</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>30</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_traits</td>
+<td><strong>metadata_id_columns</strong></td>
+<td>String</td>
+<td>The names of possible metadata columns containing identifier information, ordered by priority</td>
+<td>('strain', 'name)</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_traits</td>
+<td><strong>weights</strong></td>
+<td>File</td>
+<td>a dictionary of key/value mappings in JSON format used to weight KDE tip frequencies</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_translate</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_translate</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_translate</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>augur_translate</td>
 <td><strong>genes</strong></td>
 <td>File</td>
 <td>A file containing a list of genes to translate (from nucleotides to amino acids)</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_translate</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_tree</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>64</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_tree</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>750</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_tree</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6576,9 +6984,17 @@
 </tr>
 <tr>
 <td>augur_tree</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>augur_tree</td>
 <td><strong>method</strong></td>
 <td>String</td>
-<td>Which method to use to build the tree; options: "fasttree", "raxml", "iqtree"</td>
+<td>The method used to build the tree. Options: "fasttree", "raxml", "iqtree" (default)</td>
 <td>iqtree</td>
 <td>Optional</td>
 </tr>
@@ -6604,6 +7020,110 @@
 <td>String</td>
 <td>Additional tree builder arguments either augmenting or overriding the default arguments. FastTree defaults: "-nt -nosupport". RAxML defaults: "-f d -m GTRCAT -c 25 -p 235813". IQ-TREE defaults: "-ninit 2 -n 2 -me 0.05 -nt AUTO -redo"</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_files</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_files</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_files</td>
+<td><strong>docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_files</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_files</td>
+<td><strong>skip_extra_headers</strong></td>
+<td>Boolean</td>
+<td>If the files you are concatenating have identical headers, you can include only the first instance of the header and skip all of the others so they do not appear duplicated in the concatenated file. To activate this, set to true.</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fasta_to_ids</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fasta_to_ids</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>375</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fasta_to_ids</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>ubuntu</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fasta_to_ids</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>filter_sequences_by_length</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>filter_sequences_by_length</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>300</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>filter_sequences_by_length</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>filter_sequences_by_length</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6640,10 +7160,10 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
-<td><strong>auspice_config</strong></td>
-<td>File</td>
-<td>Auspice config file for customizing visualizations in the Augur_PHB workflow; takes priority over the other customization values available for augur_export. Defaults are set for various organisms &amp; flu segments. A minimal auspice config file is set in cases where organism is not specified and user does not provide an optional input config file.</td>
-<td></td>
+<td><strong>flu_genoflu_genotype</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>N/A</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -6736,6 +7256,14 @@
 </tr>
 <tr>
 <td>organism_parameters</td>
+<td><strong>vadr_model</strong></td>
+<td>File</td>
+<td>Path to the a tar + gzipped VADR model file</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>organism_parameters</td>
 <td><strong>vadr_options</strong></td>
 <td>String</td>
 <td>Options for the v-annotate.pl VADR script</td>
@@ -6751,11 +7279,171 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>reorder_matrix</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>reorder_matrix</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>reorder_matrix</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>reorder_matrix</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>reorder_matrix</td>
+<td><strong>phandango_coloring</strong></td>
+<td>Boolean</td>
+<td>Whether or not Phandango coloring will color all items from the same column the same</td>
+<td>FALSE</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>sc2_defaults</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>sc2_defaults</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>sc2_defaults</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>sc2_defaults</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>sc2_defaults</td>
 <td><strong>nextstrain_ncov_repo_commit</strong></td>
 <td>String</td>
 <td>The version of the <a href="https://github.com/nextstrain/ncov/">https://github.com/nextstrain/ncov/</a> from which to draw default values for SARS-CoV-2.</td>
-<td>23d1243127e8838a61b7e5c1a72bc419bf8c5a0d</td>
+<td>cec4fa0ecd8612e4363d40662060a5a9c712d67e</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>snp_dists</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>snp_dists</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>snp_dists</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>snp_dists</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tsv_join</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tsv_join</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tsv_join</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tsv_join</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>7</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tsv_join</td>
+<td><strong>out_suffix</strong></td>
+<td>String</td>
+<td>Suffix of merged tsv files</td>
+<td>.tsv</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>timezone</strong></td>
+<td>String</td>
+<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
+<td></td>
 <td>Optional</td>
 </tr>
 </tbody>
