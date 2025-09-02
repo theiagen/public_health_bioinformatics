@@ -65,16 +65,18 @@ These workflows currently support the following organisms. The first option in t
 - **RSV-A** (**`"rsv_a"`**, `"rsv-a"`, `"RSV-A"`, `"RSV_A"`)
 - **RSV-B** (**`"rsv_b"`**, `"rsv-b"`, `"RSV-B"`, `"RSV_B"`)
 - **Measles** (**`"measles"`**, `"Measles"`, `"mev"`, `"MeV"`, `"Morbillivirus"`, `"morbillivirus"`)
+- **Mumps** (**`"mumps"`**, `"Mumps"`, `"MuV"`, `"muv"`, `"Mumps virus"`, `"mumps virus"`)
+- **Rubella** (**`"rubella"`**, `"Rubella"`, `"RuV"`, `"ruv"`, `"Rubella virus"`, `"rubella virus"`)
 
 The compatibility of each workflow with each pathogen is shown below:
 
-|  | SARS-CoV-2 | Mpox | HIV | WNV | Influenza | RSV-A | RSV-B | Measles |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ❌ |
-| ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ |
-| FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+|  | SARS-CoV-2 | Mpox | HIV | WNV | Influenza | RSV-A | RSV-B | Measles | Mumps | Rubella |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 
 We've provided the following information to help you set up the workflow for each organism in the form of input JSONs.
 
@@ -173,8 +175,10 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | nextclade_dataset_tag_input | sars-cov-2 | `"2025-08-02--08-55-17Z"` |
         | reference_genome | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"` |
         | vadr_max_length | sars-cov-2 | `30000` |
+        | vadr_skip_length | sars-cov-2 | `10000` |
         | vadr_mem | sars-cov-2 | `8` |
-        | vadr_options | sars-cov-2 | `"--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"` |
+        | vadr_options | sars-cov-2 | `"--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta"` |
+        | vadr_model_file | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"` |
 
         </div>
 
@@ -192,8 +196,10 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | reference_genome | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.MT903345.reference.fasta"` |
         | reference_gff_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3"` |
         | vadr_max_length | MPXV | `210000` |
+        | vadr_skip_length | MPXV | `65480` |
         | vadr_mem | MPXV | `8` |
-        | vadr_options | MPXV | `"--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"` |
+        | vadr_options | MPXV | `"--mkey mpxv --glsearch --minimap2 -s -r --nomisc --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --s_overhang 150 --out_allfasta"` |
+        | vadr_model_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.4.2-1.tar.gz"` |
         
         </div>
 
@@ -209,8 +215,10 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | primer_bed_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/al/wnv/WNV-L1_primer.bed"` |  |
         | reference_genome | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/NC_009942.1_wnv_L1.fasta"` |  |
         | vadr_max_length | WNV | `11000` |  |
+        | vadr_skip_length | WNV | `3000` |  |
         | vadr_mem | WNV | `8` |  |
-        | vadr_options | WNV | `"--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"` |  |
+        | vadr_options | WNV | `"--mkey flavi --nomisc --noprotid --out_allfasta"` |  |
+        | vadr_model_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flavi-1.2-1.tar.gz"` |  |
 
         </div>
 
@@ -223,8 +231,10 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | flu_subtype | flu | all | all | N/A | TheiaCoV will attempt to automatically assign a flu subtype |
         | genome_length_input | flu | all | all | `13500` |  |
         | vadr_max_length | flu | all | all | `13500` |  |
+        | vadr_skip_length | flu | all | all | `500` |  |
         | vadr_mem | flu | all | all | `8` |  |
-        | vadr_options | flu | all | all | `"--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"` |  |
+        | vadr_options | flu | all | all | `"--mkey flu --atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3"` |  |
+        | vadr_model_file | flu | all | all | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"` |  |
         | nextclade_dataset_name_input | flu | ha | h1n1 | `"nextstrain/flu/h1n1pdm/ha/MW626062"` |  |
         | nextclade_dataset_tag_input | flu | ha | h1n1 | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | ha | h1n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.fasta"` |  |
@@ -274,10 +284,12 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | kraken_target_organism | rsv_a | `"Human respiratory syncytial virus A"` |
         | nextclade_dataset_name_input | rsv_a | `nextstrain/rsv/a/EPI_ISL_412866` |
         | nextclade_dataset_tag_input | rsv_a | `"2024-11-27--02-51-00Z"` |
-        | reference_genome | rsv_a | `gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta` |
+        | reference_genome | rsv_a | `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"` |
         | vadr_max_length | rsv_a | `15500` |
+        | vadr_skip_length | rsv_a | `5000` |
         | vadr_mem | rsv_a | `32` |
-        | vadr_options | rsv_a | `-r --mkey rsv --xnocomp` |
+        | vadr_options | rsv_a | `"--mkey rsv --xnocomp -r"` |
+        | vadr_model_file | rsv_a | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"` |
 
         </div>
 
@@ -290,10 +302,11 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | kraken_target_organism | rsv_b | `"human respiratory syncytial virus"` |
         | nextclade_dataset_name_input | rsv_b | `nextstrain/rsv/b/EPI_ISL_1653999` |
         | nextclade_dataset_tag_input | rsv_b | `"2025-03-04--17-31-25Z"` |
-        | reference_genome | rsv_b | `gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta` |
+        | reference_genome | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"` |
         | vadr_max_length | rsv_b | `15500` |
         | vadr_mem | rsv_b | `32` |
-        | vadr_options | rsv_b | `-r --mkey rsv --xnocomp` |
+        | vadr_options | rsv_b | `"--mkey rsv --xnocomp -r"` |
+        | vadr_model_file | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"` |
 
         </div>
 
@@ -302,15 +315,15 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
         |---|---|---|---|
-        | kraken_target_organism_input | HIV | `Human immunodeficiency virus 1` |  |
+        | kraken_target_organism_input | HIV | `"Human immunodeficiency virus 1"` |  |
         | genome_length_input | HIV-v1 | `9181` | This version of HIV originates from Oregon |
-        | primer_bed_file | HIV-v1 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed` | This version of HIV originates from Oregon |
-        | reference_genome | HIV-v1 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta` | This version of HIV originates from Oregon |
-        | reference_gff_file | HIV-v1 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3` | This version of HIV originates from Oregon |
+        | primer_bed_file | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"` | This version of HIV originates from Oregon |
+        | reference_genome | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta"` | This version of HIV originates from Oregon |
+        | reference_gff_file | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"` | This version of HIV originates from Oregon |
         | genome_length_input | HIV-v2 | `9840` | This version of HIV originates from Southern Africa |
-        | primer_bed_file | HIV-v2 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed` | This version of HIV originates from Southern Africa |
-        | reference_genome | HIV-v2 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta` | This version of HIV originates from Southern Africa |
-        | reference_gff_file | HIV-v2 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3` | This version of HIV originates from Southern Africa |
+        | primer_bed_file | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed"` | This version of HIV originates from Southern Africa |
+        | reference_genome | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"` | This version of HIV originates from Southern Africa |
+        | reference_gff_file | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"` | This version of HIV originates from Southern Africa |
 
         </div>
     
@@ -323,9 +336,45 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | genome_length_input | measles | `16000` |
         | nextclade_dataset_name_input | measles | `"nextstrain/measles/genome/WHO-2012"` |
         | nextclade_dataset_tag_input | measles | `"2025-08-11--19-06-01Z"` |
+        | reference_genome | measles | `"gs://theiagen-public-resources-rp/reference_data/viral/measles/NC_001498.1_measles_reference.fasta"` |
+        | vadr_max_length | measles | `18000` |
+        | vadr_skip_length | measles | `0` |
+        | vadr_mem | measles | `24` |
+        | vadr_options | measles | `"--mkey mev -r --indefclass 0.01"` |
+        | vadr_model_file | measles | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mev-1.02.tar.gz"` |
 
         </div>
-                
+
+    === "Mumps"
+        <div class="searchable-table" markdown="block">
+
+        | **Overwrite Variable Name** | **Organism** | **Default Value** |
+        |---|---|---|
+        | reference_genome | mumps | `"gs://theiagen-public-resources-rp/reference_data/viral/mumps/NC_002200.1_mumps_reference.fasta"` |
+        | genome_length_input | mumps | `15300` |
+        | vadr_options | mumps | `"--mkey muv -r --indefclass 0.025"` |
+        | vadr_max_length | mumps | `18000` |
+        | vadr_skip_length | mumps | `0` |
+        | vadr_mem | mumps | `16` |
+        | vadr_model_file | mumps | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-muv-1.01.tar.gz"` |
+
+        </div>
+
+    === "Rubella"
+        <div class="searchable-table" markdown="block">
+
+        | **Overwrite Variable Name** | **Organism** | **Default Value** |
+        |---|---|---|
+        | reference_genome | rubella | `"gs://theiagen-public-resources-rp/reference_data/viral/rubella/NC_001545.2_rubella_reference.fasta"` |
+        | genome_length_input | rubella | `9800` |
+        | vadr_options | rubella | `"--mkey ruv -r"` |
+        | vadr_max_length | rubella | `10000` |
+        | vadr_skip_length | rubella | `0` |
+        | vadr_mem | rubella | `16` |
+        | vadr_model_file | rubella | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-ruv-1.01.tar.gz"` |
+
+        </div>
+
 ### Workflow Tasks
 
 All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT, and ClearLabs workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaCoV workflows subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
@@ -399,18 +448,18 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
     The following tasks are organism-specific. The following table summarizes the characterization tools that are run for the indicated organism.
 
-    | | **SARS-CoV-2** | **Mpox** | **West Nile Virus** | **Influenza** | **RSV-A** | **RSV-B** | **HIV** | **Measles** |
-    |---|---|---|---|---|---|---|---|---|
-    | **Pangolin** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-    | **Nextclade** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ |
-    | **VADR** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ |
-    | **VADR Flu Segments** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | **Quasitools HyDRA** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
-    | **IRMA** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | **Abricate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | **% Gene Coverage** | ✅ | ✅ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ |
-    | **Antiviral Detection** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | **GenoFLU** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
+    | | **SARS-CoV-2** | **Mpox** | **West Nile Virus** | **Influenza** | **RSV-A** | **RSV-B** | **HIV** | **Measles** | **Mumps** | **Rubella** |
+    |---|---|---|---|---|---|---|---|---|---|---|
+    | **Pangolin** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **Nextclade** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ | ❌ |
+    | **VADR** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
+    | **VADR Flu Segments** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **Quasitools HyDRA** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
+    | **IRMA** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **Abricate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **% Gene Coverage** | ✅ | ✅ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ |
+    | **Antiviral Detection** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **GenoFLU** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 
     ✅ This task runs automatically for these organisms<br>
     ➕ This task can run for these organisms if optional parameter(s) are provided; see task description for details.<br>
@@ -473,6 +522,16 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 === "Measles"
 
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
+
+{{ include_md("common_text/vadr_task.md", indent=4) }}
+
+=== "Mumps"
+
+{{ include_md("common_text/vadr_task.md", indent=4) }}
+
+=== "Rubella"
+
+{{ include_md("common_text/vadr_task.md", indent=4) }}
 
 ### Outputs
 
