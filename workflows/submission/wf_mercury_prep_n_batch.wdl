@@ -55,6 +55,8 @@ workflow mercury_prep_n_batch {
   call versioning.version_capture {
   }
   output {
+    File? bankit_fasta = mercury.bankit_fasta
+    File? bankit_metadata = mercury.bankit_metadata
     File? excluded_samples = mercury.excluded_samples
     File? biosample_metadata = mercury.biosample_metadata
     File? sra_metadata = mercury.sra_metadata

@@ -46,7 +46,7 @@ task mercury {
     Int cpu = 2
     Int disk_size = 100
     Int memory = 8
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.1.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/mercury:1.1.3"
   }
   meta {
     volatile: true
@@ -101,12 +101,17 @@ task mercury {
 
     # provide a lowercased organism variable for use later
     echo "~{organism}" | tr '[:upper:]' '[:lower:]' > ORGANISM_NAME
+
+    # change bankit_metadata to tsv if exists
+    if [ -f ~{output_name}.src ]; then
+      mv ~{output_name}.src ~{output_name}.tsv
+    fi
   >>>
   output {
     String mercury_version = read_string("VERSION")
     String organism_name = read_string("ORGANISM_NAME")
     File? bankit_fasta = "~{output_name}_bankit_combined.fasta"
-    File? bankit_metadata = "~{output_name}.src"
+    File? bankit_metadata = "~{output_name}.tsv"
     File? biosample_metadata = "~{output_name}_biosample_metadata.tsv"
     File? excluded_samples = "~{output_name}_excluded_samples.tsv"
     File? genbank_fasta = "~{output_name}_genbank_untrimmed_combined.fasta"

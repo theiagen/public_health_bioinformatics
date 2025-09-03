@@ -393,18 +393,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
             | Software Documentation | https://bitbucket.org/genomicepidemiology/serotypefinder/src/master/ |
             | Original Publication(s) | [Rapid and Easy In Silico Serotyping of Escherichia coli Isolates by Use of Whole-Genome Sequencing Data](https://journals.asm.org/doi/10.1128/JCM.00008-15) |
         
-    ??? task "`ECTyper`: Serotyping"
-        
-        [ECTyper](https://github.com/phac-nml/ecoli_serotyping) is a serotyping module for *E. coli*. In TheiaProk, we are using assembly files as input.
-        
-        !!! techdetails "ECTyper Technical Details"
-            
-            |  | Links |
-            | --- | --- |
-            | Task | [task_ectyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_ectyper.wdl) |
-            | Software Source Code | [ECTyper on GitHub](https://github.com/phac-nml/ecoli_serotyping) |
-            | Software Documentation | [ECTyper on GitHub](https://github.com/phac-nml/ecoli_serotyping) |
-            | Orginal publication | [ECTyper: in silico Escherichia coli serotype and species prediction from raw and assembled whole-genome sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8767331/) |
+{{ include_md("common_text/ectyper_task.md")}}
 
     `VirulenceFinder` identifies virulence genes in total or partial sequenced isolates of bacteria. Currently, only *E. coli* is supported in TheiaProk workflows. 
 
