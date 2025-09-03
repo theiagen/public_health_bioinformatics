@@ -91,7 +91,6 @@ task fetch_bs {
     ##FWD Read
     lane_count=0
     for fwd_read in ./dataset_*/${SAMPLENAME_RENAMED}_*R1_*.fastq.gz; do
-      echo "Processing forward read: $fwd_read"
       if [[ -s $fwd_read ]]; then
         echo "cat fwd reads: cat $fwd_read >> ~{sample_name}_R1.fastq.gz" 
         cat $fwd_read >> ~{sample_name}_R1.fastq.gz
