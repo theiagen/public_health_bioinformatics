@@ -28,7 +28,6 @@ import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 workflow theiaprok_illumina_pe {
   meta {
     description: "De-novo genome assembly, taxonomic ID, and QC of paired-end bacterial NGS data"
-    synopsis: "This workflow performs de-novo genome assembly, taxonomic identification, and quality control checks on paired-end Illumina sequencing data."
   }
   input {
     String samplename
