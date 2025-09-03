@@ -2,40 +2,42 @@
 ??? task "`amr_search`: Antimicrobial resistance profiling"
 <!-- endif -->
 
-<!-- if: theiaprok -->
-??? task "`amr_search`: _Neisseria gonorrhoeae_ antimicrobial resistance profiling"
-
-    This task performs *in silico* antimicrobial resistance (AMR) profiling for *Neisseria gonorrhoeae* using **AMRsearch**, the primary tool used by [Pathogenwatch](https://pathogen.watch/) to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.
-
-    The AMR search is conducted when *Neisseria gonorrhoeae* is identified as the taxon in *TheiaProk* workflows. The default database for *N. gonorrhoeae* is **485**.
-
+<!-- if: theiaprok|theiaeuk -->
+??? task "`amr_search`: Antimicrobial Resistance Profiling (optional)"
+    Activate this task by setting `run_amr_search` to be `true`.
 <!-- endif -->
 
-<!-- if: theiaeuk -->
-??? task "`amr_search`: Antimicrobial resistance profiling (Optional)"
+    This task performs _in silico_ antimicrobial resistance (AMR) profiling for supported species using AMRsearch, the primary tool used by [Pathogenwatch](https://pathogen.watch/) to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.
 
-    Set the `run_amr_search` parameter to `true` to enable this task.
+    AMRsearch screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both _resistance genes_ and _mutations_, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow **S/I/R classification** (_Sensitive_, _Intermediate_, _Resistant_).
 
-    The AMR Search module will report only specific SNP changes in the AMR genes, like FUR1 F211L. For a complete list of mutations being queried, please refer to [`amr_search`'s documentation](https://github.com/pathogenwatch-oss/amr-search). 
-<!-- endif -->
+    Currently, only a subset of species are supported by this task.
 
-<!-- if: amr_search|theiaeuk -->
-    This task performs *in silico* antimicrobial resistance (AMR) profiling for supported species using **AMRsearch**, the primary tool used by [Pathogenwatch](https://pathogen.watch/) to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.
-<!-- endif -->
+    ??? toggle "Supported Species"
+        The following table shows the species name and the associated NCBI Code. If you are running AMR Search as part of TheiaProk and TheiaEuk, these codes will be automatically determined based on the GAMBIT predicted taxon, or the user-provided `expected_taxon` input.
 
-    **AMRsearch** screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both **resistance genes** and **mutations**, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow **S/I/R classification** (*Sensitive, Intermediate, Resistant*).
+        | Species                      | NCBI Code |
+        |------------------------------|-----------|
+        | _Neisseria gonorrhoeae_      | 485       |
+        | _Staphylococcus aureus_      | 1280      |
+        | _Salmonella_ Typhi           | 90370     |
+        | _Streptococcus pneumoniae_   | 1313      |
+        | _Klebisiella_                | 570       |
+        | _Escherichia_                | 561       |
+        | _Mycobacterium tuberculosis_ | 1773      |
+        | _Candida auris_              | 498019    |
+        | _Vibrio cholerae_            | 666       |
+        | _Campylobacter_              | 194       |
 
     **Outputs:**
 
-    - **JSON Output:** Contains the complete AMR profile, including detailed **resistance state**, detected **resistance genes/mutations**, and supporting **BLAST results**.
-
-    - **CSV & PDF Tables:** An incorprated Python script, `parse_amr_json.py`, extracts and formats results into a **CSV file** and **PDF summary table** for easier visualization.
+    - **JSON Output**: Contains the complete AMR profile, including detailed resistance state, detected resistance genes/mutations, and supporting BLAST results.
+    - **CSV & PDF Tables**: An incorporated Python script, `parse_amr_json.py`, extracts and formats results into a CSV file and PDF summary table for easier visualization.
 
     !!! techdetails "amr_search Technical Details"    
-
         |  | Links |
         | --- | --- |
         | Task | [task_amr_search.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_amr_search.wdl) |
-        | Software Source Code | [AMRsearch](https://github.com/pathogenwatch-oss/amr-search) |
-        | Software Documentation | [Pathogenwatch](https://cgps.gitbook.io/pathogenwatch) |
-        | Original Publication(s) | [PAARSNP: *rapid genotypic resistance prediction for *Neisseria gonorrhoeae*](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7545138/) |
+        | Software Source Code | [AMRsearch on GitHub](https://github.com/pathogenwatch-oss/amr-search) |
+        | Software Documentation | [AMRsearch on GitHub](https://github.com/pathogenwatch-oss/amr-search) |
+        | Original Publication(s) | [PAARSNP: rapid genotypic resistance prediction for _Neisseria gonorrhoeae_](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7545138/) |
