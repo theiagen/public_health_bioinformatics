@@ -65,7 +65,7 @@
     - path: miniwdl_run/call-busco/work/BUSCO_RESULTS
     - path: miniwdl_run/call-busco/work/DATABASE
     - path: miniwdl_run/call-busco/work/VERSION
-      md5sum: 3cfdda0096f0689c9829ed27bdef6b1a
+      md5sum: 963613a99241a28c8de00e6ed2493239
     - path: miniwdl_run/call-busco/work/_miniwdl_inputs/0/test_filtered_contigs.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-busco/work/test/prodigal_output/predicted_genes/predicted.faa
@@ -424,7 +424,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_bbduk.wdl
       md5sum: aec6ef024d6dff31723f44290f6b9cf5
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_busco.wdl
-      md5sum: 765c33e10de500e0369ce2ac96dff7bb
+      md5sum: 8e429daa8883df57e97b5db18e0ca832
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_cg_pipeline.wdl
       md5sum: aefc03d04bb1394f62d7dc73c6d5b706
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_fastp.wdl
