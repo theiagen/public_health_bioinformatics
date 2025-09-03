@@ -986,7 +986,16 @@ workflow theiaprok_illumina_pe {
     String? serotypefinder_serotype = merlin_magic.serotypefinder_serotype
     File? ectyper_results = merlin_magic.ectyper_results
     String? ectyper_version = merlin_magic.ectyper_version
+    File? ectyper_warnings = merlin_magic.ectyper_warnings
     String? ectyper_predicted_serotype = merlin_magic.ectyper_predicted_serotype
+    String? ectyper_qc_result = merlin_magic.ectyper_qc_result
+    String? ectyper_database_version = merlin_magic.ectyper_database_version
+    String? ectyper_pathotype = merlin_magic.ectyper_pathotype
+    String? ectyper_pathotype_count = merlin_magic.ectyper_pathotype_count
+    String? ectyper_pathotype_genes = merlin_magic.ectyper_pathotype_genes
+    String? ectyper_pathodb_version = merlin_magic.ectyper_pathodb_version
+    String? ectyper_stx_subtypes = merlin_magic.ectyper_stx_subtypes
+    String? ectyper_docker = merlin_magic.ectyper_docker
     String? shigatyper_predicted_serotype = merlin_magic.shigatyper_predicted_serotype
     String? shigatyper_ipaB_presence_absence = merlin_magic.shigatyper_ipaB_presence_absence
     String? shigatyper_notes = merlin_magic.shigatyper_notes
