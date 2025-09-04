@@ -1,8 +1,8 @@
 <!-- if: theiaprok -->
-??? task "Read Identification with Kraken2 (optional)"
+??? task "`Kraken2`: Read Identification (optional)"
 <!-- endif -->
 <!-- if: theiacov|freyja -->
-??? task "Read Identification with Kraken2"
+??? task "`Kraken2`: Read Identification"
 <!-- endif -->
 <!-- if: kraken -->
 ??? task "Kraken2"

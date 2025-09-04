@@ -1,4 +1,4 @@
-??? toggle "Read Identification with MIDAS (optional)"
+??? task "`MIDAS`: Read Identification (optional)"
     To activate this task, set `call_midas` to `true`.
 
     The `MIDAS` task is for the identification of reads to detect contamination with non-target taxa.
