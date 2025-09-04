@@ -7,4 +7,4 @@
         | Task | [task_clockwork.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/mycobacterium/task_clockwork.wdl) |
         | Software Source Code | [Clockwork on GitHub](https://github.com/iqbal-lab-org/clockwork) |
         | Software Documentation | [Clockwork Wiki](https://github.com/iqbal-lab-org/clockwork/wiki) |
-        | Original Publication(s) | _Clockwork Tool_: [Minos: variant adjudication and joint genotyping of cohorts of bacterial genome](https://doi.org/10.1186/s13059-022-02714-x) |
+        | Original Publication(s) | _Clockwork tool_: [Minos: variant adjudication and joint genotyping of cohorts of bacterial genome](https://doi.org/10.1186/s13059-022-02714-x) |

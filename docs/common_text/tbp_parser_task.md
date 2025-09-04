@@ -1,5 +1,5 @@
 ??? task "`tbp-parser`: Interpretation and Parsing of TBProfiler JSON outputs (optional)"
-    Activate `tbp-parser` by setting `call_tbp_parser` to `true`
+    To activate this task, set `call_tbp_parser` to `true`
 
     [tbp-parser](https://github.com/theiagen/tbp-parser/) was developed by Theiagen in partnership with the California Department of Public Health. This tool adds useful drug resistance interpretation by applying expert rules and organizing the outputs from TBProfiler. To understand this module and its functions, [please examine the documentation for this tool](https://theiagen.github.io/tbp-parser/latest/). 
 

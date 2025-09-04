@@ -10,4 +10,4 @@
     !!! techdetails "Digger-Denovo Technical Details"
         |  | Links |
         | --- | --- |
-        | SubWorkflow File | [wf_digger_denovo.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wd) |
+        | Subworkflow | [wf_digger_denovo.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wd) |

@@ -1,6 +1,5 @@
 ??? task "`PlasmidFinder`: Plasmid Identification (optional)"
-
-    Activate this task by setting `call_plasmidfinder` to `true`.
+    To activate this task, set `call_plasmidfinder` to `true`.
 
     `PlasmidFinder`, from the Center for Genomic Epidemiology, detects plasmids in total or partially sequenced genomes and identifies the closest plasmid type in the database for typing purposes.
 

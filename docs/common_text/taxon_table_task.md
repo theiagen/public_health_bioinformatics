@@ -1,5 +1,4 @@
 ??? task "`Taxon Tables`: Copy outputs to new data tables based on taxonomic assignment (optional)"
-
     !!! tip ""
         This task is incompatible when running TheiaProk on the command-line as it is geared specifically for Terra. Do not activate this task if you are a command-line user.
 
@@ -31,3 +30,8 @@
         
     !!! tip ""        
         There are no output columns for the taxon table task. The only output of the task is that additional data tables will appear for in the Terra workspace for samples matching a taxa in the `taxon_tables` file.
+
+    !!! techdetails "`export_taxon_table` Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_export_taxon_table.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_export/task_export_taxon_table.wdl) |

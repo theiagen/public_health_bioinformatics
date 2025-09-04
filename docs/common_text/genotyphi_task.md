@@ -1,8 +1,8 @@
 ??? task "`genotyphi`: _Salmonella_ Typhi Characterization ==_for Illumina and ONT only_=="
-    [`genotyphi`](https://github.com/katholt/genotyphi) is activated upon the identification of the "Typhi" serotype by SISTR or SeqSero2 (via either the `seqsero2_predicted_serotype`, or the `sistr_predicted_serotype`). `genotyphi` divides the _Salmonella enterica_ serovar Typhi population into detailed lineages, clades, and subclades. It also detects mutations in the quinolone-resistance determining regions, acquired antimicrobial resistance genes, plasmid replicons, and subtypes of the IncHI1 plasmid which is associated with multidrug resistance.
+    [`genotyphi`](https://github.com/typhoidgenomics/genotyphi) is activated upon the identification of the "Typhi" serotype by SISTR or SeqSero2 (via either the `seqsero2_predicted_serotype`, or the `sistr_predicted_serotype`). `genotyphi` divides the _Salmonella enterica_ serovar Typhi population into detailed lineages, clades, and subclades. It also detects mutations in the quinolone-resistance determining regions, acquired antimicrobial resistance genes, plasmid replicons, and subtypes of the IncHI1 plasmid which is associated with multidrug resistance.
 
-    TheiaProk uses [Mykrobe](https://github.com/typhoidgenomics/genotyphi/blob/main/README.md#typhi-mykrobe) in order to perform k-mer based genotyping with a genotyping scheme specific to _Salmonella_ Typhi. This scheme divides the _Salmonella_ Typhi population into genotypes based on unique SNV markers.
-    
+    This task uses [Mykrobe](https://github.com/typhoidgenomics/genotyphi/blob/main/README.md#typhi-mykrobe) in order to perform k-mer based genotyping with a genotyping scheme specific to _Salmonella_ Typhi, and then parses that output using the `genotyphi` tool. This scheme divides the _Salmonella_ Typhi population into genotypes based on unique SNV markers.
+
     !!! techdetails "genotyphi Technical Details"
         
         |  | Links |

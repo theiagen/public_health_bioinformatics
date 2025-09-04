@@ -286,155 +286,37 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 ??? toggle "_Staphyloccocus aureus_"
     ##### _Staphyloccocus aureus_ {% raw %} {#staphyloccocus-aureus} {% endraw %}
 
-    ??? task "`spatyper`: Sequence typing"
-        
-        Given a fasta file or multiple fasta files, this script identifies the repeats and the order and generates a *spa* type. The repeat sequences and repeat orders found on http://spaserver2.ridom.de/ are used to identify the spa type of each enriched sequence. Ridom *spa* type and the genomics repeat sequence are then reported back to the user.
-        
-        !!! techdetails "spatyper Technical Details"
+{{ include_md("common_text/spatyper_task.md", indent=4) }}
 
-            |  | Links |
-            | --- | --- |
-            | Task | [task_spatyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/staphylococcus/task_spatyper.wdl) |
-            | Software Source Code | [spatyper](https://github.com/HCGB-IGTP/spaTyper) |
-            | Software Documentation | [spatyper](https://github.com/HCGB-IGTP/spaTyper) |
-            
-    ??? task "`staphopia-sccmec`: Sequence typing"
-        
-        This tool assigns a SCCmec type by BLAST the SCCmec primers against an assembly. `staphopia-sccmec`reports `True` for exact primer matches and `False` for at least 1 base pair difference. The [Hamming Distance](https://en.wikipedia.org/wiki/Hamming_distance) is also reported.
-        
-        !!! techdetails "staphopia-sccmec Technical Details"           
-            
-            |  | Links |
-            | --- | --- |
-            | Task | [task_staphopiasccmec.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/staphylococcus/task_staphopiasccmec.wdl) |
-            | Software Source Code | [staphopia-sccmec](https://github.com/staphopia/staphopia-sccmec) |
-            | Software Documentation | [staphopia-sccmec](https://github.com/staphopia/staphopia-sccmec) |
-            | Original Publication(s) | [*Staphylococcus aureus* viewed from the perspective of 40,000+ genomes](https://doi.org/10.7717/peerj.5261) |
+{{ include_md("common_text/staphopia_sccmec_task.md", indent=4) }}
 
-    ??? task "`agrvate`: Sequence typing"
-        
-        This tool identifies the *agr* locus type and reports possible variants in the *agr* operon. AgrVATE accepts a *S. aureus* genome assembly as input and performs a kmer search using an Agr-group specific kmer database to assign the Agr-group. The *agr* operon is then extracted using *in-silico* PCR and variants are called using an Agr-group specific reference operon.
-        
-        !!! techdetails "agrvate Technical Details"
-            
-            |  | Links |
-            | --- | --- |
-            | Task | [task_agrvate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/staphylococcus/task_agrvate.wdl) |
-            | Software Source Code | [agrVATE](https://github.com/VishnuRaghuram94/AgrVATE) |
-            | Software Documentation | [agrVATE](https://github.com/VishnuRaghuram94/AgrVATE) |
-            | Original Publication(s) | [Species-Wide Phylogenomics of the *Staphylococcus aureus Agr* Operon Revealed Convergent Evolution of Frameshift Mutations](https://doi.org/10.1128/spectrum.01334-21) |
+{{ include_md("common_text/agrvate_task.md", indent=4) }}
 
 ??? toggle "_Streptococcus pneumoniae_"
     ##### _Streptococcus pneumoniae_ {% raw %} {#streptococcus-pneumoniae} {% endraw %}
 
-    ??? task "`PopPUNK`: Global Pneumococcal Sequence Cluster typing"
-        
-        Global Pneumococcal Sequence Clusters (GPSC) define and name pneumococcal strains. GPSC designation is undertaken using the PopPUNK software and GPSC database as described in the file below, obtained from [here](https://www.pneumogen.net/gps/#/training#command-line).
+{{ include_md("common_text/poppunk_task.md", indent=4) }}
 
-        :file: [GPSC_README_PopPUNK2.txt](../../assets/files/GPSC_README_PopPUNK2.txt)
-        
-        !!! tip "Interpreting GPSC results"
-            - In the `*_external_clusters.csv` novel clusters are assigned NA. For isolates that are assigned a novel cluster and pass QC, you can email [globalpneumoseq@gmail.com](mailto:globalpneumoseq@gmail.com) to have these novel clusters added to the database.
-            - Unsampled diversity in the pneumococcal population may represent missing variation that links two GPS clusters. When this is discovered, GPSCs are merged and the merge history is indicated. For example, if GPSC23 and GPSC362 merged, the GPSC would be reported as GPSC23, with a merge history of GPSC23;362.
-        
-        !!! techdetails "PopPUNK Technical Details"
-            
-            |  | Links |
-            | --- | --- |
-            | Task | [task_poppunk_streppneumo.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl) |
-            | GPSC database | <https://www.pneumogen.net/gps/#/training#command-line> |
-            | Software Source Code | [PopPunk](https://github.com/bacpop/PopPUNK) |
-            | Software Documentation | <https://poppunk.readthedocs.io/en/latest/> |
-            | Original Publication(s) | [Fast and flexible bacterial genomic epidemiology with PopPUNK](https://genome.cshlp.org/content/29/2/304) |
-        
-    ??? task "`SeroBA`: Serotyping ==_for Illumina_PE only_=="
-        
-        Streptococcus pneumoniae serotyping is performed with SeroBA.
-        
-        !!! techdetails "SeroBA Technical Details"
-            
-            |  | Links |
-            | --- | --- |
-            | Task | [task_seroba.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_seroba.wdl) |
-            | Software Source Code | [SeroBA](https://github.com/sanger-pathogens/seroba) |
-            | Software Documentation | https://sanger-pathogens.github.io/seroba/ |
-            | Original Publication(s) | [SeroBA: rapid high-throughput serotyping of Streptococcus pneumoniae from whole genome sequence data](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000186) |
-    
-    ??? task "`pbptyper`: Penicillin-binding protein genotyping"
-       
-        The Penicillin-binding proteins (PBP) are responsible for the minimum inhibitory concentration phenotype for beta-lactam antibiotic. In *Streptococcus pneumoniae*, these PBP genes can be identified and typed with PBPTyper. 
-        
-        !!! techdetails "pbptyper Technical Details"
-            
-            |  | Links |
-            | --- | --- |
-            | Task | [task_pbptyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_pbptyper.wdl) |
-            | Software Source Code | [pbptyper](https://github.com/rpetit3/pbptyper) |
-            | Software Documentation | [pbptyper](https://github.com/rpetit3/pbptyper) |
-            | Original Publication(s) | [Penicillin-binding protein transpeptidase signatures for tracking and predicting β-lactam resistance levels in Streptococcus pneumoniae](https://journals.asm.org/doi/full/10.1128/mBio.00756-16) |
+{{ include_md("common_text/seroba_task.md", indent=4) }}
+
+{{ include_md("common_text/pbptyper_task.md", indent=4) }}
 
 ??? toggle "_Streptococcus pyogenes_"
     ##### _Streptococcus pyogenes_ {% raw %} {#streptococcus-pyogenes} {% endraw %}
-    ??? task "`emm-typing-tool`: Sequence typing ==_for Illumina_PE only_=="
 
-        emm-typing of *Streptococcus pyogenes* raw reads. Assign emm type and subtype by querying the CDC M-type specific database. 
-        
-        !!! techdetails "emm-typing-tool Technical Details"            
-            |  | Links |
-            | --- | --- |
-            | Task | [task_emmtypingtool.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_emmtypingtool.wdl) |
-            | Software Source Code | [emm-typing-tool](https://github.com/ukhsa-collaboration/emm-typing-tool) |
-            | Software Documentation | [emm-typing-tool](https://github.com/ukhsa-collaboration/emm-typing-tool) |
+{{ include_md("common_text/emmtypingtool_task.md", indent=4) }}
+
+{{ include_md("common_text/emmtyper_task.md", indent=4) }}
 
 ??? toggle "_Vibrio_ spp."
     ##### _Vibrio_ spp. {% raw %} {#vibrio} {% endraw %}
-    ??? task "`SRST2`: Vibrio characterization ==_for Illumina only_=="
 
-        The `SRST2 Vibrio characterization` task detects sequences for *Vibrio* spp. characterization using Illumina sequence reads and a database of target sequence that are traditionally used in PCR methods. The sequences included in the database are as follows:
-        
-        | Sequence name | Sequence role | Purpose in database |
-        | --- | --- | --- |
-        | *toxR* | Transcriptional activator | Species marker where presence identifies *V. cholerae*  |
-        | *ompW* | Outer Membrane Protein | Species marker where presence identifies *V. cholerae*  |
-        | *ctxA* | Cholera toxin | Indicates cholera toxin production |
-        | *tcpA*_classical | Toxin co-pilus A allele associated with the Classical biotype | Used to infer identity as Classical biotype |
-        | tcpA_ElTor | Toxin co-pilus A allele associated with the El Tor biotype | Used to infer identity as El Tor biotype |
-        | *wbeN* | O antigen encoding region | Used to infer identity as O1 serogroup |
-        | *wbfR* | O antigen encoding region | Used to infer identity as O139 serogroup |
+{{ include_md("common_text/abricate_vibrio_task.md", indent=4) }}
 
-        !!! techdetails "SRST2 Technical Details"
+{{ include_md("common_text/srst2_task.md", indent=4) }}
 
-            |  | Links |
-            | --- | --- |
-            | Task | [task_srst2_vibrio.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/vibrio/task_srst2_vibrio.wdl) |
-            | Software Source Code | [srst2](https://github.com/katholt/srst2) |
-            | Software Documentation | [srst2](https://github.com/katholt/srst2) |
-            | Database Description | [Docker container](https://github.com/StaPH-B/docker-builds/tree/master/build-files/srst2/0.2.0-vibrio-230224) |
-    
 {{ include_md("common_text/vibecheck_task.md", indent=4) }}
 
-    ??? task "`Abricate`: Vibrio characterization"
-
-        The `Abricate` Vibrio characterization task detects sequences for *Vibrio* spp. characterization using genome assemblies and the abricate "vibrio" database. The sequences included in the database are as follows:
-        
-        | Sequence name | Sequence role | Purpose in database |
-        | --- | --- | --- |
-        | *toxR* | Transcriptional activator | Species marker where presence identifies *V. cholerae*  |
-        | *ompW* | Outer Membrane Protein | Species marker where presence identifies *V. cholerae*  |
-        | *ctxA* | Cholera toxin | Indicates cholera toxin production |
-        | *tcpA*_classical | Toxin co-pilus A allele associated with the Classical biotype | Used to infer identity as Classical biotype |
-        | tcpA_ElTor | Toxin co-pilus A allele associated with the El Tor biotype | Used to infer identity as El Tor biotype |
-        | *wbeN* | O antigen encoding region | Used to infer identity as O1 serogroup |
-        | *wbfR* | O antigen encoding region | Used to infer identity as O139 serogroup |
-        
-        !!! techdetails "Abricate Technical Details"
-            |  | Links |
-            | --- | --- |
-            | Task | [task_abricate_vibrio.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/vibrio/task_srst2_vibrio.wdl) |
-            | Software Source Code | [abricate](https://github.com/tseemann/abricate) |
-            | Software Documentation | [abricate](https://github.com/tseemann/abricate) |
-            | Database Description | [Docker container](https://github.com/StaPH-B/docker-builds/tree/master/build-files/abricate/1.0.1-vibrio-cholera) |
-    
 ### Outputs
 
 === "TheiaProk_Illumina_PE"

@@ -17,4 +17,4 @@
     !!! techdetails "Host Decontaminate Technical Details"
         |  | Links |
         | --- | --- |
-        | Subworkflow File | [wf_host_decontaminate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_host_decontaminate.wdl) |
+        | Subworkflow | [wf_host_decontaminate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_host_decontaminate.wdl) |

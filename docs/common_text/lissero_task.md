@@ -29,5 +29,5 @@
         |  | Links |
         | --- | --- |
         | Task | [task_lissero.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/listeria/task_lissero.wdl) |
-        | Software Source Code | [LisSero](https://github.com/MDU-PHL/LisSero) |
-        | Software Documentation | [LisSero](https://github.com/MDU-PHL/LisSero) |
+        | Software Source Code | [LisSero on GitHub](https://github.com/MDU-PHL/LisSero) |
+        | Software Documentation | [LisSero on GitHub](https://github.com/MDU-PHL/LisSero) |

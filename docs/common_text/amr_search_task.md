@@ -4,7 +4,7 @@
 
 <!-- if: theiaprok|theiaeuk -->
 ??? task "`amr_search`: Antimicrobial Resistance Profiling (optional)"
-    Activate this task by setting `run_amr_search` to be `true`.
+    To activate this task, set `run_amr_search` to be `true`.
 <!-- endif -->
 
     This task performs _in silico_ antimicrobial resistance (AMR) profiling for supported species using AMRsearch, the primary tool used by [Pathogenwatch](https://pathogen.watch/) to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.

@@ -22,4 +22,4 @@
         | Task | [task_mummer_ani.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_mummer_ani.wdl) |
         | Software Source Code | [ani-m on GitHub](https://github.com/lskatz/ani-m)<br>[MUMmer on GitHub](https://github.com/mummer4/mummer) |
         | Software Documentation | [ani-m on GitHub](https://github.com/lskatz/ani-m)<br>[MUMmer on SourceForge](https://mummer.sourceforge.net/) |
-        | Original Publication(s) | _MUMmer4_: [MUMmer4: A fast and versatile genome alignment system](https://doi.org/10.1371/journal.pcbi.1005944)<br>_RGDv2 Database_: [Rapid identification of enteric bacteria from whole genome sequences using average nucleotide identity metrics](https://doi.org/10.3389/fmicb.2023.1225207) |
+        | Original Publication(s) | _MUMmer4_: [MUMmer4: A fast and versatile genome alignment system](https://doi.org/10.1371/journal.pcbi.1005944)<br>_RGDv2 database_: [Rapid identification of enteric bacteria from whole genome sequences using average nucleotide identity metrics](https://doi.org/10.3389/fmicb.2023.1225207) |

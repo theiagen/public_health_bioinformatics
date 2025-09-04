@@ -10,4 +10,4 @@
         | Task | [task_hicap.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/haemophilus/task_hicap.wdl) |
         | Software Source Code | [hicap on GitHub](https://github.com/scwatts/hicap) |
         | Software Documentation | [hicap on GitHub](https://github.com/scwatts/hicap) |
-        | Original Publication(s) | [hicap: In Silico Serotyping of the Haemophilus influenzae Capsule Locus](https://doi.org/10.7717/peerj.5261) |
+        | Original Publication(s) | [hicap: In Silico Serotyping of the Haemophilus influenzae Capsule Locus](https://doi.org/10.1128/jcm.00190-19) |
