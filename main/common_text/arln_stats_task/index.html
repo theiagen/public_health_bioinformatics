@@ -5294,19 +5294,20 @@
   <h1>Arln stats task</h1>
 
 <details class="task">
-<summary><code>ARLN_Stats</code>: Stats required by ARLN such as assembly ratio and Q30% scores (optional)</summary>
-<p>The <code>arln_stats</code> task when enabled, will provide the user with not already provided ARLN compliant statistics used for PASS/FAIL assesment such as assembly ratio, GC perecnt statistics, and will calculate the Q30% scores of the raw and cleaned reads, provided that these are utilized by the run workflow. TheiaProk_FASTA will not provide these results, only assembly ratio, and likewise TheiaProk_Illumina_SE and TheiaProk_ONT will only provide R1 Q30% metrics.</p>
-<p>The Q30% statistics are calculated via a Python script, <a href="https://github.com/theiagen/theiagen_docker_builds/blob/main/arln_stats/1.0.0/q30.py">q30.py</a>, that is incorporated within the Docker image. The assembly ratio statistic is obtained by parsing an included <a href="../../assets/files/NCBI_Assembly_stats_20240124.txt">NCBI_Stats</a> text file that is created by the CDC to aggregate NCBI prokayotic assembly data. The file is sorted by taxon and has statistics such as minimum, maximum, and mean assembly length, the assembly ratio, and the standard deviation for each taxon. This data is used to obtain and calculate the assembly ratio of samples passed through ARLN_Stats, much the same as CDC's Phoenix. The NCBI_Stats file will be kept up to date when there are updates to the parent NCBI dataset.</p>
+<summary><code>arln_stats</code>: Quality Assessment for ARLN (optional)</summary>
+<p>To activate this task, set <code>call_arln_stats</code> to <code>true</code>.</p>
+<p>The <code>arln_stats</code> task will provide the user with Antimicrobial Resistance Laboratory Network (<a href="https://www.cdc.gov/antimicrobial-resistance-laboratory-networks/php/about/domestic.html">ARLN</a>)-compliant statistics used for PASS/FAIL assessment, such as assembly ratio, percent GC statistics, and the percent Q30 of raw and cleaned reads.</p>
+<p>The Q30 statistics are calculated via a Python script (<a href="https://github.com/theiagen/theiagen_docker_builds/blob/main/arln_stats/1.0.0/q30.py">q30.py</a>) that is incorporated within this task's Docker image. The assembly ratio statistic is obtained by parsing an included <a href="https://github.com/CDCgov/phoenix/blob/main/assets/databases/NCBI_Assembly_stats_20240124.txt">NCBI Assembly Stats</a> text file that is created by the CDC to aggregate NCBI prokaryotic assembly data. The file is sorted by taxon and has statistics for each taxon (see toggle below). This data is used to obtain and calculate the assembly ratio of samples passed through <code>arln_stats</code>, much the same as CDC's <a href="https://github.com/CDCgov/phoenix/wiki/Pipeline-Overview#qc-of-assembled-scaffolds--500bps">Phoenix pipeline</a>.</p>
 <details class="toggle">
-<summary>NCBI_Assembly_stats_20240124.txt Explained</summary>
+<summary>NCBI Assembly Stats Explained</summary>
 <p>This aggregated data file is produced by the <a href="https://github.com/CDCgov/phoenix/wiki/Pipeline-Overview#qc-of-assembled-scaffolds--500bps">CDC</a> and the columns are as follows: </p>
 <ul>
 <li>Species</li>
 <li>Assembly_Size_Min</li>
-<li>Assembly_ Size_Max</li>
+<li>Assembly_Size_Max</li>
 <li>Assembly_vMedian</li>
-<li>Assembly_ Size_Mean</li>
-<li>Assembly_ Size_StDev</li>
+<li>Assembly_Size_Mean</li>
+<li>Assembly_Size_StDev</li>
 <li>Assembly_count</li>
 <li>GC_Min</li>
 <li>GC_Max</li>
@@ -5324,7 +5325,7 @@
 </ul>
 </details>
 <div class="admonition techdetails">
-<p class="admonition-title">ARLN_Stats Technical Details</p>
+<p class="admonition-title">arln_stats Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -5363,7 +5364,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 27, 2025 14:58:18 UTC">2025-06-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
   </span>
 
     

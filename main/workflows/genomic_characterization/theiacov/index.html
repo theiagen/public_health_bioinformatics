@@ -15241,18 +15241,56 @@
 </details>
 <details class="toggle">
 <summary>Read quality trimming</summary>
-<p>Either <code>trimmomatic</code> or <code>fastp</code> can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of <code>trim_window_size</code>), cutting once the average quality within the window falls below <code>trim_quality_trim_score</code>. They will both discard the read if it is trimmed below <code>trim_minlen</code>. </p>
-<details class="dna">
-<summary><code>read_processing</code> input parameter</summary>
-<p>This input parameter accepts either <code>trimmomatic</code> or <code>fastp</code> as an input to determine which tool should be used for read quality trimming. This is set to <code>trimmomatic</code> by default.</p>
-<p>If the <code>fastp</code> option is selected, see below for table of default parameters.</p>
+<div class="admonition dna">
+<p class="admonition-title"><code>read_processing</code> with <code>"trimmomatic"</code> (default) or <code>"fastp"</code></p>
+<p>Either <code>trimmomatic</code> or <code>fastp</code> can be used for read-quality trimming. Trimmomatic is used by default. </p>
+<p>To activate <code>fastp</code>, set the <code>read_processing</code> input parameter to <code>"fastp"</code>. </p>
+<p>These tasks are mutually exclusive.</p>
+</div>
+<details class="task">
+<summary><code>Trimmomatic</code>: Read Trimming</summary>
+<p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>Trimmomatic</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/usadellab/Trimmomatic">Trimmomatic on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic Website</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>fastp</code>: Read Trimming</summary>
+<p><code>fastp</code> trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
+<p><code>fastp</code> also has additional default parameters and features that are not a part of <code>trimmomatic</code>'s default configuration.</p>
 <details class="toggle">
 <summary><code>fastp</code> default read-trimming parameters</summary>
 <table>
 <thead>
 <tr>
-<th><strong>Parameter</strong></th>
-<th><strong>Explanation</strong></th>
+<th>Parameter</th>
+<th>Explanation</th>
 </tr>
 </thead>
 <tbody>
@@ -15276,7 +15314,6 @@
 </table>
 <p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
 </details>
-</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic and fastp Technical Details</p>
 <table>
@@ -15289,35 +15326,33 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl">task_fastp.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl">task_fastp.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/usadellab/Trimmomatic">Trimmomatic</a><br><a href="https://github.com/OpenGene/fastp">fastp on Github</a></td>
+<td><a href="https://github.com/OpenGene/fastp">fastp on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic</a><br><a href="https://github.com/OpenGene/fastp">fastp</a></td>
+<td><a href="https://github.com/OpenGene/fastp">fastp on GitHub</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a><br><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a></td>
+<td><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
-<details class="toggle">
-<summary>Adapter removal</summary>
-<p>The <code>BBDuk</code> task removes adapters from sequence reads. To do this:</p>
-<ul>
-<li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/">Repair</a> from the <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.</li>
-<li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>) is then used to trim the adapters and filter out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>, which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.</li>
-</ul>
-<details class="question">
-<summary>What are adapters and why do they need to be removed?</summary>
-<p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
 </details>
+<details class="toggle">
+<summary><code>BBDuk</code>: Adapter Trimming and PhiX Removal</summary>
+<p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">Illumina adapters here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
+<p>The <code>bbduk</code> task removes adapters from sequence reads. To do this:</p>
+<ul>
+<li><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/">Repair</a> from the <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files (it <em>re-pairs</em>).</li>
+<li><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>) is then used to trim the adapters and filter out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>, which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.</li>
+</ul>
 <div class="admonition techdetails">
 <p class="admonition-title">BBDuk Technical Details</p>
 <table>
@@ -15334,11 +15369,11 @@
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a></td>
+<td><a href="https://sourceforge.net/projects/bbmap/">BBMap on SourceForge</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a></td>
+<td><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk Guide (archived)</a></td>
 </tr>
 </tbody>
 </table>
@@ -15346,13 +15381,17 @@
 </details>
 <details class="toggle">
 <summary>Read Quantification</summary>
-<p>There are two methods for read quantification to choose from: <a href="https://github.com/rpetit3/fastq-scan"><code>fastq-scan</code></a> (default) or <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"><code>fastqc</code></a>. Both quantify the forward and reverse reads in FASTQ files. For paired-end data, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads. <code>fastqc</code> also provides a graphical visualization of the read quality.</p>
-<details class="dna">
-<summary><code>read_qc</code> input parameter</summary>
-<p>This input parameter accepts either <code>"fastq_scan"</code> or <code>"fastqc"</code> as an input to determine which tool should be used for read quantification. This is set to <code>"fastq-scan"</code> by default.</p>
-</details>
+<div class="admonition dna">
+<p class="admonition-title"><code>read_qc</code> with <code>"fastq-scan"</code> (default) or <code>"fastqc"</code></p>
+<p>Either <code>fastq-scan</code> or <code>fastqc</code> can be used for read quantification. <code>fastq-scan</code> is used by default. </p>
+<p>To activate <code>fastqc</code>, set the <code>read_qc</code> input parameter to <code>"fastqc"</code>.</p>
+<p>These tasks are mutually exclusive.</p>
+</div>
+<details class="task">
+<summary><code>fastq-scan</code>: Read Quantification</summary>
+<p><code>fastq-scan</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">fastq-scan and FastQC Technical Details</p>
+<p class="admonition-title"><code>fastq-scan</code> Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -15363,22 +15402,53 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl&quot;">task_fastqc.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan on Github</a><br><a href="https://github.com/s-andrews/FastQC">fastqc on Github</a></td>
+<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/rpetit3/fastq-scan/blob/master/README.md">fastq-scan</a><br><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">fastqc</a></td>
+<td><a href="https://github.com/rpetit3/fastq-scan/blob/master/README.md">fastq-scan on GitHub</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
+<details class="task">
+<summary><code>FastQC</code>: Read Quantification</summary>
+<p><code>FastQC</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<p>This tool also provides a graphical visualization of the read quality.</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>FastQC</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl">task_fastqc.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/s-andrews/FastQC">FastQC on Github</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC Website</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
 <details class="toggle">
-<summary>Read Identification with Kraken2</summary>
+<summary><code>Kraken2</code>: Read Identification</summary>
 <p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
 <p>Kraken2 is run on both the raw and clean reads.</p>
 <div class="admonition info">
@@ -15405,7 +15475,7 @@
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown</a></td>
+<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">Kraken2 Documentation</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
@@ -15415,6 +15485,23 @@
 </table>
 </div>
 </details>
+<div class="admonition techdetails">
+<p class="admonition-title">read_QC_trim Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subworkflow</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl">wf_read_QC_trim_pe.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl">wf_read_QC_trim_se.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 </div>
 <div class="tabbed-block">
@@ -15453,18 +15540,56 @@
 </details>
 <details class="toggle">
 <summary>Read quality trimming</summary>
-<p>Either <code>trimmomatic</code> or <code>fastp</code> can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of <code>trim_window_size</code>), cutting once the average quality within the window falls below <code>trim_quality_trim_score</code>. They will both discard the read if it is trimmed below <code>trim_minlen</code>. </p>
-<details class="dna">
-<summary><code>read_processing</code> input parameter</summary>
-<p>This input parameter accepts either <code>trimmomatic</code> or <code>fastp</code> as an input to determine which tool should be used for read quality trimming. This is set to <code>trimmomatic</code> by default.</p>
-<p>If the <code>fastp</code> option is selected, see below for table of default parameters.</p>
+<div class="admonition dna">
+<p class="admonition-title"><code>read_processing</code> with <code>"trimmomatic"</code> (default) or <code>"fastp"</code></p>
+<p>Either <code>trimmomatic</code> or <code>fastp</code> can be used for read-quality trimming. Trimmomatic is used by default. </p>
+<p>To activate <code>fastp</code>, set the <code>read_processing</code> input parameter to <code>"fastp"</code>. </p>
+<p>These tasks are mutually exclusive.</p>
+</div>
+<details class="task">
+<summary><code>Trimmomatic</code>: Read Trimming</summary>
+<p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>Trimmomatic</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/usadellab/Trimmomatic">Trimmomatic on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic Website</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>fastp</code>: Read Trimming</summary>
+<p><code>fastp</code> trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
+<p><code>fastp</code> also has additional default parameters and features that are not a part of <code>trimmomatic</code>'s default configuration.</p>
 <details class="toggle">
 <summary><code>fastp</code> default read-trimming parameters</summary>
 <table>
 <thead>
 <tr>
-<th><strong>Parameter</strong></th>
-<th><strong>Explanation</strong></th>
+<th>Parameter</th>
+<th>Explanation</th>
 </tr>
 </thead>
 <tbody>
@@ -15488,7 +15613,6 @@
 </table>
 <p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
 </details>
-</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic and fastp Technical Details</p>
 <table>
@@ -15501,35 +15625,33 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl">task_fastp.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl">task_fastp.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/usadellab/Trimmomatic">Trimmomatic</a><br><a href="https://github.com/OpenGene/fastp">fastp on Github</a></td>
+<td><a href="https://github.com/OpenGene/fastp">fastp on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic</a><br><a href="https://github.com/OpenGene/fastp">fastp</a></td>
+<td><a href="https://github.com/OpenGene/fastp">fastp on GitHub</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a><br><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a></td>
+<td><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
-<details class="toggle">
-<summary>Adapter removal</summary>
-<p>The <code>BBDuk</code> task removes adapters from sequence reads. To do this:</p>
-<ul>
-<li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/">Repair</a> from the <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.</li>
-<li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>) is then used to trim the adapters and filter out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>, which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.</li>
-</ul>
-<details class="question">
-<summary>What are adapters and why do they need to be removed?</summary>
-<p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
 </details>
+<details class="toggle">
+<summary><code>BBDuk</code>: Adapter Trimming and PhiX Removal</summary>
+<p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">Illumina adapters here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
+<p>The <code>bbduk</code> task removes adapters from sequence reads. To do this:</p>
+<ul>
+<li><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/">Repair</a> from the <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files (it <em>re-pairs</em>).</li>
+<li><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>) is then used to trim the adapters and filter out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>, which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.</li>
+</ul>
 <div class="admonition techdetails">
 <p class="admonition-title">BBDuk Technical Details</p>
 <table>
@@ -15546,11 +15668,11 @@
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a></td>
+<td><a href="https://sourceforge.net/projects/bbmap/">BBMap on SourceForge</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a></td>
+<td><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk Guide (archived)</a></td>
 </tr>
 </tbody>
 </table>
@@ -15558,13 +15680,17 @@
 </details>
 <details class="toggle">
 <summary>Read Quantification</summary>
-<p>There are two methods for read quantification to choose from: <a href="https://github.com/rpetit3/fastq-scan"><code>fastq-scan</code></a> (default) or <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"><code>fastqc</code></a>. Both quantify the forward and reverse reads in FASTQ files. For paired-end data, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads. <code>fastqc</code> also provides a graphical visualization of the read quality.</p>
-<details class="dna">
-<summary><code>read_qc</code> input parameter</summary>
-<p>This input parameter accepts either <code>"fastq_scan"</code> or <code>"fastqc"</code> as an input to determine which tool should be used for read quantification. This is set to <code>"fastq-scan"</code> by default.</p>
-</details>
+<div class="admonition dna">
+<p class="admonition-title"><code>read_qc</code> with <code>"fastq-scan"</code> (default) or <code>"fastqc"</code></p>
+<p>Either <code>fastq-scan</code> or <code>fastqc</code> can be used for read quantification. <code>fastq-scan</code> is used by default. </p>
+<p>To activate <code>fastqc</code>, set the <code>read_qc</code> input parameter to <code>"fastqc"</code>.</p>
+<p>These tasks are mutually exclusive.</p>
+</div>
+<details class="task">
+<summary><code>fastq-scan</code>: Read Quantification</summary>
+<p><code>fastq-scan</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">fastq-scan and FastQC Technical Details</p>
+<p class="admonition-title"><code>fastq-scan</code> Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -15575,22 +15701,53 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl&quot;">task_fastqc.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan on Github</a><br><a href="https://github.com/s-andrews/FastQC">fastqc on Github</a></td>
+<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/rpetit3/fastq-scan/blob/master/README.md">fastq-scan</a><br><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">fastqc</a></td>
+<td><a href="https://github.com/rpetit3/fastq-scan/blob/master/README.md">fastq-scan on GitHub</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
+<details class="task">
+<summary><code>FastQC</code>: Read Quantification</summary>
+<p><code>FastQC</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<p>This tool also provides a graphical visualization of the read quality.</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>FastQC</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl">task_fastqc.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/s-andrews/FastQC">FastQC on Github</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC Website</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
 <details class="toggle">
-<summary>Read Identification with Kraken2</summary>
+<summary><code>Kraken2</code>: Read Identification</summary>
 <p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
 <p>Kraken2 is run on both the raw and clean reads.</p>
 <div class="admonition info">
@@ -15617,7 +15774,7 @@
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown</a></td>
+<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">Kraken2 Documentation</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
@@ -15627,13 +15784,30 @@
 </table>
 </div>
 </details>
+<div class="admonition techdetails">
+<p class="admonition-title">read_QC_trim Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subworkflow</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl">wf_read_QC_trim_pe.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl">wf_read_QC_trim_se.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 </div>
 <div class="tabbed-block">
 <details class="task">
 <summary><code>read_QC_trim_ont</code>: Read Quality Trimming, Quantification, and Identification</summary>
 <p><code>read_QC_trim_ont</code> is a sub-workflow that filters low-quality reads and trims low-quality regions of reads. It uses several tasks, described below.</p>
-<details class="task">
+<details class="toggle">
 <summary><code>HRRT</code>: Human Host Sequence Removal</summary>
 <p>All reads of human origin <strong>are removed</strong>, including their mates, by using NCBI's <a href="https://github.com/ncbi/sra-human-scrubber"><strong>human read removal tool (HRRT)</strong></a>. </p>
 <p>HRRT is based on the <a href="https://doi.org/10.1186/s13059-021-02490-0">SRA Taxonomy Analysis Tool</a> and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.</p>
@@ -15664,11 +15838,36 @@
 </div>
 </details>
 <details class="toggle">
-<summary>Read quality filtering</summary>
-<p>Read filtering is performed using <code>artic guppyplex</code> which performs a quality check by filtering the reads by length to remove chimeric reads.</p>
+<summary><code>artic_guppyplex</code>: Read Filtering</summary>
+<p>Reads are filtered by length with <code>artic_guppyplex</code>, which is a part of the <a href="https://artic.network/fieldbioinformatics/fieldbioinformatics-sop.html"><code>ARTIC</code> protocol</a>. Since TheiaCoV was developed primarily for amplicon-based viral sequencing, this task is included to remove chimeric reads that are either too short or too long.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">artic_guppyplex Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_artic_guppyplex.wdl">task_artic_guppyplex.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/artic-network/fieldbioinformatics/">ARTIC on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://artic.readthedocs.io/en/latest/?badge=latest">ARTIC Documentation</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 <details class="toggle">
-<summary>Read Identification with Kraken2</summary>
+<summary><code>Kraken2</code>: Read Identification</summary>
 <p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
 <p>Kraken2 is run on both the raw and clean reads.</p>
 <div class="admonition info">
@@ -15695,7 +15894,7 @@
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown</a></td>
+<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">Kraken2 Documentation</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
@@ -15706,8 +15905,38 @@
 </div>
 </details>
 <details class="toggle">
-<summary><code>nanoplot</code>: Plotting and quantifying long-read sequencing data</summary>
-<p>Nanoplot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<summary><code>NanoPlot</code>: Read Quantification</summary>
+<p>NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<p>While this task currently is run <em>outside</em> of the <code>read_QC_trim_ont</code> workflow, it is being included here as it calculates statistics on the read data. This is done so that the actual assembly genome lengths can be used (if an estimated genome length is not provided by the user) to ensure the estimated coverage statistics are accurate.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">NanoPlot Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl">task_nanoplot.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/wdecoster/NanoPlot">NanoPlot on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/wdecoster/NanoPlot/blob/master/README.md">NanoPlot Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911">NanoPack2: population-scale evaluation of long-read sequencing data</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">read_QC_trim_ont Technical Details</p>
@@ -15720,24 +15949,8 @@
 </thead>
 <tbody>
 <tr>
-<td>Sub-workflow</td>
+<td>Subworkflow</td>
 <td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl">wf_read_QC_trim_ont.wdl</a></td>
-</tr>
-<tr>
-<td>Tasks</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl">task_nanoplot.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl">task_rasusa.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl">task_nanoq.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan</a><br><a href="https://github.com/wdecoster/NanoPlot">NanoPlot</a><br><a href="https://github.com/mbhall88/rasusa">RASUSA</a><br><a href="https://github.com/esteinig/nanoq">nanoq</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https:/github.com/ncbi/sra-human-scrubber/blob/master/README.md">NCBI Scrub on GitHub</a><br><a href="https://github.com/wdecoster/NanoPlot/tree/master?tab=readme-ov-file#readme">NanoPlot documentation on GitHub</a><br><a href="https://github.com/mbhall88/rasusa">Rasusa on GitHub</a><br><a href="https://github.com/esteinig/nanoq">Nanoq on GitHub</a><br><a href="https://artic.readthedocs.io/en/latest/?badge=latest">Artic Pipeline ReadTheDocs</a><br><a href="https://github.com/DerrickWood/kraken2/wiki">Kraken2 on GitHub</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911">NanoPack2: population-scale evaluation of long-read sequencing data</a><br><a href="https://doi.org/10.21105/joss.03941">Rasusa: Randomly subsample sequencing reads to a specified coverage</a><br><a href="https://doi.org/10.21105/joss.02991">Nanoq: ultra-fast quality control for nanopore reads</a><br><a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
 </tr>
 </tbody>
 </table>
@@ -15749,6 +15962,7 @@
 </div>
 <details class="task">
 <summary><code>qc_check</code>: Check QC Metrics Against User-Defined Thresholds (optional)</summary>
+<p>To activate this task, provide a <code>qc_check_table</code> as input.</p>
 <p>The <code>qc_check</code> task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a <code>qc_check_table</code> TSV file. If all QC metrics meet the threshold, the <code>qc_check</code> output variable will read <code>QC_PASS</code>. Otherwise, the output will read <code>QC_NA</code> if the task could not proceed or <code>QC_ALERT</code> followed by a string indicating what metric failed.</p>
 <p>The <code>qc_check</code> task applies quality thresholds according to the specified organism, which should match the <em>standardized</em> <code>organism</code> input in the TheiaCoV workflows.</p>
 <details class="toggle">
@@ -15769,7 +15983,7 @@
 </div>
 </details>
 <div class="admonition techdetails">
-<p class="admonition-title"><code>qc_check</code> Technical Details</p>
+<p class="admonition-title">qc_check Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -16488,7 +16702,7 @@
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td>INSaFLU database: <em><a href="https://doi.org/10.1186/s13073-018-0555-0">INSaFLU: an automated open web-based bioinformatics suite "from-reads" for influenza whole-genome-sequencing-based surveillance</a></em></td>
+<td><em>INSaFLU database</em>: <a href="https://doi.org/10.1186/s13073-018-0555-0">INSaFLU: an automated open web-based bioinformatics suite "from-reads" for influenza whole-genome-sequencing-based surveillance</a></td>
 </tr>
 </tbody>
 </table>

@@ -5294,38 +5294,22 @@
   <h1>Nanoplot task</h1>
 
 <details class="task">
-<summary><code>nanoplot</code></summary>
-<p>Nanoplot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Nanoplot Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl">task_nanoplot.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/wdecoster/NanoPlot">NanoPlot</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/wdecoster/NanoPlot/blob/master/README.md">NanoPlot Documentation</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911">NanoPack2: population-scale evaluation of long-read sequencing data</a></td>
-</tr>
-</tbody>
-</table>
-</div>
+<summary><code>NanoPlot</code>: Read Quantification</summary>
+<p>NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
 </details>
+<!-- if: ont -->
+<div class="language-text highlight"><pre><span></span><code>While this task currently is run _outside_ of the `read_QC_trim_ont` workflow, it is being included here as it calculates statistics on the read data. This is done so that the actual assembly genome lengths can be used (if an estimated genome length is not provided by the user) to ensure the estimated coverage statistics are accurate.
+</code></pre></div>
+<!-- endif -->
+
+<div class="language-text highlight"><pre><span></span><code>!!! techdetails "NanoPlot Technical Details"
+    |  | Links |
+    | --- | --- |
+    | Task | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl) |
+    | Software Source Code | [NanoPlot on GitHub](https://github.com/wdecoster/NanoPlot) |
+    | Software Documentation | [NanoPlot Documentation](https://github.com/wdecoster/NanoPlot/blob/master/README.md) |
+    | Original Publication(s) | [NanoPack2: population-scale evaluation of long-read sequencing data](https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911) |
+</code></pre></div>
 
 
 
@@ -5348,7 +5332,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
   </span>
 
     

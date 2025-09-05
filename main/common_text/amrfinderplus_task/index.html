@@ -5294,10 +5294,14 @@
   <h1>Amrfinderplus task</h1>
 
 <details class="task">
-<summary><code>AMRFinderPlus</code>: AMR Genotyping (default)</summary>
+<summary><code>AMRFinderPlus</code>: AMR Genotyping</summary>
 <p>NCBI's <a href="https://github.com/ncbi/amr/wiki">AMRFinderPlus</a> is the default antimicrobial resistance (AMR) detection tool used in TheiaProk. ResFinder may be used alternatively and if so, AMRFinderPlus is not run. </p>
 <p>AMRFinderPlus identifies acquired antimicrobial resistance (AMR) genes, virulence genes, and stress genes.  Such AMR genes confer resistance to antibiotics, metals, biocides, heat, or acid. For some taxa (see <a href="https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#--organism-option">here</a>), AMRFinderPlus will provide taxa-specific results including filtering out genes that are almost ubiquitous in the taxa (intrinsic genes) and identifying resistance-associated point mutations.  In TheiaProk, the taxon used by AMRFinderPlus is specified based on the <code>gambit_predicted_taxon</code> or a user-provided <code>expected_taxon</code>. AMRFinderPlus also has the ability to utilize a GFF and protein FASTA file which can be enabled via <code>amrfinder_use_gff</code> allowing for more accurate calls.</p>
-<p>You can check if a gene or point mutation is in the AMRFinderPlus database <a href="https://www.ncbi.nlm.nih.gov/pathogens/refgene/#">here</a>, find the sequences of reference genes <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJNA313047">here</a>, and search the query Hidden Markov Models (HMMs) used by AMRFinderPlus to identify AMR genes and some stress and virulence proteins (<a href="https://www.ncbi.nlm.nih.gov/pathogens/hmm/">here</a>). The AMRFinderPlus database is updated frequently. You can ensure you are using the most up-to-date version by specifying the docker image as a workflow input. You might like to save this docker image as a workspace data element to make this easier.</p>
+<p>You can check if a gene or point mutation is in the AMRFinderPlus database with the <a href="https://www.ncbi.nlm.nih.gov/pathogens/refgene/#">Reference Gene Catalog</a>, find the sequences of reference genes in the <a href="https://www.ncbi.nlm.nih.gov/bioproject/PRJNA313047">Bacterial Antimicrobial Resistance Reference Gene Database BioProject</a>, and search the query Hidden Markov Models (HMMs) used by AMRFinderPlus to identify AMR genes and some stress and virulence proteins in the <a href="https://www.ncbi.nlm.nih.gov/pathogens/hmm/">Reference HMM Catalog</a>. The AMRFinderPlus database is updated frequently. You can ensure you are using the most up-to-date version by specifying the Docker image in the optional workflow input.</p>
+<details class="toggle">
+<summary>AMRFinderPlus results can be used to confirm taxonomic assignment in <em>A. baumannii</em></summary>
+<p>The <em>bla</em>OXA-51-like genes, also known as <em>oxaAB</em>, are considered intrinsic to <em>Acinetobacter baumannii</em> but are not found in other <em>Acinetobacter</em> species. <strong>Identification of a <em>bla</em>OXA-51-like gene with this tool is therefore considered to confirm the species' identity as <em>A. baumannii</em>.</strong></p>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">AMRFinderPlus Technical Details</p>
 <table>
@@ -5314,11 +5318,11 @@
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/ncbi/amr">amr on GitHub</a></td>
+<td><a href="https://github.com/ncbi/amr">NCBI's AMRFinderPlus on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td>https://github.com/ncbi/amr/wiki</td>
+<td><a href="https://github.com/ncbi/amr/wiki">https://github.com/ncbi/amr/wiki</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
@@ -5350,7 +5354,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 27, 2025 14:58:18 UTC">2025-06-27</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
   </span>
 
     

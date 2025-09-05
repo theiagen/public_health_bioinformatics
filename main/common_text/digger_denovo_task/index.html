@@ -5295,11 +5295,226 @@
 
 <details class="task">
 <summary><code>digger_denovo</code>: <em>De novo</em> Assembly</summary>
-<p>De Novo assembly will be undertaken only for samples that have sufficient read quantity and quality, as determined by the <code>screen</code> task assessment of clean reads. </p>
-<p>In this workflow, assembly is performed using the <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wdl">digger_denovo</a>, which is a hat tip to <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline. This undertakes the assembly with one of three assemblers <a href="https://github.com/ncbi/SKESA">SKESA</a> (default), <a href="https://github.com/ablab/spades">SPAdes</a>, <a href="https://github.com/voutcn/megahit">Megahit</a>, but also performs a number of post processing steps for assembly polishing and contig filtering. Pilon can optionally be run if <code>call_pilon</code> is set to true. On default, the contig filtering task is set to run, which will remove any homopolymers, contigs below a specificied length, and contigs with coverage below a specified minimum coverage. This can be turned off by setting <code>run_filter_contigs</code> to <code>false</code>. </p>
-<details class="toggle">
-<summary>What is <em>de novo</em>  assembly?</summary>
 <p><em>De novo</em>  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.</p>
+<p>In TheiaProk and TheiaEuk Illumina workflows, <em>de novo</em> assembly is performed for samples that have sufficient read quantity and quality using <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wdl">digger_denovo</a>, a subworkflow based off of <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline. The name "digger" is a nod to Shovill and SPAdes.</p>
+<details class="toggle">
+<summary><em>De novo</em> Assembly</summary>
+<div class="admonition dna">
+<p class="admonition-title"><code>assembler</code> with <code>skesa</code> (default), <code>spades</code>, or <code>megahit</code></p>
+<p>To activate a particular assembler, set the <code>assembler</code> input parameter to either <code>skesa</code> (default), <code>spades</code>, or <code>megahit</code>.</p>
+<p>These tasks are mutually exclusive.</p>
+</div>
+<details class="task">
+<summary><code>SKESA</code>: <em>De novo</em> Assembly (default)</summary>
+<p>This task is activated by default.</p>
+<p><code>SKESA</code> (Strategic K-mer Extension for Scrupulous Assemblies) is a <em>de novo</em> assembler that is fairly conservative and introduces breaks in the genome at repeat regions. This leads to higher sequence quality but more fragmented assemblies, which, depending on the final analysis goal, can be either highly preferred or detrimental. Designed for Illumina reads and haploid genomes, SKESA is the default assembler in the <code>digger_denovo</code> subworkflow.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">SKESA Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_skesa.wdl">task_skesa.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/SKESA">SKESA on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/SKESA">SKESA on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1186/s13059-018-1540-z">SKESA: strategic k-mer externsion for scrupulous assemblies</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>SPAdes</code>: <em>De novo</em> Assembly (alternative)</summary>
+<p>To activate this task, set <code>assembler</code> to <code>spades</code>.</p>
+<p><code>SPAdes</code> (St. Petersburg genome assembler) is a <em>de novo</em> assembly tool that uses de Bruijn graphs to assemble genomes from Illumina short reads.</p>
+<p>In TheiaProk, SPAdes is run in <code>--isolate</code> mode, which is the recommended flag for high-coverage isolate and multi-cell Illumina data, which is typical of most bacterial sequencing projects. This method is optimized for improving assembly quality and decreasing runtime.</p>
+<details class="warning" open="open">
+<summary>Non-deterministic output(s)</summary>
+<p>This task may yield non-deterministic outputs.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">MetaviralSPAdes Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_spades.wdl">task_spades.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ablab/spades">SPAdes on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://ablab.github.io/spades/index.html">SPAdes Manual</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><em>TheiaProk</em>: <a href="https://doi.org/10.1089/cmb.2012.0021">SPAdes: A New Genome Assembly Algorithm and Its Applications to Single-Cell Sequencing</a><br><em>TheiaViral</em>: <a href="https://doi.org/10.1093/bioinformatics/btaa490">MetaviralSPAdes: assembly of viruses from metagenomic data</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>MEGAHIT</code>: <em>De novo</em> Assembly (alternative)</summary>
+<p>To activate this task, set <code>assembler</code> to <code>megahit</code>.</p>
+<p>The <a href="https://github.com/voutcn/megahit">MEGAHIT assembler</a> is a fast and memory-efficient <em>de novo</em> assembler that can handle large datasets. While optimized for metagenomics, MEGAHIT also performs well on single-genome assemblies, making it a versatile choice for various assembly tasks.</p>
+<p>MEGAHIT uses a multiple k-mer strategy that can be beneficial for assembling genomes with varying coverage levels, which is common in metagenomic samples. It constructs succinct de Bruijn graphs to efficiently represent the assembly process, allowing it to handle large and complex datasets with reduced memory usage.</p>
+<details class="warning" open="open">
+<summary>Non-deterministic output(s)</summary>
+<p>This task may yield non-deterministic outputs.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">MEGAHIT Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_megahit.wdl">task_megahit.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/voutcn/megahit">MEGAHIT on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/voutcn/megahit/blob/master/README.md">MEGAHIT on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btv033">MEGAHIT: an ultra-fast single-node solution for large and complex metagenomics assembly via succinct de Bruijn graph</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+<details class="toggle">
+<summary>Assembly Polishing (optional)</summary>
+<p>To activate assembly polishing, set <code>call_pilon</code> to <code>true</code>.</p>
+<details class="task">
+<summary><code>bwa</code>: Read Alignment to the Assembly</summary>
+<p>BWA (Burrow-Wheeler Aligner) is used to align the cleaned read files to generated assembly file in order to generate an alignment. The resulting BAM file is directly passed to the Pilon task to polish the assembly for errors.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">BWA Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl">task_bwa.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/lh3/bwa">BWA on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://bio-bwa.sourceforge.net/">BWA Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp324">Fast and accurate short read alignment with Burrows-Wheeler transform</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>Pilon</code>: Assembly Polishing</summary>
+<p><code>Pilon</code> is a tool that uses read alignments to correct errors in an assembly.</p>
+<p>The <code>bwa</code>-generated alignment of the read data to the assembly is used to identify inconsistences between the reads and the assembly in order to correct them. <code>Pilon</code> will attempt to fix individual base errors and small indels using the read data. This can improve the overall quality of the assembly, especially when the assembler has made mistakes due to sequencing errors or low coverage regions.</p>
+<p>The default parameters were set to mimic the parameters used by <a href="https://github.com/tseemann/shovill">Shovill</a>: <code>--fix bases --minq 60 --minqual 3 --mindepth 0.25</code>. These can be modified by the user.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Pilon Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_pilon.wdl">task_pilon.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/broadinstitute/pilon">Pilon on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/broadinstitute/pilon/wiki">Pilon Wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1371/journal.pone.0112963">Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+<details class="toggle">
+<summary>Contig Filtering (optional)</summary>
+<details class="task">
+<summary><code>Filter Contigs</code>: Contig Quality Control</summary>
+<p>To <strong><em>de</em></strong>activate contig filtering, set <code>run_filter_contigs</code> to <code>false</code>.</p>
+<p>This task filters the created contigs based on a default minimum length threshold of 200 bp and a minimum coverage of 2.0. It also eliminates homopolymer contigs (contigs of any length that consist of a single nucleotide).</p>
+<p>Options are available to skip any of these filters by setting the respective parameters to <code>false</code>: <code>filter_contigs_skip_length_filter</code>, <code>filter_contigs_skip_coverage_filter</code>, and <code>filter_contigs_skip_homopolymer_filter</code>. The minimum length and coverage thresholds can be adjusted using the <code>filter_contigs_min_length</code> and <code>filter_contigs_min_coverage</code> parameters, respectively.</p>
+<p>This ensures high-quality assemblies by retaining only contigs that meet specified criteria. Detailed metrics on contig counts and sequence lengths before and after filtering are provided in the output.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Filter Contigs Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WDL Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_filter_contigs.wdl">task_filter_contigs.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">Digger-Denovo Technical Details</p>
@@ -5312,7 +5527,7 @@
 </thead>
 <tbody>
 <tr>
-<td>SubWorkflow File</td>
+<td>Subworkflow</td>
 <td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wdl">wf_digger_denovo.wdl</a></td>
 </tr>
 </tbody>
@@ -5341,7 +5556,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 4, 2025 13:18:05 UTC">2025-09-04</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
   </span>
 
     

@@ -987,7 +987,7 @@ tbprofiler_pct_reads_mapped	Float	The percentage of reads that successfully mapp
 tbprofiler_report_csv	File	The raw output file from TBProfiler	TBProfiler_tNGS
 tbprofiler_report_json	File	The json output file from TBProfiler	TBProfiler_tNGS
 tbprofiler_report_tsv	File	The TSV output file from TBProfiler	TBProfiler_tNGS
-tbprofiler_resistance_genes	String	The genes in which a mutation was detected that may be resistance conferring	TBProfiler_tNGS, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+tbprofiler_resistance_genes	String	The genes in which a mutation was detected that may be resistance conferring, in the format of `<gene target> <variant detected> (<estimated fraction of reads that support the variant>)`	TBProfiler_tNGS, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 tbprofiler_sub_lineage	String	The Mycobacterium tuberculosis sub-lineage assignment as made by TBProfiler	TBProfiler_tNGS, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 tbprofiler_tngs_wf_analysis_date	String	The date on which the workflow was run	TBProfiler_tNGS
 tbprofiler_tngs_wf_version	String	The version of the tbprofiler_tngs workflow used for this analysis	TBProfiler_tNGS

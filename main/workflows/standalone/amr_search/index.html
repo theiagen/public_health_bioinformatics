@@ -5856,16 +5856,67 @@
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">¶</a></h3>
 <details class="task">
 <summary><code>amr_search</code>: Antimicrobial resistance profiling</summary>
-<p>This task performs <em>in silico</em> antimicrobial resistance (AMR) profiling for supported species using <strong>AMRsearch</strong>, the primary tool used by <a href="https://pathogen.watch/">Pathogenwatch</a> to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.</p>
-<p><strong>AMRsearch</strong> screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both <strong>resistance genes</strong> and <strong>mutations</strong>, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow <strong>S/I/R classification</strong> (<em>Sensitive, Intermediate, Resistant</em>).</p>
+<p>This task performs <em>in silico</em> antimicrobial resistance (AMR) profiling for supported species using AMRsearch, the primary tool used by <a href="https://pathogen.watch/">Pathogenwatch</a> to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.</p>
+<p>AMRsearch screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both <em>resistance genes</em> and <em>mutations</em>, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow <strong>S/I/R classification</strong> (<em>Sensitive</em>, <em>Intermediate</em>, <em>Resistant</em>).</p>
+<p>Currently, only a subset of species are supported by this task.</p>
+<details class="toggle">
+<summary>Supported Species</summary>
+<p>The following table shows the species name and the associated NCBI Code. If you are running AMR Search as part of TheiaProk and TheiaEuk, these codes will be automatically determined based on the GAMBIT predicted taxon, or the user-provided <code>expected_taxon</code> input.</p>
+<table>
+<thead>
+<tr>
+<th>Species</th>
+<th>NCBI Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Neisseria gonorrhoeae</em></td>
+<td>485</td>
+</tr>
+<tr>
+<td><em>Staphylococcus aureus</em></td>
+<td>1280</td>
+</tr>
+<tr>
+<td><em>Salmonella</em> Typhi</td>
+<td>90370</td>
+</tr>
+<tr>
+<td><em>Streptococcus pneumoniae</em></td>
+<td>1313</td>
+</tr>
+<tr>
+<td><em>Klebisiella</em></td>
+<td>570</td>
+</tr>
+<tr>
+<td><em>Escherichia</em></td>
+<td>561</td>
+</tr>
+<tr>
+<td><em>Mycobacterium tuberculosis</em></td>
+<td>1773</td>
+</tr>
+<tr>
+<td><em>Candida auris</em></td>
+<td>498019</td>
+</tr>
+<tr>
+<td><em>Vibrio cholerae</em></td>
+<td>666</td>
+</tr>
+<tr>
+<td><em>Campylobacter</em></td>
+<td>194</td>
+</tr>
+</tbody>
+</table>
+</details>
 <p><strong>Outputs:</strong></p>
 <ul>
-<li>
-<p><strong>JSON Output:</strong> Contains the complete AMR profile, including detailed <strong>resistance state</strong>, detected <strong>resistance genes/mutations</strong>, and supporting <strong>BLAST results</strong>.</p>
-</li>
-<li>
-<p><strong>CSV &amp; PDF Tables:</strong> An incorprated Python script, <code>parse_amr_json.py</code>, extracts and formats results into a <strong>CSV file</strong> and <strong>PDF summary table</strong> for easier visualization.</p>
-</li>
+<li><strong>JSON Output</strong>: Contains the complete AMR profile, including detailed resistance state, detected resistance genes/mutations, and supporting BLAST results.</li>
+<li><strong>CSV &amp; PDF Tables</strong>: An incorporated Python script, <code>parse_amr_json.py</code>, extracts and formats results into a CSV file and PDF summary table for easier visualization.</li>
 </ul>
 <div class="admonition techdetails">
 <p class="admonition-title">amr_search Technical Details</p>
@@ -5883,15 +5934,15 @@
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/pathogenwatch-oss/amr-search">AMRsearch</a></td>
+<td><a href="https://github.com/pathogenwatch-oss/amr-search">AMRsearch on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://cgps.gitbook.io/pathogenwatch">Pathogenwatch</a></td>
+<td><a href="https://github.com/pathogenwatch-oss/amr-search">AMRsearch on GitHub</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7545138/">PAARSNP: <em>rapid genotypic resistance prediction for </em>Neisseria gonorrhoeae*</a></td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7545138/">PAARSNP: rapid genotypic resistance prediction for <em>Neisseria gonorrhoeae</em></a></td>
 </tr>
 </tbody>
 </table>

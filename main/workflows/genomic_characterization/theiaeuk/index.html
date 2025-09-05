@@ -11041,9 +11041,13 @@
 </details>
 <details class="task">
 <summary><code>Rasusa</code>: Read subsampling (optional, on by default)</summary>
+<p>To deactivate this task, set <code>call_rasusa</code> to <code>false</code>.</p>
+<p><code>Rasusa</code> is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.</p>
+<p>The <code>Rasusa</code> task performs subsampling on the input raw reads. By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs (0.7 Mb higher than the average bacterial genome length), and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the <code>genome_length</code> input parameter. The target subsampling depth can also be adjusted by modifying the <code>subsample_coverage</code> variable.</p>
+<p>For TheiaEuk_Illumina_PE, the estimated genome length is determined by the <code>read_screen</code> task. Please note that the user can prevent the task from being launched by setting the <code>call_rasusa</code> variable to false.</p>
 <details class="warning" open="open">
 <summary>Non-deterministic output(s)</summary>
-<p>This task may yield non-deterministic outputs.</p>
+<p>This task may yield non-deterministic outputs since it performs <em>random</em> subsampling. To ensure reproducibility, set a a value for the <code>rasusa_seed</code> optional input variable.</p>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">Rasusa Technical Details</p>
@@ -11080,18 +11084,56 @@
 <p><code>read_QC_trim</code> is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the <code>read_QC_trim</code> sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.</p>
 <details class="toggle">
 <summary>Read quality trimming</summary>
-<p>Either <code>trimmomatic</code> or <code>fastp</code> can be used for read-quality trimming. Trimmomatic is used by default. Both tools trim low-quality regions of reads with a sliding window (with a window size of <code>trim_window_size</code>), cutting once the average quality within the window falls below <code>trim_quality_trim_score</code>. They will both discard the read if it is trimmed below <code>trim_minlen</code>. </p>
-<details class="dna">
-<summary><code>read_processing</code> input parameter</summary>
-<p>This input parameter accepts either <code>trimmomatic</code> or <code>fastp</code> as an input to determine which tool should be used for read quality trimming. This is set to <code>trimmomatic</code> by default.</p>
-<p>If the <code>fastp</code> option is selected, see below for table of default parameters.</p>
+<div class="admonition dna">
+<p class="admonition-title"><code>read_processing</code> with <code>"trimmomatic"</code> (default) or <code>"fastp"</code></p>
+<p>Either <code>trimmomatic</code> or <code>fastp</code> can be used for read-quality trimming. Trimmomatic is used by default. </p>
+<p>To activate <code>fastp</code>, set the <code>read_processing</code> input parameter to <code>"fastp"</code>. </p>
+<p>These tasks are mutually exclusive.</p>
+</div>
+<details class="task">
+<summary><code>Trimmomatic</code>: Read Trimming</summary>
+<p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>Trimmomatic</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/usadellab/Trimmomatic">Trimmomatic on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic Website</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>fastp</code>: Read Trimming</summary>
+<p><code>fastp</code> trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
+<p><code>fastp</code> also has additional default parameters and features that are not a part of <code>trimmomatic</code>'s default configuration.</p>
 <details class="toggle">
 <summary><code>fastp</code> default read-trimming parameters</summary>
 <table>
 <thead>
 <tr>
-<th><strong>Parameter</strong></th>
-<th><strong>Explanation</strong></th>
+<th>Parameter</th>
+<th>Explanation</th>
 </tr>
 </thead>
 <tbody>
@@ -11115,7 +11157,6 @@
 </table>
 <p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
 </details>
-</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic and fastp Technical Details</p>
 <table>
@@ -11128,35 +11169,33 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl">task_fastp.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl">task_fastp.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/usadellab/Trimmomatic">Trimmomatic</a><br><a href="https://github.com/OpenGene/fastp">fastp on Github</a></td>
+<td><a href="https://github.com/OpenGene/fastp">fastp on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic</a><br><a href="https://github.com/OpenGene/fastp">fastp</a></td>
+<td><a href="https://github.com/OpenGene/fastp">fastp on GitHub</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a><br><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a></td>
+<td><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
-<details class="toggle">
-<summary>Adapter removal</summary>
-<p>The <code>BBDuk</code> task removes adapters from sequence reads. To do this:</p>
-<ul>
-<li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/">Repair</a> from the <a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files.</li>
-<li><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>) is then used to trim the adapters and filter out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>, which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.</li>
-</ul>
-<details class="question">
-<summary>What are adapters and why do they need to be removed?</summary>
-<p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about Illumina adapters <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
 </details>
+<details class="toggle">
+<summary><code>BBDuk</code>: Adapter Trimming and PhiX Removal</summary>
+<p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">Illumina adapters here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
+<p>The <code>bbduk</code> task removes adapters from sequence reads. To do this:</p>
+<ul>
+<li><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/">Repair</a> from the <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files (it <em>re-pairs</em>).</li>
+<li><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>) is then used to trim the adapters and filter out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>, which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.</li>
+</ul>
 <div class="admonition techdetails">
 <p class="admonition-title">BBDuk Technical Details</p>
 <table>
@@ -11173,11 +11212,11 @@
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a></td>
+<td><a href="https://sourceforge.net/projects/bbmap/">BBMap on SourceForge</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a></td>
+<td><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk Guide (archived)</a></td>
 </tr>
 </tbody>
 </table>
@@ -11185,13 +11224,17 @@
 </details>
 <details class="toggle">
 <summary>Read Quantification</summary>
-<p>There are two methods for read quantification to choose from: <a href="https://github.com/rpetit3/fastq-scan"><code>fastq-scan</code></a> (default) or <a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/"><code>fastqc</code></a>. Both quantify the forward and reverse reads in FASTQ files. For paired-end data, they also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads. <code>fastqc</code> also provides a graphical visualization of the read quality.</p>
-<details class="dna">
-<summary><code>read_qc</code> input parameter</summary>
-<p>This input parameter accepts either <code>"fastq_scan"</code> or <code>"fastqc"</code> as an input to determine which tool should be used for read quantification. This is set to <code>"fastq-scan"</code> by default.</p>
-</details>
+<div class="admonition dna">
+<p class="admonition-title"><code>read_qc</code> with <code>"fastq-scan"</code> (default) or <code>"fastqc"</code></p>
+<p>Either <code>fastq-scan</code> or <code>fastqc</code> can be used for read quantification. <code>fastq-scan</code> is used by default. </p>
+<p>To activate <code>fastqc</code>, set the <code>read_qc</code> input parameter to <code>"fastqc"</code>.</p>
+<p>These tasks are mutually exclusive.</p>
+</div>
+<details class="task">
+<summary><code>fastq-scan</code>: Read Quantification</summary>
+<p><code>fastq-scan</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">fastq-scan and FastQC Technical Details</p>
+<p class="admonition-title"><code>fastq-scan</code> Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -11202,23 +11245,112 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl&quot;">task_fastqc.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan on Github</a><br><a href="https://github.com/s-andrews/FastQC">fastqc on Github</a></td>
+<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/rpetit3/fastq-scan/blob/master/README.md">fastq-scan</a><br><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">fastqc</a></td>
+<td><a href="https://github.com/rpetit3/fastq-scan/blob/master/README.md">fastq-scan on GitHub</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>FastQC</code>: Read Quantification</summary>
+<p><code>FastQC</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<p>This tool also provides a graphical visualization of the read quality.</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>FastQC</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl">task_fastqc.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/s-andrews/FastQC">FastQC on Github</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC Website</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
 </details>
+<details class="toggle">
+<summary><code>Kraken2</code>: Read Identification (optional)</summary>
+<p>To activate this task, set <code>call_kraken</code> to <code>true</code> and provide a value for <code>kraken_db</code>.</p>
+<p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
+<div class="admonition info">
+<p class="admonition-title">Database-dependent</p>
+<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
+</div>
+<p>As an alternative to <code>MIDAS</code> (see above), the <code>Kraken2</code> task can also be turned on through setting the <code>call_kraken</code> input variable as <code>true</code> for the identification of reads to detect contamination with non-target taxa.</p>
+<p>A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on <a href="../../standalone/kraken2/#databases">Kraken2 standalone documentation</a>.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Kraken2 Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl">task_kraken2.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/DerrickWood/kraken2/">Kraken2 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">Kraken2 Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://link.springer.com/article/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">read_QC_trim Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subworkflow</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl">wf_read_QC_trim_pe.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl">wf_read_QC_trim_se.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 <details class="task">
 <summary><code>qc_check</code>: Check QC Metrics Against User-Defined Thresholds (optional)</summary>
+<p>To activate this task, provide a <code>qc_check_table</code> as input.</p>
 <p>The <code>qc_check</code> task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a <code>qc_check_table</code> TSV file. If all QC metrics meet the threshold, the <code>qc_check</code> output variable will read <code>QC_PASS</code>. Otherwise, the output will read <code>QC_NA</code> if the task could not proceed or <code>QC_ALERT</code> followed by a string indicating what metric failed.</p>
 <p>The <code>qc_check</code> task applies quality thresholds according to the sample taxa. The sample taxa is taken from the <code>gambit_predicted_taxon</code> value inferred by the GAMBIT module OR can be manually provided by the user using the <code>expected_taxon</code> workflow input.</p>
 <details class="toggle">
@@ -11240,7 +11372,7 @@
 </div>
 </details>
 <div class="admonition techdetails">
-<p class="admonition-title"><code>qc_check</code> Technical Details</p>
+<p class="admonition-title">qc_check Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -11262,11 +11394,226 @@
 </div>
 <details class="task">
 <summary><code>digger_denovo</code>: <em>De novo</em> Assembly</summary>
-<p>De Novo assembly will be undertaken only for samples that have sufficient read quantity and quality, as determined by the <code>screen</code> task assessment of clean reads. </p>
-<p>In this workflow, assembly is performed using the <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wdl">digger_denovo</a>, which is a hat tip to <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline. This undertakes the assembly with one of three assemblers <a href="https://github.com/ncbi/SKESA">SKESA</a> (default), <a href="https://github.com/ablab/spades">SPAdes</a>, <a href="https://github.com/voutcn/megahit">Megahit</a>, but also performs a number of post processing steps for assembly polishing and contig filtering. Pilon can optionally be run if <code>call_pilon</code> is set to true. On default, the contig filtering task is set to run, which will remove any homopolymers, contigs below a specificied length, and contigs with coverage below a specified minimum coverage. This can be turned off by setting <code>run_filter_contigs</code> to <code>false</code>. </p>
-<details class="toggle">
-<summary>What is <em>de novo</em>  assembly?</summary>
 <p><em>De novo</em>  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.</p>
+<p>In TheiaProk and TheiaEuk Illumina workflows, <em>de novo</em> assembly is performed for samples that have sufficient read quantity and quality using <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wdl">digger_denovo</a>, a subworkflow based off of <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline. The name "digger" is a nod to Shovill and SPAdes.</p>
+<details class="toggle">
+<summary><em>De novo</em> Assembly</summary>
+<div class="admonition dna">
+<p class="admonition-title"><code>assembler</code> with <code>skesa</code> (default), <code>spades</code>, or <code>megahit</code></p>
+<p>To activate a particular assembler, set the <code>assembler</code> input parameter to either <code>skesa</code> (default), <code>spades</code>, or <code>megahit</code>.</p>
+<p>These tasks are mutually exclusive.</p>
+</div>
+<details class="task">
+<summary><code>SKESA</code>: <em>De novo</em> Assembly (default)</summary>
+<p>This task is activated by default.</p>
+<p><code>SKESA</code> (Strategic K-mer Extension for Scrupulous Assemblies) is a <em>de novo</em> assembler that is fairly conservative and introduces breaks in the genome at repeat regions. This leads to higher sequence quality but more fragmented assemblies, which, depending on the final analysis goal, can be either highly preferred or detrimental. Designed for Illumina reads and haploid genomes, SKESA is the default assembler in the <code>digger_denovo</code> subworkflow.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">SKESA Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_skesa.wdl">task_skesa.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/SKESA">SKESA on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/ncbi/SKESA">SKESA on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1186/s13059-018-1540-z">SKESA: strategic k-mer externsion for scrupulous assemblies</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>SPAdes</code>: <em>De novo</em> Assembly (alternative)</summary>
+<p>To activate this task, set <code>assembler</code> to <code>spades</code>.</p>
+<p><code>SPAdes</code> (St. Petersburg genome assembler) is a <em>de novo</em> assembly tool that uses de Bruijn graphs to assemble genomes from Illumina short reads.</p>
+<p>In TheiaProk, SPAdes is run in <code>--isolate</code> mode, which is the recommended flag for high-coverage isolate and multi-cell Illumina data, which is typical of most bacterial sequencing projects. This method is optimized for improving assembly quality and decreasing runtime.</p>
+<details class="warning" open="open">
+<summary>Non-deterministic output(s)</summary>
+<p>This task may yield non-deterministic outputs.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">MetaviralSPAdes Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_spades.wdl">task_spades.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ablab/spades">SPAdes on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://ablab.github.io/spades/index.html">SPAdes Manual</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><em>TheiaProk</em>: <a href="https://doi.org/10.1089/cmb.2012.0021">SPAdes: A New Genome Assembly Algorithm and Its Applications to Single-Cell Sequencing</a><br><em>TheiaViral</em>: <a href="https://doi.org/10.1093/bioinformatics/btaa490">MetaviralSPAdes: assembly of viruses from metagenomic data</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>MEGAHIT</code>: <em>De novo</em> Assembly (alternative)</summary>
+<p>To activate this task, set <code>assembler</code> to <code>megahit</code>.</p>
+<p>The <a href="https://github.com/voutcn/megahit">MEGAHIT assembler</a> is a fast and memory-efficient <em>de novo</em> assembler that can handle large datasets. While optimized for metagenomics, MEGAHIT also performs well on single-genome assemblies, making it a versatile choice for various assembly tasks.</p>
+<p>MEGAHIT uses a multiple k-mer strategy that can be beneficial for assembling genomes with varying coverage levels, which is common in metagenomic samples. It constructs succinct de Bruijn graphs to efficiently represent the assembly process, allowing it to handle large and complex datasets with reduced memory usage.</p>
+<details class="warning" open="open">
+<summary>Non-deterministic output(s)</summary>
+<p>This task may yield non-deterministic outputs.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">MEGAHIT Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_megahit.wdl">task_megahit.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/voutcn/megahit">MEGAHIT on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/voutcn/megahit/blob/master/README.md">MEGAHIT on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btv033">MEGAHIT: an ultra-fast single-node solution for large and complex metagenomics assembly via succinct de Bruijn graph</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+<details class="toggle">
+<summary>Assembly Polishing (optional)</summary>
+<p>To activate assembly polishing, set <code>call_pilon</code> to <code>true</code>.</p>
+<details class="task">
+<summary><code>bwa</code>: Read Alignment to the Assembly</summary>
+<p>BWA (Burrow-Wheeler Aligner) is used to align the cleaned read files to generated assembly file in order to generate an alignment. The resulting BAM file is directly passed to the Pilon task to polish the assembly for errors.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">BWA Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl">task_bwa.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/lh3/bwa">BWA on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://bio-bwa.sourceforge.net/">BWA Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp324">Fast and accurate short read alignment with Burrows-Wheeler transform</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>Pilon</code>: Assembly Polishing</summary>
+<p><code>Pilon</code> is a tool that uses read alignments to correct errors in an assembly.</p>
+<p>The <code>bwa</code>-generated alignment of the read data to the assembly is used to identify inconsistences between the reads and the assembly in order to correct them. <code>Pilon</code> will attempt to fix individual base errors and small indels using the read data. This can improve the overall quality of the assembly, especially when the assembler has made mistakes due to sequencing errors or low coverage regions.</p>
+<p>The default parameters were set to mimic the parameters used by <a href="https://github.com/tseemann/shovill">Shovill</a>: <code>--fix bases --minq 60 --minqual 3 --mindepth 0.25</code>. These can be modified by the user.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Pilon Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_pilon.wdl">task_pilon.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/broadinstitute/pilon">Pilon on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/broadinstitute/pilon/wiki">Pilon Wiki</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1371/journal.pone.0112963">Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+<details class="toggle">
+<summary>Contig Filtering (optional)</summary>
+<details class="task">
+<summary><code>Filter Contigs</code>: Contig Quality Control</summary>
+<p>To <strong><em>de</em></strong>activate contig filtering, set <code>run_filter_contigs</code> to <code>false</code>.</p>
+<p>This task filters the created contigs based on a default minimum length threshold of 200 bp and a minimum coverage of 2.0. It also eliminates homopolymer contigs (contigs of any length that consist of a single nucleotide).</p>
+<p>Options are available to skip any of these filters by setting the respective parameters to <code>false</code>: <code>filter_contigs_skip_length_filter</code>, <code>filter_contigs_skip_coverage_filter</code>, and <code>filter_contigs_skip_homopolymer_filter</code>. The minimum length and coverage thresholds can be adjusted using the <code>filter_contigs_min_length</code> and <code>filter_contigs_min_coverage</code> parameters, respectively.</p>
+<p>This ensures high-quality assemblies by retaining only contigs that meet specified criteria. Detailed metrics on contig counts and sequence lengths before and after filtering are provided in the output.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Filter Contigs Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>WDL Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_filter_contigs.wdl">task_filter_contigs.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">Digger-Denovo Technical Details</p>
@@ -11279,7 +11626,7 @@
 </thead>
 <tbody>
 <tr>
-<td>SubWorkflow File</td>
+<td>Subworkflow</td>
 <td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wdl">wf_digger_denovo.wdl</a></td>
 </tr>
 </tbody>
@@ -11288,7 +11635,7 @@
 </details>
 <details class="task">
 <summary><code>quast</code>: Assembly Quality Assessment</summary>
-<p>QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics without a reference being necessary. It includes useful metrics such as number of contigs, length of the largest contig and N50. </p>
+<p>QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics without a reference being necessary. It includes useful metrics such as number of contigs, length of the largest contig and N50.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">QUAST Technical Details</p>
 <table>
@@ -11309,7 +11656,7 @@
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://quast.sourceforge.net/">https://quast.sourceforge.net/</a></td>
+<td><a href="https://quast.sourceforge.net/">QUAST Manual on SourceForge</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
@@ -11358,14 +11705,90 @@
 <details class="task">
 <summary><code>read_QC_trim_ont</code>: Read Quality Trimming, Quantification, and Identification</summary>
 <p><code>read_QC_trim_ont</code> is a sub-workflow that filters low-quality reads and trims low-quality regions of reads. It uses several tasks, described below.</p>
+<div class="admonition dna">
+<p class="admonition-title">A note on estimated genome length</p>
+<p>By default, the estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to <a href="https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt">the information of thousands of NCBI bacterial assemblies collated here</a>. This estimate can be overwritten by the user and is used by <code>Rasusa</code>.</p>
+</div>
 <details class="toggle">
-<summary>Read Identification with Kraken2 (optional)</summary>
+<summary><code>Rasusa</code>: Read Subsampling</summary>
+<p><code>Rasusa</code> is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.</p>
+<p>The <code>Rasusa</code> task performs subsampling on the input raw reads. By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs (0.7 Mb higher than the average bacterial genome length), and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the <code>genome_length</code> input parameter. The target subsampling depth can also be adjusted by modifying the <code>subsample_coverage</code> variable.</p>
+<details class="warning" open="open">
+<summary>Non-deterministic output(s)</summary>
+<p>This task may yield non-deterministic outputs since it performs <em>random</em> subsampling. To ensure reproducibility, set a a value for the <code>rasusa_seed</code> optional input variable.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Rasusa Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl">task_rasusa.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/mbhall88/rasusa">Rasusa on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/mbhall88/rasusa">Rasusa on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.21105/joss.03941">Rasusa: Randomly subsample sequencing reads to a specified coverage</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="toggle">
+<summary><code>Nanoq</code>: Read Filtering</summary>
+<p>Reads are filtered by length and quality using <code>nanoq</code>. By default, sequences with less than 500 basepairs and quality scores lower than 10 are filtered out to improve assembly accuracy. These defaults are able to be modified by the user.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Nanoq Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl">task_nanoq.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/esteinig/nanoq">Nanoq on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/esteinig/nanoq/blob/master/README.md">Nanoq Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.21105/joss.02991">Nanoq: ultra-fast quality control for nanopore reads</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="toggle">
+<summary><code>Kraken2</code>: Read Identification (optional)</summary>
+<p>To activate this task, set <code>call_kraken</code> to <code>true</code> and provide a value for <code>kraken_db</code>.</p>
 <p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
+<p>Kraken2 is run on the raw read data.</p>
 <div class="admonition info">
 <p class="admonition-title">Database-dependent</p>
 <p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
 </div>
-<p>As an alternative to <code>MIDAS</code> (see above), the <code>Kraken2</code> task can also be turned on through setting the <code>call_kraken</code> input variable as <code>true</code> for the identification of reads to detect contamination with non-target taxa.</p>
 <p>A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on <a href="../../standalone/kraken2/#databases">Kraken2 standalone documentation</a>.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Kraken2 Technical Details</p>
@@ -11387,7 +11810,7 @@
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown</a></td>
+<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">Kraken2 Documentation</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
@@ -11397,25 +11820,39 @@
 </table>
 </div>
 </details>
-<div class="admonition dna">
-<p class="admonition-title">A note on estimated genome length</p>
-<p>By default, an estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to the information collated <a href="https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt">here</a>. This estimate can be overwritten by the user, and is used by <code>RASUSA</code>.</p>
+<details class="toggle">
+<summary><code>NanoPlot</code>: Read Quantification</summary>
+<p>NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<p>While this task currently is run <em>outside</em> of the <code>read_QC_trim_ont</code> workflow, it is being included here as it calculates statistics on the read data. This is done so that the actual assembly genome lengths can be used (if an estimated genome length is not provided by the user) to ensure the estimated coverage statistics are accurate.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">NanoPlot Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl">task_nanoplot.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/wdecoster/NanoPlot">NanoPlot on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/wdecoster/NanoPlot/blob/master/README.md">NanoPlot Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911">NanoPack2: population-scale evaluation of long-read sequencing data</a></td>
+</tr>
+</tbody>
+</table>
 </div>
-<details class="toggle">
-<summary><code>nanoplot</code>: Plotting and quantifying long-read sequencing data</summary>
-<p>Nanoplot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
-</details>
-<details class="toggle">
-<summary>Read subsampling</summary>
-<p>Samples are automatically randomly subsampled to 150X coverage using <code>RASUSA</code>.</p>
-</details>
-<details class="toggle">
-<summary>Plasmid prediction</summary>
-<p>Plasmids are identified using replicon sequences used for typing from <a href="https://cge.food.dtu.dk/services/PlasmidFinder/">PlasmidFinder</a>.</p>
-</details>
-<details class="toggle">
-<summary>Read filtering</summary>
-<p>Reads are filtered by length and quality using <code>nanoq</code>. By default, sequences with less than 500 basepairs and quality score lower than 10 are filtered out to improve assembly accuracy.</p>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">read_QC_trim_ont Technical Details</p>
@@ -11428,24 +11865,8 @@
 </thead>
 <tbody>
 <tr>
-<td>Sub-workflow</td>
+<td>Subworkflow</td>
 <td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl">wf_read_QC_trim_ont.wdl</a></td>
-</tr>
-<tr>
-<td>Tasks</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl">task_nanoplot.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl">task_rasusa.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl">task_nanoq.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan</a><br><a href="https://github.com/wdecoster/NanoPlot">NanoPlot</a><br><a href="https://github.com/mbhall88/rasusa">RASUSA</a><br><a href="https://github.com/esteinig/nanoq">nanoq</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https:/github.com/ncbi/sra-human-scrubber/blob/master/README.md">NCBI Scrub on GitHub</a><br><a href="https://github.com/wdecoster/NanoPlot/tree/master?tab=readme-ov-file#readme">NanoPlot documentation on GitHub</a><br><a href="https://github.com/mbhall88/rasusa">Rasusa on GitHub</a><br><a href="https://github.com/esteinig/nanoq">Nanoq on GitHub</a><br><a href="https://artic.readthedocs.io/en/latest/?badge=latest">Artic Pipeline ReadTheDocs</a><br><a href="https://github.com/DerrickWood/kraken2/wiki">Kraken2 on GitHub</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911">NanoPack2: population-scale evaluation of long-read sequencing data</a><br><a href="https://doi.org/10.21105/joss.03941">Rasusa: Randomly subsample sequencing reads to a specified coverage</a><br><a href="https://doi.org/10.21105/joss.02991">Nanoq: ultra-fast quality control for nanopore reads</a><br><a href="https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
 </tr>
 </tbody>
 </table>
@@ -11570,7 +11991,7 @@
 </details>
 <details class="toggle">
 <summary><code>Bandage</code>: Graph Visualization</summary>
-<p>Bandage creates <em>de novo</em> assembly graphs containing the assembled contigs and the connections between those contigs.</p>
+<p>Bandage creates <em>de novo</em> assembly graphs containing the assembled contigs and the connections between those contigs. These graphs are useful for visualizing the assembly structure, identifying potential misassemblies, and understanding the relationships between contigs.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Bandage Technical Details</p>
 <table>
@@ -11603,7 +12024,7 @@
 </details>
 <details class="toggle">
 <summary><code>Polypolish</code>: Hybrid Assembly Polishing <mark><em>for ONT and Illumina data</em></mark></summary>
-<p>If short reads are provided with the optional <code>illumina_read1</code> and <code>illumina_read2</code> inputs, Polypolish will use those short-reads to correct errors in the long-read assemblies. Uniquely, Polypolish uses the short-read alignments where each read is aligned to <em>all</em> possible locations, meaning that repeat regions will have error correction.</p>
+<p>If short reads are provided with the optional <code>illumina_read1</code> and <code>illumina_read2</code> inputs, Polypolish will use those short-reads to correct errors in the long-read assemblies. Uniquely, Polypolish uses the short-read alignments where each read is aligned to <em>all</em> possible locations, meaning that even repeat regions will have error correction.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Polypolish Technical Details</p>
 <table>
@@ -11710,7 +12131,8 @@
 </details>
 <details class="toggle">
 <summary><code>Filter Contigs</code>: Filter contigs below a threshold length and remove homopolymer contigs</summary>
-<p>This task filters the created contigs based on a user-defined minimum length threshold (default of 1000) and eliminates homopolymer contigs (contigs of any length that consist of a single nucleotide). This ensures high-quality assemblies by retaining only contigs that meet specified criteria. Detailed metrics on contig counts and sequence lengths before and after filtering are provided in the output.</p>
+<p>This task filters the created contigs based on a user-defined minimum length threshold (default of 1000) and eliminates homopolymer contigs (contigs of any length that consist of a single nucleotide).</p>
+<p>This ensures high-quality assemblies by retaining only contigs that meet specified criteria. Detailed metrics on contig counts and sequence lengths before and after filtering are provided in the output.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Filter Contigs Technical Details</p>
 <table>
@@ -11774,6 +12196,23 @@
 </table>
 </div>
 </details>
+<div class="admonition techdetails">
+<p class="admonition-title">Flye-Denovo Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subworkflow</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_flye_denovo.wdl">wf_flye_denovo.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 </div>
 </div>
@@ -11851,7 +12290,7 @@
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td>https://busco.ezlab.org/</td>
+<td><a href="https://busco.ezlab.org/">https://busco.ezlab.org/</a></td>
 </tr>
 <tr>
 <td>Orginal publication</td>
@@ -11962,19 +12401,69 @@
 </div>
 </details>
 <details class="task">
-<summary><code>amr_search</code>: Antimicrobial resistance profiling (Optional)</summary>
-<p>Set the <code>run_amr_search</code> parameter to <code>true</code> to enable this task.</p>
-<p>The AMR Search module will report only specific SNP changes in the AMR genes, like FUR1 F211L. For a complete list of mutations being queried, please refer to <a href="https://github.com/pathogenwatch-oss/amr-search"><code>amr_search</code>'s documentation</a>. </p>
-<p>This task performs <em>in silico</em> antimicrobial resistance (AMR) profiling for supported species using <strong>AMRsearch</strong>, the primary tool used by <a href="https://pathogen.watch/">Pathogenwatch</a> to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.</p>
-<p><strong>AMRsearch</strong> screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both <strong>resistance genes</strong> and <strong>mutations</strong>, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow <strong>S/I/R classification</strong> (<em>Sensitive, Intermediate, Resistant</em>).</p>
+<summary><code>amr_search</code>: Antimicrobial Resistance Profiling (optional)</summary>
+<p>To activate this task, set <code>run_amr_search</code> to be <code>true</code>.</p>
+<p>This task performs <em>in silico</em> antimicrobial resistance (AMR) profiling for supported species using AMRsearch, the primary tool used by <a href="https://pathogen.watch/">Pathogenwatch</a> to genotype and infer antimicrobial resistance (AMR) phenotypes from assembled microbial genomes.</p>
+<p>AMRsearch screens against Pathogenwatch's library of curated genotypes and inferred phenotypes, developed in collaboration with community experts. Resistance phenotypes are determined based on both <em>resistance genes</em> and <em>mutations</em>, and the system accounts for interactions between multiple SNPs, genes, and suppressors. Predictions follow <strong>S/I/R classification</strong> (<em>Sensitive</em>, <em>Intermediate</em>, <em>Resistant</em>).</p>
+<p>Currently, only a subset of species are supported by this task.</p>
+<details class="toggle">
+<summary>Supported Species</summary>
+<p>The following table shows the species name and the associated NCBI Code. If you are running AMR Search as part of TheiaProk and TheiaEuk, these codes will be automatically determined based on the GAMBIT predicted taxon, or the user-provided <code>expected_taxon</code> input.</p>
+<table>
+<thead>
+<tr>
+<th>Species</th>
+<th>NCBI Code</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><em>Neisseria gonorrhoeae</em></td>
+<td>485</td>
+</tr>
+<tr>
+<td><em>Staphylococcus aureus</em></td>
+<td>1280</td>
+</tr>
+<tr>
+<td><em>Salmonella</em> Typhi</td>
+<td>90370</td>
+</tr>
+<tr>
+<td><em>Streptococcus pneumoniae</em></td>
+<td>1313</td>
+</tr>
+<tr>
+<td><em>Klebisiella</em></td>
+<td>570</td>
+</tr>
+<tr>
+<td><em>Escherichia</em></td>
+<td>561</td>
+</tr>
+<tr>
+<td><em>Mycobacterium tuberculosis</em></td>
+<td>1773</td>
+</tr>
+<tr>
+<td><em>Candida auris</em></td>
+<td>498019</td>
+</tr>
+<tr>
+<td><em>Vibrio cholerae</em></td>
+<td>666</td>
+</tr>
+<tr>
+<td><em>Campylobacter</em></td>
+<td>194</td>
+</tr>
+</tbody>
+</table>
+</details>
 <p><strong>Outputs:</strong></p>
 <ul>
-<li>
-<p><strong>JSON Output:</strong> Contains the complete AMR profile, including detailed <strong>resistance state</strong>, detected <strong>resistance genes/mutations</strong>, and supporting <strong>BLAST results</strong>.</p>
-</li>
-<li>
-<p><strong>CSV &amp; PDF Tables:</strong> An incorprated Python script, <code>parse_amr_json.py</code>, extracts and formats results into a <strong>CSV file</strong> and <strong>PDF summary table</strong> for easier visualization.</p>
-</li>
+<li><strong>JSON Output</strong>: Contains the complete AMR profile, including detailed resistance state, detected resistance genes/mutations, and supporting BLAST results.</li>
+<li><strong>CSV &amp; PDF Tables</strong>: An incorporated Python script, <code>parse_amr_json.py</code>, extracts and formats results into a CSV file and PDF summary table for easier visualization.</li>
 </ul>
 <div class="admonition techdetails">
 <p class="admonition-title">amr_search Technical Details</p>
@@ -11992,15 +12481,15 @@
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/pathogenwatch-oss/amr-search">AMRsearch</a></td>
+<td><a href="https://github.com/pathogenwatch-oss/amr-search">AMRsearch on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://cgps.gitbook.io/pathogenwatch">Pathogenwatch</a></td>
+<td><a href="https://github.com/pathogenwatch-oss/amr-search">AMRsearch on GitHub</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7545138/">PAARSNP: <em>rapid genotypic resistance prediction for </em>Neisseria gonorrhoeae*</a></td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7545138/">PAARSNP: rapid genotypic resistance prediction for <em>Neisseria gonorrhoeae</em></a></td>
 </tr>
 </tbody>
 </table>
@@ -13403,7 +13892,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 11, 2025 20:16:11 UTC">2025-08-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
   </span>
 
     

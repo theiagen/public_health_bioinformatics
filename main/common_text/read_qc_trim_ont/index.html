@@ -5298,7 +5298,7 @@
 <p><code>read_QC_trim_ont</code> is a sub-workflow that filters low-quality reads and trims low-quality regions of reads. It uses several tasks, described below.</p>
 </details>
 <!-- if: theiacov|freyja -->
-<div class="language-text highlight"><pre><span></span><code>??? task "`HRRT`: Human Host Sequence Removal"
+<div class="language-text highlight"><pre><span></span><code>??? toggle "`HRRT`: Human Host Sequence Removal"
 
     All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber).
 
@@ -5312,13 +5312,22 @@
         | Software Documentation |  [HRRT on NCBI](https://ncbiinsights.ncbi.nlm.nih.gov/2023/02/02/scrubbing-human-sequences-sra-submissions/) |
 
 
-??? toggle "Read quality filtering"
+??? toggle "`artic_guppyplex`: Read Filtering"
+    Reads are filtered by length with `artic_guppyplex`, which is a part of the [`ARTIC` protocol](https://artic.network/fieldbioinformatics/fieldbioinformatics-sop.html). Since TheiaCoV was developed primarily for amplicon-based viral sequencing, this task is included to remove chimeric reads that are either too short or too long.
 
-    Read filtering is performed using `artic guppyplex` which performs a quality check by filtering the reads by length to remove chimeric reads.
-</code></pre></div>
-<!-- endif -->
+    !!! techdetails "artic_guppyplex Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_artic_guppyplex.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_artic_guppyplex.wdl) |
+        | Software Source Code | [ARTIC on GitHub](https://github.com/artic-network/fieldbioinformatics/) |
+        | Software Documentation | [ARTIC Documentation](https://artic.readthedocs.io/en/latest/?badge=latest) |
 
-<div class="language-text highlight"><pre><span></span><code>    `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
+
+??? toggle "`Kraken2`: Read Identification"
+
+    `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
+
+    Kraken2 is run on both the raw and clean reads.
 
 
 
@@ -5328,45 +5337,105 @@
 
 
 
+
     !!! techdetails "Kraken2 Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
         | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/)  |
-        | Software Documentation | &lt;https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown&gt; |
+        | Software Documentation | [Kraken2 Documentation](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown) |
         | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0) |
 </code></pre></div>
+<!-- endif -->
+
 <!-- if: theiaprok -->
 <div class="language-text highlight"><pre><span></span><code>!!! dna "A note on estimated genome length"
 
-    By default, an estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to the information collated [here](https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt). This estimate can be overwritten by the user, and is used by `RASUSA`.
+    By default, the estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to [the information of thousands of NCBI bacterial assemblies collated here](https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt). This estimate can be overwritten by the user and is used by `Rasusa`.
 </code></pre></div>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>??? toggle "`nanoplot`: Plotting and quantifying long-read sequencing data"
-
-    Nanoplot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads.
-</code></pre></div>
 <!-- if: theiaprok -->
-<div class="language-text highlight"><pre><span></span><code>??? toggle "Read subsampling"
-    Samples are automatically randomly subsampled to 150X coverage using `RASUSA`.
 
-??? toggle "Plasmid prediction"
-    Plasmids are identified using replicon sequences used for typing from [PlasmidFinder](https://cge.food.dtu.dk/services/PlasmidFinder/).
+<div class="language-text highlight"><pre><span></span><code>??? toggle "`Rasusa`: Read Subsampling"
 
-??? toggle "Read filtering"
-    Reads are filtered by length and quality using `nanoq`. By default, sequences with less than 500 basepairs and quality score lower than 10 are filtered out to improve assembly accuracy.
+
+    `Rasusa` is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.
+
+
+    The `Rasusa` task performs subsampling on the input raw reads. By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs (0.7 Mb higher than the average bacterial genome length), and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the `genome_length` input parameter. The target subsampling depth can also be adjusted by modifying the `subsample_coverage` variable.
+
+
+    ???+ warning "Non-deterministic output(s)"
+        This task may yield non-deterministic outputs since it performs _random_ subsampling. To ensure reproducibility, set a a value for the `rasusa_seed` optional input variable.
+
+    !!! techdetails "Rasusa Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl) |
+        | Software Source Code | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
+        | Software Documentation | [Rasusa on GitHub](https://github.com/mbhall88/rasusa) |
+        | Original Publication(s) | [Rasusa: Randomly subsample sequencing reads to a specified coverage](https://doi.org/10.21105/joss.03941) |
+
+
+??? toggle "`Nanoq`: Read Filtering"
+
+    Reads are filtered by length and quality using `nanoq`. By default, sequences with less than 500 basepairs and quality scores lower than 10 are filtered out to improve assembly accuracy. These defaults are able to be modified by the user.
+
+    !!! techdetails "Nanoq Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_nanoq.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl) |
+        | Software Source Code | [Nanoq on GitHub](https://github.com/esteinig/nanoq) |
+        | Software Documentation | [Nanoq Documentation](https://github.com/esteinig/nanoq/blob/master/README.md) |
+        | Original Publication(s) | [Nanoq: ultra-fast quality control for nanopore reads](https://doi.org/10.21105/joss.02991)
+
+
+??? toggle "`Kraken2`: Read Identification (optional)"
+    To activate this task, set `call_kraken` to `true` and provide a value for `kraken_db`.
+
+    `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
+
+
+    Kraken2 is run on the raw read data.
+
+
+    !!! info "Database-dependent"
+        This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`.
+
+
+    A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on [Kraken2 standalone documentation](../standalone/kraken2.md#databases).
+
+
+
+    !!! techdetails "Kraken2 Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
+        | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/)  |
+        | Software Documentation | [Kraken2 Documentation](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown) |
+        | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0) |
 </code></pre></div>
 <!-- endif -->
 
-<div class="language-text highlight"><pre><span></span><code>!!! techdetails "read_QC_trim_ont Technical Details"
+<div class="language-text highlight"><pre><span></span><code>??? toggle "`NanoPlot`: Read Quantification"
+
+    NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads.
+
+    While this task currently is run _outside_ of the `read_QC_trim_ont` workflow, it is being included here as it calculates statistics on the read data. This is done so that the actual assembly genome lengths can be used (if an estimated genome length is not provided by the user) to ensure the estimated coverage statistics are accurate.
+
+    !!! techdetails "NanoPlot Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Task | [task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl) |
+        | Software Source Code | [NanoPlot on GitHub](https://github.com/wdecoster/NanoPlot) |
+        | Software Documentation | [NanoPlot Documentation](https://github.com/wdecoster/NanoPlot/blob/master/README.md) |
+        | Original Publication(s) | [NanoPack2: population-scale evaluation of long-read sequencing data](https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911) |
+
+!!! techdetails "read_QC_trim_ont Technical Details"
     |  | Links |
     | --- | --- |
-    | Sub-workflow | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
-    | Tasks | [task_fastq_scan.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl)&lt;br&gt;[task_nanoplot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_nanoplot.wdl)&lt;br&gt;[task_rasusa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_rasusa.wdl)&lt;br&gt;[task_nanoq.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_nanoq.wdl)
-    | Software Source Code | [fastq-scan](https://github.com/rpetit3/fastq-scan)&lt;br&gt;[NanoPlot](https://github.com/wdecoster/NanoPlot)&lt;br&gt;[RASUSA](https://github.com/mbhall88/rasusa)&lt;br&gt;[nanoq](https://github.com/esteinig/nanoq) |
-    | Software Documentation | [NCBI Scrub on GitHub](&lt;https://github.com/ncbi/sra-human-scrubber/blob/master/README.md&gt;)&lt;br&gt;[NanoPlot documentation on GitHub](https://github.com/wdecoster/NanoPlot/tree/master?tab=readme-ov-file#readme)&lt;br&gt;[Rasusa on GitHub](https://github.com/mbhall88/rasusa)&lt;br&gt;[Nanoq on GitHub](https://github.com/esteinig/nanoq)&lt;br&gt;[Artic Pipeline ReadTheDocs](https://artic.readthedocs.io/en/latest/?badge=latest)&lt;br&gt;[Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/wiki)
-    | Original Publication(s) | [NanoPack2: population-scale evaluation of long-read sequencing data](https://academic.oup.com/bioinformatics/article/39/5/btad311/7160911)&lt;br&gt;[Rasusa: Randomly subsample sequencing reads to a specified coverage](https://doi.org/10.21105/joss.03941)&lt;br&gt;[Nanoq: ultra-fast quality control for nanopore reads](https://doi.org/10.21105/joss.02991)&lt;br&gt;[Improved metagenomic analysis with Kraken 2](https://genomebiology.biomedcentral.com/articles/10.1186/s13059-019-1891-0) |
+    | Subworkflow | [wf_read_QC_trim_ont.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_ont.wdl) |
 </code></pre></div>
 
 
@@ -5390,7 +5459,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10 UTC">2025-05-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
   </span>
 
     
