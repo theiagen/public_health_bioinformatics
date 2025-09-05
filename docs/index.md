@@ -76,7 +76,9 @@ A Public Service Announcement regarding calculating the contribution math:
 
 Andrew Hale added a .txt database file to docs/assets that artifically inflates his line 
 count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract 
-55,316 from his line count when updating this list. okay thanks byee
+55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt database in a later commit (on 2025-09-03), so also please subtract 55,316 from Sage Wright's line count as well.
+
+okay thanks byee
 -->
 
 (Ordered by contribution [# of lines changed] as of 2025-07-16)

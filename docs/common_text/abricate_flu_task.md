@@ -10,4 +10,4 @@
         | Task | [task_abricate.wdl (abricate_flu subtask)](https://github.com/theiagen/public_health_bioinformatics/blob/2dff853defc6ea540a058873f6fe6a78cc2350c7/tasks/gene_typing/drug_resistance/task_abricate.wdl#L59) |
         | Software Source Code | [ABRicate on GitHub](https://github.com/tseemann/abricate) |
         | Software Documentation | [ABRicate on GitHub](https://github.com/tseemann/abricate) |
-        | Original Publication(s) | INSaFLU database: _[INSaFLU: an automated open web-based bioinformatics suite "from-reads" for influenza whole-genome-sequencing-based surveillance](https://doi.org/10.1186/s13073-018-0555-0)_ |
+        | Original Publication(s) | _INSaFLU database_: [INSaFLU: an automated open web-based bioinformatics suite "from-reads" for influenza whole-genome-sequencing-based surveillance](https://doi.org/10.1186/s13073-018-0555-0) |
