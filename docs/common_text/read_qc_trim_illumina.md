@@ -1,5 +1,4 @@
 ??? task "`read_QC_trim`: Read Quality Trimming, Adapter Removal, Quantification, and Identification"
-
     `read_QC_trim` is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the `read_QC_trim` sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.
 
 <!-- if: theiacov|freyja|theiaviral -->
@@ -19,9 +18,7 @@
 
 {{ include_md("common_text/fastp_task.md", indent=8) }}
 
-    ??? toggle "Adapter removal"
-
-{{ include_md("common_text/bbduk_task.md", indent=8) }}
+{{ include_md("common_text/bbduk_task.md", indent=4, replacements={"??? task": "??? toggle"}) }}
 
     ??? toggle "Read Quantification"
 
@@ -40,6 +37,10 @@
 {{ include_md("common_text/midas_task.md", indent=4, replacements={"??? task": "??? toggle"}) }}
 <!-- endif -->
 
+<!-- if: theiaprok|theiaeuk -->
+{{ include_md("common_text/kraken2_task.md", condition="theiaprokillumina", indent=4, replacements={"??? task": "??? toggle"}) }}
+<!-- endif -->
+
 <!-- if: theiacov -->
 {{ include_md("common_text/kraken2_task.md", condition="theiacov", indent=4, replacements={"??? task": "??? toggle"}) }}
 <!-- endif -->
@@ -51,3 +52,8 @@
 
 {{ include_md("common_text/krakentools_task.md", condition="theiaviral", indent=4, replacements={'??? task "`krakentools`"' : '??? toggle "Read Extraction"'}) }}
 <!-- endif -->
+
+    !!! techdetails "read_QC_trim Technical Details"
+        |  | Links |
+        | --- | --- |
+        | Subworkflow | [wf_read_QC_trim_pe.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl)<br>[wf_read_QC_trim_se.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl) |

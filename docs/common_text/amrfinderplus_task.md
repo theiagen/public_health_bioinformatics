@@ -1,4 +1,4 @@
-??? task "`AMRFinderPlus`: AMR Genotyping (default)"
+??? task "`AMRFinderPlus`: AMR Genotyping"
 
     NCBI's [AMRFinderPlus](https://github.com/ncbi/amr/wiki) is the default antimicrobial resistance (AMR) detection tool used in TheiaProk. ResFinder may be used alternatively and if so, AMRFinderPlus is not run. 
 

@@ -1,5 +1,6 @@
-<!-- if: theiaprok -->
+<!-- if: theiaprokillumina|ont -->
 ??? task "`Kraken2`: Read Identification (optional)"
+    To activate this task, set `call_kraken` to `true` and provide a value for `kraken_db`.
 <!-- endif -->
 <!-- if: theiacov|freyja -->
 ??? task "`Kraken2`: Read Identification"
@@ -17,6 +18,10 @@
     Kraken2 is run on both the raw and clean reads.
 <!-- endif -->
 
+<!-- if: ont -->
+    Kraken2 is run on the raw read data.
+<!-- endif -->
+
 <!-- if: theiaviral -->
     This task runs on cleaned reads passed from the `read_QC_trim` subworkflow and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones.
 <!-- endif -->
@@ -25,9 +30,11 @@
         This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`.
 <!-- endif -->
   
-<!-- if: theiaprok -->
+<!-- if: theiaprokillumina -->
     As an alternative to `MIDAS` (see above), the `Kraken2` task can also be turned on through setting the `call_kraken` input variable as `true` for the identification of reads to detect contamination with non-target taxa.
+<!-- endif -->
 
+<!-- if: theiaprokillumina|ont -->
     A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on [Kraken2 standalone documentation](../standalone/kraken2.md#databases).
 <!-- endif -->
 
@@ -46,5 +53,5 @@
         | --- | --- |
         | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
         | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/)  |
-        | Software Documentation | <https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown> |
+        | Software Documentation | [Kraken2 Documentation](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown) |
         | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0) |
