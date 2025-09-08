@@ -2740,3 +2740,18 @@ zip_files	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Zip_Column_C
 zip_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Zip_Column_Content	runtime
 zip_files	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Zip_Column_Content	docker
 zip_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Zip_Column_Content	runtime
+ont_barcode_concatenation	input_bucket_path	String	The full path to your **unconcatenated** data's Google bucket folder location, including the gs://; can be easily copied by right-clicking and copying the link address in the header after navigating to the folder in the "Files" section of the "Data" tab on Terra (see above for examples)		Required	ONT_Barcode_Concatenation	general
+ont_barcode_concatenation	output_bucket_path	String	The full path to where you want the **concatenated** data to be stored as a Google bucket folder location, including the gs://; can be easily copied by right-clicking and copying the link address in the header after navigating to the desired folder in the "Files" section of the "Data" tab on Terra (see above for examples)		Required	ONT_Barcode_Concatenation	general
+ont_barcode_concatenation	terra_project	String	The name of the Terra project where your data table will be located		Required	ONT_Barcode_Concatenation	general
+ont_barcode_concatenation	terra_table_name	String	The name of the Terra table you want to add your newly concatenated samples to		Required	ONT_Barcode_Concatenation	general
+ont_barcode_concatenation	terra_workspace	String	"The name of the Terra workspace where your data table will be located	"		Required	ONT_Barcode_Concatenation	general
+cat_ont_barcodes	cpu	Int	Number of CPUs to allocate to the task	2	Optional	ONT_Barcode_Concatenation	runtime
+cat_ont_barcodes	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	ONT_Barcode_Concatenation	runtime
+cat_ont_barcodes	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ont-barcodes:0.0.2	Optional	ONT_Barcode_Concatenation	docker
+cat_ont_barcodes	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	ONT_Barcode_Concatenation	runtime
+create_terra_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	ONT_Barcode_Concatenation	runtime
+create_terra_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	ONT_Barcode_Concatenation	runtime
+create_terra_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	ONT_Barcode_Concatenation	docker
+create_terra_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	ONT_Barcode_Concatenation	runtime
+ont_barcode_concatenation	barcode_renaming_file	File	A tab-delimited file where the name of the barcode folders are mapped to the desired sample name in the Terra table (see above for examples)		Optional	ONT_Barcode_Concatenation	general
+ont_barcode_concatenation	file_extension	String	If your ONT data ends in a different extension, like ".fq.gz" or ".fastq", you can indicate that here.	".fastq.gz"	Optional	ONT_Barcode_Concatenation	general
