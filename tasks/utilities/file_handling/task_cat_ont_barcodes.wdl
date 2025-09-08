@@ -12,6 +12,9 @@ task cat_ont_barcodes {
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ont-barcodes:0.0.2"
     Int memory = 4
   }
+  meta {
+    volatile: true
+  }
   command <<<
     set -euo pipefail
 
