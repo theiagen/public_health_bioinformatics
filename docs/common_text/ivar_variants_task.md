@@ -1,7 +1,17 @@
-??? task "`ivar_variants`"
+??? task "`ivar_variants`: Variant Calling"
+    iVar uses the outputs of `samtools mpileup` to call single nucleotide variants (SNVs) and insertions/deletions (indels). Several key parameters can be set to determine the stringency of variant calling, including minimum quality, minimum allele frequency, and minimum depth.
 
-    The `ivar_variants` task wraps the [iVar](https://andersen-lab.github.io/ivar/html/index.html) tool to call variants from the sorted BAM file produced by the `bwa` task. It uses the `ivar variants` command to identify and report variants based on the aligned reads. The `ivar_variants` task will filter all variant calls based on user-defined parameters, including `min_map_quality`, `min_depth`, and `min_allele_freq`. This task will return a VCF file containing the variant calls, along with the total number of variants, and the proportion of intermediate variant calls.
+    This task returns a VCF file containing all called variants, the number of detected variants, and the proportion of those variants with allele frequencies between 0.6 and 0.9 (also known as _intermediate_ variants).
 
+<!-- if: theiacov -->
+    For TheiaCoV, the following default parameters are used:
+    
+    - minimum quality: 20
+    - minimum depth: 100
+    - minimum allele frequency: 0.06
+<!-- endif -->
+
+<!-- if: theiaviral -->
     ??? dna "`min_depth` input parameter"
         This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is `10`.
 
@@ -10,7 +20,7 @@
 
     ??? dna "`min_allele_freq` input parameter"
         This parameter accepts a float value to set the minimum allele frequency for variant calling and subsequent consensus sequence generation. The default value is `0.6`.
-
+<!-- endif -->
     !!! techdetails "iVar Technical Details"
         |  | Links |
         | --- | --- |

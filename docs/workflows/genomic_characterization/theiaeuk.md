@@ -68,23 +68,23 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
 {{ include_md("common_text/read_screen_task.md", condition="theiaeuk", indent=8) }}
 {{ include_md("common_text/rasusa_task.md", indent=8, condition="theiaeukillumina") }}
-{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaeuk", indent=8) }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiaeuk", indent=8) }}
 {{ include_md("common_text/qc_check_task.md", condition="theiaeuk", indent=8) }}
 
         !!! dna ""
             These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
-{{ include_md("common_text/digger_denovo_task.md", indent=8) }}
+{{ include_md("common_text/digger_denovo_wf.md", indent=8) }}
 {{ include_md("common_text/quast_task.md", indent=8) }}
 {{ include_md("common_text/cg_pipeline_task.md", indent=8) }}
 
     === "TheiaEuk_ONT"
 
-{{ include_md("common_text/read_qc_trim_ont.md", condition="theiaprok", indent=8) }}
+{{ include_md("common_text/read_qc_trim_ont_wf.md", condition="theiaprok", indent=8) }}
 
         !!! dna ""
             These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
-{{ include_md("common_text/flye_denovo_task.md", condition="theiaeuk", indent=8) }}
+{{ include_md("common_text/flye_denovo_wf.md", condition="theiaeuk", indent=8) }}
 
 #### Organism-agnostic characterization
 

@@ -1,4 +1,6 @@
-??? task "`fastp`: Read Trimming"
+??? task "`fastp`: Read Trimming (alternative)"
+    To activate this task, set `read_processing` to `"fastp"`.
+
     `fastp` trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with `trim_window_size`), cutting once the average quality within the window falls below the `trim_quality_trim_score` (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below `trim_minlen` (default of 75 for paired-end, 25 for single-end).
 
     `fastp` also has additional default parameters and features that are not a part of `trimmomatic`'s default configuration.

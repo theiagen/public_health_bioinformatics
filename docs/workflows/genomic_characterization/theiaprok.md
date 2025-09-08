@@ -83,7 +83,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 !!! dna ""
     These tasks are performed regardless of organism. They include tasks that are performed regardless of and specific for the input data type. They perform read trimming and assembly appropriate to the input data type.
 
-{{ include_md("common_text/versioning_task.md", condition="theiaprok") }}
+{{ include_md("common_text/versioning_task.md") }}
 
 #### Assembly Tasks
 
@@ -94,11 +94,11 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 {{ include_md("common_text/read_screen_task.md", condition="theiaprok", indent=8) }}
 
         !!! dna ""
-            These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
+            These tasks clean then assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
-{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaprok", indent=8) }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiaprok", indent=8) }}
 {{ include_md("common_text/cg_pipeline_task.md", indent=8) }}
-{{ include_md("common_text/digger_denovo_task.md", indent=8) }}
+{{ include_md("common_text/digger_denovo_wf.md", indent=8) }}
 
     === "TheiaProk_Illumina_SE"
 
@@ -106,21 +106,21 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 {{ include_md("common_text/read_screen_task.md", condition="theiaprok", indent=8) }}
 
         !!! dna ""
-            These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
+            These tasks clean then assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
-{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaprok", indent=8) }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiaprok", indent=8) }}
 {{ include_md("common_text/cg_pipeline_task.md", indent=8) }}
-{{ include_md("common_text/digger_denovo_task.md", indent=8) }}
+{{ include_md("common_text/digger_denovo_wf.md", indent=8) }}
 
     === "TheiaProk_ONT"
 
 {{ include_md("common_text/read_screen_task.md", condition="theiaprok", indent=8) }}
 
         !!! dna ""
-            These tasks assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
+            These tasks clean then assemble the reads into a _de novo_ assembly and assess the quality of the assembly.
 
-{{ include_md("common_text/read_qc_trim_ont.md", condition="theiaprok", indent=8) }}
-{{ include_md("common_text/flye_denovo_task.md", condition="theiaprok", indent=8) }}
+{{ include_md("common_text/read_qc_trim_ont_wf.md", condition="theiaprok", indent=8) }}
+{{ include_md("common_text/flye_denovo_wf.md", condition="theiaprok", indent=8) }}
 
     === "TheiaProk_FASTA"
         !!! dna ""

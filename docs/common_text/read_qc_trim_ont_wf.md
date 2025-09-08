@@ -2,11 +2,11 @@
     `read_QC_trim_ont` is a sub-workflow that filters low-quality reads and trims low-quality regions of reads. It uses several tasks, described below.
 
 <!-- if: theiacov|freyja -->
-{{ include_md("common_text/ncbi_scrub_task.md", indent=4, replacements={"??? task": "??? toggle"}) }}
+{{ include_md("common_text/ncbi_scrub_task.md", indent=4) }}
 
-{{ include_md("common_text/artic_guppyplex_task.md", indent=4, replacements={"??? task": "??? toggle"}) }}
+{{ include_md("common_text/artic_guppyplex_task.md", indent=4) }}
 
-{{ include_md("common_text/kraken2_task.md", indent=4, replacements={"??? task": "??? toggle"}, condition="theiacov") }}
+{{ include_md("common_text/kraken2_task.md", indent=4, condition="theiacov") }}
   
 <!-- endif -->
   
@@ -18,14 +18,14 @@
 
 <!-- if: theiaprok -->
 
-{{ include_md("common_text/rasusa_task.md", indent=4, replacements={"??? task": "??? toggle"}, condition="ont") }}
+{{ include_md("common_text/rasusa_task.md", indent=4, condition="ont") }}
 
-{{ include_md("common_text/nanoq_task.md", indent=4, replacements={"??? task": "??? toggle"}) }}
+{{ include_md("common_text/nanoq_task.md", indent=4) }}
 
-{{ include_md("common_text/kraken2_task.md", indent=4, replacements={"??? task": "??? toggle"}, condition="ont") }}
+{{ include_md("common_text/kraken2_task.md", indent=4, condition="ont") }}
 <!-- endif -->
 
-{{ include_md("common_text/nanoplot_task.md", indent=4, replacements={"??? task": "??? toggle"}, condition="ont") }}
+{{ include_md("common_text/nanoplot_task.md", indent=4, condition="ont") }}
 
     !!! techdetails "read_QC_trim_ont Technical Details"
         |  | Links |
