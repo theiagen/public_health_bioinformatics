@@ -6,7 +6,7 @@
     !!! techdetails "emm-typing-tool Technical Details"            
         |  | Links |
         | --- | --- |
-        | Task | [task_emmtypingtool.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_emmtyper.wdl) |
+        | Task | [task_emmtyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_emmtyper.wdl) |
         | Software Source Code | [emmtyper on GitHub](https://github.com/MDU-PHL/emmtyper/tree/master) |
         | Software Documentation | [emmtyper on GitHub](https://github.com/MDU-PHL/emmtyper/tree/master) |
         | Original Publication(s) | _emm typing scheme_: [A systematic and functional classification of Streptococcus pyogenes that serves as a new tool for molecular typing and vaccine development](https://doi.org/10.1093/infdis/jiu260) |

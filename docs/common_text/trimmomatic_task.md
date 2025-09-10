@@ -1,4 +1,6 @@
-??? task "`Trimmomatic`: Read Trimming"
+??? task "`Trimmomatic`: Read Trimming (default)"
+    Read proccessing is available via `Trimmomatic` by default.
+
     Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with `trim_window_size`), cutting once the average quality within the window falls below the `trim_quality_trim_score` (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below `trim_minlen` (default of 75 for paired-end, 25 for single-end).
 
     !!! techdetails "`Trimmomatic` Technical Details"

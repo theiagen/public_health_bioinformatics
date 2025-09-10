@@ -6,7 +6,7 @@
 
 ## ONT_Barcode_Concatenation_PHB
 
-Unconcatenated ONT data is the bane of all humanity. This workflow will automatically concatenate all reads in a given folder and upload those reads to a Terra data table.
+This workflow will automatically concatenate all reads in a given folder and upload those reads to a Terra data table.
 
 We recommend running this workflow with **"Run workflow with inputs defined by file paths"** selected in Terra. This will allow you to upload your data files and provide the necessary information for the workflow without having to specify a data table. There are no outputs for this workflow, as the data is added to either a new or existing table in your workspace.
 

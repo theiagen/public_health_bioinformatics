@@ -155,9 +155,9 @@ We've provided the following information to help you set up the workflow for eac
         {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_FASTA_Batch"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
-### Organism-specific parameters and logic {% raw %} {#org-specific} {% endraw %}
+### Organism-Specific Parameters {% raw %} {#org-specific} {% endraw %}
 
-The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflows. This step automatically sets the different parameters needed for each downstream tool to the appropriate value for the user-designated organism (by default, `"sars-cov-2"` is the default organism).
+**The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflows**. This step automatically sets the different parameters needed for each downstream tool to the appropriate value for the user-designated organism (by default, `"sars-cov-2"` is the default organism).
 
 !!! dna ""
     The following tables include the relevant organism-specific parameters; **all of these default values can be overwritten by providing a value for the "Overwrite Variable Name" field**.
@@ -375,74 +375,60 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         </div>
 
-### Workflow Tasks
+### Core Tasks
 
-All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT, and ClearLabs workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaCoV workflows subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
-
-#### Core tasks
-
-!!! tip ""
-    These tasks are performed regardless of organism, and perform read trimming and various quality control steps.
+!!! dna ""
+    These tasks are performed for all organisms. They include tasks that are performed regardless of and specific for the input data type. They perform read trimming and assembly appropriate to the input data type.
 
 {{ include_md("common_text/versioning_task.md") }}
 
+#### Assembly Tasks
+
 !!! caption ""
     === "TheiaCoV_Illumina_PE"
-{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiacov", indent=8) }}
+
+        **_If non-influenza_**
+{{ include_md("common_text/ivar_consensus_wf.md", indent=8) }}
+
+        **_If influenza_**
+{{ include_md("common_text/irma_task.md", condition="assembly", indent=8)}}
 
     === "TheiaCoV_Illumina_SE"
-{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/ivar_consensus_wf.md", condition="theiacov", indent=8) }}
 
     === "TheiaCoV_ONT"
-{{ include_md("common_text/read_qc_trim_ont.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/read_qc_trim_ont_wf.md", condition="theiacov", indent=8) }}
 
+        **_If non-influenza_**
+{{ include_md("common_text/artic_consensus_task.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/assembly_metrics_task.md", indent=8, condition="theiacov") }}
+
+        **_If influenza_**
+{{ include_md("common_text/irma_task.md", condition="assembly", indent=8) }}
+{{ include_md("common_text/assembly_metrics_task.md", indent=8, condition="theiacov") }}
+
+    === "TheiaCoV_ClearLabs"
+{{ include_md("common_text/ncbi_scrub_task.md", indent=8) }}
+{{ include_md("common_text/fastq_scan_task.md", condition="clearlabs", indent=8) }}
+{{ include_md("common_text/kraken2_task.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/artic_consensus_task.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/assembly_metrics_task.md", indent=8, condition="theiacov") }}
+
+    === "TheiaCoV_FASTA"
+        !!! dna ""
+            Since this workflow requires FASTA files as input, no assembly or read trimming is performed, and the workflow proceeds directly to the "post-assembly tasks" section below.
+
+#### Post-Assembly Tasks
+
+!!! dna ""
+    These tasks are performed for all organisms after assembly (or directly after input for TheiaCoV_FASTA).
+
+{{ include_md("common_text/consensus_qc_task.md") }}
 {{ include_md("common_text/qc_check_task.md", condition="theiacov")}}
 
-#### Assembly tasks
-
-!!! tip ""
-    Either one of these tasks is run depending on the organism and workflow type.
-
-??? toggle "`ivar_consensus`: Alignment, Consensus, Variant Detection, and Assembly Statistics ==_for non-flu organisms in Illumina workflows_=="
-
-    `ivar_consensus` is a sub-workflow within TheiaCoV that performs reference-based consensus assembly using the [iVar](https://andersen-lab.github.io/ivar/html/index.html) tool by Nathan Grubaugh from the Andersen lab.
-
-    The following steps are performed as part of this sub-workflow:
-
-    1. Cleaned reads are aligned to the appropriate reference genome (see also the [*organism-specific parameters and logic*](./theiacov.md#org-specific) section above) using [BWA](http://bio-bwa.sourceforge.net/) to generate a Binary Alignment Mapping (BAM) file.
-    2. If `trim_primers` is set to true, primers will be removed using `ivar trim`.
-        1.  General statistics about the remaining reads are calculated.
-    3. The `ivar consensus` command is run to generate a consensus assembly.
-    4. General statistics about the assembly are calculated..
-
-    !!! techdetails "iVar Consensus Technical Details"    
-        | Workflow | TheiaCoV_Illumina_PE & TheiaCoV_Illumina_SE |
-        | --- | --- |
-        | Sub-workflow | [wf_ivar_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_ivar_consensus.wdl) |
-        | Tasks | [task_bwa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl)<br>[task_ivar_primer_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl)<br>[task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl)<br>[task_ivar_variant_call.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl)<br>[task_ivar_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_ivar_consensus.wdl) |
-        | Software Source Code | [BWA on GitHub](https://github.com/lh3/bwa), [iVar on GitHub](https://andersen-lab.github.io/ivar/html/) |
-        | Software Documentation | [BWA on SourceForge](https://bio-bwa.sourceforge.net/), [iVar on GitHub](https://andersen-lab.github.io/ivar/html/) |
-        | Original Publication(s) | [Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM](https://doi.org/10.48550/arXiv.1303.3997)<br>[An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](http://dx.doi.org/10.1186/s13059-018-1618-7) |
-
-??? toggle "`artic_consensus`: Alignment, Primer Trimming, Variant Detection, and Consensus ==_for non-flu organisms in ONT & ClearLabs workflows_=="
-
-    Briefly, input reads are aligned to the appropriate reference with [minimap2](https://github.com/lh3/minimap2) to generate a Binary Alignment Mapping ([BAM](https://en.wikipedia.org/wiki/Binary_Alignment_Map)) file. Primer sequences are then removed from the BAM file and a consensus assembly file is generated using the [Artic minion](https://artic.readthedocs.io/en/latest/commands/#basecaller) Medaka argument.
-
-    !!! info ""
-        Read-trimming is performed on raw read data generated on the ClearLabs instrument and thus not a required step in the TheiaCoV_ClearLabs workflow.
-
-    General statistics about the assembly are generated with the `consensus_qc` task ([task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl)).
-
-    !!! techdetails "Artic Consensus Technical Details"
-        |  | Links |
-        | --- | --- |
-        | Task | [task_artic_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_artic_consensus.wdl) |
-        | Software Source Code | [Artic on GitHub](https://github.com/artic-network/fieldbioinformatics) |
-        | Software Documentation | [Artic pipeline](https://artic.readthedocs.io/en/latest/?badge=latest) |
-
-{{ include_md("common_text/irma_task.md", condition="assembly")}}
-
-#### Organism-specific characterization tasks {% raw %} {#org-specific-tasks} {% endraw %}
+#### Organism-specific Characterization Tasks {% raw %} {#org-specific-tasks} {% endraw %}
 
 !!! dna ""
 
@@ -499,7 +485,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
 {{ include_md("common_text/abricate_flu_task.md", indent=4) }}
 
-{{ include_md("common_text/flu_antiviral_substitutions_task.md", indent=4) }}
+{{ include_md("common_text/flu_antiviral_substitutions_wf.md", indent=4) }}
 
 {{ include_md("common_text/genoflu_task.md", indent=4) }}
 

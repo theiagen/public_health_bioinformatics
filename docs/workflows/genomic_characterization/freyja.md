@@ -121,19 +121,19 @@ This workflow runs on the sample level.
 
 === "Illumina paired-end input data"
 
-{{ include_md("common_text/read_qc_trim_illumina.md", indent=4, condition="freyja") }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", indent=4, condition="freyja") }}
 {{ include_md("common_text/bwa_task.md", condition="freyja", indent=4) }}
 {{ include_md("common_text/primer_trim_task.md", indent=4) }}
 
 === "Illumina single-end input data"
 
-{{ include_md("common_text/read_qc_trim_illumina.md", indent=4, condition="freyja") }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", indent=4, condition="freyja") }}
 {{ include_md("common_text/bwa_task.md", condition="freyja", indent=4) }}
 {{ include_md("common_text/primer_trim_task.md", indent=4) }}
 
 === "ONT input data"
 
-{{ include_md("common_text/read_qc_trim_ont.md", indent=4, condition="freyja") }}
+{{ include_md("common_text/read_qc_trim_ont_wf.md", indent=4, condition="freyja") }}
 {{ include_md("common_text/minimap2_task.md", condition="only_map_ont", indent=4) }}
 
 ??? task "`freyja` Details"

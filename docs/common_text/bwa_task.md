@@ -6,6 +6,11 @@
 ??? task "`bwa`: Read Alignment to the Assembly"
     BWA (Burrow-Wheeler Aligner) is used to align the cleaned read files to generated assembly file in order to generate an alignment. The resulting BAM file is directly passed to the Pilon task to polish the assembly for errors.
 
+<!-- if: theiacov -->
+??? task "`bwa`: Read Alignment to the Reference"
+    BWA (Burrow-Wheeler Aligner) is used to align the cleaned read files to a reference genome, either  determined by the user or provided by the [_organism-specific parameters_ section](./theiacov.md#org-specific) (see above). The resulting BAM file is used for primer trimming, variant calling, and consensus generation in downstream tasks.
+<!-- endif -->
+
 <!-- if: freyja -->
 ??? task "`bwa` Details"
     This task aligns the cleaned short reads (Illumina) to the reference genome provided by the user.

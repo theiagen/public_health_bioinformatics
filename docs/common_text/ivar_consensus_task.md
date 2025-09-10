@@ -1,7 +1,15 @@
-??? task "`ivar consensus`"
+??? task "`ivar_consensus`: Consensus Assembly"
+    iVar's `consensus` tool generates a reference-based consensus assembly. Several parameters can be set that determine the stringency of the consensus assembly, including minimum quality, minimum allele frequency, and minimum depth.
 
-    The `consensus` task wraps the [iVar](https://andersen-lab.github.io/ivar/html/index.html) tool to generate a reference-based consensus assembly from the sorted BAM file produced by the `bwa` task. It uses the `ivar consensus` command to call variants and generate a consensus sequence based on those mapped reads. The `consensus` task will filter all variant calls based on user-defined parameters, including `min_map_quality`, `min_depth`, and `min_allele_freq`. This task will return a consensus sequence in FASTA format and the samtools mpileup output.
+<!-- if: theiacov -->
+    For TheiaCoV, the following default parameters are used:
+    
+    - minimum quality: 20
+    - minimum depth: 100
+    - minimum allele frequency: 0.6
+<!-- endif -->
 
+<!-- if: theiaviral -->
     This task is functional for segmented viruses by iteratively executing iVar on a contig-by-contig basis and concantenating resulting consensus contigs.
 
     ??? dna "`min_depth` input parameter"
@@ -12,6 +20,7 @@
 
     ??? dna "`min_allele_freq` input parameter"
         This parameter accepts a float value to set the minimum allele frequency for variant calling and subsequent consensus sequence generation. The default value is `0.6`.
+<!-- endif -->
 
     !!! techdetails "iVar Technical Details"
         |  | Links |

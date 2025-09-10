@@ -1,5 +1,5 @@
 <!-- if: assembly -->
-??? toggle "`irma`: Assembly and Characterization ==_for flu in TheiaCoV_Illumina_PE & TheiaCoV_ONT_=="
+??? task "`irma`: Assembly and Characterization"
 <!-- endif -->
 <!-- if: task -->
 ??? task "`irma`"

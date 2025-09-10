@@ -2,14 +2,11 @@
 ??? task "`Kraken2`: Read Identification (optional)"
     To activate this task, set `call_kraken` to `true` and provide a value for `kraken_db`.
 <!-- endif -->
-<!-- if: theiacov|freyja -->
+<!-- if: theiacov|freyja|theiaviral -->
 ??? task "`Kraken2`: Read Identification"
 <!-- endif -->
 <!-- if: kraken -->
 ??? task "Kraken2"
-<!-- endif -->
-<!-- if: theiaviral -->
-??? toggle "Read Identification"
 <!-- endif -->
 
     `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.

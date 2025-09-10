@@ -1,4 +1,6 @@
-??? task "`FastQC`: Read Quantification"
+??? task "`FastQC`: Read Quantification (alternative)"
+    To activate this task, set `read_qc` to `"fastqc"`.
+
     `FastQC` quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads.
 
     This tool also provides a graphical visualization of the read quality.
