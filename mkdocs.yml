@@ -28,6 +28,7 @@ nav:
                - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
                - Create_Terra_Table: workflows/data_import/create_terra_table.md
                - Fetch_SRR_Accession: workflows/data_import/fetch_srr_accession.md
+               - ONT_Barcode_Concatenation: workflows/data_import/ont_barcode_concatenation.md
                - SRA_Fetch: workflows/data_import/sra_fetch.md
             - Genomic Characterization:
                - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
@@ -92,6 +93,7 @@ nav:
                - Fetch_SRR_Accession: workflows/data_import/fetch_srr_accession.md
                - Kraken2: workflows/standalone/kraken2.md
                - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
+               - ONT_Barcode_Concatenation: workflows/data_import/ont_barcode_concatenation.md
                - PhyloCompare: workflows/standalone/phylocompare.md
                - RASUSA: workflows/standalone/rasusa.md
                - Rename_FASTQ: workflows/standalone/rename_fastq.md
@@ -173,6 +175,7 @@ nav:
             - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
             - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
             - Nextclade_Batch: workflows/phylogenetic_placement/nextclade_batch.md
+            - ONT_Barcode_Concatenation: workflows/data_import/ont_barcode_concatenation.md
             - Pangolin_Update: workflows/genomic_characterization/pangolin_update.md
             - PhyloCompare: workflows/standalone/phylocompare.md
             - RASUSA: workflows/standalone/rasusa.md
@@ -295,8 +298,8 @@ extra:
   social:
     - icon: fontawesome/brands/github
       link: https://github.com/theiagen
-    - icon: fontawesome/brands/twitter
-      link: https://twitter.com/theiagen
+    - icon: fontawesome/brands/bluesky
+      link: https://bsky.app/profile/theiagen.bsky.social
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/theiagen
   version:
