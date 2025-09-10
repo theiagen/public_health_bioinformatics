@@ -11151,16 +11151,11 @@
 <details class="task">
 <summary><code>read_QC_trim</code>: Read Quality Trimming, Adapter Removal, Quantification, and Identification</summary>
 <p><code>read_QC_trim</code> is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the <code>read_QC_trim</code> sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.</p>
-<details class="toggle">
-<summary>Read quality trimming</summary>
 <div class="admonition dna">
-<p class="admonition-title"><code>read_processing</code> with <code>"trimmomatic"</code> (default) or <code>"fastp"</code></p>
-<p>Either <code>trimmomatic</code> or <code>fastp</code> can be used for read-quality trimming. Trimmomatic is used by default. </p>
-<p>To activate <code>fastp</code>, set the <code>read_processing</code> input parameter to <code>"fastp"</code>. </p>
-<p>These tasks are mutually exclusive.</p>
-</div>
+<p>By default, <code>read_processing</code> is set to <code>"trimmomatic"</code>. To use <code>fastp</code> instead, set <code>read_processing</code> to <code>"fastp"</code>. These tasks are mutually exclusive.</p>
 <details class="task">
-<summary><code>Trimmomatic</code>: Read Trimming</summary>
+<summary><code>Trimmomatic</code>: Read Trimming (default)</summary>
+<p>Read proccessing is available via <code>Trimmomatic</code> by default.</p>
 <p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
 <div class="admonition techdetails">
 <p class="admonition-title"><code>Trimmomatic</code> Technical Details</p>
@@ -11193,7 +11188,8 @@
 </div>
 </details>
 <details class="task">
-<summary><code>fastp</code>: Read Trimming</summary>
+<summary><code>fastp</code>: Read Trimming (alternative)</summary>
+<p>To activate this task, set <code>read_processing</code> to <code>"fastp"</code>.</p>
 <p><code>fastp</code> trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
 <p><code>fastp</code> also has additional default parameters and features that are not a part of <code>trimmomatic</code>'s default configuration.</p>
 <details class="toggle">
@@ -11256,8 +11252,8 @@
 </table>
 </div>
 </details>
-</details>
-<details class="toggle">
+</div>
+<details class="task">
 <summary><code>BBDuk</code>: Adapter Trimming and PhiX Removal</summary>
 <p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">Illumina adapters here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
 <p>The <code>bbduk</code> task removes adapters from sequence reads. To do this:</p>
@@ -11291,16 +11287,11 @@
 </table>
 </div>
 </details>
-<details class="toggle">
-<summary>Read Quantification</summary>
 <div class="admonition dna">
-<p class="admonition-title"><code>read_qc</code> with <code>"fastq-scan"</code> (default) or <code>"fastqc"</code></p>
-<p>Either <code>fastq-scan</code> or <code>fastqc</code> can be used for read quantification. <code>fastq-scan</code> is used by default. </p>
-<p>To activate <code>fastqc</code>, set the <code>read_qc</code> input parameter to <code>"fastqc"</code>.</p>
-<p>These tasks are mutually exclusive.</p>
-</div>
+<p>By default, <code>read_qc</code> is set to <code>"fastq_scan"</code>. To use <code>fastqc</code> instead, set <code>read_qc</code> to <code>"fastqc"</code>. These tasks are mutually exclusive.</p>
 <details class="task">
-<summary><code>fastq-scan</code>: Read Quantification</summary>
+<summary><code>fastq-scan</code>: Read Quantification (default)</summary>
+<p>Read quantification is available via <code>fastq-scan</code> by default.</p>
 <p><code>fastq-scan</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
 <div class="admonition techdetails">
 <p class="admonition-title"><code>fastq-scan</code> Technical Details</p>
@@ -11329,7 +11320,8 @@
 </div>
 </details>
 <details class="task">
-<summary><code>FastQC</code>: Read Quantification</summary>
+<summary><code>FastQC</code>: Read Quantification (alternative)</summary>
+<p>To activate this task, set <code>read_qc</code> to <code>"fastqc"</code>.</p>
 <p><code>FastQC</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
 <p>This tool also provides a graphical visualization of the read quality.</p>
 <div class="admonition techdetails">
@@ -11358,8 +11350,8 @@
 </table>
 </div>
 </details>
-</details>
-<details class="toggle">
+</div>
+<details class="task">
 <summary><code>Kraken2</code>: Read Identification (optional)</summary>
 <p>To activate this task, set <code>call_kraken</code> to <code>true</code> and provide a value for <code>kraken_db</code>.</p>
 <p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
@@ -11778,7 +11770,7 @@
 <p class="admonition-title">A note on estimated genome length</p>
 <p>By default, the estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to <a href="https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt">the information of thousands of NCBI bacterial assemblies collated here</a>. This estimate can be overwritten by the user and is used by <code>Rasusa</code>.</p>
 </div>
-<details class="toggle">
+<details class="task">
 <summary><code>Rasusa</code>: Read Subsampling</summary>
 <p><code>Rasusa</code> is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.</p>
 <p>The <code>Rasusa</code> task performs subsampling on the input raw reads. By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs (0.7 Mb higher than the average bacterial genome length), and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the <code>genome_length</code> input parameter. The target subsampling depth can also be adjusted by modifying the <code>subsample_coverage</code> variable.</p>
@@ -11816,7 +11808,7 @@
 </table>
 </div>
 </details>
-<details class="toggle">
+<details class="task">
 <summary><code>Nanoq</code>: Read Filtering</summary>
 <p>Reads are filtered by length and quality using <code>nanoq</code>. By default, sequences with less than 500 basepairs and quality scores lower than 10 are filtered out to improve assembly accuracy. These defaults are able to be modified by the user.</p>
 <div class="admonition techdetails">
@@ -11849,7 +11841,7 @@
 </table>
 </div>
 </details>
-<details class="toggle">
+<details class="task">
 <summary><code>Kraken2</code>: Read Identification (optional)</summary>
 <p>To activate this task, set <code>call_kraken</code> to <code>true</code> and provide a value for <code>kraken_db</code>.</p>
 <p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
@@ -11889,7 +11881,7 @@
 </table>
 </div>
 </details>
-<details class="toggle">
+<details class="task">
 <summary><code>NanoPlot</code>: Read Quantification</summary>
 <p>NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
 <p>While this task currently is run <em>outside</em> of the <code>read_QC_trim_ont</code> workflow, it is being included here as it calculates statistics on the read data. This is done so that the actual assembly genome lengths can be used (if an estimated genome length is not provided by the user) to ensure the estimated coverage statistics are accurate.</p>
@@ -12565,9 +12557,8 @@
 </div>
 </details>
 <details class="task">
-<summary>Snippy Variants: antifungal resistance detection</summary>
-<p>To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance. It's important to note that unlike <code>amr_search</code>, this task reports all variants found in the searched targets. </p>
-<p>The genes in which there are known resistance-conferring mutations for this pathogen are:</p>
+<summary><code>Snippy_Variants</code>: Antifungal Resistance Detection</summary>
+<p>To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance. It's important to note that unlike <code>amr_search</code>, this task reports all variants found in the searched targets.</p>
 <ul>
 <li>FKS1</li>
 <li>ERG11 (lanosterol 14-alpha demethylase)</li>
@@ -12616,10 +12607,6 @@
 </tr>
 </tbody>
 </table>
-<p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
-</span></code></pre></div>
-<p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
 <details class="toggle">
 <summary>Known resistance-conferring mutations for <em>Candidozyma auris</em></summary>
 <p>Mutations in these genes that are known to confer resistance are shown below</p>
@@ -12637,97 +12624,104 @@
 </thead>
 <tbody>
 <tr>
-<td><strong>Candidozyma auris</strong></td>
-<td><strong>Human</strong></td>
-<td><strong>ERG11</strong></td>
+<td>Candidozyma auris</td>
+<td>Human</td>
+<td>ERG11</td>
 <td></td>
-<td><strong>Y132F</strong></td>
-<td><strong>Fluconazole</strong></td>
+<td>Y132F</td>
+<td>Fluconazole</td>
 <td><a href="https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant">Simultaneous Emergence of Multidrug-Resistant <em>Candida auris</em> on 3 Continents Confirmed by Whole-Genome Sequencing and Epidemiological Analyses</a></td>
 </tr>
 <tr>
-<td><strong>Candidozyma auris</strong></td>
-<td><strong>Human</strong></td>
-<td><strong>ERG11</strong></td>
+<td>Candidozyma auris</td>
+<td>Human</td>
+<td>ERG11</td>
 <td></td>
-<td><strong>K143R</strong></td>
-<td><strong>Fluconazole</strong></td>
+<td>K143R</td>
+<td>Fluconazole</td>
 <td><a href="https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant">Simultaneous Emergence of Multidrug-Resistant <em>Candida auris</em> on 3 Continents Confirmed by Whole-Genome Sequencing and Epidemiological Analyses</a></td>
 </tr>
 <tr>
-<td><strong>Candidozyma auris</strong></td>
-<td><strong>Human</strong></td>
-<td><strong>ERG11</strong></td>
+<td>Candidozyma auris</td>
+<td>Human</td>
+<td>ERG11</td>
 <td></td>
-<td><strong>F126T</strong></td>
-<td><strong>Fluconazole</strong></td>
+<td>F126T</td>
+<td>Fluconazole</td>
 <td><a href="https://academic.oup.com/cid/article/64/2/134/2706620/Simultaneous-Emergence-of-Multidrug-Resistant">Simultaneous Emergence of Multidrug-Resistant <em>Candida auris</em> on 3 Continents Confirmed by Whole-Genome Sequencing and Epidemiological Analyses</a></td>
 </tr>
 <tr>
-<td><strong>Candidozyma auris</strong></td>
-<td><strong>Human</strong></td>
-<td><strong>FKS1</strong></td>
+<td>Candidozyma auris</td>
+<td>Human</td>
+<td>FKS1</td>
 <td></td>
-<td><strong>S639P</strong></td>
-<td><strong>Micafungin</strong></td>
+<td>S639P</td>
+<td>Micafungin</td>
 <td><a href="https://www.sciencedirect.com/science/article/pii/S0732889317303498">Activity of CD101, a long-acting echinocandin, against clinical isolates of Candida auris</a></td>
 </tr>
 <tr>
-<td><strong>Candidozyma auris</strong></td>
-<td><strong>Human</strong></td>
-<td><strong>FKS1</strong></td>
+<td>Candidozyma auris</td>
+<td>Human</td>
+<td>FKS1</td>
 <td></td>
-<td><strong>S639P</strong></td>
-<td><strong>Caspofungin</strong></td>
+<td>S639P</td>
+<td>Caspofungin</td>
 <td><a href="https://www.sciencedirect.com/science/article/pii/S0732889317303498">Activity of CD101, a long-acting echinocandin, against clinical isolates of Candida auris</a></td>
 </tr>
 <tr>
-<td><strong>Candidozyma auris</strong></td>
-<td><strong>Human</strong></td>
-<td><strong>FKS1</strong></td>
+<td>Candidozyma auris</td>
+<td>Human</td>
+<td>FKS1</td>
 <td></td>
-<td><strong>S639P</strong></td>
-<td><strong>Anidulafungin</strong></td>
+<td>S639P</td>
+<td>Anidulafungin</td>
 <td><a href="https://www.sciencedirect.com/science/article/pii/S0732889317303498">Activity of CD101, a long-acting echinocandin, against clinical isolates of Candida auris</a></td>
 </tr>
 <tr>
-<td><strong>Candidozyma auris</strong></td>
-<td><strong>Human</strong></td>
-<td><strong>FKS1</strong></td>
+<td>Candidozyma auris</td>
+<td>Human</td>
+<td>FKS1</td>
 <td></td>
-<td><strong>S639F</strong></td>
-<td><strong>Micafungin</strong></td>
+<td>S639F</td>
+<td>Micafungin</td>
 <td><a href="https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718">A multicentre study of antifungal susceptibility patterns among 350 <em>Candida auris</em> isolates (2009–17) in India: role of the ERG11 and FKS1 genes in azole and echinocandin resistance</a></td>
 </tr>
 <tr>
-<td><strong>Candidozyma auris</strong></td>
-<td><strong>Human</strong></td>
-<td><strong>FKS1</strong></td>
+<td>Candidozyma auris</td>
+<td>Human</td>
+<td>FKS1</td>
 <td></td>
-<td><strong>S639F</strong></td>
-<td><strong>Caspofungin</strong></td>
+<td>S639F</td>
+<td>Caspofungin</td>
 <td><a href="https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718">A multicentre study of antifungal susceptibility patterns among 350 <em>Candida auris</em> isolates (2009–17) in India: role of the ERG11 and FKS1 genes in azole and echinocandin resistance</a></td>
 </tr>
 <tr>
-<td><strong>Candidozyma auris</strong></td>
-<td><strong>Human</strong></td>
-<td><strong>FKS1</strong></td>
+<td>Candidozyma auris</td>
+<td>Human</td>
+<td>FKS1</td>
 <td></td>
-<td><strong>S639F</strong></td>
-<td><strong>Anidulafungin</strong></td>
+<td>S639F</td>
+<td>Anidulafungin</td>
 <td><a href="https://academic.oup.com/jac/advance-article/doi/10.1093/jac/dkx480/4794718">A multicentre study of antifungal susceptibility patterns among 350 <em>Candida auris</em> isolates (2009–17) in India: role of the ERG11 and FKS1 genes in azole and echinocandin resistance</a></td>
 </tr>
 <tr>
-<td><strong>Candidozyma auris</strong></td>
-<td><strong>Human</strong></td>
-<td><strong>FUR1</strong></td>
-<td><strong>CAMJ_004922</strong></td>
-<td><strong>F211I</strong></td>
-<td><strong>5-flucytosine</strong></td>
+<td>Candidozyma auris</td>
+<td>Human</td>
+<td>FUR1</td>
+<td>CAMJ_004922</td>
+<td>F211I</td>
+<td>5-flucytosine</td>
 <td><a href="https://doi.org/10.1038/s41426-018-0045-x">Genomic epidemiology of the UK outbreak of the emerging human fungal pathogen Candida auris</a></td>
 </tr>
 </tbody>
 </table>
+</details>
+<details class="toggle">
+<summary>Example Output Interpretation</summary>
+<p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
+</span></code></pre></div>
+<p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">Snippy Variants Technical Details</p>
@@ -12760,9 +12754,8 @@
 <summary><em>Candida albicans</em></summary>
 <p>When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed.</p>
 <details class="task">
-<summary>Snippy Variants: antifungal resistance detection</summary>
-<p>To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance.</p>
-<p>The genes in which there are known resistance-conferring mutations for this pathogen are:</p>
+<summary><code>Snippy_Variants</code>: Antifungal Resistance Detection</summary>
+<p>To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance. It's important to note that unlike <code>amr_search</code>, this task reports all variants found in the searched targets.</p>
 <ul>
 <li>ERG11</li>
 <li>GCS1 (FKS1)</li>
@@ -12796,6 +12789,13 @@
 </tr>
 </tbody>
 </table>
+<details class="toggle">
+<summary>Example Output Interpretation</summary>
+<p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
+</span></code></pre></div>
+<p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Snippy Variants Technical Details</p>
 <table>
@@ -12827,9 +12827,8 @@
 <summary><em>Aspergillus fumigatus</em></summary>
 <p>When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed.</p>
 <details class="task">
-<summary>Snippy Variants: antifungal resistance detection</summary>
-<p>To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance.</p>
-<p>The genes in which there are known resistance-conferring mutations for this pathogen are:</p>
+<summary><code>Snippy_Variants</code>: Antifungal Resistance Detection</summary>
+<p>To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance. It's important to note that unlike <code>amr_search</code>, this task reports all variants found in the searched targets.</p>
 <ul>
 <li>Cyp51A</li>
 <li>HapE</li>
@@ -12858,6 +12857,13 @@
 </tr>
 </tbody>
 </table>
+<details class="toggle">
+<summary>Example Output Interpretation</summary>
+<p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
+</span></code></pre></div>
+<p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Snippy Variants Technical Details</p>
 <table>
@@ -12889,9 +12895,8 @@
 <summary><em>Cryptococcus neoformans</em></summary>
 <p>When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed.</p>
 <details class="task">
-<summary>Snippy Variants: antifungal resistance detection</summary>
-<p>To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, and these variants are queried for product names associated with resistance.</p>
-<p>The genes in which there are known resistance-conferring mutations for this pathogen are:</p>
+<summary><code>Snippy_Variants</code>: Antifungal Resistance Detection</summary>
+<p>To detect mutations that may confer antifungal resistance, <code>Snippy</code> is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance. It's important to note that unlike <code>amr_search</code>, this task reports all variants found in the searched targets.</p>
 <ul>
 <li>ERG11 (CNA00300)</li>
 </ul>
@@ -12910,6 +12915,13 @@
 </tr>
 </tbody>
 </table>
+<details class="toggle">
+<summary>Example Output Interpretation</summary>
+<p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
+</span></code></pre></div>
+<p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Snippy Variants Technical Details</p>
 <table>
@@ -13961,7 +13973,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 10, 2025 17:12:08 UTC">2025-09-10</span>
   </span>
 
     

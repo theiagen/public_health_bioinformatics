@@ -5363,51 +5363,40 @@
   <h1>Ivar consensus task</h1>
 
 <details class="task">
-<summary><code>ivar consensus</code></summary>
-<p>The <code>consensus</code> task wraps the <a href="https://andersen-lab.github.io/ivar/html/index.html">iVar</a> tool to generate a reference-based consensus assembly from the sorted BAM file produced by the <code>bwa</code> task. It uses the <code>ivar consensus</code> command to call variants and generate a consensus sequence based on those mapped reads. The <code>consensus</code> task will filter all variant calls based on user-defined parameters, including <code>min_map_quality</code>, <code>min_depth</code>, and <code>min_allele_freq</code>. This task will return a consensus sequence in FASTA format and the samtools mpileup output.</p>
-<p>This task is functional for segmented viruses by iteratively executing iVar on a contig-by-contig basis and concantenating resulting consensus contigs.</p>
-<details class="dna">
-<summary><code>min_depth</code> input parameter</summary>
-<p>This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is <code>10</code>.</p>
+<summary><code>ivar_consensus</code>: Consensus Assembly</summary>
+<p>iVar's <code>consensus</code> tool generates a reference-based consensus assembly. Several parameters can be set that determine the stringency of the consensus assembly, including minimum quality, minimum allele frequency, and minimum depth.</p>
 </details>
-<details class="dna">
-<summary><code>min_map_quality</code> input parameter</summary>
-<p>This parameter accepts an integer value to set the minimum mapping quality for variant calling and subsequent consensus sequence generation. The default value is <code>20</code>.</p>
-</details>
-<details class="dna">
-<summary><code>min_allele_freq</code> input parameter</summary>
-<p>This parameter accepts a float value to set the minimum allele frequency for variant calling and subsequent consensus sequence generation. The default value is <code>0.6</code>.</p>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">iVar Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_ivar_consensus.wdl">task_ivar_consensus.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://andersen-lab.github.io/ivar/html/">Ivar on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://andersen-lab.github.io/ivar/html/manualpage.html">Ivar Documentation</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="http://dx.doi.org/10.1186/s13059-018-1618-7">An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
+<!-- if: theiacov -->
+<div class="language-text highlight"><pre><span></span><code>For TheiaCoV, the following default parameters are used:
+
+- minimum quality: 20
+- minimum depth: 100
+- minimum allele frequency: 0.6
+</code></pre></div>
+<!-- endif -->
+
+<!-- if: theiaviral -->
+<div class="language-text highlight"><pre><span></span><code>This task is functional for segmented viruses by iteratively executing iVar on a contig-by-contig basis and concantenating resulting consensus contigs.
+
+??? dna "`min_depth` input parameter"
+    This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is `10`.
+
+??? dna "`min_map_quality` input parameter"
+    This parameter accepts an integer value to set the minimum mapping quality for variant calling and subsequent consensus sequence generation. The default value is `20`.
+
+??? dna "`min_allele_freq` input parameter"
+    This parameter accepts a float value to set the minimum allele frequency for variant calling and subsequent consensus sequence generation. The default value is `0.6`.
+</code></pre></div>
+<!-- endif -->
+
+<div class="language-text highlight"><pre><span></span><code>!!! techdetails "iVar Technical Details"
+    |  | Links |
+    | --- | --- |
+    | Task | [task_ivar_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_ivar_consensus.wdl) |
+    | Software Source Code | [Ivar on GitHub](https://andersen-lab.github.io/ivar/html/) |
+    | Software Documentation | [Ivar Documentation](https://andersen-lab.github.io/ivar/html/manualpage.html) |
+    | Original Publication(s) | [An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](http://dx.doi.org/10.1186/s13059-018-1618-7) |
+</code></pre></div>
 
 
 
@@ -5430,7 +5419,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 10, 2025 17:12:08 UTC">2025-09-10</span>
   </span>
 
     

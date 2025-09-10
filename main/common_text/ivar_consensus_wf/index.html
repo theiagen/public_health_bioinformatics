@@ -9,7 +9,7 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/digger_denovo_task/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/ivar_consensus_wf/">
       
       
       
@@ -19,7 +19,7 @@
     
     
       
-        <title>Digger denovo task - Public Health Bioinformatics</title>
+        <title>Ivar consensus wf - Public Health Bioinformatics</title>
       
     
     
@@ -127,7 +127,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Digger denovo task
+              Ivar consensus wf
             
           </span>
         </div>
@@ -5360,138 +5360,14 @@
   
 
 
-  <h1>Digger denovo task</h1>
+  <h1>Ivar consensus wf</h1>
 
 <details class="task">
-<summary><code>digger_denovo</code>: <em>De novo</em> Assembly</summary>
-<p><em>De novo</em>  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.</p>
-<p>In TheiaProk and TheiaEuk Illumina workflows, <em>de novo</em> assembly is performed for samples that have sufficient read quantity and quality using <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wdl">digger_denovo</a>, a subworkflow based off of <a href="https://github.com/tseemann/shovill">Shovill</a> pipeline. The name "digger" is a nod to Shovill and SPAdes.</p>
-<details class="toggle">
-<summary><em>De novo</em> Assembly</summary>
-<div class="admonition dna">
-<p class="admonition-title"><code>assembler</code> with <code>skesa</code> (default), <code>spades</code>, or <code>megahit</code></p>
-<p>To activate a particular assembler, set the <code>assembler</code> input parameter to either <code>skesa</code> (default), <code>spades</code>, or <code>megahit</code>.</p>
-<p>These tasks are mutually exclusive.</p>
-</div>
+<summary><code>ivar_consensus</code>: Alignment, Consensus, Variant Detection, and Assembly Statistics</summary>
+<p><code>iVar Consensus</code> is a sub-workflow within TheiaCoV that performs reference-based consensus assembly using the <a href="https://andersen-lab.github.io/ivar/html/index.html">iVar</a> tool by Nathan Grubaugh from the Andersen lab.</p>
 <details class="task">
-<summary><code>SKESA</code>: <em>De novo</em> Assembly (default)</summary>
-<p>This task is activated by default.</p>
-<p><code>SKESA</code> (Strategic K-mer Extension for Scrupulous Assemblies) is a <em>de novo</em> assembler that is fairly conservative and introduces breaks in the genome at repeat regions. This leads to higher sequence quality but more fragmented assemblies, which, depending on the final analysis goal, can be either highly preferred or detrimental. Designed for Illumina reads and haploid genomes, SKESA is the default assembler in the <code>digger_denovo</code> subworkflow.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">SKESA Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_skesa.wdl">task_skesa.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/ncbi/SKESA">SKESA on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/ncbi/SKESA">SKESA on GitHub</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1186/s13059-018-1540-z">SKESA: strategic k-mer externsion for scrupulous assemblies</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>SPAdes</code>: <em>De novo</em> Assembly (alternative)</summary>
-<p>To activate this task, set <code>assembler</code> to <code>spades</code>.</p>
-<p><code>SPAdes</code> (St. Petersburg genome assembler) is a <em>de novo</em> assembly tool that uses de Bruijn graphs to assemble genomes from Illumina short reads.</p>
-<p>In TheiaProk, SPAdes is run in <code>--isolate</code> mode, which is the recommended flag for high-coverage isolate and multi-cell Illumina data, which is typical of most bacterial sequencing projects. This method is optimized for improving assembly quality and decreasing runtime.</p>
-<details class="warning" open="open">
-<summary>Non-deterministic output(s)</summary>
-<p>This task may yield non-deterministic outputs.</p>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">MetaviralSPAdes Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_spades.wdl">task_spades.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/ablab/spades">SPAdes on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://ablab.github.io/spades/index.html">SPAdes Manual</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><em>TheiaProk</em>: <a href="https://doi.org/10.1089/cmb.2012.0021">SPAdes: A New Genome Assembly Algorithm and Its Applications to Single-Cell Sequencing</a><br><em>TheiaViral</em>: <a href="https://doi.org/10.1093/bioinformatics/btaa490">MetaviralSPAdes: assembly of viruses from metagenomic data</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>MEGAHIT</code>: <em>De novo</em> Assembly (alternative)</summary>
-<p>To activate this task, set <code>assembler</code> to <code>megahit</code>.</p>
-<p>The <a href="https://github.com/voutcn/megahit">MEGAHIT assembler</a> is a fast and memory-efficient <em>de novo</em> assembler that can handle large datasets. While optimized for metagenomics, MEGAHIT also performs well on single-genome assemblies, making it a versatile choice for various assembly tasks.</p>
-<p>MEGAHIT uses a multiple k-mer strategy that can be beneficial for assembling genomes with varying coverage levels, which is common in metagenomic samples. It constructs succinct de Bruijn graphs to efficiently represent the assembly process, allowing it to handle large and complex datasets with reduced memory usage.</p>
-<details class="warning" open="open">
-<summary>Non-deterministic output(s)</summary>
-<p>This task may yield non-deterministic outputs.</p>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">MEGAHIT Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_megahit.wdl">task_megahit.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/voutcn/megahit">MEGAHIT on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/voutcn/megahit/blob/master/README.md">MEGAHIT on GitHub</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1093/bioinformatics/btv033">MEGAHIT: an ultra-fast single-node solution for large and complex metagenomics assembly via succinct de Bruijn graph</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-</details>
-<details class="toggle">
-<summary>Assembly Polishing (optional)</summary>
-<p>To activate assembly polishing, set <code>call_pilon</code> to <code>true</code>.</p>
-<details class="task">
-<summary><code>bwa</code>: Read Alignment to the Assembly</summary>
-<p>BWA (Burrow-Wheeler Aligner) is used to align the cleaned read files to generated assembly file in order to generate an alignment. The resulting BAM file is directly passed to the Pilon task to polish the assembly for errors.</p>
+<summary><code>bwa</code>: Read Alignment to the Reference</summary>
+<p>BWA (Burrow-Wheeler Aligner) is used to align the cleaned read files to a reference genome, either  determined by the user or provided by the <a href="theiacov.md#org-specific"><em>organism-specific parameters</em> section</a> (see above). The resulting BAM file is used for primer trimming, variant calling, and consensus generation in downstream tasks.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">BWA Technical Details</p>
 <table>
@@ -5523,12 +5399,11 @@
 </div>
 </details>
 <details class="task">
-<summary><code>Pilon</code>: Assembly Polishing</summary>
-<p><code>Pilon</code> is a tool that uses read alignments to correct errors in an assembly.</p>
-<p>The <code>bwa</code>-generated alignment of the read data to the assembly is used to identify inconsistences between the reads and the assembly in order to correct them. <code>Pilon</code> will attempt to fix individual base errors and small indels using the read data. This can improve the overall quality of the assembly, especially when the assembler has made mistakes due to sequencing errors or low coverage regions.</p>
-<p>The default parameters were set to mimic the parameters used by <a href="https://github.com/tseemann/shovill">Shovill</a>: <code>--fix bases --minq 60 --minqual 3 --mindepth 0.25</code>. These can be modified by the user.</p>
+<summary><code>ivar_trim</code>: Primer Trimming (optional)</summary>
+<p>To deactivate this task, set <code>trim_primers</code> to <code>false</code>.</p>
+<p>Using the user-provided (or, more rarely, a <a href="theiacov.md#org-specific"><em>organism-specific parameters</em>-determined</a>) <code>primer_bed</code> file, iVar soft-clips primer sequences from an aligned and sorted BAM file and then trims the reads based on a quality threshold of 20 using a sliding window approach. If the resulting read is greater than 30 bp, the read is written to a a new BAM file consisting of only trimmed reads (or reads that did not have a primer identified).</p>
 <div class="admonition techdetails">
-<p class="admonition-title">Pilon Technical Details</p>
+<p class="admonition-title">iVar Trim Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -5539,35 +5414,30 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_pilon.wdl">task_pilon.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl">task_ivar_primer_trim.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/broadinstitute/pilon">Pilon on GitHub</a></td>
+<td><a href="https://andersen-lab.github.io/ivar/html/">iVar on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/broadinstitute/pilon/wiki">Pilon Wiki</a></td>
+<td><a href="https://andersen-lab.github.io/ivar/html/">iVar on GitHub</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1371/journal.pone.0112963">Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement</a></td>
+<td><a href="http://dx.doi.org/10.1186/s13059-018-1618-7">An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
-</details>
-<details class="toggle">
-<summary>Contig Filtering (optional)</summary>
 <details class="task">
-<summary><code>Filter Contigs</code>: Contig Quality Control</summary>
-<p>To <strong><em>de</em></strong>activate contig filtering, set <code>run_filter_contigs</code> to <code>false</code>.</p>
-<p>This task filters the created contigs based on a default minimum length threshold of 200 bp and a minimum coverage of 2.0. It also eliminates homopolymer contigs (contigs of any length that consist of a single nucleotide).</p>
-<p>Options are available to skip any of these filters by setting the respective parameters to <code>false</code>: <code>filter_contigs_skip_length_filter</code>, <code>filter_contigs_skip_coverage_filter</code>, and <code>filter_contigs_skip_homopolymer_filter</code>. The minimum length and coverage thresholds can be adjusted using the <code>filter_contigs_min_length</code> and <code>filter_contigs_min_coverage</code> parameters, respectively.</p>
-<p>This ensures high-quality assemblies by retaining only contigs that meet specified criteria. Detailed metrics on contig counts and sequence lengths before and after filtering are provided in the output.</p>
+<summary><code>assembly_metrics</code>: Mapping Statistics</summary>
+<p>The <code>assembly_metrics</code> task generates mapping statistics from a BAM file. It uses samtools to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics.</p>
+<p>This task is run twice: once on the untrimmed reads and, if primer trimming is enabled, once on the primer-trimmed reads. This allows for a comparison of mapping statistics before and after primer trimming, which can be useful for assessing the impact of primer trimming on the quality of the alignment and subsequent analyses.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">Filter Contigs Technical Details</p>
+<p class="admonition-title"><code>assembly_metrics</code> Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -5577,16 +5447,106 @@
 </thead>
 <tbody>
 <tr>
-<td>WDL Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_filter_contigs.wdl">task_filter_contigs.wdl</a></td>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl">task_assembly_metrics.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
+<details class="task">
+<summary><code>ivar_consensus</code>: Consensus Assembly</summary>
+<p>iVar's <code>consensus</code> tool generates a reference-based consensus assembly. Several parameters can be set that determine the stringency of the consensus assembly, including minimum quality, minimum allele frequency, and minimum depth.</p>
+<p>For TheiaCoV, the following default parameters are used:</p>
+<ul>
+<li>minimum quality: 20</li>
+<li>minimum depth: 100</li>
+<li>minimum allele frequency: 0.6</li>
+</ul>
+<div class="admonition techdetails">
+<p class="admonition-title">iVar Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_ivar_consensus.wdl">task_ivar_consensus.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://andersen-lab.github.io/ivar/html/">Ivar on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://andersen-lab.github.io/ivar/html/manualpage.html">Ivar Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="http://dx.doi.org/10.1186/s13059-018-1618-7">An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>ivar_variants</code>: Variant Calling</summary>
+<p>iVar uses the outputs of <code>samtools mpileup</code> to call single nucleotide variants (SNVs) and insertions/deletions (indels). Several key parameters can be set to determine the stringency of variant calling, including minimum quality, minimum allele frequency, and minimum depth.</p>
+<p>This task returns a VCF file containing all called variants, the number of detected variants, and the proportion of those variants with allele frequencies between 0.6 and 0.9 (also known as <em>intermediate</em> variants).</p>
+<p>For TheiaCoV, the following default parameters are used:</p>
+<ul>
+<li>minimum quality: 20</li>
+<li>minimum depth: 100</li>
+<li>minimum allele frequency: 0.06</li>
+</ul>
+<div class="admonition techdetails">
+<p class="admonition-title">iVar Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl">task_ivar_variant_call.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://andersen-lab.github.io/ivar/html/">Ivar on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://andersen-lab.github.io/ivar/html/manualpage.html">Ivar Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="http://dx.doi.org/10.1186/s13059-018-1618-7">An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
 <div class="admonition techdetails">
-<p class="admonition-title">Digger-Denovo Technical Details</p>
+<p class="admonition-title">iVar Consensus Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -5597,7 +5557,7 @@
 <tbody>
 <tr>
 <td>Subworkflow</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wdl">wf_digger_denovo.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_ivar_consensus.wdl">wf_ivar_consensus.wdl</a></td>
 </tr>
 </tbody>
 </table>
@@ -5625,7 +5585,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 10, 2025 17:12:08 UTC">2025-09-10</span>
   </span>
 
     
@@ -5635,7 +5595,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 12, 2025 18:19:33 UTC">2025-05-12</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 10, 2025 17:12:08 UTC">2025-09-10</span>
   </span>
 
     

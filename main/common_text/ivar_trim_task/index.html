@@ -9,7 +9,7 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/flu_antiviral_substitutions_task/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/ivar_trim_task/">
       
       
       
@@ -19,7 +19,7 @@
     
     
       
-        <title>Flu antiviral substitutions task - Public Health Bioinformatics</title>
+        <title>Ivar trim task - Public Health Bioinformatics</title>
       
     
     
@@ -127,7 +127,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Flu antiviral substitutions task
+              Ivar trim task
             
           </span>
         </div>
@@ -5360,34 +5360,14 @@
   
 
 
-  <h1>Flu antiviral substitutions task</h1>
+  <h1>Ivar trim task</h1>
 
 <details class="task">
-<summary><code>flu_antiviral_substitutions</code></summary>
-<p>This subworkflow determines if any antiviral mutations are present in the HA, NA, and MP segments of H1N1 or H3N2 flu sample, or any in non-subtype-specific PA, PB1, and PB2 segments.</p>
-<p>These mutations are identified by generating a multiple sequence alignment (MSA) between each individual flu segment and the respective reference genome using MAFFT. Amino acid mutations are then called from the MSA. The resulting mutations are compared against <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl">a list of known amino-acid substitutions associated with antiviral resistance</a> and any matches are reported. </p>
-<p>This list of amino-acid substitutions includes both substitutions reported in the scientific literature and those inferred to potentially cause antiviral resistance based on analogous antiviral mutations in other flu subtypes. <a href="../../assets/files/antiviral_resistance_flu_aa_substitutions_explanations.xlsx"><strong>A table with the explanation for each amino-acid substitution in the antiviral resistance task is available here</strong></a>.</p>
-<p>The list of known amino-acid substitutions associated with resistance can be expanded via optional user input <code>antiviral_aa_subs</code> in the format "<code>NA:V95A,HA:I97V</code>", i.e. <code>Protein:AAPositionAA</code>. </p>
-<details class="toggle">
-<summary>Currently, the default mutations considered confer resistance to the following antivirals</summary>
-<ul>
-<li>A_315675</li>
-<li>Amantadine</li>
-<li>Compound_367</li>
-<li>Favipiravir</li>
-<li>Fludase</li>
-<li>L_742_001</li>
-<li>Laninamivir</li>
-<li>Oseltamivir (tamiflu)</li>
-<li>Peramivir</li>
-<li>Pimodivir</li>
-<li>Rimantadine</li>
-<li>Xofluza</li>
-<li>Zanamivir</li>
-</ul>
-</details>
+<summary><code>ivar_trim</code>: Primer Trimming (optional)</summary>
+<p>To deactivate this task, set <code>trim_primers</code> to <code>false</code>.</p>
+<p>Using the user-provided (or, more rarely, a <a href="./theiacov.md#org-specific"><em>organism-specific parameters</em>-determined</a>) <code>primer_bed</code> file, iVar soft-clips primer sequences from an aligned and sorted BAM file and then trims the reads based on a quality threshold of 20 using a sliding window approach. If the resulting read is greater than 30 bp, the read is written to a a new BAM file consisting of only trimmed reads (or reads that did not have a primer identified).</p>
 <div class="admonition techdetails">
-<p class="admonition-title">Antiviral Substitutions Technical Details</p>
+<p class="admonition-title">iVar Trim Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -5397,16 +5377,20 @@
 </thead>
 <tbody>
 <tr>
-<td>Sub-workflow</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_influenza_antiviral_substitutions.wdl">wf_influenza_antiviral_substitutions.wdl</a></td>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl">task_ivar_primer_trim.wdl</a></td>
 </tr>
 <tr>
-<td>Tasks</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_mafft.wdl">task_mafft.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl">task_flu_antiviral_subs.wdl</a></td>
+<td>Software Source Code</td>
+<td><a href="https://andersen-lab.github.io/ivar/html/">iVar on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://andersen-lab.github.io/ivar/html/">iVar on GitHub</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1093/molbev/mst010">MAFFT Multiple Sequence Alignment Software Version 7: Improvements in Performance and Usability</a><br><a href="https://doi.org/10.1016/j.tibtech.2019.09.009">Next-Generation Sequencing: An Eye-Opener for the Surveillance of Antiviral Resistance in Influenza</a></td>
+<td><a href="http://dx.doi.org/10.1186/s13059-018-1618-7">An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar</a></td>
 </tr>
 </tbody>
 </table>
@@ -5434,7 +5418,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 14, 2025 20:58:00 UTC">2025-08-14</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 10, 2025 17:12:08 UTC">2025-09-10</span>
   </span>
 
     
@@ -5444,7 +5428,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 14, 2025 20:58:00 UTC">2025-08-14</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 10, 2025 17:12:08 UTC">2025-09-10</span>
   </span>
 
     

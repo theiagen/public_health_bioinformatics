@@ -9,7 +9,7 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/host_decontaminate/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/artic_consensus_task/">
       
       
       
@@ -19,7 +19,7 @@
     
     
       
-        <title>Host decontaminate - Public Health Bioinformatics</title>
+        <title>Artic consensus task - Public Health Bioinformatics</title>
       
     
     
@@ -127,7 +127,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Host decontaminate
+              Artic consensus task
             
           </span>
         </div>
@@ -5360,36 +5360,18 @@
   
 
 
-  <h1>Host decontaminate</h1>
+  <h1>Artic consensus task</h1>
 
 <details class="task">
-<summary><code>host_decontaminate</code>: Host read decontamination</summary>
-<p>Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome acquired on-the-fly. The reference host genome can be acquired via <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon input or assembly accession. Host Decontaminate maps inputted reads to the host genome using <code>minimap2</code>, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads. </p>
-<p>The detailed steps and tasks are as follows:</p>
-<details class="toggle">
-<summary>Taxonomic Identification</summary>
-<p>The <code>ncbi_identify</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxonomy and desired taxonomic rank. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including <strong>read classification and targeted read extraction</strong>. This task also generates a comprehensive summary file of all successful hits to the input <code>taxon</code>, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input <code>taxon</code>.</p>
-<details class="dna">
-<summary><code>taxon</code> input parameter</summary>
-<p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
-</details>
-<details class="dna">
-<summary><code>rank</code> a.k.a <code>read_extraction_rank</code> input parameter</summary>
-<p>Valid options include: <code>"species"</code>, <code>"genus"</code>, <code>"family"</code>, <code>"order"</code>, <code>"class"</code>, <code>"phylum"</code>, <code>"kingdom"</code>, or <code>"domain"</code>. By default it is set to <code>"family"</code>. This parameter filters metadata to report information only at the taxonomic <code>rank</code> specified by the user, regardless of the taxonomic rank implied by the original input <code>taxon</code>.</p>
-</details>
-<details class="warning" open="open">
-<summary>Important</summary>
-<ul>
-<li>The <code>rank</code> parameter <strong>must</strong> specify a taxonomic rank that is <mark>equal to or above</mark> the input taxon's taxonomic rank.</li>
-</ul>
-<p><strong>Examples:</strong></p>
-<ul>
-<li>If your input <code>taxon</code> is <code>Lyssavirus rabies</code> (species level) with <code>rank</code> set to <code>family</code>, the task will return information for the family of <code>Lyssavirus rabies</code>: taxon ID for Rhabdoviridae (11270), name "Rhabdoviridae", and rank "family".</li>
-<li>If your input <code>taxon</code> is <code>Lyssavirus</code> (genus level) with <code>rank</code> set to <code>species</code>, the task will fail because it cannot determine species information from an inputted genus.</li>
-</ul>
-</details>
+<summary><code>artic_consensus</code>: Alignment, Primer Trimming, Variant Detection, and Consensus</summary>
+<p>This task runs the <code>Artic minion</code> command which is a pipeline with a number of stages, <a href="https://artic.readthedocs.io/en/latest/minion/#0">described in detail in the ARTIC documentation</a>. Briefly, these stages are as follows:</p>
+<p>Input reads are aligned to the appropriate reference and only mapped reads are retained. Alignment post-processing occurs, where primers are removed and various trimming steps are undertaken. Variants are detected, and a consensus assembly file is generated.</p>
+<p>Please note that the Medaka model is set by default to <code>"r941_min_high_g360"</code> which may not be suitable for your sequencing data. Please be sure to change this parameter if needed.</p>
+<div class="admonition info">
+<p>Read-trimming is performed on raw read data generated on the ClearLabs instrument and thus not a required step in the TheiaCoV_ClearLabs workflow.</p>
+</div>
 <div class="admonition techdetails">
-<p class="admonition-title">NCBI Datasets Technical Details</p>
+<p class="admonition-title">Artic Consensus Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -5400,172 +5382,15 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_identify_taxon_id.wdl">task_identify_taxon_id.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_artic_consensus.wdl">task_artic_consensus.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/ncbi/datasets">NCBI Datasets on GitHub</a></td>
+<td><a href="https://github.com/artic-network/fieldbioinformatics/">ARTIC on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/">NCBI Datasets Documentation on NCBI</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1038/s41597-024-03571-y">Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="toggle">
-<summary>Download Accession</summary>
-<p>The <a href="https://www.ncbi.nlm.nih.gov/datasets/"><code>NCBI Datasets</code></a> task downloads specified assemblies from NCBI using either the <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/">virus</a> or <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/">genome</a> (for all other genome types) package as appropriate.</p>
-<p>This task uses the accession ID output from the <code>skani</code> task to download the the most closely related reference genome to the input assembly. The downloaded reference is then used for downstream analysis, including variant calling and consensus generation.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">NCBI Datasets Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl">task_ncbi_datasets.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/ncbi/datasets">NCBI Datasets on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/">NCBI Datasets Documentation on NCBI</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1038/s41597-024-03571-y">Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="toggle">
-<summary>Map Reads to Host</summary>
-<p><code>minimap2</code> is a popular aligner that is used to align reads (or assemblies) to an assembly file. In minimap2, "modes" are a group of preset options.</p>
-<p>The mode used in this task is <code>map-ont</code> which is the default mode for long reads and indicates that long reads of ~10% error rates should be aligned to the reference genome. The output file is in SAM format.</p>
-<p>For more information regarding modes and the available options for <code>minimap2</code>, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
-<div class="admonition techdetails">
-<p class="admonition-title">minimap2 Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl">task_minimap2.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/lh3/minimap2">minimap2 on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://lh3.github.io/minimap2">minimap2</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://academic.oup.com/bioinformatics/article/34/18/3094/4994778">Minimap2: pairwise alignment for nucleotide sequences</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="toggle">
-<summary>Extract Unaligned Reads</summary>
-<p>The <code>bam_to_unaligned_fastq</code> task will extract a FASTQ file of reads that failed to align, while removing unpaired reads. </p>
-<div class="admonition techdetails">
-<p class="admonition-title"><code>parse_mapping</code> Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl">task_parse_mapping.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="toggle">
-<summary>Host Read Mapping Statistics</summary>
-<p>The <code>assembly_metrics</code> task generates mapping statistics from a BAM file. It uses samtools to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics.</p>
-<div class="admonition techdetails">
-<p class="admonition-title"><code>assembly_metrics</code> Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl">task_assembly_metrics.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">Host Decontaminate Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Subworkflow</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_host_decontaminate.wdl">wf_host_decontaminate.wdl</a></td>
+<td><a href="https://artic.readthedocs.io/en/latest/?badge=latest">ARTIC Documentation</a></td>
 </tr>
 </tbody>
 </table>
@@ -5593,7 +5418,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 10, 2025 17:12:08 UTC">2025-09-10</span>
   </span>
 
     
@@ -5603,7 +5428,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 10, 2025 17:12:08 UTC">2025-09-10</span>
   </span>
 
     

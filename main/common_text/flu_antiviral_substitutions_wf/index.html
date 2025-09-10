@@ -9,7 +9,7 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/flye_denovo_task/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/flu_antiviral_substitutions_wf/">
       
       
       
@@ -19,7 +19,7 @@
     
     
       
-        <title>Flye denovo task - Public Health Bioinformatics</title>
+        <title>Flu antiviral substitutions wf - Public Health Bioinformatics</title>
       
     
     
@@ -127,7 +127,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Flye denovo task
+              Flu antiviral substitutions wf
             
           </span>
         </div>
@@ -5360,233 +5360,34 @@
   
 
 
-  <h1>Flye denovo task</h1>
+  <h1>Flu antiviral substitutions wf</h1>
 
 <details class="task">
-<summary><code>Flye</code>: <em>De novo</em> Assembly</summary>
-<p><code>flye_denovo</code> is a sub-workflow that performs <em>de novo</em> assembly using Flye for ONT data and supports additional polishing and visualization steps.</p>
-<div class="admonition tip">
-<p class="admonition-title">Ensure correct medaka model is selected if performing medaka polishing</p>
-<p>In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}_{device}_{caller variant}_{caller_version}. See also <a href="https://github.com/nanoporetech/medaka?tab=readme-ov-file#models">https://github.com/nanoporetech/medaka?tab=readme-ov-file#models</a>. If <code>flye</code> is being run on legacy data the medaka model will likely be <code>r941_min_hac_g507</code>. Recently generated data will likely be suited by the default model of <code>r1041_e82_400bps_sup_v5.0.0</code>.</p>
-</div>
-<p>The detailed steps and tasks are as follows:</p>
+<summary><code>flu_antiviral_substitutions</code></summary>
+<p>This subworkflow determines if any antiviral mutations are present in the HA, NA, and MP segments of H1N1 or H3N2 flu sample, or any in non-subtype-specific PA, PB1, and PB2 segments.</p>
+<p>These mutations are identified by generating a multiple sequence alignment (MSA) between each individual flu segment and the respective reference genome using MAFFT. Amino acid mutations are then called from the MSA. The resulting mutations are compared against <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl">a list of known amino-acid substitutions associated with antiviral resistance</a> and any matches are reported. </p>
+<p>This list of amino-acid substitutions includes both substitutions reported in the scientific literature and those inferred to potentially cause antiviral resistance based on analogous antiviral mutations in other flu subtypes. <a href="../../assets/files/antiviral_resistance_flu_aa_substitutions_explanations.xlsx"><strong>A table with the explanation for each amino-acid substitution in the antiviral resistance task is available here</strong></a>.</p>
+<p>The list of known amino-acid substitutions associated with resistance can be expanded via optional user input <code>antiviral_aa_subs</code> in the format "<code>NA:V95A,HA:I97V</code>", i.e. <code>Protein:AAPositionAA</code>. </p>
 <details class="toggle">
-<summary><code>Porechop</code>: Read Trimming (optional; off by default)</summary>
-<p>Porechop is a tool for finding and removing adapters from ONT data. Adapters on the ends of reads are trimmed, and when a read has an adapter in the middle, the read is split into two.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Porechop Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>WDL Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_porechop.wdl">task_porechop.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/rrwick/Porechop">Porechop on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/rrwick/Porechop#porechop">https://github.com/rrwick/Porechop#porechop</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="toggle">
-<summary><code>Flye</code>: <em>De novo</em> Assembly</summary>
-<p>Flye is a <em>de novo</em> assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerates the error rate of ONT data.</p>
-<details class="dna">
-<summary><code>flye_read_type</code> input parameter</summary>
-<p>This input parameter specifies the type of sequencing reads being used for assembly. This parameter significantly impacts the assembly process and should match the characteristics of your input data. Below are the available options:</p>
-<table>
-<thead>
-<tr>
-<th><strong>Parameter</strong></th>
-<th><strong>Explanation</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><code>--nano-hq</code> (default)</td>
-<td>Optimized for ONT high-quality reads, such as Guppy5+ SUP or Q20 (&lt;5% error). Recommended for ONT reads processed with Guppy5 or newer</td>
-</tr>
-<tr>
-<td><code>--nano-raw</code></td>
-<td>For ONT regular reads, pre-Guppy5 (&lt;20% error)</td>
-</tr>
-<tr>
-<td><code>--nano-corr</code></td>
-<td>ONT reads corrected with other methods (&lt;3% error)</td>
-</tr>
-<tr>
-<td><code>--pacbio-raw</code></td>
-<td>PacBio regular CLR reads (&lt;20% error)</td>
-</tr>
-<tr>
-<td><code>--pacbio-corr</code></td>
-<td>PacBio reads corrected with other methods (&lt;3% error)</td>
-</tr>
-<tr>
-<td><code>--pacbio-hifi</code></td>
-<td>PacBio HiFi reads (&lt;1% error)</td>
-</tr>
-</tbody>
-</table>
-<p>Refer to the Flye documentation for detailed guidance on selecting the appropriate <code>flye_read_type</code> based on your sequencing data and additional optional paramaters.</p>
-</details>
-<details class="warning" open="open">
-<summary>Non-deterministic output(s)</summary>
-<p>This task may yield non-deterministic outputs.</p>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">Flye Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>WDL Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl">task_flye.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/fenderglass/Flye">Flye on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md">Flye Documentation</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://www.nature.com/articles/s41587-019-0072-8">Assembly of long, error-prone reads using repeat graphs</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="toggle">
-<summary><code>Bandage</code>: Graph Visualization</summary>
-<p>Bandage creates <em>de novo</em> assembly graphs containing the assembled contigs and the connections between those contigs. These graphs are useful for visualizing the assembly structure, identifying potential misassemblies, and understanding the relationships between contigs.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Bandage Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>WDL Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_bandage_plot.wdl">task_bandage_plot.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/rrwick/Bandage">Bandage on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/rrwick/Bandage#bandage">Bandage Documentation</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://academic.oup.com/bioinformatics/article/31/20/3350/196114">Bandage: interactive visualization of <em>de novo</em> genome assemblies</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="toggle">
-<summary><code>Polypolish</code>: Hybrid Assembly Polishing <mark><em>for ONT and Illumina data</em></mark></summary>
-<p>If short reads are provided with the optional <code>illumina_read1</code> and <code>illumina_read2</code> inputs, Polypolish will use those short-reads to correct errors in the long-read assemblies. Uniquely, Polypolish uses the short-read alignments where each read is aligned to <em>all</em> possible locations, meaning that even repeat regions will have error correction.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Polypolish Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_polypolish.wdl">task_polypolish.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/rrwick/Polypolish">Polypolish on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/rrwick/Polypolish#polypolish">Polypolish Documentation</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1371/journal.pcbi.1009802">Polypolish: short-read polishing of long-read bacterial genome assemblies</a><br><a href="https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.001254">How low can you go? Short-read polishing of Oxford Nanopore bacterial genome assemblies</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="toggle">
-<summary><code>Medaka</code>: Polishing of Flye assembly (default; optional)</summary>
-<p>Polishing is optional and can be skipped by setting the <code>skip_polishing</code> variable to true. If polishing is skipped, then neither Medaka or Racon will run.</p>
-<p>Medaka is the default assembly polisher used in TheiaProk. Racon may be used alternatively, and if so, Medaka will not run. Medaka uses the raw reads to polish the assembly and generate a consensus sequence. </p>
-<p>Importantly, Medaka requires knowing the model that was used to generate the read data. There are several ways to provide this information:</p>
+<summary>Currently, the default mutations considered confer resistance to the following antivirals</summary>
 <ul>
-<li>Automatic Model Selection: Automatically determines the most appropriate Medaka model based on the input data, ensuring optimal polishing results without manual intervention. </li>
-<li>User-Specified Model Override: Allows users to specify a particular <code>Medaka model</code> if automatic selection does not yield the desired outcome or for specialized use cases.</li>
-<li>Default Model: If both automatic model selection fails and no user-specified model is provided, Medaka defaults to the predefined fallback model <code>r1041_e82_400bps_sup_v5.0.0</code>. </li>
+<li>A_315675</li>
+<li>Amantadine</li>
+<li>Compound_367</li>
+<li>Favipiravir</li>
+<li>Fludase</li>
+<li>L_742_001</li>
+<li>Laninamivir</li>
+<li>Oseltamivir (tamiflu)</li>
+<li>Peramivir</li>
+<li>Pimodivir</li>
+<li>Rimantadine</li>
+<li>Xofluza</li>
+<li>Zanamivir</li>
 </ul>
-<div class="admonition info">
-<p class="admonition-title">Medaka Model Resolution Process</p>
-<p>Medaka's automatic model selection uses the <code>medaka tools resolve_model</code> command to identify the appropriate model for polishing. This process relies on metadata embedded in the input file, which is typically generated by the basecaller. If the automatic selection fails to identify a suitable model, Medaka gracefully falls back to the default model to maintain workflow continuity. <strong>Users should verify the chosen model and consider specifying a model override if necessary.</strong></p>
-</div>
-<div class="admonition techdetails">
-<p class="admonition-title">Medaka Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>WDL Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_medaka.wdl">task_medaka.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/nanoporetech/medaka">Medaka on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/nanoporetech/medaka#medaka">Medaka Documentation</a></td>
-</tr>
-</tbody>
-</table>
-</div>
 </details>
-<details class="toggle">
-<summary><code>Racon</code>: Polishing of Flye assembly (alternative; optional)</summary>
-<p>Polishing is optional and can be skipped by setting the <code>skip_polishing</code> variable to true. If polishing is skipped, then neither Medaka or Racon will run.</p>
-<p><code>Racon</code> is an alternative to using <code>medaka</code> for assembly polishing, and can be run by setting the <code>polisher</code> input to "racon".  Racon is a consensus algorithm designed for refining raw de novo DNA assemblies generated from long, uncorrected sequencing reads.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">Racon Technical Details</p>
+<p class="admonition-title">Antiviral Substitutions Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -5596,105 +5397,16 @@
 </thead>
 <tbody>
 <tr>
-<td>WDL Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_racon.wdl">task_racon.wdl</a></td>
+<td>Sub-workflow</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_influenza_antiviral_substitutions.wdl">wf_influenza_antiviral_substitutions.wdl</a></td>
 </tr>
 <tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/lbcb-sci/racon">Racon on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/lbcb-sci/racon#racon">Racon Documentation</a></td>
+<td>Tasks</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_mafft.wdl">task_mafft.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl">task_flu_antiviral_subs.wdl</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://genome.cshlp.org/content/27/5/737">Fast and accurate de novo genome assembly from long uncorrected reads</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="toggle">
-<summary><code>Filter Contigs</code>: Filter contigs below a threshold length and remove homopolymer contigs</summary>
-<p>This task filters the created contigs based on a user-defined minimum length threshold (default of 1000) and eliminates homopolymer contigs (contigs of any length that consist of a single nucleotide).</p>
-<p>This ensures high-quality assemblies by retaining only contigs that meet specified criteria. Detailed metrics on contig counts and sequence lengths before and after filtering are provided in the output.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Filter Contigs Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>WDL Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_filter_contigs.wdl">task_filter_contigs.wdl</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="toggle">
-<summary><code>Dnaapler</code>: Final Assembly Orientation</summary>
-<p>Dnaapler reorients contigs to start at specific reference points. Dnaapler supports the following modes, which can be indicated by filling the <code>dnaapler_mode</code> input variable with the desired mode. The default is <code>all</code>, which reorients contigs to start with <code>dnaA</code>, <code>terL</code>, <code>repA</code>, or <code>COG1474</code>.</p>
-<ul>
-<li><strong>all</strong>: Reorients contigs to start with <code>dnaA</code>, <code>terL</code>, <code>repA</code>, or <code>COG1474</code> (<em>Default</em>)</li>
-<li><strong>chromosome</strong>: Reorients to begin with the <code>dnaA</code> chromosomal replication initiator gene, commonly used for bacterial chromosome assemblies.</li>
-<li><strong>plasmid</strong>: Reorients to start with the <code>repA</code> plasmid replication initiation gene, ideal for plasmid assemblie</li>
-<li><strong>phage</strong>: Reorients to start with the <code>terL</code> large terminase subunit gene, used for bacteriophage assemblies</li>
-<li><strong>archaea</strong>: Reorients to start with the <code>COG1474</code> archaeal Orc1/cdc6 gene, relevant for archaeal assemblies</li>
-<li><strong>custom</strong>: Reorients based on a user-specified gene in amino acid FASTA format for experimental or unique workflows</li>
-<li><strong>mystery</strong>: Reorients to start with a random CDS for exploratory purposes</li>
-<li><strong>largest</strong>: Reorients to start with the largest CDS in the assembly, often useful for poorly annotated genomes</li>
-<li><strong>nearest</strong>: Reorients to start with the first CDS nearest to the sequence start, resolving CDS breakpoints</li>
-<li><strong>bulk</strong>: Processes multiple contigs to start with the desired start gene (<code>dnaA</code>, <code>terL</code>, <code>repA</code>, or custom)</li>
-</ul>
-<div class="admonition techdetails">
-<p class="admonition-title">Dnaapler Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>WDL Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_dnaapler.wdl">task_dnaapler.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/gbouras13/dnaapler">Dnaapler on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/gbouras13/dnaapler?tab=readme-ov-file#dnaapler">Dnaapler Documentation</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://joss.theoj.org/papers/10.21105/joss.05968">Dnaapler: a tool to reorient circular microbial genomes</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">Flye-Denovo Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Subworkflow</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_flye_denovo.wdl">wf_flye_denovo.wdl</a></td>
+<td><a href="https://doi.org/10.1093/molbev/mst010">MAFFT Multiple Sequence Alignment Software Version 7: Improvements in Performance and Usability</a><br><a href="https://doi.org/10.1016/j.tibtech.2019.09.009">Next-Generation Sequencing: An Eye-Opener for the Surveillance of Antiviral Resistance in Influenza</a></td>
 </tr>
 </tbody>
 </table>
@@ -5722,7 +5434,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 10, 2025 17:12:08 UTC">2025-09-10</span>
   </span>
 
     
@@ -5732,7 +5444,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2025 21:49:10 UTC">2025-05-08</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 14, 2025 20:58:00 UTC">2025-08-14</span>
   </span>
 
     
