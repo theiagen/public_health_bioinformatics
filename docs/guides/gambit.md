@@ -25,7 +25,7 @@ If the **distance between the query genome assembly and the closest genome in th
 
     ---
 
-    [GAMBIT Prokaryotic GTDB Database v2.0.1](#gambit-gtdb-database-v201)
+    [GAMBIT Prokaryotic GTDB Database v2.1.0](#gambit-gtdb-database-v210)
 
     [GAMBIT Fungal Database v1.0.0](#gambit-fungal-database-v100)
 
@@ -171,6 +171,43 @@ Options:
 
 ### GAMBIT Prokaryotic Databases
 
+#### GAMBIT GTDB Database v2.1.0
+
+??? toggle "Database Details"
+
+    This database is a **minor update** to the v2.0.1 database. This database is identical to the v2.0.1 database, **except for the following modifications**.
+    
+    1. Genomes representing *Salmonella enterica* subspecies houtenae and diarizonae were added to the database.
+        a. Rationale: In the v2.0.0 and v2.0.1 databases, no genomes representing these subspecies are present, therefore query genomes representing these subspecies were not reliably classifed as *Salmonella enterica*.
+    2. The *Salmonella arizonae* species was modified to be a subspecies of *Salmonella enterica*.
+        a. Rationale: While GTDB classifies *Salmonella arizonae* as its own species due to its divergence from other Salmonella species, NCBI considers *Salmonella arizonae* a subspecies of *Salmonella enterica*. *Salmonella enterica* is also the typical naming convention within public health laboratories, therefore we have renamed the species to align with user preference.
+    3. The following genomes below were removed. 
+        a. Rationale: These genomes are currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Echerichia coli* query genomes to *Shigella* species.
+
+        GCF_002247485.1 
+        GCF_002248245.1
+        GCF_002249025.1
+        GCF_002246815.1
+        GCF_001064675.1
+        GCF_022494155.1
+        GCF_022494015.1
+        GCF_022494095.1
+        GCF_022494415.1   
+
+    **Database Files**
+
+    These database files are hosted in a public Google bucket by Theiagen Genomics:
+
+    **GS URI (for [Terra.bio](https://terra.bio) usage):**
+
+    - `gs://gambit-databases-rp/2.1.0/gambit-metadata-2.1.0-20250808.gdb`
+    - `gs://gambit-databases-rp/2.1.0/gambit-signatures-2.1.0-20250808.gs`
+
+    **HTTPS URL (for local download):**
+
+    - <https://storage.cloud.google.com/gambit-databases-rp/2.1.0/gambit-metadata-2.1.0-20250808.gdb>
+    - <https://storage.cloud.google.com/gambit-databases-rp/2.1.0/gambit-signatures-2.1.0-20250808.gs>
+    
 #### GAMBIT GTDB Database v2.0.1
 
 ??? toggle "Database Details"
