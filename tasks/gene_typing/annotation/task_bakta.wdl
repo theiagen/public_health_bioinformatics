@@ -9,9 +9,9 @@ task bakta {
     Int disk_size = 200
     File bakta_db_selected
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3"
-    Boolean proteins = false # Proteins: Fasta file of trusted protein sequences for CDS annotation
     Boolean compliant = false
     File? prodigal_tf # Prodigal_tf: Prodigal training file to use for CDS prediction
+    File? proteins # Proteins: Fasta file of trusted protein sequences for CDS annotation
     String? bakta_opts # Additional Bakta arguments
   }
   command <<<  
@@ -32,7 +32,7 @@ task bakta {
     --prefix ~{samplename} \
     --output ~{samplename} \
     ~{true='--compliant' false='' compliant} \
-    ~{true='--proteins' false='' proteins} \
+    ~{'--proteins ' + proteins} \
     ~{'--prodigal-tf ' + prodigal_tf} \
     ~{assembly}
 
