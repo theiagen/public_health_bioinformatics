@@ -129,7 +129,12 @@ workflow theiacov_clearlabs {
     call vadr_task.vadr {
       input:
         genome_fasta = consensus.consensus_seq,
-        assembly_length_unambiguous = consensus_qc.number_ATCG
+        assembly_length_unambiguous = consensus_qc.number_ATCG,
+        max_length = organism_parameters.vadr_maxlength,
+        vadr_opts = organism_parameters.vadr_opts,
+        vadr_model_file = organism_parameters.vadr_model_file,
+        skip_length = organism_parameters.vadr_skiplength,
+        memory = organism_parameters.vadr_memory
     }
   }
   if (defined(qc_check_table)) {

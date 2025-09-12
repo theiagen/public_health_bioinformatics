@@ -39,7 +39,7 @@ This workflow also features an optional module, `summarize_data`, that creates a
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "MashTree"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "MashTree_FASTA"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///
 

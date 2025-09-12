@@ -76,23 +76,27 @@ A Public Service Announcement regarding calculating the contribution math:
 
 Andrew Hale added a .txt database file to docs/assets that artifically inflates his line 
 count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract 
-55,316 from his line count when updating this list. okay thanks byee
+55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt database in a later commit (on 2025-09-03), so also please subtract 55,316 from Sage Wright's line count as well.
+
+okay thanks byee
 -->
 
-(Ordered by contribution [# of lines changed] as of 2025-07-16)
+(Ordered by contribution [# of lines changed] as of 2025-09-08)
 
-- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision <!-- 144592 -->
-- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation <!-- 41092-->
-- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation <!-- 36760 -->
-- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation <!-- 17660 -->
-- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation <!-- 6178 -->
-- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation <!-- 60300 - 55316 = 5694 -->
-- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation <!-- 5268 -->
-- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation <!-- 4363 -->
-- **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision <!-- 3352 -->
-- **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision <!-- 152 -->
-- **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation <!-- 111 -->
-- **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision <!-- 0 -->
+- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision <!-- 94943 + 113445 - 55316 = 153072 -->
+- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation <!-- 22862 + 18241 = 41103-->
+- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation <!-- 29852 + 15908 = 36760 -->
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation <!-- 14674 + 10655 = 25329 -->
+- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation <!-- 8378 + 3814 = 12192 -->
+- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation <!-- 4098 + 2080 = 6178 -->
+- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation <!-- 59452 + 1855 - 55316 = 5991 -->
+- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation <!-- 3532 + 831 = 4363 -->
+- **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision <!-- 2908 + 444 = 3352 -->
+- **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision <!-- 84 + 68 = 152 -->
+- **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation <!-- 72 + 39 = 111 -->
+- **Sushmita Sridhar** ([@ss43](https://github.com/ss43)) - Validation <!-- 11 + 12 = 23 -->
+- **Deborah Young** ([@theiadeb](https://github.com/theiadeb)) - Validation <!-- 3 + 3 = 6 -->
+- **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision <!-- 0 + 0 = 0 -->
 
 ### External Contributors
 
