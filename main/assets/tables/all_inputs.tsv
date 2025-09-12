@@ -382,7 +382,7 @@ bakta	disk_size	Int	Amount of storage (in GB) to allocate to the task	200	Option
 bakta	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	docker
 bakta	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	24	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime
 bakta	prodigal_tf	File	Prodigal training file to use for CDS prediction by bakta		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general
-bakta	proteins	Boolean	THIS VARIABLE IS BUGGED PLEASE DO NOT DO ANYTHING HERE	FALSE	Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general
+bakta	proteins	File	Fasta file of trusted protein sequences for CDS annotation		Optional	TheiaProk_FASTA, TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general
 bam_to_unaligned_fastq	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Host_Decontaminate	runtime
 bam_to_unaligned_fastq	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Host_Decontaminate	runtime
 bam_to_unaligned_fastq	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	Host_Decontaminate	docker
