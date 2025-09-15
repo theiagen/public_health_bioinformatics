@@ -54,7 +54,7 @@ task chroquetas {
   output {
     File amr_stats_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt"
     File amr_summary_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt"
-    String amr_summary_string = read_string("AMR_SUMMARY_STRING")
+    String amr_string = read_string("AMR_SUMMARY_STRING")
     String chroquetas_version = read_string("CHROQUETAS_VERSION")
   }
 

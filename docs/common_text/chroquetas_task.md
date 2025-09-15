@@ -5,6 +5,13 @@
 
     ChroQueTas is automatically called if a compatible GAMBIT-predicted taxon is identified.
 
+    **Outputs:**
+
+    - **AMR Stats**: Depicts the number of FungAMR and non-FungAMR mutations on a gene-by-gene (protein sequence) basis.
+    - **AMR Summary**: Depicts the mutation resistance and support for potential drug resistance on a gene-by-gene (protein sequence) basis. To interpret confidence scores, please refer to the corresponding [ChroQueTas wiki](https://github.com/nmquijada/ChroQueTas/wiki/Confidence-score-for-antimicrobial-resistance) section.
+    - **AMR String**: Depicts detected AMR mutations as a comma-delimited string in the following format: "<PROTEIN>_<REFERNCE_AA><POSITION><MUTATION_AA>,..."
+
+
     ??? toggle "Supported Species and Genes"
         The following table shows the species name and screened genes as of ChroQueTas v1.0.0. Species will be automatically determined based on the GAMBIT predicted taxon.
 
@@ -68,10 +75,6 @@
     | *Venturia inaequalis*             | Beta-tubulin, Cytochrome b                                         |
     | *Zymoseptoria tritici*            | Cyp51, Cytochrome b                                                |
     
-    **Outputs:**
-
-    - **JSON Output**: Contains the complete AMR profile, including detailed resistance state, detected resistance genes/mutations, and supporting BLAST results.
-    - **CSV & PDF Tables**: An incorporated Python script, `parse_amr_json.py`, extracts and formats results into a CSV file and PDF summary table for easier visualization.
 
     !!! techdetails "ChroQueTas Technical Details"    
         |  | Links |
