@@ -893,7 +893,6 @@ workflow merlin_magic {
           }
         }
       }
-    }
   # Running AMR Search
   if (run_amr_search) {
     # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search. 
@@ -1236,9 +1235,9 @@ workflow merlin_magic {
     String snippy_variants_num_variants = select_first([snippy_cauris.snippy_variants_num_variants, snippy_cauris_ont.snippy_variants_num_variants, snippy_afumigatus.snippy_variants_num_variants, snippy_afumigatus_ont.snippy_variants_num_variants, snippy_crypto.snippy_variants_num_reads_aligned, snippy_crypto_ont.snippy_variants_num_variants, "No matching taxon detected"])
     String snippy_variants_percent_ref_coverage = select_first([snippy_cauris.snippy_variants_percent_ref_coverage, snippy_cauris_ont.snippy_variants_percent_ref_coverage, snippy_afumigatus.snippy_variants_percent_ref_coverage, snippy_afumigatus_ont.snippy_variants_percent_ref_coverage, snippy_crypto.snippy_variants_percent_ref_coverage, snippy_crypto_ont.snippy_variants_percent_ref_coverage, "No matching taxon detected"])
     # chroquetas
-    File chroquetas_amr_stats = chroquetas.amr_stats_file
-    File chroquetas_amr_summary = chroquetas.amr_summary_file
-    String chroquetas_amr_string = chroquetas.amr_summary_string
-    String chroquetas_version = chroquetas.chroquetas_version
+    File? chroquetas_amr_stats = chroquetas.amr_stats_file
+    File? chroquetas_amr_summary = chroquetas.amr_summary_file
+    String? chroquetas_amr_string = chroquetas.amr_summary_string
+    String? chroquetas_version = chroquetas.chroquetas_version
   }
 }
