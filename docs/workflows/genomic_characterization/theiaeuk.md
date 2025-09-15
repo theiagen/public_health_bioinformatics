@@ -99,6 +99,12 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 !!! tip ""
     The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Many of these taxa-specific tasks do not require any additional inputs from the user.
 
+??? toggle "General antimicrobial resistance screening"
+
+    ChroQueTas performs antimicrobial resistance screening for 58 fungal pathogens.
+
+{{ include_md("common_text/chroquetas_task.md", indent=4) }}
+
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
     Three tools can be deployed when _Candidozyma auris_/_Candida auris_ is  identified.
 
