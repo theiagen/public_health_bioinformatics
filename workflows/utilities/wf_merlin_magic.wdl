@@ -1239,5 +1239,6 @@ workflow merlin_magic {
     File? chroquetas_amr_summary = chroquetas.amr_summary_file
     String? chroquetas_amr_string = chroquetas.amr_string
     String? chroquetas_version = chroquetas.chroquetas_version
+    String? chroquetas_status = chroquetas.chroquetas_status
   }
 }

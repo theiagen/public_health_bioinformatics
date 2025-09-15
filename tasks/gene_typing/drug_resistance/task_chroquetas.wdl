@@ -27,35 +27,44 @@ task chroquetas {
   species_prep=$(echo ~{species} | tr '[:upper:]' '[:lower:]' | tr ' ' '_')
   corrected_species=$(echo ${species_prep^})
 
-  # call chroquetas
-  ChroQueTas.sh \
-    -g ~{genome_fasta} \
-    -s ${corrected_species} \
-    --min_cov ~{min_percent_coverage} \
-    --min_id ~{min_percent_identity} \
-    -t ~{cpu} \
-    -o chroquetas_out \
-    ~{if defined(proteome_fasta) then "-p ~{proteome_fasta}" else ""} \
-    ~{if defined(translation_code) then "-c ~{translation_code}" else ""}
+  # ensure the species is compatible
+  grep_check=$(ChroQueTas.sh --list_species | cut -f 1 | tail -n+2 | grep -P "^${corrected_species}$"
+  if [ ! -n ${grep_check} ]; then
+    echo "ERROR: Species not found" | tee CHROQUETAS_STATUS
+  else
+    # call chroquetas
+    ChroQueTas.sh \
+      -g ~{genome_fasta} \
+      -s ${corrected_species} \
+      --min_cov ~{min_percent_coverage} \
+      --min_id ~{min_percent_identity} \
+      -t ~{cpu} \
+      -o chroquetas_out \
+      ~{if defined(proteome_fasta) then "-p ~{proteome_fasta}" else ""} \
+      ~{if defined(translation_code) then "-c ~{translation_code}" else ""}
+  
+    # rename output files to include sample name
+    based_name=$(echo $(basename ~{genome_fasta}) | sed -E 's/(.*)\.[^\.]+$/\1/')
+    mv chroquetas_out/${based_name}.ChroQueTaS.AMR_stats.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt
+    mv chroquetas_out/${based_name}.ChroQueTaS.AMR_summary.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt
+  
+    # extract AMR summary string
+    tail -n+2 chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt \
+      | awk '{ print $1, $4, $3, $5 }' \
+      | sed -E 's/([^ ]+) ([^ ]+) ([^ ]+) ([^ ]+)/\1_\2\3\4/' \
+      | tr '\n' ',' \
+      | sed -E 's/,$//' \
+      | tee AMR_SUMMARY_STRING
 
-  # rename output files to include sample name
-  based_name=$(echo $(basename ~{genome_fasta}) | sed -E 's/(.*)\.[^\.]+$/\1/')
-  mv chroquetas_out/${based_name}.ChroQueTaS.AMR_stats.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt
-  mv chroquetas_out/${based_name}.ChroQueTaS.AMR_summary.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt
-
-  # extract AMR summary string
-  tail -n+2 chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt \
-    | awk '{ print $1, $4, $3, $5 }' \
-    | sed -E 's/([^ ]+) ([^ ]+) ([^ ]+) ([^ ]+)/\1_\2\3\4/' \
-    | tr '\n' ',' \
-    | sed -E 's/,$//' \
-    | tee AMR_SUMMARY_STRING
+    echo "PASS" | tee CHROQUETAS_STATUS
+  fi
   >>>
   output {
-    File amr_stats_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt"
-    File amr_summary_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt"
-    String amr_string = read_string("AMR_SUMMARY_STRING")
-    String chroquetas_version = read_string("CHROQUETAS_VERSION")
+    File? amr_stats_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt"
+    File? amr_summary_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt"
+    String? amr_string = read_string("AMR_SUMMARY_STRING")
+    String? chroquetas_version = read_string("CHROQUETAS_VERSION")
+    String chroquetas_status = read_string("CHROQUETAS_STATUS")
   }
 
   runtime {
