@@ -40,7 +40,9 @@ import "../../tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl" as vibechec
 # theiaeuk
 import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query
 import "../../tasks/gene_typing/variant_detection/task_snippy_variants.wdl" as snippy
+import "../../tasks/gene_typing/drug_resistance/task_chroquetas.wdl" as chroquetas_task
 import "../../tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl" as cauris_cladetyper
+
 
 workflow merlin_magic {
   meta {
@@ -68,6 +70,7 @@ workflow merlin_magic {
     String? agrvate_docker_image
     String? amr_search_docker_image
     String? cauris_cladetyper_docker_image
+    String? chroquetas_docker_image
     String? clockwork_docker_image
     String? ectyper_docker_image
     String? emmtyper_docker_image
@@ -111,6 +114,12 @@ workflow merlin_magic {
     Int? amr_search_cpu
     Int? amr_search_memory
     Int? amr_search_disk_size
+    # chroquetas options
+    Int? chroquetas_min_percent_coverage
+    Int? chroquetas_min_percent_identity
+    String? chroqutas_translation_code
+    Int? chroquetas_cpu
+    Int? chroquetas_memory
     # cladetyper options - primarily files we host
     Int? cladetyper_kmer_size
     File? cladetyper_ref_clade1
@@ -815,6 +824,75 @@ workflow merlin_magic {
             docker = snippy_gene_query_docker_image
         }
       }
+    # check for ChroQueTas-accounted taxa - requires compatibility with Gambit output
+    if (merlin_tag == "Arthroderma vanbreuseghemii" ||
+        merlin_tag == "Aspergillus awamori" ||
+        merlin_tag == "Aspergillus fumigatus" ||
+        merlin_tag == "Aspergillus niger" ||
+        merlin_tag == "Aspergillus terreus" ||
+        merlin_tag == "Aspergillus tubingensis" ||
+        merlin_tag == "Beauveria bassiana" ||
+        merlin_tag == "Blumeria graminis" ||
+        merlin_tag == "Blumeria graminis hordei" ||
+        merlin_tag == "Blumeria graminis tritici" ||
+        merlin_tag == "Botrytis cinerea" ||
+        merlin_tag == "Candida albicans" ||
+        merlin_tag == "Candida dubliniensis" ||
+        merlin_tag == "Candida metapsilosis" ||
+        merlin_tag == "Candida orthopsilosis" ||
+        merlin_tag == "Candida parapsilosis" ||
+        merlin_tag == "Candida tropicalis" ||
+        merlin_tag == "Candidozyma auris" ||
+        merlin_tag == "Cercospora beticola" ||
+        merlin_tag == "Clavispora lusitaniae" ||
+        merlin_tag == "Colletotrichum acutatum" ||
+        merlin_tag == "Colletotrichum fructicola" ||
+        merlin_tag == "Colletotrichum gloeosporioides" ||
+        merlin_tag == "Colletotrichum graminicola" ||
+        merlin_tag == "Colletotrichum siamense" ||
+        merlin_tag == "Corynespora cassiicola" ||
+        merlin_tag == "Cryptococcus deuterogattii" ||
+        merlin_tag == "Cryptococcus neoformans" ||
+        merlin_tag == "Erysiphe necator" ||
+        merlin_tag == "Fusarium fujikuroi" ||
+        merlin_tag == "Fusarium graminearum" ||
+        merlin_tag == "Fusarium incarnatum" ||
+        merlin_tag == "Fusarium pseudograminearum" ||
+        merlin_tag == "Histoplasma capsulatum" ||
+        merlin_tag == "Kluyveromyces marxianus" ||
+        merlin_tag == "Magnaporthe grisea" ||
+        merlin_tag == "Monilinia fructicola" ||
+        merlin_tag == "Mycosphaerella fijiensis" ||
+        merlin_tag == "Nakaseomyces glabratus" ||
+        merlin_tag == "Passalora fulva" ||
+        merlin_tag == "Phaeosphaeria nodorum" ||
+        merlin_tag == "Phakopsora pachyrhizi" ||
+        merlin_tag == "Pichia kudriavzevii" ||
+        merlin_tag == "Pneumocystis jirovecii" ||
+        merlin_tag == "Puccinia triticina" ||
+        merlin_tag == "Pyrenopeziza brassicae" ||
+        merlin_tag == "Saccharomyces cerevisiae" ||
+        merlin_tag == "Saccharomyces paradoxus" ||
+        merlin_tag == "Tapesia acuformis" ||
+        merlin_tag == "Tapesia yallundae" ||
+        merlin_tag == "Trichophyton indotineae" ||
+        merlin_tag == "Trichophyton interdigitale" ||
+        merlin_tag == "Trichophyton mentagrophytes" ||
+        merlin_tag == "Trichophyton rubrum" ||
+        merlin_tag == "Ustilaginoidea virens" ||
+        merlin_tag == "Venturia inaequalis" ||
+        merlin_tag == "Zymoseptoria tritici") {
+        call chroquetas_task.chroquetas {
+          input:
+            genome_fasta = assembly,
+            species = merlin_tag,
+            samplename = samplename,
+            min_percent_coverage = chroquetas_min_percent_coverage,
+            min_percent_identity = chroquetas_min_percent_identity,
+            docker = chroquetas_docker_image
+          }
+        }
+      }
     }
   # Running AMR Search
   if (run_amr_search) {
@@ -1157,5 +1235,10 @@ workflow merlin_magic {
     String snippy_variants_coverage_tsv = select_first([snippy_cauris.snippy_variants_coverage_tsv, snippy_cauris_ont.snippy_variants_coverage_tsv, snippy_afumigatus.snippy_variants_coverage_tsv, snippy_afumigatus_ont.snippy_variants_coverage_tsv, snippy_crypto.snippy_variants_coverage_tsv, snippy_crypto_ont.snippy_variants_coverage_tsv, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
     String snippy_variants_num_variants = select_first([snippy_cauris.snippy_variants_num_variants, snippy_cauris_ont.snippy_variants_num_variants, snippy_afumigatus.snippy_variants_num_variants, snippy_afumigatus_ont.snippy_variants_num_variants, snippy_crypto.snippy_variants_num_reads_aligned, snippy_crypto_ont.snippy_variants_num_variants, "No matching taxon detected"])
     String snippy_variants_percent_ref_coverage = select_first([snippy_cauris.snippy_variants_percent_ref_coverage, snippy_cauris_ont.snippy_variants_percent_ref_coverage, snippy_afumigatus.snippy_variants_percent_ref_coverage, snippy_afumigatus_ont.snippy_variants_percent_ref_coverage, snippy_crypto.snippy_variants_percent_ref_coverage, snippy_crypto_ont.snippy_variants_percent_ref_coverage, "No matching taxon detected"])
+    # chroquetas
+    File chroquetas_amr_stats = chroquetas.amr_stats_file
+    File chroquetas_amr_summary = chroquetas.amr_summary_file
+    String chroquetas_amr_string = chroquetas.amr_summary_string
+    String chroquetas_version = chroquetas.chroquetas_version
   }
 }

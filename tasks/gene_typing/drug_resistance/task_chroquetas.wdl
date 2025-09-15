@@ -6,8 +6,8 @@ task chroquetas {
     String species
     String samplename
 
-    Int min_cov = 75 # set to ChroQueTas default
-    Int min_id = 90  # set to ChroQueTas default
+    Int min_percent_coverage = 75 # set to ChroQueTas default
+    Int min_percent_identity = 90  # set to ChroQueTas default
     File? proteome_fasta
     String? translation_code
 
@@ -31,8 +31,8 @@ task chroquetas {
   ChroQueTas.sh \
     -g ~{genome_fasta} \
     -s ${corrected_species} \
-    --min_cov ~{min_cov} \
-    --min_id ~{min_id} \
+    --min_cov ~{min_percent_coverage} \
+    --min_id ~{min_percent_identity} \
     -t ~{cpu} \
     -o chroquetas_out \
     ~{if defined(proteome_fasta) then "-p ~{proteome_fasta}" else ""} \
