@@ -412,7 +412,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
       md5sum: f1834d4b58b0021eab61d78b01fc88a1
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_bakta.wdl
-      md5sum: 96f6cb7f0c8716513a0ca74b083a745f
+      md5sum: 733518e77aeb6036dafb6515d8d6799a
     - path: miniwdl_run/wdl/tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl
       md5sum: 295b7a6355c2b5f0a514fce571f9bf84
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_prokka.wdl
@@ -444,7 +444,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_trimmomatic.wdl
       contains: ["version", "trimmomatic", "output"]
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_ectyper.wdl
-      md5sum: df450c25710d7002769dfb0382a3f20f
+      md5sum: 958debdfb76a8e89995e13ab11506b17
     - path: miniwdl_run/wdl/tasks/species_typing/salmonella/task_genotyphi.wdl
       md5sum: 94591719849869c5f0f5bc27dc749d7f
     - path: miniwdl_run/wdl/tasks/species_typing/acinetobacter/task_kaptive.wdl
@@ -484,7 +484,7 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 481f5fbce5aa1abf93acd912797821cc
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: 31e063d17c5c1b16c4ffdd00bf241533
+      md5sum: 007d00e16609a8823a1fedb91fcbfb03
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
       contains: ["version", "QC", "output"]
     - path: miniwdl_run/workflow.log
