@@ -9,7 +9,8 @@
 
     - **AMR Stats**: Depicts the number of FungAMR and non-FungAMR mutations on a gene-by-gene (protein sequence) basis.
     - **AMR Summary**: Depicts the mutation resistance and support for potential drug resistance on a gene-by-gene (protein sequence) basis. To interpret confidence scores, please refer to the corresponding [ChroQueTas wiki](https://github.com/nmquijada/ChroQueTas/wiki/Confidence-score-for-antimicrobial-resistance) section.
-    - **AMR String**: Depicts detected AMR mutations as a comma-delimited string in the following format: "<PROTEIN>_<REFERNCE_AA><POSITION><MUTATION_AA>,..."
+    - **Mutations String**: Depicts detected AMR mutations as a comma-delimited string in the following format: "<PROTEIN>_<REFERENCE_AA><POSITION><MUTATION_AA>,..."
+    - **Fungicide Resistance String**: Depicts detected AMR mutations AND the affected fungicides as a comma-delimited string in the following format: "<PROTEIN>_<REFERENCE_AA><POSITION><MUTATION_AA>[<FUNGICIDE1><SUPPORT>;...],..."
 
 
     ??? toggle "Supported Species and Genes"

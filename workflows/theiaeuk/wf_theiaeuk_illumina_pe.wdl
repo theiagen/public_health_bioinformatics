@@ -305,6 +305,13 @@ workflow theiaeuk_illumina_pe {
     String? theiaeuk_snippy_variants_hits = merlin_magic.snippy_variants_hits
     String? theiaeuk_snippy_variants_reference_genome = merlin_magic.snippy_variants_reference_genome
     String? theiaeuk_snippy_variants_gene_query_results = merlin_magic.snippy_variants_gene_query_results
+    # chroquetas
+    File? chroquetas_amr_stats = merlin_magic.chroquetas_amr_stats
+    File? chroquetas_amr_summary = merlin_magic.chroquetas_amr_summary
+    String? chroquetas_mutations = merlin_magic.chroquetas_mutations
+    String? chroquetas_fungicide_resistance = merlin_magic.chroquetas_fungicide_resistance
+    String? chroquetas_version = merlin_magic.chroquetas_version
+    String? chroquetas_status = merlin_magic.chroquetas_status
     # Array[File]? snippy_outputs = merlin_magic.snippy_outputs
     String? theiaeuk_snippy_variants_results = merlin_magic.snippy_variants_results
     String? theiaeuk_snippy_variants_bam = merlin_magic.snippy_variants_bam

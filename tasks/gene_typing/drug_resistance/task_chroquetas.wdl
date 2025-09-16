@@ -17,20 +17,25 @@ task chroquetas {
     Int memory = 8
   }
   command <<<
-  # get version (non-zero exit status)
-  ChroQueTas.sh --version | sed -E 's/\(Chromosome Query Targets\) version //' | tee CHROQUETAS_VERSION
+  # Multiple piped commands return non-zero exit status, so -o is incompatible
+  set -eu
 
-  # fail hard
-  set -euo pipefail
+  # Monitor status with CHROQUETAS_STATUS file
+  echo "ERROR" | tee CHROQUETAS_STATUS
+
+  # get version (non-zero exit status)
+  ChroQueTas.sh --version \
+    | sed -E 's/\(Chromosome Query Targets\) version //' \
+    | tee CHROQUETAS_VERSION
 
   # ChroQueTas expects species with underscore delimiters and a capital first letter
   species_prep=$(echo ~{species} | tr '[:upper:]' '[:lower:]' | tr ' ' '_')
   corrected_species=$(echo ${species_prep^})
 
   # ensure the species is compatible
-  grep_check=$(ChroQueTas.sh --list_species | cut -f 1 | tail -n+2 | grep -P "^${corrected_species}$"
+  grep_check=$(ChroQueTas.sh --list_species | cut -f 1 | tail -n+2 | grep -P "^${corrected_species}$")
   if [ ! -n ${grep_check} ]; then
-    echo "ERROR: Species not found" | tee CHROQUETAS_STATUS
+    echo "ERROR: Incompatible species" | tee CHROQUETAS_STATUS
   else
     # call chroquetas
     ChroQueTas.sh \
@@ -49,6 +54,7 @@ task chroquetas {
     mv chroquetas_out/${based_name}.ChroQueTaS.AMR_summary.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt
   
     # extract AMR summary string
+    # e.g. <GENE>_<REF_POSITION><AA_CHANGE><QUERY_POSITION>
     tail -n+2 chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt \
       | awk '{ print $1, $4, $3, $5 }' \
       | sed -E 's/([^ ]+) ([^ ]+) ([^ ]+) ([^ ]+)/\1_\2\3\4/' \
@@ -56,17 +62,27 @@ task chroquetas {
       | sed -E 's/,$//' \
       | tee AMR_SUMMARY_STRING
 
+    # extract AMR summary annotated w/fungicide resistance
+    # e.g. <GENE>_<REF_POSITION><AA_CHANGE><QUERY_POSITION>[<FUNGICIDE_RESISTANCE1>;<FUNGICIDE_RESISTANCEn>]
+    tail -n+2 chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt \
+      | awk '{ print $1, $4, $3, $5, $6 }' \
+      | sed -E 's/([^ ]+) ([^ ]+) ([^ ]+) ([^ ]+) ([^ ]+)/\1_\2\3\4[\5]/' \
+      | sed -E 's/,/;/g' \
+      | tr '\n' ',' \
+      | sed -E 's/,$//' \
+      | tee ANNOTATED_AMR_SUMMARY_STRING
+
     echo "PASS" | tee CHROQUETAS_STATUS
   fi
   >>>
   output {
     File? amr_stats_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt"
     File? amr_summary_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt"
-    String? amr_string = read_string("AMR_SUMMARY_STRING")
-    String? chroquetas_version = read_string("CHROQUETAS_VERSION")
+    String? chroquetas_mutations = read_string("AMR_SUMMARY_STRING")
+    String? chroquetas_fungicide_resistance = read_string("ANNOTATED_AMR_SUMMARY_STRING")
+    String chroquetas_version = read_string("CHROQUETAS_VERSION")
     String chroquetas_status = read_string("CHROQUETAS_STATUS")
   }
-
   runtime {
     memory: "~{memory} GB"
     cpu: cpu

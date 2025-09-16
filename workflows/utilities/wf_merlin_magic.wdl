@@ -1237,7 +1237,8 @@ workflow merlin_magic {
     # chroquetas
     File? chroquetas_amr_stats = chroquetas.amr_stats_file
     File? chroquetas_amr_summary = chroquetas.amr_summary_file
-    String? chroquetas_amr_string = chroquetas.amr_string
+    String? chroquetas_mutations = chroquetas.chroquetas_mutations
+    String? chroquetas_fungicide_resistance = chroquetas.chroquetas_fungicide_resistance
     String? chroquetas_version = chroquetas.chroquetas_version
     String? chroquetas_status = chroquetas.chroquetas_status
   }
