@@ -65,16 +65,18 @@ These workflows currently support the following organisms. The first option in t
 - **RSV-A** (**`"rsv_a"`**, `"rsv-a"`, `"RSV-A"`, `"RSV_A"`)
 - **RSV-B** (**`"rsv_b"`**, `"rsv-b"`, `"RSV-B"`, `"RSV_B"`)
 - **Measles** (**`"measles"`**, `"Measles"`, `"mev"`, `"MeV"`, `"Morbillivirus"`, `"morbillivirus"`)
+- **Mumps** (**`"mumps"`**, `"Mumps"`, `"MuV"`, `"muv"`, `"Mumps virus"`, `"mumps virus"`)
+- **Rubella** (**`"rubella"`**, `"Rubella"`, `"RuV"`, `"ruv"`, `"Rubella virus"`, `"rubella virus"`)
 
 The compatibility of each workflow with each pathogen is shown below:
 
-|  | SARS-CoV-2 | Mpox | HIV | WNV | Influenza | RSV-A | RSV-B | Measles |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ❌ |
-| ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ |
-| FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
-| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+|  | SARS-CoV-2 | Mpox | HIV | WNV | Influenza | RSV-A | RSV-B | Measles | Mumps | Rubella |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Illumina_PE | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| Illumina_SE | ✅ | ✅ | ❌ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| ONT | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| FASTA | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ |
+| ClearLabs | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 
 We've provided the following information to help you set up the workflow for each organism in the form of input JSONs.
 
@@ -120,31 +122,31 @@ We've provided the following information to help you set up the workflow for eac
     === "TheiaCoV_Illumina_PE"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_Illumina_PE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_Illumina_PE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_Illumina_SE"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_Illumina_SE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_Illumina_SE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_ONT"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_ONT"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_ONT"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_FASTA"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_FASTA"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_FASTA"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_ClearLabs"
         /// html | div[class="searchable-table"]
 
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_ClearLabs"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status", "Organism"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_ClearLabs"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
     === "TheiaCoV_FASTA_Batch"
@@ -153,9 +155,9 @@ We've provided the following information to help you set up the workflow for eac
         {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaCoV_FASTA_Batch"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
-### Organism-specific parameters and logic {% raw %} {#org-specific} {% endraw %}
+### Organism-Specific Parameters {% raw %} {#org-specific} {% endraw %}
 
-The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflows. This step automatically sets the different parameters needed for each downstream tool to the appropriate value for the user-designated organism (by default, `"sars-cov-2"` is the default organism).
+**The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflows**. This step automatically sets the different parameters needed for each downstream tool to the appropriate value for the user-designated organism (by default, `"sars-cov-2"` is the default organism).
 
 !!! dna ""
     The following tables include the relevant organism-specific parameters; **all of these default values can be overwritten by providing a value for the "Overwrite Variable Name" field**.
@@ -170,11 +172,13 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | kraken_target_organism_input | sars-cov-2 | `"Severe acute respiratory syndrome coronavirus 2"` |
         | nextclade_dataset_name_input | sars-cov-2 | `"nextstrain/sars-cov-2/wuhan-hu-1/orfs"` |
         | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34 "`|
-        | nextclade_dataset_tag_input | sars-cov-2 | `"2025-06-09--15-42-38Z"` |
+        | nextclade_dataset_tag_input | sars-cov-2 | `"2025-08-02--08-55-17Z"` |
         | reference_genome | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"` |
         | vadr_max_length | sars-cov-2 | `30000` |
+        | vadr_skip_length | sars-cov-2 | `10000` |
         | vadr_mem | sars-cov-2 | `8` |
-        | vadr_options | sars-cov-2 | `"--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"` |
+        | vadr_options | sars-cov-2 | `"--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta"` |
+        | vadr_model_file | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"` |
 
         </div>
 
@@ -192,8 +196,10 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | reference_genome | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.MT903345.reference.fasta"` |
         | reference_gff_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3"` |
         | vadr_max_length | MPXV | `210000` |
+        | vadr_skip_length | MPXV | `65480` |
         | vadr_mem | MPXV | `8` |
-        | vadr_options | MPXV | `"--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"` |
+        | vadr_options | MPXV | `"--mkey mpxv --glsearch --minimap2 -s -r --nomisc --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --s_overhang 150 --out_allfasta"` |
+        | vadr_model_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.4.2-1.tar.gz"` |
         
         </div>
 
@@ -209,8 +215,10 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | primer_bed_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/al/wnv/WNV-L1_primer.bed"` |  |
         | reference_genome | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/NC_009942.1_wnv_L1.fasta"` |  |
         | vadr_max_length | WNV | `11000` |  |
+        | vadr_skip_length | WNV | `3000` |  |
         | vadr_mem | WNV | `8` |  |
-        | vadr_options | WNV | `"--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"` |  |
+        | vadr_options | WNV | `"--mkey flavi --nomisc --noprotid --out_allfasta"` |  |
+        | vadr_model_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flavi-1.2-1.tar.gz"` |  |
 
         </div>
 
@@ -223,31 +231,33 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | flu_subtype | flu | all | all | N/A | TheiaCoV will attempt to automatically assign a flu subtype |
         | genome_length_input | flu | all | all | `13500` |  |
         | vadr_max_length | flu | all | all | `13500` |  |
+        | vadr_skip_length | flu | all | all | `500` |  |
         | vadr_mem | flu | all | all | `8` |  |
-        | vadr_options | flu | all | all | `"--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"` |  |
+        | vadr_options | flu | all | all | `"--mkey flu --atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3"` |  |
+        | vadr_model_file | flu | all | all | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"` |  |
         | nextclade_dataset_name_input | flu | ha | h1n1 | `"nextstrain/flu/h1n1pdm/ha/MW626062"` |  |
-        | nextclade_dataset_tag_input | flu | ha | h1n1 | `"2025-01-22--09-54-14Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h1n1 | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | ha | h1n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | h3n2 | `"nextstrain/flu/h3n2/ha/EPI1857216"` |  |
-        | nextclade_dataset_tag_input | flu | ha | h3n2 | `"2025-01-22--09-54-14Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h3n2 | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | ha | h3n2 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | victoria | `"nextstrain/flu/vic/ha/KX058884"` |  |
-        | nextclade_dataset_tag_input | flu | ha | victoria | `"2025-01-22--09-54-14Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | victoria | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | ha | victoria | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | yamagata | `"nextstrain/flu/yam/ha/JN993010"` |  |
         | nextclade_dataset_tag_input | flu | ha | yamagata | `"2024-01-30--16-34-55Z"` |  |
         | reference_genome | flu | ha | yamagata | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | h5n1 | `"community/moncla-lab/iav-h5/ha/all-clades"` |  |
-        | nextclade_dataset_tag_input | flu | ha | h5n1 | `"2025-01-30--18-05-53Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h5n1 | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | ha | h5n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | h1n1 | `"nextstrain/flu/h1n1pdm/na/MW626056"` |  |
-        | nextclade_dataset_tag_input | flu | na | h1n1 | `"2025-03-26--11-47-13"` |  |
+        | nextclade_dataset_tag_input | flu | na | h1n1 | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | na | h1n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | h3n2 | `"nextstrain/flu/h3n2/na/EPI1857215"` |  |
-        | nextclade_dataset_tag_input | flu | na | h3n2 | `"2025-01-22--09-54-14Z"` |  |
+        | nextclade_dataset_tag_input | flu | na | h3n2 | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | na | h3n2 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | victoria | `"nextstrain/flu/vic/na/CY073894"` |  |
-        | nextclade_dataset_tag_input | flu | na | victoria | `"2025-03-26--11-47-13Z"` |  |
+        | nextclade_dataset_tag_input | flu | na | victoria | `"2025-08-07--09-22-32Z"` |  |
         | reference_genome | flu | na | victoria | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | yamagata | `"NA"` |  |
         | nextclade_dataset_tag_input | flu | na | yamagata | `"NA"` |  |
@@ -274,10 +284,12 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | kraken_target_organism | rsv_a | `"Human respiratory syncytial virus A"` |
         | nextclade_dataset_name_input | rsv_a | `nextstrain/rsv/a/EPI_ISL_412866` |
         | nextclade_dataset_tag_input | rsv_a | `"2024-11-27--02-51-00Z"` |
-        | reference_genome | rsv_a | `gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta` |
+        | reference_genome | rsv_a | `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"` |
         | vadr_max_length | rsv_a | `15500` |
+        | vadr_skip_length | rsv_a | `5000` |
         | vadr_mem | rsv_a | `32` |
-        | vadr_options | rsv_a | `-r --mkey rsv --xnocomp` |
+        | vadr_options | rsv_a | `"--mkey rsv --xnocomp -r"` |
+        | vadr_model_file | rsv_a | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"` |
 
         </div>
 
@@ -290,10 +302,11 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         | kraken_target_organism | rsv_b | `"human respiratory syncytial virus"` |
         | nextclade_dataset_name_input | rsv_b | `nextstrain/rsv/b/EPI_ISL_1653999` |
         | nextclade_dataset_tag_input | rsv_b | `"2025-03-04--17-31-25Z"` |
-        | reference_genome | rsv_b | `gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta` |
+        | reference_genome | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"` |
         | vadr_max_length | rsv_b | `15500` |
         | vadr_mem | rsv_b | `32` |
-        | vadr_options | rsv_b | `-r --mkey rsv --xnocomp` |
+        | vadr_options | rsv_b | `"--mkey rsv --xnocomp -r"` |
+        | vadr_model_file | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"` |
 
         </div>
 
@@ -302,15 +315,15 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
 
         | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
         |---|---|---|---|
-        | kraken_target_organism_input | HIV | `Human immunodeficiency virus 1` |  |
+        | kraken_target_organism_input | HIV | `"Human immunodeficiency virus 1"` |  |
         | genome_length_input | HIV-v1 | `9181` | This version of HIV originates from Oregon |
-        | primer_bed_file | HIV-v1 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed` | This version of HIV originates from Oregon |
-        | reference_genome | HIV-v1 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta` | This version of HIV originates from Oregon |
-        | reference_gff_file | HIV-v1 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3` | This version of HIV originates from Oregon |
+        | primer_bed_file | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"` | This version of HIV originates from Oregon |
+        | reference_genome | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta"` | This version of HIV originates from Oregon |
+        | reference_gff_file | HIV-v1 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"` | This version of HIV originates from Oregon |
         | genome_length_input | HIV-v2 | `9840` | This version of HIV originates from Southern Africa |
-        | primer_bed_file | HIV-v2 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed` | This version of HIV originates from Southern Africa |
-        | reference_genome | HIV-v2 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta` | This version of HIV originates from Southern Africa |
-        | reference_gff_file | HIV-v2 | `gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3` | This version of HIV originates from Southern Africa |
+        | primer_bed_file | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed"` | This version of HIV originates from Southern Africa |
+        | reference_genome | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"` | This version of HIV originates from Southern Africa |
+        | reference_gff_file | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"` | This version of HIV originates from Southern Africa |
 
         </div>
     
@@ -321,96 +334,118 @@ The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflo
         |---|---|---|
         | kraken_target_organism_input | measles | `"Measles morbillivirus"` |
         | genome_length_input | measles | `16000` |
-        | nextclade_dataset_name_input | measles | `"nextstrain/measles/N450/WHO-2012"` |
-        | nextclade_dataset_tag_input | measles | `"2025-03-26--11-47-13Z"` |
+        | nextclade_dataset_name_input | measles | `"nextstrain/measles/genome/WHO-2012"` |
+        | nextclade_dataset_tag_input | measles | `"2025-08-11--19-06-01Z"` |
+        | reference_genome | measles | `"gs://theiagen-public-resources-rp/reference_data/viral/measles/NC_001498.1_measles_reference.fasta"` |
+        | vadr_max_length | measles | `18000` |
+        | vadr_skip_length | measles | `0` |
+        | vadr_mem | measles | `24` |
+        | vadr_options | measles | `"--mkey mev -r --indefclass 0.01"` |
+        | vadr_model_file | measles | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mev-1.02.tar.gz"` |
 
         </div>
-                
-### Workflow Tasks
 
-All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT, and ClearLabs workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaCoV workflows subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
+    === "Mumps"
+        <div class="searchable-table" markdown="block">
 
-#### Core tasks
+        | **Overwrite Variable Name** | **Organism** | **Default Value** |
+        |---|---|---|
+        | reference_genome | mumps | `"gs://theiagen-public-resources-rp/reference_data/viral/mumps/NC_002200.1_mumps_reference.fasta"` |
+        | genome_length_input | mumps | `15300` |
+        | vadr_options | mumps | `"--mkey muv -r --indefclass 0.025"` |
+        | vadr_max_length | mumps | `18000` |
+        | vadr_skip_length | mumps | `0` |
+        | vadr_mem | mumps | `16` |
+        | vadr_model_file | mumps | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-muv-1.01.tar.gz"` |
 
-!!! tip ""
-    These tasks are performed regardless of organism, and perform read trimming and various quality control steps.
+        </div>
+
+    === "Rubella"
+        <div class="searchable-table" markdown="block">
+
+        | **Overwrite Variable Name** | **Organism** | **Default Value** |
+        |---|---|---|
+        | reference_genome | rubella | `"gs://theiagen-public-resources-rp/reference_data/viral/rubella/NC_001545.2_rubella_reference.fasta"` |
+        | genome_length_input | rubella | `9800` |
+        | vadr_options | rubella | `"--mkey ruv -r"` |
+        | vadr_max_length | rubella | `10000` |
+        | vadr_skip_length | rubella | `0` |
+        | vadr_mem | rubella | `16` |
+        | vadr_model_file | rubella | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-ruv-1.01.tar.gz"` |
+
+        </div>
+
+### Core Tasks
+
+!!! dna ""
+    These tasks are performed for all organisms. They include tasks that are performed regardless of and specific for the input data type. They perform read trimming and assembly appropriate to the input data type.
 
 {{ include_md("common_text/versioning_task.md") }}
 
+#### Assembly Tasks
+
 !!! caption ""
     === "TheiaCoV_Illumina_PE"
-{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiacov", indent=8) }}
+
+        **_If non-influenza_**
+{{ include_md("common_text/ivar_consensus_wf.md", indent=8) }}
+
+        **_If influenza_**
+{{ include_md("common_text/irma_task.md", condition="assembly", indent=8)}}
 
     === "TheiaCoV_Illumina_SE"
-{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/ivar_consensus_wf.md", condition="theiacov", indent=8) }}
 
     === "TheiaCoV_ONT"
-{{ include_md("common_text/read_qc_trim_ont.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/read_qc_trim_ont_wf.md", condition="theiacov", indent=8) }}
 
+        **_If non-influenza_**
+{{ include_md("common_text/artic_consensus_task.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/assembly_metrics_task.md", indent=8, condition="theiacov") }}
+
+        **_If influenza_**
+{{ include_md("common_text/irma_task.md", condition="assembly", indent=8) }}
+{{ include_md("common_text/assembly_metrics_task.md", indent=8, condition="theiacov") }}
+
+    === "TheiaCoV_ClearLabs"
+{{ include_md("common_text/ncbi_scrub_task.md", indent=8) }}
+{{ include_md("common_text/fastq_scan_task.md", condition="clearlabs", indent=8) }}
+{{ include_md("common_text/kraken2_task.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/artic_consensus_task.md", condition="theiacov", indent=8) }}
+{{ include_md("common_text/assembly_metrics_task.md", indent=8, condition="theiacov") }}
+
+    === "TheiaCoV_FASTA"
+        !!! dna ""
+            Since this workflow requires FASTA files as input, no assembly or read trimming is performed, and the workflow proceeds directly to the "post-assembly tasks" section below.
+
+#### Post-Assembly Tasks
+
+!!! dna ""
+    These tasks are performed for all organisms after assembly (or directly after input for TheiaCoV_FASTA).
+
+{{ include_md("common_text/consensus_qc_task.md") }}
 {{ include_md("common_text/qc_check_task.md", condition="theiacov")}}
 
-#### Assembly tasks
-
-!!! tip ""
-    Either one of these tasks is run depending on the organism and workflow type.
-
-??? toggle "`ivar_consensus`: Alignment, Consensus, Variant Detection, and Assembly Statistics ==_for non-flu organisms in Illumina workflows_=="
-
-    `ivar_consensus` is a sub-workflow within TheiaCoV that performs reference-based consensus assembly using the [iVar](https://andersen-lab.github.io/ivar/html/index.html) tool by Nathan Grubaugh from the Andersen lab.
-
-    The following steps are performed as part of this sub-workflow:
-
-    1. Cleaned reads are aligned to the appropriate reference genome (see also the [*organism-specific parameters and logic*](./theiacov.md#org-specific) section above) using [BWA](http://bio-bwa.sourceforge.net/) to generate a Binary Alignment Mapping (BAM) file.
-    2. If `trim_primers` is set to true, primers will be removed using `ivar trim`.
-        1.  General statistics about the remaining reads are calculated.
-    3. The `ivar consensus` command is run to generate a consensus assembly.
-    4. General statistics about the assembly are calculated..
-
-    !!! techdetails "iVar Consensus Technical Details"    
-        | Workflow | TheiaCoV_Illumina_PE & TheiaCoV_Illumina_SE |
-        | --- | --- |
-        | Sub-workflow | [wf_ivar_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_ivar_consensus.wdl) |
-        | Tasks | [task_bwa.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl)<br>[task_ivar_primer_trim.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl)<br>[task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl)<br>[task_ivar_variant_call.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl)<br>[task_ivar_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_ivar_consensus.wdl) |
-        | Software Source Code | [BWA on GitHub](https://github.com/lh3/bwa), [iVar on GitHub](https://andersen-lab.github.io/ivar/html/) |
-        | Software Documentation | [BWA on SourceForge](https://bio-bwa.sourceforge.net/), [iVar on GitHub](https://andersen-lab.github.io/ivar/html/) |
-        | Original Publication(s) | [Aligning sequence reads, clone sequences and assembly contigs with BWA-MEM](https://doi.org/10.48550/arXiv.1303.3997)<br>[An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](http://dx.doi.org/10.1186/s13059-018-1618-7) |
-
-??? toggle "`artic_consensus`: Alignment, Primer Trimming, Variant Detection, and Consensus ==_for non-flu organisms in ONT & ClearLabs workflows_=="
-
-    Briefly, input reads are aligned to the appropriate reference with [minimap2](https://github.com/lh3/minimap2) to generate a Binary Alignment Mapping ([BAM](https://en.wikipedia.org/wiki/Binary_Alignment_Map)) file. Primer sequences are then removed from the BAM file and a consensus assembly file is generated using the [Artic minion](https://artic.readthedocs.io/en/latest/commands/#basecaller) Medaka argument.
-
-    !!! info ""
-        Read-trimming is performed on raw read data generated on the ClearLabs instrument and thus not a required step in the TheiaCoV_ClearLabs workflow.
-
-    General statistics about the assembly are generated with the `consensus_qc` task ([task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl)).
-
-    !!! techdetails "Artic Consensus Technical Details"
-        |  | Links |
-        | --- | --- |
-        | Task | [task_artic_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_artic_consensus.wdl) |
-        | Software Source Code | [Artic on GitHub](https://github.com/artic-network/fieldbioinformatics) |
-        | Software Documentation | [Artic pipeline](https://artic.readthedocs.io/en/latest/?badge=latest) |
-
-{{ include_md("common_text/irma_task.md", condition="assembly")}}
-
-#### Organism-specific characterization tasks {% raw %} {#org-specific-tasks} {% endraw %}
+#### Organism-specific Characterization Tasks {% raw %} {#org-specific-tasks} {% endraw %}
 
 !!! dna ""
 
     The following tasks are organism-specific. The following table summarizes the characterization tools that are run for the indicated organism.
 
-    | | **SARS-CoV-2** | **Mpox** | **West Nile Virus** | **Influenza** | **RSV-A** | **RSV-B** | **HIV** | **Measles** |
-    |---|---|---|---|---|---|---|---|---|
-    | **Pangolin** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-    | **Nextclade** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ |
-    | **VADR** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ❌ |
-    | **VADR Flu Segments** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | **Quasitools HyDRA** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ |
-    | **IRMA** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | **Abricate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | **% Gene Coverage** | ✅ | ✅ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ |
-    | **Antiviral Detection** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
-    | **GenoFLU** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ |
+    | | **SARS-CoV-2** | **Mpox** | **West Nile Virus** | **Influenza** | **RSV-A** | **RSV-B** | **HIV** | **Measles** | **Mumps** | **Rubella** |
+    |---|---|---|---|---|---|---|---|---|---|---|
+    | **Pangolin** | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **Nextclade** | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ | ❌ | ✅ | ❌ | ❌ |
+    | **VADR** | ✅ | ✅ | ✅ | ✅ | ✅ | ✅ | ❌ | ✅ | ✅ | ✅ |
+    | **VADR Flu Segments** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **Quasitools HyDRA** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
+    | **IRMA** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **Abricate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **% Gene Coverage** | ✅ | ✅ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ |
+    | **Antiviral Detection** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **GenoFLU** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
 
     ✅ This task runs automatically for these organisms<br>
     ➕ This task can run for these organisms if optional parameter(s) are provided; see task description for details.<br>
@@ -450,7 +485,7 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 
 {{ include_md("common_text/abricate_flu_task.md", indent=4) }}
 
-{{ include_md("common_text/flu_antiviral_substitutions_task.md", indent=4) }}
+{{ include_md("common_text/flu_antiviral_substitutions_wf.md", indent=4) }}
 
 {{ include_md("common_text/genoflu_task.md", indent=4) }}
 
@@ -473,6 +508,16 @@ All input reads are processed through "core tasks" in the TheiaCoV Illumina, ONT
 === "Measles"
 
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
+
+{{ include_md("common_text/vadr_task.md", indent=4) }}
+
+=== "Mumps"
+
+{{ include_md("common_text/vadr_task.md", indent=4) }}
+
+=== "Rubella"
+
+{{ include_md("common_text/vadr_task.md", indent=4) }}
 
 ### Outputs
 

@@ -7,7 +7,7 @@ task ectyper {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/ectyper:1.0.0--pyhdfd78af_1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ectyper:2.0.0"
     Int disk_size = 100
     Int cpu = 4
     Int memory = 8
@@ -23,7 +23,7 @@ task ectyper {
     Int h_min_percent_identity = 95
     Int o_min_percent_coverage = 90
     Int h_min_percent_coverage = 50
-    Boolean verify = false
+    Boolean verify = true
     Boolean print_alleles = false
   }
   command <<<
@@ -35,17 +35,42 @@ task ectyper {
       ~{'-hpcov ' + h_min_percent_coverage} \
       ~{true="--verify" false="" verify} \
       ~{true="-s" false="" print_alleles} \
+      --pathotype \
       --cores ~{cpu} \
       --output ./ \
       --input ~{assembly}
     mv output.tsv ~{samplename}.tsv
     # parse ECTyper TSV
-    cut -f 5 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROTYPE
+    cut -f 8 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROTYPE
+    cut -f 9 ~{samplename}.tsv | tail -n 1 | tee QC_RESULT
+    cut -f 18 ~{samplename}.tsv | tail -n 1 | tee DATABASE_VERSION
+    cut -f 19 ~{samplename}.tsv | tail -n 1 | tee WARNINGS.txt
+    # If species is of Shigella and QC is "WARNING (WRONG SPECIES)", then set pathotype to "Not Reportable; See Warnings"
+    # Occurs when ECTyper Verify is set to true
+    if [[ "$(cat QC_RESULT)" == "WARNING (WRONG SPECIES)" ]]; then
+      echo "Not Reportable; See Warnings" > PATHOTYPE
+    else
+      cut -f 20 ~{samplename}.tsv | tail -n 1 | tee PATHOTYPE
+    fi
+    cut -f 21 ~{samplename}.tsv | tail -n 1 | tee PATHOTYPE_COUNT
+    cut -f 22 ~{samplename}.tsv | tail -n 1 | tee PATHOTYPE_GENES
+    cut -f 31 ~{samplename}.tsv | tail -n 1 | tee PATHODB_VERSION
+    cut -f 32 ~{samplename}.tsv | tail -n 1 | tee STXSUBTYPES
+
   >>>
   output {
     File ectyper_results = "~{samplename}.tsv"
     String ectyper_predicted_serotype = read_string("PREDICTED_SEROTYPE")
     String ectyper_version = read_string("VERSION")
+    File ectyper_warnings = "WARNINGS.txt"
+    String ectyper_qc_result = read_string("QC_RESULT")
+    String ectyper_database_version = read_string("DATABASE_VERSION")
+    String ectyper_pathotype = read_string("PATHOTYPE")
+    String ectyper_pathotype_count = read_string("PATHOTYPE_COUNT")
+    String ectyper_pathotype_genes = read_string("PATHOTYPE_GENES")
+    String ectyper_pathodb_version = read_string("PATHODB_VERSION")
+    String ectyper_stx_subtypes = read_string("STXSUBTYPES")
+    String ectyper_docker = docker
   }
   runtime {
     docker: "~{docker}"

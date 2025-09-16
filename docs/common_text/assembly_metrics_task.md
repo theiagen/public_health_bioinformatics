@@ -1,6 +1,9 @@
-??? task "`assembly_metrics`"
-
+??? task "`assembly_metrics`: Mapping Statistics"
     The `assembly_metrics` task generates mapping statistics from a BAM file. It uses samtools to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics.
+
+<!-- if: theiacov -->
+    This task is run twice: once on the untrimmed reads and, if primer trimming is enabled, once on the primer-trimmed reads. This allows for a comparison of mapping statistics before and after primer trimming, which can be useful for assessing the impact of primer trimming on the quality of the alignment and subsequent analyses.
+<!-- endif -->
 
     !!! techdetails "`assembly_metrics` Technical Details"
         |  | Links |

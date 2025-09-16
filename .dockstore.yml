@@ -195,11 +195,6 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/data_import/wf_sra_fetch.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Terra_2_BQ_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_terra_2_bq.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
  - name: Fetch_SRR_Accession_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/data_import/wf_fetch_srr_accession.wdl
@@ -258,6 +253,8 @@ workflows:
  - name: Nextclade_Batch_PHB 
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_batch.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Terra_2_GISAID_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/submission/wf_terra_2_gisaid.wdl
@@ -336,5 +333,10 @@ workflows:
  - name: TheiaViral_Panel_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_panel.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: ONT_Barcode_Concatenation_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/data_import/wf_ont_barcode_concatenation.wdl
    testParameterFiles:
      - /tests/inputs/empty.json

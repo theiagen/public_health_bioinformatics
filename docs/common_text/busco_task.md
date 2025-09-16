@@ -22,5 +22,5 @@
         | --- | --- |
         | Task | [task_busco.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_busco.wdl) |
         | Software Source Code | [BUSCO on GitLab](https://gitlab.com/ezlab/busco) |
-        | Software Documentation | https://busco.ezlab.org/ |
+        | Software Documentation | <https://busco.ezlab.org/> |
         | Orginal publication | [BUSCO: assessing genome assembly and annotation completeness with single-copy orthologs](https://academic.oup.com/bioinformatics/article/31/19/3210/211866) |
