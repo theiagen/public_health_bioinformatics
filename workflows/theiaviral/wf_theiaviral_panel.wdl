@@ -144,6 +144,8 @@ workflow theiaviral_panel {
                 "source_table": source_table_name,
                 "taxon_name": ncbi_identify.taxon_name,
                 "assembly_fasta": theiaviral.assembly_consensus_fasta,
+                "theiaviral_panel_analysis_date": version_capture.date,
+                "theiaviral_panel_version": version_capture.phb_version,
                 "read1": select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
                 "read2": select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2]),
                 "kraken2_report": kraken2.kraken2_report,
