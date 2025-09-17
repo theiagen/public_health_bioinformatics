@@ -311,7 +311,7 @@
 
     ??? toggle "Read Quality Control, Trimming, Filtering, Identification"
 
-{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiaviral_panel", indent=8) }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiaviral_panel", indent=8) }}
 
     ??? toggle "Read Extraction and Binning"
 
