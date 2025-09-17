@@ -17,7 +17,7 @@ workflows:
     - /tests/inputs/empty.json
  - name: ChroQueTas
    subclass: WDL
-   primaryDescriptorPath: /workflows/standalone/wf_chroquetas.wdl
+   primaryDescriptorPath: /workflows/standalone_modules/wf_chroquetas.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: Snippy_Variants_PHB
