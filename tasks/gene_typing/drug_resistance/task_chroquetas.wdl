@@ -2,7 +2,7 @@ version 1.0
 
 task chroquetas {
   input {
-    File genome_fasta
+    File assembly_fasta
     String species
     String samplename
 
@@ -21,7 +21,7 @@ task chroquetas {
   set -eu
 
   # Monitor status with CHROQUETAS_STATUS file
-  echo "ERROR" | tee CHROQUETAS_STATUS
+  echo "ERROR" > CHROQUETAS_STATUS
 
   # get version (non-zero exit status)
   ChroQueTas.sh --version \
@@ -33,13 +33,15 @@ task chroquetas {
   corrected_species=$(echo ${species_prep^})
 
   # ensure the species is compatible
-  grep_check=$(ChroQueTas.sh --list_species | cut -f 1 | tail -n+2 | grep -P "^${corrected_species}$")
-  if [ ! -n ${grep_check} ]; then
+  grep_check=$(ChroQueTas.sh --list_species | cut -f 1 | tail -n+2 | grep -P "^${corrected_species}$" || true)
+  if [ -z ${grep_check} ]; then
     echo "ERROR: Incompatible species" | tee CHROQUETAS_STATUS
+    echo "" > AMR_SUMMARY_STRING
+    echo "" > ANNOTATED_AMR_SUMMARY_STRING
   else
     # call chroquetas
     ChroQueTas.sh \
-      -g ~{genome_fasta} \
+      -g ~{assembly_fasta} \
       -s ${corrected_species} \
       --min_cov ~{min_percent_coverage} \
       --min_id ~{min_percent_identity} \
@@ -49,7 +51,7 @@ task chroquetas {
       ~{if defined(translation_code) then "-c ~{translation_code}" else ""}
   
     # rename output files to include sample name
-    based_name=$(echo $(basename ~{genome_fasta}) | sed -E 's/(.*)\.[^\.]+$/\1/')
+    based_name=$(echo $(basename ~{assembly_fasta}) | sed -E 's/(.*)\.[^\.]+$/\1/')
     if [ -f chroquetas_out/${based_name}.ChroQueTaS.AMR_stats.txt ]; then
       mv chroquetas_out/${based_name}.ChroQueTaS.AMR_stats.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt
       mv chroquetas_out/${based_name}.ChroQueTaS.AMR_summary.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt
@@ -90,8 +92,8 @@ task chroquetas {
   output {
     File? amr_stats_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt"
     File? amr_summary_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt"
-    String? chroquetas_mutations = read_string("AMR_SUMMARY_STRING")
-    String? chroquetas_fungicide_resistance = read_string("ANNOTATED_AMR_SUMMARY_STRING")
+    String chroquetas_mutations = read_string("AMR_SUMMARY_STRING")
+    String chroquetas_fungicide_resistance = read_string("ANNOTATED_AMR_SUMMARY_STRING")
     String chroquetas_version = read_string("CHROQUETAS_VERSION")
     String chroquetas_status = read_string("CHROQUETAS_STATUS")
   }

@@ -884,7 +884,7 @@ workflow merlin_magic {
         merlin_tag == "Zymoseptoria tritici") {
         call chroquetas_task.chroquetas {
           input:
-            genome_fasta = assembly,
+            assembly_fasta = assembly,
             species = merlin_tag,
             samplename = samplename,
             min_percent_coverage = chroquetas_min_percent_coverage,
