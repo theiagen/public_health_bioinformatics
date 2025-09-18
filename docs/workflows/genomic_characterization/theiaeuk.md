@@ -92,6 +92,10 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     These tasks are performed regardless of the organism and provide quality control and taxonomic assignment.
 
 {{ include_md("common_text/gambit_task.md") }}
+
+!!! warning ""
+    Due to limitations and characterization issues in newly currated BUSCO databases, logic has been implemented to pin eukaryotic functionality to BUSCO database `eukaryota_odb10`.
+
 {{ include_md("common_text/busco_task.md") }}
 
 #### Organism-specific characterization
