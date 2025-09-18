@@ -22,7 +22,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
 !!! warning "Before running TheiaEuk"
 
-    TheiaEuk_Illumina_PE relies on [Snippy](#organism-specific-characterization) to perform variant calling on the cleaned read dataset and then queries the resulting file for specific mutations that are known to confim antifugal resistance (see [Organism-specific characterization](#organism-specific-characterization) section). This behaviour has been replicated in TheiaEuk_ONT but the variant calling is performed directly on the resulting assemblies. Therefore, the read support reported is, at the moment, non-reliable. Future improvements will include improvements on this module. 
+    For some taxa, TheiaEuk_Illumina_PE relies on [Snippy](#organism-specific-characterization) to perform variant calling on the cleaned read dataset and then queries the resulting file for specific mutations that are known to confim antifugal resistance (see [Organism-specific characterization](#organism-specific-characterization) section). This behaviour has been replicated in TheiaEuk_ONT but the variant calling is performed directly on the resulting assemblies. Therefore, the read support reported is, at the moment, non-reliable. Future improvements will include improvements on this module. 
 
 ### Inputs
 
@@ -54,7 +54,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
 ### Workflow Tasks
 
-All input reads are processed through "core tasks" in the TheiaEuk workflows. These undertake read trimming and assembly appropriate to the input data type, currently only Illumina paired-end data. TheiaEuk workflow subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" or alternatives to tasks run in the workflow by default.
+All input reads are processed through "core tasks" in the TheiaEuk workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaEuk workflow subsequently launch default genome characterization modules for quality assessment, and additional taxa-specific characterization steps. When setting up the workflow, users may choose to use "optional tasks" or alternatives to tasks run in the workflow by default.
 
 #### Core tasks
 
@@ -91,19 +91,14 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 !!! tip ""
     These tasks are performed regardless of the organism and provide quality control and taxonomic assignment.
 
-{{ include_md("common_text/gambit_task.md") }}
 {{ include_md("common_text/busco_task.md") }}
+{{ include_md("common_text/gambit_task.md") }}
+{{ include_md("common_text/chroquetas_task.md") }}
 
 #### Organism-specific characterization
 
 !!! tip ""
     The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using `GAMBIT`. Many of these taxa-specific tasks do not require any additional inputs from the user.
-
-??? toggle "General antimicrobial resistance screening"
-
-    ChroQueTas performs antimicrobial resistance screening for 58 fungal pathogens.
-
-{{ include_md("common_text/chroquetas_task.md", indent=4) }}
 
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
     Three tools can be deployed when _Candidozyma auris_/_Candida auris_ is  identified.

@@ -1,5 +1,5 @@
 ??? task "`chroquetas`: Antimicrobial Resistance Profiling"
-    This task performs *in silico* antimicrobial resistance (AMR) mutation detection using ChroQueTas in conjunction with the [FungAMR](https://card.mcmaster.ca/fungamrhome) database.
+    This task performs *in silico* antimicrobial resistance (AMR) mutation detection using [ChroQueTas](https://github.com/nmquijada/ChroQueTas) in conjunction with the [FungAMR](https://card.mcmaster.ca/fungamrhome) database.
 
     ChroQueTas extracts the putative expressed protein where point mutations are known to cause AMR, discards poorly aligned sequences via sequence similarity to known AMR genes via BLASTp, attempts to account for intron splicing and structural variation, and finally uses MAFFT to align and evaluate amino acid changes that may correspond to resistance relative to FungAMR genes.
 
