@@ -132,7 +132,7 @@ workflow theiaviral_panel {
         }
         if (defined(output_taxon_table)){
           # call export_taxon_table
-          call export_taxon_table_task.export_taxon_table_vsp {
+          call export_taxon_table_task.export_taxon_table {
             input:
               samplename = samplename + "_" + sub(ncbi_identify.taxon_name, " ", "-"),
               taxon_table = output_taxon_table,
