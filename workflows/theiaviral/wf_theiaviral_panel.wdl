@@ -136,6 +136,7 @@ workflow theiaviral_panel {
             input:
               samplename = samplename + "_" + sub(ncbi_identify.taxon_name, " ", "-"),
               taxon_table = output_taxon_table,
+              theiaviral_panel = true,
               gambit_predicted_taxon = ncbi_identify.taxon_name,
               terra_project = terra_project,
               terra_workspace = terra_workspace,
