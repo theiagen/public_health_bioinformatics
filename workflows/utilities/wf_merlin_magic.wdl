@@ -825,63 +825,6 @@ workflow merlin_magic {
         }
       }
     # check for ChroQueTas-accounted taxa - requires compatibility with Gambit output
-    if (merlin_tag == "Arthroderma vanbreuseghemii" ||
-        merlin_tag == "Aspergillus awamori" ||
-        merlin_tag == "Aspergillus fumigatus" ||
-        merlin_tag == "Aspergillus niger" ||
-        merlin_tag == "Aspergillus terreus" ||
-        merlin_tag == "Aspergillus tubingensis" ||
-        merlin_tag == "Beauveria bassiana" ||
-        merlin_tag == "Blumeria graminis" ||
-        merlin_tag == "Blumeria graminis hordei" ||
-        merlin_tag == "Blumeria graminis tritici" ||
-        merlin_tag == "Botrytis cinerea" ||
-        merlin_tag == "Candida albicans" ||
-        merlin_tag == "Candida dubliniensis" ||
-        merlin_tag == "Candida metapsilosis" ||
-        merlin_tag == "Candida orthopsilosis" ||
-        merlin_tag == "Candida parapsilosis" ||
-        merlin_tag == "Candida tropicalis" ||
-        merlin_tag == "Candidozyma auris" ||
-        merlin_tag == "Cercospora beticola" ||
-        merlin_tag == "Clavispora lusitaniae" ||
-        merlin_tag == "Colletotrichum acutatum" ||
-        merlin_tag == "Colletotrichum fructicola" ||
-        merlin_tag == "Colletotrichum gloeosporioides" ||
-        merlin_tag == "Colletotrichum graminicola" ||
-        merlin_tag == "Colletotrichum siamense" ||
-        merlin_tag == "Corynespora cassiicola" ||
-        merlin_tag == "Cryptococcus deuterogattii" ||
-        merlin_tag == "Cryptococcus neoformans" ||
-        merlin_tag == "Erysiphe necator" ||
-        merlin_tag == "Fusarium fujikuroi" ||
-        merlin_tag == "Fusarium graminearum" ||
-        merlin_tag == "Fusarium incarnatum" ||
-        merlin_tag == "Fusarium pseudograminearum" ||
-        merlin_tag == "Histoplasma capsulatum" ||
-        merlin_tag == "Kluyveromyces marxianus" ||
-        merlin_tag == "Magnaporthe grisea" ||
-        merlin_tag == "Monilinia fructicola" ||
-        merlin_tag == "Mycosphaerella fijiensis" ||
-        merlin_tag == "Nakaseomyces glabratus" ||
-        merlin_tag == "Passalora fulva" ||
-        merlin_tag == "Phaeosphaeria nodorum" ||
-        merlin_tag == "Phakopsora pachyrhizi" ||
-        merlin_tag == "Pichia kudriavzevii" ||
-        merlin_tag == "Pneumocystis jirovecii" ||
-        merlin_tag == "Puccinia triticina" ||
-        merlin_tag == "Pyrenopeziza brassicae" ||
-        merlin_tag == "Saccharomyces cerevisiae" ||
-        merlin_tag == "Saccharomyces paradoxus" ||
-        merlin_tag == "Tapesia acuformis" ||
-        merlin_tag == "Tapesia yallundae" ||
-        merlin_tag == "Trichophyton indotineae" ||
-        merlin_tag == "Trichophyton interdigitale" ||
-        merlin_tag == "Trichophyton mentagrophytes" ||
-        merlin_tag == "Trichophyton rubrum" ||
-        merlin_tag == "Ustilaginoidea virens" ||
-        merlin_tag == "Venturia inaequalis" ||
-        merlin_tag == "Zymoseptoria tritici") {
         call chroquetas_task.chroquetas {
           input:
             assembly_fasta = assembly,
@@ -892,7 +835,6 @@ workflow merlin_magic {
             docker = chroquetas_docker_image
           }
         }
-      }
   # Running AMR Search
   if (run_amr_search) {
     # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search. 
