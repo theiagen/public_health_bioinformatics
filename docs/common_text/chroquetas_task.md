@@ -1,20 +1,19 @@
-??? task "`chroquetas`: Antimicrobial Resistance Profiling"
+??? task "`ChroQueTas`: Antimicrobial Resistance Profiling"
     This task performs *in silico* antimicrobial resistance (AMR) mutation detection using [ChroQueTas](https://github.com/nmquijada/ChroQueTas) in conjunction with the [FungAMR](https://card.mcmaster.ca/fungamrhome) database.
 
     ChroQueTas extracts the putative expressed protein where point mutations are known to cause AMR, discards poorly aligned sequences via sequence similarity to known AMR genes via BLASTp, attempts to account for intron splicing and structural variation, and finally uses MAFFT to align and evaluate amino acid changes that may correspond to resistance relative to FungAMR genes.
 
-    ChroQueTas is automatically called if a compatible GAMBIT-predicted taxon is identified.
+    ChroQueTas is automatically called if a **compatible GAMBIT-predicted taxon or provided `expected_taxon` is identified**. Currently, 58 different species are supported.
 
     **Outputs:**
 
     - **AMR Stats**: Depicts the number of FungAMR and non-FungAMR mutations on a gene-by-gene (protein sequence) basis.
     - **AMR Summary**: Depicts the mutation resistance and support for potential drug resistance on a gene-by-gene (protein sequence) basis. To interpret confidence scores, please refer to the corresponding [ChroQueTas wiki](https://github.com/nmquijada/ChroQueTas/wiki/Confidence-score-for-antimicrobial-resistance) section.
-    - **Mutations String**: Depicts detected AMR mutations as a comma-delimited string in the following format: "<PROTEIN>_<REFERENCE_AA><POSITION><MUTATION_AA>,..."
-    - **Fungicide Resistance String**: Depicts detected AMR mutations AND the affected fungicides as a comma-delimited string in the following format: "<PROTEIN>_<REFERENCE_AA><POSITION><MUTATION_AA>[<FUNGICIDE1><SUPPORT>;...],..."
+    - **Fungicide Resistance String**: Depicts detected AMR mutations AND the affected fungicides as a comma-delimited string in the following format: `"<PROTEIN>_<REFERENCE_AA><POSITION><MUTATION_AA>[<FUNGICIDE1><SUPPORT>;...],..."`
 
 
     ??? toggle "Supported Species and Genes"
-        The following table shows the species name and screened genes as of ChroQueTas v1.0.0. Species will be automatically determined based on the GAMBIT predicted taxon.
+        The following table shows the species name and screened genes as of ChroQueTas v1.0.0. Species will be automatically determined based on the GAMBIT predicted taxon or provided `expected_taxon` name.
 
     | Species                          | Antimicrobial Resistance Genes                                      |
     |-----------------------------------|---------------------------------------------------------------------|
