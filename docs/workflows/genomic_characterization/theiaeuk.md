@@ -8,12 +8,12 @@
 
 **The TheiaEuk workflows are for the assembly, quality assessment, and characterization of fungal genomes.** It is designed to accept Illumina paired-end sequencing data or base-called ONT reads as the primary input. **It is currently intended only for ==haploid== fungal genomes like _Candidozyma auris_.** Analyzing diploid genomes using TheiaEuk should be attempted only with expert attention to the resulting genome quality.
 
-All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, and species taxon identification. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
+All input reads are processed through "core tasks" in each workflow. The core tasks include raw read quality assessment, read cleaning (quality trimming and adapter removal), de novo assembly, assembly quality assessment, species taxon identification, and antimicrobial resistance (AMR) _in silico_ prediction. For some taxa identified, taxa-specific sub-workflows will be automatically activated, undertaking additional taxa-specific characterization steps, including clade-typing and/or antifungal resistance detection.
 
 === "TheiaEuk_Illumina_PE"
 
     !!! caption "TheiaEuk Illumina PE Workflow Diagram"
-        ![TheiaEuk Illumina PE Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PHB_202557.png)
+        ![TheiaEuk Illumina PE Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PE.png)
 
 === "TheiaEuk_ONT"
 
