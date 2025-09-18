@@ -85,6 +85,7 @@ nav:
                - AMR_Search: workflows/standalone/amr_search.md
                - Assembly_Fetch: workflows/data_import/assembly_fetch.md
                - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
+               - ChroQueTas: workflows/standalone/chroquetas.md
                - Clair3_Variants_ONT: workflows/phylogenetic_construction/clair3_variants.md
                - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md               
                - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
