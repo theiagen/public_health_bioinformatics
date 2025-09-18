@@ -56,15 +56,6 @@ task chroquetas {
       mv chroquetas_out/${based_name}.ChroQueTaS.AMR_stats.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt
       mv chroquetas_out/${based_name}.ChroQueTaS.AMR_summary.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt
     
-      # extract AMR summary string
-      # e.g. <GENE>_<REF_POSITION><AA_CHANGE><QUERY_POSITION>
-      tail -n+2 chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt \
-        | awk '{ print $1, $4, $3, $5 }' \
-        | sed -E 's/([^ ]+) ([^ ]+) ([^ ]+) ([^ ]+)/\1_\2\3\4/' \
-        | tr '\n' ',' \
-        | sed -E 's/,$//' \
-        | tee AMR_SUMMARY_STRING
-  
       # extract AMR summary annotated w/fungicide resistance
       # e.g. <GENE>_<REF_POSITION><AA_CHANGE><QUERY_POSITION>[<FUNGICIDE_RESISTANCE1>;<FUNGICIDE_RESISTANCEn>]
       tail -n+2 chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt \
@@ -92,7 +83,6 @@ task chroquetas {
   output {
     File? amr_stats_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt"
     File? amr_summary_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt"
-    String chroquetas_mutations = read_string("AMR_SUMMARY_STRING")
     String chroquetas_fungicide_resistance = read_string("ANNOTATED_AMR_SUMMARY_STRING")
     String chroquetas_version = read_string("CHROQUETAS_VERSION")
     String chroquetas_status = read_string("CHROQUETAS_STATUS")

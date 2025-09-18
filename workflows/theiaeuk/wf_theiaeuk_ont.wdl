@@ -215,7 +215,6 @@ workflow theiaeuk_ont {
     # chroquetas
     File? chroquetas_amr_stats = merlin_magic.chroquetas_amr_stats
     File? chroquetas_amr_summary = merlin_magic.chroquetas_amr_summary
-    String? chroquetas_mutations = merlin_magic.chroquetas_mutations
     String? chroquetas_fungicide_resistance = merlin_magic.chroquetas_fungicide_resistance
     String? chroquetas_version = merlin_magic.chroquetas_version
     String? chroquetas_status = merlin_magic.chroquetas_status
