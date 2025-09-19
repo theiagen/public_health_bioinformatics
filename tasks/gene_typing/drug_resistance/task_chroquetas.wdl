@@ -36,7 +36,6 @@ task chroquetas {
   grep_check=$(ChroQueTas.sh --list_species | cut -f 1 | tail -n+2 | grep -P "^${corrected_species}$" || true)
   if [ -z ${grep_check} ]; then
     echo "ERROR: Incompatible species" | tee CHROQUETAS_STATUS
-    echo "" > AMR_SUMMARY_STRING
     echo "" > ANNOTATED_AMR_SUMMARY_STRING
   else
     # call chroquetas
@@ -72,7 +71,6 @@ task chroquetas {
       # if no AMR genes found, create empty output files
       mv chroquetas_out/${based_name}.ChroQueTaS.AMR_summary.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt
       echo -e "No AMR genes found" > chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt
-      echo "" | tee AMR_SUMMARY_STRING
       echo "" | tee ANNOTATED_AMR_SUMMARY_STRING
       echo "PASS" | tee CHROQUETAS_STATUS
     else
