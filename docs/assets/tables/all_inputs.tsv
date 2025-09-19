@@ -2266,6 +2266,7 @@ ts_mlst	min_percent_identity	Float	Minimum % identity to known MLST gene to repo
 ts_mlst	minscore	Float	Minimum score <https://github.com/tseemann/mlst#scoring-system> to assign an MLST profile	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 ts_mlst	nopath	Boolean	true = use mlst --nopath. If set to false, filename paths are not stripped from FILE column in output TSV	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 ts_mlst	scheme	String	Don’t autodetect the MLST scheme; force this scheme on all inputs (see <https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab> for accepted strings)	None	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+bakta	proteins	File	DESCRIPTION		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 cg_pipeline_clean	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime
 cg_pipeline_clean	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime
 cg_pipeline_raw	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime
