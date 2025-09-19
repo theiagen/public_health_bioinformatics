@@ -16,8 +16,8 @@ amrfinderplus_nuc	separate_betalactam_genes	Boolean	Report beta-Lactam AMR genes
 amrfinderplus_nuc	use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	False	Optional	AMRFinderPlus	general
 amrfinderplus_wf	assembly	File	The assembly file for your sample in FASTA format		Required	AMRFinderPlus	general
 amrfinderplus_wf	samplename	String	The name of the sample being analyzed		Required	AMRFinderPlus	general
-version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, ChroQueTas, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Host_Decontaminate, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	docker
-version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, ChroQueTas, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Host_Decontaminate, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	general
+version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, ChroQueTas, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	docker
+version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, ChroQueTas, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	general
 amr_search	cpu	Int	Number of CPUs to allocate to the task	2	Optional	AMR_Search	runtime
 amr_search	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	AMR_Search	runtime
 amr_search	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	AMR_Search	docker
@@ -474,14 +474,27 @@ nanoplot_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task	100
 nanoplot_raw	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	docker
 nanoplot_raw	max_length	Int	The maximum length of clean reads, for which reads longer than the length specified will be hidden.	100000	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	general
 nanoplot_raw	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	runtime
+primer_trim	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime
+primer_trim	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime
+primer_trim	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan	Optional	Freyja_FASTQ	docker
+primer_trim	keep_noprimer_reads	Boolean	Include reads with no primers	True	Optional	Freyja_FASTQ	general
+primer_trim	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime
 read_QC_trim_ont	artic_guppyplex_cpu	Int	Number of CPUs to allocate to the task	8	Optional	Freyja_FASTQ	runtime
 read_QC_trim_ont	artic_guppyplex_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime
 read_QC_trim_ont	artic_guppyplex_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3	Optional	Freyja_FASTQ	general
 read_QC_trim_ont	artic_guppyplex_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Freyja_FASTQ	runtime
+read_QC_trim_ont	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general
 read_QC_trim_ont	downsampling_coverage	Float	Internal component, do not modify	150	Optional	Freyja_FASTQ	general
 read_QC_trim_ont	genome_length	Int	Length of the genome	5000000	Optional	Freyja_FASTQ	general
+read_QC_trim_ont	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime
+read_QC_trim_ont	kraken2_recalculate_abundances_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime
 read_QC_trim_ont	kraken2_recalculate_abundances_docker	String	Docker image to use for the task		Optional	Freyja_FASTQ	docker
+read_QC_trim_ont	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime
+read_QC_trim_ont	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime
+read_QC_trim_ont	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.		Optional	Freyja_FASTQ	general
+read_QC_trim_ont	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime
 read_QC_trim_ont	kraken_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db	Optional	Freyja_FASTQ	general
+read_QC_trim_ont	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime
 read_QC_trim_ont	max_length	Int	Internal component, do not modify		Optional	Freyja_FASTQ	general
 read_QC_trim_ont	min_length	Int	Internal component, do not modify		Optional	Freyja_FASTQ	general
 read_QC_trim_ont	nanoq_cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime
@@ -505,28 +518,17 @@ read_QC_trim_ont	rasusa_memory	Int	Amount of memory/RAM (in GB) to allocate to t
 read_QC_trim_ont	rasusa_number_of_reads	Int	Subsample to a specific number of reads		Optional	Freyja_FASTQ	general
 read_QC_trim_ont	rasusa_seed	Int	Random seed to use		Optional	Freyja_FASTQ	general
 read_QC_trim_ont	run_prefix	String	Internal component, do not modify		Optional	Freyja_FASTQ	general
+read_QC_trim_pe	adapters	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
+read_QC_trim_pe	bbduk_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	call_kraken	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	call_midas	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	extract_unclassified	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	fastp_args	String	Internal component, do not modify	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host	String	Internal component, do not modify		Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_complete_only	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_decontaminate_mem	Int	Internal component, do not modify	32	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_is_accession	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_refseq	Boolean	Internal component, do not modify	True	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	taxon_id	Int	Internal component, do not modify	0	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	general
-read_QC_trim_se	fastp_args	String	DESCRIPTION	-g -5 20 -3 20	Optional	Freyja_FASTQ	general
-read_QC_trim_ont	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general
-read_QC_trim_ont	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime
-read_QC_trim_ont	kraken2_recalculate_abundances_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime
-read_QC_trim_ont	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime
-read_QC_trim_ont	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime
-read_QC_trim_ont	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.		Optional	Freyja_FASTQ	general
-read_QC_trim_ont	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime
-read_QC_trim_ont	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime
-read_QC_trim_pe	adapters	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_pe	bbduk_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	call_kraken	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	call_midas	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	fastp_args	String	Internal component, do not modify	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	kraken_cpu	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	kraken_db	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
 read_QC_trim_pe	kraken_disk_size	Int	Internal component, do not modify	100	Optional	Freyja_FASTQ	general
@@ -535,15 +537,15 @@ read_QC_trim_pe	midas_db	File	Internal component, do not modify		Optional	Freyja
 read_QC_trim_pe	phix	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
 read_QC_trim_pe	read_processing	String	Internal component, do not modify	trimmomatic	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	read_qc	String	Internal component, do not modify	fastq_scan	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	target_organism	String	Internal component, do not modify		Optional	Freyja_FASTQ (SE)	general
-read_QC_trim_pe	trim_quality_trim_score	Int	Internal component, do not modify	30	Optional	Freyja_FASTQ (SE)	general
+read_QC_trim_pe	taxon_id	Int	Internal component, do not modify	0	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	trim_window_size	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	trimmomatic_args	String	Internal component, do not modify		Optional	Freyja_FASTQ	general
 read_QC_trim_se	adapters	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
 read_QC_trim_se	bbduk_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ	general
 read_QC_trim_se	call_kraken	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
 read_QC_trim_se	call_midas	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
-read_QC_trim_se	fastp_args	String	Internal component, do not modify	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ (PE)	general
+read_QC_trim_se	fastp_args	String	DESCRIPTION	-g -5 20 -3 20	Optional	Freyja_FASTQ	general
 read_QC_trim_se	kraken_cpu	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ	general
 read_QC_trim_se	kraken_db	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
 read_QC_trim_se	kraken_disk_size	Int	Internal component, do not modify	100	Optional	Freyja_FASTQ	general
@@ -552,25 +554,9 @@ read_QC_trim_se	midas_db	File	Internal component, do not modify		Optional	Freyja
 read_QC_trim_se	phix	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
 read_QC_trim_se	read_processing	String	Internal component, do not modify	trimmomatic	Optional	Freyja_FASTQ	general
 read_QC_trim_se	read_qc	String	Internal component, do not modify	fastq_scan	Optional	Freyja_FASTQ	general
-read_QC_trim_se	target_organism	String	Internal component, do not modify		Optional	Freyja_FASTQ (PE)	general
 read_QC_trim_se	trim_quality_min_score	Int	Internal component, do not modify	30	Optional	Freyja_FASTQ	general
 read_QC_trim_se	trim_window_size	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ	general
 read_QC_trim_se	trimmomatic_args	String	Internal component, do not modify		Optional	Freyja_FASTQ	general
-primer_trim	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime
-primer_trim	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime
-primer_trim	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan	Optional	Freyja_FASTQ	docker
-primer_trim	keep_noprimer_reads	Boolean	Include reads with no primers	True	Optional	Freyja_FASTQ	general
-primer_trim	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime
-read_QC_trim_ont	call_kraken	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ (SE)	general
-read_QC_trim_ont	kraken2_recalculate_abundances_cpu	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ (SE)	general
-read_QC_trim_ont	kraken2_recalculate_abundances_disk_size	Int	Internal component, do not modify	100	Optional	Freyja_FASTQ (SE)	general
-read_QC_trim_ont	kraken2_recalculate_abundances_docker	Int	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4	Optional	Freyja_FASTQ (SE)	general
-read_QC_trim_ont	kraken2_recalculate_abundances_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ (SE)	general
-read_QC_trim_ont	kraken_cpu	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ (SE)	general
-read_QC_trim_ont	kraken_db	File	Internal component, do not modify		Optional	Freyja_FASTQ (SE)	general
-read_QC_trim_ont	kraken_disk_size	Int	Internal component, do not modify	100	Optional	Freyja_FASTQ (SE)	general
-read_QC_trim_ont	kraken_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ (SE)	general
-read_QC_trim_ont	target_organism	String	Internal component, do not modify		Optional	Freyja_FASTQ (SE)	general
 freyja_plot	collection_date	Array[String]	An array containing the collection dates for the sample (YYYY-MM-DD format)		Optional	Freyja_Plot	general
 freyja_plot	freyja_demixed	Array[File]	An array containing the output files (freyja_demixed) made by Freyja_FASTQ		Required	Freyja_Plot	general
 freyja_plot	freyja_plot_name	String	The name of the plot to be produced. Example: "my-freyja-plot"		Required	Freyja_Plot	general
@@ -1852,7 +1838,6 @@ flye_denovo	racon_disk_size	Int	Amount of storage (in GB) to allocate to the tas
 flye_denovo	racon_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaEuk_ONT, TheiaProk_ONT	runtime
 flye_denovo	run_porechop	Boolean	If true, trims reads before assembly using Porechop	False	Optional	TheiaEuk_ONT, TheiaProk_ONT	general
 flye_denovo	skip_polishing	Boolean	If true, skips polishing	False	Optional	TheiaEuk_ONT, TheiaProk_ONT	general
-merlin_magic	agrvate_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
 merlin_magic	read1	File	Internal component, do not modify		Optional	TheiaEuk_ONT, TheiaProk_FASTA	general
 merlin_magic	read2	File	Internal component, do not modify		Optional	TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 quast	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
@@ -2029,7 +2014,7 @@ bakta	disk_size	Int	Amount of storage (in GB) to allocate to the task	200	Option
 bakta	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
 bakta	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	24	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 bakta	prodigal_tf	File	Prodigal training file to use for CDS prediction by bakta		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-bakta	proteins	Boolean	THIS VARIABLE IS BUGGED PLEASE DO NOT DO ANYTHING HERE	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+bakta	proteins	File	THIS VARIABLE IS BUGGED PLEASE DO NOT DO ANYTHING HERE	False	Optional	TheiaProk_FASTA	general
 busco	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.7.1_cv1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
 busco	eukaryote	Boolean	Assesses eukaryotic organisms, rather than prokaryotic organisms	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 busco	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
@@ -2061,6 +2046,7 @@ merlin_magic	abricate_vibrio_docker_image	String	The Docker container to use for
 merlin_magic	abricate_vibrio_min_percent_coverage	Int	Minimum DNA percent coverage	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	abricate_vibrio_min_percent_identity	Int	Minimum DNA percent identity	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	agrvate_agr_typing_only	Boolean	Set to true to skip agr operon extraction and frameshift detection	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	agrvate_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
 merlin_magic	call_poppunk	Boolean	If true, runs PopPUNK for GPSC cluster designation for S. pneumoniae	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	call_shigeifinder_reads_input	Boolean	If set to "true", the ShigEiFinder task will run again but using read files as input instead of the assembly file. Input is shown but not used for TheiaProk_FASTA.	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	call_stxtyper	Boolean	If set to "true", the StxTyper task will run on all samples regardless of the gambit_predicted_taxon output. Useful if you suspect a non-E.coli or non-Shigella sample contains stx genes.	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
