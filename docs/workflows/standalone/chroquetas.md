@@ -30,4 +30,4 @@ The ChroQueTas workflow is a standalone version of the FungAMR-integrated antimi
 
 ## References
 
-> [ChroQueTas](https://github.com/nmquijada/ChroQueTas)
+> Bédard, C., Pageau, A., Fijarczyk, A. et al. FungAMR: a comprehensive database for investigating fungal mutations associated with antimicrobial resistance. Nat Microbiol 10, 2338–2352 (2025). https://doi.org/10.1038/s41564-025-02084-7
