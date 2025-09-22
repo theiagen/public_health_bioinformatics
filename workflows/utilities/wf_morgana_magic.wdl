@@ -6,6 +6,7 @@ import "../utilities/wf_flu_track.wdl" as flu_track_wf
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../../tasks/species_typing/lentivirus/task_quasitools.wdl" as quasitools_task
 import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 
 workflow morgana_magic {
   input {
@@ -54,30 +55,28 @@ workflow morgana_magic {
     Int? pangolin_disk_size
     String? pangolin_docker_image
     Int? pangolin_memory
+    # gene coverage inputs
+    File? reference_gene_locations_bed
+    File? ivar_consensus_aligned_bam
+    # vadr parameters
+    Int? vadr_max_length
+    Int? vadr_skip_length
+    String? vadr_options
+    File? vadr_model_file
+    Int? vadr_memory
   }
   call set_organism_defaults.organism_parameters {
     input:
       organism = taxon_name,
       pangolin_docker_image = pangolin_docker_image
   }
-  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
-    # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b
-    call vadr_task.vadr {
-      input:
-        genome_fasta = assembly_fasta,
-        assembly_length_unambiguous = select_first([number_ATCG]),
-        vadr_opts = organism_parameters.vadr_opts,
-        vadr_model_file = organism_parameters.vadr_model_file,
-        max_length = organism_parameters.vadr_maxlength,
-        skip_length = organism_parameters.vadr_skiplength,
-        memory = organism_parameters.vadr_memory
-    }
-  }
   if (organism_parameters.standardized_organism == "flu") {
     call flu_track_wf.flu_track {
       input:
         samplename = samplename,
         assembly_fasta = assembly_fasta,
+        read1 = read1,
+        read2 = read2,
         seq_method = seq_method,
         standardized_organism = organism_parameters.standardized_organism,
         assembly_metrics_cpu = assembly_metrics_cpu,
@@ -111,6 +110,29 @@ workflow morgana_magic {
         vadr_outputs_tgz = vadr.outputs_tgz
     }
   }
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
+    # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b
+    call vadr_task.vadr {
+      input:
+        genome_fasta = select_first([assembly_fasta, flu_track.irma_assembly_fasta]),
+        assembly_length_unambiguous = select_first([number_ATCG]),
+        vadr_opts = select_first([vadr_options, organism_parameters.vadr_opts]),
+        vadr_model_file = select_first([vadr_model_file, organism_parameters.vadr_model_file]),
+        max_length = select_first([vadr_max_length, organism_parameters.vadr_maxlength]),
+        skip_length = select_first([vadr_skip_length, organism_parameters.vadr_skiplength]),
+        memory = select_first([vadr_memory, organism_parameters.vadr_memory])
+    }
+  }
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(reference_gene_locations_bed)) {
+    # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
+    call gene_coverage_task.gene_coverage {
+      input:
+        bamfile = select_first([ivar_consensus_aligned_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam, ""]),
+        bedfile = select_first([reference_gene_locations_bed, organism_parameters.gene_locations_bed]),
+        samplename = samplename,
+        organism = organism_parameters.standardized_organism
+    }
+  }
   if (organism_parameters.standardized_organism == "sars-cov-2") {
     call pangolin.pangolin4 {
       input:
@@ -122,7 +144,8 @@ workflow morgana_magic {
         memory = pangolin_memory
     }
   }
-  if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b") { 
+  # Non-flu Nextclade
+  if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "measles" ) {
     call nextclade_task.nextclade_v3 {
       input:
         genome_fasta = assembly_fasta,
@@ -198,15 +221,15 @@ workflow morgana_magic {
     String nextclade_version = select_first([rabies_nextclade.nextclade_version, nextclade_v3.nextclade_version, flu_track.nextclade_version, ""])
     String nextclade_docker = select_first([rabies_nextclade.nextclade_docker, nextclade_v3.nextclade_docker, flu_track.nextclade_docker, ""])
     String nextclade_ds_tag = select_first([organism_parameters.nextclade_dataset_tag, ""])
-    # Nextclade outputs for all MPXV
-    File? nextclade_json_mpxv = nextclade_v3.nextclade_json
-    File? auspice_json_mpxv = nextclade_v3.auspice_json
-    File? nextclade_tsv_mpxv = nextclade_v3.nextclade_tsv
-    String? nextclade_aa_subs_mpxv = nextclade_output_parser.nextclade_aa_subs
-    String? nextclade_aa_dels_mpxv = nextclade_output_parser.nextclade_aa_dels
-    String? nextclade_clade_mpxv = nextclade_output_parser.nextclade_clade
-    String? nextclade_lineage_mpxv = nextclade_output_parser.nextclade_lineage
-    String? nextclade_qc_mpxv = nextclade_output_parser.nextclade_qc
+    # Nextclade outputs for non-flu
+    File? nextclade_json = nextclade_v3.nextclade_json
+    File? auspice_json = nextclade_v3.auspice_json
+    File? nextclade_tsv = nextclade_v3.nextclade_tsv
+    String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
+    String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
+    String? nextclade_clade = nextclade_output_parser.nextclade_clade
+    String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
+    String? nextclade_qc = nextclade_output_parser.nextclade_qc
     # Nextclade outputs for rabies
     File? nextclade_json_rabies = rabies_nextclade.nextclade_json
     File? auspice_json_rabies = rabies_nextclade.auspice_json
@@ -258,5 +281,9 @@ workflow morgana_magic {
     File? quasitools_dr_report = quasitools.dr_report
     File? quasitools_hydra_vcf = quasitools.hydra_vcf
     File? quasitools_mutations_report = quasitools.mutations_report
+    # Gene Coverage Outputs
+    Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
+    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
+    File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
   }
 }
