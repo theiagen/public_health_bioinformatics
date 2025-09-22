@@ -71,7 +71,7 @@ task chroquetas {
       # if no AMR genes found, create empty output files
       mv chroquetas_out/${based_name}.ChroQueTaS.AMR_summary.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt
       echo -e "No AMR genes found" > chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt
-      echo "" | tee ANNOTATED_AMR_SUMMARY_STRING
+      echo "No resistance detected" | tee ANNOTATED_AMR_SUMMARY_STRING
       echo "PASS" | tee CHROQUETAS_STATUS
     else
       echo "ERROR: Missing output files" | tee CHROQUETAS_STATUS
