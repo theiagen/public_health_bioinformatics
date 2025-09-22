@@ -207,6 +207,7 @@ Options:
 
     - <https://storage.cloud.google.com/gambit-databases-rp/2.1.0/gambit-metadata-2.1.0-20250808.gdb>
     - <https://storage.cloud.google.com/gambit-databases-rp/2.1.0/gambit-signatures-2.1.0-20250808.gs>
+    Please note: The files above are located in a requester pays GCP bucket, therefore a billing project must be provided in the request to download. 
     
 #### GAMBIT GTDB Database v2.0.1
 
