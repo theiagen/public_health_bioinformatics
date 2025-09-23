@@ -11,6 +11,7 @@ import "../../tasks/species_typing/lentivirus/task_quasitools.wdl" as quasitools
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_ivar_consensus.wdl" as consensus_call
+import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 import "../utilities/wf_morgana_magic.wdl" as morgana_magic
 
@@ -66,6 +67,24 @@ workflow theiacov_illumina_pe {
     # qc check parameters
     File? qc_check_table
   }
+  call set_organism_defaults.organism_parameters {
+    input:
+      organism = organism,
+      reference_gff_file = reference_gff,
+      reference_genome = reference_genome,
+      gene_locations_bed_file = reference_gene_locations_bed,
+      genome_length_input = genome_length,
+      nextclade_dataset_tag_input = nextclade_dataset_tag,
+      nextclade_dataset_name_input = nextclade_dataset_name,     
+      vadr_max_length = vadr_max_length,
+      vadr_skip_length = vadr_skip_length,
+      vadr_options = vadr_options,
+      vadr_model = vadr_model_file,
+      vadr_mem = vadr_memory,
+      primer_bed_file = primer_bed,
+      pangolin_docker_image = pangolin_docker_image,
+      kraken_target_organism_input = target_organism
+  }
   if (! skip_screen) {
     call screen.check_reads as raw_check_reads {
       input:
@@ -78,7 +97,7 @@ workflow theiacov_illumina_pe {
         min_coverage = min_coverage,
         min_proportion = min_proportion,
         workflow_series = "theiacov",
-        expected_genome_length = genome_length
+        expected_genome_length = organism_parameters.genome_length
     }
   }
   if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
@@ -93,7 +112,7 @@ workflow theiacov_illumina_pe {
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
-        target_organism = kraken_target_organism
+        target_organism = organism_parameters.kraken_target_organism
     }
     if (! skip_screen) {
       call screen.check_reads as clean_check_reads {
@@ -107,38 +126,55 @@ workflow theiacov_illumina_pe {
           min_coverage = min_coverage,
           min_proportion = min_proportion,
           workflow_series = "theiacov",
-          expected_genome_length = genome_length
+          expected_genome_length = organism_parameters.genome_length
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+      if (organism_parameters.standardized_organism == "flu") {
+        call morgana_magic.morgana_magic as morgana_magic_flu {
+          input:
+            samplename = samplename,
+            taxon_name = organism_parameters.standardized_organism,
+            seq_method = seq_method,
+            read1 = read_QC_trim.read1_clean,
+            read2 = read_QC_trim.read2_clean,
+            vadr_max_length = vadr_max_length,
+            vadr_skip_length = vadr_skip_length,
+            vadr_options = vadr_options,
+            vadr_model_file = vadr_model_file,
+            vadr_memory = vadr_memory,
+            reference_gene_locations_bed = reference_gene_locations_bed,
+            workflow_type = "theiacov_pe"
+        }
+      }
       # assembly via bwa and ivar for non-flu data
-      if (organism != "flu") {
+      if (organism_parameters.standardized_organism != "flu") {
         call consensus_call.ivar_consensus {
           input:
             samplename = samplename,
             read1 = read_QC_trim.read1_clean,
             read2 = read_QC_trim.read2_clean,
-            reference_genome = reference_genome,
-            primer_bed = primer_bed,
-            reference_gff = reference_gff,
+            reference_genome = organism_parameters.reference,
+            primer_bed = organism_parameters.primer_bed,
+            reference_gff = organism_parameters.reference_gff,
             min_depth = select_first([min_depth, 100]),
             consensus_min_freq = consensus_min_freq,
             variant_min_freq = variant_min_freq,
             trim_primers = trim_primers
         }
       }
-      if (defined(ivar_consensus.assembly_fasta)) {
+      if (defined(ivar_consensus.assembly_fasta) || defined(morgana_magic_flu.irma_assembly_fasta)) {
         call consensus_qc_task.consensus_qc {
           input:
-            assembly_fasta =  select_first([ivar_consensus.assembly_fasta]),
-            reference_genome = reference_genome,
-            genome_length = genome_length
+            assembly_fasta =  select_first([ivar_consensus.assembly_fasta, morgana_magic_flu.irma_assembly_fasta]),
+            reference_genome = organism_parameters.reference,
+            genome_length = organism_parameters.genome_length
         }
-        call morgana_magic.morgana_magic {
+        call morgana_magic.morgana_magic as morgana_magic_non_flu {
           input:
             samplename = samplename,
             assembly_fasta = select_first([ivar_consensus.assembly_fasta]),
-            taxon_name = organism,
+            taxon_name = organism_parameters.standardized_organism,
             seq_method = seq_method,
             read1 = read_QC_trim.read1_clean,
             read2 = read_QC_trim.read2_clean,
@@ -149,7 +185,8 @@ workflow theiacov_illumina_pe {
             vadr_model_file = vadr_model_file,
             vadr_memory = vadr_memory,
             reference_gene_locations_bed = reference_gene_locations_bed,
-            ivar_consensus_aligned_bam = ivar_consensus.aligned_bam
+            ivar_consensus_aligned_bam = ivar_consensus.aligned_bam,
+            workflow_type = "theiacov_pe"
         }
       }
       if (defined(qc_check_table)) {
@@ -157,7 +194,7 @@ workflow theiacov_illumina_pe {
         call qc_check.qc_check_phb as qc_check_task {
           input:
             qc_check_table = qc_check_table,
-            expected_taxon = organism,
+            expected_taxon = organism_parameters.standardized_organism,
             num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
             num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
             num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
@@ -170,7 +207,7 @@ workflow theiacov_illumina_pe {
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             number_Degenerate =  consensus_qc.number_Degenerate,
             percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            vadr_num_alerts = morgana_magic.vadr_num_alerts
+            vadr_num_alerts = select_first([morgana_magic_flu.vadr_num_alerts, morgana_magic_non_flu.vadr_num_alerts])
         }
       }
     }
@@ -261,17 +298,17 @@ workflow theiacov_illumina_pe {
     String? ivar_variant_version = ivar_consensus.ivar_variant_version
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     # Read Alignment - assembly outputs
-    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, morgana_magic.irma_version, ""])
-    String assembly_fasta = select_first([ivar_consensus.assembly_fasta, morgana_magic.irma_assembly_fasta, "Assembly could not be generated"])
+    String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, morgana_magic_flu.irma_version, ""])
+    String assembly_fasta = select_first([ivar_consensus.assembly_fasta, morgana_magic_flu.irma_assembly_fasta])
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     # Read Alignment - consensus assembly qc outputs
     # this is the minimum depth used for consensus and variant calling in EITHER iVar or IRMA
-    Int consensus_n_variant_min_depth = select_first([min_depth, morgana_magic.irma_minimum_consensus_support, 100])
+    Int consensus_n_variant_min_depth = select_first([min_depth, morgana_magic_flu.irma_minimum_consensus_support, 100])
     File? consensus_stats = ivar_consensus.consensus_stats
     File? consensus_flagstat = ivar_consensus.consensus_flagstat
     String meanbaseq_trim = select_first([ivar_consensus.meanbaseq_trim, ""])
     String meanmapq_trim = select_first([ivar_consensus.meanmapq_trim, ""])
-    String assembly_mean_coverage = select_first([ivar_consensus.assembly_mean_coverage, morgana_magic.ha_na_assembly_coverage , ""])
+    String assembly_mean_coverage = select_first([ivar_consensus.assembly_mean_coverage, morgana_magic_non_flu.ha_na_assembly_coverage , ""])
     String? samtools_version_stats = ivar_consensus.samtools_version_stats
     # Read Alignment - consensus assembly summary outputs
     Int? number_N = consensus_qc.number_N
@@ -280,117 +317,117 @@ workflow theiacov_illumina_pe {
     Int? number_Total = consensus_qc.number_Total
     Float? percent_reference_coverage =  consensus_qc.percent_reference_coverage
     # SC2 specific coverage outputs
-    Float? sc2_s_gene_mean_coverage = morgana_magic.sc2_s_gene_mean_coverage
-    Float? sc2_s_gene_percent_coverage = morgana_magic.sc2_s_gene_percent_coverage
-    File? est_percent_gene_coverage_tsv = morgana_magic.est_percent_gene_coverage_tsv
+    Float? sc2_s_gene_mean_coverage = morgana_magic_non_flu.sc2_s_gene_mean_coverage
+    Float? sc2_s_gene_percent_coverage = morgana_magic_non_flu.sc2_s_gene_percent_coverage
+    File? est_percent_gene_coverage_tsv = morgana_magic_non_flu.est_percent_gene_coverage_tsv
     # Pangolin outputs
-    String? pango_lineage = morgana_magic.pango_lineage
-    String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded
-    String? pangolin_conflicts = morgana_magic.pangolin_conflicts
-    String? pangolin_notes = morgana_magic.pangolin_notes
-    String? pangolin_assignment_version = morgana_magic.pangolin_assignment_version
-    File? pango_lineage_report = morgana_magic.pango_lineage_report
-    String? pangolin_docker = morgana_magic.pangolin_docker
-    String? pangolin_versions = morgana_magic.pangolin_versions
+    String? pango_lineage = morgana_magic_non_flu.pango_lineage
+    String? pango_lineage_expanded = morgana_magic_non_flu.pango_lineage_expanded
+    String? pangolin_conflicts = morgana_magic_non_flu.pangolin_conflicts
+    String? pangolin_notes = morgana_magic_non_flu.pangolin_notes
+    String? pangolin_assignment_version = morgana_magic_non_flu.pangolin_assignment_version
+    File? pango_lineage_report = morgana_magic_non_flu.pango_lineage_report
+    String? pangolin_docker = morgana_magic_non_flu.pangolin_docker
+    String? pangolin_versions = morgana_magic_non_flu.pangolin_versions
     # Nextclade outputs for all organisms
-    String? nextclade_version = morgana_magic.nextclade_version
-    String? nextclade_docker = morgana_magic.nextclade_docker
+    String? nextclade_version = select_first([morgana_magic_flu.nextclade_version, morgana_magic_non_flu.nextclade_version])
+    String? nextclade_docker = select_first([morgana_magic_flu.nextclade_docker, morgana_magic_non_flu.nextclade_docker])
     # Nextclade outputs for non-flu
-    File? nextclade_json = morgana_magic.nextclade_json
-    File? auspice_json = morgana_magic.auspice_json
-    File? nextclade_tsv = morgana_magic.nextclade_tsv
-    String nextclade_ds_tag = morgana_magic.nextclade_dataset_tag
-    String? nextclade_aa_subs = morgana_magic.nextclade_aa_subs
-    String? nextclade_aa_dels = morgana_magic.nextclade_aa_dels
-    String? nextclade_clade = morgana_magic.nextclade_clade
-    String? nextclade_lineage = morgana_magic.nextclade_lineage
-    String? nextclade_qc = morgana_magic.nextclade_qc
+    File? nextclade_json = morgana_magic_non_flu.nextclade_json
+    File? auspice_json = morgana_magic_non_flu.auspice_json
+    File? nextclade_tsv = morgana_magic_non_flu.nextclade_tsv
+    String nextclade_ds_tag = organism_parameters.nextclade_dataset_tag
+    String? nextclade_aa_subs = morgana_magic_non_flu.nextclade_aa_subs
+    String? nextclade_aa_dels = morgana_magic_non_flu.nextclade_aa_dels
+    String? nextclade_clade = morgana_magic_non_flu.nextclade_clade
+    String? nextclade_lineage = morgana_magic_non_flu.nextclade_lineage
+    String? nextclade_qc = morgana_magic_non_flu.nextclade_qc
     # Nextclade outputs for flu H5N1
-    File? nextclade_json_flu_h5n1 = morgana_magic.nextclade_json_flu_h5n1
-    File? auspice_json_flu_h5n1 = morgana_magic.auspice_json_flu_h5n1
-    File? nextclade_tsv_flu_h5n1 = morgana_magic.nextclade_tsv_flu_h5n1
-    String? nextclade_aa_subs_flu_h5n1 = morgana_magic.nextclade_aa_subs_flu_h5n1
-    String? nextclade_aa_dels_flu_h5n1 = morgana_magic.nextclade_aa_dels_flu_h5n1
-    String? nextclade_clade_flu_h5n1 = morgana_magic.nextclade_clade_flu_h5n1
-    String? nextclade_qc_flu_h5n1 = morgana_magic.nextclade_qc_flu_h5n1
+    File? nextclade_json_flu_h5n1 = morgana_magic_flu.nextclade_json_flu_h5n1
+    File? auspice_json_flu_h5n1 = morgana_magic_flu.auspice_json_flu_h5n1
+    File? nextclade_tsv_flu_h5n1 = morgana_magic_flu.nextclade_tsv_flu_h5n1
+    String? nextclade_aa_subs_flu_h5n1 = morgana_magic_flu.nextclade_aa_subs_flu_h5n1
+    String? nextclade_aa_dels_flu_h5n1 = morgana_magic_flu.nextclade_aa_dels_flu_h5n1
+    String? nextclade_clade_flu_h5n1 = morgana_magic_flu.nextclade_clade_flu_h5n1
+    String? nextclade_qc_flu_h5n1 = morgana_magic_flu.nextclade_qc_flu_h5n1
     # Nextclade outputs for flu HA
-    File? nextclade_json_flu_ha = morgana_magic.nextclade_json_flu_ha
-    File? auspice_json_flu_ha = morgana_magic.auspice_json_flu_ha
-    File? nextclade_tsv_flu_ha = morgana_magic.nextclade_tsv_flu_ha
-    String? nextclade_ds_tag_flu_ha = morgana_magic.nextclade_ds_tag_flu_ha
-    String? nextclade_aa_subs_flu_ha = morgana_magic.nextclade_aa_subs_flu_ha
-    String? nextclade_aa_dels_flu_ha = morgana_magic.nextclade_aa_dels_flu_ha
-    String? nextclade_clade_flu_ha = morgana_magic.nextclade_clade_flu_ha
-    String? nextclade_qc_flu_ha = morgana_magic.nextclade_qc_flu_ha
+    File? nextclade_json_flu_ha = morgana_magic_flu.nextclade_json_flu_ha
+    File? auspice_json_flu_ha = morgana_magic_flu.auspice_json_flu_ha
+    File? nextclade_tsv_flu_ha = morgana_magic_flu.nextclade_tsv_flu_ha
+    String? nextclade_ds_tag_flu_ha = morgana_magic_flu.nextclade_ds_tag_flu_ha
+    String? nextclade_aa_subs_flu_ha = morgana_magic_flu.nextclade_aa_subs_flu_ha
+    String? nextclade_aa_dels_flu_ha = morgana_magic_flu.nextclade_aa_dels_flu_ha
+    String? nextclade_clade_flu_ha = morgana_magic_flu.nextclade_clade_flu_ha
+    String? nextclade_qc_flu_ha = morgana_magic_flu.nextclade_qc_flu_ha
     # Nextclade outputs for flu NA
-    File? nextclade_json_flu_na = morgana_magic.nextclade_json_flu_na
-    File? auspice_json_flu_na = morgana_magic.auspice_json_flu_na
-    File? nextclade_tsv_flu_na = morgana_magic.nextclade_tsv_flu_na
-    String? nextclade_ds_tag_flu_na = morgana_magic.nextclade_ds_tag_flu_na
-    String? nextclade_aa_subs_flu_na = morgana_magic.nextclade_aa_subs_flu_na
-    String? nextclade_aa_dels_flu_na = morgana_magic.nextclade_aa_dels_flu_na
-    String? nextclade_clade_flu_na = morgana_magic.nextclade_clade_flu_na
-    String? nextclade_qc_flu_na = morgana_magic.nextclade_qc_flu_na
+    File? nextclade_json_flu_na = morgana_magic_flu.nextclade_json_flu_na
+    File? auspice_json_flu_na = morgana_magic_flu.auspice_json_flu_na
+    File? nextclade_tsv_flu_na = morgana_magic_flu.nextclade_tsv_flu_na
+    String? nextclade_ds_tag_flu_na = morgana_magic_flu.nextclade_ds_tag_flu_na
+    String? nextclade_aa_subs_flu_na = morgana_magic_flu.nextclade_aa_subs_flu_na
+    String? nextclade_aa_dels_flu_na = morgana_magic_flu.nextclade_aa_dels_flu_na
+    String? nextclade_clade_flu_na = morgana_magic_flu.nextclade_clade_flu_na
+    String? nextclade_qc_flu_na = morgana_magic_flu.nextclade_qc_flu_na
     # VADR Annotation QC
-    File? vadr_alerts_list = morgana_magic.vadr_alerts_list
-    File? vadr_feature_tbl_pass = morgana_magic.vadr_feature_tbl_pass
-    File? vadr_feature_tbl_fail = morgana_magic.vadr_feature_tbl_fail
-    File? vadr_classification_summary_file = morgana_magic.vadr_classification_summary_file
-    File? vadr_all_outputs_tar_gz = morgana_magic.vadr_all_outputs_tar_gz
-    String? vadr_num_alerts = morgana_magic.vadr_num_alerts
-    String? vadr_docker = morgana_magic.vadr_docker
-    File? vadr_fastas_zip_archive = morgana_magic.vadr_fastas_zip_archive
+    File? vadr_alerts_list = select_first([morgana_magic_flu.vadr_alerts_list, morgana_magic_non_flu.vadr_alerts_list])
+    File? vadr_feature_tbl_pass = select_first([morgana_magic_flu.vadr_feature_tbl_pass, morgana_magic_non_flu.vadr_feature_tbl_pass])
+    File? vadr_feature_tbl_fail = select_first([morgana_magic_flu.vadr_feature_tbl_fail, morgana_magic_non_flu.vadr_feature_tbl_fail])
+    File? vadr_classification_summary_file = select_first([morgana_magic_flu.vadr_classification_summary_file, morgana_magic_non_flu.vadr_classification_summary_file])
+    File? vadr_all_outputs_tar_gz = select_first([morgana_magic_flu.vadr_all_outputs_tar_gz, morgana_magic_non_flu.vadr_all_outputs_tar_gz])
+    String? vadr_num_alerts = select_first([morgana_magic_flu.vadr_num_alerts, morgana_magic_non_flu.vadr_num_alerts])
+    String? vadr_docker = select_first([morgana_magic_flu.vadr_docker, morgana_magic_non_flu.vadr_docker])
+    File? vadr_fastas_zip_archive = select_first([morgana_magic_flu.vadr_fastas_zip_archive, morgana_magic_non_flu.vadr_fastas_zip_archive])
     # Flu IRMA Outputs
-    String? irma_version = morgana_magic.irma_version
-    String? irma_docker = morgana_magic.irma_docker
-    String? irma_type = morgana_magic.irma_type
-    String? irma_subtype = morgana_magic.irma_subtype
-    String? irma_subtype_notes = morgana_magic.irma_subtype_notes
-    File? irma_assembly_fasta_concatenated = morgana_magic.flu_assembly_fasta_concatenated
-    File? irma_ha_segment_fasta = morgana_magic.flu_ha_segment_fasta
-    File? irma_na_segment_fasta = morgana_magic.flu_na_segment_fasta
-    File? irma_pa_segment_fasta = morgana_magic.flu_pa_segment_fasta
-    File? irma_pb1_segment_fasta = morgana_magic.flu_pb1_segment_fasta
-    File? irma_pb2_segment_fasta = morgana_magic.flu_pb2_segment_fasta
-    File? irma_mp_segment_fasta = morgana_magic.flu_mp_segment_fasta
-    File? irma_np_segment_fasta = morgana_magic.flu_np_segment_fasta
-    File? irma_ns_segment_fasta = morgana_magic.flu_ns_segment_fasta
+    String? irma_version = morgana_magic_flu.irma_version
+    String? irma_docker = morgana_magic_flu.irma_docker
+    String? irma_type = morgana_magic_flu.irma_type
+    String? irma_subtype = morgana_magic_flu.irma_subtype
+    String? irma_subtype_notes = morgana_magic_flu.irma_subtype_notes
+    File? irma_assembly_fasta_concatenated = morgana_magic_flu.flu_assembly_fasta_concatenated
+    File? irma_ha_segment_fasta = morgana_magic_flu.flu_ha_segment_fasta
+    File? irma_na_segment_fasta = morgana_magic_flu.flu_na_segment_fasta
+    File? irma_pa_segment_fasta = morgana_magic_flu.flu_pa_segment_fasta
+    File? irma_pb1_segment_fasta = morgana_magic_flu.flu_pb1_segment_fasta
+    File? irma_pb2_segment_fasta = morgana_magic_flu.flu_pb2_segment_fasta
+    File? irma_mp_segment_fasta = morgana_magic_flu.flu_mp_segment_fasta
+    File? irma_np_segment_fasta = morgana_magic_flu.flu_np_segment_fasta
+    File? irma_ns_segment_fasta = morgana_magic_flu.flu_ns_segment_fasta
     # Flu GenoFLU Outputs
-    String? genoflu_version = morgana_magic.genoflu_version
-    String? genoflu_genotype = morgana_magic.genoflu_genotype
-    String? genoflu_all_segments = morgana_magic.genoflu_all_segments
-    File? genoflu_output_tsv = morgana_magic.genoflu_output_tsv
+    String? genoflu_version = morgana_magic_flu.genoflu_version
+    String? genoflu_genotype = morgana_magic_flu.genoflu_genotype
+    String? genoflu_all_segments = morgana_magic_flu.genoflu_all_segments
+    File? genoflu_output_tsv = morgana_magic_flu.genoflu_output_tsv
     # Flu Abricate Outputs
-    String? abricate_flu_type = morgana_magic.abricate_flu_type
-    String? abricate_flu_subtype = morgana_magic.abricate_flu_subtype
-    File? abricate_flu_results = morgana_magic.abricate_flu_results
-    String? abricate_flu_database = morgana_magic.abricate_flu_database
-    String? abricate_flu_version = morgana_magic.abricate_flu_version
+    String? abricate_flu_type = morgana_magic_flu.abricate_flu_type
+    String? abricate_flu_subtype = morgana_magic_flu.abricate_flu_subtype
+    File? abricate_flu_results = morgana_magic_flu.abricate_flu_results
+    String? abricate_flu_database = morgana_magic_flu.abricate_flu_database
+    String? abricate_flu_version = morgana_magic_flu.abricate_flu_version
     # Flu Antiviral Substitution Outputs
-    String? flu_A_315675_resistance = morgana_magic.flu_A_315675_resistance
-    String? flu_amantadine_resistance = morgana_magic.flu_amantadine_resistance
-    String? flu_compound_367_resistance = morgana_magic.flu_compound_367_resistance
-    String? flu_favipiravir_resistance = morgana_magic.flu_favipiravir_resistance
-    String? flu_fludase_resistance = morgana_magic.flu_fludase_resistance
-    String? flu_L_742_001_resistance = morgana_magic.flu_L_742_001_resistance
-    String? flu_laninamivir_resistance = morgana_magic.flu_laninamivir_resistance
-    String? flu_peramivir_resistance = morgana_magic.flu_peramivir_resistance
-    String? flu_pimodivir_resistance = morgana_magic.flu_pimodivir_resistance
-    String? flu_rimantadine_resistance = morgana_magic.flu_rimantadine_resistance
-    String? flu_oseltamivir_resistance = morgana_magic.flu_oseltamivir_resistance
-    String? flu_xofluza_resistance = morgana_magic.flu_xofluza_resistance
-    String? flu_zanamivir_resistance = morgana_magic.flu_zanamivir_resistance
+    String? flu_A_315675_resistance = morgana_magic_flu.flu_A_315675_resistance
+    String? flu_amantadine_resistance = morgana_magic_flu.flu_amantadine_resistance
+    String? flu_compound_367_resistance = morgana_magic_flu.flu_compound_367_resistance
+    String? flu_favipiravir_resistance = morgana_magic_flu.flu_favipiravir_resistance
+    String? flu_fludase_resistance = morgana_magic_flu.flu_fludase_resistance
+    String? flu_L_742_001_resistance = morgana_magic_flu.flu_L_742_001_resistance
+    String? flu_laninamivir_resistance = morgana_magic_flu.flu_laninamivir_resistance
+    String? flu_peramivir_resistance = morgana_magic_flu.flu_peramivir_resistance
+    String? flu_pimodivir_resistance = morgana_magic_flu.flu_pimodivir_resistance
+    String? flu_rimantadine_resistance = morgana_magic_flu.flu_rimantadine_resistance
+    String? flu_oseltamivir_resistance = morgana_magic_flu.flu_oseltamivir_resistance
+    String? flu_xofluza_resistance = morgana_magic_flu.flu_xofluza_resistance
+    String? flu_zanamivir_resistance = morgana_magic_flu.flu_zanamivir_resistance
     # HIV Outputs
-    String? quasitools_version = morgana_magic.quasitools_version
-    String? quasitools_date = morgana_magic.quasitools_date
-    File? quasitools_coverage_file = morgana_magic.quasitools_coverage_file
-    File? quasitools_dr_report = morgana_magic.quasitools_dr_report
-    File? quasitools_hydra_vcf = morgana_magic.quasitools_hydra_vcf
-    File? quasitools_mutations_report = morgana_magic.quasitools_mutations_report
+    String? quasitools_version = morgana_magic_non_flu.quasitools_version
+    String? quasitools_date = morgana_magic_non_flu.quasitools_date
+    File? quasitools_coverage_file = morgana_magic_non_flu.quasitools_coverage_file
+    File? quasitools_dr_report = morgana_magic_non_flu.quasitools_dr_report
+    File? quasitools_hydra_vcf = morgana_magic_non_flu.quasitools_hydra_vcf
+    File? quasitools_mutations_report = morgana_magic_non_flu.quasitools_mutations_report
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
     # Capture percentage_mapped_reads from ivar_consensus task or flu_track task
-    String percentage_mapped_reads = select_first([ivar_consensus.percentage_mapped_reads, morgana_magic.percentage_mapped_reads, ""])
+    String percentage_mapped_reads = select_first([ivar_consensus.percentage_mapped_reads, morgana_magic_flu.percentage_mapped_reads, ""])
   }
 }
