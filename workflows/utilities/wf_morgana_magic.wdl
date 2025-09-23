@@ -75,8 +75,6 @@ workflow morgana_magic {
       input:
         samplename = samplename,
         assembly_fasta = assembly_fasta,
-        read1 = read1,
-        read2 = read2,
         seq_method = seq_method,
         standardized_organism = organism_parameters.standardized_organism,
         assembly_metrics_cpu = assembly_metrics_cpu,
@@ -239,6 +237,14 @@ workflow morgana_magic {
     String? nextclade_clade_rabies = rabies_output_parser.nextclade_clade
     String? nextclade_lineage_rabies = rabies_output_parser.nextclade_lineage
     String? nextclade_qc_rabies = rabies_output_parser.nextclade_qc
+    # Nextclade outputs for flu H5N1
+    File? nextclade_json_flu_h5n1 = flu_track.nextclade_json_flu_h5n1
+    File? auspice_json_flu_h5n1 = flu_track.auspice_json_flu_h5n1
+    File? nextclade_tsv_flu_h5n1 = flu_track.nextclade_tsv_flu_h5n1
+    String? nextclade_aa_subs_flu_h5n1 = flu_track.nextclade_aa_subs_flu_h5n1
+    String? nextclade_aa_dels_flu_h5n1 = flu_track.nextclade_aa_dels_flu_h5n1
+    String? nextclade_clade_flu_h5n1 = flu_track.nextclade_clade_flu_h5n1
+    String? nextclade_qc_flu_h5n1 = flu_track.nextclade_qc_flu_h5n1
     # Nextclade outputs for flu HA
     File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
     File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha
@@ -263,6 +269,18 @@ workflow morgana_magic {
     String? irma_type = flu_track.irma_type
     String? irma_subtype = flu_track.irma_subtype
     String? irma_subtype_notes = flu_track.irma_subtype_notes
+    File? irma_assembly_fasta = flu_track.irma_assembly_fasta
+    File? flu_assembly_fasta_concatenated = flu_track.flu_assembly_fasta_concatenated
+    Int? irma_minimum_consensus_support = flu_track.irma_minimum_consensus_support
+    String? ha_na_assembly_coverage = flu_track.ha_na_assembly_coverage
+    File? flu_ha_segment_fasta = flu_track.flu_ha_segment_fasta
+    File? flu_na_segment_fasta = flu_track.flu_na_segment_fasta
+    File? flu_pa_segment_fasta = flu_track.flu_pa_segment_fasta
+    File? flu_pb1_segment_fasta = flu_track.flu_pb1_segment_fasta
+    File? flu_pb2_segment_fasta = flu_track.flu_pb2_segment_fasta
+    File? flu_mp_segment_fasta = flu_track.flu_mp_segment_fasta
+    File? flu_np_segment_fasta = flu_track.flu_np_segment_fasta
+    File? flu_ns_segment_fasta = flu_track.flu_ns_segment_fasta
     # Flu GenoFLU Outputs
     String? genoflu_version = flu_track.genoflu_version
     String? genoflu_genotype = flu_track.genoflu_genotype
@@ -274,6 +292,20 @@ workflow morgana_magic {
     File? abricate_flu_results = flu_track.abricate_flu_results
     String? abricate_flu_database =  flu_track.abricate_flu_database
     String? abricate_flu_version = flu_track.abricate_flu_version
+    # Flu Antiviral Substitution Outputs
+    String? flu_A_315675_resistance = flu_track.flu_A_315675_resistance
+    String? flu_amantadine_resistance = flu_track.flu_amantadine_resistance
+    String? flu_compound_367_resistance = flu_track.flu_compound_367_resistance
+    String? flu_favipiravir_resistance = flu_track.flu_favipiravir_resistance
+    String? flu_fludase_resistance = flu_track.flu_fludase_resistance
+    String? flu_L_742_001_resistance = flu_track.flu_L_742_001_resistance
+    String? flu_laninamivir_resistance = flu_track.flu_laninamivir_resistance
+    String? flu_peramivir_resistance = flu_track.flu_peramivir_resistance
+    String? flu_pimodivir_resistance = flu_track.flu_pimodivir_resistance
+    String? flu_rimantadine_resistance = flu_track.flu_rimantadine_resistance
+    String? flu_oseltamivir_resistance = flu_track.flu_oseltamivir_resistance
+    String? flu_xofluza_resistance = flu_track.flu_xofluza_resistance
+    String? flu_zanamivir_resistance = flu_track.flu_zanamivir_resistance
     # HIV Quasitools Outputs
     String? quasitools_version = quasitools.quasitools_version
     String? quasitools_date = quasitools.quasitools_date
@@ -285,5 +317,7 @@ workflow morgana_magic {
     Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
     Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
     File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
+    # Flu Track Percentage Mapped Reads
+    String? percentage_mapped_reads = flu_track.percentage_mapped_reads
   }
 }
