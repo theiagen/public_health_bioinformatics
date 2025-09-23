@@ -39,7 +39,7 @@ If the **distance between the query genome assembly and the closest genome in th
 
 The [**GAMBIT_Query_PHB**](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Gambit_Query_PHB) workflow performs taxon assignment of a genome assembly using the GAMBIT. It can be imported directly to [Terra.bio](https://terra.bio) via [Dockstore](https://dockstore.org).
 
-Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly and a sample name associated with the genome assembly. The default GAMBIT database used for taxonomic identification is the Prokaryotic [GAMBIT Database GTDB v2.0.1](#gambit-gtdb-database-v201), but alternate GAMBIT databases can be provided.
+Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly and a sample name associated with the genome assembly. The default GAMBIT database used for taxonomic identification is the Prokaryotic [GAMBIT Database GTDB v2.1.0](#gambit-gtdb-database-v210), but alternate GAMBIT databases can be provided.
 
 !!! dna "Gambit_Query_PHB"
     More information on **GAMBIT_Query_PHB** is available [**here**](../workflows/standalone/gambit_query.md).
@@ -62,7 +62,7 @@ Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly
 
 Additionally, GAMBIT is also part of the **TheiaProk** and **TheiaEuk** collection of workflows, the first dedicated to the analysis of prokaryotic data, and the second data to mycotics. The TheiaProk or TheiaEuk most appropriate for your type of input data can be imported from the Dockstore links on the right.
 
-In both, GAMBIT is responsible for performing the taxonomic identification of the assembled sequences, which can trigger taxa-specific submodules for further genomic characterization. For TheiaProk, the default database is the Prokaryotic [GAMBIT Database GTDB v2.0.1](#gambit-gtdb-database-v201) and for TheiaEuk, the default database is the [Fungal GAMBIT Database v1.0.0](#gambit-fungal-database-v100).
+In both, GAMBIT is responsible for performing the taxonomic identification of the assembled sequences, which can trigger taxa-specific submodules for further genomic characterization. For TheiaProk, the default database is the Prokaryotic [GAMBIT Database GTDB v2.1.0](#gambit-gtdb-database-v210) and for TheiaEuk, the default database is the [Fungal GAMBIT Database v1.0.0](#gambit-fungal-database-v100).
 
 !!! dna "TheiaProk and TheiaEuk"
     More information on TheiaProk and TheiaEuk is available on the following pages:
