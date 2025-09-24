@@ -41,7 +41,10 @@ workflow morgana_magic {
     Int? abricate_flu_memory
     Int? abricate_flu_min_percent_coverage
     Int? abricate_flu_min_percent_identity
+    Int? flu_track_min_depth
     # nextclade inputs
+    String? nextclade_dataset_name
+    String? nextclade_dataset_tag
     Int? nextclade_cpu
     Int? nextclade_disk_size
     String? nextclade_docker_image
@@ -129,34 +132,7 @@ workflow morgana_magic {
           read2 = read2,
           seq_method = seq_method,
           standardized_organism = organism_parameters.standardized_organism,
-          assembly_metrics_cpu = assembly_metrics_cpu,
-          assembly_metrics_disk_size = assembly_metrics_disk_size,
-          assembly_metrics_docker = assembly_metrics_docker,
-          assembly_metrics_memory = assembly_metrics_memory,
-          irma_cpu = irma_cpu,
-          irma_disk_size = irma_disk_size,
-          irma_docker_image = irma_docker_image,        
-          irma_keep_ref_deletions = irma_keep_ref_deletions,
-          irma_memory = irma_memory,
-          genoflu_cross_reference = genoflu_cross_reference,
-          genoflu_cpu = genoflu_cpu,
-          genoflu_disk_size = genoflu_disk_size,
-          genoflu_docker = genoflu_docker,
-          genoflu_memory = genoflu_memory,
-          abricate_flu_cpu = abricate_flu_cpu,
-          abricate_flu_disk_size = abricate_flu_disk_size,
-          abricate_flu_docker = abricate_flu_docker,
-          abricate_flu_memory = abricate_flu_memory,
-          abricate_flu_min_percent_coverage = abricate_flu_min_percent_coverage,
-          abricate_flu_min_percent_identity = abricate_flu_min_percent_identity,
-          nextclade_cpu = nextclade_cpu,
-          nextclade_disk_size = nextclade_disk_size,
-          nextclade_docker_image = nextclade_docker_image,
-          nextclade_memory = nextclade_memory,
-          nextclade_output_parser_cpu = nextclade_output_parser_cpu,
-          nextclade_output_parser_disk_size = nextclade_output_parser_disk_size,
-          nextclade_output_parser_docker = nextclade_output_parser_docker,
-          nextclade_output_parser_memory = nextclade_output_parser_memory
+          irma_min_consensus_support = select_first([flu_track_min_depth])
       }
       call vadr_task.vadr as vadr_pe {
         input:
@@ -198,7 +174,7 @@ workflow morgana_magic {
       input:
         samplename = samplename,
         fasta = select_first([assembly_fasta]),
-        docker = organism_parameters.pangolin_docker,
+        docker = select_first([pangolin_docker_image, organism_parameters.pangolin_docker]),
         cpu = pangolin_cpu,
         disk_size = pangolin_disk_size,
         memory = pangolin_memory
@@ -209,8 +185,8 @@ workflow morgana_magic {
     call nextclade_task.nextclade_v3 {
       input:
         genome_fasta = select_first([assembly_fasta]),
-        dataset_name = organism_parameters.nextclade_dataset_name,
-        dataset_tag = organism_parameters.nextclade_dataset_tag,
+        dataset_name = select_first([nextclade_dataset_name, organism_parameters.nextclade_dataset_name]),
+        dataset_tag = select_first([nextclade_dataset_tag, organism_parameters.nextclade_dataset_tag]),
         cpu = nextclade_cpu,
         disk_size = nextclade_disk_size,
         docker = nextclade_docker_image,
@@ -280,7 +256,7 @@ workflow morgana_magic {
     # Nextclade outputs
     String nextclade_version = select_first([rabies_nextclade.nextclade_version, nextclade_v3.nextclade_version, flu_track_pe.nextclade_version, flu_track_fasta.nextclade_version, ""])
     String nextclade_docker = select_first([rabies_nextclade.nextclade_docker, nextclade_v3.nextclade_docker, flu_track_pe.nextclade_docker, flu_track_fasta.nextclade_docker, ""])
-    String nextclade_ds_tag = select_first([organism_parameters.nextclade_dataset_tag, ""])
+    String nextclade_ds_tag = select_first([nextclade_dataset_tag, organism_parameters.nextclade_dataset_tag, ""])
     # Nextclade outputs for non-flu
     File? nextclade_json = nextclade_v3.nextclade_json
     File? auspice_json = nextclade_v3.auspice_json
