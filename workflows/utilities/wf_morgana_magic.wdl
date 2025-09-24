@@ -260,14 +260,14 @@ workflow morgana_magic {
   output {
     String organism = select_first([organism_parameters.standardized_organism, taxon_name])
     # VADR outputs
-    File? vadr_alerts_list = select_first([vadr.alerts_list, vadr_pe.alerts_list, vadr_fasta.alerts_list])
-    String? vadr_num_alerts = select_first([vadr.num_alerts, vadr_pe.num_alerts, vadr_fasta.num_alerts])
-    File? vadr_feature_tbl_pass = select_first([vadr.feature_tbl_pass, vadr_pe.feature_tbl_pass, vadr_fasta.feature_tbl_pass])
-    File? vadr_feature_tbl_fail = select_first([vadr.feature_tbl_fail, vadr_pe.feature_tbl_fail, vadr_fasta.feature_tbl_fail])
-    File? vadr_classification_summary_file = select_first([vadr.classification_summary_file, vadr_pe.classification_summary_file, vadr_fasta.classification_summary_file])
-    File? vadr_all_outputs_tar_gz = select_first([vadr.outputs_tgz, vadr_pe.outputs_tgz, vadr_fasta.outputs_tgz])
-    String? vadr_docker = select_first([vadr.vadr_docker, vadr_pe.vadr_docker, vadr_fasta.vadr_docker])
-    File? vadr_fastas_zip_archive = select_first([vadr.vadr_fastas_zip_archive, vadr_pe.vadr_fastas_zip_archive, vadr_fasta.vadr_fastas_zip_archive])
+    String? vadr_alerts_list = select_first([vadr.alerts_list, vadr_pe.alerts_list, vadr_fasta.alerts_list, ""])
+    String? vadr_num_alerts = select_first([vadr.num_alerts, vadr_pe.num_alerts, vadr_fasta.num_alerts, ""])
+    String? vadr_feature_tbl_pass = select_first([vadr.feature_tbl_pass, vadr_pe.feature_tbl_pass, vadr_fasta.feature_tbl_pass, ""])
+    String? vadr_feature_tbl_fail = select_first([vadr.feature_tbl_fail, vadr_pe.feature_tbl_fail, vadr_fasta.feature_tbl_fail, ""])
+    String? vadr_classification_summary_file = select_first([vadr.classification_summary_file, vadr_pe.classification_summary_file, vadr_fasta.classification_summary_file, ""])
+    String? vadr_all_outputs_tar_gz = select_first([vadr.outputs_tgz, vadr_pe.outputs_tgz, vadr_fasta.outputs_tgz, ""])
+    String? vadr_docker = select_first([vadr.vadr_docker, vadr_pe.vadr_docker, vadr_fasta.vadr_docker, ""])
+    String? vadr_fastas_zip_archive = select_first([vadr.vadr_fastas_zip_archive, vadr_pe.vadr_fastas_zip_archive, vadr_fasta.vadr_fastas_zip_archive, ""])
     # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded

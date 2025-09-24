@@ -369,14 +369,14 @@ workflow theiacov_illumina_pe {
     String? nextclade_clade_flu_na = morgana_magic_flu.nextclade_clade_flu_na
     String? nextclade_qc_flu_na = morgana_magic_flu.nextclade_qc_flu_na
     # VADR Annotation QC
-    File? vadr_alerts_list = select_first([morgana_magic_flu.vadr_alerts_list, morgana_magic_non_flu.vadr_alerts_list])
-    File? vadr_feature_tbl_pass = select_first([morgana_magic_flu.vadr_feature_tbl_pass, morgana_magic_non_flu.vadr_feature_tbl_pass])
-    File? vadr_feature_tbl_fail = select_first([morgana_magic_flu.vadr_feature_tbl_fail, morgana_magic_non_flu.vadr_feature_tbl_fail])
-    File? vadr_classification_summary_file = select_first([morgana_magic_flu.vadr_classification_summary_file, morgana_magic_non_flu.vadr_classification_summary_file])
-    File? vadr_all_outputs_tar_gz = select_first([morgana_magic_flu.vadr_all_outputs_tar_gz, morgana_magic_non_flu.vadr_all_outputs_tar_gz])
+    String? vadr_alerts_list = select_first([morgana_magic_flu.vadr_alerts_list, morgana_magic_non_flu.vadr_alerts_list])
+    String? vadr_feature_tbl_pass = select_first([morgana_magic_flu.vadr_feature_tbl_pass, morgana_magic_non_flu.vadr_feature_tbl_pass])
+    String? vadr_feature_tbl_fail = select_first([morgana_magic_flu.vadr_feature_tbl_fail, morgana_magic_non_flu.vadr_feature_tbl_fail])
+    String? vadr_classification_summary_file = select_first([morgana_magic_flu.vadr_classification_summary_file, morgana_magic_non_flu.vadr_classification_summary_file])
+    String? vadr_all_outputs_tar_gz = select_first([morgana_magic_flu.vadr_all_outputs_tar_gz, morgana_magic_non_flu.vadr_all_outputs_tar_gz])
     String? vadr_num_alerts = select_first([morgana_magic_flu.vadr_num_alerts, morgana_magic_non_flu.vadr_num_alerts])
     String? vadr_docker = select_first([morgana_magic_flu.vadr_docker, morgana_magic_non_flu.vadr_docker])
-    File? vadr_fastas_zip_archive = select_first([morgana_magic_flu.vadr_fastas_zip_archive, morgana_magic_non_flu.vadr_fastas_zip_archive])
+    String? vadr_fastas_zip_archive = select_first([morgana_magic_flu.vadr_fastas_zip_archive, morgana_magic_non_flu.vadr_fastas_zip_archive])
     # Flu IRMA Outputs
     String? irma_version = morgana_magic_flu.irma_version
     String? irma_docker = morgana_magic_flu.irma_docker
