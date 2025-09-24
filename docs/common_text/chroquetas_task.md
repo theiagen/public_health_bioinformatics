@@ -8,8 +8,8 @@
     **Outputs:**
 
     - **AMR Stats**: Depicts the number of FungAMR and non-FungAMR mutations on a gene-by-gene (protein sequence) basis.
-    - **AMR Summary**: Depicts the mutation resistance and support for potential drug resistance on a gene-by-gene (protein sequence) basis. To interpret confidence scores, please refer to the corresponding [ChroQueTas wiki](https://github.com/nmquijada/ChroQueTas/wiki/Confidence-score-for-antimicrobial-resistance) section.
-    - **Fungicide Resistance String**: Depicts detected AMR mutations AND the affected fungicides as a comma-delimited string in the following format: `"<PROTEIN>_<REFERENCE_AA><POSITION><MUTATION_AA>[<FUNGICIDE1><SUPPORT>;...],..."`
+    - **AMR Summary**: Depicts the mutation resistance and support for potential drug resistance on a gene-by-gene (protein sequence) basis.
+    - **Fungicide Resistance String**: Depicts detected AMR mutations AND the affected fungicides as a comma-delimited string in the following format: `"<PROTEIN>_<REFERENCE_AA><POSITION><MUTATION_AA>[<FUNGICIDE1><CONFIDENCE_SCORE>;...],..."`
 
 
     ??? toggle "Supported Species and Genes"
@@ -75,6 +75,28 @@
         | *Venturia inaequalis*             | Beta-tubulin, Cytochrome b                                         |
         | *Zymoseptoria tritici*            | Cyp51, Cytochrome b                                                |
         
+    ??? toggle "Confidence score for antimicrobial resistance"
+        For each mutation there can be one or several antifungals for which the resistance has been associated with resistance in the past. For each antigungal, e.g. `Clotrimazole(3/NA)`, it appears two numbers (or an `NA`) between brackets separated by a `/`. These values represent the **confidence score**, that assesses the degree of evidence that supports their role in drug resistance. The number in the left side of the / is the **highest positive confidence score** while the one on the right side is the **highest negative confidence score**.
+
+        - A **positive confidence score** denotes mutations reported to confer resistance
+        - A **negative confidence score** relates to mutations reported in susceptible strains
+
+        The following table shows the confidence scores and their rationale.
+
+        | Confidence score    | Description                                                                                                                                                                                         |
+        |---------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+        | 1                   | The mutation was created in the same susceptible species background and effect on resistance was confirmed by measurements.                                                                         |
+        | 2                   | The mutation was created in the same gene but expressed in another species with potentially non endogenous level of expression and effect on resistance was confirmed by experimental measurements. |
+        | 3                   | The effect of the mutation was quantified by bulk competition assays such as Deep Mutational Scanning.                                                                                              |
+        | 4                   | The mutation was identified by experimental evolution where its high frequency in independent replicates suggests it causes resistance.                                                             |
+        | 5                   | The deletion of the gene causes resistance.                                                                                                                                                         |
+        | 6                   | The overexpression or duplication of the gene causes resistance.                                                                                                                                    |
+        | 7                   | Significant association between the mutation and resistance in a population as determined by GWAS (or other population-based association such as QTL or classical genetics).                        |
+        | 8                   | The mutation was identified in a 'natural' strain (e.g. a clinical isolate) that is resistant but without any further validations.                                                                  |
+        | NA                  | Absence of a positive confidence score report                                                                                                                                                       |
+        | Negative scores (-) | Any confidence score where the mutation was found not to cause resistance using the approach of the corresponding positive score.                                                                   |
+
+        More information can be found in [ChroQueTas' documentation](https://github.com/nmquijada/ChroQueTas/wiki/Confidence-score-for-antimicrobial-resistance).
 
     !!! techdetails "ChroQueTas Technical Details"    
         |  | Links |
