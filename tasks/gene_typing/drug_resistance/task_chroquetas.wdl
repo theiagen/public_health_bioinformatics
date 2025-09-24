@@ -52,12 +52,13 @@ task chroquetas {
     # rename output files to include sample name
     based_name=$(echo $(basename ~{assembly_fasta}) | sed -E 's/(.*)\.[^\.]+$/\1/')
     if [ -f chroquetas_out/${based_name}.ChroQueTaS.AMR_stats.txt ]; then
-      mv chroquetas_out/${based_name}.ChroQueTaS.AMR_stats.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt
-      mv chroquetas_out/${based_name}.ChroQueTaS.AMR_summary.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt
+      # only move if the file names are different
+      mv chroquetas_out/${based_name}.ChroQueTaS.AMR_stats.txt ~{samplename}.ChroQueTaS.AMR_stats.txt
+      mv chroquetas_out/${based_name}.ChroQueTaS.AMR_summary.txt ~{samplename}.ChroQueTaS.AMR_summary.txt
     
       # extract AMR summary annotated w/fungicide resistance
       # e.g. <GENE>_<REF_POSITION><AA_CHANGE><QUERY_POSITION>[<FUNGICIDE_RESISTANCE1>;<FUNGICIDE_RESISTANCEn>]
-      tail -n+2 chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt \
+      tail -n+2 ~{samplename}.ChroQueTaS.AMR_summary.txt \
         | awk '{ print $1, $4, $3, $5, $6 }' \
         | sed -E 's/([^ ]+) ([^ ]+) ([^ ]+) ([^ ]+) ([^ ]+)/\1_\2\3\4[\5]/' \
         | sed -E 's/,/;/g' \
@@ -69,8 +70,8 @@ task chroquetas {
     # check if no AMR genes found
     elif [ -f chroquetas_out/${based_name}.ChroQueTaS.AMR_summary.txt ]; then
       # if no AMR genes found, create empty output files
-      mv chroquetas_out/${based_name}.ChroQueTaS.AMR_summary.txt chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt
-      echo -e "No AMR genes found" > chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt
+      mv chroquetas_out/${based_name}.ChroQueTaS.AMR_summary.txt ~{samplename}.ChroQueTaS.AMR_summary.txt
+      echo -e "No AMR genes found" > ~{samplename}.ChroQueTaS.AMR_stats.txt
       echo "No resistance detected" | tee ANNOTATED_AMR_SUMMARY_STRING
       echo "PASS" | tee CHROQUETAS_STATUS
     else
@@ -79,8 +80,8 @@ task chroquetas {
   fi
   >>>
   output {
-    File? amr_stats_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_stats.txt"
-    File? amr_summary_file = "chroquetas_out/~{samplename}.ChroQueTaS.AMR_summary.txt"
+    File? amr_stats_file = "~{samplename}.ChroQueTaS.AMR_stats.txt"
+    File? amr_summary_file = "~{samplename}.ChroQueTaS.AMR_summary.txt"
     String chroquetas_fungicide_resistance = read_string("ANNOTATED_AMR_SUMMARY_STRING")
     String chroquetas_version = read_string("CHROQUETAS_VERSION")
     String chroquetas_status = read_string("CHROQUETAS_STATUS")
