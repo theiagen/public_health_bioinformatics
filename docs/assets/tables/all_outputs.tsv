@@ -400,7 +400,7 @@ snippy_variants_percent_ref_coverage	Float	Proportion of the reference genome co
 snippy_variants_qc_metrics	File	TSV file containing quality control metrics for the sample	Snippy_Variants
 snippy_variants_query	String	Query strings specified by the user when running the workflow	Snippy_Variants
 snippy_variants_query_check	String	Verification that query strings are found in the reference genome	Snippy_Variants
-snippy_variants_results	File	CSV file detailing results for all mutations identified in the query sequence relative to the reference	Snippy_Variants
+snippy_variants_results	File	CSV file detailing results for all mutations identified relative to the reference	Snippy_Variants
 snippy_variants_summary	File	A summary TXT fie showing the number of mutations identified for each mutation type	Snippy_Variants
 snippy_variants_version	String	Version of Snippy used	Snippy_Variants
 snippy_variants_wf_version	String	Version of Snippy_Variants used	Snippy_Variants
@@ -666,21 +666,21 @@ r2_mean_q_raw	Float	Mean quality score of raw reverse reads	TheiaEuk_Illumina_PE
 r2_mean_readlength_raw	Float	Mean read length of raw reverse reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
 theiaeuk_illumina_pe_analysis_date	String	Date of TheiaEuk PE workflow execution	TheiaEuk_Illumina_PE
 theiaeuk_illumina_pe_version	String	TheiaEuk PE workflow version used	TheiaEuk_Illumina_PE
-theiaeuk_snippy_variants_bai	String	BAI file produced by the snippy module	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_bam	String	BAM file produced by the snippy module	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_coverage_tsv	String	TSV file containing coverage information for each base in the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_gene_query_results	String	File containing all lines from variants file matching gene query terms	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_hits	String	String of all variant file entries matching gene query term	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_num_reads_aligned	String	Number of reads aligned by snippy	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_num_variants	String	Number of variants detected by snippy	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_outdir_tarball	String	Tar compressed file containing full snippy output directory	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_percent_ref_coverage	String	Percent of reference genome covered by snippy	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_query	String	The gene query term(s) used to search variant	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_query_check	String	Were the gene query terms present in the refence annotated genome file	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_bai	String	Indexed bam file of the reads aligned to the reference	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_bam	String	BAM file of reads aligned to the reference	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_coverage_tsv	String	Coverage statistics TSV file output by the `samtools coverage` command, providing genome-wide metrics such as the proportion of bases covered (depth â‰¥ 1), mean depth, and other related statistics.	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_gene_query_results	String	CSV file detailing results for mutations associated with the query strings specified by the user	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_hits	String	A summary of mutations associated with the query strings specified by the user	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_num_reads_aligned	String	Number of reads that aligned to the reference genome as calculated by samtools view -c command	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_num_variants	String	Number of variants detected between sample and reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_outdir_tarball	String	A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_percent_ref_coverage	String	Proportion of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10).	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_query	String	Gene query strings specified by the user when running the workflow	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_query_check	String	Verification that query strings are found in the reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 theiaeuk_snippy_variants_reference_genome	String	The reference genome used in the alignment and variant calling	TheiaEuk_Illumina_PE
-theiaeuk_snippy_variants_results	String	The variants file produced by snippy	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_summary	String	A file summarizing the variants detected by snippy	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_version	String	The version of the snippy_variants module being used	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_results	String	CSV file detailing results for all mutations identified relative to the reference	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_summary	String	A summary TXT fie showing the number of mutations identified for each mutation type	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_version	String	Version of Snippy used	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 bandage_plot	File	Image file (PNG) visualizing the Flye assembly graph generated by Bandage	TheiaEuk_ONT, TheiaProk_ONT
 bandage_version	String	Version of Bandage used	TheiaEuk_ONT, TheiaProk_ONT
 cladetype_annotated_ref	String	The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted	TheiaEuk_ONT
