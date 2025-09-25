@@ -8,6 +8,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../utilities/wf_flu_track.wdl" as run_flu_track
+import "../utilities/wf_morgana_magic.wdl" as morgana_magic
 
 workflow theiacov_fasta {
   meta {
@@ -60,16 +61,16 @@ workflow theiacov_fasta {
       genome_length = organism_parameters.genome_length
   }
   # vadr task
-if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
-  call vadr_task.vadr {
-    input:
-      genome_fasta = assembly_fasta,
-      assembly_length_unambiguous = consensus_qc.number_ATCG,
-      max_length = organism_parameters.vadr_maxlength,
-      vadr_opts = organism_parameters.vadr_opts,
-      vadr_model_file = organism_parameters.vadr_model_file,
-      skip_length = organism_parameters.vadr_skiplength,
-      memory = organism_parameters.vadr_memory
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
+    call vadr_task.vadr {
+      input:
+        genome_fasta = assembly_fasta,
+        assembly_length_unambiguous = consensus_qc.number_ATCG,
+        max_length = organism_parameters.vadr_maxlength,
+        vadr_opts = organism_parameters.vadr_opts,
+        vadr_model_file = organism_parameters.vadr_model_file,
+        skip_length = organism_parameters.vadr_skiplength,
+        memory = organism_parameters.vadr_memory
     }
   }
   if (organism == "flu") {
@@ -105,6 +106,20 @@ if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parame
           organism = organism_parameters.standardized_organism
       }
     }
+  }
+  call morgana_magic.morgana_magic {
+    input:
+      samplename = samplename,
+      assembly_fasta = assembly_fasta,
+      taxon_name = organism_parameters.standardized_organism,
+      seq_method = seq_method,
+      number_ATCG = consensus_qc.number_ATCG,
+      vadr_max_length = select_first([organism_parameters.vadr_maxlength, vadr_max_length]),
+      vadr_skip_length = select_first([organism_parameters.vadr_skiplength, vadr_skip_length]),
+      vadr_options = select_first([organism_parameters.vadr_opts, vadr_opts]),
+      vadr_model_file = select_first([organism_parameters.vadr_model_file, vadr_model_file]),
+      vadr_memory = select_first([organism_parameters.vadr_memory, vadr_memory]),
+      workflow_type = "theiacov_fasta"
   }
   # QC check task
   if (defined(qc_check_table)) {

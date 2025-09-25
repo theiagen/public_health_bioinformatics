@@ -11,10 +11,10 @@ import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as 
 workflow morgana_magic {
   input {
     String samplename
-    File? assembly_fasta
+    File assembly_fasta
     String taxon_name
     String seq_method
-    File read1
+    File? read1
     File? read2
     Int? number_ATCG # needed for vadr 
     # assembly metrics 
@@ -128,7 +128,7 @@ workflow morgana_magic {
         vadr_outputs_tgz = vadr.outputs_tgz
     }
   }
-  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(reference_gene_locations_bed)) {
+  if (workflow_type == "theiacov_pe" && (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(reference_gene_locations_bed))) {
     # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
     call gene_coverage_task.gene_coverage {
       input:
@@ -171,10 +171,10 @@ workflow morgana_magic {
         memory = nextclade_output_parser_memory
     }
   }
-  if (organism_parameters.standardized_organism == "HIV") {
+  if (defined(read1) && organism_parameters.standardized_organism == "HIV") {
     call quasitools_task.quasitools {
       input:
-        read1 = read1,
+        read1 = select_first([read1]),
         read2 = read2,
         samplename = samplename
     }
