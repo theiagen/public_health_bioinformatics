@@ -197,7 +197,8 @@ workflow theiaviral_illumina_pe {
             assembly_fasta = select_first([consensus.consensus_seq]),
             taxon_name = ncbi_identify.raw_taxon_id,
             seq_method = "illumina_pe",
-            number_ATCG = consensus_qc.number_ATCG
+            number_ATCG = consensus_qc.number_ATCG,
+            workflow_type = "theiaviral"
         }
       }
     }

@@ -255,7 +255,8 @@ workflow theiaviral_ont {
             assembly_fasta = select_first([bcftools_consensus.assembly_fasta]),
             taxon_name = ncbi_identify.raw_taxon_id,
             seq_method = "nanopore",
-            number_ATCG = consensus_qc.number_ATCG
+            number_ATCG = consensus_qc.number_ATCG,
+            workflow_type = "theiaviral"
         }
       }
     }
