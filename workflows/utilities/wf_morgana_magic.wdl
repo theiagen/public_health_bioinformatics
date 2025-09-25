@@ -28,6 +28,8 @@ workflow morgana_magic {
     String? irma_docker_image
     Boolean? irma_keep_ref_deletions
     Int? irma_memory
+    File? irma_ha_bam
+    File? irma_na_bam
     # flu track - genoflu
     Int? genoflu_cpu
     File? genoflu_cross_reference
@@ -60,7 +62,7 @@ workflow morgana_magic {
     Int? pangolin_memory
     # gene coverage inputs
     File? reference_gene_locations_bed
-    File? ivar_consensus_aligned_bam
+    File? gene_coverage_bam
     # vadr parameters
     Int? vadr_max_length
     Int? vadr_skip_length
@@ -75,78 +77,7 @@ workflow morgana_magic {
       organism = taxon_name,
       pangolin_docker_image = pangolin_docker_image
   }
-  if (organism_parameters.standardized_organism == "flu") {
-    if (workflow_type == "theiacov_fasta"){
-      call vadr_task.vadr as vadr_fasta {
-        input:
-          genome_fasta = select_first([assembly_fasta]),
-          assembly_length_unambiguous = select_first([number_ATCG]),
-          vadr_opts = select_first([vadr_options, organism_parameters.vadr_opts]),
-          vadr_model_file = select_first([vadr_model_file, organism_parameters.vadr_model_file]),
-          max_length = select_first([vadr_max_length, organism_parameters.vadr_maxlength]),
-          skip_length = select_first([vadr_skip_length, organism_parameters.vadr_skiplength]),
-          memory = select_first([vadr_memory, organism_parameters.vadr_memory])
-      }
-      call flu_track_wf.flu_track as flu_track_fasta {
-        input:
-          samplename = samplename,
-          assembly_fasta = select_first([assembly_fasta]),
-          seq_method = seq_method,
-          standardized_organism = organism_parameters.standardized_organism,
-          assembly_metrics_cpu = assembly_metrics_cpu,
-          assembly_metrics_disk_size = assembly_metrics_disk_size,
-          assembly_metrics_docker = assembly_metrics_docker,
-          assembly_metrics_memory = assembly_metrics_memory,
-          irma_cpu = irma_cpu,
-          irma_disk_size = irma_disk_size,
-          irma_docker_image = irma_docker_image,        
-          irma_keep_ref_deletions = irma_keep_ref_deletions,
-          irma_memory = irma_memory,
-          genoflu_cross_reference = genoflu_cross_reference,
-          genoflu_cpu = genoflu_cpu,
-          genoflu_disk_size = genoflu_disk_size,
-          genoflu_docker = genoflu_docker,
-          genoflu_memory = genoflu_memory,
-          abricate_flu_cpu = abricate_flu_cpu,
-          abricate_flu_disk_size = abricate_flu_disk_size,
-          abricate_flu_docker = abricate_flu_docker,
-          abricate_flu_memory = abricate_flu_memory,
-          abricate_flu_min_percent_coverage = abricate_flu_min_percent_coverage,
-          abricate_flu_min_percent_identity = abricate_flu_min_percent_identity,
-          nextclade_cpu = nextclade_cpu,
-          nextclade_disk_size = nextclade_disk_size,
-          nextclade_docker_image = nextclade_docker_image,
-          nextclade_memory = nextclade_memory,
-          nextclade_output_parser_cpu = nextclade_output_parser_cpu,
-          nextclade_output_parser_disk_size = nextclade_output_parser_disk_size,
-          nextclade_output_parser_docker = nextclade_output_parser_docker,
-          nextclade_output_parser_memory = nextclade_output_parser_memory,
-          vadr_outputs_tgz = vadr.outputs_tgz
-      }
-    }
-    if (workflow_type == "theiacov_pe") {
-      call flu_track_wf.flu_track as flu_track_pe {
-        input:
-          samplename = samplename,
-          read1 = read1,
-          read2 = read2,
-          seq_method = seq_method,
-          standardized_organism = organism_parameters.standardized_organism,
-          irma_min_consensus_support = select_first([flu_track_min_depth])
-      }
-      call vadr_task.vadr as vadr_pe {
-        input:
-          genome_fasta = select_first([flu_track_pe.irma_assembly_fasta_padded]),
-          assembly_length_unambiguous = select_first([number_ATCG]),
-          vadr_opts = select_first([vadr_options, organism_parameters.vadr_opts]),
-          vadr_model_file = select_first([vadr_model_file, organism_parameters.vadr_model_file]),
-          max_length = select_first([vadr_max_length, organism_parameters.vadr_maxlength]),
-          skip_length = select_first([vadr_skip_length, organism_parameters.vadr_skiplength]),
-          memory = select_first([vadr_memory, organism_parameters.vadr_memory])
-      }
-    }
-  }
-  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
+  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
     # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b
     call vadr_task.vadr  {
       input:
@@ -159,11 +90,49 @@ workflow morgana_magic {
         memory = select_first([vadr_memory, organism_parameters.vadr_memory])
     }
   }
+  if (organism_parameters.standardized_organism == "flu" && (workflow_type == "theiaviral" || workflow_type == "theiaviral_panel")) {
+    call flu_track_wf.flu_track {
+      input:
+        samplename = samplename,
+        assembly_fasta = assembly_fasta,
+        seq_method = seq_method,
+        standardized_organism = organism_parameters.standardized_organism,
+        assembly_metrics_cpu = assembly_metrics_cpu,
+        assembly_metrics_disk_size = assembly_metrics_disk_size,
+        assembly_metrics_docker = assembly_metrics_docker,
+        assembly_metrics_memory = assembly_metrics_memory,
+        irma_cpu = irma_cpu,
+        irma_disk_size = irma_disk_size,
+        irma_docker_image = irma_docker_image,        
+        irma_keep_ref_deletions = irma_keep_ref_deletions,
+        irma_memory = irma_memory,
+        genoflu_cross_reference = genoflu_cross_reference,
+        genoflu_cpu = genoflu_cpu,
+        genoflu_disk_size = genoflu_disk_size,
+        genoflu_docker = genoflu_docker,
+        genoflu_memory = genoflu_memory,
+        abricate_flu_cpu = abricate_flu_cpu,
+        abricate_flu_disk_size = abricate_flu_disk_size,
+        abricate_flu_docker = abricate_flu_docker,
+        abricate_flu_memory = abricate_flu_memory,
+        abricate_flu_min_percent_coverage = abricate_flu_min_percent_coverage,
+        abricate_flu_min_percent_identity = abricate_flu_min_percent_identity,
+        nextclade_cpu = nextclade_cpu,
+        nextclade_disk_size = nextclade_disk_size,
+        nextclade_docker_image = nextclade_docker_image,
+        nextclade_memory = nextclade_memory,
+        nextclade_output_parser_cpu = nextclade_output_parser_cpu,
+        nextclade_output_parser_disk_size = nextclade_output_parser_disk_size,
+        nextclade_output_parser_docker = nextclade_output_parser_docker,
+        nextclade_output_parser_memory = nextclade_output_parser_memory,
+        vadr_outputs_tgz = vadr.outputs_tgz
+    }
+  }
   if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(reference_gene_locations_bed)) {
     # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
     call gene_coverage_task.gene_coverage {
       input:
-        bamfile = select_first([ivar_consensus_aligned_bam, flu_track_pe.irma_ha_bam, flu_track_pe.irma_na_bam, flu_track_fasta.irma_ha_bam, flu_track_fasta.irma_na_bam]),
+        bamfile = select_first([gene_coverage_bam]),
         bedfile = select_first([reference_gene_locations_bed, organism_parameters.gene_locations_bed]),
         samplename = samplename,
         organism = select_first([organism_parameters.standardized_organism, taxon_name])
@@ -236,14 +205,14 @@ workflow morgana_magic {
   output {
     String organism = select_first([organism_parameters.standardized_organism, taxon_name])
     # VADR outputs
-    String? vadr_alerts_list = select_first([vadr.alerts_list, vadr_pe.alerts_list, vadr_fasta.alerts_list, ""])
-    String? vadr_num_alerts = select_first([vadr.num_alerts, vadr_pe.num_alerts, vadr_fasta.num_alerts, ""])
-    String? vadr_feature_tbl_pass = select_first([vadr.feature_tbl_pass, vadr_pe.feature_tbl_pass, vadr_fasta.feature_tbl_pass, ""])
-    String? vadr_feature_tbl_fail = select_first([vadr.feature_tbl_fail, vadr_pe.feature_tbl_fail, vadr_fasta.feature_tbl_fail, ""])
-    String? vadr_classification_summary_file = select_first([vadr.classification_summary_file, vadr_pe.classification_summary_file, vadr_fasta.classification_summary_file, ""])
-    String? vadr_all_outputs_tar_gz = select_first([vadr.outputs_tgz, vadr_pe.outputs_tgz, vadr_fasta.outputs_tgz, ""])
-    String? vadr_docker = select_first([vadr.vadr_docker, vadr_pe.vadr_docker, vadr_fasta.vadr_docker, ""])
-    String? vadr_fastas_zip_archive = select_first([vadr.vadr_fastas_zip_archive, vadr_pe.vadr_fastas_zip_archive, vadr_fasta.vadr_fastas_zip_archive, ""])
+    String? vadr_alerts_list = vadr.alerts_list
+    String? vadr_num_alerts = vadr.num_alerts
+    String? vadr_feature_tbl_pass = vadr.feature_tbl_pass
+    String? vadr_feature_tbl_fail = vadr.feature_tbl_fail
+    String? vadr_classification_summary_file = vadr.classification_summary_file
+    String? vadr_all_outputs_tar_gz = vadr.outputs_tgz
+    String? vadr_docker = vadr.vadr_docker
+    String? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
     # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded
@@ -254,8 +223,8 @@ workflow morgana_magic {
     String? pangolin_docker = pangolin4.pangolin_docker
     String? pangolin_versions = pangolin4.pangolin_versions
     # Nextclade outputs
-    String nextclade_version = select_first([rabies_nextclade.nextclade_version, nextclade_v3.nextclade_version, flu_track_pe.nextclade_version, flu_track_fasta.nextclade_version, ""])
-    String nextclade_docker = select_first([rabies_nextclade.nextclade_docker, nextclade_v3.nextclade_docker, flu_track_pe.nextclade_docker, flu_track_fasta.nextclade_docker, ""])
+    String nextclade_version = select_first([rabies_nextclade.nextclade_version, nextclade_v3.nextclade_version, flu_track.nextclade_version, ""])
+    String nextclade_docker = select_first([rabies_nextclade.nextclade_docker, nextclade_v3.nextclade_docker, flu_track.nextclade_docker, ""])
     String nextclade_ds_tag = select_first([nextclade_dataset_tag, organism_parameters.nextclade_dataset_tag, ""])
     # Nextclade outputs for non-flu
     File? nextclade_json = nextclade_v3.nextclade_json
@@ -276,74 +245,74 @@ workflow morgana_magic {
     String? nextclade_lineage_rabies = rabies_output_parser.nextclade_lineage
     String? nextclade_qc_rabies = rabies_output_parser.nextclade_qc
     # Nextclade outputs for flu H5N1
-    String? nextclade_json_flu_h5n1 = select_first([flu_track_pe.nextclade_json_flu_h5n1, flu_track_fasta.nextclade_json_flu_h5n1, ""])
-    String? auspice_json_flu_h5n1 = select_first([flu_track_pe.auspice_json_flu_h5n1, flu_track_fasta.auspice_json_flu_h5n1, ""])
-    String? nextclade_tsv_flu_h5n1 = select_first([flu_track_pe.nextclade_tsv_flu_h5n1, flu_track_fasta.nextclade_tsv_flu_h5n1, ""])
-    String? nextclade_aa_subs_flu_h5n1 = select_first([flu_track_pe.nextclade_aa_subs_flu_h5n1, flu_track_fasta.nextclade_aa_subs_flu_h5n1, ""])
-    String? nextclade_aa_dels_flu_h5n1 = select_first([flu_track_pe.nextclade_aa_dels_flu_h5n1, flu_track_fasta.nextclade_aa_dels_flu_h5n1, ""])
-    String? nextclade_clade_flu_h5n1 = select_first([flu_track_pe.nextclade_clade_flu_h5n1, flu_track_fasta.nextclade_clade_flu_h5n1, ""])
-    String? nextclade_qc_flu_h5n1 = select_first([flu_track_pe.nextclade_qc_flu_h5n1, flu_track_fasta.nextclade_qc_flu_h5n1, ""])
+    String? nextclade_json_flu_h5n1 = flu_track.nextclade_json_flu_h5n1
+    String? auspice_json_flu_h5n1 = flu_track.auspice_json_flu_h5n1
+    String? nextclade_tsv_flu_h5n1 = flu_track.nextclade_tsv_flu_h5n1
+    String? nextclade_aa_subs_flu_h5n1 = flu_track.nextclade_aa_subs_flu_h5n1
+    String? nextclade_aa_dels_flu_h5n1 = flu_track.nextclade_aa_dels_flu_h5n1
+    String? nextclade_clade_flu_h5n1 = flu_track.nextclade_clade_flu_h5n1
+    String? nextclade_qc_flu_h5n1 = flu_track.nextclade_qc_flu_h5n1
     # Nextclade outputs for flu HA
-    String? nextclade_json_flu_ha = select_first([flu_track_pe.nextclade_json_flu_ha, flu_track_fasta.nextclade_json_flu_ha, ""])
-    String? auspice_json_flu_ha = select_first([flu_track_pe.auspice_json_flu_ha, flu_track_fasta.auspice_json_flu_ha, ""])
-    String? nextclade_tsv_flu_ha = select_first([flu_track_pe.nextclade_tsv_flu_ha, flu_track_fasta.nextclade_tsv_flu_ha, ""])
-    String? nextclade_ds_tag_flu_ha = select_first([flu_track_pe.nextclade_ds_tag_flu_ha, flu_track_fasta.nextclade_ds_tag_flu_ha, ""])
-    String? nextclade_aa_subs_flu_ha = select_first([flu_track_pe.nextclade_aa_subs_flu_ha, flu_track_fasta.nextclade_aa_subs_flu_ha, ""])
-    String? nextclade_aa_dels_flu_ha = select_first([flu_track_pe.nextclade_aa_dels_flu_ha, flu_track_fasta.nextclade_aa_dels_flu_ha, ""])
-    String? nextclade_clade_flu_ha = select_first([flu_track_pe.nextclade_clade_flu_ha, flu_track_fasta.nextclade_clade_flu_ha, ""])
-    String? nextclade_qc_flu_ha = select_first([flu_track_pe.nextclade_qc_flu_ha, flu_track_fasta.nextclade_qc_flu_ha, ""])
+    String? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
+    String? auspice_json_flu_ha = flu_track.auspice_json_flu_ha
+    String? nextclade_tsv_flu_ha = flu_track.nextclade_tsv_flu_ha
+    String? nextclade_ds_tag_flu_ha = flu_track.nextclade_ds_tag_flu_ha
+    String? nextclade_aa_subs_flu_ha = flu_track.nextclade_aa_subs_flu_ha
+    String? nextclade_aa_dels_flu_ha = flu_track.nextclade_aa_dels_flu_ha
+    String? nextclade_clade_flu_ha = flu_track.nextclade_clade_flu_ha
+    String? nextclade_qc_flu_ha = flu_track.nextclade_qc_flu_ha
     # Nextclade outputs for flu NA
-    String? nextclade_json_flu_na = select_first([flu_track_pe.nextclade_json_flu_na, flu_track_fasta.nextclade_json_flu_na, ""])
-    String? auspice_json_flu_na = select_first([flu_track_pe.auspice_json_flu_na, flu_track_fasta.auspice_json_flu_na, ""])
-    String? nextclade_tsv_flu_na = select_first([flu_track_pe.nextclade_tsv_flu_na, flu_track_fasta.nextclade_tsv_flu_na, ""])
-    String? nextclade_ds_tag_flu_na = select_first([flu_track_pe.nextclade_ds_tag_flu_na, flu_track_fasta.nextclade_ds_tag_flu_na, ""])
-    String? nextclade_aa_subs_flu_na = select_first([flu_track_pe.nextclade_aa_subs_flu_na, flu_track_fasta.nextclade_aa_subs_flu_na, ""])
-    String? nextclade_aa_dels_flu_na = select_first([flu_track_pe.nextclade_aa_dels_flu_na, flu_track_fasta.nextclade_aa_dels_flu_na, ""])
-    String? nextclade_clade_flu_na = select_first([flu_track_pe.nextclade_clade_flu_na, flu_track_fasta.nextclade_clade_flu_na, ""])
-    String? nextclade_qc_flu_na = select_first([flu_track_pe.nextclade_qc_flu_na, flu_track_fasta.nextclade_qc_flu_na, ""])
+    String? nextclade_json_flu_na = flu_track.nextclade_json_flu_na
+    String? auspice_json_flu_na = flu_track.auspice_json_flu_na
+    String? nextclade_tsv_flu_na = flu_track.nextclade_tsv_flu_na
+    String? nextclade_ds_tag_flu_na = flu_track.nextclade_ds_tag_flu_na
+    String? nextclade_aa_subs_flu_na = flu_track.nextclade_aa_subs_flu_na
+    String? nextclade_aa_dels_flu_na = flu_track.nextclade_aa_dels_flu_na
+    String? nextclade_clade_flu_na = flu_track.nextclade_clade_flu_na
+    String? nextclade_qc_flu_na = flu_track.nextclade_qc_flu_na
     # Flu IRMA Outputs
-    String? irma_version = select_first([flu_track_pe.irma_version, flu_track_fasta.irma_version, ""])
-    String? irma_docker = select_first([flu_track_pe.irma_docker, flu_track_fasta.irma_docker, ""])
-    String? irma_type = select_first([flu_track_pe.irma_type, flu_track_fasta.irma_type, ""])
-    String? irma_subtype = select_first([flu_track_pe.irma_subtype, flu_track_fasta.irma_subtype, ""])
-    String? irma_subtype_notes = select_first([flu_track_pe.irma_subtype_notes, flu_track_fasta.irma_subtype_notes, ""])
-    String? irma_assembly_fasta = select_first([flu_track_pe.irma_assembly_fasta, flu_track_fasta.irma_assembly_fasta, ""])
-    String? flu_assembly_fasta_concatenated = select_first([flu_track_pe.flu_assembly_fasta_concatenated, flu_track_fasta.flu_assembly_fasta_concatenated, ""])
-    String? irma_minimum_consensus_support = select_first([flu_track_pe.irma_minimum_consensus_support, flu_track_fasta.irma_minimum_consensus_support, ""])
-    String? ha_na_assembly_coverage = select_first([flu_track_pe.ha_na_assembly_coverage, flu_track_fasta.ha_na_assembly_coverage, ""])
-    String? flu_ha_segment_fasta = select_first([flu_track_pe.flu_ha_segment_fasta, flu_track_fasta.flu_ha_segment_fasta, ""])
-    String? flu_na_segment_fasta = select_first([flu_track_pe.flu_na_segment_fasta, flu_track_fasta.flu_na_segment_fasta, ""])
-    String? flu_pa_segment_fasta = select_first([flu_track_pe.flu_pa_segment_fasta, flu_track_fasta.flu_pa_segment_fasta, ""])
-    String? flu_pb1_segment_fasta = select_first([flu_track_pe.flu_pb1_segment_fasta, flu_track_fasta.flu_pb1_segment_fasta, ""])
-    String? flu_pb2_segment_fasta = select_first([flu_track_pe.flu_pb2_segment_fasta, flu_track_fasta.flu_pb2_segment_fasta, ""])
-    String? flu_mp_segment_fasta = select_first([flu_track_pe.flu_mp_segment_fasta, flu_track_fasta.flu_mp_segment_fasta, ""])
-    String? flu_np_segment_fasta = select_first([flu_track_pe.flu_np_segment_fasta, flu_track_fasta.flu_np_segment_fasta, ""])
-    String? flu_ns_segment_fasta = select_first([flu_track_pe.flu_ns_segment_fasta, flu_track_fasta.flu_ns_segment_fasta, ""])
+    String? irma_version = flu_track.irma_version
+    String? irma_docker = flu_track.irma_docker
+    String? irma_type = flu_track.irma_type
+    String? irma_subtype = flu_track.irma_subtype
+    String? irma_subtype_notes = flu_track.irma_subtype_notes
+    String? irma_assembly_fasta = flu_track.irma_assembly_fasta
+    String? flu_assembly_fasta_concatenated = flu_track.flu_assembly_fasta_concatenated
+    String? irma_minimum_consensus_support = flu_track.irma_minimum_consensus_support
+    String? ha_na_assembly_coverage = flu_track.ha_na_assembly_coverage
+    String? flu_ha_segment_fasta = flu_track.flu_ha_segment_fasta
+    String? flu_na_segment_fasta = flu_track.flu_na_segment_fasta
+    String? flu_pa_segment_fasta = flu_track.flu_pa_segment_fasta
+    String? flu_pb1_segment_fasta = flu_track.flu_pb1_segment_fasta
+    String? flu_pb2_segment_fasta = flu_track.flu_pb2_segment_fasta
+    String? flu_mp_segment_fasta = flu_track.flu_mp_segment_fasta
+    String? flu_np_segment_fasta = flu_track.flu_np_segment_fasta
+    String? flu_ns_segment_fasta = flu_track.flu_ns_segment_fasta
     # Flu GenoFLU Outputs
-    String? genoflu_version = select_first([flu_track_pe.genoflu_version, flu_track_fasta.genoflu_version, ""])
-    String? genoflu_genotype = select_first([flu_track_pe.genoflu_genotype, flu_track_fasta.genoflu_genotype, ""])
-    String? genoflu_all_segments = select_first([flu_track_pe.genoflu_all_segments, flu_track_fasta.genoflu_all_segments, ""])
-    String? genoflu_output_tsv = select_first([flu_track_pe.genoflu_output_tsv, flu_track_fasta.genoflu_output_tsv, ""])
+    String? genoflu_version = flu_track.genoflu_version
+    String? genoflu_genotype = flu_track.genoflu_genotype
+    String? genoflu_all_segments = flu_track.genoflu_all_segments
+    String? genoflu_output_tsv = flu_track.genoflu_output_tsv
     # Flu Abricate Outputs
-    String? abricate_flu_type = select_first([flu_track_pe.abricate_flu_type, flu_track_fasta.abricate_flu_type, ""])
-    String? abricate_flu_subtype =  select_first([flu_track_pe.abricate_flu_subtype, flu_track_fasta.abricate_flu_subtype, ""])
-    String? abricate_flu_results = select_first([flu_track_pe.abricate_flu_results, flu_track_fasta.abricate_flu_results, ""])
-    String? abricate_flu_database =  select_first([flu_track_pe.abricate_flu_database, flu_track_fasta.abricate_flu_database, ""])
-    String? abricate_flu_version = select_first([flu_track_pe.abricate_flu_version, flu_track_fasta.abricate_flu_version, ""])
+    String? abricate_flu_type = flu_track.abricate_flu_type
+    String? abricate_flu_subtype = flu_track.abricate_flu_subtype
+    String? abricate_flu_results = flu_track.abricate_flu_results
+    String? abricate_flu_database = flu_track.abricate_flu_database
+    String? abricate_flu_version = flu_track.abricate_flu_version
     # Flu Antiviral Substitution Outputs
-    String? flu_A_315675_resistance = select_first([flu_track_pe.flu_A_315675_resistance, flu_track_fasta.flu_A_315675_resistance, ""])
-    String? flu_amantadine_resistance = select_first([flu_track_pe.flu_amantadine_resistance, flu_track_fasta.flu_amantadine_resistance, ""])
-    String? flu_compound_367_resistance = select_first([flu_track_pe.flu_compound_367_resistance, flu_track_fasta.flu_compound_367_resistance, ""])
-    String? flu_favipiravir_resistance = select_first([flu_track_pe.flu_favipiravir_resistance, flu_track_fasta.flu_favipiravir_resistance, ""])
-    String? flu_fludase_resistance = select_first([flu_track_pe.flu_fludase_resistance, flu_track_fasta.flu_fludase_resistance, ""])
-    String? flu_L_742_001_resistance = select_first([flu_track_pe.flu_L_742_001_resistance, flu_track_fasta.flu_L_742_001_resistance, ""])
-    String? flu_laninamivir_resistance = select_first([flu_track_pe.flu_laninamivir_resistance, flu_track_fasta.flu_laninamivir_resistance, ""])
-    String? flu_peramivir_resistance = select_first([flu_track_pe.flu_peramivir_resistance, flu_track_fasta.flu_peramivir_resistance, ""])
-    String? flu_pimodivir_resistance = select_first([flu_track_pe.flu_pimodivir_resistance, flu_track_fasta.flu_pimodivir_resistance, ""])
-    String? flu_rimantadine_resistance = select_first([flu_track_pe.flu_rimantadine_resistance, flu_track_fasta.flu_rimantadine_resistance, ""])
-    String? flu_oseltamivir_resistance = select_first([flu_track_pe.flu_oseltamivir_resistance, flu_track_fasta.flu_oseltamivir_resistance, ""])
-    String? flu_xofluza_resistance = select_first([flu_track_pe.flu_xofluza_resistance, flu_track_fasta.flu_xofluza_resistance, ""])
-    String? flu_zanamivir_resistance = select_first([flu_track_pe.flu_zanamivir_resistance, flu_track_fasta.flu_zanamivir_resistance, ""])
+    String? flu_A_315675_resistance = flu_track.flu_A_315675_resistance
+    String? flu_amantadine_resistance = flu_track.flu_amantadine_resistance
+    String? flu_compound_367_resistance = flu_track.flu_compound_367_resistance
+    String? flu_favipiravir_resistance = flu_track.flu_favipiravir_resistance
+    String? flu_fludase_resistance = flu_track.flu_fludase_resistance
+    String? flu_L_742_001_resistance = flu_track.flu_L_742_001_resistance
+    String? flu_laninamivir_resistance = flu_track.flu_laninamivir_resistance
+    String? flu_peramivir_resistance = flu_track.flu_peramivir_resistance
+    String? flu_pimodivir_resistance = flu_track.flu_pimodivir_resistance
+    String? flu_rimantadine_resistance = flu_track.flu_rimantadine_resistance
+    String? flu_oseltamivir_resistance = flu_track.flu_oseltamivir_resistance
+    String? flu_xofluza_resistance = flu_track.flu_xofluza_resistance
+    String? flu_zanamivir_resistance = flu_track.flu_zanamivir_resistance
     # HIV Quasitools Outputs
     String? quasitools_version = quasitools.quasitools_version
     String? quasitools_date = quasitools.quasitools_date
@@ -356,6 +325,6 @@ workflow morgana_magic {
     Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
     File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
     # Flu Track Percentage Mapped Reads
-    String? percentage_mapped_reads = select_first([flu_track_pe.percentage_mapped_reads, flu_track_fasta.percentage_mapped_reads, ""])
+    String? percentage_mapped_reads = flu_track.percentage_mapped_reads
   }
 }
