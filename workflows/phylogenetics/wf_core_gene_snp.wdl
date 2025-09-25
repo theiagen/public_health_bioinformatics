@@ -39,7 +39,7 @@ workflow core_gene_snp_workflow {
   }
   if (align) {
     if (core_tree) {
-      call snp_sites.snp_sites as core_snp_sites {
+      call snp_sites.snp_sites {
         input:
           msa_fasta = select_first([pirate.pirate_core_alignment_fasta]),
           output_name = cluster_name_updated + "_core",
