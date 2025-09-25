@@ -16,7 +16,7 @@ workflow morgana_magic {
     String seq_method
     File read1
     File? read2
-    Int? number_ATCG # needed for vadr
+    Int? number_ATCG # needed for vadr 
     # assembly metrics 
     Int? assembly_metrics_cpu
     Int? assembly_metrics_disk_size
@@ -96,7 +96,7 @@ workflow morgana_magic {
         samplename = samplename,
         assembly_fasta = assembly_fasta,
         seq_method = seq_method,
-        standardized_organism = organism_parameters.standardized_organism,
+        standardized_organism = select_first([organism_parameters.standardized_organism]),
         assembly_metrics_cpu = assembly_metrics_cpu,
         assembly_metrics_disk_size = assembly_metrics_disk_size,
         assembly_metrics_docker = assembly_metrics_docker,
