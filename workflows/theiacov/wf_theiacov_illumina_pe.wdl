@@ -180,7 +180,7 @@ workflow theiacov_illumina_pe {
           vadr_options = select_first([organism_parameters.vadr_opts, vadr_options]),
           vadr_model_file = select_first([organism_parameters.vadr_model_file, vadr_model_file]),
           vadr_memory = select_first([organism_parameters.vadr_memory, vadr_memory]),
-          reference_gene_locations_bed = select_first([organism_parameters.gene_locations_bed, reference_gene_locations_bed]),
+          reference_gene_locations_bed = select_first([reference_gene_locations_bed, organism_parameters.gene_locations_bed]),
           gene_coverage_bam = select_first([ivar_consensus.aligned_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam]),
           nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
           nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
