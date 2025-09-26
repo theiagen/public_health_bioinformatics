@@ -13,6 +13,7 @@ import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2
 import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
+import "../utilities/wf_morgana_magic.wdl" as morgana_magic
 
 workflow theiacov_clearlabs {
   meta {
@@ -104,7 +105,7 @@ workflow theiacov_clearlabs {
         assembly_fasta = consensus.consensus_seq,
         taxon_name = organism_parameters.standardized_organism,
         seq_method = seq_method,
-        read1 = read_QC_trim.read1_clean,
+        read1 = read1,
         number_ATCG = consensus_qc.number_ATCG,
         vadr_max_length = organism_parameters.vadr_maxlength,
         vadr_skip_length = organism_parameters.vadr_skiplength,
