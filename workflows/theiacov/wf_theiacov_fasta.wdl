@@ -60,53 +60,6 @@ workflow theiacov_fasta {
       reference_genome = organism_parameters.reference,
       genome_length = organism_parameters.genome_length
   }
-  # vadr task
-  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
-    call vadr_task.vadr {
-      input:
-        genome_fasta = assembly_fasta,
-        assembly_length_unambiguous = consensus_qc.number_ATCG,
-        max_length = organism_parameters.vadr_maxlength,
-        vadr_opts = organism_parameters.vadr_opts,
-        vadr_model_file = organism_parameters.vadr_model_file,
-        skip_length = organism_parameters.vadr_skiplength,
-        memory = organism_parameters.vadr_memory
-    }
-  }
-  if (organism == "flu") {
-    call run_flu_track.flu_track {
-      input:
-        assembly_fasta = assembly_fasta,
-        samplename = samplename,
-        standardized_organism = organism,
-        seq_method = seq_method,
-        flu_subtype = flu_subtype,
-        vadr_outputs_tgz = vadr.outputs_tgz,
-    }
-  }
-  if (organism_parameters.standardized_organism == "sars-cov-2") {
-    call pangolin.pangolin4 {
-      input:
-        samplename = samplename,
-        fasta = assembly_fasta,
-        docker = organism_parameters.pangolin_docker
-    }
-  }
-  if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "measles") {
-    if (organism_parameters.nextclade_dataset_tag != "NA") {
-      call nextclade_task.nextclade_v3 {
-        input:
-          genome_fasta = assembly_fasta,
-          dataset_name = organism_parameters.nextclade_dataset_name,
-          dataset_tag = organism_parameters.nextclade_dataset_tag
-      }
-      call nextclade_task.nextclade_output_parser {
-        input:
-          nextclade_tsv = nextclade_v3.nextclade_tsv,
-          organism = organism_parameters.standardized_organism
-      }
-    }
-  }
   call morgana_magic.morgana_magic {
     input:
       samplename = samplename,
@@ -121,6 +74,17 @@ workflow theiacov_fasta {
       vadr_memory = select_first([organism_parameters.vadr_memory, vadr_memory]),
       workflow_type = "theiacov_fasta"
   }
+  if (organism == "flu") {
+    call run_flu_track.flu_track {
+      input:
+        assembly_fasta = assembly_fasta,
+        samplename = samplename,
+        standardized_organism = organism,
+        seq_method = seq_method,
+        flu_subtype = flu_subtype,
+        vadr_outputs_tgz = morgana_magic.vadr_all_outputs_tar_gz,
+    }
+  }
   # QC check task
   if (defined(qc_check_table)) {
     call qc_check_phb_task.qc_check_phb as qc_check_task {
@@ -131,7 +95,7 @@ workflow theiacov_fasta {
         assembly_length_unambiguous = consensus_qc.number_ATCG,
         number_Degenerate = consensus_qc.number_Degenerate,
         percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-        vadr_num_alerts = vadr.num_alerts
+        vadr_num_alerts = morgana_magic.vadr_num_alerts
     }
   }
   call versioning.version_capture {
@@ -151,35 +115,35 @@ workflow theiacov_fasta {
     Int number_Total = consensus_qc.number_Total
     Float percent_reference_coverage = consensus_qc.percent_reference_coverage
     # Pangolin outputs
-    String? pango_lineage = pangolin4.pangolin_lineage
-    String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded
-    String? pangolin_conflicts = pangolin4.pangolin_conflicts
-    String? pangolin_notes = pangolin4.pangolin_notes
-    String? pangolin_assignment_version = pangolin4.pangolin_assignment_version
-    File? pango_lineage_report = pangolin4.pango_lineage_report
-    String? pangolin_docker = pangolin4.pangolin_docker
-    String? pangolin_versions = pangolin4.pangolin_versions
+    String? pango_lineage = morgana_magic.pango_lineage
+    String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded
+    String? pangolin_conflicts = morgana_magic.pangolin_conflicts
+    String? pangolin_notes = morgana_magic.pangolin_notes
+    String? pangolin_assignment_version = morgana_magic.pangolin_assignment_version
+    File? pango_lineage_report = morgana_magic.pango_lineage_report
+    String? pangolin_docker = morgana_magic.pangolin_docker
+    String? pangolin_versions = morgana_magic.pangolin_versions
     # Nextclade outputs
-    File? nextclade_json = nextclade_v3.nextclade_json
-    File? auspice_json = nextclade_v3.auspice_json
-    File? nextclade_tsv = nextclade_v3.nextclade_tsv
-    String? nextclade_version = nextclade_v3.nextclade_version
-    String? nextclade_docker = nextclade_v3.nextclade_docker
+    File? nextclade_json = morgana_magic.nextclade_json
+    File? auspice_json = morgana_magic.auspice_json
+    File? nextclade_tsv = morgana_magic.nextclade_tsv
+    String? nextclade_version = morgana_magic.nextclade_version
+    String? nextclade_docker = morgana_magic.nextclade_docker
     String nextclade_ds_tag =  organism_parameters.nextclade_dataset_tag
-    String? nextclade_clade = nextclade_output_parser.nextclade_clade
-    String? nextclade_aa_subs = nextclade_output_parser.nextclade_aa_subs
-    String? nextclade_aa_dels = nextclade_output_parser.nextclade_aa_dels
-    String? nextclade_lineage = nextclade_output_parser.nextclade_lineage
-    String? nextclade_qc = nextclade_output_parser.nextclade_qc
+    String? nextclade_clade = morgana_magic.nextclade_clade
+    String? nextclade_aa_subs = morgana_magic.nextclade_aa_subs
+    String? nextclade_aa_dels = morgana_magic.nextclade_aa_dels
+    String? nextclade_lineage = morgana_magic.nextclade_lineage
+    String? nextclade_qc = morgana_magic.nextclade_qc
     # VADR Annotation QC
-    File? vadr_alerts_list = vadr.alerts_list
-    File? vadr_feature_tbl_pass = vadr.feature_tbl_pass
-    File? vadr_feature_tbl_fail = vadr.feature_tbl_fail
-    File? vadr_classification_summary_file = vadr.classification_summary_file
-    File? vadr_all_outputs_tar_gz = vadr.outputs_tgz
-    String? vadr_docker = vadr.vadr_docker
-    File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
-    String? vadr_num_alerts = vadr.num_alerts
+    File? vadr_alerts_list = morgana_magic.vadr_alerts_list
+    File? vadr_feature_tbl_pass = morgana_magic.vadr_feature_tbl_pass
+    File? vadr_feature_tbl_fail = morgana_magic.vadr_feature_tbl_fail
+    File? vadr_classification_summary_file = morgana_magic.vadr_classification_summary_file
+    File? vadr_all_outputs_tar_gz = morgana_magic.vadr_all_outputs_tar_gz
+    String? vadr_docker = morgana_magic.vadr_docker
+    File? vadr_fastas_zip_archive = morgana_magic.vadr_fastas_zip_archive
+    String? vadr_num_alerts = morgana_magic.vadr_num_alerts
     # VADR Annotation QC for flu
     File? vadr_flu_segment_concatenated_fasta = flu_track.flu_assembly_fasta_concatenated
     File? vadr_flu_ha_segment_fasta = flu_track.flu_ha_segment_fasta
