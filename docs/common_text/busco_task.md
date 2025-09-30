@@ -15,7 +15,13 @@
     - Number of genes examined (n) - the number of genes examined.
     
     A high equity assembly will use the appropriate database for the taxa, have high complete (C) and single-copy (S) percentages, and low duplicated (D), fragmented (F) and missing (M) percentages. 
-  
+
+<!-- if: theiaeuk -->
+    !!! warning
+
+        Due to limitations and characterization issues in newly curated BUSCO databases, logic has been implemented to pin eukaryotic functionality to BUSCO database `eukaryota_odb10`.
+<!-- endif -->
+
     !!! techdetails "BUSCO Technical Details"
         
         |  | Links |
