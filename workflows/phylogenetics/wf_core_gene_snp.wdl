@@ -52,12 +52,12 @@ workflow core_gene_snp_workflow {
       }
       call iqtree.iqtree as core_iqtree {
         input:
-          alignment = select_first([snp_sites.snp_sites_multifasta, pirate.pirate_core_alignment_fasta]),
+          alignment = select_first([snp_sites.snp_sites_multifasta]),
           cluster_name = cluster_name_updated
       }
       call snp_dists.snp_dists as core_snp_dists {
         input:
-          alignment = select_first([snp_sites.snp_sites_multifasta, pirate.pirate_core_alignment_fasta]),
+          alignment = select_first([snp_sites.snp_sites_multifasta]),
           cluster_name = cluster_name_updated
       }
       call reorder_matrix.reorder_matrix as core_reorder_matrix {
