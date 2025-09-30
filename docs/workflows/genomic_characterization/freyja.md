@@ -99,21 +99,21 @@ This workflow runs on the sample level.
 === "Illumina paired-end input data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ"]}, exclude_filters={"Workflow": ["Freyja_FASTQ"], "Terra Task Name": ["read_QC_trim_se","read_QC_trim_ont"]}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ"]}, exclude_filters={"Terra Task Name": ["read_QC_trim_se", "read_QC_trim_ont"]}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
 
     ///
 
 === "Illumina single-end input data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ"]}, exclude_filters={"Workflow": ["Freyja_FASTQ"], "Terra Task Name": ["read_QC_trim_pe","read_QC_trim_ont"]}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ"]}, exclude_filters={"Terra Task Name": ["read_QC_trim_pe", "read_QC_trim_ont"]}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
 
     ///
 
 === "ONT input data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ"]}, exclude_filters={"Workflow": ["Freyja_FASTQ"], "Terra Task Name": ["primer_trim","read_QC_trim_pe", "read_QC_trim_se"]}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ"]}, exclude_filters={"Terra Task Name": ["primer_trim", "read_QC_trim_pe", "read_QC_trim_se"]}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
 
     ///
 
