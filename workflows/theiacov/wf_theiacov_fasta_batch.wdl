@@ -60,7 +60,7 @@ workflow theiacov_fasta_batch {
   }
   call morgana_magic.morgana_magic {
     input:
-      samplename = samplename,
+      samplename = samplenames,
       assembly_fasta = cat_files_fasta.concatenated_files,
       taxon_name = organism_parameters.standardized_organism,
       nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
