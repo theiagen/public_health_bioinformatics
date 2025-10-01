@@ -35,6 +35,8 @@
 
     Segmented viruses are accounted for in TheiaViral. The reference genome database excludes segmented viral nucleotide accessions, while including RefSeq assembly accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.
 
+**TheiaViral_Panel** workflow uses the assembly capabilities of **TheiaViral_Illumina_PE** to analyze samples sequenced using Illumina's Viral Surveillance Panel (VSP). Given a list of NCBI Taxonomy codes samples will have any matching reads extracted, assembled, and characterized for each code given as input. This is achieved by performing read QC on panel samples and scattering cleaned reads over the given list of taxonomy codes. Reads aligning with input taxon codes are extracted and if their count is over the binning threshold (default of 1000) the extracted reads will be passed onto **TheiaViral_Illumina_PE** to perform assembly and characterization. For each sample there may be multiple resultant assemblies. These assemblies and their subsequent characterization results are uploaded to taxon specific Terra tables. Overall sample QC and extraction information will be present in the input table. 
+
 ### Workflow Diagram
 
 === "TheiaViral_Illumina_PE"
@@ -49,59 +51,102 @@
 
         ![TheiaViral_ONT Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
 
-## TheiaViral Workflows for Different Input Types
+=== "TheiaViral_Panel"
+    !!! caption "TheiaViral_Panel Workflow Diagram"
 
-<div class="grid cards " markdown>
+        ![TheiaViral_Panel Workflow Diagram](../../assets/figures/TheiaViral_Panel_PHB.png)
 
--   <center> **TheiaViral_Illumina_PE** </center>
+### Inputs
 
-    ---
-
-    !!! dna "Illumina_PE Input Read Data"
+!!! dna "Input Data"
+    === "TheiaViral_Illumina_PE"
 
         The TheiaViral_Illumina_PE workflow inputs Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time and storage costs.
 
         Modifications to the optional parameter for `trim_minlen` may be required to appropriately trim reads shorter than 2 x 150 bp (i.e. generated using a 300-cycle sequencing kit), such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
--   <center> **TheiaViral_ONT** </center>
+        ???+ dna_blue "`taxon` _required_ input parameter"
+            `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) and do not have to be species-level (see `read_extraction_rank` below).
 
-    ---
+        /// html | div[style='float: left; width: 50%; padding-right: 10px;']
 
-    !!! dna_blue "ONT Input Read Data"
+        ??? dna "`host` optional input parameter"
+            The `host` input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task `is_accession` (ONT) or Read QC Trim PE `host_is_accession` (Illumina) boolean populated as "true".
+
+        ??? dna "`extract_unclassified` optional input parameter"
+            By default, the `extract_unclassified` parameter is set to "true", which indicates that reads that are not classified by Kraken2 (Illumina) or Metabuli (ONT) will be included with reads classified as the input `taxon`. These classification software most often do not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. Host decontamination occurs in TheiaViral using NCBI `sra-human-scrubber`, read classification to the human genome, and/or via mapping reads to the inputted `host`. Contaminant viral reads are mostly excluded because they will be often be classified against the default RefSeq classification databases. Consider setting `extract_unclassified` to false if *de novo* assembly or Skani reference selection is failing.
+        ///
+
+        /// html | div[style='float: right; width: 50%; padding-left: 10px;']
+
+        ??? dna "`min_allele_freq`, `min_depth`, and `min_map_quality` optional input parameters"
+            These parameters have a direct effect on the variants that will ultimately be reported in the consensus assembly. `min_allele_freq` determines the minimum proportion of an allelic variant to be reported in the consensus assembly. `min_depth` and `min_map_quality` affect how "N" is reported in the consensus, i.e. depth below `min_depth` is reported as "N" and reads with mapping quality below `min_map_quality` are not included in depth calculations.
+
+        ??? dna "`read_extraction_rank` optional input parameter"
+            By default, the `read_extraction_rank` parameter is set to "family", which indicates that reads will be extracted if they are classified as the taxonomic family of the input `taxon`, including all descendant taxa of the family. Read classification may not resolve to the rank of the input `taxon`, so these reads may be classified at higher ranks. For example, some *Lyssavirus rabies* (species) reads may only be resolved to *Lyssavirus* (genus), so they would not be extracted if the `read_extraction_rank` is set to "species". Setting the `read_extraction_rank` above the inputted `taxon`'s rank can therefore dramatically increase the number of reads recovered, at the potential cost of including other viruses. This likely is not a problem for scarcely represented lineages, e.g. a sample that is expected to include *Lyssavirus rabies* is unlikely to contain other viruses of the corresponding family, Rhabdoviridae, within the same sample. However, setting a `read_extraction_rank` far beyond the input `taxon` rank can be problematic when multiple representatives of the same viral family are included in similar abundance within the same sample. To further refine the desired `read_extraction_rank`, please review the corresponding classification reports of the respective classification software (kraken2 for Illumina and Metabuli for ONT)
+        ///
+
+        /// html | div[style='clear: both;']
+        ///
+
+    === "TheiaViral_ONT"
 
         The TheiaViral_ONT workflow inputs base-called Oxford Nanopore Technology (ONT) read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time and storage costs.
 
         It is recommended to trim adapter sequencings via `dorado` basecalling prior to running TheiaViral_ONT, though `porechop` can optionally be called to trim adapters within the workflow.
 
         **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaViral_ONT workflow must be quality assessed before reporting results. We recommend using the [Dorado_Basecalling_PHB](../standalone/dorado_basecalling.md) workflow if applicable.**
+        
+        ???+ dna_blue "`taxon` _required_ input parameter"
+            `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) and do not have to be species-level (see `read_extraction_rank` below).
 
-</div>
+        /// html | div[style='float: left; width: 50%; padding-right: 10px;']
 
-### Inputs
+        ??? dna "`host` optional input parameter"
+            The `host` input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task `is_accession` (ONT) or Read QC Trim PE `host_is_accession` (Illumina) boolean populated as "true".
 
-???+ dna_blue "`taxon` _required_ input parameter"
-    `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) and do not have to be species-level (see `read_extraction_rank` below).
+        ??? dna "`extract_unclassified` optional input parameter"
+            By default, the `extract_unclassified` parameter is set to "true", which indicates that reads that are not classified by Kraken2 (Illumina) or Metabuli (ONT) will be included with reads classified as the input `taxon`. These classification software most often do not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. Host decontamination occurs in TheiaViral using NCBI `sra-human-scrubber`, read classification to the human genome, and/or via mapping reads to the inputted `host`. Contaminant viral reads are mostly excluded because they will be often be classified against the default RefSeq classification databases. Consider setting `extract_unclassified` to false if *de novo* assembly or Skani reference selection is failing.
+        ///
 
-/// html | div[style='float: left; width: 50%; padding-right: 10px;']
+        /// html | div[style='float: right; width: 50%; padding-left: 10px;']
 
-??? dna "`host` optional input parameter"
-    The `host` input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task `is_accession` (ONT) or Read QC Trim PE `host_is_accession` (Illumina) boolean populated as "true".
+        ??? dna "`min_allele_freq`, `min_depth`, and `min_map_quality` optional input parameters"
+            These parameters have a direct effect on the variants that will ultimately be reported in the consensus assembly. `min_allele_freq` determines the minimum proportion of an allelic variant to be reported in the consensus assembly. `min_depth` and `min_map_quality` affect how "N" is reported in the consensus, i.e. depth below `min_depth` is reported as "N" and reads with mapping quality below `min_map_quality` are not included in depth calculations.
 
-??? dna "`extract_unclassified` optional input parameter"
-    By default, the `extract_unclassified` parameter is set to "true", which indicates that reads that are not classified by Kraken2 (Illumina) or Metabuli (ONT) will be included with reads classified as the input `taxon`. These classification software most often do not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. Host decontamination occurs in TheiaViral using NCBI `sra-human-scrubber`, read classification to the human genome, and/or via mapping reads to the inputted `host`. Contaminant viral reads are mostly excluded because they will be often be classified against the default RefSeq classification databases. Consider setting `extract_unclassified` to false if *de novo* assembly or Skani reference selection is failing.
-///
+        ??? dna "`read_extraction_rank` optional input parameter"
+            By default, the `read_extraction_rank` parameter is set to "family", which indicates that reads will be extracted if they are classified as the taxonomic family of the input `taxon`, including all descendant taxa of the family. Read classification may not resolve to the rank of the input `taxon`, so these reads may be classified at higher ranks. For example, some *Lyssavirus rabies* (species) reads may only be resolved to *Lyssavirus* (genus), so they would not be extracted if the `read_extraction_rank` is set to "species". Setting the `read_extraction_rank` above the inputted `taxon`'s rank can therefore dramatically increase the number of reads recovered, at the potential cost of including other viruses. This likely is not a problem for scarcely represented lineages, e.g. a sample that is expected to include *Lyssavirus rabies* is unlikely to contain other viruses of the corresponding family, Rhabdoviridae, within the same sample. However, setting a `read_extraction_rank` far beyond the input `taxon` rank can be problematic when multiple representatives of the same viral family are included in similar abundance within the same sample. To further refine the desired `read_extraction_rank`, please review the corresponding classification reports of the respective classification software (kraken2 for Illumina and Metabuli for ONT)
+        ///
 
-/// html | div[style='float: right; width: 50%; padding-left: 10px;']
+        /// html | div[style='clear: both;']
+        ///
 
-??? dna "`min_allele_freq`, `min_depth`, and `min_map_quality` optional input parameters"
-    These parameters have a direct effect on the variants that will ultimately be reported in the consensus assembly. `min_allele_freq` determines the minimum proportion of an allelic variant to be reported in the consensus assembly. `min_depth` and `min_map_quality` affect how "N" is reported in the consensus, i.e. depth below `min_depth` is reported as "N" and reads with mapping quality below `min_map_quality` are not included in depth calculations.
+    === "TheiaViral_Panel"
 
-??? dna "`read_extraction_rank` optional input parameter"
-    By default, the `read_extraction_rank` parameter is set to "family", which indicates that reads will be extracted if they are classified as the taxonomic family of the input `taxon`, including all descendant taxa of the family. Read classification may not resolve to the rank of the input `taxon`, so these reads may be classified at higher ranks. For example, some *Lyssavirus rabies* (species) reads may only be resolved to *Lyssavirus* (genus), so they would not be extracted if the `read_extraction_rank` is set to "species". Setting the `read_extraction_rank` above the inputted `taxon`'s rank can therefore dramatically increase the number of reads recovered, at the potential cost of including other viruses. This likely is not a problem for scarcely represented lineages, e.g. a sample that is expected to include *Lyssavirus rabies* is unlikely to contain other viruses of the corresponding family, Rhabdoviridae, within the same sample. However, setting a `read_extraction_rank` far beyond the input `taxon` rank can be problematic when multiple representatives of the same viral family are included in similar abundance within the same sample. To further refine the desired `read_extraction_rank`, please review the corresponding classification reports of the respective classification software (kraken2 for Illumina and Metabuli for ONT)
-///
+        The TheiaViral_Panel workflow accepts Illumina VSP paired-end reads as well as normal Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time and storage costs. 
 
-/// html | div[style='clear: both;']
-///
+        ??? dna "`taxon_ids` _required_ input parameter"
+            The `taxon_ids` parameter is a required input that regulates what taxon are available for read extraction. This parameter defaults to the list of organisms available in Illumina VSP2. Changing this parameter will change what organisms are extracted for assembly and characterization.
+
+        ??? dna "`output_taxon_table` _required_ input parameter"
+            The `output_taxon_table` parameter is a required input that specifies which taxon are output to what taxon table in Terra.The format of this table is shown below. 
+
+            **Example:**
+            ```
+            taxon	taxon_table	
+            influenza	influenza_panel_specimen	
+            coronavirus	coronavirus_panel_specimen
+            human_immunodeficiency_virus	hiv_panel_specimen
+            monkeypox_virus	monkeypox_panel_specimen
+            etc..
+            ```
+            Any taxonomy classification identified as "influenza" will be output to a Terra table named "influenza_panel_specimen". 
+
+        ??? dna "`concatenate_unclassified` optional parameter"
+            By default, `concatenate_unclassified` is set to false, which indicates that reads that are not classified by Kraken2 will be included with reads classified as the input `taxon`. The classification software most often does not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. If extracted data is lacking and assemblies are not generated setting this parameter to true will add to the read count making assemblies more probable, however, could introduce reads that are not aligned with the identified `taxon`.
+        
+        ??? dna "`min_read_count` _required_ parameter"
+            By default, `min_read_count` is set to 1000, being the number of reads needed to pass the binning threshold to proceed onto assembly and characterization via **TheiaViral_Illumina_PE**
 
 === "TheiaViral_Illumina_PE"
     /// html | div[class="searchable-table"]
@@ -117,6 +162,12 @@
 
     ///
 
+=== "TheiaViral_Panel"
+    /// html | div[class="searchable-table"]
+
+    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaViral_Panel"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
+
+    ///
 ### Workflow Tasks
 
 === "TheiaViral_Illumina_PE"
@@ -252,6 +303,34 @@
 
 {{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=8) }}
 
+=== "TheiaViral_Panel"
+
+    ??? toggle "Versioning"
+
+{{ include_md("common_text/versioning_task.md", condition="theiaviral", indent=8) }}
+
+    ??? toggle "Read Quality Control, Trimming, Filtering, Identification"
+
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiaviral_panel", indent=8) }}
+
+    ??? toggle "Read Extraction and Binning"
+
+{{ include_md("common_text/krakentools_task.md", condition="theiaviral_panel", indent=8)}}
+
+    ??? toggle "Taxonomic Identification"
+
+{{ include_md("common_text/ncbi_identify_task.md", indent=8) }}
+
+    ??? toggle "Assembly and Characterization"
+
+        TheiaViral_Panel utilizes the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single VSP sample to undergo the same viral assembly as other samples. 
+
+        See TheiaViral_Illumina_PE documentation above for more details.
+
+    ??? toggle "Data Population"
+
+        Export Taxon Tables is used to publish data per binned read set to user specified tables. 
+
 #### Taxa-Specific Tasks
 
 The TheiaViral workflows activate taxa-specific sub-workflows after the identification of relevant taxa. These characterization modules are activated by populating `taxon` with an *exact* match to a taxon listed in parentheses below (case-insensitive):
@@ -274,14 +353,21 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
 === "TheiaViral_Illumina_PE"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaViral_Illumina_PE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaViral_Illumina_PE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
 === "TheiaViral_ONT"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaViral_ONT"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaViral_ONT"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+
+    ///
+
+=== "TheiaViral_Panel"
+    /// html | div[class="searchable-table"]
+
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaViral_Panel"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
@@ -354,7 +440,7 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
     - `dehost_wf_download_status`: If this output is populated with something other than "PASS", it indicates a host genome could not be retrieved for decontamination. See the `host` input explanation for more information and review the `download_accession`/`download_taxonomy` task output logs for advanced error parsing.
 
 ??? warning "Known errors associated with read quality"
-    
+
     - ONT workflows may fail at Metabuli if no reads are classified as the `taxon`. Check the Metabuli `classification.tsv` or `krona` report for the read extraction taxon ID to determine if any reads were classified. This error will report `out of memory (OOM)`, but increasing memory will not resolve it.
     - Illumina workflows may fail at CheckV (*de novo*) with `Error: 80 hmmsearch tasks failed. Program should be rerun` if no viral contigs were identified in the *de novo* assembly.
 
