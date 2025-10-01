@@ -207,6 +207,7 @@ task example_task {
 ### The `runtime` block
 
 - The runtime block defines the compute resources and environment for the task.
+- Cromwell uses `disk` for [TES](https://cromwell.readthedocs.io/en/stable/backends/TES/) and `disks` for GCP backends; consider setting both
 - Always specify a Docker:
 
     ```bash
@@ -214,7 +215,8 @@ task example_task {
       docker: docker
       cpu: cpu
       memory: memory
-      disk: disk_size
+      disks: "local-disk " + disk_size + " SSD"
+      disk: disk_size + " GB"
     }
     ```
 
