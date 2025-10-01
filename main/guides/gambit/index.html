@@ -810,6 +810,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#gambit-gtdb-database-v210" class="md-nav__link">
+    <span class="md-ellipsis">
+      GAMBIT GTDB Database v2.1.0
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gambit-gtdb-database-v201" class="md-nav__link">
     <span class="md-ellipsis">
       GAMBIT GTDB Database v2.0.1
@@ -5864,6 +5873,15 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#gambit-gtdb-database-v210" class="md-nav__link">
+    <span class="md-ellipsis">
+      GAMBIT GTDB Database v2.1.0
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gambit-gtdb-database-v201" class="md-nav__link">
     <span class="md-ellipsis">
       GAMBIT GTDB Database v2.0.1
@@ -6121,7 +6139,7 @@
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg></span> <strong>Latest Database Version</strong></p>
 <hr>
-<p><a href="#gambit-gtdb-database-v201">GAMBIT Prokaryotic GTDB Database v2.0.1</a></p>
+<p><a href="#gambit-gtdb-database-v210">GAMBIT Prokaryotic GTDB Database v2.1.0</a></p>
 <p><a href="#gambit-fungal-database-v100">GAMBIT Fungal Database v1.0.0</a></p>
 </li>
 </ul>
@@ -6130,7 +6148,7 @@
 <p><a href="https://www.theiagen.com/">Theiagen</a>’s <a href="https://github.com/theiagen/public_health_bioinformatics">Public Health Bioinformatics (PHB)</a> is a suite of workflows for characterization, epidemiology and sharing of pathogen genomes. Workflows are available for viruses, bacteria, and fungi.</p>
 <h2 id="importing-and-using-gambit-via-the-phb-workflows">Importing and using GAMBIT via the PHB workflows<a class="headerlink" href="#importing-and-using-gambit-via-the-phb-workflows" title="Permanent link">¶</a></h2>
 <p>The <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Gambit_Query_PHB"><strong>GAMBIT_Query_PHB</strong></a> workflow performs taxon assignment of a genome assembly using the GAMBIT. It can be imported directly to <a href="https://terra.bio">Terra.bio</a> via <a href="https://dockstore.org">Dockstore</a>.</p>
-<p>Two inputs are required for the <strong>GAMBIT_Query_PHB</strong> workflow: a genome assembly and a sample name associated with the genome assembly. The default GAMBIT database used for taxonomic identification is the Prokaryotic <a href="#gambit-gtdb-database-v201">GAMBIT Database GTDB v2.0.1</a>, but alternate GAMBIT databases can be provided.</p>
+<p>Two inputs are required for the <strong>GAMBIT_Query_PHB</strong> workflow: a genome assembly and a sample name associated with the genome assembly. The default GAMBIT database used for taxonomic identification is the Prokaryotic <a href="#gambit-gtdb-database-v210">GAMBIT Database GTDB v2.1.0</a>, but alternate GAMBIT databases can be provided.</p>
 <div class="admonition dna">
 <p class="admonition-title">Gambit_Query_PHB</p>
 <p>More information on <strong>GAMBIT_Query_PHB</strong> is available <a href="../../workflows/standalone/gambit_query/"><strong>here</strong></a>.</p>
@@ -6154,7 +6172,7 @@
 </ul>
 </div>
 <p>Additionally, GAMBIT is also part of the <strong>TheiaProk</strong> and <strong>TheiaEuk</strong> collection of workflows, the first dedicated to the analysis of prokaryotic data, and the second data to mycotics. The TheiaProk or TheiaEuk most appropriate for your type of input data can be imported from the Dockstore links on the right.</p>
-<p>In both, GAMBIT is responsible for performing the taxonomic identification of the assembled sequences, which can trigger taxa-specific submodules for further genomic characterization. For TheiaProk, the default database is the Prokaryotic <a href="#gambit-gtdb-database-v201">GAMBIT Database GTDB v2.0.1</a> and for TheiaEuk, the default database is the <a href="#gambit-fungal-database-v100">Fungal GAMBIT Database v1.0.0</a>.</p>
+<p>In both, GAMBIT is responsible for performing the taxonomic identification of the assembled sequences, which can trigger taxa-specific submodules for further genomic characterization. For TheiaProk, the default database is the Prokaryotic <a href="#gambit-gtdb-database-v210">GAMBIT Database GTDB v2.1.0</a> and for TheiaEuk, the default database is the <a href="#gambit-fungal-database-v100">Fungal GAMBIT Database v1.0.0</a>.</p>
 <div class="admonition dna">
 <p class="admonition-title">TheiaProk and TheiaEuk</p>
 <p>More information on TheiaProk and TheiaEuk is available on the following pages:</p>
@@ -6227,7 +6245,48 @@
 </span></code></pre></div>
 <hr>
 <h2 id="gambit-databases">GAMBIT Databases<a class="headerlink" href="#gambit-databases" title="Permanent link">¶</a></h2>
+<div class="admonition tip">
+<p class="admonition-title">Database Access</p>
+<p>Please note that all GAMBIT databases are located in a <a href="https://cloud.google.com/storage/docs/requester-pays">"Requester Pays" GCP bucket</a>.</p>
+<p>A billing project <strong>must</strong> be provided in the request to download; otherwise, the following links and GS URIs will not work.</p>
+</div>
 <h3 id="gambit-prokaryotic-databases">GAMBIT Prokaryotic Databases<a class="headerlink" href="#gambit-prokaryotic-databases" title="Permanent link">¶</a></h3>
+<h4 id="gambit-gtdb-database-v210">GAMBIT GTDB Database v2.1.0<a class="headerlink" href="#gambit-gtdb-database-v210" title="Permanent link">¶</a></h4>
+<details class="toggle">
+<summary>Database Details</summary>
+<p>This database is a <strong>minor update</strong> to the v2.0.1 database. This database is identical to the v2.0.1 database, <strong>except for the following modifications</strong>.</p>
+<ol>
+<li>Genomes representing <em>Salmonella enterica</em> subspecies houtenae and diarizonae were added to the database.
+    a. Rationale: In the v2.0.0 and v2.0.1 databases, no genomes representing these subspecies are present, therefore query genomes representing these subspecies were not reliably classifed as <em>Salmonella enterica</em>.</li>
+<li>The <em>Salmonella arizonae</em> species was modified to be a subspecies of <em>Salmonella enterica</em>.
+    a. Rationale: While GTDB classifies <em>Salmonella arizonae</em> as its own species due to its divergence from other Salmonella species, NCBI considers <em>Salmonella arizonae</em> a subspecies of <em>Salmonella enterica</em>. <em>Salmonella enterica</em> is also the typical naming convention within public health laboratories, therefore we have renamed the species to align with user preference.</li>
+<li>
+<p>The following genomes below were removed. 
+    a. Rationale: These genomes are currently named as <em>Shigella</em> species in NCBI, but are actually <em>Escherichia coli</em> according to the best match type strain using ANI. Their removal from the database prevents false assignment of <em>Echerichia coli</em> query genomes to <em>Shigella</em> species.</p>
+<p>GCF_002247485.1&nbsp;
+GCF_002248245.1
+GCF_002249025.1
+GCF_002246815.1
+GCF_001064675.1
+GCF_022494155.1
+GCF_022494015.1
+GCF_022494095.1
+GCF_022494415.1   </p>
+</li>
+</ol>
+<p><strong>Database Files</strong></p>
+<p>These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:</p>
+<p><strong>GS URI (for <a href="https://terra.bio">Terra.bio</a> usage):</strong></p>
+<ul>
+<li><code>gs://gambit-databases-rp/2.1.0/gambit-metadata-2.1.0-20250808.gdb</code></li>
+<li><code>gs://gambit-databases-rp/2.1.0/gambit-signatures-2.1.0-20250808.gs</code></li>
+</ul>
+<p><strong>HTTPS URL (for local download):</strong></p>
+<ul>
+<li><a href="https://storage.cloud.google.com/gambit-databases-rp/2.1.0/gambit-metadata-2.1.0-20250808.gdb">https://storage.cloud.google.com/gambit-databases-rp/2.1.0/gambit-metadata-2.1.0-20250808.gdb</a></li>
+<li><a href="https://storage.cloud.google.com/gambit-databases-rp/2.1.0/gambit-signatures-2.1.0-20250808.gs">https://storage.cloud.google.com/gambit-databases-rp/2.1.0/gambit-signatures-2.1.0-20250808.gs</a></li>
+</ul>
+</details>
 <h4 id="gambit-gtdb-database-v201">GAMBIT GTDB Database v2.0.1<a class="headerlink" href="#gambit-gtdb-database-v201" title="Permanent link">¶</a></h4>
 <details class="toggle">
 <summary>Database Details</summary>
@@ -6248,7 +6307,7 @@ GCF_002248705.1
 </code></pre></div>
 <p>These genomes currently named as <em>Shigella</em> species in NCBI, but are actually <em>Escherichia coli</em> according to the best match type strain using ANI. Their removal from the database prevents false assignment of <em>Echerichia coli</em> query genomes to <em>Shigella</em> species.</p>
 <p><strong>Database Files</strong></p>
-<p>These database files are hosted in a public Google bucket by Theiagen Genomics:</p>
+<p>These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:</p>
 <p><strong>GS URI (for <a href="https://terra.bio">Terra.bio</a> usage):</strong></p>
 <ul>
 <li><code>gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.1-20250505.gdb</code></li>
@@ -6292,7 +6351,7 @@ GCF_002248705.1
 </li>
 </ul>
 <p><strong>Database Files</strong></p>
-<p>These database files are hosted in a public Google bucket by Theiagen Genomics:</p>
+<p>These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:</p>
 <p><strong>GS URI (for <a href="https://terra.bio">Terra.bio</a> usage):</strong></p>
 <ul>
 <li><code>gs://gambit-databases-rp/2.0.0/gambit-metadata-2.0.0-20240628.gdb</code></li>
@@ -6329,7 +6388,7 @@ GCF_002248705.1
 </li>
 </ul>
 <p><strong>Database Files</strong></p>
-<p>These database files are hosted in a public Google bucket by Theiagen Genomics:</p>
+<p>These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:</p>
 <p><strong>GS URI (for <a href="https://terra.bio">Terra.bio</a> usage):</strong></p>
 <ul>
 <li><code>gs://gambit-databases-rp/1.3.0/gambit-metadata-1.3-231016.gdb</code></li>
@@ -6374,7 +6433,7 @@ GCF_002248705.1
 </li>
 </ul>
 <p><strong>Database Files</strong></p>
-<p>These database files are hosted in a public Google bucket by Theiagen Genomics:</p>
+<p>These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:</p>
 <p><strong>GS URI (for <a href="https://terra.bio">Terra.bio</a> usage):</strong></p>
 <ul>
 <li><code>gs://gambit-databases-rp/1.2.0/gambit-metadata-1.2-231002.gdb</code></li>
@@ -6397,7 +6456,7 @@ GCF_002248705.1
 <summary>Database Details</summary>
 <p>This database is a <strong>patch update</strong> to the RefSeq Curated v1.0.0 database. In addition to all of the species included in the v1.0.0 database below, this database replaces all species in the <strong>Enterobacter, Legionella, and Vibrio genera</strong> with the available genomes in RefSeq as of April 17th, 2023.</p>
 <p><strong>Database Files</strong></p>
-<p>These database files are hosted in a public Google bucket by Theiagen:</p>
+<p>These database files are hosted in a public "Requester Pays" Google bucket by Theiagen:</p>
 <p><strong>GS URI (for <a href="https://terra.bio">Terra.bio</a> usage):</strong></p>
 <ul>
 <li><code>gs://gambit-databases-rp/1.1.0/gambit-metadata-1.1-230417.gdb</code></li>
@@ -6433,7 +6492,7 @@ GCF_002248705.1
 </li>
 </ul>
 <p><strong>Database Files</strong></p>
-<p>These database files are hosted in a public Google bucket by Theiagen:</p>
+<p>These database files are hosted in a public "Requester Pays" Google bucket by Theiagen:</p>
 <p><strong>GS URI (for <a href="https://terra.bio">Terra.bio</a> usage):</strong></p>
 <ul>
 <li><code>gs://gambit-databases-rp/1.0b2/gambit-genomes-1.0b2-rev2-211116.db</code></li>
@@ -6471,7 +6530,7 @@ GCF_002248705.1
 <li>Two pairs of species were too closely related to distinguish (<em>Aspergillus flavus/Aspergillus oryzae</em>&nbsp;and&nbsp;<em>Aspergillus niger/Aspergillus welwitschiae</em>), therefore were combined.</li>
 </ul>
 <p><strong>Database Files</strong></p>
-<p>These database files are hosted in a public Google bucket by Theiagen:</p>
+<p>These database files are hosted in a public "Requester Pays" Google bucket by Theiagen:</p>
 <p><strong>GS URI (for <a href="https://terra.bio">Terra.bio</a> usage):</strong></p>
 <ul>
 <li><code>gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb</code></li>
@@ -6502,7 +6561,7 @@ GCF_002248705.1
 <li>Two pairs of species were too closely related to distinguish (<em>Aspergillus flavus/Aspergillus oryzae</em>&nbsp;and&nbsp;<em>Aspergillus niger/Aspergillus welwitschiae</em>), therefore were combined.</li>
 </ul>
 <p><strong>Database Files</strong></p>
-<p>These database files are hosted in a public Google bucket by Theiagen:</p>
+<p>These database files are hosted in a public "Requester Pays" Google bucket by Theiagen:</p>
 <p><strong>GS URI (for <a href="https://terra.bio">Terra.bio</a> usage):</strong></p>
 <ul>
 <li><code>gs://gambit-databases-rp/fungal-version/0.2/221130-theiagen-fungal-v0.2.db</code></li>
@@ -6786,7 +6845,7 @@ GCF_002248705.1
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 26, 2025 16:35:00 UTC">2025-06-26</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 1, 2025 19:11:34 UTC">2025-10-01</span>
   </span>
 
     
