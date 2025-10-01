@@ -101,10 +101,10 @@ mercury_prep_n_batch	terra_workspace_name	String	The name of your Terra workspac
 nextclade_batch	assembly_fastas	Array[File]	The assembly files for your samples in FASTA format		Required	Nextclade_Batch	general
 nextclade_batch	dataset_name	String	What nextclade dataset name to run nextclade on; some options are: "sars-cov-2", "flu_h1n1pdm_ha", "flu_h1n1pdm_na", "flu_h3n2_ha", "flu_h3n2_na", "flu_vic_ha", "flu_vic_na", "flu_yam_ha", "hMPXV", "hMPXV_B1", "MPXV", "rsv_a" and "rsv_b"		Required	Nextclade_Batch	general
 ont_barcode_concatenation	input_bucket_path	String	The full path to your **unconcatenated** data's Google bucket folder location, including the gs://; can be easily copied by right-clicking and copying the link address in the header after navigating to the folder in the "Files" section of the "Data" tab on Terra (see above for examples)		Required	ONT_Barcode_Concatenation	general
-ont_barcode_concatenation	new_table_name	String	DESCRIPTION		Required	ONT_Barcode_Concatenation	general
+ont_barcode_concatenation	new_table_name	String	The name of the Terra table where you want the **concatenated** data to be added to; can be new or pre-existing		Required	ONT_Barcode_Concatenation	general
 ont_barcode_concatenation	output_bucket_path	String	The full path to where you want the **concatenated** data to be stored as a Google bucket folder location, including the gs://; can be easily copied by right-clicking and copying the link address in the header after navigating to the desired folder in the "Files" section of the "Data" tab on Terra (see above for examples)		Required	ONT_Barcode_Concatenation	general
 ont_barcode_concatenation	terra_project	String	The name of the Terra project where your data table will be located		Required	ONT_Barcode_Concatenation	general
-ont_barcode_concatenation	terra_workspace	String	DESCRIPTION		Required	ONT_Barcode_Concatenation	general
+ont_barcode_concatenation	terra_workspace	String	The name of the Terra workspace where your data table will be located		Required	ONT_Barcode_Concatenation	general
 pangolin_update	assembly_fasta	File	The assembly file for your sample in FASTA format		Required	Pangolin_Update	general
 pangolin_update	old_lineage	String	The Pangolin lineage previously assigned to the sample		Required	Pangolin_Update	general
 pangolin_update	old_pangolin_assignment_version	String	Version of the Pangolin software previously used for lineage assignment.		Required	Pangolin_Update	general
@@ -375,7 +375,7 @@ bakta	disk_size	Int	Amount of storage (in GB) to allocate to the task	200	Option
 bakta	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
 bakta	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	24	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 bakta	prodigal_tf	File	Prodigal training file to use for CDS prediction by bakta		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-bakta	proteins	File	THIS VARIABLE IS BUGGED PLEASE DO NOT DO ANYTHING HERE	False	Optional	TheiaProk_FASTA	general
+bakta	proteins	File	Fasta file of trusted protein sequences for CDS annotation		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 bam_to_unaligned_fastq	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Host_Decontaminate	runtime
 bam_to_unaligned_fastq	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Host_Decontaminate	runtime
 bam_to_unaligned_fastq	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	Host_Decontaminate	docker
@@ -1083,7 +1083,7 @@ make_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Create_Terr
 make_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Create_Terra_Table	runtime
 make_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	Create_Terra_Table	docker
 make_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Create_Terra_Table	runtime
-make_table	responsible_workflow	String	DESCRIPTION	Create_Terra_Table_PHB	Optional	Create_Terra_Table	general
+make_table	responsible_workflow	String	Internal component, do not modify	Create_Terra_Table_PHB	Optional	Create_Terra_Table	general
 mashtree_fasta	data_summary_column_names	String	A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix); e.g., "amrfinderplus_amr_genes,amrfinderplus_virulence_genes"		Optional	MashTree_FASTA	general
 mashtree_fasta	data_summary_terra_project	String	The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL		Optional	MashTree_FASTA	general
 mashtree_fasta	data_summary_terra_table	String	The name of the sample-level Terra data table that will be used for generating a data summary		Optional	MashTree_FASTA	general
@@ -1529,7 +1529,7 @@ minimap2_assembly_correction	memory	Int	Amount of memory/RAM (in GB) to allocate
 minimap2_ont	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Host_Decontaminate	runtime
 minimap2_ont	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Host_Decontaminate	runtime
 minimap2_ont	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22	Optional	Host_Decontaminate	docker
-minimap2_ont	query2	File	DESCRIPTION		Optional	Host_Decontaminate	general
+minimap2_ont	query2	File	Internal component, do not modify		Optional	Host_Decontaminate	general
 minimap2_pe	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Host_Decontaminate	runtime
 minimap2_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Host_Decontaminate	runtime
 minimap2_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22	Optional	Host_Decontaminate	docker
@@ -1612,7 +1612,7 @@ ncbi_identify	docker	String	Docker image to use for the task	us-docker.pkg.dev/g
 ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
 ncbi_identify	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	Host_Decontaminate	runtime
 ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-ncbi_identify	rank	String	DESCRIPTION		Optional	Host_Decontaminate	general
+ncbi_identify	rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.		Optional	Host_Decontaminate	general
 ncbi_identify	refseq	Boolean	Only query RefSeq genomes	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 ncbi_identify	summary_limit	Int	Maximum number of genomes to return in the summary	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 ncbi_identify	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
@@ -1735,7 +1735,7 @@ parse_mapping	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Host_Dec
 parse_mapping	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Host_Decontaminate, TheiaViral_ONT	runtime
 parse_mapping	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	Host_Decontaminate, TheiaViral_ONT	docker
 parse_mapping	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Host_Decontaminate, TheiaViral_ONT	runtime
-parse_mapping	min_qual	Int	DESCRIPTION		Optional	Host_Decontaminate	general
+parse_mapping	min_qual	Int	Minimum quality score for reads to be included in the analysis		Optional	Host_Decontaminate	general
 phylocompare	max_distance	Float	Maximum tolerable distance in validation	0.0	Optional	PhyloCompare	general
 phylocompare	midpoint	Boolean	Root phylogenies at their midpoint	False	Optional	PhyloCompare	general
 phylocompare	outgroups	String	Comma-delimited list of outgroup tip(s) to root upon. Multiple outgroup tips will root on the branch descended from their most recent common ancestor		Optional	PhyloCompare	general
@@ -2030,45 +2030,45 @@ read_QC_trim_ont	rasusa_memory	Int	Amount of memory/RAM (in GB) to allocate to t
 read_QC_trim_ont	rasusa_number_of_reads	Int	Subsample to a specific number of reads		Optional	Freyja_FASTQ	general
 read_QC_trim_ont	rasusa_seed	Int	Random seed to use		Optional	Freyja_FASTQ	general
 read_QC_trim_ont	run_prefix	String	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_pe	adapters	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_pe	bbduk_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	call_kraken	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	call_midas	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	adapters	File	A FASTA file containing adapter sequences		Optional	Freyja_FASTQ	general
+read_QC_trim_pe	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	extract_unclassified	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	fastp_args	String	Internal component, do not modify	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host	String	Internal component, do not modify		Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_complete_only	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_decontaminate_mem	Int	Internal component, do not modify	32	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_is_accession	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_refseq	Boolean	Internal component, do not modify	True	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	kraken_cpu	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	kraken_db	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_pe	kraken_disk_size	Int	Internal component, do not modify	100	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	kraken_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	midas_db	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_pe	phix	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_pe	read_processing	String	Internal component, do not modify	trimmomatic	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	read_qc	String	Internal component, do not modify	fastq_scan	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.		Optional	Freyja_FASTQ	general
+read_QC_trim_pe	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	midas_db	File	Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.		Optional	Freyja_FASTQ	general
+read_QC_trim_pe	phix	File	The file containing the phix sequence to be used during bbduk task		Optional	Freyja_FASTQ	general
+read_QC_trim_pe	read_processing	String	Options: "trimmomatic" or "fastp" to indicate which read trimming module to use	trimmomatic	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	read_qc	String	Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality.	fastq_scan	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	taxon_id	Int	Internal component, do not modify	0	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	trim_window_size	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	trimmomatic_args	String	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_se	adapters	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_se	bbduk_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ	general
-read_QC_trim_se	call_kraken	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
-read_QC_trim_se	call_midas	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
-read_QC_trim_se	fastp_args	String	DESCRIPTION	-g -5 20 -3 20	Optional	Freyja_FASTQ	general
-read_QC_trim_se	kraken_cpu	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ	general
-read_QC_trim_se	kraken_db	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_se	kraken_disk_size	Int	Internal component, do not modify	100	Optional	Freyja_FASTQ	general
-read_QC_trim_se	kraken_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ	general
-read_QC_trim_se	midas_db	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_se	phix	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_se	read_processing	String	Internal component, do not modify	trimmomatic	Optional	Freyja_FASTQ	general
-read_QC_trim_se	read_qc	String	Internal component, do not modify	fastq_scan	Optional	Freyja_FASTQ	general
-read_QC_trim_se	trim_quality_min_score	Int	Internal component, do not modify	30	Optional	Freyja_FASTQ	general
-read_QC_trim_se	trim_window_size	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ	general
-read_QC_trim_se	trimmomatic_args	String	Internal component, do not modify		Optional	Freyja_FASTQ	general
+rread_QC_trim_pe	trim_window_size	Int	The window size to use during trimming	4	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	trimmomatic_args	String	Additional command-line arguments to use with trimmomatic		Optional	Freyja_FASTQ	general
+read_QC_trim_se	adapters	File	A FASTA file containing adapter sequences		Optional	Freyja_FASTQ	general
+read_QC_trim_se	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	general
+read_QC_trim_se	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general
+read_QC_trim_se	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general
+read_QC_trim_se	fastp_args	String	Additional arguments to use with fastp	-g -5 20 -3 20	Optional	Freyja_FASTQ	general
+read_QC_trim_se	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	general
+read_QC_trim_se	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.		Optional	Freyja_FASTQ	general
+read_QC_trim_se	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	general
+read_QC_trim_se	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	general
+read_QC_trim_se	midas_db	File	Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.		Optional	Freyja_FASTQ	general
+read_QC_trim_se	phix	File	The file containing the phix sequence to be used during bbduk task		Optional	Freyja_FASTQ	general
+read_QC_trim_se	read_processing	String	Options: "trimmomatic" or "fastp" to indicate which read trimming module to use	trimmomatic	Optional	Freyja_FASTQ	general
+read_QC_trim_se	read_qc	String	Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality.	fastq_scan	Optional	Freyja_FASTQ	general
+read_QC_trim_se	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	general
+read_QC_trim_se	trim_window_size	Int	The window size to use during trimming	4	Optional	Freyja_FASTQ	general
+read_QC_trim_se	trimmomatic_args	String	Additional command-line arguments to use with trimmomatic		Optional	Freyja_FASTQ	general
 referenceseeker	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime
 referenceseeker	disk_size	Int	Amount of storage (in GB) to allocate to the task	200	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime
 referenceseeker	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	docker
