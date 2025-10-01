@@ -80,9 +80,16 @@ task tbp_parser {
       # get cumulative percent coverage for all primer regions over min_depth
       cumulative_primer_region_length=$(samtools depth -a -J ~{tbprofiler_bam} -b "$coverage_regions_bed" | wc -l)
       genome=$(samtools depth -a -J ~{tbprofiler_bam} -b "$coverage_regions_bed" | awk -F "\t" -v min_depth=~{min_depth} '{if ($3 >= min_depth) print;}' | wc -l )
-      python3 -c "print ( ($genome / $cumulative_primer_region_length ) * 100 )" | tee GENOME_PC
-      # get average depth for all primer regions
-      samtools depth -a -J ~{tbprofiler_bam} -b "$coverage_regions_bed" | awk -F "\t" '{sum+=$3} END { if (NR > 0) print sum/NR; else print 0 }' | tee AVG_DEPTH
+
+      # prevents division by zero if no coverage across any primer regions
+      if [[ $cumulative_primer_region_length -eq 0 ]]; then
+        echo "No coverage across any tNGS regions found."
+      else
+        python3 -c "print ( ($genome / $cumulative_primer_region_length ) * 100 )" | tee GENOME_PC
+        # get average depth for all primer regions
+        samtools depth -a -J ~{tbprofiler_bam} -b "$coverage_regions_bed" | awk -F "\t" '{sum+=$3} END { if (NR > 0) print sum/NR; else print 0 }' | tee AVG_DEPTH
+      fi
+
     else
       # get genome percent coverage for the entire reference genome length over min_depth
       genome=$(samtools depth -a -J ~{tbprofiler_bam} | awk -F "\t" -v min_depth=~{min_depth} '{if ($3 >= min_depth) print;}' | wc -l )
