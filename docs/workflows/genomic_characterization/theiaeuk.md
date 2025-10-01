@@ -92,7 +92,8 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     These tasks are performed regardless of the organism and provide quality control and taxonomic assignment.
 
 {{ include_md("common_text/gambit_task.md") }}
-{{ include_md("common_text/busco_task.md") }}
+
+{{ include_md("common_text/busco_task.md", condition="theiaeuk") }}
 
 #### Organism-specific characterization
 

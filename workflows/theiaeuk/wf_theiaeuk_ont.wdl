@@ -17,7 +17,7 @@ workflow theiaeuk_ont {
     Int genome_length = 50000000 
     String workflow_series = "theiaeuk"
     Int busco_memory = 24
-    String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
+    String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v6.0.0_cv1"
     File gambit_db_genomes = "gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-metadata-1.0.0-20241213.gdb"
     File gambit_db_signatures = "gs://gambit-databases-rp/fungal-version/1.0.0/gambit-fungal-signatures-1.0.0-20241213.gs"
     # read screen parameters

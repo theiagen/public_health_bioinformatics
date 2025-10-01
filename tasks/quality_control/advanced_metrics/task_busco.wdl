@@ -7,7 +7,7 @@ task busco {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.7.1_cv1"
+    String docker = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v6.0.0_cv1"
     Int memory = 8
     Int cpu = 2
     Int disk_size = 100
@@ -28,7 +28,7 @@ task busco {
       -c ~{cpu} \
       -m geno \
       -o ~{samplename} \
-      ~{true='--auto-lineage-euk' false='--auto-lineage-prok' eukaryote}
+      ~{true='-l eukaryota_odb10' false='--auto-lineage-prok' eukaryote}
 
     # check for existence of output file; otherwise display a string that says the output was not created
     if [ -f ~{samplename}/short_summary.specific.*.~{samplename}.txt ]; then

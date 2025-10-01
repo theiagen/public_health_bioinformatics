@@ -34,7 +34,7 @@ workflow theiaeuk_illumina_pe {
     Int trim_window_size = 10
     Int min_contig_length = 1000
     Int busco_memory = 24
-    String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
+    String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v6.0.0_cv1"
     Boolean skip_screen = false 
     File? qc_check_table
     String? expected_taxon
