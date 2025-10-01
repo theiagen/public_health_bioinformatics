@@ -196,7 +196,7 @@ workflow theiacov_ont {
             gene_coverage_bam = select_first([consensus.trim_sorted_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam, ""]),
             nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
             nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
-            pangolin_docker_image = organism_parameters.pangolin_docker
+            pangolin_docker_image = organism_parameters.pangolin_docker,
             workflow_type = "theiacov_ont"
         }
       }
