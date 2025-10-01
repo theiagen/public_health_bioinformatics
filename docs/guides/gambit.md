@@ -169,6 +169,11 @@ Options:
 
 ## GAMBIT Databases
 
+!!! tip "Database Access"
+    Please note that all GAMBIT databases are located in a ["Requester Pays" GCP bucket](https://cloud.google.com/storage/docs/requester-pays).
+
+    A billing project **must** be provided in the request to download; otherwise, the following links and GS URIs will not work.
+
 ### GAMBIT Prokaryotic Databases
 
 #### GAMBIT GTDB Database v2.1.0
@@ -196,7 +201,7 @@ Options:
 
     **Database Files**
 
-    These database files are hosted in a public Google bucket by Theiagen Genomics:
+    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:
 
     **GS URI (for [Terra.bio](https://terra.bio) usage):**
 
@@ -207,8 +212,7 @@ Options:
 
     - <https://storage.cloud.google.com/gambit-databases-rp/2.1.0/gambit-metadata-2.1.0-20250808.gdb>
     - <https://storage.cloud.google.com/gambit-databases-rp/2.1.0/gambit-signatures-2.1.0-20250808.gs>
-    Please note: The files above are located in a requester pays GCP bucket, therefore a billing project must be provided in the request to download. 
-    
+
 #### GAMBIT GTDB Database v2.0.1
 
 ??? toggle "Database Details"
@@ -233,7 +237,7 @@ Options:
 
     **Database Files**
 
-    These database files are hosted in a public Google bucket by Theiagen Genomics:
+    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:
 
     **GS URI (for [Terra.bio](https://terra.bio) usage):**
 
@@ -271,7 +275,7 @@ Options:
 
     **Database Files**
 
-    These database files are hosted in a public Google bucket by Theiagen Genomics:
+    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:
 
     **GS URI (for [Terra.bio](https://terra.bio) usage):**
 
@@ -305,7 +309,7 @@ Options:
 
     **Database Files**
 
-    These database files are hosted in a public Google bucket by Theiagen Genomics:
+    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:
 
     **GS URI (for [Terra.bio](https://terra.bio) usage):**
 
@@ -348,7 +352,7 @@ Options:
 
     **Database Files**
 
-    These database files are hosted in a public Google bucket by Theiagen Genomics:
+    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:
 
     **GS URI (for [Terra.bio](https://terra.bio) usage):**
 
@@ -374,7 +378,7 @@ Options:
 
     **Database Files**
 
-    These database files are hosted in a public Google bucket by Theiagen:
+    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen:
 
     **GS URI (for [Terra.bio](https://terra.bio) usage):**
 
@@ -409,7 +413,7 @@ Options:
 
     **Database Files**
 
-    These database files are hosted in a public Google bucket by Theiagen:
+    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen:
 
     **GS URI (for [Terra.bio](https://terra.bio) usage):**
 
@@ -450,7 +454,7 @@ Options:
 
     **Database Files**
 
-    These database files are hosted in a public Google bucket by Theiagen:
+    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen:
 
     **GS URI (for [Terra.bio](https://terra.bio) usage):**
 
@@ -485,7 +489,7 @@ Options:
 
     **Database Files**
 
-    These database files are hosted in a public Google bucket by Theiagen:
+    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen:
 
     **GS URI (for [Terra.bio](https://terra.bio) usage):**
 
