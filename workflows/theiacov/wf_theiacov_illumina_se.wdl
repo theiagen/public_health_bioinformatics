@@ -155,6 +155,7 @@ workflow theiacov_illumina_se {
           gene_coverage_bam = ivar_consensus.aligned_bam,
           nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
           nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
+          pangolin_docker_image = organism_parameters.pangolin_docker,
           workflow_type = "theiacov_se"
       }
       if (defined(qc_check_table)) {
