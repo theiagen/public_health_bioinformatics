@@ -56,6 +56,13 @@ workflow morgana_magic {
     String? nextclade_output_parser_docker
     Int? nextclade_output_parser_memory
     # pangolin inputs
+    String? pangolin_analysis_mode
+    Boolean? pangolin_expanded_lineage
+    Float? pangolin_max_ambig
+    Int? pangolin_min_length
+    String? pangolin_arguments
+    Boolean? pangolin_skip_designation_cache
+    Boolean? pangolin_skip_scorpio
     Int? pangolin_cpu
     Int? pangolin_disk_size
     String? pangolin_docker_image
@@ -63,12 +70,27 @@ workflow morgana_magic {
     # gene coverage inputs
     File? reference_gene_locations_bed
     File? gene_coverage_bam
+    Int? gene_coverage_min_depth
+    Int? sc2_s_gene_start
+    Int? sc2_s_gene_stop
+    Int? gene_coverage_cpu
+    Int? gene_coverage_disk_size
+    Int? gene_coverage_memory
+    Int? gene_coverage_docker
+    # quasitools inputs
+    Int? quasitools_cpu
+    Int? quasitools_memory
+    Int? quasitools_disk_size
+    String? quasitools_docker
     # vadr parameters
     Int? vadr_max_length
+    Int? vadr_min_length
     Int? vadr_skip_length
     String? vadr_options
     File? vadr_model_file
     Int? vadr_memory
+    Int? vadr_cpu
+    Int? vadr_disk_size
     # Workflow Settings
     String? workflow_type
   }
@@ -86,8 +108,11 @@ workflow morgana_magic {
         vadr_opts = select_first([vadr_options, organism_parameters.vadr_opts]),
         vadr_model_file = select_first([vadr_model_file, organism_parameters.vadr_model_file]),
         max_length = select_first([vadr_max_length, organism_parameters.vadr_maxlength]),
+        min_length = vadr_min_length,
         skip_length = select_first([vadr_skip_length, organism_parameters.vadr_skiplength]),
-        memory = select_first([vadr_memory, organism_parameters.vadr_memory])
+        memory = select_first([vadr_memory, organism_parameters.vadr_memory]),
+        cpu = vadr_cpu,
+        disk_size = vadr_disk_size
     }
   }
   if (organism_parameters.standardized_organism == "flu" && (workflow_type == "theiaviral" || workflow_type == "theiaviral_panel")) {
@@ -135,7 +160,14 @@ workflow morgana_magic {
         bamfile = select_first([gene_coverage_bam]),
         bedfile = select_first([reference_gene_locations_bed, organism_parameters.gene_locations_bed]),
         samplename = samplename,
-        organism = select_first([organism_parameters.standardized_organism, taxon_name])
+        organism = select_first([organism_parameters.standardized_organism, taxon_name]),
+        sc2_s_gene_start = sc2_s_gene_start,
+        sc2_s_gene_stop = sc2_s_gene_stop,
+        min_depth = gene_coverage_min_depth,
+        cpu = gene_coverage_cpu,
+        disk_size = gene_coverage_disk_size,
+        docker = gene_coverage_docker,
+        memory = gene_coverage_memory
     }
   }
   if (organism_parameters.standardized_organism == "sars-cov-2") {
@@ -143,6 +175,13 @@ workflow morgana_magic {
       input:
         samplename = samplename,
         fasta = select_first([assembly_fasta]),
+        analysis_mode = pangolin_analysis_mode,
+        expanded_lineage = pangolin_expanded_lineage,
+        max_ambig = pangolin_max_ambig,
+        min_length = pangolin_min_length,
+        skip_designation_cache = pangolin_skip_designation_cache,
+        skip_scorpio = pangolin_skip_scorpio,
+        pangolin_arguments = pangolin_arguments,
         docker = select_first([pangolin_docker_image, organism_parameters.pangolin_docker]),
         cpu = pangolin_cpu,
         disk_size = pangolin_disk_size,
@@ -176,7 +215,11 @@ workflow morgana_magic {
       input:
         read1 = select_first([read1]),
         read2 = read2,
-        samplename = samplename
+        samplename = samplename,
+        cpu = quasitools_cpu,
+        memory = quasitools_memory,
+        disk_size = quasitools_disk_size,
+        docker = quasitools_docker
     }
   }
   if (organism_parameters.standardized_organism == "rabies") {
