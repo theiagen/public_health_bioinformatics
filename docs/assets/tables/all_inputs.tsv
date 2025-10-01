@@ -15,8 +15,8 @@ basespace_fetch	sample_name	String	The sample name is the sample identifier used
 cauris_cladetyper	assembly_fasta	File	The assembly file for your sample in FASTA format		Required	Cauris_CladeTyper	general
 cauris_cladetyper	samplename	String	The name of the sample being analyzed		Required	Cauris_CladeTyper	general
 chroquetas_workflow	assembly_fasta	File	Genome fasta		Required	ChroQueTas	general
-chroquetas_workflow	samplename	String			Required	ChroQueTas	general
-chroquetas_workflow	species	String	DESCRIPTION		Required	ChroQueTas	general
+chroquetas_workflow	samplename	String	Sample name		Required	ChroQueTas	general
+chroquetas_workflow	species	String	Binomial species name formatted as "Genus species"		Required	ChroQueTas	general
 clair3_variants_ont	read1	File	ONT read file in FASTQ file format (compression optional)		Required	Clair3_Variants_ONT	general
 clair3_variants_ont	reference_genome_file	File	Reference genome in FASTA format		Required	Clair3_Variants_ONT	general
 clair3_variants_ont	samplename	String	The name of the sample being analyzed		Required	Clair3_Variants_ONT	general
@@ -465,10 +465,10 @@ chroquetas	cpu	Int	Number of CPUs to allocate to the task	2	Optional	ChroQueTas	
 chroquetas	disk_size	Int	Amount of storage (in GB) to allocate to the task	16	Optional	ChroQueTas	runtime
 chroquetas	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/chroquetas:1.0.0	Optional	ChroQueTas	docker
 chroquetas	memory	Int	Amount of memory (in GB) to allocate to the task	8	Optional	ChroQueTas	runtime
-chroquetas	min_percent_coverage	Int	DESCRIPTION	75	Optional	ChroQueTas	general
-chroquetas	min_percent_identity	Int	DESCRIPTION	90	Optional	ChroQueTas	general
-chroquetas	proteome_fasta	File	DESCRIPTION		Optional	ChroQueTas	general
-chroquetas	translation_code	String	DESCRIPTION		Optional	ChroQueTas	general
+chroquetas	min_percent_coverage	Int	Minimum percent coverage of FungAMR reference protein	75	Optional	ChroQueTas	general
+chroquetas	min_percent_identity	Int	Minimum percent identity of FungAMR reference protein	90	Optional	ChroQueTas	general
+chroquetas	proteome_fasta	File	Protein fasta to use for alignments		Optional	ChroQueTas	general
+chroquetas	translation_code	String	Alternative codon translation code. This is set for each species by default and not recommended to change.		Optional	ChroQueTas	general
 chunk_files	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Dorado_Basecalling	runtime
 chunk_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Dorado_Basecalling	runtime
 chunk_files	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Dorado_Basecalling	docker
@@ -1193,10 +1193,10 @@ merlin_magic	cauris_cladetyper_docker_image	String	Internal component, do not mo
 merlin_magic	chroquetas_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 merlin_magic	chroquetas_docker_image	String	Docker image to use for the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
 merlin_magic	chroquetas_memory	Int	Amount of memory (in GB) to allocate to the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
-merlin_magic	chroquetas_min_percent_coverage	Int	DESCRIPTION		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	chroquetas_min_percent_identity	Int	DESCRIPTION		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	chroqutas_translation_code	String	DESCRIPTION		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	cladetyper_kmer_size	Int	Kmer size for cladtyper		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	chroquetas_min_percent_coverage	Int	Minimum percent coverage of FungAMR reference protein		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	chroquetas_min_percent_identity	Int	Minimum percent identityt of FungAMR reference protein		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	chroqutas_translation_code	String	Alternative codon translation code. Set for each species by default and not recommended to change		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	cladetyper_kmer_size	Int	Kmer size for cladetyper		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	cladetyper_kmer_size	Int	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	cladetyper_max_distance	Float	The maximum GAMBIT distance to report a *C. auris* clade hit	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	cladetyper_max_distance	Float	Internal component, do not modify	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
