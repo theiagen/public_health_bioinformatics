@@ -192,6 +192,15 @@ checkv_denovo_total_genes	Int	Number of genes detected in de novo assembly by Ch
 checkv_denovo_version	String	Version of CheckV used for de novo assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_denovo_weighted_completeness	Float	Weighted completeness score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_denovo_weighted_contamination	Float	Weighted contamination score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
+chroquetas_amr_stats	File	DESCRIPTION	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+chroquetas_amr_stats_file	File	DESCRIPTION	ChroQueTas
+chroquetas_amr_summary	File	DESCRIPTION	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+chroquetas_amr_summary_file	File	DESCRIPTION	ChroQueTas
+chroquetas_fungicide_resistance	String	DESCRIPTION	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
+chroquetas_status	String	DESCRIPTION	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
+chroquetas_version	String	DESCRIPTION	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
+chroquetas_wf_analysis_date	String	DESCRIPTION	ChroQueTas
+chroquetas_wf_version	String	DESCRIPTION	ChroQueTas
 cladetype_annotated_ref	String	The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted	TheiaEuk_ONT
 cladetyper_annotated_reference	String	The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted	Cauris_CladeTyper, TheiaEuk_Illumina_PE
 cladetyper_clade	String	The clade assigned to the input assembly	Cauris_CladeTyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
