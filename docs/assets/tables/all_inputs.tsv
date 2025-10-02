@@ -14,8 +14,8 @@ basespace_fetch	basespace_sample_name	String	The BaseSpace sample name is the sa
 basespace_fetch	sample_name	String	The sample name is the sample identifier used in the Terra.bio data table corresponding to the metadata associated with the sample to be transferred from BaseSpace		Required	BaseSpace_Fetch	general
 cauris_cladetyper	assembly_fasta	File	The assembly file for your sample in FASTA format		Required	Cauris_CladeTyper	general
 cauris_cladetyper	samplename	String	The name of the sample being analyzed		Required	Cauris_CladeTyper	general
-chroquetas_workflow	assembly_fasta	File	Genome fasta		Required	ChroQueTas	general
-chroquetas_workflow	samplename	String	Sample name		Required	ChroQueTas	general
+chroquetas_workflow	assembly_fasta	File	The assembly file for your sample in FASTA format		Required	ChroQueTas	general
+chroquetas_workflow	samplename	String	The name of the sample being analyzed		Required	ChroQueTas	general
 chroquetas_workflow	species	String	Binomial species name formatted as "Genus species"		Required	ChroQueTas	general
 clair3_variants_ont	read1	File	ONT read file in FASTQ file format (compression optional)		Required	Clair3_Variants_ONT	general
 clair3_variants_ont	reference_genome_file	File	Reference genome in FASTA format		Required	Clair3_Variants_ONT	general
@@ -1194,7 +1194,7 @@ merlin_magic	chroquetas_cpu	Int	Number of CPUs to allocate to the task		Optional
 merlin_magic	chroquetas_docker_image	String	Docker image to use for the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
 merlin_magic	chroquetas_memory	Int	Amount of memory (in GB) to allocate to the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 merlin_magic	chroquetas_min_percent_coverage	Int	Minimum percent coverage of FungAMR reference protein		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	chroquetas_min_percent_identity	Int	Minimum percent identityt of FungAMR reference protein		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	chroquetas_min_percent_identity	Int	Minimum percent identity of FungAMR reference protein		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	chroqutas_translation_code	String	Alternative codon translation code. Set for each species by default and not recommended to change		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	cladetyper_kmer_size	Int	Kmer size for cladetyper		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	cladetyper_kmer_size	Int	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
@@ -1625,9 +1625,9 @@ ncbi_datasets_download_genome_accession	use_ncbi_virus	Boolean	Set to true to do
 ncbi_identify	complete	Boolean	Only query genomes labeled complete	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 ncbi_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 ncbi_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-ncbi_identify	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	Host_Decontaminate	docker
+ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	Host_Decontaminate	docker
 ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-ncbi_identify	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	Host_Decontaminate	runtime
+ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate	runtime
 ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 ncbi_identify	rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.		Optional	Host_Decontaminate	general
 ncbi_identify	refseq	Boolean	Only query RefSeq genomes	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
@@ -2017,7 +2017,7 @@ read_QC_trim_ont	downsampling_coverage	Float	Internal component, do not modify	1
 read_QC_trim_ont	genome_length	Int	Length of the genome	5000000	Optional	Freyja_FASTQ	general
 read_QC_trim_ont	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime
 read_QC_trim_ont	kraken2_recalculate_abundances_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime
-read_QC_trim_ont	kraken2_recalculate_abundances_docker	String	Docker image to use for the task		Optional	Freyja_FASTQ	docker
+read_QC_trim_ont	kraken2_recalculate_abundances_docker	String	The Docker container to use for the task		Optional	Freyja_FASTQ	docker
 read_QC_trim_ont	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime
 read_QC_trim_ont	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime
 read_QC_trim_ont	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.		Optional	Freyja_FASTQ	general
@@ -2657,9 +2657,9 @@ transfer_files	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_
 transfer_files	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Transfer_Column_Content	runtime
 transfer_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Freyja_Update	runtime
 transfer_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Transfer_Column_Content	runtime
-transfer_files	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine	Optional	Freyja_Update	docker
+transfer_files	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine	Optional	Freyja_Update	docker
 transfer_files	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine	Optional	Transfer_Column_Content	docker
-transfer_files	memory	Int	Amount of memory (in GB) to allocate to the task	2	Optional	Freyja_Update	runtime
+transfer_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Freyja_Update	runtime
 transfer_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Transfer_Column_Content	runtime
 trim_genbank_fastas	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Mercury_Prep_N_Batch	runtime
 trim_genbank_fastas	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Mercury_Prep_N_Batch	runtime

@@ -192,10 +192,8 @@ checkv_denovo_total_genes	Int	Number of genes detected in de novo assembly by Ch
 checkv_denovo_version	String	Version of CheckV used for de novo assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_denovo_weighted_completeness	Float	Weighted completeness score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_denovo_weighted_contamination	Float	Weighted contamination score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
-chroquetas_amr_stats	File	File depicting quantity of AMR mutations detected on a gene-by-gene basis	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-chroquetas_amr_stats_file	File	File depicting quantity of AMR mutations detected on a gene-by-gene basis	ChroQueTas
-chroquetas_amr_summary	File	File depicting positions, mutations, and associated fungicide resistance	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-chroquetas_amr_summary_file	File	File depicting positions, mutations, and associated fungicide resistance	ChroQueTas
+chroquetas_amr_stats	File	File depicting quantity of AMR mutations detected on a gene-by-gene basis	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
+chroquetas_amr_summary	File	File depicting positions, mutations, and associated fungicide resistance	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
 chroquetas_fungicide_resistance	String	Comma-delimited summary of mutations and their associated fungicide resistance	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
 chroquetas_status	String	Status depicting passing or specific errors encountered	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
 chroquetas_version	String	Version of ChroQueTas	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
