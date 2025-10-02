@@ -2,18 +2,8 @@ version 1.0
 
 import "../../tasks/task_versioning.wdl" as versioning
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
-import "../../tasks/assembly/task_spades.wdl" as spades_task
-import "../../tasks/assembly/task_megahit.wdl" as megahit_task
-import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
-import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
-import "../../tasks/taxon_id/task_skani.wdl" as skani_task
 import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../tasks/taxon_id/task_identify_taxon_id.wdl" as identify_taxon_id_task
-import "../../tasks/alignment/task_bwa.wdl" as bwa_task
-import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus
-import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as variant_call_task
-import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
-import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../utilities/wf_morgana_magic.wdl" as morgana_magic_wf
 import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools_task
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2_task
@@ -48,17 +38,12 @@ workflow theiaviral_panel {
 
     String terra_project
     String terra_workspace
-    String kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
-    File? skani_db
-    File? checkv_db
-    Int min_map_quality = 20
-    Int min_depth = 10
-    Float min_allele_freq = 0.6
-    String? read_extraction_rank
-    Boolean concatenate_unclassified = false
+    File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
+    Boolean extract_unclassified = false
     Boolean skip_theiaviral_screen = true
     Int min_read_count = 1000
     Boolean call_metaviralspades = true
+    String? host
   }  
   call versioning.version_capture {
     input:
@@ -70,8 +55,11 @@ workflow theiaviral_panel {
       read2 = read2,
       samplename = samplename,
       kraken_db = kraken_db,
+      call_kraken = true,
+      host = host,
       workflow_series = "theiaviral_panel"
   }
+  # parse the kraken report to get the taxon ids present in the sample, lowering scatter shards
   call kraken_parser_task.kraken_output_parser as kraken_parser {
     input:
       kraken2_report = select_first([read_QC_trim.kraken_report_clean]),
@@ -88,7 +76,7 @@ workflow theiaviral_panel {
         taxon_id = taxon_id
     }
     if (krakentools.success) {
-      if (concatenate_unclassified) {
+      if (extract_unclassified) {
         call cat_lanes.cat_lanes {
           input:
             samplename = samplename + "_" + taxon_id,
@@ -115,7 +103,6 @@ workflow theiaviral_panel {
         call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
           input:
             taxon = taxon_id,
-            rank = read_extraction_rank,
             use_ncbi_virus = true
         }
         call theiaviral_illumina_pe.theiaviral_illumina_pe as theiaviral {
@@ -128,13 +115,7 @@ workflow theiaviral_panel {
             kraken_db = kraken_db,
             skip_qc = true,
             skip_screen = skip_theiaviral_screen,
-            skani_db = skani_db,
-            checkv_db = checkv_db,
-            genome_length = ncbi_identify.avg_genome_length,
-            min_map_quality = min_map_quality,
-            min_depth = min_depth,
-            min_allele_freq = min_allele_freq,
-            read_extraction_rank = read_extraction_rank
+            genome_length = ncbi_identify.avg_genome_length
         }
         if (defined(output_taxon_table)){
           # call export_taxon_table

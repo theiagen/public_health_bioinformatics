@@ -49,8 +49,8 @@ task extract_kraken_reads {
       # Extract organism name and store it
       grep "~{taxon_id}" "~{kraken2_report}" | awk '{for (i=6; i <= NF; ++i) print $i}' | tr '\n' ' ' | xargs > ORGANISM_NAME
     else
-      echo "DEBUG: Taxon ID not found in kraken report"
-      echo "Unknown organism" > ORGANISM_NAME
+      echo "DEBUG: ~{taxon_id} not found in kraken report"
+      echo "Unknown_organism" > ORGANISM_NAME
     fi
   >>>
   output {
