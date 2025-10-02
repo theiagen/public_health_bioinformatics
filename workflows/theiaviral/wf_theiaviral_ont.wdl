@@ -456,14 +456,14 @@ workflow theiaviral_ont {
     String? nextclade_docker = morgana_magic.nextclade_docker
     String? nextclade_ds_tag = morgana_magic.nextclade_ds_tag
     # Nextclade outputs for MPXV
-    File? nextclade_json_mpxv = morgana_magic.nextclade_json_mpxv
-    File? auspice_json_mpxv = morgana_magic.auspice_json_mpxv
-    File? nextclade_tsv_mpxv = morgana_magic.nextclade_tsv_mpxv
-    String? nextclade_aa_subs_mpxv = morgana_magic.nextclade_aa_subs_mpxv
-    String? nextclade_aa_dels_mpxv = morgana_magic.nextclade_aa_dels_mpxv
-    String? nextclade_clade_mpxv = morgana_magic.nextclade_clade_mpxv
-    String? nextclade_lineage_mpxv = morgana_magic.nextclade_lineage_mpxv
-    String? nextclade_qc_mpxv = morgana_magic.nextclade_qc_mpxv
+    File? nextclade_json_mpxv = morgana_magic.nextclade_json
+    File? auspice_json_mpxv = morgana_magic.auspice_json
+    File? nextclade_tsv_mpxv = morgana_magic.nextclade_tsv
+    String? nextclade_aa_subs_mpxv = morgana_magic.nextclade_aa_subs
+    String? nextclade_aa_dels_mpxv = morgana_magic.nextclade_aa_dels
+    String? nextclade_clade_mpxv = morgana_magic.nextclade_clade
+    String? nextclade_lineage_mpxv = morgana_magic.nextclade_lineage
+    String? nextclade_qc_mpxv = morgana_magic.nextclade_qc
     # Nextclade outputs for Rabies
     File? nextclade_json_rabies = morgana_magic.nextclade_json_rabies
     File? auspice_json_rabies = morgana_magic.auspice_json_rabies
