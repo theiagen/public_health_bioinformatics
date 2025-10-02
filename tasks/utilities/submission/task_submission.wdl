@@ -135,14 +135,35 @@ task prune_table {
         sra_metadata[column] = table[column]
     sra_metadata.rename(columns={"submission_id" : "sample_name"}, inplace=True)
 
+    # create the full gcp path for renamed public facing read1 files
+    table["read1_public"] = "~{gcp_bucket_uri}" + "/" + sra_metadata["library_ID"] + "_R1.fastq.gz"
+
     # prettify the filenames and rename them to be sra compatible
-    sra_metadata["~{read1_column_name}"] = sra_metadata["~{read1_column_name}"].map(lambda filename: filename.split('/').pop())
+    sra_metadata["~{read1_column_name}"] = table["read1_public"].map(lambda filename: filename.split('/').pop())
     sra_metadata.rename(columns={"~{read1_column_name}" : "filename"}, inplace=True)
-    table["~{read1_column_name}"].to_csv("filepaths.tsv", index=False, header=False) # make a file that contains the names of all the reads so we can use gsutil -m cp
+
+    # create a file that contains the original and new public facing filepaths for read1 so we can use gsutil -m cp
+    fp_df = table[["~{read1_column_name}", "read1_public"]]
+    fp_df.to_csv("filepaths.tsv", sep='\t', index=False, header=False)
+
+    # create a dataframe for mapping samples to their new public read paths for terra upload
+    terra_update_df = table[["~{table_name}_id", "read1_public"]]
+
+    # if read2 column is present, repeat steps above for read2
     if "~{read2_column_name}" in sra_metadata.columns:
-      sra_metadata["~{read2_column_name}"] = sra_metadata["~{read2_column_name}"].map(lambda filename2: filename2.split('/').pop())   
+      table["read2_public"] = "~{gcp_bucket_uri}" + "/" + sra_metadata["library_ID"] + "_R2.fastq.gz"
+
+      sra_metadata["~{read2_column_name}"] = table["read2_public"].map(lambda filename: filename.split('/').pop())
       sra_metadata.rename(columns={"~{read2_column_name}" : "filename2"}, inplace=True)
-      table["~{read2_column_name}"].to_csv("filepaths.tsv", mode='a', index=False, header=False)
+
+      fp_df = table[["~{read2_column_name}", "read2_public"]]
+      fp_df.to_csv("filepaths.tsv", mode='a', sep='\t', index=False, header=False)
+
+      terra_update_df = table[["~{table_name}_id", "read1_public", "read2_public"]]
+
+    # write out tsv file which will be used to update the terra table with the new public facing read paths
+    terra_update_df.rename(columns={terra_update_df.columns[0]: "entity:~{table_name}_id"}, inplace=True)
+    terra_update_df.to_csv("upload-terra.tsv", sep='\t', index=False, header=True)
 
     # write metadata tables to tsv output files
     biosample_metadata.to_csv("biosample_table.tsv", sep='\t', index=False)
@@ -156,11 +177,14 @@ task prune_table {
     # copy the raw reads to the bucket specified by user
     export CLOUDSDK_PYTHON=python2.7  # ensure python 2.7 for gsutil commands
     # iterate through file created earlier to grab the uri for each read file
-    while read -r line; do
-      echo "running \`gsutil -m cp ${line} ~{gcp_bucket_uri}\`"
-      gsutil -m cp -n "${line}" "~{gcp_bucket_uri}"
+    while IFS=$'\t' read -r og_fp new_fp; do
+      echo "running \`gsutil -m cp ${og_fp} ${new_fp}\`"
+      gsutil -m cp -n "${og_fp}" "${new_fp}"
     done < filepaths.tsv
     unset CLOUDSDK_PYTHON   # probably not necessary, but in case I do more things afterwards, this resets that env var
+
+    # upload the read1_public and read2_public columns to the Terra table for tracking purposes
+    python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --tsv upload-terra.tsv
   >>>
   output {
     File biosample_table = "biosample_table.tsv"
