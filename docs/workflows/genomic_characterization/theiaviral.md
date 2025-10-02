@@ -315,6 +315,8 @@
 
     ??? toggle "Read Extraction and Binning"
 
+{{ include_md("common_text/kraken_parser_task.md", indent=8)}}
+
 {{ include_md("common_text/krakentools_task.md", condition="theiaviral_panel", indent=8)}}
 
     ??? toggle "Taxonomic Identification"

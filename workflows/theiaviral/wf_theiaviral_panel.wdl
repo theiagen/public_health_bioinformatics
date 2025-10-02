@@ -20,6 +20,7 @@ import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2_task
 import "../../tasks/quality_control/basic_statistics/task_fastq_scan.wdl" as fastq_scan
 import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
+import "../../tasks/utilities/file_handling/task_kraken_parser.wdl" as kraken_parser_task
 import "wf_theiaviral_illumina_pe.wdl" as theiaviral_illumina_pe
 
 workflow theiaviral_panel {
@@ -71,8 +72,13 @@ workflow theiaviral_panel {
       kraken_db = kraken_db,
       workflow_series = "theiaviral_panel"
   }
+  call kraken_parser_task.kraken_output_parser as kraken_parser {
+    input:
+      kraken2_report = select_first([read_QC_trim.kraken_report_clean]),
+      taxon_ids = taxon_ids
+  }
   # get kraken outputs ready will have to run it outside of read qc trim to fix
-  scatter (taxon_id in taxon_ids) {
+  scatter (taxon_id in kraken_parser.parsed_taxon_ids) {
     call krakentools_task.extract_kraken_reads as krakentools {
       input:
         kraken2_output = select_first([read_QC_trim.kraken_classified_report]),
