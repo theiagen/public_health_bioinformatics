@@ -118,11 +118,11 @@ augur_fasttree_version	String	The fasttree version used, blank if other tree met
 augur_iqtree_model_used	String	The iqtree model used during augur tree, blank if iqtree not used	Augur
 augur_iqtree_version	String	The iqtree version used during augur tree (defualt), blank if other tree method used	Augur
 augur_mafft_version	String	The mafft version used in augur align	Augur
-augur_metadata	File	DESCRIPTION	Augur_Prep
+augur_metadata	File	TSV file of the metadata provided as input to the workflow in the proper format for Augur analysis	Augur_Prep
 augur_phb_analysis_date	String	The date the analysis was run	Augur
 augur_phb_version	String	The version of the Public Health Bioinformatics (PHB) repository used	Augur
-augur_prep_phb_analysis_date	String	DESCRIPTION	Augur_Prep
-augur_prep_phb_version	String	DESCRIPTION	Augur_Prep
+augur_prep_phb_analysis_date	String	Date of analysis	Augur_Prep
+augur_prep_phb_version	String	Version of the Public Health Bioinformatics (PHB) repository used	Augur_Prep
 augur_raxml_version	String	The version of raxml used during augur tree, blank if other tree method used	Augur
 augur_version	String	Version of Augur used	Augur
 auspice_input_json	File	JSON file used as input to Auspice	Augur
@@ -217,7 +217,7 @@ clair3_vcf	File	Variant calls in VCF format from Clair3	TheiaViral_ONT
 clair3_version	String	Clair3 Version being used	Clair3_Variants_ONT, TheiaViral_ONT
 clockwork_decontaminated_read1	File	Decontaminated forward reads by Clockwork	TheiaProk_Illumina_PE
 clockwork_decontaminated_read2	File	Decontaminated reverse reads by Clockwork	TheiaProk_Illumina_PE
-combined_assemblies	File	DESCRIPTION	Augur
+combined_assemblies	File	Concatenated FASTA file containing all samples	Augur
 combined_mean_q_clean	Float	Mean quality score for the combined clean reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
 combined_mean_q_raw	Float	Mean quality score for the combined raw reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
 combined_mean_readlength_clean	Float	Mean read length for the combined clean reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
@@ -271,7 +271,6 @@ dorado_model_used	String	Model used for basecalling	Dorado_Basecalling
 dorado_trim_version	String	Version of Dorado used in the `dorado_trim` task	Dorado_Basecalling
 ectyper_database_version	String	Version of the ECTyper database used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_docker	String	Docker image used to run ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-ectyper_docker	String	DESCRIPTION	TheiaProk_ONT
 ectyper_pathodb_version	String	Version of the ECTyper pathotype database used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_pathotype	String	Samples pathotype predicted by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_pathotype_count	String	Number of pathotypes predicted by ECTyper	TheiaProk_FASTA
@@ -283,7 +282,6 @@ ectyper_results	File	TSV file of evidence for ECTyper predicted serotype (see <h
 ectyper_stx_subtypes	String	Shiga toxin subtypes predicted by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_version	String	Version of ECTyper used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_warnings	File	ECTyper warning messages	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-ectyper_warnings	File	DESCRIPTION	TheiaProk_ONT
 emmtyper_docker	String	Docker image for emmtyper 	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 emmtyper_emm_type	String	The emm-type of a Streptococcus pyogenes assembly	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 emmtyper_results_tsv	File	TSV file with emmtyper results	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -386,13 +384,13 @@ freyja_bootstrap_lineages_pdf	String	A boxplot of the bootstrap lineages CSV fil
 freyja_bootstrap_summary	String	A CSV that contains the 0.025, 0.05, 0.25, 0.5 (median), 0.75, 0.95, and 0.975 percentiles for each WHO designated VOI/VOC	Freyja_FASTQ
 freyja_bootstrap_summary_pdf	String	A boxplot of the bootstrap summary CSV file	Freyja_FASTQ
 freyja_coverage	Float	Coverage identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
-freyja_dashboard	File	DESCRIPTION	Freyja_Dashboard
-freyja_dashboard_metadata	File	DESCRIPTION	Freyja_Dashboard
-freyja_dashboard_version	String	DESCRIPTION	Freyja_Dashboard
-freyja_dashboard_wf_analysis_date	String	DESCRIPTION	Freyja_Dashboard
-freyja_dashboard_wf_version	String	DESCRIPTION	Freyja_Dashboard
+freyja_dashboard	File	The HTML file of the dashboard created	Freyja_Dashboard
+freyja_dashboard_metadata	File	The metadata used to create the dashboard	Freyja_Dashboard
+freyja_dashboard_version	String	The version of Freyja used	Freyja_Dashboard
+freyja_dashboard_wf_analysis_date	String	The date of analysis	Freyja_Dashboard
+freyja_dashboard_wf_version	String	The version of the Public Health Bioinformatics (PHB) repository used	Freyja_Dashboard
 freyja_demixed	File	The main output TSV; see the section directly above this table for an explanation	Freyja_FASTQ
-freyja_demixed_aggregate	File	DESCRIPTION	Freyja_Dashboard, Freyja_Plot
+freyja_demixed_aggregate	File	A TSV file that summarizes the `freyja_demixed` outputs for all samples	Freyja_Dashboard, Freyja_Plot
 freyja_demixed_parsed	File	Parsed freyja_demixed file, containing the same information, for easy result concatenation	Freyja_FASTQ
 freyja_depths	File	A TSV listing the depth of every position	Freyja_FASTQ
 freyja_fastq_wf_analysis_date	String	Date of analysis	Freyja_FASTQ
@@ -400,11 +398,11 @@ freyja_fastq_wf_version	String	The version of the Public Health Bioinformatics (
 freyja_lineage_metadata_file	String	Metadata file for lineages identified by Freyja	Freyja_FASTQ
 freyja_lineages	String	Lineages in descending order identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
 freyja_metadata_version	String	Name of lineage metadata file used, or the date if update_db is true	Freyja_FASTQ
-freyja_plot	File	DESCRIPTION	Freyja_Plot
-freyja_plot_metadata	File	DESCRIPTION	Freyja_Plot
-freyja_plot_version	String	DESCRIPTION	Freyja_Plot
-freyja_plot_wf_analysis_date	String	DESCRIPTION	Freyja_Plot
-freyja_plot_wf_version	String	DESCRIPTION	Freyja_Plot
+freyja_plot	File	A PDF of the plot produced by the workflow	Freyja_Plot
+freyja_plot_metadata	File	The metadata used to create the plot	Freyja_Plot
+freyja_plot_version	String	The version of Freyja used	Freyja_Plot
+freyja_plot_wf_analysis_date	String	The date of analysis	Freyja_Plot
+freyja_plot_wf_version	String	The version of the Public Health Bioinformatics (PHB) repository used	Freyja_Plot
 freyja_resid	String	Residual of the weighted least absolute deviation problem used to estimate lineage abundances identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
 freyja_summarized	String	Sum of all lineage abundances in a particular WHO designation identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
 freyja_variants	File	The TSV file containing the variants identified by Freyja	Freyja_FASTQ
@@ -1096,9 +1094,6 @@ snippy_variants_version	String	Version of Snippy used	Snippy_Variants
 snippy_variants_wf_version	String	Version of Snippy_Variants used	Snippy_Variants
 snippy_wg_snp_matrix	File	CSV file of whole genome pairwise SNP distances between samples, calculated from the final alignment	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree
 snp_matrix	File	The SNP distance matrix for all samples used in the phylogenetic tree	Augur
-snp_sites_docker	String	Docker image for snp_sites task	Core_Gene_SNP
-snp_sites_multifasta	File	Curated alignment produced by SNP-sites	Core_Gene_SNP
-snp_sites_version	String	Version of SNP-sites used	Core_Gene_SNP
 sonneityping_final_genotype	String	Final genotype call from Mykrobe, via sonneityper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sonneityping_final_report_tsv	File	Detailed TSV report from mykrobe, via sonneityper (see <https://github.com/katholt/sonneityping#example-output>)	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sonneityping_genotype_confidence	String	Confidence in the final genotype call from sonneityper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT

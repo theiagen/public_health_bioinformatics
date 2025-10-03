@@ -326,13 +326,13 @@ augur_export	docker	String	The Docker container to use for the task	us-docker.pk
 augur_export	include_root_sequence	Boolean	Export an additional JSON containing the root sequence used to identify mutations	False	Optional	Augur	general
 augur_export	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	64	Optional	Augur	runtime
 augur_export	title	String	The title to be displayed by auspice		Optional	Augur	general
-augur_prep	collection_date	String	DESCRIPTION		Optional	Augur_Prep	general
-augur_prep	continent	String	DESCRIPTION		Optional	Augur_Prep	general
-augur_prep	country	String	DESCRIPTION		Optional	Augur_Prep	general
-augur_prep	county	String	DESCRIPTION		Optional	Augur_Prep	general
-augur_prep	nextclade_clade	String	DESCRIPTION		Optional	Augur_Prep	general
-augur_prep	pango_lineage	String	DESCRIPTION		Optional	Augur_Prep	general
-augur_prep	state	String	DESCRIPTION		Optional	Augur_Prep	general
+augur_prep	collection_date	String	Collection date of the sample		Optional	Augur_Prep	general
+augur_prep	continent	String	Continent where sample was collected		Optional	Augur_Prep	general
+augur_prep	country	String	Country where sample was collected		Optional	Augur_Prep	general
+augur_prep	county	String	County (or smaller locality) where sample was collected		Optional	Augur_Prep	general
+augur_prep	nextclade_clade	String	The Nextclade clade of the sample		Optional	Augur_Prep	general
+augur_prep	pango_lineage	String	The Pangolin lineage of the sample		Optional	Augur_Prep	general
+augur_prep	state	String	State (or province) where sample was collected		Optional	Augur_Prep	general
 augur_refine	branch_length_inference	String	Branch length mode of timetree to use; options: "auto", "joint", "marginal", "input"	auto	Optional	Augur	general
 augur_refine	clock_filter_iqd	Int	Remove tips that deviate more than n_iqd interquartile ranges from the root-to-tip vs time regression	4	Optional	Augur	general
 augur_refine	clock_rate	Float	Fixed clock rate to use for time tree calculations		Optional	Augur	general
@@ -578,7 +578,6 @@ core_gene_snp_workflow	midpoint_root_tree	Boolean	Boolean variable that will ins
 core_gene_snp_workflow	pan_tree	Boolean	Boolean variable that instructs the workflow to create a phylogenetic tree and SNP distance matrix from the pangenome alignment. Align must also be set to true.	False	Optional	Core_Gene_SNP	general
 core_gene_snp_workflow	phandango_coloring	Boolean	Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true.	False	Optional	Core_Gene_SNP	general
 core_gene_snp_workflow	sample_names	Array[String]	Array of sample_ids from the data table used		Optional	Core_Gene_SNP	general
-core_gene_snp_workflow	snp_sites	Boolean	DESCRIPTION	True	Optional	Core_Gene_SNP	general
 core_iqtree	alrt	Int	Number of replicates to use for the SH-like approximate likelihood ratio test (Minimum recommended= 1000). Follows IQ-TREE "-alrt" option	1000	Optional	Core_Gene_SNP	general
 core_iqtree	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Core_Gene_SNP	runtime
 core_iqtree	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime
@@ -597,10 +596,6 @@ core_snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Ge
 core_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
 core_snp_dists	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Core_Gene_SNP, kSNP3, kSNP4	docker
 core_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
-core_snp_sites	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Gene_SNP	runtime
-core_snp_sites	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime
-core_snp_sites	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1	Optional	Core_Gene_SNP	docker
-core_snp_sites	memory	Int	Amount of memory (in GB) to allocate to the task	2	Optional	Core_Gene_SNP	runtime
 create_table_from_array	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Dorado_Basecalling	runtime
 create_table_from_array	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Dorado_Basecalling	runtime
 create_table_from_array	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	Dorado_Basecalling	docker
@@ -1099,7 +1094,7 @@ make_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Create_Terr
 make_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Create_Terra_Table	runtime
 make_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	Create_Terra_Table	docker
 make_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Create_Terra_Table	runtime
-make_table	responsible_workflow	String	DESCRIPTION	Create_Terra_Table_PHB	Optional	Create_Terra_Table	general
+make_table	responsible_workflow	String	Internal component, do not modify	Create_Terra_Table_PHB	Optional	Create_Terra_Table	general
 mashtree_fasta	data_summary_column_names	String	A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix); e.g., "amrfinderplus_amr_genes,amrfinderplus_virulence_genes"		Optional	MashTree_FASTA	general
 mashtree_fasta	data_summary_terra_project	String	The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL		Optional	MashTree_FASTA	general
 mashtree_fasta	data_summary_terra_table	String	The name of the sample-level Terra data table that will be used for generating a data summary		Optional	MashTree_FASTA	general
@@ -1119,15 +1114,15 @@ mashtree_task	sort_order	String	For neighbor-joining, the sort order can make a 
 mashtree_task	truncLength	Int	How many characters to keep in a filename	250	Optional	MashTree_FASTA	general
 mask_low_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_ONT	runtime
 mask_low_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime
-mask_low_coverage	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0	Optional	TheiaViral_ONT	docker
-mask_low_coverage	memory	Int	Amount of memory (in GB) to allocate to the task	8	Optional	TheiaViral_ONT	runtime
+mask_low_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0	Optional	TheiaViral_ONT	docker
+mask_low_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_ONT	runtime
 megahit	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime
 megahit	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime
-megahit	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9	Optional	TheiaViral_Illumina_PE	docker
-megahit	kmers	String	DESCRIPTION		Optional	TheiaViral_Illumina_PE	general
-megahit	megahit_opts	String	DESCRIPTION		Optional	TheiaViral_Illumina_PE	general
-megahit	memory	Int	Amount of memory (in GB) to allocate to the task	16	Optional	TheiaViral_Illumina_PE	runtime
-megahit	min_contig_length	Int	DESCRIPTION	1	Optional	TheiaViral_Illumina_PE	general
+megahit	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9	Optional	TheiaViral_Illumina_PE	docker
+megahit	kmers	String	Comma-separated list of kmer sizes to use for assembly. All must be odd, in the range 15-255, increment <= 28	21,29,39,59,79,99,119,141	Optional	TheiaViral_Illumina_PE	general
+megahit	megahit_opts	String	Additional parameters for MEGAHIT assembler		Optional	TheiaViral_Illumina_PE	general
+megahit	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaViral_Illumina_PE	runtime
+megahit	min_contig_length	Int	Minimum contig length for MEGAHIT assembler	1	Optional	TheiaViral_Illumina_PE	general
 mercury	amplicon_primer_scheme	String	Populate to overwrite amplicon_primer_scheme column		Optional	Mercury_Prep_N_Batch	general
 mercury	amplicon_size	String	Populate to overwrite amplicon_size column		Optional	Mercury_Prep_N_Batch	general
 mercury	authors	String	Populate to overwrite authors column		Optional	Mercury_Prep_N_Batch	general
@@ -1202,7 +1197,6 @@ merlin_magic	chroquetas_min_percent_coverage	Int	Minimum percent coverage of Fun
 merlin_magic	chroquetas_min_percent_identity	Int	Minimum percent identity of FungAMR reference protein		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	chroqutas_translation_code	String	Alternative codon translation code. Set for each species by default and not recommended to change		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	cladetyper_kmer_size	Int	Kmer size for cladetyper		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	cladetyper_kmer_size	Int	Kmer size for cladtyper		Optional	TheiaEuk_ONT	general
 merlin_magic	cladetyper_kmer_size	Int	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	cladetyper_max_distance	Float	The maximum GAMBIT distance to report a *C. auris* clade hit	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	cladetyper_max_distance	Float	Internal component, do not modify	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
@@ -1631,8 +1625,10 @@ ncbi_datasets_download_genome_accession	use_ncbi_virus	Boolean	Set to true to do
 ncbi_identify	complete	Boolean	Only query genomes labeled complete	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 ncbi_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 ncbi_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	Host_Decontaminate	docker
+ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
+ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate	runtime
+ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 ncbi_identify	rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.		Optional	Host_Decontaminate	general
 ncbi_identify	refseq	Boolean	Only query RefSeq genomes	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 ncbi_identify	summary_limit	Int	Maximum number of genomes to return in the summary	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
@@ -2021,7 +2017,7 @@ read_QC_trim_ont	downsampling_coverage	Float	Internal component, do not modify	1
 read_QC_trim_ont	genome_length	Int	Length of the genome	5000000	Optional	Freyja_FASTQ	general
 read_QC_trim_ont	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime
 read_QC_trim_ont	kraken2_recalculate_abundances_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime
-read_QC_trim_ont	kraken2_recalculate_abundances_docker	String	Docker image to use for the task		Optional	Freyja_FASTQ	docker
+read_QC_trim_ont	kraken2_recalculate_abundances_docker	String	The Docker container to use for the task		Optional	Freyja_FASTQ	docker
 read_QC_trim_ont	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime
 read_QC_trim_ont	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime
 read_QC_trim_ont	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.		Optional	Freyja_FASTQ	general
@@ -2051,45 +2047,45 @@ read_QC_trim_ont	rasusa_memory	Int	Amount of memory/RAM (in GB) to allocate to t
 read_QC_trim_ont	rasusa_number_of_reads	Int	Subsample to a specific number of reads		Optional	Freyja_FASTQ	general
 read_QC_trim_ont	rasusa_seed	Int	Random seed to use		Optional	Freyja_FASTQ	general
 read_QC_trim_ont	run_prefix	String	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_pe	adapters	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_pe	bbduk_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	call_kraken	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	call_midas	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	adapters	File	A FASTA file containing adapter sequences		Optional	Freyja_FASTQ	general
+read_QC_trim_pe	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	extract_unclassified	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	fastp_args	String	Internal component, do not modify	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host	String	Internal component, do not modify		Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_complete_only	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_decontaminate_mem	Int	Internal component, do not modify	32	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_is_accession	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_refseq	Boolean	Internal component, do not modify	True	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	kraken_cpu	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	kraken_db	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_pe	kraken_disk_size	Int	Internal component, do not modify	100	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	kraken_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	midas_db	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_pe	phix	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_pe	read_processing	String	Internal component, do not modify	trimmomatic	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	read_qc	String	Internal component, do not modify	fastq_scan	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.		Optional	Freyja_FASTQ	general
+read_QC_trim_pe	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	midas_db	File	Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.		Optional	Freyja_FASTQ	general
+read_QC_trim_pe	phix	File	The file containing the phix sequence to be used during bbduk task		Optional	Freyja_FASTQ	general
+read_QC_trim_pe	read_processing	String	Options: "trimmomatic" or "fastp" to indicate which read trimming module to use	trimmomatic	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	read_qc	String	Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality.	fastq_scan	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	taxon_id	Int	Internal component, do not modify	0	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	trim_window_size	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ	general
-read_QC_trim_pe	trimmomatic_args	String	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_se	adapters	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_se	bbduk_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ	general
-read_QC_trim_se	call_kraken	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
-read_QC_trim_se	call_midas	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
-read_QC_trim_se	fastp_args	String	DESCRIPTION	-g -5 20 -3 20	Optional	Freyja_FASTQ	general
-read_QC_trim_se	kraken_cpu	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ	general
-read_QC_trim_se	kraken_db	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_se	kraken_disk_size	Int	Internal component, do not modify	100	Optional	Freyja_FASTQ	general
-read_QC_trim_se	kraken_memory	Int	Internal component, do not modify	8	Optional	Freyja_FASTQ	general
-read_QC_trim_se	midas_db	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_se	phix	File	Internal component, do not modify		Optional	Freyja_FASTQ	general
-read_QC_trim_se	read_processing	String	Internal component, do not modify	trimmomatic	Optional	Freyja_FASTQ	general
-read_QC_trim_se	read_qc	String	Internal component, do not modify	fastq_scan	Optional	Freyja_FASTQ	general
-read_QC_trim_se	trim_quality_min_score	Int	Internal component, do not modify	30	Optional	Freyja_FASTQ	general
-read_QC_trim_se	trim_window_size	Int	Internal component, do not modify	4	Optional	Freyja_FASTQ	general
-read_QC_trim_se	trimmomatic_args	String	Internal component, do not modify		Optional	Freyja_FASTQ	general
+read_QC_trim_pe	trim_window_size	Int	The window size to use during trimming	4	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	trimmomatic_args	String	Additional command-line arguments to use with trimmomatic		Optional	Freyja_FASTQ	general
+read_QC_trim_se	adapters	File	A FASTA file containing adapter sequences		Optional	Freyja_FASTQ	general
+read_QC_trim_se	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	general
+read_QC_trim_se	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general
+read_QC_trim_se	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general
+read_QC_trim_se	fastp_args	String	Additional arguments to use with fastp	-g -5 20 -3 20	Optional	Freyja_FASTQ	general
+read_QC_trim_se	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	general
+read_QC_trim_se	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.		Optional	Freyja_FASTQ	general
+read_QC_trim_se	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	general
+read_QC_trim_se	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	general
+read_QC_trim_se	midas_db	File	Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.		Optional	Freyja_FASTQ	general
+read_QC_trim_se	phix	File	The file containing the phix sequence to be used during bbduk task		Optional	Freyja_FASTQ	general
+read_QC_trim_se	read_processing	String	Options: "trimmomatic" or "fastp" to indicate which read trimming module to use	trimmomatic	Optional	Freyja_FASTQ	general
+read_QC_trim_se	read_qc	String	Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality.	fastq_scan	Optional	Freyja_FASTQ	general
+read_QC_trim_se	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	general
+read_QC_trim_se	trim_window_size	Int	The window size to use during trimming	4	Optional	Freyja_FASTQ	general
+read_QC_trim_se	trimmomatic_args	String	Additional command-line arguments to use with trimmomatic		Optional	Freyja_FASTQ	general
 referenceseeker	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime
 referenceseeker	disk_size	Int	Amount of storage (in GB) to allocate to the task	200	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime
 referenceseeker	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	docker
@@ -2212,7 +2208,7 @@ snippy_tree_wf	snippy_core_cpu	Int	Number of CPUs to allocate to the task	8	Opti
 snippy_tree_wf	snippy_core_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime
 snippy_tree_wf	snippy_core_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker
 snippy_tree_wf	snippy_core_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime
-snippy_tree_wf	snippy_variants_qc_metrics	Array[File]	DESCRIPTION		Optional	Snippy_Tree	general
+snippy_tree_wf	snippy_variants_qc_metrics	Array[File]	Files produced by the Snippy_Variants workflow used to concatenate the reports for each sample in the tree		Optional	Snippy_Tree	general
 snippy_tree_wf	snp_dists_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker
 snippy_tree_wf	snp_sites_cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime
 snippy_tree_wf	snp_sites_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime
@@ -2711,7 +2707,9 @@ vadr_update	vadr_model_file	File	Path to the a tar + gzipped VADR model file	gs:
 vadr_update	vadr_opts	String	Options for the v-annotate.pl VADR script	 "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"	Optional	VADR_Update	general
 vadr_update	vadr_skip_length	Int	Minimum assembly length (unambiguous) to run VADR	10000	Optional	VADR_Update	general
 version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, ChroQueTas, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	docker
+version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	ChroQueTas	docker
 version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, ChroQueTas, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	general
+version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	ChroQueTas	general
 wg_reorder_matrix	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Tree	runtime
 wg_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Tree	runtime
 wg_reorder_matrix	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1	Optional	Snippy_Tree	docker
