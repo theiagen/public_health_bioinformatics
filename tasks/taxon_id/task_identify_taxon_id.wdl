@@ -40,6 +40,16 @@ task identify_taxon_id {
       query_rank = "~{rank}".lower()
       report = report['taxonomy']
 
+      # See https://github.com/ncbi/datasets/blob/6b6f65e5bcdb4fb99e173bb608e25f41429e3669/client/apps/public/Datasets/v2/datasets/ResolveTaxons.go#L25
+      ranks_below_species = [
+        'subspecies',
+        'strain',
+        'subvariety',
+        'serotype',
+        'isolate',
+        'no rank'
+      ]
+
       # Raw taxon name, id, and rank is based on the original user input query
       raw_taxon_name = report['current_scientific_name'].get('name', '')
       raw_taxon_id = report.get('tax_id', '')
@@ -53,10 +63,10 @@ task identify_taxon_id {
 
       # Reported taxon name, id, and rank is based on the ranked user input query (if provided/found)
       # if no rank provided, default to raw taxon rank, unless taxon is below species level (no rank) then set to "species"
-      reported_taxon_rank = query_rank if query_rank else ('species' if raw_taxon_rank == 'no rank' else raw_taxon_rank)
+      reported_taxon_rank = query_rank if query_rank else ('species' if raw_taxon_rank in ranks_below_species else raw_taxon_rank)
       if query_rank and (reported_taxon_rank not in report['classification']):
         reported_taxon_rank = reported_taxon_name = reported_taxon_id = 'N/A'
-        raise ValueError(f"ERROR: Input taxon rank '{query_rank}' is not valid (too specific) for taxon: '{query_taxon}'.")
+        raise ValueError(f"ERROR: Input taxon rank '{query_rank}' is not valid for taxon: '{query_taxon}'.")
       else:
         reported_taxon_name = report['classification'].get(reported_taxon_rank, {}).get('name', '')
         reported_taxon_id = report['classification'].get(reported_taxon_rank, {}).get('id', '')
