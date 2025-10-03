@@ -28,8 +28,6 @@ workflow morgana_magic {
     String? irma_docker_image
     Boolean? irma_keep_ref_deletions
     Int? irma_memory
-    File? irma_ha_bam
-    File? irma_na_bam
     # flu track - genoflu
     Int? genoflu_cpu
     File? genoflu_cross_reference
@@ -43,7 +41,6 @@ workflow morgana_magic {
     Int? abricate_flu_memory
     Int? abricate_flu_min_percent_coverage
     Int? abricate_flu_min_percent_identity
-    Int? flu_track_min_depth
     # nextclade inputs
     String? nextclade_dataset_name
     String? nextclade_dataset_tag
@@ -76,7 +73,7 @@ workflow morgana_magic {
     Int? gene_coverage_cpu
     Int? gene_coverage_disk_size
     Int? gene_coverage_memory
-    Int? gene_coverage_docker
+    String? gene_coverage_docker
     # quasitools inputs
     Int? quasitools_cpu
     Int? quasitools_memory
@@ -121,7 +118,7 @@ workflow morgana_magic {
         samplename = samplename,
         assembly_fasta = assembly_fasta,
         seq_method = seq_method,
-        standardized_organism = select_first([organism_parameters.standardized_organism]),
+        standardized_organism = organism_parameters.standardized_organism,
         assembly_metrics_cpu = assembly_metrics_cpu,
         assembly_metrics_disk_size = assembly_metrics_disk_size,
         assembly_metrics_docker = assembly_metrics_docker,

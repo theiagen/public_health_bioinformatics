@@ -1,11 +1,8 @@
 version 1.0
 
-import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check_phb_task
-import "../../tasks/species_typing/betacoronavirus/task_pangolin.wdl" as pangolin
 import "../../tasks/task_versioning.wdl" as versioning
-import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../utilities/wf_flu_track.wdl" as run_flu_track
 import "../utilities/wf_morgana_magic.wdl" as morgana_magic
