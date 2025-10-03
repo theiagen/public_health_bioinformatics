@@ -38,7 +38,7 @@ task export_taxon_table {
     for index in "${!taxon_array[@]}"; do
       taxon=${taxon_array[$index]}
       table=${table_array[$index]}
-      if [[ "${sample_taxon}" == *"${taxon}"* ]]; then
+      if [[ "${sample_taxon,,}" == *"${taxon,,}"* ]]; then
         sample_table=${table}
         break
       else 
