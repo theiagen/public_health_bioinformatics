@@ -101,6 +101,7 @@ mercury_prep_n_batch	sample_names	Array[String]	The samples you want to submit		
 mercury_prep_n_batch	terra_project_name	String	The name of your Terra project. You can find this information in the URL of the webpage of your Terra dashboard. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is example		Required	Mercury_Prep_N_Batch	general
 mercury_prep_n_batch	terra_table_name	String	The name of the Terra table where your samples can be found. Do not include the entity: prefix, the _id suffix, or the _set_id suffix, just the name of the sample-level data table as listed in the sidebar on lefthand side of the Terra Data tab.		Required	Mercury_Prep_N_Batch	general
 mercury_prep_n_batch	terra_workspace_name	String	The name of your Terra workspace where your samples can be found. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is my_workspace		Required	Mercury_Prep_N_Batch	general
+morgana_magic	seq_method	String	DESCRIPTION		Required	TheiaCoV_FASTA_Batch	general
 nextclade_batch	assembly_fastas	Array[File]	The assembly files for your samples in FASTA format		Required	Nextclade_Batch	general
 nextclade_batch	dataset_name	String	What nextclade dataset name to run nextclade on; some options are: "sars-cov-2", "flu_h1n1pdm_ha", "flu_h1n1pdm_na", "flu_h3n2_ha", "flu_h3n2_na", "flu_vic_ha", "flu_vic_na", "flu_yam_ha", "hMPXV", "hMPXV_B1", "MPXV", "rsv_a" and "rsv_b"		Required	Nextclade_Batch	general
 ont_barcode_concatenation	input_bucket_path	String	The full path to your **unconcatenated** data's Google bucket folder location, including the gs://; can be easily copied by right-clicking and copying the link address in the header after navigating to the folder in the "Files" section of the "Data" tab on Terra (see above for examples)		Required	ONT_Barcode_Concatenation	general
@@ -920,13 +921,6 @@ gamma	min_percent_identity	Int	Threshold of identity for gene matches in percent
 gamma	output_fasta	Boolean	Allows GAMMA to output gene matches in FASTA format	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 gamma	output_gff	Boolean	Allows GAMMA to output gene matches in GFF format	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 gamma	run_gammas	Boolean	Turns on GAMMA-S which runs GAMMA on nucleotide sequences rather than translating input sequences and matches	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-gene_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
-gene_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
-gene_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	docker
-gene_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
-gene_coverage	min_depth	Int	The minimum depth to determine if a position was covered.	10	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
-gene_coverage	sc2_s_gene_start	Int	start nucleotide position of the SARS-CoV-2 Spike gene	21563	Optional	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
-gene_coverage	sc2_s_gene_stop	Int	End/Last nucleotide position of the SARS-CoV-2 Spike gene	25384	Optional	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
 get_fasta_genome_size	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_FASTQ	runtime
 get_fasta_genome_size	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	Freyja_FASTQ	runtime
 get_fasta_genome_size	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/seqkit:2.4.0--h9ee0642_0	Optional	Freyja_FASTQ	docker
@@ -1554,39 +1548,74 @@ minimap2_reads	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaMe
 minimap2_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime
 minimap2_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22	Optional	TheiaMeta_Illumina_PE	docker
 minimap2_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaMeta_Illumina_PE	runtime
-morgana_magic	abricate_flu_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	abricate_flu_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	abricate_flu_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-morgana_magic	abricate_flu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	abricate_flu_min_percent_coverage	Int	Minimum DNA percent coverage	60	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
-morgana_magic	abricate_flu_min_percent_identity	Int	Minimum DNA percent identity	70	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
-morgana_magic	assembly_metrics_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	assembly_metrics_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	assembly_metrics_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-morgana_magic	assembly_metrics_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	genoflu_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	genoflu_cross_reference	File	An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
-morgana_magic	genoflu_disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	genoflu_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.06	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-morgana_magic	genoflu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	irma_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	irma_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	irma_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/irma:1.2.0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-morgana_magic	irma_keep_ref_deletions	Boolean	True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting N's or deleting the sequence entirely. False sets this IRMA paramater to "DEL" and true sets it to "NNN"	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
-morgana_magic	irma_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	nextclade_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	nextclade_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	nextclade_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-morgana_magic	nextclade_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	nextclade_output_parser_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	nextclade_output_parser_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	nextclade_output_parser_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-morgana_magic	nextclade_output_parser_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	pangolin_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	pangolin_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	pangolin_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-morgana_magic	pangolin_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general
+morgana_magic	abricate_flu_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	abricate_flu_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	abricate_flu_docker	String	The Docker container to use for the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	docker
+morgana_magic	abricate_flu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	abricate_flu_min_percent_coverage	Int	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
+morgana_magic	abricate_flu_min_percent_identity	Int	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
+morgana_magic	assembly_metrics_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	assembly_metrics_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	assembly_metrics_docker	String	The Docker container to use for the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	docker
+morgana_magic	assembly_metrics_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	flu_track_min_depth	Int	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	gene_coverage_bam	File	DESCRIPTION		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	gene_coverage_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+morgana_magic	gene_coverage_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+morgana_magic	gene_coverage_docker	Int	The Docker container to use for the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker
+morgana_magic	gene_coverage_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+morgana_magic	gene_coverage_min_depth	Int	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	genoflu_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	genoflu_cross_reference	File	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	reference
+morgana_magic	genoflu_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	genoflu_docker	String	The Docker container to use for the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	docker
+morgana_magic	genoflu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	irma_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	irma_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	irma_docker_image	String	The Docker container to use for the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	docker
+morgana_magic	irma_ha_bam	File	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	irma_keep_ref_deletions	Boolean	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	reference
+morgana_magic	irma_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	irma_na_bam	File	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	nextclade_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	nextclade_dataset_name	String	DESCRIPTION		Optional	TheiaCoV_FASTA, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	nextclade_dataset_tag	String	DESCRIPTION		Optional	TheiaCoV_FASTA, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	nextclade_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	nextclade_docker_image	String	The Docker container to use for the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	docker
+morgana_magic	nextclade_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	nextclade_output_parser_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	nextclade_output_parser_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	nextclade_output_parser_docker	String	The Docker container to use for the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	docker
+morgana_magic	nextclade_output_parser_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	number_ATCG	Int	DESCRIPTION		Optional	TheiaCoV_FASTA_Batch	general
+morgana_magic	pangolin_analysis_mode	String	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	pangolin_arguments	String	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	pangolin_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	pangolin_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	pangolin_docker_image	String	The Docker container to use for the task		Optional	TheiaCoV_FASTA	docker
+morgana_magic	pangolin_expanded_lineage	Boolean	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	pangolin_max_ambig	Float	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	pangolin_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
+morgana_magic	pangolin_min_length	Int	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	pangolin_skip_designation_cache	Boolean	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	pangolin_skip_scorpio	Boolean	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	quasitools_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+morgana_magic	quasitools_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+morgana_magic	quasitools_docker	String	The Docker container to use for the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker
+morgana_magic	quasitools_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+morgana_magic	read1	File	DESCRIPTION		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	general
+morgana_magic	read2	File	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
+morgana_magic	reference_gene_locations_bed	File	DESCRIPTION		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	reference
+morgana_magic	sc2_s_gene_start	Int	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	sc2_s_gene_stop	Int	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	vadr_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+morgana_magic	vadr_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+morgana_magic	vadr_max_length	Int	DESCRIPTION		Optional	TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	vadr_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+morgana_magic	vadr_min_length	Int	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	vadr_model_file	File	DESCRIPTION		Optional	TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	vadr_options	String	DESCRIPTION		Optional	TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	vadr_skip_length	Int	DESCRIPTION		Optional	TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	general
 mutation_context	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime
 mutation_context	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime
 mutation_context	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/nextstrain-mpox-mutation-context:2024-06-27	Optional	Augur	docker
@@ -1625,10 +1654,8 @@ ncbi_datasets_download_genome_accession	use_ncbi_virus	Boolean	Set to true to do
 ncbi_identify	complete	Boolean	Only query genomes labeled complete	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 ncbi_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 ncbi_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	Host_Decontaminate	docker
-ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate	runtime
-ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	docker
+ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 ncbi_identify	rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.		Optional	Host_Decontaminate	general
 ncbi_identify	refseq	Boolean	Only query RefSeq genomes	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 ncbi_identify	summary_limit	Int	Maximum number of genomes to return in the summary	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
@@ -1652,20 +1679,20 @@ nextclade_batch	gene_annotations_gff	File	A genome annotations file for codon-aw
 nextclade_batch	input_ref	File	An optional FASTA file containing reference sequence. This file should contain exactly 1 sequence	Uses the reference fasta associated with the specified nextclade dataset name	Optional	Nextclade_Batch	reference
 nextclade_batch	pathogen_json	File	An optional pathogen JSON file containing configuration and data specific to a pathogen	Uses the reference pathogen JSON file associated with the specified nextclade dataset name	Optional	Nextclade_Batch	general
 nextclade_batch	reference_tree_json	File	An optional phylogenetic reference tree file which serves as a target for phylogenetic placement	Uses the reference tree associated with the specified nextclade dataset name	Optional	Nextclade_Batch	reference
-nextclade_output_parser	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
-nextclade_output_parser	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
-nextclade_output_parser	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	docker
-nextclade_output_parser	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
-nextclade_v3	auspice_reference_tree_json	File	An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.	Inherited from nextclade dataset	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	reference
-nextclade_v3	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
-nextclade_v3	custom_input_dataset	File	For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.	Defaults are GenoFLU Genotype specific. Please find these default values here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
-nextclade_v3	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
-nextclade_v3	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.16.0	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	docker
-nextclade_v3	gene_annotations_gff	File	A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: <https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html>	Inherited from nextclade dataset	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
-nextclade_v3	input_ref	File	A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: <https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html>	Inherited from nextclade dataset	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	reference
-nextclade_v3	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
-nextclade_v3	nextclade_pathogen_json	File	General dataset configuration file. See here for more info: <https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html>	Inherited from nextclade dataset	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
-nextclade_v3	verbosity	String	other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)	warn	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
+nextclade_output_parser	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT	runtime
+nextclade_output_parser	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ONT	runtime
+nextclade_output_parser	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim	Optional	TheiaCoV_ONT	docker
+nextclade_output_parser	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_ONT	runtime
+nextclade_v3	auspice_reference_tree_json	File	An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.	Inherited from nextclade dataset	Optional	TheiaCoV_ONT	reference
+nextclade_v3	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT	runtime
+nextclade_v3	custom_input_dataset	File	For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.	Defaults are GenoFLU Genotype specific. Please find these default values here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_ONT	general
+nextclade_v3	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ONT	runtime
+nextclade_v3	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.16.0	Optional	TheiaCoV_ONT	docker
+nextclade_v3	gene_annotations_gff	File	A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: <https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html>	Inherited from nextclade dataset	Optional	TheiaCoV_ONT	general
+nextclade_v3	input_ref	File	A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: <https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html>	Inherited from nextclade dataset	Optional	TheiaCoV_ONT	reference
+nextclade_v3	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_ONT	runtime
+nextclade_v3	nextclade_pathogen_json	File	General dataset configuration file. See here for more info: <https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html>	Inherited from nextclade dataset	Optional	TheiaCoV_ONT	general
+nextclade_v3	verbosity	String	other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)	warn	Optional	TheiaCoV_ONT	general
 nextclade_v3_set	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Nextclade_Batch	runtime
 nextclade_v3_set	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Nextclade_Batch	runtime
 nextclade_v3_set	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5	Optional	Nextclade_Batch	docker
@@ -1730,16 +1757,16 @@ pan_snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Gen
 pan_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
 pan_snp_dists	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Core_Gene_SNP, kSNP3, kSNP4	docker
 pan_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
-pangolin4	analysis_mode	String	Used to switch between usher and pangolearn analysis modes. Only use usher because pangolearn is no longer supported as of Pangolin v4.3 and higher versions.		Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
-pangolin4	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
-pangolin4	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
-pangolin4	expanded_lineage	Boolean	True/False that determines if a lineage should be expanded without aliases (e.g., BA.1 → B.1.1.529.1)	True	Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
-pangolin4	max_ambig	Float	The maximum proportion of Ns allowed for pangolin to attempt an assignment	0.5	Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
-pangolin4	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
-pangolin4	min_length	Int	Minimum query length allowed for pangolin to attempt an assignment	10000	Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
-pangolin4	pangolin_arguments	String	Optional arguments for pangolin e.g. ''--skip-scorpio''		Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
-pangolin4	skip_designation_cache	Boolean	A True/False option that determines if the designation cache should be used	False	Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
-pangolin4	skip_scorpio	Boolean	A True/False option that determines if scorpio should be skipped.	False	Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
+pangolin4	analysis_mode	String	Used to switch between usher and pangolearn analysis modes. Only use usher because pangolearn is no longer supported as of Pangolin v4.3 and higher versions.		Optional	Pangolin_Update	general
+pangolin4	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Pangolin_Update	runtime
+pangolin4	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Pangolin_Update	runtime
+pangolin4	expanded_lineage	Boolean	True/False that determines if a lineage should be expanded without aliases (e.g., BA.1 → B.1.1.529.1)	True	Optional	Pangolin_Update	general
+pangolin4	max_ambig	Float	The maximum proportion of Ns allowed for pangolin to attempt an assignment	0.5	Optional	Pangolin_Update	general
+pangolin4	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Pangolin_Update	runtime
+pangolin4	min_length	Int	Minimum query length allowed for pangolin to attempt an assignment	10000	Optional	Pangolin_Update	general
+pangolin4	pangolin_arguments	String	Optional arguments for pangolin e.g. ''--skip-scorpio''		Optional	Pangolin_Update	general
+pangolin4	skip_designation_cache	Boolean	A True/False option that determines if the designation cache should be used	False	Optional	Pangolin_Update	general
+pangolin4	skip_scorpio	Boolean	A True/False option that determines if scorpio should be skipped.	False	Optional	Pangolin_Update	general
 pangolin_update	lineage_log	File	TSV file detailing previous lineage assignments and software versions for this sample.		Optional	Pangolin_Update	general
 pangolin_update	new_pangolin_docker	String	The Pangolin docker image used to update the Pangolin lineage assignments.		Optional	Pangolin_Update	general
 pangolin_update	organism	String	The organism to be analyzed	sars-cov-2	Optional	Pangolin_Update	general
@@ -1861,15 +1888,6 @@ qc_check_task	r2_mean_readlength_raw	Float	Internal component, do not modify		Op
 qc_check_task	sc2_s_gene_mean_coverage	Float	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 qc_check_task	sc2_s_gene_percent_coverage	Float	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 qc_check_task	vadr_num_alerts	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-quasitools_illumina_pe	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_Illumina_PE	runtime
-quasitools_illumina_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_Illumina_PE	runtime
-quasitools_illumina_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/quasitools:0.7.0--pyh864c0ab_1	Optional	TheiaCoV_Illumina_PE	docker
-quasitools_illumina_pe	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_Illumina_PE	runtime
-quasitools_ont	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT	runtime
-quasitools_ont	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ONT	runtime
-quasitools_ont	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/quasitools:0.7.0--pyh864c0ab_1	Optional	TheiaCoV_ONT	docker
-quasitools_ont	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaCoV_ONT	runtime
-quasitools_ont	read2	File	Internal component, do not modify		Optional	TheiaCoV_ONT	general
 quast	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 quast	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 quast	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/quast:5.0.2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
@@ -2696,10 +2714,10 @@ usher	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optiona
 usher	mutation_annotated_tree_pb	File	Required for organisms other than sars-cov-2, mpox, RSV-A or RSV-B. This is the mutation-annotated global phylogeny upon which your samples will be placed		Optional, Required	Usher	general
 usher	reference_genome	File	Required for organisms other than sars-cov-2, mpox, RSV-A or RSV-B. This is the reference genome used to determine your sequence's mutations to accurately place the sample on the phylogeny.		Optional, Required	Usher	general
 usher	subtree_size	Int	Indicates how many of the closest-related samples you want to show in a subtree; more subtrees are made if there is more sequence diversity in the set of input samples (multiple subtrees are only generated if this workflow is run on the set level).	20	Optional	Usher	general
-vadr	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, VADR_Update	runtime
-vadr	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, VADR_Update	runtime
-vadr	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, VADR_Update	docker
-vadr	min_length	Int	Minimum length subsequence to possibly replace Ns for the fasta-trim-terminal-ambigs.pl VADR script	50	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, VADR_Update	general
+vadr	cpu	Int	Number of CPUs to allocate to the task	4	Optional	VADR_Update	runtime
+vadr	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	VADR_Update	runtime
+vadr	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4	Optional	VADR_Update	docker
+vadr	min_length	Int	Minimum length subsequence to possibly replace Ns for the fasta-trim-terminal-ambigs.pl VADR script	50	Optional	VADR_Update	general
 vadr_update	organism	String	Target organism for VADR	sars-cov-2	Optional	VADR_Update	general
 vadr_update	vadr_max_length	Int	Maximum length for the fasta-trim-terminal-ambigs.pl VADR script	30000	Optional	VADR_Update	general
 vadr_update	vadr_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	VADR_Update	runtime
@@ -2707,9 +2725,7 @@ vadr_update	vadr_model_file	File	Path to the a tar + gzipped VADR model file	gs:
 vadr_update	vadr_opts	String	Options for the v-annotate.pl VADR script	 "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"	Optional	VADR_Update	general
 vadr_update	vadr_skip_length	Int	Minimum assembly length (unambiguous) to run VADR	10000	Optional	VADR_Update	general
 version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, ChroQueTas, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	docker
-version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	ChroQueTas	docker
 version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, ChroQueTas, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	general
-version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	ChroQueTas	general
 wg_reorder_matrix	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Tree	runtime
 wg_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Tree	runtime
 wg_reorder_matrix	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1	Optional	Snippy_Tree	docker
