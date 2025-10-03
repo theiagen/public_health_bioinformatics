@@ -42,7 +42,7 @@ workflow core_gene_snp_workflow {
   if (align) {
     if (core_tree) {
       if (snp_sites) {
-        call snp_sites.snp_sites {
+        call snp_sites.snp_sites as core_snp_sites {
           input:
             msa_fasta = select_first([pirate.pirate_core_alignment_fasta]),
             output_name = cluster_name_updated + "_core",
@@ -56,12 +56,12 @@ workflow core_gene_snp_workflow {
       }
       call iqtree.iqtree as core_iqtree {
         input:
-          alignment = select_first([snp_sites.snp_sites_multifasta, pirate.pirate_core_alignment_fasta]),
+          alignment = select_first([core_snp_sites.snp_sites_multifasta, pirate.pirate_core_alignment_fasta]),
           cluster_name = cluster_name_updated
       }
       call snp_dists.snp_dists as core_snp_dists {
         input:
-          alignment = select_first([snp_sites.snp_sites_multifasta, pirate.pirate_core_alignment_fasta]),
+          alignment = select_first([core_snp_sites.snp_sites_multifasta, pirate.pirate_core_alignment_fasta]),
           cluster_name = cluster_name_updated
       }
       call reorder_matrix.reorder_matrix as core_reorder_matrix {
@@ -123,9 +123,9 @@ workflow core_gene_snp_workflow {
     File? pirate_presence_absence_csv = pirate.pirate_presence_absence_csv
     String pirate_docker_image = pirate.pirate_docker_image
     # snp_sites outputs
-    File? snp_sites_multifasta = snp_sites.snp_sites_multifasta
-    String? snp_sites_version = snp_sites.snp_sites_version
-    String? snp_sites_docker = snp_sites.snp_sites_docker
+    File? snp_sites_multifasta = core_snp_sites.snp_sites_multifasta
+    String? snp_sites_version = core_snp_sites.snp_sites_version
+    String? snp_sites_docker = core_snp_sites.snp_sites_docker
     # snp_dists outputs
     String? pirate_snps_dists_version = select_first([core_snp_dists.snp_dists_version,pan_snp_dists.snp_dists_version,""])
     # iqtree outputs
