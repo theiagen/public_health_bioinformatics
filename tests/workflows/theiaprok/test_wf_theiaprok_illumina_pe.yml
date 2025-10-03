@@ -478,7 +478,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
       md5sum: 9d665d02c1c655c023910b9910dc4c2c
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
-      md5sum: d5a8a0f4353b6241d8292830d233bff3
+      md5sum: 1f86500562b7884eb2d0752f90f1e84d
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_kraken2.wdl
       md5sum: 735bf70c5a5cf92e43477e4e291ccf14
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
@@ -489,3 +489,4 @@
       contains: ["version", "QC", "output"]
     - path: miniwdl_run/workflow.log
       contains: ["wdl", "theiaprok_illumina_pe", "NOTICE", "done"]
+
