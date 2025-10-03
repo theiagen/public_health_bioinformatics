@@ -20,8 +20,6 @@ workflow core_gene_snp_workflow {
     Boolean core_tree = true
     # use pan_tree = true to produce a phylogenetic tree and snp distance matrix from the pangenome alignment
     Boolean pan_tree = false
-    # call snp_sites from core genome alignment
-    Boolean snp_sites = true
     # data summary input variables
     Array[String]? sample_names
     String? data_summary_terra_project
@@ -41,27 +39,25 @@ workflow core_gene_snp_workflow {
   }
   if (align) {
     if (core_tree) {
-      if (snp_sites) {
-        call snp_sites.snp_sites as core_snp_sites {
-          input:
-            msa_fasta = select_first([pirate.pirate_core_alignment_fasta]),
-            output_name = cluster_name_updated + "_core",
-            allow_wildcard_bases = false,
-            output_vcf = false,
-            output_phylip = false,
-            output_multifasta = true,
-            output_pseudo_ref = false,
-            output_monomorphic = false
-        }
+      call snp_sites.snp_sites as core_snp_sites {
+        input:
+          msa_fasta = select_first([pirate.pirate_core_alignment_fasta]),
+          output_name = cluster_name_updated + "_core",
+          allow_wildcard_bases = true,
+          output_vcf = false,
+          output_phylip = false,
+          output_multifasta = true,
+          output_pseudo_ref = false,
+          output_monomorphic = false
       }
       call iqtree.iqtree as core_iqtree {
         input:
-          alignment = select_first([core_snp_sites.snp_sites_multifasta, pirate.pirate_core_alignment_fasta]),
+          alignment = select_first([core_snp_sites.snp_sites_multifasta]),
           cluster_name = cluster_name_updated
       }
       call snp_dists.snp_dists as core_snp_dists {
         input:
-          alignment = select_first([core_snp_sites.snp_sites_multifasta, pirate.pirate_core_alignment_fasta]),
+          alignment = select_first([core_snp_sites.snp_sites_multifasta]),
           cluster_name = cluster_name_updated
       }
       call reorder_matrix.reorder_matrix as core_reorder_matrix {

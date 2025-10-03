@@ -578,7 +578,6 @@ core_gene_snp_workflow	midpoint_root_tree	Boolean	Boolean variable that will ins
 core_gene_snp_workflow	pan_tree	Boolean	Boolean variable that instructs the workflow to create a phylogenetic tree and SNP distance matrix from the pangenome alignment. Align must also be set to true.	False	Optional	Core_Gene_SNP	general
 core_gene_snp_workflow	phandango_coloring	Boolean	Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true.	False	Optional	Core_Gene_SNP	general
 core_gene_snp_workflow	sample_names	Array[String]	Array of sample_ids from the data table used		Optional	Core_Gene_SNP	general
-core_gene_snp_workflow	snp_sites	Boolean	Run SNP-sites to extract SNP sites from core genome alignment	True	Optional	Core_Gene_SNP	general
 core_iqtree	alrt	Int	Number of replicates to use for the SH-like approximate likelihood ratio test (Minimum recommended= 1000). Follows IQ-TREE "-alrt" option	1000	Optional	Core_Gene_SNP	general
 core_iqtree	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Core_Gene_SNP	runtime
 core_iqtree	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime
