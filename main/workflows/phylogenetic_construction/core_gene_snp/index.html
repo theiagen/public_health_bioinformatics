@@ -5842,7 +5842,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#phylogenetic-construction">Phylogenetic Construction</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#bacteria">Bacteria</a></td>
-<td>v3.0.0</td>
+<td>vX.X.X</td>
 <td>Some optional features incompatible, Yes</td>
 <td>Set-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Core_Gene_SNP_PHB:main?tab=info">Core_Gene_SNP_PHB</a></td>
@@ -5854,7 +5854,7 @@
 <p class="admonition-title">Core Gene SNP Workflow Diagram</p>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/figures/Core_Gene_SNP.png" data-desc-position="bottom"><img alt="Core Gene SNP Workflow Diagram" src="../../../assets/figures/Core_Gene_SNP.png" width:45_="width:45%"></a></p>
 </div>
-<p>The Core_Gene_SNP workflow is intended for pangenome analysis, core gene alignment, and phylogenetic analysis. The workflow takes in gene sequence data in GFF3 format from a set of samples. It first produces a pangenome summary using <a href="https://github.com/SionBayliss/PIRATE"><code>Pirate</code></a>, which clusters genes within the sample set into orthologous gene families. By default, the workflow also instructs <code>Pirate</code> to produce both core gene and pangenome alignments. The workflow subsequently triggers the generation of a phylogenetic tree and SNP distance matrix from the core gene alignment using <a href="https://github.com/iqtree/iqtree2/tree/v1.6.7"><code>iqtree</code></a> and <a href="https://github.com/tseemann/snp-dists"><code>snp-dists</code></a>, respectively. Optionally, the workflow will also run this analysis using the pangenome alignment. This workflow also features an optional module, <code>summarize_data</code>, that creates a presence/absence matrix for the analyzed samples from a list of indicated columns (such as AMR genes, etc.) that can be used in Phandango.</p>
+<p>The Core_Gene_SNP workflow is intended for pangenome analysis, core gene alignment, and phylogenetic analysis. The workflow takes in gene sequence data in GFF3 format from a set of samples. It first produces a pangenome summary using <a href="https://github.com/SionBayliss/PIRATE"><code>Pirate</code></a>, which clusters genes within the sample set into orthologous gene families. By default, the workflow also instructs <code>Pirate</code> to produce both core gene and pangenome alignments. The workflow subsequently triggers the generation of a phylogenetic tree and SNP distance matrix from the core gene alignment. First, <a href="https://github.com/sanger-pathogens/snp-sites"><code>snp-sites</code></a> extracts polymorphic sites only from the alignment, which are then used by <a href="https://github.com/iqtree/iqtree2/tree/v1.6.7"><code>iqtree</code></a> to generate the phylogenetic tree. <a href="https://github.com/tseemann/snp-dists"><code>snp-dists</code></a> subsequently builds the SNP distance matrix from the core gene alignment. Optionally, the workflow will also run this analysis using the pangenome alignment. This workflow also features an optional module, <code>summarize_data</code>, that creates a presence/absence matrix for the analyzed samples from a list of indicated columns (such as AMR genes, etc.) that can be used in Phandango.</p>
 <div class="admonition info">
 <p class="admonition-title">Default Parameters</p>
 <p>Please note that while default parameters for pangenome construction and phylogenetic tree generation are provided, <strong>these default parameters may not suit every dataset and have not been validated against known phylogenies</strong>. Users should take care to select the parameters that are most appropriate for their dataset. Please reach out to <a href="mailto:support@theiagen.com">support@theiagen.com</a> or one of the other resources listed at the bottom of this page if you would like assistance with this task.</p>
@@ -6096,6 +6096,38 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>core_snp_sites</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>core_snp_sites</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>core_snp_sites</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker image to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>core_snp_sites</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
 <td>2</td>
 <td>Optional</td>
 </tr>
@@ -6351,7 +6383,7 @@
 </table>
 </div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">¶</a></h3>
-<p>By default, the Core_Gene_SNP workflow will begin by analyzing the input sample set using <a href="https://github.com/SionBayliss/PIRATE">PIRATE</a>. Pirate takes in GFF3 files and classifies the genes into gene families by sequence identity, outputting a pangenome summary file. The workflow will instruct Pirate to create core gene and pangenome alignments using this gene family data. Setting the "align" input variable to false will turn off this behavior, and the workflow will output only the pangenome summary. The workflow will then use the core gene alignment from <code>Pirate</code> to infer a phylogenetic tree using <code>IQ-TREE</code>. It will also produce an SNP distance matrix from this alignment using <a href="https://github.com/tseemann/snp-dists">snp-dists</a>. This behavior can be turned off by setting the <code>core_tree</code> input variable to false. The workflow will not create a pangenome tree or SNP-matrix by default, but this behavior can be turned on by setting the <code>pan_tree</code> input variable to true.</p>
+<p>By default, the Core_Gene_SNP workflow will begin by analyzing the input sample set using <a href="https://github.com/SionBayliss/PIRATE">PIRATE</a>. Pirate takes in GFF3 files and classifies the genes into gene families by sequence identity, outputting a pangenome summary file. The workflow will instruct Pirate to create core gene and pangenome alignments using this gene family data. Setting the "align" input variable to false will turn off this behavior, and the workflow will output only the pangenome summary. The workflow will then by default extract SNP sites from the <code>Pirate</code> core gene alignment via <a href="https://github.com/sanger-pathogens/snp-sites"><code>SNP-sites</code></a>. The SNP alignment is used to infer a phylogenetic tree using <a href="https://github.com/iqtree/iqtree2/tree/v1.6.7"><code>IQ-TREE v1.6.7</code></a>. It will also produce an SNP distance matrix from this alignment using <a href="https://github.com/tseemann/snp-dists">snp-dists</a>. This behavior can be turned off by setting the <code>core_tree</code> input variable to false. The workflow will not create a pangenome tree or SNP-matrix by default, but this behavior can be turned on by setting the <code>pan_tree</code> input variable to true.</p>
 <p>The optional <code>summarize_data</code> task performs the following only if all of the <code>data_summary_*</code> and <code>sample_names</code> optional variables are filled out:</p>
 <ol>
 <li>Digests a <em>comma-separated</em>  list of column names, such as <code>"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"</code>, etc. that can be found within the origin Terra data table.</li>
@@ -6497,7 +6529,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 11, 2025 20:16:11 UTC">2025-08-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 6, 2025 15:38:58 UTC">2025-10-06</span>
   </span>
 
     
