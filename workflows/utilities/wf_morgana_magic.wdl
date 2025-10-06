@@ -89,7 +89,7 @@ workflow morgana_magic {
     Int? vadr_cpu
     Int? vadr_disk_size
     # Workflow Settings
-    String? workflow_type
+    String workflow_type
   }
   call set_organism_defaults.organism_parameters {
     input:
