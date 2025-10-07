@@ -4,6 +4,7 @@ task kraken_output_parser {
   input {
     File kraken2_report
     Array[String] taxon_ids
+    Int? read_count_threshold
     
     Int cpu = 2
     Int disk_size = 100
@@ -22,10 +23,15 @@ task kraken_output_parser {
     for line in open("~{kraken2_report}"):
         line = line.strip().split("\t")
         taxon_id = str(line[4])
+        read_count= int(line[1])
         if (taxon_id in taxon_array):
-          parsed_array.append(taxon_id)
+          if read_count >= ~{read_count_threshold}:
+            parsed_array.append(taxon_id)
+          else:
+            print(f"Taxon ID {taxon_id} has {read_count} reads, below threshold of ~{read_count_threshold}")
     with open("parsed_ids.txt", "w") as out:
         out.write("\\n".join(parsed_array) + "\\n")
+        out.close()
     CODE
 
   >>>
