@@ -367,57 +367,57 @@
     - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/SRR13687078.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade
-    - path: miniwdl_run/call-nextclade_v3/command
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/command
       md5sum: 650b6c27c91358c1b1407b5cb02c7014
-    - path: miniwdl_run/call-nextclade_v3/inputs.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/inputs.json
       contains: ["dataset_name", "dataset_tag", "genome_fasta"]
-    - path: miniwdl_run/call-nextclade_v3/outputs.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/outputs.json
       contains: ["nextclade_json", "nextclade_version"]
-    - path: miniwdl_run/call-nextclade_v3/stderr.txt
-    - path: miniwdl_run/call-nextclade_v3/stderr.txt.offset
-    - path: miniwdl_run/call-nextclade_v3/stdout.txt
-    - path: miniwdl_run/call-nextclade_v3/task.log
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/stderr.txt
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/stderr.txt.offset
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/stdout.txt
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/task.log
       contains: ["wdl", "theiacov_illumina_pe", "done"]
-    - path: miniwdl_run/call-nextclade_v3/work/SRR13687078.ivar.consensus.nextclade.auspice.json
-    - path: miniwdl_run/call-nextclade_v3/work/SRR13687078.ivar.consensus.nextclade.json
-    - path: miniwdl_run/call-nextclade_v3/work/SRR13687078.ivar.consensus.nextclade.tsv
-    - path: miniwdl_run/call-nextclade_v3/work/NEXTCLADE_VERSION
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/SRR13687078.ivar.consensus.nextclade.auspice.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/SRR13687078.ivar.consensus.nextclade.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/SRR13687078.ivar.consensus.nextclade.tsv
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/NEXTCLADE_VERSION
       md5sum: 18af3f93175b428112831635db79f32a
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.aligned.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.aligned.fasta
       md5sum: 59893fd3ef32062d50ded18300024734
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.csv
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.ndjson
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.E.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.csv
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.ndjson
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.E.fasta
       md5sum: b84502318ddddc339eae05c5eb2a1ff8
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.M.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.M.fasta
       md5sum: 7b4b60c7ed0c3b02be1095913c8a19e0
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.N.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.N.fasta
       md5sum: f7f87c9ad8e6f5193ba1845c15f5a3ff
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF1a.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF1a.fasta
       md5sum: 1035b0ef8dd7acb0ad94133d1d59dd4b
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF1b.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF1b.fasta
       md5sum: e185f89f9bf273a436b92926c27a6bb6
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF3a.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF3a.fasta
       md5sum: c9ad81eaae733e400892654e9006632f
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF6.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF6.fasta
       md5sum: c1d610f9e45acd3915e40f0d643f0188
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF7a.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF7a.fasta
       md5sum: 6a128f382b60376719d94cfaed018844
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF7b.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF7b.fasta
       md5sum: 80ebf21c9b190354c10ff56bc30fcb7f
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF8.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF8.fasta
       md5sum: acc50605f4df17e4773be03538ce1fca
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF9b.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF9b.fasta
       md5sum: 0f55e05f70734e109cca95918da37881
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.S.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.S.fasta
       md5sum: 77689948a0c14fe6a3e9241453ecb885
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/genome_annotation.gff3
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/reference.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/genome_annotation.gff3
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/reference.fasta
       md5sum: c7ce05f28e4ec0322c96f24e064ef55c
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/tree.json
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
-    - path: miniwdl_run/call-nextclade_v3/work/_miniwdl_inputs/0/SRR13687078.ivar.consensus.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/tree.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/_miniwdl_inputs/0/SRR13687078.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade output parsing
     - path: miniwdl_run/call-nextclade_output_parser/command
