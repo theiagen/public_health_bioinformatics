@@ -113,7 +113,7 @@ workflow theiaviral_panel {
         # call export_taxon_table
         call export_taxon_table_task.export_taxon_table {
           input:
-            samplename = samplename + "_" + sub(ncbi_identify.taxon_name, " ", "-"),
+            samplename = samplename + "_" + sub(ncbi_identify.taxon_name, " ", "_"),
             taxon_table = output_taxon_table,
             theiaviral_panel = true,
             gambit_predicted_taxon = ncbi_identify.taxon_name,
