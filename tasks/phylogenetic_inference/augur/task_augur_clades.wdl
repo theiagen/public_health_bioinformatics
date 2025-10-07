@@ -12,7 +12,7 @@ task augur_clades {
     Int disk_size = 50
     Int memory = 2
     Int cpu = 1
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0"
   }
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur clades \

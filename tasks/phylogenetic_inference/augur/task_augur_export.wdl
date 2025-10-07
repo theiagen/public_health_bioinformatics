@@ -17,7 +17,7 @@ task augur_export {
     Int disk_size = 100
     Int memory = 64
     Int cpu = 4
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0"
   }
   command <<<
     augur export v2 \
