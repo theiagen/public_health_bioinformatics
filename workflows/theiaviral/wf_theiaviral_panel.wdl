@@ -38,7 +38,6 @@ workflow theiaviral_panel {
     String terra_workspace
     File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     Boolean extract_unclassified = false
-    Boolean skip_theiaviral_screen = true
     Int min_read_count = 1000
     Boolean call_metaviralspades = true
     String? host
@@ -107,7 +106,7 @@ workflow theiaviral_panel {
           call_metaviralspades = call_metaviralspades,
           kraken_db = kraken_db,
           skip_qc = true,
-          skip_screen = skip_theiaviral_screen,
+          skip_screen = true,
           genome_length = ncbi_identify.avg_genome_length
       }
       if (defined(output_taxon_table)){
