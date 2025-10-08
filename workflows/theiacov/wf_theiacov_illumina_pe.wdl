@@ -125,17 +125,6 @@ workflow theiacov_illumina_pe {
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-      if (organism_parameters.standardized_organism == "flu") {
-        call run_flu_track.flu_track {
-          input:
-            read1 = read_QC_trim.read1_clean,
-            read2 = read_QC_trim.read2_clean,
-            samplename = samplename,
-            standardized_organism = organism_parameters.standardized_organism,
-            seq_method = seq_method,
-            irma_min_consensus_support = select_first([min_depth, 30])
-        }
-      }
       # assembly via bwa and ivar for non-flu data
       if (organism_parameters.standardized_organism != "flu") {
         call consensus_call.ivar_consensus {
@@ -150,6 +139,18 @@ workflow theiacov_illumina_pe {
             consensus_min_freq = consensus_min_freq,
             variant_min_freq = variant_min_freq,
             trim_primers = trim_primers
+        }
+      }
+      # for flu organisms call flu_track
+      if (organism_parameters.standardized_organism == "flu") {
+        call run_flu_track.flu_track {
+          input:
+            read1 = read_QC_trim.read1_clean,
+            read2 = read_QC_trim.read2_clean,
+            samplename = samplename,
+            standardized_organism = organism_parameters.standardized_organism,
+            seq_method = seq_method,
+            irma_min_consensus_support = select_first([min_depth, 30])
         }
       }
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {
