@@ -208,40 +208,6 @@ task filter_sequences_by_length {
   }
 }
 
-task set_sc2_defaults { # establish sars-cov-2 default values for augur
-  input {
-    String nextstrain_ncov_repo_commit = "cec4fa0ecd8612e4363d40662060a5a9c712d67e" # last updated on 2024-02-01    
-    Int disk_size = 50
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    Int memory = 1
-    Int cpu = 1
-  }
-  command <<<
-    wget -q "https://github.com/nextstrain/ncov/archive/~{nextstrain_ncov_repo_commit}.tar.gz"
-    tar -xf "~{nextstrain_ncov_repo_commit}.tar.gz" --strip-components=1
-  >>>
-  output {
-    Int min_num_unambig = 27000
-    File clades_tsv = "defaults/clades.tsv"
-    File lat_longs_tsv = "defaults/lat_longs.tsv"
-    File reference_fasta = "defaults/reference_seq.fasta"
-    File reference_genbank = "defaults/reference_seq.gb"
-    File auspice_config = "defaults/auspice_config.json"
-    Float min_date = 2020.0
-    Int pivot_interval = 1
-    String pivot_interval_units = "weeks"
-    Float narrow_bandwidth = 0.05
-    Float proportion_wide = 0.0
-  }
-  runtime {
-    docker: docker
-    memory: memory + " GB"
-    cpu: cpu
-    disks:  "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB"
-  }
-}
-
 task prep_augur_metadata {
   input {
     File assembly
