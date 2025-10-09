@@ -245,14 +245,14 @@ workflow morgana_magic {
   output {
     String organism = select_first([organism_parameters.standardized_organism, taxon_name])
     # VADR outputs
-    String? vadr_alerts_list = vadr.alerts_list
+    File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts
-    String? vadr_feature_tbl_pass = vadr.feature_tbl_pass
-    String? vadr_feature_tbl_fail = vadr.feature_tbl_fail
-    String? vadr_classification_summary_file = vadr.classification_summary_file
-    String? vadr_all_outputs_tar_gz = vadr.outputs_tgz
+    File? vadr_feature_tbl_pass = vadr.feature_tbl_pass
+    File? vadr_feature_tbl_fail = vadr.feature_tbl_fail
+    File? vadr_classification_summary_file = vadr.classification_summary_file
+    File? vadr_all_outputs_tar_gz = vadr.outputs_tgz
     String? vadr_docker = vadr.vadr_docker
-    String? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
+    File? vadr_fastas_zip_archive = vadr.vadr_fastas_zip_archive
     # Pangolin outputs
     String? pango_lineage = pangolin4.pangolin_lineage
     String? pango_lineage_expanded = pangolin4.pangolin_lineage_expanded
@@ -285,26 +285,26 @@ workflow morgana_magic {
     String? nextclade_lineage_rabies = rabies_output_parser.nextclade_lineage
     String? nextclade_qc_rabies = rabies_output_parser.nextclade_qc
     # Nextclade outputs for flu H5N1
-    String? nextclade_json_flu_h5n1 = flu_track.nextclade_json_flu_h5n1
-    String? auspice_json_flu_h5n1 = flu_track.auspice_json_flu_h5n1
-    String? nextclade_tsv_flu_h5n1 = flu_track.nextclade_tsv_flu_h5n1
+    File? nextclade_json_flu_h5n1 = flu_track.nextclade_json_flu_h5n1
+    File? auspice_json_flu_h5n1 = flu_track.auspice_json_flu_h5n1
+    File? nextclade_tsv_flu_h5n1 = flu_track.nextclade_tsv_flu_h5n1
     String? nextclade_aa_subs_flu_h5n1 = flu_track.nextclade_aa_subs_flu_h5n1
     String? nextclade_aa_dels_flu_h5n1 = flu_track.nextclade_aa_dels_flu_h5n1
     String? nextclade_clade_flu_h5n1 = flu_track.nextclade_clade_flu_h5n1
     String? nextclade_qc_flu_h5n1 = flu_track.nextclade_qc_flu_h5n1
     # Nextclade outputs for flu HA
-    String? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
-    String? auspice_json_flu_ha = flu_track.auspice_json_flu_ha
-    String? nextclade_tsv_flu_ha = flu_track.nextclade_tsv_flu_ha
+    File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
+    File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha
+    File? nextclade_tsv_flu_ha = flu_track.nextclade_tsv_flu_ha
     String? nextclade_ds_tag_flu_ha = flu_track.nextclade_ds_tag_flu_ha
     String? nextclade_aa_subs_flu_ha = flu_track.nextclade_aa_subs_flu_ha
     String? nextclade_aa_dels_flu_ha = flu_track.nextclade_aa_dels_flu_ha
     String? nextclade_clade_flu_ha = flu_track.nextclade_clade_flu_ha
     String? nextclade_qc_flu_ha = flu_track.nextclade_qc_flu_ha
     # Nextclade outputs for flu NA
-    String? nextclade_json_flu_na = flu_track.nextclade_json_flu_na
-    String? auspice_json_flu_na = flu_track.auspice_json_flu_na
-    String? nextclade_tsv_flu_na = flu_track.nextclade_tsv_flu_na
+    File? nextclade_json_flu_na = flu_track.nextclade_json_flu_na
+    File? auspice_json_flu_na = flu_track.auspice_json_flu_na
+    File? nextclade_tsv_flu_na = flu_track.nextclade_tsv_flu_na
     String? nextclade_ds_tag_flu_na = flu_track.nextclade_ds_tag_flu_na
     String? nextclade_aa_subs_flu_na = flu_track.nextclade_aa_subs_flu_na
     String? nextclade_aa_dels_flu_na = flu_track.nextclade_aa_dels_flu_na
@@ -316,27 +316,27 @@ workflow morgana_magic {
     String? irma_type = flu_track.irma_type
     String? irma_subtype = flu_track.irma_subtype
     String? irma_subtype_notes = flu_track.irma_subtype_notes
-    String? irma_assembly_fasta = flu_track.irma_assembly_fasta
-    String? flu_assembly_fasta_concatenated = flu_track.flu_assembly_fasta_concatenated
-    String? irma_minimum_consensus_support = flu_track.irma_minimum_consensus_support
+    File? irma_assembly_fasta = flu_track.irma_assembly_fasta
+    File? flu_assembly_fasta_concatenated = flu_track.flu_assembly_fasta_concatenated
+    Int? irma_minimum_consensus_support = flu_track.irma_minimum_consensus_support
     String? ha_na_assembly_coverage = flu_track.ha_na_assembly_coverage
-    String? flu_ha_segment_fasta = flu_track.flu_ha_segment_fasta
-    String? flu_na_segment_fasta = flu_track.flu_na_segment_fasta
-    String? flu_pa_segment_fasta = flu_track.flu_pa_segment_fasta
-    String? flu_pb1_segment_fasta = flu_track.flu_pb1_segment_fasta
-    String? flu_pb2_segment_fasta = flu_track.flu_pb2_segment_fasta
-    String? flu_mp_segment_fasta = flu_track.flu_mp_segment_fasta
-    String? flu_np_segment_fasta = flu_track.flu_np_segment_fasta
-    String? flu_ns_segment_fasta = flu_track.flu_ns_segment_fasta
+    File? flu_ha_segment_fasta = flu_track.flu_ha_segment_fasta
+    File? flu_na_segment_fasta = flu_track.flu_na_segment_fasta
+    File? flu_pa_segment_fasta = flu_track.flu_pa_segment_fasta
+    File? flu_pb1_segment_fasta = flu_track.flu_pb1_segment_fasta
+    File? flu_pb2_segment_fasta = flu_track.flu_pb2_segment_fasta
+    File? flu_mp_segment_fasta = flu_track.flu_mp_segment_fasta
+    File? flu_np_segment_fasta = flu_track.flu_np_segment_fasta
+    File? flu_ns_segment_fasta = flu_track.flu_ns_segment_fasta
     # Flu GenoFLU Outputs
     String? genoflu_version = flu_track.genoflu_version
     String? genoflu_genotype = flu_track.genoflu_genotype
     String? genoflu_all_segments = flu_track.genoflu_all_segments
-    String? genoflu_output_tsv = flu_track.genoflu_output_tsv
+    File? genoflu_output_tsv = flu_track.genoflu_output_tsv
     # Flu Abricate Outputs
     String? abricate_flu_type = flu_track.abricate_flu_type
     String? abricate_flu_subtype = flu_track.abricate_flu_subtype
-    String? abricate_flu_results = flu_track.abricate_flu_results
+    File? abricate_flu_results = flu_track.abricate_flu_results
     String? abricate_flu_database = flu_track.abricate_flu_database
     String? abricate_flu_version = flu_track.abricate_flu_version
     # Flu Antiviral Substitution Outputs

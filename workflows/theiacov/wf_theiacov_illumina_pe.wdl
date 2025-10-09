@@ -362,14 +362,14 @@ workflow theiacov_illumina_pe {
     String? nextclade_clade_flu_na = flu_track.nextclade_clade_flu_na
     String? nextclade_qc_flu_na = flu_track.nextclade_qc_flu_na
     # VADR Annotation QC
-    String? vadr_alerts_list = morgana_magic.vadr_alerts_list
-    String? vadr_feature_tbl_pass = morgana_magic.vadr_feature_tbl_pass
-    String? vadr_feature_tbl_fail = morgana_magic.vadr_feature_tbl_fail
-    String? vadr_classification_summary_file = morgana_magic.vadr_classification_summary_file
-    String? vadr_all_outputs_tar_gz = morgana_magic.vadr_all_outputs_tar_gz
+    File? vadr_alerts_list = morgana_magic.vadr_alerts_list
+    File? vadr_feature_tbl_pass = morgana_magic.vadr_feature_tbl_pass
+    File? vadr_feature_tbl_fail = morgana_magic.vadr_feature_tbl_fail
+    File? vadr_classification_summary_file = morgana_magic.vadr_classification_summary_file
+    File? vadr_all_outputs_tar_gz = morgana_magic.vadr_all_outputs_tar_gz
     String? vadr_num_alerts = morgana_magic.vadr_num_alerts
     String? vadr_docker = morgana_magic.vadr_docker
-    String? vadr_fastas_zip_archive = morgana_magic.vadr_fastas_zip_archive
+    File? vadr_fastas_zip_archive = morgana_magic.vadr_fastas_zip_archive
     # Flu IRMA Outputs
     String? irma_version = flu_track.irma_version
     String? irma_docker = flu_track.irma_docker
