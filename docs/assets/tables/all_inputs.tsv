@@ -464,8 +464,8 @@ checkv_denovo	docker	String	The Docker container to use for the task	us-docker.p
 checkv_denovo	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 chroquetas	cpu	Int	Number of CPUs to allocate to the task	2	Optional	ChroQueTas	runtime
 chroquetas	disk_size	Int	Amount of storage (in GB) to allocate to the task	16	Optional	ChroQueTas	runtime
-chroquetas	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/chroquetas:1.0.0	Optional	ChroQueTas	docker
-chroquetas	memory	Int	Amount of memory (in GB) to allocate to the task	8	Optional	ChroQueTas	runtime
+chroquetas	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/chroquetas:1.0.0	Optional	ChroQueTas	docker
+chroquetas	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	ChroQueTas	runtime
 chroquetas	min_percent_coverage	Int	Minimum percent coverage of FungAMR reference protein	75	Optional	ChroQueTas	general
 chroquetas	min_percent_identity	Int	Minimum percent identity of FungAMR reference protein	90	Optional	ChroQueTas	general
 chroquetas	proteome_fasta	File	Protein fasta to use for alignments		Optional	ChroQueTas	general
@@ -597,6 +597,10 @@ core_snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Ge
 core_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
 core_snp_dists	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Core_Gene_SNP, kSNP3, kSNP4	docker
 core_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
+core_snp_sites	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Gene_SNP	runtime
+core_snp_sites	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime
+core_snp_sites	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1	Optional	Core_Gene_SNP	docker
+core_snp_sites	memory	Int	Amount of memory (in GB) to allocate to the task	2	Optional	Core_Gene_SNP	runtime
 create_table_from_array	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Dorado_Basecalling	runtime
 create_table_from_array	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Dorado_Basecalling	runtime
 create_table_from_array	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	Dorado_Basecalling	docker
@@ -1185,8 +1189,8 @@ merlin_magic	call_tbp_parser	Boolean	If set to "true", activates the tbp_parser 
 merlin_magic	cauris_cladetyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	cauris_cladetyper_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	chroquetas_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
-merlin_magic	chroquetas_docker_image	String	Docker image to use for the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
-merlin_magic	chroquetas_memory	Int	Amount of memory (in GB) to allocate to the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
+merlin_magic	chroquetas_docker_image	String	The Docker container to use for the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
+merlin_magic	chroquetas_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 merlin_magic	chroquetas_min_percent_coverage	Int	Minimum percent coverage of FungAMR reference protein		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	chroquetas_min_percent_identity	Int	Minimum percent identity of FungAMR reference protein		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	chroqutas_translation_code	String	Alternative codon translation code. Set for each species by default and not recommended to change		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
@@ -1654,7 +1658,7 @@ ncbi_datasets_download_genome_accession	use_ncbi_virus	Boolean	Set to true to do
 ncbi_identify	complete	Boolean	Only query genomes labeled complete	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 ncbi_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 ncbi_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	docker
+ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	docker
 ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 ncbi_identify	rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.		Optional	Host_Decontaminate	general
 ncbi_identify	refseq	Boolean	Only query RefSeq genomes	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
