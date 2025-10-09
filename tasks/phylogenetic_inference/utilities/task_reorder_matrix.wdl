@@ -5,7 +5,9 @@ task reorder_matrix {
     File input_tree
     File matrix
     String cluster_name
-    Boolean midpoint_root_tree
+
+    String? outgroup_root # will preferentially root with outgroup if defined
+    Boolean? midpoint_root
     
     Int disk_size = 100
     Int cpu = 1
@@ -37,10 +39,12 @@ task reorder_matrix {
     snps.index = snps.index.astype(str)
 
     # reroot tree with midpoint, if midpoint_root_tree is set to true
-    if ("~{midpoint_root_tree}" == "true"):
+    if "~{outgroup_root}":
+        tree.root_with_outgroup("~{outgroup_root}")
+    elif "~{midpoint_root}" == "true":
         tree.root_at_midpoint()
 
-    # extract ordered terminal ends of tree (could be midpoint rooted or not, depending on midpoint_root_tree optional input)
+    # extract ordered terminal ends of tree (could be midpoint rooted or not, depending on midpoint_root optional input)
     term_names = [term.name for term in tree.get_terminals()]
 
     # reorder matrix according to the order of tree terminal ends

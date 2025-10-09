@@ -20,41 +20,45 @@ import "../../tasks/utilities/file_handling/task_cat_files.wdl" as file_handling
 
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
-import "../../tasks/phylogenetic_inference/utilities/task_root_phylo.wdl" as task_root_phylo
-
 workflow augur {
   input {
+    # primary inputs
     Array[File]+ assembly_fastas # use the HA or NA segment files for flu
     Array[File]? sample_metadata_tsvs # created with Augur_Prep
     String build_name
     String build_name_updated = sub(build_name, " ", "_")
+    File? alignment_fasta # if alignment is provided, then skip alignment step
+
+    # organism-specific inputs
+    String organism = "sars-cov-2" # compatible with organism_parameters inputs, or manual Augur parameters below
+    String flu_segment = "HA" # options: HA or NA
+    String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1" "H5N1"
+
+    # augur parameters
     File? reference_fasta
     Boolean remove_reference = false # by default, do not remove the reference
     File? reference_genbank
     Int? min_num_unambig
-    String organism = "sars-cov-2" # options: sars-cov-2, flu, mpxv, "rsv-a" or "rsv-b"
-    String flu_segment = "HA" # options: HA or NA
-    String? flu_subtype # options: "Victoria" "Yamagata" "H3N2" "H1N1" "H5N1"
-    Boolean skip_alignment = false # by default, do not skip alignment
-    File? alignment_fasta # if alignment is skipped, provide an alignment
-
     File? clades_tsv
-    Boolean extract_clade_mutations = false # generate clades_tsv on the fly
-    Boolean run_traits = false # by default, do not run traits
-    String? augur_trait_columns # comma-separated list of columns to use for traits
-    # these are very minimal files that hopefully will prevent workflow failure but will not provide any useful information
     File? lat_longs_tsv
     File? auspice_config
-
-    Boolean distance_tree_only = false # by default, do not skip making a time tree
-
-    Boolean midpoint_root_tree = true # by default, midpoint root the tree
-    String? outgroup_root
-
     Int? pivot_interval
     Float? min_date
     Float? narrow_bandwidth
     Float? proportion_wide
+    String? augur_trait_columns # comma-separated list of columns to use for traits
+    Boolean extract_clade_mutations = false # generate clades_tsv on the fly
+
+    # phylogenetic tree parameters
+    Boolean distance_tree_only = false # by default, do not skip making a time tree
+    Boolean midpoint_root = true # by default, midpoint root the tree
+    String? outgroup_root
+  }
+  # skip alignment if alignment_fasta is inputted
+  if defined(alignment_fasta) {
+    Boolean skip_alignment = true
+  } else {
+    Boolean skip_alignment = false
   }
   call set_organism_defaults.organism_parameters {
     input:
@@ -109,11 +113,24 @@ workflow augur {
       aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
       build_name = build_name_updated
   }
+  call snp_dists_task.snp_dists { # create a snp matrix from the alignment
+    input:
+      cluster_name = build_name_updated,
+      alignment = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta])
+  }
+  call reorder_matrix_task.reorder_matrix { # reorder snp matrix to match distance tree 
+    input:
+      input_tree = augur_tree.aligned_tree,
+      matrix = snp_dists.snp_matrix,
+      cluster_name = build_name_updated,
+      midpoint_root = midpoint_root,
+      outgroup_root = outgroup_root
+  }
   if (! distance_tree_only && defined(tsv_join.out_tsv)) { # by default, continue
     call refine_task.augur_refine { # create a timetree (aka, refine augur tree)
       input:
         aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
-        draft_augur_tree = augur_tree.aligned_tree,
+        draft_augur_tree = reorder_matrix.tree,
         metadata = tsv_join.out_tsv,
         build_name = build_name_updated
     }
@@ -176,18 +193,6 @@ workflow augur {
         lat_longs_tsv = select_first([lat_longs_tsv, organism_parameters.augur_lat_longs_tsv]),
         auspice_config = select_first([auspice_config, organism_parameters.augur_auspice_config])
     }
-  }
-  call snp_dists_task.snp_dists { # create a snp matrix from the alignment
-    input:
-      cluster_name = build_name_updated,
-      alignment = select_first([augur_align.aligned_fasta,filter_sequences_by_length.filtered_fasta])
-  }
-  call reorder_matrix_task.reorder_matrix { # reorder snp matrix to match distance tree 
-    input:
-      input_tree = augur_tree.aligned_tree,
-      matrix = snp_dists.snp_matrix,
-      cluster_name = build_name_updated,
-      midpoint_root_tree = midpoint_root_tree
   }
   call versioning.version_capture { # capture the version
     input:
