@@ -47,7 +47,7 @@ workflow augur {
     Float? narrow_bandwidth
     Float? proportion_wide
     String? augur_trait_columns # comma-separated list of columns to use for traits
-    Boolean extract_clade_mutations = false # generate clades_tsv on the fly
+    String? augur_clade_columns # comma-separated list of columns to use for clades
 
     # phylogenetic tree parameters
     Boolean build_time_tree = true # by default, construct a time tree
@@ -64,6 +64,7 @@ workflow augur {
   } else {
     Boolean skip_alignment = false
   }
+
   # set organism parameters for default organisms, passthrough for others
   call set_organism_defaults.organism_parameters {
     input:
@@ -81,6 +82,13 @@ workflow augur {
       narrow_bandwidth = narrow_bandwidth,
       proportion_wide = proportion_wide
   }
+  # skip clade extraction if augur_clade_columns is not defined
+  if defined(augur_clade_columns || defined(clades_tsv) || defined(organism_parameters.augur_clades_tsv)) {
+    Boolean run_clades = true
+  } else {
+    Boolean run_clades = false
+  }
+
   if (defined(sample_metadata_tsvs)) {
     # merge the metadata files
     call augur_utils.tsv_join { 
@@ -98,6 +106,8 @@ workflow augur {
         concatenated_file_name = "~{build_name_updated}_concatenated.fasta"
     }
   }
+
+  # Alignment preparation
   # remove any sequences that do not meet the quality threshold
   # perform prior to alignment to increase throughput
   call augur_utils.filter_sequences_by_length { 
@@ -119,6 +129,8 @@ workflow augur {
     input:
       sequences_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta])
   }
+
+  # Phylogenetic tree reconstruction
   # create a phylogenetic tree
   call tree_task.augur_tree { 
     input:
@@ -140,8 +152,10 @@ workflow augur {
       midpoint_root = midpoint_root,
       outgroup_root = outgroup_root
   }
-  if (build_time_tree && defined(tsv_join.out_tsv)) { # by default, continue
-    call refine_task.augur_refine { # create a time-calibrated phylogenetic tree (aka, refine augur tree)
+
+  if (build_time_tree && defined(tsv_join.out_tsv)) {
+    # create a time-calibrated phylogenetic tree (aka, refine augur tree)
+    call refine_task.augur_refine { 
       input:
         aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
         draft_augur_tree = reorder_matrix.tree,
