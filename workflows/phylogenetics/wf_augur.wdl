@@ -9,6 +9,7 @@ import "../../tasks/phylogenetic_inference/augur/task_augur_traits.wdl" as trait
 import "../../tasks/phylogenetic_inference/augur/task_augur_translate.wdl" as translate_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_tree.wdl" as tree_task
 import "../../tasks/phylogenetic_inference/augur/task_augur_mutation_context.wdl" as mutation_context_task
+import "../../tasks/phylogenetic_inference/augur/task_extract_clade_mutations.wdl" as extract_clade_mutations_task
 
 import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix_task
 import "../../tasks/phylogenetic_inference/utilities/task_snp_dists.wdl" as snp_dists_task
@@ -48,6 +49,7 @@ workflow augur {
     Float? proportion_wide
     String? augur_trait_columns # comma-separated list of columns to use for traits
     String? augur_clade_columns # comma-separated list of columns to use for clades
+    String augur_id_column = "strain" # column in metadata tsv that contains the sequence names/IDs
 
     # phylogenetic tree parameters
     Boolean build_time_tree = true # by default, construct a time tree
@@ -94,7 +96,7 @@ workflow augur {
     call augur_utils.tsv_join { 
       input:
         input_tsvs = select_first([sample_metadata_tsvs]),
-        id_col = "strain",
+        id_col = augur_id_column,
         out_basename = "metadata-merged"
     }
   }
@@ -153,7 +155,7 @@ workflow augur {
       outgroup_root = outgroup_root
   }
 
-  if defined(tsv_join.out_tsv)) {
+  if defined(tsv_join.out_tsv) {
     # create a time-calibrated phylogenetic tree (aka, refine augur tree)
     call refine_task.augur_refine { 
       input:
@@ -197,12 +199,15 @@ workflow augur {
         }
       }
       if (run_clades) {
-        # one must be present and not the empty "minimal-clades.tsv" file
         if (defined(augur_clade_columns)) { 
-          call extract_clade_mutations {{
+          call extract_clade_mutations_task.extract_clade_mutations {
             input:
-              metadata = tsv_join.out_tsv,
+              metadata_tsv = tsv_join.out_tsv,
               clade_columns = augur_clade_columns,
+              tip_column = augur_id_column,
+              tree = augur_refine.refined_tree,
+              nt_mutations = augur_ancestral.ancestral_nt_muts_json,
+              aa_mutations = translate_task.translated_aa_muts_json
           }
         }
           # assign clades to nodes based on amino-acid or nucleotide signatures
@@ -255,6 +260,9 @@ workflow augur {
     File combined_assemblies = filter_sequences_by_length.filtered_fasta
     File? metadata_merged = tsv_join.out_tsv
     File? traits_json = augur_traits.traits_assignments_json
+
+    # clade assignments
+    File? clade_mutations = extract_clade_mutations.clades_file
 
     # list of samples that were kept and met the length filters    
     File keep_list = fasta_to_ids.ids_txt
