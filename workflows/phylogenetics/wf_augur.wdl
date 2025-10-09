@@ -50,9 +50,13 @@ workflow augur {
     Boolean extract_clade_mutations = false # generate clades_tsv on the fly
 
     # phylogenetic tree parameters
-    Boolean distance_tree_only = false # by default, do not skip making a time tree
+    Boolean build_time_tree = true # by default, construct a time tree
     Boolean midpoint_root = true # by default, midpoint root the tree
     String? outgroup_root
+  }
+  # capture the version
+  call versioning.version_capture { 
+    input:
   }
   # skip alignment if alignment_fasta is inputted
   if defined(alignment_fasta) {
@@ -60,6 +64,7 @@ workflow augur {
   } else {
     Boolean skip_alignment = false
   }
+  # set organism parameters for default organisms, passthrough for others
   call set_organism_defaults.organism_parameters {
     input:
       organism = organism,
@@ -77,48 +82,57 @@ workflow augur {
       proportion_wide = proportion_wide
   }
   if (defined(sample_metadata_tsvs)) {
-    call augur_utils.tsv_join { # merge the metadata files
+    # merge the metadata files
+    call augur_utils.tsv_join { 
       input:
         input_tsvs = select_first([sample_metadata_tsvs]),
         id_col = "strain",
         out_basename = "metadata-merged"
     }
   }
-  if (! skip_alignment) { # by default, continue
-    call file_handling.cat_files { # concatenate all of the input fasta files together
+  if (! skip_alignment) {
+    # concatenate all of the input fasta files together
+    call file_handling.cat_files {       
       input:
         files_to_cat = assembly_fastas,
         concatenated_file_name = "~{build_name_updated}_concatenated.fasta"
     }
   }
-  call augur_utils.filter_sequences_by_length { # remove any sequences that do not meet the quality threshold
+  # remove any sequences that do not meet the quality threshold
+  # perform prior to alignment to increase throughput
+  call augur_utils.filter_sequences_by_length { 
     input:
       sequences_fasta = select_first([cat_files.concatenated_files, alignment_fasta]),
       min_non_N = select_first([min_num_unambig, organism_parameters.augur_min_num_unambig]),
   }
-  if (! skip_alignment) { # by default, continue
-    call align_task.augur_align { # perform mafft alignment on the sequences
+  if (! skip_alignment) {
+    # perform mafft alignment on the sequences
+    call align_task.augur_align { 
       input:
         assembly_fasta = filter_sequences_by_length.filtered_fasta,
         reference_fasta = select_first([reference_fasta, organism_parameters.reference]),
         remove_reference = remove_reference
     }
   }
-  call augur_utils.fasta_to_ids { # extract list of remaining sequences (so we know which ones were dropped)
+  call augur_utils.fasta_to_ids { 
+    # extract list of remaining sequences (so we know which ones were dropped)
     input:
       sequences_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta])
   }
-  call tree_task.augur_tree { # create a "draft" (or distance) augur tree
+  # create a phylogenetic tree
+  call tree_task.augur_tree { 
     input:
       aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
       build_name = build_name_updated
   }
-  call snp_dists_task.snp_dists { # create a snp matrix from the alignment
+  # create a snp matrix from the alignment
+  call snp_dists_task.snp_dists { 
     input:
       cluster_name = build_name_updated,
       alignment = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta])
   }
-  call reorder_matrix_task.reorder_matrix { # reorder snp matrix to match distance tree 
+  # reorder snp matrix to match distance tree 
+  call reorder_matrix_task.reorder_matrix { 
     input:
       input_tree = augur_tree.aligned_tree,
       matrix = snp_dists.snp_matrix,
@@ -126,8 +140,8 @@ workflow augur {
       midpoint_root = midpoint_root,
       outgroup_root = outgroup_root
   }
-  if (! distance_tree_only && defined(tsv_join.out_tsv)) { # by default, continue
-    call refine_task.augur_refine { # create a timetree (aka, refine augur tree)
+  if (build_time_tree && defined(tsv_join.out_tsv)) { # by default, continue
+    call refine_task.augur_refine { # create a time-calibrated phylogenetic tree (aka, refine augur tree)
       input:
         aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
         draft_augur_tree = reorder_matrix.tree,
@@ -166,8 +180,10 @@ workflow augur {
         }
       }
       if (! run_traits) {
-        if (defined(clades_tsv) || (defined(organism_parameters.augur_clades_tsv) && (basename(organism_parameters.augur_clades_tsv) != "minimal-clades.tsv"))) { # one must be present and not the empty "minimal-clades.tsv" file
-          call clades_task.augur_clades { # assign clades to nodes based on amino-acid or nucleotide signatures
+        # one must be present and not the empty "minimal-clades.tsv" file
+        if (defined(clades_tsv) || (defined(organism_parameters.augur_clades_tsv) && (basename(organism_parameters.augur_clades_tsv) != "minimal-clades.tsv"))) { 
+          # assign clades to nodes based on amino-acid or nucleotide signatures
+          call clades_task.augur_clades { 
             input:
               refined_tree = augur_refine.refined_tree,
               ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
@@ -178,7 +194,8 @@ workflow augur {
         }
       }
     }
-    call export_task.augur_export { # export json files suitable for auspice visualization
+    # export json files suitable for auspice visualization
+    call export_task.augur_export { 
       input:
         refined_tree = augur_refine.refined_tree,
         metadata = tsv_join.out_tsv,
@@ -194,9 +211,6 @@ workflow augur {
         auspice_config = select_first([auspice_config, organism_parameters.augur_auspice_config])
     }
   }
-  call versioning.version_capture { # capture the version
-    input:
-  }
   output {
     # version capture
     String augur_phb_version = version_capture.phb_version
@@ -207,7 +221,7 @@ workflow augur {
     String? augur_mafft_version = augur_align.mafft_version
     File? auspice_input_json = augur_export.auspice_json
     File? time_tree = augur_refine.refined_tree
-    File distance_tree = augur_tree.aligned_tree
+    File phylogenetic_tree = augur_tree.aligned_tree
     String augur_iqtree_model_used = augur_tree.iqtree_model_used
     String augur_iqtree_version = augur_tree.iqtree_version
     String augur_fasttree_version = augur_tree.fasttree_version
