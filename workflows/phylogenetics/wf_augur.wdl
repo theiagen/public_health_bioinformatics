@@ -83,7 +83,7 @@ workflow augur {
       proportion_wide = proportion_wide
   }
   # skip clade extraction if augur_clade_columns is not defined
-  if defined(augur_clade_columns || defined(clades_tsv) || defined(organism_parameters.augur_clades_tsv)) {
+  if defined(augur_clade_columns || defined(clades_tsv) || (defined(organism_parameters.augur_clades_tsv) && (basename(organism_parameters.augur_clades_tsv) != "minimal-clades.tsv"))) {
     Boolean run_clades = true
   } else {
     Boolean run_clades = false
@@ -153,22 +153,25 @@ workflow augur {
       outgroup_root = outgroup_root
   }
 
-  if (build_time_tree && defined(tsv_join.out_tsv)) {
+  if defined(tsv_join.out_tsv)) {
     # create a time-calibrated phylogenetic tree (aka, refine augur tree)
     call refine_task.augur_refine { 
       input:
         aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
         draft_augur_tree = reorder_matrix.tree,
         metadata = tsv_join.out_tsv,
-        build_name = build_name_updated
+        build_name = build_name_updated,
+        build_time_tree = build_time_tree
     }
-    call ancestral_task.augur_ancestral { # infer ancestral sequences
+    # infer ancestral sequences
+    call ancestral_task.augur_ancestral { 
       input:
         refined_tree = augur_refine.refined_tree,
         aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
         build_name = build_name_updated
     }
-    call translate_task.augur_translate { # translate gene regions from nucleotides to amino acids
+    # translate gene regions from nucleotides to amino acids
+    call translate_task.augur_translate { 
       input:
         refined_tree = augur_refine.refined_tree,
         ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
@@ -184,7 +187,7 @@ workflow augur {
       }
     }
     if (flu_segment != "NA") { # we have clade information for all "standard" species except for NA flu segments (SC2 defaults should be selected first)
-      if (run_traits && defined(tsv_join.out_tsv)) { # by default do not run traits and clades will be assigned based on the clades_tsv
+      if (defined(tsv_join.out_tsv)) { # by default do not run traits and clades will be assigned based on the clades_tsv
         call traits_task.augur_traits {
           input:
             refined_tree = augur_refine.refined_tree,
@@ -193,18 +196,23 @@ workflow augur {
             build_name = build_name_updated
         }
       }
-      if (! run_traits) {
+      if (run_clades) {
         # one must be present and not the empty "minimal-clades.tsv" file
-        if (defined(clades_tsv) || (defined(organism_parameters.augur_clades_tsv) && (basename(organism_parameters.augur_clades_tsv) != "minimal-clades.tsv"))) { 
-          # assign clades to nodes based on amino-acid or nucleotide signatures
-          call clades_task.augur_clades { 
+        if (defined(augur_clade_columns)) { 
+          call extract_clade_mutations {{
             input:
-              refined_tree = augur_refine.refined_tree,
-              ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
-              translated_aa_muts_json = augur_translate.translated_aa_muts_json,
-              build_name = build_name_updated,
-              clades_tsv = select_first([clades_tsv, organism_parameters.augur_clades_tsv])
+              metadata = tsv_join.out_tsv,
+              clade_columns = augur_clade_columns,
           }
+        }
+          # assign clades to nodes based on amino-acid or nucleotide signatures
+        call clades_task.augur_clades { 
+          input:
+            refined_tree = augur_refine.refined_tree,
+            ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
+            translated_aa_muts_json = augur_translate.translated_aa_muts_json,
+            build_name = build_name_updated,
+            clades_tsv = select_first([extract_clade_mutations.clades_tsv, clades_tsv, organism_parameters.augur_clades_tsv])
         }
       }
     }
@@ -225,6 +233,9 @@ workflow augur {
         auspice_config = select_first([auspice_config, organism_parameters.augur_auspice_config])
     }
   }
+  if (defined(build_time_tree)) {
+    time_tree = augur_refine.refined_tree
+  }
   output {
     # version capture
     String augur_phb_version = version_capture.phb_version
@@ -234,7 +245,7 @@ workflow augur {
     # augur outputs
     String? augur_mafft_version = augur_align.mafft_version
     File? auspice_input_json = augur_export.auspice_json
-    File? time_tree = augur_refine.refined_tree
+    File? time_tree = select_first([time_tree])
     File phylogenetic_tree = augur_tree.aligned_tree
     String augur_iqtree_model_used = augur_tree.iqtree_model_used
     String augur_iqtree_version = augur_tree.iqtree_version

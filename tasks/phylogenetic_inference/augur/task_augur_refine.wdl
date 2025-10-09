@@ -2,26 +2,32 @@ version 1.0
 
 task augur_refine {
   input {
+    # basic parameters
     File aligned_fasta
     File draft_augur_tree
     File? metadata
     String build_name
 
+    # phylogeny parameters
+    Boolean keep_root = true # do not reroot the tree; use it as-is (overrides anything specified by --root)
+    Boolean keep_polytomies = false # don't attempt to resolve polytomies
+    String? root # rooting mechanism ("best", "least-squares", "min_dev", "oldest", etc)
+    String divergence_units = "mutations" # units in which sequence divergences is exported ("mutations" or "mutations-per-site")
+
+    # time calibration parameters
+    Boolean build_time_tree = true
     Int? gen_per_year # number of generations per year (default: 50)
     Float? clock_rate # fixed clock rate
     Float? clock_std_dev # standard deviation of the fixed clock_rate estimate
-    Boolean keep_root = true # do not reroot the tree; use it as-is (overrides anything specified by --root)
-    String? root # rooting mechanism ("best", "least-squares", "min_dev", "oldest", etc)
     Boolean? covariance # account for covariation when estimating rates and/or rerooting (default: true)
-    Boolean keep_polytomies = false # don't attempt to resolve polytomies
     Int? precision # precision used to determine the number of grid points; options: 0 (rough) to 3 (ultra fine); default 'auto'
     Boolean date_confidence = true # calculate confidence intervals for node dates
     String date_inference = "marginal" # assign internal nodes to their marginally most likley dates (joint, marginal)
     String? branch_length_inference # branch length mode of treetime to use (auto, joint, marginal, input; default: auto)
     String? coalescent # coalescent time scale in units of inverse clock rate (float), optimize as scalar ("opt") or skyline (skyline)
     Int? clock_filter_iqd = 4 # remove tips that deviate more than n_iqd interquartile ranges from the root-to-tip vs time regression
-    String divergence_units = "mutations" # units in which sequence divergences is exported ("mutations" or "mutations-per-site")
 
+    # runtime parameters
     Int disk_size = 100
     Int memory = 50
     Int cpu = 2
@@ -34,7 +40,7 @@ task augur_refine {
       ~{'--metadata ' + metadata} \
       --output-tree "~{build_name}_timetree.nwk" \
       --output-node-data "~{build_name}_branch_lengths.json" \
-      --timetree \
+      ~{if build_time_tree then "--timetree" else ""} \
       ~{"--clock-rate " + clock_rate} \
       ~{"--clock-std-dev " + clock_std_dev} \
       ~{"--coalescent " + coalescent} \
