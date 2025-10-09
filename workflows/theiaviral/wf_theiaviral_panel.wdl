@@ -276,7 +276,7 @@ workflow theiaviral_panel {
     File kraken2_report_raw = read_QC_trim.kraken_report
     File kraken2_report_clean = select_first([read_QC_trim.kraken_report_clean])
     File kraken2_classified_report = select_first([read_QC_trim.kraken_classified_report])
-    Float? kraken_percent_human_raw = read_QC_trim.kraken_human
+    Float? kraken_percent_human_raw = read_QC_trim.kraken_human_viral_panel
     Float? kraken_percent_human_clean = read_QC_trim.kraken_human_clean
     # fastq_scan
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
