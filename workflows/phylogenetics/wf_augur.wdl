@@ -193,7 +193,7 @@ workflow augur {
       if (generate_clades_tsv) { 
         call extract_clade_mutations_task.extract_clade_mutations {
           input:
-            metadata_tsv = select_first([tsv_join.out_tsv]),
+            metadata_tsv = tsv_join.out_tsv,
             clade_columns = "clade_membership",
             tip_column = augur_id_column,
             tree = augur_refine.refined_tree,
