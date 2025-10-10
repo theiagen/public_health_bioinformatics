@@ -74,7 +74,7 @@ workflow organism_parameters {
     String sc2_pivot_interval_units = "weeks"
     Float sc2_narrow_bandwidth = 0.05
     Float sc2_proportion_wide = 0.0
-    Float sc2_min_num_unambig = 27000
+    Int sc2_min_num_unambig = 27000
   }
   if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox" || organism == "Monkeypox virus" || organism == "Mpox" || organism == "10244") {
     String mpox_org_name = "MPXV"

@@ -25,17 +25,17 @@ task extract_clade_mutations{
     extract_nextclades.py \
       --tree ~{tree} \
       --metadata ~{metadata_tsv} \
-      --clade_cols ~{clade_cols} \
-      --tip_col ~{tip_col} \
+      --clade_cols ~{clade_columns} \
+      --tip_col ~{tip_column} \
       --output_tsv ~{clades_file_path}
       --nt_mutations ~{nt_mutations} \
-      ~{if defined(aa_mutations) then "--aa_mutations " + aa_mutations else ""} \
+      ~{"--aa_mutations " + aa_mutations} \
       ~{true="--noncomprehensive" false="" allow_missing_tips} \
       ~{true="--skip_singletons" false="" skip_singleton_clades}
       -o ~{clades_file_path}
   >>>
   output {
-    File clades_file = "~{clades_file_path}"
+    File clades_tsv = "~{clades_file_path}"
   }
   runtime {
     docker: docker 

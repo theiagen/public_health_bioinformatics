@@ -133,10 +133,18 @@ task tsv_join {
     writer = csv.DictWriter(outf, header, delimiter='\t', dialect=csv.unix_dialect, quoting=csv.QUOTE_MINIMAL)
     writer.writeheader()
     writer.writerows(out_row_by_id[row_id] for row_id in out_ids)
+
+  if "date" in header:
+    has_time = "true"
+  else:
+    has_time = "false"
+  with open('HAS_TIME') as out:
+      out.write(has_time)
   CODE
   >>>
   output {
     File out_tsv = "~{out_basename}~{out_suffix}"
+    Boolean has_time = read_boolean("HAS_TIME")
   }
   runtime {
     memory: "~{memory} GB"
