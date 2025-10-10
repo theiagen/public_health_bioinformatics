@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/utilities/data_import/task_lod_table_prep.wdl" as lod_prep_task
+import "../../tasks/utilities/data_import/task_lod_table_prep.wdl" as lod_table_prep_task
 
 workflow lod_prep {
   input {
@@ -19,7 +19,7 @@ workflow lod_prep {
     Array[String] expected_alleles
 
   }
-  call lod_prep_task.lod_table_prep as prepare_lod_table {
+  call lod_table_prep_task.lod_table_prep as lod_table_prep {
     input:
       input_table_name = input_table_name,
       workspace_name = workspace_name,
@@ -33,6 +33,6 @@ workflow lod_prep {
       expected_alleles = expected_alleles
   }
   output {
-    File lod_table_tsv = prepare_lod_table.lod_table_tsv
+    File lod_table_tsv = lod_table_prep.lod_table_tsv
   } 
 }

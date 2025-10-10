@@ -24,11 +24,6 @@ task lod_table_prep {
   command <<<
     set -euo pipefail
 
-    #python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --entity_type "~{input_table_name}" --tsv_filename "~{input_table_name}-data.tsv"
-
-    # delete this later Uncomment the following for local testing:
-    #cp ~{input_table} ~{input_table_name}-data.tsv
-
     python3 <<CODE
     from bioforklift.terra import Terra, WorkflowConfig
     import pandas as pd
