@@ -48,7 +48,7 @@ workflow augur {
     Float? narrow_bandwidth
     Float? proportion_wide
     String? augur_trait_columns # comma-separated list of columns to use for traits
-    String? augur_clade_columns # comma-separated list of columns to use for clades
+    Boolean generate_clades_tsv = false # generate clades tsv file from clade_membership header
     String augur_id_column = "strain" # column in metadata tsv that contains the sequence names/IDs
 
     # phylogenetic tree parameters
@@ -199,11 +199,11 @@ workflow augur {
         }
       }
       if (run_clades) {
-        if (defined(augur_clade_columns)) { 
+        if (generate_clades_tsv) { 
           call extract_clade_mutations_task.extract_clade_mutations {
             input:
               metadata_tsv = tsv_join.out_tsv,
-              clade_columns = augur_clade_columns,
+              clade_columns = "clade_membership",
               tip_column = augur_id_column,
               tree = augur_refine.refined_tree,
               nt_mutations = augur_ancestral.ancestral_nt_muts_json,
