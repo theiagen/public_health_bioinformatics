@@ -155,7 +155,7 @@ workflow augur {
       input:
         aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
         draft_augur_tree = reorder_matrix.tree,
-        metadata = select_first([tsv_join.out_tsv]),
+        metadata = tsv_join.out_tsv,
         build_name = build_name_updated,
         build_time_tree = select_first([tsv_join.has_time])
     }
