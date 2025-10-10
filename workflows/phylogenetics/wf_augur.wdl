@@ -234,7 +234,7 @@ workflow augur {
   if (select_first([tsv_join.has_time, false])) {
     File time_tree_path = select_first([augur_refine.refined_tree])
   }
-  if (! select_first([tsv_join.has_time, false])) {
+  if (! select_first([tsv_join.has_time, false]) && defined(tsv_join.out_tsv)) {
     File phylogenetic_tree_path = select_first([augur_refine.refined_tree])
   }
   output {
@@ -246,7 +246,7 @@ workflow augur {
     # augur outputs
     String? augur_mafft_version = augur_align.mafft_version
     File? auspice_input_json = augur_export.auspice_json
-    File? time_tree = select_first([time_tree_path])
+    File? time_tree = time_tree_path
     File phylogenetic_tree = select_first([phylogenetic_tree_path, augur_tree.tree])
     String augur_iqtree_model_used = augur_tree.iqtree_model_used
     String augur_iqtree_version = augur_tree.iqtree_version
