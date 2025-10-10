@@ -55,6 +55,7 @@ workflow augur {
     String? outgroup_root
   }
   String build_name_updated = sub(build_name, " ", "_")
+
   # capture the version
   call versioning.version_capture { 
     input:
@@ -216,7 +217,7 @@ workflow augur {
   call export_task.augur_export { 
     input:
       tree = select_first([augur_refine.refined_tree, augur_tree.tree]),
-      metadata = select_first([tsv_join.out_tsv]),
+      metadata = select_first([tsv_join.out_tsv, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"]),
       node_data_jsons = select_all([
                           augur_refine.branch_lengths,
                           augur_ancestral.ancestral_nt_muts_json,

@@ -31,9 +31,18 @@ task augur_export {
       node_data_arg=""
     fi
 
+    # check if the bash variable is empty, then check if the file is (allows for empty file inputs)
+    metadata=~{metadata}
+    metadata_arg=""
+    if [[ ! -z $metadata ]]; then
+      if [ -s $metadata ]; then
+        metadata_arg="--metadata "~{metadata}
+      fi
+    fi
+
     augur export v2 \
       --tree ~{tree} \
-      ~{"--metadata " + metadata} \
+      $metadata_arg \
       $node_data_arg \
       --output ~{build_name}_auspice.json \
       ~{"--auspice-config " + auspice_config} \
