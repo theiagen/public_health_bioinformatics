@@ -41,7 +41,7 @@ task reorder_matrix {
     # reroot tree with midpoint, if midpoint_root_tree is set to true
     if "~{outgroup_root}":
         tree.root_with_outgroup("~{outgroup_root}")
-    elif "~{midpoint_root}" == "true":
+    elif "~{midpoint_root_tree}" == "true":
         tree.root_at_midpoint()
 
     # extract ordered terminal ends of tree (could be midpoint rooted or not, depending on midpoint_root optional input)
