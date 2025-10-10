@@ -70,7 +70,7 @@ task augur_tree {
   >>>
 
   output {
-    File aligned_tree  = "~{build_name}_~{method}.nwk"
+    File tree  = "~{build_name}_~{method}.nwk"
     String augur_version = read_string("VERSION")
     String iqtree_version = read_string("IQTREE_VERSION")
     String fasttree_version = read_string("FASTTREE_VERSION")

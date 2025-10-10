@@ -95,7 +95,7 @@ workflow augur {
     # merge the metadata files
     call augur_utils.tsv_join { 
       input:
-        input_tsvs = select_first([sample_metadata_tsvs]),
+        input_tsvs = sample_metadata_tsvs,
         id_col = augur_id_column,
         out_basename = "metadata-merged"
     }
@@ -148,7 +148,7 @@ workflow augur {
   # reorder snp matrix to match distance tree 
   call reorder_matrix_task.reorder_matrix { 
     input:
-      input_tree = augur_tree.aligned_tree,
+      input_tree = augur_tree.tree,
       matrix = snp_dists.snp_matrix,
       cluster_name = build_name_updated,
       midpoint_root = midpoint_root,
@@ -221,21 +221,21 @@ workflow augur {
         }
       }
     }
-    # export json files suitable for auspice visualization
-    call export_task.augur_export { 
-      input:
-        refined_tree = augur_refine.refined_tree,
-        metadata = tsv_join.out_tsv,
-        node_data_jsons = select_all([
-                            augur_refine.branch_lengths,
-                            augur_ancestral.ancestral_nt_muts_json,
-                            augur_translate.translated_aa_muts_json,
-                            augur_clades.clade_assignments_json,
-                            augur_traits.traits_assignments_json,
-                            mutation_context.mutation_context_json]),
-        build_name = build_name_updated,
-        lat_longs_tsv = select_first([lat_longs_tsv, organism_parameters.augur_lat_longs_tsv]),
-        auspice_config = select_first([auspice_config, organism_parameters.augur_auspice_config])
+  # export json files suitable for auspice visualization
+  call export_task.augur_export { 
+    input:
+      tree = select_first([augur_refine.refined_tree, augur_tree.tree]),
+      metadata = select_first([tsv_join.out_tsv]),
+      node_data_jsons = select_all([
+                          augur_refine.branch_lengths,
+                          augur_ancestral.ancestral_nt_muts_json,
+                          augur_translate.translated_aa_muts_json,
+                          augur_clades.clade_assignments_json,
+                          augur_traits.traits_assignments_json,
+                          mutation_context.mutation_context_json]),
+      build_name = build_name_updated,
+      lat_longs_tsv = select_first([lat_longs_tsv, organism_parameters.augur_lat_longs_tsv]),
+      auspice_config = select_first([auspice_config, organism_parameters.augur_auspice_config])
     }
   }
   if (defined(build_time_tree)) {
@@ -251,7 +251,7 @@ workflow augur {
     String? augur_mafft_version = augur_align.mafft_version
     File? auspice_input_json = augur_export.auspice_json
     File? time_tree = select_first([time_tree])
-    File phylogenetic_tree = augur_tree.aligned_tree
+    File phylogenetic_tree = augur_tree.tree
     String augur_iqtree_model_used = augur_tree.iqtree_model_used
     String augur_iqtree_version = augur_tree.iqtree_version
     String augur_fasttree_version = augur_tree.fasttree_version

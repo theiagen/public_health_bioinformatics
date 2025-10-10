@@ -2,7 +2,7 @@ version 1.0
 
 task augur_export {
   input {
-    File refined_tree
+    File tree
     File? metadata
     Array[File] node_data_jsons
     String build_name
@@ -20,10 +20,21 @@ task augur_export {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0"
   }
   command <<<
+    # fail hard
+    set -euo pipefail
+
+    # prepare node_data argument
+    node_data=~{sep=' ' node_data_jsons}
+    if [ -z $node_data ]; then
+      node_data_arg="--node-data "${node_data}
+    else
+      node_data_arg=""
+    fi
+
     augur export v2 \
-      --tree ~{refined_tree} \
+      --tree ~{tree} \
       ~{"--metadata " + metadata} \
-      --node-data ~{sep=' ' node_data_jsons} \
+      $node_data_arg \
       --output ~{build_name}_auspice.json \
       ~{"--auspice-config " + auspice_config} \
       ~{"--title " + title} \
