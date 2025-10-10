@@ -28,16 +28,6 @@ task lod_table_prep {
     from bioforklift.terra import Terra, WorkflowConfig
     import pandas as pd
 
-    # defining wdl inputs as python variables for easier use
-    input_table_name = "~{input_table_name}"
-    read1_column_name = "~{read1_column_name}"
-    read2_column_name = "~{read2_column_name}"
-    taxon_column_name = "~{taxon_column_name}"
-    output_table_name = "~{output_table_name}"
-    expected_genes = ",".join(["~{sep=',' expected_genes}"])
-    expected_alleles = ",".join(["~{sep=',' expected_alleles}"])
-    downsampling_levels = sorted([~{sep=',' downsampling_levels}])
-
     # Initialize Terra client
     terra = Terra(
       source_workspace="~{workspace_name}",
@@ -51,9 +41,9 @@ task lod_table_prep {
     input_header = list(input_df.columns)
 
     required_columns = [
-      read1_column_name,
-      read2_column_name,
-      taxon_column_name,
+      "~{read1_column_name}",
+      "~{read2_column_name}",
+      "~{taxon_column_name}",
     ]
 
     # check that all required columns are present in the input table
@@ -64,20 +54,20 @@ task lod_table_prep {
     # write header to output LOD table
     output_df = pd.DataFrame(
       {
-        f"entity:{output_table_name}_id" : input_df[f"entity:{input_table_name}_id"],
-        "taxon": input_df[taxon_column_name],
-        "expected_genes": expected_genes,
-        "expected_alleles": expected_alleles,
-        "read1": input_df[read1_column_name],
-        "read2": input_df[read2_column_name],
+        "entity:~{output_table_name}_id" : input_df["entity:~{input_table_name}_id"],
+        "taxon": input_df["~{taxon_column_name}"],
+        "expected_genes": ",".join(["~{sep=',' expected_genes}"]),
+        "expected_alleles": ",".join(["~{sep=',' expected_alleles}"]),
+        "read1": input_df["~{read1_column_name}"],
+        "read2": input_df["~{read2_column_name}"],
       }
     )
 
-    downsampled_df = pd.DataFrame({"downsampling_level": downsampling_levels})
+    downsampled_df = pd.DataFrame({"downsampling_level": sorted([~{sep=',' downsampling_levels}])})
     merged_df = output_df.merge(downsampled_df, how="cross")
-    merged_df["entity:{output_table_name}_id"] = merged_df["entity:{output_table_name}_id"] + "_" + merged_df["downsampling_level"].astype(str) + "x"
+    merged_df["entity:~{output_table_name}_id"] = merged_df["entity:~{output_table_name}_id"] + "_" + merged_df["downsampling_level"].astype(str) + "x"
     output_df = pd.concat([output_df, merged_df], ignore_index=True)
-    output_df.to_csv(f"{output_table_name}-data.tsv", sep="\t", index=False)
+    output_df.to_csv("~{output_table_name}-data.tsv", sep="\t", index=False)
 
     updated_df = terra.entities.upload_entities(data=output_df, target="~{output_table_name}")
     result = terra.entities.create_entity_set("~{output_table_name}_set", "~{output_table_name}", updated_df)
