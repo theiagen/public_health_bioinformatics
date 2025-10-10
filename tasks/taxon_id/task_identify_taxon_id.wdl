@@ -8,7 +8,7 @@ task identify_taxon_id {
     Boolean use_ncbi_virus = false
     Boolean complete = true
     Boolean refseq = true
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq"
     Int cpu = 1
     Int memory = 4
     Int disk_size = 50
@@ -21,36 +21,71 @@ task identify_taxon_id {
     datasets --version | sed 's|datasets version: ||' | tee DATASETS_VERSION
 
     echo "DEBUG: Obtaining taxon report for taxon: ~{taxon} and rank: ~{rank}"
-    datasets summary taxonomy taxon ~{'"' + taxon + '"'} \
-      ~{"--rank " + rank} \
-      --as-json-lines | \
-    dataformat tsv taxonomy \
-      --template tax-summary > ncbi_taxon_summary.tsv
+    # Note "jq -c '.reports[]'" acts identically to --as-json-lines
+    datasets summary taxonomy taxon ~{'"' + taxon + '"'} | \
+    tee ncbi_taxon_summary.json | \
+    jq -c '.reports[]' | \
+    dataformat tsv taxonomy --template tax-summary > ncbi_taxon_summary.tsv
 
-    datasets summary taxonomy taxon ~{'"' + taxon + '"'} \
-      --as-json-lines | \
-    dataformat tsv taxonomy --template tax-summary > raw_taxon_summary.tsv
+    python3 <<CODE
+    import json
 
-    # check if the taxon summary file is empty
+    with open("ncbi_taxon_summary.json") as f:
+      data = json.load(f)
+
+    report_list = data['reports']
+
+    for report in report_list:
+      query_taxon = ', '. join([q for q in report['query']])
+      query_rank = "~{rank}".lower()
+      report = report['taxonomy']
+
+      # Raw taxon name, id, and rank is based on the original user input query
+      raw_taxon_name = report['current_scientific_name'].get('name', '')
+      raw_taxon_id = report.get('tax_id', '')
+
+      # Missing 'rank' means raw taxon rank is below-species or invalid. NCBI reports as 'no rank'.
+      if 'rank' in report:
+        raw_taxon_rank = report['rank'].lower()
+      elif 'species' in report['classification']:
+        raw_taxon_rank = 'no rank'
+      else:
+        raw_taxon_rank = 'N/A'
+
+      # Reported taxon info is based on the 'rank' input (if provided). Otherwise, use raw rank.
+      if not query_rank:
+        print("DEBUG: No input 'rank' provided, defaulting to raw taxon ID, name, and rank.")
+        reported_taxon_name = raw_taxon_name
+        reported_taxon_id = raw_taxon_id
+        reported_taxon_rank = raw_taxon_rank
+      elif query_rank not in report['classification']:
+        reported_taxon_name = reported_taxon_id = reported_taxon_rank = 'N/A'
+        raise ValueError(f"ERROR: Input taxon rank '{query_rank}' is not valid for taxon: '{query_taxon}'.")
+      else:
+        reported_taxon_name = report['classification'].get(query_rank, {}).get('name', '')
+        reported_taxon_id = report['classification'].get(query_rank, {}).get('id', '')
+        reported_taxon_rank = query_rank
+
+    outputs = {
+      "TAXON_ID": str(reported_taxon_id),
+      "TAXON_NAME": str(reported_taxon_name),
+      "TAXON_RANK": str(reported_taxon_rank),
+      "RAW_TAXON_ID": str(raw_taxon_id),
+      "RAW_TAXON_NAME": str(raw_taxon_name),
+      "RAW_TAXON_RANK": str(raw_taxon_rank)
+    }
+    for filename, value in outputs.items():
+      with open(filename, "w") as f:
+        f.write(value)
+    CODE
+    echo "DEBUG: Reported TAXON_ID: $(cat TAXON_ID), TAXON_NAME: $(cat TAXON_NAME), TAXON_RANK: $(cat TAXON_RANK)"
+
     if [ ! -s "ncbi_taxon_summary.tsv" ]; then
       echo "ERROR: no taxon summary found for taxon: ~{taxon} and rank: ~{rank}"
       exit 1
-    else
-      # check if ncbi_taxon_summary.tsv is longer than 2 lines (header + 1 data line)
-      # if so, then the taxon rank (either calculated or provided) is too specific and we need to exit with an error
-      if [ $(wc -l < ncbi_taxon_summary.tsv) -gt 2 ]; then
-        echo "ERROR: input taxon rank '~{rank}' is not valid (too specific) for taxon: '~{taxon}'." 1>&2
-        exit 1
-      fi
-      # extract the taxid ($2) tax name ($3) and rank ($5) from the output tsv file
-      # skip the header line. if the input taxon rank is invalid (too specific), there will be more than one line listed here.
-      awk -F'\t' 'NR == 2 {print $2}' ncbi_taxon_summary.tsv > TAXON_ID
-      awk -F'\t' 'NR == 2 {print $3}' ncbi_taxon_summary.tsv > TAXON_NAME
-      awk -F'\t' 'NR == 2 {print $5}' ncbi_taxon_summary.tsv > TAXON_RANK
-
-      awk -F'\t' 'NR == 2 {print $2}' raw_taxon_summary.tsv > RAW_TAXON_ID
     fi
 
+    echo "DEBUG: Generating genome summary for taxon: ~{taxon}"
     # get list of {summary_limit} genomes from the specified taxon and calculate average genome length
     if ~{use_ncbi_virus}; then
       # virus-genome --fields: https://www.ncbi.nlm.nih.gov/datasets/docs/v2/command-line-tools/using-dataformat/virus-data-reports/
@@ -98,11 +133,14 @@ task identify_taxon_id {
   >>>
   output {
     File taxon_summary_tsv = "ncbi_taxon_summary.tsv"
+    File taxon_summary_json = "ncbi_taxon_summary.json"
     File genome_summary_tsv = "ncbi_genome_summary.tsv"
     String taxon_id = read_string("TAXON_ID")
     String taxon_name = read_string("TAXON_NAME")
     String taxon_rank = read_string("TAXON_RANK")
     String raw_taxon_id = read_string("RAW_TAXON_ID")
+    String raw_taxon_name = read_string("RAW_TAXON_NAME")
+    String raw_taxon_rank = read_string("RAW_TAXON_RANK")
     String avg_genome_length = read_string("AVG_GENOME_LENGTH")
     String ncbi_datasets_accession = read_string("NCBI_ACCESSION")
     String ncbi_datasets_version = read_string("DATASETS_VERSION")
