@@ -51,6 +51,7 @@ workflow augur {
     String augur_id_column = "strain" # column in metadata tsv that contains the sequence names/IDs
 
     # phylogenetic tree = true # by default, midpoint root the tree
+    Boolean midpoint_root_tree = true
     String? outgroup_root
   }
   String build_name_updated = sub(build_name, " ", "_")
