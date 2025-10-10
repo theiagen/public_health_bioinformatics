@@ -149,7 +149,7 @@ workflow augur {
       outgroup_root = outgroup_root
   }
 
-  if (defined(select_first([tsv_join.out_tsv]))) {
+  if (defined(tsv_join.out_tsv)) {
     # create a time-calibrated phylogenetic tree (aka, refine augur tree)
     call refine_task.augur_refine { 
       input:
@@ -182,39 +182,36 @@ workflow augur {
           build_name = build_name_updated
       }
     }
-    if (flu_segment != "NA") { # we have clade information for all "standard" species except for NA flu segments (SC2 defaults should be selected first)
-      if (defined(tsv_join.out_tsv)) { # by default do not run traits and clades will be assigned based on the clades_tsv
-        call traits_task.augur_traits {
+    call traits_task.augur_traits {
+      input:
+        refined_tree = augur_refine.refined_tree,
+        metadata = tsv_join.out_tsv,
+        columns = select_first([augur_trait_columns, "pango_lineage,clade_membership"]), # default to these columns if none are specified
+        build_name = build_name_updated
+    }
+    if (defined(call_clades)) {
+      if (generate_clades_tsv) { 
+        call extract_clade_mutations_task.extract_clade_mutations {
           input:
-            refined_tree = augur_refine.refined_tree,
-            metadata = tsv_join.out_tsv,
-            columns = select_first([augur_trait_columns, "pango_lineage,clade_membership"]), # default to these columns if none are specified
-            build_name = build_name_updated
+            metadata_tsv = select_first([tsv_join.out_tsv]),
+            clade_columns = "clade_membership",
+            tip_column = augur_id_column,
+            tree = augur_refine.refined_tree,
+            nt_mutations = augur_ancestral.ancestral_nt_muts_json,
+            aa_mutations = augur_translate.translated_aa_muts_json
         }
       }
-      if (defined(call_clades)) {
-        if (generate_clades_tsv) { 
-          call extract_clade_mutations_task.extract_clade_mutations {
-            input:
-              metadata_tsv = select_first([tsv_join.out_tsv]),
-              clade_columns = "clade_membership",
-              tip_column = augur_id_column,
-              tree = augur_refine.refined_tree,
-              nt_mutations = augur_ancestral.ancestral_nt_muts_json,
-              aa_mutations = augur_translate.translated_aa_muts_json
-          }
-        }
-          # assign clades to nodes based on amino-acid or nucleotide signatures
-        call clades_task.augur_clades { 
-          input:
-            refined_tree = augur_refine.refined_tree,
-            ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
-            translated_aa_muts_json = augur_translate.translated_aa_muts_json,
-            build_name = build_name_updated,
-            clades_tsv = select_first([extract_clade_mutations.clades_tsv, clades_tsv, organism_parameters.augur_clades_tsv])
-        }
+      # assign clades to nodes based on amino-acid or nucleotide signatures
+      call clades_task.augur_clades { 
+        input:
+          refined_tree = augur_refine.refined_tree,
+          ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
+          translated_aa_muts_json = augur_translate.translated_aa_muts_json,
+          build_name = build_name_updated,
+          clades_tsv = select_first([extract_clade_mutations.clades_tsv, clades_tsv, organism_parameters.augur_clades_tsv])
       }
     }
+  }
   # export json files suitable for auspice visualization
   call export_task.augur_export { 
     input:
@@ -230,14 +227,13 @@ workflow augur {
       build_name = build_name_updated,
       lat_longs_tsv = select_first([lat_longs_tsv, organism_parameters.augur_lat_longs_tsv]),
       auspice_config = select_first([auspice_config, organism_parameters.augur_auspice_config])
-    }
   }
 
   # determine what the refined tree represents
-  if (select_first([tsv_join.has_time])) {
+  if (select_first([tsv_join.has_time, false])) {
     File time_tree_path = select_first([augur_refine.refined_tree])
   }
-  if (! select_first([tsv_join.has_time])) {
+  if (! select_first([tsv_join.has_time, false])) {
     File phylogenetic_tree_path = select_first([augur_refine.refined_tree])
   }
   output {
