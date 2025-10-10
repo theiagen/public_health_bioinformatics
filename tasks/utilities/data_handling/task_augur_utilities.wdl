@@ -221,10 +221,10 @@ task prep_augur_metadata {
     File assembly
     String? collection_date
     String? country
-    String? state
-    String? continent
+    String? division
+    String? region
 
-    String? county = ""
+    String? location = ""
     String? pango_lineage
     String? nextclade_clade
     String? organism = "sars-cov-2"
@@ -258,7 +258,7 @@ task prep_augur_metadata {
 
     # write everything to a file
     echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation\t${pangolin_header}\t${nextclade_header}" > augur_metadata.tsv
-    echo -e "\"${assembly_header}\"\t\"${virus}\"\t\"~{collection_date}\"\t\"~{continent}\"\t\"~{country}\"\t\"~{state}\"\t\"~{county}\"\t\"~{pango_lineage}\"\t\"~{nextclade_clade}\"" >> augur_metadata.tsv
+    echo -e "\"${assembly_header}\"\t\"${virus}\"\t\"~{collection_date}\"\t\"~{region}\"\t\"~{country}\"\t\"~{division}\"\t\"~{location}\"\t\"~{pango_lineage}\"\t\"~{nextclade_clade}\"" >> augur_metadata.tsv
   >>>
   output {
     File augur_metadata = "augur_metadata.tsv"

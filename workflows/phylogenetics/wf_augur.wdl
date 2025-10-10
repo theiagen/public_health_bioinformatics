@@ -50,8 +50,7 @@ workflow augur {
     Boolean generate_clades_tsv = false # generate clades tsv file from clade_membership header
     String augur_id_column = "strain" # column in metadata tsv that contains the sequence names/IDs
 
-    # phylogenetic tree parameters
-    Boolean midpoint_root_tree = true # by default, midpoint root the tree
+    # phylogenetic tree = true # by default, midpoint root the tree
     String? outgroup_root
   }
   String build_name_updated = sub(build_name, " ", "_")
