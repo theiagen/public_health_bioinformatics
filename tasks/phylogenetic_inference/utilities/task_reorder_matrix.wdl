@@ -7,7 +7,7 @@ task reorder_matrix {
     String cluster_name
 
     String? outgroup_root # will preferentially root with outgroup if defined
-    Boolean? midpoint_root
+    Boolean? midpoint_root_tree
     
     Int disk_size = 100
     Int cpu = 1
