@@ -25,7 +25,8 @@ task augur_export {
 
     # prepare node_data argument
     node_data=~{sep=' ' node_data_jsons}
-    if [ -z $node_data ]; then
+    echo node_data
+    if [ -z $(echo $node_data | sed -e 's/ //g') ]; then
       node_data_arg="--node-data "${node_data}
     else
       node_data_arg=""
