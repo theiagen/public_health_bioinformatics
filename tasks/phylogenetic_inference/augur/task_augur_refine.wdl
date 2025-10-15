@@ -15,7 +15,7 @@ task augur_refine {
     String divergence_units = "mutations" # units in which sequence divergences is exported ("mutations" or "mutations-per-site")
 
     # time calibration parameters
-    Boolean build_time_tree = true
+    Boolean build_time_tree = false
     Int? gen_per_year # number of generations per year (default: 50)
     Float? clock_rate # fixed clock rate
     Float? clock_std_dev # standard deviation of the fixed clock_rate estimate
@@ -40,7 +40,7 @@ task augur_refine {
       ~{'--metadata ' + metadata} \
       --output-tree "~{build_name}_timetree.nwk" \
       --output-node-data "~{build_name}_branch_lengths.json" \
-      ~{if build_time_tree then "--timetree" else ""} \
+      ~{true="--timetree" false="" build_time_tree} \
       ~{"--clock-rate " + clock_rate} \
       ~{"--clock-std-dev " + clock_std_dev} \
       ~{"--coalescent " + coalescent} \

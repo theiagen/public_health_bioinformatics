@@ -150,14 +150,14 @@ workflow augur {
       outgroup_root = outgroup_root
   }
 
-  # create a time-calibrated phylogenetic tree (aka, refine augur tree)
+  # refine and potentially create a time-calibrated phylogenetic tree
   call refine_task.augur_refine { 
     input:
       aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
       draft_augur_tree = reorder_matrix.tree,
-      metadata = select_first([tsv_join.out_tsv]),
+      metadata = tsv_join.out_tsv,
       build_name = build_name_updated,
-      build_time_tree = select_first([tsv_join.has_time])
+      build_time_tree = tsv_join.has_time
   }
 
   if (defined(tsv_join.out_tsv)) {
@@ -235,7 +235,7 @@ workflow augur {
   if (select_first([tsv_join.has_time, false])) {
     File time_tree_path = select_first([augur_refine.refined_tree])
   }
-  if (! select_first([tsv_join.has_time, false]) && defined(tsv_join.out_tsv)) {
+  if (! select_first([tsv_join.has_time, false]) {
     File phylogenetic_tree_path = select_first([augur_refine.refined_tree])
   }
   output {
