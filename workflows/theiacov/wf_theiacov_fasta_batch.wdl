@@ -38,7 +38,7 @@ workflow theiacov_fasta_batch {
       headers = samplenames,
       concatenated_file_name = "concatenated_assemblies.fasta"
   }
-  call morgana_magic.morgana_magic {
+  call morgana_magic.morgana_magic as morgana_magic_wf {
     input:
       samplename = "concatenated_assemblies",
       assembly_fasta = cat_files_fasta.concatenated_files,
@@ -46,6 +46,7 @@ workflow theiacov_fasta_batch {
       nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
       nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
       pangolin_docker_image = organism_parameters.pangolin_docker,
+      seq_method = "NA",
       workflow_type = "theiacov_fasta_batch"
   }
   call versioning.version_capture {
@@ -59,13 +60,13 @@ workflow theiacov_fasta_batch {
       bucket_name = bucket_name,
       samplenames = samplenames,
       organism = organism_parameters.standardized_organism,
-      nextclade_tsv = morgana_magic.nextclade_tsv,
-      nextclade_docker = morgana_magic.nextclade_docker,
-      nextclade_version = morgana_magic.nextclade_version,
+      nextclade_tsv = morgana_magic_wf.nextclade_tsv,
+      nextclade_docker = morgana_magic_wf.nextclade_docker,
+      nextclade_version = morgana_magic_wf.nextclade_version,
       nextclade_ds_tag = organism_parameters.nextclade_dataset_tag,
-      nextclade_json = morgana_magic.nextclade_json,
-      pango_lineage_report = morgana_magic.pango_lineage_report,
-      pangolin_docker = morgana_magic.pangolin_docker,
+      nextclade_json = morgana_magic_wf.nextclade_json,
+      pango_lineage_report = morgana_magic_wf.pango_lineage_report,
+      pangolin_docker = morgana_magic_wf.pangolin_docker,
       theiacov_fasta_analysis_date = version_capture.date,
       theiacov_fasta_version = version_capture.phb_version
   }
@@ -74,10 +75,10 @@ workflow theiacov_fasta_batch {
     String theiacov_fasta_batch_version = version_capture.phb_version
     String theiacov_fasta_batch_analysis_date = version_capture.date
     # Pangolin outputs
-    File? pango_lineage_report = morgana_magic.pango_lineage_report
+    File? pango_lineage_report = morgana_magic_wf.pango_lineage_report
     # Nextclade outputs
-    File? nextclade_json = morgana_magic.nextclade_json
-    File? nextclade_tsv = morgana_magic.nextclade_tsv
+    File? nextclade_json = morgana_magic_wf.nextclade_json
+    File? nextclade_tsv = morgana_magic_wf.nextclade_tsv
     # Wrangling outputs
     File datatable = sm_theiacov_fasta_wrangling.terra_table
   }
