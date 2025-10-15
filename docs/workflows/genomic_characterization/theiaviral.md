@@ -68,26 +68,17 @@
         ???+ dna_blue "`taxon` _required_ input parameter"
             `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) and do not have to be species-level (see `read_extraction_rank` below).
 
-        /// html | div[style='float: left; width: 50%; padding-right: 10px;']
-
         ??? dna "`host` optional input parameter"
             The `host` input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task `is_accession` (ONT) or Read QC Trim PE `host_is_accession` (Illumina) boolean populated as "true".
 
         ??? dna "`extract_unclassified` optional input parameter"
             By default, the `extract_unclassified` parameter is set to "true", which indicates that reads that are not classified by Kraken2 (Illumina) or Metabuli (ONT) will be included with reads classified as the input `taxon`. These classification software most often do not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. Host decontamination occurs in TheiaViral using NCBI `sra-human-scrubber`, read classification to the human genome, and/or via mapping reads to the inputted `host`. Contaminant viral reads are mostly excluded because they will be often be classified against the default RefSeq classification databases. Consider setting `extract_unclassified` to false if *de novo* assembly or Skani reference selection is failing.
-        ///
-
-        /// html | div[style='float: right; width: 50%; padding-left: 10px;']
 
         ??? dna "`min_allele_freq`, `min_depth`, and `min_map_quality` optional input parameters"
             These parameters have a direct effect on the variants that will ultimately be reported in the consensus assembly. `min_allele_freq` determines the minimum proportion of an allelic variant to be reported in the consensus assembly. `min_depth` and `min_map_quality` affect how "N" is reported in the consensus, i.e. depth below `min_depth` is reported as "N" and reads with mapping quality below `min_map_quality` are not included in depth calculations.
 
         ??? dna "`read_extraction_rank` optional input parameter"
             By default, the `read_extraction_rank` parameter is set to "family", which indicates that reads will be extracted if they are classified as the taxonomic family of the input `taxon`, including all descendant taxa of the family. Read classification may not resolve to the rank of the input `taxon`, so these reads may be classified at higher ranks. For example, some *Lyssavirus rabies* (species) reads may only be resolved to *Lyssavirus* (genus), so they would not be extracted if the `read_extraction_rank` is set to "species". Setting the `read_extraction_rank` above the inputted `taxon`'s rank can therefore dramatically increase the number of reads recovered, at the potential cost of including other viruses. This likely is not a problem for scarcely represented lineages, e.g. a sample that is expected to include *Lyssavirus rabies* is unlikely to contain other viruses of the corresponding family, Rhabdoviridae, within the same sample. However, setting a `read_extraction_rank` far beyond the input `taxon` rank can be problematic when multiple representatives of the same viral family are included in similar abundance within the same sample. To further refine the desired `read_extraction_rank`, please review the corresponding classification reports of the respective classification software (kraken2 for Illumina and Metabuli for ONT)
-        ///
-
-        /// html | div[style='clear: both;']
-        ///
 
     === "TheiaViral_ONT"
 
@@ -178,7 +169,7 @@
 
     ??? toggle "Taxonomic Identification"
 
-{{ include_md("common_text/ncbi_identify_task.md", indent=8) }}
+{{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral", indent=8) }}
 
     ??? toggle "Read Quality Control, Trimming, Filtering, Identification and Extraction"
 
@@ -235,7 +226,7 @@
 
     ??? toggle "Taxonomic Identification"
 
-{{ include_md("common_text/ncbi_identify_task.md", indent=8) }}
+{{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral", indent=8) }}
 
     ??? toggle "Read Quality Control, Trimming, and Filtering"
 
@@ -307,7 +298,7 @@
 
     ??? toggle "Versioning"
 
-{{ include_md("common_text/versioning_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/versioning_task.md", condition="theiaviral_panel", indent=8) }}
 
     ??? toggle "Read Quality Control, Trimming, Filtering, Identification"
 
@@ -321,17 +312,53 @@
 
     ??? toggle "Taxonomic Identification"
 
-{{ include_md("common_text/ncbi_identify_task.md", indent=8) }}
+{{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral_panel", indent=8) }} 
 
-    ??? toggle "Assembly and Characterization"
+    !!! tip ""
+        TheiaViral_Panel utilizes the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single VSP sample to undergo the same viral assembly as other samples. This extends from **Assembly and Reference Selection** to **Assembly Evaluation and Consensus Quality Control**
 
-        TheiaViral_Panel utilizes the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single VSP sample to undergo the same viral assembly as other samples. 
+    ??? toggle "*De novo* Assembly and Reference Selection"
+        ???+ warning "These tasks are only performed if no reference genome is provided"
+            In this workflow, *de novo* assembly is primarily used to facilitate the selection of a closely related reference genome, though high quality *de novo* assemblies can be used for downstream analysis. If the user provides an input `reference_fasta`, the following assembly generation, assembly evaluation, and reference selections tasks will be **skipped**:
+        
+            - `spades`
+            - `megahit`
+            - `checkv_denovo`
+            - `quast_denovo`
+            - `skani`
+            - `ncbi_datasets`
 
-        See TheiaViral_Illumina_PE documentation above for more details.
+{{ include_md("common_text/spades_task.md", condition="theiaviral", indent=8) }}
+
+{{ include_md("common_text/megahit_task.md", condition="theiaviral", indent=8) }}
+
+{{ include_md("common_text/skani_task.md", condition="theiaviral", indent=8) }}
+
+{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=8, replacements={'??? task "NCBI Datasets"' : '??? task "`ncbi_datasets`"'}) }}
+
+    ??? toggle "Reference Mapping"
+
+{{ include_md("common_text/bwa_task.md", condition="theiaviral", indent=8) }}
+
+{{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=8, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
+
+    ??? toggle "Variant Calling and Consensus Generation"
+
+{{ include_md("common_text/ivar_variants_task.md", condition="theiaviral", indent=8) }}
+
+{{ include_md("common_text/ivar_consensus_task.md", condition="theiaviral", indent=8) }}
+
+    ??? toggle "Assembly Evaluation and Consensus Quality Control"
+
+{{ include_md("common_text/quast_task.md", condition="theiaviral", indent=8, replacements={'??? task "`quast`: Assembly Quality Assessment"' : '??? task "`quast_denovo`"'}) }}
+
+{{ include_md("common_text/checkv_task.md", condition="theiaviral", indent=8, replacements={'??? task "`checkv`"' : '??? task "`checkv_denovo` & `checkv_consensus`"'}) }}
+
+{{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=8) }}
 
     ??? toggle "Data Population"
 
-        Export Taxon Tables is used to publish data per binned read set to user specified tables. 
+{{ include_md("common_text/taxon_table_task.md", indent=8) }} 
 
 #### Taxa-Specific Tasks
 

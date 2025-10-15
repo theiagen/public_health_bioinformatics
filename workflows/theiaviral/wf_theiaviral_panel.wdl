@@ -258,7 +258,6 @@ workflow theiaviral_panel {
       }
     }  
   }
- 
   output {
     # Number of assembled viruses
     Int assembled_viruses = length(select_all(theiaviral.assembly_consensus_fasta))
