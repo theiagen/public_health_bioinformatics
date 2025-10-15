@@ -192,8 +192,8 @@ workflow augur {
         build_name = build_name_updated
     }
     if (defined(call_clades)) {
-      if (extract_clade_mutations_tsv) { 
-        call extract_clade_mutations_task.extract_clade_mutations {
+      if (extract_clade_mutations) {
+        call extract_clade_mutations_task.extract_clade_mutations as clade_extraction_task {
           input:
             metadata_tsv = select_first([tsv_join.out_tsv]),
             clade_columns = "clade_membership",
@@ -210,7 +210,7 @@ workflow augur {
           ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
           translated_aa_muts_json = augur_translate.translated_aa_muts_json,
           build_name = build_name_updated,
-          clades_tsv = select_first([extract_clade_mutations.clades_tsv, clades_tsv, organism_parameters.augur_clades_tsv])
+          clades_tsv = select_first([clade_extraction_task.clades_tsv, clades_tsv, organism_parameters.augur_clades_tsv])
       }
     }
   }
@@ -259,7 +259,7 @@ workflow augur {
     File? traits_json = augur_traits.traits_assignments_json
 
     # clade assignments
-    File? clade_mutations = extract_clade_mutations.clades_tsv
+    File? clade_mutations = clade_extraction_task.clades_tsv
 
     # list of samples that were kept and met the length filters    
     File keep_list = fasta_to_ids.ids_txt
