@@ -28,8 +28,8 @@ task extract_clade_mutations{
       --clade_cols ~{clade_columns} \
       --tip_col ~{tip_column} \
       --output_tsv ~{clades_file_path}
-      --nt_mutations ~{nt_mutations} \
-      ~{"--aa_mutations " + aa_mutations} \
+      --nt_muts ~{nt_mutations} \
+      ~{"--aa_muts " + aa_mutations} \
       ~{true="--noncomprehensive" false="" allow_missing_tips} \
       ~{true="--skip_singletons" false="" skip_singleton_clades}
       -o ~{clades_file_path}
