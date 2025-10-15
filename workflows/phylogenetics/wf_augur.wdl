@@ -47,7 +47,7 @@ workflow augur {
     Float? narrow_bandwidth
     Float? proportion_wide
     String? augur_trait_columns # comma-separated list of columns to use for traits
-    Boolean generate_clades_tsv = false # generate clades tsv file from clade_membership header
+    Boolean extract_clade_mutations = false # generate clades tsv file from clade_membership header
     String augur_id_column = "strain" # column in metadata tsv that contains the sequence names/IDs
 
     # phylogenetic tree = true # by default, midpoint root the tree
@@ -192,7 +192,7 @@ workflow augur {
         build_name = build_name_updated
     }
     if (defined(call_clades)) {
-      if (generate_clades_tsv) { 
+      if (extract_clade_mutations_tsv) { 
         call extract_clade_mutations_task.extract_clade_mutations {
           input:
             metadata_tsv = select_first([tsv_join.out_tsv]),

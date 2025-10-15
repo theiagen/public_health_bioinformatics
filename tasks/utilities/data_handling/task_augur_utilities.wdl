@@ -138,7 +138,7 @@ task tsv_join {
     has_time = "true"
   else:
     has_time = "false"
-  with open('HAS_TIME') as out:
+  with open('HAS_TIME', 'w') as out:
       out.write(has_time)
   CODE
   >>>
