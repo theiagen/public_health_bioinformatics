@@ -82,10 +82,10 @@
 
         The TheiaViral_Panel workflow accepts Illumina VSP paired-end reads as well as normal Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time and storage costs. 
 
-        ??? dna "`taxon_ids` _required_ input parameter"
-            The `taxon_ids` parameter is a required input that regulates what taxon are available for read extraction. This parameter defaults to the list of organisms available in Illumina VSP2. Changing this parameter will change what organisms are extracted for assembly and characterization.
+        ??? dna "`taxon_ids` optional input parameter"
+            The `taxon_ids` parameter is a required input that regulates what taxon are available for read extraction. `taxon_ids` will show up as an optional input as TheiaViral_Panel uses the VSP2 list of taxon IDs by default. This is required for TheiaViral_Panel to run correctly. Changing this parameter will change what organisms are extracted for assembly and characterization. 
 
-        ??? dna "`output_taxon_table` _required_ input parameter"
+        ??? dna_blue "`output_taxon_table` _required_ input parameter"
             The `output_taxon_table` parameter is a required input that specifies which taxon are output to what taxon table in Terra.The format of this table is shown below. 
 
             **Example:**
@@ -99,10 +99,10 @@
             ```
             Any taxonomy classification identified as "influenza" will be output to a Terra table named "influenza_panel_specimen". 
 
-        ??? dna "`concatenate_unclassified` optional parameter"
+        ??? dna "`extract_unclassified` optional input parameter"
             By default, `concatenate_unclassified` is set to false, which indicates that reads that are not classified by Kraken2 will be included with reads classified as the input `taxon`. The classification software most often does not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. If extracted data is lacking and assemblies are not generated setting this parameter to true will add to the read count making assemblies more probable, however, could introduce reads that are not aligned with the identified `taxon`.
         
-        ??? dna "`min_read_count` _required_ parameter"
+        ??? dna "`min_read_count` optional input parameter"
             By default, `min_read_count` is set to 1000, being the number of reads needed to pass the binning threshold to proceed onto assembly and characterization via **TheiaViral_Illumina_PE**
 
 === "TheiaViral_Illumina_PE"
