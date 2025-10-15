@@ -32,7 +32,6 @@ task extract_clade_mutations{
       ~{"--aa_muts " + aa_mutations} \
       ~{true="--noncomprehensive" false="" allow_missing_tips} \
       ~{true="--skip_singletons" false="" skip_singleton_clades}
-      -o ~{clades_file_path}
   >>>
   output {
     File clades_tsv = "~{clades_file_path}"
