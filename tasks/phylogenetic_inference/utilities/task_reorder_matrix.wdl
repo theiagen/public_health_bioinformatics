@@ -39,6 +39,7 @@ task reorder_matrix {
     snps.index = snps.index.astype(str)
 
     # reroot tree with midpoint, if midpoint_root_tree is set to true
+    print("~{outgroup_root}")
     if "~{outgroup_root}":
         tree.root_with_outgroup("~{outgroup_root}")
     elif "~{midpoint_root_tree}" == "true":
