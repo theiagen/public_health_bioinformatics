@@ -253,7 +253,7 @@ workflow augur {
     String augur_iqtree_version = augur_tree.iqtree_version
     String augur_fasttree_version = augur_tree.fasttree_version
     String augur_raxml_version = augur_tree.raxml_version
-    File aligned_fastas = select_first([augur_align.aligned_fasta, alignment_fasta])
+    File alignment_fasta = select_first([augur_align.aligned_fasta, alignment_fasta])
     File combined_assemblies = filter_sequences_by_length.filtered_fasta
     File? metadata_merged = tsv_join.out_tsv
     File? traits_json = augur_traits.traits_assignments_json
