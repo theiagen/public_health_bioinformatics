@@ -38,7 +38,7 @@ task augur_refine {
       --tree "~{draft_augur_tree}" \
       --alignment "~{aligned_fasta}" \
       ~{'--metadata ' + metadata} \
-      --output-tree "~{build_name}_timetree.nwk" \
+      --output-tree "~{build_name}_refined.nwk" \
       --output-node-data "~{build_name}_branch_lengths.json" \
       ~{true="--timetree" false="" build_time_tree} \
       ~{"--clock-rate " + clock_rate} \
@@ -57,7 +57,7 @@ task augur_refine {
       ~{true="--date-confidence" false="" date_confidence} 
   >>>
   output {
-    File refined_tree   = "~{build_name}_timetree.nwk"
+    File refined_tree   = "~{build_name}_refined.nwk"
     File branch_lengths = "~{build_name}_branch_lengths.json"
   }
   runtime {
