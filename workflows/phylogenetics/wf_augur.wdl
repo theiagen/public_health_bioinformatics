@@ -235,7 +235,7 @@ workflow augur {
   if (select_first([tsv_join.has_time, false])) {
     File time_tree_path = select_first([augur_refine.refined_tree])
   }
-  if (! select_first([tsv_join.has_time, false]) {
+  if (! select_first([tsv_join.has_time, false])) {
     File phylogenetic_tree_path = select_first([augur_refine.refined_tree])
   }
   output {
