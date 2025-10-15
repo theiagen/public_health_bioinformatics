@@ -94,20 +94,27 @@ workflow morgana_magic {
   call set_organism_defaults.organism_parameters {
     input:
       organism = taxon_name,
-      pangolin_docker_image = pangolin_docker_image
+      pangolin_docker_image = pangolin_docker_image,
+      gene_locations_bed_file = reference_gene_locations_bed,
+      nextclade_dataset_tag_input = nextclade_dataset_tag,
+      nextclade_dataset_name_input = nextclade_dataset_name,     
+      vadr_max_length = vadr_max_length,
+      vadr_skip_length = vadr_skip_length,
+      vadr_options = vadr_options,
+      vadr_model = vadr_model_file,
+      vadr_mem = vadr_memory,
   }
   if (workflow_type != "theiacov_fasta_batch" && (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles")) {
     # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b
     call vadr_task.vadr  {
       input:
-        genome_fasta = select_first([assembly_fasta]),
+        genome_fasta = assembly_fasta,
         assembly_length_unambiguous = select_first([number_ATCG]),
-        vadr_opts = select_first([vadr_options, organism_parameters.vadr_opts]),
-        vadr_model_file = select_first([vadr_model_file, organism_parameters.vadr_model_file]),
-        max_length = select_first([vadr_max_length, organism_parameters.vadr_maxlength]),
-        min_length = vadr_min_length,
-        skip_length = select_first([vadr_skip_length, organism_parameters.vadr_skiplength]),
-        memory = select_first([vadr_memory, organism_parameters.vadr_memory]),
+        vadr_opts = organism_parameters.vadr_opts,
+        vadr_model_file = organism_parameters.vadr_model_file,
+        max_length = organism_parameters.vadr_maxlength,
+        skip_length = organism_parameters.vadr_skiplength,
+        memory = organism_parameters.vadr_memory,
         cpu = vadr_cpu,
         disk_size = vadr_disk_size
     }
@@ -155,9 +162,9 @@ workflow morgana_magic {
     call gene_coverage_task.gene_coverage {
       input:
         bamfile = select_first([gene_coverage_bam]),
-        bedfile = select_first([reference_gene_locations_bed, organism_parameters.gene_locations_bed]),
+        bedfile = organism_parameters.gene_locations_bed,
         samplename = samplename,
-        organism = select_first([organism_parameters.standardized_organism, taxon_name]),
+        organism = organism_parameters.standardized_organism,
         sc2_s_gene_start = sc2_s_gene_start,
         sc2_s_gene_stop = sc2_s_gene_stop,
         min_depth = gene_coverage_min_depth,
@@ -171,7 +178,7 @@ workflow morgana_magic {
     call pangolin.pangolin4 {
       input:
         samplename = samplename,
-        fasta = select_first([assembly_fasta]),
+        fasta = assembly_fasta,
         analysis_mode = pangolin_analysis_mode,
         expanded_lineage = pangolin_expanded_lineage,
         max_ambig = pangolin_max_ambig,
@@ -179,7 +186,7 @@ workflow morgana_magic {
         skip_designation_cache = pangolin_skip_designation_cache,
         skip_scorpio = pangolin_skip_scorpio,
         pangolin_arguments = pangolin_arguments,
-        docker = select_first([pangolin_docker_image, organism_parameters.pangolin_docker]),
+        docker = organism_parameters.pangolin_docker,
         cpu = pangolin_cpu,
         disk_size = pangolin_disk_size,
         memory = pangolin_memory
@@ -189,9 +196,9 @@ workflow morgana_magic {
   if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "measles" ) {
     call nextclade_task.nextclade_v3 {
       input:
-        genome_fasta = select_first([assembly_fasta]),
-        dataset_name = select_first([nextclade_dataset_name, organism_parameters.nextclade_dataset_name]),
-        dataset_tag = select_first([nextclade_dataset_tag, organism_parameters.nextclade_dataset_tag]),
+        genome_fasta = assembly_fasta,
+        dataset_name = organism_parameters.nextclade_dataset_name,
+        dataset_tag = organism_parameters.nextclade_dataset_tag,
         cpu = nextclade_cpu,
         disk_size = nextclade_disk_size,
         docker = nextclade_docker_image,
@@ -243,7 +250,7 @@ workflow morgana_magic {
     }
   }
   output {
-    String organism = select_first([organism_parameters.standardized_organism, taxon_name])
+    String organism = organism_parameters.standardized_organism
     # VADR outputs
     File? vadr_alerts_list = vadr.alerts_list
     String? vadr_num_alerts = vadr.num_alerts

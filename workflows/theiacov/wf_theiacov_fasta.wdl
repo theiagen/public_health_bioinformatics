@@ -64,13 +64,13 @@ workflow theiacov_fasta {
       taxon_name = organism_parameters.standardized_organism,
       seq_method = seq_method,
       number_ATCG = consensus_qc.number_ATCG,
-      vadr_max_length = select_first([organism_parameters.vadr_maxlength, vadr_max_length]),
-      vadr_skip_length = select_first([organism_parameters.vadr_skiplength, vadr_skip_length]),
-      vadr_options = select_first([organism_parameters.vadr_opts, vadr_opts]),
-      vadr_model_file = select_first([organism_parameters.vadr_model_file, vadr_model_file]),
-      vadr_memory = select_first([organism_parameters.vadr_memory, vadr_memory]),
-      nextclade_dataset_name = select_first([organism_parameters.nextclade_dataset_name, nextclade_dataset_name]),
-      nextclade_dataset_tag = select_first([organism_parameters.nextclade_dataset_tag, nextclade_dataset_tag]),
+      vadr_max_length = organism_parameters.vadr_maxlength,
+      vadr_skip_length = organism_parameters.vadr_skiplength,
+      vadr_options = organism_parameters.vadr_opts,
+      vadr_model_file = organism_parameters.vadr_model_file,
+      vadr_memory = organism_parameters.vadr_memory,
+      nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
+      nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
       workflow_type = "theiacov_fasta"
   }
   if (organism == "flu") {
