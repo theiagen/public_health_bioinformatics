@@ -24,8 +24,7 @@ task augur_export {
     set -euo pipefail
 
     # prepare node_data argument
-    node_data=~{sep=' ' node_data_jsons}
-    echo node_data
+    node_data="~{sep=' ' node_data_jsons}"
     if [ -z $(echo $node_data | sed -e 's/ //g') ]; then
       node_data_arg="--node-data "${node_data}
     else
