@@ -27,7 +27,7 @@ task extract_clade_mutations{
       --metadata ~{metadata_tsv} \
       --clade_cols ~{clade_columns} \
       --tip_col ~{tip_column} \
-      --output_tsv ~{clades_file_path} \
+      --output ~{clades_file_path} \
       --nt_muts ~{nt_mutations} \
       ~{"--aa_muts " + aa_mutations} \
       ~{true="--noncomprehensive" false="" allow_missing_tips} \
