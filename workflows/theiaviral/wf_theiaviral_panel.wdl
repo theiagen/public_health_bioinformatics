@@ -31,7 +31,7 @@ workflow theiaviral_panel {
       "31631", "162145", "12730", "2560525", "11216", "2560526", "1803956", "10798", "208893", "208895", "11320", "11520", "11552", "1335626", "147711", "147712", "463676", "2901879", 
       "2697049", "10404"
     ]
-    File output_taxon_table
+    File? output_taxon_table
     String source_table_name
 
     String terra_project
