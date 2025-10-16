@@ -185,7 +185,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
     Please note that some modules require specific input data that may render it incompatible with every workflow. For example, ShigaTyper (a _Shigella_/EIEC serotyping tool) is not available for TheiaProk_FASTA as it requires read data as input. We have made a note next to each module to indicate which workflows are compatible with the module if there are restrictions.
 
-{{ include_md("common_text/taxon_table_task.md") }}
+{{ include_md("common_text/taxon_table_task.md", condition="theiaprok") }}
 
 ??? toggle "_Acinetobacter baumannii_"
     ##### _Acinetobacter baumannii_ {% raw %} {#acinetobacter-baumannii} {% endraw %}
