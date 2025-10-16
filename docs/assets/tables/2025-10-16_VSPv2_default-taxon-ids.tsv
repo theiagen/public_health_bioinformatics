@@ -9,7 +9,7 @@ Taxon ID	Common Name	Species Name	Genome Length
 118655	Oropouche virus	Orthobunyavirus oropoucheense	11985
 11587	Punta Toro virus	Phlebovirus toroense	12634
 11029	Ross River virus	Alphavirus rossriver	11802
-28292	sandfly fever Sicilian virus	Phlebovirus siciliaense	NA
+28292	Sandfly fever Sicilian virus	Phlebovirus siciliaense	NA
 11033	Semliki Forest virus	Alphavirus semliki	11341
 11034	Sindbis virus	Alphavirus sindbis	11671
 1608084	Tacheng Tick Virus 2	Uukuvirus tachengense	8844
@@ -17,7 +17,7 @@ Taxon ID	Common Name	Species Name	Genome Length
 11082	West Nile virus	Orthoflavivirus nilense	10942
 11089	Yellow fever virus	Orthoflavivirus flavi	11026
 64320	Zika virus	Orthoflavivirus zikaense	10874
-10804	adeno-associated virus 2	Dependoparvovirus primate1	4679
+10804	Adeno-associated virus 2	Dependoparvovirus primate1	4679
 12092	Hepatovirus A	Hepatovirus ahepa	7446
 10407	Hepatitis B virus	Orthohepadnavirus hominoidei	3192
 3052230	Hepacivirus hominis	Hepacivirus hominis	9431
@@ -69,7 +69,7 @@ Taxon ID	Common Name	Species Name	Genome Length
 11590	Toscana virus	Phlebovirus toscanaense	12545
 11036	Venezuelan equine encephalitis virus	Alphavirus venezuelan	11411
 11039	Western equine encephalitis virus	Alphavirus western	11523
-1313215	aichivirus A1	Kobuvirus aichi	8266
+1313215	Aichivirus A1	Kobuvirus aichi	8266
 33758	Echovirus	Echovirus	NA
 138948	Enterovirus A	Enterovirus alphacoxsackie	7427
 138949	Enterovirus B	Enterovirus betacoxsackie	7410
@@ -119,36 +119,36 @@ Taxon ID	Common Name	Species Name	Genome Length
 186541	Tai Forest ebolavirus	Orthoebolavirus taiense	18935
 3052503	Orthohantavirus tulaense	Orthohantavirus tulaense	9987
 1891762	Betapolyomavirus hominis	Betapolyomavirus hominis	5146
-10376	human gammaherpesvirus 4	Lymphocryptovirus humangamma4	172146
+10376	Human gammaherpesvirus 4	Lymphocryptovirus humangamma4	172146
 10359	Human betaherpesvirus 5	Cytomegalovirus humanbeta5	214152
-10580	human papillomavirus 11	Alphapapillomavirus 10	7931
+10580	Human papillomavirus 11	Alphapapillomavirus 10	7931
 333760	Human papillomavirus 16	Alphapapillomavirus 9	7905
-333761	human papillomavirus 18	Alphapapillomavirus 7	7857
+333761	Human papillomavirus 18	Alphapapillomavirus 7	7857
 337044	Alphapapillomavirus 5	Alphapapillomavirus 5	7805
-10585	human papillomavirus 31	Alphapapillomavirus 9	7923
-10586	human papillomavirus 33	Alphapapillomavirus 9	7910
-10587	human papillomavirus 35	Alphapapillomavirus 9	7889
-10588	human papillomavirus 39	Alphapapillomavirus 7	7850
-10615	human papillomavirus 40	Alphapapillomavirus 8	7909
-10590	human papillomavirus 42	Alphapapillomavirus 1	7918
-10591	human papillomavirus 43	Alphapapillomavirus 8	NA
-10592	human papillomavirus 44	Alphapapillomavirus 10	7833
-10593	human papillomavirus 45	Alphapapillomavirus 7	7858
-10595	human papillomavirus 51	Alphapapillomavirus 5	7811
-10618	human papillomavirus 52	Alphapapillomavirus 9	7955
+10585	Human papillomavirus 31	Alphapapillomavirus 9	7923
+10586	Human papillomavirus 33	Alphapapillomavirus 9	7910
+10587	Human papillomavirus 35	Alphapapillomavirus 9	7889
+10588	Human papillomavirus 39	Alphapapillomavirus 7	7850
+10615	Human papillomavirus 40	Alphapapillomavirus 8	7909
+10590	Human papillomavirus 42	Alphapapillomavirus 1	7918
+10591	Human papillomavirus 43	Alphapapillomavirus 8	NA
+10592	Human papillomavirus 44	Alphapapillomavirus 10	7833
+10593	Human papillomavirus 45	Alphapapillomavirus 7	7858
+10595	Human papillomavirus 51	Alphapapillomavirus 5	7811
+10618	Human papillomavirus 52	Alphapapillomavirus 9	7955
 337050	Alphapapillomavirus 6	Alphapapillomavirus 6	7847
 1671798	Human papillomavirus type 54	Alphapapillomavirus 13	7759
-10596	human papillomavirus 56	Alphapapillomavirus 6	7851
-10598	human papillomavirus 58	Alphapapillomavirus 9	7844
-37115	human papillomavirus 59	Alphapapillomavirus 7	7896
+10596	Human papillomavirus 56	Alphapapillomavirus 6	7851
+10598	Human papillomavirus 58	Alphapapillomavirus 9	7844
+37115	Human papillomavirus 59	Alphapapillomavirus 7	7896
 333754	Alphapapillomavirus 10	Alphapapillomavirus 10	7898
 333767	Alphapapillomavirus 3	Alphapapillomavirus 3	8061
-37119	human papillomavirus 66	Alphapapillomavirus 6	7824
-45240	human papillomavirus 68	Alphapapillomavirus 7	7830
-37121	human papillomavirus 69	Alphapapillomavirus 5	7702
+37119	Human papillomavirus 66	Alphapapillomavirus 6	7824
+45240	Human papillomavirus 68	Alphapapillomavirus 7	7830
+37121	Human papillomavirus 69	Alphapapillomavirus 5	7702
 39457	Human papillomavirus type 70	Alphapapillomavirus 7	7905
-51033	human papillomavirus 73	Alphapapillomavirus 11	7754
-129724	human papillomavirus 82	Alphapapillomavirus 5	NA
+51033	Human papillomavirus 73	Alphapapillomavirus 11	7754
+129724	Human papillomavirus 82	Alphapapillomavirus 5	NA
 746830	Human polyomavirus 6	Deltapolyomavirus sextihominis	4926
 746831	Human polyomavirus 7	Deltapolyomavirus septihominis	4952
 943908	Human polyomavirus 9	Alphapolyomavirus nonihominis	5027
