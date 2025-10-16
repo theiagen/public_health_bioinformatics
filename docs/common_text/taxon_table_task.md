@@ -1,7 +1,10 @@
+??? task "`Taxon Tables`: Copy outputs to new data tables based on taxonomic assignment (optional)"
+
 <!-- if: theiaviral_panel -->
-??? task "`Taxon Tables`: Copy outputs to new data tables based on taxonomic assignment"
     !!! tip ""
-        The `output_taxon_table` required input parameter is used to activate this task.
+        This task is incompatible when running TheiaViral_Panel on the command-line as it is geared specifically for Terra. Do not activate this task if you are a command-line user.
+
+    Activate this task by providing a value for the `output_taxon_table` input variable. If provided, the user must also provide values to the `terra_project` and `terra_workspace` optional input variables.
 
     The `taxon_tables` module will copy sample data to a different data table based on the taxonomic assignment. For example, if an *influenza* sample is analyzed, the module will copy the sample data to a new table for *influenza* samples or add the sample data to an existing table. 
 
@@ -19,8 +22,6 @@
 
 <!-- endif -->
 <!-- if: theiaprok -->
-??? task "`Taxon Tables`: Copy outputs to new data tables based on taxonomic assignment (optional)"
-
     !!! tip ""
         This task is incompatible when running TheiaProk on the command-line as it is geared specifically for Terra. Do not activate this task if you are a command-line user.
 

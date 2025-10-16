@@ -92,7 +92,18 @@
 
         The TheiaViral_Panel workflow accepts Illumina VSP paired-end reads as well as normal Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs. 
 
-        ???+ dna_blue "`output_taxon_table` _required_ input parameter"
+        ???+ dna_blue "`taxon_ids` optional input parameter"
+            **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly.** 
+            
+            By default, TheiaViral_Panel uses a list of **204** taxon IDs are provided to the workflow by default. This list is derived from the list of targeted viruses and subtypes in the Viral Surveillance Panel version 2 (VSPv2) panel produced by Illumina. This list can be modified to include or exclude any taxon IDs of interest; however, the taxon IDs _must_ be present in the Kraken2 database used for read classification. The list of default taxon IDs can be found below:
+
+            /// html | div[class="searchable-table"]
+            {{ render_tsv_table("docs/assets/tables/2025-10-16_VSPv2_default-taxon-ids.tsv", indent=12 )}} 
+            ///
+
+            Changing this parameter will change what organisms are extracted for assembly and characterization.
+
+        ??? dna "`output_taxon_table` optional input parameter"
             A key feature of TheiaViral_Panel is the ability to output assemblies and characterization results to taxon-specific Terra tables. This allows users to easily separate results by taxon for downstream analysis.
                 
             Because of this, the `output_taxon_table` parameter is a **required** input file that specifies which taxon are output to what taxon table in Terra.
@@ -108,17 +119,6 @@
             human_immunodeficiency_virus	hiv_panel_specimen
             monkeypox_virus	monkeypox_panel_specimen
             ```
-
-        ??? dna "`taxon_ids` optional input parameter"
-            **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly.** 
-            
-            By default, TheiaViral_Panel uses a list of **204** taxon IDs are provided to the workflow by default. This list is derived from the list of targeted viruses and subtypes in the Viral Surveillance Panel version 2 (VSPv2) panel produced by Illumina. This list can be modified to include or exclude any taxon IDs of interest; however, the taxon IDs _must_ be present in the Kraken2 database used for read classification. The list of default taxon IDs can be found below:
-
-            /// html | div[class="searchable-table"]
-            {{ render_tsv_table("docs/assets/tables/2025-10-16_VSPv2_default-taxon-ids.tsv", indent=12 )}} 
-            ///
-
-            Changing this parameter will change what organisms are extracted for assembly and characterization.
 
         ??? dna "`extract_unclassified` optional input parameter"
             By default, `extract_unclassifed` is set to `false`, which indicates that reads that are **not** classified by Kraken2 **will NOT** be included with reads classified as the input `taxon`. 
