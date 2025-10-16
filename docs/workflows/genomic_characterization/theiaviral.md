@@ -6,13 +6,26 @@
 
 ## TheiaViral Workflows
 
-**TheiaViral** workflows assemble, quality assess, and characterize viral genomes from diverse data sources, including metagenomic samples. TheiaViral workflows can generate consensus assemblies of recalcitrant viruses, including diverse or recombinant lineages, such as rabies virus and norovirus, through a three-step approach: 1) generating an intermediate *de novo* assembly from taxonomy-filtered reads, 2) selecting the best reference from a database of ~200,000 viral genomes using average nucleotide identity, and 3) producing a final consensus assembly through reference-based read mapping and variant calling. Reference genomes can be directly provided to TheiaViral to bypass *de novo* assembly, which enables compatibility with tiled amplicon sequencing data. Targeted viral characterization is functional for lineages [listed below](#taxa-specific-tasks).
+**The TheiaViral workflows are for the assembley, quality assessment, and characterization of viral genomes from diverse data sources, including metagenomic samples.** There are currently three TheiaViral workflows designed to accomodate different kinds of input data:
 
-???+ question "What are the main differences between the TheiaViral and TheiaCov workflows?"
+- Illumina paired-end sequencing (**TheiaViral_Illumina_PE**)
+- Oxford Nanopore Technology (ONT) sequencing (**TheiaViral_ONT**)
+- Illumina paired-end sequencing originating from hybrid-capture panel-based methods (**TheiaViral_Panel**)
+
+!!! tip ""
+    These workflows function by generating consensus assemblies of recalcitrant viruses, including diverse or recombinant lineages (such as rabies or norovirus), through a three-step approach:
+
+    1. An intermediate _de novo_ assembly is generated from taxonomy-filtered reads,
+    2. The best reference from a database of ~200,000 viral genomes is selected using average nucleotide identity (ANI), and
+    3. A final consensus assembly is generated through reference-based read mapping and variant calling.
+
+    _De novo_ assembly and reference selection can be skipped by providing a reference genome as input; this enables compatibility with tiled-amplicon sequencing data. Subsequent genomic characterization is currently only functional for the viral lineages [listed below](#taxa-specific-tasks).
+
+???+ question "What are the main differences between the TheiaViral and TheiaCoV workflows?"
 
     <div class="grid cards" markdown>
 
-    -   :material-database: **TheiaCov Workflows**
+    -   :material-database: **TheiaCoV Workflows**
 
         ---
 
@@ -31,11 +44,9 @@
 
     </div>
 
-???+ question "Segmented viruses"
+???+ question "What about segmented viruses?"
 
-    Segmented viruses are accounted for in TheiaViral. The reference genome database excludes segmented viral nucleotide accessions, while including RefSeq assembly accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.
-
-**TheiaViral_Panel** workflow uses the assembly capabilities of **TheiaViral_Illumina_PE** to analyze samples sequenced using Illumina's Viral Surveillance Panel (VSP). Given a list of NCBI Taxonomy codes samples will have any matching reads extracted, assembled, and characterized for each code given as input. This is achieved by performing read QC on panel samples and scattering cleaned reads over the given list of taxonomy codes. Reads aligning with input taxon codes are extracted and if their count is over the binning threshold (default of 1000) the extracted reads will be passed onto **TheiaViral_Illumina_PE** to perform assembly and characterization. For each sample there may be multiple resultant assemblies. These assemblies and their subsequent characterization results are uploaded to taxon specific Terra tables. Overall sample QC and extraction information will be present in the input table. 
+    TheiaViral can properly assemble segmented viruses. The reference genome database used in Step 2 excludes segmented viral _nucleotide_ accessions but includes the RefSeq _assembly_ accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.
 
 ### Workflow Diagram
 
@@ -61,16 +72,15 @@
 !!! dna "Input Data"
     === "TheiaViral_Illumina_PE"
 
-        The TheiaViral_Illumina_PE workflow inputs Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time and storage costs.
+        The TheiaViral_Illumina_PE workflow inputs Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs.
 
         Modifications to the optional parameter for `trim_minlen` may be required to appropriately trim reads shorter than 2 x 150 bp (i.e. generated using a 300-cycle sequencing kit), such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
 {{ include_md("common_text/theiaviral_inputs.md", indent=8) }}
 
-
     === "TheiaViral_ONT"
 
-        The TheiaViral_ONT workflow inputs base-called Oxford Nanopore Technology (ONT) read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time and storage costs.
+        The TheiaViral_ONT workflow inputs base-called Oxford Nanopore Technology (ONT) read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs.
 
         It is recommended to trim adapter sequencings via `dorado` basecalling prior to running TheiaViral_ONT, though `porechop` can optionally be called to trim adapters within the workflow.
 
@@ -80,13 +90,10 @@
 
     === "TheiaViral_Panel"
 
-        The TheiaViral_Panel workflow accepts Illumina VSP paired-end reads as well as normal Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time and storage costs. 
+        The TheiaViral_Panel workflow accepts Illumina VSP paired-end reads as well as normal Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs. 
 
-        ??? dna "`taxon_ids` optional input parameter"
-            The `taxon_ids` parameter is a required input that regulates what taxon are available for read extraction. `taxon_ids` will show up as an optional input as TheiaViral_Panel uses the VSP2 list of taxon IDs by default. This is required for TheiaViral_Panel to run correctly. Changing this parameter will change what organisms are extracted for assembly and characterization. 
-
-        ??? dna_blue "`output_taxon_table` _required_ input parameter"
-            The `output_taxon_table` parameter is a required input that specifies which taxon are output to what taxon table in Terra.The format of this table is shown below. 
+        ???+ dna_blue "`output_taxon_table` _required_ input parameter"
+            The `output_taxon_table` parameter is a required input file that specifies which taxon are output to what taxon table in Terra. The format of this table is shown below. 
 
             **Example:**
             ```
@@ -98,6 +105,9 @@
             etc..
             ```
             Any taxonomy classification identified as "influenza" will be output to a Terra table named "influenza_panel_specimen". 
+
+        ??? dna "`taxon_ids` optional input parameter"
+            The `taxon_ids` parameter is a required input that regulates what taxon are available for read extraction. `taxon_ids` will show up as an optional input as TheiaViral_Panel uses the VSP2 list of taxon IDs by default. This is required for TheiaViral_Panel to run correctly. Changing this parameter will change what organisms are extracted for assembly and characterization. 
 
         ??? dna "`extract_unclassified` optional input parameter"
             By default, `concatenate_unclassified` is set to false, which indicates that reads that are not classified by Kraken2 will be included with reads classified as the input `taxon`. The classification software most often does not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. If extracted data is lacking and assemblies are not generated setting this parameter to true will add to the read count making assemblies more probable, however, could introduce reads that are not aligned with the identified `taxon`.
@@ -125,6 +135,7 @@
     {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "TheiaViral_Panel"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
 
     ///
+
 ### Workflow Tasks
 
 === "TheiaViral_Illumina_PE"
@@ -188,7 +199,7 @@
 
     ??? toggle "Versioning"
 
-{{ include_md("common_text/versioning_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/versioning_task.md", indent=8) }}
 
     ??? toggle "Taxonomic Identification"
 
@@ -262,9 +273,11 @@
 
 === "TheiaViral_Panel"
 
+    Given a list of NCBI Taxonomy codes samples will have any matching reads extracted, assembled, and characterized for each code given as input. This is achieved by performing read QC on panel samples and scattering cleaned reads over the given list of taxonomy codes. Reads aligning with input taxon codes are extracted and if their count is over the binning threshold (default of 1000) the extracted reads will be passed onto **TheiaViral_Illumina_PE** to perform assembly and characterization. For each sample there may be multiple resultant assemblies. These assemblies and their subsequent characterization results are uploaded to taxon specific Terra tables. Overall sample QC and extraction information will be present in the input table.
+
     ??? toggle "Versioning"
 
-{{ include_md("common_text/versioning_task.md", condition="theiaviral_panel", indent=8) }}
+{{ include_md("common_text/versioning_task.md", indent=8) }}
 
     ??? toggle "Read Quality Control, Trimming, Filtering, Identification"
 
@@ -283,48 +296,39 @@
     !!! tip ""
         TheiaViral_Panel utilizes the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single VSP sample to undergo the same viral assembly as other samples. This extends from **Assembly and Reference Selection** to **Assembly Evaluation and Consensus Quality Control**
 
-    ??? toggle "*De novo* Assembly and Reference Selection"
-        ???+ warning "These tasks are only performed if no reference genome is provided"
-            In this workflow, *de novo* assembly is primarily used to facilitate the selection of a closely related reference genome, though high quality *de novo* assemblies can be used for downstream analysis. If the user provides an input `reference_fasta`, the following assembly generation, assembly evaluation, and reference selections tasks will be **skipped**:
-        
-            - `spades`
-            - `megahit`
-            - `checkv_denovo`
-            - `quast_denovo`
-            - `skani`
-            - `ncbi_datasets`
+        ??? toggle "_De novo_ Assembly and Reference Selection"
 
-{{ include_md("common_text/spades_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/spades_task.md", condition="theiaviral", indent=12) }}
 
-{{ include_md("common_text/megahit_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/megahit_task.md", condition="theiaviral", indent=12) }}
 
-{{ include_md("common_text/skani_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/skani_task.md", condition="theiaviral", indent=12) }}
 
-{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=8, replacements={'??? task "NCBI Datasets"' : '??? task "`ncbi_datasets`"'}) }}
+{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=12, replacements={'??? task "NCBI Datasets"' : '??? task "`ncbi_datasets`"'}) }}
 
-    ??? toggle "Reference Mapping"
+        ??? toggle "Reference Mapping"
 
-{{ include_md("common_text/bwa_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/bwa_task.md", condition="theiaviral", indent=12) }}
 
-{{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=8, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
+{{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=12, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
 
-    ??? toggle "Variant Calling and Consensus Generation"
+        ??? toggle "Variant Calling and Consensus Generation"
 
-{{ include_md("common_text/ivar_variants_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/ivar_variants_task.md", condition="theiaviral", indent=12) }}
 
-{{ include_md("common_text/ivar_consensus_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/ivar_consensus_task.md", condition="theiaviral", indent=12) }}
 
-    ??? toggle "Assembly Evaluation and Consensus Quality Control"
+        ??? toggle "Assembly Evaluation and Consensus Quality Control"
 
-{{ include_md("common_text/quast_task.md", condition="theiaviral", indent=8, replacements={'??? task "`quast`: Assembly Quality Assessment"' : '??? task "`quast_denovo`"'}) }}
+{{ include_md("common_text/quast_task.md", condition="theiaviral", indent=12, replacements={'??? task "`quast`: Assembly Quality Assessment"' : '??? task "`quast_denovo`"'}) }}
 
-{{ include_md("common_text/checkv_task.md", condition="theiaviral", indent=8, replacements={'??? task "`checkv`"' : '??? task "`checkv_denovo` & `checkv_consensus`"'}) }}
+{{ include_md("common_text/checkv_task.md", condition="theiaviral", indent=12, replacements={'??? task "`checkv`"' : '??? task "`checkv_denovo` & `checkv_consensus`"'}) }}
 
-{{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=12) }}
 
     ??? toggle "Data Population"
 
-{{ include_md("common_text/taxon_table_task.md", indent=8) }} 
+{{ include_md("common_text/taxon_table_task.md", indent=8) }}
 
 #### Taxa-Specific Tasks
 
