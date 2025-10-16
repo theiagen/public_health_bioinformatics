@@ -93,27 +93,40 @@
         The TheiaViral_Panel workflow accepts Illumina VSP paired-end reads as well as normal Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs. 
 
         ???+ dna_blue "`output_taxon_table` _required_ input parameter"
-            The `output_taxon_table` parameter is a required input file that specifies which taxon are output to what taxon table in Terra. The format of this table is shown below. 
+            A key feature of TheiaViral_Panel is the ability to output assemblies and characterization results to taxon-specific Terra tables. This allows users to easily separate results by taxon for downstream analysis.
+                
+            Because of this, the `output_taxon_table` parameter is a **required** input file that specifies which taxon are output to what taxon table in Terra.
 
-            **Example:**
+            **Formatting the `output_taxon_table` file**
+            
+            The `output_taxon_table` file must be uploaded a Google storage bucket that is accessible by Terra and should be in **tab-delimited** format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column. This will result in any taxonomy classification identified as "influenza" being added to a Terra table named "influenza_panel_specimen". An example can be seen below.
+ 
             ```
-            taxon	taxon_table	
-            influenza	influenza_panel_specimen	
+            taxon	taxon_table
+            influenza	influenza_panel_specimen
             coronavirus	coronavirus_panel_specimen
             human_immunodeficiency_virus	hiv_panel_specimen
             monkeypox_virus	monkeypox_panel_specimen
-            etc..
             ```
-            Any taxonomy classification identified as "influenza" will be output to a Terra table named "influenza_panel_specimen". 
 
         ??? dna "`taxon_ids` optional input parameter"
-            The `taxon_ids` parameter is a required input that regulates what taxon are available for read extraction. `taxon_ids` will show up as an optional input as TheiaViral_Panel uses the VSP2 list of taxon IDs by default. This is required for TheiaViral_Panel to run correctly. Changing this parameter will change what organisms are extracted for assembly and characterization. 
+            **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly.** 
+            
+            By default, TheiaViral_Panel uses a list of **204** taxon IDs are provided to the workflow by default. This list is derived from the list of targeted viruses and subtypes in the Viral Surveillance Panel version 2 (VSPv2) panel produced by Illumina. This list can be modified to include or exclude any taxon IDs of interest; however, the taxon IDs _must_ be present in the Kraken2 database used for read classification. The list of default taxon IDs can be found below:
+
+            /// html | div[class="searchable-table"]
+            {{ render_tsv_table("docs/assets/tables/2025-10-16_VSPv2_default-taxon-ids.tsv", indent=12 )}} 
+            ///
+
+            Changing this parameter will change what organisms are extracted for assembly and characterization.
 
         ??? dna "`extract_unclassified` optional input parameter"
-            By default, `concatenate_unclassified` is set to false, which indicates that reads that are not classified by Kraken2 will be included with reads classified as the input `taxon`. The classification software most often does not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. If extracted data is lacking and assemblies are not generated setting this parameter to true will add to the read count making assemblies more probable, however, could introduce reads that are not aligned with the identified `taxon`.
+            By default, `extract_unclassifed` is set to `false`, which indicates that reads that are **not** classified by Kraken2 **will NOT** be included with reads classified as the input `taxon`. 
+                        
+            If the extracted read data is lacking and assemblies are not generated, consider setting this parameter to `true` to increase the available read count to make assembly generation more probable. Please note this will introduce reads that are not aligned with the identified `taxon`.
         
         ??? dna "`min_read_count` optional input parameter"
-            By default, `min_read_count` is set to 1000, being the number of reads needed to pass the binning threshold to proceed onto assembly and characterization via **TheiaViral_Illumina_PE**
+            By default, `min_read_count` is set to 1000. This value is the number of reads that are required to pass the binning threshold to proceed onto assembly and characterization. 
 
 === "TheiaViral_Illumina_PE"
     /// html | div[class="searchable-table"]
@@ -273,7 +286,7 @@
 
 === "TheiaViral_Panel"
 
-    Given a list of NCBI Taxonomy codes samples will have any matching reads extracted, assembled, and characterized for each code given as input. This is achieved by performing read QC on panel samples and scattering cleaned reads over the given list of taxonomy codes. Reads aligning with input taxon codes are extracted and if their count is over the binning threshold (default of 1000) the extracted reads will be passed onto **TheiaViral_Illumina_PE** to perform assembly and characterization. For each sample there may be multiple resultant assemblies. These assemblies and their subsequent characterization results are uploaded to taxon specific Terra tables. Overall sample QC and extraction information will be present in the input table.
+    TheiaViral_Panel operates by identifying reads that align with input taxon codes (specified in the `taxon_ids` input variable), extracting those reads, and assembling and characterizing them using the same modules as TheiaViral_Illumina_PE. Multiple assemblies and characterizations can be generated from a single sample if reads align with multiple taxon codes.
 
     ??? toggle "Versioning"
 
@@ -294,7 +307,7 @@
 {{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral_panel", indent=8) }} 
 
     !!! tip ""
-        TheiaViral_Panel utilizes the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single VSP sample to undergo the same viral assembly as other samples. This extends from **Assembly and Reference Selection** to **Assembly Evaluation and Consensus Quality Control**
+        TheiaViral_Panel utilizes the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single VSP sample to undergo the same viral assembly as other samples. The following tasks are performed for each taxon ID that passes the read binning threshold:
 
         ??? toggle "_De novo_ Assembly and Reference Selection"
 
@@ -326,9 +339,9 @@
 
 {{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=12) }}
 
-    ??? toggle "Data Population"
+    ??? toggle "Exporting Results to Taxon-Specific Tables"
 
-{{ include_md("common_text/taxon_table_task.md", indent=8) }}
+{{ include_md("common_text/taxon_table_task.md", condition="theiaviral_panel", indent=8) }}
 
 #### Taxa-Specific Tasks
 
