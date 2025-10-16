@@ -6,9 +6,9 @@
 
 ## Augur Workflows
 
-Genomic Epidemiology is an important approach in the effort to understand and mitigate against disease transmission. An often-critical step in viral genomic epidemiology is the generation of phylogenetic trees to explore the genetic relationship between viruses on a local, regional, national or global scale. The Augur workflows, currently only targeted for viral pathogens, facilitate this process by generating files for the visualization of phylogenetic trees with accompanying metadata.
+Genomic Epidemiology is an important approach to understand and mitigate disease transmission. A critical step in viral genomic epidemiology is generating phylogenetic trees to explore the genetic relationship between viruses on a local, regional, national, or global scale. To this end, the Augur workflows enable viral phylogenetic analysis by generating phylogenetic trees and incorporating metadata into a stunning visual via the Auspice format.
 
-Two workflows are offered: **Augur_Prep_PHB** and **Augur_PHB**. These must be run sequentially, respectively, to first prepare each individual sample for running Augur, and secondly to run Augur itself on the set of samples, generating the phylogenetic tree files with accompanying metadata. The outputs from these workflows can be visualized in [Auspice](https://docs.nextstrain.org/projects/auspice/en/latest/) and [UShER](https://github.com/yatisht/usher).
+Two workflows are offered: **Augur_Prep_PHB** and **Augur_PHB**. These workflows must be run sequentially to generate a phylogenetic tree with metadata included, though **Augur_PHB** can generate a phylogenetic tree without metadata as a standalone workflow. The outputs from these workflows can be visualized in [Auspice](https://docs.nextstrain.org/projects/auspice/en/latest/) and [UShER](https://github.com/yatisht/usher).
 
 !!! dna "**Helpful resources for epidemiological interpretation**"
 
@@ -24,7 +24,7 @@ The Augur_Prep_PHB workflow was written to prepare individual sample assemblies 
 
 #### Augur_Prep Inputs
 
-The Augur_Prep_PHB workflow takes assembly FASTA files and associated metadata formatted in a data table. FASTA files may be generated with one of the TheiaCoV Characterization workflows and should adhere to quality control guidelines, (e.g. [QC guidelines produced by PHA4GE](https://github.com/pha4ge/pipeline-resources/blob/main/docs/qc-solutions.md)). The metadata can be uploaded to Terra as TSV file, formatted as in [this example](https://docs.google.com/spreadsheets/d/1PF1u3R-ZGm53UiVsTlIcpg9Qk2dUJgtx/edit#gid=253517867).
+The Augur_Prep_PHB workflow takes assembly FASTA files and associated metadata formatted in a data table. FASTA files may be generated with one of the TheiaCoV/TheiaViral Characterization workflows and should adhere to quality control guidelines, (e.g. [QC guidelines produced by PHA4GE](https://github.com/pha4ge/pipeline-resources/blob/main/docs/qc-solutions.md)). The metadata can be uploaded to Terra as TSV file, formatted as in [this example](https://docs.google.com/spreadsheets/d/1PF1u3R-ZGm53UiVsTlIcpg9Qk2dUJgtx/edit#gid=253517867).
 
 This workflow runs on the sample level.
 
@@ -47,11 +47,11 @@ This workflow runs on the sample level.
 !!! info "Helpful Hint"
     You may have to generate phylogenies multiple times, running the Augur_PHB workflow, assessing results, and amending inputs to generate a final tree with sufficient diversity and high-quality data of interest.
 
-The Augur_PHB workflow takes a **set** of assembly/consensus files (FASTA format) and sample metadata files (TSV format) that have been reformatted using Augur_Prep_PHB and runs Augur to generate the phylogenetic tree files with accompanying metadata. Additionally, the workflow infers pairwise SNP distances.
+The Augur_PHB workflow takes a **set** of assembly/consensus files (FASTA format) and optional sample metadata files (TSV format) that have been reformatted using Augur_Prep_PHB. Augur_PHB runs Augur to generate the phylogenetic tree files with accompanying metadata. Additionally, the workflow infers pairwise SNP distances and can generate a time-calibrated phylogeny if collection date metadata was included in Augur_Prep_PHB.
 
 #### Augur Inputs
 
-The Augur_PHB workflow takes in a ***set*** of SARS-CoV-2 (or any other viral pathogen) FASTA and metadata files. If running the workflow via Terra, individual samples will need to be added to a set before running the workflow. Input FASTAs should meet QA metrics. Sets of FASTAs with highly discordant quality metrics may result in the inaccurate inference of genetic relatedness. There **must** be some sequence diversity among the set of input assemblies. If insufficient diversity is present, it may be necessary to add a more divergent sequence to the set.
+The Augur_PHB workflow takes in a ***set*** of viral pathogen FASTA and metadata files. If running the workflow via Terra, individual samples will need to be added to a set before running the workflow. Input FASTAs should meet QC metrics. Sets of FASTAs with highly discordant quality metrics may result in the inaccurate inference of genetic relatedness. There **must** be some sequence diversity among the set of input assemblies. If insufficient diversity is present, it may be necessary to add a more divergent sequences to the set.
 
 !!! dna "Optional Inputs"
     There are **many** optional user inputs. For SARS-CoV-2, Flu, rsv-a, rsv-b, and mpxv, default values that mimic the NextStrain builds have been preselected. To use these defaults, you must write either `"sars-cov-2"`,`"flu"`, `"rsv-a"`, `"rsv-b"`, or `"mpxv"` for the `organism` variable.
@@ -162,29 +162,84 @@ This workflow runs on the set level. Please note that for every task, runtime pa
 
 ///
 
-??? task "Workflow Tasks"
-    ##### Augur Workflow Tasks {% raw %} {#augur-tasks} {% endraw %}
+### Workflow Tasks
 
-    The Augur_PHB workflow uses the inputs to generate a phylogenetic tree in JSON format that is compatible with phylogenetic tree visualization software.
+The Augur_PHB workflow uses the inputs to generate a phylogenetic tree in Auspice JSON and Newick formats. 
     
-    In Augur_PHB, the tasks below are called. For the Augur subcommands, please view the [Nextstrain Augur documentation](https://docs.nextstrain.org/projects/augur/en/stable/usage/usage.html) for more details and explanations.
+In Augur_PHB, the tasks below are called. For the Augur subcommands, please view the [Nextstrain Augur documentation](https://docs.nextstrain.org/projects/augur/en/stable/usage/usage.html) for more details and explanations.
 
-    1. `cat_files` - concatenate all of the input fasta files together
-    2. `sc2_defaults` - if organism is SARS-CoV-2, establish default parameters
-    3. `flu_defaults` - if organism is Flu, establish default parameters
-    4. `filter_sequences_by_length` - remove any sequences that do not meet the quality threshold set by `min_num_unambig`
-    5. `tsv_join` - merge the metadata files
-    6. `fasta_to_ids` - extract a list of remaining sequences so we know which ones were dropped
-    7. `augur_align` - perform MAFFT alignment on the sequences
-    8. `augur_tree` - create a distance tree
-    9. `augur_refine` - create a timetree
-    10. `augur_ancestral` - infer ancestral sequences
-    11. `augur_translate` - translate gene regions from nucleotides to amino acids
-    12. `mutation_context` - if organism is MPXV, calculates the mutation fraction of G->A or C->T changes
-    13. `augur_clades` - if clade information is provided, assign clades to nodes based on amino-acid or nucleotide signatures
-    14. `augur_export` - export all the results in a JSON file suitable for Auspice visualization
-    15. `snp_dists` - create a SNP matrix from the alignment
-    16. `reorder_matrix` - reorder the SNP matrix to match the distance tree
+??? toggle "Versioning"
+
+{{ include_md("common_text/versioning_task.md", indent=8) }}
+
+??? toggle "Organism Parameters"
+
+{{ include_md("common_text/organism_parameters_wf.md", indent=8) }}
+
+??? toggle "Join Metadata TSVs"
+
+{{ include_md("common_text/tsv_join_task.md", indent=8) }}
+
+??? toggle "Concatenate Assemblies"
+
+{{ include_md("common_text/cat_files_task.md", indent=8) }}
+
+??? toggle "Filter Sequences by Length"
+
+{{ include_md("common_text/filter_contigs_task.md", indent=8) }}
+
+??? toggle "Augur Align"
+
+{{ include_md("common_text/augur_align_task.md", indent=8) }}
+
+??? toggle "Extract Sequence IDs"
+
+{{ include_md("common_text/fasta_to_ids_task.md", indent=8) }}
+
+??? toggle "Augur Tree"
+
+{{ include_md("common_text/augur_tree_task.md", indent=8) }}
+
+??? toggle "Calculate SNP Distances"
+
+{{ include_md("common_text/snp_dists_task.md", indent=8) }}
+
+??? toggle "Root and Reorder Matrix"
+
+{{ include_md("common_text/reorder_matrix_task.md", indent=8) }}
+
+??? toggle "Augur Refine"
+
+{{ include_md("common_text/augur_refine_task.md", indent=8) }}
+
+??? toggle "Augur Ancestral"
+
+{{ include_md("common_text/augur_ancestral_task.md", indent=8) }}
+
+??? toggle "Augur Translate"
+
+{{ include_md("common_text/augur_translate_task.md", indent=8) }}
+
+??? toggle "Add Mutation Context"
+
+{{ include_md("common_text/mutation_context_task.md", indent=8) }}
+
+??? toggle "Augur Traits"
+
+{{ include_md("common_text/augur_traits_task.md", indent=8) }}
+
+??? toggle "Extract Clade-defining Mutations"
+
+{{ include_md("common_text/extract_clade_mutations_task.md", indent=8) }}
+
+??? toggle "Augur Clades"
+
+{{ include_md("common_text/augur_clades_task.md", indent=8) }}
+
+??? toggle "Augur Export"
+
+{{ include_md("common_text/augur_export_task.md", indent=8) }}
+
 
 #### Augur Outputs
 
