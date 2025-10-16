@@ -6,7 +6,7 @@
 
 ## TheiaViral Workflows
 
-**The TheiaViral workflows are for the assembley, quality assessment, and characterization of viral genomes from diverse data sources, including metagenomic samples.** There are currently three TheiaViral workflows designed to accomodate different kinds of input data:
+**The TheiaViral workflows are for the assembly, quality assessment, and characterization of viral genomes from diverse data sources, including metagenomic samples.** There are currently three TheiaViral workflows designed to accomodate different kinds of input data:
 
 - Illumina paired-end sequencing (**TheiaViral_Illumina_PE**)
 - Oxford Nanopore Technology (ONT) sequencing (**TheiaViral_ONT**)
@@ -93,7 +93,7 @@
         The TheiaViral_Panel workflow accepts Illumina VSP paired-end reads as well as normal Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs. 
 
         ???+ dna_blue "`taxon_ids` optional input parameter"
-            **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly.** 
+            **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly, but is optional in Terra.** 
             
             By default, TheiaViral_Panel uses a list of **204** taxon IDs are provided to the workflow by default. This list is derived from the list of targeted viruses and subtypes in the Viral Surveillance Panel version 2 (VSPv2) panel produced by Illumina. This list can be modified to include or exclude any taxon IDs of interest; however, the taxon IDs _must_ be present in the Kraken2 database used for read classification. The list of default taxon IDs can be found below:
 
