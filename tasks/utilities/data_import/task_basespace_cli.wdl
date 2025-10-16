@@ -41,7 +41,7 @@ task fetch_bs {
     echo "run_id: ${run_id}" 
     if [[ ! -z "${run_id}" ]]; then 
       #Grab BaseSpace Dataset ID from dataset lists within given run 
-      dataset_id_array=($(${bs_command} list dataset --retry --input-run=${run_id} | grep -E "${dataset_name}([_.-]|[^0-9]|$)" | awk -F "|" '{ print $3 }' )) 
+      dataset_id_array=($(${bs_command} list dataset --retry --input-run=${run_id} | grep "${dataset_name}" | awk -F "|" '{ print $3 }' )) 
       echo "dataset_id: ${dataset_id_array[*]}"
     else 
       #Try Grabbing BaseSpace Dataset ID from project name
