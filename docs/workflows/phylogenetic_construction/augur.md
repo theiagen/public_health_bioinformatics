@@ -124,7 +124,7 @@ In Augur_PHB, the tasks below are called. For the Augur subcommands, please view
 
 {{ include_md("common_text/augur_traits_task.md", indent=4) }}
 
-??? toggle "Clade Defining via Mutations"
+??? toggle "Clade Defining via Sequence Signatures"
 
 {{ include_md("common_text/extract_clade_mutations_task.md", indent=4) }}
 
