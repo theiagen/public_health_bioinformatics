@@ -214,7 +214,7 @@ theiaviral_ont	taxon	String	Taxon ID or organism name of interest		Required	Thei
 theiaviral_panel	read1	File	Illumina forward read file in FASTQ file format (compression optional)		Required	TheiaViral_Panel	general
 theiaviral_panel	read2	File	Illumina reverse read file in FASTQ file format (compression optional)		Required	TheiaViral_Panel	general
 theiaviral_panel	samplename	String	Name of the sample being analyzed		Required	TheiaViral_Panel	general
-theiaviral_panel	taxon_ids	Array[String]	An array of taxon IDs user wishes to analyze.	Defaults to Illumina VSP set	Required	TheiaViral_Panel	general
+theiaviral_panel	taxon_ids	Array[String]	An array of taxon IDs user wishes to analyze.	Defaults to Illumina VSP set	Optional	TheiaViral_Panel	general
 theiaviral_panel	output_taxon_table	File	A TSV file containing organism names and their corresponding output table names.		Optional	TheiaViral_Panel	general
 theiaviral_panel	source_table_name	String	Name of the Terra table the source reads originate from. This is used for identifying originating location of extracted assemblies once added to output tables.		Required	TheiaViral_Panel	general
 theiaviral_panel	terra_project	String	The Terra project containing the data table		Required	TheiaViral_Panel	general
