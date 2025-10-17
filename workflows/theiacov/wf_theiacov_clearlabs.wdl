@@ -93,7 +93,7 @@ workflow theiacov_clearlabs {
       samplename = samplename,
       bamfile = consensus.trim_sorted_bam
   }
-  if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2") {
+  if (organism_parameters.standardized_organism == "sars-cov-2") {
     # run organism-specific typing
     call morgana_magic.morgana_magic as morgana_magic_wf {
       input:
