@@ -47,120 +47,36 @@ This workflow runs on the sample level.
 !!! info "Helpful Hint"
     You may have to generate phylogenies multiple times, running the Augur_PHB workflow, assessing results, and amending inputs to generate a final tree with sufficient diversity and high-quality data of interest.
 
-The Augur_PHB workflow takes a **set** of assembly/consensus files (FASTA format) and optional sample metadata files (TSV format) that have been reformatted using Augur_Prep_PHB. Augur_PHB runs Augur to generate the phylogenetic tree files with accompanying metadata. Additionally, the workflow infers pairwise SNP distances and can generate a time-calibrated phylogeny if collection date metadata was included in Augur_Prep_PHB.
+The Augur_PHB workflow takes a **set** of assembly/consensus files (FASTA format) and optional sample metadata files (TSV format) that have been formatted using Augur_Prep_PHB. Augur_PHB runs Augur to generate a phylogenetic tree following the construction of a SNP distance matrix and alignment. Provided metadata will be incorporated into the Auspice-formatted tree visual. 
+
+If running the workflow via Terra, individual samples will need to be added to a set before running the workflow. 
 
 #### Augur Inputs
 
-The Augur_PHB workflow takes in a ***set*** of viral pathogen FASTA and metadata files. If running the workflow via Terra, individual samples will need to be added to a set before running the workflow. Input FASTAs should meet QC metrics. Sets of FASTAs with highly discordant quality metrics may result in the inaccurate inference of genetic relatedness. There **must** be some sequence diversity among the set of input assemblies. If insufficient diversity is present, it may be necessary to add a more divergent sequences to the set.
+Particular inputs/metadata will automatically bypass or trigger modules, such as populating `alignment_fasta`, which bypasses alignment; a time-calibrated phylogeny will be generated if "collection_date" is included in the metadata; clade-defining mutations can be automatically extracted if the "clade_membership" metadata field is populated in conjunction with setting the `extract_clade_mutations` input to `true`.
 
-!!! dna "Optional Inputs"
-    There are **many** optional user inputs. For SARS-CoV-2, Flu, rsv-a, rsv-b, and mpxv, default values that mimic the NextStrain builds have been preselected. To use these defaults, you must write either `"sars-cov-2"`,`"flu"`, `"rsv-a"`, `"rsv-b"`, or `"mpxv"` for the `organism` variable.
-
-    For Flu - it is **required** to set `flu_segment` to either `"HA"` or `"NA"` & `flu_subtype` to either `"H1N1"` or `"H3N2"` or `"Victoria"` or `"Yamagata"` or `"H5N1"` (`"H5N1"` will only work with `"HA"`) depending on your set of samples.
-
-???+ toggle "A Note on Optional Inputs"
-    ??? toggle "Default values for SARS-CoV-2"
-        - min_num_unambig = 27000
-        - clades_tsv = [defaults/clades.tsv](https://github.com/nextstrain/ncov/tree/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/clades.tsv)
-        - lat_longs_tsv = [defaults/lat_longs.tsv](https://github.com/nextstrain/ncov/blob/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/lat_longs.tsv)
-        - reference_fasta = [defaults/reference_seq.fasta](https://github.com/nextstrain/ncov/blob/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/reference_seq.fasta)
-        - reference_genbank = [defaults/reference_seq.gb](https://github.com/nextstrain/ncov/blob/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/reference_seq.gb)
-        - auspice_config = [defaults/auspice_config.json](https://github.com/nextstrain/ncov/blob/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/auspice_config.json)
-        - min_date = 2020.0
-        - pivot_interval = 1
-        - pivot_interval_units = "weeks"
-        - narrow_bandwidth = 0.05
-        - proportion_wide = 0.0
-
-    ??? toggle "Default values for Flu"
-        - lat_longs_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"`
-        - min_num_unambig = 900
-        - min_date = 2020.0
-        - pivot_interval = 1
-        - narrow_bandwidth = 0.1666667
-        - proportion_wide = 0.0
-        ??? toggle "H1N1"
-            - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h1n1pdm.json"`
-            - HA
-                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.gb"`
-                - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_h1n1pdm_ha.tsv"`
-            - NA
-                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.gb"`
-        ??? toggle "H3N2"
-            - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h3n2.json"`
-            - HA
-                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.gb"`
-                - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_h3n2_ha.tsv"`
-            - NA
-                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.gb"`
-        ??? toggle "Victoria"
-            - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_vic.json"`
-            - HA
-                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.gb"`
-                - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_vic_ha.tsv"`
-            - NA
-                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_na.gb"`
-        ??? toggle "Yamagata"
-            - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam.json"`
-            - HA
-                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_ha.gb"`
-                - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_yam_ha.tsv"`
-            - NA
-                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_na.gb"`
-        ??? toggle "H5N1"
-            - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h5n1.json"`
-            - HA
-                - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.gb"`
-                - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/h5nx-clades.tsv"`
-
-    ??? toggle "Default values for MPXV"
-        - min_num_unambig = 150000
-        - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_clades.tsv"`
-        - lat_longs_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"`
-        - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/NC_063383.1.reference.fasta"`
-        - reference_genbank = `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/NC_063383.1_reference.gb"`
-        - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_auspice_config_mpxv.json"`
-        - min_date = 2020.0
-        - pivot_interval = 1
-        - narrow_bandwidth = 0.1666667
-        - proportion_wide = 0.0
-
-    ??? toggle "Default values for RSV-A"
-        - min_num_unambig = 10850
-        - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_a_clades.tsv"`
-        - lat_longs_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"`
-        - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"`
-        - reference_genbank = `""gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.gb"`
-        - auspice_config = `""gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"`
-        - min_date = 2020.0
-        - pivot_interval = 1
-        - narrow_bandwidth = 0.1666667
-        - proportion_wide = 0.0
-
-    ??? toggle "Default values for RSV-B"
-        - min_num_unambig = 10850
-        - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_b_clades.tsv"`
-        - lat_longs_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"`
-        - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"`
-        - reference_genbank = `""gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.gb"`
-        - auspice_config = `""gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"`
-        - min_date = 2020.0
-        - pivot_interval = 1
-        - narrow_bandwidth = 0.1666667
-        - proportion_wide = 0.0
-
-    For more information regarding these optional inputs, please view [Nextrain's detailed documentation on Augur](https://docs.nextstrain.org/projects/augur/en/stable/usage/usage.html)
-
-    !!! info "What's required or not?"
-        For organisms _other_ than SARS-CoV-2 or Flu, the required variables have both the "required" and "optional" tags.
-
-This workflow runs on the set level. Please note that for every task, runtime parameters are modifiable (cpu, disk_size, docker, and memory); most of these values have been excluded from the table below for convenience.
+Input FASTAs should meet QC metrics. Sets of FASTAs with highly discordant quality metrics may result in the inaccurate inference of genetic relatedness. There **must** be some sequence diversity among the set of input assemblies. If insufficient diversity is present, it may be necessary to add a more divergent sequences to the set.
 
 /// html | div[class="searchable-table"]
 
 {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Augur"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
+
+
+!!! dna "Optional Inputs"
+    There are **many** optional user inputs. For SARS-CoV-2, Flu, rsv-a, rsv-b, and mpxv, default values that mimic the Nextstrain builds have been preselected. To use these defaults, you must write either `"sars-cov-2"`,`"flu"`, `"rsv-a"`, `"rsv-b"`, or `"mpxv"` for the `organism` variable.
+
+    For Flu - it is **required** to set `flu_segment` to either `"HA"` or `"NA"` & `flu_subtype` to either `"H1N1"` or `"H3N2"` or `"Victoria"` or `"Yamagata"` or `"H5N1"` (`"H5N1"` will only work with `"HA"`) depending on your set of samples.
+
+???+ toggle "A Note on Optional Inputs"
+
+{{ include_md("common_text/organism_parameters_wf.md", condition="virus", indent=4) }}
+
+    For more information regarding these optional inputs, please view [Nextrain's detailed documentation on Augur](https://docs.nextstrain.org/projects/augur/en/stable/usage/usage.html)
+
+    !!! info "What's required or not?"
+        For organisms _other_ than SARS-CoV-2 or Flu, the required variables have both the "required" and "optional" tags.
 
 ### Workflow Tasks
 
@@ -170,75 +86,53 @@ In Augur_PHB, the tasks below are called. For the Augur subcommands, please view
 
 ??? toggle "Versioning"
 
-{{ include_md("common_text/versioning_task.md", indent=8) }}
+{{ include_md("common_text/versioning_task.md", indent=4) }}
 
-??? toggle "Organism Parameters"
+??? toggle "Default Organism Parameters"
 
-{{ include_md("common_text/organism_parameters_wf.md", indent=8) }}
+{{ include_md("common_text/organism_parameters_wf.md", indent=4) }}
 
-??? toggle "Join Metadata TSVs"
+??? toggle "Alignment"
 
-{{ include_md("common_text/tsv_join_task.md", indent=8) }}
+{{ include_md("common_text/augur_align_task.md", indent=4) }}
 
-??? toggle "Concatenate Assemblies"
+{{ include_md("common_text/filter_contigs_task.md", indent=4) }}
 
-{{ include_md("common_text/cat_files_task.md", indent=8) }}
+{{ include_md("common_text/snp_dists_task.md", indent=4) }}
 
-??? toggle "Filter Sequences by Length"
+??? toggle "SNP Matrix and Phylogenetic Tree Building"
 
-{{ include_md("common_text/filter_contigs_task.md", indent=8) }}
+{{ include_md("common_text/augur_tree_task.md", indent=4) }}
 
-??? toggle "Augur Align"
+{{ include_md("common_text/reorder_matrix_task.md", indent=4) }}
 
-{{ include_md("common_text/augur_align_task.md", indent=8) }}
+??? toggle "Tree Refinement and Time-Calibration (Optional)"
 
-??? toggle "Extract Sequence IDs"
+{{ include_md("common_text/augur_refine_task.md", indent=4) }}
 
-{{ include_md("common_text/fasta_to_ids_task.md", indent=8) }}
+??? toggle "Ancestral Nucleotide and Amino Acid Mutation Extraction"
 
-??? toggle "Augur Tree"
+{{ include_md("common_text/augur_ancestral_task.md", indent=4) }}
 
-{{ include_md("common_text/augur_tree_task.md", indent=8) }}
+{{ include_md("common_text/augur_translate_task.md", indent=4) }}
 
-??? toggle "Calculate SNP Distances"
+??? toggle "Add Mutation Context (Monkeypox)"
 
-{{ include_md("common_text/snp_dists_task.md", indent=8) }}
+{{ include_md("common_text/mutation_context_task.md", indent=4) }}
 
-??? toggle "Root and Reorder Matrix"
+??? toggle "Addition of Trait Metadata"
 
-{{ include_md("common_text/reorder_matrix_task.md", indent=8) }}
+{{ include_md("common_text/augur_traits_task.md", indent=4) }}
 
-??? toggle "Augur Refine"
+??? toggle "Clade Defining via Mutations"
 
-{{ include_md("common_text/augur_refine_task.md", indent=8) }}
+{{ include_md("common_text/extract_clade_mutations_task.md", indent=4) }}
 
-??? toggle "Augur Ancestral"
+{{ include_md("common_text/augur_clades_task.md", indent=4) }}
 
-{{ include_md("common_text/augur_ancestral_task.md", indent=8) }}
+??? toggle "Auspice Format Export"
 
-??? toggle "Augur Translate"
-
-{{ include_md("common_text/augur_translate_task.md", indent=8) }}
-
-??? toggle "Add Mutation Context"
-
-{{ include_md("common_text/mutation_context_task.md", indent=8) }}
-
-??? toggle "Augur Traits"
-
-{{ include_md("common_text/augur_traits_task.md", indent=8) }}
-
-??? toggle "Extract Clade-defining Mutations"
-
-{{ include_md("common_text/extract_clade_mutations_task.md", indent=8) }}
-
-??? toggle "Augur Clades"
-
-{{ include_md("common_text/augur_clades_task.md", indent=8) }}
-
-??? toggle "Augur Export"
-
-{{ include_md("common_text/augur_export_task.md", indent=8) }}
+{{ include_md("common_text/augur_export_task.md", indent=4) }}
 
 
 #### Augur Outputs

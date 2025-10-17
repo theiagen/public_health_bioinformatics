@@ -127,6 +127,13 @@ workflow augur {
       sequences_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta])
   }
 
+  # create a snp matrix from the alignment
+  call snp_dists_task.snp_dists { 
+    input:
+      cluster_name = build_name_updated,
+      alignment = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta])
+  }
+
   # Phylogenetic tree reconstruction
   # create a phylogenetic tree
   call tree_task.augur_tree { 
@@ -134,13 +141,7 @@ workflow augur {
       aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
       build_name = build_name_updated
   }
-  # create a snp matrix from the alignment
-  call snp_dists_task.snp_dists { 
-    input:
-      cluster_name = build_name_updated,
-      alignment = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta])
-  }
-  # reorder snp matrix to match distance tree 
+  # root the phylogeny and reorder the SNP matrix to match the phylogeny's tip order
   call reorder_matrix_task.reorder_matrix { 
     input:
       input_tree = augur_tree.tree,
