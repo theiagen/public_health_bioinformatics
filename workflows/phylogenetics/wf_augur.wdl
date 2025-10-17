@@ -170,12 +170,14 @@ workflow augur {
         build_name = build_name_updated
     }
     # translate gene regions from nucleotides to amino acids
-    call translate_task.augur_translate { 
-      input:
-        refined_tree = augur_refine.refined_tree,
-        ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
-        reference_genbank = select_first([reference_genbank, organism_parameters.reference_gbk]),
-        build_name = build_name_updated
+    if (defined(select_first([reference_genbank, organism_parameters.reference_genbank])) {
+      call translate_task.augur_translate { 
+        input:
+          refined_tree = augur_refine.refined_tree,
+          ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
+          reference_genbank = select_first([reference_genbank, organism_parameters.reference_gbk]),
+          build_name = build_name_updated
+      }
     }
     if (organism_parameters.standardized_organism == "MPXV") {
       call mutation_context_task.mutation_context { # add mutation context to the tree

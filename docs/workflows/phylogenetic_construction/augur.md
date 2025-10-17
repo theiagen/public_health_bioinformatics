@@ -49,7 +49,7 @@ This workflow runs on the sample level.
 
 The Augur_PHB workflow takes a **set** of assembly/consensus files (FASTA format) and optional sample metadata files (TSV format) that have been formatted using Augur_Prep_PHB. Augur_PHB runs Augur to generate a phylogenetic tree following the construction of a SNP distance matrix and alignment. Provided metadata will be incorporated into the Auspice-formatted tree visual. 
 
-If running the workflow via Terra, individual samples will need to be added to a set before running the workflow. 
+If running the workflow via Terra, individual samples must be added to a set before running the workflow. 
 
 #### Augur Inputs
 
@@ -92,7 +92,7 @@ In Augur_PHB, the tasks below are called. For the Augur subcommands, please view
 
 {{ include_md("common_text/organism_parameters_wf.md", indent=4) }}
 
-??? toggle "Alignment"
+??? toggle "Alignment and SNP Matrix Extraction"
 
 {{ include_md("common_text/augur_align_task.md", indent=4) }}
 
@@ -100,7 +100,7 @@ In Augur_PHB, the tasks below are called. For the Augur subcommands, please view
 
 {{ include_md("common_text/snp_dists_task.md", indent=4) }}
 
-??? toggle "SNP Matrix and Phylogenetic Tree Building"
+??? toggle "Phylogenetic Tree Building"
 
 {{ include_md("common_text/augur_tree_task.md", indent=4) }}
 

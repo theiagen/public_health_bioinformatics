@@ -4,8 +4,7 @@ task augur_clades {
   input {
     File refined_tree
     File ancestral_nt_muts_json
-    File translated_aa_muts_json
-   # File reference_fasta
+    File? translated_aa_muts_json
     String build_name
 
     File clades_tsv # tsv file containing clade definitions by amino acid
@@ -17,7 +16,8 @@ task augur_clades {
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur clades \
       --tree "~{refined_tree}" \
-      --mutations "~{ancestral_nt_muts_json}" "~{translated_aa_muts_json}" \
+      --mutations "~{ancestral_nt_muts_json}" \
+      ~{' "' + ~{translated_aa_muts_json} + '"'} \
       --clades "~{clades_tsv}" \
       --output-node-data "~{build_name}_clades.json"
 
