@@ -71,6 +71,7 @@ task fetch_bs {
     echo "Concatenating and renaming FASTQ files to add back underscores in basespace_sample_name"
     # setting a new bash variable to use for renaming during concatenation of FASTQs
     for elm in ./dataset_${dataset_id}/*.fastq.gz; do
+      echo "Checking Basespace file: $elm"
       if [[ $(echo "$elm" | cut -d '/' -f 3) =~ [-] && $sample_identifier =~ [_] ]]; then
         echo "Basespace sample name for $(echo "$elm" | cut -d '/' -f 3) contains dashes, input sample identifier $sample_identifier contains underscores, renaming identifier..."
         SAMPLENAME_RENAMED=$(echo $sample_identifier | sed 's|_|-|g' | sed 's|\.|-|g')
@@ -81,6 +82,10 @@ task fetch_bs {
       fi
       if [[ ($(echo "$elm" | cut -d '/' -f 3) =~ [_] && $sample_identifier =~ [_]) || ($(echo "$elm" | cut -d '/' -f 3) =~ [-] && $sample_identifier =~ [-]) ]]; then
         echo "Both Basespace sample name and input sample identifier for $(echo "$elm" | cut -d '/' -f 3) contain matching separators..."
+        SAMPLENAME_RENAMED=$sample_identifier
+      fi
+      if [[ ! ($(echo "$elm" | cut -d '/' -f 3) =~ [_]) || ! ($(echo "$elm" | cut -d '/' -f 3) =~ [-]) ]]; then
+        echo "Filename doesn't use underscore or hyphen separators, using input sample identifier as-is"
         SAMPLENAME_RENAMED=$sample_identifier
       fi
     done
