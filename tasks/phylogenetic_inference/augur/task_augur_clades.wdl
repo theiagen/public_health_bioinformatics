@@ -17,7 +17,7 @@ task augur_clades {
     AUGUR_RECURSION_LIMIT=10000 augur clades \
       --tree "~{refined_tree}" \
       --mutations "~{ancestral_nt_muts_json}" \
-      ~{' "' + ~{translated_aa_muts_json} + '"'} \
+      ~{if defined(translated_aa_muts_json) then '" ~{translated_aa_muts_json}"' else ""} \
       --clades "~{clades_tsv}" \
       --output-node-data "~{build_name}_clades.json"
 

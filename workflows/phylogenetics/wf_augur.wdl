@@ -170,7 +170,7 @@ workflow augur {
         build_name = build_name_updated
     }
     # translate gene regions from nucleotides to amino acids
-    if (defined(select_first([reference_genbank, organism_parameters.reference_genbank])) {
+    if (defined(select_first([reference_genbank, organism_parameters.reference_gbk]))) {
       call translate_task.augur_translate { 
         input:
           refined_tree = augur_refine.refined_tree,
