@@ -16,7 +16,7 @@ workflow morgana_magic {
     String seq_method
     File? read1
     File? read2
-    Int? number_ATCG # needed for vadr 
+    Int? number_ATCG # needed for vadr
     # assembly metrics 
     Int? assembly_metrics_cpu
     Int? assembly_metrics_disk_size
@@ -229,7 +229,7 @@ workflow morgana_magic {
   if (organism_parameters.standardized_organism == "rabies") {
     call nextclade_task.nextclade_v3_set as rabies_nextclade {
       input:
-        genome_fastas = [select_first([assembly_fasta])],
+        genome_fastas = [assembly_fasta],
         reference_tree_json = organism_parameters.nextclade_auspice_tree,
         gene_annotations_gff = organism_parameters.reference_gff,
         pathogen_json = organism_parameters.nextclade_pathogen_json,
