@@ -6,11 +6,11 @@
 
     ??? toggle "Default values for SARS-CoV-2"
         - min_num_unambig = 27000
-        - clades_tsv = [defaults/clades.tsv](https://github.com/nextstrain/ncov/tree/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/clades.tsv)
-        - lat_longs_tsv = [defaults/lat_longs.tsv](https://github.com/nextstrain/ncov/blob/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/lat_longs.tsv)
-        - reference_fasta = [defaults/reference_seq.fasta](https://github.com/nextstrain/ncov/blob/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/reference_seq.fasta)
-        - reference_genbank = [defaults/reference_seq.gb](https://github.com/nextstrain/ncov/blob/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/reference_seq.gb)
-        - auspice_config = [defaults/auspice_config.json](https://github.com/nextstrain/ncov/blob/23d1243127e8838a61b7e5c1a72bc419bf8c5a0d/defaults/auspice_config.json)
+        - clades_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_clades_20251008.tsv"`
+        - lat_longs_tsv = `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_lat_longs_20251008.tsv"`
+        - reference_fasta = `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"`
+        - reference_genbank = `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_reference_seq_20251008.gb"`
+        - auspice_config = `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_auspice_config_20251008.json"`
         - min_date = 2020.0
         - pivot_interval = 1
         - pivot_interval_units = "weeks"
