@@ -199,6 +199,7 @@ chroquetas_status	String	Status depicting passing or specific errors encountered
 chroquetas_version	String	Version of ChroQueTas	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
 chroquetas_wf_analysis_date	String	Date analysis was conducted	ChroQueTas
 chroquetas_wf_version	String	Version of the PHB workflow used	ChroQueTas
+clade_mutations	File	"clades.tsv" file delineating sequence signatures for provided clade metadata	Augur
 cladetype_annotated_ref	String	The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted	TheiaEuk_ONT
 cladetyper_annotated_reference	String	The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted	Cauris_CladeTyper, TheiaEuk_Illumina_PE
 cladetyper_clade	String	The clade assigned to the input assembly	Cauris_CladeTyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
@@ -260,7 +261,6 @@ dehost_wf_host_mapping_mean_depth	Float	Average depth from host read mapping	The
 dehost_wf_host_mapping_metrics	File	File of mapping metrics	TheiaViral_Illumina_PE, TheiaViral_ONT
 dehost_wf_host_mapping_stats	File	File of mapping statistics	TheiaViral_Illumina_PE, TheiaViral_ONT
 dehost_wf_host_percent_mapped_reads	Float	Percentage of reads mapped to host reference genome	TheiaViral_Illumina_PE, TheiaViral_ONT
-distance_tree	File	The distance tree created in Newick (.nwk) format	Augur
 dnaapler_version	String	Version of dnaapler used	TheiaEuk_ONT, TheiaProk_ONT
 dorado_basecall_docker	String	Docker image used in the `dorado_basecall` task	Dorado_Basecalling
 dorado_basecall_version	String	Version of Dorado used in the `dorado_basecall` task	Dorado_Basecalling
@@ -273,8 +273,7 @@ ectyper_database_version	String	Version of the ECTyper database used	TheiaProk_F
 ectyper_docker	String	Docker image used to run ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_pathodb_version	String	Version of the ECTyper pathotype database used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_pathotype	String	Samples pathotype predicted by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-ectyper_pathotype_count	String	Number of pathotypes predicted by ECTyper	TheiaProk_FASTA
-ectyper_pathotype_count	String	Number of pathotypes predicted by ECTyper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+ectyper_pathotype_count	String	Number of pathotypes predicted by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_pathotype_genes	String	Pathotype genes observed by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_predicted_serotype	String	Serotype predicted by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_qc_result	String	QC pass or fail for the sample analyzed	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -817,6 +816,7 @@ phylocompare_tree1_clean	File	Cleaned newick file for the first tree	PhyloCompar
 phylocompare_tree2_clean	File	Cleaned newick file for the second tree	PhyloCompare
 phylocompare_validation	String	"PASS" if distance < `max_distance` and "FAIL" if distance > `max_distance` or could not be calculated	PhyloCompare
 phylocompare_version	String	Version of PhyloCompare python script	PhyloCompare
+phylogenetic_tree	File	Phylogenetic tree without time-calibration	Augur
 pilon_docker	String	The Docker image for pilon	TheiaMeta_Illumina_PE
 pilon_version	String	The version of pilon	TheiaMeta_Illumina_PE
 pirate_core_alignment_fasta	File	Nucleotide alignments of the core genes as created using MAFFT within Pirate. Loci are ordered according to the gene_families.ordered file.	Core_Gene_SNP
@@ -1094,6 +1094,9 @@ snippy_variants_version	String	Version of Snippy used	Snippy_Variants
 snippy_variants_wf_version	String	Version of Snippy_Variants used	Snippy_Variants
 snippy_wg_snp_matrix	File	CSV file of whole genome pairwise SNP distances between samples, calculated from the final alignment	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree
 snp_matrix	File	The SNP distance matrix for all samples used in the phylogenetic tree	Augur
+snp_sites_docker	String	Docker file used for SNP-sites	Core_Gene_SNP
+snp_sites_multifasta	File	Extracted SNP-sites alignment	Core_Gene_SNP
+snp_sites_version	String	Version of SNP-sites used	Core_Gene_SNP
 sonneityping_final_genotype	String	Final genotype call from Mykrobe, via sonneityper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sonneityping_final_report_tsv	File	Detailed TSV report from mykrobe, via sonneityper (see <https://github.com/katholt/sonneityping#example-output>)	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sonneityping_genotype_confidence	String	Confidence in the final genotype call from sonneityper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
