@@ -1553,8 +1553,8 @@ minimap2_reads	docker	String	The Docker container to use for the task	us-docker.
 minimap2_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaMeta_Illumina_PE	runtime
 morgana_magic_wf	abricate_flu_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic_wf	abricate_flu_cpu	Int	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
-morgana_magic_wf	abricate_flu_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic_wf	abricate_flu_disk_size	Int	Internal component, do not modify		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+morgana_magic_wf	abricate_flu_disk_size	Int	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+morgana_magic_wf	abricate_flu_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic_wf	abricate_flu_docker	String	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT		docker
 morgana_magic_wf	abricate_flu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic_wf	abricate_flu_memory	Int	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	runtime
