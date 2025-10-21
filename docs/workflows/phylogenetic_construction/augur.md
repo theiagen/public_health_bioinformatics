@@ -118,7 +118,7 @@ In Augur_PHB, the tasks below are called. For the Augur subcommands, please view
 
 ??? toggle "Add Mutation Context (Monkeypox)"
 
-{{ include_md("common_text/mutation_context_task.md", indent=4) }}
+{{ include_md("common_text/augur_mutation_context_task.md", indent=4) }}
 
 ??? toggle "Addition of Trait Metadata"
 
