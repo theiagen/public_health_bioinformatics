@@ -6,17 +6,21 @@
 
 ## Augur Workflows
 
-Genomic Epidemiology is an important approach to understand and mitigate disease transmission. A critical step in viral genomic epidemiology is generating phylogenetic trees to explore the genetic relationship between viruses on a local, regional, national, or global scale. To this end, the Augur workflows enable viral phylogenetic analysis by generating phylogenetic trees and incorporating metadata into a stunning visual via the Auspice format.
+!!! caption "Augur Workflow Diagram"
+    ![Augur Workflow Diagram](../../assets/figures/Augur_MAIN.png)
 
-Two workflows are offered: **Augur_Prep_PHB** and **Augur_PHB**. These workflows must be run sequentially to generate a phylogenetic tree with metadata included, though **Augur_PHB** can generate a phylogenetic tree without metadata as a standalone workflow. The outputs from these workflows can be visualized in [Auspice](https://docs.nextstrain.org/projects/auspice/en/latest/) and [UShER](https://github.com/yatisht/usher).
-
-!!! dna "**Helpful resources for epidemiological interpretation**"
+!!! dna inline end "**Helpful resources for epidemiological interpretation**"
 
     - [introduction to Nextstrain](https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-1.html) (which includes Auspice)
     - guide to Nextstrain [interactive trees](https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-4.html)
     - an [introduction to UShER](https://www.cdc.gov/advanced-molecular-detection/php/training/module-3-3.html)
     - a video about [how to read trees](https://www.cdc.gov/advanced-molecular-detection/php/training/module-1-3.html) if this is new to you
     - documentation on [how to identify SARS-CoV-2 recombinants](https://github.com/pha4ge/pipeline-resources/blob/main/docs/sc2-recombinants.md)
+
+Genomic Epidemiology is an important approach to understand and mitigate disease transmission. A critical step in viral genomic epidemiology is generating phylogenetic trees to explore the genetic relationship between viruses on a local, regional, national, or global scale. To this end, the Augur workflows enable viral phylogenetic analysis by generating phylogenetic trees and incorporating metadata into a stunning visual via the Auspice format.
+
+Two workflows are offered: **Augur_Prep_PHB** and **Augur_PHB**. These workflows must be run sequentially to generate a phylogenetic tree with metadata included, though **Augur_PHB** can generate a phylogenetic tree without metadata as a standalone workflow. The outputs from these workflows can be visualized in [Auspice](https://docs.nextstrain.org/projects/auspice/en/latest/) and [UShER](https://github.com/yatisht/usher).
+
 
 ### Augur_Prep_PHB
 
