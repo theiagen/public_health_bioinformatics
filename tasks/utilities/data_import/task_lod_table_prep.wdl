@@ -28,6 +28,7 @@ task lod_table_prep {
     # load config yaml
     with open("~{lod_config_yaml}", 'r') as f:
       config = yaml.safe_load(f)
+    print("Loaded LOD config YAML file.")
 
     required_params = {
       'workspace_name': "~{workspace_name}",
@@ -43,6 +44,7 @@ task lod_table_prep {
     for param in required_params:
       if not config['workflow'].get(param) and not required_params[param]:
         raise ValueError(f"ERROR: Missing required input parameter: '{param}'. Not found in config or optional WDL inputs")
+    print("All required parameters found.")
 
     # set parameters, giving precedence to WDL inputs if provided
     workspace_name = "~{workspace_name}" if "~{workspace_name}" else config['workflow']['workspace_name']
@@ -74,6 +76,7 @@ task lod_table_prep {
       }
     )
     num_rows = len(output_df)
+    print(f"Preparing LOD table for {num_rows} samples...")
 
     # load reportables, expected values, and make sure columns to compare exist
     for target in config['reportables']:
@@ -92,7 +95,8 @@ task lod_table_prep {
         mask = output_df[f"entity:{output_table_name}_id"] == sample
         if not mask.any():
           raise ValueError(f"No sample_id matches '{sample}' in expected_values for target '{target['target_name']}'")
-        output_df.loc[mask, f"expected_{target['target_name']}"] = value
+        output_df.loc[mask, f"expected_{target['target_name']}"] = [value] * num_rows
+    print("Populated all reportable and expected values for all targets.")
 
     # create downsampled sample for each level across all samples
     downsampled_df = pd.DataFrame({"downsampling_level": downsampling_levels})
@@ -104,7 +108,9 @@ task lod_table_prep {
     # combine original samples with all downsampled samples
     output_df = pd.concat([output_df, merged_df], ignore_index=True)
     output_df.to_csv("~{output_table_name}-data.tsv", sep="\t", index=False)
+    print(f"Generated LOD table with {len(output_df)} total entries including downsampled levels.")
 
+    # upload the output table to Terra
     updated_df = terra.entities.upload_entities(data=output_df, target="~{output_table_name}")
     result = terra.entities.create_entity_set("~{output_table_name}_set", "~{output_table_name}", updated_df)
     if result.ok:
