@@ -99,23 +99,23 @@ task lod_table_prep {
           raise ValueError(f"No sample_id matches '{sample}' in expected_values for target '{target['target_name']}'")
         row_index = output_df.index[mask][0]
         output_df.at[row_index, f"expected_{target['target_name']}"] = value
-      print("Populated all reportable and expected values for all targets.")
+    print("Populated all reportable and expected values for all targets.")
 
     # create downsampled sample for each level across all samples
     downsampled_df = pd.DataFrame({"downsampling_level": downsampling_levels})
     merged_df = output_df.merge(downsampled_df, how="cross")
 
     # modify entity ids (sample_id names) to reflect downsampling level in output table
-    merged_df["entity:~{output_table_name}_id"] = merged_df["entity:~{output_table_name}_id"] + "_" + merged_df["downsampling_level"].astype(str) + "x"
+    merged_df[f"entity:{output_table_name}_id"] = merged_df[f"entity:{output_table_name}_id"] + "_" + merged_df["downsampling_level"].astype(str) + "x"
 
     # combine original samples with all downsampled samples
     output_df = pd.concat([output_df, merged_df], ignore_index=True)
-    output_df.to_csv("~{output_table_name}-data.tsv", sep="\t", index=False)
+    output_df.to_csv(f"{output_table_name}-data.tsv", sep="\t", index=False)
     print(f"Generated LOD table with {len(output_df)} total entries including downsampled levels.")
 
     # upload the output table to Terra
-    updated_df = terra.entities.upload_entities(data=output_df, target="~{output_table_name}")
-    result = terra.entities.create_entity_set("~{output_table_name}_set", "~{output_table_name}", updated_df)
+    updated_df = terra.entities.upload_entities(data=output_df, target=f"{output_table_name}")
+    result = terra.entities.create_entity_set(f"{output_table_name}_set", f"{output_table_name}", updated_df)
     if result.ok:
         print("Entity set created successfully")
 
