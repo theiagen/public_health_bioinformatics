@@ -16,13 +16,14 @@ workflow host_decontaminate {
     File? read2
     String host
     Boolean is_accession = false
+    Boolean is_genome = false
     Boolean refseq = true
     Boolean complete_only = false
     Int minimap2_memory = 32
   }
   String hostsample = samplename + "_host"
   # gather an accession from a taxon input
-  if (! is_accession) {
+  if (! is_accession && ! is_genome) {
     call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
       input:
         taxon = host,
@@ -32,11 +33,13 @@ workflow host_decontaminate {
         use_ncbi_virus = false
     }
   }
-  # download accession
-  call ncbi_datasets.ncbi_datasets_download_genome_accession as download_accession {
-    input:
-      ncbi_accession = select_first([ncbi_identify.ncbi_datasets_accession, host]),
-      use_ncbi_virus = false
+  # download accession if it isn't directly provided
+  if (! is_genome) {
+    call ncbi_datasets.ncbi_datasets_download_genome_accession as download_accession {
+      input:
+        ncbi_accession = select_first([ncbi_identify.ncbi_datasets_accession, host]),
+        use_ncbi_virus = false
+    }
   }
   # run paired-end mode
   if (defined(read2)) {
@@ -45,7 +48,7 @@ workflow host_decontaminate {
         samplename = hostsample,
         query1 = read1,
         query2 = read2,
-        reference = select_first([download_accession.ncbi_datasets_assembly_fasta]),
+        reference = select_first([download_accession.ncbi_datasets_assembly_fasta, host]),
         mode = "sr",
         output_sam = true,
         long_read_flags = false,
@@ -58,7 +61,7 @@ workflow host_decontaminate {
       input:
         samplename = hostsample,
         query1 = read1,
-        reference = select_first([download_accession.ncbi_datasets_assembly_fasta]),
+        reference = select_first([download_accession.ncbi_datasets_assembly_fasta, host]),
         mode = "map-ont",
         output_sam = true,
         long_read_flags = true,
