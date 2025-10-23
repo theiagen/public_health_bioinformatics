@@ -87,7 +87,7 @@ task lod_table_prep {
         output_df[target['column_to_compare']] = input_df[target['column_to_compare']]
 
       # creating columns of 'reportable_{target_name}' values
-      output_df[f"reportable_{target['target_name']}"] = [target['target_values']] * num_rows
+      output_df[f"reportable_{target['target_name']}"] = [','.join(sorted(target['target_values']))] * num_rows
 
       # creating columns of 'expected_{target_name}' values
       # First initialize the column with None since not all samples will have the same expected values
@@ -98,7 +98,7 @@ task lod_table_prep {
         if not mask.any():
           raise ValueError(f"No sample_id matches '{sample}' in expected_values for target '{target['target_name']}'")
         row_index = output_df.index[mask][0]
-        output_df.at[row_index, f"expected_{target['target_name']}"] = value
+        output_df.at[row_index, f"expected_{target['target_name']}"] = ','.join(sorted(value))
     print("Populated all reportable and expected values for all targets.")
 
     # create downsampled sample for each level across all samples
