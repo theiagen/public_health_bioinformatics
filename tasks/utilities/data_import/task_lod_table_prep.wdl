@@ -84,7 +84,7 @@ task lod_table_prep {
         output_df[target['column_to_compare']] = input_df[target['column_to_compare']]
 
       # creating columns of 'reportable_{target_name}' values
-      output_df[f"reportable_{target['target_name']}"] = target['target_values'] * num_rows
+      output_df[f"reportable_{target['target_name']}"] = [target['target_values']] * num_rows
 
       # creating columns of 'expected_{target_name}' values
       for sample, value in target['expected_values'].items():
