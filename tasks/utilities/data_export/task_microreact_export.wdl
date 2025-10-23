@@ -5,10 +5,16 @@ task microreact_export {
     description: "This task generates a Microreact input file from supplied metadata and tree files, submitting to Microreact when access token is provided."
   }
   input {
-    File metadata
-    Array[String] metadata_columns
-    Array[String] tree_files
-    String docker 
+    String project_name
+    String id_column
+    File metadata_tsv
+    Array[String]? metadata_columns
+    Array[String]? tree_files
+    String? access_token
+    Boolean restricted_access = true
+    Boolean update_project = false
+    String? project_url
+    String docker = "microreact_export:latest"
     Int disk_size = 10
     Int memory = 4
     Int cpu = 2
@@ -17,11 +23,21 @@ task microreact_export {
     # set -euo pipefail to avoid silent failure
     set -euo pipefail
 
-    
+    python /scripts/microreact_export.py \
+      --project_name ~{project_name} \
+      ~{"--project_url " + project_url} \
+      --metadata_tsv ~{metadata_tsv} \
+      --id_column ~{id_column} \
+      --tree_files ~{sep=" " tree_files} \
+      ~{"--selected_columns " + metadata_columns} \
+      ~{"--access_token " + access_token} \
+      ~{"--restricted_access " + restricted_access} \
+      ~{"--update " + update_project} \
+      
   >>>
   output {
-    File microreact_json 
-    File? microreact_api_response 
+    File microreact_json = "project_input.json"
+    File? microreact_api_response = "microreact_response.json"
   }
   runtime {
     docker: "~{docker}"
