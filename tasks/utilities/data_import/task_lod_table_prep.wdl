@@ -90,13 +90,16 @@ task lod_table_prep {
       output_df[f"reportable_{target['target_name']}"] = [target['target_values']] * num_rows
 
       # creating columns of 'expected_{target_name}' values
+      # First initialize the column with None since not all samples will have the same expected values
+      output_df[f"expected_{target['target_name']}"] = None
       for sample, value in target['expected_values'].items():
         # value is only assigned if sample from expected_values matches the sample_id in the input table
         mask = output_df[f"entity:{output_table_name}_id"] == sample
         if not mask.any():
           raise ValueError(f"No sample_id matches '{sample}' in expected_values for target '{target['target_name']}'")
-        output_df.loc[mask, f"expected_{target['target_name']}"] = [value]
-    print("Populated all reportable and expected values for all targets.")
+        row_index = output_df.index[mask][0]
+        output_df.at[row_index, f"expected_{target['target_name']}"] = value
+      print("Populated all reportable and expected values for all targets.")
 
     # create downsampled sample for each level across all samples
     downsampled_df = pd.DataFrame({"downsampling_level": downsampling_levels})
