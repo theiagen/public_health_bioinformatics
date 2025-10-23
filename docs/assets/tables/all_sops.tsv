@@ -34,3 +34,5 @@ SOP	Workflow	SOP version	PHB version compatibility	Pathogen/Category	Current or 
 [Running Influenza A, H3N2 Metagenomic Samples in Terra using Theiagen’s Freyja FASTQ Workflow](../assets/sops/TG-FREY-H3N2_FreyjaFASTQ_v1.pdf)	Freyja	v1	v3	Flu	Current
 [Linking BaseSpace and Importing BaseSpace Reads to Terra](../assets/sops/TG-TER-04_BaseSpaceFetch_v2.pdf)	BaseSpace_Fetch	v2	v2	Data Import	Prior
 [Uploading Data, Creating Metadata Tables and TSV files, and Importing Workflows](../assets/sops/TG-TER-03_GettingStartedInTerra_v3.pdf)	None	v3	v1, v2	Data Import	Prior
+[TG-FREY-H5Nx_FreyjaFASTQ_H5Nx_v1](../assets/sops/TG-FREY-H5Nx_FreyjaFASTQ_H5Nx_v1.pdf)	Freyja	v1	v3	Flu	Current
+[TG-ONT-01_Concatenation_of_ONT_Reads_v1](../assets/sops/TG-ONT-01_Concatenation_of_ONT_Reads_v1.pdf)	ONT	v1	v3	Bacterial	Current
