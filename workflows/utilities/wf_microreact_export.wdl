@@ -27,7 +27,7 @@ workflow wf_microreact_export {
         terra_project_name = terra_project_name
     }
   }
-  call microreact_export.microreact_export {
+  call microreact_export.microreact_export as microreact{
     input:
       project_name = project_name,
       metadata_tsv = select_first([download.terra_table, metadata_file]),
@@ -40,7 +40,7 @@ workflow wf_microreact_export {
       id_column = id_column
   }
   output {
-    File microreact_json = microreact_export.microreact_json
-    File? microreact_api_response = microreact_export.microreact_api_response
+    File microreact_json = microreact.microreact_json
+    File? microreact_api_response = microreact.microreact_api_response
   }
 }
