@@ -110,7 +110,7 @@ task lod_table_prep {
 
     # combine original samples with all downsampled samples
     output_df = pd.concat([output_df, merged_df], ignore_index=True)
-    output_df.to_csv(f"{output_table_name}-data.tsv", sep="\t", index=False)
+    output_df.to_csv(f"{output_table_name}_datatable.tsv", sep="\t", index=False)
     print(f"Generated LOD table with {len(output_df)} total entries including downsampled levels.")
 
     # upload the output table to Terra
@@ -123,7 +123,7 @@ task lod_table_prep {
 
   >>>
   output {
-    File lod_table_tsv = "~{output_table_name}-data.tsv"
+    File lod_table_tsv = glob("*_datatable.tsv")
   }
   runtime {
     docker: docker
