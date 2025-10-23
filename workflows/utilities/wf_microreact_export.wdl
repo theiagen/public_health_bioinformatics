@@ -13,7 +13,7 @@ workflow wf_microreact_export {
     String? project_url
     String? access_token
     File? metadata_file
-    Array[String]? tree_files
+    Array[File]? tree_files
     Array[String]? metadata_columns
     Boolean update_project = false
     Boolean restricted_access = true

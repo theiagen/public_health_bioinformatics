@@ -9,7 +9,7 @@ task microreact_export {
     String id_column
     File metadata_tsv
     Array[String]? metadata_columns
-    Array[String]? tree_files
+    Array[File]? tree_files
     String? access_token
     Boolean restricted_access = true
     Boolean update_project = false
