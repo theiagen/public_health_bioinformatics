@@ -89,7 +89,7 @@ task lod_table_prep {
       # creating columns of 'expected_{target_name}' values
       for sample, value in target['expected_values'].items():
         # value is only assigned if sample from expected_values matches the sample_id in the input table
-        mask = output_df[f"entity:{input_table_name}_id"] == sample
+        mask = output_df[f"entity:{output_table_name}_id"] == sample
         if not mask.any():
           raise ValueError(f"No sample_id matches '{sample}' in expected_values for target '{target['target_name']}'")
         output_df.loc[mask, f"expected_{target['target_name']}"] = value
