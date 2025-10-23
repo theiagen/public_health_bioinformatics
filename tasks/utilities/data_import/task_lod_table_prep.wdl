@@ -95,7 +95,7 @@ task lod_table_prep {
         mask = output_df[f"entity:{output_table_name}_id"] == sample
         if not mask.any():
           raise ValueError(f"No sample_id matches '{sample}' in expected_values for target '{target['target_name']}'")
-        output_df.loc[mask, f"expected_{target['target_name']}"] = [value] * num_rows
+        output_df.loc[mask, f"expected_{target['target_name']}"] = [value]
     print("Populated all reportable and expected values for all targets.")
 
     # create downsampled sample for each level across all samples
