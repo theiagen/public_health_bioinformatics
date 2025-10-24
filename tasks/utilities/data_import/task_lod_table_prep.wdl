@@ -123,7 +123,7 @@ task lod_table_prep {
 
   >>>
   output {
-    File lod_table_tsv = glob("*_datatable.tsv")
+    Array[File] lod_table_tsv = glob("*_datatable.tsv")
   }
   runtime {
     docker: docker
