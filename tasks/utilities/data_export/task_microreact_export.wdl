@@ -14,7 +14,7 @@ task microreact_export {
     Boolean restricted_access = true
     Boolean update_project = false
     String? project_url
-    String docker = "microreact_export:latest"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/microreact_export:0.1.0-dev"
     Int disk_size = 10
     Int memory = 4
     Int cpu = 2
