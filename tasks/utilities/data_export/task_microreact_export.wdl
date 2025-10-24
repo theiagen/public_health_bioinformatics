@@ -29,7 +29,7 @@ task microreact_export {
       --metadata_tsv ~{metadata_tsv} \
       --id_column ~{id_column} \
       --tree_files ~{sep=" " tree_files} \
-      ~{"--selected_columns " + metadata_columns} \
+      --selected_columns ~{sep=" " metadata_columns} \
       ~{"--access_token " + access_token} \
       ~{"--restricted_access " + restricted_access} \
       ~{"--update " + update_project} \
