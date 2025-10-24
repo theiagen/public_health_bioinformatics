@@ -340,3 +340,8 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/data_import/wf_ont_barcode_concatenation.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
+ - name: Microreact_Export_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/wf_microreact_export.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
