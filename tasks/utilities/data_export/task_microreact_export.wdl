@@ -31,8 +31,8 @@ task microreact_export {
       --tree_files ~{sep=" " tree_files} \
       --selected_columns ~{sep=" " metadata_columns} \
       ~{"--access_token " + access_token} \
-      ~{"--restricted_access " + restricted_access} \
-      ~{"--update " + update_project} \
+      --restricted_access ~{restricted_access} \
+      --update ~{update_project}
       
   >>>
   output {
