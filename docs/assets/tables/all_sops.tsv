@@ -18,7 +18,7 @@ SOP	Workflow	SOP version	PHB version compatibility	Pathogen/Category	Current or 
 [Analyzing HAI Pathogens using Phoenix Version 2 in Terra](../assets/sops/TG-PX-V2_PhoenixV2.pdf)	Phoenix	v1	v1	HAI	Prior
 [Analyzing Phylogenetic Relationships in Terra using Theiagen’s Augur Workflows](../assets/sops/TG-AUGUR-01_Augur_v1.pdf)	Augur	v1	v1	Phylogenetic construction	Prior
 [Submitting SC2 Sequence Data to GISAID using Theiagen’s Terra 2 GISAID Workflow](../assets/sops/TG-GISAID-01_Terra2GISAID_v2.pdf)	Terra_2_GISAID	v2	v2	Public data sharing, SC2	Current
-[Comparing Terra Data Tables using Theiagen’s TheiaValidate Workflow](../assets/sops/TG-VAL-01_TheiaValidate_v1.pdf)	TheiaValidate	v1	v1, v2	Validations	Current
+[Comparing Terra Data Tables using Theiagen’s TheiaValidate Workflow](../assets/sops/TG-VAL-01_TheiaValidate_v1.pdf)	TheiaValidate	v1	v1, v2	Validations	Prior
 [Comparing Terra Data Tables using Theiagen’s TheiaValidate Workflow](../assets/sops/TG-VAL-01_TheiaValidate_v2.pdf)	TheiaValidate	v2	v2	Validations	Prior
 [Running Theiagen’s Rasusa Workflow in Terra to Randomly Downsample Reads](../assets/sops/TG-RASUSA-01_v2.pdf)	RASUSA	v2	v1, v2	Downsampling	Current
 [Running Theiagen’s Snippy_Variants_PHB Workflow in Terra](../assets/sops/TG-SNP-01_Snippy_Variants_v1.pdf)	Snippy_Variants	v1	v2	Bacterial, Phylogenetic construction	Current
