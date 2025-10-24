@@ -20,17 +20,17 @@ workflow wf_microreact_export {
     Boolean download_terra_table = true
   }
   if (download_terra_table) {
-    call task_download_terra_table.download_terra_table as download {
+    call task_download_terra_table.download_terra_table {
       input:
         terra_table_name = terra_table_name,
         terra_workspace_name = terra_workspace_name,
         terra_project_name = terra_project_name
     }
   }
-  call microreact_export.microreact_export as microreact{
+  call microreact_export.microreact_export as create_microreact_project {
     input:
       project_name = project_name,
-      metadata_tsv = select_first([download.terra_table, metadata_file]),
+      metadata_tsv = select_first([download_terra_table.terra_table, metadata_file]),
       tree_files = tree_files,
       metadata_columns = metadata_columns,
       update_project = update_project,
@@ -40,7 +40,7 @@ workflow wf_microreact_export {
       id_column = id_column
   }
   output {
-    File microreact_json = microreact.microreact_json
-    File? microreact_api_response = microreact.microreact_api_response
+    File microreact_json = create_microreact_project.microreact_json
+    File? microreact_api_response = create_microreact_project.microreact_api_response
   }
 }
