@@ -10,16 +10,18 @@ workflow wf_microreact_export {
     String terra_table_name
     String terra_workspace_name
     String terra_project_name
+    String? date_column
     String? project_url
     String? access_token
     File? metadata_file
     Array[File]? tree_files
     Array[String]? metadata_columns
     Boolean update_project = false
+    Boolean remove_file_columns = true
     Boolean restricted_access = true
-    Boolean download_terra_table = true
+    Boolean download_table = true
   }
-  if (download_terra_table) {
+  if (download_table) {
     call task_download_terra_table.download_terra_table {
       input:
         terra_table_name = terra_table_name,
@@ -37,7 +39,9 @@ workflow wf_microreact_export {
       project_url = project_url,
       restricted_access = restricted_access,
       access_token = access_token,
-      id_column = id_column
+      id_column = id_column,
+      date_column = date_column,
+      remove_file_columns = remove_file_columns
   }
   output {
     File microreact_json = create_microreact_project.microreact_json
