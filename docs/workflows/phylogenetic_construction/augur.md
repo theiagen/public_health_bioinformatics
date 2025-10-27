@@ -17,20 +17,32 @@
     - a video about [how to read trees](https://www.cdc.gov/advanced-molecular-detection/php/training/module-1-3.html) if this is new to you
     - documentation on [how to identify SARS-CoV-2 recombinants](https://github.com/pha4ge/pipeline-resources/blob/main/docs/sc2-recombinants.md)
 
-Genomic Epidemiology is an important approach to understand and mitigate disease transmission. A critical step in viral genomic epidemiology is generating phylogenetic trees to explore the genetic relationship between viruses on a local, regional, national, or global scale. To this end, the Augur workflows enable viral phylogenetic analysis by generating phylogenetic trees and incorporating metadata into a stunning visual via the Auspice format.
+Genomic Epidemiology is an important approach to understand and mitigate disease transmission. A critical step in viral genomic epidemiology is generating phylogenetic trees to explore the genetic relationship between viruses on a local, regional, national, or global scale. To this end, the Augur workflows enable **viral phylogenetic analysis** by generating phylogenetic trees from genome assemblies and incorporating metadata into a intuitive visual platform via [Auspice](https://auspice.us).
 
-Two workflows are offered: **Augur_Prep_PHB** and **Augur_PHB**. These workflows must be run sequentially to generate a phylogenetic tree with metadata included, though **Augur_PHB** can generate a phylogenetic tree without metadata as a standalone workflow. The outputs from these workflows can be visualized in [Auspice](https://docs.nextstrain.org/projects/auspice/en/latest/) and [UShER](https://github.com/yatisht/usher).
+Two workflows are offered: **Augur_Prep_PHB** and **Augur_PHB**. The first prepares individual samples' metadata to be visualized alognside the phylogenetic tree produced by **Augur_PHB**, wlthough this workflow can be run without metadata to produce just the phylogenetic tree visualization. If metadata is to be incorporated, these workflows must be run sequentially. The final outputs from **Augur_PHB** can be visualized in [Auspice](https://auspice.us), which is the recommended platform, and, alternatively, [UShER](https://genome.ucsc.edu/cgi-bin/hgPhyloPlace).
 
 
 ### Augur_Prep_PHB
 
-The Augur_Prep_PHB workflow was written to prepare individual sample assemblies and their metadata for running the Augur_PHB analysis.
+The **Augur_Prep_PHB** workflow was written to prepare individual sample assemblies and their metadata for running the Augur_PHB analysis. The optional metadata inputs include collection date information (in `YYYY-MM-DD` format), clade information (like `nextclade clade` and/or `pango lineage`), and geographical information. 
+
+This workflow runs on the sample level, and takes assembly FASTA files and associated metadata formatted in a data table. FASTA files may be generated with one of the TheiaCoV/TheiaViral Characterization workflows and should adhere to quality control guidelines, (e.g. [QC guidelines produced by PHA4GE](https://github.com/pha4ge/pipeline-resources/blob/main/docs/qc-solutions.md)). 
+
+!!! dna "**How to prepare metadata**"
+
+    We advise for metadata to be prepared carefully in a TSV file that can then be uploaded to the same [Terra](https://terra.bio) datatable that contains the sample information. An exaple of a formatted TSV file can be found in [this example](https://docs.google.com/spreadsheets/d/1PF1u3R-ZGm53UiVsTlIcpg9Qk2dUJgtx/edit#gid=253517867). A few important considerations are:
+
+    - Please always include the **date information** in `YYYY-MM-DD` format, otherwise it won't be compatible with Augur. You can specify unknown dates or month by replacing the respected values by `XX` (e.g.: `2013-01-XX` or `2011-XX-XX`) and completely unknown dates can be shown with `20XX-XX-XX` (which does not restrict the sequence to being in the 21st century - they could be earlier). Alternatively, reduced precision format can also be used (e.g.: `2018`, `2018-03`.)
+        - Because Excel will automatically change the date formatting, we recommend not opening or preparing your meta data file in Excel. If the metadata is already in Excel, or you decide to prepare it in Excel, we recommend using another program to correct the dates afterwards (and don’t open it in Excel again!).
+    - Different levels of **geographical information** can be passed to Augur. A pre-prepared latitude and logitude file is provided by default by Theiagen, wich can eb found [here](TODO). Just ensure that your spelling matches what is in the file exactly or, alternatively, provide your own. We support the following levels:
+        - `region` - Lowest-level resolution, used often for continents (e.g.: `europe`, `asia`, `north america`)
+        - `country` - Denotes the country where the sample originated (e.g.: `Argentina`, `Japan`, `USA`)
+        - `divisions` - Denotes divisions, or states, or sometimes cities, within the country (e.g.: `California`, `Colorado`, `Cork`, )
+        - `location` - Highest-level resolution, often used for custom latitude and longitude for futher detail on divisions, like cities within states. Just ensure that this level is provided in either the default latitude and longitude file on your custom one. 
+    - Optional **clade** information, such the one assigned by *Nextclade*.
+    - Optional **Pangolin lineage** information for SARS-CoV-2 samples.
 
 #### Augur_Prep Inputs
-
-The Augur_Prep_PHB workflow takes assembly FASTA files and associated metadata formatted in a data table. FASTA files may be generated with one of the TheiaCoV/TheiaViral Characterization workflows and should adhere to quality control guidelines, (e.g. [QC guidelines produced by PHA4GE](https://github.com/pha4ge/pipeline-resources/blob/main/docs/qc-solutions.md)). The metadata can be uploaded to Terra as TSV file, formatted as in [this example](https://docs.google.com/spreadsheets/d/1PF1u3R-ZGm53UiVsTlIcpg9Qk2dUJgtx/edit#gid=253517867).
-
-This workflow runs on the sample level.
 
 /// html | div[class="searchable-table"]
 
