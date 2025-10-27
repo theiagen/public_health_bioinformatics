@@ -100,9 +100,7 @@ The Augur_PHB workflow uses the inputs to generate a phylogenetic tree in Auspic
     
 In Augur_PHB, the tasks below are called. For the Augur subcommands, please view the [Nextstrain Augur documentation](https://docs.nextstrain.org/projects/augur/en/stable/usage/usage.html) for more details and explanations.
 
-
 {{ include_md("common_text/versioning_task.md") }}
-
 
 {{ include_md("common_text/organism_parameters_wf.md") }}
 
@@ -142,6 +140,10 @@ In Augur_PHB, the tasks below are called. For the Augur subcommands, please view
 
 !!! dna "Flu clade assignments"
     Note that for flu, the clade assignment is usually mostly done for the more recent seasonal influenza viruses. Older strains may get an "unassigned" designation for clades. Therefore, it is important to counter check with the NextClade results from TheiaCoV if the lack of clade assignment is due to analyzing older sequences or sequence related.
+
+!!! caption "Augur Output Metadata Conditional"
+    ![Augur Output Metadata Conditional](../../assets/figures/Augur_Additional.png)
+    The metadata and type of tree in the output JSON for Auspice will depend on the metadata that is present in input metadata file. If no metadata file is provided, the output JSON will only contain a distance tree. If date information is present, the distance tree will be replaced by a tree refined by time (time tree). If clade and/or pango lineage (for SARS-CoV-2) information is provided, the tree will be possible to be colored by this. If geographical information is present, a map will load in Auspice with the information provided, as long that is present in the default of provided latute and longitude file. 
 
 The `auspice_input_json` is intended to be uploaded to [Auspice](https://auspice.us/) to view the phylogenetic tree. This provides a visualization of the genetic relationships between your set of samples. The `metadata_merged` output can also be uploaded to add context to the phylogenetic visualization. The `combined_assemblies` output can be uploaded to [UShER](https://genome.ucsc.edu/cgi-bin/hgPhyloPlace) to view the samples on a global tree of representative sequences from the public repositories.
 
