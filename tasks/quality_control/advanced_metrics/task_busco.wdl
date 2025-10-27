@@ -28,7 +28,7 @@ task busco {
       -c ~{cpu} \
       -m geno \
       -o ~{samplename} \
-      ~{true='-l eukaryota_odb10' false='--auto-lineage-prok' eukaryote}
+      ~{true='--auto-lineage-euk' false='--auto-lineage-prok' eukaryote}
 
     # check for existence of output file; otherwise display a string that says the output was not created
     if [ -f ~{samplename}/short_summary.specific.*.~{samplename}.txt ]; then
