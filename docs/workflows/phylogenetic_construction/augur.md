@@ -37,7 +37,7 @@ This workflow runs on the sample level, and takes assembly FASTA files and assoc
     - Different levels of **geographical information** can be passed to Augur. A pre-prepared latitude and logitude file is provided by default by Theiagen, wich can eb found [here](TODO). Just ensure that your spelling matches what is in the file exactly or, alternatively, provide your own. We support the following levels:
         - `region` - Lowest-level resolution, used often for continents (e.g.: `europe`, `asia`, `north america`)
         - `country` - Denotes the country where the sample originated (e.g.: `Argentina`, `Japan`, `USA`)
-        - `divisions` - Denotes divisions, or states, or sometimes cities, within the country (e.g.: `California`, `Colorado`, `Cork`, )
+        - `divisions` - Denotes divisions, or states, or sometimes cities, within the country (e.g.: `California`, `Colorado`, `Cork`)
         - `location` - Highest-level resolution, often used for custom latitude and longitude for futher detail on divisions, like cities within states. Just ensure that this level is provided in either the default latitude and longitude file on your custom one. 
     - Optional **clade** information, such the one assigned by *Nextclade*.
     - Optional **Pangolin lineage** information for SARS-CoV-2 samples.
@@ -100,55 +100,37 @@ The Augur_PHB workflow uses the inputs to generate a phylogenetic tree in Auspic
     
 In Augur_PHB, the tasks below are called. For the Augur subcommands, please view the [Nextstrain Augur documentation](https://docs.nextstrain.org/projects/augur/en/stable/usage/usage.html) for more details and explanations.
 
-??? toggle "Versioning"
 
-{{ include_md("common_text/versioning_task.md", indent=4) }}
+{{ include_md("common_text/versioning_task.md") }}
 
-??? toggle "Default Organism Parameters"
 
-{{ include_md("common_text/organism_parameters_wf.md", indent=4) }}
+{{ include_md("common_text/organism_parameters_wf.md") }}
 
-??? toggle "Alignment and SNP Matrix Extraction"
+{{ include_md("common_text/augur_align_task.md") }}
 
-{{ include_md("common_text/augur_align_task.md", indent=4) }}
+{{ include_md("common_text/filter_contigs_task.md") }}
 
-{{ include_md("common_text/filter_contigs_task.md", indent=4) }}
+{{ include_md("common_text/snp_dists_task.md") }}
 
-{{ include_md("common_text/snp_dists_task.md", indent=4) }}
+{{ include_md("common_text/augur_tree_task.md") }}
 
-??? toggle "Phylogenetic Tree Building"
+{{ include_md("common_text/reorder_matrix_task.md") }}
 
-{{ include_md("common_text/augur_tree_task.md", indent=4) }}
+{{ include_md("common_text/augur_refine_task.md") }}
 
-{{ include_md("common_text/reorder_matrix_task.md", indent=4) }}
+{{ include_md("common_text/augur_ancestral_task.md") }}
 
-??? toggle "Tree Refinement and Time-Calibration (Optional)"
+{{ include_md("common_text/augur_translate_task.md") }}
 
-{{ include_md("common_text/augur_refine_task.md", indent=4) }}
+{{ include_md("common_text/augur_mutation_context_task.md") }}
 
-??? toggle "Ancestral Nucleotide and Amino Acid Mutation Extraction"
+{{ include_md("common_text/augur_traits_task.md") }}
 
-{{ include_md("common_text/augur_ancestral_task.md", indent=4) }}
+{{ include_md("common_text/extract_clade_mutations_task.md") }}
 
-{{ include_md("common_text/augur_translate_task.md", indent=4) }}
+{{ include_md("common_text/augur_clades_task.md") }}
 
-??? toggle "Add Mutation Context (Monkeypox)"
-
-{{ include_md("common_text/augur_mutation_context_task.md", indent=4) }}
-
-??? toggle "Addition of Trait Metadata"
-
-{{ include_md("common_text/augur_traits_task.md", indent=4) }}
-
-??? toggle "Clade Defining via Sequence Signatures"
-
-{{ include_md("common_text/extract_clade_mutations_task.md", indent=4) }}
-
-{{ include_md("common_text/augur_clades_task.md", indent=4) }}
-
-??? toggle "Auspice Format Export"
-
-{{ include_md("common_text/augur_export_task.md", indent=4) }}
+{{ include_md("common_text/augur_export_task.md") }}
 
 
 #### Augur Outputs
