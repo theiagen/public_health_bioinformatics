@@ -224,7 +224,7 @@ task prep_augur_metadata {
     String? division
     String? region
 
-    String? location = ""
+    String? location
     String? pango_lineage
     String? nextclade_clade
     String? organism = "sars-cov-2"
