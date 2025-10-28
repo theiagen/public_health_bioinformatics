@@ -656,6 +656,8 @@ metaspades_version	String	The version of metaspades	TheiaMeta_Illumina_PE
 metaviralspades_docker	String	Docker image used for MetaviralSPAdes	TheiaViral_Illumina_PE
 metaviralspades_status	String	Status of MetaviralSPAdes assembly	TheiaViral_Illumina_PE
 metaviralspades_version	String	Version of MetaviralSPAdes used	TheiaViral_Illumina_PE
+microreact_api_response	File	Result of the Microreact API request	Microreact_Export
+microreact_json	File	A project file that can be used for manual upload to Microreact	Microreact_Export
 midas_docker	String	MIDAS docker image used	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 midas_primary_genus	String	The primary genus detected by MIDAS	TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 midas_report	File	TSV report of full MIDAS results	TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE

@@ -23,6 +23,8 @@ nav:
      - Workflows: 
         - Workflows by Type: 
             - Overview Table: workflows_overview/workflows_type.md
+            - Data Export:
+               - Microreact Export: workflows/data_export/microreact_export.md
             - Data Import:
                - Assembly_Fetch: workflows/data_import/assembly_fetch.md
                - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
@@ -93,6 +95,7 @@ nav:
                - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
                - Fetch_SRR_Accession: workflows/data_import/fetch_srr_accession.md
                - Kraken2: workflows/standalone/kraken2.md
+               - Microreact Export: workflows/data_export/microreact_export.md
                - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
                - ONT_Barcode_Concatenation: workflows/data_import/ont_barcode_concatenation.md
                - PhyloCompare: workflows/standalone/phylocompare.md
@@ -175,6 +178,7 @@ nav:
             - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md
             - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
             - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
+            - Microreact Export: workflows/data_export/microreact_export.md
             - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
             - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
             - Nextclade_Batch: workflows/phylogenetic_placement/nextclade_batch.md
