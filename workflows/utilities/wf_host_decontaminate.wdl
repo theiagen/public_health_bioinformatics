@@ -33,7 +33,7 @@ workflow host_decontaminate {
         use_ncbi_virus = false
     }
   }
-  # download accession if it isn't directly provided
+  # download accession if genome isn't directly provided
   if (! is_genome) {
     call ncbi_datasets.ncbi_datasets_download_genome_accession as download_accession {
       input:
