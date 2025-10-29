@@ -64,8 +64,8 @@ This workflow runs on the sample level, and takes assembly FASTA files and assoc
 
 The **Augur_PHB** is a [Terra](https://app.terra.bio/) and command-line compatible workflow that takes as input a **set of assembly/consensus files** (FASTA format), an **optional viral organism designation**, and an **optional sample metadata files** (TSV format) that have been formatted via the Augur_Prep_PHB workflow. Augur_PHB runs [Augur](https://docs.nextstrain.org/projects/augur/en/stable/) to generate a phylogenetic tree following the construction of a SNP distance matrix and alignment. Provided metadata will be used to refine the final tree and incorporated into the [Auspice](https://auspice.us/)-formatted tree visual. 
 
-!!! info "Helpful Hint"
-    Phylogenetic inference is an art form and requires careful planning, quality control of sequences, and metadata curation. You may have to generate phylogenies multiple times by running the Augur_PHB workflow, assessing results, and amending inputs, to generate a final tree with sufficient diversity and high-quality data of interest. The existing [guide on phylogenetics](../../guides/phylogenetics.md) is a wonderful resource to give you the necessary information on the considerations you'll need to have to perform this type of analysis.
+!!! info "Before getting started"
+    **Phylogenetic inference requires careful planning, quality control of sequences, and metadata curation.** You may have to generate phylogenies multiple times by running the Augur_PHB workflow, assessing results, and amending inputs, to generate a final tree with sufficient diversity and high-quality data of interest. The existing [guide on phylogenetics](../../guides/phylogenetics.md) is a wonderful resource to give you the necessary information on the considerations you'll need to have to perform this type of analysis.
 
 #### Augur Inputs
 
