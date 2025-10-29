@@ -291,126 +291,126 @@
     - path: miniwdl_run/call-consensus_qc/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # pangolin
-    - path: miniwdl_run/call-pangolin4/command
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/command
       md5sum: 8c294d7c8143daaefc10e3f891feda52
-    - path: miniwdl_run/call-pangolin4/inputs.json
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/inputs.json
       contains: ["fasta", "samplename"]
-    - path: miniwdl_run/call-pangolin4/outputs.json
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/outputs.json
       contains: ["pangolin4", "pangolin_assignment_version", "pangolin_notes"]
-    - path: miniwdl_run/call-pangolin4/stderr.txt
-    - path: miniwdl_run/call-pangolin4/stderr.txt.offset
-    - path: miniwdl_run/call-pangolin4/stdout.txt
-    - path: miniwdl_run/call-pangolin4/task.log
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/stderr.txt
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/stderr.txt.offset
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/stdout.txt
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/task.log
       contains: ["wdl", "theiacov_illumina_se", "pangolin4", "done"]
-    - path: miniwdl_run/call-pangolin4/work/DATE
-    - path: miniwdl_run/call-pangolin4/work/ERR6319327.pangolin_report.csv
-    - path: miniwdl_run/call-pangolin4/work/EXPANDED_LINEAGE
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/DATE
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/ERR6319327.pangolin_report.csv
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/EXPANDED_LINEAGE
       md5sum: 2430b919e9b5f418c6a13add9d3c1db8
-    - path: miniwdl_run/call-pangolin4/work/PANGOLIN_CONFLICTS
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGOLIN_CONFLICTS
       md5sum: 30565a8911a6bb487e3745c0ea3c8224
-    - path: miniwdl_run/call-pangolin4/work/PANGOLIN_LINEAGE
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGOLIN_LINEAGE
       md5sum: 2430b919e9b5f418c6a13add9d3c1db8
-    - path: miniwdl_run/call-pangolin4/work/PANGOLIN_NOTES
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 0b1f8fb5b938fe71631f61234cbf7ab3
-    - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
       md5sum: 06c58c7c0d183ba579c8d833875c0f40
-    - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/VERSION_PANGOLIN_ALL
       md5sum: ead40108c79688ad60d8340711f067a5
-    - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade
-    - path: miniwdl_run/call-nextclade_v3/command
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/command
       md5sum: 5a7b3af1ee5c350ae4645d14d26b4715
-    - path: miniwdl_run/call-nextclade_v3/inputs.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/inputs.json
       contains: ["dataset_name", "dataset_tag", "genome_fasta"]
-    - path: miniwdl_run/call-nextclade_v3/outputs.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/outputs.json
       contains: ["nextclade_json", "nextclade_version"]
-    - path: miniwdl_run/call-nextclade_v3/stderr.txt
-    - path: miniwdl_run/call-nextclade_v3/stderr.txt.offset
-    - path: miniwdl_run/call-nextclade_v3/stdout.txt
-    - path: miniwdl_run/call-nextclade_v3/task.log
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/stderr.txt
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/stderr.txt.offset
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/stdout.txt
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/task.log
       contains: ["wdl", "theiacov_illumina_se", "done"]
-    - path: miniwdl_run/call-nextclade_v3/work/ERR6319327.ivar.consensus.nextclade.auspice.json
-    - path: miniwdl_run/call-nextclade_v3/work/ERR6319327.ivar.consensus.nextclade.json
-    - path: miniwdl_run/call-nextclade_v3/work/ERR6319327.ivar.consensus.nextclade.tsv
-    - path: miniwdl_run/call-nextclade_v3/work/NEXTCLADE_VERSION
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/ERR6319327.ivar.consensus.nextclade.auspice.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/ERR6319327.ivar.consensus.nextclade.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/ERR6319327.ivar.consensus.nextclade.tsv
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/NEXTCLADE_VERSION
       md5sum: 18af3f93175b428112831635db79f32a
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.aligned.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.aligned.fasta
       md5sum: 2e3156ddefcdf94930edd98bdd6c19c6
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.csv
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.ndjson
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.E.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.csv
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.ndjson
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.E.fasta
       md5sum: b84502318ddddc339eae05c5eb2a1ff8
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.M.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.M.fasta
       md5sum: 7b4b60c7ed0c3b02be1095913c8a19e0
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.N.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.N.fasta
       md5sum: 1d98ea23593e865d064f89fc50d327a3
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF1a.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF1a.fasta
       md5sum: 64222f7837a780c749a1843906536409
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF1b.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF1b.fasta
       md5sum: 3786323324737ac465ca9b4bea6a7904
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF3a.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF3a.fasta
       md5sum: 0b5e002d3b925c4d35aa7f757ac324e6
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF6.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF6.fasta
       md5sum: c1d610f9e45acd3915e40f0d643f0188
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF7a.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF7a.fasta
       md5sum: 54066a55295e54aa71916dd31499e541
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF7b.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF7b.fasta
       md5sum: 2073dd2f459ad2db27d4c4b05b668155
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF8.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF8.fasta
       md5sum: fa8708767c9ec6921b8217c07598aa61
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.ORF9b.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.ORF9b.fasta
       md5sum: d3dab52c5ff6ee918f1a6666b93d2588
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade.cds_translation.S.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.cds_translation.S.fasta
       md5sum: 7ea73e4fd00bfd6ce3236bb528cb6e6c
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/genome_annotation.gff3
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/reference.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/genome_annotation.gff3
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/reference.fasta
       md5sum: c7ce05f28e4ec0322c96f24e064ef55c
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/tree.json
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/tree.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
       md5sum: 7697eb7a30fc32763dc332b5a28ab4dd
-    - path: miniwdl_run/call-nextclade_v3/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade output parsing
-    - path: miniwdl_run/call-nextclade_output_parser/command
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_output_parser/command
       md5sum: c29847f8af5a008c2c57deb23b989ada
-    - path: miniwdl_run/call-nextclade_output_parser/inputs.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_output_parser/inputs.json
       contains: ["nextclade_tsv", "tsv"]
-    - path: miniwdl_run/call-nextclade_output_parser/outputs.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_output_parser/outputs.json
       contains: ["nextclade_aa_subs", "nextclade_clade"]
-    - path: miniwdl_run/call-nextclade_output_parser/stderr.txt
-    - path: miniwdl_run/call-nextclade_output_parser/stderr.txt.offset
-    - path: miniwdl_run/call-nextclade_output_parser/stdout.txt
-    - path: miniwdl_run/call-nextclade_output_parser/task.log
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_output_parser/stderr.txt
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_output_parser/stderr.txt.offset
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_output_parser/stdout.txt
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_output_parser/task.log
       contains: ["wdl", "theiacov_illumina_se", "done"]
-    - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_AADELS
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_output_parser/work/NEXTCLADE_AADELS
       md5sum: 99bd36012d9499265c186d3d82dce25d
-    - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_AASUBS
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_output_parser/work/NEXTCLADE_AASUBS
       md5sum: b3f2db7e892d3daf50f06ee4a1d81ce3
-    - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_CLADE
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_output_parser/work/NEXTCLADE_CLADE
       md5sum: 091b0550fbf76caed33736bc66d72644
-    - path: miniwdl_run/call-nextclade_output_parser/work/NEXTCLADE_LINEAGE
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_output_parser/work/NEXTCLADE_LINEAGE
       md5sum: 2430b919e9b5f418c6a13add9d3c1db8
-    - path: miniwdl_run/call-nextclade_output_parser/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.nextclade.tsv
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_output_parser/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.nextclade.tsv
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # vadr
-    - path: miniwdl_run/call-vadr/command
+    - path: miniwdl_run/call-morgana_magic/call-vadr/command
       md5sum: 0d3290d50b9e2047eb514be595fccef7
-    - path: miniwdl_run/call-vadr/inputs.json
+    - path: miniwdl_run/call-morgana_magic/call-vadr/inputs.json
       contains: ["assembly_length_unambiguous", "genome_fasta", "fasta"]
-    - path: miniwdl_run/call-vadr/outputs.json
-    - path: miniwdl_run/call-vadr/stderr.txt
-    - path: miniwdl_run/call-vadr/stderr.txt.offset
-    - path: miniwdl_run/call-vadr/stdout.txt
-    - path: miniwdl_run/call-vadr/task.log
+    - path: miniwdl_run/call-morgana_magic/call-vadr/outputs.json
+    - path: miniwdl_run/call-morgana_magic/call-vadr/stderr.txt
+    - path: miniwdl_run/call-morgana_magic/call-vadr/stderr.txt.offset
+    - path: miniwdl_run/call-morgana_magic/call-vadr/stdout.txt
+    - path: miniwdl_run/call-morgana_magic/call-vadr/task.log
       contains: ["wdl", "theiacov_illumina_se", "done"]
-    - path: miniwdl_run/call-vadr/work/ERR6319327.ivar.consensus.vadr.alerts.tsv
+    - path: miniwdl_run/call-morgana_magic/call-vadr/work/ERR6319327.ivar.consensus.vadr.alerts.tsv
       md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-vadr/work/ERR6319327.ivar.consensus.vadr.tar.gz
-    - path: miniwdl_run/call-vadr/work/ERR6319327.ivar.consensus_trimmed.fasta
+    - path: miniwdl_run/call-morgana_magic/call-vadr/work/ERR6319327.ivar.consensus.vadr.tar.gz
+    - path: miniwdl_run/call-morgana_magic/call-vadr/work/ERR6319327.ivar.consensus_trimmed.fasta
       md5sum: 7e2806bcfbd3f81ed3b8a79fdfaabcbe
-    - path: miniwdl_run/call-vadr/work/NUM_ALERTS
+    - path: miniwdl_run/call-morgana_magic/call-vadr/work/NUM_ALERTS
       md5sum: 897316929176464ebc9ad085f31e7284
     # version capture
     - path: miniwdl_run/call-version_capture/inputs.json
