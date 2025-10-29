@@ -31,16 +31,20 @@ task microreact_export {
       --metadata_tsv ~{metadata_tsv} \
       --id_column ~{id_column} \
       ~{"--date_column " + date_column} \
-      --tree_files ~{sep=" " tree_files} \
-      --selected_columns ~{sep=" " metadata_columns} \
-      ~{"--access_token " + access_token} \
-      --restricted_access ~{restricted_access} \
-      --update ~{update_project} \
-      --remove_file_columns ~{remove_file_columns}
+      ~{if defined(tree_files) && length(select_first([tree_files, []])) > 0
+          then "--tree_files " + sep(" ", select_first([tree_files, []]))
+          else ""} \
+      ~{if defined(metadata_columns) && length(select_first([metadata_columns, []])) > 0
+          then "--selected_columns " + sep(" ", select_first([metadata_columns, []]))
+          else ""} \
+      ~{if defined(access_token) then "--access_token " + access_token else ""} \
+      ~{true="--restricted_access" false="" restricted_access} \
+      ~{true="--update" false="" update_project} \
+      ~{true="--remove_file_columns" false="" remove_file_columns}
       
   >>>
   output {
-    File microreact_json = "project_input.json"
+    File microreact_input = "~{project_name}_input.microreact"
     File? microreact_api_response = "microreact_response.json"
   }
   runtime {

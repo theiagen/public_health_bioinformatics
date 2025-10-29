@@ -44,7 +44,7 @@ workflow wf_microreact_export {
       remove_file_columns = remove_file_columns
   }
   output {
-    File microreact_json = create_microreact_project.microreact_json
+    File microreact_input = create_microreact_project.microreact_input
     File? microreact_api_response = create_microreact_project.microreact_api_response
   }
 }
