@@ -31,12 +31,10 @@ task microreact_export {
       --metadata_tsv ~{metadata_tsv} \
       --id_column ~{id_column} \
       ~{"--date_column " + date_column} \
-      ~{if defined(tree_files) && length(select_first([tree_files, []])) > 0
-          then "--tree_files " + sep(" ", select_first([tree_files, []]))
-          else ""} \
+      ~{if defined(tree_files) && length(select_first([tree_files, []])) > 0 
+        then "--tree_files " else ""} "${tree_files[@]}" \
       ~{if defined(metadata_columns) && length(select_first([metadata_columns, []])) > 0
-          then "--selected_columns " + sep(" ", select_first([metadata_columns, []]))
-          else ""} \
+          then "--selected_columns " else ""} "${metadata_columns[@]}" \
       ~{if defined(access_token) then "--access_token " + access_token else ""} \
       ~{true="--restricted_access" false="" restricted_access} \
       ~{true="--update" false="" update_project} \
