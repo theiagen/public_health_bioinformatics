@@ -95,7 +95,7 @@ task resfinder {
     # strip off 18 lines from top of file (18th line is the header with the columns: antimicrobial, class, WGS-predicted phenotype, Match, Genetic Background)
     tail +18 ~{samplename}_pheno_table.tsv > ~{samplename}_pheno_table.headerless.tsv
     
-    # convert all letters in first column (antibiotic) to uppercase. For readability of output string
+    # convert all letters in first column (antibiotic) to uppercase for readability of output string
     awk -F '\t' 'BEGIN{OFS="\t"} { $1=toupper($1) } 1' ~{samplename}_pheno_table.headerless.tsv > ~{samplename}_pheno_table.headerless.uppercase.tsv
 
     # if column 3 shows 'Resistant', then print list of drugs followed by the genes/point mutations responsible - alphabetized
@@ -103,8 +103,7 @@ task resfinder {
     | sed 's/..$//' | tr ';' '\n' | sort | tr '\n' ';' > RESFINDER_PREDICTED_PHENO_RESISTANCE.txt
 
     # check for XDR Shigella status, based on CDC definition here: https://emergency.cdc.gov/han/2023/han00486.asp
-    # requirements:
-    # organism input (i.e. gambit_predicted_taxon) must contain "Shigella"
+    # requirements: organism input (i.e. gambit_predicted_taxon) must contain "Shigella"
     # predicted resistance to antimicrobials must include ALL: "ampicillin", "azithromycin", "ceftriaxone", "ciprofloxacin", "sulfamethoxazole", and "trimethoprim"
     if [[ "~{organism}" != *"Shigella"* ]]; then
       echo 'Either the input gambit_predicted_taxon does not contain "Shigella" or the user did not supply the organism as an input string to the workflow.'
@@ -132,7 +131,6 @@ task resfinder {
     # set output strings for Resistance or no Resistance predicted for each of 6 drugs
     # if grep finds the drug in the RESFINDER_PREDICTED_PHENO_RESISTANCE.txt file, then set the output string to "Resistance"
     # if grep does not find the drug in the RESFINDER_PREDICTED_PHENO_RESISTANCE.txt file, then set the output string to "No resistance predicted"
-    
     if grep -qi "ampicillin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
       awk -F '\t' 'BEGIN{OFS=":";} { if($1 == "AMPICILLIN") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_AMP.txt
     else
@@ -152,9 +150,7 @@ task resfinder {
     fi
     
     if grep -qi "ciprofloxacin" RESFINDER_PREDICTED_PHENO_RESISTANCE.txt; then
-      # also needs the nalidixic acid, fluroquinolone, unknown quinolone one too lol woo
       awk -F '\t' 'BEGIN{OFS=":";} {if($1 == "CIPROFLOXACIN") {print "Resistance (" $1,$5 ")"}}' ~{samplename}_pheno_table.headerless.uppercase.tsv > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
-      # parse the nalidixic acid, fluroquinolone, unknown quinolone fields and also add the pointfinder results stuff
     else
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_CIP.txt
     fi
@@ -171,6 +167,30 @@ task resfinder {
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_TMP.txt
     fi
 
+    # fluroquinolone resistance detection
+
+    # look for fluoroquinolone, ciprofloxacin, unknown quinolone, and nalidixic acid in _pheno_table tsv file. If column 3 is 'Resistant', extract column 5 (gene/mutation)
+    # split column 5 into new lines by ", " delimiter and save to fq_resistance_candidates.tsv
+    grep -i -E "FLUOROQUINOLONE|CIPROFLOXACIN|UNKNOWN QUINOLONE|NALIDIXIC ACID" pheno_table.headerless.uppercase.tsv \
+    | awk -F '\t' 'BEGIN{OFS="\t"} { if($3 == "Resistant") {print $5}}' | sed 's/, /\n/g' > fq_resistance_candidates.tsv
+
+    if [ -f ~{samplename}_PointFinder_results.tsv ]; then
+      awk -F '\t' 'BEGIN{OFS="\t"} { $4=toupper($4) } 1' ~{samplename}_PointFinder_results.tsv > ~{samplename}_PointFinder_results.uppercase.tsv
+      # extract column 1 ("gryA p.S83L") and convert format from "gene mutation" (currently: "gyrA p.S83L")  to "gene (mutation)" (to become: "gyrA (p.S83L)"")
+      grep -i -E "FLUOROQUINOLONE|CIPROFLOXACIN|UNKNOWN QUINOLONE|NALIDIXIC ACID" ~{samplename}_PointFinder_results.uppercase.tsv \
+      | awk -F '\t' 'BEGIN{OFS="";} { split($1,a," "); print a[1] " (" a[2] ")"}' >> fq_resistance_candidates.tsv
+    fi
+
+    # deduplicate
+    sort -u fq_resistance_candidates.tsv > fq_resistance_candidates.sorted.unique.tsv
+    
+    # remove blank lines
+    grep -v '^$' fq_resistance_candidates.sorted.unique.tsv > fq_resistance_candidates.sorted.unique.noblanklines.tsv
+
+    # count of fq mutations
+    wc -l < fq_resistance_candidates.sorted.unique.noblanklines.tsv > RESFINDER_PREDICTED_RESISTANCE_FQ_COUNT.txt
+
+
   >>>
   output {
     File resfinder_pheno_table = "~{samplename}_pheno_table.tsv"
@@ -185,8 +205,10 @@ task resfinder {
     String resfinder_predicted_resistance_Amp = read_string("RESFINDER_PREDICTED_RESISTANCE_AMP.txt")
     String resfinder_predicted_resistance_Azm = read_string("RESFINDER_PREDICTED_RESISTANCE_AZM.txt")
     String resfinder_predicted_resistance_Axo = read_string("RESFINDER_PREDICTED_RESISTANCE_AXO.txt")
-    String resfinder_predicted_resistance_fq = read_string("RESFINDER_PREDICTED_RESISTANCE_CIP.txt") # fluoroquinolone
-    Int resfinder_predicted_resistance_fq_mechanisms # count of fq mutations in previous output
+    String resfinder_predicted_resistance_Cip = read_string("RESFINDER_PREDICTED_RESISTANCE_CIP.txt")
+
+    String resfinder_predicted_resistance_fq = read_string("RESFINDER_PREDICTED_RESISTANCE_FQ.txt")
+    Int resfinder_predicted_resistance_fq_mechanisms = read_string("RESFINDER_PREDICTED_RESISTANCE_FQ_COUNT.txt")
     
     String resfinder_predicted_resistance_Smx = read_string("RESFINDER_PREDICTED_RESISTANCE_SMX.txt")
     String resfinder_predicted_resistance_Tmp = read_string("RESFINDER_PREDICTED_RESISTANCE_TMP.txt")
