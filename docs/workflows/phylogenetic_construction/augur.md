@@ -62,28 +62,27 @@ This workflow runs on the sample level, and takes assembly FASTA files and assoc
 
 [Augur](https://docs.nextstrain.org/projects/augur/en/stable/) is a bioinformatics toolkit to track evolution from sequence data, ingesting sequences and metadata such as dates and sampling locations, filtering the data, aligning the sequences, infering a tree, and export the results in a format that can be visualized by [Auspice](https://auspice.us/). This is the tool behind [Nextrain's builds](https://nextstrain.org/) available for a large collection of viral organisms.
 
-The **Augur_PHB** is a [Terra](https://app.terra.bio/) and command-line compatible workflow that takes as input a **set of assembly/consensus files** (FASTA format), an **optional viral organism designation**, and an **optional sample metadata files** (TSV format) that have been formatted via the Augur_Prep_PHB workflow. Augur_PHB runs [Augur](https://docs.nextstrain.org/projects/augur/en/stable/) to generate a phylogenetic tree following the construction of a SNP distance matrix and alignment. Provided metadata will be used to refine the final tree and incorporated into the [Auspice](https://auspice.us/)-formatted tree visual. 
-
 !!! info "Before getting started"
     **Phylogenetic inference requires careful planning, quality control of sequences, and metadata curation.** You may have to generate phylogenies multiple times by running the Augur_PHB workflow, assessing results, and amending inputs, to generate a final tree with sufficient diversity and high-quality data of interest. The existing [guide on phylogenetics](../../guides/phylogenetics.md) is a wonderful resource to give you the necessary information on the considerations you'll need to have to perform this type of analysis.
 
+The **Augur_PHB** is a [Terra](https://app.terra.bio/) and command-line compatible workflow that takes as input a **set of assembly/consensus files** (FASTA format), an **optional viral organism designation**, and an **optional sample metadata files** (TSV format) that have been formatted via the Augur_Prep_PHB workflow. Augur_PHB runs [Augur](https://docs.nextstrain.org/projects/augur/en/stable/) to generate a phylogenetic tree following the construction of a SNP distance matrix and alignment. Provided metadata will be used to refine the final tree and incorporated into the [Auspice](https://auspice.us/)-formatted tree visual. 
+
 #### Augur Inputs
 
-Particular inputs/metadata will automatically bypass or trigger modules, such as populating `alignment_fasta`, which bypasses alignment; a time-calibrated phylogeny will be generated if "collection_date" is included in the metadata; clade-defining mutations can be automatically extracted if the "clade_membership" metadata field is populated in conjunction with setting the `extract_clade_mutations` input to `true`.
+The metadata present in the final JSON file for Auspice visualization is dictated by the metadata present in the optional metadata file. If no file is provided, the final tree visual will include solely the distance tree calculated from the provided set if assembly files. If this file is present, different metadata fields will trigger different steps: date information will trigger the refinement of the distance tree into a time tree; if clade information is passed, this will be assigned to the tree nodes; if geographical information is present, it will be represented in the Auspice visual within a map. The following figure illustrates this logic.
 
-Input FASTAs should meet QC metrics. Sets of FASTAs with highly discordant quality metrics may result in the inaccurate inference of genetic relatedness. There **must** be some sequence diversity among the set of input assemblies. If insufficient diversity is present, it may be necessary to add a more divergent sequences to the set.
+!!! caption "Augur metadata conditionals"
+    ![Augur Metadata Conditional](../../assets/figures/Augur_Additional.png)
+    <br>
+    The metadata and type of tree in the output JSON for Auspice will depend on the metadata that is present in input metadata file. If no metadata file is provided, the output JSON will only contain a distance tree. If date information is present, the distance tree will be replaced by a tree refined by time (time tree). If clade and/or pango lineage (for SARS-CoV-2) information is provided, the tree will be possible to be colored by this. If geographical information is present, a map will load in Auspice with the information provided, as long that is present in the default of provided latute and longitude file. 
 
-/// html | div[class="searchable-table"]
+Additionally, particular inputs will automatically bypass or trigger modules, such as populating `alignment_fasta`, which bypasses alignment. Clade-defining mutations can be automatically extracted if the "clade_membership" metadata field is populated in conjunction with setting the `extract_clade_mutations` optional input to `true`.
 
-{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Augur"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+!!! warning "Sample diversity and tree building"
+    Fefore attempting a phylogenetic tree, you must insure that the input FASTAs meet quality-control metrics. Sets of FASTAs with highly discordant quality metrics may result in the inaccurate inference of genetic relatedness. 
+    Additionally, there must be some sequence diversity among the set of input assemblies. If insufficient diversity is present, it may be necessary to add a more divergent sequences to the set of samples to be analyzed.
 
-///
-
-
-!!! dna "Optional Inputs"
-    There are **many** optional user inputs. For SARS-CoV-2, Flu, rsv-a, rsv-b, and mpxv, default values that mimic the Nextstrain builds have been preselected. To use these defaults, you must write either `"sars-cov-2"`,`"flu"`, `"rsv-a"`, `"rsv-b"`, or `"mpxv"` for the `organism` variable.
-
-    For Flu - it is **required** to set `flu_segment` to either `"HA"` or `"NA"` & `flu_subtype` to either `"H1N1"` or `"H3N2"` or `"Victoria"` or `"Yamagata"` or `"H5N1"` (`"H5N1"` will only work with `"HA"`) depending on your set of samples.
+There are **many** optional user inputs. For SARS-CoV-2, Flu, RSV-A, RSV-B, and MPXV, default values that mimic the Nextstrain builds have been preselected. To use these defaults, you must write either `"sars-cov-2"`,`"flu"`, `"rsv-a"`, `"rsv-b"`, or `"mpxv"` for the `organism` variable. For Flu it is **required** to set `flu_segment` to either `"HA"` or `"NA"` & `flu_subtype` to either `"H1N1"` or `"H3N2"` or `"Victoria"` or `"Yamagata"` or `"H5N1"` (`"H5N1"` will only work with `"HA"`) depending on your set of samples.
 
 ???+ toggle "A Note on Optional Inputs"
 
@@ -93,6 +92,13 @@ Input FASTAs should meet QC metrics. Sets of FASTAs with highly discordant quali
 
     !!! info "What's required or not?"
         For organisms _other_ than SARS-CoV-2 or Flu, the required variables have both the "required" and "optional" tags.
+
+/// html | div[class="searchable-table"]
+
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Augur"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+
+///
+
 
 ### Workflow Tasks
 
@@ -140,11 +146,6 @@ In Augur_PHB, the tasks below are called. For the Augur subcommands, please view
 
 !!! dna "Flu clade assignments"
     Note that for flu, the clade assignment is usually mostly done for the more recent seasonal influenza viruses. Older strains may get an "unassigned" designation for clades. Therefore, it is important to counter check with the NextClade results from TheiaCoV if the lack of clade assignment is due to analyzing older sequences or sequence related.
-
-!!! caption "Augur Output Metadata Conditional"
-    ![Augur Output Metadata Conditional](../../assets/figures/Augur_Additional.png)
-    <br>
-    The metadata and type of tree in the output JSON for Auspice will depend on the metadata that is present in input metadata file. If no metadata file is provided, the output JSON will only contain a distance tree. If date information is present, the distance tree will be replaced by a tree refined by time (time tree). If clade and/or pango lineage (for SARS-CoV-2) information is provided, the tree will be possible to be colored by this. If geographical information is present, a map will load in Auspice with the information provided, as long that is present in the default of provided latute and longitude file. 
 
 The `auspice_input_json` is intended to be uploaded to [Auspice](https://auspice.us/) to view the phylogenetic tree. This provides a visualization of the genetic relationships between your set of samples. The `metadata_merged` output can also be uploaded to add context to the phylogenetic visualization. The `combined_assemblies` output can be uploaded to [UShER](https://genome.ucsc.edu/cgi-bin/hgPhyloPlace) to view the samples on a global tree of representative sequences from the public repositories.
 
