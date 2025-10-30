@@ -67,7 +67,7 @@ workflow organism_parameters {
 
     File sc2_lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_lat_longs_20251008.tsv"
     File sc2_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_clades_20251008.tsv"
-    File sc2_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_auspice_config_20251008.json"
+    File sc2_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_auspice_config_20251030.json"
     File sc2_reference_genbank = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_reference_seq_20251008.gb"
     Float sc2_min_date = 2020.0
     Int sc2_pivot_interval = 1
