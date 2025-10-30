@@ -95,7 +95,7 @@
         ???+ dna_blue "`taxon_ids` optional input parameter"
             **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly, but is optional in Terra.** 
             
-            By default, TheiaViral_Panel uses a list of **204** taxon IDs are provided to the workflow by default. This list is derived from the list of targeted viruses and subtypes in the Viral Surveillance Panel version 2 (VSP v2) panel produced by Illumina. This list can be modified to include or exclude any taxon IDs of interest; however, the taxon IDs _must_ be present in the Kraken2 database used for read classification. Changing this parameter will change what organisms are extracted for assembly and characterization. The list of default taxon IDs can be found below:
+            By default, TheiaViral_Panel uses a list of **204** taxon IDs derived from a list of targeted viruses and subtypes in the Viral Surveillance Panel version 2 (VSP v2) produced by Illumina. This list can be modified to include or exclude any taxon IDs of interest; however, the taxon IDs _must_ be present in the Kraken2 database used for read classification. Changing this parameter will change what organisms are extracted for assembly and characterization. The list of default taxon IDs can be found below:
 
             /// html | div[class="searchable-table"]
             {{ render_tsv_table("docs/assets/tables/2025-10-16_VSPv2_default-taxon-ids.tsv", indent=12 )}} 
