@@ -8,6 +8,7 @@ task microreact_export {
     String project_name
     String id_column
     File metadata_tsv
+    File? matrix_file
     String? date_column
     Array[String]? metadata_columns
     Array[File]? tree_files
@@ -32,6 +33,7 @@ task microreact_export {
       --project_name ~{project_name} \
       ~{"--project_url " + project_url} \
       --metadata_tsv ~{metadata_tsv} \
+      ~{"--matrix_file " + matrix_file} \
       --id_column ~{id_column} \
       ~{"--date_column " + date_column} \
       ~{if defined(tree_files) && length(select_first([tree_files, []])) > 0 
