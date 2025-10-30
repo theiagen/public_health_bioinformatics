@@ -13,7 +13,7 @@ task freyja_dashboard_task {
     Boolean scale_by_viral_load = false
     String freyja_dashboard_title
     File? dashboard_intro_text
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1"
     Int disk_size = 100
     Int memory = 2
     Int cpu = 1
