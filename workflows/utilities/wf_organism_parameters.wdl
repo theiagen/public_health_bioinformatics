@@ -170,7 +170,7 @@ workflow organism_parameters {
         String yam_ha_nextclade_ds_tag = "2024-01-30--16-34-55Z"
         String yam_ha_nextclade_ds_name = "nextstrain/flu/yam/ha/JN993010"
         String yam_ha_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_yam_ha.tsv"
-        String yam_ha_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam.json"
+        String yam_ha_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam_20251030.json"
       }
       if (flu_subtype == "H5N1") {
         # H5N1 is a special case where the dataset used is the h5nx all clades dataset 
@@ -179,7 +179,7 @@ workflow organism_parameters {
         String h5n1_ha_nextclade_ds_tag = "2025-08-12--18-07-15Z"
         String h5n1_ha_nextclade_ds_name = "community/moncla-lab/iav-h5/ha/all-clades"
         String h5n1_ha_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/h5nx-clades.tsv"
-        String h5n1_ha_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h5n1.json"
+        String h5n1_ha_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h5n1_20251030.json"
       }
     }
     if (flu_segment == "NA") {
@@ -188,28 +188,28 @@ workflow organism_parameters {
         String h1n1_na_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.gb"
         String h1n1_na_nextclade_ds_tag = "2025-08-07--09-22-32Z"
         String h1n1_na_nextclade_ds_name = "nextstrain/flu/h1n1pdm/na/MW626056"
-        String h1n1_na_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h1n1pdm.json"
+        String h1n1_na_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h1n1pdm_20251030.json"
       }
       if (flu_subtype == "H3N2") {
         String h3n2_na_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.fasta"
         String h3n2_na_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.gb"
         String h3n2_na_nextclade_ds_tag = "2025-08-07--09-22-32Z"
         String h3n2_na_nextclade_ds_name = "nextstrain/flu/h3n2/na/EPI1857215"
-        String h3n2_na_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h3n2.json"
+        String h3n2_na_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h3n2_20251030.json"
       }
       if (flu_subtype == "Victoria") {
         String vic_na_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_na.fasta"
         String vic_na_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_na.gb"
         String vic_na_nextclade_ds_tag = "2025-08-07--09-22-32Z"
         String vic_na_nextclade_ds_name = "nextstrain/flu/vic/na/CY073894"
-        String vic_na_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_vic.json"
+        String vic_na_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_vic_20251030.json"
       }
       if (flu_subtype == "Yamagata") {
         String yam_na_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_na.fasta"
         String yam_na_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_na.gb"
         String yam_na_nextclade_ds_tag = "NA"
         String yam_na_nextclade_ds_name = "NA"
-        String yam_na_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam.json"
+        String yam_na_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam_20251030.json"
       }
     }
     if (flu_genoflu_genotype == "B3.13") {
@@ -236,7 +236,7 @@ workflow organism_parameters {
     File rsv_a_lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"
     File rsv_a_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_a_clades.tsv"
     File rsv_a_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.gb"
-    File rsv_a_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"
+    File rsv_a_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config_20251030.json"
     Int rsv_a_min_num_unambig = 10850 #using 70% of 15500
     # inherited from flu defaults
     Float rsv_a_min_date = 2020.0
@@ -262,7 +262,7 @@ workflow organism_parameters {
     File rsv_b_lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"
     File rsv_b_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_b_clades.tsv"
     File rsv_b_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.gb"
-    File rsv_b_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"
+    File rsv_b_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config_20251030.json"
     Int rsv_b_min_num_unambig = 10850 #using 70% of 15500
     # inherited from flu defaults
     Float rsv_b_min_date = 2020.0
