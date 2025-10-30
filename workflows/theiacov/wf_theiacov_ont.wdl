@@ -52,6 +52,7 @@ workflow theiacov_ont {
     Int? vadr_max_length
     Int? vadr_skip_length
     String? vadr_options
+    File? vadr_model_file
     Int? vadr_memory
     # pangolin parameters
     String? pangolin_docker_image
@@ -73,6 +74,7 @@ workflow theiacov_ont {
       vadr_max_length = vadr_max_length,
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
+      vadr_model = vadr_model_file,
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
       pangolin_docker_image = pangolin_docker_image
@@ -95,7 +97,7 @@ workflow theiacov_ont {
     }
   }
   if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-    call read_qc_trim_workflow.read_QC_trim_ont as read_qc_trim {
+    call read_qc_trim_workflow.read_QC_trim_ont as read_QC_trim {
       input:
         read1 = read1,
         samplename = samplename,
@@ -109,7 +111,7 @@ workflow theiacov_ont {
     if (! skip_screen) {
       call screen.check_reads_se as clean_check_reads {
         input:
-          read1 = read_qc_trim.read1_clean,
+          read1 = read_QC_trim.read1_clean,
           min_reads = min_reads,
           min_basepairs = min_basepairs,
           min_genome_length = min_genome_length,
@@ -127,7 +129,7 @@ workflow theiacov_ont {
           input:
             samplename = samplename,
             organism = organism_parameters.standardized_organism,
-            read1 = read_qc_trim.read1_clean,
+            read1 = read_QC_trim.read1_clean,
             primer_bed = organism_parameters.primer_bed,
             normalise = normalise,
             reference_genome = organism_parameters.reference,
@@ -147,7 +149,7 @@ workflow theiacov_ont {
       if (organism_parameters.standardized_organism == "flu") {
         call run_flu_track.flu_track {
           input:
-            read1 = read_qc_trim.read1_clean,
+            read1 = read_QC_trim.read1_clean,
             samplename = samplename,
             standardized_organism = organism_parameters.standardized_organism,
             seq_method = seq_method,
@@ -163,7 +165,7 @@ workflow theiacov_ont {
       }
       call nanoplot_task.nanoplot as nanoplot_clean {
         input:
-          read1 = read_qc_trim.read1_clean,
+          read1 = read_QC_trim.read1_clean,
           samplename = samplename,
           est_genome_length = select_first([genome_length, organism_parameters.genome_length])
       }
@@ -209,13 +211,14 @@ workflow theiacov_ont {
               organism = organism_parameters.standardized_organism
           }
         }
-        if (organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b"){ 
-          # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b
+        if (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || organism_parameters.standardized_organism == "rsv_a" || organism_parameters.standardized_organism == "rsv_b" || organism_parameters.standardized_organism == "WNV" || organism_parameters.standardized_organism == "flu" || organism_parameters.standardized_organism == "mumps" || organism_parameters.standardized_organism == "rubella" || organism_parameters.standardized_organism == "measles") {
+          # tasks specific to MPXV, sars-cov-2, WNV, flu, rsv_a, and rsv_b, measles, mumps, and rubella
           call vadr_task.vadr {
             input:
               genome_fasta = select_first([consensus.consensus_seq, flu_track.irma_assembly_fasta_padded]),
               assembly_length_unambiguous = consensus_qc.number_ATCG,
               vadr_opts = organism_parameters.vadr_opts,
+              vadr_model_file = organism_parameters.vadr_model_file,
               max_length = organism_parameters.vadr_maxlength,
               skip_length = organism_parameters.vadr_skiplength,
               memory = organism_parameters.vadr_memory
@@ -225,7 +228,7 @@ workflow theiacov_ont {
       if (organism_parameters.standardized_organism == "HIV") {
         call quasitools.quasitools as quasitools_ont {
           input:
-            read1 = read_qc_trim.read1_clean,
+            read1 = read_QC_trim.read1_clean,
             samplename = samplename
         }
       }
@@ -236,7 +239,7 @@ workflow theiacov_ont {
             expected_taxon = organism_parameters.standardized_organism,
             num_reads_raw1 = nanoplot_raw.num_reads,
             num_reads_clean1 = nanoplot_clean.num_reads,
-            kraken_human = read_qc_trim.kraken_human,
+            kraken_human = read_QC_trim.kraken_human,
             meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq,
             assembly_mean_coverage = stats_n_coverage_primtrim.depth,
             number_N = consensus_qc.number_N,
@@ -263,7 +266,7 @@ workflow theiacov_ont {
     String? read_screen_clean = clean_check_reads.read_screen
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC - dehosting outputs
-    File? read1_dehosted = read_qc_trim.read1_dehosted
+    File? read1_dehosted = read_QC_trim.read1_dehosted
     # Read QC - nanoplot outputs    
     String? nanoplot_version = nanoplot_raw.nanoplot_version
     String? nanoplot_docker = nanoplot_raw.nanoplot_docker
@@ -290,18 +293,18 @@ workflow theiacov_ont {
     Float? nanoplot_r1_median_q_clean = nanoplot_clean.median_q
     Float? nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage
     # Read QC - kraken outputs general
-    String? kraken_version = read_qc_trim.kraken_version
-    String? kraken_target_organism_name = read_qc_trim.kraken_target_organism_name
+    String? kraken_version = read_QC_trim.kraken_version
+    String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
     # Read QC - kraken outputs raw
-    Float? kraken_human = read_qc_trim.kraken_human
-    String? kraken_sc2 = read_qc_trim.kraken_sc2
-    String? kraken_target_organism = read_qc_trim.kraken_target_organism
-    File? kraken_report = read_qc_trim.kraken_report
+    Float? kraken_human = read_QC_trim.kraken_human
+    String? kraken_sc2 = read_QC_trim.kraken_sc2
+    String? kraken_target_organism = read_QC_trim.kraken_target_organism
+    File? kraken_report = read_QC_trim.kraken_report
     # Read QC - kraken outputs dehosted
-    Float? kraken_human_dehosted = read_qc_trim.kraken_human_dehosted
-    String? kraken_sc2_dehosted = read_qc_trim.kraken_sc2_dehosted
-    String? kraken_target_organism_dehosted = read_qc_trim.kraken_target_organism_dehosted
-    File? kraken_report_dehosted = read_qc_trim.kraken_report_dehosted
+    Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
+    String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
+    String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
+    File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
     # Read Alignment - Artic consensus outputs
     String assembly_fasta = select_first([consensus.consensus_seq, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
     File? aligned_bam = consensus.trim_sorted_bam
@@ -399,15 +402,15 @@ workflow theiacov_ont {
     String? irma_type = flu_track.irma_type
     String? irma_subtype = flu_track.irma_subtype
     String? irma_subtype_notes = flu_track.irma_subtype_notes
-    File? irma_assembly_fasta_concatenated = flu_track.irma_assembly_fasta_concatenated
-    File? irma_ha_segment_fasta = flu_track.irma_ha_segment_fasta
-    File? irma_na_segment_fasta = flu_track.irma_na_segment_fasta
-    File? irma_pa_segment_fasta = flu_track.irma_pa_segment_fasta
-    File? irma_pb1_segment_fasta = flu_track.irma_pb1_segment_fasta
-    File? irma_pb2_segment_fasta = flu_track.irma_pb2_segment_fasta
-    File? irma_mp_segment_fasta = flu_track.irma_mp_segment_fasta
-    File? irma_np_segment_fasta = flu_track.irma_np_segment_fasta
-    File? irma_ns_segment_fasta = flu_track.irma_ns_segment_fasta
+    File? irma_assembly_fasta_concatenated = flu_track.flu_assembly_fasta_concatenated
+    File? irma_ha_segment_fasta = flu_track.flu_ha_segment_fasta
+    File? irma_na_segment_fasta = flu_track.flu_na_segment_fasta
+    File? irma_pa_segment_fasta = flu_track.flu_pa_segment_fasta
+    File? irma_pb1_segment_fasta = flu_track.flu_pb1_segment_fasta
+    File? irma_pb2_segment_fasta = flu_track.flu_pb2_segment_fasta
+    File? irma_mp_segment_fasta = flu_track.flu_mp_segment_fasta
+    File? irma_np_segment_fasta = flu_track.flu_np_segment_fasta
+    File? irma_ns_segment_fasta = flu_track.flu_ns_segment_fasta
     # Flu GenoFLU Outputs
     String? genoflu_version = flu_track.genoflu_version
     String? genoflu_genotype = flu_track.genoflu_genotype

@@ -26,4 +26,4 @@ title: Alphabetical Workflows
 *[Command-line Compatibility]: Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either `miniwdl` or `cromwell`.
 *[Some optional features incompatible]: Some optional features of this workflow are incompatible with command-line use and require modification
 *[Yes]: This workflow is compatible with command-line use
-*[No]: This workflow is not compatible with command-line use even with modifications
+*[No]: This workflow is not compatible with command-line use even with modifications; this workflow is engineered to run on Terra

@@ -1,6 +1,8 @@
 
 ??? task "`qc_check`: Check QC Metrics Against User-Defined Thresholds (optional)"
 
+    To activate this task, provide a `qc_check_table` as input.
+
     The `qc_check` task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a `qc_check_table` TSV file. If all QC metrics meet the threshold, the `qc_check` output variable will read `QC_PASS`. Otherwise, the output will read `QC_NA` if the task could not proceed or `QC_ALERT` followed by a string indicating what metric failed.
 
 <!-- if: theiacov -->
@@ -31,7 +33,7 @@
         !!! warning "Example Purposes Only"
             The QC threshold values shown in the file above are for example purposes only and should not be presumed to be sufficient for every dataset.
 
-    !!! techdetails "`qc_check` Technical Details"
+    !!! techdetails "qc_check Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_qc_check_phb.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_qc_check_phb.wdl) |

@@ -76,6 +76,8 @@ workflow theiaprok_illumina_pe {
     Boolean call_abricate = false
     Boolean call_gamma = false
     Boolean call_arln_stats = false
+    Boolean mlst_scheme_override = false # If true, will force E. coli scheme to be used when Gambit predicts Escherichia coli, otherwise will return scheme MLST predicts.
+    Boolean mlst_run_secondary_scheme = false # If true, will run secondary scheme if primary scheme is of ecoli or abaumannii, these two have multiple schemes that are relevant.
     String abricate_db = "vfdb"
     String genome_annotation = "prokka" # options: "prokka" or "bakta"
     String bakta_db = "full" # Default: "light" or "full"
@@ -221,7 +223,9 @@ workflow theiaprok_illumina_pe {
           input: 
             assembly = digger_denovo.assembly_fasta,
             samplename = samplename,
-            taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon])
+            taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
+            run_secondary_scheme = mlst_run_secondary_scheme,
+            scheme_override = mlst_scheme_override
         }
         if (genome_annotation == "prokka") {
           call prokka_task.prokka {
@@ -713,6 +717,10 @@ workflow theiaprok_illumina_pe {
                 "ts_mlst_novel_alleles": ts_mlst.ts_mlst_novel_alleles,
                 "ts_mlst_predicted_st": ts_mlst.ts_mlst_predicted_st,
                 "ts_mlst_pubmlst_scheme": ts_mlst.ts_mlst_pubmlst_scheme,
+                "ts_mlst_predicted_secondary_st": ts_mlst.ts_mlst_predicted_secondary_st,
+                "ts_mlst_pubmlst_secondary_scheme": ts_mlst.ts_mlst_pubmlst_secondary_scheme,
+                "ts_mlst_secondary_allelic_profile": ts_mlst.ts_mlst_secondary_allelic_profile,
+                "ts_mlst_secondary_novel_alleles": ts_mlst.ts_mlst_secondary_novel_alleles,
                 "ts_mlst_results": ts_mlst.ts_mlst_results,
                 "ts_mlst_version": ts_mlst.ts_mlst_version,
                 "vibecheck_lineage_report": merlin_magic.vibecheck_lineage_report,
@@ -933,8 +941,12 @@ workflow theiaprok_illumina_pe {
     String? ts_mlst_predicted_st = ts_mlst.ts_mlst_predicted_st
     String? ts_mlst_pubmlst_scheme = ts_mlst.ts_mlst_pubmlst_scheme
     String? ts_mlst_allelic_profile = ts_mlst.ts_mlst_allelic_profile
-    String? ts_mlst_version = ts_mlst.ts_mlst_version
     File? ts_mlst_novel_alleles = ts_mlst.ts_mlst_novel_alleles
+    String? ts_mlst_predicted_secondary_st = ts_mlst.ts_mlst_predicted_secondary_st
+    String? ts_mlst_pubmlst_secondary_scheme = ts_mlst.ts_mlst_pubmlst_secondary_scheme
+    String? ts_mlst_secondary_allelic_profile = ts_mlst.ts_mlst_secondary_allelic_profile
+    File? ts_mlst_secondary_novel_alleles = ts_mlst.ts_mlst_secondary_novel_alleles
+    String? ts_mlst_version = ts_mlst.ts_mlst_version
     String? ts_mlst_docker = ts_mlst.ts_mlst_docker
     # Prokka Results
     File? prokka_gff = prokka.prokka_gff
@@ -974,7 +986,16 @@ workflow theiaprok_illumina_pe {
     String? serotypefinder_serotype = merlin_magic.serotypefinder_serotype
     File? ectyper_results = merlin_magic.ectyper_results
     String? ectyper_version = merlin_magic.ectyper_version
+    File? ectyper_warnings = merlin_magic.ectyper_warnings
     String? ectyper_predicted_serotype = merlin_magic.ectyper_predicted_serotype
+    String? ectyper_qc_result = merlin_magic.ectyper_qc_result
+    String? ectyper_database_version = merlin_magic.ectyper_database_version
+    String? ectyper_pathotype = merlin_magic.ectyper_pathotype
+    String? ectyper_pathotype_count = merlin_magic.ectyper_pathotype_count
+    String? ectyper_pathotype_genes = merlin_magic.ectyper_pathotype_genes
+    String? ectyper_pathodb_version = merlin_magic.ectyper_pathodb_version
+    String? ectyper_stx_subtypes = merlin_magic.ectyper_stx_subtypes
+    String? ectyper_docker = merlin_magic.ectyper_docker
     String? shigatyper_predicted_serotype = merlin_magic.shigatyper_predicted_serotype
     String? shigatyper_ipaB_presence_absence = merlin_magic.shigatyper_ipaB_presence_absence
     String? shigatyper_notes = merlin_magic.shigatyper_notes

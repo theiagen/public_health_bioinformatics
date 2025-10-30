@@ -9,7 +9,7 @@ task transfer_files {
     Int disk_size = 25
     Int memory = 2
     Int cpu = 1
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine"
   }
   command <<<
   # transfer_files to specified gcp_uri

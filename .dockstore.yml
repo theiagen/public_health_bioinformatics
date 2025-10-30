@@ -15,6 +15,11 @@ workflows:
    primaryDescriptorPath: /workflows/theiaeuk/wf_cauris_cladetyper.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: ChroQueTas_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_chroquetas.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Snippy_Variants_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_snippy_variants.wdl
@@ -195,11 +200,6 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/data_import/wf_sra_fetch.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Terra_2_BQ_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_terra_2_bq.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
  - name: Fetch_SRR_Accession_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/data_import/wf_fetch_srr_accession.wdl
@@ -250,9 +250,16 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/wf_theiavalidate.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Samples_to_Ref_Tree_PHB
+ - name: PhyloCompare_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_addToRefTree.wdl
+   primaryDescriptorPath: /workflows/phylogenetics/wf_phylocompare.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: Nextclade_Batch_PHB 
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_batch.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Terra_2_GISAID_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/submission/wf_terra_2_gisaid.wdl
@@ -331,5 +338,10 @@ workflows:
  - name: ShigaPass_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_shigapass.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: ONT_Barcode_Concatenation_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/data_import/wf_ont_barcode_concatenation.wdl
    testParameterFiles:
      - /tests/inputs/empty.json

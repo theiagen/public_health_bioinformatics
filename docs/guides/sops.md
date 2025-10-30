@@ -30,7 +30,7 @@ Theiagen has developed a number of Standard Operating Procedures (SOPs) to help 
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filters={"Workflow": "TheiaCoV"}, columns=["SOP", "SOP version", "Workflow", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"]) }}
+{{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filters={"Pathogen/Category": ["Flu", "SC2"]}, columns=["SOP", "SOP version", "Workflow", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"]) }}
 
 ///
 
@@ -38,7 +38,7 @@ Theiagen has developed a number of Standard Operating Procedures (SOPs) to help 
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filters={"Workflow": ["Theiaprok", "Phoenix"]}, columns=["SOP", "SOP version", "Workflow", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"]) }}
+{{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filters={"Pathogen/Category": ["Bacterial", "HAI"]}, columns=["SOP", "SOP version", "Workflow", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"]) }}
 
 ///
 
@@ -62,6 +62,6 @@ Theiagen has developed a number of Standard Operating Procedures (SOPs) to help 
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filters={"Workflow": ["TheiaValidate", "RASUSA", "Snippy_Variants"]}, columns=["SOP", "SOP version", "Workflow", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"]) }}
+{{ render_tsv_table("docs/assets/tables/all_sops.tsv", sort_by=["Current or prior wf version?", "SOP"], filters={"Pathogen/Category": ["Data Import", "Downsampling", "Getting Started", "Validations"]}, columns=["SOP", "SOP version", "Workflow", "PHB version compatibility", "Pathogen/Category", "Current or prior wf version?"]) }}
 
 ///

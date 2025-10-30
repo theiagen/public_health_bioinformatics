@@ -32,6 +32,7 @@ workflow organism_parameters {
     Int? vadr_skip_length
     String? vadr_options
     Int? vadr_mem
+    File? vadr_model
 
     # pangolin parameters
     String? pangolin_docker_image
@@ -49,21 +50,22 @@ workflow organism_parameters {
     Float? narrow_bandwidth
     Float? proportion_wide
   }
-  if (organism == "sars-cov-2" || organism == "SARS-CoV-2") {
+  if (organism == "sars-cov-2" || organism == "SARS-CoV-2" || organism == "2697049" || organism == "3418604") {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"
     String sc2_gene_locations_bed = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"
-    String sc2_nextclade_ds_tag = "2025-06-09--15-42-38Z"
+    String sc2_nextclade_ds_tag = "2025-08-02--08-55-17Z"
     String sc2_nextclade_ds_name = "nextstrain/sars-cov-2/wuhan-hu-1/orfs"
     String sc2_kraken_target_organism = "Severe acute respiratory syndrome coronavirus 2"
     String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.1-pdata-1.34"
     Int sc2_genome_len = 29903
     Int sc2_vadr_max_length = 30000
     Int sc2_vadr_skip_length = 10000
-    String sc2_vadr_options = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
+    String sc2_vadr_options = "--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta"
     Int sc2_vadr_memory = 8
+    File sc2_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"
   }
-  if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox" || organism == "Monkeypox virus" || organism == "Mpox") {
+  if (organism == "MPXV" || organism == "mpox" || organism == "monkeypox" || organism == "Monkeypox virus" || organism == "Mpox" || organism == "10244") {
     String mpox_org_name = "MPXV"
     String mpox_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.MT903345.reference.fasta"
     String mpox_gene_locations_bed = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_gene_locations.bed"
@@ -72,10 +74,11 @@ workflow organism_parameters {
     String mpox_kraken_target_organism = "Monkeypox virus"
     String mpox_primer_bed_file = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.primer.bed"
     String mpox_reference_gff_file = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3"
-    String mpox_vadr_options = "--glsearch -s -r --nomisc --mkey mpxv --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --out_allfasta --minimap2 --s_overhang 150"
+    String mpox_vadr_options = "--mkey mpxv --glsearch --minimap2 -s -r --nomisc --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --s_overhang 150 --out_allfasta"
     Int mpox_vadr_max_length = 210000
     Int mpox_vadr_skip_length = 65480
     Int mpox_vadr_memory = 8
+    File mpox_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.4.2-1.tar.gz"
     Int mpox_genome_len = 197200
 
     # augur options for mpxv
@@ -90,20 +93,21 @@ workflow organism_parameters {
     Float mpox_narrow_bandwidth = 0.1666667
     Float mpox_proportion_wide = 0.0
   }  
-  if (organism == "WNV" || organism == "wnv" || organism == "West Nile virus") {
+  if (organism == "WNV" || organism == "wnv" || organism == "West Nile virus" || organism == "11082") {
     String wnv_org_name = "WNV"
     String wnv_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/wnv/NC_009942.1_wnv_L1.fasta"
     String wnv_kraken_target_organism = "West Nile virus"
     String wnv_primer_bed_file = "gs://theiagen-public-resources-rp/reference_data/viral/wnv/WNV-L1_primer.bed"
     Int wnv_genome_len = 11000
-    String wnv_vadr_options = "--mkey flavi --mdir /opt/vadr/vadr-models-flavi/ --nomisc --noprotid --out_allfasta"    
+    String wnv_vadr_options = "--mkey flavi --nomisc --noprotid --out_allfasta"
     Int wnv_vadr_max_length = 11000
     Int wnv_vadr_skip_length = 3000
     Int wnv_vadr_memory = 16
+    File wnv_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flavi-1.2-1.tar.gz"
     String wnv_nextclade_ds_tag = "NA"
     String wnv_nextclade_ds_name = "NA"
   }
-  if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza") {
+  if (organism == "flu" || organism == "influenza" || organism == "Flu" || organism == "Influenza" || organism == "11320" || organism == "11309" || organism == "11308" || organism == "11520") {
     String flu_org_name = "flu"
     Int flu_genome_len = 13500
 
@@ -116,17 +120,19 @@ workflow organism_parameters {
     Float flu_proportion_wide = 0.0
 
     # vadr options for flu
-    String flu_vadr_options = "--atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3 --mkey flu"
+    String flu_vadr_options = "--mkey flu --atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3"
     Int flu_vadr_max_length = 13500
     Int flu_vadr_skip_length = 500
     Int flu_vadr_memory = 8
+    File flu_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"
+
 
     # setting nextclade and augur parameters
     if (flu_segment == "HA") {
       if (flu_subtype == "H1N1") {
         String h1n1_ha_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.fasta"
         String h1n1_ha_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.gb"
-        String h1n1_ha_nextclade_ds_tag = "2025-01-22--09-54-14Z"
+        String h1n1_ha_nextclade_ds_tag = "2025-08-07--09-22-32Z"
         String h1n1_ha_nextclade_ds_name = "nextstrain/flu/h1n1pdm/ha/MW626062"
         String h1n1_ha_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_h1n1pdm_ha.tsv"
         String h1n1_ha_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h1n1pdm.json"
@@ -134,7 +140,7 @@ workflow organism_parameters {
       if (flu_subtype == "H3N2") {
         String h3n2_ha_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.fasta"
         String h3n2_ha_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.gb"
-        String h3n2_ha_nextclade_ds_tag = "2025-01-22--09-54-14Z"
+        String h3n2_ha_nextclade_ds_tag = "2025-08-07--09-22-32Z"
         String h3n2_ha_nextclade_ds_name = "nextstrain/flu/h3n2/ha/EPI1857216"
         String h3n2_ha_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_h3n2_ha.tsv"
         String h3n2_ha_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h3n2.json"
@@ -142,7 +148,7 @@ workflow organism_parameters {
       if (flu_subtype == "Victoria") {
         String vic_ha_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.fasta"
         String vic_ha_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.gb"
-        String vic_ha_nextclade_ds_tag = "2025-01-22--09-54-14Z"
+        String vic_ha_nextclade_ds_tag = "2025-08-07--09-22-32Z"
         String vic_ha_nextclade_ds_name = "nextstrain/flu/vic/ha/KX058884"
         String vic_ha_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_vic_ha.tsv"
         String vic_ha_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_vic.json"
@@ -159,7 +165,7 @@ workflow organism_parameters {
         # H5N1 is a special case where the dataset used is the h5nx all clades dataset 
         String h5n1_ha_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.fasta"
         String h5n1_ha_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.gb"
-        String h5n1_ha_nextclade_ds_tag = "2025-01-30--18-05-53Z"
+        String h5n1_ha_nextclade_ds_tag = "2025-08-12--18-07-15Z"
         String h5n1_ha_nextclade_ds_name = "community/moncla-lab/iav-h5/ha/all-clades"
         String h5n1_ha_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/h5nx-clades.tsv"
         String h5n1_ha_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h5n1.json"
@@ -169,21 +175,21 @@ workflow organism_parameters {
       if (flu_subtype == "H1N1") {
         String h1n1_na_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.fasta"
         String h1n1_na_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.gb"
-        String h1n1_na_nextclade_ds_tag = "2025-03-26--11-47-13Z"
+        String h1n1_na_nextclade_ds_tag = "2025-08-07--09-22-32Z"
         String h1n1_na_nextclade_ds_name = "nextstrain/flu/h1n1pdm/na/MW626056"
         String h1n1_na_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h1n1pdm.json"
       }
       if (flu_subtype == "H3N2") {
         String h3n2_na_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.fasta"
         String h3n2_na_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.gb"
-        String h3n2_na_nextclade_ds_tag = "2025-01-22--09-54-14Z"
+        String h3n2_na_nextclade_ds_tag = "2025-08-07--09-22-32Z"
         String h3n2_na_nextclade_ds_name = "nextstrain/flu/h3n2/na/EPI1857215"
         String h3n2_na_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_h3n2.json"
       }
       if (flu_subtype == "Victoria") {
         String vic_na_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_na.fasta"
         String vic_na_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_na.gb"
-        String vic_na_nextclade_ds_tag = "2025-03-26--11-47-13Z"
+        String vic_na_nextclade_ds_tag = "2025-08-07--09-22-32Z"
         String vic_na_nextclade_ds_name = "nextstrain/flu/vic/na/CY073894"
         String vic_na_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_vic.json"
       }
@@ -202,17 +208,18 @@ workflow organism_parameters {
       String d1_1_custom_nextclade_dataset = "gs://theiagen-public-resources-rp/reference_data/viral/flu/nextclade_avian-flu_h5n1-d1.1_2025-06-24.json"
     }
   }
-  if (organism == "rsv_a" || organism == "rsv-a" || organism == "RSV-A" || organism == "RSV_A") {
+  if (organism == "rsv_a" || organism == "rsv-a" || organism == "RSV-A" || organism == "RSV_A" || organism == "208893") {
     String rsv_a_org_name = "rsv_a"
     String rsv_a_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"
     String rsv_a_nextclade_ds_tag = "2024-11-27--02-51-00Z"
     String rsv_a_nextclade_ds_name = "nextstrain/rsv/a/EPI_ISL_412866"
     Int rsv_a_genome_len = 15500
     String rsv_a_kraken_target_organism = "Human respiratory syncytial virus A"
-    String rsv_a_vadr_options = "-r --mkey rsv --xnocomp"
+    String rsv_a_vadr_options = "--mkey rsv --xnocomp -r"
     Int rsv_a_vadr_max_length = 15500
     Int rsv_a_vadr_skip_length = 5000
     Int rsv_a_vadr_memory = 32
+    File rsv_a_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"
 
     # augur options for rsv-a
     File rsv_a_lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"
@@ -226,17 +233,19 @@ workflow organism_parameters {
     Float rsv_a_narrow_bandwidth = 0.1666667
     Float rsv_a_proportion_wide = 0.0
   }
-  if (organism == "rsv_b" || organism == "rsv-b" || organism == "RSV-B" || organism == "RSV_B") {
+  if (organism == "rsv_b" || organism == "rsv-b" || organism == "RSV-B" || organism == "RSV_B" || organism == "208895") {
     String rsv_b_org_name = "rsv_b"
     String rsv_b_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"
     String rsv_b_nextclade_ds_tag = "2025-03-04--17-31-25Z"
     String rsv_b_nextclade_ds_name = "nextstrain/rsv/b/EPI_ISL_1653999"
     Int rsv_b_genome_len = 15500
     String rsv_b_kraken_target_organism = "human respiratory syncytial virus" 
-    String rsv_b_vadr_options = "-r --mkey rsv --xnocomp"
+    String rsv_b_vadr_options = "--mkey rsv --xnocomp -r"
     Int rsv_b_vadr_max_length = 15500
     Int rsv_b_vadr_skip_length = 5000
     Int rsv_b_vadr_memory = 32
+    File rsv_b_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"
+
 
     # augur options for rsv-b
     File rsv_b_lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"
@@ -250,28 +259,57 @@ workflow organism_parameters {
     Float rsv_b_narrow_bandwidth = 0.1666667
     Float rsv_b_proportion_wide = 0.0
   }
-  if (organism == "HIV" && hiv_primer_version == "v1") {
-    String hiv_v1_org_name = "HIV"
-    String hiv_v1_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta"
-    String hiv_v1_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"
-    String hiv_v1_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"
-    String hiv_v1_target_organism = "Human immunodeficiency virus 1"
-    Int hiv_v1_genome_len = 9181 
+  if (organism == "HIV" || organism == "11676" || organism == "11709") {
+    String hiv_org_name = "HIV"
+    if (hiv_primer_version == "v1" || organism == "11676") {
+      String hiv_v1_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.fasta"
+      String hiv_v1_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"
+      String hiv_v1_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"
+      String hiv_v1_target_organism = "Human immunodeficiency virus 1"
+      Int hiv_v1_genome_len = 9181 
+    }
+    if (hiv_primer_version == "v2" || organism == "11709") {
+      String hiv_v2_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"
+      String hiv_v2_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"
+      String hiv_v2_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed"
+      String hiv_v2_target_organism = "Human immunodeficiency virus 1"
+      Int hiv_v2_genome_len = 9840
+    }
   }
-  if (organism == "HIV" && hiv_primer_version == "v2") {
-    String hiv_v2_org_name = "HIV"
-    String hiv_v2_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"
-    String hiv_v2_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"
-    String hiv_v2_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v2.0.primer.hyphen400.1.bed"
-    String hiv_v2_target_organism = "Human immunodeficiency virus 1"
-    Int hiv_v2_genome_len = 9840
-  }
-  if (organism == "Measles" || organism == "measles" || organism == "mev" || organism == "MeV" || organism == "Morbillivirus" || organism == "morbillivirus") {
+  if (organism == "measles" || organism == "Measles" || organism == "mev" || organism == "MeV" || organism == "Morbillivirus" || organism == "morbillivirus" || organism == "11234") {
     String measles_org_name = "measles"
     String measles_kraken_target_organism = "Measles morbillivirus"
-    String measles_genome_len = 16000
-    String measles_nextclade_ds_tag = "2025-03-26--11-47-13Z"
-    String measles_nextclade_ds_name = "nextstrain/measles/N450/WHO-2012"
+    Int measles_genome_len = 16000
+    String measles_nextclade_ds_tag = "2025-08-11--19-06-01Z"
+    String measles_nextclade_ds_name = "nextstrain/measles/genome/WHO-2012"
+    String measles_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/measles/NC_001498.1_measles_reference.fasta"
+    String measles_vadr_options = "--mkey mev -r --indefclass 0.01"
+    Int measles_vadr_max_length = 18000
+    Int measles_vadr_skip_length = 0
+    Int measles_vadr_memory = 24
+    File measles_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mev-1.02.tar.gz"
+  }
+  if (organism == "mumps" || organism == "MuV" || organism == "muv" || organism == "Mumps" || organism == "Mumps virus" || organism == "mumps virus" || organism == "2560602") {
+    # vadr options for mumps
+    String mumps_org_name = "mumps"
+    String mumps_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/mumps/NC_002200.1_mumps_reference.fasta"
+    Int mumps_genome_len = 15300
+    String mumps_vadr_options = "--mkey muv -r --indefclass 0.025"
+    Int mumps_vadr_max_length = 18000
+    Int mumps_vadr_skip_length = 0
+    Int mumps_vadr_memory = 16
+    File mumps_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-muv-1.01.tar.gz"
+  }
+  if (organism == "rubella" || organism == "RuV" || organism == "ruv" || organism == "Rubella" || organism == "Rubella virus" || organism == "rubella virus" || organism == "11041") {
+    # vadr options for rubella
+    String rubella_org_name = "rubella"
+    String rubella_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/rubella/NC_001545.2_rubella_reference.fasta"
+    Int rubella_genome_len = 9800
+    String rubella_vadr_options = "--mkey ruv -r"
+    Int rubella_vadr_max_length = 10000
+    Int rubella_vadr_skip_length = 0
+    Int rubella_vadr_memory = 16
+    File rubella_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-ruv-1.01.tar.gz"
   }
   # set rabies nextclade parameters
   if (organism == "rabies" || organism == "Lyssavirus rabies" || organism == "lyssavirus" || organism == "Lyssavirus" || organism == "Rabies" || organism == "11292" || organism == "11286") {
@@ -283,14 +321,13 @@ workflow organism_parameters {
   }
   output {
     # standardized organism flag
-    String standardized_organism = select_first([sc2_org_name, mpox_org_name, wnv_org_name, flu_org_name, rsv_a_org_name, rsv_b_org_name, hiv_v1_org_name, hiv_v2_org_name, measles_org_name, rabies_org_name, organism])
+    String standardized_organism = select_first([sc2_org_name, mpox_org_name, wnv_org_name, flu_org_name, rsv_a_org_name, rsv_b_org_name, hiv_org_name, measles_org_name, rabies_org_name, mumps_org_name, rubella_org_name, organism])
     # reference genome and sequencing information
-    File reference = select_first([reference_genome, sc2_reference_genome, mpox_reference_genome, wnv_reference_genome, h1n1_ha_reference, h3n2_ha_reference, vic_ha_reference, yam_ha_reference, h5n1_ha_reference, h1n1_na_reference, h3n2_na_reference, vic_na_reference, yam_na_reference, 
-    rsv_a_reference_genome, rsv_b_reference_genome, hiv_v1_reference_genome, hiv_v2_reference_genome, rabies_nextclade_genome, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    File reference = select_first([reference_genome, sc2_reference_genome, mpox_reference_genome, wnv_reference_genome, h1n1_ha_reference, h3n2_ha_reference, vic_ha_reference, yam_ha_reference, h5n1_ha_reference, h1n1_na_reference, h3n2_na_reference, vic_na_reference, yam_na_reference, rsv_a_reference_genome, rsv_b_reference_genome, hiv_v1_reference_genome, hiv_v2_reference_genome, rabies_nextclade_genome, measles_reference_genome, mumps_reference_genome, rubella_reference_genome, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File gene_locations_bed = select_first([gene_locations_bed_file, sc2_gene_locations_bed, mpox_gene_locations_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"])
     File primer_bed = select_first([primer_bed_file, mpox_primer_bed_file, wnv_primer_bed_file, hiv_v1_primer_bed, hiv_v2_primer_bed, "gs://theiagen-public-resources-rp/empty_files/empty.bed"])
     File reference_gff = select_first([reference_gff_file, mpox_reference_gff_file, hiv_v1_reference_gff, hiv_v2_reference_gff, rabies_nextclade_gff, "gs://theiagen-public-resources-rp/empty_files/empty.gff3"])
-    Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len, measles_genome_len, 0])
+    Int genome_length = select_first([genome_length_input, sc2_genome_len, mpox_genome_len, wnv_genome_len, flu_genome_len, rsv_a_genome_len, rsv_b_genome_len, hiv_v1_genome_len, hiv_v2_genome_len, measles_genome_len, mumps_genome_len, rubella_genome_len, 0])
     # nextclade information
     String nextclade_dataset_tag = select_first([nextclade_dataset_tag_input, sc2_nextclade_ds_tag, mpox_nextclade_ds_tag, wnv_nextclade_ds_tag, h1n1_ha_nextclade_ds_tag, h3n2_ha_nextclade_ds_tag, vic_ha_nextclade_ds_tag, yam_ha_nextclade_ds_tag, h5n1_ha_nextclade_ds_tag, h1n1_na_nextclade_ds_tag, h3n2_na_nextclade_ds_tag, vic_na_nextclade_ds_tag, yam_na_nextclade_ds_tag, rsv_a_nextclade_ds_tag, rsv_b_nextclade_ds_tag, measles_nextclade_ds_tag, "NA"])
     String nextclade_dataset_name = select_first([nextclade_dataset_name_input, sc2_nextclade_ds_name, mpox_nextclade_ds_name, wnv_nextclade_ds_name, h1n1_ha_nextclade_ds_name, h3n2_ha_nextclade_ds_name, vic_ha_nextclade_ds_name, yam_ha_nextclade_ds_name, h5n1_ha_nextclade_ds_name, h1n1_na_nextclade_ds_name, h3n2_na_nextclade_ds_name, vic_na_nextclade_ds_name, yam_na_nextclade_ds_name, rsv_a_nextclade_ds_name, rsv_b_nextclade_ds_name, measles_nextclade_ds_name, "NA"])
@@ -300,10 +337,11 @@ workflow organism_parameters {
     # pangolin options
     String pangolin_docker = select_first([pangolin_docker_image, sc2_pangolin_docker, ""])
     # vadr options
-    String vadr_opts = select_first([vadr_options, sc2_vadr_options, mpox_vadr_options, wnv_vadr_options, flu_vadr_options, rsv_a_vadr_options, rsv_b_vadr_options, "NA"])
-    Int vadr_maxlength = select_first([vadr_max_length, sc2_vadr_max_length, mpox_vadr_max_length, wnv_vadr_max_length, flu_vadr_max_length, rsv_a_vadr_max_length, rsv_b_vadr_max_length, 0])
-    Int vadr_memory = select_first([vadr_mem, sc2_vadr_memory, mpox_vadr_memory, wnv_vadr_memory, flu_vadr_memory, rsv_a_vadr_memory, rsv_b_vadr_memory, 0])
-    Int vadr_skiplength = select_first([vadr_skip_length, sc2_vadr_skip_length, mpox_vadr_skip_length, wnv_vadr_skip_length, flu_vadr_skip_length, rsv_a_vadr_skip_length, rsv_b_vadr_skip_length, 0])
+    String vadr_opts = select_first([vadr_options, sc2_vadr_options, mpox_vadr_options, wnv_vadr_options, flu_vadr_options, rsv_a_vadr_options, rsv_b_vadr_options, measles_vadr_options, mumps_vadr_options, rubella_vadr_options, "NA"])
+    File vadr_model_file = select_first([vadr_model, sc2_vadr_model_file, mpox_vadr_model_file, wnv_vadr_model_file, flu_vadr_model_file, rsv_a_vadr_model_file, rsv_b_vadr_model_file, measles_vadr_model_file, mumps_vadr_model_file, rubella_vadr_model_file, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    Int vadr_maxlength = select_first([vadr_max_length, sc2_vadr_max_length, mpox_vadr_max_length, wnv_vadr_max_length, flu_vadr_max_length, rsv_a_vadr_max_length, rsv_b_vadr_max_length, measles_vadr_max_length, mumps_vadr_max_length, rubella_vadr_max_length, 0])
+    Int vadr_memory = select_first([vadr_mem, sc2_vadr_memory, mpox_vadr_memory, wnv_vadr_memory, flu_vadr_memory, rsv_a_vadr_memory, rsv_b_vadr_memory, measles_vadr_memory, mumps_vadr_memory, rubella_vadr_memory, 16])
+    Int vadr_skiplength = select_first([vadr_skip_length, sc2_vadr_skip_length, mpox_vadr_skip_length, wnv_vadr_skip_length, flu_vadr_skip_length, rsv_a_vadr_skip_length, rsv_b_vadr_skip_length, measles_vadr_skip_length, mumps_vadr_skip_length, rubella_vadr_skip_length, 0])
     # kraken options
     String kraken_target_organism = select_first([kraken_target_organism_input, sc2_kraken_target_organism, mpox_kraken_target_organism, wnv_kraken_target_organism, hiv_v1_target_organism, hiv_v2_target_organism, rsv_a_kraken_target_organism, rsv_b_kraken_target_organism, measles_kraken_target_organism, ""])
     # augur options

@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Freyja Workflow Series**](../workflows/genomic_characterization/freyja.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**Freyja Workflow Series**](../workflows/genomic_characterization/freyja.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level", "Dockstore"]) }}
 
 ## Freyja Overview
 
@@ -99,41 +99,41 @@ This workflow runs on the sample level.
 === "Illumina paired-end input data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Freyja_FASTQ (PE)"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ"]}, exclude_filters={"Terra Task Name": ["read_QC_trim_se", "read_QC_trim_ont"]}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
 
     ///
 
 === "Illumina single-end input data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Freyja_FASTQ (SE)"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
-    
+    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ"]}, exclude_filters={"Terra Task Name": ["read_QC_trim_pe", "read_QC_trim_ont"]}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+
     ///
 
 === "ONT input data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Freyja_FASTQ (ONT)"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
-    
+    {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ"]}, exclude_filters={"Terra Task Name": ["primer_trim", "read_QC_trim_pe", "read_QC_trim_se"]}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=4) }}
+
     ///
 
 #### Analysis Tasks
 
 === "Illumina paired-end input data"
 
-{{ include_md("common_text/read_qc_trim_illumina.md", indent=4, condition="freyja") }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", indent=4, condition="freyja") }}
 {{ include_md("common_text/bwa_task.md", condition="freyja", indent=4) }}
 {{ include_md("common_text/primer_trim_task.md", indent=4) }}
 
 === "Illumina single-end input data"
 
-{{ include_md("common_text/read_qc_trim_illumina.md", indent=4, condition="freyja") }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", indent=4, condition="freyja") }}
 {{ include_md("common_text/bwa_task.md", condition="freyja", indent=4) }}
 {{ include_md("common_text/primer_trim_task.md", indent=4) }}
 
 === "ONT input data"
 
-{{ include_md("common_text/read_qc_trim_ont.md", indent=4, condition="freyja") }}
+{{ include_md("common_text/read_qc_trim_ont_wf.md", indent=4, condition="freyja") }}
 {{ include_md("common_text/minimap2_task.md", condition="only_map_ont", indent=4) }}
 
 ??? task "`freyja` Details"
@@ -168,24 +168,24 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 !!! tip "Click "Ignore empty outputs""
     When running the Freyja_FASTQ_PHB workflow, it is recommended to select the "Ignore empty outputs" option in the Terra UI. This will hide the output columns that will not be generated for your input data type.
 
-=== "Illumina paired-end input data"
+=== "Illumina paired-end output data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": "Freyja (Illumina paired-end)"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (PE)"]}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
-=== "Illumina single-end input data"
+=== "Illumina single-end output data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": "Freyja (Illumina single-end)"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (SE)"]}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
-=== "ONT input data"
+=== "ONT output data"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": "Freyja (ONT)"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=True, filters={"Workflow": ["Freyja_FASTQ", "Freyja_FASTQ (ONT)"]}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
 
     ///
 
@@ -251,7 +251,7 @@ This workflow runs on the set level.
     This task will aggregate multiple samples together, and then create an interactive HTML visualization. Several optional inputs dictate the dashboard appearance (see each variable's description for more information).
 
     !!! techdetails "Freyja Dashboard Technical Details"
-    
+
         |  | Links |
         | --- | --- |
         | Task | [wf_freyja_dashboard.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_dashboard.wdl) |
@@ -298,7 +298,7 @@ There are two ways to run [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq) for non
 
 ### Using the `freyja_pathogen` flag
 
-When using the `freyja_pathogen` flag, the user must set the optional `update_db` flag to _true_, so that the latest version of the barcode file is automatically downloaded by Freyja. 
+When using the `freyja_pathogen` flag, the user must set the optional `update_db` flag to _true_, so that the latest version of the barcode file is automatically downloaded by Freyja.
 
 !!! caption "Figure 2:  Optional input for Freyja_FASTQ_PHB to provide the pathogen to be used by Freyja"
     ##### Figure 2 { #figure2 }

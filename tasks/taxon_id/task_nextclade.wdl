@@ -11,7 +11,7 @@ task nextclade_v3 {
     File? gene_annotations_gff
     File? nextclade_pathogen_json
     File? input_ref
-    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5" 
+    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.16.0" 
     String? dataset_name
     String verbosity = "warn" # other options are: "off" "error" "info" "debug" and "trace"
     String? dataset_tag
@@ -150,25 +150,24 @@ task nextclade_output_parser {
   }
 }
 
-task nextclade_add_ref {
+task nextclade_v3_set {
   meta {
     description: "Nextclade task to add samples to either a user specified or a nextclade reference tree."
   }
   input {
-    File genome_fasta
+    Array[File] genome_fastas
     File? reference_tree_json
-    File? nextclade_pathogen_json
+    File? pathogen_json
     File? gene_annotations_gff
     File? input_ref
     String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5"
-    String dataset_name
+    String? dataset_name
     String? dataset_tag
     String verbosity = "warn" # other options are: "off" "error" "info" "debug" and "trace"
     Int disk_size = 100
     Int memory = 4
     Int cpu = 2
   }
-  String basename = basename(genome_fasta, ".fasta")
   command <<<
     # track version & print to log
     nextclade --version | tee NEXTCLADE_VERSION
@@ -176,17 +175,37 @@ task nextclade_add_ref {
     # make the directory incase the dataset doesnt exist
     mkdir nextclade_dataset_dir/
 
-    echo "DEBUG: downloading nextclade dataset..."
-    nextclade dataset get \
-      --name="~{dataset_name}" \
-      ~{"--tag " + dataset_tag} \
-      -o nextclade_dataset_dir \
-      --verbosity ~{verbosity}
+    if [ ! -z "~{dataset_name}" ]; then
+      echo "DEBUG: downloading nextclade dataset..."
+      nextclade dataset get \
+        --name="~{dataset_name}" \
+        ~{"--tag " + dataset_tag} \
+        -o nextclade_dataset_dir \
+        --verbosity ~{verbosity}
+    fi
+    
 
     # If no reference sequence is provided, use the reference tree from the dataset
     if [ -z "~{reference_tree_json}" ]; then
       echo "Default dataset reference tree JSON will be used"
-      cp -v nextclade_dataset_dir/tree.json reference_tree.json
+
+      # Identify the reference tree JSON by excluding the pathogen.json
+      for file in $(find nextclade_dataset_dir/ -type f -name "*.json" ! -name "*pathogen.json"); do
+        # if there is a tree.json (per Nextclade documentation), use that as the reference tree
+        if [[ $file == *"tree.json" ]]; then
+          reference_tree_json=$file
+          break
+        # otherwise, if there is a file that is not pathogen.json, use that as the reference tree
+        else
+          reference_tree_json=$file
+        fi
+      done
+
+      if [[ ! -v reference_tree_json ]]; then
+        echo "ERROR: No reference tree JSON found and no user reference tree provided"
+        exit 1
+      fi
+      cp -v $reference_tree_json reference_tree.json
     else
       echo "User reference tree JSON will be used"
       cp -v ~{reference_tree_json} reference_tree.json
@@ -199,14 +218,14 @@ task nextclade_add_ref {
     nextclade run \
       --input-dataset nextclade_dataset_dir/ \
       --input-tree ${tree_json} \
-      ~{"--input-pathogen-json " + nextclade_pathogen_json} \
+      ~{"--input-pathogen-json " + pathogen_json} \
       ~{"--input-annotation " + gene_annotations_gff} \
       ~{"--input-ref " + input_ref} \
-      --output-json "~{basename}".nextclade.json \
-      --output-tsv  "~{basename}".nextclade.tsv \
-      --output-tree "~{basename}".nextclade.auspice.json \
+      --output-json nextclade_output.json \
+      --output-tsv  nextclade_output.tsv \
+      --output-tree nextclade_output.auspice.json \
       --output-all=. \
-      "~{genome_fasta}"
+      ~{sep=' ' genome_fastas}
   >>>
   runtime {
     docker: "~{docker}"
@@ -219,10 +238,10 @@ task nextclade_add_ref {
   }
   output {
     String nextclade_version = read_string("NEXTCLADE_VERSION")
-    File nextclade_json = "~{basename}.nextclade.json"
-    File auspice_json = "~{basename}.nextclade.auspice.json"
-    File nextclade_tsv = "~{basename}.nextclade.tsv"
+    File nextclade_json = "nextclade_output.json"
+    File auspice_json = "nextclade_output.auspice.json"
+    File nextclade_tsv = "nextclade_output.tsv"
     String nextclade_docker = docker
-    File netclade_ref_tree = "reference_tree.json"
+    File nextclade_ref_tree = "reference_tree.json"
   }
 }

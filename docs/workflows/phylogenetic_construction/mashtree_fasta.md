@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**MashTree_FASTA**](../workflows/phylogenetic_construction/mashtree_fasta.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**MashTree_FASTA**](../workflows/phylogenetic_construction/mashtree_fasta.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level", "Dockstore"]) }}
 
 ## MashTree_FASTA_PHB
 
@@ -39,7 +39,7 @@ This workflow also features an optional module, `summarize_data`, that creates a
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "MashTree"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "MashTree_FASTA"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"]) }}
 
 ///
 

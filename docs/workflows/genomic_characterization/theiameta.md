@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaMeta**](../workflows/genomic_characterization/theiameta.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaMeta**](../workflows/genomic_characterization/theiameta.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level", "Dockstore"]) }}
 
 ## TheiaMeta Workflows
 
@@ -34,7 +34,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 #### Read Cleaning and QC
 
 {{ include_md("common_text/ncbi_scrub_task.md") }}
-{{ include_md("common_text/read_qc_trim_illumina.md", condition="theiameta") }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiameta") }}
 {{ include_md("common_text/kraken2_task.md", condition="theiameta") }}
 
 #### Assembly
@@ -72,16 +72,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
-??? task "`pilon`: Assembly Polishing"
-    `pilon` is a tool that uses read alignment to correct errors in an assembly. It is used to polish the assembly produced by metaSPAdes. The input to Pilon is the sorted BAM file produced by `samtools`, and the original draft assembly produced by `metaspades`.
-
-    !!! techdetails "pilon Technical Details"
-        | | Links |
-        |---|---|
-        | Task | [task_pilon.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_pilon.wdl) |
-        | Software Source Code | [Pilon on GitHub](https://github.com/broadinstitute/pilon) |
-        | Software Documentation | [Pilon Wiki](https://github.com/broadinstitute/pilon/wiki) |
-        | Original Publication(s) | [Pilon: An Integrated Tool for Comprehensive Microbial Variant Detection and Genome Assembly Improvement](https://doi.org/10.1371/journal.pone.0112963) |
+{{ include_md("common_text/pilon_task.md", condition="theiameta") }}
 
 #### Reference Alignment & Contig Filtering
 
