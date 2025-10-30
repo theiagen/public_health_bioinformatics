@@ -217,6 +217,11 @@ usher_workflow	assembly_fasta	Array[File]	The assembly files for your samples in
 usher_workflow	organism	String	What organism to run UShER on; the following organism have default global phylogenies and reference files provided: sars-cov-2, mpox, RSV-A, RSV-B.		Required	Usher	general
 usher_workflow	tree_name	String	The output prefix for the uncondensed tree output and the clades output.		Required	Usher	general
 vadr_update	genome_fasta	File	Consensus genome assembly		Required	VADR_Update	general
+wf_microreact_export	id_column	String	Column that will be used for unique identification within Microreact		Required	Microreact_Export	general
+wf_microreact_export	project_name	String	Desired Microreact project name		Required	Microreact_Export	general
+wf_microreact_export	terra_project_name	String	Terra project name where the Microreact metadata can be found		Required	Microreact_Export	general
+wf_microreact_export	terra_table_name	String	Terra table name to be used as Microreact metadata table		Required	Microreact_Export	general
+wf_microreact_export	terra_workspace_name	String	Terra workspace name where the Microreact metadata can be found		Required	Microreact_Export	general
 zip_column_content	files_to_zip	Array[File]	The column that has the files you want to zip.		Required	Zip_Column_Content	general
 zip_column_content	zipped_file_name	String	The name you want your zipped file to have. The .zip file extension will be added to this name.		Required	Zip_Column_Content	general
 abricate	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
@@ -600,6 +605,10 @@ core_snp_sites	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Ge
 core_snp_sites	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime
 core_snp_sites	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1	Optional	Core_Gene_SNP	docker
 core_snp_sites	memory	Int	Amount of memory (in GB) to allocate to the task	2	Optional	Core_Gene_SNP	runtime
+create_microreact_project	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Microreact_Export	runtime
+create_microreact_project	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	Microreact_Export	runtime
+create_microreact_project	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/microreact_export:0.1.0-dev	Optional	Microreact_Export	docker
+create_microreact_project	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Microreact_Export	runtime
 create_table_from_array	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Dorado_Basecalling	runtime
 create_table_from_array	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Dorado_Basecalling	runtime
 create_table_from_array	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	Dorado_Basecalling	docker
@@ -683,10 +692,10 @@ download_accession	docker	String	The Docker container to use for the task	us-doc
 download_accession	include_gbff	Boolean	Set to true if you would like the GenBank Flat File (GBFF) file included in the output. It contains nucleotide sequence, metadata, and annotations.	False	Optional	Host_Decontaminate	general
 download_accession	include_gff3	Boolean	Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations	False	Optional	Host_Decontaminate	general
 download_accession	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate	runtime
-download_terra_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA	runtime
-download_terra_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA	runtime
-download_terra_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA	docker
-download_terra_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA	runtime
+download_terra_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Microreact_Export, Terra_2_ENA	runtime
+download_terra_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Microreact_Export, Terra_2_ENA	runtime
+download_terra_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Microreact_Export, Terra_2_ENA	docker
+download_terra_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Microreact_Export, Terra_2_ENA	runtime
 export_taxon_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 export_taxon_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 export_taxon_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
@@ -2710,6 +2719,16 @@ vadr_update	vadr_opts	String	Options for the v-annotate.pl VADR script	 "--noseq
 vadr_update	vadr_skip_length	Int	Minimum assembly length (unambiguous) to run VADR	10000	Optional	VADR_Update	general
 version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, ChroQueTas, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	docker
 version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, ChroQueTas, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	general
+wf_microreact_export	access_token	String	Users' access token for Microreact API usage		Optional	Microreact_Export	general
+wf_microreact_export	date_column	String	Column of Terra table containing dates		Optional	Microreact_Export	general
+wf_microreact_export	download_table	Boolean	Will use download_terra_table to obtain Terra table when set to true, set to false when running on command line for TSV/CSV submission	True	Optional	Microreact_Export	general
+wf_microreact_export	metadata_columns	Array[String]	Columns of Terra table to be used as Microreact metadata, will default to using the whole Terra table if empty		Optional	Microreact_Export	general
+wf_microreact_export	metadata_file	File	For usage on command line when submitting a local TSV/CSV file only.		Optional	Microreact_Export	general
+wf_microreact_export	project_url	String	Microreact project ID that is used for updating an existing project		Optional	Microreact_Export	general
+wf_microreact_export	remove_file_columns	Boolean	When true, will remove columns associated with files, removing cloud URLs.	True	Optional	Microreact_Export	general
+wf_microreact_export	restricted_access	Boolean	When true, restricts access to the Microreact project to private	True	Optional	Microreact_Export	general
+wf_microreact_export	tree_files	Array[File]	List of tree files to include in the Microreact project		Optional	Microreact_Export	general
+wf_microreact_export	update_project	Boolean	When true, updates an existing Microreact project. This option requires "project_url" to be used.	False	Optional	Microreact_Export	general
 wg_reorder_matrix	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Tree	runtime
 wg_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Tree	runtime
 wg_reorder_matrix	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1	Optional	Snippy_Tree	docker
