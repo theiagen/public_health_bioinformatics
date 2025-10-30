@@ -69,6 +69,10 @@ The **Augur_PHB** is a [Terra](https://app.terra.bio/) and command-line compatib
 
 #### Augur Inputs
 
+!!! warning "Sample diversity and tree building"
+    Fefore attempting a phylogenetic tree, you must insure that the input FASTAs meet quality-control metrics. Sets of FASTAs with highly discordant quality metrics may result in the inaccurate inference of genetic relatedness. 
+    Additionally, there must be some sequence diversity among the set of input assemblies. If insufficient diversity is present, it may be necessary to add a more divergent sequences to the set of samples to be analyzed.
+
 The metadata present in the final JSON file for Auspice visualization is dictated by the metadata present in the optional metadata file. If no file is provided, the final tree visual will include solely the distance tree calculated from the provided set if assembly files. If this file is present, different metadata fields will trigger different steps: date information will trigger the refinement of the distance tree into a time tree; if clade information is passed, this will be assigned to the tree nodes; if geographical information is present, it will be represented in the Auspice visual within a map. The following figure illustrates this logic.
 
 !!! caption "Augur metadata conditionals"
@@ -78,20 +82,27 @@ The metadata present in the final JSON file for Auspice visualization is dictate
 
 Additionally, particular inputs will automatically bypass or trigger modules, such as populating `alignment_fasta`, which bypasses alignment. Clade-defining mutations can be automatically extracted if the "clade_membership" metadata field is populated in conjunction with setting the `extract_clade_mutations` optional input to `true`.
 
-!!! warning "Sample diversity and tree building"
-    Fefore attempting a phylogenetic tree, you must insure that the input FASTAs meet quality-control metrics. Sets of FASTAs with highly discordant quality metrics may result in the inaccurate inference of genetic relatedness. 
-    Additionally, there must be some sequence diversity among the set of input assemblies. If insufficient diversity is present, it may be necessary to add a more divergent sequences to the set of samples to be analyzed.
+##### A Note on Optional Inputs
 
-There are **many** optional user inputs. For SARS-CoV-2, Flu, RSV-A, RSV-B, and MPXV, default values that mimic the Nextstrain builds have been preselected. To use these defaults, you must write either `"sars-cov-2"`,`"flu"`, `"rsv-a"`, `"rsv-b"`, or `"mpxv"` for the `organism` variable. For Flu it is **required** to set `flu_segment` to either `"HA"` or `"NA"` & `flu_subtype` to either `"H1N1"` or `"H3N2"` or `"Victoria"` or `"Yamagata"` or `"H5N1"` (`"H5N1"` will only work with `"HA"`) depending on your set of samples.
+!!! warning "Input organism"
+    There are **many** optional user inputs. For SARS-CoV-2, Flu, RSV-A, RSV-B, and MPXV, default values that mimic the Nextstrain builds have been preselected. To use these defaults, you must write either `"sars-cov-2"`,`"flu"`, `"rsv-a"`, `"rsv-b"`, or `"mpxv"` for the `organism` variable. For Flu it is **required** to set `flu_segment` to either `"HA"` or `"NA"` & `flu_subtype` to either `"H1N1"` or `"H3N2"` or `"Victoria"` or `"Yamagata"` or `"H5N1"` (`"H5N1"` will only work with `"HA"`) depending on your set of samples.
 
-???+ toggle "A Note on Optional Inputs"
+!!! info "Running Augur_PHB on custom organsisms"
+    Augur_PHB supports several "default" organisms but you way wish to run on a set of a assemblies from an organism not on the provided list above. To do so, you'll need to provide several optional inputs to guarantee workflow functionality
+    
 
-{{ include_md("common_text/organism_parameters_wf.md", condition="virus", indent=4) }}
+    | **Task** | **Input** | **Description** | Notes |
+    | --- | --- | --- | --- |
+    | augur | _reference_fasta_ | Reference sequence in FASTA format. |  |
+    | augur | _reference_genbank_ | Reference sequence in GenBank format. |  |
+    | augur | _organism_ | Name of expected organism. |  |
+    | augur | _min_num_unambig_ | Minimum number of called bases in genome to pass prefilter. |  |
+    | augur | _lat_longs_tsv_ | Tab-delimited file of geographic location names with corresponding latitude and longitude values. Only necessary if geographical information is in the metadata. | Must follow [this](https://github.com/nextstrain/augur/blob/master/augur/data/lat_longs.tsv) format |
+    | augur | _clades_tsv_ | TSV file containing clade mutation positions in four columns. Only necessary if clade information is in the metadata. | For an organism without set defaults, an empty clades file is provided to prevent workflow failure, but will not be as useful as an organism specific clades file. |
 
-    For more information regarding these optional inputs, please view [Nextrain's detailed documentation on Augur](https://docs.nextstrain.org/projects/augur/en/stable/usage/usage.html)
+For organisms _other_ than SARS-CoV-2 or Flu, the required variables have both the "Required" and "Optional" tags. For more information regarding these optional inputs, please view [Nextrain's detailed documentation on Augur](https://docs.nextstrain.org/projects/augur/en/stable/usage/usage.html)
 
-    !!! info "What's required or not?"
-        For organisms _other_ than SARS-CoV-2 or Flu, the required variables have both the "required" and "optional" tags.
+{{ include_md("common_text/organism_parameters_wf.md", condition="virus") }}
 
 /// html | div[class="searchable-table"]
 
@@ -102,13 +113,9 @@ There are **many** optional user inputs. For SARS-CoV-2, Flu, RSV-A, RSV-B, and 
 
 ### Workflow Tasks
 
-The Augur_PHB workflow uses the inputs to generate a phylogenetic tree in Auspice JSON and Newick formats. 
-    
-In Augur_PHB, the tasks below are called. For the Augur subcommands, please view the [Nextstrain Augur documentation](https://docs.nextstrain.org/projects/augur/en/stable/usage/usage.html) for more details and explanations.
+The Augur_PHB workflow uses the inputs to generate a phylogenetic tree in Auspice JSON and Newick formats. The tasks below are called. For the Augur subcommands, please view the [Nextstrain Augur documentation](https://docs.nextstrain.org/projects/augur/en/stable/usage/usage.html) for more details and explanations.
 
 {{ include_md("common_text/versioning_task.md") }}
-
-{{ include_md("common_text/organism_parameters_wf.md") }}
 
 {{ include_md("common_text/augur_align_task.md") }}
 
@@ -139,17 +146,20 @@ In Augur_PHB, the tasks below are called. For the Augur subcommands, please view
 
 #### Augur Outputs
 
-!!! dna "Diversity dependent"
-    Note that the node & branch coloring by clade or lineage assignment might be dependent on the diversity of your input dataset. This is because the clade assignment is done using the ancestrally reconstructed amino acid or nucleotide changes at the tree nodes rather than a direct sequence-to-reference mutation comparison. You may notice this happening when you get clade/lineage assignments from NextClade when running TheiaCoV workflows, but no clade/lineage assignment on the Augur Auspice tree.
+The `auspice_input_json` is intended to be uploaded to [Auspice](https://auspice.us/) to view the resulting phylogenetic tree with the provided metadata. Alternatively, a phylogenetic tree in Newick fromat is also available for visualization in other platforms. The `metadata_merged` output can also be uploaded to these to add further context to the phylogenetic visualization. Additionally, the `combined_assemblies` output can be uploaded to [UShER](https://genome.ucsc.edu/cgi-bin/hgPhyloPlace) to view the samples on a global tree of representative sequences from public repositories.
 
-    To get around this issue, you can upload the Augur output file `merged-metadata.tsv` to Auspice that includes the correct clade/lineage assignments to allow for coloring by Clade.
+The Nextstrain team hosts documentation surrounding the Augur workflow to Auspice visualization here, which details the various components of the Auspice interface: [How data is exported by Augur for visualisation in Auspice](https://docs.nextstrain.org/en/latest/learn/augur-to-auspice.html).
 
-!!! dna "Flu clade assignments"
-    Note that for flu, the clade assignment is usually mostly done for the more recent seasonal influenza viruses. Older strains may get an "unassigned" designation for clades. Therefore, it is important to counter check with the NextClade results from TheiaCoV if the lack of clade assignment is due to analyzing older sequences or sequence related.
+##### Mpox-specific Auspice Output JSON
 
-The `auspice_input_json` is intended to be uploaded to [Auspice](https://auspice.us/) to view the phylogenetic tree. This provides a visualization of the genetic relationships between your set of samples. The `metadata_merged` output can also be uploaded to add context to the phylogenetic visualization. The `combined_assemblies` output can be uploaded to [UShER](https://genome.ucsc.edu/cgi-bin/hgPhyloPlace) to view the samples on a global tree of representative sequences from the public repositories.
+If you are building a tree for Mpox samples and set the optional input parameter `organism` to `"mpox"` , an additional step will be carried out in the Augur_PHB workflow that calculates the mutation fraction of G→A or C→T changes. These mutations have been shown to be a characteristic of APOBEC3-type editing, which indicate adaptation of the virus to circulation among humans.
 
-The Nextstrain team hosts documentation surrounding the Augur workflow → Auspice visualization here, which details the various components of the Auspice interface: [How data is exported by Augur for visualisation in Auspice](https://docs.nextstrain.org/en/latest/learn/augur-to-auspice.html).
+When visualizing the output `auspice_input_json` file, there will be 2 new choices in the drop-down menu for "Color By":
+
+- G→A or C→T fraction
+- NGA/TCN context of G→A or C→T mutations.
+
+An example Mpox tree with these "Color By" options can be viewed [here](https://nextstrain.org/mpox/clade-IIb?c=GA_CT_fraction)
 
 /// html | div[class="searchable-table"]
 
@@ -157,16 +167,7 @@ The Nextstrain team hosts documentation surrounding the Augur workflow → Auspi
 
 ///
 
-#### Mpox-specific Auspice Output JSON
 
-If you are building a tree for Mpox samples and set the optional input parameter `organism` to `"mpox"` , an additional step will be carried out in the Augur_PHB workflow. This additional step will calculate the mutation fraction of G→A or C→T changes. These mutations have been shown to be a characteristic of APOBEC3-type editing, which indicate adaptation of the virus to circulation among humans as was observed with the 2022 clade IIb outbreak, and more recently (2024) with the clade Ib outbreak in South Kivu, Democratic Republic of the Congo.
-
-When visualizing the output `auspice_input_json` file, there will be 2 new choices in the drop-down menu for "Color By":
-
-- G→A or C→T fraction
-- NGA/TCN context of G→A or C→T mutations.
-
-An example Mpox tree with these "Color By" options can be viewed here: <https://nextstrain.org/mpox/clade-IIb?c=GA_CT_fraction>
 
 ### References
 
