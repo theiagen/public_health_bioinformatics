@@ -11,7 +11,7 @@ task tbp_parser {
     String? sequencing_method
     String? operator
 
-    Int? min_depth # default 10
+    Int min_depth = 10 # default 10
     Float? min_frequency # default 0.1
     Int? min_read_support # default 10
     
