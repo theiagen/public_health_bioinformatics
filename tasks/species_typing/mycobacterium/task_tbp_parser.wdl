@@ -92,23 +92,19 @@ task tbp_parser {
         stop=$(echo "$line" | cut -f 3)
 
         # count filtered positions, total positions, and total depth for the region
-        read \
-          filtered_count \
-          total_count \
-          total_depth \
-          < <(
-            samtools depth -a -J -r "$chromosome:$start-$stop" "~{tbprofiler_bam}" | \
-            awk -v min_depth="~{min_depth}" '
-              BEGIN { filtered_count=0; total_count=0; total_depth=0 }
-              {
-                total_count++;
-                if ($3 >= min_depth) {
-                  filtered_count++; total_depth += $3
-                }
+        read filtered_count total_count total_depth < <(
+          samtools depth -a -J -r "$chromosome:$start-$stop" "~{tbprofiler_bam}" |
+          awk -v min_depth="~{min_depth}" '
+            BEGIN { filtered_count=0; total_count=0; total_depth=0 }
+            {
+              total_count++;
+              if ($3 >= min_depth) {
+                filtered_count++; total_depth += $3
               }
-              END { print filtered_count, total_count, total_depth }
-            '
-          )
+            }
+            END { print filtered_count, total_count, total_depth }
+          '
+        )
 
         # accumulate counts across all primer regions
         filtered_primer_positions=$((filtered_primer_positions + filtered_count))
