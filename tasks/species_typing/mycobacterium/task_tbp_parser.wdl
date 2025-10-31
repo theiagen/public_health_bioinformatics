@@ -90,7 +90,6 @@ task tbp_parser {
         # pull out the important fields from the bedfile
         start=$(echo "$line" | cut -f 2)
         stop=$(echo "$line" | cut -f 3)
-        gene=$(echo "$line" | cut -f 4)
 
         # count filtered positions, total positions, and total depth for the region
         read \
