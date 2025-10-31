@@ -212,6 +212,12 @@ workflow theiaeuk_ont {
     File? amr_search_results_pdf = merlin_magic.amr_results_pdf
     String? amr_search_docker = merlin_magic.amr_search_docker
     String? amr_search_version = merlin_magic.amr_search_version  
+    # chroquetas
+    File? chroquetas_amr_stats = merlin_magic.chroquetas_amr_stats
+    File? chroquetas_amr_summary = merlin_magic.chroquetas_amr_summary
+    String? chroquetas_fungicide_resistance = merlin_magic.chroquetas_fungicide_resistance
+    String? chroquetas_version = merlin_magic.chroquetas_version
+    String? chroquetas_status = merlin_magic.chroquetas_status
     # Snippy variants outputs
     String? theiaeuk_snippy_variants_version = merlin_magic.snippy_variants_version
     String? theiaeuk_snippy_variants_query = merlin_magic.snippy_variants_query
