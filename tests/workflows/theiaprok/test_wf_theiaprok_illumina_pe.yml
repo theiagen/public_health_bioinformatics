@@ -418,7 +418,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_prokka.wdl
       md5sum: 000285292df1f7c353fafcc0d5737028
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_resfinder.wdl
-      md5sum: 062be12bbba315d4feee01dd10e1c782
+      md5sum: 9fcb66937a2944585533644ff96ee5ef
     - path: miniwdl_run/wdl/tasks/gene_typing/variant_detection/task_snippy_variants.wdl
       md5sum: b66f4306b61fa3bc7bbc242556866b6c
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_bbduk.wdl
@@ -484,7 +484,7 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 481f5fbce5aa1abf93acd912797821cc
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: 007d00e16609a8823a1fedb91fcbfb03
+      md5sum: 23fd600c379012c909c0b0dd811425bb
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
       contains: ["version", "QC", "output"]
     - path: miniwdl_run/workflow.log

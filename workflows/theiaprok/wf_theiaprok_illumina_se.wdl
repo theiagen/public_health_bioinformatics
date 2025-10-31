@@ -538,9 +538,12 @@ workflow theiaprok_illumina_se {
                 "resfinder_predicted_resistance_Cip": resfinder_task.resfinder_predicted_resistance_Cip,
                 "resfinder_predicted_resistance_Smx": resfinder_task.resfinder_predicted_resistance_Smx,
                 "resfinder_predicted_resistance_Tmp": resfinder_task.resfinder_predicted_resistance_Tmp,
+                "resfinder_predicted_resistance_fq_mechanisms": resfinder_task.resfinder_predicted_resistance_fq_mechanisms,
+                "resfinder_predicted_xdr_shigella": resfinder_task.resfinder_predicted_xdr_shigella,
                 "resfinder_predicted_xdr_shigella": resfinder_task.resfinder_predicted_xdr_shigella,
                 "resfinder_results": resfinder_task.resfinder_results_tab,
                 "resfinder_seqs": resfinder_task.resfinder_hit_in_genome_seq,
+                "resfinder_version": resfinder_task.resfinder_version,
                 "run_id": run_id,
                 "seq_platform": seq_method,
                 "seqsero2_note": merlin_magic.seqsero2_note,
@@ -844,6 +847,9 @@ workflow theiaprok_illumina_se {
     String? resfinder_predicted_resistance_Cip = resfinder_task.resfinder_predicted_resistance_Cip
     String? resfinder_predicted_resistance_Smx = resfinder_task.resfinder_predicted_resistance_Smx
     String? resfinder_predicted_resistance_Tmp = resfinder_task.resfinder_predicted_resistance_Tmp
+    String? resfinder_predicted_resistance_fq = resfinder_task.resfinder_predicted_resistance_fq
+    Int? resfinder_predicted_resistance_fq_mechanisms = resfinder_task.resfinder_predicted_resistance_fq_mechanisms
+    String? resfinder_version = resfinder_task.resfinder_version
     String? resfinder_db_version = resfinder_task.resfinder_db_version
     String? resfinder_docker = resfinder_task.resfinder_docker
     # MLST Typing
