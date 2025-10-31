@@ -77,17 +77,53 @@ task tbp_parser {
     echo 0.0 > AVG_DEPTH
 
     if [[ "~{tngs_data}" == "true" ]]; then
-      # get cumulative percent coverage for all primer regions over min_depth
-      cumulative_primer_region_length=$(samtools depth -a -J ~{tbprofiler_bam} -b "$coverage_regions_bed" | wc -l)
-      genome=$(samtools depth -a -J ~{tbprofiler_bam} -b "$coverage_regions_bed" | awk -F "\t" -v min_depth=~{min_depth} '{if ($3 >= min_depth) print;}' | wc -l )
+      # extract chromosome name from bam file
+      chromosome=$(samtools idxstats ~{tbprofiler_bam} | cut -f 1 | head -1)
+
+      # initialize counters
+      filtered_primer_positions=0
+      total_primer_positions=0
+      total_primer_depth=0
+
+      # iterate through file and calculate coverage for each row in the bedfile (1-based)
+      while read -r line; do
+        # pull out the important fields from the bedfile
+        start=$(echo "$line" | cut -f 2)
+        stop=$(echo "$line" | cut -f 3)
+        gene=$(echo "$line" | cut -f 4)
+
+        # count filtered positions, total positions, and total depth for the region
+        read \
+          filtered_count \
+          total_count \
+          total_depth \
+          < <(
+            samtools depth -a -J -r "$chromosome:$start-$stop" "~{tbprofiler_bam}" | \
+            awk -v min_depth="~{min_depth}" '
+              BEGIN { filtered_count=0; total_count=0; total_depth=0 }
+              {
+                total_count++;
+                if ($3 >= min_depth) {
+                  filtered_count++; total_depth += $3
+                }
+              }
+              END { print filtered_count, total_count, total_depth }
+            '
+          )
+
+        # accumulate counts across all primer regions
+        filtered_primer_positions=$((filtered_primer_positions + filtered_count))
+        total_primer_positions=$((total_primer_positions + total_count))
+        total_primer_depth=$((total_primer_depth + total_depth))
+      done < "$coverage_regions_bed"
 
       # prevents division by zero if no coverage across any primer regions
-      if [[ $cumulative_primer_region_length -eq 0 ]]; then
+      if [[ $filtered_primer_positions -eq 0 ]]; then
         echo "No coverage across any tNGS regions found."
       else
-        python3 -c "print ( ($genome / $cumulative_primer_region_length ) * 100 )" | tee GENOME_PC
+        python3 -c "print ( ($filtered_primer_positions / $total_primer_positions ) * 100 )" | tee GENOME_PC
         # get average depth for all primer regions
-        samtools depth -a -J ~{tbprofiler_bam} -b "$coverage_regions_bed" | awk -F "\t" '{sum+=$3} END { if (NR > 0) print sum/NR; else print 0 }' | tee AVG_DEPTH
+        python3 -c "print ( $total_primer_depth / $filtered_primer_positions )" | tee AVG_DEPTH
       fi
 
     else
