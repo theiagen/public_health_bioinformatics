@@ -11,7 +11,7 @@ task irma {
     Int minimum_read_length = 75 # matching default for TheiaCoV_Illumina_PE; NOTE: IRMA's default is 125 bp
     Int minimum_average_consensus_allele_quality = 10 # IRMA default is 0, we are matching MIRA standards for both ONT and ILMN: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
     Float minimum_ambiguous_threshold = 0.20
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/irma:1.2.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/irma:1.3.1"
     Int memory = 16
     Int cpu = 4
     Int disk_size = 100
@@ -229,6 +229,22 @@ task irma {
       # clean up temporary FASTA files
       rm "padded_assemblies/${BASENAME%.fasta}.temp.fasta"
     done
+
+    echo "Counting number of minor variants for each segment..."
+    for TABLE in ~{samplename}/tables/*-variants.txt; do
+      echo "Processing table: ${TABLE}"
+      # extract segment name from filename (splitting on '_' and '-' delimiters)
+      SEGMENT_NAME=$(basename "${TABLE}" | awk -F'[_-]' '{print $2}')
+      count=$(awk -F'\t' 'NR>1 && $9 >= 0.05 {c++} END{print c+0}' "$TABLE")
+      echo "$count" > "~{samplename}/tables/SEG_${SEGMENT_NAME}_NUM_MINOR_VARIANTS"
+      if [[ ! -f "~{samplename}/tables/all_minor_variants.tsv" ]]; then
+        # create file with header if it doesn't exist
+        awk -F'\t' 'NR==1 {print}' "$TABLE" > "~{samplename}/tables/all_minor_variants.tsv"
+      fi
+      # append rows of minor variants for each segment to file
+      awk -F'\t' 'NR>1 && $9 >= 0.05 {print}' "$TABLE" >> "~{samplename}/tables/all_minor_variants.tsv"
+    done
+
   >>>
   output {
     # all of these FASTAs are derived from the amended_consensus/*.fa files produced by IRMA
@@ -255,6 +271,17 @@ task irma {
     File? seg_mp_assembly_padded = "padded_assemblies/~{samplename}_MP.pad.fasta"
     File? seg_np_assembly_padded = "padded_assemblies/~{samplename}_NP.pad.fasta"
     File? seg_ns_assembly_padded = "padded_assemblies/~{samplename}_NS.pad.fasta"
+
+    # Output number of minor variants called by IRMA for each segment
+    Int? seg_ha_num_minor_variants = read_int("~{samplename}/tables/SEG_HA_NUM_MINOR_VARIANTS")
+    Int? seg_na_num_minor_variants = read_int("~{samplename}/tables/SEG_NA_NUM_MINOR_VARIANTS")
+    Int? seg_pa_num_minor_variants = read_int("~{samplename}/tables/SEG_PA_NUM_MINOR_VARIANTS")
+    Int? seg_pb1_num_minor_variants = read_int("~{samplename}/tables/SEG_PB1_NUM_MINOR_VARIANTS")
+    Int? seg_pb2_num_minor_variants = read_int("~{samplename}/tables/SEG_PB2_NUM_MINOR_VARIANTS")
+    Int? seg_mp_num_minor_variants = read_int("~{samplename}/tables/SEG_MP_NUM_MINOR_VARIANTS")
+    Int? seg_np_num_minor_variants = read_int("~{samplename}/tables/SEG_NP_NUM_MINOR_VARIANTS")
+    Int? seg_ns_num_minor_variants = read_int("~{samplename}/tables/SEG_NS_NUM_MINOR_VARIANTS")
+    File? irma_all_minor_variants_tsv = "~{samplename}/tables/all_minor_variants.tsv"
 
     String irma_type = read_string("IRMA_TYPE")
     String irma_subtype = read_string("IRMA_SUBTYPE")
