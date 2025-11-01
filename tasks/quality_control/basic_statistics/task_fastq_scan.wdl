@@ -34,6 +34,12 @@ task fastq_scan_pe {
     read1_seqs=$(cat READ1_SEQS)
     echo
 
+    jq -r .qc_stats.read_mean ~{read1_name}_fastq-scan.json > READ1_MEAN_LENGTH
+    echo "DEBUG: mean read length in $(basename ~{read1}): $(cat READ1_MEAN_LENGTH)"
+
+    jq -r .qc_stats.qual_mean ~{read1_name}_fastq-scan.json > READ1_MEAN_QUALITY
+    echo "DEBUG: mean read quality in $(basename ~{read1}): $(cat READ1_MEAN_QUALITY)"
+
     # capture reverse read stats
     echo "DEBUG: running fastq-scan on $(basename ~{read2})"
     eval "${cat_reads} ~{read2}" | fastq-scan | tee ~{read2_name}_fastq-scan.json
@@ -42,6 +48,12 @@ task fastq_scan_pe {
     jq .qc_stats.read_total ~{read2_name}_fastq-scan.json > READ2_SEQS
     echo "DEBUG: number of reads in $(basename ~{read2}): $(cat READ2_SEQS)"
     read2_seqs=$(cat READ2_SEQS)
+
+    jq -r .qc_stats.read_mean ~{read2_name}_fastq-scan.json > READ2_MEAN_LENGTH
+    echo "DEBUG: mean read length in $(basename ~{read2}): $(cat READ2_MEAN_LENGTH)"
+
+    jq -r .qc_stats.qual_mean ~{read2_name}_fastq-scan.json > READ2_MEAN_QUALITY
+    echo "DEBUG: mean read quality in $(basename ~{read2}): $(cat READ2_MEAN_QUALITY)"
 
     # capture number of read pairs
     if [ "${read1_seqs}" == "${read2_seqs}" ]; then
@@ -59,6 +71,10 @@ task fastq_scan_pe {
     File read2_fastq_scan_json = "~{read2_name}_fastq-scan.json"
     Int read1_seq = read_int("READ1_SEQS")
     Int read2_seq = read_int("READ2_SEQS")
+    Float read1_mean_length = read_float("READ1_MEAN_LENGTH")
+    Float read2_mean_length = read_float("READ2_MEAN_LENGTH")
+    Float read1_mean_quality = read_float("READ1_MEAN_QUALITY")
+    Float read2_mean_quality = read_float("READ2_MEAN_QUALITY")
     String read_pairs = read_string("READ_PAIRS")
     String version = read_string("VERSION")
     String fastq_scan_docker = docker
@@ -103,10 +119,18 @@ task fastq_scan_se {
     # using simple redirect so STDOUT is not confusing
     jq .qc_stats.read_total ~{read1_name}_fastq-scan.json > READ1_SEQS
     echo "DEBUG: number of reads in $(basename ~{read1}): $(cat READ1_SEQS)"
+
+    jq -r .qc_stats.read_mean ~{read1_name}_fastq-scan.json > READ1_MEAN_LENGTH
+    echo "DEBUG: mean read length in $(basename ~{read1}): $(cat READ1_MEAN_LENGTH)"
+
+    jq -r .qc_stats.qual_mean ~{read1_name}_fastq-scan.json > READ1_MEAN_QUALITY
+    echo "DEBUG: mean read quality in $(basename ~{read1}): $(cat READ1_MEAN_QUALITY)"
   >>>
   output {
     File fastq_scan_json = "~{read1_name}_fastq-scan.json"
     Int read1_seq = read_int("READ1_SEQS")
+    Float read1_mean_length = read_float("READ1_MEAN_LENGTH")
+    Float read1_mean_quality = read_float("READ1_MEAN_QUALITY")
     String version = read_string("VERSION")
     String fastq_scan_docker = docker
   }
