@@ -16,7 +16,7 @@
 === "TheiaProk_Illumina_PE"
 
     !!! caption "TheiaProk Illumina PE Workflow Diagram"
-        ![TheiaProk Illumina PE Workflow Diagram](../../assets/figures/TheiaProk_v3.0.0.png)
+        ![TheiaProk Illumina PE Workflow Diagram](../../assets/figures/TheiaProk_Illumina.png)
 
 === "TheiaProk_ONT"
 
