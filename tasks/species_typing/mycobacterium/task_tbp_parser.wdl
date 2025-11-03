@@ -104,6 +104,9 @@ task tbp_parser {
         total_covered_depth=$((total_covered_depth + covered_depth))
       done < "$coverage_regions_bed"
 
+      echo "DEBUG: Number of positions in BED file: $num_positions"
+      echo "DEBUG: Number of covered positions in BED file: $num_covered_positions"
+      echo "DEBUG: Total covered depth: $total_covered_depth"
       # prevents division by zero if no coverage across any primer regions
       if [[ $num_covered_positions -eq 0 ]]; then
         echo "No coverage across any tNGS regions found."
