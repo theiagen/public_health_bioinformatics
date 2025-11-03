@@ -18,9 +18,9 @@ task seqsero2s {
     set -euo pipefail
     
     # Print and save version
-    SeqSero2s.py --version | tee VERSION
+    SeqSero2S.py --version | tee VERSION
 
-    # Usage: SeqSero2s.py 
+    # Usage: SeqSero2S.py 
     # -m <string> (which workflow to apply, 'a' (raw reads allele micro-assembly), 'k' (raw reads and genome assembly k-mer), default=a)
     # -t <string> (input data type; HARDCODED TO EITHER '2' (separated paired-end reads) OR '3' (single reads) SINCE ASSEMBLY INPUT IS HANDLED SEPARATELY)
     # -i <file> (/path/to/input/file)
@@ -28,7 +28,7 @@ task seqsero2s {
     # -d <string> (output directory name)
     # -n <string> (sets the sample name in the report output)
 
-    SeqSero2s.py \
+    SeqSero2S.py \
       -m ~{mode} \
       -p ~{cpu} \
       ~{true='-t 2' false='-t 3' paired_end} \
@@ -101,9 +101,9 @@ task seqsero2s_assembly {
     set -euo pipefail
 
     # Print and save version
-    SeqSero2s.py --version | tee VERSION
+    SeqSero2S.py --version | tee VERSION
 
-    # Usage: SeqSero2s.py 
+    # Usage: SeqSero2S.py 
     # -m <string> (which workflow to apply; HARDCODED TO 'k' (raw reads and genome assembly k-mer) SINCE THE OTHER MODE DOES NOT WORK ON ASSEMBLIES)
     # -t <string> (input data type; HARDCODED TO '4' SINCE ONLY ASSEMBLIES ARE USED HERE)
     # -i <file> (/path/to/input/file)
@@ -111,7 +111,7 @@ task seqsero2s_assembly {
     # -d <string> (output directory name)
     # -n <string> (sets the sample name in the report output)
 
-    SeqSero2s.py \
+    SeqSero2S.py \
       -m k \
       -p ~{cpu} \
       -t 4 \
