@@ -10,7 +10,6 @@ import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen_task
 import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
-import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../tasks/taxon_id/task_identify_taxon_id.wdl" as identify_taxon_id_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
@@ -50,7 +49,7 @@ workflow theiaviral_ont {
     input:
   }
   # get the taxon id, taxon name, and taxon rank from the user provided taxon
-  call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
+  call identify_taxon_id_task.identify_taxon_id as ete3_identify {
     input:
       taxon = taxon,
       rank = read_extraction_rank
@@ -60,7 +59,7 @@ workflow theiaviral_ont {
     input:
       read1 = read1,
       samplename = samplename,
-      est_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
+      est_genome_length = select_first([genome_length, 12500]) # default viral genome length
   }
   # adapter trimming
   if (call_porechop) {
@@ -96,7 +95,7 @@ workflow theiaviral_ont {
     input:
       read1 = select_first([host_decontaminate.dehost_read1, ncbi_scrub_se.read1_dehosted]),
       samplename = samplename,
-      taxon_id = select_first([ncbi_identify.taxon_id]),
+      taxon_id = select_first([ete3_identify.taxon_id]),
       extract_unclassified = extract_unclassified
   }
   # downsample reads if the user wants, rasusa parameters are set in the task
@@ -106,7 +105,7 @@ workflow theiaviral_ont {
       input:
         read1 = metabuli.metabuli_read1_extract,
         samplename = samplename,
-        genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
+        genome_length = genome_length
     }
   }
   # extracted/filtered clean read quality check.
@@ -114,7 +113,7 @@ workflow theiaviral_ont {
     input:
       read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
       samplename = samplename,
-      est_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
+      est_genome_length = select_first([genome_length, 12500])
   }
   # check for minimum number of reads, basepairs, coverage, etc
   if (! skip_screen) {
@@ -122,7 +121,7 @@ workflow theiaviral_ont {
       input:
         read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
         workflow_series = "theiaviral",
-        expected_genome_length = select_first([genome_length, ncbi_identify.avg_genome_length]),
+        expected_genome_length = genome_length,
         skip_mash = true
     }
   }
@@ -168,21 +167,12 @@ workflow theiaviral_ont {
           assembly_fasta = select_first([reference_fasta, flye.assembly_fasta, raven.assembly_fasta]),
           samplename = samplename
       }
-      # if skani cannot identify a reference genome, fail gracefully
-      if (skani.skani_status == "PASS") {
-        # download the best reference determined from skani
-        call ncbi_datasets_task.ncbi_datasets_download_genome_accession as ncbi_datasets {
-          input:
-            ncbi_accession = skani.skani_top_accession,
-            use_ncbi_virus = skani.skani_virus_download
-        }
-      }
       if (defined(reference_fasta) || skani.skani_status == "PASS") {
         # align assembly to reference genome
         call minimap2_task.minimap2 as minimap2 {
           input:
             query1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
-            reference = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+            reference = select_first([reference_fasta, skani.skani_reference_assembly]),
             samplename = samplename,
             mode = "map-ont",
             output_sam = true,
@@ -204,14 +194,14 @@ workflow theiaviral_ont {
         # Index the reference genome for Clair3
         call fasta_utilities_task.samtools_faidx as fasta_utilities{
           input:
-            fasta = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta])
+            fasta = select_first([reference_fasta, skani.skani_reference_assembly])
         }
         # variant calling with Clair3
         call clair3_task.clair3_variants as clair3 {
           input:
             alignment_bam_file = parse_mapping.bam,
             alignment_bam_file_index = parse_mapping.bai,
-            reference_genome_file = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+            reference_genome_file = select_first([reference_fasta, skani.skani_reference_assembly]),
             reference_genome_file_index = fasta_utilities.fai,
             sequencing_platform = "ont",
             enable_long_indel = true,
@@ -222,7 +212,7 @@ workflow theiaviral_ont {
           input:
             bam = parse_mapping.bam,
             bai = parse_mapping.bai,
-            reference_fasta = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
+            reference_fasta = select_first([reference_fasta, skani.skani_reference_assembly]),
             min_depth = min_depth
         }
         # create consensus genome based on variant calls
@@ -238,8 +228,8 @@ workflow theiaviral_ont {
         call consensus_qc_task.consensus_qc as consensus_qc {
           input:
             assembly_fasta = bcftools_consensus.assembly_fasta,
-            reference_genome = select_first([reference_fasta, ncbi_datasets.ncbi_datasets_assembly_fasta]),
-            genome_length = select_first([genome_length, ncbi_identify.avg_genome_length])
+            reference_genome = select_first([reference_fasta, skani.skani_reference_assembly]),
+            genome_length = select_first([genome_length, 12500])
         }
         # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
         call checkv_task.checkv as checkv_consensus {
@@ -253,7 +243,7 @@ workflow theiaviral_ont {
             read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
             samplename = samplename,
             assembly_fasta = select_first([bcftools_consensus.assembly_fasta]),
-            taxon_name = ncbi_identify.raw_taxon_id,
+            taxon_name = ete3_identify.raw_taxon_id,
             seq_method = "nanopore",
             number_ATCG = consensus_qc.number_ATCG
         }
@@ -265,15 +255,11 @@ workflow theiaviral_ont {
     String theiaviral_ont_version = version_capture.phb_version
     String theiaviral_ont_date = version_capture.date
     # ncbi datasets - taxon identification
-    File ncbi_identify_taxon_summary_tsv = ncbi_identify.taxon_summary_tsv
-    File ncbi_identify_genome_summary_tsv = ncbi_identify.genome_summary_tsv
-    String ncbi_identify_taxon_id = ncbi_identify.taxon_id
-    String ncbi_identify_taxon_name = ncbi_identify.taxon_name
-    String ncbi_identify_read_extraction_rank = ncbi_identify.taxon_rank
-    Int ncbi_identify_avg_genome_length = ncbi_identify.avg_genome_length
-    String ncbi_identify_accession = ncbi_identify.ncbi_datasets_accession
-    String ncbi_identify_version = ncbi_identify.ncbi_datasets_version
-    String ncbi_identify_docker = ncbi_identify.ncbi_datasets_docker
+    String ncbi_taxon_id = ete3_identify.taxon_id
+    String ncbi_taxon_name = ete3_identify.taxon_name
+    String ncbi_read_extraction_rank = ete3_identify.taxon_rank
+    String ete3_version = ete3_identify.ete3_version
+    String ete3_docker = ete3_identify.ete3_docker
     # host decontamination outputs
     File? dehost_wf_dehost_read1 = host_decontaminate.dehost_read1
     String? dehost_wf_host_accession = host_decontaminate.host_genome_accession
@@ -369,11 +355,7 @@ workflow theiaviral_ont {
     String? skani_database = skani.skani_database
     String? skani_version = skani.skani_version
     String? skani_docker = skani.skani_docker
-    # ncbi_datasets outputs - download reference genome
-    File? skani_top_ani_fasta = ncbi_datasets.ncbi_datasets_assembly_fasta
-    String? reference_taxon = ncbi_datasets.taxon_name
-    String? ncbi_datasets_version = ncbi_datasets.ncbi_datasets_version
-    String? ncbi_datasets_docker = ncbi_datasets.ncbi_datasets_docker
+    File? skani_reference_assembly = skani.skani_reference_assembly
     # minimap2 outputs - reads aligned to best reference
     File? minimap2_out = minimap2.minimap2_out
     String? minimap2_version = minimap2.minimap2_version
