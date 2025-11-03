@@ -1,6 +1,6 @@
 version 1.0
 
-task seqsero2 {
+task seqsero2s {
   input {
     File read1
     File? read2
@@ -87,7 +87,7 @@ task seqsero2 {
   }
 }
 
-task seqsero2_assembly {
+task seqsero2s_assembly {
   input {
     File assembly_fasta
     String samplename
