@@ -22,7 +22,7 @@ import "../../tasks/species_typing/neisseria/task_meningotype.wdl" as meningotyp
 import "../../tasks/species_typing/neisseria/task_ngmaster.wdl" as ngmaster_task
 import "../../tasks/species_typing/pseudomonas/task_pasty.wdl" as pasty_task
 import "../../tasks/species_typing/salmonella/task_genotyphi.wdl" as genotyphi
-import "../../tasks/species_typing/salmonella/task_seqsero2.wdl" as seqsero2_task
+import "../../tasks/species_typing/salmonella/task_seqsero2s.wdl" as seqsero2s_task
 import "../../tasks/species_typing/salmonella/task_sistr.wdl" as sistr_task
 import "../../tasks/species_typing/staphylococcus/task_agrvate.wdl" as agrvate_task
 import "../../tasks/species_typing/staphylococcus/task_spatyper.wdl" as spatyper_task
@@ -86,7 +86,7 @@ workflow merlin_magic {
     String? pasty_docker_image
     String? pbptyper_docker_image
     String? poppunk_docker_image
-    String? seqsero2_docker_image
+    String? seqsero2s_docker_image
     String? seroba_docker_image
     String? serotypefinder_docker_image
     String? shigatyper_docker_image
@@ -401,24 +401,24 @@ workflow merlin_magic {
         disk_size = sistr_disk_size
     }
     if (!ont_data && !assembly_only) {
-      call seqsero2_task.seqsero2 { 
+      call seqsero2s_task.seqsero2s { 
         input:
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
           paired_end = paired_end,
-          docker = seqsero2_docker_image
+          docker = seqsero2s_docker_image
       }
     }
     if (ont_data || assembly_only) {
-      call seqsero2_task.seqsero2_assembly {
+      call seqsero2s_task.seqsero2s_assembly {
         input:
           assembly_fasta = assembly,
           samplename = samplename,
-          docker = seqsero2_docker_image
+          docker = seqsero2s_docker_image
       }
     }
-    if ((select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype]) == "Typhi" || sistr.sistr_predicted_serotype == "Typhi") && !assembly_only) {
+    if ((select_first([seqsero2s.seqsero2s_predicted_serotype, seqsero2s_assembly.seqsero2s_predicted_serotype]) == "Typhi" || sistr.sistr_predicted_serotype == "Typhi") && !assembly_only) {
       call genotyphi.genotyphi as genotyphi_task {
         input: 
           read1 = select_first([read1]),
@@ -851,8 +851,8 @@ workflow merlin_magic {
       "Vibrio cholerae" : "666"
     }
     # Check for Salmonella typing first then default to merlin_tag
-    String taxon = select_first([seqsero2.seqsero2_predicted_serotype, 
-      seqsero2_assembly.seqsero2_predicted_serotype,sistr.sistr_predicted_serotype, merlin_tag])
+    String taxon = select_first([seqsero2s.seqsero2s_predicted_serotype, 
+      seqsero2s_assembly.seqsero2s_predicted_serotype,sistr.sistr_predicted_serotype, merlin_tag])
 
     # Checks for a match to the AMR_Search available taxon codes
     if (taxon == "Neisseria gonorrhoeae" || taxon == "Staphylococcus aureus" || 
@@ -978,12 +978,12 @@ workflow merlin_magic {
     String? sistr_h2_antigens = sistr.sistr_h2_antigens
     String? sistr_o_antigens = sistr.sistr_o_antigens
     String? sistr_serotype_cgmlst = sistr.sistr_serotype_cgmlst
-    String seqsero2_report = select_first([seqsero2.seqsero2_report, seqsero2_assembly.seqsero2_report, ""])
-    String seqsero2_version = select_first([seqsero2.seqsero2_version, seqsero2_assembly.seqsero2_version, ""])
-    String seqsero2_predicted_antigenic_profile = select_first([seqsero2.seqsero2_predicted_antigenic_profile, seqsero2_assembly.seqsero2_predicted_antigenic_profile, ""])
-    String seqsero2_predicted_serotype = select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype, ""])
-    String? seqsero2_predicted_contamination = seqsero2.seqsero2_predicted_contamination
-    String seqsero2_note = select_first([seqsero2.seqsero2_note, seqsero2_assembly.seqsero2_note, ""])
+    String seqsero2s_report = select_first([seqsero2s.seqsero2s_report, seqsero2s_assembly.seqsero2s_report, ""])
+    String seqsero2s_version = select_first([seqsero2s.seqsero2s_version, seqsero2s_assembly.seqsero2s_version, ""])
+    String seqsero2s_predicted_antigenic_profile = select_first([seqsero2s.seqsero2s_predicted_antigenic_profile, seqsero2s_assembly.seqsero2s_predicted_antigenic_profile, ""])
+    String seqsero2s_predicted_serotype = select_first([seqsero2s.seqsero2s_predicted_serotype, seqsero2s_assembly.seqsero2s_predicted_serotype, ""])
+    String? seqsero2s_predicted_contamination = seqsero2s.seqsero2s_predicted_contamination
+    String seqsero2s_note = select_first([seqsero2s.seqsero2s_note, seqsero2s_assembly.seqsero2s_note, ""])
     # Salmonella serotype Typhi typing
     File? genotyphi_report_tsv = genotyphi_task.genotyphi_report_tsv 
     File? genotyphi_mykrobe_json = genotyphi_task.genotyphi_mykrobe_json
