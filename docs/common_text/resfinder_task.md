@@ -43,13 +43,6 @@
         6. Resfinder or PointFinder predicted resistance to **Trimethoprim**
         7. Resfinder or PointFinder predicted resistance to **Sulfamethoxazole**
 
-    ??? toggle "Additional Criteria for XDR _Shigella_ from CDC NARMS"
-
-        CDC NARMS has a slightly different definition for XDR _Shigella_ than the one used to determine the `resfinder_predicted_xdr_shigella` output above. Their definition is more stringent, and requires **two** different mechanisms that confer resistant to quinolones. The following two outputs can help determine if the sample meets this more strict criteria:
-
-        - `resfinder_predicted_resistance_fq` - a semicolon-separated list of drugs (ciprofloxacin, fluoroquinolone, nalidixic acid, and unknown quinolone) and their associated mutations for which ResFinder and/or PointFinder predicted resistance.
-        - `resfinder_predicted_resistance_fq_mechanisms` - the number of unique point mutations that confer fluoroquinolone resistance; mutations that confer resistance to more than one drug are counted once.
-
     There are 3 potential outputs for the **`resfinder_predicted_xdr_shigella`** output string:
 
     - **`Not Shigella based on gambit_predicted_taxon or user input`**
