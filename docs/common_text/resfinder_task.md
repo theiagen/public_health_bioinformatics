@@ -54,7 +54,7 @@
 
     - **`Not Shigella based on gambit_predicted_taxon or user input`**
     - **`Not XDR Shigella`** for samples indicated as _Shigella_ by either GAMBIT or user input _**BUT**_ ResFinder did **NOT** predict resistance to **all 6 drugs in the XDR definition above**
-    - **`Potentially XDR Shigella`** for samples indicated as _Shigella_ _**AND**_ ResFinder/PointFinder **DID** predict resistance to ceftriazone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, _and_ ampicillin.
+    - **`Potentially XDR Shigella`** for samples indicated as _Shigella_ _**AND**_ ResFinder/PointFinder **DID** predict resistance to **all 6 drugs in the XDR definition above**
   
     !!! tip "What should I do if I see "Potentially XDR Shigella"?"
         If a sample is designated as `Potentially XDR Shigella`, we recommend reviewing the following output columns to confirm the presence of resistance genes/mutations associated with each drug in the XDR definition:
