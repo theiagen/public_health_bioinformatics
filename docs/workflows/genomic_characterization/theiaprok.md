@@ -279,7 +279,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 {{ include_md("common_text/sistr_task.md", indent=4) }}
 
-{{ include_md("common_text/seqsero2_task.md", indent=4) }}
+{{ include_md("common_text/seqsero2s_task.md", indent=4) }}
 
 {{ include_md("common_text/genotyphi_task.md", indent=4) }}
 
