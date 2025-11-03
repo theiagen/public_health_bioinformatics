@@ -128,7 +128,7 @@ task resfinder {
       echo "Not Shigella based on gambit_predicted_taxon or user input" | tee RESFINDER_PREDICTED_XDR_SHIGELLA.txt
     fi
         
-    # function to set output strings for "Resistance" or "No Resistance predicted" for drug
+    # function to set output strings for "Resistance" or "No resistance predicted" for drug
     check_resistance() {
       local drug="$1"
       local outfile="$2"
@@ -184,7 +184,7 @@ task resfinder {
 
     done
 
-    # make output string -- prefix with "Resistance" if there are any results, if there are none say "No Resistance predicted" instead
+    # make output string -- prefix with "Resistance" if there are any results, if there are none say "No resistance predicted" instead
     {
       for drug in "${!drug_to_variable[@]}"; do
         variable="${drug_to_variable[$drug]}"
@@ -194,9 +194,9 @@ task resfinder {
       done
     } | sort | paste -d';' -s > RESFINDER_PREDICTED_RESISTANCE_FQ.txt
     
-    # If the output file is empty, write "No Resistance predicted"; otherwise prefix and suffix with Resistance (...)
+    # If the output file is empty, write "No resistance predicted"; otherwise prefix and suffix with Resistance (...)
     if [[ ! -s RESFINDER_PREDICTED_RESISTANCE_FQ.txt ]]; then
-      echo "No Resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_FQ.txt
+      echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_FQ.txt
     else 
       # add prefix and suffix
       sed -i '1s/^/Resistance (/;1s/$/)/' RESFINDER_PREDICTED_RESISTANCE_FQ.txt
