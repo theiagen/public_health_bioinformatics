@@ -65,7 +65,7 @@ workflow morgana_magic {
     String? pangolin_docker_image
     Int? pangolin_memory
     # gene coverage inputs
-    File? reference_gene_locations_bed
+    File reference_gene_locations_bed
     File? gene_coverage_bam
     Int? gene_coverage_min_depth
     Int? sc2_s_gene_start
@@ -157,7 +157,7 @@ workflow morgana_magic {
         vadr_outputs_tgz = vadr.outputs_tgz
     }
   }
-  if (workflow_type == "theiacov_pe" && (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(reference_gene_locations_bed))) {
+  if ((workflow_type == "theiacov_pe" || workflow_type == "theiacov_se" || workflow_type == "theiacov_ont") && (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || (defined(reference_gene_locations_bed) && basename(reference_gene_locations_bed) != "empty.bed"))) {
     # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
     call gene_coverage_task.gene_coverage {
       input:
