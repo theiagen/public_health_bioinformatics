@@ -234,13 +234,16 @@ task irma {
       echo "Processing table: ${TABLE}"
       # extract segment name from filename (splitting on '_' and '-' delimiters)
       SEGMENT_NAME=$(basename "${TABLE}" | awk -F'[_-]' '{print $2}')
-      count=$(awk -F'\t' 'NR>1 && $9 >= 0.05 {c++} END{print c+0}' "$TABLE")
+
+      # count number of minor variants (AF >= 0.05) excluding header line
+      count=$(awk -F'\t' 'NR>1 && $9 >= 0.05 {c++} END {print c+0}' "$TABLE")
       echo "$count" > "~{samplename}/tables/SEG_${SEGMENT_NAME}_NUM_MINOR_VARIANTS"
+
+      # create output file with header if it doesn't exist
       if [[ ! -f "~{samplename}/tables/all_minor_variants.tsv" ]]; then
-        # create file with header if it doesn't exist
         awk -F'\t' 'NR==1 {print}' "$TABLE" > "~{samplename}/tables/all_minor_variants.tsv"
       fi
-      # append rows of minor variants for each segment to file
+      # append rows of minor variants for each segment to output file
       awk -F'\t' 'NR>1 && $9 >= 0.05 {print}' "$TABLE" >> "~{samplename}/tables/all_minor_variants.tsv"
     done
 
