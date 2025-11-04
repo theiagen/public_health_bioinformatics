@@ -60,7 +60,7 @@ task ete3_taxon_id {
       "TAXON_NAME": str(reported_taxon_name),
       "TAXON_RANK": str(reported_taxon_rank),
       "RAW_TAXON_ID": str(query_taxid),
-      "RAW_TAXON_NAME": str(query_name),
+      "RAW_TAXON_NAME": str(query_taxon),
       "RAW_TAXON_RANK": str(query_rank)
     }
     for filename, value in outputs.items():
