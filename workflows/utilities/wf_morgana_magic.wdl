@@ -65,7 +65,7 @@ workflow morgana_magic {
     String? pangolin_docker_image
     Int? pangolin_memory
     # gene coverage inputs
-    File reference_gene_locations_bed
+    File? reference_gene_locations_bed
     File? gene_coverage_bam
     Int? gene_coverage_min_depth
     Int? sc2_s_gene_start
@@ -157,21 +157,23 @@ workflow morgana_magic {
         vadr_outputs_tgz = vadr.outputs_tgz
     }
   }
-  if ((workflow_type == "theiacov_pe" || workflow_type == "theiacov_se" || workflow_type == "theiacov_ont") && (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || (defined(reference_gene_locations_bed) && basename(reference_gene_locations_bed) != "empty.bed"))) {
-    # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
-    call gene_coverage_task.gene_coverage {
-      input:
-        bamfile = select_first([gene_coverage_bam]),
-        bedfile = organism_parameters.gene_locations_bed,
-        samplename = samplename,
-        organism = organism_parameters.standardized_organism,
-        sc2_s_gene_start = sc2_s_gene_start,
-        sc2_s_gene_stop = sc2_s_gene_stop,
-        min_depth = gene_coverage_min_depth,
-        cpu = gene_coverage_cpu,
-        disk_size = gene_coverage_disk_size,
-        docker = gene_coverage_docker,
-        memory = gene_coverage_memory
+  if ((workflow_type == "theiacov_pe" || workflow_type == "theiacov_se" || workflow_type == "theiacov_ont") && (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(organism_parameters.gene_locations_bed))) {
+    if (basename(organism_parameters.gene_locations_bed) != "empty.bed") {
+      # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
+      call gene_coverage_task.gene_coverage {
+        input:
+          bamfile = select_first([gene_coverage_bam]),
+          bedfile = organism_parameters.gene_locations_bed,
+          samplename = samplename,
+          organism = organism_parameters.standardized_organism,
+          sc2_s_gene_start = sc2_s_gene_start,
+          sc2_s_gene_stop = sc2_s_gene_stop,
+          min_depth = gene_coverage_min_depth,
+          cpu = gene_coverage_cpu,
+          disk_size = gene_coverage_disk_size,
+          docker = gene_coverage_docker,
+          memory = gene_coverage_memory
+      }
     }
   }
   if (organism_parameters.standardized_organism == "sars-cov-2") {
