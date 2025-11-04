@@ -35,7 +35,7 @@
     ??? toggle "Criteria for XDR _Shigella_ Prediction"
         A sample is required to meet **all 7 criteria** in order to be designated as `Potentially XDR Shigella` 
 
-        1. The GAMBIT task in the workflow must identify the sample as `Shigella` OR the user must input the word `Shigella` somewhere within the input String variable `expected_taxon`. This requirement serves as the identification of a sample to be of the _Shigella_ genus.
+        1. Either GAMBIT or the user-provided `expected_taxon` input must identify the sample as `Shigella`
         2. Resfinder or PointFinder predicted resistance to **Ampicillin**
         3. Resfinder or PointFinder predicted resistance to **Azithromycin**
         4. Resfinder or PointFinder predicted resistance to **Ciprofloxacin**
