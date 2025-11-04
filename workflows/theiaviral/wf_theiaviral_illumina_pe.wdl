@@ -220,10 +220,6 @@ workflow theiaviral_illumina_pe {
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
     String? fastq_scan_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
-    Float? fastq_scan_r1_mean_readlength_raw = read_QC_trim.fastq_scan_r1_mean_readlength_raw
-    Float? fastq_scan_r2_mean_readlength_raw = read_QC_trim.fastq_scan_r2_mean_readlength_raw
-    Float? fastq_scan_r1_mean_q_raw = read_QC_trim.fastq_scan_r1_mean_q_raw
-    Float? fastq_scan_r2_mean_q_raw = read_QC_trim.fastq_scan_r2_mean_q_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
     String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
@@ -267,10 +263,6 @@ workflow theiaviral_illumina_pe {
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
-    Float? fastq_scan_r1_mean_readlength_clean = read_QC_trim.fastq_scan_r1_mean_readlength_clean
-    Float? fastq_scan_r2_mean_readlength_clean = read_QC_trim.fastq_scan_r2_mean_readlength_clean
-    Float? fastq_scan_r1_mean_q_clean = read_QC_trim.fastq_scan_r1_mean_q_clean
-    Float? fastq_scan_r2_mean_q_clean = read_QC_trim.fastq_scan_r2_mean_q_clean
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # clean read screening
