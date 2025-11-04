@@ -34,6 +34,7 @@ workflow theiaviral_illumina_pe {
     Boolean call_metaviralspades = true # if false, move to megahit immediately
     Boolean skip_rasusa = true 
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
+    File? reference_gene_locations_bed # optional, if provided will be used for coverage calculations
     Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
     Int min_depth = 10
     Int min_map_quality = 20
@@ -198,7 +199,8 @@ workflow theiaviral_illumina_pe {
             taxon_name = ncbi_identify.raw_taxon_id,
             seq_method = "illumina_pe",
             number_ATCG = consensus_qc.number_ATCG,
-            workflow_type = "theiaviral"
+            workflow_type = "theiaviral",
+            reference_gene_locations_bed = reference_gene_locations_bed
         }
       }
     }

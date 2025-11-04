@@ -35,6 +35,7 @@ workflow theiaviral_ont {
     String samplename
     String? host # host genome to dehost reads, if desired
     File? reference_fasta
+    File? reference_gene_locations_bed # optional, if provided will be used for coverage calculations
     Int? genome_length
     Int min_depth = 10 # minimum depth for masking low coverage regions
     Float min_allele_freq = 0.6 # minimum allele frequency for consensus calling
@@ -256,7 +257,8 @@ workflow theiaviral_ont {
             taxon_name = ncbi_identify.raw_taxon_id,
             seq_method = "nanopore",
             number_ATCG = consensus_qc.number_ATCG,
-            workflow_type = "theiaviral"
+            workflow_type = "theiaviral",
+            reference_gene_locations_bed = reference_gene_locations_bed
         }
       }
     }
