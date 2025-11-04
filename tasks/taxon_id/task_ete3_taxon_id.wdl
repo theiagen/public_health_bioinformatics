@@ -36,7 +36,7 @@ task ete3_taxon_id {
     lineage2rank = taxa.get_rank(lineage)
     # will overwrite multiple "no rank" entries, but these won't be used later
     rank2lineage = {v: k for k, v in lineage2rank.items()}
-    query_rank = list(taxa.get_rank(query_taxid).keys())[0]
+    query_rank = list(taxa.get_rank([query_taxid]).keys())[0]
     query_taxon = taxa.get_taxid_translator([query_taxid])[query_taxid]
     print(f"DEBUG: Resolved input taxon '~{taxon}' to taxid: {query_taxid}, name: {query_taxon}, rank: {query_rank}")
 
