@@ -104,7 +104,7 @@ task skani {
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 21 | tee TOP_SCORE
     fi
 
-  echo ~{fasta_dir} $(cat TOP_ACCESSION).fna > TOP_ASSEMBLY
+  echo ~{fasta_dir}$(cat TOP_ACCESSION).fna > TOP_ASSEMBLY
   >>>
   output{
     File skani_report = "~{samplename}_skani_results_sorted.tsv"
@@ -112,7 +112,7 @@ task skani {
     Float skani_top_ani = read_float("TOP_ANI")
     Float skani_top_query_coverage = read_float("TOP_QUERY_COVERAGE")
     Float skani_top_score = read_float("TOP_SCORE")
-    String skani_reference_assembly = read_string("TOP_ASSEMBLY")
+    File skani_reference_assembly = read_string("TOP_ASSEMBLY")
     String skani_database = skani_db
     String skani_warning = read_string("SKANI_WARNING")
     String skani_status = read_string("SKANI_STATUS")
