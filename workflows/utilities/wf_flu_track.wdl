@@ -308,6 +308,15 @@ workflow flu_track {
     File flu_mp_segment_fasta = select_first([irma.seg_mp_assembly, vadr_flu_segments.seg_mp_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File flu_np_segment_fasta = select_first([irma.seg_np_assembly, vadr_flu_segments.seg_np_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File flu_ns_segment_fasta = select_first([irma.seg_ns_assembly, vadr_flu_segments.seg_ns_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    File? irma_all_minor_variants_tsv = irma.irma_all_minor_variants_tsv
+    Int? flu_ha_num_minor_variants = irma.seg_ha_num_minor_variants
+    Int? flu_na_num_minor_variants = irma.seg_na_num_minor_variants
+    Int? flu_pa_num_minor_variants = irma.seg_pa_num_minor_variants
+    Int? flu_pb1_num_minor_variants = irma.seg_pb1_num_minor_variants
+    Int? flu_pb2_num_minor_variants = irma.seg_pb2_num_minor_variants
+    Int? flu_mp_num_minor_variants = irma.seg_mp_num_minor_variants
+    Int? flu_np_num_minor_variants = irma.seg_np_num_minor_variants
+    Int? flu_ns_num_minor_variants = irma.seg_ns_num_minor_variants
     Array[File]? irma_assemblies = irma.irma_plurality_consensus_assemblies
     Array[File]? irma_vcfs = irma.irma_vcfs
     Array[File]? irma_bams = irma.irma_bams

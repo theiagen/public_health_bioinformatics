@@ -240,7 +240,6 @@ workflow morgana_magic {
     String? irma_type = flu_track.irma_type
     String? irma_subtype = flu_track.irma_subtype
     String? irma_subtype_notes = flu_track.irma_subtype_notes
-    Array[File]? irma_bams = flu_track.irma_bams
     # Flu GenoFLU Outputs
     String? genoflu_version = flu_track.genoflu_version
     String? genoflu_genotype = flu_track.genoflu_genotype

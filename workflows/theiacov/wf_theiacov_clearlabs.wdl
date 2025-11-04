@@ -172,11 +172,17 @@ workflow theiacov_clearlabs {
     String seq_platform = seq_method
     # Read QC - dehosting outputs
     File read1_dehosted = ncbi_scrub_se.read1_dehosted
-    # Read QC - fastq_scan outputs
+    # fastq_scan raw (per read stats)
     Int fastq_scan_num_reads_raw1 = fastq_scan_raw_reads.read1_seq
-    Int fastq_scan_num_reads_clean1 = fastq_scan_clean_reads.read1_seq
+    Float fastq_scan_r1_mean_readlength_raw = fastq_scan_raw_reads.read1_mean_length
+    Float fastq_scan_r1_mean_q_raw = fastq_scan_raw_reads.read1_mean_quality
     String fastq_scan_version = fastq_scan_raw_reads.version
+    String fastq_scan_docker = fastq_scan_raw_reads.fastq_scan_docker
     File fastq_scan_raw1_json = fastq_scan_raw_reads.fastq_scan_json
+    # fastq_scan clean (per read stats)
+    Int fastq_scan_num_reads_clean1 = fastq_scan_clean_reads.read1_seq
+    Float fastq_scan_r1_mean_readlength_clean = fastq_scan_clean_reads.read1_mean_length
+    Float fastq_scan_r1_mean_q_clean = fastq_scan_clean_reads.read1_mean_quality
     File fastq_scan_clean1_json = fastq_scan_clean_reads.fastq_scan_json
     # Read QC - kraken outputs
     String kraken_version = kraken2_raw.version
