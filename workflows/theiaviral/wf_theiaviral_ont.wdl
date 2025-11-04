@@ -10,7 +10,7 @@ import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen_task
 import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
-import "../../tasks/taxon_id/task_identify_taxon_id.wdl" as identify_taxon_id_task
+import "../../tasks/taxon_id/task_ete3_taxon_id.wdl" as identify_taxon_id_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/assembly/task_raven.wdl" as raven_task
@@ -49,7 +49,7 @@ workflow theiaviral_ont {
     input:
   }
   # get the taxon id, taxon name, and taxon rank from the user provided taxon
-  call identify_taxon_id_task.identify_taxon_id as ete3_identify {
+  call identify_taxon_id_task.ete3_taxon_id as ete3_identify {
     input:
       taxon = taxon,
       rank = read_extraction_rank
@@ -105,7 +105,7 @@ workflow theiaviral_ont {
       input:
         read1 = metabuli.metabuli_read1_extract,
         samplename = samplename,
-        genome_length = genome_length
+        genome_length = select_first([genome_length])
     }
   }
   # extracted/filtered clean read quality check.
@@ -121,7 +121,7 @@ workflow theiaviral_ont {
       input:
         read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
         workflow_series = "theiaviral",
-        expected_genome_length = genome_length,
+        expected_genome_length = select_first([genome_length, 12500]), # default to 12500 if genome_length not provided
         skip_mash = true
     }
   }
