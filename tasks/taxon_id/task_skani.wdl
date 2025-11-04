@@ -104,7 +104,7 @@ task skani {
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 21 | tee TOP_SCORE
     fi
 
-  cat ~{fasta_dir}/ $(cat TOP_ACCESSION).fna > TOP_ASSEMBLY
+  echo ~{fasta_dir} $(cat TOP_ACCESSION).fna > TOP_ASSEMBLY
   >>>
   output{
     File skani_report = "~{samplename}_skani_results_sorted.tsv"
