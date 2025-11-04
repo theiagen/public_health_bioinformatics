@@ -459,8 +459,8 @@
       md5sum: a3d0b5f00f1430f314e9a2f5b16ca915
     - path: miniwdl_run/wdl/tasks/species_typing/streptococcus/task_pbptyper.wdl
       md5sum: 1149dbbb7fcd7f8b825d59f4ab8d5f15
-    - path: miniwdl_run/wdl/tasks/species_typing/salmonella/task_seqsero2.wdl
-      md5sum: e476e906c183692ecb401c35e70afc14
+    - path: miniwdl_run/wdl/tasks/species_typing/salmonella/task_seqsero2s.wdl
+      md5sum: b66f6d92dc470e48c917666b44282109
     - path: miniwdl_run/wdl/tasks/species_typing/streptococcus/task_seroba.wdl
       md5sum: 5931ecf20a6f04e44cfd9f43fd5bae73
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl
@@ -484,7 +484,7 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 481f5fbce5aa1abf93acd912797821cc
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: 007d00e16609a8823a1fedb91fcbfb03
+      md5sum: 6c5d51a910b11e17a7a8152397ff5759
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
       contains: ["version", "QC", "output"]
     - path: miniwdl_run/workflow.log
