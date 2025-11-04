@@ -16,7 +16,6 @@ task irma {
     Int cpu = 4
     Int disk_size = 100
   }
-  String read_basename = basename(read1)
   command <<<
     # capture irma vesion
     IRMA | head -n1 | awk -F' ' '{ print "IRMA " $5 }' | tee VERSION
