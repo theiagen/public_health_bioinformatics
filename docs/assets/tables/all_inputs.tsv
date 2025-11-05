@@ -2290,7 +2290,7 @@ tbp_parser	config	File	The configuration file to use, in YAML format (overrides 
 tbp_parser	coverage_regions_bed	File	A file that contains the regions to perform coverage analysis on		Optional	TBProfiler_tNGS	general
 tbp_parser	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS	runtime
 tbp_parser	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TBProfiler_tNGS	runtime
-tbp_parser	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.6.0	Optional	TBProfiler_tNGS	docker
+tbp_parser	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1	Optional	TBProfiler_tNGS	docker
 tbp_parser	etha237_frequency	Float	Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser	0.1	Optional	TBProfiler_tNGS	general
 tbp_parser	expert_rule_regions_bed	File	A file that contains the regions where R mutations and expert rules are applied		Optional	TBProfiler_tNGS	general
 tbp_parser	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TBProfiler_tNGS	runtime
