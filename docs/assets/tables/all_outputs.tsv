@@ -273,8 +273,7 @@ ectyper_database_version	String	Version of the ECTyper database used	TheiaProk_F
 ectyper_docker	String	Docker image used to run ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_pathodb_version	String	Version of the ECTyper pathotype database used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_pathotype	String	Samples pathotype predicted by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-ectyper_pathotype_count	String	Number of pathotypes predicted by ECTyper	TheiaProk_FASTA
-ectyper_pathotype_count	String	Number of pathotypes predicted by ECTyper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+ectyper_pathotype_count	String	Number of pathotypes predicted by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_pathotype_genes	String	Pathotype genes observed by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_predicted_serotype	String	Serotype predicted by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_qc_result	String	QC pass or fail for the sample analyzed	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -1094,6 +1093,9 @@ snippy_variants_version	String	Version of Snippy used	Snippy_Variants
 snippy_variants_wf_version	String	Version of Snippy_Variants used	Snippy_Variants
 snippy_wg_snp_matrix	File	CSV file of whole genome pairwise SNP distances between samples, calculated from the final alignment	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree
 snp_matrix	File	The SNP distance matrix for all samples used in the phylogenetic tree	Augur
+snp_sites_docker	String	The Docker container to use for the task	Core_Gene_SNP
+snp_sites_multifasta	File	Multi-FASTA file of SNP sites	Core_Gene_SNP
+snp_sites_version	String	Version of the SNP-sites tool used	Core_Gene_SNP
 sonneityping_final_genotype	String	Final genotype call from Mykrobe, via sonneityper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sonneityping_final_report_tsv	File	Detailed TSV report from mykrobe, via sonneityper (see <https://github.com/katholt/sonneityping#example-output>)	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sonneityping_genotype_confidence	String	Confidence in the final genotype call from sonneityper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
