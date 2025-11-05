@@ -1,10 +1,10 @@
 version 1.0
 
-task ete3_taxon_id {
+task ete4_taxon_id {
   input {
     String taxon # can be taxon id (int) or organism name (string)
     String? rank # limit input taxon to the user specified rank
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ete3:3.1.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ete4:4.3.0"
     Int cpu = 1
     Int memory = 4
     Int disk_size = 50
@@ -14,12 +14,12 @@ task ete3_taxon_id {
     set -euo pipefail
 
     date | tee DATE
-    ete3 version | sed 's| Tool path.*||' | tee ETE3_VERSION
+    ete4 version | sed 's| Tool path.*||' | tee ete4_VERSION
 
     echo "DEBUG: Obtaining taxon report for taxon: ~{taxon} and rank: ~{rank}"
 
     python3 <<CODE
-    from ete3 import NCBITaxa
+    from ete4 import NCBITaxa
 
     taxa = NCBITaxa()
     # check if the taxon is an integer taxid or a string name
@@ -76,8 +76,8 @@ task ete3_taxon_id {
     String raw_taxon_id = read_string("RAW_TAXON_ID")
     String raw_taxon_name = read_string("RAW_TAXON_NAME")
     String raw_taxon_rank = read_string("RAW_TAXON_RANK")
-    String ete3_version = read_string("ETE3_VERSION")
-    String ete3_docker = docker
+    String ete4_version = read_string("ete4_VERSION")
+    String ete4_docker = docker
   }
   runtime {
     memory: "~{memory} GB"

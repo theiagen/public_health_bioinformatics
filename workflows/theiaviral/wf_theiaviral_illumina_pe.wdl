@@ -8,7 +8,7 @@ import "../../tasks/assembly/task_megahit.wdl" as megahit_task
 import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
-import "../../tasks/taxon_id/task_ete3_taxon_id.wdl" as identify_taxon_id_task
+import "../../tasks/taxon_id/task_ete4_taxon_id.wdl" as identify_taxon_id_task
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus_task
 import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as variant_call_task
@@ -45,7 +45,7 @@ workflow theiaviral_illumina_pe {
     input:
   }
   # get the taxon id
-  call identify_taxon_id_task.ete3_taxon_id as ete3_identify {
+  call identify_taxon_id_task.ete4_taxon_id as ete4_identify {
     input:
       taxon = taxon,
       rank = read_extraction_rank
@@ -56,7 +56,7 @@ workflow theiaviral_illumina_pe {
       read1 = read1,
       read2 = read2,
       samplename = samplename,
-      taxon_id = ete3_identify.taxon_id,
+      taxon_id = ete4_identify.taxon_id,
       extract_unclassified = extract_unclassified,
       kraken_db = kraken_db,
       workflow_series = "theiaviral",
@@ -184,7 +184,7 @@ workflow theiaviral_illumina_pe {
             read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1]),
             read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2]),
             assembly_fasta = select_first([consensus.consensus_seq]),
-            taxon_name = ete3_identify.raw_taxon_id,
+            taxon_name = ete4_identify.raw_taxon_id,
             seq_method = "illumina_pe",
             number_ATCG = consensus_qc.number_ATCG
         }
@@ -196,11 +196,11 @@ workflow theiaviral_illumina_pe {
     String theiaviral_illumina_pe_version = version_capture.phb_version
     String theiaviral_illumina_pe_date = version_capture.date
     # ncbi datasets - taxon identification
-    String ncbi_taxon_id = ete3_identify.taxon_id
-    String ncbi_taxon_name = ete3_identify.taxon_name
-    String ncbi_read_extraction_rank = ete3_identify.taxon_rank
-    String ete3_version = ete3_identify.ete3_version
-    String ete3_docker = ete3_identify.ete3_docker
+    String ncbi_taxon_id = ete4_identify.taxon_id
+    String ncbi_taxon_name = ete4_identify.taxon_name
+    String ncbi_read_extraction_rank = ete4_identify.taxon_rank
+    String ete4_version = ete4_identify.ete4_version
+    String ete4_docker = ete4_identify.ete4_docker
     # raw read quality control
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2

@@ -10,7 +10,7 @@ import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen_task
 import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
-import "../../tasks/taxon_id/task_ete3_taxon_id.wdl" as identify_taxon_id_task
+import "../../tasks/taxon_id/task_ete4_taxon_id.wdl" as identify_taxon_id_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/assembly/task_raven.wdl" as raven_task
@@ -49,7 +49,7 @@ workflow theiaviral_ont {
     input:
   }
   # get the taxon id, taxon name, and taxon rank from the user provided taxon
-  call identify_taxon_id_task.ete3_taxon_id as ete3_identify {
+  call identify_taxon_id_task.ete4_taxon_id as ete4_identify {
     input:
       taxon = taxon,
       rank = read_extraction_rank
@@ -95,7 +95,7 @@ workflow theiaviral_ont {
     input:
       read1 = select_first([host_decontaminate.dehost_read1, ncbi_scrub_se.read1_dehosted]),
       samplename = samplename,
-      taxon_id = select_first([ete3_identify.taxon_id]),
+      taxon_id = select_first([ete4_identify.taxon_id]),
       extract_unclassified = extract_unclassified
   }
   # downsample reads if the user wants, rasusa parameters are set in the task
@@ -243,7 +243,7 @@ workflow theiaviral_ont {
             read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
             samplename = samplename,
             assembly_fasta = select_first([bcftools_consensus.assembly_fasta]),
-            taxon_name = ete3_identify.raw_taxon_id,
+            taxon_name = ete4_identify.raw_taxon_id,
             seq_method = "nanopore",
             number_ATCG = consensus_qc.number_ATCG
         }
@@ -255,11 +255,11 @@ workflow theiaviral_ont {
     String theiaviral_ont_version = version_capture.phb_version
     String theiaviral_ont_date = version_capture.date
     # ncbi datasets - taxon identification
-    String ncbi_taxon_id = ete3_identify.taxon_id
-    String ncbi_taxon_name = ete3_identify.taxon_name
-    String ncbi_read_extraction_rank = ete3_identify.taxon_rank
-    String ete3_version = ete3_identify.ete3_version
-    String ete3_docker = ete3_identify.ete3_docker
+    String ncbi_taxon_id = ete4_identify.taxon_id
+    String ncbi_taxon_name = ete4_identify.taxon_name
+    String ncbi_read_extraction_rank = ete4_identify.taxon_rank
+    String ete4_version = ete4_identify.ete4_version
+    String ete4_docker = ete4_identify.ete4_docker
     # host decontamination outputs
     File? dehost_wf_dehost_read1 = host_decontaminate.dehost_read1
     String? dehost_wf_host_accession = host_decontaminate.host_genome_accession
