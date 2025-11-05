@@ -192,13 +192,6 @@ checkv_denovo_total_genes	Int	Number of genes detected in de novo assembly by Ch
 checkv_denovo_version	String	Version of CheckV used for de novo assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_denovo_weighted_completeness	Float	Weighted completeness score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
 checkv_denovo_weighted_contamination	Float	Weighted contamination score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
-chroquetas_amr_stats	File	File depicting quantity of AMR mutations detected on a gene-by-gene basis	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
-chroquetas_amr_summary	File	File depicting positions, mutations, and associated fungicide resistance	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
-chroquetas_fungicide_resistance	String	Comma-delimited summary of mutations and their associated fungicide resistance	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
-chroquetas_status	String	Status depicting passing or specific errors encountered	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
-chroquetas_version	String	Version of ChroQueTas	ChroQueTas, TheiaEuk_Illumina_PE, TheiaEuk_ONT
-chroquetas_wf_analysis_date	String	Date analysis was conducted	ChroQueTas
-chroquetas_wf_version	String	Version of the PHB workflow used	ChroQueTas
 cladetype_annotated_ref	String	The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted	TheiaEuk_ONT
 cladetyper_annotated_reference	String	The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted	Cauris_CladeTyper, TheiaEuk_Illumina_PE
 cladetyper_clade	String	The clade assigned to the input assembly	Cauris_CladeTyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
