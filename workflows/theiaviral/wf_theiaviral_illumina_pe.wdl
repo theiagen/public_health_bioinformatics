@@ -60,6 +60,7 @@ workflow theiaviral_illumina_pe {
       input:
         read1 = read1,
         read2 = read2,
+        call_kraken = true,
         samplename = samplename,
         taxon_id = ncbi_identify.taxon_id,
         extract_unclassified = extract_unclassified,
