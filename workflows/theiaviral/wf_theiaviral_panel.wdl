@@ -2,7 +2,6 @@ version 1.0
 
 import "../../tasks/task_versioning.wdl" as versioning
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
-import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
 import "../../tasks/taxon_id/task_identify_taxon_id.wdl" as identify_taxon_id_task
 import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools_task
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2_task
