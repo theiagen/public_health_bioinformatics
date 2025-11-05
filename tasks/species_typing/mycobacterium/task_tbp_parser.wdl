@@ -81,16 +81,26 @@ task tbp_parser {
       chromosome=$(samtools idxstats ~{tbprofiler_bam} | cut -f 1 | head -1)
 
       # initialize counters
+      # num_positions:          total count of positions across all regions in the BED file
+      # num_covered_positions:  total count of positions across all regions in the BED file (where read depth >= min_depth)
+      # total_covered_depth:    total sum of read depths for each position across all regions (where read depth >= min_depth)
       num_positions=0
       num_covered_positions=0
       total_covered_depth=0
 
-      # iterate through file and calculate coverage for each row in the bedfile (1-based)
+      # iterate through the BED file and calculate coverage for each region (line) (1-based coordinates)
       while read -r line; do
         start=$(echo "$line" | cut -f 2)
         stop=$(echo "$line" | cut -f 3)
 
-        # count number of total positions, covered positions (>= min_depth), and total covered depth for a given region
+        # for this specific region in the BED file, run `samtools depth` (including zero-coverage positions with -a)
+        # and pipe to awk to compute three region-level metrics:
+        # - `positions`:          count of positions in this region
+        # - `covered_positions`:  count of positions in this region (where read depth >= min_depth)
+        # - `covered_depth`:      sum of read depths for each position in this region (where read depth >= min_depth)
+        #
+        # bash process substitution makes the samtools/awk output look like a temporary file that can be read by the `read` command
+        # and assign those values to the variables mentioned above.
         read positions covered_positions covered_depth < <(
           samtools depth -a -J -r "$chromosome:$start-$stop" "~{tbprofiler_bam}" |
           awk -v min_depth="~{min_depth}" '
@@ -98,7 +108,8 @@ task tbp_parser {
             END { print positions, covered_positions, covered_depth }
           '
         )
-        # accumulate the sum of all counts across all primer regions
+        # accumulate region-level metrics into total counters.
+        # used for calculating average depth and percent coverage across all regions in the BED file once the loop is complete.
         num_positions=$((num_positions + positions))
         num_covered_positions=$((num_covered_positions + covered_positions))
         total_covered_depth=$((total_covered_depth + covered_depth))
