@@ -228,8 +228,7 @@ workflow theiaviral_ont {
         call consensus_qc_task.consensus_qc as consensus_qc {
           input:
             assembly_fasta = bcftools_consensus.assembly_fasta,
-            reference_genome = select_first([reference_fasta, skani.skani_reference_assembly]),
-            genome_length = select_first([genome_length, 12500])
+            reference_genome = select_first([reference_fasta, skani.skani_reference_assembly])
         }
         # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
         call checkv_task.checkv as checkv_consensus {
