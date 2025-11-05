@@ -8,7 +8,7 @@ import "../utilities/wf_flu_track.wdl" as run_flu_track
 import "../utilities/wf_ivar_consensus.wdl" as consensus_call
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
-import "../utilities/wf_morgana_magic.wdl" as morgana_magic
+import "../utilities/wf_morgana_magic.wdl" as morgana_magic_wf
 
 workflow theiacov_illumina_pe {
   meta {
@@ -161,7 +161,7 @@ workflow theiacov_illumina_pe {
             genome_length = organism_parameters.genome_length
         }
       }
-      call morgana_magic.morgana_magic as morgana_magic_wf {
+      call morgana_magic_wf.morgana_magic {
         input:
           samplename = samplename,
           assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
@@ -200,7 +200,7 @@ workflow theiacov_illumina_pe {
             assembly_length_unambiguous = consensus_qc.number_ATCG,
             number_Degenerate =  consensus_qc.number_Degenerate,
             percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            vadr_num_alerts = morgana_magic_wf.vadr_num_alerts
+            vadr_num_alerts = morgana_magic.vadr_num_alerts
         }
       }
     }
@@ -310,31 +310,31 @@ workflow theiacov_illumina_pe {
     Int? number_Total = consensus_qc.number_Total
     Float? percent_reference_coverage =  consensus_qc.percent_reference_coverage
     # SC2 specific coverage outputs
-    Float? sc2_s_gene_mean_coverage = morgana_magic_wf.sc2_s_gene_mean_coverage
-    Float? sc2_s_gene_percent_coverage = morgana_magic_wf.sc2_s_gene_percent_coverage
-    File? est_percent_gene_coverage_tsv = morgana_magic_wf.est_percent_gene_coverage_tsv
+    Float? sc2_s_gene_mean_coverage = morgana_magic.sc2_s_gene_mean_coverage
+    Float? sc2_s_gene_percent_coverage = morgana_magic.sc2_s_gene_percent_coverage
+    File? est_percent_gene_coverage_tsv = morgana_magic.est_percent_gene_coverage_tsv
     # Pangolin outputs
-    String? pango_lineage = morgana_magic_wf.pango_lineage
-    String? pango_lineage_expanded = morgana_magic_wf.pango_lineage_expanded
-    String? pangolin_conflicts = morgana_magic_wf.pangolin_conflicts
-    String? pangolin_notes = morgana_magic_wf.pangolin_notes
-    String? pangolin_assignment_version = morgana_magic_wf.pangolin_assignment_version
-    File? pango_lineage_report = morgana_magic_wf.pango_lineage_report
-    String? pangolin_docker = morgana_magic_wf.pangolin_docker
-    String? pangolin_versions = morgana_magic_wf.pangolin_versions
+    String? pango_lineage = morgana_magic.pango_lineage
+    String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded
+    String? pangolin_conflicts = morgana_magic.pangolin_conflicts
+    String? pangolin_notes = morgana_magic.pangolin_notes
+    String? pangolin_assignment_version = morgana_magic.pangolin_assignment_version
+    File? pango_lineage_report = morgana_magic.pango_lineage_report
+    String? pangolin_docker = morgana_magic.pangolin_docker
+    String? pangolin_versions = morgana_magic.pangolin_versions
     # Nextclade outputs for all organisms
-    String? nextclade_version = morgana_magic_wf.nextclade_version
-    String? nextclade_docker = morgana_magic_wf.nextclade_docker
+    String? nextclade_version = morgana_magic.nextclade_version
+    String? nextclade_docker = morgana_magic.nextclade_docker
     # Nextclade outputs for non-flu
-    File? nextclade_json = morgana_magic_wf.nextclade_json
-    File? auspice_json = morgana_magic_wf.auspice_json
-    File? nextclade_tsv = morgana_magic_wf.nextclade_tsv
+    File? nextclade_json = morgana_magic.nextclade_json
+    File? auspice_json = morgana_magic.auspice_json
+    File? nextclade_tsv = morgana_magic.nextclade_tsv
     String nextclade_ds_tag = organism_parameters.nextclade_dataset_tag
-    String? nextclade_aa_subs = morgana_magic_wf.nextclade_aa_subs
-    String? nextclade_aa_dels = morgana_magic_wf.nextclade_aa_dels
-    String? nextclade_clade = morgana_magic_wf.nextclade_clade
-    String? nextclade_lineage = morgana_magic_wf.nextclade_lineage
-    String? nextclade_qc = morgana_magic_wf.nextclade_qc
+    String? nextclade_aa_subs = morgana_magic.nextclade_aa_subs
+    String? nextclade_aa_dels = morgana_magic.nextclade_aa_dels
+    String? nextclade_clade = morgana_magic.nextclade_clade
+    String? nextclade_lineage = morgana_magic.nextclade_lineage
+    String? nextclade_qc = morgana_magic.nextclade_qc
     # Nextclade outputs for flu H5N1
     File? nextclade_json_flu_h5n1 = flu_track.nextclade_json_flu_h5n1
     File? auspice_json_flu_h5n1 = flu_track.auspice_json_flu_h5n1
@@ -362,14 +362,14 @@ workflow theiacov_illumina_pe {
     String? nextclade_clade_flu_na = flu_track.nextclade_clade_flu_na
     String? nextclade_qc_flu_na = flu_track.nextclade_qc_flu_na
     # VADR Annotation QC
-    File? vadr_alerts_list = morgana_magic_wf.vadr_alerts_list
-    File? vadr_feature_tbl_pass = morgana_magic_wf.vadr_feature_tbl_pass
-    File? vadr_feature_tbl_fail = morgana_magic_wf.vadr_feature_tbl_fail
-    File? vadr_classification_summary_file = morgana_magic_wf.vadr_classification_summary_file
-    File? vadr_all_outputs_tar_gz = morgana_magic_wf.vadr_all_outputs_tar_gz
-    String? vadr_num_alerts = morgana_magic_wf.vadr_num_alerts
-    String? vadr_docker = morgana_magic_wf.vadr_docker
-    File? vadr_fastas_zip_archive = morgana_magic_wf.vadr_fastas_zip_archive
+    File? vadr_alerts_list = morgana_magic.vadr_alerts_list
+    File? vadr_feature_tbl_pass = morgana_magic.vadr_feature_tbl_pass
+    File? vadr_feature_tbl_fail = morgana_magic.vadr_feature_tbl_fail
+    File? vadr_classification_summary_file = morgana_magic.vadr_classification_summary_file
+    File? vadr_all_outputs_tar_gz = morgana_magic.vadr_all_outputs_tar_gz
+    String? vadr_num_alerts = morgana_magic.vadr_num_alerts
+    String? vadr_docker = morgana_magic.vadr_docker
+    File? vadr_fastas_zip_archive = morgana_magic.vadr_fastas_zip_archive
     # Flu IRMA Outputs
     String? irma_version = flu_track.irma_version
     String? irma_docker = flu_track.irma_docker
@@ -411,12 +411,12 @@ workflow theiacov_illumina_pe {
     String? flu_xofluza_resistance = flu_track.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_track.flu_zanamivir_resistance
     # HIV Outputs
-    String? quasitools_version = morgana_magic_wf.quasitools_version
-    String? quasitools_date = morgana_magic_wf.quasitools_date
-    File? quasitools_coverage_file = morgana_magic_wf.quasitools_coverage_file
-    File? quasitools_dr_report = morgana_magic_wf.quasitools_dr_report
-    File? quasitools_hydra_vcf = morgana_magic_wf.quasitools_hydra_vcf
-    File? quasitools_mutations_report = morgana_magic_wf.quasitools_mutations_report
+    String? quasitools_version = morgana_magic.quasitools_version
+    String? quasitools_date = morgana_magic.quasitools_date
+    File? quasitools_coverage_file = morgana_magic.quasitools_coverage_file
+    File? quasitools_dr_report = morgana_magic.quasitools_dr_report
+    File? quasitools_hydra_vcf = morgana_magic.quasitools_hydra_vcf
+    File? quasitools_mutations_report = morgana_magic.quasitools_mutations_report
     # QC_Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
