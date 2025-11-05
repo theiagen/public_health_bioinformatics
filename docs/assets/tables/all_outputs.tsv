@@ -961,12 +961,12 @@ semibin_bins	Array[File]	An array of binned metagenomic assembled genome files	T
 semibin_docker	String	The Docker image of semibin	TheiaMeta_Illumina_PE
 semibin_version	String	The version of Semibin used	TheiaMeta_Illumina_PE
 seq_platform	String	Description of the sequencing methodology used to generate the input read data	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-seqsero2_note	String	Additional notes produced by SeqSero2	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-seqsero2_predicted_antigenic_profile	String	Antigenic profile predicted for Salmonella spp. by SeqSero2	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-seqsero2_predicted_contamination	String	Indicates whether contamination between Salmonella with different serotypes was predicted by SeqSero2	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-seqsero2_predicted_serotype	String	Serotype predicted by SeqSero2	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-seqsero2_report	String	TSV report produced by SeqSero2	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-seqsero2_version	String	Version of SeqSero2 used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+seqsero2s_note	String	Additional notes produced by SeqSero2S	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+seqsero2s_predicted_antigenic_profile	String	Antigenic profile predicted for Salmonella spp. by SeqSero2S	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+seqsero2s_predicted_contamination	String	Indicates whether contamination between Salmonella with different serotypes was predicted by SeqSero2S	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+seqsero2s_predicted_serotype	String	Serotype predicted by SeqSero2S	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+seqsero2s_report	String	TSV report produced by SeqSero2S	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+seqsero2s_version	String	Version of SeqSero2S used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 seroba_ariba_identity	String	Percentage identity between the query sequence and ARIBA-predicted serotype	TheiaProk_Illumina_PE
 seroba_ariba_serotype	String	Serotype predicted by ARIBA, via SeroBA	TheiaProk_Illumina_PE
 seroba_details	File	Detailed TSV file from SeroBA	TheiaProk_Illumina_PE
