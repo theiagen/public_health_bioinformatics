@@ -11,7 +11,7 @@ task tbp_parser {
     String? sequencing_method
     String? operator
 
-    Int? min_depth # default 10
+    Int min_depth = 10 # default 10
     Float? min_frequency # default 0.1
     Int? min_read_support # default 10
     
@@ -32,7 +32,7 @@ task tbp_parser {
     
     Int cpu = 1
     Int disk_size = 100   
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.6.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1"
     Int memory = 4
   }
   command <<<
@@ -77,12 +77,56 @@ task tbp_parser {
     echo 0.0 > AVG_DEPTH
 
     if [[ "~{tngs_data}" == "true" ]]; then
-      # get cumulative percent coverage for all primer regions over min_depth
-      cumulative_primer_region_length=$(samtools depth -a -J ~{tbprofiler_bam} -b "$coverage_regions_bed" | wc -l)
-      genome=$(samtools depth -a -J ~{tbprofiler_bam} -b "$coverage_regions_bed" | awk -F "\t" -v min_depth=~{min_depth} '{if ($3 >= min_depth) print;}' | wc -l )
-      python3 -c "print ( ($genome / $cumulative_primer_region_length ) * 100 )" | tee GENOME_PC
-      # get average depth for all primer regions
-      samtools depth -a -J ~{tbprofiler_bam} -b "$coverage_regions_bed" | awk -F "\t" '{sum+=$3} END { if (NR > 0) print sum/NR; else print 0 }' | tee AVG_DEPTH
+      # extract chromosome name from bam file
+      chromosome=$(samtools idxstats ~{tbprofiler_bam} | cut -f 1 | head -1)
+
+      # initialize counters
+      # num_positions:          total count of positions across all regions in the BED file
+      # num_covered_positions:  total count of positions across all regions in the BED file (where read depth >= min_depth)
+      # total_covered_depth:    total sum of read depths for each position across all regions (where read depth >= min_depth)
+      num_positions=0
+      num_covered_positions=0
+      total_covered_depth=0
+
+      # iterate through the BED file and calculate coverage for each region (line) (1-based coordinates)
+      while read -r line; do
+        start=$(echo "$line" | cut -f 2)
+        stop=$(echo "$line" | cut -f 3)
+
+        # for this specific region in the BED file, run `samtools depth` (including zero-coverage positions with -a)
+        # and pipe to awk to compute three region-level metrics:
+        # - `positions`:          count of positions in this region
+        # - `covered_positions`:  count of positions in this region (where read depth >= min_depth)
+        # - `covered_depth`:      sum of read depths for each position in this region (where read depth >= min_depth)
+        #
+        # bash process substitution makes the samtools/awk output look like a temporary file that can be read by the `read` command
+        # and assign those values to the variables mentioned above.
+        read positions covered_positions covered_depth < <(
+          samtools depth -a -J -r "$chromosome:$start-$stop" "~{tbprofiler_bam}" |
+          awk -v min_depth="~{min_depth}" '
+            { positions++; if ($3 >= min_depth) { covered_positions++; covered_depth += $3 } }
+            END { print positions, covered_positions, covered_depth }
+          '
+        )
+        # accumulate region-level metrics into total counters.
+        # used for calculating average depth and percent coverage across all regions in the BED file once the loop is complete.
+        num_positions=$((num_positions + positions))
+        num_covered_positions=$((num_covered_positions + covered_positions))
+        total_covered_depth=$((total_covered_depth + covered_depth))
+      done < "$coverage_regions_bed"
+
+      echo "DEBUG: Number of positions in BED file: $num_positions"
+      echo "DEBUG: Number of covered positions in BED file: $num_covered_positions"
+      echo "DEBUG: Total covered depth: $total_covered_depth"
+      # prevents division by zero if no coverage across any primer regions
+      if [[ $num_covered_positions -eq 0 ]]; then
+        echo "No coverage across any tNGS regions found."
+      else
+        python3 -c "print ( ($num_covered_positions / $num_positions ) * 100 )" | tee GENOME_PC
+        # get average depth for all primer regions
+        python3 -c "print ( $total_covered_depth / $num_covered_positions )" | tee AVG_DEPTH
+      fi
+
     else
       # get genome percent coverage for the entire reference genome length over min_depth
       genome=$(samtools depth -a -J ~{tbprofiler_bam} | awk -F "\t" -v min_depth=~{min_depth} '{if ($3 >= min_depth) print;}' | wc -l )
