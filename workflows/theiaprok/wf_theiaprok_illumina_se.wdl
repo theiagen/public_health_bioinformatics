@@ -546,12 +546,12 @@ workflow theiaprok_illumina_se {
                 "resfinder_version": resfinder_task.resfinder_version,
                 "run_id": run_id,
                 "seq_platform": seq_method,
-                "seqsero2_note": merlin_magic.seqsero2_note,
-                "seqsero2_predicted_antigenic_profile": merlin_magic.seqsero2_predicted_antigenic_profile,
-                "seqsero2_predicted_contamination": merlin_magic.seqsero2_predicted_contamination,
-                "seqsero2_predicted_serotype": merlin_magic.seqsero2_predicted_serotype,
-                "seqsero2_report": merlin_magic.seqsero2_report,
-                "seqsero2_version": merlin_magic.seqsero2_version,
+                "seqsero2s_note": merlin_magic.seqsero2s_note,
+                "seqsero2s_predicted_antigenic_profile": merlin_magic.seqsero2s_predicted_antigenic_profile,
+                "seqsero2s_predicted_contamination": merlin_magic.seqsero2s_predicted_contamination,
+                "seqsero2s_predicted_serotype": merlin_magic.seqsero2s_predicted_serotype,
+                "seqsero2s_report": merlin_magic.seqsero2s_report,
+                "seqsero2s_version": merlin_magic.seqsero2s_version,
                 "serotypefinder_docker": merlin_magic.serotypefinder_docker,
                 "serotypefinder_report": merlin_magic.serotypefinder_report,
                 "serotypefinder_serotype": merlin_magic.serotypefinder_serotype,
@@ -987,12 +987,12 @@ workflow theiaprok_illumina_se {
     String? sistr_h2_antigens = merlin_magic.sistr_h2_antigens
     String? sistr_o_antigens = merlin_magic.sistr_o_antigens
     String? sistr_serotype_cgmlst = merlin_magic.sistr_serotype_cgmlst
-    String? seqsero2_report = merlin_magic.seqsero2_report
-    String? seqsero2_version = merlin_magic.seqsero2_version
-    String? seqsero2_note = merlin_magic.seqsero2_note
-    String? seqsero2_predicted_antigenic_profile = merlin_magic.seqsero2_predicted_antigenic_profile
-    String? seqsero2_predicted_serotype = merlin_magic.seqsero2_predicted_serotype
-    String? seqsero2_predicted_contamination = merlin_magic.seqsero2_predicted_contamination
+    String? seqsero2s_report = merlin_magic.seqsero2s_report
+    String? seqsero2s_version = merlin_magic.seqsero2s_version
+    String? seqsero2s_note = merlin_magic.seqsero2s_note
+    String? seqsero2s_predicted_antigenic_profile = merlin_magic.seqsero2s_predicted_antigenic_profile
+    String? seqsero2s_predicted_serotype = merlin_magic.seqsero2s_predicted_serotype
+    String? seqsero2s_predicted_contamination = merlin_magic.seqsero2s_predicted_contamination
     # Salmonella serotype Typhi Typing
     File? genotyphi_report_tsv = merlin_magic.genotyphi_report_tsv 
     File? genotyphi_mykrobe_json = merlin_magic.genotyphi_mykrobe_json

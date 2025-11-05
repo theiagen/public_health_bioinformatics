@@ -1367,8 +1367,8 @@ merlin_magic	poppunk_gps_unword_clusters_csv	File	Poppunk database file *Provide
 merlin_magic	read1	File	Internal component, do not modify		Optional	TheiaEuk_ONT, TheiaProk_FASTA	general
 merlin_magic	read2	File	Internal component, do not modify		Optional	TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	run_amr_search	Boolean	If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs.	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	seqsero2_docker_image	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	seqsero2_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/seqsero2:1.2.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
+merlin_magic	seqsero2s_docker_image	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	seqsero2s_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/seqsero2s:1.1.4	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
 merlin_magic	seroba_docker_image	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	seroba_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/seroba:1.0.2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
 merlin_magic	serotypefinder_docker_image	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
@@ -2290,7 +2290,7 @@ tbp_parser	config	File	The configuration file to use, in YAML format (overrides 
 tbp_parser	coverage_regions_bed	File	A file that contains the regions to perform coverage analysis on		Optional	TBProfiler_tNGS	general
 tbp_parser	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS	runtime
 tbp_parser	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TBProfiler_tNGS	runtime
-tbp_parser	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.6.0	Optional	TBProfiler_tNGS	docker
+tbp_parser	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1	Optional	TBProfiler_tNGS	docker
 tbp_parser	etha237_frequency	Float	Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser	0.1	Optional	TBProfiler_tNGS	general
 tbp_parser	expert_rule_regions_bed	File	A file that contains the regions where R mutations and expert rules are applied		Optional	TBProfiler_tNGS	general
 tbp_parser	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TBProfiler_tNGS	runtime

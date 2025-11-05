@@ -408,11 +408,11 @@ workflow theiaprok_fasta {
             "resfinder_version": resfinder_task.resfinder_version,
             "run_id": run_id,
             "seq_platform": seq_method,
-            "seqsero2_note": merlin_magic.seqsero2_note,
-            "seqsero2_predicted_antigenic_profile": merlin_magic.seqsero2_predicted_antigenic_profile,
-            "seqsero2_predicted_serotype": merlin_magic.seqsero2_predicted_serotype,
-            "seqsero2_report": merlin_magic.seqsero2_report,
-            "seqsero2_version": merlin_magic.seqsero2_version,
+            "seqsero2s_note": merlin_magic.seqsero2s_note,
+            "seqsero2s_predicted_antigenic_profile": merlin_magic.seqsero2s_predicted_antigenic_profile,
+            "seqsero2s_predicted_serotype": merlin_magic.seqsero2s_predicted_serotype,
+            "seqsero2s_report": merlin_magic.seqsero2s_report,
+            "seqsero2s_version": merlin_magic.seqsero2s_version,
             "serotypefinder_docker": merlin_magic.serotypefinder_docker,
             "serotypefinder_report": merlin_magic.serotypefinder_report,
             "serotypefinder_serotype": merlin_magic.serotypefinder_serotype,
@@ -690,11 +690,11 @@ workflow theiaprok_fasta {
     String? sistr_h2_antigens = merlin_magic.sistr_h2_antigens
     String? sistr_o_antigens = merlin_magic.sistr_o_antigens
     String? sistr_serotype_cgmlst = merlin_magic.sistr_serotype_cgmlst
-    String? seqsero2_report = merlin_magic.seqsero2_report
-    String? seqsero2_version = merlin_magic.seqsero2_version
-    String? seqsero2_predicted_antigenic_profile = merlin_magic.seqsero2_predicted_antigenic_profile
-    String? seqsero2_predicted_serotype = merlin_magic.seqsero2_predicted_serotype
-    String? seqsero2_note = merlin_magic.seqsero2_note
+    String? seqsero2s_report = merlin_magic.seqsero2s_report
+    String? seqsero2s_version = merlin_magic.seqsero2s_version
+    String? seqsero2s_predicted_antigenic_profile = merlin_magic.seqsero2s_predicted_antigenic_profile
+    String? seqsero2s_predicted_serotype = merlin_magic.seqsero2s_predicted_serotype
+    String? seqsero2s_note = merlin_magic.seqsero2s_note
     # Klebsiella Typing
     File? kleborate_output_file = merlin_magic.kleborate_output_file
     String? kleborate_version = merlin_magic.kleborate_version
