@@ -1,6 +1,6 @@
 ??? task "`host_decontaminate`: Host Read Decontamination"
 
-    Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome acquired on-the-fly. The reference host genome can be acquired via [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon input or assembly accession. Host Decontaminate maps inputted reads to the host genome using `minimap2`, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads. 
+    Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome that is directly inputted or acquired on-the-fly. The reference host genome can be inputted into the `host` input field as a URI (with `is_genome` set to "true"), acquired via [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon input, or assembly accession (with `is_accession` set to "true"). Host Decontaminate maps inputted reads to the host genome using `minimap2`, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads. 
 
     The detailed steps and tasks are as follows:
 
