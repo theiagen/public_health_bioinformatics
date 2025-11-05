@@ -274,7 +274,7 @@ workflow morgana_magic {
     # Nextclade outputs
     String nextclade_version = select_first([rabies_nextclade.nextclade_version, nextclade_v3.nextclade_version, flu_track.nextclade_version, ""])
     String nextclade_docker = select_first([rabies_nextclade.nextclade_docker, nextclade_v3.nextclade_docker, flu_track.nextclade_docker, ""])
-    String nextclade_ds_tag = select_first([nextclade_dataset_tag, organism_parameters.nextclade_dataset_tag, ""])
+    String nextclade_ds_tag = organism_parameters.nextclade_dataset_tag
     # Nextclade outputs for non-flu
     File? nextclade_json = nextclade_v3.nextclade_json
     File? auspice_json = nextclade_v3.auspice_json
