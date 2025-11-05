@@ -193,9 +193,9 @@ task resfinder {
         fi
       done
     } | sort | paste -d';' -s > RESFINDER_PREDICTED_RESISTANCE_FQ.txt
-    
+
     # If the output file is empty, write "No resistance predicted"; otherwise prefix and suffix with Resistance (...)
-    if [[ ! -s RESFINDER_PREDICTED_RESISTANCE_FQ.txt ]]; then
+    if [[ -s RESFINDER_PREDICTED_RESISTANCE_FQ.txt ]]; then
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_FQ.txt
     else 
       # add prefix and suffix
