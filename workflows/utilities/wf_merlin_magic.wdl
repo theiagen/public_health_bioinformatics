@@ -816,6 +816,7 @@ workflow merlin_magic {
             docker = snippy_gene_query_docker_image
         }
       }
+    }
   # Running AMR Search
   if (run_amr_search) {
     # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search. 
