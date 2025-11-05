@@ -214,8 +214,6 @@ theiaviral_ont	taxon	String	Taxon ID or organism name of interest		Required	Thei
 theiaviral_panel	read1	File	Illumina forward read file in FASTQ file format (compression optional)		Required	TheiaViral_Panel	general
 theiaviral_panel	read2	File	Illumina reverse read file in FASTQ file format (compression optional)		Required	TheiaViral_Panel	general
 theiaviral_panel	samplename	String	Name of the sample being analyzed		Required	TheiaViral_Panel	general
-theiaviral_panel	taxon_ids	Array[String]	An array of taxon IDs user wishes to analyze.	Defaults to Illumina VSP set	Optional	TheiaViral_Panel	general
-theiaviral_panel	output_taxon_table	File	A TSV file containing organism names and their corresponding output table names.		Optional	TheiaViral_Panel	general
 theiaviral_panel	source_table_name	String	Name of the Terra table the source reads originate from. This is used for identifying originating location of extracted assemblies once added to output tables.		Required	TheiaViral_Panel	general
 theiaviral_panel	terra_project	String	The Terra project containing the data table		Required	TheiaViral_Panel	general
 theiaviral_panel	terra_workspace	String	The Terra workspace containing the data table		Required	TheiaViral_Panel	general
@@ -431,6 +429,10 @@ cat_lanes	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Concatenate_
 cat_lanes	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Concatenate_Illumina_Lanes, TheiaViral_Panel	runtime
 cat_lanes	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.2	Optional	Concatenate_Illumina_Lanes, TheiaViral_Panel	docker
 cat_lanes	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Concatenate_Illumina_Lanes, TheiaViral_Panel	runtime
+cat_lanes	read1_lane3	File	Internal component, do not modify		Optional	TheiaViral_Panel	general
+cat_lanes	read1_lane4	File	Internal component, do not modify		Optional	TheiaViral_Panel	general
+cat_lanes	read2_lane3	File	Internal component, do not modify		Optional	TheiaViral_Panel	general
+cat_lanes	read2_lane4	File	Internal component, do not modify		Optional	TheiaViral_Panel	general
 cat_ont_barcodes	cpu	Int	Number of CPUs to allocate to the task	2	Optional	ONT_Barcode_Concatenation	runtime
 cat_ont_barcodes	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	ONT_Barcode_Concatenation	runtime
 cat_ont_barcodes	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ont-barcodes:0.0.2	Optional	ONT_Barcode_Concatenation	docker
@@ -1654,7 +1656,7 @@ ncbi_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Dec
 ncbi_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime
 ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	docker
 ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime
-ncbi_identify	rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.		Optional	Host_Decontaminate	general
+ncbi_identify	rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.		Optional	Host_Decontaminate, TheiaViral_Panel	general
 ncbi_identify	refseq	Boolean	Only query RefSeq genomes	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general
 ncbi_identify	summary_limit	Int	Maximum number of genomes to return in the summary	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general
 ncbi_identify	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
@@ -1951,7 +1953,7 @@ read_QC_trim	artic_guppyplex_memory	Int	Amount of memory/RAM (in GB) to allocate
 read_QC_trim	artic_guppyplex_memory	Int	Internal component, do not modify		Optional	TheiaEuk_ONT, TheiaProk_ONT	general
 read_QC_trim	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime
 read_QC_trim	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-read_QC_trim	call_kraken	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_ONT, TheiaViral_Illumina_PE	general
+read_QC_trim	call_kraken	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_ONT	general
 read_QC_trim	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general
 read_QC_trim	call_midas	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel	general
 read_QC_trim	downsampling_coverage	Float	The desired coverage to sub-sample the reads to with RASUSA	150	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general
@@ -2656,19 +2658,23 @@ theiavalidate	terra_project2_name	String	If the table2_name is located in a diff
 theiavalidate	terra_workspace2_name	String	If the table2_name is located in a different Terra workspace, indicate it here. Otherwise, the workflow will look for table2_name in the Terra workspace indicated in terra_workspace1_name.	value for terra_workspace1_name	Optional	TheiaValidate	general
 theiavalidate	validation_criteria_tsv	File	If the user wants to specify a different comparison than the default exact string match, they may supply a TSV file that indicates the different options (see the section below this table).		Optional	TheiaValidate	general
 theiaviral_illumina_pe	call_metaviralspades	Boolean	True/False to call assembly with MetaviralSPAdes and use Megahit as fallback	True	Optional	TheiaViral_Illumina_PE	general
-theiaviral_illumina_pe	checkv_db	File	Database used for CheckV		Optional	TheiaViral_Illumina_PE	database
+theiaviral_illumina_pe	checkv_db	File	Database used for CheckV		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	database
 theiaviral_illumina_pe	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	True	Optional	TheiaViral_Illumina_PE	general
+theiaviral_illumina_pe	extract_unclassified	Boolean	Internal component, do not modify	True	Optional	TheiaViral_Panel	general
 theiaviral_illumina_pe	genome_length	Int	Expected genome length of taxon of interest		Optional	TheiaViral_Illumina_PE	general
 theiaviral_illumina_pe	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_Illumina_PE	general
+theiaviral_illumina_pe	host	String	Internal component, do not modify		Optional	TheiaViral_Panel	general
 theiaviral_illumina_pe	kraken_db	File	Kraken2 database file	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaViral_Illumina_PE	database
-theiaviral_illumina_pe	min_allele_freq	Float	Minimum allele frequency required for a variant to populate the consensus sequence	0.6	Optional	TheiaViral_Illumina_PE	general
-theiaviral_illumina_pe	min_depth	Int	Minimum read depth required for a variant to populate the consensus sequence	10	Optional	TheiaViral_Illumina_PE	general
-theiaviral_illumina_pe	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_Illumina_PE	general
+theiaviral_illumina_pe	min_allele_freq	Float	Minimum allele frequency required for a variant to populate the consensus sequence	0.6	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general
+theiaviral_illumina_pe	min_depth	Int	Minimum read depth required for a variant to populate the consensus sequence	10	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general
+theiaviral_illumina_pe	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general
 theiaviral_illumina_pe	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	family	Optional	TheiaViral_Illumina_PE	general
+theiaviral_illumina_pe	read_extraction_rank	String	Internal component, do not modify	family	Optional	TheiaViral_Panel	general
 theiaviral_illumina_pe	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_Illumina_PE	general
-theiaviral_illumina_pe	skani_db	File	Database used for reference selection		Optional	TheiaViral_Illumina_PE	database
+theiaviral_illumina_pe	reference_fasta	File	Internal component, do not modify		Optional	TheiaViral_Panel	reference
+theiaviral_illumina_pe	skani_db	File	Database used for reference selection		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	database
 theiaviral_illumina_pe	skip_qc	Boolean	Internal component, do not modify	False	Optional	TheiaViral_Illumina_PE	general
-theiaviral_illumina_pe	skip_rasusa	Boolean	True/False to skip read subsampling with Rasusa	True	Optional	TheiaViral_Illumina_PE	general
+theiaviral_illumina_pe	skip_rasusa	Boolean	True/False to skip read subsampling with Rasusa	True	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general
 theiaviral_illumina_pe	skip_screen	Boolean	True/False to skip read screening check prior to analysis	False	Optional	TheiaViral_Illumina_PE	general
 theiaviral_ont	call_porechop	Boolean	True/False to trim adapters with porechop	False	Optional	TheiaViral_ONT	general
 theiaviral_ont	call_raven	Boolean	True/False to call assembly with Raven and use Flye as fallback	True	Optional	TheiaViral_ONT	general
@@ -2687,6 +2693,8 @@ theiaviral_panel	extract_unclassified	Boolean	True/False that determines if uncl
 theiaviral_panel	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_Panel	general
 theiaviral_panel	kraken_db	File	Kraken2 database file in .tar.gz format.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaViral_Panel	general
 theiaviral_panel	min_read_count	Int	Minimum number of reads required to consider a taxon for assembly	1000	Optional	TheiaViral_Panel	general
+theiaviral_panel	output_taxon_table	File	A TSV file containing organism names and their corresponding output table names.		Optional	TheiaViral_Panel	general
+theiaviral_panel	taxon_ids	Array[String]	An array of taxon IDs user wishes to analyze.	[['1618189'], ['37124'], ['46839'], ['12637'], ['1216928'], ['59301'], ['2169701'], ['118655'], ['11587'], ['11029'], ['28292'], ['11033'], ['11034'], ['1608084'], ['64286'], ['11082'], ['11089'], ['64320'], ['10804'], ['12092'], ['10407'], ['3052230'], ['12475'], ['291484'], ['11676'], ['11709'], ['68887'], ['1980456'], ['308159'], ['3052470'], ['3052490'], ['169173'], ['42097'], ['261204'], ['430511'], ['3052489'], ['238817'], ['2259728'], ['47301'], ['1980442'], ['3052496'], ['3052499'], ['90961'], ['80935'], ['35305'], ['1221391'], ['38767'], ['11021'], ['38768'], ['2847089'], ['3052223'], ['260964'], ['35511'], ['11072'], ['11577'], ['38766'], ['2971765'], ['1474807'], ['12538'], ['11079'], ['3052225'], ['11083'], ['11292'], ['11580'], ['11080'], ['45270'], ['11084'], ['11590'], ['11036'], ['11039'], ['1313215'], ['33758'], ['138948'], ['138949'], ['138950'], ['138951'], ['1239565'], ['1239570'], ['1239572'], ['1239573'], ['142786'], ['28875'], ['28876'], ['36427'], ['1348384'], ['1330524'], ['95341'], ['2849717'], ['1424613'], ['2010960'], ['565995'], ['3052302'], ['3052518'], ['3052477'], ['1570291'], ['3052307'], ['3052480'], ['2169991'], ['33743'], ['3052310'], ['3052148'], ['3052314'], ['3052303'], ['3052317'], ['1708253'], ['33727'], ['1708252'], ['12542'], ['3052493'], ['378809'], ['186539'], ['11588'], ['2907957'], ['3052498'], ['1003835'], ['1452514'], ['186540'], ['186541'], ['3052503'], ['1891762'], ['10376'], ['10359'], ['10580'], ['333760'], ['333761'], ['337044'], ['10585'], ['10586'], ['10587'], ['10588'], ['10615'], ['10590'], ['10591'], ['10592'], ['10593'], ['10595'], ['10618'], ['337050'], ['1671798'], ['10596'], ['10598'], ['37115'], ['333754'], ['333767'], ['37119'], ['45240'], ['37121'], ['39457'], ['51033'], ['129724'], ['746830'], ['746831'], ['943908'], ['10632'], ['1891764'], ['1965344'], ['493803'], ['1203539'], ['1497391'], ['1891767'], ['1277649'], ['862909'], ['862909'], ['440266'], ['10298'], ['10310'], ['11234'], ['152219'], ['10244'], ['2560602'], ['11041'], ['10335'], ['10255'], ['129875'], ['108098'], ['129951'], ['130310'], ['130308'], ['130309'], ['536079'], ['329641'], ['11137'], ['290028'], ['277944'], ['31631'], ['162145'], ['12730'], ['2560525'], ['11216'], ['2560526'], ['1803956'], ['10798'], ['208893'], ['208895'], ['11320'], ['11520'], ['11552'], ['1335626'], ['147711'], ['147712'], ['463676'], ['2901879'], ['2697049'], ['10404']]	Optional	TheiaViral_Panel	general
 transfer_files	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_Update	runtime
 transfer_files	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Transfer_Column_Content	runtime
 transfer_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Freyja_Update	runtime

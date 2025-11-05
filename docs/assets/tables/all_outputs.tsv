@@ -86,11 +86,10 @@ arln_taxon_gc_mean	String	Mean GC percent of the taxon.	TheiaProk_FASTA, TheiaPr
 arln_taxon_gc_percent_stdev	String	Reported GC percent standard deviation of the given taxonomy pulled from NCBI aggregated data.	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 artic_docker	String	Docker image utilized for read trimming and consensus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
 artic_version	String	Version of the Artic software utilized for read trimming and conesnsus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
-assembler	String	Assembler used in digger_denovo subworkflow	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-assemblies	Array[File]	Assembly files generated during the workflow	TheiaViral_Panel
-assembler_version	String	Version of the assembler used in digger_denovo	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 assembled_viruses	Int	Number of viruses assembled from sample	TheiaViral_Panel
-assembly_fasta	String	Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly. Contigs will be ordered from largest to smallest when IRMA is used.	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+assembler	String	Assembler used in digger_denovo subworkflow	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+assembler_version	String	Version of the assembler used in digger_denovo	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+assemblies	Array[File]	Assembly files generated during the workflow	TheiaViral_Panel
 assembly_consensus_fasta	File	Final consensus assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT
 assembly_denovo_fasta	File	De novo assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT
 assembly_fasta	File	Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly. Contigs will be ordered from largest to smallest when IRMA is used.	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE
@@ -250,19 +249,19 @@ czgenepi_prep_version	String	The version of PHB the workflow is in	CZGenEpi_Prep
 datatable	File	Sample-level data table TSV file that was used to update the original sample-level data table in the last step of the TheiaCoV_FASTA_Batch workflow.	TheiaCoV_FASTA_Batch
 dehost_read1	File	Reads that did not map to host	Host_Decontaminate
 dehost_read2	File	Paired-reads that did not map to host	Host_Decontaminate
-dehost_wf_dehost_read1	File	Reads that did not map to host	TheiaViral_Illumina_PE, TheiaViral_ONT
-dehost_wf_dehost_read2	File	Paired-reads that did not map to host	TheiaViral_Illumina_PE
-dehost_wf_host_accession	String	Host genome accession	TheiaViral_Illumina_PE, TheiaViral_ONT
-dehost_wf_host_fasta	File	Host genome FASTA file	TheiaViral_Illumina_PE, TheiaViral_ONT
-dehost_wf_host_flagstat	File	Output from the SAMtools flagstat command to assess quality of the alignment file (BAM)	TheiaViral_Illumina_PE, TheiaViral_ONT
-dehost_wf_host_mapped_bai	File	Indexed bam file of the reads aligned to the host reference	TheiaViral_Illumina_PE, TheiaViral_ONT
-dehost_wf_host_mapped_bam	File	Sorted BAM file containing the alignments of reads to the host reference genome	TheiaViral_Illumina_PE, TheiaViral_ONT
-dehost_wf_host_mapping_cov_hist	File	Coverage histogram from host read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
-dehost_wf_host_mapping_coverage	Float	Average coverage from host read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
-dehost_wf_host_mapping_mean_depth	Float	Average depth from host read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
-dehost_wf_host_mapping_metrics	File	File of mapping metrics	TheiaViral_Illumina_PE, TheiaViral_ONT
-dehost_wf_host_mapping_stats	File	File of mapping statistics	TheiaViral_Illumina_PE, TheiaViral_ONT
-dehost_wf_host_percent_mapped_reads	Float	Percentage of reads mapped to host reference genome	TheiaViral_Illumina_PE, TheiaViral_ONT
+dehost_wf_dehost_read1	File	Reads that did not map to host	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+dehost_wf_dehost_read2	File	Paired-reads that did not map to host	TheiaViral_Illumina_PE, TheiaViral_Panel
+dehost_wf_host_accession	String	Host genome accession	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+dehost_wf_host_fasta	File	Host genome FASTA file	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+dehost_wf_host_flagstat	File	Output from the SAMtools flagstat command to assess quality of the alignment file (BAM)	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+dehost_wf_host_mapped_bai	File	Indexed bam file of the reads aligned to the host reference	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+dehost_wf_host_mapped_bam	File	Sorted BAM file containing the alignments of reads to the host reference genome	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+dehost_wf_host_mapping_cov_hist	File	Coverage histogram from host read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+dehost_wf_host_mapping_coverage	Float	Average coverage from host read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+dehost_wf_host_mapping_mean_depth	Float	Average depth from host read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+dehost_wf_host_mapping_metrics	File	File of mapping metrics	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+dehost_wf_host_mapping_stats	File	File of mapping statistics	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+dehost_wf_host_percent_mapped_reads	Float	Percentage of reads mapped to host reference genome	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
 distance_tree	File	The distance tree created in Newick (.nwk) format	Augur
 dnaapler_version	String	Version of dnaapler used	TheiaEuk_ONT, TheiaProk_ONT
 dorado_basecall_docker	String	Docker image used in the `dorado_basecall` task	Dorado_Basecalling
@@ -324,39 +323,39 @@ fastq_dl_version	String	The version of fastq-dl used	SRA_Fetch
 fastq_dl_warning	String	This warning field is populated if SRA-Lite files are detected. These files contain all quality encoding as Phred-30 or Phred-3.	SRA_Fetch
 fastq_files	Array[File]	FASTQ files produced from basecalling and demultiplexing	Dorado_Basecalling
 fastq_scan_clean1_json	String	The JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length	Freyja_FASTQ
-fastq_scan_clean1_json	File	The JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
-fastq_scan_clean2_json	File	The JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE
-fastq_scan_clean_pairs	String	Number of read pairs after cleaning	TheiaViral_Illumina_PE
-fastq_scan_docker	String	The Docker image of fastq_scan	TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE
+fastq_scan_clean1_json	File	The JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_clean2_json	File	The JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_clean_pairs	String	Number of read pairs after cleaning	TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_docker	String	The Docker image of fastq_scan	TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_clean1	String	The number of forward reads after cleaning as calculated by fastq_scan	Freyja_FASTQ
-fastq_scan_num_reads_clean1	Int	The number of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
-fastq_scan_num_reads_clean2	Int	The number of reverse reads after cleaning as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE
+fastq_scan_num_reads_clean1	Int	The number of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_num_reads_clean2	Int	The number of reverse reads after cleaning as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_clean_pairs	String	The number of read pairs after cleaning as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 fastq_scan_num_reads_raw1	String	The number of input forward reads as calculated by fastq_scan	Freyja_FASTQ
-fastq_scan_num_reads_raw1	Int	The number of input forward reads as calculated by fastq_scan	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
-fastq_scan_num_reads_raw2	Int	The number of input reserve reads as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE
+fastq_scan_num_reads_raw1	Int	The number of input forward reads as calculated by fastq_scan	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_num_reads_raw2	Int	The number of input reserve reads as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_raw_pairs	String	The number of input read pairs as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 fastq_scan_raw1_json	String	The JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length	Freyja_FASTQ
-fastq_scan_raw1_json	File	The JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
-fastq_scan_raw2_json	File	The JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE
-fastq_scan_raw_pairs	String	Number of raw read pairs	TheiaViral_Illumina_PE
-fastq_scan_version	String	The version of fastq_scan	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+fastq_scan_raw1_json	File	The JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_raw2_json	File	The JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_raw_pairs	String	Number of raw read pairs	TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_version	String	The version of fastq_scan	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastqc_clean1_html	String	An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser	Freyja_FASTQ
-fastqc_clean1_html	File	An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-fastqc_clean2_html	File	An HTML file that provides a graphical visualization of clean reverse read quality from fastqc to open in an internet browser	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-fastqc_docker	String	The Docker container used for fastqc	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+fastqc_clean1_html	File	An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Panel
+fastqc_clean2_html	File	An HTML file that provides a graphical visualization of clean reverse read quality from fastqc to open in an internet browser	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Panel
+fastqc_docker	String	The Docker container used for fastqc	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Panel
 fastqc_num_reads_clean1	String	The number of forward reads after cleaning by fastqc	Freyja_FASTQ
-fastqc_num_reads_clean1	Int	The number of forward reads after cleaning by fastqc	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-fastqc_num_reads_clean2	Int	The number of reverse reads after cleaning by fastqc	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-fastqc_num_reads_clean_pairs	String	The number of read pairs after cleaning by fastqc	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+fastqc_num_reads_clean1	Int	The number of forward reads after cleaning by fastqc	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Panel
+fastqc_num_reads_clean2	Int	The number of reverse reads after cleaning by fastqc	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Panel
+fastqc_num_reads_clean_pairs	String	The number of read pairs after cleaning by fastqc	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Panel
 fastqc_num_reads_raw1	String	The number of input forward reads by fastqc before cleaning	Freyja_FASTQ
-fastqc_num_reads_raw1	Int	The number of input forward reads by fastqc before cleaning	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-fastqc_num_reads_raw2	Int	The number of input reverse reads by fastqc before cleaning	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-fastqc_num_reads_raw_pairs	String	The number of input read pairs by fastqc before cleaning	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+fastqc_num_reads_raw1	Int	The number of input forward reads by fastqc before cleaning	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Panel
+fastqc_num_reads_raw2	Int	The number of input reverse reads by fastqc before cleaning	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Panel
+fastqc_num_reads_raw_pairs	String	The number of input read pairs by fastqc before cleaning	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Panel
 fastqc_raw1_html	String	An HTML file that provides a graphical visualization of raw forward read quality from fastqc to open in an internet browser	Freyja_FASTQ
-fastqc_raw1_html	File	An HTML file that provides a graphical visualization of raw forward read quality from fastqc to open in an internet browser	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-fastqc_raw2_html	File	An HTML file that provides a graphical visualization of raw reverse read quality from fastqc to open in an internet browser	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-fastqc_version	String	Version of fastqc software used	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+fastqc_raw1_html	File	An HTML file that provides a graphical visualization of raw forward read quality from fastqc to open in an internet browser	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Panel
+fastqc_raw2_html	File	An HTML file that provides a graphical visualization of raw reverse read quality from fastqc to open in an internet browser	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Panel
+fastqc_version	String	Version of fastqc software used	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Panel
 fetch_srr_accession_analysis_date	String	The date the fetch_srr_accession analysis was run.	Fetch_SRR_Accession
 fetch_srr_accession_version	String	The version of the fetch_srr_accession workflow.	Fetch_SRR_Accession
 filtered_contigs_metrics	File	File containing metrics of contigs filtered	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -464,6 +463,7 @@ host_mapping_mean_depth	Float	Average depth from host read mapping	Host_Decontam
 host_mapping_metrics	File	File of mapping metrics	Host_Decontaminate
 host_mapping_stats	File	File of mapping statistics	Host_Decontaminate
 host_percent_mapped_reads	Float	Percentage of reads mapped to host reference genome	Host_Decontaminate
+identified_organisms	Array[String]	DESCRIPTION	TheiaViral_Panel
 irma_assembly_fasta_concatenated	File	Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_docker	String	Docker image used to run IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 irma_ha_segment_fasta	File	HA (Haemagglutinin) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
@@ -516,9 +516,9 @@ kmerfinder_template_coverage	String	Percent of kmer coverage pertaining to the t
 kmerfinder_top_hit	String	Top hit species of KmerFinder	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 kraken2_classified_read1	File	FASTQ file of classified forward/R1 reads	Kraken_ONT, Kraken_PE, Kraken_SE
 kraken2_classified_read2	File	FASTQ file of classified reverse/R2 reads (if PE)	Kraken_PE
-kraken2_classified_report	File	Standard Kraken2 output report. TXT filetype, but can be opened in Excel as a TSV file	Kraken_ONT, Kraken_PE, Kraken_SE
-kraken2_database	String	Kraken2 database used for the taxonomic assignment	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-kraken2_docker	String	Docker image used to run kraken2	Kraken_ONT, Kraken_PE, Kraken_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_SE
+kraken2_classified_report	File	Standard Kraken2 output report. TXT filetype, but can be opened in Excel as a TSV file	Kraken_ONT, Kraken_PE, Kraken_SE, TheiaViral_Panel
+kraken2_database	String	Kraken2 database used for the taxonomic assignment	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel
+kraken2_docker	String	Docker image used to run kraken2	Kraken_ONT, Kraken_PE, Kraken_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Panel
 kraken2_extracted_read1	File	Forward reads extracted by taxonomic classification	TheiaViral_Illumina_PE
 kraken2_extracted_read2	File	Reverse reads extracted by taxonomic classification	TheiaViral_Illumina_PE
 kraken2_pe_wf_analysis_date	String	Date the workflow was run	Kraken_PE
@@ -543,6 +543,8 @@ kraken_database	String	Database used for Kraken classification	TheiaViral_Illumi
 kraken_docker	String	Docker image used for Kraken	TheiaProk_Illumina_PE, TheiaProk_ONT, TheiaViral_Illumina_PE
 kraken_human	Float	Percent of human read data detected using the Kraken2 software	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 kraken_human_dehosted	Float	Percent of human read data detected using the Kraken2 software after host removal	Freyja_FASTQ, NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+kraken_percent_human_clean	Float	Percent of human read data detected using the Kraken2 software after host removal for cleaned reads	TheiaViral_Panel
+kraken_percent_human_raw	Float	Percent of human read data detected using the Kraken2 software after host removal for raw reads	TheiaViral_Panel
 kraken_report	String	Full Kraken report	Freyja_FASTQ, TheiaViral_Illumina_PE
 kraken_report	File	Full Kraken report	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 kraken_report_dehosted	File	Full Kraken report after host removal	Freyja_FASTQ, NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
@@ -902,20 +904,20 @@ raven_denovo_status	String	Status of Raven assembly	TheiaViral_ONT
 raven_denovo_version	String	Version of Raven used	TheiaViral_ONT
 read1	File	File containing the forward reads	BaseSpace_Fetch, SRA_Fetch
 read1_aligned	File	Forward read file of only aligned reads	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-read1_clean	File	Forward read file after quality trimming and adapter removal	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+read1_clean	File	Forward read file after quality trimming and adapter removal	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel
 read1_concatenated	File	Concatenated forward reads	Concatenate_Illumina_Lanes, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-read1_dehosted	File	The dehosted forward reads file; suggested read file for SRA submission 	Freyja_FASTQ, NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE
+read1_dehosted	File	The dehosted forward reads file; suggested read file for SRA submission 	Freyja_FASTQ, NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 read1_mapped	File	The mapped forward reads to the assembly	TheiaMeta_Illumina_PE
 read1_renamed	File	New read1 FASTQ file renamed to desired filename	Rename_FASTQ
 read1_subsampled	File	Read1 FASTQ files downsampled to desired coverage	RASUSA, TheiaEuk_Illumina_PE
 read1_trimmed	File	Forward read file after quality trimming and adapter removal	TheiaCoV_ONT
 read1_unaligned	File	Forward read file of unaligned reads	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 read1_unmapped	File	The unmapped forwards reads to the assembly	TheiaMeta_Illumina_PE
-read2	File	File containing the reverse reads (not available for single-end or ONT data)	BaseSpace_Fetch, SRA_Fetch, TheiaViral_Panel
+read2	File	File containing the reverse reads (not available for single-end or ONT data)	BaseSpace_Fetch, SRA_Fetch
 read2_aligned	File	Reverse read file of only aligned reads	TheiaCoV_Illumina_PE
-read2_clean	File	Reverse read file after quality trimming and adapter removal	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+read2_clean	File	Reverse read file after quality trimming and adapter removal	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Panel
 read2_concatenated	File	Concatenated reverse reads	Concatenate_Illumina_Lanes, TheiaProk_Illumina_PE
-read2_dehosted	File	The dehosted reverse reads file; suggested read file for SRA submission 	Freyja_FASTQ, NCBI_Scrub_PE, TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE
+read2_dehosted	File	The dehosted reverse reads file; suggested read file for SRA submission 	Freyja_FASTQ, NCBI_Scrub_PE, TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 read2_mapped	File	The mapped reverse reads to the assembly	TheiaMeta_Illumina_PE
 read2_renamed	File	New read2 FASTQ file renamed to desired filename	Rename_FASTQ
 read2_subsampled	File	Read2 FASTQ files downsampled to desired coverage	RASUSA, TheiaEuk_Illumina_PE
@@ -1151,8 +1153,6 @@ stxtyper_report	File	Raw results TSV file produced by StxTyper	TheiaProk_FASTA, 
 stxtyper_stx_frameshifts_or_internal_stop_hits	String	Comma-separated list of matches that have the OPERON output of "FRAMESHIFT" or "INTERNAL_STOP". Possible outputs "stx1", "stx2", or "stx1,stx2"	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 stxtyper_version	String	Version of StxTyper used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 taxon_table_status	String	Status of the taxon table upload	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-table_created_by	String	Name of the task that created output Terra table	TheiaViral_Panel
-taxon_name	String	Name of taxonomy of sample	TheiaViral_Panel
 tbp_parser_average_genome_depth	Float	The mean depth of coverage across all target regions included in the analysis	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 tbp_parser_coverage_report	File	A file containing the breadth of coverage across each target loci	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 tbp_parser_docker	String	The docker image and version tag for the tbp_parser tool	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_ONT
@@ -1240,22 +1240,22 @@ theiavalidate_report	File	A PDF summary report	TheiaValidate
 theiavalidate_status	String	Indicates whether or not validation was attempted	TheiaValidate
 theiavalidate_version	String	The version of the TheiaValidate Python Docker	TheiaValidate
 theiavalidate_wf_version	String	The version of the PHB repository	TheiaValidate
-theiaviral_panel_analysis_date	String	The date the analysis was run	TheiaViral_Panel
-theiaviral_panel_version	String	The version of the workflow that was run	TheiaViral_Panel
 theiaviral_illumina_pe_date	String	Date of TheiaViral Illumina PE workflow run	TheiaViral_Illumina_PE
 theiaviral_illumina_pe_version	String	Version of TheiaViral Illumina PE workflow	TheiaViral_Illumina_PE
 theiaviral_ont_date	String	Date of TheiaViral ONT workflow run	TheiaViral_ONT
 theiaviral_ont_version	String	Version of TheiaViral ONT workflow	TheiaViral_ONT
+theiaviral_panel_analysis_date	String	The date the analysis was run	TheiaViral_Panel
+theiaviral_panel_version	String	The version of the workflow that was run	TheiaViral_Panel
 time_tree	File	The time tree created in Newick (.nwk) format	Augur
 traits_json	File	A JSON file containing sample traits	Augur
 transfer_column_content_analysis_date	String	The date the workflow was run	Transfer_Column_Content
 transfer_column_content_version	String	The version of the repository the workflow is hosted in	Transfer_Column_Content
 transferred_files	File	A list of all of the files now located at the target bucket location (GSURI)	Transfer_Column_Content
-trimmomatic_docker	String	The docker image used for the trimmomatic module in this workflow	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+trimmomatic_docker	String	The docker image used for the trimmomatic module in this workflow	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 trimmomatic_read1_trimmed	File	The read1 file post trimming	TBProfiler_tNGS
 trimmomatic_read2_trimmed	File	The read2 file post trimming	TBProfiler_tNGS
 trimmomatic_stats	File	The read trimming statistics	TBProfiler_tNGS
-trimmomatic_version	String	The version of Trimmomatic used	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE
+trimmomatic_version	String	The version of Trimmomatic used	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 ts_mlst_allelic_profile	String	Profile of MLST loci and allele numbers predicted by MLST	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ts_mlst_docker	String	Docker image used for MLST	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ts_mlst_novel_alleles	File	FASTA file containing nucleotide sequence of any alleles that are not in the MLST database used by TheiaProk	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
