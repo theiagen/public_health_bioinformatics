@@ -230,21 +230,26 @@ task irma {
     done
 
     echo "Counting number of minor variants for each segment..."
-    for TABLE in ~{samplename}/tables/*-variants.txt; do
-      echo "Processing table: ${TABLE}"
-      # extract segment name from filename (splitting on '_' and '-' delimiters)
-      SEGMENT_NAME=$(basename "${TABLE}" | awk -F'[_-]' '{print $2}')
+    # loop through segments in SEGMENT_DICT to find variant files and count minor variants (ignoring subtype info in filename)
+    for SEGMENT_STR in "${!SEGMENT_DICT[@]}"; do
+      segment_variant_file=$(find "~{samplename}/tables" -name "*_${SEGMENT_STR}*-variants.txt")
 
-      # count number of minor variants (AF >= 0.05) excluding header line
-      count=$(awk -F'\t' 'NR>1 && $9 >= 0.05 {c++} END {print c+0}' "$TABLE")
-      echo "$count" > "~{samplename}/tables/SEG_${SEGMENT_NAME}_NUM_MINOR_VARIANTS"
+      # if the segment file exists, count number of minor variants (AF >= 0.05) excluding header line
+      if [ -n "$segment_variant_file" ]; then
+        echo "DEBUG: segment_variant_file is set to: $segment_variant_file"
+        count=$(awk -F'\t' 'NR>1 && $9 >= 0.05 {c++} END {print c+0}' "$segment_variant_file")
+        echo "$count" > "~{samplename}/tables/SEG_${SEGMENT_STR}_NUM_MINOR_VARIANTS"
 
-      # create output file with header if it doesn't exist
-      if [[ ! -f "~{samplename}/tables/all_minor_variants.tsv" ]]; then
-        awk -F'\t' 'NR==1 {print}' "$TABLE" > "~{samplename}/tables/all_minor_variants.tsv"
+        # create concatenated output file with header if it doesn't exist
+        if [[ ! -f "~{samplename}/tables/all_minor_variants.tsv" ]]; then
+          awk -F'\t' 'NR==1 {print}' "$segment_variant_file" > "~{samplename}/tables/all_minor_variants.tsv"
+        fi
+        # append rows of minor variants for each segment to concatenated output file
+        awk -F'\t' 'NR>1 && $9 >= 0.05 {print}' "$segment_variant_file" >> "~{samplename}/tables/all_minor_variants.tsv"
+      else
+        echo "WARNING: No minor variant file found for segment ${SEGMENT_STR} for ~{samplename}"
+        echo "N/A" > "~{samplename}/tables/SEG_${SEGMENT_STR}_NUM_MINOR_VARIANTS"
       fi
-      # append rows of minor variants for each segment to output file
-      awk -F'\t' 'NR>1 && $9 >= 0.05 {print}' "$TABLE" >> "~{samplename}/tables/all_minor_variants.tsv"
     done
 
   >>>
@@ -274,15 +279,17 @@ task irma {
     File? seg_np_assembly_padded = "padded_assemblies/~{samplename}_NP.pad.fasta"
     File? seg_ns_assembly_padded = "padded_assemblies/~{samplename}_NS.pad.fasta"
 
-    # Output number of minor variants called by IRMA for each segment
-    Int? seg_ha_num_minor_variants = read_int("~{samplename}/tables/SEG_HA_NUM_MINOR_VARIANTS")
-    Int? seg_na_num_minor_variants = read_int("~{samplename}/tables/SEG_NA_NUM_MINOR_VARIANTS")
-    Int? seg_pa_num_minor_variants = read_int("~{samplename}/tables/SEG_PA_NUM_MINOR_VARIANTS")
-    Int? seg_pb1_num_minor_variants = read_int("~{samplename}/tables/SEG_PB1_NUM_MINOR_VARIANTS")
-    Int? seg_pb2_num_minor_variants = read_int("~{samplename}/tables/SEG_PB2_NUM_MINOR_VARIANTS")
-    Int? seg_mp_num_minor_variants = read_int("~{samplename}/tables/SEG_MP_NUM_MINOR_VARIANTS")
-    Int? seg_np_num_minor_variants = read_int("~{samplename}/tables/SEG_NP_NUM_MINOR_VARIANTS")
-    Int? seg_ns_num_minor_variants = read_int("~{samplename}/tables/SEG_NS_NUM_MINOR_VARIANTS")
+    # Output number of minor variants called by IRMA for each segment.
+    # To display counts of minor variants in a column, these outputs cannot be optional.
+    # Outputs are of type String to allow for "N/A" value if segment is not present.
+    String seg_ha_num_minor_variants = read_string("~{samplename}/tables/SEG_HA_NUM_MINOR_VARIANTS")
+    String seg_na_num_minor_variants = read_string("~{samplename}/tables/SEG_NA_NUM_MINOR_VARIANTS")
+    String seg_pa_num_minor_variants = read_string("~{samplename}/tables/SEG_PA_NUM_MINOR_VARIANTS")
+    String seg_pb1_num_minor_variants = read_string("~{samplename}/tables/SEG_PB1_NUM_MINOR_VARIANTS")
+    String seg_pb2_num_minor_variants = read_string("~{samplename}/tables/SEG_PB2_NUM_MINOR_VARIANTS")
+    String seg_mp_num_minor_variants = read_string("~{samplename}/tables/SEG_MP_NUM_MINOR_VARIANTS")
+    String seg_np_num_minor_variants = read_string("~{samplename}/tables/SEG_NP_NUM_MINOR_VARIANTS")
+    String seg_ns_num_minor_variants = read_string("~{samplename}/tables/SEG_NS_NUM_MINOR_VARIANTS")
     File? irma_all_minor_variants_tsv = "~{samplename}/tables/all_minor_variants.tsv"
 
     String irma_type = read_string("IRMA_TYPE")
