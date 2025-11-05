@@ -273,8 +273,7 @@ ectyper_database_version	String	Version of the ECTyper database used	TheiaProk_F
 ectyper_docker	String	Docker image used to run ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_pathodb_version	String	Version of the ECTyper pathotype database used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_pathotype	String	Samples pathotype predicted by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-ectyper_pathotype_count	String	Number of pathotypes predicted by ECTyper	TheiaProk_FASTA
-ectyper_pathotype_count	String	Number of pathotypes predicted by ECTyper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+ectyper_pathotype_count	String	Number of pathotypes predicted by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_pathotype_genes	String	Pathotype genes observed by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_predicted_serotype	String	Serotype predicted by ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_qc_result	String	QC pass or fail for the sample analyzed	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -305,6 +304,8 @@ est_coverage_clean	Float	Estimated coverage calculated from clean reads and geno
 est_coverage_raw	Float	Estimated coverage calculated from raw reads and genome length	TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 est_genome_length	Int	Estimated genome length	TheiaEuk_ONT
 est_percent_gene_coverage_tsv	File	Percent coverage for each gene in the organism being analyzed (depending on the organism input)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+ete4_docker	String	Docker image used for ETE4 taxonomy parsing	TheiaViral_Illumina_PE, TheiaViral_ONT
+ete4_version	String	The version of ETE4 used	TheiaViral_Illumina_PE, TheiaViral_ONT
 excluded_samples	File	A file that contains the names and reasons why a sample was excluded from submission. **For SARS-CoV-2**, there are two sections: First, a section for any samples that failed to meet pre-determined quality thresholds (`number_N` and `vadr_num_alert`). Second, a section that includes a table that describes any missing required metadata for each sample. This table has the sample name for rows and any columns that have missing metadata as headers. If a sample is missing a piece of required metadata, the corresponding cell will be blank. However, if a different sample does have metadata for that column, the associated value will appear in the corresponding cell. **For flu and mpox**, only the second section described above exists. _Please see the example below for more details_.	Mercury_Prep_N_Batch
 excluded_samples	File	Text file listing samples that were excluded from BioSample submission for missing required metadata	Terra_2_NCBI
 failed_uploads	File	The metadata for any failed uploads	Terra_2_GISAID
@@ -691,17 +692,16 @@ nanoplot_tsv_raw	File	A TSV report describing the raw reads	Freyja_FASTQ, TheiaC
 nanoplot_version	String	Version of nanoplot used for analysis	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT
 nanoq_filtered_read1	File	Filtered reads from NanoQ	TheiaViral_ONT
 nanoq_version	String	Version of nanoq used in analysis	Freyja_FASTQ, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
-ncbi_datasets_docker	String	Docker image used for NCBI datasets	TheiaViral_Illumina_PE, TheiaViral_ONT
-ncbi_datasets_version	String	Version of NCBI datasets used	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT
-ncbi_identify_accession	String	NCBI accession ID of identified taxon	TheiaViral_Illumina_PE, TheiaViral_ONT
-ncbi_identify_avg_genome_length	Int	Average genome length from NCBI taxon summary	TheiaViral_Illumina_PE, TheiaViral_ONT
-ncbi_identify_docker	String	Docker image used for NCBI identify	TheiaViral_ONT
-ncbi_identify_genome_summary_tsv	File	TSV file with genome summary from NCBI	TheiaViral_Illumina_PE, TheiaViral_ONT
-ncbi_identify_read_extraction_rank	String	Taxonomic rank used for read extraction	TheiaViral_Illumina_PE, TheiaViral_ONT
-ncbi_identify_taxon_id	String	NCBI taxonomy ID of identified organism	TheiaViral_Illumina_PE, TheiaViral_ONT
-ncbi_identify_taxon_name	String	Name of identified taxon	TheiaViral_Illumina_PE, TheiaViral_ONT
-ncbi_identify_taxon_summary_tsv	File	TSV file with taxa specific summary from NCBI	TheiaViral_Illumina_PE, TheiaViral_ONT
-ncbi_identify_version	String	Version of NCBI identify tool used	TheiaViral_ONT
+ncbi_datasets_docker	String	Docker image used for NCBI datasets	TheiaViral_ONT
+ncbi_datasets_version	String	Version of NCBI datasets used	Host_Decontaminate
+ncbi_identify_accession	String	NCBI accession ID of identified taxon	TheiaViral_ONT
+ncbi_identify_avg_genome_length	Int	Average genome length from NCBI taxon summary	TheiaViral_ONT
+ncbi_identify_genome_summary_tsv	File	TSV file with genome summary from NCBI	TheiaViral_ONT
+ncbi_identify_read_extraction_rank	String	Taxonomic rank used for read extraction	TheiaViral_ONT
+ncbi_identify_taxon_id	String	NCBI taxonomy ID of identified organism	TheiaViral_ONT
+ncbi_identify_taxon_name	String	Name of identified taxon	TheiaViral_ONT
+ncbi_identify_taxon_summary_tsv	File	TSV file with taxa specific summary from NCBI	TheiaViral_ONT
+ncbi_read_extraction_rank	String	Read extraction rank used	TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_scrub_docker	String	The Docker image for NCBI's HRRT (human read removal tool)	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_scrub_human_spots_removed	Int	Number of spots removed (or masked)	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_scrub_pe_analysis_date	String	Date of analysis	NCBI_Scrub_PE
@@ -709,6 +709,8 @@ ncbi_scrub_pe_version	String	Version of HRRT software used	NCBI_Scrub_PE
 ncbi_scrub_read1_dehosted	File	Dehosted reads after NCBI scrub	TheiaViral_ONT
 ncbi_scrub_se_analysis_date	String	Date of analysis	NCBI_Scrub_SE
 ncbi_scrub_se_version	String	Version of HRRT software used	NCBI_Scrub_SE
+ncbi_taxon_id	String	NCBI taxonomy ID of inputted organism following rank extraction	TheiaViral_Illumina_PE, TheiaViral_ONT
+ncbi_taxon_name	String	NCBI taxonomy name of inputted taxon following rank extraction	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_aa_dels	String	Amino-acid deletions as detected by NextClade. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 nextclade_aa_dels_flu_h5n1	String	Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for H5N1 whole genome	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
 nextclade_aa_dels_flu_ha	String	Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -929,8 +931,6 @@ read_screen_clean	String	PASS or FAIL result from clean read screening; FAIL acc
 read_screen_clean_tsv	File	Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 read_screen_raw	String	PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 read_screen_raw_tsv	File	Raw read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-reference_taxon	String	NCBI derived taxon name from best ANI hit accession	TheiaViral_ONT
-reference_taxon_name	String	NCBI derived taxon name from best ANI hit accession	TheiaViral_Illumina_PE
 rename_fastq_files_analysis_date	String	Date of analysis	Rename_FASTQ
 rename_fastq_files_version	String	Version of PHB used for the analysis	Rename_FASTQ
 resfinder_db_version	String	Version of ResFinder database	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -1020,11 +1020,12 @@ sistr_serotype_cgmlst	String	cgMLST of the serogroup prediicted by SISTR	TheiaPr
 sistr_version	String	Version of SISTR used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 skani_database	String	Database used for Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_docker	String	Docker image used for Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_reference_assembly	File	Reference assembly URI	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_report	File	Report from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_status	String	Status of Skani analysis	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_accession	String	Top accession ID from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_ani	Float	Top ANI score from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
-skani_top_ani_fasta	File	FASTA file of top ANI match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_top_ani_fasta	File	FASTA file of top ANI match from Skani	TheiaViral_ONT
 skani_top_query_coverage	Float	Query coverage of top match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_score	Float	Top score from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_version	String	Version of Skani used	TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -1094,6 +1095,9 @@ snippy_variants_version	String	Version of Snippy used	Snippy_Variants
 snippy_variants_wf_version	String	Version of Snippy_Variants used	Snippy_Variants
 snippy_wg_snp_matrix	File	CSV file of whole genome pairwise SNP distances between samples, calculated from the final alignment	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree
 snp_matrix	File	The SNP distance matrix for all samples used in the phylogenetic tree	Augur
+snp_sites_docker	String	Docker file used for SNP-sites	Core_Gene_SNP
+snp_sites_multifasta	File	Post-processed multifasta outputted by SNP-sites	Core_Gene_SNP
+snp_sites_version	String	Version of SNP-sites used	Core_Gene_SNP
 sonneityping_final_genotype	String	Final genotype call from Mykrobe, via sonneityper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sonneityping_final_report_tsv	File	Detailed TSV report from mykrobe, via sonneityper (see <https://github.com/katholt/sonneityping#example-output>)	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sonneityping_genotype_confidence	String	Confidence in the final genotype call from sonneityper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT

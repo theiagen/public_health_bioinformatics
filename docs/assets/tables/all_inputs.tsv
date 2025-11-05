@@ -565,7 +565,7 @@ consensus	skip_N	Boolean	True/False that determines if "N" bases should be skipp
 consensus_qc	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	runtime
 consensus_qc	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	runtime
 consensus_qc	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	docker
-consensus_qc	genome_length	Int	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, VADR_Update	general
+consensus_qc	genome_length	Int	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	general
 consensus_qc	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	runtime
 consensus_qc	reference_genome	File	Internal component, do not modify		Optional	VADR_Update	general
 core_gene_snp_workflow	align	Boolean	Boolean variable that instructs the workflow to generate core and pangenome alignments if "true". If "false", the workflow will produce only a pangenome summary.	True	Optional	Core_Gene_SNP	general
@@ -687,6 +687,10 @@ download_terra_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	C
 download_terra_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA	runtime
 download_terra_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA	docker
 download_terra_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA	runtime
+ete4_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+ete4_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+ete4_identify	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ete4:4.3.0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
+ete4_identify	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 export_taxon_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 export_taxon_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 export_taxon_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
@@ -949,6 +953,7 @@ gubbins	tree_args	String	Quoted string of further arguments passed to tree build
 gubbins	tree_builder	String	Application to use for Gubbins tree building algorithm: "raxml", "raxmlng", "iqtree", "iqtree-fast", "fasttree", "hybrid" (fasttree is used for the first tree, and raxml is used for later iterations), "rapidnj"	raxml	Optional	Snippy_Tree	general
 host_decontaminate	complete_only	Boolean	Only download genomes labeled "complete"	False	Optional	Host_Decontaminate, TheiaViral_ONT	general
 host_decontaminate	is_accession	Boolean	Inputted "host" is an accession	False	Optional	Host_Decontaminate, TheiaViral_ONT	general
+host_decontaminate	is_genome	Boolean	Inputted "host" is a genome URI	False	Optional	Host_Decontaminate, TheiaViral_ONT	general
 host_decontaminate	minimap2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Host_Decontaminate, TheiaViral_ONT	runtime
 host_decontaminate	read2	File	Paired-end read 2 in FASTQ file format (compression optional)		Optional	Host_Decontaminate	general
 host_decontaminate	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general
@@ -1613,12 +1618,12 @@ nanoq	max_read_qual	Int	Maximum read quality to keep	100	Optional	TheiaViral_ONT
 nanoq	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaViral_ONT	runtime
 nanoq	min_read_length	Int	Minimum read length to keep	500	Optional	TheiaViral_ONT	general
 nanoq	min_read_qual	Int	Minimum read quality to keep	10	Optional	TheiaViral_ONT	general
-ncbi_datasets	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-ncbi_datasets	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-ncbi_datasets	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-ncbi_datasets	include_gbff	Boolean	True/False to include gbff files in the output	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
-ncbi_datasets	include_gff3	Boolean	True/False to include gff3 files in the output	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
-ncbi_datasets	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+ncbi_datasets	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_ONT	runtime
+ncbi_datasets	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_ONT	runtime
+ncbi_datasets	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	TheiaViral_ONT	docker
+ncbi_datasets	include_gbff	Boolean	True/False to include gbff files in the output	False	Optional	TheiaViral_ONT	general
+ncbi_datasets	include_gff3	Boolean	True/False to include gff3 files in the output	False	Optional	TheiaViral_ONT	general
+ncbi_datasets	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_ONT	runtime
 ncbi_datasets_download_genome_accession	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime
 ncbi_datasets_download_genome_accession	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime
 ncbi_datasets_download_genome_accession	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	docker
@@ -1626,15 +1631,15 @@ ncbi_datasets_download_genome_accession	include_gbff	Boolean	Set to true if you 
 ncbi_datasets_download_genome_accession	include_gff3	Boolean	Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations	False	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	general
 ncbi_datasets_download_genome_accession	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime
 ncbi_datasets_download_genome_accession	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	False	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	general
-ncbi_identify	complete	Boolean	Only query genomes labeled complete	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
-ncbi_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-ncbi_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+ncbi_identify	complete	Boolean	Only query genomes labeled complete	True	Optional	TheiaViral_ONT	general
+ncbi_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Decontaminate	runtime
+ncbi_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate	runtime
+ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq	Optional	Host_Decontaminate	docker
+ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate	runtime
 ncbi_identify	rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.		Optional	Host_Decontaminate	general
-ncbi_identify	refseq	Boolean	Only query RefSeq genomes	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
-ncbi_identify	summary_limit	Int	Maximum number of genomes to return in the summary	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
-ncbi_identify	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
+ncbi_identify	refseq	Boolean	Only query RefSeq genomes	True	Optional	TheiaViral_ONT	general
+ncbi_identify	summary_limit	Int	Maximum number of genomes to return in the summary	100	Optional	TheiaViral_ONT	general
+ncbi_identify	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	False	Optional	TheiaViral_ONT	general
 ncbi_scrub_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	NCBI_Scrub_PE	runtime
 ncbi_scrub_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	NCBI_Scrub_PE	runtime
 ncbi_scrub_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1	Optional	NCBI_Scrub_PE	docker
@@ -1942,6 +1947,7 @@ read_QC_trim	host_decontaminate_mem	Int	Internal component, do not modify	32	Opt
 read_QC_trim	host_decontaminate_mem	Int	Memory allocated for minimap2 (in GB)	32	Optional	TheiaViral_Illumina_PE	general
 read_QC_trim	host_is_accession	Boolean	Internal component, do not modify	False	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general
 read_QC_trim	host_is_accession	Boolean	Inputted "host" is an accession	False	Optional	TheiaViral_Illumina_PE	general
+read_QC_trim	host_is_genome	Boolean	Inputted "host" is a genome URI	False	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE	general
 read_QC_trim	host_refseq	Boolean	Internal component, do not modify	True	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE	general
 read_QC_trim	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ONT, TheiaProk_ONT	runtime
 read_QC_trim	kraken2_recalculate_abundances_cpu	Int	Internal component, do not modify		Optional	TheiaEuk_ONT	general
@@ -2059,6 +2065,7 @@ read_QC_trim_pe	host	String	Internal component, do not modify		Optional	Freyja_F
 read_QC_trim_pe	host_complete_only	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_decontaminate_mem	Int	Internal component, do not modify	32	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_is_accession	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
+read_QC_trim_pe	host_is_genome	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	host_refseq	Boolean	Internal component, do not modify	True	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	general
 read_QC_trim_pe	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.		Optional	Freyja_FASTQ	general
@@ -2171,8 +2178,9 @@ shared_variants	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	
 skani	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 skani	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 skani	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
+skani	fasta_dir	String	Reference genome database base directory	gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251103/fna/	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 skani	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-skani	skani_db	File	Skani database file	gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20250613.tar	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	database
+skani	skani_db	File	Skani database file	gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251103.tar	Optional	TheiaViral_Illumina_PE	database
 sm_theiacov_fasta_wrangling	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaCoV_FASTA_Batch	runtime
 sm_theiacov_fasta_wrangling	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_FASTA_Batch	runtime
 sm_theiacov_fasta_wrangling	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4	Optional	TheiaCoV_FASTA_Batch	docker
