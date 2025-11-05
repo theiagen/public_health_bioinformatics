@@ -90,15 +90,15 @@
 
     === "TheiaViral_Panel"
 
-        The TheiaViral_Panel workflow accepts Illumina VSP paired-end reads as well as normal Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs. 
+        The TheiaViral_Panel workflow accepts Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs. 
 
         ???+ dna_blue "`taxon_ids` optional input parameter"
             **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly, but is optional in Terra.** 
             
-            By default, TheiaViral_Panel uses a list of **204** taxon IDs derived from a list of targeted viruses and subtypes in the Viral Surveillance Panel version 2 (VSP v2) produced by Illumina. This list can be modified to include or exclude any taxon IDs of interest; however, the taxon IDs _must_ be present in the Kraken2 database used for read classification. Changing this parameter will change what organisms are extracted for assembly and characterization. The list of default taxon IDs can be found below:
+            By default, TheiaViral_Panel uses a list of **204** taxon IDs derived from a list of targeted viruses and subtypes in the Viral Surveillance Panel version 2 (VSP v2) produced by Illumina, though this workflow is not specific to that assay. This list can be modified to include or exclude any taxon IDs of interest; however, the taxon IDs _must_ be present in the Kraken2 database used for read classification. Changing this parameter will change what organisms are extracted for assembly and characterization. The list of default taxon IDs can be found below:
 
             /// html | div[class="searchable-table"]
-            {{ render_tsv_table("docs/assets/tables/2025-10-16_VSPv2_default-taxon-ids.tsv", indent=12 )}} 
+            {{ render_tsv_table("docs/assets/tables/2025-10-16_default-taxon-ids.tsv", indent=12 )}} 
             ///
 
         ??? dna "`output_taxon_table` optional input parameter"
@@ -305,7 +305,7 @@
 {{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral_panel", indent=8) }} 
 
     !!! tip ""
-        TheiaViral_Panel utilizes the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single VSP sample to undergo the same viral assembly as other samples. The following tasks are performed for each taxon ID that passes the read binning threshold:
+        TheiaViral_Panel utilizes the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single sample to undergo the same viral assembly as other samples. The following tasks are performed for each taxon ID that passes the read binning threshold:
 
         ??? toggle "_De novo_ Assembly and Reference Selection"
 
