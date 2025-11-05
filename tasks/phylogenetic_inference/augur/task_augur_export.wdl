@@ -25,7 +25,7 @@ task augur_export {
 
     # prepare node_data argument
     node_data="~{sep=' ' node_data_jsons}"
-    # This conditional checks if the node_data list is NOT empty. The spaces are removed for whatever reason
+    # This conditional checks if the node_data list is NOT empty while removing spaces
     if [ ! -z $(echo $node_data | sed -e 's/ //g') ]; then
       node_data_arg="--node-data "${node_data}
     else
@@ -37,7 +37,7 @@ task augur_export {
     metadata_arg=""
     if [[ ! -z $metadata ]]; then
       if [ -s $metadata ]; then
-        metadata_arg="--metadata "~{metadata}
+        metadata_arg="--metadata ~{metadata}"
       fi
     fi
 
