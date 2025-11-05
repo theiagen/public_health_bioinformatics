@@ -40,7 +40,6 @@ import "../../tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl" as vibechec
 # theiaeuk
 import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query
 import "../../tasks/gene_typing/variant_detection/task_snippy_variants.wdl" as snippy
-import "../../tasks/gene_typing/drug_resistance/task_chroquetas.wdl" as chroquetas_task
 import "../../tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl" as cauris_cladetyper
 
 
@@ -70,7 +69,6 @@ workflow merlin_magic {
     String? agrvate_docker_image
     String? amr_search_docker_image
     String? cauris_cladetyper_docker_image
-    String? chroquetas_docker_image
     String? clockwork_docker_image
     String? ectyper_docker_image
     String? emmtyper_docker_image
@@ -114,12 +112,6 @@ workflow merlin_magic {
     Int? amr_search_cpu
     Int? amr_search_memory
     Int? amr_search_disk_size
-    # chroquetas options
-    Int? chroquetas_min_percent_coverage
-    Int? chroquetas_min_percent_identity
-    String? chroqutas_translation_code
-    Int? chroquetas_cpu
-    Int? chroquetas_memory
     # cladetyper options - primarily files we host
     Int? cladetyper_kmer_size
     File? cladetyper_ref_clade1
@@ -824,17 +816,6 @@ workflow merlin_magic {
             docker = snippy_gene_query_docker_image
         }
       }
-    # check for ChroQueTas-accounted taxa - requires compatibility with Gambit output
-        call chroquetas_task.chroquetas {
-          input:
-            assembly_fasta = assembly,
-            species = merlin_tag,
-            samplename = samplename,
-            min_percent_coverage = chroquetas_min_percent_coverage,
-            min_percent_identity = chroquetas_min_percent_identity,
-            docker = chroquetas_docker_image
-          }
-        }
   # Running AMR Search
   if (run_amr_search) {
     # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search. 
@@ -1176,11 +1157,5 @@ workflow merlin_magic {
     String snippy_variants_coverage_tsv = select_first([snippy_cauris.snippy_variants_coverage_tsv, snippy_cauris_ont.snippy_variants_coverage_tsv, snippy_afumigatus.snippy_variants_coverage_tsv, snippy_afumigatus_ont.snippy_variants_coverage_tsv, snippy_crypto.snippy_variants_coverage_tsv, snippy_crypto_ont.snippy_variants_coverage_tsv, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
     String snippy_variants_num_variants = select_first([snippy_cauris.snippy_variants_num_variants, snippy_cauris_ont.snippy_variants_num_variants, snippy_afumigatus.snippy_variants_num_variants, snippy_afumigatus_ont.snippy_variants_num_variants, snippy_crypto.snippy_variants_num_reads_aligned, snippy_crypto_ont.snippy_variants_num_variants, "No matching taxon detected"])
     String snippy_variants_percent_ref_coverage = select_first([snippy_cauris.snippy_variants_percent_ref_coverage, snippy_cauris_ont.snippy_variants_percent_ref_coverage, snippy_afumigatus.snippy_variants_percent_ref_coverage, snippy_afumigatus_ont.snippy_variants_percent_ref_coverage, snippy_crypto.snippy_variants_percent_ref_coverage, snippy_crypto_ont.snippy_variants_percent_ref_coverage, "No matching taxon detected"])
-    # chroquetas
-    File? chroquetas_amr_stats = chroquetas.amr_stats_file
-    File? chroquetas_amr_summary = chroquetas.amr_summary_file
-    String? chroquetas_fungicide_resistance = chroquetas.chroquetas_fungicide_resistance
-    String? chroquetas_version = chroquetas.chroquetas_version
-    String? chroquetas_status = chroquetas.chroquetas_status
   }
 }
