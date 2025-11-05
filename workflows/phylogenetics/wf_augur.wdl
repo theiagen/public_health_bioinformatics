@@ -249,25 +249,25 @@ workflow augur {
 
     # augur outputs
     String? augur_mafft_version = augur_align.mafft_version
-    File? auspice_input_json = augur_export.auspice_json
-    File? time_tree = time_tree_path
-    File phylogenetic_tree = select_first([phylogenetic_tree_path, augur_tree.tree])
+    File? augur_auspice_input_json = augur_export.auspice_json
+    File? augur_time_tree = time_tree_path
+    File augur_distance_tree = select_first([phylogenetic_tree_path, augur_tree.tree])
     String augur_iqtree_model_used = augur_tree.iqtree_model_used
     String augur_iqtree_version = augur_tree.iqtree_version
     String augur_fasttree_version = augur_tree.fasttree_version
     String augur_raxml_version = augur_tree.raxml_version
-    File aligned_fastas = select_first([augur_align.aligned_fasta, alignment_fasta])
-    File combined_assemblies = filter_sequences_by_length.filtered_fasta
-    File? metadata_merged = tsv_join.out_tsv
-    File? traits_json = augur_traits.traits_assignments_json
+    File augur_aligned_fastas = select_first([augur_align.aligned_fasta, alignment_fasta])
+    File augur_combined_assemblies = filter_sequences_by_length.filtered_fasta
+    File? augur_metadata_merged = tsv_join.out_tsv
+    File? augur_traits_json = augur_traits.traits_assignments_json
 
     # clade assignments
-    File? clade_mutations = clade_extraction_task.clades_tsv
+    File? augur_clade_mutations = clade_extraction_task.clades_tsv
 
     # list of samples that were kept and met the length filters    
-    File keep_list = fasta_to_ids.ids_txt
+    File augur_keep_list = fasta_to_ids.ids_txt
   
     # snp matrix output
-    File snp_matrix = reorder_matrix.ordered_matrix
+    File augur_snp_matrix = reorder_matrix.ordered_matrix
   }
 }
