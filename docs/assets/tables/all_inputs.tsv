@@ -1606,8 +1606,8 @@ morgana_magic	quasitools_memory	Int	Amount of memory/RAM (in GB) to allocate to 
 morgana_magic	read1	File	Internal component, do not modify		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	general
 morgana_magic	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_ONT	general
 morgana_magic	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	reference
-morgana_magic	sc2_s_gene_start	Int	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
-morgana_magic	sc2_s_gene_stop	Int	DESCRIPTION		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	sc2_s_gene_start	Int	Start position of S gene		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	sc2_s_gene_stop	Int	End position of S gene		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
 morgana_magic	vadr_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic	vadr_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic	vadr_max_length	Int	Maximum length for the fasta-trim-terminal-ambigs.pl VADR script		Optional	TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	general
@@ -2643,7 +2643,7 @@ theiaviral_illumina_pe	min_depth	Int	Minimum read depth required for a variant t
 theiaviral_illumina_pe	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_Illumina_PE	general
 theiaviral_illumina_pe	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	family	Optional	TheiaViral_Illumina_PE	general
 theiaviral_illumina_pe	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_Illumina_PE	general
-theiaviral_illumina_pe	reference_gene_locations_bed	File	DESCRIPTION		Optional	TheiaViral_Illumina_PE	reference
+theiaviral_illumina_pe	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaViral_Illumina_PE	reference
 theiaviral_illumina_pe	skip_rasusa	Boolean	True/False to skip read subsampling with Rasusa	True	Optional	TheiaViral_Illumina_PE	general
 theiaviral_illumina_pe	skip_screen	Boolean	True/False to skip read screening check prior to analysis	False	Optional	TheiaViral_Illumina_PE	general
 theiaviral_ont	call_porechop	Boolean	True/False to trim adapters with porechop	False	Optional	TheiaViral_ONT	general
@@ -2656,7 +2656,7 @@ theiaviral_ont	min_depth	Int	Minimum read depth required for a variant to popula
 theiaviral_ont	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_ONT	general
 theiaviral_ont	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	family	Optional	TheiaViral_ONT	general
 theiaviral_ont	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_ONT	general
-theiaviral_ont	reference_gene_locations_bed	File	DESCRIPTION		Optional	TheiaViral_ONT	reference
+theiaviral_ont	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaViral_ONT	reference
 theiaviral_ont	skip_rasusa	Boolean	True/False to skip read subsampling with Rasusa	True	Optional	TheiaViral_ONT	general
 theiaviral_ont	skip_screen	Boolean	True/False to skip read screening check prior to analysis	False	Optional	TheiaViral_ONT	general
 transfer_files	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_Update	runtime
