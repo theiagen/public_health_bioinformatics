@@ -233,9 +233,9 @@
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade.ndjson
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/genome_annotation.gff3
       md5sum: ca7fb34cad6558bc07fcef587743b934
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
       md5sum: 207e4b0df8a35a2d7fa7a4b21fd110be
-    - path: miniwdl_run/call-nextclade_v3/work/nextclade_dataset_dir/reference.fasta
+    - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/reference.fasta
       md5sum: c7ce05f28e4ec0322c96f24e064ef55c
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/tree.json
@@ -304,13 +304,13 @@
       md5sum: 717da6cd0df2d2f1d00461f3498aaca9
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 59478efddde2191ead1b46b1f121bbc9
-    - path: miniwdl_run/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
       md5sum: 423422138426522d239584bb99a72d8e
-    - path: miniwdl_run/call-pangolin4/work/VERSION_PANGOLIN_ALL
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/VERSION_PANGOLIN_ALL
       md5sum: d1cac94c5f9737fda52c0633cd940768
-    - path: miniwdl_run/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-pangolin4/work/clearlabs.pangolin_report.csv
+    - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/clearlabs.pangolin_report.csv
       md5sum: 97e0f5c71810612d14e4bc502815a6b5
     - path: miniwdl_run/call-stats_n_coverage/command
       md5sum: ac020678f99ac145b11d3dbc7b9fe9ba
