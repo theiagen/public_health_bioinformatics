@@ -522,11 +522,6 @@ kraken2_extracted_read1	File	Forward reads extracted by taxonomic classification
 kraken2_extracted_read2	File	Reverse reads extracted by taxonomic classification	TheiaViral_Illumina_PE
 kraken2_pe_wf_analysis_date	String	Date the workflow was run	Kraken_PE
 kraken2_pe_wf_version	String	Workflow version	Kraken_PE
-kraken2_classified_read1	File	FASTQ file of classified forward/R1 reads	Kraken_SE, Kraken_PE, Kraken_ONT
-kraken2_classified_read2	File	FASTQ file of classified reverse/R2 reads (if PE)	Kraken_PE
-kraken2_classified_report	File	Standard Kraken2 output report. TXT filetype, but can be opened in Excel as a TSV file	Kraken_SE, Kraken_PE, Kraken_ONT, TheiaViral_Panel
-kraken2_database	String	Kraken2 database used for the taxonomic assignment	TheiaProk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Panel
-kraken2_docker	String	Docker image used to run kraken2	Kraken_SE, Kraken_PE, Kraken_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Panel
 kraken2_percent_human_clean	Float	The percentage of human-classified reads in the sample's clean reads	TheiaMeta_Illumina_PE
 kraken2_percent_human_raw	Float	The percentage of human-classified reads in the sample's raw reads	TheiaMeta_Illumina_PE
 kraken2_report	File	TXT document describing taxonomic prediction of every FASTQ record. This file is usually very large and cumbersome to open and view	Kraken_ONT, Kraken_PE, Kraken_SE
