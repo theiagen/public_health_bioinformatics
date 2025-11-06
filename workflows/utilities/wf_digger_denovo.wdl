@@ -149,6 +149,7 @@ workflow digger_denovo {
     }
   output {
     File assembly_fasta = select_first([filter_contigs.filtered_fasta, pilon.assembly_fasta, spades.assembly_fasta, megahit.assembly_fasta, skesa.assembly_fasta])
+    String assembly_status = select_first([spades.spades_status, megahit.megahit_status, skesa.skesa_status])
     File? contigs_gfa = spades.assembly_gfa
     File? filtered_contigs_metrics = filter_contigs.assembly_filtering_metrics
     File? pilon_changes = pilon.changes

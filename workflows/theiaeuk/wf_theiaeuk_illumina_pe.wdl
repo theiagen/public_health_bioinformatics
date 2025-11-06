@@ -253,6 +253,7 @@ workflow theiaeuk_illumina_pe {
     Float? combined_mean_readlength_clean = cg_pipeline_clean.combined_mean_readlength
     # Assembly - digger_denovo outputs and Assembly QC
     File? assembly_fasta = digger_denovo.assembly_fasta
+    String? assembly_status = digger_denovo.assembly_status
     File? contigs_gfa = digger_denovo.contigs_gfa
     File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
     String? assembler = digger_denovo.assembler_used

@@ -38,11 +38,23 @@ task skesa {
         --vector_percent 1 \
         ~{skesa_opts}
     fi
+
+    if [ -f "~{samplename}_skesa_contigs.fasta" ]; then
+      echo "PASS" > SKESA_STATUS
+      if [ ! -s "~{samplename}_skesa_contigs.fasta" ]; then
+        echo "ERROR: No contigs were assembled"
+        echo "FAIL" > SKESA_STATUS
+      fi
+    else
+      echo "ERROR: Skesa assembly failed"
+      echo "FAIL" > SKESA_STATUS
+    fi
   >>>
   output {
     File? assembly_fasta = "~{samplename}_skesa_contigs.fasta"
     String skesa_version = read_string("VERSION")
     String skesa_docker = "~{docker}"
+    String skesa_status = read_string("SKESA_STATUS")
   }
   runtime {
     docker: "~{docker}"
