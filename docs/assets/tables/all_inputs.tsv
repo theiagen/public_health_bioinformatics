@@ -2168,6 +2168,7 @@ skani	docker	String	The Docker container to use for the task	us-docker.pkg.dev/g
 skani	fasta_dir	String	Reference genome database base directory	gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251103/fna/	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 skani	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 skani	skani_db	File	Skani database file	gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251103.tar	Optional	TheiaViral_Illumina_PE	database
+skani	skani_db	File	DESCRIPTION	gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251103.tar	Optional	TheiaViral_ONT	database
 sm_theiacov_fasta_wrangling	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaCoV_FASTA_Batch	runtime
 sm_theiacov_fasta_wrangling	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_FASTA_Batch	runtime
 sm_theiacov_fasta_wrangling	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4	Optional	TheiaCoV_FASTA_Batch	docker

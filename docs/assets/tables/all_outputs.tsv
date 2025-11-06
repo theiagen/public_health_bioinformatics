@@ -691,15 +691,7 @@ nanoplot_tsv_raw	File	A TSV report describing the raw reads	Freyja_FASTQ, TheiaC
 nanoplot_version	String	Version of nanoplot used for analysis	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT
 nanoq_filtered_read1	File	Filtered reads from NanoQ	TheiaViral_ONT
 nanoq_version	String	Version of nanoq used in analysis	Freyja_FASTQ, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
-ncbi_datasets_docker	String	Docker image used for NCBI datasets	TheiaViral_ONT
 ncbi_datasets_version	String	Version of NCBI datasets used	Host_Decontaminate
-ncbi_identify_accession	String	NCBI accession ID of identified taxon	TheiaViral_ONT
-ncbi_identify_avg_genome_length	Int	Average genome length from NCBI taxon summary	TheiaViral_ONT
-ncbi_identify_genome_summary_tsv	File	TSV file with genome summary from NCBI	TheiaViral_ONT
-ncbi_identify_read_extraction_rank	String	Taxonomic rank used for read extraction	TheiaViral_ONT
-ncbi_identify_taxon_id	String	NCBI taxonomy ID of identified organism	TheiaViral_ONT
-ncbi_identify_taxon_name	String	Name of identified taxon	TheiaViral_ONT
-ncbi_identify_taxon_summary_tsv	File	TSV file with taxa specific summary from NCBI	TheiaViral_ONT
 ncbi_read_extraction_rank	String	Read extraction rank used	TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_scrub_docker	String	The Docker image for NCBI's HRRT (human read removal tool)	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_scrub_human_spots_removed	Int	Number of spots removed (or masked)	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -1017,7 +1009,6 @@ skani_report	File	Report from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_status	String	Status of Skani analysis	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_accession	String	Top accession ID from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_ani	Float	Top ANI score from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
-skani_top_ani_fasta	File	FASTA file of top ANI match from Skani	TheiaViral_ONT
 skani_top_query_coverage	Float	Query coverage of top match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_score	Float	Top score from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_version	String	Version of Skani used	TheiaViral_Illumina_PE, TheiaViral_ONT
