@@ -50,8 +50,13 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
         - [TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json)
         - [TheiaCoV_FASTA_RSV-B_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_RSV-B_2024-04-19.json)
 
-!!! caption "TheiaCoV Workflow Diagram"
-    ![TheiaCoV Workflow Diagram](../../assets/figures/TheiaCoV.png)
+=== "TheiaCoV_Illumina_PE"
+    !!! caption "TheiaCoV Illumina PE and SE Workflow Diagram"
+        ![TheiaCoV Workflow Diagram](../../assets/figures/TheiaCoV_Illumina.png)
+
+=== "TheiaCoV_ONT"
+    !!! caption "TheiaCoV ONT Workflow Diagram"
+        ![TheiaCoV Workflow Diagram](../../assets/figures/TheiaCoV_ONT.png)
 
 ### Supported Organisms
 
