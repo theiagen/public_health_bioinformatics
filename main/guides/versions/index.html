@@ -6480,12 +6480,6 @@
 <td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
-<td>gene_coverage</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
-<td>TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT</td>
-</tr>
-<tr>
 <td>get_fasta_genome_size</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/biocontainers/seqkit:2.4.0--h9ee0642_0</td>
@@ -6932,44 +6926,56 @@
 <tr>
 <td>morgana_magic</td>
 <td><strong>abricate_flu_docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727</td>
-<td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
+<td></td>
+<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>assembly_metrics_docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
-<td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
+<td></td>
+<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>gene_coverage_docker</strong></td>
+<td></td>
+<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>genoflu_docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.06</td>
-<td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
+<td></td>
+<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>irma_docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/irma:1.2.0</td>
-<td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
+<td></td>
+<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>nextclade_docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2</td>
-<td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
+<td></td>
+<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>nextclade_output_parser_docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim</td>
-<td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
+<td></td>
+<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>pangolin_docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.10.2</td>
-<td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
+<td></td>
+<td>TheiaCoV_FASTA, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>quasitools_docker</strong></td>
+<td></td>
+<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>mutation_context</td>
@@ -7030,18 +7036,6 @@
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10</td>
 <td>Terra_2_NCBI</td>
-</tr>
-<tr>
-<td>nextclade_output_parser</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim</td>
-<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT</td>
-</tr>
-<tr>
-<td>nextclade_v3</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.16.0</td>
-<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT</td>
 </tr>
 <tr>
 <td>nextclade_v3_set</td>
@@ -7144,18 +7138,6 @@
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16</td>
 <td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
-</tr>
-<tr>
-<td>quasitools_illumina_pe</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/quasitools:0.7.0--pyh864c0ab_1</td>
-<td>TheiaCoV_Illumina_PE</td>
-</tr>
-<tr>
-<td>quasitools_ont</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/quasitools:0.7.0--pyh864c0ab_1</td>
-<td>TheiaCoV_ONT</td>
 </tr>
 <tr>
 <td>quast</td>
@@ -7545,7 +7527,7 @@
 <td>vadr</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4</td>
-<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, VADR_Update</td>
+<td>VADR_Update</td>
 </tr>
 <tr>
 <td>version_capture</td>
@@ -7783,6 +7765,30 @@
 <td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
+<td>morgana_magic</td>
+<td><strong>genoflu_cross_reference</strong></td>
+<td>File</td>
+<td>An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py</td>
+<td></td>
+<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>irma_keep_ref_deletions</strong></td>
+<td>Boolean</td>
+<td>True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting N's or deleting the sequence entirely. False sets this IRMA paramater to "DEL" and true sets it to "NNN"</td>
+<td></td>
+<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>reference_gene_locations_bed</strong></td>
+<td>File</td>
+<td>Use to provide locations of interest where average coverage will be calculated</td>
+<td></td>
+<td>TheiaCoV_FASTA, TheiaCoV_FASTA_Batch</td>
+</tr>
+<tr>
 <td>nextclade_batch</td>
 <td><strong>input_ref</strong></td>
 <td>File</td>
@@ -7799,28 +7805,28 @@
 <td>Nextclade_Batch</td>
 </tr>
 <tr>
-<td>nextclade_v3</td>
-<td><strong>auspice_reference_tree_json</strong></td>
-<td>File</td>
-<td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
-<td>Inherited from nextclade dataset</td>
-<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT</td>
-</tr>
-<tr>
-<td>nextclade_v3</td>
-<td><strong>input_ref</strong></td>
-<td>File</td>
-<td>A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html</a></td>
-<td>Inherited from nextclade dataset</td>
-<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT</td>
-</tr>
-<tr>
 <td>organism_parameters</td>
 <td><strong>reference_gff_file</strong></td>
 <td>File</td>
 <td>Reference GFF file for the organism being analyzed</td>
 <td>Default provided for mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"])</td>
 <td>Augur, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_ONT</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>reference_gene_locations_bed</strong></td>
+<td>File</td>
+<td>Use to provide locations of interest where average coverage will be calculated</td>
+<td></td>
+<td>TheiaViral_Illumina_PE</td>
+</tr>
+<tr>
+<td>theiaviral_ont</td>
+<td><strong>reference_gene_locations_bed</strong></td>
+<td>File</td>
+<td>Use to provide locations of interest where average coverage will be calculated</td>
+<td></td>
+<td>TheiaViral_ONT</td>
 </tr>
 </tbody>
 </table>
