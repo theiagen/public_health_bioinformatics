@@ -36,7 +36,7 @@ task ete4_taxon_id {
     lineage2rank = taxa.get_rank(lineage)
     # will overwrite multiple "no rank" entries, but these won't be used later
     rank2lineage = {v: k for k, v in lineage2rank.items()}
-    query_rank = list(taxa.get_rank([query_taxid]).keys())[0]
+    query_rank = list(taxa.get_rank([query_taxid]).values())[0]
     query_taxon = taxa.get_taxid_translator([query_taxid])[query_taxid]
     print(f"DEBUG: Resolved input taxon '~{taxon}' to taxid: {query_taxid}, name: {query_taxon}, rank: {query_rank}")
 
@@ -47,6 +47,7 @@ task ete4_taxon_id {
       print("DEBUG: No input 'rank' provided, defaulting to raw taxon ID, name, and rank.")
       reported_taxon_name = query_taxon
       reported_taxon_rank = query_rank
+      reported_taxon_id = query_taxid
     elif check_rank not in rank2lineage:
       reported_taxon_name = reported_taxon_id = reported_taxon_rank = 'N/A'
       raise ValueError(f"ERROR: Input taxon rank '{check_rank}' is not valid for taxon: '{query_taxon}'.")
