@@ -80,7 +80,6 @@ task check_reads {
     # estimate genome length if theiaprok AND expected_genome_length was not provided
     if ( [ "~{workflow_series}" == "theiaprok" ] || [ "~{workflow_series}" == "theiaeuk" ] ) && [[ -z "~{expected_genome_length}" ]]; then
       # First Pass; assuming average depth
-      # Pass through
       mash sketch -o test -k 31 -m 3 -r ~{read1} ~{read2} > mash-output.txt 2>&1 || true
       # check if the mash file was generated (successful run)
       if [ ! -f test.msh ]; then
