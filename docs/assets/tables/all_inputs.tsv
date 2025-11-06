@@ -70,7 +70,7 @@ freyja_plot	samplename	Array[String]	The names of the samples being analyzed		Re
 freyja_update	gcp_uri	String	The path where you want the Freyja reference files to be stored. Include gs:// at the beginning of the string. Full example with a Terra workspace bucket: "gs://fc-87ddd67a-c674-45a8-9651-f91e3d2f6bb7"		Required	Freyja_Update	general
 gambit_query	assembly_fasta	File	The assembly file for your sample in FASTA format		Required	Gambit_Query	general
 gambit_query	samplename	String	The name of the sample being analyzed		Required	Gambit_Query	general
-host_decontaminate	host	String	Host taxon/accession to dehost reads, if provided		Required	Host_Decontaminate	general
+host_decontaminate	host	String	Host taxon/assembly FASTA/accession to dehost reads, if provided		Required	Host_Decontaminate	general
 host_decontaminate	read1	File	Read 1 in FASTQ file format (compression optional)		Required	Host_Decontaminate	general
 host_decontaminate	samplename	String	The name of the sample being analyzed		Required	Host_Decontaminate	general
 kraken2_ont_wf	kraken2_db	File	A Kraken2 database in .tar.gz format		Required	Kraken_ONT	general
@@ -953,7 +953,7 @@ gubbins	tree_args	String	Quoted string of further arguments passed to tree build
 gubbins	tree_builder	String	Application to use for Gubbins tree building algorithm: "raxml", "raxmlng", "iqtree", "iqtree-fast", "fasttree", "hybrid" (fasttree is used for the first tree, and raxml is used for later iterations), "rapidnj"	raxml	Optional	Snippy_Tree	general
 host_decontaminate	complete_only	Boolean	Only download genomes labeled "complete"	False	Optional	Host_Decontaminate, TheiaViral_ONT	general
 host_decontaminate	is_accession	Boolean	Inputted "host" is an accession	False	Optional	Host_Decontaminate, TheiaViral_ONT	general
-host_decontaminate	is_genome	Boolean	Inputted "host" is a genome URI	False	Optional	Host_Decontaminate, TheiaViral_ONT	general
+host_decontaminate	is_genome	Boolean	Inputted "host" is an assembly FASTA	False	Optional	Host_Decontaminate, TheiaViral_ONT	general
 host_decontaminate	minimap2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Host_Decontaminate, TheiaViral_ONT	runtime
 host_decontaminate	read2	File	Paired-end read 2 in FASTQ file format (compression optional)		Optional	Host_Decontaminate	general
 host_decontaminate	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general
