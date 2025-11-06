@@ -252,18 +252,19 @@
 
 #### Taxa-Specific Tasks
 
-The TheiaViral workflows activate taxa-specific sub-workflows after the identification of relevant taxa. These characterization modules are activated by populating `taxon` with an *exact* match to a taxon listed in parentheses below (case-insensitive):
+The TheiaViral workflows activate taxa-specific sub-workflows after the identification of relevant taxa. These characterization modules are activated by populating `taxon` with an *exact* match to a compatible taxon. We recommend using the taxon ID integer because these can be simpler. Compatible taxon codes are listed in parentheses below (case-insensitive):
 
-- **SARS-CoV-2** (`"2697049"`, `"3418604"`, `"severe acute respiratory syndrome coronavirus 2"`, `"betacoronavirus pandemicum"`)
+- **SARS-CoV-2** (`"2697049"`, `"severe acute respiratory syndrome coronavirus 2"`)
 - **Monkeypox virus** (`"10244"`, `"mpox"`, `"monkeypox virus"`)
 - **Human Immunodeficiency Virus 1** (`"11676"`, `"human immunodeficiency virus 1"`)
 - **Human Immunodeficiency Virus 2** (`"11709"`, `"human immunodeficiency virus 2"`)
 - **West Nile Virus** (`"11082"`, `"west nile virus"`)
-- **Influenza** (`"11320"`, `"11309"`, `"11520"`, `"influenza"`)
+- **Influenza A** (`"11320"`, `"influenza a virus"`)
+- **Influenza B** (`"11520"`, `"influenza b virus"`)
 - **RSV-A** (`"208893"`, `"human respiratory syncytial virus a"`)
 - **RSV-B** (`"208895"`, `"human respiratory syncytial virus b"`)
 - **Measles** (`"11234"`, `"measles"`)
-- **Rabies** (`"11286"`, `"11292"`, `"lyssavirus rabies"`)
+- **Rabies** (`"11292"`, `"lyssavirus rabies"`)
 - **Mumps** (`"2560602"`, `"mumps virus"`, `"Mumps orthorubulavirus"`)
 - **Rubella** (`"11041"`, `"rubella virus"`)
 
