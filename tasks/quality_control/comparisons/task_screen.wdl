@@ -201,7 +201,7 @@ task check_reads_se {
   }
   command <<<
     # just in case anything fails, throw an error
-    set -euo pipefail
+    set -eu pipefail
 
     # populate column headers for metrics and init failure log
     metrics="read1_count\tread_bp\test_genome_length"
@@ -241,43 +241,50 @@ task check_reads_se {
       # estimate genome length if theiaprok AND expected_genome_length was not provided
       if ( [ "~{workflow_series}" == "theiaprok" ] || [ "~{workflow_series}" == "theiaeuk" ] ) && [[ -z "~{expected_genome_length}" ]]; then
         # First Pass; assuming average depth
-        mash sketch -o test -k 31 -m 3 -r ~{read1} > mash-output.txt 2>&1
-        grep "Estimated genome size:" mash-output.txt | \
-          awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_length_output
-        grep "Estimated coverage:" mash-output.txt | \
-          awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
-        
-        # remove mash outputs
-        rm -rf test.msh
-        rm -rf mash-output.txt
-        
-        estimated_genome_length=`head -n1 genome_length_output`
-        estimated_coverage=`head -n1 coverage_output`
-
-        # Check if second pass is needed
-        if [ "~{workflow_series}" == "theiaprok" ]; then
-          if [ ${estimated_genome_length} -gt "~{max_genome_length}" ] || [ ${estimated_genome_length} -lt "~{min_genome_length}" ]; then
-            # Probably high coverage, try increasing number of kmer copies to 10
-            M="-m 10"
-            if [ ${estimated_genome_length} -lt "~{min_genome_length}" ]; then
-              # Probably low coverage, try decreasing the number of kmer copies to 1
-              M="-m 1"
-            fi
-    
-            mash sketch -o test -k 31 ${M} -r ~{read1} > mash-output.txt 2>&1
-            grep "Estimated genome size:" mash-output.txt | \
-              awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_length_output
-            grep "Estimated coverage:" mash-output.txt | \
-              awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
-              
-            # remove mash outputs
-            rm -rf test.msh
-            rm -rf mash-output.txt
-          fi
-            
+        mash sketch -o test -k 31 -m 3 -r ~{read1} > mash-output.txt 2>&1 || true
+        if [ ! -f test.msh ]; then
+          fail_log+="; mash failed - cannot estimate genome length and coverage"
+          estimated_coverage=0
+          estimated_genome_length=0
+          rm mash-output.txt
+        else
+          grep "Estimated genome size:" mash-output.txt | \
+            awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_length_output
+          grep "Estimated coverage:" mash-output.txt | \
+            awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
+          
+          # remove mash outputs
+          rm -rf test.msh
+          rm -rf mash-output.txt
+          
           estimated_genome_length=`head -n1 genome_length_output`
           estimated_coverage=`head -n1 coverage_output`
+  
+          # Check if second pass is needed
+          if [ "~{workflow_series}" == "theiaprok" ]; then
+            if [ ${estimated_genome_length} -gt "~{max_genome_length}" ] || [ ${estimated_genome_length} -lt "~{min_genome_length}" ]; then
+              # Probably high coverage, try increasing number of kmer copies to 10
+              M="-m 10"
+              if [ ${estimated_genome_length} -lt "~{min_genome_length}" ]; then
+                # Probably low coverage, try decreasing the number of kmer copies to 1
+                M="-m 1"
+              fi
+      
+              mash sketch -o test -k 31 ${M} -r ~{read1} > mash-output.txt 2>&1
+              grep "Estimated genome size:" mash-output.txt | \
+                awk '{if($4){printf("%d", $4)}} END {if (!NR) print "0"}' > genome_length_output
+              grep "Estimated coverage:" mash-output.txt | \
+                awk '{if($3){printf("%d", $3)}} END {if (!NR) print "0"}' > coverage_output
+                
+              # remove mash outputs
+              rm -rf test.msh
+              rm -rf mash-output.txt
+            fi
+              
+            estimated_genome_length=`head -n1 genome_length_output`
+            estimated_coverage=`head -n1 coverage_output`
         fi
+      fi
     
       # estimate coverage if theiacov OR expected_genome_length was provided
       elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_length}" ]; then
