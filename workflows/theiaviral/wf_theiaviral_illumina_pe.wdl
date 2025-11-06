@@ -37,6 +37,7 @@ workflow theiaviral_illumina_pe {
     Boolean call_metaviralspades = true # if false, move to megahit immediately
     Boolean skip_rasusa = true 
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
+    File? reference_gene_locations_bed # optional, if provided will be used for coverage calculations
     Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
     Int min_depth = 10
     Int min_map_quality = 20
@@ -206,7 +207,9 @@ workflow theiaviral_illumina_pe {
             assembly_fasta = select_first([consensus.consensus_seq]),
             taxon_name = select_first([ncbi_identify.raw_taxon_id, taxon]),
             seq_method = "illumina_pe",
-            number_ATCG = consensus_qc.number_ATCG
+            number_ATCG = consensus_qc.number_ATCG,
+            workflow_type = "theiaviral",
+            reference_gene_locations_bed = reference_gene_locations_bed
         }
       }
     }
@@ -386,15 +389,14 @@ workflow theiaviral_illumina_pe {
     String? nextclade_version = morgana_magic.nextclade_version
     String? nextclade_docker = morgana_magic.nextclade_docker
     String? nextclade_ds_tag = morgana_magic.nextclade_ds_tag
-    # Nextclade outputs for MPXV
-    File? nextclade_json_mpxv = morgana_magic.nextclade_json_mpxv
-    File? auspice_json_mpxv = morgana_magic.auspice_json_mpxv
-    File? nextclade_tsv_mpxv = morgana_magic.nextclade_tsv_mpxv
-    String? nextclade_aa_subs_mpxv = morgana_magic.nextclade_aa_subs_mpxv
-    String? nextclade_aa_dels_mpxv = morgana_magic.nextclade_aa_dels_mpxv
-    String? nextclade_clade_mpxv = morgana_magic.nextclade_clade_mpxv
-    String? nextclade_lineage_mpxv = morgana_magic.nextclade_lineage_mpxv
-    String? nextclade_qc_mpxv = morgana_magic.nextclade_qc_mpxv
+    File? nextclade_json = morgana_magic.nextclade_json
+    File? auspice_json = morgana_magic.auspice_json
+    File? nextclade_tsv = morgana_magic.nextclade_tsv
+    String? nextclade_aa_subs = morgana_magic.nextclade_aa_subs
+    String? nextclade_aa_dels = morgana_magic.nextclade_aa_dels
+    String? nextclade_clade = morgana_magic.nextclade_clade
+    String? nextclade_lineage = morgana_magic.nextclade_lineage
+    String? nextclade_qc = morgana_magic.nextclade_qc
     # Nextclade outputs for Rabies
     File? nextclade_json_rabies = morgana_magic.nextclade_json_rabies
     File? auspice_json_rabies = morgana_magic.auspice_json_rabies
