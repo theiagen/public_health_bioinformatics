@@ -117,6 +117,7 @@ task check_reads {
             estimated_genome_length=`head -n1 genome_length_output`
             estimated_coverage=`head -n1 coverage_output`
           fi
+        fi
       fi
     # estimate coverage if theiacov OR expected_genome_length was provided
     elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_length}" ]; then
@@ -283,8 +284,8 @@ task check_reads_se {
               
             estimated_genome_length=`head -n1 genome_length_output`
             estimated_coverage=`head -n1 coverage_output`
+          fi
         fi
-      fi
     
       # estimate coverage if theiacov OR expected_genome_length was provided
       elif [ "~{workflow_series}" == "theiacov" ] || [ "~{expected_genome_length}" ]; then
