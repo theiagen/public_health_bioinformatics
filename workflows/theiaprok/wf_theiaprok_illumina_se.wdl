@@ -753,7 +753,7 @@ workflow theiaprok_illumina_se {
     String? kraken2_database = read_QC_trim.kraken_database
     #Assembly - digger_denovo outputs
     File? assembly_fasta = digger_denovo.assembly_fasta
-    File? assembly_status = digger_denovo.assembly_status
+    String? assembly_status = digger_denovo.assembly_status
     File? contigs_gfa = digger_denovo.contigs_gfa
     File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
     String? assembler = digger_denovo.assembler_used
