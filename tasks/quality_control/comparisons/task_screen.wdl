@@ -83,7 +83,7 @@ task check_reads {
       mash sketch -o test -k 31 -m 3 -r ~{read1} ~{read2} > mash-output.txt 2>&1 || true
       # check if the mash file was generated (successful run)
       if [ ! -f test.msh ]; then
-        fail_log+="; mash failed to estimate genome length and coverage"
+        fail_log+="; mash failed - cannot estimate genome length and coverage"
         estimated_coverage=0
         estimated_genome_length=0
         rm mash-output.txt
