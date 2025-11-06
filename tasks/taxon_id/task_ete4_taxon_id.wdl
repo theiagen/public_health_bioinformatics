@@ -45,8 +45,8 @@ task ete4_taxon_id {
     # Reported taxon info is based on the 'rank' input (if provided). Otherwise, use raw rank.
     if not check_rank:
       print("DEBUG: No input 'rank' provided, defaulting to raw taxon ID, name, and rank.")
-      reported_taxon_name = raw_taxon_name
-      reported_taxon_rank = raw_taxon_rank
+      reported_taxon_name = query_taxon
+      reported_taxon_rank = query_rank
     elif check_rank not in rank2lineage:
       reported_taxon_name = reported_taxon_id = reported_taxon_rank = 'N/A'
       raise ValueError(f"ERROR: Input taxon rank '{check_rank}' is not valid for taxon: '{query_taxon}'.")
