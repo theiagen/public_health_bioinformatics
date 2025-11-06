@@ -1643,12 +1643,6 @@ nanoq	max_read_qual	Int	Maximum read quality to keep	100	Optional	TheiaViral_ONT
 nanoq	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaViral_ONT	runtime
 nanoq	min_read_length	Int	Minimum read length to keep	500	Optional	TheiaViral_ONT	general
 nanoq	min_read_qual	Int	Minimum read quality to keep	10	Optional	TheiaViral_ONT	general
-ncbi_datasets	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_ONT	runtime
-ncbi_datasets	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_ONT	runtime
-ncbi_datasets	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	TheiaViral_ONT	docker
-ncbi_datasets	include_gbff	Boolean	True/False to include gbff files in the output	False	Optional	TheiaViral_ONT	general
-ncbi_datasets	include_gff3	Boolean	True/False to include gff3 files in the output	False	Optional	TheiaViral_ONT	general
-ncbi_datasets	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_ONT	runtime
 ncbi_datasets_download_genome_accession	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime
 ncbi_datasets_download_genome_accession	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime
 ncbi_datasets_download_genome_accession	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	docker
@@ -1656,15 +1650,6 @@ ncbi_datasets_download_genome_accession	include_gbff	Boolean	Set to true if you 
 ncbi_datasets_download_genome_accession	include_gff3	Boolean	Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations	False	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	general
 ncbi_datasets_download_genome_accession	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime
 ncbi_datasets_download_genome_accession	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	False	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	general
-ncbi_identify	complete	Boolean	Only query genomes labeled complete	True	Optional	TheiaViral_ONT	general
-ncbi_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Decontaminate	runtime
-ncbi_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate	runtime
-ncbi_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq	Optional	Host_Decontaminate	docker
-ncbi_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Host_Decontaminate	runtime
-ncbi_identify	rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.		Optional	Host_Decontaminate	general
-ncbi_identify	refseq	Boolean	Only query RefSeq genomes	True	Optional	TheiaViral_ONT	general
-ncbi_identify	summary_limit	Int	Maximum number of genomes to return in the summary	100	Optional	TheiaViral_ONT	general
-ncbi_identify	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	False	Optional	TheiaViral_ONT	general
 ncbi_scrub_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	NCBI_Scrub_PE	runtime
 ncbi_scrub_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	NCBI_Scrub_PE	runtime
 ncbi_scrub_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1	Optional	NCBI_Scrub_PE	docker
