@@ -111,7 +111,7 @@ task skani {
 
   # acquire the taxon of the best hit, if possible
   if [ -f ~{acc2taxon_map} ]; then
-    top_taxon=$(grep -wFf TOP_ACCESSION ~{acc2taxon_map} | cut -f 2)
+    top_taxon=$(grep -wFf TOP_ACCESSION ~{acc2taxon_map} | cut -f 2 || true)
     if [ -n "$top_taxon" ]; then
       echo "$top_taxon" > TOP_TAXON
     else
