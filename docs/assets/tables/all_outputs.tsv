@@ -1004,7 +1004,8 @@ sistr_serotype_cgmlst	String	cgMLST of the serogroup prediicted by SISTR	TheiaPr
 sistr_version	String	Version of SISTR used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 skani_database	String	Database used for Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_docker	String	Docker image used for Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
-skani_reference_assembly	File	Reference assembly URI	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_reference_assembly	File	Reference genome assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_reference_taxon	String	Reference taxon name	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_report	File	Report from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_status	String	Status of Skani analysis	TheiaViral_Illumina_PE, TheiaViral_ONT
 skani_top_accession	String	Top accession ID from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT

@@ -1650,6 +1650,10 @@ ncbi_datasets_download_genome_accession	include_gbff	Boolean	Set to true if you 
 ncbi_datasets_download_genome_accession	include_gff3	Boolean	Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations	False	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	general
 ncbi_datasets_download_genome_accession	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime
 ncbi_datasets_download_genome_accession	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	False	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	general
+ncbi_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Decontaminate	runtime
+ncbi_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate	runtime
+ncbi_identify	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq	Optional	Host_Decontaminate	docker
+ncbi_identify	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	Host_Decontaminate	runtime
 ncbi_scrub_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	NCBI_Scrub_PE	runtime
 ncbi_scrub_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	NCBI_Scrub_PE	runtime
 ncbi_scrub_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1	Optional	NCBI_Scrub_PE	docker
@@ -2162,12 +2166,13 @@ shared_variants	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Find_S
 shared_variants	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Find_Shared_Variants, Snippy_Tree	runtime
 shared_variants	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16	Optional	Find_Shared_Variants, Snippy_Tree	docker
 shared_variants	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Find_Shared_Variants, Snippy_Tree	runtime
+skani	acc2taxon_map	File	Tab-delimited map between reference genome accessions and their affiliated taxon	gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_accession2taxon_20251107.tsv	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 skani	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 skani	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 skani	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-skani	fasta_dir	String	Reference genome database base directory	gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251103/fna/	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
+skani	fasta_dir	String	Reference genome database base directory	gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251107/fna/	Optional	TheiaViral_Illumina_PE	general
 skani	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-skani	skani_db	File	Skani database file	gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251103.tar	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	database
+skani	skani_db	File	Skani database file	gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251107.tar	Optional	TheiaViral_Illumina_PE	database
 sm_theiacov_fasta_wrangling	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaCoV_FASTA_Batch	runtime
 sm_theiacov_fasta_wrangling	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_FASTA_Batch	runtime
 sm_theiacov_fasta_wrangling	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4	Optional	TheiaCoV_FASTA_Batch	docker
