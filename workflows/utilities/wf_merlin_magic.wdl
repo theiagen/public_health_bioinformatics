@@ -750,29 +750,29 @@ workflow merlin_magic {
             maxsoft = snippy_maxsoft,
             docker = snippy_variants_docker_image
         }
-        if (assembly_only && ont_data) {
-          call snippy.snippy_variants as snippy_afumigatus_ont {
-            input:
-              reference_genome_file = snippy_reference_afumigatus,
-              assembly_fasta = assembly,
-              samplename = samplename,
-              map_qual = snippy_map_qual,
-              base_quality = snippy_base_quality,
-              min_coverage = snippy_min_coverage,
-              min_frac = snippy_min_frac,
-              min_quality = snippy_min_quality,
-              maxsoft = snippy_maxsoft,
-              docker = snippy_variants_docker_image
-          }
-        }
-        call snippy_gene_query.snippy_gene_query as snippy_gene_query_afumigatus {
+      }
+      if (assembly_only && ont_data) {
+        call snippy.snippy_variants as snippy_afumigatus_ont {
           input:
+            reference_genome_file = snippy_reference_afumigatus,
+            assembly_fasta = assembly,
             samplename = samplename,
-            snippy_variants_results = select_first([snippy_afumigatus.snippy_variants_results, snippy_afumigatus_ont.snippy_variants_results]),
-            reference = snippy_reference_afumigatus,
-            query_gene = select_first([snippy_query_gene, "Cyp51A,HapE,AFUA_4G08340"]), # AFUA_4G08340 is COX10 according to MARDy
-            docker = snippy_gene_query_docker_image
+            map_qual = snippy_map_qual,
+            base_quality = snippy_base_quality,
+            min_coverage = snippy_min_coverage,
+            min_frac = snippy_min_frac,
+            min_quality = snippy_min_quality,
+            maxsoft = snippy_maxsoft,
+            docker = snippy_variants_docker_image
         }
+      }
+      call snippy_gene_query.snippy_gene_query as snippy_gene_query_afumigatus {
+        input:
+          samplename = samplename,
+          snippy_variants_results = select_first([snippy_afumigatus.snippy_variants_results, snippy_afumigatus_ont.snippy_variants_results]),
+          reference = snippy_reference_afumigatus,
+          query_gene = select_first([snippy_query_gene, "Cyp51A,HapE,AFUA_4G08340"]), # AFUA_4G08340 is COX10 according to MARDy
+          docker = snippy_gene_query_docker_image
       }
     }
     if (merlin_tag == "Cryptococcus neoformans") {
