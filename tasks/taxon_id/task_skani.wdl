@@ -13,6 +13,7 @@ task skani {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2"
   }
   command <<<
+    # pipefail, but not in the middle of pipes
     set -eu pipefail
 
     # extract skani db
@@ -103,21 +104,23 @@ task skani {
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 3 | tee TOP_ANI
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 5 | tee TOP_QUERY_COVERAGE
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 21 | tee TOP_SCORE
+    fi
 
-      # acquire the taxon of the best hit, if possible
-      if [ -f ~{acc2taxon_map} ]; then
-        top_taxon=$(grep -wFf TOP_ACCESSION ~{acc2taxon_map} | cut -f 2)
-        echo "$top_taxon" > TOP_TAXON
-      else
-        echo "N/A" > TOP_TAXON
-     fi
+  # acquire the path of the best hit assembly
+  echo ~{fasta_dir}$(cat TOP_ACCESSION).fna > TOP_ASSEMBLY
+
+  # acquire the taxon of the best hit, if possible
+  if [ -f ~{acc2taxon_map} ]; then
+    top_taxon=$(grep -wFf TOP_ACCESSION ~{acc2taxon_map} | cut -f 2)
+    if [ -n "$top_taxon" ]; then
+      echo "$top_taxon" > TOP_TAXON
+    else
+      echo "N/A" > TOP_TAXON
     fi
   else
     echo "N/A" > TOP_TAXON
   fi
 
-  # acquire the path of the best hit assembly
-  echo ~{fasta_dir}$(cat TOP_ACCESSION).fna > TOP_ASSEMBLY
   >>>
   output{
     File skani_report = "~{samplename}_skani_results_sorted.tsv"
