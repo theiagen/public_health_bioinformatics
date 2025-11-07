@@ -4,8 +4,9 @@ task skani {
   input{
     File assembly_fasta
     String samplename
-    File skani_db = "gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251103.tar"
-    String fasta_dir = "gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251103/fna/"
+    File skani_db = "gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251107.tar"
+    String fasta_dir = "gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251107/fna/"
+    File? acc2taxon_map = "gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_accession2taxon_20251107.tsv"
     Int disk_size = 100
     Int cpu = 2
     Int memory = 4
@@ -104,7 +105,21 @@ task skani {
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 21 | tee TOP_SCORE
     fi
 
+  # acquire the path of the best hit assembly
   echo ~{fasta_dir}$(cat TOP_ACCESSION).fna > TOP_ASSEMBLY
+
+  # acquire the taxon of the best hit, if possible
+  if [ -f ~{acc2taxon_map} ]; then
+    top_taxon=$(grep -wFf TOP_ACCESSION ~{acc2taxon_map} | cut -f 2)
+    if [ -n "$top_taxon" ]; then
+      echo "$top_taxon" > TOP_TAXON
+    else
+      echo "N/A" > TOP_TAXON
+    fi
+  else
+    echo "N/A" > TOP_TAXON
+  fi
+
   >>>
   output{
     File skani_report = "~{samplename}_skani_results_sorted.tsv"
@@ -113,6 +128,7 @@ task skani {
     Float skani_top_query_coverage = read_float("TOP_QUERY_COVERAGE")
     Float skani_top_score = read_float("TOP_SCORE")
     File skani_reference_assembly = read_string("TOP_ASSEMBLY")
+    String skani_reference_taxon = read_string("TOP_TAXON")
     String skani_database = skani_db
     String skani_warning = read_string("SKANI_WARNING")
     String skani_status = read_string("SKANI_STATUS")
