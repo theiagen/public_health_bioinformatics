@@ -24,7 +24,7 @@ SOP	Workflow	SOP version	PHB version compatibility	Pathogen/Category	Current or 
 [Running Theiagen’s Snippy_Variants_PHB Workflow in Terra](../assets/sops/TG-SNP-01_Snippy_Variants_v1.pdf)	Snippy_Variants	v1	v2	Bacterial, Phylogenetic construction	Current
 [TheiaProk_ONT](../assets/sops/TG-TP-ONT_TheiaProkONT_v2%201.pdf)	ONT, TheiaProk	v3	v2, v3	Bacterial	Current
 [Getting Started In Terra](../assets/sops/TG-TER-03_GettingStartedInTerra_v3.pdf)	None	v3	v2, v3	Getting Started	Prior
-[Getting Started In Terra](../assets/sops/TG-TER-03_GettingStartedInTerra_v4-1.pdf)	None	v4	v2, v3	Getting Started	Current
+[Getting Started In Terra](../assets/sops/TG-TER-03_GettingStartedInTerra_v4-1.pdf)	None	v4	v2, v3	Getting Started	Prior
 [Analyze SARS-COV-2 using TheiaCoV_ONT](../assets/sops/TG-SC2-ONT_Analyzing_SC2_Using_TheiaCov_ONT_PHB_v2.pdf)	ONT, TheiaCoV	v2	v1	SC2	Prior
 [Analyze SARS-COV-2 using TheiaCoV_ONT](../assets/sops/TG-SC2-ONT_SOP_Analysis_SC2_ONT_v3.pdf)	ONT, TheiaCoV	v3	v2	SC2	Prior
 [Analyzing SARS-CoV-2 using TheiaCov_ClearLabs](../assets/sops/TG-SC2-CL_SC2_ClearLabs_v3.pdf)	CL, TheiaCoV	v3	v2	SC2	Prior
