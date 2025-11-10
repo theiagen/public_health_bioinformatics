@@ -23,7 +23,7 @@ task check_reads {
   }
   command <<<
     # fail upon error, except during pipes
-    set -eu pipefail
+    set -eu
 
     # populate column headers for metrics and init failure log
     metrics="read1_count\tread2_count\tread_bp\test_genome_length"
@@ -202,7 +202,7 @@ task check_reads_se {
   }
   command <<<
     # just in case anything fails, throw an error
-    set -eu pipefail
+    set -eu
 
     # populate column headers for metrics and init failure log
     metrics="read1_count\tread_bp\test_genome_length"
