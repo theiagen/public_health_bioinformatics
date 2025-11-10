@@ -20,6 +20,7 @@ Taxon ID	Common Name	Species Name	Genome Length
 12092	Hepatovirus A	Hepatovirus ahepa	7446
 3052230	Hepacivirus hominis	Hepacivirus hominis	9431
 12475	Hepatitis delta virus	Deltavirus italiense	1680
+291484	Hepatitis E virus	Hepatitis E virus	7499
 11676	Human immunodeficiency virus 1	Lentivirus humimdef1	9388
 11709	Human immunodeficiency virus 2	Lentivirus humimdef2	10059
 68887	Torque teno virus	Torque teno virus	3477
@@ -38,6 +39,7 @@ Taxon ID	Common Name	Species Name	Genome Length
 1221391	Cedar virus	Henipavirus cedarense	18162
 38767	Lyssavirus duvenhage	Lyssavirus duvenhage	11976
 11021	Eastern equine encephalitis virus	Alphavirus eastern	11675
+38768	European bat lyssavirus	European bat lyssavirus	11935
 2847089	Ghana virus	Henipavirus ghanaense	18530
 3052223	Henipavirus hendraense	Henipavirus hendraense	18234
 260964	Henipavirus		18134
@@ -57,7 +59,7 @@ Taxon ID	Common Name	Species Name	Genome Length
 11084	Tick-borne encephalitis virus	Orthoflavivirus encephalitidis	7367
 11036	Venezuelan equine encephalitis virus	Alphavirus venezuelan	11411
 11039	Western equine encephalitis virus	Alphavirus western	11523
-1313215	aichivirus A1	Kobuvirus aichi	NA
+1313215	aichivirus A1	Kobuvirus aichi	8266
 138948	Enterovirus A	Enterovirus alphacoxsackie	7427
 138949	Enterovirus B	Enterovirus betacoxsackie	7410
 138950	Enterovirus C	Enterovirus coxsackiepol	7442
@@ -72,8 +74,8 @@ Taxon ID	Common Name	Species Name	Genome Length
 1348384	Rotavirus H	Rotavirus aspergastroenteritidis	17961
 1330524	Salivirus A	Salivirus aklasse	7956
 95341	Sapovirus		7470
-2849717	Aigai virus	Orthonairovirus parahaemorrhagiae	NA
-1424613	Anjozorobe virus	Orthohantavirus thailandense	11910
+2849717	Aigai virus	Orthonairovirus parahaemorrhagiae	19245
+1424613	Anjozorobe virus	Orthohantavirus thailandense	NA
 2010960	Bombali virus	Orthoebolavirus bombaliense	19043
 565995	Bundibugyo virus	Orthoebolavirus bundibugyoense	18940
 3052302	Mammarenavirus chapareense	Mammarenavirus chapareense	10464
@@ -102,7 +104,7 @@ Taxon ID	Common Name	Species Name	Genome Length
 1891762	Betapolyomavirus hominis	Betapolyomavirus hominis	5146
 10376	human gammaherpesvirus 4	Lymphocryptovirus humangamma4	172146
 10359	Human betaherpesvirus 5	Cytomegalovirus humanbeta5	214152
-333760	Human papillomavirus 16	Alphapapillomavirus 9	NA
+333760	Human papillomavirus 16	Alphapapillomavirus 9	7905
 333761	human papillomavirus 18	Alphapapillomavirus 7	7857
 337044	Alphapapillomavirus 5	Alphapapillomavirus 5	7805
 337050	Alphapapillomavirus 6	Alphapapillomavirus 6	7847
@@ -127,7 +129,7 @@ Taxon ID	Common Name	Species Name	Genome Length
 11234	Measles morbillivirus	Morbillivirus hominis	15956
 152219	Menangle virus	Pararubulavirus menangleense	15516
 10244	Monkeypox virus	Orthopoxvirus monkeypox	193392
-2560602	Mumps orthorubulavirus	Orthorubulavirus parotitidis	15380
+2560602	Mumps orthorubulavirus	Orthorubulavirus parotitidis	NA
 11041	Rubella virus	Rubivirus rubellae	9762
 10335	Human alphaherpesvirus 3	Varicellovirus humanalpha3	125308
 10255	Variola virus	Orthopoxvirus variola	186087
@@ -162,3 +164,10 @@ Taxon ID	Common Name	Species Name	Genome Length
 2697049	Severe acute respiratory syndrome coronavirus 2	Betacoronavirus pandemicum	29883
 10404	Hepadnaviridae		3186
 3052505	Orthomarburgvirus marburgense	Orthomarburgvirus marburgense	NA
+337041	Alphapapillomavirus 9	Alphapapillomavirus 9	7916
+337042	Alphapapillomavirus 7	Alphapapillomavirus 7	7861
+333757	Alphapapillomavirus 8	Alphapapillomavirus 8	7960
+337048	Alphapapillomavirus 1	Alphapapillomavirus 1	7940
+333754	Alphapapillomavirus 10	Alphapapillomavirus 10	7898
+333766	Alphapapillomavirus 13	Alphapapillomavirus 13	7759
+337049	Alphapapillomavirus 11	Alphapapillomavirus 11	7779
