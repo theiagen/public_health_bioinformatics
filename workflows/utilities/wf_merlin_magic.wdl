@@ -22,7 +22,7 @@ import "../../tasks/species_typing/neisseria/task_meningotype.wdl" as meningotyp
 import "../../tasks/species_typing/neisseria/task_ngmaster.wdl" as ngmaster_task
 import "../../tasks/species_typing/pseudomonas/task_pasty.wdl" as pasty_task
 import "../../tasks/species_typing/salmonella/task_genotyphi.wdl" as genotyphi
-import "../../tasks/species_typing/salmonella/task_seqsero2.wdl" as seqsero2_task
+import "../../tasks/species_typing/salmonella/task_seqsero2s.wdl" as seqsero2s_task
 import "../../tasks/species_typing/salmonella/task_sistr.wdl" as sistr_task
 import "../../tasks/species_typing/staphylococcus/task_agrvate.wdl" as agrvate_task
 import "../../tasks/species_typing/staphylococcus/task_spatyper.wdl" as spatyper_task
@@ -40,7 +40,6 @@ import "../../tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl" as vibechec
 # theiaeuk
 import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query
 import "../../tasks/gene_typing/variant_detection/task_snippy_variants.wdl" as snippy
-import "../../tasks/gene_typing/drug_resistance/task_chroquetas.wdl" as chroquetas_task
 import "../../tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl" as cauris_cladetyper
 
 
@@ -70,7 +69,6 @@ workflow merlin_magic {
     String? agrvate_docker_image
     String? amr_search_docker_image
     String? cauris_cladetyper_docker_image
-    String? chroquetas_docker_image
     String? clockwork_docker_image
     String? ectyper_docker_image
     String? emmtyper_docker_image
@@ -86,7 +84,7 @@ workflow merlin_magic {
     String? pasty_docker_image
     String? pbptyper_docker_image
     String? poppunk_docker_image
-    String? seqsero2_docker_image
+    String? seqsero2s_docker_image
     String? seroba_docker_image
     String? serotypefinder_docker_image
     String? shigatyper_docker_image
@@ -114,12 +112,6 @@ workflow merlin_magic {
     Int? amr_search_cpu
     Int? amr_search_memory
     Int? amr_search_disk_size
-    # chroquetas options
-    Int? chroquetas_min_percent_coverage
-    Int? chroquetas_min_percent_identity
-    String? chroqutas_translation_code
-    Int? chroquetas_cpu
-    Int? chroquetas_memory
     # cladetyper options - primarily files we host
     Int? cladetyper_kmer_size
     File? cladetyper_ref_clade1
@@ -401,24 +393,24 @@ workflow merlin_magic {
         disk_size = sistr_disk_size
     }
     if (!ont_data && !assembly_only) {
-      call seqsero2_task.seqsero2 { 
+      call seqsero2s_task.seqsero2s { 
         input:
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
           paired_end = paired_end,
-          docker = seqsero2_docker_image
+          docker = seqsero2s_docker_image
       }
     }
     if (ont_data || assembly_only) {
-      call seqsero2_task.seqsero2_assembly {
+      call seqsero2s_task.seqsero2s_assembly {
         input:
           assembly_fasta = assembly,
           samplename = samplename,
-          docker = seqsero2_docker_image
+          docker = seqsero2s_docker_image
       }
     }
-    if ((select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype]) == "Typhi" || sistr.sistr_predicted_serotype == "Typhi") && !assembly_only) {
+    if ((select_first([seqsero2s.seqsero2s_predicted_serotype, seqsero2s_assembly.seqsero2s_predicted_serotype]) == "Typhi" || sistr.sistr_predicted_serotype == "Typhi") && !assembly_only) {
       call genotyphi.genotyphi as genotyphi_task {
         input: 
           read1 = select_first([read1]),
@@ -758,29 +750,29 @@ workflow merlin_magic {
             maxsoft = snippy_maxsoft,
             docker = snippy_variants_docker_image
         }
-        if (assembly_only && ont_data) {
-          call snippy.snippy_variants as snippy_afumigatus_ont {
-            input:
-              reference_genome_file = snippy_reference_afumigatus,
-              assembly_fasta = assembly,
-              samplename = samplename,
-              map_qual = snippy_map_qual,
-              base_quality = snippy_base_quality,
-              min_coverage = snippy_min_coverage,
-              min_frac = snippy_min_frac,
-              min_quality = snippy_min_quality,
-              maxsoft = snippy_maxsoft,
-              docker = snippy_variants_docker_image
-          }
-        }
-        call snippy_gene_query.snippy_gene_query as snippy_gene_query_afumigatus {
+      }
+      if (assembly_only && ont_data) {
+        call snippy.snippy_variants as snippy_afumigatus_ont {
           input:
+            reference_genome_file = snippy_reference_afumigatus,
+            assembly_fasta = assembly,
             samplename = samplename,
-            snippy_variants_results = select_first([snippy_afumigatus.snippy_variants_results, snippy_afumigatus_ont.snippy_variants_results]),
-            reference = snippy_reference_afumigatus,
-            query_gene = select_first([snippy_query_gene, "Cyp51A,HapE,AFUA_4G08340"]), # AFUA_4G08340 is COX10 according to MARDy
-            docker = snippy_gene_query_docker_image
+            map_qual = snippy_map_qual,
+            base_quality = snippy_base_quality,
+            min_coverage = snippy_min_coverage,
+            min_frac = snippy_min_frac,
+            min_quality = snippy_min_quality,
+            maxsoft = snippy_maxsoft,
+            docker = snippy_variants_docker_image
         }
+      }
+      call snippy_gene_query.snippy_gene_query as snippy_gene_query_afumigatus {
+        input:
+          samplename = samplename,
+          snippy_variants_results = select_first([snippy_afumigatus.snippy_variants_results, snippy_afumigatus_ont.snippy_variants_results]),
+          reference = snippy_reference_afumigatus,
+          query_gene = select_first([snippy_query_gene, "Cyp51A,HapE,AFUA_4G08340"]), # AFUA_4G08340 is COX10 according to MARDy
+          docker = snippy_gene_query_docker_image
       }
     }
     if (merlin_tag == "Cryptococcus neoformans") {
@@ -824,17 +816,7 @@ workflow merlin_magic {
             docker = snippy_gene_query_docker_image
         }
       }
-    # check for ChroQueTas-accounted taxa - requires compatibility with Gambit output
-        call chroquetas_task.chroquetas {
-          input:
-            assembly_fasta = assembly,
-            species = merlin_tag,
-            samplename = samplename,
-            min_percent_coverage = chroquetas_min_percent_coverage,
-            min_percent_identity = chroquetas_min_percent_identity,
-            docker = chroquetas_docker_image
-          }
-        }
+    }
   # Running AMR Search
   if (run_amr_search) {
     # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search. 
@@ -851,8 +833,8 @@ workflow merlin_magic {
       "Vibrio cholerae" : "666"
     }
     # Check for Salmonella typing first then default to merlin_tag
-    String taxon = select_first([seqsero2.seqsero2_predicted_serotype, 
-      seqsero2_assembly.seqsero2_predicted_serotype,sistr.sistr_predicted_serotype, merlin_tag])
+    String taxon = select_first([seqsero2s.seqsero2s_predicted_serotype, 
+      seqsero2s_assembly.seqsero2s_predicted_serotype,sistr.sistr_predicted_serotype, merlin_tag])
 
     # Checks for a match to the AMR_Search available taxon codes
     if (taxon == "Neisseria gonorrhoeae" || taxon == "Staphylococcus aureus" || 
@@ -978,12 +960,12 @@ workflow merlin_magic {
     String? sistr_h2_antigens = sistr.sistr_h2_antigens
     String? sistr_o_antigens = sistr.sistr_o_antigens
     String? sistr_serotype_cgmlst = sistr.sistr_serotype_cgmlst
-    String seqsero2_report = select_first([seqsero2.seqsero2_report, seqsero2_assembly.seqsero2_report, ""])
-    String seqsero2_version = select_first([seqsero2.seqsero2_version, seqsero2_assembly.seqsero2_version, ""])
-    String seqsero2_predicted_antigenic_profile = select_first([seqsero2.seqsero2_predicted_antigenic_profile, seqsero2_assembly.seqsero2_predicted_antigenic_profile, ""])
-    String seqsero2_predicted_serotype = select_first([seqsero2.seqsero2_predicted_serotype, seqsero2_assembly.seqsero2_predicted_serotype, ""])
-    String? seqsero2_predicted_contamination = seqsero2.seqsero2_predicted_contamination
-    String seqsero2_note = select_first([seqsero2.seqsero2_note, seqsero2_assembly.seqsero2_note, ""])
+    String seqsero2s_report = select_first([seqsero2s.seqsero2s_report, seqsero2s_assembly.seqsero2s_report, ""])
+    String seqsero2s_version = select_first([seqsero2s.seqsero2s_version, seqsero2s_assembly.seqsero2s_version, ""])
+    String seqsero2s_predicted_antigenic_profile = select_first([seqsero2s.seqsero2s_predicted_antigenic_profile, seqsero2s_assembly.seqsero2s_predicted_antigenic_profile, ""])
+    String seqsero2s_predicted_serotype = select_first([seqsero2s.seqsero2s_predicted_serotype, seqsero2s_assembly.seqsero2s_predicted_serotype, ""])
+    String? seqsero2s_predicted_contamination = seqsero2s.seqsero2s_predicted_contamination
+    String seqsero2s_note = select_first([seqsero2s.seqsero2s_note, seqsero2s_assembly.seqsero2s_note, ""])
     # Salmonella serotype Typhi typing
     File? genotyphi_report_tsv = genotyphi_task.genotyphi_report_tsv 
     File? genotyphi_mykrobe_json = genotyphi_task.genotyphi_mykrobe_json
@@ -1176,11 +1158,5 @@ workflow merlin_magic {
     String snippy_variants_coverage_tsv = select_first([snippy_cauris.snippy_variants_coverage_tsv, snippy_cauris_ont.snippy_variants_coverage_tsv, snippy_afumigatus.snippy_variants_coverage_tsv, snippy_afumigatus_ont.snippy_variants_coverage_tsv, snippy_crypto.snippy_variants_coverage_tsv, snippy_crypto_ont.snippy_variants_coverage_tsv, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
     String snippy_variants_num_variants = select_first([snippy_cauris.snippy_variants_num_variants, snippy_cauris_ont.snippy_variants_num_variants, snippy_afumigatus.snippy_variants_num_variants, snippy_afumigatus_ont.snippy_variants_num_variants, snippy_crypto.snippy_variants_num_reads_aligned, snippy_crypto_ont.snippy_variants_num_variants, "No matching taxon detected"])
     String snippy_variants_percent_ref_coverage = select_first([snippy_cauris.snippy_variants_percent_ref_coverage, snippy_cauris_ont.snippy_variants_percent_ref_coverage, snippy_afumigatus.snippy_variants_percent_ref_coverage, snippy_afumigatus_ont.snippy_variants_percent_ref_coverage, snippy_crypto.snippy_variants_percent_ref_coverage, snippy_crypto_ont.snippy_variants_percent_ref_coverage, "No matching taxon detected"])
-    # chroquetas
-    File? chroquetas_amr_stats = chroquetas.amr_stats_file
-    File? chroquetas_amr_summary = chroquetas.amr_summary_file
-    String? chroquetas_fungicide_resistance = chroquetas.chroquetas_fungicide_resistance
-    String? chroquetas_version = chroquetas.chroquetas_version
-    String? chroquetas_status = chroquetas.chroquetas_status
   }
 }
