@@ -412,7 +412,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_quast.wdl
       contains: ["version", "quast", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/comparisons/task_screen.wdl
-      md5sum: b29abd561aed29275777eada8bfef0d9
+      md5sum: bac37566bc32a9de259812a8ab7d662b
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_trimmomatic.wdl
       contains: ["version", "trimmomatic", "output"]
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_ectyper.wdl
