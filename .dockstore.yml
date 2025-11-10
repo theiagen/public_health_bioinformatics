@@ -15,11 +15,6 @@ workflows:
    primaryDescriptorPath: /workflows/theiaeuk/wf_cauris_cladetyper.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: ChroQueTas_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_chroquetas.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
  - name: Snippy_Variants_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_snippy_variants.wdl

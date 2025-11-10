@@ -93,7 +93,6 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 
 {{ include_md("common_text/busco_task.md") }}
 {{ include_md("common_text/gambit_task.md") }}
-{{ include_md("common_text/chroquetas_task.md") }}
 
 #### Organism-specific characterization
 

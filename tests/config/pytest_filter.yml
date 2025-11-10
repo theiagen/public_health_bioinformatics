@@ -113,7 +113,7 @@ wf_theiaprok_illumina_pe:
   - tasks/species_typing/pseudomonas/task_pasty.wdl
   - tasks/species_typing/streptococcus/task_pbptyper.wdl
   - tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl
-  - tasks/species_typing/salmonella/task_seqsero2.wdl
+  - tasks/species_typing/salmonella/task_seqsero2s.wdl
   - tasks/species_typing/streptococcus/task_seroba.wdl
   - tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl
   - tasks/species_typing/escherichia_shigella/task_shigatyper.wdl
@@ -158,7 +158,7 @@ wf_theiaprok_illumina_se:
   - tasks/species_typing/pseudomonas/task_pasty.wdl
   - tasks/species_typing/streptococcus/task_pbptyper.wdl
   - tasks/species_typing/streptococcus/task_poppunk_streppneumo.wdl
-  - tasks/species_typing/salmonella/task_seqsero2.wdl
+  - tasks/species_typing/salmonella/task_seqsero2s.wdl
   - tasks/species_typing/streptococcus/task_seroba.wdl
   - tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl
   - tasks/species_typing/escherichia_shigella/task_shigatyper.wdl
