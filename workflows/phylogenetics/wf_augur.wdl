@@ -85,7 +85,8 @@ workflow augur {
     call file_handling.cat_files { # concatenate all of the input fasta files together
       input:
         files_to_cat = assembly_fastas,
-        concatenated_file_name = "~{build_name_updated}_concatenated.fasta"
+        concatenated_file_name = "~{build_name_updated}_concatenated.fasta",
+        skip_extra_headers = false
     }
   }
   call augur_utils.filter_sequences_by_length { # remove any sequences that do not meet the quality threshold
