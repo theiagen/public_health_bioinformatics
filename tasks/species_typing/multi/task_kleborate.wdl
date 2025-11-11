@@ -16,7 +16,6 @@ task kleborate_klebsiella {
     Float min_percent_coverage = 80.0 #  Minimum alignment percent coverage for main results (default: 80.0)
     Float min_spurious_percent_identity = 80.0 # Minimum alignment percent identity for spurious results (default: 80.0)
     Float min_spurious_percent_coverage = 40.0 #  Minimum alignment percent coverage for spurious results (default: 40.0)
-    String min_kaptive_confidence = "Good" # {None,Low,Good,High,Very_high,Perfect} Minimum Kaptive confidence to call K/O loci - confidence levels below this will be reported as unknown (default: Good)
   }
   command <<<
     # Print and save date
@@ -25,16 +24,14 @@ task kleborate_klebsiella {
     # Print and save version
     kleborate --version | tee VERSION 
 
-    # Run Kleborate on the input assembly with the --all flag and output with samplename prefix
-    # if preset_organism is kpsc, run kleborate for Klebsiella pneumoniae species complex
+    # If preset_organism is kpsc, run kleborate for Klebsiella pneumoniae species complex
     if [ "~{preset_organism}" = "kpsc" ]; then
       
       kleborate \
       ~{'--klebsiella_pneumo_complex__mlst_min_identity ' + min_percent_identity} \
       ~{'--klebsiella_pneumo_complex__mlst_min_coverage ' + min_percent_coverage} \
-      ~{'--min_spurious_identity ' + min_spurious_percent_identity} \
-      ~{'--min_spurious_coverage ' + min_spurious_percent_coverage} \
-      ~{'--min_kaptive_confidence ' + min_kaptive_confidence} \
+      ~{'--klebsiella_pneumo_complex__amr_min_spurious_identity ' + min_spurious_percent_identity} \
+      ~{'--klebsiella_pneumo_complex__amr_min_spurious_coverage ' + min_spurious_percent_coverage} \
       --outdir kleborate_results \
       --assemblies ~{assembly} \
       --preset ~{preset_organism} \
@@ -50,11 +47,8 @@ task kleborate_klebsiella {
     if [ "~{preset_organism}" = "kosc" ]; then
       
       kleborate \
-      ~{'--min_identity ' + min_percent_identity} \
-      ~{'--min_coverage ' + min_percent_coverage} \
-      ~{'--min_spurious_identity ' + min_spurious_percent_identity} \
-      ~{'--min_spurious_coverage ' + min_spurious_percent_coverage} \
-      ~{'--min_kaptive_confidence ' + min_kaptive_confidence} \
+      ~{'----klebsiella_oxytoca_complex__mlst_min_identity ' + min_percent_identity} \
+      ~{'----klebsiella_oxytoca_complex__mlst_min_coverage ' + min_percent_coverage} \
       --outdir kleborate_results \
       --assemblies ~{assembly} \
       --preset ~{preset_organism} \
@@ -117,7 +111,7 @@ task kleborate_ecoli {
     # Print and save version
     kleborate --version | tee VERSION 
 
-    # Run Kleborate on the input assembly with the --all flag and output with samplename prefix
+    # Run Kleborate on the input assembly for Escherichia
     kleborate \
     --outdir kleborate_results \
     --assemblies ~{assembly} \
