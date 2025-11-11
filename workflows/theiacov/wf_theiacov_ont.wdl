@@ -411,15 +411,10 @@ workflow theiacov_ont {
     File? irma_mp_segment_fasta = flu_track.flu_mp_segment_fasta
     File? irma_np_segment_fasta = flu_track.flu_np_segment_fasta
     File? irma_ns_segment_fasta = flu_track.flu_ns_segment_fasta
-    File? irma_all_minor_variants_tsv = flu_track.irma_all_minor_variants_tsv
-    String? irma_ha_num_minor_variants = flu_track.flu_ha_num_minor_variants
-    String? irma_na_num_minor_variants = flu_track.flu_na_num_minor_variants
-    String? irma_pa_num_minor_variants = flu_track.flu_pa_num_minor_variants
-    String? irma_pb1_num_minor_variants = flu_track.flu_pb1_num_minor_variants
-    String? irma_pb2_num_minor_variants = flu_track.flu_pb2_num_minor_variants
-    String? irma_mp_num_minor_variants = flu_track.flu_mp_num_minor_variants
-    String? irma_np_num_minor_variants = flu_track.flu_np_num_minor_variants
-    String? irma_ns_num_minor_variants = flu_track.flu_ns_num_minor_variants
+    File? irma_qc_summary_tsv = flu_track.irma_qc_summary_tsv
+    File? irma_all_snvs_tsv = flu_track.irma_all_snvs_tsv
+    File? irma_all_insertions_tsv = flu_track.irma_all_insertions_tsv
+    File? irma_all_deletions_tsv = flu_track.irma_all_deletions_tsv
     Array[File]? irma_bams = flu_track.irma_bams
     # Flu GenoFLU Outputs
     String? genoflu_version = flu_track.genoflu_version
