@@ -118,7 +118,7 @@
             ///
         
         ??? dna "`kraken_db` optional input parameter"
-            For the reliable extraction of input taxon IDs, it is important to make sure that the taxon IDs used as input are concordant with the contents of the Kraken database. When making changes to this parameter keep in mind the relationship between these two inputs.  
+            For the reliable extraction of input taxon IDs, it is important to make sure that the taxon IDs used as input are concordant with the contents of the Kraken database. When making changes to this parameter keep in mind the relationship between these two inputs. The default database can be accessed [here](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz).  
 
         ??? dna "`extract_unclassified` optional input parameter"
             By default, `extract_unclassifed` is set to `false`, which indicates that reads that are **not** classified by Kraken2 **will NOT** be included with reads classified as the input `taxon`. 
