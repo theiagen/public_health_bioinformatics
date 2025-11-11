@@ -1,6 +1,8 @@
 ??? task "`augur ancestral`: Ancestral Nucleotide Sequence Reconstruction"
     `augur ancestral` infers ancestral nucleotide sequences based on phylogenetic relatedness using maximum-likelihood via TreeTime. A "joint" maximum likelihood model is used by default, though "marginal" input is permitted. 
 
+    NOTE: `keep-ambiguous` and `infer-ambiguous` are mutually-exclusive, incompatible options that will raise an error if selected together.
+
     !!! techdetails "`augur ancestral` Technical Details"        
         |  | Links |
         | --- | --- |
