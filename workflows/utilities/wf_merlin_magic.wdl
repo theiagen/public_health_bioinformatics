@@ -12,7 +12,7 @@ import "../../tasks/species_typing/escherichia_shigella/task_sonneityping.wdl" a
 import "../../tasks/species_typing/escherichia_shigella/task_stxtyper.wdl" as stxtyper_task
 import "../../tasks/species_typing/escherichia_shigella/task_virulencefinder.wdl" as virulencefinder_task
 import "../../tasks/species_typing/haemophilus/task_hicap.wdl" as hicap_task
-import "../../tasks/species_typing/klebsiella/task_kleborate.wdl" as kleborate_task
+import "../../tasks/species_typing/multi/task_kleborate.wdl" as kleborate_task
 import "../../tasks/species_typing/legionella/task_legsta.wdl" as legsta_task
 import "../../tasks/species_typing/listeria/task_lissero.wdl" as lissero_task
 import "../../tasks/species_typing/mycobacterium/task_clockwork.wdl" as clockwork_task
@@ -156,8 +156,6 @@ workflow merlin_magic {
     Float? kaptive_min_percent_coverage
     Float? kaptive_low_gene_percent_identity
     # kleborate options
-    Boolean? kleborate_skip_resistance
-    Boolean? kleborate_skip_kaptive
     Float? kleborate_min_percent_identity
     Float? kleborate_min_percent_coverage
     Float? kleborate_min_spurious_percent_identity
@@ -317,6 +315,12 @@ workflow merlin_magic {
         print_alleles = ectyper_print_alleles,
         docker = ectyper_docker_image
     }
+    call kleborate_task.kleborate_ecoli {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        docker = kleborate_docker_image
+    }
     if (!assembly_only) {
       call shigatyper_task.shigatyper {
         input:
@@ -422,13 +426,26 @@ workflow merlin_magic {
     }
   }
   # see here for appropriate Klebsiella species & subspecies to be analyzed w Kleborate: https://github.com/klebgenomics/Kleborate/wiki/Species-detection
-  if (merlin_tag == "Klebsiella" || merlin_tag == "Klebsiella pneumoniae" || merlin_tag == "Klebsiella variicola" || merlin_tag == "Klebsiella aerogenes" || merlin_tag == "Klebsiella oxytoca") {
-    call kleborate_task.kleborate {
+  if (merlin_tag == "Klebsiella" || merlin_tag == "Klebsiella pneumoniae" || merlin_tag == "Klebsiella variicola" || merlin_tag == "Klebsiella aerogenes") {
+    call kleborate_task.kleborate_klebsiella as kleborate_klebsiella_kpsc {
       input:
         assembly = assembly,
         samplename = samplename,
-        skip_resistance = kleborate_skip_resistance,
-        skip_kaptive = kleborate_skip_kaptive,
+        preset_organism = "kpsc",
+        min_percent_identity = kleborate_min_percent_identity,
+        min_percent_coverage = kleborate_min_percent_coverage,
+        min_spurious_percent_identity = kleborate_min_spurious_percent_identity,
+        min_spurious_percent_coverage = kleborate_min_spurious_percent_coverage,
+        min_kaptive_confidence = kleborate_min_kaptive_confidence,
+        docker = kleborate_docker_image
+    }
+  }
+  if (merlin_tag == "Klebsiella oxytoca") {
+    call kleborate_task.kleborate_klebsiella as kleborate_klebsiella_kosc {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        preset_organism = "kosc",
         min_percent_identity = kleborate_min_percent_identity,
         min_percent_coverage = kleborate_min_percent_coverage,
         min_spurious_percent_identity = kleborate_min_spurious_percent_identity,
@@ -896,6 +913,9 @@ workflow merlin_magic {
     String? shigeifinder_O_antigen = shigeifinder.shigeifinder_O_antigen
     String? shigeifinder_H_antigen = shigeifinder.shigeifinder_H_antigen
     String? shigeifinder_notes = shigeifinder.shigeifinder_notes
+    File? kleborate_ecoli_output_file = kleborate_ecoli.kleborate_ecoli_output_file
+    String? kleborate_ecoli_docker = kleborate_ecoli.kleborate_ecoli_docker
+    String? kleborate_ecoli_version = kleborate_ecoli.kleborate_ecoli_version
     # ShigeiFinder outputs but for task that uses reads instead of assembly as input
     File? shigeifinder_report_reads = shigeifinder_reads.shigeifinder_report
     String? shigeifinder_docker_reads = shigeifinder_reads.shigeifinder_docker
@@ -975,20 +995,21 @@ workflow merlin_magic {
     String? genotyphi_final_genotype = genotyphi_task.genotyphi_final_genotype
     String? genotyphi_genotype_confidence = genotyphi_task.genotyphi_genotype_confidence
     # Klebsiella Typing
-    File? kleborate_output_file = kleborate.kleborate_output_file
-    String? kleborate_version = kleborate.kleborate_version
-    String? kleborate_docker = kleborate.kleborate_docker
-    String? kleborate_key_resistance_genes = kleborate.kleborate_key_resistance_genes
-    String? kleborate_genomic_resistance_mutations = kleborate.kleborate_genomic_resistance_mutations
-    String? kleborate_mlst_sequence_type = kleborate.kleborate_mlst_sequence_type
-    String? kleborate_klocus = kleborate.kleborate_klocus
-    String? kleborate_ktype = kleborate.kleborate_ktype
-    String? kleborate_olocus = kleborate.kleborate_olocus
-    String? kleborate_otype = kleborate.kleborate_otype
-    String? kleborate_klocus_confidence = kleborate.kleborate_klocus_confidence
-    String? kleborate_olocus_confidence = kleborate.kleborate_olocus_confidence
-    String? kleborate_virulence_score = kleborate.kleborate_virulence_score
-    String? kleborate_resistance_score = kleborate.kleborate_resistance_score
+    File? kleborate_klebsiella_output_file = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_output_file, kleborate_klebsiella_kosc.kleborate_klebsiella_output_file, ""])
+    File? kleborate_klebsiella_hAMRonization_output_file = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_hAMRonization_output_file, kleborate_klebsiella_kosc.kleborate_klebsiella_hAMRonization_output_file, ""])
+    String? kleborate_klebsiella_version = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_version, kleborate_klebsiella_kosc.kleborate_klebsiella_version, ""])
+    String? kleborate_klebsiella_docker = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_docker, kleborate_klebsiella_kosc.kleborate_klebsiella_docker, ""])
+    String? kleborate_klebsiella_key_resistance_genes = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_key_resistance_genes, kleborate_klebsiella_kosc.kleborate_klebsiella_key_resistance_genes, ""])
+    String? kleborate_klebsiella_genomic_resistance_mutations = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_genomic_resistance_mutations, kleborate_klebsiella_kosc.kleborate_klebsiella_genomic_resistance_mutations, ""])
+    String? kleborate_klebsiella_mlst_sequence_type = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_mlst_sequence_type, kleborate_klebsiella_kosc.kleborate_klebsiella_mlst_sequence_type, ""])
+    String? kleborate_klebsiella_klocus = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_klocus, kleborate_klebsiella_kosc.kleborate_klebsiella_klocus, ""])
+    String? kleborate_klebsiella_ktype = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_ktype, kleborate_klebsiella_kosc.kleborate_klebsiella_ktype, ""])
+    String? kleborate_klebsiella_olocus = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_olocus, kleborate_klebsiella_kosc.kleborate_klebsiella_olocus, ""])
+    String? kleborate_klebsiella_otype = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_otype, kleborate_klebsiella_kosc.kleborate_klebsiella_otype, ""])
+    String? kleborate_klebsiella_klocus_confidence = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_klocus_confidence, kleborate_klebsiella_kosc.kleborate_klebsiella_klocus_confidence, ""])
+    String? kleborate_klebsiella_olocus_confidence = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_olocus_confidence, kleborate_klebsiella_kosc.kleborate_klebsiella_olocus_confidence, ""])
+    String? kleborate_klebsiella_virulence_score = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_virulence_score, kleborate_klebsiella_kosc.kleborate_klebsiella_virulence_score, ""])
+    String? kleborate_klebsiella_resistance_score = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_resistance_score, kleborate_klebsiella_kosc.kleborate_klebsiella_resistance_score, ""])
     # Neisseria gonorrhoeae Typing
     File? ngmaster_tsv = ngmaster.ngmaster_tsv
     String? ngmaster_version = ngmaster.ngmaster_version

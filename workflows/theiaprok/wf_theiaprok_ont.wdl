@@ -381,20 +381,20 @@ workflow theiaprok_ont {
                 "kaptive_output_file_k": merlin_magic.kaptive_output_file_k,
                 "kaptive_output_file_oc": merlin_magic.kaptive_output_file_oc,
                 "kaptive_version": merlin_magic.kaptive_version,
-                "kleborate_docker": merlin_magic.kleborate_docker,
-                "kleborate_genomic_resistance_mutations": merlin_magic.kleborate_genomic_resistance_mutations,
-                "kleborate_key_resistance_genes": merlin_magic.kleborate_key_resistance_genes,
-                "kleborate_klocus_confidence": merlin_magic.kleborate_klocus_confidence,
-                "kleborate_klocus": merlin_magic.kleborate_klocus,
-                "kleborate_ktype": merlin_magic.kleborate_ktype,
-                "kleborate_mlst_sequence_type": merlin_magic.kleborate_mlst_sequence_type,
-                "kleborate_olocus_confidence": merlin_magic.kleborate_olocus_confidence,
-                "kleborate_olocus": merlin_magic.kleborate_olocus,
-                "kleborate_otype": merlin_magic.kleborate_otype,
-                "kleborate_output_file": merlin_magic.kleborate_output_file,
-                "kleborate_resistance_score": merlin_magic.kleborate_resistance_score,
-                "kleborate_version": merlin_magic.kleborate_version,
-                "kleborate_virulence_score": merlin_magic.kleborate_virulence_score,
+                "kleborate_docker": merlin_magic.kleborate_klebsiella_docker,
+                "kleborate_genomic_resistance_mutations": merlin_magic.kleborate_klebsiella_genomic_resistance_mutations,
+                "kleborate_key_resistance_genes": merlin_magic.kleborate_klebsiella_key_resistance_genes,
+                "kleborate_klocus_confidence": merlin_magic.kleborate_klebsiella_klocus_confidence,
+                "kleborate_klocus": merlin_magic.kleborate_klebsiella_klocus,
+                "kleborate_ktype": merlin_magic.kleborate_klebsiella_ktype,
+                "kleborate_mlst_sequence_type": merlin_magic.kleborate_klebsiella_mlst_sequence_type,
+                "kleborate_olocus_confidence": merlin_magic.kleborate_klebsiella_olocus_confidence,
+                "kleborate_olocus": merlin_magic.kleborate_klebsiella_olocus,
+                "kleborate_otype": merlin_magic.kleborate_klebsiella_otype,
+                "kleborate_output_file": merlin_magic.kleborate_klebsiella_output_file,
+                "kleborate_resistance_score": merlin_magic.kleborate_klebsiella_resistance_score,
+                "kleborate_version": merlin_magic.kleborate_klebsiella_version,
+                "kleborate_virulence_score": merlin_magic.kleborate_klebsiella_virulence_score,
                 "kmerfinder_database": kmerfinder.kmerfinder_database,
                 "kmerfinder_docker": kmerfinder.kmerfinder_docker,
                 "kmerfinder_query_coverage": kmerfinder.kmerfinder_query_coverage,
@@ -884,6 +884,10 @@ workflow theiaprok_ont {
     File? virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv
     String? virulencefinder_docker = merlin_magic.virulencefinder_docker
     String? virulencefinder_hits = merlin_magic.virulencefinder_hits
+    # Kleborate ecoli results
+    File? kleborate_ecoli_output_file = merlin_magic.kleborate_ecoli_output_file
+    String? kleborate_ecoli_version = merlin_magic.kleborate_ecoli_version
+    String? kleborate_ecoli_docker = merlin_magic.kleborate_ecoli_docker
     # stxtyper 
     File? stxtyper_report = merlin_magic.stxtyper_report
     String? stxtyper_docker = merlin_magic.stxtyper_docker
@@ -948,20 +952,21 @@ workflow theiaprok_ont {
     String? genotyphi_final_genotype = merlin_magic.genotyphi_final_genotype
     String? genotyphi_genotype_confidence = merlin_magic.genotyphi_genotype_confidence
     # Klebsiella Typing
-    File? kleborate_output_file = merlin_magic.kleborate_output_file
-    String? kleborate_version = merlin_magic.kleborate_version
-    String? kleborate_docker = merlin_magic.kleborate_docker
-    String? kleborate_key_resistance_genes = merlin_magic.kleborate_key_resistance_genes
-    String? kleborate_genomic_resistance_mutations = merlin_magic.kleborate_genomic_resistance_mutations
-    String? kleborate_mlst_sequence_type = merlin_magic.kleborate_mlst_sequence_type
-    String? kleborate_klocus = merlin_magic.kleborate_klocus
-    String? kleborate_ktype = merlin_magic.kleborate_ktype
-    String? kleborate_olocus = merlin_magic.kleborate_olocus
-    String? kleborate_otype = merlin_magic.kleborate_otype
-    String? kleborate_klocus_confidence = merlin_magic.kleborate_klocus_confidence
-    String? kleborate_olocus_confidence = merlin_magic.kleborate_olocus_confidence
-    String? kleborate_virulence_score = merlin_magic.kleborate_virulence_score
-    String? kleborate_resistance_score = merlin_magic.kleborate_resistance_score
+    File? kleborate_klebsiella_output_file = merlin_magic.kleborate_klebsiella_output_file
+    File? kleborate_klebsiella_hAMRonization_output_file = merlin_magic.kleborate_klebsiella_hAMRonization_output_file
+    String? kleborate_klebsiella_version = merlin_magic.kleborate_klebsiella_version
+    String? kleborate_klebsiella_docker = merlin_magic.kleborate_klebsiella_docker
+    String? kleborate_klebsiella_key_resistance_genes = merlin_magic.kleborate_klebsiella_key_resistance_genes
+    String? kleborate_klebsiella_genomic_resistance_mutations = merlin_magic.kleborate_klebsiella_genomic_resistance_mutations
+    String? kleborate_klebsiella_mlst_sequence_type = merlin_magic.kleborate_klebsiella_mlst_sequence_type
+    String? kleborate_klebsiella_klocus = merlin_magic.kleborate_klebsiella_klocus
+    String? kleborate_klebsiella_ktype = merlin_magic.kleborate_klebsiella_ktype
+    String? kleborate_klebsiella_olocus = merlin_magic.kleborate_klebsiella_olocus
+    String? kleborate_klebsiella_otype = merlin_magic.kleborate_klebsiella_otype
+    String? kleborate_klebsiella_klocus_confidence = merlin_magic.kleborate_klebsiella_klocus_confidence
+    String? kleborate_klebsiella_olocus_confidence = merlin_magic.kleborate_klebsiella_olocus_confidence
+    String? kleborate_klebsiella_virulence_score = merlin_magic.kleborate_klebsiella_virulence_score
+    String? kleborate_klebsiella_resistance_score = merlin_magic.kleborate_klebsiella_resistance_score
     # Neisseria gonorrhoeae Typing
     File? ngmaster_tsv = merlin_magic.ngmaster_tsv
     String? ngmaster_version = merlin_magic.ngmaster_version
