@@ -90,39 +90,41 @@
 
     === "TheiaViral_Panel"
 
-        The TheiaViral_Panel workflow accepts Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs. 
+        The TheiaViral_Panel workflow accepts Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs.
+
+        For the analysis of RSV and Flu it is recommended that TheiaCov is run for full characterization of RSV and IRMA assembly for Flu. 
+        Due to limitations within the Kraken Database RSV A and B will both be extracted under HRSV. Subtypes can be losely infered by looking at Skani outputs. 
 
         ???+ dna_blue "`taxon_ids` optional input parameter"
             **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly, but is optional in Terra.** 
             
-            By default, TheiaViral_Panel uses a list of **172** taxon IDs derived from a list of targeted viruses and subtypes in the Viral Surveillance Panel version 2 (VSP v2) produced by Illumina, though this workflow is not specific to that assay. This list can be modified to include or exclude any taxon IDs of interest; however, the taxon IDs _must_ be present in the Kraken2 database used for read classification. Changing this parameter will change what organisms are extracted for assembly and characterization. The list of default taxon IDs can be found below:
+            By default, TheiaViral_Panel uses a list of **172** taxon IDs derived from a list of targeted viruses and subtypes in the [Viral Surveillance Panel version 2 (VSP v2) produced by Illumina](https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/viral-surveillance-panel.html), though this workflow is not specific to that assay. This list can be modified to include or exclude any taxon IDs of interest; however, the taxon IDs _must_ be present in the Kraken2 database used for read classification. Changing this parameter will change what organisms are extracted for assembly and characterization. Also keep in mind that these IDs must be available in the passed Kraken DB. The list of default taxon IDs can be found below:
 
             /// html | div[class="searchable-table"]
-            {{ render_tsv_table("docs/assets/tables/2025-10-16_default-taxon-ids.tsv", indent=12 )}} 
+            {{ render_tsv_table("docs/assets/tables/2025-11-10_default-taxon-ids.tsv", indent=12 )}} 
             ///
 
         ??? dna "`output_taxon_table` optional input parameter"
             A key feature of TheiaViral_Panel is the ability to output assemblies and characterization results to taxon-specific Terra tables. This allows users to easily separate results by taxon for downstream analysis.
-                
-            Because of this, the `output_taxon_table` parameter is a **required** input file that specifies which taxon are output to what taxon table in Terra.
+
+            The `output_taxon_table` parameter is an **optional** input file with a set default that specifies which taxon are output to what taxon table in Terra.
 
             **Formatting the `output_taxon_table` file**
             
-            The `output_taxon_table` file must be uploaded a Google storage bucket that is accessible by Terra and should be in **tab-delimited** format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column. This will result in any taxonomy classification identified as "influenza" being added to a Terra table named "influenza_panel_specimen". An example can be seen below.
+            The `output_taxon_table` file must be uploaded to a Google storage bucket that is accessible by Terra and should be in **tab-delimited** format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column. This will result in any taxonomy classification identified as "influenza" being added to a Terra table named "influenza_panel_specimen". The default table is shown below.
  
-            ```
-            taxon	taxon_table
-            influenza	influenza_panel_specimen
-            coronavirus	coronavirus_panel_specimen
-            human_immunodeficiency_virus	hiv_panel_specimen
-            monkeypox_virus	monkeypox_panel_specimen
-            ```
+            /// html | div[class="searchable-table"]
+            {{ render_tsv_table("docs/assets/tables/theiaviral_panel_taxon_table_20251111.tsv", indent=12 )}} 
+            ///
+        
+        ??? dna "`kraken_db` optional input parameter"
+            For the reliable extraction of input taxon IDs, it is important to make sure that the taxon IDs used as input are concordant with the contents of the Kraken database. When making changes to this parameter keep in mind the relationship between these two inputs.  
 
         ??? dna "`extract_unclassified` optional input parameter"
             By default, `extract_unclassifed` is set to `false`, which indicates that reads that are **not** classified by Kraken2 **will NOT** be included with reads classified as the input `taxon`. 
                         
-            If the extracted read data is lacking and assemblies are not generated, consider setting this parameter to `true` to increase the available read count to make assembly generation more probable. Please note this will introduce reads that are not aligned with the identified `taxon`.
-        
+            If the extracted read data is lacking and assemblies are not generated, consider setting this parameter to `true` to increase the available read count to make assembly generation more probable. Please note this will introduce reads that are not aligned with the identified `taxon` and can introduce significant noise and misclassifications.
+
         ??? dna "`min_read_count` optional input parameter"
             By default, `min_read_count` is set to 1000. This value is the number of reads that are required to pass the binning threshold to proceed onto assembly and characterization. 
 
