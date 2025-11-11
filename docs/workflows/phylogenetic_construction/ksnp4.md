@@ -26,7 +26,7 @@ While kSNP4 introduces enhancements, much of the foundational information from k
 ### Workflow Actions
 
 {{ include_md("common_text/ksnp_task.md", condition="ksnp4") }}
-{{ include_md("common_text/snp_dists_task.md") }}
+{{ include_md("common_text/snp_dists_task.md", condition="ksnp") }}
 {{ include_md("common_text/data_summary_task.md") }}
 
 ### Outputs

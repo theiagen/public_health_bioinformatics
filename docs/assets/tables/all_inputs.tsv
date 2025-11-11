@@ -14,9 +14,6 @@ basespace_fetch	basespace_sample_name	String	The BaseSpace sample name is the sa
 basespace_fetch	sample_name	String	The sample name is the sample identifier used in the Terra.bio data table corresponding to the metadata associated with the sample to be transferred from BaseSpace		Required	BaseSpace_Fetch	general
 cauris_cladetyper	assembly_fasta	File	The assembly file for your sample in FASTA format		Required	Cauris_CladeTyper	general
 cauris_cladetyper	samplename	String	The name of the sample being analyzed		Required	Cauris_CladeTyper	general
-chroquetas_workflow	assembly_fasta	File	The assembly file for your sample in FASTA format		Required	ChroQueTas	general
-chroquetas_workflow	samplename	String	The name of the sample being analyzed		Required	ChroQueTas	general
-chroquetas_workflow	species	String	Binomial species name formatted as "Genus species"		Required	ChroQueTas	general
 clair3_variants_ont	read1	File	ONT read file in FASTQ file format (compression optional)		Required	Clair3_Variants_ONT	general
 clair3_variants_ont	reference_genome_file	File	Reference genome in FASTA format		Required	Clair3_Variants_ONT	general
 clair3_variants_ont	samplename	String	The name of the sample being analyzed		Required	Clair3_Variants_ONT	general
@@ -286,11 +283,11 @@ assembled_reads_percent	memory	Int	Amount of memory/RAM (in GB) to allocate to t
 assembly_fetch	assembly_fasta	File	The assembly file for your sample in FASTA format		Optional	Assembly_Fetch	general
 assembly_fetch	ncbi_accession	String	NCBI accession passed to the NCBI datasets task to be downloaded. Example: GCF_000006945.2 (Salmonella enterica subsp. enterica, serovar Typhimurium str. LT2 reference genome)		Optional	Assembly_Fetch	general
 augur	alignment_fasta	File	The alignment fasta file in Augur		Optional	Augur	general
+augur	augur_id_column	String	Column name of sequence IDs	strain	Optional	Augur	general
 augur	augur_trait_columns	String	Comma-separated list of columns to use for trait analysis in Augur		Optional	Augur	general
 augur	auspice_config	File	Auspice config file for customizing visualizations; takes priority over the other customization values available for augur_export	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, a minimal auspice config file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-auspice-config.json", but will not be as useful as an organism specific config file.	Optional	Augur	general
-augur	build_name_updated	String	Internal component, do not modify	build_name where ' ' is substituted with '_'	Optional	Augur	general
 augur	clades_tsv	File	TSV file containing clade mutation positions in four columns	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, an empty clades file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-clades.tsv", but will not be as useful as an organism specific clades file.	Optional, Required	Augur	general
-augur	distance_tree_only	Boolean	Create only a distance tree (skips all Augur steps after augur_tree)	False	Optional	Augur	general
+augur	extract_clade_mutations	Boolean	Generate a "clades.tsv" using "clade_membership" column metadata (overrides clades_tsv)	False	Optional	Augur	general
 augur	flu_segment	String	Required if organism = "flu". The name of the segment to be analyzed; options: "HA" or "NA"	HA	Optional	Augur	general
 augur	flu_subtype	String	Required if organism = "flu". The subtype of the flu samples being analyzed; options: "H1N1", "H3N2", "Victoria", "Yamagata", "H5N1"		Optional, Required	Augur	general
 augur	lat_longs_tsv	File	Tab-delimited file of geographic location names with corresponding latitude and longitude values	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized.	Optional	Augur	general
@@ -299,22 +296,21 @@ augur	min_date	Float	Minimum date to begin filtering or frequencies calculations
 augur	min_num_unambig	Int	Minimum number of called bases in genome to pass prefilter	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, the default value is 0	Optional	Augur	general
 augur	narrow_bandwidth	Float	The bandwidth for the narrow KDE	0.08333	Optional	Augur	general
 augur	organism	String	Organism used to preselect default values; options: "sars-cov-2", "flu", "mpxv", "rsv-a", "rsv-b"	sars-cov-2	Optional	Augur	general
+augur	outgroup_root	String	Tip name to root phylogenetic tree upon (overrides midpoint root)		Optional	Augur	general
 augur	pivot_interval	Int	Number of units between pivots	3	Optional	Augur	general
 augur	proportion_wide	Float	The proportion of the wide bandwidth to use in the KDE mixture model	0.2	Optional	Augur	general
 augur	reference_fasta	File	The reference FASTA file used to align the genomes and build the trees	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, a reference fasta file must be provided otherwise the workflow fails.	Optional, Required	Augur	reference
 augur	reference_genbank	File	The GenBank .gb file for the same reference genome used for the reference_fasta	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails.	Optional, Required	Augur	reference
 augur	remove_reference	Boolean	Whether or not to remove the reference in Augur	False	Optional	Augur	general
-augur	run_traits	Boolean	Whether or not to run trait analysis in Augur	False	Optional	Augur	general
 augur	sample_metadata_tsvs	Array[File]	An array of the metadata files produced in Augur_Prep_PHB		Optional	Augur	general
-augur	skip_alignment	Boolean	Whether or not to skip alignment in Augur	False	Optional	Augur	general
 augur_align	cpu	Int	Number of CPUs to allocate to the task	64	Optional	Augur	runtime
 augur_align	disk_size	Int	Amount of storage (in GB) to allocate to the task	750	Optional	Augur	runtime
-augur_align	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0	Optional	Augur	docker
+augur_align	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker
 augur_align	fill_gaps	Boolean	If true, gaps represent missing data rather than true indels and so are replaced by N after aligning.	False	Optional	Augur	general
 augur_align	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	128	Optional	Augur	runtime
 augur_ancestral	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Augur	runtime
 augur_ancestral	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime
-augur_ancestral	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0	Optional	Augur	docker
+augur_ancestral	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker
 augur_ancestral	infer_ambiguous	Boolean	If true, infer nucleotides and ambiguous sites and replace with most likely	False	Optional	Augur	general
 augur_ancestral	inference	String	Calculate joint or marginal maximum likelihood ancestral sequence states; options: "joint", "marginal"	joint	Optional	Augur	general
 augur_ancestral	keep_ambiguous	Boolean	If true, do not infer nucleotides at ambiguous (N) sides	False	Optional	Augur	general
@@ -322,23 +318,23 @@ augur_ancestral	keep_overhangs	Boolean	If true, do not infer nucleotides for gap
 augur_ancestral	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	50	Optional	Augur	runtime
 augur_clades	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime
 augur_clades	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime
-augur_clades	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0	Optional	Augur	docker
+augur_clades	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker
 augur_clades	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Augur	runtime
 augur_export	colors_tsv	File	Custom color defintiions, one per line in the format TRAIT_TYPE\tTRAIT_VALUE\tHEX_CODE		Optional	Augur	general
 augur_export	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Augur	runtime
 augur_export	description_md	File	Markdown file with description of build and/or acknowledgements		Optional	Augur	general
 augur_export	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	runtime
-augur_export	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0	Optional	Augur	docker
+augur_export	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker
 augur_export	include_root_sequence	Boolean	Export an additional JSON containing the root sequence used to identify mutations	False	Optional	Augur	general
 augur_export	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	64	Optional	Augur	runtime
 augur_export	title	String	The title to be displayed by auspice		Optional	Augur	general
+augur_prep	clade	String	Clade membership metadata		Optional	Augur_Prep	general
 augur_prep	collection_date	String	Collection date of the sample		Optional	Augur_Prep	general
-augur_prep	continent	String	Continent where sample was collected		Optional	Augur_Prep	general
 augur_prep	country	String	Country where sample was collected		Optional	Augur_Prep	general
-augur_prep	county	String	County (or smaller locality) where sample was collected		Optional	Augur_Prep	general
-augur_prep	nextclade_clade	String	The Nextclade clade of the sample		Optional	Augur_Prep	general
+augur_prep	division	String	Sub-national location (e.g. state/province) where sample was collected		Optional	Augur_Prep	general
+augur_prep	location	String	Sub-divisional location (e.g. county) where sample was collected 		Optional	Augur_Prep	general
 augur_prep	pango_lineage	String	The Pangolin lineage of the sample		Optional	Augur_Prep	general
-augur_prep	state	String	State (or province) where sample was collected		Optional	Augur_Prep	general
+augur_prep	region	String	Continental/regional location where sample was collected		Optional	Augur_Prep	general
 augur_refine	branch_length_inference	String	Branch length mode of timetree to use; options: "auto", "joint", "marginal", "input"	auto	Optional	Augur	general
 augur_refine	clock_filter_iqd	Int	Remove tips that deviate more than n_iqd interquartile ranges from the root-to-tip vs time regression	4	Optional	Augur	general
 augur_refine	clock_rate	Float	Fixed clock rate to use for time tree calculations		Optional	Augur	general
@@ -350,7 +346,7 @@ augur_refine	date_confidence	Boolean	If true, calculate confidence intervals for
 augur_refine	date_inference	String	Assign internal nodes to their marginally most likely dates; options: "joint", "marginal"	marginal	Optional	Augur	general
 augur_refine	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	runtime
 augur_refine	divergence_units	String	Units in which sequence divergences is exported; options: "mutations" or "mutations-per-site"	mutations	Optional	Augur	general
-augur_refine	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0	Optional	Augur	docker
+augur_refine	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker
 augur_refine	gen_per_year	Int	Number of generations per year	50	Optional	Augur	general
 augur_refine	keep_polytomies	Boolean	If true, don't attempt to resolve polytomies	False	Optional	Augur	general
 augur_refine	keep_root	Boolean	If true, do not reroot the tree; use it as-is (overrides anything specified by root)	True	Optional	Augur	general
@@ -359,18 +355,18 @@ augur_refine	precision	Int	Precision used by TreeTime to determine the number of
 augur_refine	root	String	Rooting mechanism; options: "best", "least-squares", "min_dev", "oldest", etc.		Optional	Augur	general
 augur_traits	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Augur	runtime
 augur_traits	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	runtime
-augur_traits	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0	Optional	Augur	docker
+augur_traits	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker
 augur_traits	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	30	Optional	Augur	runtime
 augur_traits	metadata_id_columns	String	The names of possible metadata columns containing identifier information, ordered by priority	('strain', 'name)	Optional	Augur	general
 augur_traits	weights	File	a dictionary of key/value mappings in JSON format used to weight KDE tip frequencies		Optional	Augur	general
 augur_translate	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime
 augur_translate	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime
-augur_translate	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0	Optional	Augur	docker
+augur_translate	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker
 augur_translate	genes	File	A file containing a list of genes to translate (from nucleotides to amino acids)		Optional	Augur	general
 augur_translate	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Augur	runtime
 augur_tree	cpu	Int	Number of CPUs to allocate to the task	64	Optional	Augur	runtime
 augur_tree	disk_size	Int	Amount of storage (in GB) to allocate to the task	750	Optional	Augur	runtime
-augur_tree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0	Optional	Augur	docker
+augur_tree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker
 augur_tree	exclude_sites	File	File of one-based sites to exclude for raw tree building (BED format in .bed files, DRM format in tab-delimited files, or one position per line)		Optional	Augur	general
 augur_tree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Augur	runtime
 augur_tree	method	String	The method used to build the tree. Options: "fasttree", "raxml", "iqtree" (default)	iqtree	Optional	Augur	general
@@ -458,6 +454,7 @@ cg_reorder_matrix	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snip
 cg_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Tree	runtime
 cg_reorder_matrix	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1	Optional	Snippy_Tree	docker
 cg_reorder_matrix	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Tree	runtime
+cg_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon (overrides midpoint root)		Optional	Snippy_Tree	general
 cg_snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Tree	runtime
 cg_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Snippy_Tree	runtime
 cg_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Tree	runtime
@@ -471,18 +468,16 @@ checkv_denovo	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaVir
 checkv_denovo	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 checkv_denovo	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/checkv:1.0.3	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
 checkv_denovo	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-chroquetas	cpu	Int	Number of CPUs to allocate to the task	2	Optional	ChroQueTas	runtime
-chroquetas	disk_size	Int	Amount of storage (in GB) to allocate to the task	16	Optional	ChroQueTas	runtime
-chroquetas	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/chroquetas:1.0.0	Optional	ChroQueTas	docker
-chroquetas	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	ChroQueTas	runtime
-chroquetas	min_percent_coverage	Int	Minimum percent coverage of FungAMR reference protein	75	Optional	ChroQueTas	general
-chroquetas	min_percent_identity	Int	Minimum percent identity of FungAMR reference protein	90	Optional	ChroQueTas	general
-chroquetas	proteome_fasta	File	Protein fasta to use for alignments		Optional	ChroQueTas	general
-chroquetas	translation_code	String	Alternative codon translation code. This is set for each species by default and not recommended to change.		Optional	ChroQueTas	general
 chunk_files	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Dorado_Basecalling	runtime
 chunk_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Dorado_Basecalling	runtime
 chunk_files	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Dorado_Basecalling	docker
 chunk_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Dorado_Basecalling	runtime
+clade_extraction_task	allow_missing_tips	Boolean	Generate clades if metadata is missing for some tips	True	Optional	Augur	general
+clade_extraction_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime
+clade_extraction_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	Augur	runtime
+clade_extraction_task	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/extract_clade_mutations:0.0.1	Optional	Augur	docker
+clade_extraction_task	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	Augur	runtime
+clade_extraction_task	skip_singleton_clades	Boolean	Skip extracting sequence signatures for clades with a single tip	True	Optional	Augur	general
 cladetyper	cpu	Int	Number of CPUs to allocate to the task	8	Optional	Cauris_CladeTyper	runtime
 cladetyper	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Cauris_CladeTyper	runtime
 cladetyper	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	Cauris_CladeTyper	docker
@@ -602,6 +597,7 @@ core_reorder_matrix	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Co
 core_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
 core_reorder_matrix	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1	Optional	Core_Gene_SNP, kSNP3, kSNP4	docker
 core_reorder_matrix	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
+core_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon (overrides midpoint root)		Optional	Core_Gene_SNP, kSNP3, kSNP4	general
 core_snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
 core_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
 core_snp_dists	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Core_Gene_SNP, kSNP3, kSNP4	docker
@@ -1212,12 +1208,6 @@ merlin_magic	call_tbp_parser	Boolean	Internal component, do not modify	False	Opt
 merlin_magic	call_tbp_parser	Boolean	If set to "true", activates the tbp_parser module and results in more outputs, including tbp_parser_looker_report_csv, tbp_parser_laboratorian_report_csv,  tbp_parser_lims_report_csv, tbp_parser_coverage_report, and tbp_parser_genome_percent_coverage	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	cauris_cladetyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	cauris_cladetyper_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	chroquetas_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
-merlin_magic	chroquetas_docker_image	String	The Docker container to use for the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
-merlin_magic	chroquetas_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
-merlin_magic	chroquetas_min_percent_coverage	Int	Minimum percent coverage of FungAMR reference protein		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	chroquetas_min_percent_identity	Int	Minimum percent identity of FungAMR reference protein		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	chroqutas_translation_code	String	Alternative codon translation code. Set for each species by default and not recommended to change		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	cladetyper_kmer_size	Int	Kmer size for cladetyper		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	cladetyper_kmer_size	Int	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	cladetyper_max_distance	Float	The maximum GAMBIT distance to report a *C. auris* clade hit	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
@@ -1764,6 +1754,7 @@ pan_reorder_matrix	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Cor
 pan_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
 pan_reorder_matrix	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1	Optional	Core_Gene_SNP, kSNP3, kSNP4	docker
 pan_reorder_matrix	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
+pan_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon (overrides midpoint root)		Optional	Core_Gene_SNP, kSNP3, kSNP4	general
 pan_snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
 pan_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime
 pan_snp_dists	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Core_Gene_SNP, kSNP3, kSNP4	docker
@@ -2142,6 +2133,7 @@ reorder_matrix	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur, 
 reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur, MashTree_FASTA	runtime
 reorder_matrix	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1	Optional	Augur, MashTree_FASTA	docker
 reorder_matrix	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Augur, MashTree_FASTA	runtime
+reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon (overrides midpoint root)		Optional	MashTree_FASTA	general
 reorder_matrix	phandango_coloring	Boolean	Whether or not Phandango coloring will color all items from the same column the same	False	Optional	Augur	general
 resfinder_task	acquired	Boolean	Set to true to tell ResFinder to identify acquired resistance genes	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 resfinder_task	call_pointfinder	Boolean	Set to true to enable detection of point mutations.	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
@@ -2180,11 +2172,6 @@ samtools_faidx	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Clair3_
 samtools_faidx	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Clair3_Variants_ONT	runtime
 samtools_faidx	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	Clair3_Variants_ONT	docker
 samtools_faidx	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Clair3_Variants_ONT	runtime
-sc2_defaults	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime
-sc2_defaults	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime
-sc2_defaults	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0	Optional	Augur	docker
-sc2_defaults	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	1	Optional	Augur	runtime
-sc2_defaults	nextstrain_ncov_repo_commit	String	The version of the <https://github.com/nextstrain/ncov/> from which to draw default values for SARS-CoV-2.	cec4fa0ecd8612e4363d40662060a5a9c712d67e	Optional	Augur	general
 semibin	cpu	Int	Number of CPUs to allocate to the task	6	Optional	TheiaMeta_Illumina_PE	runtime
 semibin	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime
 semibin	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/semibin:2.0.2--pyhdfd78af_0	Optional	TheiaMeta_Illumina_PE	docker
@@ -2751,12 +2738,13 @@ vadr_update	vadr_memory	Int	Amount of memory/RAM (in GB) to allocate to the task
 vadr_update	vadr_model_file	File	Path to the a tar + gzipped VADR model file	gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz	Optional	VADR_Update	database
 vadr_update	vadr_opts	String	Options for the v-annotate.pl VADR script	 "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"	Optional	VADR_Update	general
 vadr_update	vadr_skip_length	Int	Minimum assembly length (unambiguous) to run VADR	10000	Optional	VADR_Update	general
-version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, ChroQueTas, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	docker
-version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, ChroQueTas, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	general
+version_capture	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	docker
+version_capture	timezone	String	Set the time zone to get an accurate date of analysis (uses UTC by default)		Optional	AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4	general
 wg_reorder_matrix	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Tree	runtime
 wg_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Tree	runtime
 wg_reorder_matrix	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1	Optional	Snippy_Tree	docker
 wg_reorder_matrix	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Tree	runtime
+wg_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon (overrides midpoint root)		Optional	Snippy_Tree	general
 wg_snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Tree	runtime
 wg_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Snippy_Tree	runtime
 wg_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Tree	runtime
