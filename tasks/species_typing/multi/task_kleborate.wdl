@@ -99,6 +99,8 @@ task kleborate_ecoli {
   input {
     File assembly
     String samplename
+    Float min_percent_identity = 90.0 # Minimum alignment percent identity for main results (default: 90.0)
+    Float min_percent_coverage = 80.0 #  Minimum alignment percent coverage for main results (default: 80.0)
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/kleborate:3.2.4_20251111"
     Int disk_size = 100
     Int cpu = 8
@@ -113,6 +115,8 @@ task kleborate_ecoli {
 
     # Run Kleborate on the input assembly for Escherichia
     kleborate \
+    ~{'--escherichia_mlst_achtman_min_identity ' + min_percent_identity} \
+    ~{'--escherichia_mlst_achtman_min_coverage ' + min_percent_coverage} \
     --outdir kleborate_results \
     --assemblies ~{assembly} \
     --preset escherichia \

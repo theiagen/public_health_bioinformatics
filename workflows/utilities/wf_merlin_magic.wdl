@@ -160,7 +160,6 @@ workflow merlin_magic {
     Float? kleborate_min_percent_coverage
     Float? kleborate_min_spurious_percent_identity
     Float? kleborate_min_spurious_percent_coverage
-    String? kleborate_min_kaptive_confidence
     # lissero options
     Float? lissero_min_percent_identity
     Float? lissero_min_percent_coverage
@@ -319,6 +318,8 @@ workflow merlin_magic {
       input:
         assembly = assembly,
         samplename = samplename,
+        min_percent_identity = kleborate_min_percent_identity,
+        min_percent_coverage = kleborate_min_percent_coverage,
         docker = kleborate_docker_image
     }
     if (!assembly_only) {
@@ -436,7 +437,6 @@ workflow merlin_magic {
         min_percent_coverage = kleborate_min_percent_coverage,
         min_spurious_percent_identity = kleborate_min_spurious_percent_identity,
         min_spurious_percent_coverage = kleborate_min_spurious_percent_coverage,
-        min_kaptive_confidence = kleborate_min_kaptive_confidence,
         docker = kleborate_docker_image
     }
   }
@@ -450,7 +450,6 @@ workflow merlin_magic {
         min_percent_coverage = kleborate_min_percent_coverage,
         min_spurious_percent_identity = kleborate_min_spurious_percent_identity,
         min_spurious_percent_coverage = kleborate_min_spurious_percent_coverage,
-        min_kaptive_confidence = kleborate_min_kaptive_confidence,
         docker = kleborate_docker_image
     }
   }
