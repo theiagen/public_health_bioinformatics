@@ -111,7 +111,7 @@
 
             **Formatting the `output_taxon_table` file**
             
-            The `output_taxon_table` file must be uploaded to a Google storage bucket that is accessible by Terra and should be in **tab-delimited** format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column. This will result in any taxonomy classification identified as "influenza" being added to a Terra table named "influenza_panel_specimen". The default table is shown below.
+            The `output_taxon_table` file must be uploaded to a Google storage bucket that is accessible by Terra and should be in **tab-delimited** format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column. This will result in any taxonomy classification identified as "influenza" being added to a Terra table named "influenza_panel_specimen". The default table is shown below. For best results, edit your taxon table in a text editor such as Notepad.
  
             /// html | div[class="searchable-table"]
             {{ render_tsv_table("docs/assets/tables/theiaviral_panel_taxon_table_20251111.tsv", indent=12 )}} 
