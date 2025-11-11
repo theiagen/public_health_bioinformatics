@@ -47,7 +47,9 @@ A Public Service Announcement regarding calculating the contribution math:
 
 Andrew Hale added a .txt database file to docs/assets that artifically inflates his line 
 count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract 
-55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt database in a later commit, so also please subtract 55,316 from Sage Wright's line count as well. please see index.md for the math
+55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt 
+database in a later commit, so also please subtract 55,316 from Sage Wright's line count as 
+well. please see index.md for the math
 
 okay thanks byee.
 -->
@@ -59,8 +61,8 @@ okay thanks byee.
 - **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation
 - **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
 - **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
-- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
 - **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
+- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
 - **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation
 - **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
@@ -83,6 +85,7 @@ We would like to gratefully acknowledge the following individuals from the publi
 - **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
 - **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
 - **Holly Halstead** ([@HNHalstead](https://github.com/HNHalstead))
+- **Nicole Dagata** ([@nicoledagatatheiagen](https://github.com/nicoledagatatheiagen))*
 - **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1))*
 
 \* Former member of Theiagen
