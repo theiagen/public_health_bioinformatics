@@ -243,11 +243,13 @@ task irma {
       if [ -f "$read_counts_file" ]; then
         total_reads=$(grep "1-initial" "$read_counts_file" | awk -F'\t' '{print $2}')
         pass_qc_reads=$(grep "2-passQC" "$read_counts_file" | awk -F'\t' '{print $2}')
+        segment_ref_name=$(sed -n "/^4-.*${SEGMENT_STR}.*/p" "$read_counts_file" | awk -F'\t' '{print $1}' | cut -d'_' -f2-)
         segment_mapped_reads=$(sed -n "/^4-.*${SEGMENT_STR}.*/p" "$read_counts_file" | awk -F'\t' '{print $2}')
       else
         echo "WARNING: READ_COUNTS.tsv file not found for ~{samplename}. Cannot extract read counts for QC summary."
         total_reads="N/A"
         pass_qc_reads="N/A"
+        segment_ref_name="${SEGMENT_STR}"
         segment_mapped_reads="N/A"
       fi
 
@@ -382,7 +384,7 @@ task irma {
         fi
       done
       # append all QC summary info for segment to TSV file
-      echo -e "~{samplename}\t${SEGMENT_STR}\t${segment_pct_ref_cov}\t${segment_median_cov}\t${segment_mean_cov}\t${segment_minor_snv}\t${segment_minor_indel}" >> "~{samplename}/~{samplename}_irma_qc_summary.tsv"
+      echo -e "~{samplename}\t${segment_ref_name}\t${segment_pct_ref_cov}\t${segment_median_cov}\t${segment_mean_cov}\t${segment_minor_snv}\t${segment_minor_indel}" >> "~{samplename}/~{samplename}_irma_qc_summary.tsv"
     done
 
   >>>
