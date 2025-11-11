@@ -352,7 +352,6 @@ workflow theiaprok_illumina_se {
                 "ani_output_tsv": ani.ani_output_tsv,
                 "ani_top_species_match": ani.ani_top_species_match,
                 "assembly_fasta": digger_denovo.assembly_fasta,
-                "assembly_status": digger_denovo.assembly_status,
                 "assembly_length": quast.genome_length,
                 "bakta_gbff": bakta.bakta_gbff,
                 "bakta_gff3": bakta.bakta_gff3,
@@ -753,7 +752,6 @@ workflow theiaprok_illumina_se {
     String? kraken2_database = read_QC_trim.kraken_database
     #Assembly - digger_denovo outputs
     File? assembly_fasta = digger_denovo.assembly_fasta
-    String? assembly_status = digger_denovo.assembly_status
     File? contigs_gfa = digger_denovo.contigs_gfa
     File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
     String? assembler = digger_denovo.assembler_used

@@ -112,7 +112,6 @@ assembly_length_unambiguous	Int	Number of unambiguous basecalls within the conse
 assembly_mean_coverage	Float	Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the SAMtools coverage command	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE
 assembly_mean_coverage	String	Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the SAMtools coverage command	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 assembly_method	String	Method employed to generate consensus assembly	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-assembly_status	String	Assembler completion status ("PASS"/"FAIL")	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 assembly_to_ref_bai	File	BAM index file for reads aligned to reference	TheiaViral_ONT
 assembly_to_ref_bam	File	BAM file of reads aligned to reference	TheiaViral_ONT
 augur_fasttree_version	String	The fasttree version used, blank if other tree method used	Augur
