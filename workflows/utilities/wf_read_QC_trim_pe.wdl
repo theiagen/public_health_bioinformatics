@@ -300,8 +300,8 @@ workflow read_QC_trim_pe {
     File? kraken_unclassified_read1 = kraken2_standalone_theiaviral_panel_clean.kraken2_unclassified_read1
     File? kraken_unclassified_read2 = kraken2_standalone_theiaviral_panel_clean.kraken2_unclassified_read2
     # kraken2 read extract - theiaviral
-    File? kraken2_extracted_read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
-    File? kraken2_extracted_read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
+    File kraken2_extracted_read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
+    File kraken2_extracted_read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
     String? kraken2_extracted_organism_name = kraken2_extract.organism_name
     String? krakentools_docker = kraken2_extract.krakentools_docker
     Boolean? kraken2_success = kraken2_extract.success
