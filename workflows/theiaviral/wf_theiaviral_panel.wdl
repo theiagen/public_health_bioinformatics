@@ -161,7 +161,6 @@ workflow theiaviral_panel {
             "skani_database": theiaviral_illumina_pe.skani_database,
             "skani_version": theiaviral_illumina_pe.skani_version,
             "skani_docker": theiaviral_illumina_pe.skani_docker,
-            "skani_top_ani_fasta": theiaviral_illumina_pe.skani_top_ani_fasta,
             "bwa_version": theiaviral_illumina_pe.bwa_version,
             "bwa_samtools_version": theiaviral_illumina_pe.bwa_samtools_version,
             "bwa_read1_aligned": theiaviral_illumina_pe.bwa_read1_aligned,
