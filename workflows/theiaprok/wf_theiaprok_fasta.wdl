@@ -694,8 +694,8 @@ workflow theiaprok_fasta {
     String? seqsero2s_predicted_serotype = merlin_magic.seqsero2s_predicted_serotype
     String? seqsero2s_note = merlin_magic.seqsero2s_note
     # Klebsiella Typing
-    File? kleborate_klebsiella_output_file = merlin_magic.kleborate_klebsiella_output_file
-    File? kleborate_klebsiella_hAMRonization_output_file = merlin_magic.kleborate_klebsiella_hAMRonization_output_file
+    String? kleborate_klebsiella_output_file = merlin_magic.kleborate_klebsiella_output_file
+    String? kleborate_klebsiella_hAMRonization_output_file = merlin_magic.kleborate_klebsiella_hAMRonization_output_file
     String? kleborate_klebsiella_version = merlin_magic.kleborate_klebsiella_version
     String? kleborate_klebsiella_docker = merlin_magic.kleborate_klebsiella_docker
     String? kleborate_klebsiella_key_resistance_genes = merlin_magic.kleborate_klebsiella_key_resistance_genes

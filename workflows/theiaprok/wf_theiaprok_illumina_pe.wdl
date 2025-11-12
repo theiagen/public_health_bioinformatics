@@ -1096,8 +1096,8 @@ workflow theiaprok_illumina_pe {
     String? genotyphi_final_genotype = merlin_magic.genotyphi_final_genotype
     String? genotyphi_genotype_confidence = merlin_magic.genotyphi_genotype_confidence
     # Klebsiella Typing
-    File? kleborate_klebsiella_output_file = merlin_magic.kleborate_klebsiella_output_file
-    File? kleborate_klebsiella_hAMRonization_output_file = merlin_magic.kleborate_klebsiella_hAMRonization_output_file
+    String? kleborate_klebsiella_output_file = merlin_magic.kleborate_klebsiella_output_file
+    String? kleborate_klebsiella_hAMRonization_output_file = merlin_magic.kleborate_klebsiella_hAMRonization_output_file
     String? kleborate_klebsiella_version = merlin_magic.kleborate_klebsiella_version
     String? kleborate_klebsiella_docker = merlin_magic.kleborate_klebsiella_docker
     String? kleborate_klebsiella_key_resistance_genes = merlin_magic.kleborate_klebsiella_key_resistance_genes
