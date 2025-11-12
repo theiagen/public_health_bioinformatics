@@ -86,7 +86,7 @@ task kleborate_klebsiella {
   >>>
   output {
     File kleborate_klebsiella_output_file = glob("~{samplename}_kleborate_*_out.tsv")[0]
-    File kleborate_klebsiella_hAMRonization_output_file = "${samplename}_hAMRonization_kleborate_out.tsv"
+    File kleborate_klebsiella_hAMRonization_output_file = "~{samplename}_hAMRonization_kleborate_out.tsv"
     String kleborate_klebsiella_version = read_string("VERSION")
     String kleborate_klebsiella_docker = docker
     String kleborate_klebsiella_mlst_sequence_type = read_string("MLST_SEQUENCE_TYPE")
@@ -142,10 +142,16 @@ task kleborate_ecoli {
     --preset escherichia \
     --trim_headers
 
-    mv kleborate_results/escherichia_output.txt ${samplename}_escherichia_output.txt
+    # Check if output file exists before moving
+    if [ -f kleborate_results/escherichia_output.txt ]; then
+      mv kleborate_results/escherichia_output.txt ~{samplename}_escherichia_output.txt
+    else
+      # Create empty output file with message if output not found
+      echo "No escherichia coli output found for escherichia module" > ~{samplename}_escherichia_output.txt
+    fi
   >>>
   output {
-    File kleborate_ecoli_output_file = "${samplename}_escherichia_output.txt"
+    File kleborate_ecoli_output_file = "~{samplename}_escherichia_output.txt"
     String kleborate_ecoli_version = read_string("VERSION")
     String kleborate_ecoli_docker = docker
   }
