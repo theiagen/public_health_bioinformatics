@@ -65,7 +65,7 @@ task kleborate_klebsiella {
     
   >>>
   output {
-    File kleborate_klebsiella_output_file = glob("~{samplename}_kleborate_*_out.tsv")
+    File kleborate_klebsiella_output_file = glob("~{samplename}_kleborate_*_out.tsv")[0]
     File kleborate_klebsiella_hAMRonization_output_file = "${samplename}_hAMRonization_kleborate_out.tsv"
     String kleborate_klebsiella_version = read_string("VERSION")
     String kleborate_klebsiella_docker = docker
