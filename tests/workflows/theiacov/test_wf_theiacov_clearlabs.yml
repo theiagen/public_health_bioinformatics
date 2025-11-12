@@ -303,15 +303,15 @@
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGOLIN_LINEAGE
       md5sum: 717da6cd0df2d2f1d00461f3498aaca9
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGOLIN_NOTES
-      md5sum: 59478efddde2191ead1b46b1f121bbc9
+      md5sum: 3cf7fd185fe58af5952d52e91d4805c0
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 423422138426522d239584bb99a72d8e
+      md5sum: c60c7052f013cca3b15591ef0e577d4a
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: d1cac94c5f9737fda52c0633cd940768
+      md5sum: 762735b9f8e69efeae463735f0ceed21
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/clearlabs.pangolin_report.csv
-      md5sum: 97e0f5c71810612d14e4bc502815a6b5
+      md5sum: 147a1c92903eba858476dbd6023564f4
     - path: miniwdl_run/call-stats_n_coverage/command
       md5sum: ac020678f99ac145b11d3dbc7b9fe9ba
     - path: miniwdl_run/call-stats_n_coverage/inputs.json

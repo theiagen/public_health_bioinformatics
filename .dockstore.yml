@@ -15,11 +15,6 @@ workflows:
    primaryDescriptorPath: /workflows/theiaeuk/wf_cauris_cladetyper.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: ChroQueTas_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_chroquetas.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
  - name: Snippy_Variants_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_snippy_variants.wdl
@@ -333,6 +328,11 @@ workflows:
  - name: TheiaViral_Illumina_PE_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_illumina_pe.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: TheiaViral_Panel_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_panel.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
  - name: ONT_Barcode_Concatenation_PHB
