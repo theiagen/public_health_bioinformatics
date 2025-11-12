@@ -5,8 +5,9 @@ task phylovalidate {
     File tree1
     File tree2
     Float? max_distance
+    Boolean resolve_tip_discrepancies = true
     
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.8"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.2.0"
     Int disk_size = 10
     Int memory = 4
     Int cpu = 1
@@ -29,6 +30,7 @@ task phylovalidate {
 
     # run comparison
     phylocompare ~{tree1_cleaned} ~{tree2_cleaned} \
+        ~{if (resolve_tip_discrepancies) then "-r" else ""} \
         --debug \
         2> >(tee -a PHYLOCOMPARE_STDERR >&2)
 
@@ -92,7 +94,7 @@ task phylovalidate {
     dx_instance_type: "mem1_ssd1_v2_x2"
   }
   output {
-    String phylocompare_version = read_string("VERSION")
+    String phylovalidate_version = read_string("VERSION")
     File summary_report = "phylo_distances.txt"
     File tree1_clean = "~{tree1_cleaned}"
     File tree2_clean = "~{tree2_cleaned}"
