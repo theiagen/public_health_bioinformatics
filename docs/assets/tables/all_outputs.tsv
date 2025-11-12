@@ -6,11 +6,11 @@ abricate_abaum_plasmid_type_genes	String	A. baumannii Plasmid typing genes found
 abricate_abaum_version	String	Version of abricate used for A. baumannii plasmid typing	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 abricate_database	String	Database of reference used with Abricate	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 abricate_docker	String	Docker file used for running abricate	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-abricate_flu_database	String	ABRicate database used for analysis	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-abricate_flu_results	File	File containing all results from ABRicate	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-abricate_flu_subtype	String	Flu subtype as determined by ABRicate	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-abricate_flu_type	String	Flu type as determined by ABRicate	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-abricate_flu_version	String	Version of ABRicate	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+abricate_flu_database	String	ABRicate database used for analysis	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+abricate_flu_results	File	File containing all results from ABRicate	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+abricate_flu_subtype	String	Flu subtype as determined by ABRicate	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+abricate_flu_type	String	Flu type as determined by ABRicate	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+abricate_flu_version	String	Version of ABRicate	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 abricate_genes	String	Genes found in the sample; from GENE column in <https://github.com/tseemann/abricate#output>	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 abricate_results_tsv	File	<https://github.com/tseemann/abricate#output> containing a row for each gene found in the sample	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 abricate_version	String	Version of abricate used for A. baumannii plasmid typing	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -91,11 +91,10 @@ assembler	String	Assembler used in digger_denovo subworkflow	TheiaEuk_Illumina_P
 assembler_version	String	Version of the assembler used in digger_denovo	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 assemblies	Array[File]	Assembly files generated during the workflow	TheiaViral_Panel
 assembly_consensus_fasta	File	Final consensus assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT
-assembly_denovo_fasta	File	De novo assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+assembly_denovo_fasta	File	De novo assembly in FASTA format	TheiaViral_Illumina_PE, TheiaViral_ONT
 assembly_fasta	File	Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly. Contigs will be ordered from largest to smallest when IRMA is used.	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE
 assembly_fasta	String	Consensus genome assembly; for lower quality flu samples, the output may state "Assembly could not be generated" when there is too little and/or too low quality data for IRMA to produce an assembly. Contigs will be ordered from largest to smallest when IRMA is used.	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 assembly_fasta	File	_De novo_ genome assembly in FASTA format	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-assembly_fasta	File	Consensus genome assembly returned from TheiaViral_Illumina_PE	TheiaViral_Panel
 assembly_fasta	File	The final recovered metagenome-assembled genome (MAG). _"A MAG represents a microbial genome by a group of sequences from genome assembly with similar characteristics. It enables [the identification of] novel species [to] understand their potential functions in a dynamic ecosystem"_[^1]	TheiaMeta_Illumina_PE
 assembly_fetch_analysis_date	String	The date the workflow was run	Assembly_Fetch
 assembly_fetch_ncbi_datasets_assembly_data_report_json	File	JSON file containing report about assembly downloaded by Asembly_Fetch	Assembly_Fetch
@@ -117,16 +116,26 @@ assembly_mean_coverage	String	Mean sequencing depth throughout the consensus ass
 assembly_method	String	Method employed to generate consensus assembly	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 assembly_to_ref_bai	File	BAM index file for reads aligned to reference	TheiaViral_ONT
 assembly_to_ref_bam	File	BAM file of reads aligned to reference	TheiaViral_ONT
+augur_aligned_fastas	File	DESCRIPTION	Augur
+augur_auspice_input_json	File	DESCRIPTION	Augur
+augur_clade_mutations	File	DESCRIPTION	Augur
+augur_combined_assemblies	File	DESCRIPTION	Augur
+augur_distance_tree	File	DESCRIPTION	Augur
 augur_fasttree_version	String	The fasttree version used, blank if other tree method used	Augur
 augur_iqtree_model_used	String	The iqtree model used during augur tree, blank if iqtree not used	Augur
 augur_iqtree_version	String	The iqtree version used during augur tree (defualt), blank if other tree method used	Augur
+augur_keep_list	File	DESCRIPTION	Augur
 augur_mafft_version	String	The mafft version used in augur align	Augur
 augur_metadata	File	TSV file of the metadata provided as input to the workflow in the proper format for Augur analysis	Augur_Prep
+augur_metadata_merged	File	DESCRIPTION	Augur
 augur_phb_analysis_date	String	The date the analysis was run	Augur
 augur_phb_version	String	The version of the Public Health Bioinformatics (PHB) repository used	Augur
 augur_prep_phb_analysis_date	String	Date of analysis	Augur_Prep
 augur_prep_phb_version	String	Version of the Public Health Bioinformatics (PHB) repository used	Augur_Prep
 augur_raxml_version	String	The version of raxml used during augur tree, blank if other tree method used	Augur
+augur_snp_matrix	File	DESCRIPTION	Augur
+augur_time_tree	File	DESCRIPTION	Augur
+augur_traits_json	File	DESCRIPTION	Augur
 augur_version	String	Version of Augur used	Augur
 auspice_input_json	File	JSON file used as input to Auspice	Augur
 auspice_json	File	Auspice-compatable JSON output generated from Nextclade analysis that includes the Nextclade default samples for clade-typing and the single sample placed on this tree	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -167,34 +176,33 @@ busco_docker	String	BUSCO docker image used	TheiaEuk_Illumina_PE, TheiaEuk_ONT, 
 busco_report	File	A plain text summary of the results in BUSCO notation	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 busco_results	String	BUSCO results (see relevant toggle in [this block](https://theiagen.github.io/public_health_bioinformatics/latest/workflows/genomic_characterization/theiaprok/#post-assembly-tasks-performed-for-all-taxa))	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 busco_version	String	BUSCO software version used	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-bwa_read1_aligned	File	Forward reads aligned to reference	TheiaViral_Illumina_PE, TheiaViral_Panel
-bwa_read1_unaligned	File	Forward reads not aligned to reference	TheiaViral_Illumina_PE, TheiaViral_Panel
-bwa_read2_aligned	File	Reverse reads aligned to reference	TheiaViral_Illumina_PE, TheiaViral_Panel
-bwa_read2_unaligned	File	Reverse reads not aligned to reference	TheiaViral_Illumina_PE, TheiaViral_Panel
-bwa_samtools_version	String	Version of samtools used by BWA	TheiaViral_Illumina_PE, TheiaViral_Panel
-bwa_sorted_bai	File	Sorted BAM index file of reads aligned to reference	TheiaViral_Illumina_PE, TheiaViral_Panel
-bwa_sorted_bam	File	Sorted BAM file of reads aligned to reference	TheiaViral_Illumina_PE, TheiaViral_Panel
-bwa_sorted_bam_unaligned	File	A BAM file that only contains reads that did not align to the reference	TheiaViral_Illumina_PE, TheiaViral_Panel
-bwa_sorted_bam_unaligned_bai	File	Index companion file to a BAM file that only contains reads that did not align to the reference	TheiaViral_Illumina_PE, TheiaViral_Panel
-bwa_version	String	Version of BWA software used	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_Panel
+bwa_read1_aligned	File	Forward reads aligned to reference	TheiaViral_Illumina_PE
+bwa_read1_unaligned	File	Forward reads not aligned to reference	TheiaViral_Illumina_PE
+bwa_read2_aligned	File	Reverse reads aligned to reference	TheiaViral_Illumina_PE
+bwa_read2_unaligned	File	Reverse reads not aligned to reference	TheiaViral_Illumina_PE
+bwa_samtools_version	String	Version of samtools used by BWA	TheiaViral_Illumina_PE
+bwa_sorted_bai	File	Sorted BAM index file of reads aligned to reference	TheiaViral_Illumina_PE
+bwa_sorted_bam	File	Sorted BAM file of reads aligned to reference	TheiaViral_Illumina_PE
+bwa_sorted_bam_unaligned	File	A BAM file that only contains reads that did not align to the reference	TheiaViral_Illumina_PE
+bwa_sorted_bam_unaligned_bai	File	Index companion file to a BAM file that only contains reads that did not align to the reference	TheiaViral_Illumina_PE
+bwa_version	String	Version of BWA software used	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_Illumina_PE
 cauris_cladetyper_wf_analysis_date	String	Date of analysis	Cauris_CladeTyper
 cauris_cladetyper_wf_version	String	Version of PHB used for the analysis	Cauris_CladeTyper
 cg_pipeline_docker	String	Docker file used for running CG-Pipeline on cleaned reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 cg_pipeline_report_clean	File	TSV file of read metrics from clean reads, including average read length, number of reads, and estimated genome coverage	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 cg_pipeline_report_raw	File	TSV file of read metrics from raw reads, including average read length, number of reads, and estimated genome coverage	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-checkv_consensus_contamination	File	Contamination estimate for consensus assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-checkv_consensus_summary	File	Summary report from CheckV for consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-checkv_consensus_total_genes	Int	Number of genes detected in consensus assembly by CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-checkv_consensus_version	String	Version of CheckV used for consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-checkv_consensus_weighted_completeness	Float	Weighted completeness score for consensus assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-checkv_consensus_weighted_contamination	Float	Weighted contamination score for consensus assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-checkv_denovo_contamination	File	Contamination estimate for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-checkv_denovo_summary	File	Summary report from CheckV for de novo assembly	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-checkv_denovo_total_genes	Int	Number of genes detected in de novo assembly by CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-checkv_denovo_version	String	Version of CheckV used for de novo assembly	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-checkv_denovo_weighted_completeness	Float	Weighted completeness score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-checkv_denovo_weighted_contamination	Float	Weighted contamination score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-clade_mutations	File	"clades.tsv" file delineating sequence signatures for provided clade metadata	Augur
+checkv_consensus_contamination	File	Contamination estimate for consensus assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
+checkv_consensus_summary	File	Summary report from CheckV for consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
+checkv_consensus_total_genes	Int	Number of genes detected in consensus assembly by CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
+checkv_consensus_version	String	Version of CheckV used for consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
+checkv_consensus_weighted_completeness	Float	Weighted completeness score for consensus assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
+checkv_consensus_weighted_contamination	Float	Weighted contamination score for consensus assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
+checkv_denovo_contamination	File	Contamination estimate for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
+checkv_denovo_summary	File	Summary report from CheckV for de novo assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
+checkv_denovo_total_genes	Int	Number of genes detected in de novo assembly by CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
+checkv_denovo_version	String	Version of CheckV used for de novo assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
+checkv_denovo_weighted_completeness	Float	Weighted completeness score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
+checkv_denovo_weighted_contamination	Float	Weighted contamination score for de novo assembly from CheckV	TheiaViral_Illumina_PE, TheiaViral_ONT
 cladetype_annotated_ref	String	The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted	TheiaEuk_ONT
 cladetyper_annotated_reference	String	The annotated reference file for the identified clade, "None" if no clade was identified/no annotation is inputted	Cauris_CladeTyper, TheiaEuk_Illumina_PE
 cladetyper_clade	String	The clade assigned to the input assembly	Cauris_CladeTyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
@@ -228,11 +236,11 @@ concatenated_files	File	The file containing all of the items from the column you
 concatenated_variants	File	The concatenated variants without presence/absence	Find_Shared_Variants
 consensus_flagstat	File	Output from the SAMtools flagstat command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 consensus_n_variant_min_depth	Int	Minimum read depth to call variants for iVar consensus and iVar variants. Also represents the minimum consensus support threshold used by IRMA with Illumina Influenza data.	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
-consensus_qc_assembly_length_unambiguous	Int	Length of consensus assembly excluding ambiguous bases	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-consensus_qc_number_Degenerate	Int	Number of degenerate bases in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-consensus_qc_number_N	Int	Number of N bases in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-consensus_qc_number_Total	Int	Total number of bases in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-consensus_qc_percent_reference_coverage	Float	Percent of reference genome covered in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+consensus_qc_assembly_length_unambiguous	Int	Length of consensus assembly excluding ambiguous bases	TheiaViral_Illumina_PE, TheiaViral_ONT
+consensus_qc_number_Degenerate	Int	Number of degenerate bases in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
+consensus_qc_number_N	Int	Number of N bases in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
+consensus_qc_number_Total	Int	Total number of bases in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
+consensus_qc_percent_reference_coverage	Float	Percent of reference genome covered in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 consensus_stats	File	Output from the SAMtools stats command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 contig_number	Int	The number of contigs in the assembly_fasta (see description for `assembly_fasta`)	TheiaMeta_Illumina_PE
 contigs_gfa	File	Assembly graph output generated by SPAdes (Illumina: PE, SE) or Flye (ONT), used to visualize and evaluate genome assembly results.	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -301,7 +309,6 @@ est_genome_length	Int	Estimated genome length	TheiaEuk_ONT
 est_percent_gene_coverage_tsv	File	Percent coverage for each gene in the organism being analyzed (depending on the organism input)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 excluded_samples	File	A file that contains the names and reasons why a sample was excluded from submission. **For SARS-CoV-2**, there are two sections: First, a section for any samples that failed to meet pre-determined quality thresholds (`number_N` and `vadr_num_alert`). Second, a section that includes a table that describes any missing required metadata for each sample. This table has the sample name for rows and any columns that have missing metadata as headers. If a sample is missing a piece of required metadata, the corresponding cell will be blank. However, if a different sample does have metadata for that column, the associated value will appear in the corresponding cell. **For flu and mpox**, only the second section described above exists. _Please see the example below for more details_.	Mercury_Prep_N_Batch
 excluded_samples	File	Text file listing samples that were excluded from BioSample submission for missing required metadata	Terra_2_NCBI
-kraken_extracted_taxon_name	String	Taxon name of the extracted organism	TheiaViral_Panel
 failed_uploads	File	The metadata for any failed uploads	Terra_2_GISAID
 fasta_utilities_fai	File	FASTA index file	TheiaViral_ONT
 fasta_utilities_samtools_docker	String	Docker image used for samtools in fasta utilities	TheiaViral_ONT
@@ -423,10 +430,10 @@ gamma_version	String	The version of GAMMA used	TheiaProk_FASTA, TheiaProk_Illumi
 genbank_fasta	File	**Only for SARS-CoV-2 submission**: GenBank fasta file for upload	Mercury_Prep_N_Batch
 genbank_metadata	File	**Only for SARS-CoV-2 submission**: GenBank metadata for upload	Mercury_Prep_N_Batch
 generated_accessions	File	Text file mapping the BioSample accession with its sample name.	Terra_2_NCBI
-genoflu_all_segments	String	The genotypes for each individual flu segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-genoflu_genotype	String	The genotype of the whole genome, based off of the individual segments types	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-genoflu_output_tsv	File	The output file from GenoFLU	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-genoflu_version	String	The version of GenoFLU used	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+genoflu_all_segments	String	The genotypes for each individual flu segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+genoflu_genotype	String	The genotype of the whole genome, based off of the individual segments types	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+genoflu_output_tsv	File	The output file from GenoFLU	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+genoflu_version	String	The version of GenoFLU used	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 genotyphi_final_genotype	String	Final genotype call from GenoTyphi	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 genotyphi_genotype_confidence	String	Confidence in the final genotype call made by GenoTyphi	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 genotyphi_mykrobe_json	File	JSON file of GenoTyphi output, described <https://github.com/katholt/genotyphi#explanation-of-columns-in-the-output>	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -458,7 +465,7 @@ host_mapping_stats	File	File of mapping statistics	Host_Decontaminate
 host_percent_mapped_reads	Float	Percentage of reads mapped to host reference genome	Host_Decontaminate
 identified_organisms	Array[String]	List of organisms extracted and identified from an panel level sample	TheiaViral_Panel
 irma_assembly_fasta_concatenated	File	Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry	TheiaCoV_Illumina_PE, TheiaCoV_ONT
-irma_docker	String	Docker image used to run IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+irma_docker	String	Docker image used to run IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 irma_ha_segment_fasta	File	HA (Haemagglutinin) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_min_consensus_support_threshold	Int	Minimum consensus support threshold used by IRMA with ONT data. For illumina data, see output called `consensus_n_variant_min_depth` for this value	TheiaCoV_ONT
 irma_mp_segment_fasta	File	MP (Matrix Protein) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
@@ -468,14 +475,14 @@ irma_ns_segment_fasta	File	NS (Nonstructural) assembly fasta file	TheiaCoV_Illum
 irma_pa_segment_fasta	File	PA (Polymerase acidic) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_pb1_segment_fasta	File	PB1 (Polymerase basic 1) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_pb2_segment_fasta	File	PB2 (Polymerase basic 2) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
-irma_subtype	String	Flu subtype as determined by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-irma_subtype_notes	String	Helpful note to user about Flu B subtypes. Output will be blank for Flu A samples. For Flu B samples it will state: "IRMA does not differentiate Victoria and Yamagata Flu B lineages. See abricate_flu_subtype output column"	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-irma_type	String	Flu type as determined by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-irma_version	String	Version of IRMA used	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-ivar_tsv	File	Variant descriptor file generated by iVar variants	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+irma_subtype	String	Flu subtype as determined by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+irma_subtype_notes	String	Helpful note to user about Flu B subtypes. Output will be blank for Flu A samples. For Flu B samples it will state: "IRMA does not differentiate Victoria and Yamagata Flu B lineages. See abricate_flu_subtype output column"	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+irma_type	String	Flu type as determined by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+irma_version	String	Version of IRMA used	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+ivar_tsv	File	Variant descriptor file generated by iVar variants	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
 ivar_variant_proportion_intermediate	String	The proportion of variants of intermediate frequency	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
-ivar_variant_version	String	Version of iVar for running the iVar variants command	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
-ivar_vcf	File	iVar tsv output converted to VCF format	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+ivar_variant_version	String	Version of iVar for running the iVar variants command	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
+ivar_vcf	File	iVar tsv output converted to VCF format	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
 ivar_version_consensus	String	Version of iVar for running the iVar consensus command	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
 ivar_version_primtrim	String	Version of iVar for running the iVar trim command	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 kaptive_k_locus	String	Best matching K locus identified by Kaptive	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -534,7 +541,7 @@ kraken_human_dehosted	Float	Percent of human read data detected using the Kraken
 kraken_percent_human_clean	Float	Percent of human read data detected using the Kraken2 software after host removal for cleaned reads	TheiaViral_Panel
 kraken_percent_human_raw	Float	Percent of human read data detected using the Kraken2 software after host removal for raw reads	TheiaViral_Panel
 kraken_report	String	Full Kraken report	Freyja_FASTQ, TheiaViral_Illumina_PE
-kraken_report	File	Full Kraken report	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Panel
+kraken_report	File	Full Kraken report	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 kraken_report_dehosted	File	Full Kraken report after host removal	Freyja_FASTQ, NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 kraken_sc2	String	Percent of SARS-CoV-2 read data detected using the Kraken2 software	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 kraken_sc2_dehosted	String	Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal	Freyja_FASTQ, NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
@@ -624,9 +631,9 @@ medaka_model	String	Model used by Medaka	TheiaEuk_ONT, TheiaProk_ONT
 medaka_reference	String	Reference sequence used in medaka task	TheiaCoV_ClearLabs, TheiaCoV_ONT
 medaka_vcf	File	A VCF file containing the identified variants	TheiaCoV_ONT
 medaka_version	String	Version of Medaka used	TheiaEuk_ONT, TheiaProk_ONT
-megahit_docker	String	Docker image used for MEGAHIT	TheiaViral_Illumina_PE, TheiaViral_Panel
-megahit_status	String	Status of the MEGAHIT assembly	TheiaViral_Illumina_PE, TheiaViral_Panel
-megahit_version	String	Version of MEGAHIT used	TheiaViral_Illumina_PE, TheiaViral_Panel
+megahit_docker	String	Docker image used for MEGAHIT	TheiaViral_Illumina_PE
+megahit_status	String	Status of the MEGAHIT assembly	TheiaViral_Illumina_PE
+megahit_version	String	Version of MEGAHIT used	TheiaViral_Illumina_PE
 meningotype_BAST	String	BAST type	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 meningotype_FetA	String	FetA type	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 meningotype_fHbp	String	fHbp type	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -651,9 +658,9 @@ metabuli_version	String	Version of Metabuli used	TheiaViral_ONT
 metadata_merged	File	Tab-delimited text file of the merged augur_metadata input files from all samples	Augur
 metaspades_docker	String	The Docker image of metaspades	TheiaMeta_Illumina_PE
 metaspades_version	String	The version of metaspades	TheiaMeta_Illumina_PE
-metaviralspades_docker	String	Docker image used for MetaviralSPAdes	TheiaViral_Illumina_PE, TheiaViral_Panel
-metaviralspades_status	String	Status of MetaviralSPAdes assembly	TheiaViral_Illumina_PE, TheiaViral_Panel
-metaviralspades_version	String	Version of MetaviralSPAdes used	TheiaViral_Illumina_PE, TheiaViral_Panel
+metaviralspades_docker	String	Docker image used for MetaviralSPAdes	TheiaViral_Illumina_PE
+metaviralspades_status	String	Status of MetaviralSPAdes assembly	TheiaViral_Illumina_PE
+metaviralspades_version	String	Version of MetaviralSPAdes used	TheiaViral_Illumina_PE
 midas_docker	String	MIDAS docker image used	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 midas_primary_genus	String	The primary genus detected by MIDAS	TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 midas_report	File	TSV report of full MIDAS results	TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -707,17 +714,15 @@ ncbi_scrub_pe_version	String	Version of HRRT software used	NCBI_Scrub_PE
 ncbi_scrub_read1_dehosted	File	Dehosted reads after NCBI scrub	TheiaViral_ONT
 ncbi_scrub_se_analysis_date	String	Date of analysis	NCBI_Scrub_SE
 ncbi_scrub_se_version	String	Version of HRRT software used	NCBI_Scrub_SE
-ncbi_taxon_summary	File	TSV summary file containing information of extracted taxonomy	TheiaViral_Panel
-ncbi_taxon_summary_avg_genome_length	String	Average genome length of extracted taxonomy	TheiaViral_Panel
-nextclade_aa_dels	String	Amino-acid deletions as detected by NextClade. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+nextclade_aa_dels	String	Amino-acid deletions as detected by NextClade. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_aa_dels_flu_h5n1	String	Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for H5N1 whole genome	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
-nextclade_aa_dels_flu_ha	String	Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-nextclade_aa_dels_flu_na	String	Amino-acid deletions as detected by NextClade. Specific to Flu; it includes deletions for NA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+nextclade_aa_dels_flu_ha	String	Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+nextclade_aa_dels_flu_na	String	Amino-acid deletions as detected by NextClade. Specific to Flu; it includes deletions for NA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_aa_dels_rabies	String	Amino-acid deletions as detected by Nextclade. Specific to Monkeypox	TheiaViral_Illumina_PE, TheiaViral_ONT
-nextclade_aa_subs	String	Amino-acid substitutions as detected by Nextclade. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+nextclade_aa_subs	String	Amino-acid substitutions as detected by Nextclade. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_aa_subs_flu_h5n1	String	Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for H5N1 whole genome	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
-nextclade_aa_subs_flu_ha	String	Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-nextclade_aa_subs_flu_na	String	Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for NA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+nextclade_aa_subs_flu_ha	String	Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+nextclade_aa_subs_flu_na	String	Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for NA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_aa_subs_rabies	String	Amino-acid substitutions as detected by Nextclade. Specific to Monkeypox	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_batch_analysis_date	String	Date of analysis	Nextclade_Batch
 nextclade_batch_auspice_json	File	Phylogenetic tree with user placed samples	Nextclade_Batch
@@ -726,33 +731,33 @@ nextclade_batch_nextclade_json	File	JSON file with the results of the Nextclade 
 nextclade_batch_nextclade_tsv	File	Tab-delimited file with Nextclade results	Nextclade_Batch
 nextclade_batch_nextclade_version	String	Nextclade version used	Nextclade_Batch
 nextclade_batch_version	String	Version of the Public Health Bioinformatics (PHB) repository used	Nextclade_Batch
-nextclade_clade	String	Nextclade clade designation, will be blank for Flu.	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+nextclade_clade	String	Nextclade clade designation, will be blank for Flu.	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_clade_flu_h5n1	String	Nextclade clade designation, specific to Flu 5N1 whole genome. NOTE: Output will be blank or `NA` since this nextclade dataset does assign clades	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
-nextclade_clade_flu_ha	String	Nextclade clade designation, specific to Flu NA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-nextclade_clade_flu_na	String	Nextclade clade designation, specific to Flu HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+nextclade_clade_flu_ha	String	Nextclade clade designation, specific to Flu NA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+nextclade_clade_flu_na	String	Nextclade clade designation, specific to Flu HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_clade_rabies	String	Nextclade clade designation, specific to Rabies	TheiaViral_Illumina_PE, TheiaViral_ONT
-nextclade_docker	String	Docker image used to run Nextclade	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+nextclade_docker	String	Docker image used to run Nextclade	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_ds_tag	String	Dataset tag used to run Nextclade. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
-nextclade_ds_tag_flu_ha	String	Dataset tag used to run Nextclade, specific to Flu HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-nextclade_ds_tag_flu_na	String	Dataset tag used to run Nextclade, specific to Flu NA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-nextclade_json	File	Nextclade output in JSON file format. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+nextclade_ds_tag_flu_ha	String	Dataset tag used to run Nextclade, specific to Flu HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+nextclade_ds_tag_flu_na	String	Dataset tag used to run Nextclade, specific to Flu NA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+nextclade_json	File	Nextclade output in JSON file format. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_json_flu_h5n1	File	Nextclade output in JSON file format, specific to Flu H5N1 whole genome	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
-nextclade_json_flu_ha	File	Nextclade output in JSON file format, specific to Flu HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-nextclade_json_flu_na	File	Nextclade output in JSON file format, specific to Flu NA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+nextclade_json_flu_ha	File	Nextclade output in JSON file format, specific to Flu HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+nextclade_json_flu_na	File	Nextclade output in JSON file format, specific to Flu NA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_json_rabies	File	Nextclade output in JSON file format, specific to Rabies	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_lineage	String	Nextclade lineage designation	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
-nextclade_lineage_rabies	String	Nextclade lineage designation, specific to Rabies	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+nextclade_lineage_rabies	String	Nextclade lineage designation, specific to Rabies	TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_qc	String	QC metric as determined by Nextclade. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_qc_flu_h5n1	String	QC metric as determined by Nextclade, specific to Flu H5N1 whole genome	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
 nextclade_qc_flu_ha	String	QC metric as determined by Nextclade, specific to Flu HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_qc_flu_na	String	QC metric as determined by Nextclade, specific to Flu NA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_qc_rabies	String	QC metric as determined by Nextclade, specific to Rabies	TheiaViral_Illumina_PE, TheiaViral_ONT
-nextclade_tsv	File	Nextclade output in TSV file format. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+nextclade_tsv	File	Nextclade output in TSV file format. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_tsv_flu_h5n1	File	Nextclade output in TSV file format, specific to Flu H5N1 whole genome	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
-nextclade_tsv_flu_ha	File	Nextclade output in TSV file format, specific to Flu HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-nextclade_tsv_flu_na	File	Nextclade output in TSV file format, specific to Flu NA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+nextclade_tsv_flu_ha	File	Nextclade output in TSV file format, specific to Flu HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+nextclade_tsv_flu_na	File	Nextclade output in TSV file format, specific to Flu NA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_tsv_rabies	File	Nextclade output in TSV file format, specific to Rabies	TheiaViral_Illumina_PE, TheiaViral_ONT
-nextclade_version	String	The version of Nextclade software used	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+nextclade_version	String	The version of Nextclade software used	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 ngmaster_ngmast_porB_allele	String	porB allele number	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ngmaster_ngmast_sequence_type	String	NG-MAST sequence type	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ngmaster_ngmast_tbpB_allele	String	tbpB allele number	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -770,18 +775,18 @@ number_contigs	Int	Total number of contigs in assembly	TheiaEuk_Illumina_PE, The
 number_Degenerate	Int	Number of degenerate basecalls within the consensus assembly	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 number_N	Int	Number of fully ambiguous basecalls within the consensus assembly	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 number_Total	Int	Total number of nucleotides within the consensus assembly	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-pango_lineage	String	Pango lineage as determined by Pangolin	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-pango_lineage_expanded	String	Pango lineage without use of aliases; e.g., "BA.1" → "B.1.1.529.1"	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+pango_lineage	String	Pango lineage as determined by Pangolin	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+pango_lineage_expanded	String	Pango lineage without use of aliases; e.g., "BA.1" → "B.1.1.529.1"	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 pango_lineage_log	File	TSV file listing Pangolin lineage assignments and software versions for this sample	Pangolin_Update
-pango_lineage_report	File	Full Pango lineage report generated by Pangolin	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-pangolin_assignment_version	String	The version of the pangolin software (e.g. PANGO or PUSHER) used for lineage assignment	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-pangolin_conflicts	String	Number of lineage conflicts as determined by Pangolin	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-pangolin_docker	String	Docker image used to run Pangolin	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-pangolin_notes	String	Lineage notes as determined by Pangolin	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+pango_lineage_report	File	Full Pango lineage report generated by Pangolin	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+pangolin_assignment_version	String	The version of the pangolin software (e.g. PANGO or PUSHER) used for lineage assignment	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+pangolin_conflicts	String	Number of lineage conflicts as determined by Pangolin	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+pangolin_docker	String	Docker image used to run Pangolin	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+pangolin_notes	String	Lineage notes as determined by Pangolin	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 pangolin_update_analysis_date	String	Date of analysis	Pangolin_Update
 pangolin_update_version	String	Version of the Public Health Bioinformatics (PHB) repository used	Pangolin_Update
 pangolin_updates	String	Result of Pangolin Update (lineage changed versus unchanged) with lineage assignment and date of analysis	Pangolin_Update
-pangolin_versions	String	All Pangolin software and database versions	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+pangolin_versions	String	All Pangolin software and database versions	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 parse_mapping_samtools_docker	String	Docker image used for samtools in parse mapping	TheiaViral_ONT
 parse_mapping_samtools_version	String	Version of samtools used in parse mapping	TheiaViral_ONT
 pasty_all_serogroups	File	TSV file with details of each serogroup from pasty (see <https://github.com/rpetit3/pasty#example-prefixdetailstsv>)	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -856,15 +861,15 @@ quasitools_dr_report	File	Drug resistance report created by Quasitools HyDRA	The
 quasitools_hydra_vcf	File	The VCF created by Quasitools HyDRA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 quasitools_mutations_report	File	The mutation report created by Quasitools HyDRA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 quasitools_version	String	Version of Quasitools used	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
-quast_denovo_docker	String	Docker image used for QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-quast_denovo_gc_percent	Float	GC percentage of de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-quast_denovo_genome_length	Int	Genome length of de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-quast_denovo_largest_contig	Int	Size of largest contig in de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-quast_denovo_n50_value	Int	N50 value of de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-quast_denovo_number_contigs	Int	Number of contigs in de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-quast_denovo_report	File	QUAST report for de novo assembly	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-quast_denovo_uncalled_bases	Float	Number of uncalled bases in de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-quast_denovo_version	String	Version of QUAST used	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+quast_denovo_docker	String	Docker image used for QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
+quast_denovo_gc_percent	Float	GC percentage of de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
+quast_denovo_genome_length	Int	Genome length of de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
+quast_denovo_largest_contig	Int	Size of largest contig in de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
+quast_denovo_n50_value	Int	N50 value of de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
+quast_denovo_number_contigs	Int	Number of contigs in de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
+quast_denovo_report	File	QUAST report for de novo assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
+quast_denovo_uncalled_bases	Float	Number of uncalled bases in de novo assembly from QUAST	TheiaViral_Illumina_PE, TheiaViral_ONT
+quast_denovo_version	String	Version of QUAST used	TheiaViral_Illumina_PE, TheiaViral_ONT
 quast_docker	String	The Docker image of QUAST	TheiaMeta_Illumina_PE
 quast_gc_percent	Float	The GC percent of your sample	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 quast_report	File	TSV report from QUAST	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -887,7 +892,6 @@ raven_denovo_docker	String	Docker image used for Raven	TheiaViral_ONT
 raven_denovo_status	String	Status of Raven assembly	TheiaViral_ONT
 raven_denovo_version	String	Version of Raven used	TheiaViral_ONT
 read1	File	File containing the forward reads	BaseSpace_Fetch, SRA_Fetch
-read1	File	Reads extracted from panel level sample	TheiaViral_Panel
 read1_aligned	File	Forward read file of only aligned reads	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 read1_clean	File	Forward read file after quality trimming and adapter removal	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel
 read1_concatenated	File	Concatenated forward reads	Concatenate_Illumina_Lanes, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -899,7 +903,6 @@ read1_trimmed	File	Forward read file after quality trimming and adapter removal	
 read1_unaligned	File	Forward read file of unaligned reads	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 read1_unmapped	File	The unmapped forwards reads to the assembly	TheiaMeta_Illumina_PE
 read2	File	File containing the reverse reads (not available for single-end or ONT data)	BaseSpace_Fetch, SRA_Fetch
-read2	File	Reads extracted from panel level sample	TheiaViral_Panel
 read2_aligned	File	Reverse read file of only aligned reads	TheiaCoV_Illumina_PE
 read2_clean	File	Reverse read file after quality trimming and adapter removal	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Panel
 read2_concatenated	File	Concatenated reverse reads	Concatenate_Illumina_Lanes, TheiaProk_Illumina_PE
@@ -909,18 +912,18 @@ read2_renamed	File	New read2 FASTQ file renamed to desired filename	Rename_FASTQ
 read2_subsampled	File	Read2 FASTQ files downsampled to desired coverage	RASUSA, TheiaEuk_Illumina_PE
 read2_unaligned	File	Reverse read file of unaligned reads	TheiaCoV_Illumina_PE
 read2_unmapped	File	The unmapped reverse reads to the assembly	TheiaMeta_Illumina_PE
-read_mapping_cov_hist	File	Coverage histogram from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-read_mapping_cov_stats	File	Coverage statistics from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-read_mapping_coverage	Float	Average coverage from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+read_mapping_cov_hist	File	Coverage histogram from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
+read_mapping_cov_stats	File	Coverage statistics from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
+read_mapping_coverage	Float	Average coverage from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
 read_mapping_date	String	Date of read mapping analysis	TheiaViral_Illumina_PE, TheiaViral_ONT
-read_mapping_depth	Float	Average depth from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-read_mapping_flagstat	File	Flagstat file from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-read_mapping_meanbaseq	Float	Mean base quality from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-read_mapping_meanmapq	Float	Mean mapping quality from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaVi, TheiaViral_Panelral_Panel
-read_mapping_percentage_mapped_reads	Float	Percentage of mapped reads	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-read_mapping_report	File	Report file from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-read_mapping_samtools_version	String	Version of samtools used in read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-read_mapping_statistics	File	Statistics file from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+read_mapping_depth	Float	Average depth from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
+read_mapping_flagstat	File	Flagstat file from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
+read_mapping_meanbaseq	Float	Mean base quality from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
+read_mapping_meanmapq	Float	Mean mapping quality from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
+read_mapping_percentage_mapped_reads	Float	Percentage of mapped reads	TheiaViral_Illumina_PE, TheiaViral_ONT
+read_mapping_report	File	Report file from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
+read_mapping_samtools_version	String	Version of samtools used in read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
+read_mapping_statistics	File	Statistics file from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
 read_screen_clean	String	PASS or FAIL result from clean read screening; FAIL accompanied by the reason(s) for failure	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 read_screen_clean_tsv	File	Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 read_screen_raw	String	PASS or FAIL result from raw read screening; FAIL accompanied by the reason(s) for failure	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -1014,18 +1017,17 @@ sistr_results	File	TSV results file produced by SISTR (see <https://github.com/p
 sistr_serogroup	String	Serogroup predicted by SISTR	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sistr_serotype_cgmlst	String	cgMLST of the serogroup prediicted by SISTR	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sistr_version	String	Version of SISTR used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-skani_database	String	Database used for Skani	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-skani_docker	String	Docker image used for Skani	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-skani_report	File	Report from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-skani_status	String	Status of Skani analysis	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-skani_top_accession	String	Top accession ID from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-skani_top_ani	Float	Top ANI score from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-skani_top_ani_fasta	File	FASTA file of top ANI match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-skani_top_query_coverage	Float	Query coverage of top match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-skani_top_score	Float	Top score from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-skani_version	String	Version of Skani used	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-skani_warning	String	Skani warning message	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-skani_reference_taxon_name	String	Name of the reference selected by Skani	TheiaViral_Panel
+skani_database	String	Database used for Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_docker	String	Docker image used for Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_report	File	Report from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_status	String	Status of Skani analysis	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_top_accession	String	Top accession ID from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_top_ani	Float	Top ANI score from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_top_ani_fasta	File	FASTA file of top ANI match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_top_query_coverage	Float	Query coverage of top match from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_top_score	Float	Top score from Skani	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_version	String	Version of Skani used	TheiaViral_Illumina_PE, TheiaViral_ONT
+skani_warning	String	Skani warning message	TheiaViral_Illumina_PE, TheiaViral_ONT
 snippy_centroid_docker	String	Docker file used for Centroid	Snippy_Streamline, Snippy_Streamline_FASTA
 snippy_centroid_fasta	File	FASTA file for the centroid sample	Snippy_Streamline, Snippy_Streamline_FASTA
 snippy_centroid_mash_tsv	File	TSV file containing mash distances computed by centroid	Snippy_Streamline, Snippy_Streamline_FASTA
@@ -1105,7 +1107,6 @@ sonneityping_mykrobe_version	String	Version of sonneityping used	TheiaProk_Illum
 sonneityping_species	String	Species call from Mykrobe via sonneityping	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 sorted_bam_unaligned	File	A BAM file that only contains reads that did not align to the reference	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 sorted_bam_unaligned_bai	File	Index companion file to a BAM file that only contains reads that did not align to the reference	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-source_table	String	Name of source table	TheiaViral_Panel
 spatyper_docker	String	spatyper docker image used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 spatyper_repeats	String	order of identified repeats	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 spatyper_tsv	File	TSV report with spatyper results	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
