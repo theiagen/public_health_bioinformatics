@@ -886,6 +886,9 @@ workflow theiaprok_ont {
     String? virulencefinder_hits = merlin_magic.virulencefinder_hits
     # Kleborate ecoli results
     File? kleborate_ecoli_output_file = merlin_magic.kleborate_ecoli_output_file
+    String? kleborate_ecoli_lee_st = merlin_magic.kleborate_ecoli_lee_st
+    String? kleborate_ecoli_lee_lineage = merlin_magic.kleborate_ecoli_lee_lineage
+    String? kleborate_ecoli_pathotype = merlin_magic.kleborate_ecoli_pathotype
     String? kleborate_ecoli_version = merlin_magic.kleborate_ecoli_version
     String? kleborate_ecoli_docker = merlin_magic.kleborate_ecoli_docker
     # stxtyper 

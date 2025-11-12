@@ -914,6 +914,9 @@ workflow merlin_magic {
     String? shigeifinder_notes = shigeifinder.shigeifinder_notes
     #Kleborate E coli outputs
     File? kleborate_ecoli_output_file = kleborate_ecoli.kleborate_ecoli_output_file
+    String? kleborate_ecoli_lee_st = kleborate_ecoli.kleborate_ecoli_lee_st
+    String? kleborate_ecoli_lee_lineage = kleborate_ecoli.kleborate_ecoli_lee_lineage
+    String? kleborate_ecoli_pathotype = kleborate_ecoli.kleborate_ecoli_pathotype
     String? kleborate_ecoli_docker = kleborate_ecoli.kleborate_ecoli_docker
     String? kleborate_ecoli_version = kleborate_ecoli.kleborate_ecoli_version
     # ShigeiFinder outputs but for task that uses reads instead of assembly as input

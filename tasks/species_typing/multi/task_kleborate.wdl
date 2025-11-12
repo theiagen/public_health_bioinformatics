@@ -5,7 +5,7 @@ task kleborate_klebsiella {
   input {
     File assembly
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kleborate:3.2.4_20251111"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kleborate:3.2.4_20251112"
     Int disk_size = 100
     Int cpu = 8
     Int memory = 16
@@ -121,7 +121,7 @@ task kleborate_ecoli {
     String samplename
     Float min_percent_identity = 90.0 # Minimum alignment percent identity for main results (default: 90.0)
     Float min_percent_coverage = 80.0 #  Minimum alignment percent coverage for main results (default: 80.0)
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kleborate:3.2.4_20251111"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kleborate:3.2.4_20251112"
     Int disk_size = 100
     Int cpu = 8
     Int memory = 16
@@ -148,11 +148,17 @@ task kleborate_ecoli {
     else
       # Create empty output file with message if output not found
       echo "No escherichia coli output found for escherichia module" > ~{samplename}_escherichia_output.txt
+      echo "None" >> ~{samplename}_escherichia_output.txt
     fi
+
+    parse_kleborate_ecoli.py ~{samplename}_escherichia_output.txt
   >>>
   output {
     File kleborate_ecoli_output_file = "~{samplename}_escherichia_output.txt"
     String kleborate_ecoli_version = read_string("VERSION")
+    String kleborate_ecoli_lee_st = read_string("LEE_ST")
+    String kleborate_ecoli_lee_lineage = read_string("LEE_LINEAGE")
+    String kleborate_ecoli_pathotype = read_string("PATHOTYPE")
     String kleborate_ecoli_docker = docker
   }
   runtime {
