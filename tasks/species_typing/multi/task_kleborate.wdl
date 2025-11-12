@@ -150,7 +150,7 @@ task kleborate_ecoli {
       echo "No escherichia coli output found for escherichia module" > ~{samplename}_escherichia_output.txt
       echo "None" >> ~{samplename}_escherichia_output.txt
     fi
-
+    # Parse the output for relevant fields
     parse_kleborate_ecoli.py ~{samplename}_escherichia_output.txt
   >>>
   output {
