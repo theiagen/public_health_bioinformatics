@@ -305,7 +305,7 @@
 {{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral_panel", indent=8) }} 
 
     !!! tip ""
-        TheiaViral_Panel utilizes the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single sample to undergo the same viral assembly as other samples. The following tasks are performed for each taxon ID that passes the read binning threshold:
+        TheiaViral_Panel uses the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single sample to undergo the same viral assembly as other samples. The following tasks are performed for each taxon ID that passes the read binning threshold:
 
         ??? toggle "_De novo_ Assembly and Reference Selection"
 
