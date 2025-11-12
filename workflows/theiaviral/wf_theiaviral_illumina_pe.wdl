@@ -134,7 +134,8 @@ workflow theiaviral_illumina_pe {
       call skani_task.skani as skani {
         input:
           assembly_fasta = select_first([reference_fasta, spades.assembly_fasta, megahit.assembly_fasta]),
-          samplename = samplename
+          samplename = samplename,
+          skani_db = skani_db
       }
       if (defined(reference_fasta) || skani.skani_status == "PASS") {
         # align reads to reference
