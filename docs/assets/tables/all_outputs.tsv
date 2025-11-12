@@ -460,27 +460,22 @@ host_mapping_mean_depth	Float	Average depth from host read mapping	Host_Decontam
 host_mapping_metrics	File	File of mapping metrics	Host_Decontaminate
 host_mapping_stats	File	File of mapping statistics	Host_Decontaminate
 host_percent_mapped_reads	Float	Percentage of reads mapped to host reference genome	Host_Decontaminate
-irma_all_minor_variants_tsv	File	Concatenated tsv file of all minor variants identified by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+irma_all_deletions_tsv	File	Concatenated TSV file of all deletions identified by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+irma_all_insertions_tsv	File	Concatenated TSV file of all insertions identified by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+irma_all_snvs_tsv	File	Concatenated TSV file of all SNVs identified by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_assembly_fasta_concatenated	File	Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_bams	Array[File]	Aligned reads from IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_docker	String	Docker image used to run IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
-irma_ha_num_minor_variants	String	Number of minor variants identified in HA segment by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_ha_segment_fasta	File	HA (Haemagglutinin) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_min_consensus_support_threshold	Int	Minimum consensus support threshold used by IRMA with ONT data. For illumina data, see output called `consensus_n_variant_min_depth` for this value	TheiaCoV_ONT
-irma_mp_num_minor_variants	String	Number of minor variants identified in MP segment by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_mp_segment_fasta	File	MP (Matrix Protein) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
-irma_na_num_minor_variants	String	Number of minor variants identified in NA segment by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_na_segment_fasta	File	NA (Neuraminidase) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
-irma_np_num_minor_variants	String	Number of minor variants identified in NP segment by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_np_segment_fasta	File	NP (Nucleoprotein) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
-irma_ns_num_minor_variants	String	Number of minor variants identified in NS segment by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_ns_segment_fasta	File	NS (Nonstructural) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
-irma_pa_num_minor_variants	String	Number of minor variants identified in PA segment by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_pa_segment_fasta	File	PA (Polymerase acidic) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
-irma_pb1_num_minor_variants	String	Number of minor variants identified in PB1 segment by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_pb1_segment_fasta	File	PB1 (Polymerase basic 1) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
-irma_pb2_num_minor_variants	String	Number of minor variants identified in PB2 segment by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_pb2_segment_fasta	File	PB2 (Polymerase basic 2) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+irma_qc_summary_tsv	File	TSV file summarizing IRMA quality control metrics	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_subtype	String	Flu subtype as determined by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 irma_subtype_notes	String	Helpful note to user about Flu B subtypes. Output will be blank for Flu A samples. For Flu B samples it will state: "IRMA does not differentiate Victoria and Yamagata Flu B lineages. See abricate_flu_subtype output column"	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 irma_type	String	Flu type as determined by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
