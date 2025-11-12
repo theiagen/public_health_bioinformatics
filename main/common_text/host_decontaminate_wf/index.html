@@ -6437,25 +6437,9 @@
 <p>The detailed steps and tasks are as follows:</p>
 <details class="toggle">
 <summary>Taxonomic Identification</summary>
-<p>The <code>ncbi_identify</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxonomy and desired taxonomic rank. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including <strong>read classification and targeted read extraction</strong>. This task also generates a comprehensive summary file of all successful hits to the input <code>taxon</code>, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input <code>taxon</code>.</p>
 <details class="dna">
 <summary><code>taxon</code> input parameter</summary>
 <p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
-</details>
-<details class="dna">
-<summary><code>rank</code> a.k.a <code>read_extraction_rank</code> input parameter</summary>
-<p>Valid options include: <code>"species"</code>, <code>"genus"</code>, <code>"family"</code>, <code>"order"</code>, <code>"class"</code>, <code>"phylum"</code>, <code>"kingdom"</code>, or <code>"domain"</code>. By default it is set to <code>"family"</code>. This parameter filters metadata to report information only at the taxonomic <code>rank</code> specified by the user, regardless of the taxonomic rank implied by the original input <code>taxon</code>.</p>
-</details>
-<details class="warning" open="open">
-<summary>Important</summary>
-<ul>
-<li>The <code>rank</code> parameter <strong>must</strong> specify a taxonomic rank that is <mark>equal to or above</mark> the input taxon's taxonomic rank.</li>
-</ul>
-<p><strong>Examples:</strong></p>
-<ul>
-<li>If your input <code>taxon</code> is <code>Lyssavirus rabies</code> (species level) with <code>rank</code> set to <code>family</code>, the task will return information for the family of <code>Lyssavirus rabies</code>: taxon ID for Rhabdoviridae (11270), name "Rhabdoviridae", and rank "family".</li>
-<li>If your input <code>taxon</code> is <code>Lyssavirus</code> (genus level) with <code>rank</code> set to <code>species</code>, the task will fail because it cannot determine species information from an inputted genus.</li>
-</ul>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">NCBI Datasets Technical Details</p>

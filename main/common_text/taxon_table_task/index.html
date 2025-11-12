@@ -6433,95 +6433,68 @@
 
 <details class="task">
 <summary><code>Taxon Tables</code>: Copy outputs to new data tables based on taxonomic assignment (optional)</summary>
-<div class="admonition tip">
-<p>This task is incompatible when running TheiaProk on the command-line as it is geared specifically for Terra. Do not activate this task if you are a command-line user.</p>
-</div>
-<p>Activate this task by providing a value for the <code>taxon_tables</code> input variable. If provided, the user must also provide values to the <code>terra_project</code> and <code>terra_workspace</code> optional input variables.</p>
-<p>The <code>taxon_tables</code> module, if enabled, will copy sample data to a different data table based on the taxonomic assignment. For example, if an <em>E. coli</em> sample is analyzed, the module will copy the sample data to a new table for <em>E. coli</em> samples or add the sample data to an existing table.</p>
-<div class="admonition tip">
-<p>To activate the <code>taxon_tables</code> module, provide a file indicating data table names to copy samples of each taxa to in the <code>taxon_tables</code> input variable.</p>
-<p><strong>Formatting the <code>taxon_tables</code> file</strong></p>
-<p>The <code>taxon_tables</code>  file must be uploaded a Google storage bucket that is accessible by Terra and should be in the format below. Briefly, the bacterial genera or species should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column.</p>
-<table>
-<thead>
-<tr>
-<th>taxon</th>
-<th>taxon_table</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Listeria_monocytogenes</td>
-<td>lmonocytogenes_specimen</td>
-</tr>
-<tr>
-<td>Salmonella</td>
-<td>salmonella_specimen</td>
-</tr>
-<tr>
-<td>Escherichia</td>
-<td>ecoli_specimen</td>
-</tr>
-<tr>
-<td>Shigella</td>
-<td>shigella_specimen</td>
-</tr>
-<tr>
-<td>Streptococcus</td>
-<td>strep_pneumo_specimen</td>
-</tr>
-<tr>
-<td>Legionella</td>
-<td>legionella_specimen</td>
-</tr>
-<tr>
-<td>Klebsiella</td>
-<td>klebsiella_specimen</td>
-</tr>
-<tr>
-<td>Mycobacterium</td>
-<td>mycobacterium_specimen</td>
-</tr>
-<tr>
-<td>Acinetobacter</td>
-<td>acinetobacter_specimen</td>
-</tr>
-<tr>
-<td>Pseudomonas</td>
-<td>pseudomonas_specimen</td>
-</tr>
-<tr>
-<td>Staphylococcus</td>
-<td>staphyloccus_specimen</td>
-</tr>
-<tr>
-<td>Neisseria</td>
-<td>neisseria_specimen</td>
-</tr>
-</tbody>
-</table>
-</div>
-<div class="admonition tip">
-<p>There are no output columns for the taxon table task. The only output of the task is that additional data tables will appear for in the Terra workspace for samples matching a taxa in the <code>taxon_tables</code> file.</p>
-</div>
-<div class="admonition techdetails">
-<p class="admonition-title"><code>export_taxon_table</code> Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_export/task_export_taxon_table.wdl">task_export_taxon_table.wdl</a></td>
-</tr>
-</tbody>
-</table>
-</div>
 </details>
+<!-- if: theiaviral_panel -->
+<div class="language-text highlight"><pre><span></span><code>!!! tip ""
+    This task is incompatible when running TheiaViral_Panel on the command-line as it is geared specifically for Terra. Do not activate this task if you are a command-line user.
+
+Activate this task by providing a value for the `output_taxon_table` input variable. If provided, the user must also provide values to the `terra_project` and `terra_workspace` optional input variables.
+
+The `taxon_tables` module will copy sample data to a different data table based on the taxonomic assignment. For example, if an *influenza* sample is analyzed, the module will copy the sample data to a new table for *influenza* samples or add the sample data to an existing table.
+
+!!! tip ""
+    **Formatting the `output_taxon_table` file**
+
+    The `output_taxon_table` file must be uploaded a Google storage bucket that is accessible by Terra and should be in **tab-delimited** format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column.
+
+    | taxon | taxon_table |
+    | --- | --- |
+    | influenza | influenza_panel_specimen |
+    | coronavirus | coronavirus_panel_specimen |
+    | human_immunodeficiency_virus | hiv_panel_specimen |
+    | monkeypox_virus | monkeypox_panel_specimen |
+</code></pre></div>
+<!-- endif -->
+<!-- if: theiaprok -->
+<div class="language-text highlight"><pre><span></span><code>!!! tip ""
+    This task is incompatible when running TheiaProk on the command-line as it is geared specifically for Terra. Do not activate this task if you are a command-line user.
+
+Activate this task by providing a value for the `taxon_tables` input variable. If provided, the user must also provide values to the `terra_project` and `terra_workspace` optional input variables.
+
+The `taxon_tables` module, if enabled, will copy sample data to a different data table based on the taxonomic assignment. For example, if an *E. coli* sample is analyzed, the module will copy the sample data to a new table for *E. coli* samples or add the sample data to an existing table.
+
+!!! tip ""
+    To activate the `taxon_tables` module, provide a file indicating data table names to copy samples of each taxa to in the `taxon_tables` input variable.
+
+    **Formatting the `taxon_tables` file**
+
+    The `taxon_tables` file must be uploaded a Google storage bucket that is accessible by Terra and should be in the format below. Briefly, the bacterial genera or species should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column.
+
+    | taxon | taxon_table |
+    | --- | --- |
+    | Listeria_monocytogenes | lmonocytogenes_specimen |
+    | Salmonella | salmonella_specimen |
+    | Escherichia | ecoli_specimen |
+    | Shigella | shigella_specimen |
+    | Streptococcus | strep_pneumo_specimen |
+    | Legionella | legionella_specimen |
+    | Klebsiella | klebsiella_specimen |
+    | Mycobacterium | mycobacterium_specimen |
+    | Acinetobacter | acinetobacter_specimen |
+    | Pseudomonas | pseudomonas_specimen |
+    | Staphylococcus | staphyloccus_specimen |
+    | Neisseria | neisseria_specimen |
+</code></pre></div>
+<!-- endif -->
+
+<div class="language-text highlight"><pre><span></span><code>!!! tip ""
+    There are no output columns for the taxon table task. The only output of the task is that additional data tables will appear for in the Terra workspace for samples matching a taxa in the taxon table file.
+
+!!! techdetails "`export_taxon_table` Technical Details"
+    |  | Links |
+    | --- | --- |
+    | Task | [task_export_taxon_table.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_export/task_export_taxon_table.wdl) |
+</code></pre></div>
 
 
 
@@ -6544,7 +6517,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 12, 2025 20:00:11 UTC">2025-11-12</span>
   </span>
 
     

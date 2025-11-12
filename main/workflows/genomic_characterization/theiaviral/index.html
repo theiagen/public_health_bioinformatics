@@ -1494,23 +1494,6 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#theiaviral-workflows-for-different-input-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        TheiaViral Workflows for Different Input Types
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="TheiaViral Workflows for Different Input Types">
-      <ul class="md-nav__list">
-        
           <li class="md-nav__item">
   <a href="#inputs" class="md-nav__link">
     <span class="md-ellipsis">
@@ -4982,23 +4965,6 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#theiaviral-workflows-for-different-input-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        TheiaViral Workflows for Different Input Types
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="TheiaViral Workflows for Different Input Types">
-      <ul class="md-nav__list">
-        
           <li class="md-nav__item">
   <a href="#inputs" class="md-nav__link">
     <span class="md-ellipsis">
@@ -6558,23 +6524,6 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#theiaviral-workflows-for-different-input-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        TheiaViral Workflows for Different Input Types
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="TheiaViral Workflows for Different Input Types">
-      <ul class="md-nav__list">
-        
           <li class="md-nav__item">
   <a href="#inputs" class="md-nav__link">
     <span class="md-ellipsis">
@@ -6959,23 +6908,6 @@
   
 </li>
         
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#theiaviral-workflows-for-different-input-types" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        TheiaViral Workflows for Different Input Types
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="TheiaViral Workflows for Different Input Types">
-      <ul class="md-nav__list">
-        
           <li class="md-nav__item">
   <a href="#inputs" class="md-nav__link">
     <span class="md-ellipsis">
@@ -7155,20 +7087,34 @@
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
 <td>vX.X.X</td>
-<td>Yes</td>
+<td>Some optional features incompatible, Yes</td>
 <td>Sample-level</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_Illumina_PE_PHB:main?tab=info">TheiaViral_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_ONT_PHB:main?tab=info">TheiaViral_ONT_PHB</a></td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_Illumina_PE_PHB:main?tab=info">TheiaViral_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_ONT_PHB:main?tab=info">TheiaViral_ONT_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_Panel_PHB:main?tab=info">TheiaViral_Panel_PHB</a></td>
 </tr>
 </tbody>
 </table>
 <h2 id="theiaviral-workflows">TheiaViral Workflows<a class="headerlink" href="#theiaviral-workflows" title="Permanent link">¶</a></h2>
-<p><strong>TheiaViral</strong> workflows assemble, quality assess, and characterize viral genomes from diverse data sources, including metagenomic samples. TheiaViral workflows can generate consensus assemblies of recalcitrant viruses, including diverse or recombinant lineages, such as rabies virus and norovirus, through a three-step approach: 1) generating an intermediate <em>de novo</em> assembly from taxonomy-filtered reads, 2) selecting the best reference from a database of ~200,000 viral genomes using average nucleotide identity, and 3) producing a final consensus assembly through reference-based read mapping and variant calling. Reference genomes can be directly provided to TheiaViral to bypass <em>de novo</em> assembly, which enables compatibility with tiled amplicon sequencing data. Targeted viral characterization is functional for lineages <a href="#taxa-specific-tasks">listed below</a>.</p>
+<p><strong>The TheiaViral workflows are for the assembly, quality assessment, and characterization of viral genomes from diverse data sources, including metagenomic samples.</strong> There are currently three TheiaViral workflows designed to accomodate different kinds of input data:</p>
+<ul>
+<li>Illumina paired-end sequencing (<strong>TheiaViral_Illumina_PE</strong>)</li>
+<li>Oxford Nanopore Technology (ONT) sequencing (<strong>TheiaViral_ONT</strong>)</li>
+<li>Illumina paired-end sequencing originating from hybrid-capture panel-based methods (<strong>TheiaViral_Panel</strong>)</li>
+</ul>
+<div class="admonition tip">
+<p>These workflows function by generating consensus assemblies of recalcitrant viruses, including diverse or recombinant lineages (such as rabies or norovirus), through a three-step approach:</p>
+<ol>
+<li>An intermediate <em>de novo</em> assembly is generated from taxonomy-filtered reads,</li>
+<li>The best reference from a database of ~200,000 viral genomes is selected using average nucleotide identity (ANI), and</li>
+<li>A final consensus assembly is generated through reference-based read mapping and variant calling.</li>
+</ol>
+<p><em>De novo</em> assembly and reference selection can be skipped by providing a reference genome as input; this enables compatibility with tiled-amplicon sequencing data. Subsequent genomic characterization is currently only functional for the viral lineages <a href="#taxa-specific-tasks">listed below</a>.</p>
+</div>
 <details class="question" open="open">
-<summary>What are the main differences between the TheiaViral and TheiaCov workflows?</summary>
+<summary>What are the main differences between the TheiaViral and TheiaCoV workflows?</summary>
 <div class="grid cards" markdown>
 <ul>
 <li>
-<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg></span> <strong>TheiaCov Workflows</strong></p>
+<p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg></span> <strong>TheiaCoV Workflows</strong></p>
 <hr>
 <ul>
 <li>For amplicon-derived viral sequencing methods</li>
@@ -7189,11 +7135,11 @@
 </div>
 </details>
 <details class="question" open="open">
-<summary>Segmented viruses</summary>
-<p>Segmented viruses are accounted for in TheiaViral. The reference genome database excludes segmented viral nucleotide accessions, while including RefSeq assembly accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.</p>
+<summary>What about segmented viruses?</summary>
+<p>TheiaViral can properly assemble segmented viruses. The reference genome database used in Step 2 excludes segmented viral <em>nucleotide</em> accessions but includes the RefSeq <em>assembly</em> accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.</p>
 </details>
 <h3 id="workflow-diagram">Workflow Diagram<a class="headerlink" href="#workflow-diagram" title="Permanent link">¶</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="1:2"><input checked="checked" id="theiaviral_illumina_pe" name="__tabbed_1" type="radio"><input id="theiaviral_ont" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="theiaviral_illumina_pe">TheiaViral_Illumina_PE</label><label for="theiaviral_ont">TheiaViral_ONT</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="theiaviral_illumina_pe" name="__tabbed_1" type="radio"><input id="theiaviral_ont" name="__tabbed_1" type="radio"><input id="theiaviral_panel" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="theiaviral_illumina_pe">TheiaViral_Illumina_PE</label><label for="theiaviral_ont">TheiaViral_ONT</label><label for="theiaviral_panel">TheiaViral_Panel</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="admonition caption">
@@ -7207,48 +7153,36 @@
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/figures/TheiaViral_ONT.png" data-desc-position="bottom"><img alt="TheiaViral_ONT Workflow Diagram" src="../../../assets/figures/TheiaViral_ONT.png"></a></p>
 </div>
 </div>
+<div class="tabbed-block">
+<div class="admonition caption">
+<p class="admonition-title">TheiaViral_Panel Workflow Diagram</p>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../../assets/figures/TheiaViral_Panel_PHB.png" data-desc-position="bottom"><img alt="TheiaViral_Panel Workflow Diagram" src="../../../assets/figures/TheiaViral_Panel_PHB.png"></a></p>
 </div>
 </div>
-<h2 id="theiaviral-workflows-for-different-input-types">TheiaViral Workflows for Different Input Types<a class="headerlink" href="#theiaviral-workflows-for-different-input-types" title="Permanent link">¶</a></h2>
-<div class="grid cards ">
-<ul>
-<li>
-<p></p><center> <strong>TheiaViral_Illumina_PE</strong> </center><p></p>
-<hr>
-<div class="admonition dna">
-<p class="admonition-title">Illumina_PE Input Read Data</p>
-<p>The TheiaViral_Illumina_PE workflow inputs Illumina paired-end read data. Read file extensions should be <code>.fastq</code> or <code>.fq</code>, and can optionally include the <code>.gz</code> compression extension. Theiagen recommends compressing files with <a href="https://www.gnu.org/software/gzip/">gzip</a> before Terra uploads to minimize data upload time and storage costs.</p>
-<p>Modifications to the optional parameter for <code>trim_minlen</code> may be required to appropriately trim reads shorter than 2 x 150 bp (i.e. generated using a 300-cycle sequencing kit), such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.</p>
 </div>
-</li>
-<li>
-<p></p><center> <strong>TheiaViral_ONT</strong> </center><p></p>
-<hr>
-<div class="admonition dna_blue">
-<p class="admonition-title">ONT Input Read Data</p>
-<p>The TheiaViral_ONT workflow inputs base-called Oxford Nanopore Technology (ONT) read data. Read file extensions should be <code>.fastq</code> or <code>.fq</code>, and can optionally include the <code>.gz</code> compression extension. Theiagen recommends compressing files with <a href="https://www.gnu.org/software/gzip/">gzip</a> before Terra uploads to minimize data upload time and storage costs.</p>
-<p>It is recommended to trim adapter sequencings via <code>dorado</code> basecalling prior to running TheiaViral_ONT, though <code>porechop</code> can optionally be called to trim adapters within the workflow.</p>
-<p><strong>The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaViral_ONT workflow must be quality assessed before reporting results. We recommend using the <a href="../../standalone/dorado_basecalling/">Dorado_Basecalling_PHB</a> workflow if applicable.</strong></p>
-</div>
-</li>
-</ul>
 </div>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">¶</a></h3>
+<div class="admonition dna">
+<p class="admonition-title">Input Data</p>
+<div class="tabbed-set tabbed-alternate" data-tabs="2:3"><input checked="checked" id="theiaviral_illumina_pe_1" name="__tabbed_2" type="radio"><input id="theiaviral_ont_1" name="__tabbed_2" type="radio"><input id="theiaviral_panel_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="theiaviral_illumina_pe_1">TheiaViral_Illumina_PE</label><label for="theiaviral_ont_1">TheiaViral_ONT</label><label for="theiaviral_panel_1">TheiaViral_Panel</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block">
+<p>The TheiaViral_Illumina_PE workflow inputs Illumina paired-end read data. Read file extensions should be <code>.fastq</code> or <code>.fq</code>, and can optionally include the <code>.gz</code> compression extension. Theiagen recommends compressing files with <a href="https://www.gnu.org/software/gzip/">gzip</a> to minimize data upload time and storage costs.</p>
+<p>Modifications to the optional parameter for <code>trim_minlen</code> may be required to appropriately trim reads shorter than 2 x 150 bp (i.e. generated using a 300-cycle sequencing kit), such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.</p>
 <details class="dna_blue" open="open">
 <summary><code>taxon</code> <em>required</em> input parameter</summary>
 <p><code>taxon</code> is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi">NCBI taxonomy database</a> and do not have to be species-level (see <code>read_extraction_rank</code> below).</p>
 </details>
-<div style="float: left; width: 50%; padding-right: 10px;">
 <details class="dna">
 <summary><code>host</code> optional input parameter</summary>
-<p>The <code>host</code> input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task <code>is_accession</code> (ONT) or Read QC Trim PE <code>host_is_accession</code> (Illumina) boolean populated as "true".</p>
+<p>The <code>host</code> input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task <code>is_accession</code> (ONT) or Read_QC_Trim_PE <code>host_is_accession</code> (Illumina) boolean populated as <code>true</code>.</p>
 </details>
 <details class="dna">
 <summary><code>extract_unclassified</code> optional input parameter</summary>
-<p>By default, the <code>extract_unclassified</code> parameter is set to "true", which indicates that reads that are not classified by Kraken2 (Illumina) or Metabuli (ONT) will be included with reads classified as the input <code>taxon</code>. These classification software most often do not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. Host decontamination occurs in TheiaViral using NCBI <code>sra-human-scrubber</code>, read classification to the human genome, and/or via mapping reads to the inputted <code>host</code>. Contaminant viral reads are mostly excluded because they will be often be classified against the default RefSeq classification databases. Consider setting <code>extract_unclassified</code> to false if <em>de novo</em> assembly or Skani reference selection is failing.</p>
+<p>By default, the <code>extract_unclassified</code> parameter is set to <code>true</code>, which indicates that reads that are <strong>not</strong> classified by Kraken2 (Illumina) or Metabuli (ONT) <strong>will</strong> be included with reads classified as the input <code>taxon</code>.</p>
+<p>These classification software most often do not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. Host decontamination occurs in TheiaViral using NCBI <code>sra-human-scrubber</code>, read classification to the human genome, and/or via mapping reads to the inputted <code>host</code>. Contaminant viral reads are mostly excluded because they will be often be classified against the default RefSeq classification databases. </p>
+<p>Consider setting <code>extract_unclassified</code> to false if <em>de novo</em> assembly or Skani reference selection is failing.</p>
 </details>
-</div>
-<div style="float: right; width: 50%; padding-left: 10px;">
 <details class="dna">
 <summary><code>min_allele_freq</code>, <code>min_depth</code>, and <code>min_map_quality</code> optional input parameters</summary>
 <p>These parameters have a direct effect on the variants that will ultimately be reported in the consensus assembly. <code>min_allele_freq</code> determines the minimum proportion of an allelic variant to be reported in the consensus assembly. <code>min_depth</code> and <code>min_map_quality</code> affect how "N" is reported in the consensus, i.e. depth below <code>min_depth</code> is reported as "N" and reads with mapping quality below <code>min_map_quality</code> are not included in depth calculations.</p>
@@ -7258,8 +7192,1197 @@
 <p>By default, the <code>read_extraction_rank</code> parameter is set to "family", which indicates that reads will be extracted if they are classified as the taxonomic family of the input <code>taxon</code>, including all descendant taxa of the family. Read classification may not resolve to the rank of the input <code>taxon</code>, so these reads may be classified at higher ranks. For example, some <em>Lyssavirus rabies</em> (species) reads may only be resolved to <em>Lyssavirus</em> (genus), so they would not be extracted if the <code>read_extraction_rank</code> is set to "species". Setting the <code>read_extraction_rank</code> above the inputted <code>taxon</code>'s rank can therefore dramatically increase the number of reads recovered, at the potential cost of including other viruses. This likely is not a problem for scarcely represented lineages, e.g. a sample that is expected to include <em>Lyssavirus rabies</em> is unlikely to contain other viruses of the corresponding family, Rhabdoviridae, within the same sample. However, setting a <code>read_extraction_rank</code> far beyond the input <code>taxon</code> rank can be problematic when multiple representatives of the same viral family are included in similar abundance within the same sample. To further refine the desired <code>read_extraction_rank</code>, please review the corresponding classification reports of the respective classification software (kraken2 for Illumina and Metabuli for ONT)</p>
 </details>
 </div>
-<div style="clear: both;"></div>
-<div class="tabbed-set tabbed-alternate" data-tabs="2:2"><input checked="checked" id="theiaviral_illumina_pe_1" name="__tabbed_2" type="radio"><input id="theiaviral_ont_1" name="__tabbed_2" type="radio"><div class="tabbed-labels"><label for="theiaviral_illumina_pe_1">TheiaViral_Illumina_PE</label><label for="theiaviral_ont_1">TheiaViral_ONT</label></div>
+<div class="tabbed-block">
+<p>The TheiaViral_ONT workflow inputs base-called Oxford Nanopore Technology (ONT) read data. Read file extensions should be <code>.fastq</code> or <code>.fq</code>, and can optionally include the <code>.gz</code> compression extension. Theiagen recommends compressing files with <a href="https://www.gnu.org/software/gzip/">gzip</a> to minimize data upload time and storage costs.</p>
+<p>It is recommended to trim adapter sequencings via <code>dorado</code> basecalling prior to running TheiaViral_ONT, though <code>porechop</code> can optionally be called to trim adapters within the workflow.</p>
+<p><strong>The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaViral_ONT workflow must be quality assessed before reporting results. We recommend using the <a href="../../standalone/dorado_basecalling/">Dorado_Basecalling_PHB</a> workflow if applicable.</strong></p>
+<details class="dna_blue" open="open">
+<summary><code>taxon</code> <em>required</em> input parameter</summary>
+<p><code>taxon</code> is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the <a href="https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi">NCBI taxonomy database</a> and do not have to be species-level (see <code>read_extraction_rank</code> below).</p>
+</details>
+<details class="dna">
+<summary><code>host</code> optional input parameter</summary>
+<p>The <code>host</code> input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task <code>is_accession</code> (ONT) or Read_QC_Trim_PE <code>host_is_accession</code> (Illumina) boolean populated as <code>true</code>.</p>
+</details>
+<details class="dna">
+<summary><code>extract_unclassified</code> optional input parameter</summary>
+<p>By default, the <code>extract_unclassified</code> parameter is set to <code>true</code>, which indicates that reads that are <strong>not</strong> classified by Kraken2 (Illumina) or Metabuli (ONT) <strong>will</strong> be included with reads classified as the input <code>taxon</code>.</p>
+<p>These classification software most often do not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. Host decontamination occurs in TheiaViral using NCBI <code>sra-human-scrubber</code>, read classification to the human genome, and/or via mapping reads to the inputted <code>host</code>. Contaminant viral reads are mostly excluded because they will be often be classified against the default RefSeq classification databases. </p>
+<p>Consider setting <code>extract_unclassified</code> to false if <em>de novo</em> assembly or Skani reference selection is failing.</p>
+</details>
+<details class="dna">
+<summary><code>min_allele_freq</code>, <code>min_depth</code>, and <code>min_map_quality</code> optional input parameters</summary>
+<p>These parameters have a direct effect on the variants that will ultimately be reported in the consensus assembly. <code>min_allele_freq</code> determines the minimum proportion of an allelic variant to be reported in the consensus assembly. <code>min_depth</code> and <code>min_map_quality</code> affect how "N" is reported in the consensus, i.e. depth below <code>min_depth</code> is reported as "N" and reads with mapping quality below <code>min_map_quality</code> are not included in depth calculations.</p>
+</details>
+<details class="dna">
+<summary><code>read_extraction_rank</code> optional input parameter</summary>
+<p>By default, the <code>read_extraction_rank</code> parameter is set to "family", which indicates that reads will be extracted if they are classified as the taxonomic family of the input <code>taxon</code>, including all descendant taxa of the family. Read classification may not resolve to the rank of the input <code>taxon</code>, so these reads may be classified at higher ranks. For example, some <em>Lyssavirus rabies</em> (species) reads may only be resolved to <em>Lyssavirus</em> (genus), so they would not be extracted if the <code>read_extraction_rank</code> is set to "species". Setting the <code>read_extraction_rank</code> above the inputted <code>taxon</code>'s rank can therefore dramatically increase the number of reads recovered, at the potential cost of including other viruses. This likely is not a problem for scarcely represented lineages, e.g. a sample that is expected to include <em>Lyssavirus rabies</em> is unlikely to contain other viruses of the corresponding family, Rhabdoviridae, within the same sample. However, setting a <code>read_extraction_rank</code> far beyond the input <code>taxon</code> rank can be problematic when multiple representatives of the same viral family are included in similar abundance within the same sample. To further refine the desired <code>read_extraction_rank</code>, please review the corresponding classification reports of the respective classification software (kraken2 for Illumina and Metabuli for ONT)</p>
+</details>
+</div>
+<div class="tabbed-block">
+<p>The TheiaViral_Panel workflow accepts Illumina paired-end read data. Read file extensions should be <code>.fastq</code> or <code>.fq</code>, and can optionally include the <code>.gz</code> compression extension. Theiagen recommends compressing files with <a href="https://www.gnu.org/software/gzip/">gzip</a> to minimize data upload time and storage costs.</p>
+<p>For the analysis of RSV and Flu it is recommended that TheiaCov is run for full characterization of RSV and IRMA assembly for Flu. 
+Due to limitations within the Kraken Database RSV A and B will both be extracted under HRSV. Subtypes can be losely infered by looking at Skani outputs. </p>
+<details class="dna_blue" open="open">
+<summary><code>taxon_ids</code> optional input parameter</summary>
+<p><strong>The <code>taxon_ids</code> parameter is required for TheiaViral_Panel to run correctly, but is optional in Terra.</strong> </p>
+<p>By default, TheiaViral_Panel uses a list of <strong>172</strong> taxon IDs derived from a list of targeted viruses and subtypes in the <a href="https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/viral-surveillance-panel.html">Viral Surveillance Panel version 2 (VSP v2) produced by Illumina</a>, though this workflow is not specific to that assay. This list can be modified to include or exclude any taxon IDs of interest; however, the taxon IDs <em>must</em> be present in the Kraken2 database used for read classification. Changing this parameter will change what organisms are extracted for assembly and characterization. Keep in mind that these IDs must be available in the passed Kraken DB. The list of default taxon IDs can be found below:</p>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Taxon ID</strong></th>
+<th><strong>Common Name</strong></th>
+<th><strong>Species Name</strong></th>
+<th><strong>Genome Length</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1618189</td>
+<td>Bourbon virus</td>
+<td>Thogotovirus bourbonense</td>
+<td>10560</td>
+</tr>
+<tr>
+<td>37124</td>
+<td>Chikungunya virus</td>
+<td>Alphavirus chikungunya</td>
+<td>11547</td>
+</tr>
+<tr>
+<td>46839</td>
+<td>Colorado tick fever virus</td>
+<td>Coltivirus dermacentoris</td>
+<td>29174</td>
+</tr>
+<tr>
+<td>12637</td>
+<td>Dengue virus</td>
+<td>Orthoflavivirus denguei</td>
+<td>10770</td>
+</tr>
+<tr>
+<td>1216928</td>
+<td>Heartland virus</td>
+<td>Bandavirus heartlandense</td>
+<td>11540</td>
+</tr>
+<tr>
+<td>59301</td>
+<td>Mayaro virus</td>
+<td>Alphavirus mayaro</td>
+<td>11411</td>
+</tr>
+<tr>
+<td>2169701</td>
+<td>Onyong-nyong virus</td>
+<td>Alphavirus onyong</td>
+<td>11827</td>
+</tr>
+<tr>
+<td>118655</td>
+<td>Oropouche virus</td>
+<td>Orthobunyavirus oropoucheense</td>
+<td>11985</td>
+</tr>
+<tr>
+<td>11587</td>
+<td>Punta Toro virus</td>
+<td>Phlebovirus toroense</td>
+<td>12634</td>
+</tr>
+<tr>
+<td>11029</td>
+<td>Ross River virus</td>
+<td>Alphavirus rossriver</td>
+<td>11802</td>
+</tr>
+<tr>
+<td>11033</td>
+<td>Semliki Forest virus</td>
+<td>Alphavirus semliki</td>
+<td>11341</td>
+</tr>
+<tr>
+<td>11034</td>
+<td>Sindbis virus</td>
+<td>Alphavirus sindbis</td>
+<td>11671</td>
+</tr>
+<tr>
+<td>1608084</td>
+<td>Tacheng Tick Virus 2</td>
+<td>Uukuvirus tachengense</td>
+<td>8844</td>
+</tr>
+<tr>
+<td>64286</td>
+<td>Usutu virus</td>
+<td>Orthoflavivirus usutuense</td>
+<td>11066</td>
+</tr>
+<tr>
+<td>11082</td>
+<td>West Nile virus</td>
+<td>Orthoflavivirus nilense</td>
+<td>10942</td>
+</tr>
+<tr>
+<td>11089</td>
+<td>Yellow fever virus</td>
+<td>Orthoflavivirus flavi</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>64320</td>
+<td>Zika virus</td>
+<td>Orthoflavivirus zikaense</td>
+<td>10874</td>
+</tr>
+<tr>
+<td>10804</td>
+<td>adeno-associated virus 2</td>
+<td>Dependoparvovirus primate1</td>
+<td>4679</td>
+</tr>
+<tr>
+<td>12092</td>
+<td>Hepatovirus A</td>
+<td>Hepatovirus ahepa</td>
+<td>7446</td>
+</tr>
+<tr>
+<td>3052230</td>
+<td>Hepacivirus hominis</td>
+<td>Hepacivirus hominis</td>
+<td>9431</td>
+</tr>
+<tr>
+<td>12475</td>
+<td>Hepatitis delta virus</td>
+<td>Deltavirus italiense</td>
+<td>1680</td>
+</tr>
+<tr>
+<td>291484</td>
+<td>Hepatitis E virus</td>
+<td>Hepatitis E virus</td>
+<td>7499</td>
+</tr>
+<tr>
+<td>11676</td>
+<td>Human immunodeficiency virus 1</td>
+<td>Lentivirus humimdef1</td>
+<td>9388</td>
+</tr>
+<tr>
+<td>11709</td>
+<td>Human immunodeficiency virus 2</td>
+<td>Lentivirus humimdef2</td>
+<td>10059</td>
+</tr>
+<tr>
+<td>68887</td>
+<td>Torque teno virus</td>
+<td>Torque teno virus</td>
+<td>3477</td>
+</tr>
+<tr>
+<td>1980456</td>
+<td>Orthohantavirus andesense</td>
+<td>Orthohantavirus andesense</td>
+<td>7735</td>
+</tr>
+<tr>
+<td>3052470</td>
+<td>Orthohantavirus bayoui</td>
+<td>Orthohantavirus bayoui</td>
+<td>10861</td>
+</tr>
+<tr>
+<td>3052490</td>
+<td>Orthohantavirus nigrorivense</td>
+<td>Orthohantavirus nigrorivense</td>
+<td>6067</td>
+</tr>
+<tr>
+<td>169173</td>
+<td>Choclo virus</td>
+<td>Orthohantavirus chocloense</td>
+<td>7844</td>
+</tr>
+<tr>
+<td>3052489</td>
+<td>Orthohantavirus negraense</td>
+<td>Orthohantavirus mamorense</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>238817</td>
+<td>Maporal virus</td>
+<td>Orthohantavirus maporalense</td>
+<td>12106</td>
+</tr>
+<tr>
+<td>1980442</td>
+<td>Orthohantavirus</td>
+<td></td>
+<td>8504</td>
+</tr>
+<tr>
+<td>3052496</td>
+<td>Orthohantavirus sangassouense</td>
+<td>Orthohantavirus sangassouense</td>
+<td>11928</td>
+</tr>
+<tr>
+<td>3052499</td>
+<td>Orthohantavirus sinnombreense</td>
+<td>Orthohantavirus sinnombreense</td>
+<td>10583</td>
+</tr>
+<tr>
+<td>90961</td>
+<td>Lyssavirus australis</td>
+<td>Lyssavirus australis</td>
+<td>11822</td>
+</tr>
+<tr>
+<td>80935</td>
+<td>Cache Valley virus</td>
+<td>Orthobunyavirus cacheense</td>
+<td>12283</td>
+</tr>
+<tr>
+<td>35305</td>
+<td>California encephalitis virus</td>
+<td>Orthobunyavirus encephalitidis</td>
+<td>12466</td>
+</tr>
+<tr>
+<td>1221391</td>
+<td>Cedar virus</td>
+<td>Henipavirus cedarense</td>
+<td>18162</td>
+</tr>
+<tr>
+<td>38767</td>
+<td>Lyssavirus duvenhage</td>
+<td>Lyssavirus duvenhage</td>
+<td>11976</td>
+</tr>
+<tr>
+<td>11021</td>
+<td>Eastern equine encephalitis virus</td>
+<td>Alphavirus eastern</td>
+<td>11675</td>
+</tr>
+<tr>
+<td>38768</td>
+<td>European bat lyssavirus</td>
+<td>European bat lyssavirus</td>
+<td>11935</td>
+</tr>
+<tr>
+<td>2847089</td>
+<td>Ghana virus</td>
+<td>Henipavirus ghanaense</td>
+<td>18530</td>
+</tr>
+<tr>
+<td>3052223</td>
+<td>Henipavirus hendraense</td>
+<td>Henipavirus hendraense</td>
+<td>18234</td>
+</tr>
+<tr>
+<td>260964</td>
+<td>Henipavirus</td>
+<td></td>
+<td>18134</td>
+</tr>
+<tr>
+<td>35511</td>
+<td>Jamestown Canyon virus</td>
+<td>Orthobunyavirus jamestownense</td>
+<td>12461</td>
+</tr>
+<tr>
+<td>11072</td>
+<td>Japanese encephalitis virus</td>
+<td>Orthoflavivirus japonicum</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>11577</td>
+<td>La Crosse virus</td>
+<td>Orthobunyavirus lacrosseense</td>
+<td>12490</td>
+</tr>
+<tr>
+<td>38766</td>
+<td>Lyssavirus lagos</td>
+<td>Lyssavirus lagos</td>
+<td>12016</td>
+</tr>
+<tr>
+<td>1474807</td>
+<td>Mojiang virus</td>
+<td>Parahenipavirus mojiangense</td>
+<td>18406</td>
+</tr>
+<tr>
+<td>12538</td>
+<td>Lyssavirus mokola</td>
+<td>Lyssavirus mokola</td>
+<td>11940</td>
+</tr>
+<tr>
+<td>11079</td>
+<td>Murray Valley encephalitis virus</td>
+<td>Orthoflavivirus murrayense</td>
+<td>7012</td>
+</tr>
+<tr>
+<td>3052225</td>
+<td>Henipavirus nipahense</td>
+<td>Henipavirus nipahense</td>
+<td>18248</td>
+</tr>
+<tr>
+<td>11083</td>
+<td>Powassan virus</td>
+<td>Orthoflavivirus powassanense</td>
+<td>10826</td>
+</tr>
+<tr>
+<td>11292</td>
+<td>Lyssavirus rabies</td>
+<td>Lyssavirus rabies</td>
+<td>11927</td>
+</tr>
+<tr>
+<td>11580</td>
+<td>Snowshoe hare virus</td>
+<td>Orthobunyavirus khatangaense</td>
+<td>12208</td>
+</tr>
+<tr>
+<td>11080</td>
+<td>St. Louis encephalitis virus</td>
+<td>Orthoflavivirus louisense</td>
+<td>10940</td>
+</tr>
+<tr>
+<td>45270</td>
+<td>Tahyna virus</td>
+<td>Orthobunyavirus tahynaense</td>
+<td>12446</td>
+</tr>
+<tr>
+<td>11084</td>
+<td>Tick-borne encephalitis virus</td>
+<td>Orthoflavivirus encephalitidis</td>
+<td>7367</td>
+</tr>
+<tr>
+<td>11036</td>
+<td>Venezuelan equine encephalitis virus</td>
+<td>Alphavirus venezuelan</td>
+<td>11411</td>
+</tr>
+<tr>
+<td>11039</td>
+<td>Western equine encephalitis virus</td>
+<td>Alphavirus western</td>
+<td>11523</td>
+</tr>
+<tr>
+<td>1313215</td>
+<td>aichivirus A1</td>
+<td>Kobuvirus aichi</td>
+<td>8266</td>
+</tr>
+<tr>
+<td>138948</td>
+<td>Enterovirus A</td>
+<td>Enterovirus alphacoxsackie</td>
+<td>7427</td>
+</tr>
+<tr>
+<td>138949</td>
+<td>Enterovirus B</td>
+<td>Enterovirus betacoxsackie</td>
+<td>7410</td>
+</tr>
+<tr>
+<td>138950</td>
+<td>Enterovirus C</td>
+<td>Enterovirus coxsackiepol</td>
+<td>7442</td>
+</tr>
+<tr>
+<td>138951</td>
+<td>Enterovirus D</td>
+<td>Enterovirus deconjuncti</td>
+<td>7367</td>
+</tr>
+<tr>
+<td>1239565</td>
+<td>Mamastrovirus 1</td>
+<td>Mamastrovirus hominis</td>
+<td>6791</td>
+</tr>
+<tr>
+<td>1239570</td>
+<td>Mamastrovirus 6</td>
+<td>Mamastrovirus melbournense</td>
+<td>6171</td>
+</tr>
+<tr>
+<td>1239573</td>
+<td>Mamastrovirus 9</td>
+<td>Mamastrovirus virginiaense</td>
+<td>6576</td>
+</tr>
+<tr>
+<td>142786</td>
+<td>Norovirus</td>
+<td></td>
+<td>5162</td>
+</tr>
+<tr>
+<td>28875</td>
+<td>Rotavirus A</td>
+<td>Rotavirus alphagastroenteritidis</td>
+<td>8881</td>
+</tr>
+<tr>
+<td>28876</td>
+<td>Rotavirus B</td>
+<td>Rotavirus betagastroenteritidis</td>
+<td>17791</td>
+</tr>
+<tr>
+<td>36427</td>
+<td>Rotavirus C</td>
+<td>Rotavirus tritogastroenteritidis</td>
+<td>17720</td>
+</tr>
+<tr>
+<td>1348384</td>
+<td>Rotavirus H</td>
+<td>Rotavirus aspergastroenteritidis</td>
+<td>17961</td>
+</tr>
+<tr>
+<td>1330524</td>
+<td>Salivirus A</td>
+<td>Salivirus aklasse</td>
+<td>7956</td>
+</tr>
+<tr>
+<td>95341</td>
+<td>Sapovirus</td>
+<td></td>
+<td>7470</td>
+</tr>
+<tr>
+<td>2849717</td>
+<td>Aigai virus</td>
+<td>Orthonairovirus parahaemorrhagiae</td>
+<td>19245</td>
+</tr>
+<tr>
+<td>1424613</td>
+<td>Anjozorobe virus</td>
+<td>Orthohantavirus thailandense</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>2010960</td>
+<td>Bombali virus</td>
+<td>Orthoebolavirus bombaliense</td>
+<td>19043</td>
+</tr>
+<tr>
+<td>565995</td>
+<td>Bundibugyo virus</td>
+<td>Orthoebolavirus bundibugyoense</td>
+<td>18940</td>
+</tr>
+<tr>
+<td>3052302</td>
+<td>Mammarenavirus chapareense</td>
+<td>Mammarenavirus chapareense</td>
+<td>10464</td>
+</tr>
+<tr>
+<td>3052518</td>
+<td>Orthonairovirus haemorrhagiae</td>
+<td>Orthonairovirus haemorrhagiae</td>
+<td>19146</td>
+</tr>
+<tr>
+<td>3052477</td>
+<td>Orthohantavirus dobravaense</td>
+<td>Orthohantavirus dobravaense</td>
+<td>9116</td>
+</tr>
+<tr>
+<td>3052307</td>
+<td>Mammarenavirus guanaritoense</td>
+<td>Mammarenavirus guanaritoense</td>
+<td>10424</td>
+</tr>
+<tr>
+<td>3052480</td>
+<td>Orthohantavirus hantanense</td>
+<td>Orthohantavirus hantanense</td>
+<td>6917</td>
+</tr>
+<tr>
+<td>2169991</td>
+<td>Mammarenavirus juninense</td>
+<td>Mammarenavirus juninense</td>
+<td>10525</td>
+</tr>
+<tr>
+<td>33743</td>
+<td>Kyasanur Forest disease virus</td>
+<td>Orthoflavivirus kyasanurense</td>
+<td>10579</td>
+</tr>
+<tr>
+<td>3052310</td>
+<td>Mammarenavirus lassaense</td>
+<td>Mammarenavirus lassaense</td>
+<td>10686</td>
+</tr>
+<tr>
+<td>3052148</td>
+<td>Cuevavirus lloviuense</td>
+<td>Cuevavirus lloviuense</td>
+<td>18893</td>
+</tr>
+<tr>
+<td>3052314</td>
+<td>Mammarenavirus lujoense</td>
+<td>Mammarenavirus lujoense</td>
+<td>10352</td>
+</tr>
+<tr>
+<td>3052303</td>
+<td>Mammarenavirus choriomeningitidis</td>
+<td>Mammarenavirus choriomeningitidis</td>
+<td>10367</td>
+</tr>
+<tr>
+<td>3052317</td>
+<td>Mammarenavirus machupoense</td>
+<td>Mammarenavirus machupoense</td>
+<td>10635</td>
+</tr>
+<tr>
+<td>12542</td>
+<td>Omsk hemorrhagic fever virus</td>
+<td>Orthoflavivirus omskense</td>
+<td>10787</td>
+</tr>
+<tr>
+<td>3052493</td>
+<td>Orthohantavirus puumalaense</td>
+<td>Orthohantavirus puumalaense</td>
+<td>10925</td>
+</tr>
+<tr>
+<td>186539</td>
+<td>Reston ebolavirus</td>
+<td>Orthoebolavirus restonense</td>
+<td>18891</td>
+</tr>
+<tr>
+<td>11588</td>
+<td>Rift Valley fever virus</td>
+<td>Phlebovirus riftense</td>
+<td>11979</td>
+</tr>
+<tr>
+<td>2907957</td>
+<td>Sabia virus</td>
+<td>Mammarenavirus brazilense</td>
+<td>10499</td>
+</tr>
+<tr>
+<td>3052498</td>
+<td>Orthohantavirus seoulense</td>
+<td>Orthohantavirus seoulense</td>
+<td>9746</td>
+</tr>
+<tr>
+<td>1003835</td>
+<td>Severe fever with thrombocytopenia syndrome virus</td>
+<td>Bandavirus dabieense</td>
+<td>10547</td>
+</tr>
+<tr>
+<td>1452514</td>
+<td>Sosuga virus</td>
+<td>Pararubulavirus sosugaense</td>
+<td>15480</td>
+</tr>
+<tr>
+<td>186540</td>
+<td>Sudan ebolavirus</td>
+<td>Orthoebolavirus sudanense</td>
+<td>18875</td>
+</tr>
+<tr>
+<td>186541</td>
+<td>Tai Forest ebolavirus</td>
+<td>Orthoebolavirus taiense</td>
+<td>18935</td>
+</tr>
+<tr>
+<td>3052503</td>
+<td>Orthohantavirus tulaense</td>
+<td>Orthohantavirus tulaense</td>
+<td>9987</td>
+</tr>
+<tr>
+<td>1891762</td>
+<td>Betapolyomavirus hominis</td>
+<td>Betapolyomavirus hominis</td>
+<td>5146</td>
+</tr>
+<tr>
+<td>10376</td>
+<td>human gammaherpesvirus 4</td>
+<td>Lymphocryptovirus humangamma4</td>
+<td>172146</td>
+</tr>
+<tr>
+<td>10359</td>
+<td>Human betaherpesvirus 5</td>
+<td>Cytomegalovirus humanbeta5</td>
+<td>214152</td>
+</tr>
+<tr>
+<td>333760</td>
+<td>Human papillomavirus 16</td>
+<td>Alphapapillomavirus 9</td>
+<td>7905</td>
+</tr>
+<tr>
+<td>333761</td>
+<td>human papillomavirus 18</td>
+<td>Alphapapillomavirus 7</td>
+<td>7857</td>
+</tr>
+<tr>
+<td>337044</td>
+<td>Alphapapillomavirus 5</td>
+<td>Alphapapillomavirus 5</td>
+<td>7805</td>
+</tr>
+<tr>
+<td>337050</td>
+<td>Alphapapillomavirus 6</td>
+<td>Alphapapillomavirus 6</td>
+<td>7847</td>
+</tr>
+<tr>
+<td>1671798</td>
+<td>Human papillomavirus type 54</td>
+<td>Alphapapillomavirus 13</td>
+<td>7759</td>
+</tr>
+<tr>
+<td>333754</td>
+<td>Alphapapillomavirus 10</td>
+<td>Alphapapillomavirus 10</td>
+<td>7898</td>
+</tr>
+<tr>
+<td>333767</td>
+<td>Alphapapillomavirus 3</td>
+<td>Alphapapillomavirus 3</td>
+<td>8061</td>
+</tr>
+<tr>
+<td>746830</td>
+<td>Human polyomavirus 6</td>
+<td>Deltapolyomavirus sextihominis</td>
+<td>4926</td>
+</tr>
+<tr>
+<td>746831</td>
+<td>Human polyomavirus 7</td>
+<td>Deltapolyomavirus septihominis</td>
+<td>4952</td>
+</tr>
+<tr>
+<td>943908</td>
+<td>Human polyomavirus 9</td>
+<td>Alphapolyomavirus nonihominis</td>
+<td>5027</td>
+</tr>
+<tr>
+<td>10632</td>
+<td>JC polyomavirus</td>
+<td>Betapolyomavirus secuhominis</td>
+<td>5171</td>
+</tr>
+<tr>
+<td>1891764</td>
+<td>Betapolyomavirus tertihominis</td>
+<td>Betapolyomavirus tertihominis</td>
+<td>5040</td>
+</tr>
+<tr>
+<td>1965344</td>
+<td>LI polyomavirus</td>
+<td>Alphapolyomavirus quardecihominis</td>
+<td>5269</td>
+</tr>
+<tr>
+<td>493803</td>
+<td>Merkel cell polyomavirus</td>
+<td>Alphapolyomavirus quintihominis</td>
+<td>5387</td>
+</tr>
+<tr>
+<td>1203539</td>
+<td>MW polyomavirus</td>
+<td>Deltapolyomavirus decihominis</td>
+<td>4927</td>
+</tr>
+<tr>
+<td>1497391</td>
+<td>New Jersey polyomavirus-2013</td>
+<td>Alphapolyomavirus terdecihominis</td>
+<td>5108</td>
+</tr>
+<tr>
+<td>1891767</td>
+<td>Betapolyomavirus macacae</td>
+<td>Betapolyomavirus macacae</td>
+<td>5243</td>
+</tr>
+<tr>
+<td>1277649</td>
+<td>STL polyomavirus</td>
+<td>Deltapolyomavirus undecihominis</td>
+<td>4776</td>
+</tr>
+<tr>
+<td>862909</td>
+<td>Trichodysplasia spinulosa-associated polyomavirus</td>
+<td>Alphapolyomavirus octihominis</td>
+<td>5232</td>
+</tr>
+<tr>
+<td>862909</td>
+<td>Trichodysplasia spinulosa-associated polyomavirus</td>
+<td>Alphapolyomavirus octihominis</td>
+<td>5232</td>
+</tr>
+<tr>
+<td>440266</td>
+<td>WU Polyomavirus</td>
+<td>Betapolyomavirus quartihominis</td>
+<td>5229</td>
+</tr>
+<tr>
+<td>10298</td>
+<td>Human alphaherpesvirus 1</td>
+<td>Simplexvirus humanalpha1</td>
+<td>155275</td>
+</tr>
+<tr>
+<td>11234</td>
+<td>Measles morbillivirus</td>
+<td>Morbillivirus hominis</td>
+<td>15956</td>
+</tr>
+<tr>
+<td>152219</td>
+<td>Menangle virus</td>
+<td>Pararubulavirus menangleense</td>
+<td>15516</td>
+</tr>
+<tr>
+<td>10244</td>
+<td>Monkeypox virus</td>
+<td>Orthopoxvirus monkeypox</td>
+<td>193392</td>
+</tr>
+<tr>
+<td>2560602</td>
+<td>Mumps orthorubulavirus</td>
+<td>Orthorubulavirus parotitidis</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>11041</td>
+<td>Rubella virus</td>
+<td>Rubivirus rubellae</td>
+<td>9762</td>
+</tr>
+<tr>
+<td>10335</td>
+<td>Human alphaherpesvirus 3</td>
+<td>Varicellovirus humanalpha3</td>
+<td>125308</td>
+</tr>
+<tr>
+<td>10255</td>
+<td>Variola virus</td>
+<td>Orthopoxvirus variola</td>
+<td>186087</td>
+</tr>
+<tr>
+<td>129875</td>
+<td>Human mastadenovirus A</td>
+<td>Mastadenovirus adami</td>
+<td>34077</td>
+</tr>
+<tr>
+<td>108098</td>
+<td>Human mastadenovirus B</td>
+<td>Mastadenovirus blackbeardi</td>
+<td>34777</td>
+</tr>
+<tr>
+<td>129951</td>
+<td>Human mastadenovirus C</td>
+<td>Mastadenovirus caesari</td>
+<td>35753</td>
+</tr>
+<tr>
+<td>130310</td>
+<td>Human mastadenovirus D</td>
+<td>Mastadenovirus dominans</td>
+<td>35160</td>
+</tr>
+<tr>
+<td>130308</td>
+<td>Human mastadenovirus E</td>
+<td>Mastadenovirus exoticum</td>
+<td>36099</td>
+</tr>
+<tr>
+<td>130309</td>
+<td>Human mastadenovirus F</td>
+<td>Mastadenovirus faecale</td>
+<td>33926</td>
+</tr>
+<tr>
+<td>536079</td>
+<td>Human mastadenovirus G</td>
+<td>Mastadenovirus russelli</td>
+<td>21467</td>
+</tr>
+<tr>
+<td>329641</td>
+<td>Human bocavirus</td>
+<td>Human bocavirus</td>
+<td>5289</td>
+</tr>
+<tr>
+<td>11137</td>
+<td>Human coronavirus 229E</td>
+<td>Alphacoronavirus chicagoense</td>
+<td>27375</td>
+</tr>
+<tr>
+<td>290028</td>
+<td>Human coronavirus HKU1</td>
+<td>Betacoronavirus hongkongense</td>
+<td>29911</td>
+</tr>
+<tr>
+<td>277944</td>
+<td>Human coronavirus NL63</td>
+<td>Alphacoronavirus amsterdamense</td>
+<td>27551</td>
+</tr>
+<tr>
+<td>31631</td>
+<td>Human coronavirus OC43</td>
+<td>Betacoronavirus gravedinis</td>
+<td>30767</td>
+</tr>
+<tr>
+<td>162145</td>
+<td>human metapneumovirus</td>
+<td>Metapneumovirus hominis</td>
+<td>13319</td>
+</tr>
+<tr>
+<td>12730</td>
+<td>Human respirovirus 1</td>
+<td>Respirovirus laryngotracheitidis</td>
+<td>15600</td>
+</tr>
+<tr>
+<td>2560525</td>
+<td>Human orthorubulavirus 2</td>
+<td>Orthorubulavirus laryngotracheitidis</td>
+<td>15649</td>
+</tr>
+<tr>
+<td>11216</td>
+<td>Human respirovirus 3</td>
+<td>Respirovirus pneumoniae</td>
+<td>15430</td>
+</tr>
+<tr>
+<td>2560526</td>
+<td>Human orthorubulavirus 4</td>
+<td>Orthorubulavirus hominis</td>
+<td>17235</td>
+</tr>
+<tr>
+<td>1803956</td>
+<td>Parechovirus A</td>
+<td>Parechovirus ahumpari</td>
+<td>666</td>
+</tr>
+<tr>
+<td>10798</td>
+<td>Human parvovirus B19</td>
+<td>Erythroparvovirus primate1</td>
+<td>5595</td>
+</tr>
+<tr>
+<td>11250</td>
+<td>human respiratory syncytial virus</td>
+<td>Orthopneumovirus hominis</td>
+<td>15246</td>
+</tr>
+<tr>
+<td>11320</td>
+<td>Influenza A virus</td>
+<td>Alphainfluenzavirus influenzae</td>
+<td>13357</td>
+</tr>
+<tr>
+<td>11520</td>
+<td>Influenza B virus</td>
+<td>Betainfluenzavirus influenzae</td>
+<td>14563</td>
+</tr>
+<tr>
+<td>11552</td>
+<td>Influenza C virus</td>
+<td>Gammainfluenzavirus influenzae</td>
+<td>12430</td>
+</tr>
+<tr>
+<td>1335626</td>
+<td>Middle East respiratory syndrome-related coronavirus</td>
+<td>Betacoronavirus cameli</td>
+<td>30150</td>
+</tr>
+<tr>
+<td>147711</td>
+<td>Rhinovirus A</td>
+<td>Enterovirus alpharhino</td>
+<td>6983</td>
+</tr>
+<tr>
+<td>147712</td>
+<td>Rhinovirus B</td>
+<td>Enterovirus betarhino</td>
+<td>6940</td>
+</tr>
+<tr>
+<td>463676</td>
+<td>Rhinovirus C</td>
+<td>Enterovirus cerhino</td>
+<td>5749</td>
+</tr>
+<tr>
+<td>2901879</td>
+<td>Severe acute respiratory syndrome coronavirus</td>
+<td>Betacoronavirus pandemicum</td>
+<td>29747</td>
+</tr>
+<tr>
+<td>2697049</td>
+<td>Severe acute respiratory syndrome coronavirus 2</td>
+<td>Betacoronavirus pandemicum</td>
+<td>29883</td>
+</tr>
+<tr>
+<td>10404</td>
+<td>Hepadnaviridae</td>
+<td></td>
+<td>3186</td>
+</tr>
+<tr>
+<td>3052505</td>
+<td>Orthomarburgvirus marburgense</td>
+<td>Orthomarburgvirus marburgense</td>
+<td>NA</td>
+</tr>
+<tr>
+<td>337041</td>
+<td>Alphapapillomavirus 9</td>
+<td>Alphapapillomavirus 9</td>
+<td>7916</td>
+</tr>
+<tr>
+<td>337042</td>
+<td>Alphapapillomavirus 7</td>
+<td>Alphapapillomavirus 7</td>
+<td>7861</td>
+</tr>
+<tr>
+<td>333757</td>
+<td>Alphapapillomavirus 8</td>
+<td>Alphapapillomavirus 8</td>
+<td>7960</td>
+</tr>
+<tr>
+<td>337048</td>
+<td>Alphapapillomavirus 1</td>
+<td>Alphapapillomavirus 1</td>
+<td>7940</td>
+</tr>
+<tr>
+<td>333754</td>
+<td>Alphapapillomavirus 10</td>
+<td>Alphapapillomavirus 10</td>
+<td>7898</td>
+</tr>
+<tr>
+<td>333766</td>
+<td>Alphapapillomavirus 13</td>
+<td>Alphapapillomavirus 13</td>
+<td>7759</td>
+</tr>
+<tr>
+<td>337049</td>
+<td>Alphapapillomavirus 11</td>
+<td>Alphapapillomavirus 11</td>
+<td>7779</td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="dna">
+<summary><code>output_taxon_table</code> optional input parameter</summary>
+<p>A key feature of TheiaViral_Panel is the ability to output assemblies and characterization results to taxon-specific Terra tables. This allows users to easily separate results by taxon for downstream analysis.</p>
+<p>The <code>output_taxon_table</code> parameter is an <strong>optional</strong> input file with a set default that specifies which taxon are output to what taxon table in Terra.</p>
+<p><strong>Formatting the <code>output_taxon_table</code> file</strong></p>
+<p>The <code>output_taxon_table</code> file must be uploaded to a Google storage bucket that is accessible by Terra and should be in <strong>tab-delimited</strong> format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column. This will result in any taxonomy classification identified as "influenza" being added to a Terra table named "influenza_panel_specimen". The default table is shown below. For best results, edit your taxon table in a text editor such as Notepad.</p>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>taxon</strong></th>
+<th><strong>taxon_table</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>influenza</td>
+<td>panel_influenza_specimen</td>
+</tr>
+<tr>
+<td>coronavirus</td>
+<td>panel_coronavirus_specimen</td>
+</tr>
+<tr>
+<td>human_immunodeficiency_virus</td>
+<td>panel_hiv_specimen</td>
+</tr>
+<tr>
+<td>monkeypox_virus</td>
+<td>panel_monkeypox_specimen</td>
+</tr>
+<tr>
+<td>human_respiratory_syncytial_virus</td>
+<td>panel_rsv_specimen</td>
+</tr>
+<tr>
+<td>west_nile_virus</td>
+<td>panel_wnv_specimen</td>
+</tr>
+<tr>
+<td>other</td>
+<td>panel_other_specimen</td>
+</tr>
+<tr>
+<td>h3n1</td>
+<td>panel_influenza_specimen</td>
+</tr>
+<tr>
+<td>h1n1</td>
+<td>panel_influenza_specimen</td>
+</tr>
+<tr>
+<td>h5n1</td>
+<td>panel_influenza_specimen</td>
+</tr>
+<tr>
+<td>h3n2</td>
+<td>panel_influenza_specimen</td>
+</tr>
+<tr>
+<td>h2n2</td>
+<td>panel_influenza_specimen</td>
+</tr>
+<tr>
+<td>mastadenovirus</td>
+<td>panel_mastadenovirus_specimen</td>
+</tr>
+<tr>
+<td>orthohantavirus</td>
+<td>panel_orthohantavirus_specimen</td>
+</tr>
+<tr>
+<td>enterovirus</td>
+<td>panel_enterovirus_specimen</td>
+</tr>
+<tr>
+<td>alphapapillomavirus</td>
+<td>panel_alphapapillomavirus_specimen</td>
+</tr>
+<tr>
+<td>hepatitis</td>
+<td>panel_hepatitis_specimen</td>
+</tr>
+<tr>
+<td>hepadnaviridae</td>
+<td>panel_hepatitis_specimen</td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="dna">
+<summary><code>kraken_db</code> optional input parameter</summary>
+<p>For the reliable extraction of input taxon IDs, it is important to make sure that the taxon IDs used as input are concordant with the contents of the Kraken database. When making changes to this parameter keep in mind the relationship between these two inputs. The default database can be accessed <a href="https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz">here</a>.  </p>
+</details>
+<details class="dna">
+<summary><code>extract_unclassified</code> optional input parameter</summary>
+<p>By default, <code>extract_unclassifed</code> is set to <code>false</code>, which indicates that reads that are <strong>not</strong> classified by Kraken2 <strong>will NOT</strong> be included with reads classified as the input <code>taxon</code>. </p>
+<p>If the extracted read data is lacking and assemblies are not generated, consider setting this parameter to <code>true</code> to increase the available read count to make assembly generation more probable. Please note this will introduce reads that are not aligned with the identified <code>taxon</code> and can introduce significant noise and misclassifications.</p>
+</details>
+<details class="dna">
+<summary><code>min_read_count</code> optional input parameter</summary>
+<p>By default, <code>min_read_count</code> is set to 1000. This value is the number of reads that are required to pass the binning threshold to proceed onto assembly and characterization. </p>
+</details>
+</div>
+</div>
+</div>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="3:3"><input checked="checked" id="theiaviral_illumina_pe_2" name="__tabbed_3" type="radio"><input id="theiaviral_ont_2" name="__tabbed_3" type="radio"><input id="theiaviral_panel_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="theiaviral_illumina_pe_2">TheiaViral_Illumina_PE</label><label for="theiaviral_ont_2">TheiaViral_ONT</label><label for="theiaviral_panel_2">TheiaViral_Panel</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="searchable-table">
@@ -7341,14 +8464,6 @@
 </tr>
 <tr>
 <td>checkv_consensus</td>
-<td><strong>checkv_db</strong></td>
-<td>File</td>
-<td>CheckV database file</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/checkv/checkv-db-v1.5.tar.gz</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>checkv_consensus</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -7377,14 +8492,6 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>checkv_denovo</td>
-<td><strong>checkv_db</strong></td>
-<td>File</td>
-<td>CheckV database file</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/checkv/checkv-db-v1.5.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8429,14 +9536,6 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>call_kraken</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
 <td><strong>call_midas</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
@@ -8644,14 +9743,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>skani</td>
-<td><strong>skani_db</strong></td>
-<td>File</td>
-<td>Skani database file</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20250613.tar</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>spades</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -8713,6 +9804,14 @@
 <td>Boolean</td>
 <td>True/False to call assembly with MetaviralSPAdes and use Megahit as fallback</td>
 <td>True</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>checkv_db</strong></td>
+<td>File</td>
+<td>Database used for CheckV</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8793,6 +9892,22 @@
 <td>File</td>
 <td>Use to provide locations of interest where average coverage will be calculated</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>skani_db</strong></td>
+<td>File</td>
+<td>Skani database file</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>skip_qc</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10737,10 +11852,692 @@
 </table>
 </div>
 </div>
+<div class="tabbed-block">
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Terra Task Name</strong></th>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Default Value</strong></th>
+<th><strong>Terra Status</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>read1</strong></td>
+<td>File</td>
+<td>Illumina forward read file in FASTQ file format (compression optional)</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>read2</strong></td>
+<td>File</td>
+<td>Illumina reverse read file in FASTQ file format (compression optional)</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>samplename</strong></td>
+<td>String</td>
+<td>Name of the sample being analyzed</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>source_table_name</strong></td>
+<td>String</td>
+<td>Name of the Terra table the source reads originate from. This is used for identifying originating location of extracted assemblies once added to output tables.</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>terra_project</strong></td>
+<td>String</td>
+<td>The Terra project containing the data table</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>terra_workspace</strong></td>
+<td>String</td>
+<td>The Terra workspace containing the data table</td>
+<td></td>
+<td>Required</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>read1_lane3</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>read1_lane4</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>read2_lane3</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>read2_lane4</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>export_taxon_table</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>export_taxon_table</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>25</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>export_taxon_table</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>export_taxon_table</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>classified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix</td>
+<td>classified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>kraken2_args</strong></td>
+<td>String</td>
+<td>Allows a user to supply additional kraken2 command-line arguments</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>unclassified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
+<td>unclassified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken_parser</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken_parser</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken_parser</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken_parser</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>krakentools</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>krakentools</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>krakentools</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>krakentools</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_identify</td>
+<td><strong>complete</strong></td>
+<td>Boolean</td>
+<td>Only query genomes labeled complete</td>
+<td>True</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_identify</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_identify</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_identify</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_identify</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_identify</td>
+<td><strong>rank</strong></td>
+<td>String</td>
+<td>Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_identify</td>
+<td><strong>refseq</strong></td>
+<td>Boolean</td>
+<td>Only query RefSeq genomes</td>
+<td>True</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_identify</td>
+<td><strong>summary_limit</strong></td>
+<td>Int</td>
+<td>Maximum number of genomes to return in the summary</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>adapters</strong></td>
+<td>File</td>
+<td>File with adapter sequences to be removed</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>bbduk_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>call_midas</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>extract_unclassified</strong></td>
+<td>Boolean</td>
+<td>Allows user to extract unclassified reads</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>fastp_args</strong></td>
+<td>String</td>
+<td>Additional arguments to use with fastp</td>
+<td>--detect_adapter_for_pe -g -5 20 -3 20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_complete_only</strong></td>
+<td>Boolean</td>
+<td>Only download host reference genome labeled "complete"</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_decontaminate_mem</strong></td>
+<td>Int</td>
+<td>Memory allocated for minimap2 (in GB)</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_is_accession</strong></td>
+<td>Boolean</td>
+<td>Inputted "host" is an accession</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_refseq</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>True</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>kraken_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>midas_db</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>phix</strong></td>
+<td>File</td>
+<td>A file containing the phix used during Illumina sequencing; used in the BBDuk task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>read_processing</strong></td>
+<td>String</td>
+<td>The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp"</td>
+<td>trimmomatic</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>read_qc</strong></td>
+<td>String</td>
+<td>The tool used for quality control (QC) of reads. Options are "fastq_scan" (default) and "fastqc"</td>
+<td>fastq_scan</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>target_organism</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>taxon_id</strong></td>
+<td>Int</td>
+<td>Internal component, do not modify</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>trim_min_length</strong></td>
+<td>Int</td>
+<td>Specifies minimum length of each read after trimming to be kept</td>
+<td>75</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>trim_quality_min_score</strong></td>
+<td>Int</td>
+<td>Specifies the average quality of bases in a sliding window to be kept</td>
+<td>30</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>trim_window_size</strong></td>
+<td>Int</td>
+<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>trimmomatic_args</strong></td>
+<td>String</td>
+<td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
+<td>-phred33</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>checkv_db</strong></td>
+<td>File</td>
+<td>Database used for CheckV</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>extract_unclassified</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>True</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>host</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>min_allele_freq</strong></td>
+<td>Float</td>
+<td>Minimum allele frequency required for a variant to populate the consensus sequence</td>
+<td>0.6</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>min_depth</strong></td>
+<td>Int</td>
+<td>Minimum read depth required for a variant to populate the consensus sequence</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>min_map_quality</strong></td>
+<td>Int</td>
+<td>Minimum mapping quality required for read alignments</td>
+<td>20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>read_extraction_rank</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td>family</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>reference_fasta</strong></td>
+<td>File</td>
+<td>Reference genome in FASTA format</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>reference_gene_locations_bed</strong></td>
+<td>File</td>
+<td>Use to provide locations of interest where average coverage will be calculated</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>skani_db</strong></td>
+<td>File</td>
+<td>Skani database file</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>skip_rasusa</strong></td>
+<td>Boolean</td>
+<td>True/False to skip read subsampling with Rasusa</td>
+<td>True</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>call_metaviralspades</strong></td>
+<td>Boolean</td>
+<td>Whether to run metaviralspades for assembly</td>
+<td>True</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>extract_unclassified</strong></td>
+<td>Boolean</td>
+<td>True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>host</strong></td>
+<td>String</td>
+<td>Host taxon/accession to dehost reads, if provided</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>kraken_db</strong></td>
+<td>File</td>
+<td>Kraken2 database file in .tar.gz format.</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>min_read_count</strong></td>
+<td>Int</td>
+<td>Minimum number of reads required to consider a taxon for assembly</td>
+<td>1000</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>output_taxon_table</strong></td>
+<td>File</td>
+<td>A TSV file containing organism names and their corresponding output table names.</td>
+<td>gs://theiagen-public-resources-rp/reference_data/family_agnostic/theiaviral_panel_taxon_table_20251111.tsv</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>taxon_ids</strong></td>
+<td>Array[String]</td>
+<td>An array of taxon IDs user wishes to analyze.</td>
+<td>["1618189", "37124", "46839", "12637", "1216928", "59301", "2169701", "118655", "11587", "11029", "11033", "11034", "1608084", "64286", "11082", "11089", "64320", "10804", "12092", "3052230", "12475", "11676", "11709", "68887", "1980456", "3052470", "3052490", "169173", "3052489", "238817", "1980442", "3052496", "3052499", "90961", "80935", "35305", "1221391", "38767", "11021", "38768", "2847089", "3052223", "260964", "35511", "11072", "11577", "38766", "1474807", "12538", "11079", "3052225", "11083", "11292", "11580", "11080", "45270", "11084", "11036", "11039", "1313215", "138948", "138949", "138950", "138951", "1239565", "1239570", "1239573", "142786", "28875", "28876", "36427", "1348384", "1330524", "95341", "2849717", "1424613", "2010960", "565995", "3052302", "3052518", "3052477", "3052307", "3052480", "2169991", "33743", "3052310", "3052148", "3052314", "3052303", "3052317", "33727", "12542", "3052493", "186539", "11588", "2907957", "3052498", "1003835", "1452514", "186540", "186541", "3052503", "1891762", "10376", "10359", "333760", "333761", "337044", "337050", "1671798", "333754", "333767", "746830", "746831", "943908", "10632", "1891764", "1965344", "493803", "1203539", "1497391", "1891767", "1277649", "862909", "862909", "440266", "11234", "152219", "10244", "2560602", "11041", "10335", "10255", "129875", "108098", "129951", "130310", "130308", "130309", "536079", "329641", "11137", "290028", "277944", "31631", "162145", "12730", "2560525", "11216", "2560526", "1803956", "10798", "11250", "11320", "11520", "11552", "1335626", "147711", "147712", "463676", "2901879", "2697049", "10404", "3052505", "337041", "337042", "333757", "337048", "333754", "333766", "337049"]</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>version_capture</td>
+<td><strong>timezone</strong></td>
+<td>String</td>
+<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">¶</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="3:2"><input checked="checked" id="theiaviral_illumina_pe_2" name="__tabbed_3" type="radio"><input id="theiaviral_ont_2" name="__tabbed_3" type="radio"><div class="tabbed-labels"><label for="theiaviral_illumina_pe_2">TheiaViral_Illumina_PE</label><label for="theiaviral_ont_2">TheiaViral_ONT</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="4:3"><input checked="checked" id="theiaviral_illumina_pe_3" name="__tabbed_4" type="radio"><input id="theiaviral_ont_3" name="__tabbed_4" type="radio"><input id="theiaviral_panel_3" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="theiaviral_illumina_pe_3">TheiaViral_Illumina_PE</label><label for="theiaviral_ont_3">TheiaViral_ONT</label><label for="theiaviral_panel_3">TheiaViral_Panel</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <details class="toggle">
@@ -13100,6 +14897,837 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </details>
 </details>
 </div>
+<div class="tabbed-block">
+<p>TheiaViral_Panel operates by identifying reads that align with input taxon codes (specified in the <code>taxon_ids</code> input variable), extracting those reads, and assembling and characterizing them using the same modules as TheiaViral_Illumina_PE. Multiple assemblies and characterizations can be generated from a single sample if reads align with multiple taxon codes.</p>
+<details class="toggle">
+<summary>Versioning</summary>
+<details class="task">
+<summary><code>versioning</code>: Version Capture</summary>
+<p>The <code>versioning</code> task captures the workflow version from the GitHub (code repository) version.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Version Capture Technical details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/task_versioning.wdl">task_versioning.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+<details class="toggle">
+<summary>Read Quality Control, Trimming, Filtering, Identification</summary>
+<details class="task">
+<summary><code>read_QC_trim</code>: Read Quality Trimming, Adapter Removal, Quantification, and Identification</summary>
+<p><code>read_QC_trim</code> is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the <code>read_QC_trim</code> sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.</p>
+<div class="admonition dna">
+<p>By default, <code>read_processing</code> is set to <code>"trimmomatic"</code>. To use <code>fastp</code> instead, set <code>read_processing</code> to <code>"fastp"</code>. These tasks are mutually exclusive.</p>
+<details class="task">
+<summary><code>Trimmomatic</code>: Read Trimming (default)</summary>
+<p>Read proccessing is available via <code>Trimmomatic</code> by default.</p>
+<p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>Trimmomatic</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/usadellab/Trimmomatic">Trimmomatic on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic Website</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>fastp</code>: Read Trimming (alternative)</summary>
+<p>To activate this task, set <code>read_processing</code> to <code>"fastp"</code>.</p>
+<p><code>fastp</code> trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
+<p><code>fastp</code> also has additional default parameters and features that are not a part of <code>trimmomatic</code>'s default configuration.</p>
+<details class="toggle">
+<summary><code>fastp</code> default read-trimming parameters</summary>
+<table>
+<thead>
+<tr>
+<th>Parameter</th>
+<th>Explanation</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-g</td>
+<td>enables polyG tail trimming</td>
+</tr>
+<tr>
+<td>-5 20</td>
+<td>enables read end-trimming</td>
+</tr>
+<tr>
+<td>-3 20</td>
+<td>enables read end-trimming</td>
+</tr>
+<tr>
+<td>--detect_adapter_for_pe</td>
+<td>enables adapter-trimming <strong>only for paired-end reads</strong></td>
+</tr>
+</tbody>
+</table>
+<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Trimmomatic and fastp Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl">task_fastp.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/OpenGene/fastp">fastp on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/OpenGene/fastp">fastp on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false">fastp: an ultra-fast all-in-one FASTQ preprocessor</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<details class="task">
+<summary><code>BBDuk</code>: Adapter Trimming and PhiX Removal</summary>
+<p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">Illumina adapters here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
+<p>The <code>bbduk</code> task removes adapters from sequence reads. To do this:</p>
+<ul>
+<li><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/">Repair</a> from the <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files (it <em>re-pairs</em>).</li>
+<li><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>) is then used to trim the adapters and filter out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>, which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.</li>
+</ul>
+<div class="admonition techdetails">
+<p class="admonition-title">BBDuk Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_bbduk.wdl">task_bbduk.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://sourceforge.net/projects/bbmap/">BBMap on SourceForge</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk Guide (archived)</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<div class="admonition dna">
+<p>By default, <code>read_qc</code> is set to <code>"fastq_scan"</code>. To use <code>fastqc</code> instead, set <code>read_qc</code> to <code>"fastqc"</code>. These tasks are mutually exclusive.</p>
+<details class="task">
+<summary><code>fastq-scan</code>: Read Quantification (default)</summary>
+<p>Read quantification is available via <code>fastq-scan</code> by default.</p>
+<p><code>fastq-scan</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>fastq-scan</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/rpetit3/fastq-scan/blob/master/README.md">fastq-scan on GitHub</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>FastQC</code>: Read Quantification (alternative)</summary>
+<p>To activate this task, set <code>read_qc</code> to <code>"fastqc"</code>.</p>
+<p><code>FastQC</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<p>This tool also provides a graphical visualization of the read quality.</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>FastQC</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl">task_fastqc.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/s-andrews/FastQC">FastQC on Github</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC Website</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</div>
+<div class="admonition techdetails">
+<p class="admonition-title">read_QC_trim Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subworkflow</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl">wf_read_QC_trim_pe.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl">wf_read_QC_trim_se.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+<details class="toggle">
+<summary>Read Extraction and Binning</summary>
+<details class="task">
+<summary><code>kraken_parser</code>: Parses Kraken Reports</summary>
+<p><code>kraken_parser</code> lightens the computation load by taking the input taxon ID list and comparing it to the taxon IDs identified by Kraken2 in the <code>kraken_report_clean</code> output file. Only taxon IDs that were found by Kraken are used in the scatter portion of the workflow, which lowers the number of scatter shards the workflow requires.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Find Files Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_kraken_parser.wdl">task_kraken_parser.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>krakentools</code>: Read Extraction</summary>
+<p>The <code>task_krakentools.wdl</code> task extracts reads from the Kraken2 output file. It uses the <a href="https://github.com/jenniferlu717/KrakenTools">KrakenTools</a> package to extract reads classified at any user-specified taxon ID.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">KrakenTools Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_krakentools.wdl">task_krakentools.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/jenniferlu717/KrakenTools">KrakenTools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/jenniferlu717/KrakenTools/blob/master/README.md">KrakenTools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1126/scitranslmed.aap9489">Metagenome analysis using the Kraken software suite</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+<details class="toggle">
+<summary>Taxonomic Identification</summary>
+<details class="task">
+<summary><code>ncbi_identify</code></summary>
+<p>The <code>ncbi_identify</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to search the NCBI Viral Genome Database and acquire taxonomic metadata from the taxonomy ID selected for extraction and assembly. This will return the taxonomy name that will facilitate downstream functions such as characterization and identification.</p>
+<details class="dna">
+<summary><code>taxon</code> input parameter</summary>
+<p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">NCBI Datasets Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_identify_taxon_id.wdl">task_identify_taxon_id.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/datasets">NCBI Datasets on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/">NCBI Datasets Documentation on NCBI</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1038/s41597-024-03571-y">Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+<div class="admonition tip">
+<p>TheiaViral_Panel utilizes the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single sample to undergo the same viral assembly as other samples. The following tasks are performed for each taxon ID that passes the read binning threshold:</p>
+<details class="toggle">
+<summary><em>De novo</em> Assembly and Reference Selection</summary>
+<details class="task">
+<summary><code>spades</code></summary>
+<p><code>SPAdes</code> (St. Petersburg genome assembler) is a <em>de novo</em> assembly tool that uses de Bruijn graphs to assemble genomes from Illumina short reads.</p>
+<p>It is run with the <code>--metaviral</code> option, which is recommended for viral genomes. MetaviralSPAdes pipeline consists of three independent steps, <code>ViralAssembly</code> for finding putative viral subgraphs in a metagenomic assembly graph and generating contigs in these graphs, <code>ViralVerify</code> for checking whether the resulting contigs have viral origin and <code>ViralComplete</code> for checking whether these contigs represent complete viral genomes. For more details, please see the original publication.</p>
+<p>MetaviralSPAdes was selected as the default assembler because it produces the most complete viral genomes within TheiaViral, determined by CheckV quality assessment (see task <code>checkv</code> for technical details).</p>
+<details class="dna">
+<summary><code>call_metaviralspades</code> input parameter</summary>
+<p>This parameter controls whether or not the <code>spades</code> task is called by the workflow. By default, <code>call_metaviralspades</code> is set to <code>true</code> because MetaviralSPAdes is used as the primary assembler. MetaviralSPAdes is generally recommended for most users, but it might not perform optimally on all datasets. If users encounter issues with MetaviralSPAdes, they can set the <code>call_metaviralspades</code> variable to <code>false</code> to bypass the <code>spades</code> task and instead <em>de novo</em> assemble using <a href="https://github.com/voutcn/megahit">MEGAHIT</a> (see task <code>megahit</code> for details). Additionally, if the <code>spades</code> task fails during execution, the workflow will automatically fall back to using MEGAHIT for <em>de novo</em> assembly.</p>
+</details>
+<details class="warning" open="open">
+<summary>Non-deterministic output(s)</summary>
+<p>This task may yield non-deterministic outputs.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">MetaviralSPAdes Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_spades.wdl">task_spades.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ablab/spades">SPAdes on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://ablab.github.io/spades/index.html">SPAdes Manual</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><em>TheiaProk</em>: <a href="https://doi.org/10.1089/cmb.2012.0021">SPAdes: A New Genome Assembly Algorithm and Its Applications to Single-Cell Sequencing</a><br><em>TheiaViral</em>: <a href="https://doi.org/10.1093/bioinformatics/btaa490">MetaviralSPAdes: assembly of viruses from metagenomic data</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>megahit</code></summary>
+<p>The <a href="https://github.com/voutcn/megahit">MEGAHIT assembler</a> is a fast and memory-efficient <em>de novo</em> assembler that can handle large datasets. While optimized for metagenomics, MEGAHIT also performs well on single-genome assemblies, making it a versatile choice for various assembly tasks.</p>
+<p>MEGAHIT uses a multiple k-mer strategy that can be beneficial for assembling genomes with varying coverage levels, which is common in metagenomic samples. It constructs succinct de Bruijn graphs to efficiently represent the assembly process, allowing it to handle large and complex datasets with reduced memory usage.</p>
+<p>This task is optional, turned off by default, and will only be called if MetaviralSPAdes fails. It can be enabled by setting the <code>skip_metaviralspades</code> parameter to <code>true</code>. The <code>megahit</code> task is used as a fallback option if the <code>spades</code> task fails during execution (see task <code>spades</code> for more details).</p>
+<details class="warning" open="open">
+<summary>Non-deterministic output(s)</summary>
+<p>This task may yield non-deterministic outputs.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">MEGAHIT Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_megahit.wdl">task_megahit.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/voutcn/megahit">MEGAHIT on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/voutcn/megahit/blob/master/README.md">MEGAHIT on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btv033">MEGAHIT: an ultra-fast single-node solution for large and complex metagenomics assembly via succinct de Bruijn graph</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>skani</code></summary>
+<p>The <code>skani</code> task is used to identify and select the most closely related reference genome to the <em>de novo</em> assembly. Skani uses an approximate mapping method without base-level alignment to calculate average nucleotide identity (ANI). It is magnitudes faster than BLAST-based methods and almost as accurate.</p>
+<p>By default, the reference genome is selected from a database of approximately 200,000 viral genomes. This database was constructed with the following methodology:</p>
+<ol>
+<li>
+<p>Extracting all <a href="https://ftp.ncbi.nlm.nih.gov/genomes/Viruses/AllNuclMetadata/">complete NCBI viral genomes</a>, excluding RefSeq accessions (redundancy), SARS-CoV-2 accessions, and segmented families (Orthomyxoviridae, Hantaviridae, Arenaviridae, and Phenuiviridae). Some complete gene accessions, and not complete genomes, are included because NCBI <code>datasets</code> completeness parameters are susceptible to metadata errors.</p>
+</li>
+<li>
+<p>Adding complete RefSeq segmented viral assembly accessions, which represent segments as individual contigs within the FASTA</p>
+</li>
+<li>
+<p>Adding one SARS-CoV-2 genome for each <a href="https://github.com/cov-lineages/lineages-website/raw/refs/heads/master/_data/lineage_data.full.json">major pangolin lineage</a></p>
+</li>
+</ol>
+<div class="admonition techdetails">
+<p class="admonition-title">Skani Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_skani.wdl">task_skani.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/bluenote-1577/skani">Skani on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/bluenote-1577/skani/blob/main/README.md">Skani Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1038/s41592-023-02018-3">Fast and robust metagenomic sequence comparison through sparse chaining with skani</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>ncbi_datasets</code></summary>
+<p>The <a href="https://www.ncbi.nlm.nih.gov/datasets/"><code>NCBI Datasets</code></a> task downloads specified assemblies from NCBI using either the <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/">virus</a> or <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/">genome</a> (for all other genome types) package as appropriate.</p>
+<p>This task uses the accession ID output from the <code>skani</code> task to download the the most closely related reference genome to the input assembly. The downloaded reference is then used for downstream analysis, including variant calling and consensus generation.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">NCBI Datasets Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl">task_ncbi_datasets.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/datasets">NCBI Datasets on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/">NCBI Datasets Documentation on NCBI</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1038/s41597-024-03571-y">Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+<details class="toggle">
+<summary>Reference Mapping</summary>
+<details class="task">
+<summary><code>bwa</code></summary>
+<p>The <code>bwa</code> task is a wrapper for the BWA alignment tool. It utilizes the BWA-MEM algorithm to map cleaned reads to the reference genome, either selected by the <code>skani</code> task or provided by the user input <code>reference_fasta</code>. This creates a BAM file which is then sorted using the command <code>samtools sort</code>.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">BWA Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_bwa.wdl">task_bwa.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/lh3/bwa">BWA on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://bio-bwa.sourceforge.net/">BWA Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp324">Fast and accurate short read alignment with Burrows-Wheeler transform</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>read_mapping_stats</code>: Mapping Statistics</summary>
+<p>The <code>read_mapping_stats</code> task generates mapping statistics from a BAM file. It uses samtools to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics.</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>read_mapping_stats</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl">task_assembly_metrics.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+<details class="toggle">
+<summary>Variant Calling and Consensus Generation</summary>
+<details class="task">
+<summary><code>ivar_variants</code>: Variant Calling</summary>
+<p>iVar uses the outputs of <code>samtools mpileup</code> to call single nucleotide variants (SNVs) and insertions/deletions (indels). Several key parameters can be set to determine the stringency of variant calling, including minimum quality, minimum allele frequency, and minimum depth.</p>
+<p>This task returns a VCF file containing all called variants, the number of detected variants, and the proportion of those variants with allele frequencies between 0.6 and 0.9 (also known as <em>intermediate</em> variants).</p>
+<details class="dna">
+<summary><code>min_depth</code> input parameter</summary>
+<p>This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is <code>10</code>.</p>
+</details>
+<details class="dna">
+<summary><code>min_map_quality</code> input parameter</summary>
+<p>This parameter accepts an integer value to set the minimum mapping quality for variant calling and subsequent consensus sequence generation. The default value is <code>20</code>.</p>
+</details>
+<details class="dna">
+<summary><code>min_allele_freq</code> input parameter</summary>
+<p>This parameter accepts a float value to set the minimum allele frequency for variant calling and subsequent consensus sequence generation. The default value is <code>0.6</code>.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">iVar Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl">task_ivar_variant_call.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://andersen-lab.github.io/ivar/html/">Ivar on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://andersen-lab.github.io/ivar/html/manualpage.html">Ivar Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="http://dx.doi.org/10.1186/s13059-018-1618-7">An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>ivar_consensus</code>: Consensus Assembly</summary>
+<p>iVar's <code>consensus</code> tool generates a reference-based consensus assembly. Several parameters can be set that determine the stringency of the consensus assembly, including minimum quality, minimum allele frequency, and minimum depth.</p>
+<p>This task is functional for segmented viruses by iteratively executing iVar on a contig-by-contig basis and concantenating resulting consensus contigs.</p>
+<details class="dna">
+<summary><code>min_depth</code> input parameter</summary>
+<p>This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is <code>10</code>.</p>
+</details>
+<details class="dna">
+<summary><code>min_map_quality</code> input parameter</summary>
+<p>This parameter accepts an integer value to set the minimum mapping quality for variant calling and subsequent consensus sequence generation. The default value is <code>20</code>.</p>
+</details>
+<details class="dna">
+<summary><code>min_allele_freq</code> input parameter</summary>
+<p>This parameter accepts a float value to set the minimum allele frequency for variant calling and subsequent consensus sequence generation. The default value is <code>0.6</code>.</p>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">iVar Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_ivar_consensus.wdl">task_ivar_consensus.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://andersen-lab.github.io/ivar/html/">Ivar on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://andersen-lab.github.io/ivar/html/manualpage.html">Ivar Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="http://dx.doi.org/10.1186/s13059-018-1618-7">An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+<details class="toggle">
+<summary>Assembly Evaluation and Consensus Quality Control</summary>
+<details class="task">
+<summary><code>quast_denovo</code></summary>
+<p>QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics without a reference being necessary. It includes useful metrics such as number of contigs, length of the largest contig and N50.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">QUAST Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_quast.wdl">task_quast.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ablab/quast">QUAST on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://quast.sourceforge.net/">QUAST Manual on SourceForge</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/29/8/1072/228832">QUAST: quality assessment tool for genome assemblies</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>checkv_denovo</code> &amp; <code>checkv_consensus</code></summary>
+<p>CheckV is a fully automated command-line pipeline for assessing the quality of viral genomes, including identification of host contamination for integrated proviruses, estimating completeness for genome fragments, and identification of closed genomes.</p>
+<p>By default, CheckV reports results on a contig-by-contig basis. The <code>checkv</code> task additionally reports both "weighted_contamination" and "weighted_completeness", which are average percents calculated across the total assembly that are weighted by contig length.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">CheckV Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_checkv.wdl">task_checkv.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://bitbucket.org/berkeleylab/checkv/src/master/">CheckV on Bitbucket</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://bitbucket.org/berkeleylab/checkv/src/master/README.md">CheckV Documentation</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1038/s41587-020-00774-7">CheckV assesses the quality and completeness of metagenome-assembled viral genomes</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>consensus_qc</code>: Assembly Statistics</summary>
+<p>The consensus_qc task generates a summary of genomic statistics from a consensus genome. This includes the total number of bases, "N" bases, degenerate bases, and an estimate of the percent coverage to the reference genome.</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>consensus_qc</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_consensus_qc.wdl">task_consensus_qc.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+</div>
+<details class="toggle">
+<summary>Exporting Results to Taxon-Specific Tables</summary>
+<details class="task">
+<summary><code>Taxon Tables</code>: Copy outputs to new data tables based on taxonomic assignment (optional)</summary>
+<div class="admonition tip">
+<p>This task is incompatible when running TheiaViral_Panel on the command-line as it is geared specifically for Terra. Do not activate this task if you are a command-line user.</p>
+</div>
+<p>Activate this task by providing a value for the <code>output_taxon_table</code> input variable. If provided, the user must also provide values to the <code>terra_project</code> and <code>terra_workspace</code> optional input variables.</p>
+<p>The <code>taxon_tables</code> module will copy sample data to a different data table based on the taxonomic assignment. For example, if an <em>influenza</em> sample is analyzed, the module will copy the sample data to a new table for <em>influenza</em> samples or add the sample data to an existing table. </p>
+<div class="admonition tip">
+<p><strong>Formatting the <code>output_taxon_table</code> file</strong></p>
+<p>The <code>output_taxon_table</code> file must be uploaded a Google storage bucket that is accessible by Terra and should be in <strong>tab-delimited</strong> format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column. </p>
+<table>
+<thead>
+<tr>
+<th>taxon</th>
+<th>taxon_table</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>influenza</td>
+<td>influenza_panel_specimen</td>
+</tr>
+<tr>
+<td>coronavirus</td>
+<td>coronavirus_panel_specimen</td>
+</tr>
+<tr>
+<td>human_immunodeficiency_virus</td>
+<td>hiv_panel_specimen</td>
+</tr>
+<tr>
+<td>monkeypox_virus</td>
+<td>monkeypox_panel_specimen</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="admonition tip">
+<p>There are no output columns for the taxon table task. The only output of the task is that additional data tables will appear for in the Terra workspace for samples matching a taxa in the taxon table file.</p>
+</div>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>export_taxon_table</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_export/task_export_taxon_table.wdl">task_export_taxon_table.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+</details>
+</div>
 </div>
 </div>
 <h4 id="taxa-specific-tasks">Taxa-Specific Tasks<a class="headerlink" href="#taxa-specific-tasks" title="Permanent link">¶</a></h4>
@@ -13119,7 +15747,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <li><strong>Rubella</strong> (<code>"11041"</code>, <code>"rubella virus"</code>, <code>"Rubella virus"</code>)</li>
 </ul>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">¶</a></h3>
-<div class="tabbed-set tabbed-alternate" data-tabs="4:2"><input checked="checked" id="theiaviral_illumina_pe_3" name="__tabbed_4" type="radio"><input id="theiaviral_ont_3" name="__tabbed_4" type="radio"><div class="tabbed-labels"><label for="theiaviral_illumina_pe_3">TheiaViral_Illumina_PE</label><label for="theiaviral_ont_3">TheiaViral_ONT</label></div>
+<div class="tabbed-set tabbed-alternate" data-tabs="5:3"><input checked="checked" id="theiaviral_illumina_pe_4" name="__tabbed_5" type="radio"><input id="theiaviral_ont_4" name="__tabbed_5" type="radio"><input id="theiaviral_panel_4" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="theiaviral_illumina_pe_4">TheiaViral_Illumina_PE</label><label for="theiaviral_ont_4">TheiaViral_ONT</label><label for="theiaviral_panel_4">TheiaViral_Panel</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="searchable-table">
@@ -15236,6 +17864,326 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </table>
 </div>
 </div>
+<div class="tabbed-block">
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Variable</strong></th>
+<th><strong>Type</strong></th>
+<th><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>assembled_viruses</td>
+<td>Int</td>
+<td>Number of viruses assembled from sample</td>
+</tr>
+<tr>
+<td>assemblies</td>
+<td>Array[File]</td>
+<td>Assembly files generated during the workflow</td>
+</tr>
+<tr>
+<td>bbduk_docker</td>
+<td>String</td>
+<td>The Docker image for bbduk, which was used to remove the adapters from the sequences</td>
+</tr>
+<tr>
+<td>dehost_wf_dehost_read1</td>
+<td>File</td>
+<td>Reads that did not map to host</td>
+</tr>
+<tr>
+<td>dehost_wf_dehost_read2</td>
+<td>File</td>
+<td>Paired-reads that did not map to host</td>
+</tr>
+<tr>
+<td>dehost_wf_host_accession</td>
+<td>String</td>
+<td>Host genome accession</td>
+</tr>
+<tr>
+<td>dehost_wf_host_fasta</td>
+<td>File</td>
+<td>Host genome FASTA file</td>
+</tr>
+<tr>
+<td>dehost_wf_host_flagstat</td>
+<td>File</td>
+<td>Output from the SAMtools flagstat command to assess quality of the alignment file (BAM)</td>
+</tr>
+<tr>
+<td>dehost_wf_host_mapped_bai</td>
+<td>File</td>
+<td>Indexed bam file of the reads aligned to the host reference</td>
+</tr>
+<tr>
+<td>dehost_wf_host_mapped_bam</td>
+<td>File</td>
+<td>Sorted BAM file containing the alignments of reads to the host reference genome</td>
+</tr>
+<tr>
+<td>dehost_wf_host_mapping_cov_hist</td>
+<td>File</td>
+<td>Coverage histogram from host read mapping</td>
+</tr>
+<tr>
+<td>dehost_wf_host_mapping_coverage</td>
+<td>Float</td>
+<td>Average coverage from host read mapping</td>
+</tr>
+<tr>
+<td>dehost_wf_host_mapping_mean_depth</td>
+<td>Float</td>
+<td>Average depth from host read mapping</td>
+</tr>
+<tr>
+<td>dehost_wf_host_mapping_metrics</td>
+<td>File</td>
+<td>File of mapping metrics</td>
+</tr>
+<tr>
+<td>dehost_wf_host_mapping_stats</td>
+<td>File</td>
+<td>File of mapping statistics</td>
+</tr>
+<tr>
+<td>dehost_wf_host_percent_mapped_reads</td>
+<td>Float</td>
+<td>Percentage of reads mapped to host reference genome</td>
+</tr>
+<tr>
+<td>fastp_html_report</td>
+<td>File</td>
+<td>The HTML report made with fastp</td>
+</tr>
+<tr>
+<td>fastp_version</td>
+<td>String</td>
+<td>The version of fastp used</td>
+</tr>
+<tr>
+<td>fastq_scan_clean1_json</td>
+<td>File</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean forward read quality and length</td>
+</tr>
+<tr>
+<td>fastq_scan_clean2_json</td>
+<td>File</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean reverse read quality and length</td>
+</tr>
+<tr>
+<td>fastq_scan_clean_pairs</td>
+<td>String</td>
+<td>Number of read pairs after cleaning</td>
+</tr>
+<tr>
+<td>fastq_scan_docker</td>
+<td>String</td>
+<td>The Docker image of fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_clean1</td>
+<td>Int</td>
+<td>The number of forward reads after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_clean2</td>
+<td>Int</td>
+<td>The number of reverse reads after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_raw1</td>
+<td>Int</td>
+<td>The number of input forward reads as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_raw2</td>
+<td>Int</td>
+<td>The number of input reserve reads as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_raw1_json</td>
+<td>File</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about raw forward read quality and length</td>
+</tr>
+<tr>
+<td>fastq_scan_raw2_json</td>
+<td>File</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about raw reverse read quality and length</td>
+</tr>
+<tr>
+<td>fastq_scan_raw_pairs</td>
+<td>String</td>
+<td>Number of raw read pairs</td>
+</tr>
+<tr>
+<td>fastq_scan_version</td>
+<td>String</td>
+<td>The version of fastq_scan</td>
+</tr>
+<tr>
+<td>fastqc_clean1_html</td>
+<td>File</td>
+<td>An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser</td>
+</tr>
+<tr>
+<td>fastqc_clean2_html</td>
+<td>File</td>
+<td>An HTML file that provides a graphical visualization of clean reverse read quality from fastqc to open in an internet browser</td>
+</tr>
+<tr>
+<td>fastqc_docker</td>
+<td>String</td>
+<td>The Docker container used for fastqc</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_clean1</td>
+<td>Int</td>
+<td>The number of forward reads after cleaning by fastqc</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_clean2</td>
+<td>Int</td>
+<td>The number of reverse reads after cleaning by fastqc</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_clean_pairs</td>
+<td>String</td>
+<td>The number of read pairs after cleaning by fastqc</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_raw1</td>
+<td>Int</td>
+<td>The number of input forward reads by fastqc before cleaning</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_raw2</td>
+<td>Int</td>
+<td>The number of input reverse reads by fastqc before cleaning</td>
+</tr>
+<tr>
+<td>fastqc_num_reads_raw_pairs</td>
+<td>String</td>
+<td>The number of input read pairs by fastqc before cleaning</td>
+</tr>
+<tr>
+<td>fastqc_raw1_html</td>
+<td>File</td>
+<td>An HTML file that provides a graphical visualization of raw forward read quality from fastqc to open in an internet browser</td>
+</tr>
+<tr>
+<td>fastqc_raw2_html</td>
+<td>File</td>
+<td>An HTML file that provides a graphical visualization of raw reverse read quality from fastqc to open in an internet browser</td>
+</tr>
+<tr>
+<td>fastqc_version</td>
+<td>String</td>
+<td>Version of fastqc software used</td>
+</tr>
+<tr>
+<td>identified_organisms</td>
+<td>Array[String]</td>
+<td>List of organisms extracted and identified from an panel level sample</td>
+</tr>
+<tr>
+<td>kraken2_classified_report</td>
+<td>File</td>
+<td>Standard Kraken2 output report. TXT filetype, but can be opened in Excel as a TSV file</td>
+</tr>
+<tr>
+<td>kraken2_database</td>
+<td>String</td>
+<td>Kraken2 database used for the taxonomic assignment</td>
+</tr>
+<tr>
+<td>kraken2_docker</td>
+<td>String</td>
+<td>Docker image used to run kraken2</td>
+</tr>
+<tr>
+<td>kraken2_report_clean</td>
+<td>File</td>
+<td>The full Kraken report for the sample's clean reads</td>
+</tr>
+<tr>
+<td>kraken2_report_raw</td>
+<td>File</td>
+<td>The full Kraken report for the sample's raw reads</td>
+</tr>
+<tr>
+<td>kraken2_version</td>
+<td>String</td>
+<td>The version of kraken2 used</td>
+</tr>
+<tr>
+<td>kraken_percent_human_clean</td>
+<td>Float</td>
+<td>Percent of human read data detected using the Kraken2 software after host removal for cleaned reads</td>
+</tr>
+<tr>
+<td>kraken_percent_human_raw</td>
+<td>Float</td>
+<td>Percent of human read data detected using the Kraken2 software after host removal for raw reads</td>
+</tr>
+<tr>
+<td>ncbi_scrub_docker</td>
+<td>String</td>
+<td>The Docker image for NCBI's HRRT (human read removal tool)</td>
+</tr>
+<tr>
+<td>ncbi_scrub_human_spots_removed</td>
+<td>Int</td>
+<td>Number of spots removed (or masked)</td>
+</tr>
+<tr>
+<td>read1_clean</td>
+<td>File</td>
+<td>Forward read file after quality trimming and adapter removal</td>
+</tr>
+<tr>
+<td>read1_dehosted</td>
+<td>File</td>
+<td>The dehosted forward reads file; suggested read file for SRA submission</td>
+</tr>
+<tr>
+<td>read2_clean</td>
+<td>File</td>
+<td>Reverse read file after quality trimming and adapter removal</td>
+</tr>
+<tr>
+<td>read2_dehosted</td>
+<td>File</td>
+<td>The dehosted reverse reads file; suggested read file for SRA submission</td>
+</tr>
+<tr>
+<td>theiaviral_panel_analysis_date</td>
+<td>String</td>
+<td>The date the analysis was run</td>
+</tr>
+<tr>
+<td>theiaviral_panel_version</td>
+<td>String</td>
+<td>The version of the workflow that was run</td>
+</tr>
+<tr>
+<td>trimmomatic_docker</td>
+<td>String</td>
+<td>The docker image used for the trimmomatic module in this workflow</td>
+</tr>
+<tr>
+<td>trimmomatic_version</td>
+<td>String</td>
+<td>The version of Trimmomatic used</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
 </div>
 </div>
 <details class="question">
@@ -15337,7 +18285,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 10, 2025 17:12:08 UTC">2025-09-10</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 12, 2025 20:00:11 UTC">2025-11-12</span>
   </span>
 
     

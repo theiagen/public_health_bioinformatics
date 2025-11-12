@@ -9,7 +9,7 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/ncbi_identify_task/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/kraken_parser_task/">
       
       
       
@@ -22,7 +22,7 @@
     
     
       
-        <title>Ncbi identify task - Public Health Bioinformatics</title>
+        <title>Kraken parser task - Public Health Bioinformatics</title>
       
     
     
@@ -129,7 +129,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Ncbi identify task
+              Kraken parser task
             
           </span>
         </div>
@@ -6429,43 +6429,29 @@
   
 
 
-  <h1>Ncbi identify task</h1>
+  <h1>Kraken parser task</h1>
 
 <details class="task">
-<summary><code>ncbi_identify</code></summary>
+<summary><code>kraken_parser</code>: Parses Kraken Reports</summary>
+<p><code>kraken_parser</code> lightens the computation load by taking the input taxon ID list and comparing it to the taxon IDs identified by Kraken2 in the <code>kraken_report_clean</code> output file. Only taxon IDs that were found by Kraken are used in the scatter portion of the workflow, which lowers the number of scatter shards the workflow requires.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">Find Files Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_kraken_parser.wdl">task_kraken_parser.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
 </details>
-<!-- if: theiaviral_panel -->
-<div class="language-text highlight"><pre><span></span><code>The `ncbi_identify` task uses [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) to search the NCBI Viral Genome Database and acquire taxonomic metadata from the taxonomy ID selected for extraction and assembly. This will return the taxonomy name that will facilitate downstream functions such as characterization and identification.
-</code></pre></div>
-<!-- endif -->
-<!-- if: theiaviral -->
-<div class="language-text highlight"><pre><span></span><code>The `ncbi_identify` task uses [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxonomy and desired taxonomic rank. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including **read classification and targeted read extraction**. This task also generates a comprehensive summary file of all successful hits to the input `taxon`, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input `taxon`.
-</code></pre></div>
-<!-- endif -->
-
-<div class="language-text highlight"><pre><span></span><code>??? dna "`taxon` input parameter"
-    This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
-</code></pre></div>
-<!-- if: theiaviral -->
-<div class="language-text highlight"><pre><span></span><code>??? dna "`rank` a.k.a `read_extraction_rank` input parameter"
-    Valid options include: `"species"`, `"genus"`, `"family"`, `"order"`, `"class"`, `"phylum"`, `"kingdom"`, or `"domain"`. By default it is set to `"family"`. This parameter filters metadata to report information only at the taxonomic `rank` specified by the user, regardless of the taxonomic rank implied by the original input `taxon`.
-???+ warning "Important"
-    - The `rank` parameter **must** specify a taxonomic rank that is ==equal to or above== the input taxon's taxonomic rank.
-
-    **Examples:**
-
-    - If your input `taxon` is `Lyssavirus rabies` (species level) with `rank` set to `family`, the task will return information for the family of `Lyssavirus rabies`: taxon ID for Rhabdoviridae (11270), name "Rhabdoviridae", and rank "family".
-    - If your input `taxon` is `Lyssavirus` (genus level) with `rank` set to `species`, the task will fail because it cannot determine species information from an inputted genus.
-</code></pre></div>
-<!-- endif -->
-<div class="language-text highlight"><pre><span></span><code>!!! techdetails "NCBI Datasets Technical Details"
-    |  | Links |
-    | --- | --- |
-    | Task | [task_identify_taxon_id.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_identify_taxon_id.wdl) |
-    | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
-    | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
-    | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
-</code></pre></div>
 
 
 
@@ -6498,7 +6484,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 12, 2025 20:00:11 UTC">2025-11-12</span>
   </span>
 
     
