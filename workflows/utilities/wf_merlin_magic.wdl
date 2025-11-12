@@ -994,7 +994,7 @@ workflow merlin_magic {
     String? genotyphi_final_genotype = genotyphi_task.genotyphi_final_genotype
     String? genotyphi_genotype_confidence = genotyphi_task.genotyphi_genotype_confidence
     # Klebsiella Typing
-    File? kleborate_klebsiella_output_file = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_output_file, kleborate_klebsiella_kosc.kleborate_klebsiella_output_file, ""])
+    File? kleborate_klebsiella_output_file = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_output_file, kleborate_klebsiella_kosc.kleborate_klebsiella_output_file])
     File? kleborate_klebsiella_hAMRonization_output_file = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_hAMRonization_output_file, kleborate_klebsiella_kosc.kleborate_klebsiella_hAMRonization_output_file, ""])
     String? kleborate_klebsiella_version = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_version, kleborate_klebsiella_kosc.kleborate_klebsiella_version, ""])
     String? kleborate_klebsiella_docker = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_docker, kleborate_klebsiella_kosc.kleborate_klebsiella_docker, ""])
