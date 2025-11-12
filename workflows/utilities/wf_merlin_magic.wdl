@@ -912,6 +912,7 @@ workflow merlin_magic {
     String? shigeifinder_O_antigen = shigeifinder.shigeifinder_O_antigen
     String? shigeifinder_H_antigen = shigeifinder.shigeifinder_H_antigen
     String? shigeifinder_notes = shigeifinder.shigeifinder_notes
+    #Kleborate E coli outputs
     File? kleborate_ecoli_output_file = kleborate_ecoli.kleborate_ecoli_output_file
     String? kleborate_ecoli_docker = kleborate_ecoli.kleborate_ecoli_docker
     String? kleborate_ecoli_version = kleborate_ecoli.kleborate_ecoli_version
@@ -994,8 +995,8 @@ workflow merlin_magic {
     String? genotyphi_final_genotype = genotyphi_task.genotyphi_final_genotype
     String? genotyphi_genotype_confidence = genotyphi_task.genotyphi_genotype_confidence
     # Klebsiella Typing
-    File? kleborate_klebsiella_output_file = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_output_file, kleborate_klebsiella_kosc.kleborate_klebsiella_output_file])
-    File? kleborate_klebsiella_hAMRonization_output_file = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_hAMRonization_output_file, kleborate_klebsiella_kosc.kleborate_klebsiella_hAMRonization_output_file, ""])
+    String? kleborate_klebsiella_output_file = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_output_file, kleborate_klebsiella_kosc.kleborate_klebsiella_output_file, ""])
+    String? kleborate_klebsiella_hAMRonization_output_file = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_hAMRonization_output_file, kleborate_klebsiella_kosc.kleborate_klebsiella_hAMRonization_output_file, ""])
     String? kleborate_klebsiella_version = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_version, kleborate_klebsiella_kosc.kleborate_klebsiella_version, ""])
     String? kleborate_klebsiella_docker = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_docker, kleborate_klebsiella_kosc.kleborate_klebsiella_docker, ""])
     String? kleborate_klebsiella_key_resistance_genes = select_first([kleborate_klebsiella_kpsc.kleborate_klebsiella_key_resistance_genes, kleborate_klebsiella_kosc.kleborate_klebsiella_key_resistance_genes, ""])
