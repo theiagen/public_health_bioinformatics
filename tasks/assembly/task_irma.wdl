@@ -231,7 +231,7 @@ task irma {
 
     # create MIRA-like QC summary TSV file (with header line)
     # many of these reported columns are based on code from MIRA-NF and are referenced below
-    echo -e "Sample\tReference\t% Reference Covered\tMedian Coverage\tMean Coverage\tCount of Minor SNVs (AF >= 0.05)\tCount of Minor Insertions (AF >= 0.05)\tCount of Minor Deletions (AF >= 0.05)" > "~{samplename}/~{samplename}_irma_qc_summary.tsv"
+    echo -e "Sample\tTotal Reads\tPass QC\tReads Mapped\tReference\t% Reference Covered\tMedian Coverage\tMean Coverage\tCount of Minor SNVs (AF >= 0.05)\tCount of Minor Insertions (AF >= 0.05)\tCount of Minor Deletions (AF >= 0.05)" > "~{samplename}/~{samplename}_irma_qc_summary.tsv"
 
     # loop through segments in SEGMENT_DICT to find variant/coverage files and append QC summary info to TSV file
     for SEGMENT_STR in "${!SEGMENT_DICT[@]}"; do
@@ -396,7 +396,7 @@ task irma {
         fi
       done
       # append all QC summary info for segment to TSV file
-      echo -e "~{samplename}\t${segment_ref_name}\t${segment_pct_ref_cov}\t${segment_median_cov}\t${segment_mean_cov}\t${segment_minor_snv}\t${segment_minor_insertions}\t${segment_minor_deletions}" >> "~{samplename}/~{samplename}_irma_qc_summary.tsv"
+      echo -e "~{samplename}\t${total_reads}\t${pass_qc_reads}\t${segment_mapped_reads}\t${segment_ref_name}\t${segment_pct_ref_cov}\t${segment_median_cov}\t${segment_mean_cov}\t${segment_minor_snv}\t${segment_minor_insertions}\t${segment_minor_deletions}" >> "~{samplename}/~{samplename}_irma_qc_summary.tsv"
     done
 
   >>>
