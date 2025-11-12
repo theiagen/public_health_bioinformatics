@@ -171,7 +171,7 @@ workflow read_QC_trim_pe {
         read2 = bbduk.read2_clean,
         host = select_first([host]),
         is_accession = host_is_accession,
-          is_genome = host_is_genome,
+        is_genome = host_is_genome,
         refseq = host_refseq,
         complete_only = host_complete_only,
         minimap2_memory = host_decontaminate_mem
