@@ -54,7 +54,7 @@ well. please see index.md for the math
 okay thanks byee.
 -->
 
-(Ordered by contribution [# of lines changed] as of 2025-09-08)
+(Ordered by contribution [# of lines changed] as of 2025-11-11)
 
 - **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision
 - **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation
