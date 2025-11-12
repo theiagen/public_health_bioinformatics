@@ -45,9 +45,9 @@ task kleborate_klebsiella {
       
       else
         #Create empty output file with message if output not found, parser will fail otherwise
-        echo "No kleborate_pneumo_complex_output.txt found" >> ${samplename}_kleborate_kpsc_out.tsv
-        echo "None" >> ${samplename}_kleborate_kpsc_out.tsv
-        echo "No hAMRonization output for K. pneumoniae complex" >> ${samplename}_hAMRonization_kleborate_out.tsv
+        echo "No kleborate_pneumo_complex_output.txt found" >> ~{samplename}_kleborate_kpsc_out.tsv
+        echo "None" >> ~{samplename}_kleborate_kpsc_out.tsv
+        echo "No hAMRonization output for K. pneumoniae complex" >> ~{samplename}_hAMRonization_kleborate_out.tsv
       fi
 
       parse_kleborate_kleb.py ~{samplename}_kleborate_kpsc_out.tsv
@@ -71,8 +71,8 @@ task kleborate_klebsiella {
 
       else
         #Create empty output file with message if output not found, parser will fail otherwise
-        echo "No kleborate_oxytoca_complex_output.txt found" >> ${samplename}_kleborate_kosc_out.tsv
-        echo "None" >> ${samplename}_kleborate_kosc_out.tsv
+        echo "No kleborate_oxytoca_complex_output.txt found" >> ~{samplename}_kleborate_kosc_out.tsv
+        echo "None" >> ~{samplename}_kleborate_kosc_out.tsv
       fi
 
       # Create placeholder hAMRonization file for kosc (not produced by this preset)
