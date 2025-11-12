@@ -37,8 +37,18 @@ task kleborate_klebsiella {
       --preset ~{preset_organism} \
       --trim_headers
 
-      mv kleborate_results/klebsiella_pneumo_complex_output.txt ~{samplename}_kleborate_kpsc_out.tsv
-      mv kleborate_results/klebsiella_pneumo_complex_hAMRonization_output.txt ~{samplename}_hAMRonization_kleborate_out.tsv
+      # Check if kleborate_pneumo_complex_output.txt exists before moving and parsing
+      if [ -f kleborate_results/klebsiella_pneumo_complex_output.txt ]; then
+
+        mv kleborate_results/klebsiella_pneumo_complex_output.txt ~{samplename}_kleborate_kpsc_out.tsv
+        mv kleborate_results/klebsiella_pneumo_complex_hAMRonization_output.txt ~{samplename}_hAMRonization_kleborate_out.tsv
+      
+      else
+        #Create empty output file with message if output not found, parser will fail otherwise
+        echo "No kleborate_pneumo_complex_output.txt found" >> ${samplename}_kleborate_kpsc_out.tsv
+        echo "None" >> ${samplename}_kleborate_kpsc_out.tsv
+        echo "No hAMRonization output for K. pneumoniae complex" >> ${samplename}_hAMRonization_kleborate_out.tsv
+      fi
 
       parse_kleborate_kleb.py ~{samplename}_kleborate_kpsc_out.tsv
 
@@ -47,16 +57,26 @@ task kleborate_klebsiella {
     if [ "~{preset_organism}" = "kosc" ]; then
       
       kleborate \
-      ~{'----klebsiella_oxytoca_complex__mlst_min_identity ' + min_percent_identity} \
-      ~{'----klebsiella_oxytoca_complex__mlst_min_coverage ' + min_percent_coverage} \
+      ~{'--klebsiella_oxytoca_complex__mlst_min_identity ' + min_percent_identity} \
+      ~{'--klebsiella_oxytoca_complex__mlst_min_coverage ' + min_percent_coverage} \
       --outdir kleborate_results \
       --assemblies ~{assembly} \
       --preset ~{preset_organism} \
       --trim_headers
 
-      mv kleborate_results/klebsiella_oxytoca_complex_output.txt ~{samplename}_kleborate_kosc_out.tsv
+      # Check if kleborate_oxytoca_complex_output.txt exists before moving and parsing
+      if [ -f kleborate_results/klebsiella_oxytoca_complex_output.txt ]; then
 
-      echo "No hAMRonization output for K. oxytoca complex" >> ${samplename}_hAMRonization_kleborate_out.tsv
+        mv kleborate_results/klebsiella_oxytoca_complex_output.txt ~{samplename}_kleborate_kosc_out.tsv
+
+      else
+        #Create empty output file with message if output not found, parser will fail otherwise
+        echo "No kleborate_oxytoca_complex_output.txt found" >> ${samplename}_kleborate_kosc_out.tsv
+        echo "None" >> ${samplename}_kleborate_kosc_out.tsv
+      fi
+
+      # Create placeholder hAMRonization file for kosc (not produced by this preset)
+      echo "No hAMRonization output for K. oxytoca complex" >> ~{samplename}_hAMRonization_kleborate_out.tsv
 
       parse_kleborate_kosc.py ~{samplename}_kleborate_kosc_out.tsv
 
