@@ -263,6 +263,10 @@ task irma {
         total_reads=$(grep "1-initial" "$read_counts_file" | awk -F'\t' '{print $2}')
         pass_qc_reads=$(grep "2-passQC" "$read_counts_file" | awk -F'\t' '{print $2}')
         segment_mapped_reads=$(sed -n "/^4-.*${SEGMENT_STR}.*/p" "$read_counts_file" | awk -F'\t' '{print $2}')
+        # update segment_mapped_reads to 0 if segment is not listed in READ_COUNTS.tsv (no reads mapped)
+        if [ -z "$segment_mapped_reads" ]; then
+          segment_mapped_reads=0
+        fi
         # update segment_ref_name to include subtype if file is found
         mapped_ref_name=$(sed -n "/^4-.*${SEGMENT_STR}.*/p" "$read_counts_file" | awk -F'\t' '{print $1}' | cut -d'_' -f2-)
         if [ -n "$mapped_ref_name" ]; then
