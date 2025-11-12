@@ -301,7 +301,7 @@ est_genome_length	Int	Estimated genome length	TheiaEuk_ONT
 est_percent_gene_coverage_tsv	File	Percent coverage for each gene in the organism being analyzed (depending on the organism input)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 excluded_samples	File	A file that contains the names and reasons why a sample was excluded from submission. **For SARS-CoV-2**, there are two sections: First, a section for any samples that failed to meet pre-determined quality thresholds (`number_N` and `vadr_num_alert`). Second, a section that includes a table that describes any missing required metadata for each sample. This table has the sample name for rows and any columns that have missing metadata as headers. If a sample is missing a piece of required metadata, the corresponding cell will be blank. However, if a different sample does have metadata for that column, the associated value will appear in the corresponding cell. **For flu and mpox**, only the second section described above exists. _Please see the example below for more details_.	Mercury_Prep_N_Batch
 excluded_samples	File	Text file listing samples that were excluded from BioSample submission for missing required metadata	Terra_2_NCBI
-extracted_taxon_name	String	Taxon name of the extracted organism	TheiaViral_Panel
+kraken_extracted_taxon_name	String	Taxon name of the extracted organism	TheiaViral_Panel
 failed_uploads	File	The metadata for any failed uploads	Terra_2_GISAID
 fasta_utilities_fai	File	FASTA index file	TheiaViral_ONT
 fasta_utilities_samtools_docker	String	Docker image used for samtools in fasta utilities	TheiaViral_ONT

@@ -118,7 +118,7 @@ workflow theiaviral_panel {
           columns_to_export = {
             "samplename": samplename + "_" + taxon_id,
             "source_table": source_table_name,
-            "extracted_taxon_name": ncbi_identify.taxon_name,
+            "kraken_extracted_taxon_name": ncbi_identify.taxon_name,
             "assembly_fasta": theiaviral_illumina_pe.assembly_consensus_fasta,
             "theiaviral_panel_analysis_date": version_capture.date,
             "theiaviral_panel_version": version_capture.phb_version,
