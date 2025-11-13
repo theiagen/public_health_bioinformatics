@@ -302,7 +302,7 @@ workflow theiacov_illumina_pe {
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     # Read Alignment - assembly outputs
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, flu_track.irma_version, ""])
-    String assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta])
+    String assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta, ""])
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     # Read Alignment - consensus assembly qc outputs
     # this is the minimum depth used for consensus and variant calling in EITHER iVar or IRMA
