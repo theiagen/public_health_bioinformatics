@@ -155,7 +155,7 @@ task resfinder {
       check_resistance "$drug" "${drug_to_file[$drug]}"
     done
 
-    # fluoroquinolone resistance detection
+    # quinolone resistance detection
     declare -A drug_to_variable=(
       ["CIPROFLOXACIN"]="ciprofloxacin"
       ["FLUOROQUINOLONE"]="fluoroquinolone"
