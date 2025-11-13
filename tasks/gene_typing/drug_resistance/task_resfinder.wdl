@@ -192,17 +192,17 @@ task resfinder {
           echo "$drug:${combined_results[$variable]}"
         fi
       done
-    } | sort | paste -d';' -s > RESFINDER_PREDICTED_RESISTANCE_FQ.txt
+    } | sort | paste -d';' -s > RESFINDER_PREDICTED_RESISTANCE_Q.txt
 
     # If the output file is empty, write "No resistance predicted"; otherwise prefix and suffix with Resistance (...)
-    if [[ -s RESFINDER_PREDICTED_RESISTANCE_FQ.txt ]]; then
-      echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_FQ.txt
+    if [[ ! -s RESFINDER_PREDICTED_RESISTANCE_Q.txt ]]; then
+      echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_Q.txt
     else 
       # add prefix and suffix
-      sed -i '1s/^/Resistance (/;1s/$/)/' RESFINDER_PREDICTED_RESISTANCE_FQ.txt
+      sed -i '1s/^/Resistance (/;1s/$/)/' RESFINDER_PREDICTED_RESISTANCE_Q.txt
     fi
     # add up the number of mechanisms
-    sort -u quinolone_resistance_candidates.tsv | grep -v '^$' | wc -l > RESFINDER_PREDICTED_RESISTANCE_FQ_COUNT.txt
+    sort -u quinolone_resistance_candidates.tsv | grep -v '^$' | wc -l > RESFINDER_PREDICTED_RESISTANCE_Q_COUNT.txt
 
   >>>
   output {
@@ -229,8 +229,8 @@ task resfinder {
     String resfinder_predicted_resistance_Smx = read_string("RESFINDER_PREDICTED_RESISTANCE_SMX.txt")
     String resfinder_predicted_resistance_Tmp = read_string("RESFINDER_PREDICTED_RESISTANCE_TMP.txt")
 
-    String resfinder_predicted_resistance_quinolone = read_string("RESFINDER_PREDICTED_RESISTANCE_FQ.txt")
-    Int resfinder_predicted_resistance_quinolone_mechanisms = read_string("RESFINDER_PREDICTED_RESISTANCE_FQ_COUNT.txt")
+    String resfinder_predicted_resistance_quinolone = read_string("RESFINDER_PREDICTED_RESISTANCE_Q.txt")
+    Int resfinder_predicted_resistance_quinolone_mechanisms = read_string("RESFINDER_PREDICTED_RESISTANCE_Q_COUNT.txt")
     
     String resfinder_docker = "~{docker}"
     String resfinder_version = read_string("RESFINDER_VERSION")
