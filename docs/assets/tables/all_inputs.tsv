@@ -570,7 +570,7 @@ consensus	skip_N	Boolean	True/False that determines if "N" bases should be skipp
 consensus_qc	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	runtime
 consensus_qc	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	runtime
 consensus_qc	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	docker
-consensus_qc	genome_length	Int	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	general
+consensus_qc	genome_length	Int	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, VADR_Update	general
 consensus_qc	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	runtime
 consensus_qc	reference_genome	File	Internal component, do not modify		Optional	VADR_Update	general
 core_gene_snp_workflow	align	Boolean	Boolean variable that instructs the workflow to generate core and pangenome alignments if "true". If "false", the workflow will produce only a pangenome summary.	True	Optional	Core_Gene_SNP	general
@@ -693,6 +693,11 @@ download_terra_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	C
 download_terra_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA	runtime
 download_terra_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA	docker
 download_terra_table	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	CZGenEpi_Prep, Mercury_Prep_N_Batch, Terra_2_ENA	runtime
+est_genome_length	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+est_genome_length	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+est_genome_length	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
+est_genome_length	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
+est_genome_length	summary_limit	Int	Maximum number of genomes to query	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 ete4_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime
 ete4_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime
 ete4_identify	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ete4:4.3.0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	docker
@@ -1670,7 +1675,6 @@ ncbi_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Host_Dec
 ncbi_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Host_Decontaminate	runtime
 ncbi_identify	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq	Optional	Host_Decontaminate	docker
 ncbi_identify	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	Host_Decontaminate	runtime
-ncbi_identify	rank	String	Internal component, do not modify		Optional	Host_Decontaminate	general
 ncbi_scrub_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	NCBI_Scrub_PE	runtime
 ncbi_scrub_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	NCBI_Scrub_PE	runtime
 ncbi_scrub_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1	Optional	NCBI_Scrub_PE	docker
@@ -2182,12 +2186,13 @@ shared_variants	disk_size	Int	Amount of storage (in GB) to allocate to the task	
 shared_variants	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16	Optional	Find_Shared_Variants, Snippy_Tree	docker
 shared_variants	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Find_Shared_Variants, Snippy_Tree	runtime
 skani	acc2taxon_map	File	Tab-delimited map between reference genome accessions and their affiliated taxon	gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251107/viral_accession2taxon_20251107.tsv	Optional	TheiaViral_Illumina_PE	general
+skani	acc2taxon_map	File	Tab-delimited map between reference genome accessions and their affiliated taxon	gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251107/viral_accession2taxon_20251107.tsv	Optional	TheiaViral_ONT	general
 skani	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 skani	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 skani	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
 skani	fasta_dir	String	Reference genome database base directory	gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251107/fna/	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 skani	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-skani	skani_db	File	Skani database file	gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251107.tar	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	database
+skani	skani_db	File	Skani database file	gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251107.tar	Optional	TheiaViral_ONT	database
 sm_theiacov_fasta_wrangling	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaCoV_FASTA_Batch	runtime
 sm_theiacov_fasta_wrangling	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_FASTA_Batch	runtime
 sm_theiacov_fasta_wrangling	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4	Optional	TheiaCoV_FASTA_Batch	docker
@@ -2650,8 +2655,7 @@ theiaviral_illumina_pe	call_metaviralspades	Boolean	True/False to call assembly 
 theiaviral_illumina_pe	checkv_db	File	Database used for CheckV		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	database
 theiaviral_illumina_pe	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	True	Optional	TheiaViral_Illumina_PE	general
 theiaviral_illumina_pe	extract_unclassified	Boolean	Internal component, do not modify	True	Optional	TheiaViral_Panel	general
-theiaviral_illumina_pe	genome_length	Int	Expected genome length of taxon of interest		Optional	TheiaViral_Illumina_PE	general
-theiaviral_illumina_pe	genome_length	Int	Expected genome length of taxon of interest		Optional	TheiaViral_Panel	general
+theiaviral_illumina_pe	genome_length	Int	Expected genome length of taxon of interest		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general
 theiaviral_illumina_pe	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_Illumina_PE	general
 theiaviral_illumina_pe	host	String	Internal component, do not modify		Optional	TheiaViral_Panel	general
 theiaviral_illumina_pe	kraken_db	File	Kraken2 database file	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaViral_Illumina_PE	database

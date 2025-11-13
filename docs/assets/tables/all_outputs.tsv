@@ -245,6 +245,8 @@ core_gene_snp_wf_analysis_date	String	Date of analysis using Core_Gene_SNP workf
 core_gene_snp_wf_version	String	Version of PHB used for analysis	Core_Gene_SNP
 czgenepi_prep_analysis_date	String	The date the workflow was run	CZGenEpi_Prep
 czgenepi_prep_version	String	The version of PHB the workflow is in	CZGenEpi_Prep
+datasets_genome_length_docker	String	The Docker container used for the task	TheiaViral_Illumina_PE, TheiaViral_ONT
+datasets_genome_length_version	String	The version of NCBI Datasets used for analysis	TheiaViral_Illumina_PE, TheiaViral_ONT
 datatable	File	Sample-level data table TSV file that was used to update the original sample-level data table in the last step of the TheiaCoV_FASTA_Batch workflow.	TheiaCoV_FASTA_Batch
 dehost_read1	File	Reads that did not map to host	Host_Decontaminate
 dehost_read2	File	Paired-reads that did not map to host	Host_Decontaminate
@@ -1131,6 +1133,7 @@ stxtyper_partial_hits	String	Possible outputs "stx1", "stx2", or "stx1,stx2". Te
 stxtyper_report	File	Raw results TSV file produced by StxTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 stxtyper_stx_frameshifts_or_internal_stop_hits	String	Comma-separated list of matches that have the OPERON output of "FRAMESHIFT" or "INTERNAL_STOP". Possible outputs "stx1", "stx2", or "stx1,stx2"	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 stxtyper_version	String	Version of StxTyper used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+taxon_avg_genome_length	String	Average genome length for taxon obtained from NCBI datasets summary	TheiaViral_Illumina_PE, TheiaViral_ONT
 taxon_table_status	String	Status of the taxon table upload	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 tbp_parser_average_genome_depth	Float	The mean depth of coverage across all target regions included in the analysis	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 tbp_parser_coverage_report	File	A file containing the breadth of coverage across each target loci	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
