@@ -1787,14 +1787,14 @@ parse_mapping	docker	String	The Docker container to use for the task	us-docker.p
 parse_mapping	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Host_Decontaminate, TheiaViral_ONT	runtime
 parse_mapping	min_qual	Int	Minimum quality score for reads to be included in the analysis		Optional	Host_Decontaminate	general
 phylocompare	midpoint	Boolean	Root phylogenies at their midpoint	False	Optional	PhyloCompare	general
-phylocompare	outgroup	String	DESCRIPTION		Optional	PhyloCompare	general
-phylocompare	validate	Boolean	DESCRIPTION	False	Optional	PhyloCompare	general
+phylocompare	outgroup	String	Root phylogenies with an outgroup tip		Optional	PhyloCompare	general
+phylocompare	validate	Boolean	Run phylogenetic validation by calculating the distance between two phylogenies' tips and branching order	False	Optional	PhyloCompare	general
 phylovalidate_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	PhyloCompare	runtime
 phylovalidate_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	PhyloCompare	runtime
 phylovalidate_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.2.0	Optional	PhyloCompare	docker
-phylovalidate_task	max_distance	Float	DESCRIPTION		Optional	PhyloCompare	general
+phylovalidate_task	max_distance	Float	Maximum tolerable distance during validation		Optional	PhyloCompare	general
 phylovalidate_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional 	PhyloCompare	runtime
-phylovalidate_task	resolve_tip_discrepancies	Boolean	DESCRIPTION	True	Optional	PhyloCompare	general
+phylovalidate_task	resolve_tip_discrepancies	Boolean	Remove tips that are discrepant between trees instead of failing	True	Optional	PhyloCompare	general
 pilon	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaMeta_Illumina_PE	runtime
 pilon	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime
 pilon	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0	Optional	TheiaMeta_Illumina_PE	docker
