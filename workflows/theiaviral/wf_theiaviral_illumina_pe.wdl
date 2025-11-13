@@ -74,7 +74,7 @@ workflow theiaviral_illumina_pe {
     # get average genome length for the taxon
     call genome_length_task.datasets_genome_length as est_genome_length {
       input:
-        taxon = ete4_identify.raw_taxon_id,
+        taxon = select_first([ete4_identify.raw_taxon_id, taxon]),
         use_ncbi_virus = true,
         complete = true,
         refseq = true
