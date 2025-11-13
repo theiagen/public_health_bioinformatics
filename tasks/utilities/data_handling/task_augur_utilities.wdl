@@ -133,10 +133,18 @@ task tsv_join {
     writer = csv.DictWriter(outf, header, delimiter='\t', dialect=csv.unix_dialect, quoting=csv.QUOTE_MINIMAL)
     writer.writeheader()
     writer.writerows(out_row_by_id[row_id] for row_id in out_ids)
+
+  if "date" in header:
+    has_time = "true"
+  else:
+    has_time = "false"
+  with open('HAS_TIME', 'w') as out:
+      out.write(has_time)
   CODE
   >>>
   output {
     File out_tsv = "~{out_basename}~{out_suffix}"
+    Boolean has_time = read_boolean("HAS_TIME")
   }
   runtime {
     memory: "~{memory} GB"
@@ -208,49 +216,15 @@ task filter_sequences_by_length {
   }
 }
 
-task set_sc2_defaults { # establish sars-cov-2 default values for augur
-  input {
-    String nextstrain_ncov_repo_commit = "cec4fa0ecd8612e4363d40662060a5a9c712d67e" # last updated on 2024-02-01    
-    Int disk_size = 50
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    Int memory = 1
-    Int cpu = 1
-  }
-  command <<<
-    wget -q "https://github.com/nextstrain/ncov/archive/~{nextstrain_ncov_repo_commit}.tar.gz"
-    tar -xf "~{nextstrain_ncov_repo_commit}.tar.gz" --strip-components=1
-  >>>
-  output {
-    Int min_num_unambig = 27000
-    File clades_tsv = "defaults/clades.tsv"
-    File lat_longs_tsv = "defaults/lat_longs.tsv"
-    File reference_fasta = "defaults/reference_seq.fasta"
-    File reference_genbank = "defaults/reference_seq.gb"
-    File auspice_config = "defaults/auspice_config.json"
-    Float min_date = 2020.0
-    Int pivot_interval = 1
-    String pivot_interval_units = "weeks"
-    Float narrow_bandwidth = 0.05
-    Float proportion_wide = 0.0
-  }
-  runtime {
-    docker: docker
-    memory: memory + " GB"
-    cpu: cpu
-    disks:  "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB"
-  }
-}
-
 task prep_augur_metadata {
   input {
     File assembly
     String? collection_date
     String? country
-    String? state
-    String? continent
+    String? division
+    String? region
 
-    String? county = ""
+    String? location
     String? pango_lineage
     String? nextclade_clade
     String? organism = "sars-cov-2"
@@ -284,7 +258,7 @@ task prep_augur_metadata {
 
     # write everything to a file
     echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation\t${pangolin_header}\t${nextclade_header}" > augur_metadata.tsv
-    echo -e "\"${assembly_header}\"\t\"${virus}\"\t\"~{collection_date}\"\t\"~{continent}\"\t\"~{country}\"\t\"~{state}\"\t\"~{county}\"\t\"~{pango_lineage}\"\t\"~{nextclade_clade}\"" >> augur_metadata.tsv
+    echo -e "\"${assembly_header}\"\t\"${virus}\"\t\"~{collection_date}\"\t\"~{region}\"\t\"~{country}\"\t\"~{division}\"\t\"~{location}\"\t\"~{pango_lineage}\"\t\"~{nextclade_clade}\"" >> augur_metadata.tsv
   >>>
   output {
     File augur_metadata = "augur_metadata.tsv"

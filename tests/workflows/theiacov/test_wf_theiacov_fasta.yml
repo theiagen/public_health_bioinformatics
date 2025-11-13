@@ -126,12 +126,12 @@
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 71eba5c871bca955ab2a69dbd2c3c62e
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: b33f3ceb802a98cd6f56a8f6f1ee9cc3
+      md5sum: fb8f56658ee4702f8e8194da92c091f0
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: d1cac94c5f9737fda52c0633cd940768
+      md5sum: 762735b9f8e69efeae463735f0ceed21
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/_miniwdl_inputs/0/clearlabs.fasta.gz
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/fasta.pangolin_report.csv
-      md5sum: 73567a81470e6d8b2106741b658c82e6
+      md5sum: b0896a7302977227ee813f718c32cf8c
     - path: miniwdl_run/call-morgana_magic/call-vadr/command
       md5sum: f50993ba11c1699a5fcb81b980db504b
     - path: miniwdl_run/call-morgana_magic/call-vadr/inputs.json
