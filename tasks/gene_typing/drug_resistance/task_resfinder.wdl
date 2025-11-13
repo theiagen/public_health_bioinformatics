@@ -171,12 +171,12 @@ task resfinder {
       variable="${drug_to_variable[$drug]}"
       # extract resfinder results
       resfinder_results["$variable"]=$(grep "$drug" ~{samplename}_pheno_table.headerless.uppercase.tsv | awk -F '\t' 'BEGIN{OFS="\t"} { if($3 == "Resistant") {print $5}}' | sed 's/, /\n/g')
-      echo "${resfinder_results["$variable"]}" >> fq_resistance_candidates.tsv
+      echo "${resfinder_results["$variable"]}" >> quinolone_resistance_candidates.tsv
 
       # grab pointfinder results if available
       if [ -f "~{samplename}_PointFinder_results.uppercase.tsv" ]; then
         pointfinder_results["$variable"]=$(grep -iE "$drug" ~{samplename}_PointFinder_results.uppercase.tsv | awk -F '\t' 'BEGIN{OFS=""} { split($1,a," "); print a[1] " (" a[2] ")" }')
-        echo "${pointfinder_results["$variable"]}" >> fq_resistance_candidates.tsv
+        echo "${pointfinder_results["$variable"]}" >> quinolone_resistance_candidates.tsv
       fi
 
       # combine resfinder and pointfinder results
@@ -202,7 +202,7 @@ task resfinder {
       sed -i '1s/^/Resistance (/;1s/$/)/' RESFINDER_PREDICTED_RESISTANCE_FQ.txt
     fi
     # add up the number of mechanisms
-    sort -u fq_resistance_candidates.tsv | grep -v '^$' | wc -l > RESFINDER_PREDICTED_RESISTANCE_FQ_COUNT.txt
+    sort -u quinolone_resistance_candidates.tsv | grep -v '^$' | wc -l > RESFINDER_PREDICTED_RESISTANCE_FQ_COUNT.txt
 
   >>>
   output {
@@ -229,8 +229,8 @@ task resfinder {
     String resfinder_predicted_resistance_Smx = read_string("RESFINDER_PREDICTED_RESISTANCE_SMX.txt")
     String resfinder_predicted_resistance_Tmp = read_string("RESFINDER_PREDICTED_RESISTANCE_TMP.txt")
 
-    String resfinder_predicted_resistance_fq = read_string("RESFINDER_PREDICTED_RESISTANCE_FQ.txt")
-    Int resfinder_predicted_resistance_fq_mechanisms = read_string("RESFINDER_PREDICTED_RESISTANCE_FQ_COUNT.txt")
+    String resfinder_predicted_resistance_quinolone = read_string("RESFINDER_PREDICTED_RESISTANCE_FQ.txt")
+    Int resfinder_predicted_resistance_quinolone_mechanisms = read_string("RESFINDER_PREDICTED_RESISTANCE_FQ_COUNT.txt")
     
     String resfinder_docker = "~{docker}"
     String resfinder_version = read_string("RESFINDER_VERSION")
