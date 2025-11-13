@@ -1,24 +1,9 @@
-??? task "`ncbi_identify`"
-<!-- if: theiaviral_panel -->
-    The `ncbi_identify` task uses [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) to search the NCBI Viral Genome Database and acquire taxonomic metadata from the taxonomy ID selected for extraction and assembly. This will return the taxonomy name that will facilitate downstream functions such as characterization and identification.
-<!-- endif --> 
-<!-- if: theiaviral -->
-    The `ncbi_identify` task uses [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxonomy and desired taxonomic rank. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including **read classification and targeted read extraction**. This task also generates a comprehensive summary file of all successful hits to the input `taxon`, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input `taxon`.
-<!-- endif -->
+??? task "`datasets_genome_length`"
+    The `datasets_genome_length` task uses [`NCBI Datasets`](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/) to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxon. This task generates a summary file of all successful hits to the input `taxon`, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. The task will then calculate the average expected genome length in basepairs for the input `taxon`.
 
     ??? dna "`taxon` input parameter"
         This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
-<!-- if: theiaviral -->
-    ??? dna "`rank` a.k.a `read_extraction_rank` input parameter"
-        Valid options include: `"species"`, `"genus"`, `"family"`, `"order"`, `"class"`, `"phylum"`, `"kingdom"`, or `"domain"`. By default it is set to `"family"`. This parameter filters metadata to report information only at the taxonomic `rank` specified by the user, regardless of the taxonomic rank implied by the original input `taxon`.
-    ???+ warning "Important"
-        - The `rank` parameter **must** specify a taxonomic rank that is ==equal to or above== the input taxon's taxonomic rank.
 
-        **Examples:**
-
-        - If your input `taxon` is `Lyssavirus rabies` (species level) with `rank` set to `family`, the task will return information for the family of `Lyssavirus rabies`: taxon ID for Rhabdoviridae (11270), name "Rhabdoviridae", and rank "family".
-        - If your input `taxon` is `Lyssavirus` (genus level) with `rank` set to `species`, the task will fail because it cannot determine species information from an inputted genus.
-<!-- endif -->
     !!! techdetails "NCBI Datasets Technical Details"
         |  | Links |
         | --- | --- |

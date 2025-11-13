@@ -159,7 +159,9 @@
 
     ??? toggle "Taxonomic Identification"
 
-{{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/ete4_identify_task.md", condition="theiaviral", indent=8) }}
+
+{{ include_md("common_text/estimate_genome_length_task.md", indent=8) }}
 
     ??? toggle "Read Quality Control, Trimming, Filtering, Identification and Extraction"
 
@@ -217,6 +219,8 @@
     ??? toggle "Taxonomic Identification"
 
 {{ include_md("common_text/ete4_identify_task.md", condition="theiaviral", indent=8) }}
+
+{{ include_md("common_text/estimate_genome_length_task.md", indent=8) }}
 
     ??? toggle "Read Quality Control, Trimming, and Filtering"
 
@@ -302,7 +306,9 @@
 
     ??? toggle "Taxonomic Identification"
 
-{{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral_panel", indent=8) }} 
+{{ include_md("common_text/ete4_identify_task.md", condition="theiaviral_panel", indent=8) }} 
+
+{{ include_md("common_text/estimate_genome_length_task.md", indent=8) }}
 
     !!! tip ""
         TheiaViral_Panel uses the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single sample to undergo the same viral assembly as other samples. The following tasks are performed for each taxon ID that passes the read binning threshold:

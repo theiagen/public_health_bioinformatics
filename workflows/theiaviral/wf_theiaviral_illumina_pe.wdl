@@ -9,6 +9,7 @@ import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
 import "../../tasks/taxon_id/task_ete4_taxon_id.wdl" as identify_taxon_id_task
+import "../../tasks/utilities/task_datasets_genome_length.wdl" as genome_length_task
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus_task
 import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as variant_call_task
@@ -69,6 +70,16 @@ workflow theiaviral_illumina_pe {
         host = host
     }
   }
+  if (! defined(genome_length)) {
+    # get average genome length for the taxon
+    call genome_length_task.datasets_genome_length as est_genome_length {
+      input:
+        taxon = ete4_identify.raw_taxon_id,
+        use_ncbi_virus = true,
+        complete = true,
+        refseq = true
+    }
+  }
   if (! skip_rasusa) {
     # downsample reads to a specific coverage
     call rasusa_task.rasusa as rasusa {
@@ -76,7 +87,7 @@ workflow theiaviral_illumina_pe {
         read1 = select_first([read_QC_trim.kraken2_extracted_read1, read1]),
         read2 = select_first([read_QC_trim.kraken2_extracted_read2, read2]),
         samplename = samplename,
-        genome_length = select_first([genome_length])
+        genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
     }
   }
   # clean read screening
@@ -86,7 +97,7 @@ workflow theiaviral_illumina_pe {
         read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
         read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
         workflow_series = "theiaviral",
-        expected_genome_length = select_first([genome_length, 12500]) # default to 12500 if genome_length not provided
+        expected_genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
     }
   }
   if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
@@ -178,7 +189,8 @@ workflow theiaviral_illumina_pe {
         call consensus_qc_task.consensus_qc as consensus_qc {
           input:
             assembly_fasta = consensus.consensus_seq,
-            reference_genome = select_first([reference_fasta, skani.skani_reference_assembly])
+            reference_genome = select_first([reference_fasta, skani.skani_reference_assembly]),
+            genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
         }
         # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
         call checkv_task.checkv as checkv_consensus {
@@ -207,12 +219,16 @@ workflow theiaviral_illumina_pe {
     # versioning outputs
     String theiaviral_illumina_pe_version = version_capture.phb_version
     String theiaviral_illumina_pe_date = version_capture.date
-    # ncbi datasets - taxon identification
+    # ete4 - taxon identification
     String? ncbi_taxon_id = ete4_identify.taxon_id
     String? ncbi_taxon_name = ete4_identify.taxon_name
     String? ncbi_read_extraction_rank = ete4_identify.taxon_rank
     String? ete4_version = ete4_identify.ete4_version
     String? ete4_docker = ete4_identify.ete4_docker
+    # NCBI datasets genome length estimation
+    String? taxon_avg_genome_length = est_genome_length.avg_genome_length
+    String? datasets_genome_length_docker = est_genome_length.ncbi_datasets_docker
+    String? datasets_genome_length_version = est_genome_length.ncbi_datasets_version
     # raw read quality control
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2

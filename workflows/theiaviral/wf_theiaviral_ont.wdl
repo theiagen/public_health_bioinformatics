@@ -11,6 +11,7 @@ import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
 import "../../tasks/taxon_id/task_skani.wdl" as skani_task
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 import "../../tasks/taxon_id/task_ete4_taxon_id.wdl" as identify_taxon_id_task
+import "../../tasks/utilities/task_datasets_genome_length.wdl" as genome_length_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/assembly/task_raven.wdl" as raven_task
@@ -55,12 +56,22 @@ workflow theiaviral_ont {
       taxon = taxon,
       rank = read_extraction_rank
   }
+  # get average genome length for the taxon if needed
+  if (! defined(genome_length)) {
+    call genome_length_task.datasets_genome_length as est_genome_length {
+      input:
+        taxon = ete4_identify.raw_taxon_id,
+        use_ncbi_virus = true,
+        complete = true,
+        refseq = true
+    }
+  }
   # raw read quality check
   call nanoplot_task.nanoplot as nanoplot_raw {
     input:
       read1 = read1,
       samplename = samplename,
-      est_genome_length = select_first([genome_length, 12500]) # default viral genome length
+      est_genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
   }
   # adapter trimming
   if (call_porechop) {
@@ -106,7 +117,7 @@ workflow theiaviral_ont {
       input:
         read1 = metabuli.metabuli_read1_extract,
         samplename = samplename,
-        genome_length = select_first([genome_length])
+        genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
     }
   }
   # extracted/filtered clean read quality check.
@@ -114,7 +125,7 @@ workflow theiaviral_ont {
     input:
       read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
       samplename = samplename,
-      est_genome_length = select_first([genome_length, 12500])
+      est_genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
   }
   # check for minimum number of reads, basepairs, coverage, etc
   if (! skip_screen) {
@@ -122,7 +133,7 @@ workflow theiaviral_ont {
       input:
         read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
         workflow_series = "theiaviral",
-        expected_genome_length = select_first([genome_length, 12500]), # default to 12500 if genome_length not provided
+        expected_genome_length = select_first([est_genome_length.avg_genome_length, genome_length]),  
         skip_mash = true
     }
   }
@@ -229,7 +240,8 @@ workflow theiaviral_ont {
         call consensus_qc_task.consensus_qc as consensus_qc {
           input:
             assembly_fasta = bcftools_consensus.assembly_fasta,
-            reference_genome = select_first([reference_fasta, skani.skani_reference_assembly])
+            reference_genome = select_first([reference_fasta, skani.skani_reference_assembly]),
+            genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
         }
         # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
         call checkv_task.checkv as checkv_consensus {
@@ -256,12 +268,16 @@ workflow theiaviral_ont {
     # versioning outputs
     String theiaviral_ont_version = version_capture.phb_version
     String theiaviral_ont_date = version_capture.date
-    # ncbi datasets - taxon identification
+    # ete4 - taxon identification
     String ncbi_taxon_id = ete4_identify.taxon_id
     String ncbi_taxon_name = ete4_identify.taxon_name
     String ncbi_read_extraction_rank = ete4_identify.taxon_rank
     String ete4_version = ete4_identify.ete4_version
     String ete4_docker = ete4_identify.ete4_docker
+    # NCBI datasets genome length estimation
+    String? taxon_avg_genome_length = est_genome_length.avg_genome_length
+    String? datasets_genome_length_docker = est_genome_length.ncbi_datasets_docker
+    String? datasets_genome_length_version = est_genome_length.ncbi_datasets_version
     # host decontamination outputs
     File? dehost_wf_dehost_read1 = host_decontaminate.dehost_read1
     String? dehost_wf_host_accession = host_decontaminate.host_genome_accession
