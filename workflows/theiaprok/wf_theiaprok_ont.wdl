@@ -511,7 +511,7 @@ workflow theiaprok_ont {
                 "resfinder_predicted_resistance_Cip": resfinder_task.resfinder_predicted_resistance_Cip,
                 "resfinder_predicted_resistance_Smx": resfinder_task.resfinder_predicted_resistance_Smx,
                 "resfinder_predicted_resistance_Tmp": resfinder_task.resfinder_predicted_resistance_Tmp,
-                "resfinder_predicted_resistance_fq_mechanisms": resfinder_task.resfinder_predicted_resistance_fq_mechanisms,
+                "resfinder_predicted_resistance_quinolone_mechanisms": resfinder_task.resfinder_predicted_resistance_quinolone_mechanisms,
                 "resfinder_predicted_xdr_shigella": resfinder_task.resfinder_predicted_xdr_shigella,
                 "resfinder_predicted_xdr_shigella": resfinder_task.resfinder_predicted_xdr_shigella,
                 "resfinder_results": resfinder_task.resfinder_results_tab,
@@ -811,8 +811,8 @@ workflow theiaprok_ont {
     String? resfinder_predicted_resistance_Cip = resfinder_task.resfinder_predicted_resistance_Cip
     String? resfinder_predicted_resistance_Smx = resfinder_task.resfinder_predicted_resistance_Smx
     String? resfinder_predicted_resistance_Tmp = resfinder_task.resfinder_predicted_resistance_Tmp
-    String? resfinder_predicted_resistance_fq = resfinder_task.resfinder_predicted_resistance_fq
-    Int? resfinder_predicted_resistance_fq_mechanisms = resfinder_task.resfinder_predicted_resistance_fq_mechanisms
+    String? resfinder_predicted_resistance_quinolone = resfinder_task.resfinder_predicted_resistance_quinolone
+    Int? resfinder_predicted_resistance_quinolone_mechanisms = resfinder_task.resfinder_predicted_resistance_quinolone_mechanisms
     String? resfinder_version = resfinder_task.resfinder_version
     String? resfinder_db_version = resfinder_task.resfinder_db_version
     String? resfinder_docker = resfinder_task.resfinder_docker

@@ -58,6 +58,8 @@
     
         Feel free to contact us at <support@theiagen.com> for assistance in interpreting these results.
 
+        If you detect an XDR Shigella sample, please contact your state and local epidemiologists so they can be informed!
+
     !!! techdetails "ResFinder Technical Details"
         
         |  | Links |
