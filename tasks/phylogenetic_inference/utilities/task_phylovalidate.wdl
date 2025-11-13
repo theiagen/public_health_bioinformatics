@@ -34,9 +34,6 @@ task phylovalidate {
         --debug \
         2> >(tee -a PHYLOVALIDATE_STDERR >&2)
 
-    # generate a cophylogeny plot
-    Rscript /theiaphylo/theiaphylo/gen_cophylo.R ~{tree1_cleaned} ~{tree2_cleaned}
-
     # extract errors while maintaining a 0 exit code
     grep -Po "ERROR.*" PHYLOVALIDATE_STDERR > PHYLOVALIDATE_ERRORS || true
 
@@ -98,7 +95,6 @@ task phylovalidate {
     File summary_report = "phylo_distances.txt"
     File tree1_clean = "~{tree1_cleaned}"
     File tree2_clean = "~{tree2_cleaned}"
-    File cophylo_plot = "cophylo_plot.pdf"
     String phylovalidate_distance = read_string("PHYLOVALIDATE_DISTANCE")
     String phylovalidate_validation = read_string("PHYLOVALIDATE")
     String phylovalidate_flag = read_string("PHYLOVALIDATE_FLAG")

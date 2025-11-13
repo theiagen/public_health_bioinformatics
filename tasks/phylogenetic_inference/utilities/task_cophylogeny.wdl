@@ -14,8 +14,8 @@ task cophylogeny {
     # set -euo pipefail to avoid silent failure
     set -euo pipefail
 
-    # grab the phylocompare version
-    phylocompare --version | tee VERSION
+    # grab the theiaphylo version
+    phylovalidate --version | tee VERSION
 
     # generate a cophylogeny plot
     Rscript /theiaphylo/theiaphylo/gen_cophylo.R ~{tree1} ~{tree2}
