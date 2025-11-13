@@ -11,6 +11,7 @@ import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_ont
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as task_parse_mapping
 import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 
 workflow freyja_fastq {
   input {
@@ -116,6 +117,16 @@ workflow freyja_fastq {
       reference_genome = reference_genome,
       reference_gff = reference_gff,
       depth_cutoff = depth_cutoff
+  }
+  if (freyja_pathogen == "SARS-CoV-2") {
+    File sc2_gene_bed = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"
+    call gene_coverage_task.gene_coverage {
+      input:
+        bamfile = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
+        bedfile = sc2_gene_bed,
+        samplename = samplename,
+        organism = "sars-cov-2"
+    }
   }
   call versioning.version_capture {
     input:
@@ -231,5 +242,9 @@ workflow freyja_fastq {
     String freyja_summarized = freyja.freyja_summarized
     String freyja_lineages = freyja.freyja_lineages
     String freyja_abundances = freyja.freyja_abundances
+    # Gene Coverage outputs - SARS-CoV-2 only
+    Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
+    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
+    File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
   }
 }
