@@ -49,9 +49,13 @@ task datasets_genome_length {
     # report if the file is empty
     if [ ! -s "ncbi_genome_summary.tsv" ]; then
       echo "ERROR: no assemblies found for taxon: ~{taxon}"
+      echo "N/A" > NCBI_ACCESSION
       echo "0" > AVG_GENOME_LENGTH
     else
       # take the average of of all genome lengths across each row
+      ncbi_accession=$(awk -F'\t' 'NR == 2 {print $1}' ncbi_genome_summary.tsv)
+      echo "DEBUG: ncbi_accession: ${ncbi_accession}"
+      echo $ncbi_accession > NCBI_ACCESSION
       awk -F'\t' '{
         if (NR > 1) { sum += $4; count++ }
       }
@@ -65,6 +69,7 @@ task datasets_genome_length {
     String avg_genome_length = read_string("AVG_GENOME_LENGTH")
     String ncbi_datasets_version = read_string("DATASETS_VERSION")
     String ncbi_datasets_docker = docker
+    String ncbi_datasets_accession = read_string("NCBI_ACCESSION")
   }
   runtime {
     memory: "~{memory} GB"

@@ -4,7 +4,7 @@
 
     The detailed steps and tasks are as follows:
 
-{{ include_md("common_text/ncbi_identify_task.md", indent=4, replacements={'??? task "`ncbi_identify`"' : '??? toggle "Taxonomic Identification"'}) }}
+{{ include_md("common_text/estimate_genome_length_task.md", indent=4, replacements={'??? task "`estimate_genome_length`"' : '??? toggle "Genome Identification"'}) }}
 
 {{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=4, replacements={'??? task "NCBI Datasets"' : '??? toggle "Download Accession"'}) }}
 

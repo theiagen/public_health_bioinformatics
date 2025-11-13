@@ -4,7 +4,7 @@ import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datase
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
-import "../../tasks/taxon_id/task_identify_taxon_id.wdl" as identify_taxon_id_task
+import "../../tasks/utilities/task_datasets_genome_length.wdl" as identify_genome_task
 
 workflow host_decontaminate {
   meta {
@@ -24,7 +24,7 @@ workflow host_decontaminate {
   String hostsample = samplename + "_host"
   # gather an accession from a taxon input
   if (! is_accession && ! is_genome) {
-    call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
+    call identify_genome_task.datasets_genome_length as ncbi_identify {
       input:
         taxon = host,
         refseq = refseq,

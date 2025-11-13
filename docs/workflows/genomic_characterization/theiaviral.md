@@ -180,15 +180,12 @@
             - `checkv_denovo`
             - `quast_denovo`
             - `skani`
-            - `ncbi_datasets`
 
 {{ include_md("common_text/spades_task.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/megahit_task.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/skani_task.md", condition="theiaviral", indent=8) }}
-
-{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=8, replacements={'??? task "NCBI Datasets"' : '??? task "`ncbi_datasets`"'}) }}
 
     ??? toggle "Reference Mapping"
 
@@ -320,8 +317,6 @@
 {{ include_md("common_text/megahit_task.md", condition="theiaviral", indent=12) }}
 
 {{ include_md("common_text/skani_task.md", condition="theiaviral", indent=12) }}
-
-{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=12, replacements={'??? task "NCBI Datasets"' : '??? task "`ncbi_datasets`"'}) }}
 
         ??? toggle "Reference Mapping"
 
