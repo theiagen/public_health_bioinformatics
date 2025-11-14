@@ -194,6 +194,8 @@ task resfinder {
       done
     } | sort | paste -d';' -s > RESFINDER_PREDICTED_RESISTANCE_Q.txt
 
+    sed -i '/^\s*$/d' RESFINDER_PREDICTED_RESISTANCE_Q.txt
+
     # If the output file is empty, write "No resistance predicted"; otherwise prefix and suffix with Resistance (...)
     if [[ ! -s RESFINDER_PREDICTED_RESISTANCE_Q.txt ]]; then
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_Q.txt
