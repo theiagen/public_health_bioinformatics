@@ -3,6 +3,7 @@ version 1.0
 import "../../tasks/alignment/task_bwa.wdl" as align
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl" as trim_primers
+import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/freyja/task_freyja.wdl" as freyja_task
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_pe
@@ -28,6 +29,8 @@ workflow freyja_fastq {
     Int? depth_cutoff
     Boolean ont = false
     String kraken2_target_organism = "Severe acute respiratory syndrome coronavirus 2"
+    # qc check parameters
+    File? qc_check_table
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -126,6 +129,24 @@ workflow freyja_fastq {
         bedfile = sc2_gene_bed,
         samplename = samplename,
         organism = "sars-cov-2"
+    }
+  }
+  if (defined(qc_check_table)) {
+    call qc_check.qc_check_phb as qc_check_task {
+      input:
+        qc_check_table = qc_check_table,
+        expected_taxon = freyja_pathogen,
+        # Read counts - handle differences between ONT (Int from nanoplot) and Illumina (Int from fastq_scan)
+        num_reads_raw1 = select_first([nanoplot_raw.num_reads, read_QC_trim_pe.fastq_scan_raw1, read_QC_trim_se.fastq_scan_raw1]),
+        num_reads_raw2 = read_QC_trim_pe.fastq_scan_raw2,
+        num_reads_clean1 = select_first([nanoplot_clean.num_reads, read_QC_trim_pe.fastq_scan_clean1, read_QC_trim_se.fastq_scan_clean1]),
+        num_reads_clean2 = read_QC_trim_pe.fastq_scan_clean2,
+        # Kraken metrics - available from all three read QC workflows
+        kraken_human = select_first([read_QC_trim_pe.kraken_human, read_QC_trim_se.kraken_human, read_QC_trim_ont.kraken_human]),
+        kraken_human_dehosted = select_first([read_QC_trim_pe.kraken_human_dehosted, read_QC_trim_se.kraken_human_dehosted, read_QC_trim_ont.kraken_human_dehosted]),
+        # SC2-specific gene coverage - only available when freyja_pathogen == "SARS-CoV-2"
+        sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth,
+        sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
     }
   }
   call versioning.version_capture {
@@ -246,5 +267,8 @@ workflow freyja_fastq {
     Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
     Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
     File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
+    # QC Check Results
+    String? qc_check = qc_check_task.qc_check
+    File? qc_standard = qc_check_task.qc_standard
   }
 }
