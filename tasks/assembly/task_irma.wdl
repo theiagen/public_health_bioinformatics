@@ -431,7 +431,7 @@ task irma {
     File? seg_ns_assembly_padded = "padded_assemblies/~{samplename}_NS.pad.fasta"
 
     # Output MIRA-like QC summary and all variants called by IRMA for each segment.
-    File irma_qc_summary_tsv = "~{samplename}/~{samplename}_irma_qc_summary.tsv"
+    File? irma_qc_summary_tsv = "~{samplename}/~{samplename}_irma_qc_summary.tsv"
     File? irma_all_snvs_tsv = "~{samplename}/tables/~{samplename}_irma_all_variants.tsv"
     File? irma_all_insertions_tsv = "~{samplename}/tables/~{samplename}_irma_all_insertions.tsv"
     File? irma_all_deletions_tsv = "~{samplename}/tables/~{samplename}_irma_all_deletions.tsv"
