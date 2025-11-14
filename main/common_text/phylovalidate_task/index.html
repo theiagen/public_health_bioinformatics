@@ -9,31 +9,27 @@
         <meta name="author" content="Theiagen Genomics">
       
       
-        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/workflows/standalone/phylocompare/">
+        <link rel="canonical" href="https://theiagen.github.io/public_health_bioinformatics/main/common_text/phylovalidate_task/">
       
       
-        <link rel="prev" href="../../genomic_characterization/pangolin_update/">
-      
-      
-        <link rel="next" href="../rasusa/">
       
       
         
       
       
-      <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
+      <link rel="icon" href="../../assets/logos/Theiagen-Symbol-Standard-01.png">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.0">
     
     
       
-        <title>PhyloCompare - Public Health Bioinformatics</title>
+        <title>Phylovalidate task - Public Health Bioinformatics</title>
       
     
     
-      <link rel="stylesheet" href="../../../assets/stylesheets/main.618322db.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.618322db.min.css">
       
         
-        <link rel="stylesheet" href="../../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
       
       
 
@@ -52,15 +48,15 @@
       
     
     
-      <link rel="stylesheet" href="../../../stylesheets/extra.css">
+      <link rel="stylesheet" href="../../stylesheets/extra.css">
     
-    <script>__md_scope=new URL("../../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
     
     
-  <link href="../../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
+  <link href="../../assets/stylesheets/glightbox.min.css" rel="stylesheet"><script src="../../assets/javascripts/glightbox.min.js"></script><style id="glightbox-style">
             html.glightbox-open { overflow: initial; height: 100%; }
             .gslide-title { margin-top: 0px; user-select: text; }
             .gslide-desc { color: #666; user-select: text; }
@@ -88,11 +84,6 @@
     <label class="md-overlay" for="__drawer"></label>
     <div data-md-component="skip">
       
-        
-        <a href="#phylocompare" class="md-skip">
-          Skip to content
-        </a>
-      
     </div>
     <div data-md-component="announce">
       
@@ -104,12 +95,12 @@
             <div class="md-banner__inner md-grid md-typeset">
               
   You're not viewing the latest version release.
-  <a href="../../../.."> 
+  <a href="../../.."> 
     <strong>Click here to go to the latest version release.</strong>
   </a>
 
             </div>
-            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
+            <script>var el=document.querySelector("[data-md-component=outdated]"),base=new URL("../.."),outdated=__md_get("__outdated",sessionStorage,base);!0===outdated&&el&&(el.hidden=!1)</script>
           </aside>
         
       </div>
@@ -121,7 +112,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="https://www.theiagen.com" title="Public Health Bioinformatics" class="md-header__button md-logo" aria-label="Public Health Bioinformatics" data-md-component="logo">
       
-  <img src="../../../assets/logos/Theiagen-Logo-White.png" alt="logo">
+  <img src="../../assets/logos/Theiagen-Logo-White.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -138,7 +129,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              PhyloCompare
+              Phylovalidate task
             
           </span>
         </div>
@@ -249,13 +240,11 @@
   
   
   
-    
-  
   
     
     
-      <li class="md-tabs__item md-tabs__item--active">
-        <a href="../../.." class="md-tabs__link">
+      <li class="md-tabs__item">
+        <a href="../.." class="md-tabs__link">
           
   
   
@@ -291,7 +280,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="https://www.theiagen.com" title="Public Health Bioinformatics" class="md-nav__button md-logo" aria-label="Public Health Bioinformatics" data-md-component="logo">
       
-  <img src="../../../assets/logos/Theiagen-Logo-White.png" alt="logo">
+  <img src="../../assets/logos/Theiagen-Logo-White.png" alt="logo">
 
     </a>
     Public Health Bioinformatics
@@ -315,29 +304,24 @@
       
   
   
-    
   
   
-  
     
     
     
     
       
-        
-        
-      
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1">
         
           
-          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="">
+          <label class="md-nav__link" for="__nav_1" id="__nav_1_label" tabindex="0">
             
   
   
@@ -355,7 +339,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_1_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1">
             <span class="md-nav__icon md-icon"></span>
             
@@ -373,7 +357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../.." class="md-nav__link">
+      <a href="../.." class="md-nav__link">
         
   
   
@@ -451,7 +435,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../getting_started/commandline/" class="md-nav__link">
+      <a href="../../getting_started/commandline/" class="md-nav__link">
         
   
   
@@ -479,7 +463,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../getting_started/terra/" class="md-nav__link">
+      <a href="../../getting_started/terra/" class="md-nav__link">
         
   
   
@@ -507,7 +491,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../getting_started/philosophy/" class="md-nav__link">
+      <a href="../../getting_started/philosophy/" class="md-nav__link">
         
   
   
@@ -593,7 +577,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../guides/sops/" class="md-nav__link">
+      <a href="../../guides/sops/" class="md-nav__link">
         
   
   
@@ -621,7 +605,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../guides/versions/" class="md-nav__link">
+      <a href="../../guides/versions/" class="md-nav__link">
         
   
   
@@ -707,7 +691,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../guides/gambit/" class="md-nav__link">
+      <a href="../../guides/gambit/" class="md-nav__link">
         
   
   
@@ -735,7 +719,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../guides/gambit_database/" class="md-nav__link">
+      <a href="../../guides/gambit_database/" class="md-nav__link">
         
   
   
@@ -763,7 +747,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../guides/phylogenetics/" class="md-nav__link">
+      <a href="../../guides/phylogenetics/" class="md-nav__link">
         
   
   
@@ -791,7 +775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../guides/custom_organisms/" class="md-nav__link">
+      <a href="../../guides/custom_organisms/" class="md-nav__link">
         
   
   
@@ -824,8 +808,6 @@
                 
   
   
-    
-  
   
   
     
@@ -836,11 +818,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5">
         
           
           <label class="md-nav__link" for="__nav_1_5" id="__nav_1_5_label" tabindex="0">
@@ -861,7 +843,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_5_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="2" aria-labelledby="__nav_1_5_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1_5">
             <span class="md-nav__icon md-icon"></span>
             
@@ -929,7 +911,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../workflows_overview/workflows_type/" class="md-nav__link">
+      <a href="../../workflows_overview/workflows_type/" class="md-nav__link">
         
   
   
@@ -1007,7 +989,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/assembly_fetch/" class="md-nav__link">
+      <a href="../../workflows/data_import/assembly_fetch/" class="md-nav__link">
         
   
   
@@ -1035,7 +1017,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/basespace_fetch/" class="md-nav__link">
+      <a href="../../workflows/data_import/basespace_fetch/" class="md-nav__link">
         
   
   
@@ -1063,7 +1045,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/create_terra_table/" class="md-nav__link">
+      <a href="../../workflows/data_import/create_terra_table/" class="md-nav__link">
         
   
   
@@ -1091,7 +1073,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+      <a href="../../workflows/data_import/fetch_srr_accession/" class="md-nav__link">
         
   
   
@@ -1119,7 +1101,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/ont_barcode_concatenation/" class="md-nav__link">
+      <a href="../../workflows/data_import/ont_barcode_concatenation/" class="md-nav__link">
         
   
   
@@ -1147,7 +1129,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/sra_fetch/" class="md-nav__link">
+      <a href="../../workflows/data_import/sra_fetch/" class="md-nav__link">
         
   
   
@@ -1233,7 +1215,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/freyja/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/freyja/" class="md-nav__link">
         
   
   
@@ -1261,7 +1243,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/pangolin_update/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/pangolin_update/" class="md-nav__link">
         
   
   
@@ -1289,7 +1271,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiacov/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiacov/" class="md-nav__link">
         
   
   
@@ -1317,7 +1299,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiaeuk/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiaeuk/" class="md-nav__link">
         
   
   
@@ -1345,7 +1327,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiameta/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiameta/" class="md-nav__link">
         
   
   
@@ -1373,7 +1355,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiaprok/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiaprok/" class="md-nav__link">
         
   
   
@@ -1401,7 +1383,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiaviral/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
         
   
   
@@ -1429,7 +1411,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/vadr_update/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/vadr_update/" class="md-nav__link">
         
   
   
@@ -1515,7 +1497,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/augur/" class="md-nav__link">
         
   
   
@@ -1543,7 +1525,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/core_gene_snp/" class="md-nav__link">
         
   
   
@@ -1571,7 +1553,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/clair3_variants/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/clair3_variants/" class="md-nav__link">
         
   
   
@@ -1599,7 +1581,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
         
   
   
@@ -1627,7 +1609,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
   
@@ -1655,7 +1637,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/ksnp3/" class="md-nav__link">
         
   
   
@@ -1683,7 +1665,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp4/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/ksnp4/" class="md-nav__link">
         
   
   
@@ -1711,7 +1693,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/lyve_set/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/lyve_set/" class="md-nav__link">
         
   
   
@@ -1739,7 +1721,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
         
   
   
@@ -1767,7 +1749,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_streamline/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_streamline/" class="md-nav__link">
         
   
   
@@ -1795,7 +1777,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
         
   
   
@@ -1823,7 +1805,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_tree/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_tree/" class="md-nav__link">
         
   
   
@@ -1851,7 +1833,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
   
@@ -1937,7 +1919,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_placement/nextclade_batch/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_placement/nextclade_batch/" class="md-nav__link">
         
   
   
@@ -1965,7 +1947,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_placement/usher/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_placement/usher/" class="md-nav__link">
         
   
   
@@ -2051,7 +2033,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
         
   
   
@@ -2079,7 +2061,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/terra_2_ena/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/terra_2_ena/" class="md-nav__link">
         
   
   
@@ -2107,7 +2089,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/terra_2_gisaid/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/terra_2_gisaid/" class="md-nav__link">
         
   
   
@@ -2135,7 +2117,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/terra_2_ncbi/" class="md-nav__link">
         
   
   
@@ -2221,7 +2203,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
+      <a href="../../workflows/data_export/concatenate_column_content/" class="md-nav__link">
         
   
   
@@ -2249,7 +2231,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_export/transfer_column_content/" class="md-nav__link">
+      <a href="../../workflows/data_export/transfer_column_content/" class="md-nav__link">
         
   
   
@@ -2277,7 +2259,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_export/zip_column_content/" class="md-nav__link">
+      <a href="../../workflows/data_export/zip_column_content/" class="md-nav__link">
         
   
   
@@ -2363,7 +2345,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../amr_search/" class="md-nav__link">
+      <a href="../../workflows/standalone/amr_search/" class="md-nav__link">
         
   
   
@@ -2391,7 +2373,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cauris_cladetyper/" class="md-nav__link">
+      <a href="../../workflows/standalone/cauris_cladetyper/" class="md-nav__link">
         
   
   
@@ -2419,7 +2401,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dorado_basecalling/" class="md-nav__link">
+      <a href="../../workflows/standalone/dorado_basecalling/" class="md-nav__link">
         
   
   
@@ -2447,7 +2429,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concatenate_illumina_lanes/" class="md-nav__link">
+      <a href="../../workflows/standalone/concatenate_illumina_lanes/" class="md-nav__link">
         
   
   
@@ -2475,7 +2457,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gambit_query/" class="md-nav__link">
+      <a href="../../workflows/standalone/gambit_query/" class="md-nav__link">
         
   
   
@@ -2503,7 +2485,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kraken2/" class="md-nav__link">
+      <a href="../../workflows/standalone/kraken2/" class="md-nav__link">
         
   
   
@@ -2531,7 +2513,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
         
   
   
@@ -2559,7 +2541,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_scrub/" class="md-nav__link">
+      <a href="../../workflows/standalone/ncbi_scrub/" class="md-nav__link">
         
   
   
@@ -2584,37 +2566,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    PhyloCompare
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../workflows/standalone/phylocompare/" class="md-nav__link">
         
   
   
@@ -2630,98 +2585,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Facts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#phylocompare_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PhyloCompare_PHB
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="PhyloCompare_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Inputs
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Workflow Tasks
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Outputs
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -2734,7 +2597,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rasusa/" class="md-nav__link">
+      <a href="../../workflows/standalone/rasusa/" class="md-nav__link">
         
   
   
@@ -2762,7 +2625,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rename_fastq/" class="md-nav__link">
+      <a href="../../workflows/standalone/rename_fastq/" class="md-nav__link">
         
   
   
@@ -2790,7 +2653,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tbprofiler_tngs/" class="md-nav__link">
+      <a href="../../workflows/standalone/tbprofiler_tngs/" class="md-nav__link">
         
   
   
@@ -2818,7 +2681,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../theiavalidate/" class="md-nav__link">
+      <a href="../../workflows/standalone/theiavalidate/" class="md-nav__link">
         
   
   
@@ -2912,7 +2775,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../workflows_overview/workflows_kingdom/" class="md-nav__link">
+      <a href="../../workflows_overview/workflows_kingdom/" class="md-nav__link">
         
   
   
@@ -2990,7 +2853,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../amr_search/" class="md-nav__link">
+      <a href="../../workflows/standalone/amr_search/" class="md-nav__link">
         
   
   
@@ -3018,7 +2881,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/assembly_fetch/" class="md-nav__link">
+      <a href="../../workflows/data_import/assembly_fetch/" class="md-nav__link">
         
   
   
@@ -3046,7 +2909,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/basespace_fetch/" class="md-nav__link">
+      <a href="../../workflows/data_import/basespace_fetch/" class="md-nav__link">
         
   
   
@@ -3074,7 +2937,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/clair3_variants/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/clair3_variants/" class="md-nav__link">
         
   
   
@@ -3102,7 +2965,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
+      <a href="../../workflows/data_export/concatenate_column_content/" class="md-nav__link">
         
   
   
@@ -3130,7 +2993,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concatenate_illumina_lanes/" class="md-nav__link">
+      <a href="../../workflows/standalone/concatenate_illumina_lanes/" class="md-nav__link">
         
   
   
@@ -3158,7 +3021,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/create_terra_table/" class="md-nav__link">
+      <a href="../../workflows/data_import/create_terra_table/" class="md-nav__link">
         
   
   
@@ -3186,7 +3049,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dorado_basecalling/" class="md-nav__link">
+      <a href="../../workflows/standalone/dorado_basecalling/" class="md-nav__link">
         
   
   
@@ -3214,7 +3077,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+      <a href="../../workflows/data_import/fetch_srr_accession/" class="md-nav__link">
         
   
   
@@ -3242,7 +3105,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kraken2/" class="md-nav__link">
+      <a href="../../workflows/standalone/kraken2/" class="md-nav__link">
         
   
   
@@ -3270,7 +3133,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_scrub/" class="md-nav__link">
+      <a href="../../workflows/standalone/ncbi_scrub/" class="md-nav__link">
         
   
   
@@ -3298,7 +3161,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/ont_barcode_concatenation/" class="md-nav__link">
+      <a href="../../workflows/data_import/ont_barcode_concatenation/" class="md-nav__link">
         
   
   
@@ -3323,37 +3186,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    PhyloCompare
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../workflows/standalone/phylocompare/" class="md-nav__link">
         
   
   
@@ -3369,98 +3205,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Facts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#phylocompare_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PhyloCompare_PHB
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="PhyloCompare_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Inputs
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Workflow Tasks
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Outputs
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -3473,7 +3217,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rasusa/" class="md-nav__link">
+      <a href="../../workflows/standalone/rasusa/" class="md-nav__link">
         
   
   
@@ -3501,7 +3245,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rename_fastq/" class="md-nav__link">
+      <a href="../../workflows/standalone/rename_fastq/" class="md-nav__link">
         
   
   
@@ -3529,7 +3273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/sra_fetch/" class="md-nav__link">
+      <a href="../../workflows/data_import/sra_fetch/" class="md-nav__link">
         
   
   
@@ -3557,7 +3301,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiameta/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiameta/" class="md-nav__link">
         
   
   
@@ -3585,7 +3329,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../theiavalidate/" class="md-nav__link">
+      <a href="../../workflows/standalone/theiavalidate/" class="md-nav__link">
         
   
   
@@ -3613,7 +3357,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_export/transfer_column_content/" class="md-nav__link">
+      <a href="../../workflows/data_export/transfer_column_content/" class="md-nav__link">
         
   
   
@@ -3641,7 +3385,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_export/zip_column_content/" class="md-nav__link">
+      <a href="../../workflows/data_export/zip_column_content/" class="md-nav__link">
         
   
   
@@ -3727,7 +3471,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/core_gene_snp/" class="md-nav__link">
         
   
   
@@ -3755,7 +3499,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
   
@@ -3783,7 +3527,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gambit_query/" class="md-nav__link">
+      <a href="../../workflows/standalone/gambit_query/" class="md-nav__link">
         
   
   
@@ -3811,7 +3555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/ksnp3/" class="md-nav__link">
         
   
   
@@ -3839,7 +3583,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp4/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/ksnp4/" class="md-nav__link">
         
   
   
@@ -3867,7 +3611,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/lyve_set/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/lyve_set/" class="md-nav__link">
         
   
   
@@ -3895,7 +3639,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
         
   
   
@@ -3923,7 +3667,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
         
   
   
@@ -3951,7 +3695,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_streamline/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_streamline/" class="md-nav__link">
         
   
   
@@ -3979,7 +3723,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
         
   
   
@@ -4007,7 +3751,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_tree/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_tree/" class="md-nav__link">
         
   
   
@@ -4035,7 +3779,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
   
@@ -4063,7 +3807,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tbprofiler_tngs/" class="md-nav__link">
+      <a href="../../workflows/standalone/tbprofiler_tngs/" class="md-nav__link">
         
   
   
@@ -4091,7 +3835,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/terra_2_ena/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/terra_2_ena/" class="md-nav__link">
         
   
   
@@ -4119,7 +3863,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/terra_2_ncbi/" class="md-nav__link">
         
   
   
@@ -4147,7 +3891,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiaprok/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiaprok/" class="md-nav__link">
         
   
   
@@ -4233,7 +3977,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cauris_cladetyper/" class="md-nav__link">
+      <a href="../../workflows/standalone/cauris_cladetyper/" class="md-nav__link">
         
   
   
@@ -4261,7 +4005,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
   
@@ -4289,7 +4033,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gambit_query/" class="md-nav__link">
+      <a href="../../workflows/standalone/gambit_query/" class="md-nav__link">
         
   
   
@@ -4317,7 +4061,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/ksnp3/" class="md-nav__link">
         
   
   
@@ -4345,7 +4089,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp4/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/ksnp4/" class="md-nav__link">
         
   
   
@@ -4373,7 +4117,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
         
   
   
@@ -4401,7 +4145,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
         
   
   
@@ -4429,7 +4173,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
   
@@ -4457,7 +4201,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/terra_2_ncbi/" class="md-nav__link">
         
   
   
@@ -4485,7 +4229,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiaeuk/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiaeuk/" class="md-nav__link">
         
   
   
@@ -4571,7 +4315,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/augur/" class="md-nav__link">
         
   
   
@@ -4599,7 +4343,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
         
   
   
@@ -4627,7 +4371,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/freyja/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/freyja/" class="md-nav__link">
         
   
   
@@ -4655,7 +4399,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/ksnp3/" class="md-nav__link">
         
   
   
@@ -4683,7 +4427,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp4/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/ksnp4/" class="md-nav__link">
         
   
   
@@ -4711,7 +4455,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
         
   
   
@@ -4739,7 +4483,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
         
   
   
@@ -4767,7 +4511,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_placement/nextclade_batch/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_placement/nextclade_batch/" class="md-nav__link">
         
   
   
@@ -4795,7 +4539,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/pangolin_update/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/pangolin_update/" class="md-nav__link">
         
   
   
@@ -4823,7 +4567,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
   
@@ -4851,7 +4595,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/terra_2_ena/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/terra_2_ena/" class="md-nav__link">
         
   
   
@@ -4879,7 +4623,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/terra_2_gisaid/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/terra_2_gisaid/" class="md-nav__link">
         
   
   
@@ -4907,7 +4651,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/terra_2_ncbi/" class="md-nav__link">
         
   
   
@@ -4935,7 +4679,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiacov/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiacov/" class="md-nav__link">
         
   
   
@@ -4963,7 +4707,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiaviral/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
         
   
   
@@ -4991,7 +4735,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_placement/usher/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_placement/usher/" class="md-nav__link">
         
   
   
@@ -5019,7 +4763,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/vadr_update/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/vadr_update/" class="md-nav__link">
         
   
   
@@ -5060,8 +4804,6 @@
                 
   
   
-    
-  
   
   
     
@@ -5072,11 +4814,11 @@
       
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_1_5_3">
         
           
           <label class="md-nav__link" for="__nav_1_5_3" id="__nav_1_5_3_label" tabindex="0">
@@ -5097,7 +4839,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_5_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="3" aria-labelledby="__nav_1_5_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_1_5_3">
             <span class="md-nav__icon md-icon"></span>
             
@@ -5115,7 +4857,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../workflows_overview/workflows_alphabetically/" class="md-nav__link">
+      <a href="../../workflows_overview/workflows_alphabetically/" class="md-nav__link">
         
   
   
@@ -5143,7 +4885,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../amr_search/" class="md-nav__link">
+      <a href="../../workflows/standalone/amr_search/" class="md-nav__link">
         
   
   
@@ -5171,7 +4913,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/assembly_fetch/" class="md-nav__link">
+      <a href="../../workflows/data_import/assembly_fetch/" class="md-nav__link">
         
   
   
@@ -5199,7 +4941,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/augur/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/augur/" class="md-nav__link">
         
   
   
@@ -5227,7 +4969,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/basespace_fetch/" class="md-nav__link">
+      <a href="../../workflows/data_import/basespace_fetch/" class="md-nav__link">
         
   
   
@@ -5255,7 +4997,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../cauris_cladetyper/" class="md-nav__link">
+      <a href="../../workflows/standalone/cauris_cladetyper/" class="md-nav__link">
         
   
   
@@ -5283,7 +5025,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/clair3_variants/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/clair3_variants/" class="md-nav__link">
         
   
   
@@ -5311,7 +5053,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_export/concatenate_column_content/" class="md-nav__link">
+      <a href="../../workflows/data_export/concatenate_column_content/" class="md-nav__link">
         
   
   
@@ -5339,7 +5081,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../concatenate_illumina_lanes/" class="md-nav__link">
+      <a href="../../workflows/standalone/concatenate_illumina_lanes/" class="md-nav__link">
         
   
   
@@ -5367,7 +5109,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/core_gene_snp/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/core_gene_snp/" class="md-nav__link">
         
   
   
@@ -5395,7 +5137,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/create_terra_table/" class="md-nav__link">
+      <a href="../../workflows/data_import/create_terra_table/" class="md-nav__link">
         
   
   
@@ -5423,7 +5165,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/czgenepi_prep/" class="md-nav__link">
         
   
   
@@ -5451,7 +5193,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../dorado_basecalling/" class="md-nav__link">
+      <a href="../../workflows/standalone/dorado_basecalling/" class="md-nav__link">
         
   
   
@@ -5479,7 +5221,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/fetch_srr_accession/" class="md-nav__link">
+      <a href="../../workflows/data_import/fetch_srr_accession/" class="md-nav__link">
         
   
   
@@ -5507,7 +5249,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/find_shared_variants/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/find_shared_variants/" class="md-nav__link">
         
   
   
@@ -5535,7 +5277,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/freyja/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/freyja/" class="md-nav__link">
         
   
   
@@ -5563,7 +5305,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../gambit_query/" class="md-nav__link">
+      <a href="../../workflows/standalone/gambit_query/" class="md-nav__link">
         
   
   
@@ -5591,7 +5333,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../kraken2/" class="md-nav__link">
+      <a href="../../workflows/standalone/kraken2/" class="md-nav__link">
         
   
   
@@ -5619,7 +5361,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp3/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/ksnp3/" class="md-nav__link">
         
   
   
@@ -5647,7 +5389,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/ksnp4/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/ksnp4/" class="md-nav__link">
         
   
   
@@ -5675,7 +5417,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/lyve_set/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/lyve_set/" class="md-nav__link">
         
   
   
@@ -5703,7 +5445,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/mashtree_fasta/" class="md-nav__link">
         
   
   
@@ -5731,7 +5473,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/mercury_prep_n_batch/" class="md-nav__link">
         
   
   
@@ -5759,7 +5501,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_amrfinderplus/" class="md-nav__link">
+      <a href="../../workflows/standalone/ncbi_amrfinderplus/" class="md-nav__link">
         
   
   
@@ -5787,7 +5529,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../ncbi_scrub/" class="md-nav__link">
+      <a href="../../workflows/standalone/ncbi_scrub/" class="md-nav__link">
         
   
   
@@ -5815,7 +5557,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_placement/nextclade_batch/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_placement/nextclade_batch/" class="md-nav__link">
         
   
   
@@ -5843,7 +5585,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/ont_barcode_concatenation/" class="md-nav__link">
+      <a href="../../workflows/data_import/ont_barcode_concatenation/" class="md-nav__link">
         
   
   
@@ -5871,7 +5613,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/pangolin_update/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/pangolin_update/" class="md-nav__link">
         
   
   
@@ -5896,37 +5638,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  
-  <span class="md-ellipsis">
-    
-  
-    PhyloCompare
-  
-
-    
-  </span>
-  
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../../workflows/standalone/phylocompare/" class="md-nav__link">
         
   
   
@@ -5942,98 +5657,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Facts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#phylocompare_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PhyloCompare_PHB
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="PhyloCompare_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Inputs
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Workflow Tasks
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Outputs
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -6046,7 +5669,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rasusa/" class="md-nav__link">
+      <a href="../../workflows/standalone/rasusa/" class="md-nav__link">
         
   
   
@@ -6074,7 +5697,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../rename_fastq/" class="md-nav__link">
+      <a href="../../workflows/standalone/rename_fastq/" class="md-nav__link">
         
   
   
@@ -6102,7 +5725,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_streamline/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_streamline/" class="md-nav__link">
         
   
   
@@ -6130,7 +5753,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_streamline_fasta/" class="md-nav__link">
         
   
   
@@ -6158,7 +5781,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_tree/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_tree/" class="md-nav__link">
         
   
   
@@ -6186,7 +5809,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_construction/snippy_variants/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_construction/snippy_variants/" class="md-nav__link">
         
   
   
@@ -6214,7 +5837,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_import/sra_fetch/" class="md-nav__link">
+      <a href="../../workflows/data_import/sra_fetch/" class="md-nav__link">
         
   
   
@@ -6242,7 +5865,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../tbprofiler_tngs/" class="md-nav__link">
+      <a href="../../workflows/standalone/tbprofiler_tngs/" class="md-nav__link">
         
   
   
@@ -6270,7 +5893,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/terra_2_ena/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/terra_2_ena/" class="md-nav__link">
         
   
   
@@ -6298,7 +5921,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/terra_2_gisaid/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/terra_2_gisaid/" class="md-nav__link">
         
   
   
@@ -6326,7 +5949,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../public_data_sharing/terra_2_ncbi/" class="md-nav__link">
+      <a href="../../workflows/public_data_sharing/terra_2_ncbi/" class="md-nav__link">
         
   
   
@@ -6354,7 +5977,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiacov/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiacov/" class="md-nav__link">
         
   
   
@@ -6382,7 +6005,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiaeuk/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiaeuk/" class="md-nav__link">
         
   
   
@@ -6410,7 +6033,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiameta/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiameta/" class="md-nav__link">
         
   
   
@@ -6438,7 +6061,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiaprok/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiaprok/" class="md-nav__link">
         
   
   
@@ -6466,7 +6089,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../theiavalidate/" class="md-nav__link">
+      <a href="../../workflows/standalone/theiavalidate/" class="md-nav__link">
         
   
   
@@ -6494,7 +6117,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/theiaviral/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/theiaviral/" class="md-nav__link">
         
   
   
@@ -6522,7 +6145,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_export/transfer_column_content/" class="md-nav__link">
+      <a href="../../workflows/data_export/transfer_column_content/" class="md-nav__link">
         
   
   
@@ -6550,7 +6173,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../phylogenetic_placement/usher/" class="md-nav__link">
+      <a href="../../workflows/phylogenetic_placement/usher/" class="md-nav__link">
         
   
   
@@ -6578,7 +6201,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../genomic_characterization/vadr_update/" class="md-nav__link">
+      <a href="../../workflows/genomic_characterization/vadr_update/" class="md-nav__link">
         
   
   
@@ -6606,7 +6229,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../data_export/zip_column_content/" class="md-nav__link">
+      <a href="../../workflows/data_export/zip_column_content/" class="md-nav__link">
         
   
   
@@ -6700,7 +6323,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../contributing/doc_contribution/" class="md-nav__link">
+      <a href="../../contributing/doc_contribution/" class="md-nav__link">
         
   
   
@@ -6728,7 +6351,7 @@
   
   
     <li class="md-nav__item">
-      <a href="../../../contributing/code_contribution/" class="md-nav__link">
+      <a href="../../contributing/code_contribution/" class="md-nav__link">
         
   
   
@@ -6781,88 +6404,6 @@
   
   
   
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#quick-facts" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Quick Facts
-      
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#phylocompare_phb" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        PhyloCompare_PHB
-      
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="PhyloCompare_PHB">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#inputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Inputs
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#workflow-tasks" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Workflow Tasks
-      
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#outputs" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        Outputs
-      
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#references" class="md-nav__link">
-    <span class="md-ellipsis">
-      
-        References
-      
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
   
 </nav>
                   </div>
@@ -6878,75 +6419,6 @@
 
 
 
-  <nav class="md-path" aria-label="Navigation">
-    <ol class="md-path__list">
-      
-      
-        
-  
-  
-    
-    
-      <li class="md-path__item">
-        <a href="../../.." class="md-path__link">
-          
-  <span class="md-ellipsis">
-    Public Health Bioinformatics
-  </span>
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-    
-    
-      
-  
-  
-    
-    
-      <li class="md-path__item">
-        <a href="../../../workflows_overview/workflows_type/" class="md-path__link">
-          
-  <span class="md-ellipsis">
-    Workflows
-  </span>
-
-        </a>
-      </li>
-    
-  
-
-    
-  
-
-      
-        
-  
-  
-    
-    
-      <li class="md-path__item">
-        <a href="../../../workflows_overview/workflows_alphabetically/" class="md-path__link">
-          
-  <span class="md-ellipsis">
-    Workflows Alphabetically
-  </span>
-
-        </a>
-      </li>
-    
-  
-
-      
-    </ol>
-  </nav>
-
               
               <article class="md-content__inner md-typeset">
                 
@@ -6957,320 +6429,8 @@
   
 
 
-<h1 id="phylocompare">PhyloCompare<a class="headerlink" href="#phylocompare" title="Permanent link">¶</a></h1>
-<h2 id="quick-facts">Quick Facts<a class="headerlink" href="#quick-facts" title="Permanent link">¶</a></h2>
-<table>
-<thead>
-<tr>
-<th><strong>Workflow Type</strong></th>
-<th><strong>Applicable Kingdom</strong></th>
-<th><strong>Last Known Changes</strong></th>
-<th><strong>Command-line Compatibility</strong></th>
-<th><strong>Workflow Level</strong></th>
-<th><strong>Dockstore</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Standalone</td>
-<td>Any taxa</td>
-<td>vX.X.X</td>
-<td>Yes</td>
-<td>Sample-level</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Phylocompare_PHB:main?tab=info">Phylocompare_PHB</a></td>
-</tr>
-</tbody>
-</table>
-<h2 id="phylocompare_phb">PhyloCompare_PHB<a class="headerlink" href="#phylocompare_phb" title="Permanent link">¶</a></h2>
-<p>PhyloCompare will generate a cophylogeny plot that visualizes the differences in two trees' tip arrangements. PhyloCompare can also quantitatively compare two phylogenies by calculating the distance between two trees as a measure of the difference in their topologies (tip and branch arrangement). Validation is triggered by setting the <code>validate</code> boolean to "true".</p>
-<p>It is recommended to root a phylogeny and PhyloCompare can root upon an outgroup tip or the midpoint.</p>
-<details class="dna">
-<summary>Tree rooting</summary>
-<p>If no rooting options are supplied PhyloCompare will determine if the trees are rooted or unrooted. </p>
-<p><code>outgroup</code> and <code>midpoint</code> are incompatible options and the <code>outgroups</code> input will take precedence.</p>
-</details>
-<details class="warning">
-<summary><code>phylovalidate_flag</code> errors</summary>
-<p>The <code>phylovalidate_flag</code> flags information that may confound distance calculation; e.g. "polytomy" can confound tree comparison if there are non-0 length branches descending from a polytomy, which may lead to erroneous distances if tips are reported in different order. In other words, phylogenies with the same topology may be reported with a non-0 distance if the tips within a polytomy are rearranged within the tree file.</p>
-<p>If flags are accompanied by a "&gt;0" <code>phylocompare_distance</code>, then this indicates no distance was calculated; e.g. the "edge_count_mismatch" flag is raised when the number of edges differs between trees and a distance could not be calculated.  </p>
-</details>
-<h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">¶</a></h3>
-<div class="searchable-table">
-<table>
-<thead>
-<tr>
-<th><strong>Terra Task Name</strong></th>
-<th><strong>Variable</strong></th>
-<th><strong>Type</strong></th>
-<th><strong>Description</strong></th>
-<th><strong>Default Value</strong></th>
-<th><strong>Terra Status</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>phylocompare</td>
-<td><strong>tree1</strong></td>
-<td>File</td>
-<td>Path to a newick-formatted phylogenetic tree in an accessible bucket</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>phylocompare</td>
-<td><strong>tree2</strong></td>
-<td>File</td>
-<td>Path to a newick-formatted phylogenetic tree in an accessible bucket</td>
-<td></td>
-<td>Required</td>
-</tr>
-<tr>
-<td>phylovalidate_task</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>root_tree1_task</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>root_tree2_task</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>cophylo_task</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>cophylo_task</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>10</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>cophylo_task</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>Docker image to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.2.0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>cophylo_task</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory (in GB) to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>phylocompare</td>
-<td><strong>midpoint</strong></td>
-<td>Boolean</td>
-<td>Root phylogenies at their midpoint</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>phylocompare</td>
-<td><strong>outgroup</strong></td>
-<td>String</td>
-<td>Root phylogenies with an outgroup tip</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>phylocompare</td>
-<td><strong>validate</strong></td>
-<td>Boolean</td>
-<td>Run phylogenetic validation by calculating the distance between two phylogenies' tips and branching order</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>phylovalidate_task</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>phylovalidate_task</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>10</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>phylovalidate_task</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.2.0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>phylovalidate_task</td>
-<td><strong>max_distance</strong></td>
-<td>Float</td>
-<td>Maximum tolerable distance during validation</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>phylovalidate_task</td>
-<td><strong>resolve_tip_discrepancies</strong></td>
-<td>Boolean</td>
-<td>Remove tips that are discrepant between trees instead of failing</td>
-<td>True</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>root_tree1_task</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>root_tree1_task</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>10</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>root_tree1_task</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>root_tree2_task</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>root_tree2_task</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>10</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>root_tree2_task</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>version_capture</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>version_capture</td>
-<td><strong>timezone</strong></td>
-<td>String</td>
-<td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
-<td></td>
-<td>Optional</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="workflow-tasks">Workflow Tasks<a class="headerlink" href="#workflow-tasks" title="Permanent link">¶</a></h3>
-<details class="task">
-<summary><code>root_phylo</code></summary>
-<p><code>root_phylo</code> returns a rooted phylogeny from inputted outgroup or by rooting upon the midpoint root. Outgroups must be tip names (case-sensitive) that exist within the tree.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Root_Phylo Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_root_phylo.wdl">task_root_phylo.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/theiagen/theiaphylo">https://github.com/theiagen/theiaphylo</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/theiagen/theiaphylo/blob/main/README.md">TheiaPhylo</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>cophylogeny</code></summary>
-<p>The Cophylogeny task will generate cophylogeny plots of two inputted phylogenies. A cophylogeny plot draws lines between two trees' tips as a method for visualizing their topological (tip/branch arrangment) differences. </p>
-<p>A cophylogeny plot is generated with branch lengths (<code>cophylogeny_plot_with_branch_lengths</code>) and a cophylogeny plot without branch lengths (<code>cophylogeny_plot</code>). The plot without branch lengths is better for depicting branching order differences, though it is important to note that the branch lengths within this plot are arbitrary and do not convey evolutionary distance. Users will most likely need to visualize the phylogenies independently to interpret evolutionary distance because it is difficult to automatically graph two phylogenies with scaled and viewable branch lengths.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Cophylogeny Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/utilities/task_cophylogeny.wdl">task_cophylogeny.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/theiagen/theiaphylo">https://github.com/theiagen/theiaphylo</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/theiagen/theiaphylo/blob/main/README.md">TheiaPhylo</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
+  <h1>Phylovalidate task</h1>
+
 <details class="task">
 <summary><code>phylovalidate</code></summary>
 <p><code>phylovalidate</code> will clean two phylogenies and validate if the distance between these two phylogenies' topologies is less than an inputted <code>max_distance</code> float (0 by default). Phylogenies are cleaned by converting 0 branch length nodes into polytomies, and any detected polytomies are reported as a flag. Polytomies may arbitrarily yield a non-0 distance, though if a 0 distance is reported with a polytomy then it indicates that the polytomy did not confound distance calculation. Trees can only be compared if the number of nodes between the trees are the same. Additionally, the tips must be the same between trees, though the <code>resolve_tip_discrepancies</code> boolean is set to "true" by default to remove discrepant tips.</p>
@@ -7301,81 +6461,6 @@
 </table>
 </div>
 </details>
-<h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">¶</a></h3>
-<div class="searchable-table">
-<table>
-<thead>
-<tr>
-<th><strong>Variable</strong></th>
-<th><strong>Type</strong></th>
-<th><strong>Description</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>cophylogeny_plot</td>
-<td>File</td>
-<td>A cophylogeny plot depicting branching order differences between two phylogenies without branch lengths</td>
-</tr>
-<tr>
-<td>cophylogeny_plot_with_branch_lengths</td>
-<td>File</td>
-<td>A cophylogeny plot depicting branching order differences between two phylogenies with branch lengths</td>
-</tr>
-<tr>
-<td>cophylogeny_version</td>
-<td>String</td>
-<td>Version of the TheiaPhylo repository used for analysis</td>
-</tr>
-<tr>
-<td>phylocompare_phb_version</td>
-<td>String</td>
-<td>The version of the Public Health Bioinformatics (PHB) repository used</td>
-</tr>
-<tr>
-<td>phylovalidate_distance</td>
-<td>String</td>
-<td>The quantitative distance between two phylogenies' tip/branch arrangements</td>
-</tr>
-<tr>
-<td>phylovalidate_flag</td>
-<td>String</td>
-<td>Flag depicting potential confounding factors during validation status</td>
-</tr>
-<tr>
-<td>phylovalidate_report</td>
-<td>File</td>
-<td>Report file summarizing the validation results</td>
-</tr>
-<tr>
-<td>phylovalidate_tree1_clean</td>
-<td>File</td>
-<td>Cleaned version of the first phylogenetic tree</td>
-</tr>
-<tr>
-<td>phylovalidate_tree2_clean</td>
-<td>File</td>
-<td>Cleaned version of the second phylogenetic tree</td>
-</tr>
-<tr>
-<td>phylovalidate_version</td>
-<td>String</td>
-<td>Version of phylovalidate used</td>
-</tr>
-</tbody>
-</table>
-</div>
-<h2 id="references">References<a class="headerlink" href="#references" title="Permanent link">¶</a></h2>
-<blockquote>
-<ul>
-<li>
-<p>Lin, Y., Rajan, V., Moret, B. M. E. (2012). A metric for phylogenetic trees based on matching. IEEE/ACM Transactions on Computational Biology and Bioinformatics, 9(4), 1014-22, <a href="https://doi.org/10.1109/tcbb.2011.157">https://doi.org/10.1109/tcbb.2011.157</a></p>
-</li>
-<li>
-<p>Moon, J. &amp; Eulenstein, O. (2018). Cluster Matching Distance for Rooted Phylogenetic Trees. Lecture Notes in Computer Science, 10847, <a href="https://doi.org/10.1007/978-3-319-94968-0_31">https://doi.org/10.1007/978-3-319-94968-0_31</a></p>
-</li>
-</ul>
-</blockquote>
 
 
 
@@ -7408,7 +6493,7 @@
     <span class="md-icon" title="Created">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M14.47 15.08 11 13V7h1.5v5.25l3.08 1.83c-.41.28-.79.62-1.11 1m-1.39 4.84c-.36.05-.71.08-1.08.08-4.42 0-8-3.58-8-8s3.58-8 8-8 8 3.58 8 8c0 .37-.03.72-.08 1.08.69.1 1.33.32 1.92.64.1-.56.16-1.13.16-1.72 0-5.5-4.5-10-10-10S2 6.5 2 12s4.47 10 10 10c.59 0 1.16-.06 1.72-.16-.32-.59-.54-1.23-.64-1.92M18 15v3h-3v2h3v3h2v-3h3v-2h-3v-3z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="July 17, 2025 20:41:44 UTC">2025-07-17</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 14, 2025 15:58:32 UTC">2025-11-14</span>
   </span>
 
     
@@ -7508,16 +6593,16 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "content.tooltips", "navigation.instant", "navigation.path", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "toc.follow"], "search": "../../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["content.code.annotate", "content.code.copy", "content.tabs.link", "content.tooltips", "navigation.instant", "navigation.path", "navigation.tabs", "navigation.top", "navigation.tracking", "search.highlight", "search.suggest", "toc.follow"], "search": "../../assets/javascripts/workers/search.7a47a382.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": {"alias": true, "default": "latest", "provider": "mike"}}</script>
     
     
-      <script src="../../../assets/javascripts/bundle.e71a0d61.min.js"></script>
+      <script src="../../assets/javascripts/bundle.e71a0d61.min.js"></script>
       
         <script src="https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js"></script>
       
-        <script src="../../../javascripts/tablesort.js"></script>
+        <script src="../../javascripts/tablesort.js"></script>
       
-        <script src="../../../javascripts/table-search.js"></script>
+        <script src="../../javascripts/table-search.js"></script>
       
     
   
