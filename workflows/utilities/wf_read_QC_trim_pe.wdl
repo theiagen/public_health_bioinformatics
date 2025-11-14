@@ -44,6 +44,7 @@ workflow read_QC_trim_pe {
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
     String? host
     Boolean host_is_accession = false
+    Boolean host_is_genome = false
     Boolean host_refseq = true
     Boolean host_complete_only = false
     Int host_decontaminate_mem = 32
@@ -170,6 +171,7 @@ workflow read_QC_trim_pe {
         read2 = bbduk.read2_clean,
         host = select_first([host]),
         is_accession = host_is_accession,
+        is_genome = host_is_genome,
         refseq = host_refseq,
         complete_only = host_complete_only,
         minimap2_memory = host_decontaminate_mem

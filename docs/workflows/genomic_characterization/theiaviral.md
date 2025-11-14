@@ -159,7 +159,9 @@
 
     ??? toggle "Taxonomic Identification"
 
-{{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/ete4_identify_task.md", condition="theiaviral", indent=8) }}
+
+{{ include_md("common_text/estimate_genome_length_task.md", indent=8) }}
 
     ??? toggle "Read Quality Control, Trimming, Filtering, Identification and Extraction"
 
@@ -178,15 +180,12 @@
             - `checkv_denovo`
             - `quast_denovo`
             - `skani`
-            - `ncbi_datasets`
 
 {{ include_md("common_text/spades_task.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/megahit_task.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/skani_task.md", condition="theiaviral", indent=8) }}
-
-{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=8, replacements={'??? task "NCBI Datasets"' : '??? task "`ncbi_datasets`"'}) }}
 
     ??? toggle "Reference Mapping"
 
@@ -216,7 +215,9 @@
 
     ??? toggle "Taxonomic Identification"
 
-{{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral", indent=8) }}
+{{ include_md("common_text/ete4_identify_task.md", condition="theiaviral", indent=8) }}
+
+{{ include_md("common_text/estimate_genome_length_task.md", indent=8) }}
 
     ??? toggle "Read Quality Control, Trimming, and Filtering"
 
@@ -255,8 +256,6 @@
 {{ include_md("common_text/flye_task.md", condition="theiaviral", indent=8, replacements={'`flye_read_type`' : '`read_type`'}) }}
 
 {{ include_md("common_text/skani_task.md", condition="theiaviral", indent=8) }}
-
-{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=8, replacements={'??? task "NCBI Datasets"' : '??? task "`ncbi_datasets`"'}) }}
 
     ??? toggle "Reference Mapping"
 
@@ -304,10 +303,12 @@
 
     ??? toggle "Taxonomic Identification"
 
-{{ include_md("common_text/ncbi_identify_task.md", condition="theiaviral_panel", indent=8) }} 
+{{ include_md("common_text/ete4_identify_task.md", condition="theiaviral_panel", indent=8) }} 
+
+{{ include_md("common_text/estimate_genome_length_task.md", indent=8) }}
 
     !!! tip ""
-        TheiaViral_Panel utilizes the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single sample to undergo the same viral assembly as other samples. The following tasks are performed for each taxon ID that passes the read binning threshold:
+        TheiaViral_Panel uses the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single sample to undergo the same viral assembly as other samples. The following tasks are performed for each taxon ID that passes the read binning threshold:
 
         ??? toggle "_De novo_ Assembly and Reference Selection"
 
@@ -316,8 +317,6 @@
 {{ include_md("common_text/megahit_task.md", condition="theiaviral", indent=12) }}
 
 {{ include_md("common_text/skani_task.md", condition="theiaviral", indent=12) }}
-
-{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=12, replacements={'??? task "NCBI Datasets"' : '??? task "`ncbi_datasets`"'}) }}
 
         ??? toggle "Reference Mapping"
 
@@ -345,20 +344,21 @@
 
 #### Taxa-Specific Tasks
 
-The TheiaViral workflows activate taxa-specific sub-workflows after the identification of relevant taxa. These characterization modules are activated by populating `taxon` with an *exact* match to a taxon listed in parentheses below (case-insensitive):
+The TheiaViral workflows activate taxa-specific sub-workflows after the identification of relevant taxa. These characterization modules are activated by populating `taxon` with an *exact* match to a compatible taxon. We recommend using the taxon ID integer because these can be simpler. Compatible taxon codes are listed in parentheses below (case-insensitive):
 
-- **SARS-CoV-2** (`"2697049"`, `"3418604"`, `"sars-cov-2"`)
-- **Monkeypox virus** (`"10244"`, `"mpxv"`, `"mpox"`, `"monkeypox virus"`)
-- **Human Immunodeficiency Virus 1** (`"11676"`, `"hiv1"`)
-- **Human Immunodeficiency Virus 2** (`"11709"`, `"hiv2"`)
-- **West Nile Virus** (`"11082"`, `"wnv"`, `"west nile virus"`)
-- **Influenza** (`"11320"`, `"11309"`, `"11520"`, `"flu"`, `"influenza"`)
-- **RSV-A** (`"208893"`, `"hrsv-a"`)
-- **RSV-B** (`"208895"`, `"hrsv-b"`)
+- **SARS-CoV-2** (`"2697049"`, `"severe acute respiratory syndrome coronavirus 2"`)
+- **Monkeypox virus** (`"10244"`, `"mpox"`, `"monkeypox virus"`)
+- **Human Immunodeficiency Virus 1** (`"11676"`, `"human immunodeficiency virus 1"`)
+- **Human Immunodeficiency Virus 2** (`"11709"`, `"human immunodeficiency virus 2"`)
+- **West Nile Virus** (`"11082"`, `"west nile virus"`)
+- **Influenza A** (`"11320"`, `"influenza a virus"`)
+- **Influenza B** (`"11520"`, `"influenza b virus"`)
+- **RSV-A** (`"208893"`, `"human respiratory syncytial virus a"`)
+- **RSV-B** (`"208895"`, `"human respiratory syncytial virus b"`)
 - **Measles** (`"11234"`, `"measles"`)
-- **Rabies** (`"11286"`, `"11292"`, `"rabies"`, `"lyssavirus rabies"`, `"lyssavirus"`)
+- **Rabies** (`"11292"`, `"lyssavirus rabies"`)
 - **Mumps** (`"2560602"`, `"mumps virus"`, `"Mumps orthorubulavirus"`)
-- **Rubella** (`"11041"`, `"rubella virus"`, `"Rubella virus"`)
+- **Rubella** (`"11041"`, `"rubella virus"`)
 
 ### Outputs
 
