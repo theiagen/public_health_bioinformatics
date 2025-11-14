@@ -160,27 +160,27 @@ workflow theiacov_illumina_pe {
             reference_genome = organism_parameters.reference,
             genome_length = organism_parameters.genome_length
         }
-      }
-      call morgana_magic_wf.morgana_magic {
-        input:
-          samplename = samplename,
-          assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
-          taxon_name = organism_parameters.standardized_organism,
-          seq_method = seq_method,
-          read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean,
-          number_ATCG = consensus_qc.number_ATCG,
-          vadr_max_length = organism_parameters.vadr_maxlength,
-          vadr_skip_length = organism_parameters.vadr_skiplength,
-          vadr_options = organism_parameters.vadr_opts,
-          vadr_model_file = organism_parameters.vadr_model_file,
-          vadr_memory = organism_parameters.vadr_memory,
-          reference_gene_locations_bed = organism_parameters.gene_locations_bed,
-          gene_coverage_bam = select_first([ivar_consensus.aligned_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam]),
-          nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
-          nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
-          pangolin_docker_image = organism_parameters.pangolin_docker,
-          workflow_type = "theiacov_pe"
+        call morgana_magic_wf.morgana_magic {
+          input:
+            samplename = samplename,
+            assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
+            taxon_name = organism_parameters.standardized_organism,
+            seq_method = seq_method,
+            read1 = read_QC_trim.read1_clean,
+            read2 = read_QC_trim.read2_clean,
+            number_ATCG = consensus_qc.number_ATCG,
+            vadr_max_length = organism_parameters.vadr_maxlength,
+            vadr_skip_length = organism_parameters.vadr_skiplength,
+            vadr_options = organism_parameters.vadr_opts,
+            vadr_model_file = organism_parameters.vadr_model_file,
+            vadr_memory = organism_parameters.vadr_memory,
+            reference_gene_locations_bed = organism_parameters.gene_locations_bed,
+            gene_coverage_bam = select_first([ivar_consensus.aligned_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam]),
+            nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
+            nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
+            pangolin_docker_image = organism_parameters.pangolin_docker,
+            workflow_type = "theiacov_pe"
+        }
       }
       if (defined(qc_check_table)) {
         # empty strings for kraken outputs throw an error so avoid those outputs for now
