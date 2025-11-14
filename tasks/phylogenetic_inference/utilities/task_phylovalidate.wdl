@@ -5,8 +5,9 @@ task phylovalidate {
     File tree1
     File tree2
     Float? max_distance
+    Boolean resolve_tip_discrepancies = true
     
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.8"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.2.0"
     Int disk_size = 10
     Int memory = 4
     Int cpu = 1
@@ -17,8 +18,8 @@ task phylovalidate {
     # set -euo pipefail to avoid silent failure
     set -euo pipefail
 
-    # grab the phylocompare version
-    phylocompare --version | tee VERSION
+    # grab the theiaphylo version
+    phylovalidate --version | tee VERSION
 
     # clean the trees, report if they are bifurcating
     Rscript /theiaphylo/theiaphylo/clean_phylo.R ~{tree1} > ~{tree1_cleaned} 2> >(cut -f 2 -d ' ' > TREE1_BIFURCATING)
@@ -28,18 +29,16 @@ task phylovalidate {
     max_distance=~{max_distance}
 
     # run comparison
-    phylocompare ~{tree1_cleaned} ~{tree2_cleaned} \
+    phylovalidate ~{tree1_cleaned} ~{tree2_cleaned} \
+        ~{if (resolve_tip_discrepancies) then "-r" else ""} \
         --debug \
-        2> >(tee -a PHYLOCOMPARE_STDERR >&2)
-
-    # generate a cophylogeny plot
-    Rscript /theiaphylo/theiaphylo/gen_cophylo.R ~{tree1_cleaned} ~{tree2_cleaned}
+        2> >(tee -a PHYLOVALIDATE_STDERR >&2)
 
     # extract errors while maintaining a 0 exit code
-    grep -Po "ERROR.*" PHYLOCOMPARE_STDERR > PHYLOCOMPARE_ERRORS || true
+    grep -Po "ERROR.*" PHYLOVALIDATE_STDERR > PHYLOVALIDATE_ERRORS || true
 
     # extract the distance
-    tail -1 phylo_distances.txt | cut -f 2 | tr -d ' ' > PHYLOCOMPARE_DISTANCE
+    tail -1 phylo_distances.txt | cut -f 2 | tr -d ' ' > PHYLOVALIDATE_DISTANCE
 
     # populate flag
     python3 <<CODE
@@ -47,15 +46,15 @@ task phylovalidate {
       tree1_bifurcating = f.read().strip()
     with open('TREE2_BIFURCATING', 'r') as f:
       tree2_bifurcating = f.read().strip()
-    phylocompare_flags = []
+    phylovalidate_flags = []
     if tree1_bifurcating == 'FALSE' or tree2_bifurcating == 'FALSE':
-      phylocompare_flags.append('polytomy')
-    with open('PHYLOCOMPARE_ERRORS', 'r') as f:
+      phylovalidate_flags.append('polytomy')
+    with open('PHYLOVALIDATE_ERRORS', 'r') as f:
       errors = set(x.strip() for x in f)
       if "ERROR - Error comparing trees: number of edges must be equal" in errors:
-        phylocompare_flags.append('edge_count_mismatch')
-    with open('PHYLOCOMPARE_FLAG', 'w') as out:
-      out.write(', '.join(phylocompare_flags))
+        phylovalidate_flags.append('edge_count_mismatch')
+    with open('PHYLOVALIDATE_FLAG', 'w') as out:
+      out.write(', '.join(phylovalidate_flags))
     CODE
 
     # run the validation
@@ -65,7 +64,7 @@ task phylovalidate {
       python3 <<CODE
     try:
       # check if the distance is greater than the max distance
-      with open('PHYLOCOMPARE_DISTANCE', 'r') as f:
+      with open('PHYLOVALIDATE_DISTANCE', 'r') as f:
         observed_distance_str = f.read().strip()
       observed_distance = float(observed_distance_str)
       if observed_distance > ~{max_distance}:
@@ -76,7 +75,7 @@ task phylovalidate {
           out.write('PASS')
     # indicates that the distance is not a float, likely a None
     except ValueError:
-      with open('PHYLOCOMPARE_DISTANCE', 'w') as out:
+      with open('PHYLOVALIDATE_DISTANCE', 'w') as out:
         out.write('>0')
       with open('PHYLOVALIDATE', 'w') as out:
         out.write('FAIL')
@@ -92,13 +91,12 @@ task phylovalidate {
     dx_instance_type: "mem1_ssd1_v2_x2"
   }
   output {
-    String phylocompare_version = read_string("VERSION")
+    String phylovalidate_version = read_string("VERSION")
     File summary_report = "phylo_distances.txt"
     File tree1_clean = "~{tree1_cleaned}"
     File tree2_clean = "~{tree2_cleaned}"
-    File cophylo_plot = "cophylo_plot.pdf"
-    String phylovalidate_distance = read_string("PHYLOCOMPARE_DISTANCE")
+    String phylovalidate_distance = read_string("PHYLOVALIDATE_DISTANCE")
     String phylovalidate_validation = read_string("PHYLOVALIDATE")
-    String phylovalidate_flag = read_string("PHYLOCOMPARE_FLAG")
+    String phylovalidate_flag = read_string("PHYLOVALIDATE_FLAG")
   }
 }

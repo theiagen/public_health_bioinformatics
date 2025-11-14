@@ -3,7 +3,7 @@ version 1.0
 task root_phylo {
   input {
     File tree
-    String? outgroups
+    String? outgroup
     Boolean? midpoint = false
     
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.8"
@@ -20,12 +20,12 @@ task root_phylo {
     phyloutils --version | tee VERSION
 
     # set bash variable to check for population in conditionals
-    outgroups=~{outgroups}
+    outgroups=~{outgroup}
 
     # root if outgroups are provided
-    if [[ -n ${outgroups} ]]; then
+    if [[ -n ${outgroup} ]]; then
       phyloutils ~{tree} \
-        --outgroup ~{outgroups} \
+        --outgroup ~{outgroup} \
         --output ~{rooted_tree_path}
     # root at the midpoint
     elif ~{midpoint}; then
