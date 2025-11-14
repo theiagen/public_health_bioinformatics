@@ -20278,6 +20278,11 @@
 <td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean reverse read quality and length</td>
 </tr>
 <tr>
+<td>fastq_scan_docker</td>
+<td>String</td>
+<td>The Docker image of fastq_scan</td>
+</tr>
+<tr>
 <td>fastq_scan_num_reads_clean1</td>
 <td>Int</td>
 <td>The number of forward reads after cleaning as calculated by fastq_scan</td>
@@ -20306,6 +20311,46 @@
 <td>fastq_scan_num_reads_raw_pairs</td>
 <td>String</td>
 <td>The number of input read pairs as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_r1_mean_q_clean</td>
+<td>Float</td>
+<td>The average quality of forward reads after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_r1_mean_q_raw</td>
+<td>Float</td>
+<td>The average quality of forward reads as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_r1_mean_readlength_clean</td>
+<td>Float</td>
+<td>The average read length of forward reads after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_r1_mean_readlength_raw</td>
+<td>Float</td>
+<td>The average read length of forward reads as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_r2_mean_q_clean</td>
+<td>Float</td>
+<td>The average quality of reverse reads after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_r2_mean_q_raw</td>
+<td>Float</td>
+<td>The average quality of reverse reads as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_r2_mean_readlength_clean</td>
+<td>Float</td>
+<td>The average read length of reverse reads after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_r2_mean_readlength_raw</td>
+<td>Float</td>
+<td>The average read length of reverse reads as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_raw1_json</td>
@@ -20468,9 +20513,29 @@
 <td>The version of GenoFLU used</td>
 </tr>
 <tr>
+<td>irma_all_deletions_tsv</td>
+<td>File</td>
+<td>Concatenated TSV file of all deletions identified by IRMA</td>
+</tr>
+<tr>
+<td>irma_all_insertions_tsv</td>
+<td>File</td>
+<td>Concatenated TSV file of all insertions identified by IRMA</td>
+</tr>
+<tr>
+<td>irma_all_snvs_tsv</td>
+<td>File</td>
+<td>Concatenated TSV file of all SNVs identified by IRMA</td>
+</tr>
+<tr>
 <td>irma_assembly_fasta_concatenated</td>
 <td>File</td>
 <td>Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry</td>
+</tr>
+<tr>
+<td>irma_bams</td>
+<td>Array[File]</td>
+<td>Aligned reads from IRMA</td>
 </tr>
 <tr>
 <td>irma_docker</td>
@@ -20516,6 +20581,11 @@
 <td>irma_pb2_segment_fasta</td>
 <td>File</td>
 <td>PB2 (Polymerase basic 2) assembly fasta file</td>
+</tr>
+<tr>
+<td>irma_qc_summary_tsv</td>
+<td>File</td>
+<td>TSV file summarizing IRMA quality control metrics</td>
 </tr>
 <tr>
 <td>irma_subtype</td>
@@ -21153,6 +21223,11 @@
 <td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean forward read quality and length</td>
 </tr>
 <tr>
+<td>fastq_scan_docker</td>
+<td>String</td>
+<td>The Docker image of fastq_scan</td>
+</tr>
+<tr>
 <td>fastq_scan_num_reads_clean1</td>
 <td>Int</td>
 <td>The number of forward reads after cleaning as calculated by fastq_scan</td>
@@ -21161,6 +21236,26 @@
 <td>fastq_scan_num_reads_raw1</td>
 <td>Int</td>
 <td>The number of input forward reads as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_r1_mean_q_clean</td>
+<td>Float</td>
+<td>The average quality of forward reads after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_r1_mean_q_raw</td>
+<td>Float</td>
+<td>The average quality of forward reads as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_r1_mean_readlength_clean</td>
+<td>Float</td>
+<td>The average read length of forward reads after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_r1_mean_readlength_raw</td>
+<td>Float</td>
+<td>The average read length of forward reads as calculated by fastq_scan</td>
 </tr>
 <tr>
 <td>fastq_scan_raw1_json</td>
@@ -21778,9 +21873,29 @@
 <td>The version of GenoFLU used</td>
 </tr>
 <tr>
+<td>irma_all_deletions_tsv</td>
+<td>File</td>
+<td>Concatenated TSV file of all deletions identified by IRMA</td>
+</tr>
+<tr>
+<td>irma_all_insertions_tsv</td>
+<td>File</td>
+<td>Concatenated TSV file of all insertions identified by IRMA</td>
+</tr>
+<tr>
+<td>irma_all_snvs_tsv</td>
+<td>File</td>
+<td>Concatenated TSV file of all SNVs identified by IRMA</td>
+</tr>
+<tr>
 <td>irma_assembly_fasta_concatenated</td>
 <td>File</td>
 <td>Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry</td>
+</tr>
+<tr>
+<td>irma_bams</td>
+<td>Array[File]</td>
+<td>Aligned reads from IRMA</td>
 </tr>
 <tr>
 <td>irma_docker</td>
@@ -21831,6 +21946,11 @@
 <td>irma_pb2_segment_fasta</td>
 <td>File</td>
 <td>PB2 (Polymerase basic 2) assembly fasta file</td>
+</tr>
+<tr>
+<td>irma_qc_summary_tsv</td>
+<td>File</td>
+<td>TSV file summarizing IRMA quality control metrics</td>
 </tr>
 <tr>
 <td>irma_subtype</td>
