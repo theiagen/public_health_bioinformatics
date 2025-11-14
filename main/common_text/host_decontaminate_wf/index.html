@@ -6433,10 +6433,11 @@
 
 <details class="task">
 <summary><code>host_decontaminate</code>: Host Read Decontamination</summary>
-<p>Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome acquired on-the-fly. The reference host genome can be acquired via <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon input or assembly accession. Host Decontaminate maps inputted reads to the host genome using <code>minimap2</code>, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads. </p>
+<p>Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome that is directly inputted or acquired on-the-fly. The reference host genome can be inputted into the <code>host</code> input field as an assembly file (with <code>is_genome</code> set to "true"), acquired via <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon input, or assembly accession (with <code>is_accession</code> set to "true"). Host Decontaminate maps inputted reads to the host genome using <code>minimap2</code>, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads. </p>
 <p>The detailed steps and tasks are as follows:</p>
-<details class="toggle">
-<summary>Taxonomic Identification</summary>
+<details class="task">
+<summary><code>datasets_genome_length</code></summary>
+<p>The <code>datasets_genome_length</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to acquire genome length metadata for an inputted taxon and retrieve a top reference accession. This task generates a summary file of all successful hits to the input <code>taxon</code>, which includes each genome's accession number, completeness status, genome length, source, and other relevant metadata. The task will then calculate the average expected genome length in basepairs for the input <code>taxon</code>.</p>
 <details class="dna">
 <summary><code>taxon</code> input parameter</summary>
 <p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
@@ -6646,7 +6647,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 14, 2025 23:34:46 UTC">2025-11-14</span>
   </span>
 
     

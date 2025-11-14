@@ -173,6 +173,14 @@
          <lastmod>2025-11-14</lastmod>
     </url>
     <url>
+         <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/estimate_genome_length_task/</loc>
+         <lastmod>2025-11-14</lastmod>
+    </url>
+    <url>
+         <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/ete4_identify_task/</loc>
+         <lastmod>2025-11-14</lastmod>
+    </url>
+    <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/extract_clade_mutations_task/</loc>
          <lastmod>2025-11-14</lastmod>
     </url>
@@ -338,10 +346,6 @@
     </url>
     <url>
          <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/ncbi_datasets_task/</loc>
-         <lastmod>2025-11-14</lastmod>
-    </url>
-    <url>
-         <loc>https://theiagen.github.io/public_health_bioinformatics/main/common_text/ncbi_identify_task/</loc>
          <lastmod>2025-11-14</lastmod>
     </url>
     <url>

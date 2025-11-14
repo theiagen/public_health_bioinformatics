@@ -7175,7 +7175,7 @@
 </details>
 <details class="dna">
 <summary><code>host</code> optional input parameter</summary>
-<p>The <code>host</code> input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task <code>is_accession</code> (ONT) or Read_QC_Trim_PE <code>host_is_accession</code> (Illumina) boolean populated as <code>true</code>.</p>
+<p>The <code>host</code> input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon, host genome assembly FASTA, or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using a genome assembly or accession, these inputs must be coupled with the Host Decontaminate task <code>is_genome</code>/<code>is_accession</code> (ONT) or Read QC Trim PE <code>host_is_genome</code>/<code>host_is_accession</code> (Illumina) boolean populated as "true".</p>
 </details>
 <details class="dna">
 <summary><code>extract_unclassified</code> optional input parameter</summary>
@@ -7202,7 +7202,7 @@
 </details>
 <details class="dna">
 <summary><code>host</code> optional input parameter</summary>
-<p>The <code>host</code> input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task <code>is_accession</code> (ONT) or Read_QC_Trim_PE <code>host_is_accession</code> (Illumina) boolean populated as <code>true</code>.</p>
+<p>The <code>host</code> input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon, host genome assembly FASTA, or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using a genome assembly or accession, these inputs must be coupled with the Host Decontaminate task <code>is_genome</code>/<code>is_accession</code> (ONT) or Read QC Trim PE <code>host_is_genome</code>/<code>host_is_accession</code> (Illumina) boolean populated as "true".</p>
 </details>
 <details class="dna">
 <summary><code>extract_unclassified</code> optional input parameter</summary>
@@ -8719,6 +8719,78 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td>Optional</td>
 </tr>
 <tr>
+<td>est_genome_length</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>est_genome_length</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>est_genome_length</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker image to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>est_genome_length</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>est_genome_length</td>
+<td><strong>summary_limit</strong></td>
+<td>Int</td>
+<td>Maximum number of genomes to query</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ete4_identify</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ete4_identify</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ete4_identify</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker image to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/ete4:4.3.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ete4_identify</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>ivar_variants</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -9303,118 +9375,6 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td>Optional</td>
 </tr>
 <tr>
-<td>ncbi_datasets</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_datasets</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>50</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_datasets</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_datasets</td>
-<td><strong>include_gbff</strong></td>
-<td>Boolean</td>
-<td>True/False to include gbff files in the output</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_datasets</td>
-<td><strong>include_gff3</strong></td>
-<td>Boolean</td>
-<td>True/False to include gff3 files in the output</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_datasets</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>complete</strong></td>
-<td>Boolean</td>
-<td>Only query genomes labeled complete</td>
-<td>True</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>50</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>refseq</strong></td>
-<td>Boolean</td>
-<td>Only query RefSeq genomes</td>
-<td>True</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>summary_limit</strong></td>
-<td>Int</td>
-<td>Maximum number of genomes to return in the summary</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>use_ncbi_virus</strong></td>
-<td>Boolean</td>
-<td>Set to true to download from NCBI Virus Datasets</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>quast_denovo</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -9576,6 +9536,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>host_is_genome</strong></td>
+<td>Boolean</td>
+<td>Inputted "host" is a genome URI</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>host_refseq</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
@@ -9712,6 +9680,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 </tr>
 <tr>
 <td>skani</td>
+<td><strong>acc2taxon_map</strong></td>
+<td>File</td>
+<td>Tab-delimited map between reference genome accessions and their affiliated taxon</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251107/viral_accession2taxon_20251107.tsv</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>skani</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -9732,6 +9708,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>skani</td>
+<td><strong>fasta_dir</strong></td>
+<td>String</td>
+<td>Reference genome database base directory</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251107/fna/</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10297,6 +10281,78 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td>Optional</td>
 </tr>
 <tr>
+<td>est_genome_length</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>est_genome_length</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>est_genome_length</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker image to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>est_genome_length</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>est_genome_length</td>
+<td><strong>summary_limit</strong></td>
+<td>Int</td>
+<td>Maximum number of genomes to query</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ete4_identify</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ete4_identify</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ete4_identify</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker image to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/ete4:4.3.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ete4_identify</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>fasta_utilities</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -10453,6 +10509,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td><strong>is_accession</strong></td>
 <td>Boolean</td>
 <td>Inputted "host" is an accession</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>host_decontaminate</td>
+<td><strong>is_genome</strong></td>
+<td>Boolean</td>
+<td>Inputted "host" is an assembly FASTA</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -11265,118 +11329,6 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td>Optional</td>
 </tr>
 <tr>
-<td>ncbi_datasets</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_datasets</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>50</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_datasets</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_datasets</td>
-<td><strong>include_gbff</strong></td>
-<td>Boolean</td>
-<td>True/False to include gbff files in the output</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_datasets</td>
-<td><strong>include_gff3</strong></td>
-<td>Boolean</td>
-<td>True/False to include gff3 files in the output</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_datasets</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>complete</strong></td>
-<td>Boolean</td>
-<td>Only query genomes labeled complete</td>
-<td>True</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>50</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>refseq</strong></td>
-<td>Boolean</td>
-<td>Only query RefSeq genomes</td>
-<td>True</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>summary_limit</strong></td>
-<td>Int</td>
-<td>Maximum number of genomes to return in the summary</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>use_ncbi_virus</strong></td>
-<td>Boolean</td>
-<td>Set to true to download from NCBI Virus Datasets</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>ncbi_scrub_se</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -11690,6 +11642,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 </tr>
 <tr>
 <td>skani</td>
+<td><strong>acc2taxon_map</strong></td>
+<td>File</td>
+<td>Tab-delimited map between reference genome accessions and their affiliated taxon</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251107/viral_accession2taxon_20251107.tsv</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>skani</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -11714,6 +11674,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 </tr>
 <tr>
 <td>skani</td>
+<td><strong>fasta_dir</strong></td>
+<td>String</td>
+<td>Reference genome database base directory</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251107/fna/</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>skani</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -11725,7 +11693,7 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td><strong>skani_db</strong></td>
 <td>File</td>
 <td>Skani database file</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20250613.tar</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251107.tar</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11979,6 +11947,46 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td>Optional</td>
 </tr>
 <tr>
+<td>ete4_identify</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ete4_identify</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ete4_identify</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker image to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/ete4:4.3.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ete4_identify</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ete4_identify</td>
+<td><strong>rank</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>export_taxon_table</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -12131,70 +12139,6 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td>Optional</td>
 </tr>
 <tr>
-<td>ncbi_identify</td>
-<td><strong>complete</strong></td>
-<td>Boolean</td>
-<td>Only query genomes labeled complete</td>
-<td>True</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>50</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>rank</strong></td>
-<td>String</td>
-<td>Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>refseq</strong></td>
-<td>Boolean</td>
-<td>Only query RefSeq genomes</td>
-<td>True</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>summary_limit</strong></td>
-<td>Int</td>
-<td>Maximum number of genomes to return in the summary</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>read_QC_trim</td>
 <td><strong>adapters</strong></td>
 <td>File</td>
@@ -12255,6 +12199,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td><strong>host_is_accession</strong></td>
 <td>Boolean</td>
 <td>Inputted "host" is an accession</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>host_is_genome</strong></td>
+<td>Boolean</td>
+<td>Inputted "host" is a genome URI</td>
 <td>False</td>
 <td>Optional</td>
 </tr>
@@ -12384,6 +12336,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
 <td>True</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaviral_illumina_pe</td>
+<td><strong>genome_length</strong></td>
+<td>Int</td>
+<td>Expected genome length of taxon of interest</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12567,8 +12527,8 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <details class="toggle">
 <summary>Taxonomic Identification</summary>
 <details class="task">
-<summary><code>ncbi_identify</code></summary>
-<p>The <code>ncbi_identify</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxonomy and desired taxonomic rank. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including <strong>read classification and targeted read extraction</strong>. This task also generates a comprehensive summary file of all successful hits to the input <code>taxon</code>, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input <code>taxon</code>.</p>
+<summary><code>ete4_identify</code></summary>
+<p>The <code>ete4_identify</code> task parses the NCBI taxonomy hierarchy from a user's inputted taxonomy and desired taxonomic rank. This task returns a taxon ID, name, and rank, which facilitates downstream functions, including <strong>read classification, targeted read extraction, and genomic characterization modules</strong>.</p>
 <details class="dna">
 <summary><code>taxon</code> input parameter</summary>
 <p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
@@ -12587,6 +12547,43 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <li>If your input <code>taxon</code> is <code>Lyssavirus rabies</code> (species level) with <code>rank</code> set to <code>family</code>, the task will return information for the family of <code>Lyssavirus rabies</code>: taxon ID for Rhabdoviridae (11270), name "Rhabdoviridae", and rank "family".</li>
 <li>If your input <code>taxon</code> is <code>Lyssavirus</code> (genus level) with <code>rank</code> set to <code>species</code>, the task will fail because it cannot determine species information from an inputted genus.</li>
 </ul>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">ete4 Identify Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_ete4_taxon_id.wdl">task_ete4_taxon_id.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/datasets">ete4 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/">NCBI Datasets Documentation on NCBI</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1038/s41597-024-03571-y">Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>datasets_genome_length</code></summary>
+<p>The <code>datasets_genome_length</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to acquire genome length metadata for an inputted taxon and retrieve a top reference accession. This task generates a summary file of all successful hits to the input <code>taxon</code>, which includes each genome's accession number, completeness status, genome length, source, and other relevant metadata. The task will then calculate the average expected genome length in basepairs for the input <code>taxon</code>.</p>
+<details class="dna">
+<summary><code>taxon</code> input parameter</summary>
+<p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">NCBI Datasets Technical Details</p>
@@ -12856,29 +12853,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 </div>
 <details class="task">
 <summary><code>host_decontaminate</code>: Host Read Decontamination</summary>
-<p>Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome acquired on-the-fly. The reference host genome can be acquired via <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon input or assembly accession. Host Decontaminate maps inputted reads to the host genome using <code>minimap2</code>, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads. </p>
+<p>Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome that is directly inputted or acquired on-the-fly. The reference host genome can be inputted into the <code>host</code> input field as an assembly file (with <code>is_genome</code> set to "true"), acquired via <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon input, or assembly accession (with <code>is_accession</code> set to "true"). Host Decontaminate maps inputted reads to the host genome using <code>minimap2</code>, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads. </p>
 <p>The detailed steps and tasks are as follows:</p>
-<details class="toggle">
-<summary>Taxonomic Identification</summary>
-<p>The <code>ncbi_identify</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxonomy and desired taxonomic rank. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including <strong>read classification and targeted read extraction</strong>. This task also generates a comprehensive summary file of all successful hits to the input <code>taxon</code>, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input <code>taxon</code>.</p>
+<details class="task">
+<summary><code>datasets_genome_length</code></summary>
+<p>The <code>datasets_genome_length</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to acquire genome length metadata for an inputted taxon and retrieve a top reference accession. This task generates a summary file of all successful hits to the input <code>taxon</code>, which includes each genome's accession number, completeness status, genome length, source, and other relevant metadata. The task will then calculate the average expected genome length in basepairs for the input <code>taxon</code>.</p>
 <details class="dna">
 <summary><code>taxon</code> input parameter</summary>
 <p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
-</details>
-<details class="dna">
-<summary><code>rank</code> a.k.a <code>read_extraction_rank</code> input parameter</summary>
-<p>Valid options include: <code>"species"</code>, <code>"genus"</code>, <code>"family"</code>, <code>"order"</code>, <code>"class"</code>, <code>"phylum"</code>, <code>"kingdom"</code>, or <code>"domain"</code>. By default it is set to <code>"family"</code>. This parameter filters metadata to report information only at the taxonomic <code>rank</code> specified by the user, regardless of the taxonomic rank implied by the original input <code>taxon</code>.</p>
-</details>
-<details class="warning" open="open">
-<summary>Important</summary>
-<ul>
-<li>The <code>rank</code> parameter <strong>must</strong> specify a taxonomic rank that is <mark>equal to or above</mark> the input taxon's taxonomic rank.</li>
-</ul>
-<p><strong>Examples:</strong></p>
-<ul>
-<li>If your input <code>taxon</code> is <code>Lyssavirus rabies</code> (species level) with <code>rank</code> set to <code>family</code>, the task will return information for the family of <code>Lyssavirus rabies</code>: taxon ID for Rhabdoviridae (11270), name "Rhabdoviridae", and rank "family".</li>
-<li>If your input <code>taxon</code> is <code>Lyssavirus</code> (genus level) with <code>rank</code> set to <code>species</code>, the task will fail because it cannot determine species information from an inputted genus.</li>
-</ul>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">NCBI Datasets Technical Details</p>
@@ -13226,6 +13208,12 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 </thead>
 <tbody>
 <tr>
+<td><code>estimated_genome_length</code></td>
+<td>Default genome_length is set to 12,500, which approximates the median RNA virus length</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
 <td><code>min_reads</code></td>
 <td>A sample will fail the read screening task if its total number of reads is less than or equal to <code>min_reads</code></td>
 <td>50</td>
@@ -13294,7 +13282,6 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <li><code>checkv_denovo</code></li>
 <li><code>quast_denovo</code></li>
 <li><code>skani</code></li>
-<li><code>ncbi_datasets</code></li>
 </ul>
 </details>
 <details class="task">
@@ -13419,40 +13406,6 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <tr>
 <td>Original Publication(s)</td>
 <td><a href="https://doi.org/10.1038/s41592-023-02018-3">Fast and robust metagenomic sequence comparison through sparse chaining with skani</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>ncbi_datasets</code></summary>
-<p>The <a href="https://www.ncbi.nlm.nih.gov/datasets/"><code>NCBI Datasets</code></a> task downloads specified assemblies from NCBI using either the <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/">virus</a> or <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/">genome</a> (for all other genome types) package as appropriate.</p>
-<p>This task uses the accession ID output from the <code>skani</code> task to download the the most closely related reference genome to the input assembly. The downloaded reference is then used for downstream analysis, including variant calling and consensus generation.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">NCBI Datasets Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl">task_ncbi_datasets.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/ncbi/datasets">NCBI Datasets on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/">NCBI Datasets Documentation on NCBI</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1038/s41597-024-03571-y">Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets</a></td>
 </tr>
 </tbody>
 </table>
@@ -13743,8 +13696,8 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <details class="toggle">
 <summary>Taxonomic Identification</summary>
 <details class="task">
-<summary><code>ncbi_identify</code></summary>
-<p>The <code>ncbi_identify</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxonomy and desired taxonomic rank. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including <strong>read classification and targeted read extraction</strong>. This task also generates a comprehensive summary file of all successful hits to the input <code>taxon</code>, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input <code>taxon</code>.</p>
+<summary><code>ete4_identify</code></summary>
+<p>The <code>ete4_identify</code> task parses the NCBI taxonomy hierarchy from a user's inputted taxonomy and desired taxonomic rank. This task returns a taxon ID, name, and rank, which facilitates downstream functions, including <strong>read classification, targeted read extraction, and genomic characterization modules</strong>.</p>
 <details class="dna">
 <summary><code>taxon</code> input parameter</summary>
 <p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
@@ -13763,6 +13716,43 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <li>If your input <code>taxon</code> is <code>Lyssavirus rabies</code> (species level) with <code>rank</code> set to <code>family</code>, the task will return information for the family of <code>Lyssavirus rabies</code>: taxon ID for Rhabdoviridae (11270), name "Rhabdoviridae", and rank "family".</li>
 <li>If your input <code>taxon</code> is <code>Lyssavirus</code> (genus level) with <code>rank</code> set to <code>species</code>, the task will fail because it cannot determine species information from an inputted genus.</li>
 </ul>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">ete4 Identify Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_ete4_taxon_id.wdl">task_ete4_taxon_id.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/datasets">ete4 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/">NCBI Datasets Documentation on NCBI</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1038/s41597-024-03571-y">Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>datasets_genome_length</code></summary>
+<p>The <code>datasets_genome_length</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to acquire genome length metadata for an inputted taxon and retrieve a top reference accession. This task generates a summary file of all successful hits to the input <code>taxon</code>, which includes each genome's accession number, completeness status, genome length, source, and other relevant metadata. The task will then calculate the average expected genome length in basepairs for the input <code>taxon</code>.</p>
+<details class="dna">
+<summary><code>taxon</code> input parameter</summary>
+<p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">NCBI Datasets Technical Details</p>
@@ -13925,29 +13915,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 </details>
 <details class="task">
 <summary><code>host_decontaminate</code>: Host Read Decontamination</summary>
-<p>Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome acquired on-the-fly. The reference host genome can be acquired via <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon input or assembly accession. Host Decontaminate maps inputted reads to the host genome using <code>minimap2</code>, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads. </p>
+<p>Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome that is directly inputted or acquired on-the-fly. The reference host genome can be inputted into the <code>host</code> input field as an assembly file (with <code>is_genome</code> set to "true"), acquired via <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon input, or assembly accession (with <code>is_accession</code> set to "true"). Host Decontaminate maps inputted reads to the host genome using <code>minimap2</code>, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads. </p>
 <p>The detailed steps and tasks are as follows:</p>
-<details class="toggle">
-<summary>Taxonomic Identification</summary>
-<p>The <code>ncbi_identify</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to search the NCBI Viral Genome Database and acquire taxonomic metadata from a user's inputted taxonomy and desired taxonomic rank. This task will always return a taxon ID, name, and rank, and it facilitates multiple downstream functions, including <strong>read classification and targeted read extraction</strong>. This task also generates a comprehensive summary file of all successful hits to the input <code>taxon</code>, which includes each taxon's accession number, completeness status, genome length, source, and other relevant metadata. Based on this summary, the task also calculates the average expected genome size for the input <code>taxon</code>.</p>
+<details class="task">
+<summary><code>datasets_genome_length</code></summary>
+<p>The <code>datasets_genome_length</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to acquire genome length metadata for an inputted taxon and retrieve a top reference accession. This task generates a summary file of all successful hits to the input <code>taxon</code>, which includes each genome's accession number, completeness status, genome length, source, and other relevant metadata. The task will then calculate the average expected genome length in basepairs for the input <code>taxon</code>.</p>
 <details class="dna">
 <summary><code>taxon</code> input parameter</summary>
 <p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
-</details>
-<details class="dna">
-<summary><code>rank</code> a.k.a <code>read_extraction_rank</code> input parameter</summary>
-<p>Valid options include: <code>"species"</code>, <code>"genus"</code>, <code>"family"</code>, <code>"order"</code>, <code>"class"</code>, <code>"phylum"</code>, <code>"kingdom"</code>, or <code>"domain"</code>. By default it is set to <code>"family"</code>. This parameter filters metadata to report information only at the taxonomic <code>rank</code> specified by the user, regardless of the taxonomic rank implied by the original input <code>taxon</code>.</p>
-</details>
-<details class="warning" open="open">
-<summary>Important</summary>
-<ul>
-<li>The <code>rank</code> parameter <strong>must</strong> specify a taxonomic rank that is <mark>equal to or above</mark> the input taxon's taxonomic rank.</li>
-</ul>
-<p><strong>Examples:</strong></p>
-<ul>
-<li>If your input <code>taxon</code> is <code>Lyssavirus rabies</code> (species level) with <code>rank</code> set to <code>family</code>, the task will return information for the family of <code>Lyssavirus rabies</code>: taxon ID for Rhabdoviridae (11270), name "Rhabdoviridae", and rank "family".</li>
-<li>If your input <code>taxon</code> is <code>Lyssavirus</code> (genus level) with <code>rank</code> set to <code>species</code>, the task will fail because it cannot determine species information from an inputted genus.</li>
-</ul>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">NCBI Datasets Technical Details</p>
@@ -14197,6 +14172,12 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 </tr>
 </thead>
 <tbody>
+<tr>
+<td><code>estimated_genome_length</code></td>
+<td>Default genome_length is set to 12,500, which approximates the median RNA virus length</td>
+<td></td>
+<td></td>
+</tr>
 <tr>
 <td><code>min_reads</code></td>
 <td>A sample will fail the read screening task if its total number of reads is less than or equal to <code>min_reads</code></td>
@@ -14480,40 +14461,6 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <tr>
 <td>Original Publication(s)</td>
 <td><a href="https://doi.org/10.1038/s41592-023-02018-3">Fast and robust metagenomic sequence comparison through sparse chaining with skani</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>ncbi_datasets</code></summary>
-<p>The <a href="https://www.ncbi.nlm.nih.gov/datasets/"><code>NCBI Datasets</code></a> task downloads specified assemblies from NCBI using either the <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/">virus</a> or <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/">genome</a> (for all other genome types) package as appropriate.</p>
-<p>This task uses the accession ID output from the <code>skani</code> task to download the the most closely related reference genome to the input assembly. The downloaded reference is then used for downstream analysis, including variant calling and consensus generation.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">NCBI Datasets Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl">task_ncbi_datasets.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/ncbi/datasets">NCBI Datasets on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/">NCBI Datasets Documentation on NCBI</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1038/s41597-024-03571-y">Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets</a></td>
 </tr>
 </tbody>
 </table>
@@ -15207,8 +15154,60 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <details class="toggle">
 <summary>Taxonomic Identification</summary>
 <details class="task">
-<summary><code>ncbi_identify</code></summary>
-<p>The <code>ncbi_identify</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to search the NCBI Viral Genome Database and acquire taxonomic metadata from the taxonomy ID selected for extraction and assembly. This will return the taxonomy name that will facilitate downstream functions such as characterization and identification.</p>
+<summary><code>ete4_identify</code></summary>
+<p>The <code>ete4_identify</code> task parses the NCBI taxonomy hierarchy from a user's inputted taxonomy and desired taxonomic rank. This task returns a taxon ID, name, and rank, which facilitates downstream functions, including <strong>read classification, targeted read extraction, and genomic characterization modules</strong>.</p>
+<details class="dna">
+<summary><code>taxon</code> input parameter</summary>
+<p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
+</details>
+<details class="dna">
+<summary><code>rank</code> a.k.a <code>read_extraction_rank</code> input parameter</summary>
+<p>Valid options include: <code>"species"</code>, <code>"genus"</code>, <code>"family"</code>, <code>"order"</code>, <code>"class"</code>, <code>"phylum"</code>, <code>"kingdom"</code>, or <code>"domain"</code>. By default it is set to <code>"family"</code>. This parameter filters metadata to report information only at the taxonomic <code>rank</code> specified by the user, regardless of the taxonomic rank implied by the original input <code>taxon</code>.</p>
+</details>
+<details class="warning" open="open">
+<summary>Important</summary>
+<ul>
+<li>The <code>rank</code> parameter <strong>must</strong> specify a taxonomic rank that is <mark>equal to or above</mark> the input taxon's taxonomic rank.</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul>
+<li>If your input <code>taxon</code> is <code>Lyssavirus rabies</code> (species level) with <code>rank</code> set to <code>family</code>, the task will return information for the family of <code>Lyssavirus rabies</code>: taxon ID for Rhabdoviridae (11270), name "Rhabdoviridae", and rank "family".</li>
+<li>If your input <code>taxon</code> is <code>Lyssavirus</code> (genus level) with <code>rank</code> set to <code>species</code>, the task will fail because it cannot determine species information from an inputted genus.</li>
+</ul>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">ete4 Identify Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_ete4_taxon_id.wdl">task_ete4_taxon_id.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/datasets">ete4 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/">NCBI Datasets Documentation on NCBI</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1038/s41597-024-03571-y">Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>datasets_genome_length</code></summary>
+<p>The <code>datasets_genome_length</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to acquire genome length metadata for an inputted taxon and retrieve a top reference accession. This task generates a summary file of all successful hits to the input <code>taxon</code>, which includes each genome's accession number, completeness status, genome length, source, and other relevant metadata. The task will then calculate the average expected genome length in basepairs for the input <code>taxon</code>.</p>
 <details class="dna">
 <summary><code>taxon</code> input parameter</summary>
 <p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
@@ -15245,7 +15244,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </details>
 </details>
 <div class="admonition tip">
-<p>TheiaViral_Panel utilizes the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single sample to undergo the same viral assembly as other samples. The following tasks are performed for each taxon ID that passes the read binning threshold:</p>
+<p>TheiaViral_Panel uses the assembly and characterization tasks of TheiaViral_Illumina_PE. This allows for multiple binned taxon IDs from a single sample to undergo the same viral assembly as other samples. The following tasks are performed for each taxon ID that passes the read binning threshold:</p>
 <details class="toggle">
 <summary><em>De novo</em> Assembly and Reference Selection</summary>
 <details class="task">
@@ -15370,40 +15369,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <tr>
 <td>Original Publication(s)</td>
 <td><a href="https://doi.org/10.1038/s41592-023-02018-3">Fast and robust metagenomic sequence comparison through sparse chaining with skani</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>ncbi_datasets</code></summary>
-<p>The <a href="https://www.ncbi.nlm.nih.gov/datasets/"><code>NCBI Datasets</code></a> task downloads specified assemblies from NCBI using either the <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/">virus</a> or <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/">genome</a> (for all other genome types) package as appropriate.</p>
-<p>This task uses the accession ID output from the <code>skani</code> task to download the the most closely related reference genome to the input assembly. The downloaded reference is then used for downstream analysis, including variant calling and consensus generation.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">NCBI Datasets Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl">task_ncbi_datasets.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/ncbi/datasets">NCBI Datasets on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/">NCBI Datasets Documentation on NCBI</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1038/s41597-024-03571-y">Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets</a></td>
 </tr>
 </tbody>
 </table>
@@ -15731,20 +15696,21 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </div>
 </div>
 <h4 id="taxa-specific-tasks">Taxa-Specific Tasks<a class="headerlink" href="#taxa-specific-tasks" title="Permanent link">¶</a></h4>
-<p>The TheiaViral workflows activate taxa-specific sub-workflows after the identification of relevant taxa. These characterization modules are activated by populating <code>taxon</code> with an <em>exact</em> match to a taxon listed in parentheses below (case-insensitive):</p>
+<p>The TheiaViral workflows activate taxa-specific sub-workflows after the identification of relevant taxa. These characterization modules are activated by populating <code>taxon</code> with an <em>exact</em> match to a compatible taxon. We recommend using the taxon ID integer because these can be simpler. Compatible taxon codes are listed in parentheses below (case-insensitive):</p>
 <ul>
-<li><strong>SARS-CoV-2</strong> (<code>"2697049"</code>, <code>"3418604"</code>, <code>"sars-cov-2"</code>)</li>
-<li><strong>Monkeypox virus</strong> (<code>"10244"</code>, <code>"mpxv"</code>, <code>"mpox"</code>, <code>"monkeypox virus"</code>)</li>
-<li><strong>Human Immunodeficiency Virus 1</strong> (<code>"11676"</code>, <code>"hiv1"</code>)</li>
-<li><strong>Human Immunodeficiency Virus 2</strong> (<code>"11709"</code>, <code>"hiv2"</code>)</li>
-<li><strong>West Nile Virus</strong> (<code>"11082"</code>, <code>"wnv"</code>, <code>"west nile virus"</code>)</li>
-<li><strong>Influenza</strong> (<code>"11320"</code>, <code>"11309"</code>, <code>"11520"</code>, <code>"flu"</code>, <code>"influenza"</code>)</li>
-<li><strong>RSV-A</strong> (<code>"208893"</code>, <code>"hrsv-a"</code>)</li>
-<li><strong>RSV-B</strong> (<code>"208895"</code>, <code>"hrsv-b"</code>)</li>
+<li><strong>SARS-CoV-2</strong> (<code>"2697049"</code>, <code>"severe acute respiratory syndrome coronavirus 2"</code>)</li>
+<li><strong>Monkeypox virus</strong> (<code>"10244"</code>, <code>"mpox"</code>, <code>"monkeypox virus"</code>)</li>
+<li><strong>Human Immunodeficiency Virus 1</strong> (<code>"11676"</code>, <code>"human immunodeficiency virus 1"</code>)</li>
+<li><strong>Human Immunodeficiency Virus 2</strong> (<code>"11709"</code>, <code>"human immunodeficiency virus 2"</code>)</li>
+<li><strong>West Nile Virus</strong> (<code>"11082"</code>, <code>"west nile virus"</code>)</li>
+<li><strong>Influenza A</strong> (<code>"11320"</code>, <code>"influenza a virus"</code>)</li>
+<li><strong>Influenza B</strong> (<code>"11520"</code>, <code>"influenza b virus"</code>)</li>
+<li><strong>RSV-A</strong> (<code>"208893"</code>, <code>"human respiratory syncytial virus a"</code>)</li>
+<li><strong>RSV-B</strong> (<code>"208895"</code>, <code>"human respiratory syncytial virus b"</code>)</li>
 <li><strong>Measles</strong> (<code>"11234"</code>, <code>"measles"</code>)</li>
-<li><strong>Rabies</strong> (<code>"11286"</code>, <code>"11292"</code>, <code>"rabies"</code>, <code>"lyssavirus rabies"</code>, <code>"lyssavirus"</code>)</li>
+<li><strong>Rabies</strong> (<code>"11292"</code>, <code>"lyssavirus rabies"</code>)</li>
 <li><strong>Mumps</strong> (<code>"2560602"</code>, <code>"mumps virus"</code>, <code>"Mumps orthorubulavirus"</code>)</li>
-<li><strong>Rubella</strong> (<code>"11041"</code>, <code>"rubella virus"</code>, <code>"Rubella virus"</code>)</li>
+<li><strong>Rubella</strong> (<code>"11041"</code>, <code>"rubella virus"</code>)</li>
 </ul>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">¶</a></h3>
 <div class="tabbed-set tabbed-alternate" data-tabs="5:3"><input checked="checked" id="theiaviral_illumina_pe_4" name="__tabbed_5" type="radio"><input id="theiaviral_ont_4" name="__tabbed_5" type="radio"><input id="theiaviral_panel_4" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="theiaviral_illumina_pe_4">TheiaViral_Illumina_PE</label><label for="theiaviral_ont_4">TheiaViral_ONT</label><label for="theiaviral_panel_4">TheiaViral_Panel</label></div>
@@ -15971,6 +15937,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Percent of reference genome covered in consensus assembly</td>
 </tr>
 <tr>
+<td>datasets_genome_length_docker</td>
+<td>String</td>
+<td>The Docker container used for the task</td>
+</tr>
+<tr>
+<td>datasets_genome_length_version</td>
+<td>String</td>
+<td>The version of NCBI Datasets used for analysis</td>
+</tr>
+<tr>
 <td>dehost_wf_dehost_read1</td>
 <td>File</td>
 <td>Reads that did not map to host</td>
@@ -16034,6 +16010,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>dehost_wf_host_percent_mapped_reads</td>
 <td>Float</td>
 <td>Percentage of reads mapped to host reference genome</td>
+</tr>
+<tr>
+<td>ete4_docker</td>
+<td>String</td>
+<td>Docker image used for ETE4 taxonomy parsing</td>
+</tr>
+<tr>
+<td>ete4_version</td>
+<td>String</td>
+<td>The version of ETE4 used</td>
 </tr>
 <tr>
 <td>fastp_html_report</td>
@@ -16241,49 +16227,9 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Standardized organism name used for characterization</td>
 </tr>
 <tr>
-<td>ncbi_datasets_docker</td>
+<td>ncbi_read_extraction_rank</td>
 <td>String</td>
-<td>Docker image used for NCBI datasets</td>
-</tr>
-<tr>
-<td>ncbi_datasets_version</td>
-<td>String</td>
-<td>Version of NCBI datasets used</td>
-</tr>
-<tr>
-<td>ncbi_identify_accession</td>
-<td>String</td>
-<td>NCBI accession ID of identified taxon</td>
-</tr>
-<tr>
-<td>ncbi_identify_avg_genome_length</td>
-<td>Int</td>
-<td>Average genome length from NCBI taxon summary</td>
-</tr>
-<tr>
-<td>ncbi_identify_genome_summary_tsv</td>
-<td>File</td>
-<td>TSV file with genome summary from NCBI</td>
-</tr>
-<tr>
-<td>ncbi_identify_read_extraction_rank</td>
-<td>String</td>
-<td>Taxonomic rank used for read extraction</td>
-</tr>
-<tr>
-<td>ncbi_identify_taxon_id</td>
-<td>String</td>
-<td>NCBI taxonomy ID of identified organism</td>
-</tr>
-<tr>
-<td>ncbi_identify_taxon_name</td>
-<td>String</td>
-<td>Name of identified taxon</td>
-</tr>
-<tr>
-<td>ncbi_identify_taxon_summary_tsv</td>
-<td>File</td>
-<td>TSV file with taxa specific summary from NCBI</td>
+<td>Read extraction rank used</td>
 </tr>
 <tr>
 <td>ncbi_scrub_docker</td>
@@ -16294,6 +16240,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>ncbi_scrub_human_spots_removed</td>
 <td>Int</td>
 <td>Number of spots removed (or masked)</td>
+</tr>
+<tr>
+<td>ncbi_taxon_id</td>
+<td>String</td>
+<td>NCBI taxonomy ID of inputted organism following rank extraction</td>
+</tr>
+<tr>
+<td>ncbi_taxon_name</td>
+<td>String</td>
+<td>NCBI taxonomy name of inputted taxon following rank extraction</td>
 </tr>
 <tr>
 <td>nextclade_aa_dels</td>
@@ -16646,11 +16602,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
 </tr>
 <tr>
-<td>reference_taxon_name</td>
-<td>String</td>
-<td>NCBI derived taxon name from best ANI hit accession</td>
-</tr>
-<tr>
 <td>skani_database</td>
 <td>String</td>
 <td>Database used for Skani</td>
@@ -16659,6 +16610,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>skani_docker</td>
 <td>String</td>
 <td>Docker image used for Skani</td>
+</tr>
+<tr>
+<td>skani_reference_assembly</td>
+<td>File</td>
+<td>Reference genome assembly</td>
+</tr>
+<tr>
+<td>skani_reference_taxon</td>
+<td>String</td>
+<td>Reference taxon name</td>
 </tr>
 <tr>
 <td>skani_report</td>
@@ -16681,11 +16642,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Top ANI score from Skani</td>
 </tr>
 <tr>
-<td>skani_top_ani_fasta</td>
-<td>File</td>
-<td>FASTA file of top ANI match from Skani</td>
-</tr>
-<tr>
 <td>skani_top_query_coverage</td>
 <td>Float</td>
 <td>Query coverage of top match from Skani</td>
@@ -16704,6 +16660,11 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>skani_warning</td>
 <td>String</td>
 <td>Skani warning message</td>
+</tr>
+<tr>
+<td>taxon_avg_genome_length</td>
+<td>String</td>
+<td>Average genome length for taxon obtained from NCBI datasets summary</td>
 </tr>
 <tr>
 <td>theiaviral_illumina_pe_date</td>
@@ -16971,6 +16932,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Percent of reference genome covered in consensus assembly</td>
 </tr>
 <tr>
+<td>datasets_genome_length_docker</td>
+<td>String</td>
+<td>The Docker container used for the task</td>
+</tr>
+<tr>
+<td>datasets_genome_length_version</td>
+<td>String</td>
+<td>The version of NCBI Datasets used for analysis</td>
+</tr>
+<tr>
 <td>dehost_wf_dehost_read1</td>
 <td>File</td>
 <td>Reads that did not map to host</td>
@@ -17029,6 +17000,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>dehost_wf_host_percent_mapped_reads</td>
 <td>Float</td>
 <td>Percentage of reads mapped to host reference genome</td>
+</tr>
+<tr>
+<td>ete4_docker</td>
+<td>String</td>
+<td>Docker image used for ETE4 taxonomy parsing</td>
+</tr>
+<tr>
+<td>ete4_version</td>
+<td>String</td>
+<td>The version of ETE4 used</td>
 </tr>
 <tr>
 <td>fasta_utilities_fai</td>
@@ -17291,59 +17272,9 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Version of nanoq used in analysis</td>
 </tr>
 <tr>
-<td>ncbi_datasets_docker</td>
+<td>ncbi_read_extraction_rank</td>
 <td>String</td>
-<td>Docker image used for NCBI datasets</td>
-</tr>
-<tr>
-<td>ncbi_datasets_version</td>
-<td>String</td>
-<td>Version of NCBI datasets used</td>
-</tr>
-<tr>
-<td>ncbi_identify_accession</td>
-<td>String</td>
-<td>NCBI accession ID of identified taxon</td>
-</tr>
-<tr>
-<td>ncbi_identify_avg_genome_length</td>
-<td>Int</td>
-<td>Average genome length from NCBI taxon summary</td>
-</tr>
-<tr>
-<td>ncbi_identify_docker</td>
-<td>String</td>
-<td>Docker image used for NCBI identify</td>
-</tr>
-<tr>
-<td>ncbi_identify_genome_summary_tsv</td>
-<td>File</td>
-<td>TSV file with genome summary from NCBI</td>
-</tr>
-<tr>
-<td>ncbi_identify_read_extraction_rank</td>
-<td>String</td>
-<td>Taxonomic rank used for read extraction</td>
-</tr>
-<tr>
-<td>ncbi_identify_taxon_id</td>
-<td>String</td>
-<td>NCBI taxonomy ID of identified organism</td>
-</tr>
-<tr>
-<td>ncbi_identify_taxon_name</td>
-<td>String</td>
-<td>Name of identified taxon</td>
-</tr>
-<tr>
-<td>ncbi_identify_taxon_summary_tsv</td>
-<td>File</td>
-<td>TSV file with taxa specific summary from NCBI</td>
-</tr>
-<tr>
-<td>ncbi_identify_version</td>
-<td>String</td>
-<td>Version of NCBI identify tool used</td>
+<td>Read extraction rank used</td>
 </tr>
 <tr>
 <td>ncbi_scrub_docker</td>
@@ -17359,6 +17290,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>ncbi_scrub_read1_dehosted</td>
 <td>File</td>
 <td>Dehosted reads after NCBI scrub</td>
+</tr>
+<tr>
+<td>ncbi_taxon_id</td>
+<td>String</td>
+<td>NCBI taxonomy ID of inputted organism following rank extraction</td>
+</tr>
+<tr>
+<td>ncbi_taxon_name</td>
+<td>String</td>
+<td>NCBI taxonomy name of inputted taxon following rank extraction</td>
 </tr>
 <tr>
 <td>nextclade_aa_dels</td>
@@ -17751,11 +17692,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Clean read screening report TSV depicting read counts, total read base pairs, and estimated genome length</td>
 </tr>
 <tr>
-<td>reference_taxon</td>
-<td>String</td>
-<td>NCBI derived taxon name from best ANI hit accession</td>
-</tr>
-<tr>
 <td>skani_database</td>
 <td>String</td>
 <td>Database used for Skani</td>
@@ -17764,6 +17700,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>skani_docker</td>
 <td>String</td>
 <td>Docker image used for Skani</td>
+</tr>
+<tr>
+<td>skani_reference_assembly</td>
+<td>File</td>
+<td>Reference genome assembly</td>
+</tr>
+<tr>
+<td>skani_reference_taxon</td>
+<td>String</td>
+<td>Reference taxon name</td>
 </tr>
 <tr>
 <td>skani_report</td>
@@ -17786,11 +17732,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Top ANI score from Skani</td>
 </tr>
 <tr>
-<td>skani_top_ani_fasta</td>
-<td>File</td>
-<td>FASTA file of top ANI match from Skani</td>
-</tr>
-<tr>
 <td>skani_top_query_coverage</td>
 <td>Float</td>
 <td>Query coverage of top match from Skani</td>
@@ -17809,6 +17750,11 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>skani_warning</td>
 <td>String</td>
 <td>Skani warning message</td>
+</tr>
+<tr>
+<td>taxon_avg_genome_length</td>
+<td>String</td>
+<td>Average genome length for taxon obtained from NCBI datasets summary</td>
 </tr>
 <tr>
 <td>theiaviral_ont_date</td>
@@ -18285,7 +18231,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 12, 2025 20:00:11 UTC">2025-11-12</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 14, 2025 23:34:46 UTC">2025-11-14</span>
   </span>
 
     
