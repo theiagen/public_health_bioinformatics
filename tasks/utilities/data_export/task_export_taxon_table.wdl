@@ -7,6 +7,7 @@ task export_taxon_table {
     String? terra_project
     String? terra_workspace
     String? samplename
+    Boolean theiaviral_panel = false
 
     Map[String, String?] columns_to_export
 
@@ -37,13 +38,23 @@ task export_taxon_table {
     for index in "${!taxon_array[@]}"; do
       taxon=${taxon_array[$index]}
       table=${table_array[$index]}
-      if [[ "${sample_taxon}" == *"${taxon}"* ]]; then
+      if [[ "${sample_taxon,,}" == *"${taxon,,}"* ]]; then
         sample_table=${table}
         break
       else 
         echo "${sample_taxon} does not match ${taxon}."
       fi
     done
+
+    if [ "~{theiaviral_panel}" == "true" ]; then
+      # check for taxon "other" in taxon table
+      other_species=$(awk -F'\t' '$1=="other" {print $2}' ~{taxon_table})
+
+      if [[ -z "${sample_table}" && -n "${other_species}" ]]; then
+        echo "Assigning Other_Species"
+        sample_table=${other_species}
+      fi
+    fi
 
     if [ -n "${sample_table}" ]; then
 

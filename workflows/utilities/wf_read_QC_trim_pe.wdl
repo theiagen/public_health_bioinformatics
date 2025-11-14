@@ -62,7 +62,7 @@ workflow read_QC_trim_pe {
         read2 = read2,
     }
   }
-  if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta") || ("~{workflow_series}" == "theiaviral")) {
+  if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta") || ("~{workflow_series}" == "theiaviral" ) || ("~{workflow_series}" == "theiaviral_panel")) {
     call ncbi_scrub.ncbi_scrub_pe {
       input:
         samplename = samplename,
@@ -162,20 +162,42 @@ workflow read_QC_trim_pe {
         read2 = bbduk.read2_clean
     }
   }
-  if ("~{workflow_series}" == "theiaviral") {
-    if (defined(host)) {
-      call host_decontaminate_wf.host_decontaminate {
-        input:
-          samplename = samplename,
-          read1 = bbduk.read1_clean,
-          read2 = bbduk.read2_clean,
-          host = select_first([host]),
-          is_accession = host_is_accession,
-          refseq = host_refseq,
-          complete_only = host_complete_only,
-          minimap2_memory = host_decontaminate_mem
-      }
+  if (defined(host) && ("~{workflow_series}" == "theiaviral" || "~{workflow_series}" == "theiaviral_panel")) {
+    call host_decontaminate_wf.host_decontaminate {
+      input:
+        samplename = samplename,
+        read1 = bbduk.read1_clean,
+        read2 = bbduk.read2_clean,
+        host = select_first([host]),
+        is_accession = host_is_accession,
+        refseq = host_refseq,
+        complete_only = host_complete_only,
+        minimap2_memory = host_decontaminate_mem
     }
+  }
+  if ("~{workflow_series}" == "theiaviral_panel") {
+    call kraken.kraken2_standalone as kraken2_standalone_theiaviral_panel_raw {
+      input:
+        samplename = samplename,
+        read1 = read1,
+        read2 = read2,
+        kraken2_db = select_first([kraken_db]),
+        disk_size = kraken_disk_size,
+        memory = kraken_memory,
+        cpu = kraken_cpu
+    }
+    call kraken.kraken2_standalone as kraken2_standalone_theiaviral_panel_clean {
+      input:
+        samplename = samplename,
+        read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
+        read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean]),
+        kraken2_db = select_first([kraken_db]),
+        disk_size = kraken_disk_size,
+        memory = kraken_memory,
+        cpu = kraken_cpu
+    }
+  }
+  if ("~{workflow_series}" == "theiaviral") {
     call kraken.kraken2_standalone as kraken2_standalone_theiaviral {
       input:
         samplename = samplename,
@@ -264,22 +286,31 @@ workflow read_QC_trim_pe {
     File? fastqc_raw2_html = fastqc_raw.read2_fastqc_html
     File? fastqc_clean1_html = fastqc_clean.read1_fastqc_html
     File? fastqc_clean2_html = fastqc_clean.read2_fastqc_html
-    # kraken2 - theiacov and theiaprok
-    String kraken_version = select_first([kraken2_theiacov_raw.version, kraken2_standalone_theiaprok.kraken2_version, kraken2_standalone_theiaviral.kraken2_version, ""])
+    # kraken2 - theiacov, theiaprok, and theiaviral_panel
+    String kraken_version = select_first([kraken2_theiacov_raw.version, kraken2_standalone_theiaprok.kraken2_version, kraken2_standalone_theiaviral.kraken2_version, kraken2_standalone_theiaviral_panel_clean.kraken2_version, ""])
     Float? kraken_human =  kraken2_theiacov_raw.percent_human
+    Float? kraken_human_viral_panel = kraken2_standalone_theiaviral_panel_raw.kraken2_percent_human
     String? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
     String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
-    String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone_theiaprok.kraken2_report, kraken2_standalone_theiaviral.kraken2_report,""])
+    String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone_theiaprok.kraken2_report, kraken2_standalone_theiaviral.kraken2_report, kraken2_standalone_theiaviral_panel_raw.kraken2_report, ""])
     Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
     String? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism
     String? kraken_target_organism_name = target_organism
     File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
-    String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone_theiaprok.kraken2_docker, kraken2_standalone_theiaviral.kraken2_docker, ""])
-    String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone_theiaprok.kraken2_database, kraken2_standalone_theiaviral.kraken2_database, kraken_db_warning, ""])
+    String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone_theiaprok.kraken2_docker, kraken2_standalone_theiaviral.kraken2_docker, kraken2_standalone_theiaviral_panel_clean.kraken2_docker, ""])
+    String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone_theiaprok.kraken2_database, kraken2_standalone_theiaviral.kraken2_database, kraken2_standalone_theiaviral_panel_clean.kraken2_database, kraken_db_warning, ""])
+    # kraken2 - theiaviral_panel
+    Float? kraken_human_clean = kraken2_standalone_theiaviral_panel_clean.kraken2_percent_human
+    File? kraken_report_clean = kraken2_standalone_theiaviral_panel_clean.kraken2_report
+    File? kraken_classified_report = kraken2_standalone_theiaviral_panel_clean.kraken2_classified_report
+    File? kraken_classified_read1 = kraken2_standalone_theiaviral_panel_clean.kraken2_classified_read1
+    File? kraken_classified_read2 = kraken2_standalone_theiaviral_panel_clean.kraken2_classified_read2
+    File? kraken_unclassified_read1 = kraken2_standalone_theiaviral_panel_clean.kraken2_unclassified_read1
+    File? kraken_unclassified_read2 = kraken2_standalone_theiaviral_panel_clean.kraken2_unclassified_read2
     # kraken2 read extract - theiaviral
-    File? kraken2_extracted_read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
-    File? kraken2_extracted_read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
+    File kraken2_extracted_read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
+    File kraken2_extracted_read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
     String? kraken2_extracted_organism_name = kraken2_extract.organism_name
     String? krakentools_docker = kraken2_extract.krakentools_docker
     Boolean? kraken2_success = kraken2_extract.success
