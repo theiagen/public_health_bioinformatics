@@ -573,6 +573,10 @@ consensus_qc	docker	String	The Docker container to use for the task	us-docker.pk
 consensus_qc	genome_length	Int	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, VADR_Update	general
 consensus_qc	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	runtime
 consensus_qc	reference_genome	File	Internal component, do not modify		Optional	VADR_Update	general
+cophylo_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	PhyloCompare	runtime
+cophylo_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	PhyloCompare	runtime
+cophylo_task	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.2.0	Optional	PhyloCompare	docker
+cophylo_task	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	PhyloCompare	runtime
 core_gene_snp_workflow	align	Boolean	Boolean variable that instructs the workflow to generate core and pangenome alignments if "true". If "false", the workflow will produce only a pangenome summary.	True	Optional	Core_Gene_SNP	general
 core_gene_snp_workflow	core_tree	Boolean	Boolean variable that instructs the workflow to create a phylogenetic tree and SNP distance matrix from the core gene alignment. Align must also be set to true.	True	Optional	Core_Gene_SNP	general
 core_gene_snp_workflow	data_summary_column_names	String	A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix); e.g., "amrfinderplus_amr_genes,amrfinderplus_virulence_genes"		Optional	Core_Gene_SNP	general
@@ -1782,13 +1786,15 @@ parse_mapping	disk_size	Int	Amount of storage (in GB) to allocate to the task	10
 parse_mapping	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	Host_Decontaminate, TheiaViral_ONT	docker
 parse_mapping	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Host_Decontaminate, TheiaViral_ONT	runtime
 parse_mapping	min_qual	Int	Minimum quality score for reads to be included in the analysis		Optional	Host_Decontaminate	general
-phylocompare	max_distance	Float	Maximum tolerable distance in validation	0.0	Optional	PhyloCompare	general
 phylocompare	midpoint	Boolean	Root phylogenies at their midpoint	False	Optional	PhyloCompare	general
-phylocompare	outgroups	String	Comma-delimited list of outgroup tip(s) to root upon. Multiple outgroup tips will root on the branch descended from their most recent common ancestor		Optional	PhyloCompare	general
+phylocompare	outgroup	String	Root phylogenies with an outgroup tip		Optional	PhyloCompare	general
+phylocompare	validate	Boolean	Run phylogenetic validation by calculating the distance between two phylogenies' tips and branching order	False	Optional	PhyloCompare	general
 phylovalidate_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	PhyloCompare	runtime
 phylovalidate_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	PhyloCompare	runtime
-phylovalidate_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.8	Optional	PhyloCompare	docker
+phylovalidate_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.2.0	Optional	PhyloCompare	docker
+phylovalidate_task	max_distance	Float	Maximum tolerable distance during validation		Optional	PhyloCompare	general
 phylovalidate_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional 	PhyloCompare	runtime
+phylovalidate_task	resolve_tip_discrepancies	Boolean	Remove tips that are discrepant between trees instead of failing	True	Optional	PhyloCompare	general
 pilon	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaMeta_Illumina_PE	runtime
 pilon	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime
 pilon	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0	Optional	TheiaMeta_Illumina_PE	docker
