@@ -3,8 +3,9 @@ version 1.0
 import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic_task
 import "../../tasks/species_typing/mycobacterium/task_tbprofiler.wdl" as tbprofiler_task
 import "../../tasks/species_typing/mycobacterium/task_tbp_parser.wdl" as tbp_parser_task
-import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken_task
+import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2_task
 import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools_task
+import "../../tasks/species_typing/mycobacterium/task_clockwork.wdl" as clockwork_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow tbprofiler_tngs {
@@ -19,13 +20,13 @@ workflow tbprofiler_tngs {
     
     Boolean run_trimmomatic = true
     Boolean run_kraken2 = false
-    File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_20240112.tar.gz" # THIS IS A MASIVE DB CAUTION
+    File kraken2_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_20240112.tar.gz" # THIS IS A MASIVE DB CAUTION
     Boolean run_clockwork = false
   }
   call versioning.version_capture {
     input:
   }
-  if (run trimmomatic) {
+  if (run_trimmomatic) {
     call trimmomatic_task.trimmomatic_pe {
       input:
         read1 = read1,
@@ -39,15 +40,15 @@ workflow tbprofiler_tngs {
       input:
         read1 = select_first([trimmomatic_pe.read1_trimmed, read1]),
         read2 = select_first([trimmomatic_pe.read2_trimmed, read2]),
-        kraken_db = kraken_db,
+        kraken2_db = kraken2_db,
         samplename = samplename
     }
     call krakentools_task.extract_kraken_reads {
       input:
-        kraken2_output = kraken2.kraken2_output,
+        kraken2_output = kraken2.kraken2_classified_report,
         kraken2_report = kraken2.kraken2_report,
-        read1 = trimmomatic_pe.read1_trimmed,
-        read2 = trimmomatic_pe.read2_trimmed,
+        read1 = select_first([trimmomatic_pe.read1_trimmed, read1]),
+        read2 = select_first([trimmomatic_pe.read2_trimmed, read2]),
         taxon_id = 77643	# MTBC
     }
   }
@@ -89,12 +90,12 @@ workflow tbprofiler_tngs {
     File? kraken2_classified_read2 = kraken2.kraken2_classified_read2
     File? kraken2_unclassified_read1 = kraken2.kraken2_unclassified_read1
     File? kraken2_unclassified_read2 = kraken2.kraken2_unclassified_read2
-    String? kraken2_db = kraken2.kraken2_database
+    String? kraken2_db_used = kraken2.kraken2_database
     # krakentools outputs
     File? krakentools_extracted_read1 = extract_kraken_reads.extracted_read1
     File? krakentools_extracted_read2 = extract_kraken_reads.extracted_read2
     String? krakentools_organism_name = extract_kraken_reads.organism_name
-    String? krakentools_docker = extract_kraken_reads.krakentools
+    String? krakentools_docker = extract_kraken_reads.krakentools_docker
     # clockwork outputs
     File? clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
     File? clockwork_cleaned_read2 = clockwork_decon_reads.clockwork_cleaned_read2
