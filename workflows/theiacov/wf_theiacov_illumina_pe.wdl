@@ -156,7 +156,7 @@ workflow theiacov_illumina_pe {
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {
         call consensus_qc_task.consensus_qc {
           input:
-            assembly_fasta =  select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
+            assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
             reference_genome = organism_parameters.reference,
             genome_length = organism_parameters.genome_length
         }
@@ -181,26 +181,26 @@ workflow theiacov_illumina_pe {
             pangolin_docker_image = organism_parameters.pangolin_docker,
             workflow_type = "theiacov_pe"
         }
-      }
-      if (defined(qc_check_table)) {
-        # empty strings for kraken outputs throw an error so avoid those outputs for now
-        call qc_check.qc_check_phb as qc_check_task {
-          input:
-            qc_check_table = qc_check_table,
-            expected_taxon = organism_parameters.standardized_organism,
-            num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
-            num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
-            num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
-            num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
-            kraken_human = read_QC_trim.kraken_human,
-            kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
-            meanbaseq_trim = ivar_consensus.meanbaseq_trim,
-            assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
-            number_N = consensus_qc.number_N,
-            assembly_length_unambiguous = consensus_qc.number_ATCG,
-            number_Degenerate =  consensus_qc.number_Degenerate,
-            percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            vadr_num_alerts = morgana_magic.vadr_num_alerts
+        if (defined(qc_check_table)) {
+          # empty strings for kraken outputs throw an error so avoid those outputs for now
+          call qc_check.qc_check_phb as qc_check_task {
+            input:
+              qc_check_table = qc_check_table,
+              expected_taxon = organism_parameters.standardized_organism,
+              num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
+              num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
+              num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
+              num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
+              kraken_human = read_QC_trim.kraken_human,
+              kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
+              meanbaseq_trim = ivar_consensus.meanbaseq_trim,
+              assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
+              number_N = consensus_qc.number_N,
+              assembly_length_unambiguous = consensus_qc.number_ATCG,
+              number_Degenerate =  consensus_qc.number_Degenerate,
+              percent_reference_coverage =  consensus_qc.percent_reference_coverage,
+              vadr_num_alerts = morgana_magic.vadr_num_alerts
+          }
         }
       }
     }
