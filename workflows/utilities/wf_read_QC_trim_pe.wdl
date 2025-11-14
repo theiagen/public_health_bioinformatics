@@ -251,20 +251,29 @@ workflow read_QC_trim_pe {
     File read1_clean = bbduk.read1_clean
     File read2_clean = bbduk.read2_clean
     String bbduk_docker = bbduk.bbduk_docker
-    # fastq_scan
+    # fastq_scan raw (per read stats)
     Int? fastq_scan_raw1 = fastq_scan_raw.read1_seq
     Int? fastq_scan_raw2 = fastq_scan_raw.read2_seq
+    Float? fastq_scan_r1_mean_readlength_raw = fastq_scan_raw.read1_mean_length
+    Float? fastq_scan_r2_mean_readlength_raw = fastq_scan_raw.read2_mean_length
+    Float? fastq_scan_r1_mean_q_raw = fastq_scan_raw.read1_mean_quality
+    Float? fastq_scan_r2_mean_q_raw = fastq_scan_raw.read2_mean_quality
     String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
-    Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
-    Int? fastq_scan_clean2 = fastq_scan_clean.read2_seq
-    String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
     String? fastq_scan_version = fastq_scan_raw.version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
+    # fastq_scan clean (per read stats)
+    Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
+    Int? fastq_scan_clean2 = fastq_scan_clean.read2_seq
+    Float? fastq_scan_r1_mean_readlength_clean = fastq_scan_clean.read1_mean_length
+    Float? fastq_scan_r2_mean_readlength_clean = fastq_scan_clean.read2_mean_length
+    Float? fastq_scan_r1_mean_q_clean = fastq_scan_clean.read1_mean_quality
+    Float? fastq_scan_r2_mean_q_clean = fastq_scan_clean.read2_mean_quality
+    String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
     File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
     File? fastq_scan_clean2_json = fastq_scan_clean.read2_fastq_scan_json
-    # fastqc
+    # fastqc (per base stats)
     Int? fastqc_raw1 = fastqc_raw.read1_seq
     Int? fastqc_raw2 = fastqc_raw.read2_seq
     String? fastqc_raw_pairs = fastqc_raw.read_pairs

@@ -326,7 +326,7 @@ fastq_scan_clean1_json	String	The JSON file output from `fastq-scan` containing 
 fastq_scan_clean1_json	File	The JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_clean2_json	File	The JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_clean_pairs	String	Number of read pairs after cleaning	TheiaViral_Illumina_PE, TheiaViral_Panel
-fastq_scan_docker	String	The Docker image of fastq_scan	TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_docker	String	The Docker image of fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_clean1	String	The number of forward reads after cleaning as calculated by fastq_scan	Freyja_FASTQ
 fastq_scan_num_reads_clean1	Int	The number of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_clean2	Int	The number of reverse reads after cleaning as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
@@ -335,6 +335,14 @@ fastq_scan_num_reads_raw1	String	The number of input forward reads as calculated
 fastq_scan_num_reads_raw1	Int	The number of input forward reads as calculated by fastq_scan	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_raw2	Int	The number of input reserve reads as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_raw_pairs	String	The number of input read pairs as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+fastq_scan_r1_mean_q_clean	Float	The average quality of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+fastq_scan_r1_mean_q_raw	Float	The average quality of forward reads as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+fastq_scan_r1_mean_readlength_clean	Float	The average read length of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+fastq_scan_r1_mean_readlength_raw	Float	The average read length of forward reads as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+fastq_scan_r2_mean_q_clean	Float	The average quality of reverse reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE
+fastq_scan_r2_mean_q_raw	Float	The average quality of reverse reads as calculated by fastq_scan	TheiaCoV_Illumina_PE
+fastq_scan_r2_mean_readlength_clean	Float	The average read length of reverse reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE
+fastq_scan_r2_mean_readlength_raw	Float	The average read length of reverse reads as calculated by fastq_scan	TheiaCoV_Illumina_PE
 fastq_scan_raw1_json	String	The JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length	Freyja_FASTQ
 fastq_scan_raw1_json	File	The JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_raw2_json	File	The JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
@@ -464,7 +472,11 @@ host_mapping_metrics	File	File of mapping metrics	Host_Decontaminate
 host_mapping_stats	File	File of mapping statistics	Host_Decontaminate
 host_percent_mapped_reads	Float	Percentage of reads mapped to host reference genome	Host_Decontaminate
 identified_organisms	Array[String]	List of organisms extracted and identified from an panel level sample	TheiaViral_Panel
+irma_all_deletions_tsv	File	Concatenated TSV file of all deletions identified by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+irma_all_insertions_tsv	File	Concatenated TSV file of all insertions identified by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+irma_all_snvs_tsv	File	Concatenated TSV file of all SNVs identified by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_assembly_fasta_concatenated	File	Assembly FASTA file of all Influenza genome segments concatenated into one sequence/FASTA entry	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+irma_bams	Array[File]	Aligned reads from IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_docker	String	Docker image used to run IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 irma_ha_segment_fasta	File	HA (Haemagglutinin) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_min_consensus_support_threshold	Int	Minimum consensus support threshold used by IRMA with ONT data. For illumina data, see output called `consensus_n_variant_min_depth` for this value	TheiaCoV_ONT
@@ -475,6 +487,7 @@ irma_ns_segment_fasta	File	NS (Nonstructural) assembly fasta file	TheiaCoV_Illum
 irma_pa_segment_fasta	File	PA (Polymerase acidic) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_pb1_segment_fasta	File	PB1 (Polymerase basic 1) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_pb2_segment_fasta	File	PB2 (Polymerase basic 2) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+irma_qc_summary_tsv	File	TSV file summarizing IRMA quality control metrics	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_subtype	String	Flu subtype as determined by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 irma_subtype_notes	String	Helpful note to user about Flu B subtypes. Output will be blank for Flu A samples. For Flu B samples it will state: "IRMA does not differentiate Victoria and Yamagata Flu B lineages. See abricate_flu_subtype output column"	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 irma_type	String	Flu type as determined by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT

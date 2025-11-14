@@ -56,7 +56,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # fastq scan raw
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/command
-      md5sum: f96c3103490fff3560fc930a84bd459d
+      md5sum: 1532a661af4b539e28da7bf961bbb10e
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/inputs.json
       contains: ["read1", "illumina_se"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/outputs.json

@@ -299,7 +299,7 @@ workflow flu_track {
     File? irma_assembly_fasta = irma.irma_assembly_fasta
     File? irma_assembly_fasta_padded = irma.irma_assembly_fasta_padded
     File? irma_assembly_fasta_concatenated_padded = irma.irma_assembly_fasta_concatenated_padded
-    File flu_assembly_fasta_concatenated = select_first([irma.irma_assembly_fasta_concatenated, vadr_flu_segments.assembly_fasta_concatenated])
+    File flu_assembly_fasta_concatenated = select_first([irma.irma_assembly_fasta_concatenated, vadr_flu_segments.assembly_fasta_concatenated, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File flu_ha_segment_fasta = select_first([irma.seg_ha_assembly, vadr_flu_segments.seg_ha_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File flu_na_segment_fasta = select_first([irma.seg_na_assembly, vadr_flu_segments.seg_na_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File flu_pa_segment_fasta = select_first([irma.seg_pa_assembly, vadr_flu_segments.seg_pa_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
@@ -308,6 +308,10 @@ workflow flu_track {
     File flu_mp_segment_fasta = select_first([irma.seg_mp_assembly, vadr_flu_segments.seg_mp_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File flu_np_segment_fasta = select_first([irma.seg_np_assembly, vadr_flu_segments.seg_np_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File flu_ns_segment_fasta = select_first([irma.seg_ns_assembly, vadr_flu_segments.seg_ns_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
+    File? irma_qc_summary_tsv = irma.irma_qc_summary_tsv
+    File? irma_all_snvs_tsv = irma.irma_all_snvs_tsv
+    File? irma_all_insertions_tsv = irma.irma_all_insertions_tsv
+    File? irma_all_deletions_tsv = irma.irma_all_deletions_tsv
     Array[File]? irma_assemblies = irma.irma_plurality_consensus_assemblies
     Array[File]? irma_vcfs = irma.irma_vcfs
     Array[File]? irma_bams = irma.irma_bams
