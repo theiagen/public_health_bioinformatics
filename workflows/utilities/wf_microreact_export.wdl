@@ -14,8 +14,8 @@ workflow wf_microreact_export {
     String? project_url
     String? access_token
     File? metadata_file
-    File? matrix_file
     Array[File]? tree_files
+    Array[File]? matrix_files
     Array[String]? metadata_columns
     Boolean update_project = false
     Boolean remove_file_columns = true
@@ -34,7 +34,7 @@ workflow wf_microreact_export {
     input:
       project_name = project_name,
       metadata_tsv = select_first([download_terra_table.terra_table, metadata_file]),
-      matrix_file = matrix_file,
+      matrix_files = matrix_files,
       tree_files = tree_files,
       metadata_columns = metadata_columns,
       update_project = update_project,

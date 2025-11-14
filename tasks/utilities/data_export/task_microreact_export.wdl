@@ -8,10 +8,10 @@ task microreact_export {
     String project_name
     String id_column
     File metadata_tsv
-    File? matrix_file
     String? date_column
     Array[String]? metadata_columns
     Array[File]? tree_files
+    Array[File]? matrix_files
     String? access_token
     Boolean restricted_access = true
     Boolean update_project = false
@@ -27,13 +27,15 @@ task microreact_export {
     set -euo pipefail
     
     tree_array=(~{sep=' ' tree_files})
+    matrix_array=(~{sep=' ' matrix_files})
     metadata_column_array=(~{sep=' ' metadata_columns})
 
     python /scripts/microreact_export.py \
       --project_name ~{project_name} \
       ~{"--project_url " + project_url} \
       --metadata_tsv ~{metadata_tsv} \
-      ~{"--matrix_file " + matrix_file} \
+      ~{if defined(matrix_files) && length(select_first([matrix_files, []])) > 0
+        then "--matrix_files " else ""} "${matrix_array[@]}" \
       --id_column ~{id_column} \
       ~{"--date_column " + date_column} \
       ~{if defined(tree_files) && length(select_first([tree_files, []])) > 0 
