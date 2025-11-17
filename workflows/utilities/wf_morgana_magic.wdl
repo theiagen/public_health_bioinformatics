@@ -212,7 +212,6 @@ workflow morgana_magic {
         genome_fasta = assembly_fasta,
         dataset_name = organism_parameters.nextclade_dataset_name,
         dataset_tag = organism_parameters.nextclade_dataset_tag,
-        custom_input_dataset = nextclade_custom_input_dataset,
         auspice_reference_tree_json = nextclade_auspice_reference_tree_json,
         gene_annotations_gff = nextclade_reference_gff_file,
         nextclade_pathogen_json = nextclade_pathogen_json, 
