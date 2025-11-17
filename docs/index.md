@@ -83,14 +83,14 @@ line count as well.
 okay thanks byee
 -->
 
-(Ordered by contribution [# of lines changed] as of 2025-11-11)
+(Ordered by contribution [# of lines changed] as of 2025-11-17)
 
-- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision <!-- 97676 + 115370 - 55316 = 157730 -->
+- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision <!-- 99007 + 115766 - 55316 = 159457 -->
 - **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation <!-- 23921 + 18640 = 42561 -->
 - **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation <!-- 20852 + 15908 = 36760 -->
-- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation <!-- 16613 + 12535 = 29148 -->
-- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation <!-- 9489 + 4591 = 14080 -->
-- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation <!-- 60412 + 2829 - 55316 = 8258 -->
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation <!-- 16936 + 12596 = 29532 -->
+- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation <!-- 10203 + 5196 = 15399 -->
+- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation <!-- 61479 + 3053 - 55316 = 9216 -->
 - **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation <!-- 4170 + 2494 = 6664 -->
 - **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation <!-- 3597 + 851 = 4448 -->
 - **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision <!-- 2908 + 444 = 3352 -->
