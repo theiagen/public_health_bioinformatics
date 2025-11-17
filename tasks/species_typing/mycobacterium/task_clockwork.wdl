@@ -21,9 +21,8 @@ task clockwork_decon_reads {
       ~{read1} \
       ~{read2}
 
-
-	  samtools sort -n  "~{samplename}.sam" > ~{samplename}.sorted.sam
-
+    samtools sort -n  "~{samplename}.sam" > ~{samplename}.sorted.sam
+    
     # Remove contaminants (reads that map with high identity to non-MTB sequences)
     clockwork remove_contam \
       /ref/Ref.remove_contam/remove_contam_metadata.tsv \
