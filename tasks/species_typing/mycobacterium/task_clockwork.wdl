@@ -8,7 +8,7 @@ task clockwork_decon_reads {
     Int disk_size = 200
     Int cpu = 16
     Int memory = 64
-    String docker = "ashedpotatoes/clockwork-plus:v0.12.5.3-CRyPTI"
+    String docker = "ashedpotatoes/clockwork-plus:v0.12.5.3-CRyPTIC"
   }
   command <<<
     # Print and save version
