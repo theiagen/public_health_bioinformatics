@@ -418,7 +418,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_prokka.wdl
       md5sum: 000285292df1f7c353fafcc0d5737028
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_resfinder.wdl
-      md5sum: 062be12bbba315d4feee01dd10e1c782
+      md5sum: 6b15e778a5200b6ffeecf68b961092c2
     - path: miniwdl_run/wdl/tasks/gene_typing/variant_detection/task_snippy_variants.wdl
       md5sum: b66f4306b61fa3bc7bbc242556866b6c
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_bbduk.wdl
@@ -440,7 +440,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_quast.wdl
       contains: ["version", "quast", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/comparisons/task_screen.wdl
-      md5sum: 9c94f1b4dfc5e397bad71eb9892b37f8
+      md5sum: bac37566bc32a9de259812a8ab7d662b
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_trimmomatic.wdl
       contains: ["version", "trimmomatic", "output"]
     - path: miniwdl_run/wdl/tasks/species_typing/escherichia_shigella/task_ectyper.wdl
@@ -484,7 +484,7 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 481f5fbce5aa1abf93acd912797821cc
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-      md5sum: 6c5d51a910b11e17a7a8152397ff5759
+      md5sum: d0da10b38b6d3794faa25f4aaa5dc028
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_pe.wdl
       contains: ["version", "QC", "output"]
     - path: miniwdl_run/workflow.log

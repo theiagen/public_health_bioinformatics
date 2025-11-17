@@ -374,6 +374,11 @@ workflow theiacov_ont {
     File? irma_mp_segment_fasta = flu_track.flu_mp_segment_fasta
     File? irma_np_segment_fasta = flu_track.flu_np_segment_fasta
     File? irma_ns_segment_fasta = flu_track.flu_ns_segment_fasta
+    File? irma_qc_summary_tsv = flu_track.irma_qc_summary_tsv
+    File? irma_all_snvs_tsv = flu_track.irma_all_snvs_tsv
+    File? irma_all_insertions_tsv = flu_track.irma_all_insertions_tsv
+    File? irma_all_deletions_tsv = flu_track.irma_all_deletions_tsv
+    Array[File]? irma_bams = flu_track.irma_bams
     # Flu GenoFLU Outputs
     String? genoflu_version = flu_track.genoflu_version
     String? genoflu_genotype = flu_track.genoflu_genotype

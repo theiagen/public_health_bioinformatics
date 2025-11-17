@@ -152,12 +152,18 @@ workflow read_QC_trim_se {
     File read1_clean = bbduk_se.read1_clean
     String bbduk_docker = bbduk_se.bbduk_docker
 
-    # fastq_scan
+    # fastq_scan raw (per read stats)
     Int? fastq_scan_raw1 = fastq_scan_raw.read1_seq
-    Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
+    Float? fastq_scan_r1_mean_readlength_raw = fastq_scan_raw.read1_mean_length
+    Float? fastq_scan_r1_mean_q_raw = fastq_scan_raw.read1_mean_quality
     String? fastq_scan_version = fastq_scan_raw.version
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     File? fastq_scan_raw1_json = fastq_scan_raw.fastq_scan_json
+
+    # fastq_scan clean (per read stats)
+    Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
+    Float? fastq_scan_r1_mean_readlength_clean = fastq_scan_clean.read1_mean_length
+    Float? fastq_scan_r1_mean_q_clean = fastq_scan_clean.read1_mean_quality
     File? fastq_scan_clean1_json = fastq_scan_clean.fastq_scan_json
 
     # fastqc
