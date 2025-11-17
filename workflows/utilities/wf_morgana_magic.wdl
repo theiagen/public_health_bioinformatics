@@ -42,15 +42,6 @@ workflow morgana_magic {
     Int? abricate_flu_min_percent_coverage
     Int? abricate_flu_min_percent_identity
     # flu track - antiviral substitutions
-    File? flu_track_h1_ha_ref
-    File? flu_track_h3_ha_ref
-    File? flu_track_n1_na_ref
-    File? flu_track_n2_na_ref
-    File? flu_track_pa_ref
-    File? flu_track_pb1_ref
-    File? flu_track_pb2_ref
-    File? flu_track_h1n1_m2_ref
-    File? flu_track_h3n2_m2_ref
     String? flu_track_antiviral_aa_subs
     # nextclade inputs
     String? nextclade_dataset_name
@@ -164,15 +155,6 @@ workflow morgana_magic {
         abricate_flu_memory = abricate_flu_memory,
         abricate_flu_min_percent_coverage = abricate_flu_min_percent_coverage,
         abricate_flu_min_percent_identity = abricate_flu_min_percent_identity,
-        flu_h1_ha_ref = flu_track_h1_ha_ref,
-        flu_h3_ha_ref = flu_track_h3_ha_ref,
-        flu_n1_na_ref = flu_track_n1_na_ref,
-        flu_n2_na_ref = flu_track_n2_na_ref,
-        flu_pa_ref = flu_track_pa_ref,
-        flu_pb1_ref = flu_track_pb1_ref,
-        flu_pb2_ref = flu_track_pb2_ref,
-        flu_h1n1_m2_ref = flu_track_h1n1_m2_ref,
-        flu_h3n2_m2_ref = flu_track_h3n2_m2_ref,
         antiviral_aa_subs = flu_track_antiviral_aa_subs,
         nextclade_cpu = nextclade_cpu,
         nextclade_disk_size = nextclade_disk_size,
