@@ -6432,37 +6432,40 @@
   <h1>Resfinder task</h1>
 
 <details class="task">
-<summary><code>ResFinder</code>: AMR Genotyping and XDR Shigella Prediction (optional)</summary>
+<summary><code>ResFinder</code>: AMR Genotyping and XDR <em>Shigella</em> Prediction (optional)</summary>
 <p>To activate this task, set <code>call_resfinder</code> to <code>true</code>.</p>
 <p><strong>AMR Genotyping</strong></p>
-<p>The <code>ResFinder</code> task is an optional task that can be used in conjunction with AMRFinderPlus for detection and identification of AMR genes and resistance-associated mutations. This task runs the Centre for Genomic Epidemiology (CGE) ResFinder tool to identify acquired antimicrobial resistance. The default thresholds for calling AMR genes are 90% identity and 50% coverage of the reference genes (expressed as a fraction in workflow inputs: 0.9 and 0.5). These are the same thresholds utilized in BioNumerics for calling AMR genes.</p>
-<p>This task can also run the CGE PointFinder tool if the <code>call_pointfinder</code> variable is set with to <code>true</code>. The databases underlying the task are different to those used by AMRFinderPlus.</p>
+<p>The <code>ResFinder</code> task is an optional task that can be used in conjunction with AMRFinderPlus for detection and identification of AMR genes and resistance-associated mutations. This task runs the Centre for Genomic Epidemiology (CGE) ResFinder tool to identify acquired antimicrobial resistance, and uses different databases for AMR detection than AMRFinderPlus. In order to call an AMR gene, there must be at least 90% (0.9) sequence identity and 50% (0.5) coverage of the reference genes. These are the same thresholds used in BioNumerics for AMR detection. </p>
+<p>Set <code>call_pointfinder</code> to <code>true</code> to also run the CGE PointFinder tool for detection of chromosomal mutations associated with antimicrobial resistance. </p>
 <details class="toggle">
 <summary>PointFinder-supported organisms</summary>
 <p>The following organisms are currently supported by <em>PointFinder</em> for mutational-based predicted resistance. If GAMBIT (<a href="#taxonomic-assignment">see above</a>) predicted the sample to be an organism not on this list, PointFinder will be skipped.</p>
 <ul>
-<li>Campylobacter coli &amp; C. jejuni</li>
-<li>Enterococcus faecalis</li>
-<li>Enterococcus faecium</li>
-<li>Escherichia coli &amp; Shigella spp.</li>
-<li>Helicobacter pylori</li>
-<li>Neisseria gonorrhoeae</li>
-<li>Klebsiella</li>
-<li>Mycobacterium tuberculosis</li>
-<li>Salmonella spp.</li>
-<li>Staphylococcus aureus</li>
+<li><em>Campylobacter coli</em> &amp; <em>C</em>. <em>jejuni</em></li>
+<li><em>Campylobacter spp</em>. (not <em>C</em>. <em>coli</em> or <em>C</em>. <em>jejuni</em>)</li>
+<li><em>Enterococcus faecalis</em></li>
+<li><em>Enterococcus faecium</em></li>
+<li><em>Escherichia coli</em> &amp; <em>Shigella spp</em>.</li>
+<li><em>Helicobacter pylori</em></li>
+<li><em>Klebsiella spp</em>.</li>
+<li><em>Mycobacterium tuberculosis</em></li>
+<li><em>Neisseria gonorrhoeae</em></li>
+<li><em>Salmonella spp</em>.</li>
+<li><em>Staphylococcus aureus</em></li>
 </ul>
 </details>
-<p><strong>XDR Shigella prediction</strong></p>
-<p>The <code>ResFinder</code> Task also has the ability to predict whether or not a sample meets the CDC's definition for extensively drug-resistant (XDR) Shigella. </p>
-<blockquote>
-<p><em>CDC defines XDR Shigella bacteria as strains that are resistant to all commonly recommended empiric and alternative antibiotics — azithromycin, ciprofloxacin, ceftriaxone, trimethoprim-sulfamethoxazole (TMP-SMX), and ampicillin</em>. <a href="https://emergency.cdc.gov/han/2023/han00486.asp">See also the <em>Increase in Extensively Drug-Resistance Shigellosis in the United State</em> CDC Health Network Alert</a> where this definition can be found.</p>
-</blockquote>
+<p><strong>XDR <em>Shigella</em> prediction</strong></p>
+<p>The <code>ResFinder</code> Task also has the ability to predict whether or not a sample meets the CDC's definition for extensively drug-resistant (XDR) <em>Shigella</em>. </p>
+<details class="caption" open="open">
+<summary>How does TheiaProk predict XDR <em>Shigella</em>?</summary>
+<p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/figures/TheiaProk_XDR_Shigella_Identification.png" data-description="CDC defines XDR Shigella bacteria as strains that are resistant to all commonly recommended empiric and alternative antibiotics — azithromycin, ciprofloxacin, ceftriaxone, trimethoprim-sulfamethoxazole (TMP-SMX), and ampicillin." data-desc-position="bottom"><img alt="XDR Shigella Identification" data-description="CDC defines XDR Shigella bacteria as strains that are resistant to all commonly recommended empiric and alternative antibiotics — azithromycin, ciprofloxacin, ceftriaxone, trimethoprim-sulfamethoxazole (TMP-SMX), and ampicillin." src="../../assets/figures/TheiaProk_XDR_Shigella_Identification.png"></a></p>
+<p><a href="https://emergency.cdc.gov/han/2023/han00486.asp">See also the <em>Increase in Extensively Drug-Resistance Shigellosis in the United State</em> CDC Health Network Alert</a> where this definition can be found.</p>
+</details>
 <details class="toggle">
-<summary>Criteria for XDR Shigella Prediction</summary>
-<p>A sample is required to meet <strong>all 7 criteria</strong> in order to be predicted as <code>XDR Shigella</code> </p>
+<summary>Criteria for XDR <em>Shigella</em> Prediction</summary>
+<p>A sample is required to meet <strong>all 7 criteria</strong> in order to be designated as <code>Potentially XDR Shigella</code> </p>
 <ol>
-<li>The GAMBIT task in the workflow must identify the sample as <code>Shigella</code> OR the user must input the word <code>Shigella</code> somewhere within the input String variable called <code>expected_taxon</code>. This requirement serves as the identification of a sample to be of the Shigella genus.</li>
+<li>Either GAMBIT or the user-provided <code>expected_taxon</code> input must identify the sample as <code>Shigella</code></li>
 <li>Resfinder or PointFinder predicted resistance to <strong>Ampicillin</strong></li>
 <li>Resfinder or PointFinder predicted resistance to <strong>Azithromycin</strong></li>
 <li>Resfinder or PointFinder predicted resistance to <strong>Ciprofloxacin</strong></li>
@@ -6471,12 +6474,23 @@
 <li>Resfinder or PointFinder predicted resistance to <strong>Sulfamethoxazole</strong></li>
 </ol>
 </details>
-<p>There are 3 potential outputs for the <strong><code>resfinder_predicted_xdr_shigella</code></strong> output string<strong>:</strong></p>
+<p>There are 3 potential outputs for the <strong><code>resfinder_predicted_xdr_shigella</code></strong> output string:</p>
 <ul>
 <li><strong><code>Not Shigella based on gambit_predicted_taxon or user input</code></strong></li>
-<li><strong><code>Not XDR Shigella</code></strong>&nbsp;for samples identified as Shigella by GAMBIT or user input BUT does ResFinder did not predict resistance to <strong>all 6 drugs in XDR definition</strong></li>
-<li><strong><code>XDR Shigella</code></strong>&nbsp;meaning the sample was identified as Shigella and ResFinder/PointFinder did predict resistance to ceftriazone, azithromycin, ciprofloxacin, trimethoprim, sulfamethoxazole, and ampicillin.</li>
+<li><strong><code>Not XDR Shigella</code></strong>&nbsp;for samples indicated as <em>Shigella</em> by either GAMBIT or user input <em><strong>BUT</strong></em> ResFinder did <strong>NOT</strong> predict resistance to <strong>all 6 drugs in the XDR definition above</strong></li>
+<li><strong><code>Potentially XDR Shigella</code></strong> for samples indicated as <em>Shigella</em> <em><strong>AND</strong></em> ResFinder/PointFinder <strong>DID</strong> predict resistance to <strong>all 6 drugs in the XDR definition above</strong></li>
 </ul>
+<div class="admonition tip">
+<p class="admonition-title">What should I do if I see "Potentially XDR Shigella"?</p>
+<p>If a sample is designated as <code>Potentially XDR Shigella</code>, we recommend reviewing the following output columns to confirm the presence of resistance genes/mutations associated with each drug in the XDR definition:</p>
+<ul>
+<li>The output file found in <code>resfinder_pheno_table</code></li>
+<li>The output file found in <code>pointfinder_results</code> (if PointFinder was run)</li>
+<li>The output string found in <code>resfinder_predicted_pheno_resistance</code></li>
+</ul>
+<p>Feel free to contact us at <a href="mailto:support@theiagen.com">support@theiagen.com</a> for assistance in interpreting these results.</p>
+<p>If you detect an XDR Shigella sample, please contact your state and local epidemiologists so they can be informed!</p>
+</div>
 <div class="admonition techdetails">
 <p class="admonition-title">ResFinder Technical Details</p>
 <table>
@@ -6529,7 +6543,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 17, 2025 13:57:36 UTC">2025-11-17</span>
   </span>
 
     
