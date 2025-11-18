@@ -20,7 +20,7 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
     Learn how to use our workflows on Terra!</center>
 
--   <center>[v3.1.1 Release Notes](https://theiagen.notion.site/public-health-bioinformatics-v3-1-1-patch-release-notes){ .md-button .md-button--secondary }
+-   <center>[v4.0.0 Release Notes](https://theiagen.notion.site/public-health-bioinformatics-v4-0-0-major-release-notes){ .md-button .md-button--secondary }
 
     ---
 
@@ -76,21 +76,23 @@ A Public Service Announcement regarding calculating the contribution math:
 
 Andrew Hale added a .txt database file to docs/assets that artifically inflates his line 
 count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract 
-55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt database in a later commit (on 2025-09-03), so also please subtract 55,316 from Sage Wright's line count as well.
+55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt 
+database in a later commit (on 2025-09-03), so also please subtract 55,316 from Sage Wright's 
+line count as well.
 
 okay thanks byee
 -->
 
-(Ordered by contribution [# of lines changed] as of 2025-09-08)
+(Ordered by contribution [# of lines changed] as of 2025-11-17)
 
-- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision <!-- 94943 + 113445 - 55316 = 153072 -->
-- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation <!-- 22862 + 18241 = 41103-->
-- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation <!-- 29852 + 15908 = 36760 -->
-- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation <!-- 14674 + 10655 = 25329 -->
-- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation <!-- 8378 + 3814 = 12192 -->
-- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation <!-- 4098 + 2080 = 6178 -->
-- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation <!-- 59452 + 1855 - 55316 = 5991 -->
-- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation <!-- 3532 + 831 = 4363 -->
+- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision <!-- 99007 + 115766 - 55316 = 159457 -->
+- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation <!-- 23921 + 18640 = 42561 -->
+- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation <!-- 20852 + 15908 = 36760 -->
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation <!-- 16936 + 12596 = 29532 -->
+- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation <!-- 10203 + 5196 = 15399 -->
+- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation <!-- 61479 + 3053 - 55316 = 9216 -->
+- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation <!-- 4170 + 2494 = 6664 -->
+- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation <!-- 3597 + 851 = 4448 -->
 - **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision <!-- 2908 + 444 = 3352 -->
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision <!-- 84 + 68 = 152 -->
 - **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation <!-- 72 + 39 = 111 -->
@@ -112,6 +114,7 @@ We would like to gratefully acknowledge the following individuals from the publi
 - **Ash O'Farrel** ([@aofarrel](https://github.com/aofarrel))
 - **Sam Baird** ([@sam-baird](https://github.com/sam-baird))
 - **Holly Halstead** ([@HNHalstead](https://github.com/HNHalstead))
+- **Nicole Dagata** ([@nicoledagatatheiagen](https://github.com/nicoledagatatheiagen))*
 - **Emily Smith** ([@emily-smith1](https://github.com/emily-smith1))*
 
 \* Former member of Theiagen
