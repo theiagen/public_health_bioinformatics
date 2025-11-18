@@ -8141,6 +8141,14 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>flu_track_antiviral_aa_subs</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>gene_coverage_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -8261,6 +8269,14 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>nextclade_auspice_reference_tree_json</strong></td>
+<td>File</td>
+<td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>nextclade_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -8281,6 +8297,14 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_input_ref</strong></td>
+<td>File</td>
+<td>A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html</a></td>
+<td>Inherited from nextclade dataset</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8321,6 +8345,30 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_pathogen_json</strong></td>
+<td>File</td>
+<td>General dataset configuration file. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html</a></td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_reference_gff_file</strong></td>
+<td>File</td>
+<td>A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html</a></td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_verbosity</strong></td>
+<td>String</td>
+<td>other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)</td>
+<td>warn</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9323,6 +9371,14 @@
 <td></td>
 <td>Optional</td>
 </tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_custom_input_dataset</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -9719,6 +9775,14 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>flu_track_antiviral_aa_subs</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>gene_coverage_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -9839,6 +9903,14 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>nextclade_auspice_reference_tree_json</strong></td>
+<td>File</td>
+<td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>nextclade_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -9859,6 +9931,14 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_input_ref</strong></td>
+<td>File</td>
+<td>A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html</a></td>
+<td>Inherited from nextclade dataset</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9899,6 +9979,30 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_pathogen_json</strong></td>
+<td>File</td>
+<td>General dataset configuration file. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html</a></td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_reference_gff_file</strong></td>
+<td>File</td>
+<td>A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html</a></td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_verbosity</strong></td>
+<td>String</td>
+<td>other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)</td>
+<td>warn</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10869,6 +10973,14 @@
 <td></td>
 <td>Optional</td>
 </tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_custom_input_dataset</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -11465,6 +11577,14 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>flu_track_antiviral_aa_subs</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>gene_coverage_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -11585,6 +11705,14 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>nextclade_auspice_reference_tree_json</strong></td>
+<td>File</td>
+<td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>nextclade_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -11605,6 +11733,14 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_input_ref</strong></td>
+<td>File</td>
+<td>A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html</a></td>
+<td>Inherited from nextclade dataset</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11645,6 +11781,30 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_pathogen_json</strong></td>
+<td>File</td>
+<td>General dataset configuration file. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html</a></td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_reference_gff_file</strong></td>
+<td>File</td>
+<td>A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html</a></td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_verbosity</strong></td>
+<td>String</td>
+<td>other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)</td>
+<td>warn</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12903,6 +13063,14 @@
 <td></td>
 <td>Optional</td>
 </tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_custom_input_dataset</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -13443,6 +13611,14 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>flu_track_antiviral_aa_subs</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>gene_coverage_bam</strong></td>
 <td>File</td>
 <td>Bam file used for calculating gene coverage</td>
@@ -13571,6 +13747,14 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>nextclade_auspice_reference_tree_json</strong></td>
+<td>File</td>
+<td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>nextclade_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -13591,6 +13775,14 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_input_ref</strong></td>
+<td>File</td>
+<td>A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html</a></td>
+<td>Inherited from nextclade dataset</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13631,6 +13823,30 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_pathogen_json</strong></td>
+<td>File</td>
+<td>General dataset configuration file. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html</a></td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_reference_gff_file</strong></td>
+<td>File</td>
+<td>A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html</a></td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_verbosity</strong></td>
+<td>String</td>
+<td>other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)</td>
+<td>warn</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14393,6 +14609,14 @@
 <td></td>
 <td>Optional</td>
 </tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_custom_input_dataset</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -14765,6 +14989,14 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>flu_track_antiviral_aa_subs</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>gene_coverage_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -14885,6 +15117,14 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>nextclade_auspice_reference_tree_json</strong></td>
+<td>File</td>
+<td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>nextclade_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -14905,6 +15145,14 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_input_ref</strong></td>
+<td>File</td>
+<td>A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html</a></td>
+<td>Inherited from nextclade dataset</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14945,6 +15193,30 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_pathogen_json</strong></td>
+<td>File</td>
+<td>General dataset configuration file. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html</a></td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_reference_gff_file</strong></td>
+<td>File</td>
+<td>A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html</a></td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_verbosity</strong></td>
+<td>String</td>
+<td>other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)</td>
+<td>warn</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15763,6 +16035,14 @@
 <td></td>
 <td>Optional</td>
 </tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_custom_input_dataset</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -15943,6 +16223,14 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>flu_track_antiviral_aa_subs</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>gene_coverage_bam</strong></td>
 <td>File</td>
 <td>Bam file used for calculating gene coverage</td>
@@ -16071,6 +16359,14 @@
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>nextclade_auspice_reference_tree_json</strong></td>
+<td>File</td>
+<td>An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.</td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>nextclade_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -16091,6 +16387,14 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_input_ref</strong></td>
+<td>File</td>
+<td>A nucleotide sequence which serves as a reference for the pairwise alignment of all input sequences. This is also the sequence which defines the coordinate system of the genome annotation. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/02-reference-sequence.html</a></td>
+<td>Inherited from nextclade dataset</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16131,6 +16435,30 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_pathogen_json</strong></td>
+<td>File</td>
+<td>General dataset configuration file. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/05-pathogen-config.html</a></td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_reference_gff_file</strong></td>
+<td>File</td>
+<td>A genome annotation to specify how to translate the nucleotide sequence to proteins (genome_annotation.gff3). specifying this enables codon-informed alignment and protein alignments. See here for more info: <a href="https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html">https://docs.nextstrain.org/projects/nextclade/en/latest/user/input-files/03-genome-annotation.html</a></td>
+<td>Inherited from nextclade dataset</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_verbosity</strong></td>
+<td>String</td>
+<td>other options are: "off" , "error" , "info" , "debug" , and "trace" (highest level of verbosity)</td>
+<td>warn</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16628,6 +16956,14 @@
 <td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
 <td></td>
 <td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>nextclade_custom_input_dataset</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td></td>
 </tr>
 </tbody>
 </table>
