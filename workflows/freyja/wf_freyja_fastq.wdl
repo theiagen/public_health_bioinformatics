@@ -13,6 +13,7 @@ import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as task_pars
 import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
+import "../../tasks/quality_control/basic_statistics/task_qualimap.wdl" as qualimap_task
 
 workflow freyja_fastq {
   input {
@@ -31,6 +32,8 @@ workflow freyja_fastq {
     String kraken2_target_organism = "Severe acute respiratory syndrome coronavirus 2"
     # qc check parameters
     File? qc_check_table
+    # run qualimap
+    Boolean run_qualimap = false
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -147,6 +150,13 @@ workflow freyja_fastq {
         # SC2-specific gene coverage - only available when freyja_pathogen == "SARS-CoV-2"
         sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth,
         sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
+    }
+  }
+  if (run_qualimap) {
+    call qualimap_task.qualimap as qualimap {
+      input:
+        samplename = samplename,
+        bam_file = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam])
     }
   }
   call versioning.version_capture {
@@ -270,5 +280,10 @@ workflow freyja_fastq {
     # QC Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
+    # Qualimap outputs
+    String? qualimap_version = qualimap.version
+    String? qualimap_docker = qualimap.qualimap_docker
+    File? qualimap_reports_zip = qualimap.qualimap_reports_zip
+    File? qualimap_genome_coverage_plot = qualimap.qualimap_genome_coverage_plot
   }
 }
