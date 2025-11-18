@@ -13,6 +13,10 @@ task qualimap {
   command <<<
     set -euo pipefail
 
+    # set tmp dir for jaba
+    mkdir -p tmp
+    export _JAVA_OPTIONS=-Djava.io.tmpdir=./tmp
+
     # get the version
     tee VERSION
     qualimap --version | grep "QualiMap v" >> VERSION
