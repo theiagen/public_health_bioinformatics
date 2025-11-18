@@ -26,12 +26,12 @@ task qualimap {
     # get genome coverage plot
     mv qualimap_results/images_qualimapReport/genome_coverage_across_reference.png ~{samplename}_genome_coverage_across_reference.png
     # zip results
-    zip -r ~{samplename}_qualimap_reports.zip qualimap_results
+    tar -zcvf ~{samplename}_qualimap_reports.tar.gz qualimap_results
   >>>
   output {
     String version = read_string("VERSION")
     String qualimap_docker = docker
-    File qualimap_reports_zip = "~{samplename}_qualimap_reports.zip"
+    File qualimap_reports_bundle = "~{samplename}_qualimap_reports.tar.gz"
     File qualimap_genome_coverage_plot = "~{samplename}_genome_coverage_across_reference.png"
   }
   runtime {
