@@ -19,7 +19,7 @@ task qualimap {
 
     # get the version
     tee VERSION
-    qualimap --version | grep "QualiMap v" >> VERSION
+    qualimap --help | grep "QualiMap v" >> VERSION
     # run qualimap bamqc for viz
     qualimap bamqc -bam ~{bam_file} -outdir qualimap_results
 
