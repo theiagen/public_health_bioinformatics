@@ -71,6 +71,7 @@ workflow theiacov_fasta {
       vadr_memory = organism_parameters.vadr_memory,
       nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
       nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
+      pangolin_docker_image = organism_parameters.pangolin_docker,
       workflow_type = "theiacov_fasta"
   }
   if (organism == "flu") {
