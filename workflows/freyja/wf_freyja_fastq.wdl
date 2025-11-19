@@ -33,7 +33,7 @@ workflow freyja_fastq {
     # qc check parameters
     File? qc_check_table
     # run qualimap
-    Boolean run_qualimap = false
+    Boolean run_qualimap = true
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -285,5 +285,7 @@ workflow freyja_fastq {
     String? qualimap_docker = qualimap.qualimap_docker
     File? qualimap_reports_bundle = qualimap.qualimap_reports_bundle
     File? qualimap_genome_coverage_plot = qualimap.qualimap_genome_coverage_plot
+    File? qualimap_genome_coverage_histogram = qualimap.qualimap_genome_coverage_histogram
+    File? qualimap_mapping_quality_plot = qualimap.qualimap_mapping_quality_plot
   }
 }
