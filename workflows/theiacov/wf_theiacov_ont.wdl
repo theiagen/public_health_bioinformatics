@@ -214,15 +214,7 @@ workflow theiacov_ont {
             abricate_flu_min_percent_coverage = 0,
             abricate_flu_min_percent_identity = 0,
             flu_track_antiviral_aa_subs = "",
-            nextclade_cpu = 0,
-            nextclade_disk_size = 0,
-            nextclade_docker_image = "",
-            nextclade_memory = 0,
             nextclade_custom_input_dataset = "gs://theiagen-public-resources-rp/empty_files/empty.json",
-            nextclade_output_parser_cpu = 0,
-            nextclade_output_parser_disk_size = 0,
-            nextclade_output_parser_docker = "",
-            nextclade_output_parser_memory = 0,
             workflow_type = "theiacov_ont"
         }
       }
