@@ -1,5 +1,6 @@
 version 1.0
 
+import "../../tasks/quality_control/basic_statistics/task_fastq_scan.wdl" as fastq_scan
 import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic_task
 import "../../tasks/species_typing/mycobacterium/task_tbprofiler.wdl" as tbprofiler_task
 import "../../tasks/species_typing/mycobacterium/task_tbp_parser.wdl" as tbp_parser_task
@@ -26,6 +27,11 @@ workflow tbprofiler_tngs {
   call versioning.version_capture {
     input:
   }
+  call fastq_scan.fastq_scan_pe as fastq_scan_raw {
+      input:
+        read1 = read1,
+        read2 = read2,
+  }
   if (run_trimmomatic) {
     call trimmomatic_task.trimmomatic_pe {
       input:
@@ -33,6 +39,11 @@ workflow tbprofiler_tngs {
         read2 = read2,
         samplename = samplename,
         trimmomatic_base_crop = bases_to_crop
+    }
+    call fastq_scan.fastq_scan_pe as fastq_scan_clean {
+      input:
+        read1 = trimmomatic_pe.read1_trimmed,
+        read2 = trimmomatic_pe.read2_trimmed,
     }
   }
   if (run_kraken2) {
@@ -75,6 +86,20 @@ workflow tbprofiler_tngs {
       tngs_data = true
   }
   output {
+    # fastq_scan raw (per read stats)
+    Int? fastq_scan_raw1 = fastq_scan_raw.read1_seq
+    Int? fastq_scan_raw2 = fastq_scan_raw.read2_seq
+    String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
+    String? fastq_scan_version = fastq_scan_raw.version
+    String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
+    File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
+    File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
+    # fastq_scan clean (per read stats)
+    Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
+    Int? fastq_scan_clean2 = fastq_scan_clean.read2_seq
+    String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
+    File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
+    File? fastq_scan_clean2_json = fastq_scan_clean.read2_fastq_scan_json
     # trimmomatic outputs
     File? trimmomatic_read1_trimmed = trimmomatic_pe.read1_trimmed
     File? trimmomatic_read2_trimmed = trimmomatic_pe.read2_trimmed
