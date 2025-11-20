@@ -96,6 +96,7 @@ workflow morgana_magic {
     Int? vadr_memory
     Int? vadr_cpu
     Int? vadr_disk_size
+    String? vadr_docker_image
     # Workflow Settings
     String workflow_type
   }
@@ -125,7 +126,8 @@ workflow morgana_magic {
         skip_length = organism_parameters.vadr_skiplength,
         memory = organism_parameters.vadr_memory,
         cpu = vadr_cpu,
-        disk_size = vadr_disk_size
+        disk_size = vadr_disk_size,
+        docker = vadr_docker_image
     }
   }
   if (organism_parameters.standardized_organism == "flu" && (workflow_type == "theiaviral" || workflow_type == "theiaviral_panel")) {
