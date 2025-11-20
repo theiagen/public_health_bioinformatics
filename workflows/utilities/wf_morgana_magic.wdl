@@ -96,6 +96,7 @@ workflow morgana_magic {
     Int? vadr_memory
     Int? vadr_cpu
     Int? vadr_disk_size
+    String? vadr_docker_image
     # Workflow Settings
     String workflow_type
   }
@@ -125,7 +126,8 @@ workflow morgana_magic {
         skip_length = organism_parameters.vadr_skiplength,
         memory = organism_parameters.vadr_memory,
         cpu = vadr_cpu,
-        disk_size = vadr_disk_size
+        disk_size = vadr_disk_size,
+        docker = vadr_docker_image
     }
   }
   if (organism_parameters.standardized_organism == "flu" && (workflow_type == "theiaviral" || workflow_type == "theiaviral_panel")) {
@@ -168,7 +170,7 @@ workflow morgana_magic {
         vadr_outputs_tgz = vadr.outputs_tgz
     }
   }
-  if ((workflow_type == "theiacov_pe" || workflow_type == "theiacov_se" || workflow_type == "theiacov_ont") && (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(organism_parameters.gene_locations_bed))) {
+  if ((workflow_type == "theiacov_pe" || workflow_type == "theiacov_se" || workflow_type == "theiacov_ont" || workflow_type == "theiacov_clearlabs") && (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(organism_parameters.gene_locations_bed))) {
     if (basename(organism_parameters.gene_locations_bed) != "empty.bed") {
       # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
       call gene_coverage_task.gene_coverage {
