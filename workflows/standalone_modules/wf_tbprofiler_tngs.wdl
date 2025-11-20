@@ -17,7 +17,6 @@ workflow tbprofiler_tngs {
     File read1
     File read2
     String samplename
-    Int bases_to_crop = 0
     
     Boolean run_trimmomatic = true
     Boolean run_kraken2 = false
@@ -38,7 +37,6 @@ workflow tbprofiler_tngs {
         read1 = read1,
         read2 = read2,
         samplename = samplename,
-        trimmomatic_base_crop = bases_to_crop
     }
     call fastq_scan.fastq_scan_pe as fastq_scan_clean {
       input:
