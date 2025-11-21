@@ -18,6 +18,8 @@ workflow tbprofiler_tngs {
     File read2
     String samplename
     
+    String? tbdb_branch
+
     Boolean run_trimmomatic = true
     Boolean run_kraken2 = false
     File kraken2_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_20240112.tar.gz" # THIS IS A MASIVE DB CAUTION
@@ -73,7 +75,8 @@ workflow tbprofiler_tngs {
     input:
       read1 = select_first([clockwork_decon_reads.clockwork_cleaned_read1, extract_kraken_reads.extracted_read1, trimmomatic_pe.read1_trimmed, read1]),
       read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2, extract_kraken_reads.extracted_read2, trimmomatic_pe.read2_trimmed, read2]),
-      samplename = samplename
+      samplename = samplename,
+      tbdb_branch = tbdb_branch
   }
   call tbp_parser_task.tbp_parser {
     input:
