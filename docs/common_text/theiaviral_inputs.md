@@ -2,7 +2,7 @@
     `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) and do not have to be species-level (see `read_extraction_rank` below).
 
 ??? dna "`host` optional input parameter"
-    The `host` input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using an accession, it must be coupled with the Host Decontaminate task `is_accession` (ONT) or Read_QC_Trim_PE `host_is_accession` (Illumina) boolean populated as `true`.
+    The `host` input triggers the Host Decontaminate workflow, which removes reads that map to a reference host genome. This input needs to be an [NCBI Taxonomy-compatible](https://www.ncbi.nlm.nih.gov/taxonomy) taxon, host genome assembly FASTA, or an NCBI assembly accession. If using a taxon, the first retrieved genome corresponding to that taxon is retrieved. If using a genome assembly or accession, these inputs must be coupled with the Host Decontaminate task `is_genome`/`is_accession` (ONT) or Read QC Trim PE `host_is_genome`/`host_is_accession` (Illumina) boolean populated as "true".
 
 ??? dna "`extract_unclassified` optional input parameter"
     By default, the `extract_unclassified` parameter is set to `true`, which indicates that reads that are **not** classified by Kraken2 (Illumina) or Metabuli (ONT) **will** be included with reads classified as the input `taxon`.

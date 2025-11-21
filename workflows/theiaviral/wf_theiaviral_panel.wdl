@@ -2,7 +2,7 @@ version 1.0
 
 import "../../tasks/task_versioning.wdl" as versioning
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
-import "../../tasks/taxon_id/task_identify_taxon_id.wdl" as identify_taxon_id_task
+import "../../tasks/taxon_id/task_ete4_taxon_id.wdl" as identify_taxon_id_task
 import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools_task
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2_task
 import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes
@@ -89,10 +89,9 @@ workflow theiaviral_panel {
           samplename = samplename + "_" + taxon_id
       }
       # get the taxon information from ncbi
-      call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
+      call identify_taxon_id_task.ete4_taxon_id as ete4_identify {
         input:
-          taxon = taxon_id,
-          use_ncbi_virus = true
+          taxon = taxon_id
       }
       call theiaviral_illumina_pe.theiaviral_illumina_pe {
         input:
@@ -104,21 +103,20 @@ workflow theiaviral_panel {
           kraken_db = kraken_db,
           skip_qc = true,
           skip_screen = true,
-          genome_length = ncbi_identify.avg_genome_length
       }
       # call export_taxon_table
       call export_taxon_table_task.export_taxon_table {
         input:
-          samplename = samplename + "_" + sub(ncbi_identify.taxon_name, " ", "_"),
+          samplename = samplename + "_" + sub(ete4_identify.taxon_name, " ", "_"),
           taxon_table = output_taxon_table,
           theiaviral_panel = true,
-          gambit_predicted_taxon = ncbi_identify.taxon_name,
+          gambit_predicted_taxon = ete4_identify.taxon_name,
           terra_project = terra_project,
           terra_workspace = terra_workspace,
           columns_to_export = {
             "samplename": samplename + "_" + taxon_id,
             "source_table": source_table_name,
-            "kraken_extracted_taxon_name": ncbi_identify.taxon_name,
+            "kraken_extracted_taxon_name": ete4_identify.taxon_name,
             "assembly_fasta": theiaviral_illumina_pe.assembly_consensus_fasta,
             "theiaviral_panel_analysis_date": version_capture.date,
             "theiaviral_panel_version": version_capture.phb_version,
@@ -130,8 +128,9 @@ workflow theiaviral_panel {
             "kraken2_version": kraken2.kraken2_version,
             "kraken2_docker": kraken2.kraken2_docker,
             "kraken2_database": kraken2.kraken2_database,
-            "ncbi_taxon_summary_tsv": ncbi_identify.taxon_summary_tsv,
-            "ncbi_taxon_summary_avg_genome_length": ncbi_identify.avg_genome_length,
+            "taxon_avg_genome_length": theiaviral_illumina_pe.taxon_avg_genome_length,
+            "datasets_genome_length_docker": theiaviral_illumina_pe.datasets_genome_length_docker,
+            "datasets_genome_length_version": theiaviral_illumina_pe.datasets_genome_length_version,
             "assembly_denovo_fasta": theiaviral_illumina_pe.assembly_denovo_fasta,
             "metaviralspades_status": theiaviral_illumina_pe.metaviralspades_status,
             "metaviralspades_version": theiaviral_illumina_pe.metaviralspades_version,
@@ -154,7 +153,7 @@ workflow theiaviral_panel {
             "quast_denovo_uncalled_bases": theiaviral_illumina_pe.quast_denovo_uncalled_bases,
             "quast_denovo_version": theiaviral_illumina_pe.quast_denovo_version,
             "quast_denovo_docker": theiaviral_illumina_pe.quast_denovo_docker,
-            "skani_reference_taxon_name": theiaviral_illumina_pe.reference_taxon_name,
+            "skani_reference_taxon_name": theiaviral_illumina_pe.skani_reference_taxon,
             "skani_report": theiaviral_illumina_pe.skani_report,
             "skani_warning": theiaviral_illumina_pe.skani_warning,
             "skani_status": theiaviral_illumina_pe.skani_status,
@@ -165,7 +164,6 @@ workflow theiaviral_panel {
             "skani_database": theiaviral_illumina_pe.skani_database,
             "skani_version": theiaviral_illumina_pe.skani_version,
             "skani_docker": theiaviral_illumina_pe.skani_docker,
-            "skani_top_ani_fasta": theiaviral_illumina_pe.skani_top_ani_fasta,
             "bwa_version": theiaviral_illumina_pe.bwa_version,
             "bwa_samtools_version": theiaviral_illumina_pe.bwa_samtools_version,
             "bwa_read1_aligned": theiaviral_illumina_pe.bwa_read1_aligned,
@@ -258,7 +256,7 @@ workflow theiaviral_panel {
     # Number of assembled viruses
     Int assembled_viruses = length(select_all(theiaviral_illumina_pe.assembly_consensus_fasta))
     # Taxon of organisms identified
-    Array[String] identified_organisms = select_all(ncbi_identify.taxon_name)
+    Array[String] identified_organisms = select_all(ete4_identify.taxon_name)
     # All assembled FASTA files
     Array[File] assemblies = select_all(theiaviral_illumina_pe.assembly_consensus_fasta)
     # Workflow Versioning
