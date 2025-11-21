@@ -220,6 +220,11 @@ usher_workflow	assembly_fasta	Array[File]	The assembly files for your samples in
 usher_workflow	organism	String	What organism to run UShER on; the following organism have default global phylogenies and reference files provided: sars-cov-2, mpox, RSV-A, RSV-B.		Required	Usher	general
 usher_workflow	tree_name	String	The output prefix for the uncondensed tree output and the clades output.		Required	Usher	general
 vadr_update	genome_fasta	File	Consensus genome assembly		Required	VADR_Update	general
+wf_microreact_export	id_column	String	Column that will be used for unique identification within Microreact		Required	Microreact_Export	general
+wf_microreact_export	project_name	String	Desired Microreact project name		Required	Microreact_Export	general
+wf_microreact_export	terra_project_name	String	Terra project name where the Microreact metadata can be found		Required	Microreact_Export	general
+wf_microreact_export	terra_table_name	String	Terra table name to be used as Microreact metadata table		Required	Microreact_Export	general
+wf_microreact_export	terra_workspace_name	String	Terra workspace name where the Microreact metadata can be found		Required	Microreact_Export	general
 zip_column_content	files_to_zip	Array[File]	The column that has the files you want to zip.		Required	Zip_Column_Content	general
 zip_column_content	zipped_file_name	String	The name you want your zipped file to have. The .zip file extension will be added to this name.		Required	Zip_Column_Content	general
 abricate	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
@@ -610,6 +615,10 @@ core_snp_sites	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Ge
 core_snp_sites	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime
 core_snp_sites	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1	Optional	Core_Gene_SNP	docker
 core_snp_sites	memory	Int	Amount of memory (in GB) to allocate to the task	2	Optional	Core_Gene_SNP	runtime
+create_microreact_project	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Microreact_Export	runtime
+create_microreact_project	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	Microreact_Export	runtime
+create_microreact_project	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/microreact_export:0.1.0-dev	Optional	Microreact_Export	docker
+create_microreact_project	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Microreact_Export	runtime
 create_table_from_array	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Dorado_Basecalling	runtime
 create_table_from_array	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Dorado_Basecalling	runtime
 create_table_from_array	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	Dorado_Basecalling	docker
