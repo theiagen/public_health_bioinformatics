@@ -9120,6 +9120,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>nextclade_custom_input_dataset</strong></td>
+<td>File</td>
+<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>nextclade_dataset_name</strong></td>
 <td>String</td>
 <td>NextClade organism dataset name</td>
@@ -9371,6 +9379,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td><strong>vadr_disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>vadr_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -9973,14 +9989,6 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
 <td></td>
 <td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>nextclade_custom_input_dataset</strong></td>
-<td>File</td>
-<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
-<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
-<td></td>
 </tr>
 </tbody>
 </table>
@@ -10978,6 +10986,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 </tr>
 <tr>
 <td>morgana_magic</td>
+<td><strong>nextclade_custom_input_dataset</strong></td>
+<td>File</td>
+<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
+<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
 <td><strong>nextclade_dataset_name</strong></td>
 <td>String</td>
 <td>NextClade organism dataset name</td>
@@ -11237,6 +11253,14 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td><strong>vadr_disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>vadr_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -11919,14 +11943,6 @@ Due to limitations within the Kraken Database RSV A and B will both be extracted
 <td>Set the time zone to get an accurate date of analysis (uses UTC by default)</td>
 <td></td>
 <td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>nextclade_custom_input_dataset</strong></td>
-<td>File</td>
-<td>For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.</td>
-<td>Defaults are GenoFLU Genotype specific. Please find these default values here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a></td>
-<td></td>
 </tr>
 </tbody>
 </table>
