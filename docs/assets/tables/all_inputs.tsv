@@ -2687,7 +2687,7 @@ theiaviral_illumina_pe	min_map_quality	Int	Minimum mapping quality required for 
 theiaviral_illumina_pe	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	family	Optional	TheiaViral_Illumina_PE	general
 theiaviral_illumina_pe	read_extraction_rank	String	Internal component, do not modify	family	Optional	TheiaViral_Panel	general
 theiaviral_illumina_pe	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general
-theiaviral_illumina_pe	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	reference
+theiaviral_illumina_pe	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general
 theiaviral_illumina_pe	skani_db	File	Skani database file		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	database
 theiaviral_illumina_pe	skip_qc	Boolean	Internal component, do not modify	False	Optional	TheiaViral_Illumina_PE	general
 theiaviral_illumina_pe	skip_rasusa	Boolean	True/False to skip read subsampling with Rasusa	True	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general
@@ -2702,7 +2702,7 @@ theiaviral_ont	min_depth	Int	Minimum read depth required for a variant to popula
 theiaviral_ont	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_ONT	general
 theiaviral_ont	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	family	Optional	TheiaViral_ONT	general
 theiaviral_ont	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_ONT	general
-theiaviral_ont	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaViral_ONT	reference
+theiaviral_ont	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaViral_ONT	general
 theiaviral_ont	skip_rasusa	Boolean	True/False to skip read subsampling with Rasusa	True	Optional	TheiaViral_ONT	general
 theiaviral_ont	skip_screen	Boolean	True/False to skip read screening check prior to analysis	False	Optional	TheiaViral_ONT	general
 theiaviral_panel	call_metaviralspades	Boolean	Whether to run metaviralspades for assembly	True	Optional	TheiaViral_Panel	general
