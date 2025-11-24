@@ -67,16 +67,16 @@ workflow tbprofiler_tngs {
   }
   output {
     # fastq_scan raw (per read stats)
-    Int? fastq_scan_raw1 = fastq_scan_raw.read1_seq
-    Int? fastq_scan_raw2 = fastq_scan_raw.read2_seq
+    Int? fastq_scan_num_reads_raw1 = fastq_scan_raw.read1_seq
+    Int? fastq_scan_num_reads_raw2 = fastq_scan_raw.read2_seq
     String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
-    String? fastq_scan_version = fastq_scan_raw.version
-    String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
+    String? fastq_scan_version = fastq_scan_raw.version
+    String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     # fastq_scan clean (per read stats)
-    Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
-    Int? fastq_scan_clean2 = fastq_scan_clean.read2_seq
+    Int? fastq_scan_num_reads_clean1 = fastq_scan_clean.read1_seq
+    Int? fastq_scan_num_reads_clean2 = fastq_scan_clean.read2_seq
     String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
     File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
     File? fastq_scan_clean2_json = fastq_scan_clean.read2_fastq_scan_json
@@ -87,8 +87,8 @@ workflow tbprofiler_tngs {
     String? trimmomatic_version = trimmomatic_pe.version
     String? trimmomatic_docker = trimmomatic_pe.trimmomatic_docker
     # clockwork outputs
-    File? clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
-    File? clockwork_cleaned_read2 = clockwork_decon_reads.clockwork_cleaned_read2
+    File? clockwork_decontaminated_read1 = clockwork_decon_reads.clockwork_cleaned_read1
+    File? clockwork_decontaminated_read2 = clockwork_decon_reads.clockwork_cleaned_read2
     String? clockwork_version = clockwork_decon_reads.clockwork_version
     # tbprofiler outputs
     File tbprofiler_report_csv = tbprofiler.tbprofiler_output_csv
