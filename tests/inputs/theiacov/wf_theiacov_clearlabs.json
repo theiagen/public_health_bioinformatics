@@ -6,6 +6,5 @@
     "theiacov_clearlabs.organism_parameters.gene_locations_bed_file": "tests/inputs/sc2_gene_locations.bed",
     "theiacov_clearlabs.kraken2_raw.kraken2_db": "tests/data/theiacov/databases/github_kraken2_test_db.tar.gz",
     "theiacov_clearlabs.kraken2_dehosted.kraken2_db": "tests/data/theiacov/databases/github_kraken2_test_db.tar.gz",
-    "theiacov_clearlabs.organism_parameters.vadr_model": "tests/data/theiacov/databases/vadr-models-sarscov2-1.3-2.tar.gz",
-    "theiacov_clearlabs.morgana_magic.genoflu_cross_reference": "./tests/inputs/empty-for-test.txt"
+    "theiacov_clearlabs.organism_parameters.vadr_model": "tests/data/theiacov/databases/vadr-models-sarscov2-1.3-2.tar.gz"
 }

@@ -162,7 +162,6 @@ workflow theiacov_illumina_se {
           irma_docker_image = "",        
           irma_keep_ref_deletions = false,
           irma_memory = 0,
-          genoflu_cross_reference = "gs://theiagen-public-resources-rp/empty_files/empty.fasta",
           genoflu_cpu = 0,
           genoflu_disk_size = 0,
           genoflu_docker = "",

@@ -4,6 +4,5 @@
     "theiacov_fasta.seq_method": "clearlabs",
     "theiacov_fasta.input_assembly_method": "clearlabs",
     "theiacov_fasta.reference_genome": "tests/inputs/completely-empty-for-test.txt",
-    "theiacov_fasta.vadr_model_file" : "tests/data/theiacov/databases/vadr-models-sarscov2-1.3-2.tar.gz",
-    "theiacov_fasta.morgana_magic.genoflu_cross_reference": "./tests/inputs/empty-for-test.txt"
+    "theiacov_fasta.vadr_model_file" : "tests/data/theiacov/databases/vadr-models-sarscov2-1.3-2.tar.gz"
 }

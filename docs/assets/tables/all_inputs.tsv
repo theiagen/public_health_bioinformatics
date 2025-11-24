@@ -1600,6 +1600,7 @@ morgana_magic	gene_coverage_memory	Int	Amount of memory/RAM (in GB) to allocate 
 morgana_magic	gene_coverage_min_depth	Int	The minimum depth to determine if a position was covered.		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
 morgana_magic	genoflu_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic	genoflu_cross_reference	File	An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	reference
+morgana_magic	genoflu_cross_reference	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	reference
 morgana_magic	genoflu_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic	genoflu_docker	String	The Docker container to use for the task		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
 morgana_magic	genoflu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
