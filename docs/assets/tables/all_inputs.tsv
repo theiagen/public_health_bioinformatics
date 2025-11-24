@@ -736,7 +736,6 @@ fastq_scan_clean_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional
 fastq_scan_clean_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ClearLabs	runtime
 fastq_scan_clean_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TheiaCoV_ClearLabs	docker
 fastq_scan_clean_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs	runtime
-fastq_scan_clean_reads	read1_name	String	Internal component, do not modify	basename of read1 (without .gz, .fastq, .fq)	Optional	TheiaCoV_ClearLabs	general
 fastq_scan_raw	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS	runtime
 fastq_scan_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TBProfiler_tNGS	runtime
 fastq_scan_raw	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TBProfiler_tNGS	docker
@@ -745,7 +744,6 @@ fastq_scan_raw_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional	T
 fastq_scan_raw_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ClearLabs	runtime
 fastq_scan_raw_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TheiaCoV_ClearLabs	docker
 fastq_scan_raw_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs	runtime
-fastq_scan_raw_reads	read1_name	String	Internal component, do not modify	basename of read1 (without .gz, .fastq, .fq)	Optional	TheiaCoV_ClearLabs	general
 fetch_bs	cpu	Int	Number of CPUs to allocate to the task	2	Optional	BaseSpace_Fetch	runtime
 fetch_bs	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	BaseSpace_Fetch	runtime
 fetch_bs	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1	Optional	BaseSpace_Fetch	docker
@@ -1654,7 +1652,7 @@ morgana_magic	quasitools_docker	String	The Docker container to use for the task	
 morgana_magic	quasitools_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic	read1	File	Internal component, do not modify		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	general
 morgana_magic	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_ONT	general
-morgana_magic	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	reference
+morgana_magic	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	general
 morgana_magic	sc2_s_gene_start	Int	Start position of S gene		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
 morgana_magic	sc2_s_gene_stop	Int	End position of S gene		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
 morgana_magic	vadr_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
