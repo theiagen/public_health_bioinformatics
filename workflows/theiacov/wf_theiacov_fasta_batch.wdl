@@ -68,7 +68,6 @@ workflow theiacov_fasta_batch {
       abricate_flu_min_percent_coverage = 0,
       abricate_flu_min_percent_identity = 0,
       flu_track_antiviral_aa_subs = "",
-      nextclade_custom_input_dataset = organism_parameters.nextclade_custom_dataset,
       workflow_type = "theiacov_fasta_batch"
   }
   call versioning.version_capture {

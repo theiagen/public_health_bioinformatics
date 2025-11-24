@@ -200,7 +200,6 @@ workflow theiacov_illumina_pe {
             abricate_flu_min_percent_coverage = 0,
             abricate_flu_min_percent_identity = 0,
             flu_track_antiviral_aa_subs = "",
-            nextclade_custom_input_dataset = organism_parameters.nextclade_custom_dataset,
             workflow_type = "theiacov_pe"
         }
         if (defined(qc_check_table)) {
