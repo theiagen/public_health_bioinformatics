@@ -214,7 +214,7 @@ workflow theiacov_ont {
             abricate_flu_min_percent_coverage = 0,
             abricate_flu_min_percent_identity = 0,
             flu_track_antiviral_aa_subs = "",
-            nextclade_custom_input_dataset = "gs://theiagen-public-resources-rp/empty_files/empty.json",
+            nextclade_custom_input_dataset = organism_parameters.nextclade_custom_dataset,
             workflow_type = "theiacov_ont"
         }
       }
