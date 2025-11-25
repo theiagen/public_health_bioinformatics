@@ -36,11 +36,6 @@ workflow tbprofiler_tngs {
         read2 = read2,
         samplename = samplename
     }
-    call fastq_scan.fastq_scan_pe as fastq_scan_clean {
-      input:
-        read1 = trimmomatic_pe.read1_trimmed,
-        read2 = trimmomatic_pe.read2_trimmed
-    }
   }
   if (run_clockwork) {
     call clockwork_task.clockwork_decon_reads {
@@ -49,6 +44,13 @@ workflow tbprofiler_tngs {
         read2 = select_first([trimmomatic_pe.read2_trimmed, read2]),
         samplename = samplename
     } 
+  }
+  if (run_trimmomatic || run_clockwork) {
+    call fastq_scan.fastq_scan_pe as fastq_scan_clean {
+      input:
+        read1 = select_first([clockwork_decon_reads.clockwork_cleaned_read1, trimmomatic_pe.read1_trimmed]),
+        read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2, trimmomatic_pe.read2_trimmed])
+    }
   }
   call tbprofiler_task.tbprofiler {
     input:
@@ -67,13 +69,13 @@ workflow tbprofiler_tngs {
   }
   output {
     # fastq_scan raw (per read stats)
-    Int? fastq_scan_num_reads_raw1 = fastq_scan_raw.read1_seq
-    Int? fastq_scan_num_reads_raw2 = fastq_scan_raw.read2_seq
-    String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
-    File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
-    File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
-    String? fastq_scan_version = fastq_scan_raw.version
-    String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
+    Int fastq_scan_num_reads_raw1 = fastq_scan_raw.read1_seq
+    Int fastq_scan_num_reads_raw2 = fastq_scan_raw.read2_seq
+    String fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
+    File fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
+    File fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
+    String fastq_scan_version = fastq_scan_raw.version
+    String fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     # fastq_scan clean (per read stats)
     Int? fastq_scan_num_reads_clean1 = fastq_scan_clean.read1_seq
     Int? fastq_scan_num_reads_clean2 = fastq_scan_clean.read2_seq
