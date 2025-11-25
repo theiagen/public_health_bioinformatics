@@ -6823,6 +6823,14 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>tbprofiler_tbdb_branch</strong></td>
+<td>String</td>
+<td>TBProfiler uses by default the TBDB database (a combination of the original library and the WHO v2 catalogue). You can opt to use a different mutation library by using this field to specify the name of the TBDB branch to use in TBProfiler; see <a href="https://jodyphelan.github.io/tb-profiler-docs/en/mutation-library/">the TBProfiler documentation</a> for more information regarding available databases</td>
+<td></td>
+<td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>virulencefinder_database</strong></td>
 <td>String</td>
 <td>The specific database to use</td>
@@ -6868,6 +6876,14 @@
 <td>Skani database file</td>
 <td>gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251107.tar</td>
 <td>TheiaViral_ONT</td>
+</tr>
+<tr>
+<td>tbprofiler_tngs</td>
+<td><strong>tbdb_branch</strong></td>
+<td>String</td>
+<td>TBProfiler uses by default the TBDB database (a combination of the original library and the WHO v2 catalogue). You can opt to use a different mutation library by using this field to specify the name of the TBDB branch to use in TBProfiler; see <a href="https://jodyphelan.github.io/tb-profiler-docs/en/mutation-library/">the TBProfiler documentation</a> for more information regarding available databases</td>
+<td></td>
+<td>TBProfiler_tNGS</td>
 </tr>
 <tr>
 <td>theiaeuk_illumina_pe</td>
@@ -7268,6 +7284,12 @@
 <td>TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
+<td>clockwork_decon_reads</td>
+<td><strong>docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e</td>
+<td>TBProfiler_tNGS</td>
+</tr>
+<tr>
 <td>compare_two_tsvs</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:1.1.2</td>
@@ -7454,10 +7476,22 @@
 <td>TheiaViral_ONT</td>
 </tr>
 <tr>
+<td>fastq_scan_clean</td>
+<td><strong>docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3</td>
+<td>TBProfiler_tNGS</td>
+</tr>
+<tr>
 <td>fastq_scan_clean_reads</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3</td>
 <td>TheiaCoV_ClearLabs</td>
+</tr>
+<tr>
+<td>fastq_scan_raw</td>
+<td><strong>docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3</td>
+<td>TBProfiler_tNGS</td>
 </tr>
 <tr>
 <td>fastq_scan_raw_reads</td>
@@ -8913,14 +8947,6 @@
 <td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
-<td>morgana_magic</td>
-<td><strong>reference_gene_locations_bed</strong></td>
-<td>File</td>
-<td>Use to provide locations of interest where average coverage will be calculated</td>
-<td></td>
-<td>TheiaCoV_FASTA, TheiaCoV_FASTA_Batch</td>
-</tr>
-<tr>
 <td>nextclade_batch</td>
 <td><strong>input_ref</strong></td>
 <td>File</td>
@@ -8943,22 +8969,6 @@
 <td>Reference GFF file for the organism being analyzed</td>
 <td>Default provided for mpox ("gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3") and HIV (primer versions 1 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"] and 2 ["gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"])</td>
 <td>Augur, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_ONT</td>
-</tr>
-<tr>
-<td>theiaviral_illumina_pe</td>
-<td><strong>reference_gene_locations_bed</strong></td>
-<td>File</td>
-<td>Use to provide locations of interest where average coverage will be calculated</td>
-<td></td>
-<td>TheiaViral_Illumina_PE, TheiaViral_Panel</td>
-</tr>
-<tr>
-<td>theiaviral_ont</td>
-<td><strong>reference_gene_locations_bed</strong></td>
-<td>File</td>
-<td>Use to provide locations of interest where average coverage will be calculated</td>
-<td></td>
-<td>TheiaViral_ONT</td>
 </tr>
 </tbody>
 </table>

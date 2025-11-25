@@ -217,8 +217,9 @@ clair3_variants_vcf	File	Final merged VCF file containing high-confidence varian
 clair3_variants_wf_version	String	Version of the PHB workflow used	Clair3_Variants_ONT
 clair3_vcf	File	Variant calls in VCF format from Clair3	TheiaViral_ONT
 clair3_version	String	Clair3 Version being used	Clair3_Variants_ONT, TheiaViral_ONT
-clockwork_decontaminated_read1	File	Decontaminated forward reads by Clockwork	TheiaProk_Illumina_PE
-clockwork_decontaminated_read2	File	Decontaminated reverse reads by Clockwork	TheiaProk_Illumina_PE
+clockwork_decontaminated_read1	File	Decontaminated forward reads by Clockwork	TBProfiler_tNGS, TheiaProk_Illumina_PE
+clockwork_decontaminated_read2	File	Decontaminated reverse reads by Clockwork	TBProfiler_tNGS, TheiaProk_Illumina_PE
+clockwork_version	String	The version of Clockwork used	TBProfiler_tNGS
 combined_mean_q_clean	Float	Mean quality score for the combined clean reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
 combined_mean_q_raw	Float	Mean quality score for the combined raw reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
 combined_mean_readlength_clean	Float	Mean read length for the combined clean reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
@@ -327,17 +328,17 @@ fastq_dl_version	String	The version of fastq-dl used	SRA_Fetch
 fastq_dl_warning	String	This warning field is populated if SRA-Lite files are detected. These files contain all quality encoding as Phred-30 or Phred-3.	SRA_Fetch
 fastq_files	Array[File]	FASTQ files produced from basecalling and demultiplexing	Dorado_Basecalling
 fastq_scan_clean1_json	String	The JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length	Freyja_FASTQ
-fastq_scan_clean1_json	File	The JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
-fastq_scan_clean2_json	File	The JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
-fastq_scan_clean_pairs	String	Number of read pairs after cleaning	TheiaViral_Illumina_PE, TheiaViral_Panel
-fastq_scan_docker	String	The Docker image of fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_clean1_json	File	The JSON file output from `fastq-scan` containing summary stats about clean forward read quality and length	TBProfiler_tNGS, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_clean2_json	File	The JSON file output from `fastq-scan` containing summary stats about clean reverse read quality and length	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_clean_pairs	String	Number of read pairs after cleaning	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_docker	String	The Docker image of fastq_scan	TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_clean1	String	The number of forward reads after cleaning as calculated by fastq_scan	Freyja_FASTQ
-fastq_scan_num_reads_clean1	Int	The number of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
-fastq_scan_num_reads_clean2	Int	The number of reverse reads after cleaning as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_num_reads_clean1	Int	The number of forward reads after cleaning as calculated by fastq_scan	TBProfiler_tNGS, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_num_reads_clean2	Int	The number of reverse reads after cleaning as calculated by fastq_scan	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_clean_pairs	String	The number of read pairs after cleaning as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 fastq_scan_num_reads_raw1	String	The number of input forward reads as calculated by fastq_scan	Freyja_FASTQ
-fastq_scan_num_reads_raw1	Int	The number of input forward reads as calculated by fastq_scan	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
-fastq_scan_num_reads_raw2	Int	The number of input reserve reads as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_num_reads_raw1	Int	The number of input forward reads as calculated by fastq_scan	TBProfiler_tNGS, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_num_reads_raw2	Int	The number of input reserve reads as calculated by fastq_scan	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_scan_num_reads_raw_pairs	String	The number of input read pairs as calculated by fastq_scan	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 fastq_scan_r1_mean_q_clean	Float	The average quality of forward reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 fastq_scan_r1_mean_q_raw	Float	The average quality of forward reads as calculated by fastq_scan	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
@@ -348,10 +349,10 @@ fastq_scan_r2_mean_q_raw	Float	The average quality of reverse reads as calculate
 fastq_scan_r2_mean_readlength_clean	Float	The average read length of reverse reads after cleaning as calculated by fastq_scan	TheiaCoV_Illumina_PE
 fastq_scan_r2_mean_readlength_raw	Float	The average read length of reverse reads as calculated by fastq_scan	TheiaCoV_Illumina_PE
 fastq_scan_raw1_json	String	The JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length	Freyja_FASTQ
-fastq_scan_raw1_json	File	The JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
-fastq_scan_raw2_json	File	The JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
-fastq_scan_raw_pairs	String	Number of raw read pairs	TheiaViral_Illumina_PE, TheiaViral_Panel
-fastq_scan_version	String	The version of fastq_scan	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_raw1_json	File	The JSON file output from `fastq-scan` containing summary stats about raw forward read quality and length	TBProfiler_tNGS, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_raw2_json	File	The JSON file output from `fastq-scan` containing summary stats about raw reverse read quality and length	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_raw_pairs	String	Number of raw read pairs	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastq_scan_version	String	The version of fastq_scan	Freyja_FASTQ, TBProfiler_tNGS, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastqc_clean1_html	String	An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser	Freyja_FASTQ
 fastqc_clean1_html	File	An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Panel
 fastqc_clean2_html	File	An HTML file that provides a graphical visualization of clean reverse read quality from fastqc to open in an internet browser	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Panel

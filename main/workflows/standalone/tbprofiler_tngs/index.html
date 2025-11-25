@@ -6934,6 +6934,102 @@
 <td>Required</td>
 </tr>
 <tr>
+<td>clockwork_decon_reads</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clockwork_decon_reads</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>200</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clockwork_decon_reads</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker image to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>clockwork_decon_reads</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
+<td>64</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_clean</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_clean</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_clean</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker image to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_clean</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_raw</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_raw</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_raw</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker image to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_raw</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>tbp_parser</td>
 <td><strong>add_cycloserine_lims</strong></td>
 <td>Boolean</td>
@@ -7177,24 +7273,8 @@
 <td>tbprofiler</td>
 <td><strong>tbprofiler_custom_db</strong></td>
 <td>File</td>
-<td>TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field and set tbprofiler_run_custom_db to true</td>
+<td>TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>tbprofiler</td>
-<td><strong>tbprofiler_run_cdph_db</strong></td>
-<td>Boolean</td>
-<td>TBProfiler uses by default the TBDB database; set this value to "true" to use the WHO v2 database with customizations for CDPH</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>tbprofiler</td>
-<td><strong>tbprofiler_run_custom_db</strong></td>
-<td>Boolean</td>
-<td>Set to true to use your own custom database. The <code>tbprofiler_custom_db</code> variable MUST be filled if this value is set to true</td>
-<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7215,10 +7295,26 @@
 </tr>
 <tr>
 <td>tbprofiler_tngs</td>
-<td><strong>bases_to_crop</strong></td>
-<td>Int</td>
-<td>Indicate the number of bases to remove from the start and end of the read</td>
-<td>0</td>
+<td><strong>run_clockwork</strong></td>
+<td>Boolean</td>
+<td>Set to True to run Clockwork read decontamination</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tbprofiler_tngs</td>
+<td><strong>run_trimmomatic</strong></td>
+<td>Boolean</td>
+<td>Set to False to skip trimmomatic read trimming</td>
+<td>True</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tbprofiler_tngs</td>
+<td><strong>tbdb_branch</strong></td>
+<td>String</td>
+<td>TBProfiler uses by default the TBDB database (a combination of the original library and the WHO v2 catalogue). You can opt to use a different mutation library by using this field to specify the name of the TBDB branch to use in TBProfiler; see <a href="https://jodyphelan.github.io/tb-profiler-docs/en/mutation-library/">the TBProfiler documentation</a> for more information regarding available databases</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7259,6 +7355,14 @@
 <td>String</td>
 <td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
 <td>-phred33</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>trimmomatic_pe</td>
+<td><strong>trimmomatic_base_crop</strong></td>
+<td>Int</td>
+<td>Indicate the number of bases to remove from the start and end of the read (assuming average read length)</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7315,6 +7419,81 @@
 </tr>
 </thead>
 <tbody>
+<tr>
+<td>clockwork_decontaminated_read1</td>
+<td>File</td>
+<td>Decontaminated forward reads by Clockwork</td>
+</tr>
+<tr>
+<td>clockwork_decontaminated_read2</td>
+<td>File</td>
+<td>Decontaminated reverse reads by Clockwork</td>
+</tr>
+<tr>
+<td>clockwork_version</td>
+<td>String</td>
+<td>The version of Clockwork used</td>
+</tr>
+<tr>
+<td>fastq_scan_clean1_json</td>
+<td>File</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean forward read quality and length</td>
+</tr>
+<tr>
+<td>fastq_scan_clean2_json</td>
+<td>File</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about clean reverse read quality and length</td>
+</tr>
+<tr>
+<td>fastq_scan_clean_pairs</td>
+<td>String</td>
+<td>Number of read pairs after cleaning</td>
+</tr>
+<tr>
+<td>fastq_scan_docker</td>
+<td>String</td>
+<td>The Docker image of fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_clean1</td>
+<td>Int</td>
+<td>The number of forward reads after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_clean2</td>
+<td>Int</td>
+<td>The number of reverse reads after cleaning as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_raw1</td>
+<td>Int</td>
+<td>The number of input forward reads as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_num_reads_raw2</td>
+<td>Int</td>
+<td>The number of input reserve reads as calculated by fastq_scan</td>
+</tr>
+<tr>
+<td>fastq_scan_raw1_json</td>
+<td>File</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about raw forward read quality and length</td>
+</tr>
+<tr>
+<td>fastq_scan_raw2_json</td>
+<td>File</td>
+<td>The JSON file output from <code>fastq-scan</code> containing summary stats about raw reverse read quality and length</td>
+</tr>
+<tr>
+<td>fastq_scan_raw_pairs</td>
+<td>String</td>
+<td>Number of raw read pairs</td>
+</tr>
+<tr>
+<td>fastq_scan_version</td>
+<td>String</td>
+<td>The version of fastq_scan</td>
+</tr>
 <tr>
 <td>tbp_parser_average_genome_depth</td>
 <td>Float</td>

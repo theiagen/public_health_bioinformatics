@@ -532,6 +532,10 @@ clean_check_reads	min_genome_length	Int	Minimum genome length to pass read scree
 clean_check_reads	min_proportion	Int	Minimum read proportion to pass read screening	40	Optional	TheiaViral_Illumina_PE	general
 clean_check_reads	min_reads	Int	Minimum reads to pass read screening	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 clean_check_reads	workflow_series	String	Internal component, do not modify	theiaviral	Optional	TheiaEuk_ONT	general
+clockwork_decon_reads	cpu	Int	Number of CPUs to allocate to the task	16	Optional	TBProfiler_tNGS	runtime
+clockwork_decon_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	200	Optional	TBProfiler_tNGS	runtime
+clockwork_decon_reads	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e	Optional	TBProfiler_tNGS	docker
+clockwork_decon_reads	memory	Int	Amount of memory (in GB) to allocate to the task	64	Optional	TBProfiler_tNGS	runtime
 compare_two_tsvs	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaValidate	runtime
 compare_two_tsvs	debug_output	Boolean	Set to true to enable more outputs; useful when debugging	False	Optional	TheiaValidate	general
 compare_two_tsvs	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	TheiaValidate	runtime
@@ -724,16 +728,22 @@ fasta_utilities	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaV
 fasta_utilities	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime
 fasta_utilities	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	TheiaViral_ONT	docker
 fasta_utilities	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_ONT	runtime
+fastq_scan_clean	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS	runtime
+fastq_scan_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TBProfiler_tNGS	runtime
+fastq_scan_clean	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TBProfiler_tNGS	docker
+fastq_scan_clean	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TBProfiler_tNGS	runtime
 fastq_scan_clean_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_ClearLabs	runtime
 fastq_scan_clean_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ClearLabs	runtime
 fastq_scan_clean_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TheiaCoV_ClearLabs	docker
 fastq_scan_clean_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs	runtime
-fastq_scan_clean_reads	read1_name	String	Internal component, do not modify	basename of read1 (without .gz, .fastq, .fq)	Optional	TheiaCoV_ClearLabs	general
+fastq_scan_raw	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS	runtime
+fastq_scan_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TBProfiler_tNGS	runtime
+fastq_scan_raw	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TBProfiler_tNGS	docker
+fastq_scan_raw	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TBProfiler_tNGS	runtime
 fastq_scan_raw_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_ClearLabs	runtime
 fastq_scan_raw_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ClearLabs	runtime
 fastq_scan_raw_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TheiaCoV_ClearLabs	docker
 fastq_scan_raw_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs	runtime
-fastq_scan_raw_reads	read1_name	String	Internal component, do not modify	basename of read1 (without .gz, .fastq, .fq)	Optional	TheiaCoV_ClearLabs	general
 fetch_bs	cpu	Int	Number of CPUs to allocate to the task	2	Optional	BaseSpace_Fetch	runtime
 fetch_bs	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	BaseSpace_Fetch	runtime
 fetch_bs	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/basespace_cli:1.2.1	Optional	BaseSpace_Fetch	docker
@@ -1505,7 +1515,7 @@ merlin_magic	tbp_parser_tngs_data	Boolean	Set to true to enable tNGS-specific pa
 merlin_magic	tbprofiler_additional_parameters	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbprofiler_additional_parameters	String	Additional parameters for TBProfiler		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	tbprofiler_custom_db	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	tbprofiler_custom_db	File	TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field and set tbprofiler_run_custom_db to true		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	tbprofiler_custom_db	File	TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	tbprofiler_docker_image	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbprofiler_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
 merlin_magic	tbprofiler_mapper	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
@@ -1514,10 +1524,8 @@ merlin_magic	tbprofiler_min_af	Float	Internal component, do not modify		Optional
 merlin_magic	tbprofiler_min_af	Float	The minimum allele frequency to call a variant	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	tbprofiler_min_depth	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbprofiler_min_depth	Int	The minimum depth for a variant to be called.	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	tbprofiler_run_cdph_db	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	tbprofiler_run_cdph_db	Boolean	TBProfiler uses by default the TBDB database; set this value to "true" to use the WHO v2 database with customizations for CDPH	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	tbprofiler_run_custom_db	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	tbprofiler_run_custom_db	Boolean	TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must set this value to true and provide a custom database in the tbprofiler_custom_db field	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	tbprofiler_tbdb_branch	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	tbprofiler_tbdb_branch	String	TBProfiler uses by default the TBDB database (a combination of the original library and the WHO v2 catalogue). You can opt to use a different mutation library by using this field to specify the name of the TBDB branch to use in TBProfiler; see [the TBProfiler documentation](https://jodyphelan.github.io/tb-profiler-docs/en/mutation-library/) for more information regarding available databases		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database
 merlin_magic	tbprofiler_variant_caller	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbprofiler_variant_caller	String	Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options.	GATK	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	tbprofiler_variant_calling_params	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
@@ -1644,7 +1652,7 @@ morgana_magic	quasitools_docker	String	The Docker container to use for the task	
 morgana_magic	quasitools_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic	read1	File	Internal component, do not modify		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	general
 morgana_magic	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_ONT	general
-morgana_magic	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	reference
+morgana_magic	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	general
 morgana_magic	sc2_s_gene_start	Int	Start position of S gene		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
 morgana_magic	sc2_s_gene_stop	Int	End position of S gene		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
 morgana_magic	vadr_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
@@ -2350,12 +2358,12 @@ tbprofiler	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Op
 tbprofiler	min_af	Float	The minimum allele frequency to call a variant	0.1	Optional	TBProfiler_tNGS	general
 tbprofiler	min_depth	Int	The minimum depth for a variant to be called.	10	Optional	TBProfiler_tNGS	general
 tbprofiler	ont_data	Boolean	Specifies nanopore specific tbprofiler parameters	False	Optional	TBProfiler_tNGS	general
-tbprofiler	tbprofiler_custom_db	File	TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field and set tbprofiler_run_custom_db to true		Optional	TBProfiler_tNGS	general
-tbprofiler	tbprofiler_run_cdph_db	Boolean	TBProfiler uses by default the TBDB database; set this value to "true" to use the WHO v2 database with customizations for CDPH	False	Optional	TBProfiler_tNGS	general
-tbprofiler	tbprofiler_run_custom_db	Boolean	Set to true to use your own custom database. The `tbprofiler_custom_db` variable MUST be filled if this value is set to true	False	Optional	TBProfiler_tNGS	general
+tbprofiler	tbprofiler_custom_db	File	TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field		Optional	TBProfiler_tNGS	general
 tbprofiler	variant_caller	String	Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler's original documentation for available options.	gatk	Optional	TBProfiler_tNGS	general
 tbprofiler	variant_calling_params	String	Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler		Optional	TBProfiler_tNGS	general
-tbprofiler_tngs	bases_to_crop	Int	Indicate the number of bases to remove from the start and end of the read	0	Optional	TBProfiler_tNGS	general
+tbprofiler_tngs	run_clockwork	Boolean	Set to True to run Clockwork read decontamination	False	Optional	TBProfiler_tNGS	general
+tbprofiler_tngs	run_trimmomatic	Boolean	Set to False to skip trimmomatic read trimming	True	Optional	TBProfiler_tNGS	general
+tbprofiler_tngs	tbdb_branch	String	TBProfiler uses by default the TBDB database (a combination of the original library and the WHO v2 catalogue). You can opt to use a different mutation library by using this field to specify the name of the TBDB branch to use in TBProfiler; see [the TBProfiler documentation](https://jodyphelan.github.io/tb-profiler-docs/en/mutation-library/) for more information regarding available databases		Optional	TBProfiler_tNGS	database
 Terra_2_ENA	allow_missing	Boolean	Whether to allow missing values in metadata	False	Optional	Terra_2_ENA	general
 Terra_2_ENA	column_mappings	File	TSV file mapping Terra table columns to ENA submission fields		Optional	Terra_2_ENA	general
 Terra_2_NCBI	column_mapping_file	File	TSV file mapping Terra table columns to NCBI submission fields		Optional	Terra_2_NCBI	general
@@ -2680,7 +2688,7 @@ theiaviral_illumina_pe	min_map_quality	Int	Minimum mapping quality required for 
 theiaviral_illumina_pe	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	family	Optional	TheiaViral_Illumina_PE	general
 theiaviral_illumina_pe	read_extraction_rank	String	Internal component, do not modify	family	Optional	TheiaViral_Panel	general
 theiaviral_illumina_pe	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general
-theiaviral_illumina_pe	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	reference
+theiaviral_illumina_pe	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general
 theiaviral_illumina_pe	skani_db	File	Skani database file		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	database
 theiaviral_illumina_pe	skip_qc	Boolean	Internal component, do not modify	False	Optional	TheiaViral_Illumina_PE	general
 theiaviral_illumina_pe	skip_rasusa	Boolean	True/False to skip read subsampling with Rasusa	True	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general
@@ -2695,7 +2703,7 @@ theiaviral_ont	min_depth	Int	Minimum read depth required for a variant to popula
 theiaviral_ont	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_ONT	general
 theiaviral_ont	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	family	Optional	TheiaViral_ONT	general
 theiaviral_ont	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_ONT	general
-theiaviral_ont	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaViral_ONT	reference
+theiaviral_ont	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaViral_ONT	general
 theiaviral_ont	skip_rasusa	Boolean	True/False to skip read subsampling with Rasusa	True	Optional	TheiaViral_ONT	general
 theiaviral_ont	skip_screen	Boolean	True/False to skip read screening check prior to analysis	False	Optional	TheiaViral_ONT	general
 theiaviral_panel	call_metaviralspades	Boolean	Whether to run metaviralspades for assembly	True	Optional	TheiaViral_Panel	general
@@ -2724,6 +2732,7 @@ trimmomatic_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	1
 trimmomatic_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.39	Optional	TBProfiler_tNGS	docker
 trimmomatic_pe	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TBProfiler_tNGS	runtime
 trimmomatic_pe	trimmomatic_args	String	Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.	-phred33	Optional	TBProfiler_tNGS	general
+trimmomatic_pe	trimmomatic_base_crop	Int	Indicate the number of bases to remove from the start and end of the read (assuming average read length)		Optional	TBProfiler_tNGS	general
 trimmomatic_pe	trimmomatic_min_length	Int	Specifies minimum length of each read after trimming to be kept	75	Optional	TBProfiler_tNGS	general
 trimmomatic_pe	trimmomatic_quality_trim_score	Int	The trimming quality score	30	Optional	TBProfiler_tNGS	general
 trimmomatic_pe	trimmomatic_window_size	Int	The window size for trimming	4	Optional	TBProfiler_tNGS	general
