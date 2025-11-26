@@ -17,7 +17,6 @@ workflow wf_microreact_export {
     Array[File]? tree_files
     Array[File]? matrix_files
     Array[String]? metadata_columns
-    Boolean update_project = false
     Boolean remove_file_columns = true
     Boolean restricted_access = true
     Boolean download_table = true
@@ -37,7 +36,6 @@ workflow wf_microreact_export {
       matrix_files = matrix_files,
       tree_files = tree_files,
       metadata_columns = metadata_columns,
-      update_project = update_project,
       project_url = project_url,
       restricted_access = restricted_access,
       access_token = access_token,

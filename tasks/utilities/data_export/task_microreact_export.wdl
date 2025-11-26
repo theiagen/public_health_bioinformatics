@@ -14,7 +14,6 @@ task microreact_export {
     Array[File]? matrix_files
     String? access_token
     Boolean restricted_access = true
-    Boolean update_project = false
     Boolean remove_file_columns = true
     String? project_url
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/microreact_export:0.1.0-dev"
@@ -44,7 +43,6 @@ task microreact_export {
           then "--selected_columns " else ""} "${metadata_column_array[@]}" \
       ~{if defined(access_token) then "--access_token " + access_token else ""} \
       ~{true="--restricted_access" false="" restricted_access} \
-      ~{true="--update" false="" update_project} \
       ~{true="--remove_file_columns" false="" remove_file_columns}
       
   >>>
