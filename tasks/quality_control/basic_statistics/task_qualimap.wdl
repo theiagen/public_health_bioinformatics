@@ -27,7 +27,7 @@ task qualimap {
     cp qualimap_results/raw_data_qualimapReport/coverage_across_reference.txt ~{samplename}_genome_coverage_across_reference.txt
     cp qualimap_results/raw_data_qualimapReport/mapping_quality_across_reference.txt ~{samplename}_mapping_quality_across_reference.txt
     # create my custom interactive plots
-    plot_coverage.py ~{samplename}_genome_coverage_across_reference.txt ~{samplename}
+    plot_coverage.py ~{samplename}_genome_coverage_across_reference.txt ~{samplename}_mapping_quality_across_reference.txt ~{samplename}
     # zip results
     tar -zcvf ~{samplename}_qualimap_reports.tar.gz qualimap_results
   >>>
