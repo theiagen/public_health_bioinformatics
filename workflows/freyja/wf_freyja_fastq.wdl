@@ -284,8 +284,6 @@ workflow freyja_fastq {
     String? qualimap_version = qualimap.version
     String? qualimap_docker = qualimap.qualimap_docker
     File? qualimap_reports_bundle = qualimap.qualimap_reports_bundle
-    File? qualimap_genome_coverage_plot = qualimap.qualimap_genome_coverage_plot
-    File? qualimap_genome_coverage_histogram = qualimap.qualimap_genome_coverage_histogram
-    File? qualimap_mapping_quality_plot = qualimap.qualimap_mapping_quality_plot
+    File? qualimap_coverage_plots_html = qualimap.qualimap_coverage_plots_html
   }
 }

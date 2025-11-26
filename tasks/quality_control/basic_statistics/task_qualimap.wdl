@@ -7,7 +7,7 @@ task qualimap {
     Int disk_size = 50
     Int memory = 8
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/qualimap:2.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/qualimap-custom-html:2.3"
   }
 
   command <<<
@@ -23,12 +23,11 @@ task qualimap {
     # run qualimap bamqc for viz
     qualimap bamqc -bam ~{bam_file} -outdir qualimap_results
 
-    # get genome coverage plot
-    mv qualimap_results/images_qualimapReport/genome_coverage_across_reference.png ~{samplename}_genome_coverage_across_reference.png
-    # mv genome coverage histogram
-    mv qualimap_results/images_qualimapReport/genome_coverage_histogram.png ~{samplename}_genome_coverage_histogram.png
-    # mv genome mapping quality across reference
-    mv qualimap_results/images_qualimapReport/genome_mapping_quality_across_reference.png ~{samplename}_mapping_quality_across_reference.png
+    # extract raw data for custom scripts/plots
+    cp qualimap_results/raw_data_qualimapReport/coverage_across_reference.txt ~{samplename}_genome_coverage_across_reference.txt
+    cp qualimap_results/raw_data_qualimapReport/mapping_quality_across_reference.txt ~{samplename}_mapping_quality_across_reference.txt
+    # create my custom interactive plots
+    plot_coverage.py ~{samplename}_genome_coverage_across_reference.txt ~{samplename}
     # zip results
     tar -zcvf ~{samplename}_qualimap_reports.tar.gz qualimap_results
   >>>
@@ -36,9 +35,7 @@ task qualimap {
     String version = read_string("VERSION")
     String qualimap_docker = docker
     File qualimap_reports_bundle = "~{samplename}_qualimap_reports.tar.gz"
-    File qualimap_genome_coverage_plot = "~{samplename}_genome_coverage_across_reference.png"
-    File qualimap_genome_coverage_histogram = "~{samplename}_genome_coverage_histogram.png"
-    File qualimap_mapping_quality_plot = "~{samplename}_mapping_quality_across_reference.png"
+    File qualimap_coverage_plots_html = "~{samplename}_coverage_plot.html"
   }
   runtime {
     docker: docker
