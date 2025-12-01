@@ -7843,13 +7843,14 @@ GCF_002248705.1
 <p>For GAMBIT Prokaryotic database v2.0.0 and above, the threshold for a given species corresponds to the maximum intra-species distance ("max intra," or diameter) (<a href="#figure1">Figure 1</a>). Some species are not well separated from their closest sister taxon and, in some cases, even overlap. Such as the case of <em>Escherichia coli</em> and <em>Shigella sonnei</em> in GAMBIT’s Prokaryotic Database. In these scenarios, the species were divided into subspecies groups based on clustering of their intra-species distances, and then reporting matches to these subgroups and their parent species.</p>
 <p>If the query genome distance is greater than the species diameter, GAMBIT attempts to report the genus. Genus diameters are computed and manually curated based on the diversity of the genus.</p>
 </div>
-<div style="float: right; width: 50%; padding: 20px;"></div>
+<div style="float: right; width: 50%; padding: 20px;">
 <div class="admonition caption">
 <p class="admonition-title">Distribution of GAMBIT distances</p>
 <h5 id="figure1">Figure 1<a class="headerlink" href="#figure1" title="Permanent link">¶</a></h5>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/figures/GAMBIT-distribution-of-distances.png" data-desc-position="bottom"><img alt="**Figure 1: Distribution of GAMBIT distances within a species and to the nearest sister taxon in the GAMBIT reference database.** Three histograms are shown in each panel (each normalized independently). The green histogram represents the distribution of GAMBIT distances from each reference genome in the species to the closest genome also within the same species. The blue histogram represents the distribution of GAMBIT distances for all pairwise comparisons within the species. The red histogram represents the distribution of GAMBIT distances from each genome in the species of interest to the closest genome in the species’ closest sister taxon. The dashed blue line represents the classification threshold for that species in the GAMBIT database, which in both cases was derived from the maximum intra-species distance. Panel A shows *Klebsiella pneumoniae* and its closest sister taxon *Klebsiella variicola*, panel B shows *Neisseria gonorrhoeae* and its closest sister taxon *Neisseria meningitidis*.  ****https://doi.org/10.1371/journal.pone.0277575.g004" src="../../assets/figures/GAMBIT-distribution-of-distances.png"></a></p>
 <p><strong>Figure 1: Distribution of GAMBIT distances within a species and to the nearest sister taxon in the GAMBIT reference database.</strong> Three histograms are shown in each panel (each normalized independently). The green histogram represents the distribution of GAMBIT distances from each reference genome in the species to the closest genome also within the same species. The blue histogram represents the distribution of GAMBIT distances for all pairwise comparisons within the species. The red histogram represents the distribution of GAMBIT distances from each genome in the species of interest to the closest genome in the species’ closest sister taxon. The dashed blue line represents the classification threshold for that species in the GAMBIT database, which in both cases was derived from the maximum intra-species distance. Panel A shows <em>Klebsiella pneumoniae</em> and its closest sister taxon <em>Klebsiella variicola</em>, panel B shows <em>Neisseria gonorrhoeae</em> and its closest sister taxon <em>Neisseria meningitidis</em>. </p>
 <p>Sourced from <a href="https://doi.org/10.1371/journal.pone.0277575.g004">https://doi.org/10.1371/journal.pone.0277575.g004</a>.</p>
+</div>
 </div>
 <div style="clear: both;"></div>
 <div style="float: left; width: 50%; padding: 20px;">
@@ -7902,13 +7903,14 @@ GCF_002248705.1
 </div>
 <p>Spearman correlation was high in all four data sets (<a href="#figure2">Figure 2</a>) (Set 1 = -0.977; Set 2 = -0.968; Set 3 = -0.969; Set 4 = -0.979) for comparisons in which the ANI was reported by the FastANI tool (100%, 5.59%, 7.42% and 47.4%), revealing a nearly monotonic relationship between GAMBIT distance and ANI.</p>
 </div>
-<div style="float: right; width: 50%; padding: 20px;"></div>
+<div style="float: right; width: 50%; padding: 20px;">
 <div class="admonition caption">
 <p class="admonition-title">Relationship between GAMBIT distance and ANI</p>
 <h5 id="figure2">Figure 2<a class="headerlink" href="#figure2" title="Permanent link">¶</a></h5>
 <p><a class="glightbox" data-type="image" data-width="auto" data-height="auto" href="../../assets/figures/GAMBIT-distance-vs-ani.png" data-desc-position="bottom"><img alt="**Figure 2: Relationship between GAMBIT distance and ANI (Average Nucleotide Identity).**  The relationship is nonlinear but very close to monotonic as measured by Spearman correlation (shown in the bottom left corner of each subplot). ANI was calculated using the FastANI tool with default parameter values. GAMBIT distances were calculated for all sets using the same parameter (k = 11, prefix = ATGAC). As FastANI only reports ANI values greater than ~80%, the fraction of total pairwise comparisons shown here were 100%, 5.5%, 7.4% and 47.4% for data sets 1–4 respectively. https://doi.org/10.1371/journal.pone.0277575.g001" src="../../assets/figures/GAMBIT-distance-vs-ani.png"></a></p>
 <p><strong>Figure 2: Relationship between GAMBIT distance and ANI (Average Nucleotide Identity).</strong>  The relationship is nonlinear but very close to monotonic as measured by Spearman correlation (shown in the bottom left corner of each subplot). ANI was calculated using the <a href="https://github.com/ParBLiSS/FastANI">FastANI</a> tool with default parameter values. GAMBIT distances were calculated for all sets using the same parameter (k = 11, prefix = ATGAC). As FastANI only reports ANI values greater than ~80%, the fraction of total pairwise comparisons shown here were 100%, 5.5%, 7.4% and 47.4% for data sets 1–4 respectively. </p>
 <p>Sourced from <a href="https://doi.org/10.1371/journal.pone.0277575.g001">https://doi.org/10.1371/journal.pone.0277575.g001</a>.</p>
+</div>
 </div>
 <div style="clear: both;"></div>
 <hr>
