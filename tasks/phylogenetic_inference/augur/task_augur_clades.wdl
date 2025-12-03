@@ -4,20 +4,20 @@ task augur_clades {
   input {
     File refined_tree
     File ancestral_nt_muts_json
-    File translated_aa_muts_json
-   # File reference_fasta
+    File? translated_aa_muts_json
     String build_name
 
     File clades_tsv # tsv file containing clade definitions by amino acid
     Int disk_size = 50
     Int memory = 2
     Int cpu = 1
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0"
   }
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur clades \
       --tree "~{refined_tree}" \
-      --mutations "~{ancestral_nt_muts_json}" "~{translated_aa_muts_json}" \
+      --mutations "~{ancestral_nt_muts_json}" \
+      "~{translated_aa_muts_json}" \
       --clades "~{clades_tsv}" \
       --output-node-data "~{build_name}_clades.json"
 
