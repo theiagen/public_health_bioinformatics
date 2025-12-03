@@ -215,8 +215,7 @@ workflow merlin_magic {
     Int srst2_min_edge_depth = 2
     Int srst2_gene_max_mismatch = 2000
     # tbprofiler options
-    Boolean tbprofiler_run_custom_db = false
-    Boolean tbprofiler_run_cdph_db = false
+    String? tbprofiler_tbdb_branch
     File? tbprofiler_custom_db
     Float? tbprofiler_min_af
     Int? tbprofiler_min_depth
@@ -487,8 +486,7 @@ workflow merlin_magic {
           min_depth = tbprofiler_min_depth,
           min_af = tbprofiler_min_af,
           tbprofiler_custom_db = tbprofiler_custom_db,
-          tbprofiler_run_custom_db = tbprofiler_run_custom_db,
-          tbprofiler_run_cdph_db = tbprofiler_run_cdph_db,
+          tbdb_branch = tbprofiler_tbdb_branch,
           docker = tbprofiler_docker_image
       }
       if (call_tbp_parser) {

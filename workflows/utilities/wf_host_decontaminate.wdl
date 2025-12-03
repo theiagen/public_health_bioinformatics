@@ -4,7 +4,7 @@ import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datase
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
-import "../../tasks/taxon_id/task_identify_taxon_id.wdl" as identify_taxon_id_task
+import "../../tasks/utilities/task_datasets_genome_length.wdl" as identify_genome_task
 
 workflow host_decontaminate {
   meta {
@@ -16,14 +16,15 @@ workflow host_decontaminate {
     File? read2
     String host
     Boolean is_accession = false
+    Boolean is_genome = false
     Boolean refseq = true
     Boolean complete_only = false
     Int minimap2_memory = 32
   }
   String hostsample = samplename + "_host"
   # gather an accession from a taxon input
-  if (! is_accession) {
-    call identify_taxon_id_task.identify_taxon_id as ncbi_identify {
+  if (! is_accession && ! is_genome) {
+    call identify_genome_task.datasets_genome_length as ncbi_identify {
       input:
         taxon = host,
         refseq = refseq,
@@ -32,11 +33,13 @@ workflow host_decontaminate {
         use_ncbi_virus = false
     }
   }
-  # download accession
-  call ncbi_datasets.ncbi_datasets_download_genome_accession as download_accession {
-    input:
-      ncbi_accession = select_first([ncbi_identify.ncbi_datasets_accession, host]),
-      use_ncbi_virus = false
+  # download accession if genome isn't directly provided
+  if (! is_genome) {
+    call ncbi_datasets.ncbi_datasets_download_genome_accession as download_accession {
+      input:
+        ncbi_accession = select_first([ncbi_identify.ncbi_datasets_accession, host]),
+        use_ncbi_virus = false
+    }
   }
   # run paired-end mode
   if (defined(read2)) {
@@ -45,7 +48,7 @@ workflow host_decontaminate {
         samplename = hostsample,
         query1 = read1,
         query2 = read2,
-        reference = select_first([download_accession.ncbi_datasets_assembly_fasta]),
+        reference = select_first([download_accession.ncbi_datasets_assembly_fasta, host]),
         mode = "sr",
         output_sam = true,
         long_read_flags = false,
@@ -58,7 +61,7 @@ workflow host_decontaminate {
       input:
         samplename = hostsample,
         query1 = read1,
-        reference = select_first([download_accession.ncbi_datasets_assembly_fasta]),
+        reference = select_first([download_accession.ncbi_datasets_assembly_fasta, host]),
         mode = "map-ont",
         output_sam = true,
         long_read_flags = true,
@@ -88,8 +91,8 @@ workflow host_decontaminate {
     # Datasets download outputs
     File? host_genome_fasta = download_accession.ncbi_datasets_assembly_fasta
     File? host_genome_data_report_json = download_accession.ncbi_datasets_assembly_data_report_json
-    String host_genome_accession = select_first([ncbi_identify.ncbi_datasets_accession, host])
-    String ncbi_datasets_version = download_accession.ncbi_datasets_version
+    String? host_genome_accession = select_first([ncbi_identify.ncbi_datasets_accession, host])
+    String? ncbi_datasets_version = download_accession.ncbi_datasets_version
     # Read mapping outputs
     File? host_mapped_sorted_bam = parse_mapping.bam
     File? host_mapped_sorted_bai = parse_mapping.bai

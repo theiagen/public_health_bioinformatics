@@ -60,7 +60,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # fastq scan raw
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/command
-      md5sum: 56bcc1ba5d2a9c94f4704fc4b8e6b7ba
+      md5sum: 4f706ef1f16b38ea78d684920a5ae838
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/inputs.json
       contains: ["read1", "read2", "illumina_pe"]
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/outputs.json
@@ -137,7 +137,7 @@
       md5sum: 7c5aba41f53293b712fd86d08ed5b36e
     # clean read screen
     - path: miniwdl_run/call-clean_check_reads/command
-      md5sum: 6736453add603a6cbcc1002b10caad35
+      md5sum: 8c1188377a6b48381a8560a2928036aa
     - path: miniwdl_run/call-clean_check_reads/inputs.json
       contains: ["read1", "read2"]
     - path: miniwdl_run/call-clean_check_reads/outputs.json
@@ -361,9 +361,9 @@
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: e98d2fc28664c0622f6b490433286e32
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: 423422138426522d239584bb99a72d8e
+      md5sum: c60c7052f013cca3b15591ef0e577d4a
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: d1cac94c5f9737fda52c0633cd940768
+      md5sum: 762735b9f8e69efeae463735f0ceed21
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/_miniwdl_inputs/0/SRR13687078.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade

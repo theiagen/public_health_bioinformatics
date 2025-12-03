@@ -47,6 +47,27 @@ workflow theiacov_fasta_batch {
       nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
       pangolin_docker_image = organism_parameters.pangolin_docker,
       seq_method = "NA",
+      # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+      assembly_metrics_cpu = 0,
+      assembly_metrics_disk_size = 0,
+      assembly_metrics_docker = "",
+      assembly_metrics_memory = 0,
+      irma_cpu = 0,
+      irma_disk_size = 0,
+      irma_docker_image = "",        
+      irma_keep_ref_deletions = false,
+      irma_memory = 0,
+      genoflu_cpu = 0,
+      genoflu_disk_size = 0,
+      genoflu_docker = "",
+      genoflu_memory = 0,
+      abricate_flu_cpu = 0,
+      abricate_flu_disk_size = 0,
+      abricate_flu_docker = "",
+      abricate_flu_memory = 0,
+      abricate_flu_min_percent_coverage = 0,
+      abricate_flu_min_percent_identity = 0,
+      flu_track_antiviral_aa_subs = "",
       workflow_type = "theiacov_fasta_batch"
   }
   call versioning.version_capture {

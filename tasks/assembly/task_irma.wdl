@@ -11,12 +11,11 @@ task irma {
     Int minimum_read_length = 75 # matching default for TheiaCoV_Illumina_PE; NOTE: IRMA's default is 125 bp
     Int minimum_average_consensus_allele_quality = 10 # IRMA default is 0, we are matching MIRA standards for both ONT and ILMN: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
     Float minimum_ambiguous_threshold = 0.20
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/irma:1.2.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/irma:1.3.1"
     Int memory = 16
     Int cpu = 4
     Int disk_size = 100
   }
-  String read_basename = basename(read1)
   command <<<
     # capture irma vesion
     IRMA | head -n1 | awk -F' ' '{ print "IRMA " $5 }' | tee VERSION
@@ -229,6 +228,181 @@ task irma {
       # clean up temporary FASTA files
       rm "padded_assemblies/${BASENAME%.fasta}.temp.fasta"
     done
+
+    # create MIRA-like QC summary TSV file (with header line)
+    # many of these reported columns are based on code from MIRA-NF and are referenced below
+    echo -e "Sample\tTotal Reads\tPass QC\tReads Mapped\tReference\t% Reference Covered\tMedian Coverage\tMean Coverage\tCount of Minor SNVs (AF >= 0.05)\tCount of Minor Insertions (AF >= 0.05)\tCount of Minor Deletions (AF >= 0.05)" > "~{samplename}/~{samplename}_irma_qc_summary.tsv"
+
+    # loop through segments in SEGMENT_DICT to find variant/coverage files and append QC summary info to TSV file
+    for SEGMENT_STR in "${!SEGMENT_DICT[@]}"; do
+
+      # find reference file used for segment, and get length of reference sequence
+      # see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/irma2pandas.py#L266
+      segment_ref_file=$(find "~{samplename}/intermediate/0-ITERATIVE-REFERENCES" -name "R0*_${SEGMENT_STR}*.ref")
+      if [ -n "$segment_ref_file" ]; then
+        echo "DEBUG: segment_reference_file is set to: $segment_ref_file"
+        echo "DEBUG: Getting length of reference sequence for segment ${SEGMENT_STR} for ~{samplename}...."
+        # get length of reference sequence, ignoring header line, assuming single-line FASTA.
+        segment_ref_len=$(awk '/^[^>]/ {print length($0)}' "$segment_ref_file")
+      else
+        echo "WARNING: No reference file found for segment ${SEGMENT_STR} for ~{samplename}"
+        segment_ref_len="N/A"
+      fi
+
+      # set the reference segment column to report the SEGMENT_STR by default
+      # this may be updated below to include the subtype if we can find the full reference name from READ_COUNTS.tsv
+      segment_ref_name="${SEGMENT_STR}"
+
+      # find total number reads, count of reads that passed IRMA QC, and reads mapped to reference segment
+      # see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/irma2pandas.py#L99
+      # see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/prepareIRMAjson.py#L310
+      read_counts_file="~{samplename}/tables/READ_COUNTS.tsv"
+      echo "DEBUG: read_counts_file is set to: $read_counts_file"
+      echo "DEBUG: Parsing READ_COUNTS.tsv file for segment ${SEGMENT_STR} for ~{samplename}...."
+      if [ -f "$read_counts_file" ]; then
+        total_reads=$(grep "1-initial" "$read_counts_file" | awk -F'\t' '{print $2}')
+        pass_qc_reads=$(grep "2-passQC" "$read_counts_file" | awk -F'\t' '{print $2}')
+        segment_mapped_reads=$(sed -n "/^4-.*${SEGMENT_STR}.*/p" "$read_counts_file" | awk -F'\t' '{print $2}')
+        # update segment_mapped_reads to 0 if segment is not listed in READ_COUNTS.tsv (no reads mapped)
+        if [ -z "$segment_mapped_reads" ]; then
+          segment_mapped_reads=0
+        fi
+        # update segment_ref_name to include subtype if file is found
+        mapped_ref_name=$(sed -n "/^4-.*${SEGMENT_STR}.*/p" "$read_counts_file" | awk -F'\t' '{print $1}' | cut -d'_' -f2-)
+        if [ -n "$mapped_ref_name" ]; then
+          segment_ref_name="${mapped_ref_name}"
+        fi
+      else
+        echo "WARNING: READ_COUNTS.tsv file not found for ~{samplename}. Cannot extract read counts for QC summary."
+        total_reads="N/A"
+        pass_qc_reads="N/A"
+        segment_mapped_reads="N/A"
+      fi
+
+      # find and parse coverage statistics file for each segment to get percent reference covered, mean coverage, and median coverage
+      # currently there is no option to do global alignment of the plurality consensus to the HMM profile. so use the standard coverage stats file.
+      # see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/irma2pandas.py#L147
+      segment_coverage_file=$(find "~{samplename}/tables" -name "*_${SEGMENT_STR}*-coverage.txt")
+      if [ -n "$segment_coverage_file" ]; then
+        echo "DEBUG: segment_coverage_file is set to: $segment_coverage_file"
+        # calculate percent reference covered. make sure segment_ref_len is not N/A or zero to avoid division by zero
+        # see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/prepareIRMAjson.py#L355
+        if [ "$segment_ref_len" != "N/A" ] && [ "$segment_ref_len" -gt 0 ]; then
+          echo "DEBUG: Calculating percent reference coverage statistics for segment ${SEGMENT_STR} for ~{samplename}...."
+          # count mapped bases found in the 4th column (excluding "-", "N", "a", "c", "t", "g") and divide by reference length.
+          segment_pct_ref_cov=$(
+            awk -F'\t' -v ref_len="$segment_ref_len" '
+              NR > 1 {
+                base = $4
+                if (base != "-" && base != "N" && base != "a" && base != "c" && base != "t" && base != "g")
+                  mapped_bases++
+              }
+              END {
+                pct_ref_cov = (mapped_bases / ref_len) * 100
+                printf "%.2f\n", pct_ref_cov
+              }
+            ' "$segment_coverage_file"
+          )
+        else
+          echo "WARNING: segment_ref_len is N/A or zero. Cannot calculate percent reference covered."
+          segment_pct_ref_cov="N/A"
+        fi
+        # calculate mean coverage depth (this is not in MIRA-NF but we are adding it here)
+        # get sum of coverage depth column (3rd column) and divide by number of records (NR) minus 1 to exclude header line
+        # the total number of records (excluding header) is equal to the total length of the segment
+        echo "DEBUG: Calculating mean coverage depth for segment ${SEGMENT_STR} for ~{samplename}...."
+        segment_mean_cov=$(
+          awk -F'\t' '
+            NR > 1 {
+              total_cov_depth += $3
+            }
+            END {
+              n = NR - 1                      # number of data rows (subtracting 1 to exclude header)
+              avg_cov = total_cov_depth / n   # calculate mean coverage
+              printf "%.2f\n", avg_cov
+            }
+          ' "${segment_coverage_file}"
+        )
+        # calculate median coverage depth
+        # see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/prepareIRMAjson.py#L387
+        # numerically sort the coverage file by the coverage depth column (3rd column) and exclude the header line
+        # then create an array of coverage depths and calculate the median value
+        echo "DEBUG: Calculating median coverage depth for segment ${SEGMENT_STR} for ~{samplename}...."
+        segment_median_cov=$(
+          awk -F'\t' 'NR > 1 {print $3}' "${segment_coverage_file}" | sort -n |
+          awk -F'\t' '
+            {
+              cov_depth_array[NR] = $1        # store coverage depths in an (1-based) array 
+            }
+            END {
+              n = NR                          # number of data rows (header was excluded during sort)
+              if (n % 2 == 1) {               # calculate median coverage for odd and even number of elements
+                median_cov = cov_depth_array[(n + 1) / 2]
+              }
+              else {
+                median_cov = (cov_depth_array[n / 2] + cov_depth_array[n / 2 + 1]) / 2
+              }
+              printf "%.2f\n", median_cov
+            }
+          '
+        )
+      else
+        echo "WARNING: segment_coverage_file is not set. Cannot calculate coverage statistics for segment ${SEGMENT_STR} for ~{samplename}."
+        segment_pct_ref_cov="N/A"
+        segment_mean_cov="N/A"
+        segment_median_cov="N/A"
+      fi
+
+      # identify and count minor variants (AF >= 0.05) for each segment and create concatenated output files of all SNVs and Indels      #
+      # SNVs:
+      #     - listed in "*-variants.txt"
+      #     - see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/irma2pandas.py#L160
+      #     - see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/prepareIRMAjson.py#L341
+      # INDELS:
+      #     - listed in "*-insertions.txt" and "*-deletions.txt"
+      #     -see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/irma2pandas.py#L210
+      #     -see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/prepareIRMAjson.py#L334
+      #
+      var_types=("variants" "insertions" "deletions")
+      for var_type in "${var_types[@]}"; do
+        segment_variant_file=$(find "~{samplename}/tables" -name "*_${SEGMENT_STR}*-${var_type}.txt")
+        if [ -n "$segment_variant_file" ]; then
+          echo "DEBUG: segment_variant_file is set to: $segment_variant_file"
+          echo "DEBUG: Counting minor ${var_type} (AF >= 0.05) for segment ${SEGMENT_STR} for ~{samplename}...."
+          # SNVs are found in the *-variants.txt file and the frequency can be found in the 9th column
+          # Indels are found in the *-insertions.txt and *-deletions.txt files and the frequency can be found in the 8th column
+          if [[ "$var_type" == "variants" ]]; then
+            freq_col=9
+          else
+            freq_col=8
+          fi
+          # count number of minor snvs/indels (AF >= 0.05)
+          var_count=$(
+            awk -F'\t' -v freq_col="$freq_col" 'NR > 1 {freq = $freq_col; if (freq >= 0.05) minor_var++} END {print minor_var+0}' "$segment_variant_file"
+          )
+          # create concatenated output file of all snvs/indels with header if it doesn't already exist
+          if [[ ! -f "~{samplename}/tables/~{samplename}_irma_all_${var_type}.tsv" ]]; then
+            awk -F'\t' 'NR==1 {print}' "$segment_variant_file" > "~{samplename}/tables/~{samplename}_irma_all_${var_type}.tsv"
+          fi
+          # append rows of snvs/indels for each segment to concatenated output file
+          awk -F'\t' 'NR > 1 {print}' "$segment_variant_file" >> "~{samplename}/tables/~{samplename}_irma_all_${var_type}.tsv"
+        else
+          echo "WARNING: No ${var_type} file found for segment ${SEGMENT_STR} for ~{samplename}"
+          var_count="N/A"
+        fi
+        # report the total number of minor snvs/indels for each segment, or report "N/A" if variant file was not found
+        if [[ "$var_type" == "variants" ]]; then
+          segment_minor_snv="$var_count"
+        elif [[ "$var_type" == "insertions" ]]; then
+          segment_minor_insertions="$var_count"
+        elif [[ "$var_type" == "deletions" ]]; then
+          segment_minor_deletions="$var_count"
+        fi
+      done
+      # append all QC summary info for segment to TSV file
+      echo -e "~{samplename}\t${total_reads}\t${pass_qc_reads}\t${segment_mapped_reads}\t${segment_ref_name}\t${segment_pct_ref_cov}\t${segment_median_cov}\t${segment_mean_cov}\t${segment_minor_snv}\t${segment_minor_insertions}\t${segment_minor_deletions}" >> "~{samplename}/~{samplename}_irma_qc_summary.tsv"
+    done
+
   >>>
   output {
     # all of these FASTAs are derived from the amended_consensus/*.fa files produced by IRMA
@@ -255,6 +429,12 @@ task irma {
     File? seg_mp_assembly_padded = "padded_assemblies/~{samplename}_MP.pad.fasta"
     File? seg_np_assembly_padded = "padded_assemblies/~{samplename}_NP.pad.fasta"
     File? seg_ns_assembly_padded = "padded_assemblies/~{samplename}_NS.pad.fasta"
+
+    # Output MIRA-like QC summary and all variants called by IRMA for each segment.
+    File? irma_qc_summary_tsv = "~{samplename}/~{samplename}_irma_qc_summary.tsv"
+    File? irma_all_snvs_tsv = "~{samplename}/tables/~{samplename}_irma_all_variants.tsv"
+    File? irma_all_insertions_tsv = "~{samplename}/tables/~{samplename}_irma_all_insertions.tsv"
+    File? irma_all_deletions_tsv = "~{samplename}/tables/~{samplename}_irma_all_deletions.tsv"
 
     String irma_type = read_string("IRMA_TYPE")
     String irma_subtype = read_string("IRMA_SUBTYPE")

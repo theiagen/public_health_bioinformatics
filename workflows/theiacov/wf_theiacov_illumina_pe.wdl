@@ -156,51 +156,72 @@ workflow theiacov_illumina_pe {
       if (defined(ivar_consensus.assembly_fasta) || defined(flu_track.irma_assembly_fasta)) {
         call consensus_qc_task.consensus_qc {
           input:
-            assembly_fasta =  select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
+            assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
             reference_genome = organism_parameters.reference,
             genome_length = organism_parameters.genome_length
         }
-      }
-      call morgana_magic_wf.morgana_magic {
-        input:
-          samplename = samplename,
-          assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
-          taxon_name = organism_parameters.standardized_organism,
-          seq_method = seq_method,
-          read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean,
-          number_ATCG = consensus_qc.number_ATCG,
-          vadr_max_length = organism_parameters.vadr_maxlength,
-          vadr_skip_length = organism_parameters.vadr_skiplength,
-          vadr_options = organism_parameters.vadr_opts,
-          vadr_model_file = organism_parameters.vadr_model_file,
-          vadr_memory = organism_parameters.vadr_memory,
-          reference_gene_locations_bed = organism_parameters.gene_locations_bed,
-          gene_coverage_bam = select_first([ivar_consensus.aligned_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam]),
-          nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
-          nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
-          pangolin_docker_image = organism_parameters.pangolin_docker,
-          workflow_type = "theiacov_pe"
-      }
-      if (defined(qc_check_table)) {
-        # empty strings for kraken outputs throw an error so avoid those outputs for now
-        call qc_check.qc_check_phb as qc_check_task {
+        call morgana_magic_wf.morgana_magic {
           input:
-            qc_check_table = qc_check_table,
-            expected_taxon = organism_parameters.standardized_organism,
-            num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
-            num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
-            num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
-            num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
-            kraken_human = read_QC_trim.kraken_human,
-            kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
-            meanbaseq_trim = ivar_consensus.meanbaseq_trim,
-            assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
-            number_N = consensus_qc.number_N,
-            assembly_length_unambiguous = consensus_qc.number_ATCG,
-            number_Degenerate =  consensus_qc.number_Degenerate,
-            percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            vadr_num_alerts = morgana_magic.vadr_num_alerts
+            samplename = samplename,
+            assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
+            taxon_name = organism_parameters.standardized_organism,
+            read1 = read_QC_trim.read1_clean,
+            read2 = read_QC_trim.read2_clean,
+            number_ATCG = consensus_qc.number_ATCG,
+            vadr_max_length = organism_parameters.vadr_maxlength,
+            vadr_skip_length = organism_parameters.vadr_skiplength,
+            vadr_options = organism_parameters.vadr_opts,
+            vadr_model_file = organism_parameters.vadr_model_file,
+            vadr_memory = organism_parameters.vadr_memory,
+            reference_gene_locations_bed = organism_parameters.gene_locations_bed,
+            gene_coverage_bam = select_first([ivar_consensus.aligned_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam]),
+            nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
+            nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
+            pangolin_docker_image = organism_parameters.pangolin_docker,
+            # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+            seq_method = "",
+            assembly_metrics_cpu = 0,
+            assembly_metrics_disk_size = 0,
+            assembly_metrics_docker = "",
+            assembly_metrics_memory = 0,
+            irma_cpu = 0,
+            irma_disk_size = 0,
+            irma_docker_image = "",        
+            irma_keep_ref_deletions = false,
+            irma_memory = 0,
+            genoflu_cpu = 0,
+            genoflu_disk_size = 0,
+            genoflu_docker = "",
+            genoflu_memory = 0,
+            abricate_flu_cpu = 0,
+            abricate_flu_disk_size = 0,
+            abricate_flu_docker = "",
+            abricate_flu_memory = 0,
+            abricate_flu_min_percent_coverage = 0,
+            abricate_flu_min_percent_identity = 0,
+            flu_track_antiviral_aa_subs = "",
+            workflow_type = "theiacov_pe"
+        }
+        if (defined(qc_check_table)) {
+          # empty strings for kraken outputs throw an error so avoid those outputs for now
+          call qc_check.qc_check_phb as qc_check_task {
+            input:
+              qc_check_table = qc_check_table,
+              expected_taxon = organism_parameters.standardized_organism,
+              num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
+              num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
+              num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
+              num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
+              kraken_human = read_QC_trim.kraken_human,
+              kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
+              meanbaseq_trim = ivar_consensus.meanbaseq_trim,
+              assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
+              number_N = consensus_qc.number_N,
+              assembly_length_unambiguous = consensus_qc.number_ATCG,
+              number_Degenerate =  consensus_qc.number_Degenerate,
+              percent_reference_coverage =  consensus_qc.percent_reference_coverage,
+              vadr_num_alerts = morgana_magic.vadr_num_alerts
+          }
         }
       }
     }
@@ -219,16 +240,26 @@ workflow theiacov_illumina_pe {
     File? read_screen_raw_tsv = raw_check_reads.read_screen_tsv
     String? read_screen_clean = clean_check_reads.read_screen
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
-    # Read QC - fastq_scan outputs
+    # Read QC - fastq_scan raw outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
     String? fastq_scan_num_reads_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
+    Float? fastq_scan_r1_mean_readlength_raw = read_QC_trim.fastq_scan_r1_mean_readlength_raw
+    Float? fastq_scan_r2_mean_readlength_raw = read_QC_trim.fastq_scan_r2_mean_readlength_raw
+    Float? fastq_scan_r1_mean_q_raw = read_QC_trim.fastq_scan_r1_mean_q_raw
+    Float? fastq_scan_r2_mean_q_raw = read_QC_trim.fastq_scan_r2_mean_q_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
+    String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
+    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
+    File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
+    # Read QC - fastq_scan clean outputs
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
-    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
-    File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
+    Float? fastq_scan_r1_mean_readlength_clean = read_QC_trim.fastq_scan_r1_mean_readlength_clean
+    Float? fastq_scan_r2_mean_readlength_clean = read_QC_trim.fastq_scan_r2_mean_readlength_clean
+    Float? fastq_scan_r1_mean_q_clean = read_QC_trim.fastq_scan_r1_mean_q_clean
+    Float? fastq_scan_r2_mean_q_clean = read_QC_trim.fastq_scan_r2_mean_q_clean
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
     # Read QC - fastqc outputs
@@ -292,7 +323,7 @@ workflow theiacov_illumina_pe {
     String? samtools_version_consensus = ivar_consensus.samtools_version_consensus
     # Read Alignment - assembly outputs
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([ivar_consensus.assembly_method_nonflu, flu_track.irma_version, ""])
-    String assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta])
+    String assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta, ""])
     String? ivar_version_consensus = ivar_consensus.ivar_version_consensus
     # Read Alignment - consensus assembly qc outputs
     # this is the minimum depth used for consensus and variant calling in EITHER iVar or IRMA
@@ -385,6 +416,11 @@ workflow theiacov_illumina_pe {
     File? irma_mp_segment_fasta = flu_track.flu_mp_segment_fasta
     File? irma_np_segment_fasta = flu_track.flu_np_segment_fasta
     File? irma_ns_segment_fasta = flu_track.flu_ns_segment_fasta
+    File? irma_qc_summary_tsv = flu_track.irma_qc_summary_tsv
+    File? irma_all_snvs_tsv = flu_track.irma_all_snvs_tsv
+    File? irma_all_insertions_tsv = flu_track.irma_all_insertions_tsv
+    File? irma_all_deletions_tsv = flu_track.irma_all_deletions_tsv
+    Array[File]? irma_bams = flu_track.irma_bams
     # Flu GenoFLU Outputs
     String? genoflu_version = flu_track.genoflu_version
     String? genoflu_genotype = flu_track.genoflu_genotype

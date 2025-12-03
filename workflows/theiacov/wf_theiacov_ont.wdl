@@ -115,7 +115,7 @@ workflow theiacov_ont {
           min_coverage = min_coverage,
           skip_mash = skip_mash,
           workflow_series = "theiacov",
-            expected_genome_length = organism_parameters.genome_length
+          expected_genome_length = organism_parameters.genome_length
       }
     }
     if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
@@ -179,7 +179,6 @@ workflow theiacov_ont {
             samplename = samplename,
             assembly_fasta = select_first([consensus.consensus_seq, flu_track.irma_assembly_fasta_padded]),
             taxon_name = organism_parameters.standardized_organism,
-            seq_method = seq_method,
             read1 = read_QC_trim.read1_clean,
             number_ATCG = consensus_qc.number_ATCG,
             vadr_max_length = organism_parameters.vadr_maxlength,
@@ -192,6 +191,28 @@ workflow theiacov_ont {
             nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
             nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
             pangolin_docker_image = organism_parameters.pangolin_docker,
+            # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+            seq_method = "", 
+            assembly_metrics_cpu = 0,
+            assembly_metrics_disk_size = 0,
+            assembly_metrics_docker = "",
+            assembly_metrics_memory = 0,
+            irma_cpu = 0,
+            irma_disk_size = 0,
+            irma_docker_image = "",        
+            irma_keep_ref_deletions = false,
+            irma_memory = 0,
+            genoflu_cpu = 0,
+            genoflu_disk_size = 0,
+            genoflu_docker = "",
+            genoflu_memory = 0,
+            abricate_flu_cpu = 0,
+            abricate_flu_disk_size = 0,
+            abricate_flu_docker = "",
+            abricate_flu_memory = 0,
+            abricate_flu_min_percent_coverage = 0,
+            abricate_flu_min_percent_identity = 0,
+            flu_track_antiviral_aa_subs = "",
             workflow_type = "theiacov_ont"
         }
       }
@@ -374,6 +395,11 @@ workflow theiacov_ont {
     File? irma_mp_segment_fasta = flu_track.flu_mp_segment_fasta
     File? irma_np_segment_fasta = flu_track.flu_np_segment_fasta
     File? irma_ns_segment_fasta = flu_track.flu_ns_segment_fasta
+    File? irma_qc_summary_tsv = flu_track.irma_qc_summary_tsv
+    File? irma_all_snvs_tsv = flu_track.irma_all_snvs_tsv
+    File? irma_all_insertions_tsv = flu_track.irma_all_insertions_tsv
+    File? irma_all_deletions_tsv = flu_track.irma_all_deletions_tsv
+    Array[File]? irma_bams = flu_track.irma_bams
     # Flu GenoFLU Outputs
     String? genoflu_version = flu_track.genoflu_version
     String? genoflu_genotype = flu_track.genoflu_genotype

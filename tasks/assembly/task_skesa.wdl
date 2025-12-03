@@ -13,8 +13,9 @@ task skesa {
     String? skesa_opts
   }
   command <<<
+    # fail hard
     set -euo pipefail
-    
+
     # Get skesa version
     skesa --version 2>&1 | grep "SKESA" | sed -E 's/^.*SKESA ([0-9.]+).*/\1/' | tee VERSION
     
