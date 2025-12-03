@@ -17,8 +17,7 @@ task tbprofiler {
     Float min_af = 0.1
     
     File? tbprofiler_custom_db
-    Boolean tbprofiler_run_cdph_db = false
-    Boolean tbprofiler_run_custom_db = false
+    String? tbdb_branch
     
     Int cpu = 8     
     Int disk_size = 100
@@ -36,23 +35,23 @@ task tbprofiler {
       INPUT_READS="-1 ~{read1} -2 ~{read2}"
     fi
 
-    # check if new database file is provided and not empty
-    if ~{tbprofiler_run_custom_db}; then
-      if [ ! -s ~{tbprofiler_custom_db} ]; then
-        echo "Custom database file is empty"
-        TBDB=""
-      else
-        echo "Found new database file ~{tbprofiler_custom_db}"
-        prefix=$(basename "~{tbprofiler_custom_db}" | sed 's/\.tar\.gz$//')
-        tar xfv ~{tbprofiler_custom_db}
-        
-        tb-profiler load_library ./"$prefix"/"$prefix"
+    # check if new database file is provided and not empty - if so, use that database preferentially
+    if [ -s "~{tbprofiler_custom_db}" ]; then
+      echo "Found new database file ~{tbprofiler_custom_db}"
+      prefix=$(basename "~{tbprofiler_custom_db}" | sed 's/\.tar\.gz$//')
+      tar xfv ~{tbprofiler_custom_db}
+      
+      tb-profiler load_library ./"$prefix"/"$prefix"
+      TBDB="--db $prefix"
 
-        TBDB="--db $prefix"
-      fi
-    elif ~{tbprofiler_run_cdph_db}; then
-      tb-profiler update_tbdb --branch CaliforniaDPH
-      TBDB="--db CaliforniaDPH"
+    elif [ -n "~{tbdb_branch}" ]; then
+      echo "Using tbdb branch ~{tbdb_branch}"
+      tb-profiler update_tbdb --branch ~{tbdb_branch}
+      TBDB="--db ~{tbdb_branch}"
+    
+    else
+      echo "Using default tbdb database"
+      TBDB=""
     fi
 
     # Run tb-profiler on the input reads with samplename prefix

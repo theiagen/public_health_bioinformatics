@@ -139,7 +139,6 @@ workflow theiacov_illumina_se {
           samplename = samplename,
           assembly_fasta = ivar_consensus.assembly_fasta,
           taxon_name = organism_parameters.standardized_organism,
-          seq_method = seq_method,
           read1 = read_QC_trim.read1_clean,
           number_ATCG = consensus_qc.number_ATCG,
           vadr_max_length = organism_parameters.vadr_maxlength,
@@ -152,6 +151,28 @@ workflow theiacov_illumina_se {
           nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
           nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
           pangolin_docker_image = organism_parameters.pangolin_docker,
+          # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+          seq_method = "",
+          assembly_metrics_cpu = 0,
+          assembly_metrics_disk_size = 0,
+          assembly_metrics_docker = "",
+          assembly_metrics_memory = 0,
+          irma_cpu = 0,
+          irma_disk_size = 0,
+          irma_docker_image = "",        
+          irma_keep_ref_deletions = false,
+          irma_memory = 0,
+          genoflu_cpu = 0,
+          genoflu_disk_size = 0,
+          genoflu_docker = "",
+          genoflu_memory = 0,
+          abricate_flu_cpu = 0,
+          abricate_flu_disk_size = 0,
+          abricate_flu_docker = "",
+          abricate_flu_memory = 0,
+          abricate_flu_min_percent_coverage = 0,
+          abricate_flu_min_percent_identity = 0,
+          flu_track_antiviral_aa_subs = "",
           workflow_type = "theiacov_se"
       }
       if (defined(qc_check_table)) {
@@ -187,11 +208,17 @@ workflow theiacov_illumina_se {
     File? read_screen_raw_tsv = raw_check_reads.read_screen_tsv
     String? read_screen_clean = clean_check_reads.read_screen
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
-    # Read QC - fastq_scan outputs
+    # Read QC - fastq_scan raw outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
+    Float? fastq_scan_r1_mean_readlength_raw = read_QC_trim.fastq_scan_r1_mean_readlength_raw
+    Float? fastq_scan_r1_mean_q_raw = read_QC_trim.fastq_scan_r1_mean_q_raw
     String? fastq_scan_version = read_QC_trim.fastq_scan_version
-    Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
+    # Read QC - fastq_scan clean outputs
+    Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
+    Float? fastq_scan_r1_mean_readlength_clean = read_QC_trim.fastq_scan_r1_mean_readlength_clean
+    Float? fastq_scan_r1_mean_q_clean = read_QC_trim.fastq_scan_r1_mean_q_clean
     File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
     # Read QC - fastqc outputs
     Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1

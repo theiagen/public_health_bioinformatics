@@ -4,14 +4,17 @@ task skani {
   input{
     File assembly_fasta
     String samplename
-    File skani_db = "gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20250613.tar"
+    File skani_db = "gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251107.tar"
+    String fasta_dir = "gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251107/fna/"
+    File? acc2taxon_map = "gs://theiagen-public-resources-rp/reference_data/databases/skani/viral_fna_20251107/viral_accession2taxon_20251107.tsv"
     Int disk_size = 100
     Int cpu = 2
     Int memory = 4
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/skani:0.2.2"
   }
   command <<<
-    set -euo pipefail
+    # pipefail, but not in the middle of pipes
+    set -eu pipefail
 
     # extract skani db
     echo "DEBUG: Decompressing Skani DB"
@@ -103,13 +106,21 @@ task skani {
       head -n 2 ~{samplename}_skani_results_sorted.tsv | tail -n 1 | cut -f 21 | tee TOP_SCORE
     fi
 
-  # need to account for if the genome is derived from refseq or not 
-  # this will have to be modified if GCAs are added to the database as well
-  if [[ $(cat TOP_ACCESSION) == GCF_* ]]; then
-    echo false > SKANI_DATASETS_VIRUS
+  # acquire the path of the best hit assembly
+  echo ~{fasta_dir}$(cat TOP_ACCESSION).fna > TOP_ASSEMBLY
+
+  # acquire the taxon of the best hit, if possible
+  if [ -f ~{acc2taxon_map} ]; then
+    top_taxon=$(grep -wFf TOP_ACCESSION ~{acc2taxon_map} | cut -f 2 || true)
+    if [ -n "$top_taxon" ]; then
+      echo "$top_taxon" > TOP_TAXON
+    else
+      echo "N/A" > TOP_TAXON
+    fi
   else
-    echo true > SKANI_DATASETS_VIRUS
+    echo "N/A" > TOP_TAXON
   fi
+
   >>>
   output{
     File skani_report = "~{samplename}_skani_results_sorted.tsv"
@@ -117,10 +128,11 @@ task skani {
     Float skani_top_ani = read_float("TOP_ANI")
     Float skani_top_query_coverage = read_float("TOP_QUERY_COVERAGE")
     Float skani_top_score = read_float("TOP_SCORE")
+    File skani_reference_assembly = read_string("TOP_ASSEMBLY")
+    String skani_reference_taxon = read_string("TOP_TAXON")
     String skani_database = skani_db
     String skani_warning = read_string("SKANI_WARNING")
     String skani_status = read_string("SKANI_STATUS")
-    Boolean skani_virus_download = read_boolean("SKANI_DATASETS_VIRUS")
     String skani_version = read_string("VERSION")
     String skani_docker = docker
   }

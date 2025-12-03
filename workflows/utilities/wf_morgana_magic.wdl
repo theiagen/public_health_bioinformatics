@@ -41,9 +41,17 @@ workflow morgana_magic {
     Int? abricate_flu_memory
     Int? abricate_flu_min_percent_coverage
     Int? abricate_flu_min_percent_identity
+    # flu track - antiviral substitutions
+    String? flu_track_antiviral_aa_subs
     # nextclade inputs
     String? nextclade_dataset_name
     String? nextclade_dataset_tag
+    File? nextclade_custom_input_dataset
+    File? nextclade_reference_gff_file
+    File? nextclade_auspice_reference_tree_json
+    File? nextclade_pathogen_json
+    File? nextclade_input_ref
+    String? nextclade_verbosity
     Int? nextclade_cpu
     Int? nextclade_disk_size
     String? nextclade_docker_image
@@ -88,6 +96,7 @@ workflow morgana_magic {
     Int? vadr_memory
     Int? vadr_cpu
     Int? vadr_disk_size
+    String? vadr_docker_image
     # Workflow Settings
     String workflow_type
   }
@@ -113,10 +122,12 @@ workflow morgana_magic {
         vadr_opts = organism_parameters.vadr_opts,
         vadr_model_file = organism_parameters.vadr_model_file,
         max_length = organism_parameters.vadr_maxlength,
+        min_length = vadr_min_length,
         skip_length = organism_parameters.vadr_skiplength,
         memory = organism_parameters.vadr_memory,
         cpu = vadr_cpu,
-        disk_size = vadr_disk_size
+        disk_size = vadr_disk_size,
+        docker = vadr_docker_image
     }
   }
   if (organism_parameters.standardized_organism == "flu" && (workflow_type == "theiaviral" || workflow_type == "theiaviral_panel")) {
@@ -146,10 +157,12 @@ workflow morgana_magic {
         abricate_flu_memory = abricate_flu_memory,
         abricate_flu_min_percent_coverage = abricate_flu_min_percent_coverage,
         abricate_flu_min_percent_identity = abricate_flu_min_percent_identity,
+        antiviral_aa_subs = flu_track_antiviral_aa_subs,
         nextclade_cpu = nextclade_cpu,
         nextclade_disk_size = nextclade_disk_size,
         nextclade_docker_image = nextclade_docker_image,
         nextclade_memory = nextclade_memory,
+        nextclade_custom_input_dataset = nextclade_custom_input_dataset,
         nextclade_output_parser_cpu = nextclade_output_parser_cpu,
         nextclade_output_parser_disk_size = nextclade_output_parser_disk_size,
         nextclade_output_parser_docker = nextclade_output_parser_docker,
@@ -157,7 +170,7 @@ workflow morgana_magic {
         vadr_outputs_tgz = vadr.outputs_tgz
     }
   }
-  if ((workflow_type == "theiacov_pe" || workflow_type == "theiacov_se" || workflow_type == "theiacov_ont") && (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(organism_parameters.gene_locations_bed))) {
+  if ((workflow_type == "theiacov_pe" || workflow_type == "theiacov_se" || workflow_type == "theiacov_ont" || workflow_type == "theiacov_clearlabs") && (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(organism_parameters.gene_locations_bed))) {
     if (basename(organism_parameters.gene_locations_bed) != "empty.bed") {
       # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
       call gene_coverage_task.gene_coverage {
@@ -201,6 +214,11 @@ workflow morgana_magic {
         genome_fasta = assembly_fasta,
         dataset_name = organism_parameters.nextclade_dataset_name,
         dataset_tag = organism_parameters.nextclade_dataset_tag,
+        auspice_reference_tree_json = nextclade_auspice_reference_tree_json,
+        gene_annotations_gff = nextclade_reference_gff_file,
+        nextclade_pathogen_json = nextclade_pathogen_json, 
+        input_ref = nextclade_input_ref,
+        verbosity = nextclade_verbosity,
         cpu = nextclade_cpu,
         disk_size = nextclade_disk_size,
         docker = nextclade_docker_image,
