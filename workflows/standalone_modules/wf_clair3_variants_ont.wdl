@@ -15,18 +15,18 @@ workflow clair3_variants_ont {
     File read1
     File reference_genome_file
     String samplename
-    String? clair3_model
-    String? clair3_docker
-    Int? clair3_memory
-    Int? clair3_cpu
-    Int? clair3_disk_size
-    Int? clair3_variant_quality
+    String clair3_model = "r1041_e82_400bps_sup_v500"
+    String clair3_docker = "us-docker.pkg.dev/general-theiagen/theiagen/clair3-extra-models:1.0.10"
+    Int clair3_memory = 8
+    Int clair3_cpu = 4
+    Int clair3_disk_size = 100
+    Int clair3_variant_quality = 2
     # Boolean flags for controlling Clair3's behavior, defaults set to true for haploid calling
-    Boolean? clair3_include_all_contigs
-    Boolean? clair3_enable_haploid_precise
-    Boolean? clair3_disable_phasing
-    Boolean? clair3_enable_gvcf
-    Boolean? clair3_enable_long_indel
+    Boolean clair3_include_all_contigs = true
+    Boolean clair3_enable_haploid_precise = true
+    Boolean clair3_disable_phasing = true
+    Boolean clair3_enable_gvcf = false
+    Boolean clair3_enable_long_indel = false
   }
   # Call the minimap2 task with recommended options for ONT data
   call minimap2_task.minimap2 {

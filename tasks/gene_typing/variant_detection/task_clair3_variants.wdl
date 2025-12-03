@@ -19,8 +19,8 @@ task clair3_variants {
     Boolean enable_gvcf = false
     Boolean enable_long_indel = false
     Int variant_quality = 2
-    Float? snp_min_af # Minimum SNP AF required for a candidate variant.
-    Float? indel_min_af # Minimum Indel AF required for a candidate variant.
+    Float snp_min_af = 0.08 # Minimum SNP AF required for a candidate variant.
+    Float? indel_min_af # Minimum Indel AF required for a candidate variant. Default dependent on sequencing platform
   }
   String ref_basename = basename(reference_genome_file)
   command <<<
