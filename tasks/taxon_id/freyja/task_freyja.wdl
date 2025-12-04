@@ -9,12 +9,12 @@ task freyja_one_sample {
     String? freyja_pathogen
     File? freyja_barcodes
     File? freyja_lineage_metadata
-    Float? eps
-    Float? adapt
+    Float eps = 0.001
+    Float adapt = 0.0
     Boolean update_db = false
     Boolean confirmed_only = false
     Boolean bootstrap = false
-    Int? number_bootstraps
+    Int number_bootstraps = 100
     Int? depth_cutoff
     Int memory = 8
     Int cpu = 2

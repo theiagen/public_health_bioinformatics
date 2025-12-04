@@ -891,7 +891,7 @@ freyja	eps	Float	The minimum lineage abundance cut-off value		Optional	Freyja_FA
 freyja	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime
 freyja	number_bootstraps	Int	The number of bootstraps to perform (only used if bootstrap = true)		Optional	Freyja_FASTQ	general
 freyja	update_db	Boolean	Updates the Freyja reference files (the usher barcodes and lineage metadata files) but will not save them as output (use Freyja_Update for that purpose). If set to true, the freyja_lineage_metadata and freyja_barcodes files are not required.	False	Optional	Freyja_FASTQ	database
-freyja_dashboard	dashboard_intro_text	File	A file containing the text to be contained at the top of the dashboard.		Optional	Freyja_Dashboard	general
+freyja_dashboard	dashboard_intro_text	File	A file containing the text to be contained at the top of the dashboard. SARS-CoV-2 lineage de-convolution performed by the Freyja workflow (<https://github.com/andersen-lab/Freyja>).		Optional	Freyja_Dashboard	general
 freyja_dashboard_task	config	File	(found in the optional section, but is required) A yaml file that applies various configurations to the dashboard, such as grouping lineages together, applying colorings, etc. See also <https://github.com/andersen-lab/Freyja/blob/main/freyja/data/plot_config.yml>.		Optional	Freyja_Dashboard	general
 freyja_dashboard_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_Dashboard	runtime
 freyja_dashboard_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_Dashboard	runtime
