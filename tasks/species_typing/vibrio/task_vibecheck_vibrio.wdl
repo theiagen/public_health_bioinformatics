@@ -8,7 +8,7 @@ task vibecheck_vibrio {
     File read1
     File? read2
     File? lineage_barcodes
-    Float? subsampling_fraction
+    Float subsampling_fraction = 0.2
     Boolean skip_subsampling = false
     String docker = "watronfire/vibecheck:2025.02.24"
     Int disk_size = 16

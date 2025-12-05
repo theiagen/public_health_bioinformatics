@@ -62,8 +62,8 @@ task lyveset {
     Boolean downsample = false
     Boolean sample_sites = false
     String read_cleaner = "CGP"
-    String? mapper
-    String? snpcaller
+    String mapper = "smalt"
+    String snpcaller = "varscan"
   }
   command <<<
     date | tee DATE

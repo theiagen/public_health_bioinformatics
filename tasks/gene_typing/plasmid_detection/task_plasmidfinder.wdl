@@ -12,9 +12,9 @@ task plasmidfinder {
     String? database_path
     String? method_path
     # minimum coverage threshold
-    Float? min_percent_coverage 
+    Float min_percent_coverage = 0.6
     # minimum blast identity threshold
-    Float? min_percent_identity
+    Float min_percent_identity = 0.9
   }
   command <<<  
   date | tee DATE
