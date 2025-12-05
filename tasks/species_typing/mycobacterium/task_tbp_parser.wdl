@@ -12,22 +12,22 @@ task tbp_parser {
     String? operator
 
     Int min_depth = 10 # default 10
-    Float? min_frequency # default 0.1
-    Int? min_read_support # default 10
+    Float min_frequency = 0.1 # default 0.1
+    Int min_read_support = 10 # default 10
     
-    Float? min_percent_coverage # default 100 (--min_percent_coverage)
+    Float min_percent_coverage = 100 # default 100 (--min_percent_coverage)
     File? coverage_regions_bed
   
     Boolean add_cycloserine_lims = false
     Boolean tbp_parser_debug = true
     Boolean tngs_data = false    
 
-    Float? rrs_frequency # default 0.1
-    Int? rrs_read_support # default 10
-    Float? rrl_frequency # default 0.1
-    Int? rrl_read_support # default 10
-    Float? rpob449_frequency # default 0.1
-    Float? etha237_frequency # default 0.1
+    Float rrs_frequency = 0.1 # default 0.1
+    Int rrs_read_support = 10 # default 10
+    Float rrl_frequency = 0.1 # default 0.1
+    Int rrl_read_support = 10 # default 10
+    Float rpob449_frequency = 0.1 # default 0.1
+    Float etha237_frequency = 0.1 # default 0.1
     File? expert_rule_regions_bed
     
     Int cpu = 1

@@ -6,7 +6,7 @@ task augur_traits {
     File? metadata
     File? weights
     #Boolean confidence = true
-    String? metadata_id_columns
+    String metadata_id_columns = "'strain', 'name'"
     String columns
     String build_name
 
