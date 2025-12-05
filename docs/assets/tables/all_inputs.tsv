@@ -569,7 +569,7 @@ consensus_qc	disk_size	Int	Amount of storage (in GB) to allocate to the task	100
 consensus_qc	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	docker
 consensus_qc	genome_length	Int	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, VADR_Update	general
 consensus_qc	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	runtime
-consensus_qc	reference_genome	File	Internal component, do not modify		Optional	VADR_Update	reference
+consensus_qc	reference_genome	File	Internal component, do not modify		Optional	VADR_Update	general
 cophylo_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	PhyloCompare	runtime
 cophylo_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	PhyloCompare	runtime
 cophylo_task	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.2.0	Optional	PhyloCompare	docker
@@ -1500,7 +1500,7 @@ merlin_magic	tbp_parser_tngs_data	Boolean	Internal component, do not modify	Fals
 merlin_magic	tbp_parser_tngs_data	Boolean	Set to true to enable tNGS-specific parameters and runs in tbp-parser	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	tbprofiler_additional_parameters	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbprofiler_additional_parameters	String	Additional parameters for TBProfiler		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	tbprofiler_custom_db	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	database
+merlin_magic	tbprofiler_custom_db	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbprofiler_custom_db	File	TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database
 merlin_magic	tbprofiler_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker
 merlin_magic	tbprofiler_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
@@ -1510,7 +1510,7 @@ merlin_magic	tbprofiler_min_af	Float	Internal component, do not modify	0.1	Optio
 merlin_magic	tbprofiler_min_af	Float	The minimum allele frequency to call a variant	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	tbprofiler_min_depth	Int	Internal component, do not modify	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbprofiler_min_depth	Int	The minimum depth for a variant to be called.	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	tbprofiler_tbdb_branch	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	database
+merlin_magic	tbprofiler_tbdb_branch	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbprofiler_tbdb_branch	String	TBProfiler uses by default the TBDB database (a combination of the original library and the WHO v2 catalogue). You can opt to use a different mutation library by using this field to specify the name of the TBDB branch to use in TBProfiler; see [the TBProfiler documentation](https://jodyphelan.github.io/tb-profiler-docs/en/mutation-library/) for more information regarding available databases		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database
 merlin_magic	tbprofiler_variant_caller	String	Internal component, do not modify	gatk	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbprofiler_variant_caller	String	Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options.	gatk	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
@@ -1586,7 +1586,7 @@ morgana_magic	gene_coverage_docker	String	The Docker container to use for the ta
 morgana_magic	gene_coverage_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic	gene_coverage_min_depth	Int	The minimum depth to determine if a position was covered.	10	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
 morgana_magic	genoflu_cpu	Int	Number of CPUs to allocate to the task		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	genoflu_cross_reference	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	reference
+morgana_magic	genoflu_cross_reference	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
 morgana_magic	genoflu_cross_reference	File	An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	reference
 morgana_magic	genoflu_disk_size	Int	Amount of storage (in GB) to allocate to the task		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic	genoflu_docker	String	The Docker container to use for the task		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
@@ -1724,16 +1724,16 @@ organism_parameters	nextclade_dataset_name_input	String	Internal component, do n
 organism_parameters	nextclade_dataset_tag_input	String	NextClade organism dataset tag		Optional	Augur	general
 organism_parameters	nextclade_dataset_tag_input	String	Internal component, do not modify		Optional	VADR_Update	general
 organism_parameters	pangolin_docker_image	String	The Docker container to use for the task		Optional	Augur, TheiaCoV_ClearLabs, TheiaCoV_FASTA	docker
-organism_parameters	pangolin_docker_image	String	Internal component, do not modify		Optional	VADR_Update	docker
+organism_parameters	pangolin_docker_image	String	Internal component, do not modify		Optional	VADR_Update	general
 organism_parameters	pivot_interval	Int	Internal component, do not modify		Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, VADR_Update	general
 organism_parameters	primer_bed_file	File	The bed file containing the primers used when sequencing was performed		Optional	Augur, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	general
 organism_parameters	primer_bed_file	File	Internal component, do not modify		Optional	VADR_Update	general
 organism_parameters	proportion_wide	Float	Internal component, do not modify		Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, VADR_Update	general
-organism_parameters	reference_genbank	File	Internal component, do not modify		Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, VADR_Update	reference
+organism_parameters	reference_genbank	File	Internal component, do not modify		Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, VADR_Update	general
 organism_parameters	reference_genome	File	An optional reference genome used for consensus assembly and QC		Optional	TheiaCoV_FASTA_Batch	reference
-organism_parameters	reference_genome	File	Internal component, do not modify		Optional	VADR_Update	reference
+organism_parameters	reference_genome	File	Internal component, do not modify		Optional	VADR_Update	general
 organism_parameters	reference_gff_file	File	Reference GFF file for the organism being analyzed		Optional	Augur, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_ONT	reference
-organism_parameters	reference_gff_file	File	Internal component, do not modify		Optional	VADR_Update	reference
+organism_parameters	reference_gff_file	File	Internal component, do not modify		Optional	VADR_Update	general
 organism_parameters	vadr_max_length	Int	Maximum length for the fasta-trim-terminal-ambigs.pl VADR script		Optional	Augur, TheiaCoV_ClearLabs, TheiaCoV_FASTA_Batch	general
 organism_parameters	vadr_mem	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	Augur, TheiaCoV_ClearLabs, TheiaCoV_FASTA_Batch	runtime
 organism_parameters	vadr_model	File	Path to the a tar + gzipped VADR model file		Optional	Augur, Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA_Batch	general
@@ -1875,7 +1875,7 @@ qc_check_task	num_reads_raw2	Int	Internal component, do not modify		Optional	The
 qc_check_task	number_contigs	Int	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
 qc_check_task	number_Degenerate	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 qc_check_task	number_N	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-qc_check_task	percent_reference_coverage	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	reference
+qc_check_task	percent_reference_coverage	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 qc_check_task	quast_gc_percent	Float	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general
 qc_check_task	r1_mean_q_clean	Float	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaProk_FASTA	general
 qc_check_task	r1_mean_q_raw	Float	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaProk_FASTA	general
