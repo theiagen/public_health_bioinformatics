@@ -643,7 +643,7 @@ digger_denovo	filter_contigs_min_length	Int	Minimum length threshold for contig 
 digger_denovo	filter_contigs_skip_coverage_filter	Boolean	Skip filtering contigs based on coverage	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general
 digger_denovo	filter_contigs_skip_homopolymer_filter	Boolean	Skip filtering contigs containing homopolymers	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general
 digger_denovo	filter_contigs_skip_length_filter	Boolean	Skip filtering contigs based on length	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general
-digger_denovo	kmers	String	K-mer sizes for assembly (comma-separated)		Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general
+digger_denovo	kmers	String	K-mer sizes for assembly (comma-separated)	21,29,39,59,79,99,119,141	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general
 digger_denovo	megahit_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime
 digger_denovo	megahit_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime
 digger_denovo	megahit_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	docker
@@ -791,7 +791,7 @@ flu_track	irma_disk_size	Int	Amount of storage (in GB) to allocate to the task	1
 flu_track	irma_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/irma:1.3.1	Optional	TheiaCoV_FASTA	general
 flu_track	irma_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/irma:1.3.1	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	docker
 flu_track	irma_keep_ref_deletions	Boolean	Internal component, do not modify	True	Optional	TheiaCoV_FASTA	general
-flu_track	irma_keep_ref_deletions	Boolean	True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting N's or deleting the sequence entirely. False sets this IRMA paramater to "DEL" and true sets it to "NNN"	True	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general
+flu_track	irma_keep_ref_deletions	Boolean	True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting N's or deleting the sequence entirely. False sets this IRMA paramater to "DEL" and true sets it to "NNN"	True	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	reference
 flu_track	irma_memory	Int	Internal component, do not modify	16	Optional	TheiaCoV_FASTA	general
 flu_track	irma_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime
 flu_track	irma_min_ambiguous_threshold	Float	Internal component, do not modify	0.2	Optional	TheiaCoV_FASTA	general
@@ -1106,7 +1106,7 @@ lyveset	disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Opti
 lyveset	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/lyveset:1.1.4f	Optional	Lyve_SET	docker
 lyveset	downsample	Boolean	If true, downsample all reads to 50x. Approximated according to the ref genome assembly	False	Optional	Lyve_SET	general
 lyveset	fast	Boolean	Shorthand for --downsample --mapper snap --nomask-phages --nomask-cliffs --sample-sites	False	Optional	Lyve_SET	general
-lyveset	mapper	String	Which mapper? Choices: "smalt", "snap"		Optional	Lyve_SET	general
+lyveset	mapper	String	Which mapper? Choices: "smalt", "snap"	smalt	Optional	Lyve_SET	general
 lyveset	mask_cliffs	Boolean	If true, search for and mask 'Cliffs' in pileups	False	Optional	Lyve_SET	general
 lyveset	mask_phages	Boolean	If true, search for and mask phages in the reference genome	False	Optional	Lyve_SET	general
 lyveset	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	64	Optional	Lyve_SET	runtime
@@ -1118,7 +1118,7 @@ lyveset	notrees	Boolean	If true, do not make phylogenies	False	Optional	Lyve_SET
 lyveset	presets	String	See presets.conf for more information		Optional	Lyve_SET	general
 lyveset	read_cleaner	String	Which read cleaner? Choices: "none", "CGP", "BayesHammer"	CGP	Optional	Lyve_SET	general
 lyveset	sample_sites	Boolean	If true, randomly choose a genome and find SNPs in a quick and dirty way. Then on the SNP-calling stage, only interrogate those sites for SNPs for each genome (including the randomly-sampled genome).	False	Optional	Lyve_SET	general
-lyveset	snpcaller	String	Which SNP caller? Choices: "varscan", "vcftools"		Optional	Lyve_SET	general
+lyveset	snpcaller	String	Which SNP caller? Choices: "varscan", "vcftools"	varscan	Optional	Lyve_SET	general
 make_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Create_Terra_Table	runtime
 make_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Create_Terra_Table	runtime
 make_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	Create_Terra_Table	docker
@@ -1148,7 +1148,7 @@ mask_low_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the tas
 megahit	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime
 megahit	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime
 megahit	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9	Optional	TheiaViral_Illumina_PE	docker
-megahit	kmers	String	Comma-separated list of kmer sizes to use for assembly. All must be odd, in the range 15-255, increment <= 28		Optional	TheiaViral_Illumina_PE	general
+megahit	kmers	String	Comma-separated list of kmer sizes to use for assembly. All must be odd, in the range 15-255, increment <= 28	21,29,39,59,79,99,119,141	Optional	TheiaViral_Illumina_PE	general
 megahit	megahit_opts	String	Additional parameters for MEGAHIT assembler		Optional	TheiaViral_Illumina_PE	general
 megahit	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaViral_Illumina_PE	runtime
 megahit	min_contig_length	Int	Minimum contig length for MEGAHIT assembler	1	Optional	TheiaViral_Illumina_PE	general
@@ -1406,20 +1406,20 @@ merlin_magic	sistr_memory	Int	Internal component, do not modify	8	Optional	Theia
 merlin_magic	sistr_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 merlin_magic	sistr_use_full_cgmlst_db	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	sistr_use_full_cgmlst_db	Boolean	Set to true to use the full set of cgMLST alleles which can include highly similar alleles. By default the smaller "centroid" alleles or representative alleles are used for each marker	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database
-merlin_magic	snippy_base_quality	Int	Minimum quality for a nucleotide to be used in variant calling		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	snippy_base_quality	Int	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	snippy_base_quality	Int	Minimum quality for a nucleotide to be used in variant calling	13	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	snippy_base_quality	Int	Internal component, do not modify	13	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	snippy_gene_query_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker
 merlin_magic	snippy_gene_query_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	snippy_map_qual	Int	Minimum mapping quality to accept in variant calling		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	snippy_map_qual	Int	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	snippy_maxsoft	Int	Number of bases of alignment to soft-clip before discarding the alignment		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	snippy_maxsoft	Int	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	snippy_map_qual	Int	Minimum mapping quality to accept in variant calling	60	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	snippy_map_qual	Int	Internal component, do not modify	60	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	snippy_maxsoft	Int	Number of bases of alignment to soft-clip before discarding the alignment	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	snippy_maxsoft	Int	Internal component, do not modify	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	snippy_min_coverage	Int	Minimum read coverage of a position to identify a mutation	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	snippy_min_coverage	Int	Internal component, do not modify	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	snippy_min_frac	Float	Minimum fraction of bases at a given position to identify a mutation		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	snippy_min_frac	Float	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	snippy_min_quality	Int	Minimum VCF variant call "quality"		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	snippy_min_quality	Int	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	snippy_min_frac	Float	Minimum fraction of bases at a given position to identify a mutation	0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	snippy_min_frac	Float	Internal component, do not modify	0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	snippy_min_quality	Int	Minimum VCF variant call "quality"	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	snippy_min_quality	Int	Internal component, do not modify	100	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	snippy_query_gene	String	Provide a gene to search for using Snippy	Default depends on detected organism	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	snippy_query_gene	String	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	snippy_reference_afumigatus	File	Snippy reference for Aspergillus fumigatus	gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference
@@ -1470,32 +1470,32 @@ merlin_magic	tbp_parser_debug	Boolean	Internal component, do not modify	True	Opt
 merlin_magic	tbp_parser_debug	Boolean	Activate the debug mode on tbp_parser; increases logging outputs	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	tbp_parser_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbp_parser_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
-merlin_magic	tbp_parser_etha237_frequency	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	tbp_parser_etha237_frequency	Float	Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	tbp_parser_etha237_frequency	Float	Internal component, do not modify	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	tbp_parser_etha237_frequency	Float	Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	tbp_parser_expert_rule_regions_bed	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbp_parser_expert_rule_regions_bed	File	A file that contains the regions where R mutations and expert rules are applied		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	tbp_parser_min_depth	Int	Internal component, do not modify	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbp_parser_min_depth	Int	Minimum depth for a variant to pass QC in tbp_parser	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	tbp_parser_min_frequency	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	tbp_parser_min_frequency	Float	The minimum frequency for a mutation to pass QC		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	tbp_parser_min_percent_coverage	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	tbp_parser_min_percent_coverage	Float	The minimum coverage for a region to pass QC in tbp_parser		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	tbp_parser_min_read_support	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	tbp_parser_min_read_support	Int	The minimum read support for a mutation to pass QC		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	tbp_parser_min_frequency	Float	Internal component, do not modify	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	tbp_parser_min_frequency	Float	The minimum frequency for a mutation to pass QC	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	tbp_parser_min_percent_coverage	Float	Internal component, do not modify	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	tbp_parser_min_percent_coverage	Float	The minimum coverage for a region to pass QC in tbp_parser	100	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	tbp_parser_min_read_support	Int	Internal component, do not modify	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	tbp_parser_min_read_support	Int	The minimum read support for a mutation to pass QC	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	tbp_parser_operator	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbp_parser_operator	String	Fills the "operator" field in the tbp_parser output files	Operator not provided	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	tbp_parser_output_seq_method_type	String	Internal component, do not modify	WGS	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbp_parser_output_seq_method_type	String	Fills out the "seq_method" field in the tbp_parser output files	WGS	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	tbp_parser_rpob449_frequency	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	tbp_parser_rpob449_frequency	Float	Minimum frequency for a mutation at protein position 449 to pass QC in tbp-parser		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	tbp_parser_rrl_frequency	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	tbp_parser_rrl_frequency	Float	Minimum frequency for a mutation in rrl to pass QC in tbp-parser		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	tbp_parser_rrl_read_support	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	tbp_parser_rrl_read_support	Int	Minimum read support for a mutation in rrl to pass QC in tbp-parser		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	tbp_parser_rrs_frequency	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	tbp_parser_rrs_frequency	Float	Minimum frequency for a mutation in rrs to pass QC in tbp-parser		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	tbp_parser_rrs_read_support	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
-merlin_magic	tbp_parser_rrs_read_support	Int	Minimum read support for a mutation in rrs to pass QC in tbp-parser		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	tbp_parser_rpob449_frequency	Float	Internal component, do not modify	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	tbp_parser_rpob449_frequency	Float	Minimum frequency for a mutation at protein position 449 to pass QC in tbp-parser	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	tbp_parser_rrl_frequency	Float	Internal component, do not modify	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	tbp_parser_rrl_frequency	Float	Minimum frequency for a mutation in rrl to pass QC in tbp-parser	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	tbp_parser_rrl_read_support	Int	Internal component, do not modify	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	tbp_parser_rrl_read_support	Int	Minimum read support for a mutation in rrl to pass QC in tbp-parser	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	tbp_parser_rrs_frequency	Float	Internal component, do not modify	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	tbp_parser_rrs_frequency	Float	Minimum frequency for a mutation in rrs to pass QC in tbp-parser	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	tbp_parser_rrs_read_support	Int	Internal component, do not modify	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+merlin_magic	tbp_parser_rrs_read_support	Int	Minimum read support for a mutation in rrs to pass QC in tbp-parser	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	tbp_parser_tngs_data	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	tbp_parser_tngs_data	Boolean	Set to true to enable tNGS-specific parameters and runs in tbp-parser	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	tbprofiler_additional_parameters	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
@@ -1523,8 +1523,8 @@ merlin_magic	vibecheck_lineage_barcodes	File	Internal component, do not modify		
 merlin_magic	vibecheck_lineage_barcodes	File	Feather formatted lineage barcodes to use instead of default O1 barcodes		Optional	TheiaProk_Illumina_PE	general
 merlin_magic	vibecheck_skip_subsampling	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 merlin_magic	vibecheck_skip_subsampling	Boolean	When enabled, will not subsample reads prior to classification. Will increase computation time	False	Optional	TheiaProk_Illumina_PE	general
-merlin_magic	vibecheck_subsampling_fraction	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-merlin_magic	vibecheck_subsampling_fraction	Float	Fraction of reads to use in classification.		Optional	TheiaProk_Illumina_PE	general
+merlin_magic	vibecheck_subsampling_fraction	Float	Internal component, do not modify	0.2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+merlin_magic	vibecheck_subsampling_fraction	Float	Fraction of reads to use in classification.	0.2	Optional	TheiaProk_Illumina_PE	general
 merlin_magic	virulencefinder_database	String	Internal component, do not modify	virulence_ecoli	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 merlin_magic	virulencefinder_database	String	The specific database to use	virulence_ecoli	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database
 merlin_magic	virulencefinder_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
@@ -1538,9 +1538,9 @@ metabuli	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Opt
 metabuli	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0	Optional	TheiaViral_ONT	docker
 metabuli	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaViral_ONT	runtime
 metabuli	metabuli_db	File	Metabuli database file	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz	Optional	TheiaViral_ONT	database
-metabuli	min_percent_coverage	Float	Minimum query coverage threshold (0.0 - 1.0)		Optional	TheiaViral_ONT	general
-metabuli	min_score	Float	Minimum sequenece similarity score (0.0 - 1.0)		Optional	TheiaViral_ONT	general
-metabuli	min_sp_score	Float	Minimum score for species- or lower-level classification		Optional	TheiaViral_ONT	general
+metabuli	min_percent_coverage	Float	Minimum query coverage threshold (0.0 - 1.0)	0	Optional	TheiaViral_ONT	general
+metabuli	min_score	Float	Minimum sequenece similarity score (0.0 - 1.0)	0	Optional	TheiaViral_ONT	general
+metabuli	min_sp_score	Float	Minimum score for species- or lower-level classification	0	Optional	TheiaViral_ONT	general
 metabuli	taxonomy_path	File	Path to taxonomy file	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/new_taxdump.tar.gz	Optional	TheiaViral_ONT	general
 metaspades_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaMeta_Illumina_PE	runtime
 metaspades_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime
@@ -1594,7 +1594,7 @@ morgana_magic	genoflu_memory	Int	Amount of memory/RAM (in GB) to allocate to the
 morgana_magic	irma_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic	irma_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic	irma_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/irma:1.3.1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
-morgana_magic	irma_keep_ref_deletions	Boolean	True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting N's or deleting the sequence entirely. False sets this IRMA paramater to "DEL" and true sets it to "NNN"	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
+morgana_magic	irma_keep_ref_deletions	Boolean	True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting N's or deleting the sequence entirely. False sets this IRMA paramater to "DEL" and true sets it to "NNN"	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	reference
 morgana_magic	irma_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic	nextclade_auspice_reference_tree_json	File	An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.	Inherited from nextclade dataset	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	reference
 morgana_magic	nextclade_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
@@ -1618,7 +1618,7 @@ morgana_magic	pangolin_analysis_mode	String	Specify which inference engine to us
 morgana_magic	pangolin_arguments	String	Optional arguments for pangolin e.g. ''--skip-scorpio''		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
 morgana_magic	pangolin_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
 morgana_magic	pangolin_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
-morgana_magic	pangolin_docker_image	String	The Docker container to use for the task		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker
+morgana_magic	pangolin_docker_image	String	The Docker container to use for the task		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general
 morgana_magic	pangolin_expanded_lineage	Boolean	True/False that determines if a lineage should be expanded without aliases (e.g., BA.1 → B.1.1.529.1)	True	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
 morgana_magic	pangolin_max_ambig	Float	Maximum proportion of Ns allowed for pangolin to attempt assignment.	0.5	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general
 morgana_magic	pangolin_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime
@@ -1810,8 +1810,8 @@ plasmidfinder	disk_size	Int	Amount of storage (in GB) to allocate to the task	50
 plasmidfinder	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/plasmidfinder:2.1.6	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
 plasmidfinder	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 plasmidfinder	method_path	String	Path to files for a user-specified method to use (blast or kma)		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-plasmidfinder	min_percent_coverage	Float	Threshold for minimum coverage, default threshold from PlasmidFinder CLI tool is used (0.60)		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-plasmidfinder	min_percent_identity	Float	Threshold for mininum blast identity, default threshold from PlasmidFinder CLI tool is used (0.90). This default differs from the default of the PlasmidFinder webtool (0.95)		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+plasmidfinder	min_percent_coverage	Float	Threshold for minimum coverage, default threshold from PlasmidFinder CLI tool is used (0.60)	0.6	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+plasmidfinder	min_percent_identity	Float	Threshold for mininum blast identity, default threshold from PlasmidFinder CLI tool is used (0.90). This default differs from the default of the PlasmidFinder webtool (0.95)	0.9	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 porechop	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_ONT	runtime
 porechop	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime
 porechop	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/porechop:0.2.4	Optional	TheiaViral_ONT	docker
@@ -2226,7 +2226,7 @@ snippy_tree_wf	snippy_core_bed	File	User-provided bed file to mask out regions o
 snippy_tree_wf	snippy_core_cpu	Int	Number of CPUs to allocate to the task	8	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime
 snippy_tree_wf	snippy_core_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime
 snippy_tree_wf	snippy_core_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker
-snippy_tree_wf	snippy_core_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general
+snippy_tree_wf	snippy_core_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime
 snippy_tree_wf	snippy_variants_qc_metrics	Array[File]	Files produced by the Snippy_Variants workflow used to concatenate the reports for each sample in the tree		Optional	Snippy_Tree	general
 snippy_tree_wf	snp_dists_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker
 snippy_tree_wf	snp_sites_cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime
@@ -2236,15 +2236,15 @@ snippy_tree_wf	snp_sites_memory	Int	Amount of memory/RAM (in GB) to allocate to 
 snippy_tree_wf	use_gubbins	Boolean	When "true", workflow removes recombination with gubbins tasks; when "false", gubbins is not used	True	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general
 snippy_variants	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Variants	runtime
 snippy_variants_wf	assembly_fasta	File	The assembly file for your sample in FASTA format		Optional	Snippy_Streamline, Snippy_Variants	general
-snippy_variants_wf	base_quality	Int	Minimum quality for a nucleotide to be used in variant calling		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general
+snippy_variants_wf	base_quality	Int	Minimum quality for a nucleotide to be used in variant calling	13	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general
 snippy_variants_wf	cpu	Int	Number of CPUs to allocate to the task	8	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	runtime
 snippy_variants_wf	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	docker
-snippy_variants_wf	map_qual	Int	Minimum mapping quality to accept in variant calling		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general
-snippy_variants_wf	maxsoft	Int	Number of bases of alignment to soft-clip before discarding the alignment		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general
+snippy_variants_wf	map_qual	Int	Minimum mapping quality to accept in variant calling	60	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general
+snippy_variants_wf	maxsoft	Int	Number of bases of alignment to soft-clip before discarding the alignment	10	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general
 snippy_variants_wf	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	runtime
 snippy_variants_wf	min_coverage	Int	Minimum read coverage of a position to identify a mutation	10	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general
-snippy_variants_wf	min_frac	Float	Minimum fraction of bases at a given position to identify a mutation		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general
-snippy_variants_wf	min_quality	Int	Minimum VCF variant call "quality"		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general
+snippy_variants_wf	min_frac	Float	Minimum fraction of bases at a given position to identify a mutation	0	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general
+snippy_variants_wf	min_quality	Int	Minimum VCF variant call "quality"	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general
 snippy_variants_wf	query_gene	String	Comma-separated strings (e.g. gene names) in which to search for mutations to output to data table		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general
 snippy_variants_wf	read1	File	Internal component, do not modify		Optional	Snippy_Streamline_FASTA	general
 snippy_variants_wf	read1	File	FASTQ file containing read1 sequences		Optional	Snippy_Variants	general
@@ -2308,19 +2308,19 @@ tbp_parser	coverage_regions_bed	File	A file that contains the regions to perform
 tbp_parser	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS	runtime
 tbp_parser	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TBProfiler_tNGS	runtime
 tbp_parser	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1	Optional	TBProfiler_tNGS	docker
-tbp_parser	etha237_frequency	Float	Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser		Optional	TBProfiler_tNGS	general
+tbp_parser	etha237_frequency	Float	Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser	0.1	Optional	TBProfiler_tNGS	general
 tbp_parser	expert_rule_regions_bed	File	A file that contains the regions where R mutations and expert rules are applied		Optional	TBProfiler_tNGS	general
 tbp_parser	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TBProfiler_tNGS	runtime
 tbp_parser	min_depth	Int	Minimum depth for a variant to pass QC in tbp_parser	10	Optional	TBProfiler_tNGS	general
-tbp_parser	min_frequency	Float	Minimum allele frequency for a variant to pass QC in tbp-parser		Optional	TBProfiler_tNGS	general
-tbp_parser	min_percent_coverage	Float	The minimum percentage of a region to exceed the minimum depth for a region to pass QC in tbp_parser		Optional	TBProfiler_tNGS	general
-tbp_parser	min_read_support	Int	Minimum read support for a variant to pass QC in tbp-parser		Optional	TBProfiler_tNGS	general
+tbp_parser	min_frequency	Float	Minimum allele frequency for a variant to pass QC in tbp-parser	0.1	Optional	TBProfiler_tNGS	general
+tbp_parser	min_percent_coverage	Float	The minimum percentage of a region to exceed the minimum depth for a region to pass QC in tbp_parser	100	Optional	TBProfiler_tNGS	general
+tbp_parser	min_read_support	Int	Minimum read support for a variant to pass QC in tbp-parser	10	Optional	TBProfiler_tNGS	general
 tbp_parser	operator	String	Fills the "operator" field in the tbp_parser output files		Optional	TBProfiler_tNGS	general
-tbp_parser	rpob449_frequency	Float	Minimum frequency for a mutation at protein position 449 to pass QC in tbp-parser		Optional	TBProfiler_tNGS	general
-tbp_parser	rrl_frequency	Float	Minimum frequency for a mutation in rrl to pass QC in tbp-parser		Optional	TBProfiler_tNGS	general
-tbp_parser	rrl_read_support	Int	Minimum read support for a mutation in rrl to pass QC in tbp-parser		Optional	TBProfiler_tNGS	general
-tbp_parser	rrs_frequency	Float	Minimum frequency for a mutation in rrs to pass QC in tbp-parser		Optional	TBProfiler_tNGS	general
-tbp_parser	rrs_read_support	Int	Minimum read support for a mutation in rrs to pass QC in tbp-parser		Optional	TBProfiler_tNGS	general
+tbp_parser	rpob449_frequency	Float	Minimum frequency for a mutation at protein position 449 to pass QC in tbp-parser	0.1	Optional	TBProfiler_tNGS	general
+tbp_parser	rrl_frequency	Float	Minimum frequency for a mutation in rrl to pass QC in tbp-parser	0.1	Optional	TBProfiler_tNGS	general
+tbp_parser	rrl_read_support	Int	Minimum read support for a mutation in rrl to pass QC in tbp-parser	10	Optional	TBProfiler_tNGS	general
+tbp_parser	rrs_frequency	Float	Minimum frequency for a mutation in rrs to pass QC in tbp-parser	0.1	Optional	TBProfiler_tNGS	general
+tbp_parser	rrs_read_support	Int	Minimum read support for a mutation in rrs to pass QC in tbp-parser	10	Optional	TBProfiler_tNGS	general
 tbp_parser	sequencing_method	String	Fills out the "seq_method" field in the tbp_parser output files		Optional	TBProfiler_tNGS	general
 tbp_parser	tbp_parser_debug	Boolean	Activate the debug mode on tbp_parser; increases logging outputs	True	Optional	TBProfiler_tNGS	general
 tbprofiler	additional_parameters	String	Additional parameters for TBProfiler		Optional	TBProfiler_tNGS	general
@@ -2436,7 +2436,7 @@ theiacov_illumina_se	vadr_options	String	Additional options to provide to VADR		
 theiacov_illumina_se	vadr_skip_length	Int	Minimum assembly length (unambiguous) to run VADR		Optional	TheiaCoV_Illumina_SE	general
 theiacov_illumina_se	variant_min_freq	Float	Minimum frequency for a variant to be reported in ivar outputs	0.6	Optional	TheiaCoV_Illumina_SE	general
 theiacov_ont	genome_length	Int	User-specified expected genome length to be used in genome statistics calculations		Optional	TheiaCoV_ONT	general
-theiacov_ont	irma_min_consensus_support	Int	Minimum consensus support threshold used by IRMA with ONT data.		Optional	TheiaCoV_ONT	general
+theiacov_ont	irma_min_consensus_support	Int	Minimum consensus support threshold used by IRMA with ONT data.	50	Optional	TheiaCoV_ONT	general
 theiacov_ont	max_genome_length	Int	Maximum genome length able to pass read screening	2673870	Optional	TheiaCoV_ONT	general
 theiacov_ont	max_length	Int	Maximum length for a read based on the SARS-CoV-2 primer scheme	700	Optional	TheiaCoV_ONT	general
 theiacov_ont	min_basepairs	Int	Minimum number of base pairs able to pass read screening	17000	Optional	TheiaCoV_ONT	general
@@ -2714,9 +2714,9 @@ ts_mlst	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_FAST
 ts_mlst	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
 ts_mlst	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-12-31	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker
 ts_mlst	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime
-ts_mlst	min_percent_coverage	Float	Minimum % breadth of coverage to report an MLST allele		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-ts_mlst	min_percent_identity	Float	Minimum % identity to known MLST gene to report an MLST allele		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
-ts_mlst	minscore	Float	Minimum score <https://github.com/tseemann/mlst#scoring-system> to assign an MLST profile		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+ts_mlst	min_percent_coverage	Float	Minimum % breadth of coverage to report an MLST allele	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+ts_mlst	min_percent_identity	Float	Minimum % identity to known MLST gene to report an MLST allele	95	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
+ts_mlst	minscore	Float	Minimum score <https://github.com/tseemann/mlst#scoring-system> to assign an MLST profile	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 ts_mlst	nopath	Boolean	true = use mlst --nopath. If set to false, filename paths are not stripped from FILE column in output TSV	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 ts_mlst	scheme	String	Don’t autodetect the MLST scheme; force this scheme on all inputs (see <https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab> for accepted strings)	none	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general
 tsv_join	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Augur	runtime
