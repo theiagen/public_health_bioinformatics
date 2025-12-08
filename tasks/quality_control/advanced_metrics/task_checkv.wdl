@@ -27,12 +27,14 @@ task checkv {
 
   # run CheckV referencing the CheckV DB delineated by $CHECKVDB
   echo "DEBUG: Running CheckV end_to_end"
+  # run CheckV regardless of failure status
   checkv end_to_end \
     ~{assembly} checkv_results/ \
     -d ${untarred_checkv_db} \
     -t ~{cpu} \
     || true
 
+  # check for CheckV output as a proxy for completion
   if [ -e checkv_results/quality_summary.tsv ]; then
     echo "PASS" | tee CHECKV_STATUS
     echo "DEBUG: Extracting statistics"
@@ -46,6 +48,7 @@ task checkv {
 
     # sum(col (2) contig_length * col (12) contamination) / total_len
     awk -v total_len="$total_len" 'NR>1 {sum += $2 * $12} END {result = sprintf("%.2f", sum / total_len); print result}' checkv_results/quality_summary.tsv | tee WEIGHTED_CONTAMINATION
+  # if CheckV didn't complete, then blank populate output variables
   else
     echo "CheckV output files not detected"
     echo "FAIL" | tee CHECKV_STATUS
