@@ -348,10 +348,11 @@ workflow theiaviral_ont {
     # checkv_denovo outputs - denovo assembly quality control
     File? checkv_denovo_summary = checkv_denovo.checkv_summary
     File? checkv_denovo_contamination = checkv_denovo.checkv_contamination
-    Float? checkv_denovo_weighted_contamination = checkv_denovo.weighted_contamination
-    Float? checkv_denovo_weighted_completeness = checkv_denovo.weighted_completeness
-    Int? checkv_denovo_total_genes = checkv_denovo.total_genes
+    String? checkv_denovo_weighted_contamination = checkv_denovo.weighted_contamination
+    String? checkv_denovo_weighted_completeness = checkv_denovo.weighted_completeness
+    String? checkv_denovo_total_genes = checkv_denovo.total_genes
     String? checkv_denovo_version = checkv_denovo.checkv_version
+    String? checkv_denovo_status = checkv_denovo.checkv_status
     # quast_denovo outputs - denovo assembly quality control
     File? quast_denovo_report = quast_denovo.quast_report
     Int? quast_denovo_genome_length = quast_denovo.genome_length
@@ -427,10 +428,11 @@ workflow theiaviral_ont {
     # checkv_consensus outputs - consensus assembly quality control
     File? checkv_consensus_summary = checkv_consensus.checkv_summary
     File? checkv_consensus_contamination = checkv_consensus.checkv_contamination
-    Float? checkv_consensus_weighted_contamination = checkv_consensus.weighted_contamination
-    Float? checkv_consensus_weighted_completeness = checkv_consensus.weighted_completeness
-    Int? checkv_consensus_total_genes = checkv_consensus.total_genes
+    String? checkv_consensus_weighted_contamination = checkv_consensus.weighted_contamination
+    String? checkv_consensus_weighted_completeness = checkv_consensus.weighted_completeness
+    String? checkv_consensus_total_genes = checkv_consensus.total_genes
     String? checkv_consensus_version = checkv_consensus.checkv_version
+    String? checkv_consensus_status = checkv_consensus.checkv_status
     # morgana magic outputs
     String? morgana_magic_organism = morgana_magic.organism
     # VADR outputs
