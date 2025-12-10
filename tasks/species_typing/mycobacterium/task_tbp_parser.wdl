@@ -76,7 +76,7 @@ task tbp_parser {
       --output_prefix ~{samplename} \
       ~{true="--debug" false="--verbose" tbp_parser_debug} \
       ~{true="--tngs" false="" tngs_data} \
-      ~{true="--add_cs_lims" false="" add_cycloserine_lims}
+      ~{true="--add_cs_lims" false="" add_cycloserine_lims} \
       ~{true="--treat_r_mutations_as_s" false="" treat_r_mutations_as_s} \
       ~{"--min_percent_locus_covered " + min_percent_locus_covered} \
       ~{"--tngs_read_support_boundaries " + tngs_read_support_boundaries} \
