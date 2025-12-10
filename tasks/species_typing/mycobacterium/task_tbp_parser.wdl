@@ -29,10 +29,16 @@ task tbp_parser {
     Float? rpob449_frequency # default 0.1
     Float? etha237_frequency # default 0.1
     File? expert_rule_regions_bed
+      
+    Float? min_percent_locus_covered # default 0.7
+    Boolean? treat_r_mutations_as_s # default False
+
+    String? tngs_read_support_boundaries # default "10,10"
+    String? tngs_frequency_boundaries # default "0.1,0.1"
     
     Int cpu = 1
     Int disk_size = 100   
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.10.0"
     Int memory = 4
   }
   command <<<
@@ -71,6 +77,10 @@ task tbp_parser {
       ~{true="--debug" false="--verbose" tbp_parser_debug} \
       ~{true="--tngs" false="" tngs_data} \
       ~{true="--add_cs_lims" false="" add_cycloserine_lims}
+      ~{true="--treat_r_mutations_as_s" false="" treat_r_mutations_as_s} \
+      ~{"--min_percent_locus_covered " + min_percent_locus_covered} \
+      ~{"--tngs_read_support_boundaries " + tngs_read_support_boundaries} \
+      ~{"--tngs_frequency_boundaries " + tngs_frequency_boundaries}
 
     # set default genome percent coverage and average depth to 0 to prevent failures
     echo 0.0 > GENOME_PC
