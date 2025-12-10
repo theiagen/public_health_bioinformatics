@@ -8,8 +8,8 @@ task abricate {
     # Parameters 
     #  --minid Minimum DNA %identity [80]
     # --mincov Minimum DNA %coverage [80]
-    Int? min_percent_identity
-    Int? min_percent_coverage
+    Int min_percent_identity = 80
+    Int min_percent_coverage = 80
     Int cpu = 2
     Int memory = 8
     Int disk_size = 100

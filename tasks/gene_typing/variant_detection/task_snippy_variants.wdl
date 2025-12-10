@@ -18,12 +18,12 @@ task snippy_variants {
     # --min_frac: Minumum proportion for variant evidence (0=AUTO) (default '0')
     # --min_quality: Minumum QUALITY in VCF column 6 (default '100')
     # --maxsoft: Maximum soft clipping to allow (default '10')
-    Int? map_qual
-    Int? base_quality
+    Int map_qual = 60
+    Int base_quality = 13
     Int min_coverage = 10
-    Float? min_frac
-    Int? min_quality
-    Int? maxsoft
+    Float min_frac = 0
+    Int min_quality = 100
+    Int maxsoft = 10
   }
   command <<<
     # set -euo pipefail to avoid silent failure

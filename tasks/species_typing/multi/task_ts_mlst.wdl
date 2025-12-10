@@ -22,9 +22,9 @@ task ts_mlst {
     Boolean scheme_override = false # If true, will exclude common mis-characterizations for E. coli from the scheme list; aeromonas, cfreundii, senterica
     String? scheme
     String? taxonomy
-    Float? min_percent_identity
-    Float? min_percent_coverage
-    Float? minscore
+    Float min_percent_identity = 95
+    Float min_percent_coverage = 10
+    Float minscore = 50
   }
   command <<< 
     set -euo pipefail
