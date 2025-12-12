@@ -201,7 +201,8 @@ workflow theiaviral_ont {
         call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
           input:
             bamfile = parse_mapping.bam,
-            samplename = samplename
+            samplename = samplename,
+            read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract])
         }
         # Index the reference genome for Clair3
         call fasta_utilities_task.samtools_faidx as fasta_utilities{

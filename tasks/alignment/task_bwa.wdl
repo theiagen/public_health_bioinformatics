@@ -54,7 +54,7 @@ task bwa {
       -@ ~{cpu} \
       -F 4 \
       -b \
-      -o ~{samplename}.sorted.bam \
+      -o ~{samplename}.sorted.aligned.bam \
       ~{samplename}.sorted.sam
 
     # create a separate BAM that only includes aligned reads (no secondary or supplementary alignments) for creating aligned FASTQ files
@@ -65,7 +65,7 @@ task bwa {
       -@ ~{cpu} \
       -F 0x904 \
       -b \
-      -o ~{samplename}.sorted.aligned-only.bam \
+      -o ~{samplename}.sorted.aligned-filtered.bam \
       ~{samplename}.sorted.sam
 
     # convert SAM to BAM that only includes unaligned reads
@@ -89,7 +89,7 @@ task bwa {
         -F 4 \
         -1 ~{samplename}_R1.fastq.gz \
         -2 ~{samplename}_R2.fastq.gz \
-        ~{samplename}.sorted.aligned-only.bam
+        ~{samplename}.sorted.aligned-filtered.bam
       echo "Generating FASTQs for unaligned reads"
       # note the lowercase 'f' here is imporant
       samtools fastq \
@@ -104,7 +104,7 @@ task bwa {
         -@ ~{cpu} \
         -F 4 \
         -0 ~{samplename}_R1.fastq.gz \
-        ~{samplename}.sorted.aligned-only.bam
+        ~{samplename}.sorted.aligned-filtered.bam
       echo -e "Generating FASTQs for unaligned single-end reads\n"
       # again, lowercase 'f' is important for getting all unaligned reads
       samtools fastq \
@@ -115,7 +115,7 @@ task bwa {
     fi
 
     # index BAMs
-    samtools index ~{samplename}.sorted.bam 
+    samtools index ~{samplename}.sorted.aligned.bam 
     samtools index ~{samplename}.sorted.unaligned-reads.bam
 
     # count output reads to ensure we are outputting all reads, regardless if the aligned or not
@@ -136,8 +136,8 @@ task bwa {
   output {
     String bwa_version = read_string("BWA_VERSION")
     String sam_version = read_string("SAMTOOLS_VERSION")
-    File sorted_bam = "${samplename}.sorted.bam"
-    File sorted_bai = "${samplename}.sorted.bam.bai"
+    File sorted_bam = "${samplename}.sorted.aligned.bam"
+    File sorted_bai = "${samplename}.sorted.aligned.bam.bai"
     File read1_aligned = "~{samplename}_R1.fastq.gz"
     File? read2_aligned = "~{samplename}_R2.fastq.gz"
     File read1_unaligned = "~{samplename}_unaligned_R1.fastq.gz"

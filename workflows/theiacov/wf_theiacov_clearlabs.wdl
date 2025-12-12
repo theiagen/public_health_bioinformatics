@@ -81,7 +81,8 @@ workflow theiacov_clearlabs {
   call assembly_metrics.stats_n_coverage {
     input:
       samplename = samplename,
-      bamfile = consensus.sorted_bam
+      bamfile = consensus.sorted_bam,
+      read1 = ncbi_scrub_se.read1_dehosted
   }
   call consensus_qc_task.consensus_qc {
     input:
@@ -91,7 +92,8 @@ workflow theiacov_clearlabs {
   call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
     input:
       samplename = samplename,
-      bamfile = consensus.trim_sorted_bam
+      bamfile = consensus.trim_sorted_bam,
+      read1 = ncbi_scrub_se.read1_dehosted
   }
   if (organism_parameters.standardized_organism == "sars-cov-2") {
     # run organism-specific typing
