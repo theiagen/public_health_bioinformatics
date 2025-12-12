@@ -4,6 +4,8 @@ task stats_n_coverage {
   input {
     File bamfile
     String samplename
+    File read1
+    File? read2
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
@@ -34,8 +36,15 @@ task stats_n_coverage {
     echo $meanbaseq | tee MEANBASEQ
     echo $meanmapq | tee MEANMAPQ
 
-    # Parsing stats.txt for total and mapped reads
-    total_reads=$(grep "^SN" ~{samplename}.stats.txt | grep "raw total sequences:" | cut -f 3)
+    # parse inputted reads for total read count
+    read1_count=$(samtools view -c ~{read1})
+    if [ -s ~{read2} ]; then
+      read2_count=$(samtools view -c ~{read2})
+      total_reads=$(echo $(($read1_count + $read2_count)))
+    else
+      total_reads=$read1_count
+    fi
+    # Parsing stats.txt for mapped reads
     mapped_reads=$(grep "^SN" ~{samplename}.stats.txt | grep "reads mapped:" | cut -f 3)
 
     # Check for empty values and set defaults to avoid errors
