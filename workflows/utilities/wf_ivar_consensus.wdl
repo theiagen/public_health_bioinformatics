@@ -73,6 +73,8 @@ workflow ivar_consensus {
     input:
       samplename = samplename,
       bamfile = primer_trim.trim_sorted_bam,
+      read1 = read1,
+      read2 = read2,
       cpu = stats_n_coverage_primtrim_cpu,
       memory = stats_n_coverage_primtrim_memory,
       disk_size = stats_n_coverage_primtrim_disk_size,
