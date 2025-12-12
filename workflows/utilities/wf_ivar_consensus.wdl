@@ -70,15 +70,15 @@ workflow ivar_consensus {
         docker = ivar_trim_primers_docker
     }
     call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
-    input:
-      samplename = samplename,
-      bamfile = primer_trim.trim_sorted_bam,
-      read1 = read1,
-      read2 = read2,
-      cpu = stats_n_coverage_primtrim_cpu,
-      memory = stats_n_coverage_primtrim_memory,
-      disk_size = stats_n_coverage_primtrim_disk_size,
-      docker = stats_n_coverage_primtrim_docker
+      input:
+        samplename = samplename,
+        bamfile = primer_trim.trim_sorted_bam,
+        read1 = read1,
+        read2 = read2,
+        cpu = stats_n_coverage_primtrim_cpu,
+        memory = stats_n_coverage_primtrim_memory,
+        disk_size = stats_n_coverage_primtrim_disk_size,
+        docker = stats_n_coverage_primtrim_docker
     }
   }
   call consensus_task.consensus {
@@ -111,6 +111,8 @@ workflow ivar_consensus {
     input:
       samplename = samplename,
       bamfile = bwa.sorted_bam,
+      read1 = read1,
+      read2 = read2,
       cpu = stats_n_coverage_cpu,
       memory = stats_n_coverage_memory,
       disk_size = stats_n_coverage_disk_size,
