@@ -152,8 +152,8 @@ workflow theiaviral_illumina_pe {
       if (defined(reference_fasta) || skani.skani_status == "PASS") {
         # align reads to reference
         if (full_read_consensus) {
-          File read1_consensus = read_QC_trim.read1_clean
-          File read2_consensus = read_QC_trim.read2_clean
+          File? read1_consensus = read_QC_trim.read1_clean
+          File? read2_consensus = read_QC_trim.read2_clean
         }
         call bwa_task.bwa {
           input:
