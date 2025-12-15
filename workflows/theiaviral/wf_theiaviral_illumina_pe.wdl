@@ -32,7 +32,6 @@ workflow theiaviral_illumina_pe {
     File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
     File? checkv_db 
     File? skani_db
-    Boolean full_read_consensus = true
     Boolean skip_screen = false # if false, run clean read screening
     Boolean skip_qc = false # If false, run read quality control
     Boolean call_metaviralspades = true # if false, move to megahit immediately
@@ -151,15 +150,11 @@ workflow theiaviral_illumina_pe {
       }
       if (defined(reference_fasta) || skani.skani_status == "PASS") {
         # align reads to reference
-        if (full_read_consensus) {
-          File? read1_consensus = read_QC_trim.read1_clean
-          File? read2_consensus = read_QC_trim.read2_clean
-        }
         call bwa_task.bwa {
           input:
             samplename = samplename,
-            read1 = select_first([read1_consensus, rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
-            read2 = select_first([read2_consensus, rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
             reference_genome = select_first([reference_fasta, skani.skani_reference_assembly])
         }
         # consensus calling via ivar
@@ -189,8 +184,8 @@ workflow theiaviral_illumina_pe {
           input:
             bamfile = bwa.sorted_bam,
             samplename = samplename,
-            read1 = select_first([read1_consensus, rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
-            read2 = select_first([read2_consensus, rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2])
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2])
         }
         # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
         call consensus_qc_task.consensus_qc as consensus_qc {
@@ -210,8 +205,8 @@ workflow theiaviral_illumina_pe {
         call morgana_magic_wf.morgana_magic {
           input:
             samplename = samplename,
-            read1 = select_first([read1_consensus, rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
-            read2 = select_first([read2_consensus, rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2]),
             assembly_fasta = select_first([consensus.consensus_seq]),
             taxon_name = select_first([ete4_identify.raw_taxon_id, taxon]),
             seq_method = "illumina_pe",
