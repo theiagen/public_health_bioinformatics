@@ -24,10 +24,6 @@ task bbduk {
     # date and version control
     date | tee DATE
 
-    # set adapter fasta
-    if [[ ! -z "~{adapters}" ]]; then
-      echo "Using user supplied FASTA file for adapters..."
-      adapter_fasta="~{adapters}"
     # Repairing disordered reads (if they exist) so that the first read in file 1 is the same mate of the first read in file 2
     echo "Repairing paired-end reads to ensure correct order..."
     repair.sh \
@@ -41,8 +37,6 @@ task bbduk {
       phix_fasta="~{phix_fasta}"
       echo "Using user supplied FASTA file for phiX: '~{phix_fasta}'"
     else
-      echo "User did not supply adapters FASTA file, using default adapters.fa file..."
-      adapter_fasta="/bbmap/resources/adapters.fa" 
       phix_fasta="/bbmap/resources/phix174_ill.ref.fa.gz"
       echo "Using default phiX FASTA file: '/bbmap/resources/phix174_ill.ref.fa.gz'"
     fi
@@ -57,11 +51,28 @@ task bbduk {
       ref=${phix_fasta} \
       stats=~{samplename}.phix.stats.txt statscolumns=5 \
       k=31 hdist=1 ordered=t
+
+    # Set adapter fasta
+    if [[ -n "~{adapters_fasta}" ]]; then
+      adapter_fasta="~{adapters_fasta}"
+      echo "Using user supplied FASTA file for adapters: '~{adapters_fasta}'"
     else
+      adapter_fasta="/bbmap/resources/adapters.fa"
+      echo "Using default adapters FASTA file: '/bbmap/resources/adapters.fa'"
     fi
 
+    # Trim adapters
+    echo "Trimming adapters and capturing those reads..."
+    bbduk.sh \
+      in=~{samplename}.rm_phix_1.fastq.gz \
+      in2=~{samplename}.rm_phix_2.fastq.gz \
+      out=~{samplename}.rm_adpt_1.fastq.gz \
+      out2=~{samplename}.rm_adpt_2.fastq.gz \
+      ref=${adapter_fasta} \
+      stats=~{samplename}.adapters.stats.txt statscolumns=5 \
+      k=23 ktrim=r mink=11 hdist=1 tpe=t tbo=t ordered=t
 
-    bbduk.sh in1=~{samplename}.paired_1.fastq.gz in2=~{samplename}.paired_2.fastq.gz out1=~{samplename}.rmadpt_1.fastq.gz out2=~{samplename}.rmadpt_2.fastq.gz ref=${adapter_fasta} stats=~{samplename}.adapters.stats.txt ktrim=r k=23 mink=11 hdist=1 tpe tbo ordered=t
+
 
   >>>
   output {
