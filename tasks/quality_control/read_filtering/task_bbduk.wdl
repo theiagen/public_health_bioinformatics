@@ -72,6 +72,40 @@ task bbduk {
       stats=~{samplename}.adapters.stats.txt statscolumns=5 \
       k=23 ktrim=r mink=11 hdist=1 tpe=t tbo=t ordered=t
 
+    # Trim primers if user provides primer sequences in string or fasta format.
+    # Depending on the input type, create multifasta files of all user provided primers grouped by length.
+    python <<CODE
+    import os
+    from Bio import SeqIO
+
+    primer_fasta = "~{primers_fasta}"
+    primers_literal = "~{primers_literal}"
+
+    # Skip if no primer input is provided
+    if not any([primer_fasta, primers_literal]):
+      pass
+
+    else:
+      os.makedirs("primer_fasta_dir", exist_ok=True)
+      print("Grouping primer sequences by length...")
+      # Read fasta file and separate primer sequences based on their sequence length
+      if primer_fasta and os.path.isfile(primer_fasta):
+        for rec in SeqIO.parse(primer_fasta, "fasta"):
+          # Write grouped primer fasta files
+          with open(f"primer_fasta_dir/grouped_primers_k{len(rec.seq)}.fasta", "a") as f:
+            print(f">{rec.id}\n{rec.seq}", file=f)
+      else:
+        raise FileNotFoundError(f"Primer fasta file '{primer_fasta}' not found.")
+
+      # Read literal primer strings and separate primer sequences based on their sequence length
+      if primers_literal:
+        primers_literal = primers_literal.replace(" ", "").split(",")
+        for i, seq in enumerate(primers_literal):
+          # Write grouped primer fasta files
+          with open(f"primer_fasta_dir/grouped_primers_k{len(seq)}.fasta", "a") as f:
+            print(f">primer_seq_literal_{i}\n{seq}", file=f)
+    CODE
+
 
 
   >>>
