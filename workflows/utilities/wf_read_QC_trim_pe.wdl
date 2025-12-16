@@ -21,9 +21,9 @@ workflow read_QC_trim_pe {
     String samplename
     File read1
     File read2
-    Int trim_min_length = 75
-    Int trim_quality_min_score = 30
-    Int trim_window_size = 4
+    Int? trim_min_length
+    Int? trim_quality_min_score
+    Int? trim_window_size
     Int bbduk_memory = 8
     Boolean call_midas = false
     File? midas_db
@@ -41,7 +41,7 @@ workflow read_QC_trim_pe {
     String read_processing = "trimmomatic" # options: trimmomatic, fastp
     String read_qc = "fastq_scan" # options: fastq_scan, fastqc
     String? trimmomatic_args
-    String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
+    String? fastp_args
     String? host
     Boolean host_is_accession = false
     Boolean host_is_genome = false

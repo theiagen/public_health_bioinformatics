@@ -28,7 +28,7 @@ task fastp_pe {
       ~{if defined(fastp_quality_trim_score) then "--cut_right_mean_quality ~{fastp_quality_trim_score}" else ""} \
       ~{if defined(fastp_min_length) then "--length_required ~{fastp_min_length}" else ""} \
       --thread ~{cpu} \
-      ~{fastp_args} \
+      ~{if defined(fastp_args) then "~{fastp_args}" else ""} \
       --html ~{samplename}_fastp.html --json ~{samplename}_fastp.json
   >>>
   output {
