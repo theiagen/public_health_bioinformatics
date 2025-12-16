@@ -15,7 +15,7 @@ task bbduk {
     File? primers_fasta
     String? primers_literal
 
-    Int primers_restrict_trim_length = 5
+    Int? primers_restrict_trim_length # dynamically assigned based on primer sequence length if not provided
     Int primers_hamming_distance = 1
     Boolean primers_mask_middle = false
     Boolean primers_reverse_complement = true
@@ -127,8 +127,10 @@ task bbduk {
         primer_stats_file="~{samplename}.primer_trim_k${KMER}.stats.txt"
         all_primer_stats_file="~{samplename}.primer_trim.stats.txt"
 
+        RESTRICT_TRIM_LENGTH=~{if defined(primers_restrict_trim_length) then '~{primers_restrict_trim_length}' else '$((KMER + KMER/2))'}
+
         # Trim primers
-        PRIMER_TRIM_ARGS="k=$KMER ktrimtips=~{primers_restrict_trim_length} mm=~{primers_mask_middle} rcomp=~{primers_reverse_complement} hdist=~{primers_hamming_distance} ordered=t"
+        PRIMER_TRIM_ARGS="k=$KMER ktrimtips=$RESTRICT_TRIM_LENGTH mm=~{primers_mask_middle} rcomp=~{primers_reverse_complement} hdist=~{primers_hamming_distance} ordered=t"
         bbduk.sh \
           in=$primer_trim_in1 \
           in2=$primer_trim_in2 \
