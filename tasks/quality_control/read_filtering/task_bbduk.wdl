@@ -106,6 +106,59 @@ task bbduk {
             print(f">primer_seq_literal_{i}\n{seq}", file=f)
     CODE
 
+    # If primers were provided, make sure primer fasta directory exists and is not empty.
+    # For best results, the bbduk kmer (k=) size should match the exact length of the provided primer sequence.
+    # In instances where multiple primers are provided at varying lengths, we will run bbduk multiple times to trim.
+    if [ -d "primer_fasta_dir" ] && [ "$(ls -A $primer_fasta_dir)" ]; then
+
+      # Initial input
+      primer_trim_in1="~{samplename}.rm_adpt_1.fastq.gz"
+      primer_trim_in2="~{samplename}.rm_adpt_2.fastq.gz"
+
+      # Read each grouped primer fasta file, grab kmer size, and run bbduk.
+      # Sort by seq_len (largest to smallest) so we can trim longer primers first to prevent partial matches from shorter primers.
+      for PRIMER_FASTA in $(ls -vr primer_fasta_dir/grouped_primers_k*.fasta); do
+        KMER=$(basename "$PRIMER_FASTA" | cut -d'k' -f2 | cut -d'.' -f1)
+        echo "Running BBDuk primer trimming with kmer size: $KMER"
+
+        # Define output files for this iteration
+        primer_trim_out1="~{samplename}.primer_trim_k${KMER}_1.fastq.gz"
+        primer_trim_out2="~{samplename}.primer_trim_k${KMER}_2.fastq.gz"
+        primer_stats_file="~{samplename}.primer_trim_k${KMER}.stats.txt"
+        all_primer_stats_file="~{samplename}.primer_trim.stats.txt"
+
+        # Trim primers
+        PRIMER_TRIM_ARGS="k=$KMER ktrimtips=~{primers_restrict_trim_length} mm=~{primers_mask_middle} rcomp=~{primers_reverse_complement} hdist=~{primers_hamming_distance} ordered=t"
+        bbduk.sh \
+          in=$primer_trim_in1 \
+          in2=$primer_trim_in2 \
+          out=$primer_trim_out1 \
+          out2=$primer_trim_out2 \
+          ref=$PRIMER_FASTA \
+          stats=$primer_stats_file statscolumns=5 \
+          $PRIMER_TRIM_ARGS
+
+        # Combine stats files from each primer trimming iteration
+        echo "#Parameters ${PRIMER_TRIM_ARGS}" >> $all_primer_stats_file
+        cat $primer_stats_file >> $all_primer_stats_file
+        echo "" >> $all_primer_stats_file
+        rm $primer_stats_file
+
+        # Set input for next iteration
+        primer_trim_in1=$primer_trim_out1
+        primer_trim_in2=$primer_trim_out2
+      done
+
+      # Rename output files to final cleaned filenames
+      mv $primer_trim_out1 ~{samplename}_1.clean.fastq.gz
+      mv $primer_trim_out2 ~{samplename}_2.clean.fastq.gz
+
+    else
+      echo "No primers provided, skipping primer trimming step."
+      # Rename output files to final cleaned filenames
+      mv ~{samplename}.rm_adpt_1.fastq.gz ~{samplename}_1.clean.fastq.gz
+      mv ~{samplename}.rm_adpt_2.fastq.gz ~{samplename}_2.clean.fastq.gz
+    fi
 
 
   >>>
@@ -114,6 +167,7 @@ task bbduk {
     File read2_clean = "${samplename}_2.clean.fastq.gz"
     File adapter_stats = "${samplename}.adapters.stats.txt"
     File phiX_stats = "${samplename}.phix.stats.txt"
+    File? primer_stats = "${samplename}.primer_trim.stats.txt"
     String bbduk_docker = docker
     String pipeline_date = read_string("DATE")
   }
