@@ -2,15 +2,23 @@ version 1.0
 
 task bbduk {
   input {
-    File read1_trimmed
-    File read2_trimmed
+    File read1
+    File read2
     String samplename
     Int memory = 8
     Int cpu = 4
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/bbtools:38.76"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/bbtools:39.38_python"
     Int disk_size = 100
-    File? adapters
-    File? phix
+
+    File? adapters_fasta
+    File? phix_fasta
+    File? primers_fasta
+    String? primers_literal
+
+    Int primers_restrict_trim_length = 5
+    Int primers_hamming_distance = 1
+    Boolean primers_mask_middle = false
+    Boolean primers_reverse_complement = true
   }
   command <<<
     # date and version control
