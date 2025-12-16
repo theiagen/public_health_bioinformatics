@@ -128,9 +128,8 @@ task bbduk {
         all_primer_stats_file="~{samplename}.primer_trim.stats.txt"
 
         RESTRICT_TRIM_LENGTH=~{if defined(primers_restrict_trim_length) then '~{primers_restrict_trim_length}' else '$((KMER + KMER/2))'}
-
-        # Trim primers
         PRIMER_TRIM_ARGS="k=$KMER ktrimtips=$RESTRICT_TRIM_LENGTH mm=~{primers_mask_middle} rcomp=~{primers_reverse_complement} hdist=~{primers_hamming_distance} ordered=t"
+        # Trim primers
         bbduk.sh \
           in=$primer_trim_in1 \
           in2=$primer_trim_in2 \
@@ -161,7 +160,6 @@ task bbduk {
       mv ~{samplename}.rm_adpt_1.fastq.gz ~{samplename}_1.clean.fastq.gz
       mv ~{samplename}.rm_adpt_2.fastq.gz ~{samplename}_2.clean.fastq.gz
     fi
-
 
   >>>
   output {
