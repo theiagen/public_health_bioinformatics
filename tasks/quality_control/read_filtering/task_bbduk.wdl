@@ -28,6 +28,14 @@ task bbduk {
     if [[ ! -z "~{adapters}" ]]; then
       echo "Using user supplied FASTA file for adapters..."
       adapter_fasta="~{adapters}"
+    # Repairing disordered reads (if they exist) so that the first read in file 1 is the same mate of the first read in file 2
+    echo "Repairing paired-end reads to ensure correct order..."
+    repair.sh \
+      in=~{read1} \
+      in2=~{read2} \
+      out=~{samplename}.raw_1.fastq.gz \
+      out2=~{samplename}.raw_2.fastq.gz
+
     else
       echo "User did not supply adapters FASTA file, using default adapters.fa file..."
       adapter_fasta="/bbmap/resources/adapters.fa" 
@@ -42,7 +50,6 @@ task bbduk {
       phix_fasta="/bbmap/resources/phix174_ill.ref.fa.gz"
     fi
 
-    repair.sh in1=~{read1_trimmed} in2=~{read2_trimmed} out1=~{samplename}.paired_1.fastq.gz out2=~{samplename}.paired_2.fastq.gz
 
     bbduk.sh in1=~{samplename}.paired_1.fastq.gz in2=~{samplename}.paired_2.fastq.gz out1=~{samplename}.rmadpt_1.fastq.gz out2=~{samplename}.rmadpt_2.fastq.gz ref=${adapter_fasta} stats=~{samplename}.adapters.stats.txt ktrim=r k=23 mink=11 hdist=1 tpe tbo ordered=t
 
