@@ -116,7 +116,7 @@ task bbduk {
       primer_trim_in2="~{samplename}.rm_adpt_2.fastq.gz"
 
       # Read each grouped primer fasta file, grab kmer size, and run bbduk.
-      # Sort by seq_len (largest to smallest) so we can trim longer primers first to prevent partial matches from shorter primers.
+      # Sort by kmer size (largest to smallest) so we can trim longer primers first to prevent partial matches from shorter primers.
       for PRIMER_FASTA in $(ls -vr primer_fasta_dir/grouped_primers_k*.fasta); do
         KMER=$(basename "$PRIMER_FASTA" | cut -d'k' -f2 | cut -d'.' -f1)
         echo "Running BBDuk primer trimming with kmer size: $KMER"
@@ -127,9 +127,12 @@ task bbduk {
         primer_stats_file="~{samplename}.primer_trim_k${KMER}.stats.txt"
         all_primer_stats_file="~{samplename}.primer_trim.stats.txt"
 
+        # Only look for kmer matches in the outermost X number of bases so we can prevent trimming from internal matches.
+        # Default is 1.5 times the kmer length if not specified by user.
         RESTRICT_TRIM_LENGTH=~{if defined(primers_restrict_trim_length) then '~{primers_restrict_trim_length}' else '$((KMER + KMER/2))'}
-        PRIMER_TRIM_ARGS="k=$KMER ktrimtips=$RESTRICT_TRIM_LENGTH mm=~{primers_mask_middle} rcomp=~{primers_reverse_complement} hdist=~{primers_hamming_distance} ordered=t"
+
         # Trim primers
+        PRIMER_TRIM_ARGS="k=$KMER ktrimtips=$RESTRICT_TRIM_LENGTH mm=~{primers_mask_middle} rcomp=~{primers_reverse_complement} hdist=~{primers_hamming_distance} ordered=t"
         bbduk.sh \
           in=$primer_trim_in1 \
           in2=$primer_trim_in2 \
