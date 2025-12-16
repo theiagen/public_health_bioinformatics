@@ -36,24 +36,33 @@ task bbduk {
       out=~{samplename}.raw_1.fastq.gz \
       out2=~{samplename}.raw_2.fastq.gz
 
+    # Set phix fasta
+    if [[ -n "~{phix_fasta}" ]]; then
+      phix_fasta="~{phix_fasta}"
+      echo "Using user supplied FASTA file for phiX: '~{phix_fasta}'"
     else
       echo "User did not supply adapters FASTA file, using default adapters.fa file..."
       adapter_fasta="/bbmap/resources/adapters.fa" 
+      phix_fasta="/bbmap/resources/phix174_ill.ref.fa.gz"
+      echo "Using default phiX FASTA file: '/bbmap/resources/phix174_ill.ref.fa.gz'"
     fi
 
-    # set phix fasta
-    if [[ ! -z "~{phix}" ]]; then
-      echo "Using user supplied FASTA file for phiX..."
-      phix_fasta="~{phix}"
+    # Attempt phiX removal first to remove contamination
+    echo "Filtering and removing reads contaminated with phiX..."
+    bbduk.sh \
+      in=~{samplename}.raw_1.fastq.gz \
+      in2=~{samplename}.raw_2.fastq.gz \
+      out=~{samplename}.rm_phix_1.fastq.gz \
+      out2=~{samplename}.rm_phix_2.fastq.gz \
+      ref=${phix_fasta} \
+      stats=~{samplename}.phix.stats.txt statscolumns=5 \
+      k=31 hdist=1 ordered=t
     else
-      echo "User did not supply phiX FASTA file, using default phix174_ill.ref.fa.gz file..."
-      phix_fasta="/bbmap/resources/phix174_ill.ref.fa.gz"
     fi
 
 
     bbduk.sh in1=~{samplename}.paired_1.fastq.gz in2=~{samplename}.paired_2.fastq.gz out1=~{samplename}.rmadpt_1.fastq.gz out2=~{samplename}.rmadpt_2.fastq.gz ref=${adapter_fasta} stats=~{samplename}.adapters.stats.txt ktrim=r k=23 mink=11 hdist=1 tpe tbo ordered=t
 
-    bbduk.sh in1=~{samplename}.rmadpt_1.fastq.gz in2=~{samplename}.rmadpt_2.fastq.gz out1=~{samplename}_1.clean.fastq.gz out2=~{samplename}_2.clean.fastq.gz outm=~{samplename}.matched_phix.fq ref=${phix_fasta} k=31 hdist=1 stats=~{samplename}.phix.stats.txt ordered=t
   >>>
   output {
     File read1_clean = "${samplename}_1.clean.fastq.gz"
