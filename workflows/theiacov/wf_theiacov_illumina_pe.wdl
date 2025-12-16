@@ -31,9 +31,9 @@ workflow theiacov_illumina_pe {
     Int? genome_length 
     # trimming parameters
     Boolean trim_primers = true
-    Int trim_min_length = 75
-    Int trim_quality_min_score = 30
-    Int trim_window_size = 4
+    Int? trim_min_length
+    Int? trim_quality_min_score
+    Int? trim_window_size
     # assembly parameters
     Int? min_depth # minimum depth to use for consensus and variant calling; default is 100 for non-flu (default value set below in call block for ivar consensus subwf), flu default is 30 for illumina (default set below in flu_track call block)
     Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
