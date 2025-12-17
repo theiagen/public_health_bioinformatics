@@ -132,8 +132,6 @@ snippy_tree_wf	snippy_variants_outdir_tarball	Array[File]	Output from the Snippy
 snippy_tree_wf	tree_name	String	String of your choice to prefix output files		Required	Snippy_Tree	general	
 snippy_variants_wf	reference_genome_file	File	Reference genome (GenBank file or fasta)		Required	Snippy_Variants	general	
 snippy_variants_wf	samplename	String	The name of the sample being analyzed		Required	Snippy_Variants	general	
-stats_n_coverage	read1	File	Internal component, do not modify		Required	TheiaCoV_ONT	general	
-stats_n_coverage_primtrim	read1	File	Internal component, do not modify		Required	TheiaCoV_ONT	general	
 tbprofiler_tngs	read1	File	Illumina forward read file in FASTQ file format (compression optional)		Required	TBProfiler_tNGS	general	
 tbprofiler_tngs	read2	File	Illumina reverse read file in FASTQ file format (compression optional)		Required	TBProfiler_tNGS	general	
 tbprofiler_tngs	samplename	String	The name of the sample being analyzed		Required	TBProfiler_tNGS	general	
