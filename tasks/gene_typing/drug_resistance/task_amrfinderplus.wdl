@@ -8,13 +8,10 @@ task amrfinderplus_nuc {
     File? gff
     Boolean? use_gff = false
     String samplename
-    # Parameters 
-    # --indent_min Minimum DNA %identity [0-1]; default is 0.9 (90%) or curated threshold if it exists
-    # --mincov Minimum DNA %coverage [0-1]; default is 0.5 (50%)
     String? organism 
     String? annotation_format
-    Float min_percent_identity = 0.9
-    Float min_percent_coverage = 0.5
+    Float min_percent_identity = 0.9 # set to mirror v4.0.23 default
+    Float min_percent_coverage = 0.5 # set to mirror v4.0.23 default
     Boolean detailed_drug_class = false
     Int cpu = 2
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/ncbi-amrfinderplus:4.0.23-2025-07-16.1"

@@ -10,7 +10,7 @@ task megahit {
     Int cpu = 4
     Int memory = 16
     Int min_contig_length = 1
-    String kmers = "21,29,39,59,79,99,119,141"
+    String kmers = "21,29,39,59,79,99,119,141" # set to mirror v1.2.9 default 
     String? megahit_opts
   }
   command <<<

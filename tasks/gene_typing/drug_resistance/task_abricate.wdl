@@ -5,11 +5,8 @@ task abricate {
     File assembly
     String samplename
     String database
-    # Parameters 
-    #  --minid Minimum DNA %identity [80]
-    # --mincov Minimum DNA %coverage [80]
-    Int min_percent_identity = 80
-    Int min_percent_coverage = 80
+    Int min_percent_identity = 80 # set to mirror v1.0.1 default
+    Int min_percent_coverage = 80 # set to mirror v1.0.1 default
     Int cpu = 2
     Int memory = 8
     Int disk_size = 100
