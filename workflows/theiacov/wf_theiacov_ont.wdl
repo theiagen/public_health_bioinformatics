@@ -133,12 +133,14 @@ workflow theiacov_ont {
         call assembly_metrics.stats_n_coverage {
           input:
             samplename = samplename,
-            bamfile = consensus.sorted_bam
+            bamfile = consensus.sorted_bam,
+            read1 = read_QC_trim.read1_clean
         }
         call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
           input:
             samplename = samplename,
-            bamfile = consensus.trim_sorted_bam
+            bamfile = consensus.trim_sorted_bam,
+            read1 = read_QC_trim.read1_clean
         }
       }
       # assembly via irma for flu organisms
