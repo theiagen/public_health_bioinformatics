@@ -44,7 +44,7 @@ task checkv {
     awk 'NR>1 {sum += $5} END {print sum}' checkv_results/quality_summary.tsv | tee TOTAL_GENES
 
     # sum(col (2) contig_length * col (10) completeness) / total_len
-    awk -v total_len="$total_len" 'NR>1 {sum += $2 * $10} END {result = sprintf("%.2f", sum / total_len); print result}' checkv_results/quality_summary.tsv | tee WEIGTHTED_COMPLETENESS
+    awk -v total_len="$total_len" 'NR>1 {sum += $2 * $10} END {result = sprintf("%.2f", sum / total_len); print result}' checkv_results/quality_summary.tsv | tee WEIGHTED_COMPLETENESS
 
     # sum(col (2) contig_length * col (12) contamination) / total_len
     awk -v total_len="$total_len" 'NR>1 {sum += $2 * $12} END {result = sprintf("%.2f", sum / total_len); print result}' checkv_results/quality_summary.tsv | tee WEIGHTED_CONTAMINATION
