@@ -6,7 +6,7 @@ task augur_traits {
     File? metadata
     File? weights
     #Boolean confidence = true
-    String? metadata_id_columns
+    String metadata_id_columns = "'strain' 'name'" # set to mirror v31.5.0 default
     String columns
     String build_name
 
