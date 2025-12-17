@@ -132,6 +132,8 @@ snippy_tree_wf	snippy_variants_outdir_tarball	Array[File]	Output from the Snippy
 snippy_tree_wf	tree_name	String	String of your choice to prefix output files		Required	Snippy_Tree	general	
 snippy_variants_wf	reference_genome_file	File	Reference genome (GenBank file or fasta)		Required	Snippy_Variants	general	
 snippy_variants_wf	samplename	String	The name of the sample being analyzed		Required	Snippy_Variants	general	
+stats_n_coverage	read1	File	Internal component, do not modify		Required	TheiaCoV_ONT	general	
+stats_n_coverage_primtrim	read1	File	Internal component, do not modify		Required	TheiaCoV_ONT	general	
 tbprofiler_tngs	read1	File	Illumina forward read file in FASTQ file format (compression optional)		Required	TBProfiler_tNGS	general	
 tbprofiler_tngs	read2	File	Illumina reverse read file in FASTQ file format (compression optional)		Required	TBProfiler_tNGS	general	
 tbprofiler_tngs	samplename	String	The name of the sample being analyzed		Required	TBProfiler_tNGS	general	
@@ -1933,6 +1935,7 @@ read_mapping_stats	cpu	Int	Number of CPUs to allocate to the task	2	Optional	The
 read_mapping_stats	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 read_mapping_stats	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 read_mapping_stats	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
+read_mapping_stats	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general	
 read_QC_trim	adapters	File	File with adapter sequences to be removed		Optional	TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 read_QC_trim	artic_guppyplex_cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaCoV_ONT	runtime	
 read_QC_trim	artic_guppyplex_cpu	Int	Internal component, do not modify	8	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
@@ -2274,10 +2277,12 @@ stats_n_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Theia
 stats_n_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 stats_n_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	docker	
 stats_n_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
+stats_n_coverage	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	general	
 stats_n_coverage_primtrim	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 stats_n_coverage_primtrim	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 stats_n_coverage_primtrim	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	docker	
 stats_n_coverage_primtrim	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
+stats_n_coverage_primtrim	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	general	
 submit_ena_data	bam_column	String	Column name containing BAM file paths	bam_file	Optional	Terra_2_ENA	general	
 submit_ena_data	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Terra_2_ENA	runtime	
 submit_ena_data	cram_column	String	Column name containing CRAM file paths	cram_file	Optional	Terra_2_ENA	general	
