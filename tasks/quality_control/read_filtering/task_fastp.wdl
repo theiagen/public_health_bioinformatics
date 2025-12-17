@@ -7,11 +7,11 @@ task fastp_pe {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2"
     Int disk_size = 100
-    Int fastp_window_size = 20
-    Int fastp_quality_trim_score = 30
-    Int fastp_min_length = 50
+    Int? fastp_window_size
+    Int? fastp_quality_trim_score
+    Int? fastp_min_length
     # -g enables polyg trimming with default value of 10
-    String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
+    String? fastp_args
     Int cpu = 4
     Int memory = 8
   }
@@ -20,14 +20,16 @@ task fastp_pe {
     date | tee DATE
 
     fastp \
-    --in1 ~{read1} --in2 ~{read2} \
-    --out1 ~{samplename}_1P.fastq.gz --out2 ~{samplename}_2P.fastq.gz \
-    --unpaired1 ~{samplename}_1U.fastq.gz --unpaired2 ~{samplename}_2U.fastq.gz \
-    --cut_right --cut_right_window_size ~{fastp_window_size} --cut_right_mean_quality ~{fastp_quality_trim_score} \
-    --length_required ~{fastp_min_length} \
-    --thread ~{cpu} \
-    ~{fastp_args} \
-    --html ~{samplename}_fastp.html --json ~{samplename}_fastp.json
+      --in1 ~{read1} --in2 ~{read2} \
+      --out1 ~{samplename}_1P.fastq.gz --out2 ~{samplename}_2P.fastq.gz \
+      --unpaired1 ~{samplename}_1U.fastq.gz --unpaired2 ~{samplename}_2U.fastq.gz \
+      ~{if defined(fastp_window_size) || defined(fastp_quality_trim_score) || defined(fastp_min_length) then "--cut_right" else ""} \
+      ~{if defined(fastp_window_size) then "--cut_right_window_size ~{fastp_window_size}" else ""} \
+      ~{if defined(fastp_quality_trim_score) then "--cut_right_mean_quality ~{fastp_quality_trim_score}" else ""} \
+      ~{if defined(fastp_min_length) then "--length_required ~{fastp_min_length}" else ""} \
+      --thread ~{cpu} \
+      ~{if defined(fastp_args) then "~{fastp_args}" else ""} \
+      --html ~{samplename}_fastp.html --json ~{samplename}_fastp.json
   >>>
   output {
     File read1_trimmed = "~{samplename}_1P.fastq.gz"
