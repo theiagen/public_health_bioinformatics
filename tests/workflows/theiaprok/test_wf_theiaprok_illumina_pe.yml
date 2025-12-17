@@ -408,19 +408,19 @@
     - path: miniwdl_run/outputs.json
       contains: ["theiaprok_illumina_pe", "predicted", "VIRULENCE", "assembly_length"]
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_abricate.wdl
-      md5sum: 6b9a5fcbdff2a2f499eb4537dc870aac
+      md5sum: 331b9c634e3024851f4eabb84ad7cd79
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl
-      md5sum: fb5bdcd2f91872c4500c2da93016a6a4
+      md5sum: 0f95a2c2069113db9216fe3c79373bc6
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_bakta.wdl
       md5sum: 733518e77aeb6036dafb6515d8d6799a
     - path: miniwdl_run/wdl/tasks/gene_typing/plasmid_detection/task_plasmidfinder.wdl
-      md5sum: 800a96fe8ca2d19f96b30b0676847248
+      md5sum: 2616688d790a5e19a213c374fda26a9f
     - path: miniwdl_run/wdl/tasks/gene_typing/annotation/task_prokka.wdl
       md5sum: 000285292df1f7c353fafcc0d5737028
     - path: miniwdl_run/wdl/tasks/gene_typing/drug_resistance/task_resfinder.wdl
       md5sum: 6b15e778a5200b6ffeecf68b961092c2
     - path: miniwdl_run/wdl/tasks/gene_typing/variant_detection/task_snippy_variants.wdl
-      md5sum: baf44579a1e75c73f8351659e7f7a410
+      md5sum: d937de15afdd2bbe9ccee89b66e64580
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_bbduk.wdl
       md5sum: aec6ef024d6dff31723f44290f6b9cf5
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_busco.wdl
@@ -476,7 +476,7 @@
     - path: miniwdl_run/wdl/tasks/species_typing/mycobacterium/task_tbprofiler.wdl
       md5sum: 5faeb350770312393258e18d7e33a4d7
     - path: miniwdl_run/wdl/tasks/species_typing/multi/task_ts_mlst.wdl
-      md5sum: 529e071583df50068694a85b814a4626
+      md5sum: 50da4a3cfea8a56375b27030700e03a8
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 1f86500562b7884eb2d0752f90f1e84d
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_kraken2.wdl
