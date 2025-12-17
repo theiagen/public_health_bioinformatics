@@ -8014,7 +8014,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#bacteria">Bacteria</a></td>
-<td>v4.0.0</td>
+<td>vX.X.X</td>
 <td>Some optional features incompatible, Yes</td>
 <td>Sample-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_Illumina_PE_PHB:main?tab=info">TheiaProk_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_Illumina_SE_PHB:main?tab=info">TheiaProk_Illumina_SE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_ONT_PHB:main?tab=info">TheiaProk_ONT_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_FASTA_PHB:main?tab=info">TheiaProk_FASTA_PHB</a></td>
@@ -8807,7 +8807,7 @@
 <td><strong>skesa_disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>50</td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8823,7 +8823,7 @@
 <td><strong>skesa_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
+<td>16</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8831,7 +8831,7 @@
 <td><strong>spades_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>16</td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8855,7 +8855,7 @@
 <td><strong>spades_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
+<td>16</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9103,7 +9103,7 @@
 <td><strong>abricate_abaum_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minimum DNA percent coverage</td>
-<td></td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9119,7 +9119,7 @@
 <td><strong>abricate_vibrio_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-vibrio-cholera</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9239,7 +9239,7 @@
 <td><strong>cladetyper_kmer_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>11</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9255,7 +9255,7 @@
 <td><strong>cladetyper_ref_clade1</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9263,7 +9263,7 @@
 <td><strong>cladetyper_ref_clade1_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9271,7 +9271,7 @@
 <td><strong>cladetyper_ref_clade2</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9279,7 +9279,7 @@
 <td><strong>cladetyper_ref_clade2_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9287,7 +9287,7 @@
 <td><strong>cladetyper_ref_clade3</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9295,7 +9295,7 @@
 <td><strong>cladetyper_ref_clade3_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9303,7 +9303,7 @@
 <td><strong>cladetyper_ref_clade4</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9311,7 +9311,7 @@
 <td><strong>cladetyper_ref_clade4_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9319,7 +9319,7 @@
 <td><strong>cladetyper_ref_clade5</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9327,7 +9327,7 @@
 <td><strong>cladetyper_ref_clade5_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9359,7 +9359,7 @@
 <td><strong>ectyper_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/ectyper:1.0.0--pyhdfd78af_1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ectyper:2.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9407,7 +9407,7 @@
 <td><strong>ectyper_verify</strong></td>
 <td>Boolean</td>
 <td>Set to true to enable E. coli species verification</td>
-<td>False</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9415,7 +9415,7 @@
 <td><strong>emmtyper_align_diff</strong></td>
 <td>Int</td>
 <td>Threshold for difference between alignment length and subject length in BLAST hit.</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9423,7 +9423,7 @@
 <td><strong>emmtyper_cluster_distance</strong></td>
 <td>Int</td>
 <td>Distance between cluster of matches to consider as different clusters.</td>
-<td></td>
+<td>500</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9431,7 +9431,7 @@
 <td><strong>emmtyper_culling_limit</strong></td>
 <td>Int</td>
 <td>Total hits to return in a position.</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9447,7 +9447,7 @@
 <td><strong>emmtyper_gap</strong></td>
 <td>Int</td>
 <td>Threshold gap to allow in BLAST hit.</td>
-<td></td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9455,7 +9455,7 @@
 <td><strong>emmtyper_max_size</strong></td>
 <td>Int</td>
 <td>Maximum size of PCR product.</td>
-<td></td>
+<td>2000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9463,7 +9463,7 @@
 <td><strong>emmtyper_min_good</strong></td>
 <td>Int</td>
 <td>Minimum size where there must be 2 matches for each mismatch.</td>
-<td></td>
+<td>15</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9471,7 +9471,7 @@
 <td><strong>emmtyper_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Minimal percent identity of sequence.</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9479,7 +9479,7 @@
 <td><strong>emmtyper_min_perfect</strong></td>
 <td>Int</td>
 <td>Minimum size of perfect match at 3' primer end.</td>
-<td></td>
+<td>15</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9487,7 +9487,7 @@
 <td><strong>emmtyper_mismatch</strong></td>
 <td>Int</td>
 <td>Threshold for number of mismatch to allow in BLAST hit.</td>
-<td></td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9496,7 +9496,7 @@
 <td>String</td>
 <td>Choose workflow [blast</td>
 <td>pcr]</td>
-<td></td>
+<td>blast</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
@@ -9567,7 +9567,7 @@
 <td><strong>kaptive_low_gene_percent_identity</strong></td>
 <td>Float</td>
 <td>Percent identity threshold for what counts as a low identity match in the gene BLAST search</td>
-<td>95</td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9575,7 +9575,7 @@
 <td><strong>kaptive_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum required percent coverage for the gene BLAST search via tBLASTn</td>
-<td>80</td>
+<td>90.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9583,7 +9583,7 @@
 <td><strong>kaptive_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum required percent identity for the gene BLAST search via tBLASTn</td>
-<td>90</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9615,7 +9615,7 @@
 <td><strong>kleborate_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent coverage for main results</td>
-<td>80</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9623,7 +9623,7 @@
 <td><strong>kleborate_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent identity for main results</td>
-<td>90</td>
+<td>90.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9631,7 +9631,7 @@
 <td><strong>kleborate_min_spurious_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent coverage for spurious results</td>
-<td>40</td>
+<td>40.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9639,7 +9639,7 @@
 <td><strong>kleborate_min_spurious_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent identity for spurious results</td>
-<td>80</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9663,7 +9663,7 @@
 <td><strong>legsta_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9679,7 +9679,7 @@
 <td><strong>lissero_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum percent coverage of the gene to accept a match</td>
-<td>95</td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9687,7 +9687,7 @@
 <td><strong>lissero_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum percent identity to accept a match</td>
-<td>95</td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9759,7 +9759,7 @@
 <td><strong>pbptyper_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minimum percent coverage to count a hit</td>
-<td>90</td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9767,7 +9767,7 @@
 <td><strong>pbptyper_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Minimum percent identity to count a hit</td>
-<td>90</td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9967,7 +9967,7 @@
 <td><strong>sistr_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/sistr_cmd:1.1.1--pyh864c0ab_2</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/sistr:1.1.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9975,7 +9975,7 @@
 <td><strong>sistr_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9991,7 +9991,7 @@
 <td><strong>snippy_base_quality</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>13</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9999,7 +9999,7 @@
 <td><strong>snippy_gene_query_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10007,7 +10007,7 @@
 <td><strong>snippy_map_qual</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>60</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10015,7 +10015,7 @@
 <td><strong>snippy_maxsoft</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10023,7 +10023,7 @@
 <td><strong>snippy_min_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10031,7 +10031,7 @@
 <td><strong>snippy_min_frac</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10039,7 +10039,7 @@
 <td><strong>snippy_min_quality</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10071,7 +10071,7 @@
 <td><strong>snippy_variants_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10079,7 +10079,7 @@
 <td><strong>sonneityping_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1-sonneityping</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10239,7 +10239,7 @@
 <td><strong>tbp_parser_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.6.0</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10415,7 +10415,7 @@
 <td><strong>tbprofiler_variant_caller</strong></td>
 <td>String</td>
 <td>Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options.</td>
-<td>GATK</td>
+<td>gatk</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10967,7 +10967,7 @@
 <td><strong>kraken_db</strong></td>
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10983,7 +10983,7 @@
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10991,7 +10991,7 @@
 <td><strong>midas_db</strong></td>
 <td>File</td>
 <td>The database used by the MIDAS task in .tar.gz format</td>
-<td>gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11519,7 +11519,7 @@
 <td><strong>scheme</strong></td>
 <td>String</td>
 <td>Don’t autodetect the MLST scheme; force this scheme on all inputs (see <a href="https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab">https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab</a> for accepted strings)</td>
-<td>None</td>
+<td>none</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12337,7 +12337,7 @@
 <td><strong>skesa_disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>50</td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12353,7 +12353,7 @@
 <td><strong>skesa_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
+<td>16</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12361,7 +12361,7 @@
 <td><strong>spades_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>16</td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12385,7 +12385,7 @@
 <td><strong>spades_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
+<td>16</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12633,7 +12633,7 @@
 <td><strong>abricate_abaum_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minimum DNA percent coverage</td>
-<td></td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12649,7 +12649,7 @@
 <td><strong>abricate_vibrio_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-vibrio-cholera</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12769,7 +12769,7 @@
 <td><strong>cladetyper_kmer_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>11</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12785,7 +12785,7 @@
 <td><strong>cladetyper_ref_clade1</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12793,7 +12793,7 @@
 <td><strong>cladetyper_ref_clade1_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12801,7 +12801,7 @@
 <td><strong>cladetyper_ref_clade2</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12809,7 +12809,7 @@
 <td><strong>cladetyper_ref_clade2_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12817,7 +12817,7 @@
 <td><strong>cladetyper_ref_clade3</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12825,7 +12825,7 @@
 <td><strong>cladetyper_ref_clade3_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12833,7 +12833,7 @@
 <td><strong>cladetyper_ref_clade4</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12841,7 +12841,7 @@
 <td><strong>cladetyper_ref_clade4_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12849,7 +12849,7 @@
 <td><strong>cladetyper_ref_clade5</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12857,7 +12857,7 @@
 <td><strong>cladetyper_ref_clade5_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12889,7 +12889,7 @@
 <td><strong>ectyper_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/ectyper:1.0.0--pyhdfd78af_1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ectyper:2.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12937,7 +12937,7 @@
 <td><strong>ectyper_verify</strong></td>
 <td>Boolean</td>
 <td>Set to true to enable E. coli species verification</td>
-<td>False</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12945,7 +12945,7 @@
 <td><strong>emmtyper_align_diff</strong></td>
 <td>Int</td>
 <td>Threshold for difference between alignment length and subject length in BLAST hit.</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12953,7 +12953,7 @@
 <td><strong>emmtyper_cluster_distance</strong></td>
 <td>Int</td>
 <td>Distance between cluster of matches to consider as different clusters.</td>
-<td></td>
+<td>500</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12961,7 +12961,7 @@
 <td><strong>emmtyper_culling_limit</strong></td>
 <td>Int</td>
 <td>Total hits to return in a position.</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12977,7 +12977,7 @@
 <td><strong>emmtyper_gap</strong></td>
 <td>Int</td>
 <td>Threshold gap to allow in BLAST hit.</td>
-<td></td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12985,7 +12985,7 @@
 <td><strong>emmtyper_max_size</strong></td>
 <td>Int</td>
 <td>Maximum size of PCR product.</td>
-<td></td>
+<td>2000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12993,7 +12993,7 @@
 <td><strong>emmtyper_min_good</strong></td>
 <td>Int</td>
 <td>Minimum size where there must be 2 matches for each mismatch.</td>
-<td></td>
+<td>15</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13001,7 +13001,7 @@
 <td><strong>emmtyper_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Minimal percent identity of sequence.</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13009,7 +13009,7 @@
 <td><strong>emmtyper_min_perfect</strong></td>
 <td>Int</td>
 <td>Minimum size of perfect match at 3' primer end.</td>
-<td></td>
+<td>15</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13017,7 +13017,7 @@
 <td><strong>emmtyper_mismatch</strong></td>
 <td>Int</td>
 <td>Threshold for number of mismatch to allow in BLAST hit.</td>
-<td></td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13026,7 +13026,7 @@
 <td>String</td>
 <td>Choose workflow [blast</td>
 <td>pcr]</td>
-<td></td>
+<td>blast</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
@@ -13097,7 +13097,7 @@
 <td><strong>kaptive_low_gene_percent_identity</strong></td>
 <td>Float</td>
 <td>Percent identity threshold for what counts as a low identity match in the gene BLAST search</td>
-<td>95</td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13105,7 +13105,7 @@
 <td><strong>kaptive_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum required percent coverage for the gene BLAST search via tBLASTn</td>
-<td>80</td>
+<td>90.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13113,7 +13113,7 @@
 <td><strong>kaptive_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum required percent identity for the gene BLAST search via tBLASTn</td>
-<td>90</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13145,7 +13145,7 @@
 <td><strong>kleborate_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent coverage for main results</td>
-<td>80</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13153,7 +13153,7 @@
 <td><strong>kleborate_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent identity for main results</td>
-<td>90</td>
+<td>90.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13161,7 +13161,7 @@
 <td><strong>kleborate_min_spurious_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent coverage for spurious results</td>
-<td>40</td>
+<td>40.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13169,7 +13169,7 @@
 <td><strong>kleborate_min_spurious_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent identity for spurious results</td>
-<td>80</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13193,7 +13193,7 @@
 <td><strong>legsta_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13209,7 +13209,7 @@
 <td><strong>lissero_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum percent coverage of the gene to accept a match</td>
-<td>95</td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13217,7 +13217,7 @@
 <td><strong>lissero_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum percent identity to accept a match</td>
-<td>95</td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13281,7 +13281,7 @@
 <td><strong>pbptyper_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minimum percent coverage to count a hit</td>
-<td>90</td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13289,7 +13289,7 @@
 <td><strong>pbptyper_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Minimum percent identity to count a hit</td>
-<td>90</td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13497,7 +13497,7 @@
 <td><strong>sistr_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/sistr_cmd:1.1.1--pyh864c0ab_2</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/sistr:1.1.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13505,7 +13505,7 @@
 <td><strong>sistr_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13521,7 +13521,7 @@
 <td><strong>snippy_base_quality</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>13</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13529,7 +13529,7 @@
 <td><strong>snippy_gene_query_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13537,7 +13537,7 @@
 <td><strong>snippy_map_qual</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>60</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13545,7 +13545,7 @@
 <td><strong>snippy_maxsoft</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13553,7 +13553,7 @@
 <td><strong>snippy_min_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13561,7 +13561,7 @@
 <td><strong>snippy_min_frac</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13569,7 +13569,7 @@
 <td><strong>snippy_min_quality</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13601,7 +13601,7 @@
 <td><strong>snippy_variants_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13609,7 +13609,7 @@
 <td><strong>sonneityping_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1-sonneityping</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13769,7 +13769,7 @@
 <td><strong>tbp_parser_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.6.0</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13945,7 +13945,7 @@
 <td><strong>tbprofiler_variant_caller</strong></td>
 <td>String</td>
 <td>Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options.</td>
-<td>GATK</td>
+<td>gatk</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13969,7 +13969,7 @@
 <td><strong>vibecheck_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>watronfire/vibecheck:2025.02.24</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13985,7 +13985,7 @@
 <td><strong>vibecheck_skip_subsampling</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13993,7 +13993,7 @@
 <td><strong>vibecheck_subsampling_fraction</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14521,7 +14521,7 @@
 <td><strong>kraken_db</strong></td>
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14537,7 +14537,7 @@
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14545,7 +14545,7 @@
 <td><strong>midas_db</strong></td>
 <td>File</td>
 <td>The database used by the MIDAS task in .tar.gz format</td>
-<td>gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15041,7 +15041,7 @@
 <td><strong>scheme</strong></td>
 <td>String</td>
 <td>Don’t autodetect the MLST scheme; force this scheme on all inputs (see <a href="https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab">https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab</a> for accepted strings)</td>
-<td>None</td>
+<td>none</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15515,7 +15515,7 @@
 <td><strong>bandage_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15539,7 +15539,7 @@
 <td><strong>dnaapler_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>1</td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15579,7 +15579,7 @@
 <td><strong>filter_contigs_disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>10</td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15587,7 +15587,7 @@
 <td><strong>filter_contigs_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15915,7 +15915,7 @@
 <td><strong>racon_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16131,7 +16131,7 @@
 <td><strong>abricate_abaum_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minimum DNA percent coverage</td>
-<td></td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16147,7 +16147,7 @@
 <td><strong>abricate_vibrio_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-vibrio-cholera</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16267,7 +16267,7 @@
 <td><strong>cladetyper_kmer_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>11</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16283,7 +16283,7 @@
 <td><strong>cladetyper_ref_clade1</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16291,7 +16291,7 @@
 <td><strong>cladetyper_ref_clade1_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16299,7 +16299,7 @@
 <td><strong>cladetyper_ref_clade2</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16307,7 +16307,7 @@
 <td><strong>cladetyper_ref_clade2_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16315,7 +16315,7 @@
 <td><strong>cladetyper_ref_clade3</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16323,7 +16323,7 @@
 <td><strong>cladetyper_ref_clade3_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16331,7 +16331,7 @@
 <td><strong>cladetyper_ref_clade4</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16339,7 +16339,7 @@
 <td><strong>cladetyper_ref_clade4_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16347,7 +16347,7 @@
 <td><strong>cladetyper_ref_clade5</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16355,7 +16355,7 @@
 <td><strong>cladetyper_ref_clade5_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16387,7 +16387,7 @@
 <td><strong>ectyper_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/ectyper:1.0.0--pyhdfd78af_1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ectyper:2.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16435,7 +16435,7 @@
 <td><strong>ectyper_verify</strong></td>
 <td>Boolean</td>
 <td>Set to true to enable E. coli species verification</td>
-<td>False</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16443,7 +16443,7 @@
 <td><strong>emmtyper_align_diff</strong></td>
 <td>Int</td>
 <td>Threshold for difference between alignment length and subject length in BLAST hit.</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16451,7 +16451,7 @@
 <td><strong>emmtyper_cluster_distance</strong></td>
 <td>Int</td>
 <td>Distance between cluster of matches to consider as different clusters.</td>
-<td></td>
+<td>500</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16459,7 +16459,7 @@
 <td><strong>emmtyper_culling_limit</strong></td>
 <td>Int</td>
 <td>Total hits to return in a position.</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16475,7 +16475,7 @@
 <td><strong>emmtyper_gap</strong></td>
 <td>Int</td>
 <td>Threshold gap to allow in BLAST hit.</td>
-<td></td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16483,7 +16483,7 @@
 <td><strong>emmtyper_max_size</strong></td>
 <td>Int</td>
 <td>Maximum size of PCR product.</td>
-<td></td>
+<td>2000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16491,7 +16491,7 @@
 <td><strong>emmtyper_min_good</strong></td>
 <td>Int</td>
 <td>Minimum size where there must be 2 matches for each mismatch.</td>
-<td></td>
+<td>15</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16499,7 +16499,7 @@
 <td><strong>emmtyper_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Minimal percent identity of sequence.</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16507,7 +16507,7 @@
 <td><strong>emmtyper_min_perfect</strong></td>
 <td>Int</td>
 <td>Minimum size of perfect match at 3' primer end.</td>
-<td></td>
+<td>15</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16515,7 +16515,7 @@
 <td><strong>emmtyper_mismatch</strong></td>
 <td>Int</td>
 <td>Threshold for number of mismatch to allow in BLAST hit.</td>
-<td></td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16524,7 +16524,7 @@
 <td>String</td>
 <td>Choose workflow [blast</td>
 <td>pcr]</td>
-<td></td>
+<td>blast</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
@@ -16595,7 +16595,7 @@
 <td><strong>kaptive_low_gene_percent_identity</strong></td>
 <td>Float</td>
 <td>Percent identity threshold for what counts as a low identity match in the gene BLAST search</td>
-<td>95</td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16603,7 +16603,7 @@
 <td><strong>kaptive_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum required percent coverage for the gene BLAST search via tBLASTn</td>
-<td>80</td>
+<td>90.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16611,7 +16611,7 @@
 <td><strong>kaptive_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum required percent identity for the gene BLAST search via tBLASTn</td>
-<td>90</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16643,7 +16643,7 @@
 <td><strong>kleborate_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent coverage for main results</td>
-<td>80</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16651,7 +16651,7 @@
 <td><strong>kleborate_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent identity for main results</td>
-<td>90</td>
+<td>90.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16659,7 +16659,7 @@
 <td><strong>kleborate_min_spurious_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent coverage for spurious results</td>
-<td>40</td>
+<td>40.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16667,7 +16667,7 @@
 <td><strong>kleborate_min_spurious_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent identity for spurious results</td>
-<td>80</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16691,7 +16691,7 @@
 <td><strong>legsta_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16707,7 +16707,7 @@
 <td><strong>lissero_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum percent coverage of the gene to accept a match</td>
-<td>95</td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16715,7 +16715,7 @@
 <td><strong>lissero_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum percent identity to accept a match</td>
-<td>95</td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16779,7 +16779,7 @@
 <td><strong>pbptyper_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minimum percent coverage to count a hit</td>
-<td>90</td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16787,7 +16787,7 @@
 <td><strong>pbptyper_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Minimum percent identity to count a hit</td>
-<td>90</td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16995,7 +16995,7 @@
 <td><strong>sistr_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/sistr_cmd:1.1.1--pyh864c0ab_2</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/sistr:1.1.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17003,7 +17003,7 @@
 <td><strong>sistr_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17019,7 +17019,7 @@
 <td><strong>snippy_base_quality</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>13</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17027,7 +17027,7 @@
 <td><strong>snippy_gene_query_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17035,7 +17035,7 @@
 <td><strong>snippy_map_qual</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>60</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17043,7 +17043,7 @@
 <td><strong>snippy_maxsoft</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17051,7 +17051,7 @@
 <td><strong>snippy_min_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17059,7 +17059,7 @@
 <td><strong>snippy_min_frac</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17067,7 +17067,7 @@
 <td><strong>snippy_min_quality</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17099,7 +17099,7 @@
 <td><strong>snippy_variants_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17107,7 +17107,7 @@
 <td><strong>sonneityping_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1-sonneityping</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17267,7 +17267,7 @@
 <td><strong>tbp_parser_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.6.0</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17443,7 +17443,7 @@
 <td><strong>tbprofiler_variant_caller</strong></td>
 <td>String</td>
 <td>Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options.</td>
-<td>GATK</td>
+<td>gatk</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17467,7 +17467,7 @@
 <td><strong>vibecheck_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>watronfire/vibecheck:2025.02.24</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17483,7 +17483,7 @@
 <td><strong>vibecheck_skip_subsampling</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -17491,7 +17491,7 @@
 <td><strong>vibecheck_subsampling_fraction</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18067,7 +18067,7 @@
 <td><strong>artic_guppyplex_cpu</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18075,7 +18075,7 @@
 <td><strong>artic_guppyplex_disk_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18083,7 +18083,7 @@
 <td><strong>artic_guppyplex_docker</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18091,7 +18091,7 @@
 <td><strong>artic_guppyplex_memory</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>16</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18155,7 +18155,7 @@
 <td><strong>kraken_db</strong></td>
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18179,7 +18179,7 @@
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18187,7 +18187,7 @@
 <td><strong>max_length</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>700</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18195,7 +18195,7 @@
 <td><strong>min_length</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>400</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18235,7 +18235,7 @@
 <td><strong>nanoq_max_read_qual</strong></td>
 <td>Int</td>
 <td>The maximum read quality to keep after trimming</td>
-<td>40</td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18363,7 +18363,7 @@
 <td><strong>run_prefix</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>artic_ncov2019</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18563,7 +18563,7 @@
 <td><strong>genome_length</strong></td>
 <td>Int</td>
 <td>User-specified expected genome length to be used in genome statistics calculations</td>
-<td></td>
+<td>5000000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18779,7 +18779,7 @@
 <td><strong>scheme</strong></td>
 <td>String</td>
 <td>Don’t autodetect the MLST scheme; force this scheme on all inputs (see <a href="https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab">https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab</a> for accepted strings)</td>
-<td>None</td>
+<td>none</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19421,7 +19421,7 @@
 <td><strong>abricate_abaum_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minimum DNA percent coverage</td>
-<td></td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19437,7 +19437,7 @@
 <td><strong>abricate_vibrio_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-vibrio-cholera</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19549,7 +19549,7 @@
 <td><strong>cladetyper_kmer_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>11</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19565,7 +19565,7 @@
 <td><strong>cladetyper_ref_clade1</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19573,7 +19573,7 @@
 <td><strong>cladetyper_ref_clade1_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19581,7 +19581,7 @@
 <td><strong>cladetyper_ref_clade2</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19589,7 +19589,7 @@
 <td><strong>cladetyper_ref_clade2_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19597,7 +19597,7 @@
 <td><strong>cladetyper_ref_clade3</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19605,7 +19605,7 @@
 <td><strong>cladetyper_ref_clade3_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19613,7 +19613,7 @@
 <td><strong>cladetyper_ref_clade4</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19621,7 +19621,7 @@
 <td><strong>cladetyper_ref_clade4_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19629,7 +19629,7 @@
 <td><strong>cladetyper_ref_clade5</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19637,7 +19637,7 @@
 <td><strong>cladetyper_ref_clade5_annotated</strong></td>
 <td>File</td>
 <td>*Provide an empty file if running TheiaProk on the command-line</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19669,7 +19669,7 @@
 <td><strong>ectyper_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/ectyper:1.0.0--pyhdfd78af_1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ectyper:2.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19717,7 +19717,7 @@
 <td><strong>ectyper_verify</strong></td>
 <td>Boolean</td>
 <td>Set to true to enable E. coli species verification</td>
-<td>False</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19725,7 +19725,7 @@
 <td><strong>emmtyper_align_diff</strong></td>
 <td>Int</td>
 <td>Threshold for difference between alignment length and subject length in BLAST hit.</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19733,7 +19733,7 @@
 <td><strong>emmtyper_cluster_distance</strong></td>
 <td>Int</td>
 <td>Distance between cluster of matches to consider as different clusters.</td>
-<td></td>
+<td>500</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19741,7 +19741,7 @@
 <td><strong>emmtyper_culling_limit</strong></td>
 <td>Int</td>
 <td>Total hits to return in a position.</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19757,7 +19757,7 @@
 <td><strong>emmtyper_gap</strong></td>
 <td>Int</td>
 <td>Threshold gap to allow in BLAST hit.</td>
-<td></td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19765,7 +19765,7 @@
 <td><strong>emmtyper_max_size</strong></td>
 <td>Int</td>
 <td>Maximum size of PCR product.</td>
-<td></td>
+<td>2000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19773,7 +19773,7 @@
 <td><strong>emmtyper_min_good</strong></td>
 <td>Int</td>
 <td>Minimum size where there must be 2 matches for each mismatch.</td>
-<td></td>
+<td>15</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19781,7 +19781,7 @@
 <td><strong>emmtyper_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Minimal percent identity of sequence.</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19789,7 +19789,7 @@
 <td><strong>emmtyper_min_perfect</strong></td>
 <td>Int</td>
 <td>Minimum size of perfect match at 3' primer end.</td>
-<td></td>
+<td>15</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19797,7 +19797,7 @@
 <td><strong>emmtyper_mismatch</strong></td>
 <td>Int</td>
 <td>Threshold for number of mismatch to allow in BLAST hit.</td>
-<td></td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19806,7 +19806,7 @@
 <td>String</td>
 <td>Choose workflow [blast</td>
 <td>pcr]</td>
-<td></td>
+<td>blast</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
@@ -19877,7 +19877,7 @@
 <td><strong>kaptive_low_gene_percent_identity</strong></td>
 <td>Float</td>
 <td>Percent identity threshold for what counts as a low identity match in the gene BLAST search</td>
-<td>95</td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19885,7 +19885,7 @@
 <td><strong>kaptive_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum required percent coverage for the gene BLAST search via tBLASTn</td>
-<td>80</td>
+<td>90.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19893,7 +19893,7 @@
 <td><strong>kaptive_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum required percent identity for the gene BLAST search via tBLASTn</td>
-<td>90</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19925,7 +19925,7 @@
 <td><strong>kleborate_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent coverage for main results</td>
-<td>80</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19933,7 +19933,7 @@
 <td><strong>kleborate_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent identity for main results</td>
-<td>90</td>
+<td>90.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19941,7 +19941,7 @@
 <td><strong>kleborate_min_spurious_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent coverage for spurious results</td>
-<td>40</td>
+<td>40.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19949,7 +19949,7 @@
 <td><strong>kleborate_min_spurious_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum alignment percent identity for spurious results</td>
-<td>80</td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19973,7 +19973,7 @@
 <td><strong>legsta_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19989,7 +19989,7 @@
 <td><strong>lissero_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Minimum percent coverage of the gene to accept a match</td>
-<td>95</td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -19997,7 +19997,7 @@
 <td><strong>lissero_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Minimum percent identity to accept a match</td>
-<td>95</td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20061,7 +20061,7 @@
 <td><strong>pbptyper_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Minimum percent coverage to count a hit</td>
-<td>90</td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20069,7 +20069,7 @@
 <td><strong>pbptyper_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Minimum percent identity to count a hit</td>
-<td>90</td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20285,7 +20285,7 @@
 <td><strong>sistr_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/sistr_cmd:1.1.1--pyh864c0ab_2</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/sistr:1.1.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20293,7 +20293,7 @@
 <td><strong>sistr_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20309,7 +20309,7 @@
 <td><strong>snippy_base_quality</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>13</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20317,7 +20317,7 @@
 <td><strong>snippy_gene_query_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20325,7 +20325,7 @@
 <td><strong>snippy_map_qual</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>60</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20333,7 +20333,7 @@
 <td><strong>snippy_maxsoft</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20341,7 +20341,7 @@
 <td><strong>snippy_min_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20349,7 +20349,7 @@
 <td><strong>snippy_min_frac</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20357,7 +20357,7 @@
 <td><strong>snippy_min_quality</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20389,7 +20389,7 @@
 <td><strong>snippy_variants_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20397,7 +20397,7 @@
 <td><strong>sonneityping_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1-sonneityping</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20557,7 +20557,7 @@
 <td><strong>tbp_parser_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.6.0</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20733,7 +20733,7 @@
 <td><strong>tbprofiler_variant_caller</strong></td>
 <td>String</td>
 <td>Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options.</td>
-<td>GATK</td>
+<td>gatk</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20757,7 +20757,7 @@
 <td><strong>vibecheck_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>watronfire/vibecheck:2025.02.24</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20773,7 +20773,7 @@
 <td><strong>vibecheck_skip_subsampling</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -20781,7 +20781,7 @@
 <td><strong>vibecheck_subsampling_fraction</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -21645,7 +21645,7 @@
 <td><strong>scheme</strong></td>
 <td>String</td>
 <td>Don’t autodetect the MLST scheme; force this scheme on all inputs (see <a href="https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab">https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab</a> for accepted strings)</td>
-<td>None</td>
+<td>none</td>
 <td>Optional</td>
 </tr>
 <tr>

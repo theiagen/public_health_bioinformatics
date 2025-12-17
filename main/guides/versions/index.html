@@ -6823,6 +6823,14 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>sistr_use_full_cgmlst_db</strong></td>
+<td>Boolean</td>
+<td>Set to true to use the full set of cgMLST alleles which can include highly similar alleles. By default the smaller "centroid" alleles or representative alleles are used for each marker</td>
+<td>False</td>
+<td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>tbprofiler_tbdb_branch</strong></td>
 <td>String</td>
 <td>TBProfiler uses by default the TBDB database (a combination of the original library and the WHO v2 catalogue). You can opt to use a different mutation library by using this field to specify the name of the TBDB branch to use in TBProfiler; see <a href="https://jodyphelan.github.io/tb-profiler-docs/en/mutation-library/">the TBProfiler documentation</a> for more information regarding available databases</td>
@@ -6855,11 +6863,59 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>kraken_db</strong></td>
+<td>File</td>
+<td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>midas_db</strong></td>
 <td>File</td>
 <td>The database used by the MIDAS task in .tar.gz format</td>
-<td>gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
 <td>TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE</td>
+</tr>
+<tr>
+<td>read_QC_trim_ont</td>
+<td><strong>kraken_db</strong></td>
+<td>File</td>
+<td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>Freyja_FASTQ</td>
+</tr>
+<tr>
+<td>read_QC_trim_pe</td>
+<td><strong>kraken_db</strong></td>
+<td>File</td>
+<td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>Freyja_FASTQ</td>
+</tr>
+<tr>
+<td>read_QC_trim_pe</td>
+<td><strong>midas_db</strong></td>
+<td>File</td>
+<td>Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
+<td>Freyja_FASTQ</td>
+</tr>
+<tr>
+<td>read_QC_trim_se</td>
+<td><strong>kraken_db</strong></td>
+<td>File</td>
+<td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>Freyja_FASTQ</td>
+</tr>
+<tr>
+<td>read_QC_trim_se</td>
+<td><strong>midas_db</strong></td>
+<td>File</td>
+<td>Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
+<td>Freyja_FASTQ</td>
 </tr>
 <tr>
 <td>referenceseeker</td>
@@ -6994,7 +7050,7 @@
 <td><strong>checkv_db</strong></td>
 <td>File</td>
 <td>Database used for CheckV</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/checkv/checkv-db-v1.5.tar.gz</td>
 <td>TheiaViral_Illumina_PE, TheiaViral_Panel</td>
 </tr>
 <tr>
@@ -7010,8 +7066,16 @@
 <td><strong>skani_db</strong></td>
 <td>File</td>
 <td>Skani database file</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/skani/skani_db_20251107.tar</td>
 <td>TheiaViral_Illumina_PE, TheiaViral_Panel</td>
+</tr>
+<tr>
+<td>theiaviral_panel</td>
+<td><strong>kraken_db</strong></td>
+<td>File</td>
+<td>Kraken2 database file in .tar.gz format.</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>TheiaViral_Panel</td>
 </tr>
 <tr>
 <td>vadr_update</td>
@@ -7138,12 +7202,6 @@
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3</td>
 <td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
-</tr>
-<tr>
-<td>bam_to_unaligned_fastq</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17</td>
-<td>Host_Decontaminate</td>
 </tr>
 <tr>
 <td>bcftools_consensus</td>
@@ -7274,7 +7332,7 @@
 <tr>
 <td>clair3_variants_ont</td>
 <td><strong>clair3_docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/clair3:1.0.10</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/clair3-extra-models:1.0.10</td>
 <td>Clair3_Variants_ONT</td>
 </tr>
 <tr>
@@ -7428,12 +7486,6 @@
 <td>Dorado_Basecalling</td>
 </tr>
 <tr>
-<td>download_accession</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1</td>
-<td>Host_Decontaminate</td>
-</tr>
-<tr>
 <td>download_terra_table</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21</td>
@@ -7550,13 +7602,13 @@
 <tr>
 <td>flu_track</td>
 <td><strong>irma_docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/irma:1.2.0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/irma:1.3.1</td>
 <td>TheiaCoV_Illumina_PE, TheiaCoV_ONT</td>
 </tr>
 <tr>
 <td>flu_track</td>
 <td><strong>nextclade_docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.14.5</td>
+<td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.16.0</td>
 <td>TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT</td>
 </tr>
 <tr>
@@ -7808,7 +7860,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>abricate_vibrio_docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-vibrio-cholera</td>
 <td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
@@ -7825,6 +7877,12 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>cauris_cladetyper_docker_image</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0</td>
+<td>TheiaEuk_Illumina_PE, TheiaEuk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>clockwork_docker_image</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e</td>
 <td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
@@ -7832,7 +7890,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>ectyper_docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/ectyper:1.0.0--pyhdfd78af_1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ectyper:2.0.0</td>
 <td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
@@ -7946,7 +8004,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>sistr_docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/biocontainers/sistr_cmd:1.1.1--pyh864c0ab_2</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/sistr:1.1.3</td>
 <td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
@@ -7964,7 +8022,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>sonneityping_docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1-sonneityping</td>
 <td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
@@ -7994,7 +8052,7 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>tbp_parser_docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.6.0</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1</td>
 <td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
@@ -8046,18 +8104,6 @@
 <td>TheiaMeta_Illumina_PE</td>
 </tr>
 <tr>
-<td>minimap2_ont</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22</td>
-<td>Host_Decontaminate</td>
-</tr>
-<tr>
-<td>minimap2_pe</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22</td>
-<td>Host_Decontaminate</td>
-</tr>
-<tr>
 <td>minimap2_reads</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22</td>
@@ -8066,61 +8112,55 @@
 <tr>
 <td>morgana_magic</td>
 <td><strong>abricate_flu_docker</strong></td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-insaflu-220727</td>
 <td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>assembly_metrics_docker</strong></td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
 <td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>gene_coverage_docker</strong></td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
 <td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>genoflu_docker</strong></td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.06</td>
 <td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>irma_docker_image</strong></td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/irma:1.3.1</td>
 <td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>nextclade_docker_image</strong></td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.16.0</td>
 <td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>nextclade_output_parser_docker</strong></td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/python/python:3.8.18-slim</td>
 <td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
-<td><strong>pangolin_docker_image</strong></td>
-<td></td>
-<td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
 <td><strong>quasitools_docker</strong></td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/quasitools:0.7.0--pyh864c0ab_1</td>
 <td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>vadr_docker_image</strong></td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4</td>
 <td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
@@ -8152,12 +8192,6 @@
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/ncbi-datasets:16.38.1</td>
 <td>Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA</td>
-</tr>
-<tr>
-<td>ncbi_identify</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq</td>
-<td>Host_Decontaminate</td>
 </tr>
 <tr>
 <td>ncbi_scrub_pe</td>
@@ -8217,7 +8251,7 @@
 <td>parse_mapping</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17</td>
-<td>Host_Decontaminate, TheiaViral_ONT</td>
+<td>TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>phylovalidate_task</td>
@@ -8353,15 +8387,45 @@
 </tr>
 <tr>
 <td>read_QC_trim_ont</td>
+<td><strong>artic_guppyplex_docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3</td>
+<td>Freyja_FASTQ</td>
+</tr>
+<tr>
+<td>read_QC_trim_ont</td>
 <td><strong>kraken2_recalculate_abundances_docker</strong></td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4</td>
+<td>Freyja_FASTQ</td>
+</tr>
+<tr>
+<td>read_QC_trim_ont</td>
+<td><strong>kraken_docker_image</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>Freyja_FASTQ</td>
+</tr>
+<tr>
+<td>read_QC_trim_ont</td>
+<td><strong>nanoq_docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1</td>
+<td>Freyja_FASTQ</td>
+</tr>
+<tr>
+<td>read_QC_trim_ont</td>
+<td><strong>ncbi_scrub_docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1</td>
+<td>Freyja_FASTQ</td>
+</tr>
+<tr>
+<td>read_QC_trim_ont</td>
+<td><strong>rasusa_docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0</td>
 <td>Freyja_FASTQ</td>
 </tr>
 <tr>
 <td>read_mapping_stats</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
-<td>Host_Decontaminate, TheiaViral_Illumina_PE, TheiaViral_ONT</td>
+<td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>
 <td>referenceseeker</td>
@@ -8711,7 +8775,7 @@
 <td><strong>reference_genbank</strong></td>
 <td>File</td>
 <td>The GenBank .gb file for the same reference genome used for the reference_fasta</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails.</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>.</td>
 <td>Augur</td>
 </tr>
 <tr>
@@ -8807,16 +8871,32 @@
 <td><strong>cladetyper_ref_clade1</strong></td>
 <td>File</td>
 <td>Reference genome FASTA for <em>Candidozyma auris</em> clade1</td>
-<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fasta</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta</td>
 <td>TheiaEuk_Illumina_PE, TheiaEuk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade1</strong></td>
+<td>File</td>
+<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta</td>
+<td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade1_annotated</strong></td>
 <td>File</td>
 <td>Reference GBFF annotation for <em>C. auris</em> clade1</td>
-<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435_Cauris_B8441_V2_genomic.gbff</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff</td>
 <td>TheiaEuk_Illumina_PE, TheiaEuk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade1_annotated</strong></td>
+<td>File</td>
+<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff</td>
+<td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
@@ -8828,11 +8908,27 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade2</strong></td>
+<td>File</td>
+<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta</td>
+<td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade2_annotated</strong></td>
 <td>File</td>
 <td>Reference GBFF annotation for <em>C. auris</em> clade2</td>
 <td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff</td>
 <td>TheiaEuk_Illumina_PE, TheiaEuk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade2_annotated</strong></td>
+<td>File</td>
+<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff</td>
+<td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
@@ -8844,11 +8940,27 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade3</strong></td>
+<td>File</td>
+<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta</td>
+<td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade3_annotated</strong></td>
 <td>File</td>
 <td>Reference GBFF annotation for <em>C. auris</em> clade3</td>
 <td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff</td>
 <td>TheiaEuk_Illumina_PE, TheiaEuk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade3_annotated</strong></td>
+<td>File</td>
+<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff</td>
+<td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
@@ -8860,11 +8972,27 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade4</strong></td>
+<td>File</td>
+<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta</td>
+<td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade4_annotated</strong></td>
 <td>File</td>
 <td>Reference GBFF annotation for <em>C. auris</em> clade4</td>
 <td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff</td>
 <td>TheiaEuk_Illumina_PE, TheiaEuk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade4_annotated</strong></td>
+<td>File</td>
+<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff</td>
+<td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
@@ -8876,11 +9004,27 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade5</strong></td>
+<td>File</td>
+<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta</td>
+<td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>cladetyper_ref_clade5_annotated</strong></td>
 <td>File</td>
 <td>Reference GBFF annotation for <em>C. auris</em> clade5</td>
 <td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff</td>
 <td>TheiaEuk_Illumina_PE, TheiaEuk_ONT</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>cladetyper_ref_clade5_annotated</strong></td>
+<td>File</td>
+<td>*Provide an empty file if running TheiaProk on the command-line</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff</td>
+<td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
@@ -8899,27 +9043,27 @@
 <td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
-<td>morgana_magic</td>
-<td><strong>genoflu_cross_reference</strong></td>
+<td>merlin_magic</td>
+<td><strong>snippy_reference_afumigatus</strong></td>
 <td>File</td>
-<td>An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py</td>
-<td></td>
-<td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
+<td>Snippy reference for Aspergillus fumigatus</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff</td>
+<td>TheiaEuk_Illumina_PE, TheiaEuk_ONT</td>
 </tr>
 <tr>
-<td>morgana_magic</td>
-<td><strong>genoflu_cross_reference</strong></td>
+<td>merlin_magic</td>
+<td><strong>snippy_reference_cryptoneo</strong></td>
 <td>File</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT</td>
+<td>Snippy reference for Cryptococcus neoformans</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff</td>
+<td>TheiaEuk_Illumina_PE, TheiaEuk_ONT</td>
 </tr>
 <tr>
 <td>morgana_magic</td>
 <td><strong>irma_keep_ref_deletions</strong></td>
 <td>Boolean</td>
 <td>True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting N's or deleting the sequence entirely. False sets this IRMA paramater to "DEL" and true sets it to "NNN"</td>
-<td></td>
+<td>True</td>
 <td>TheiaViral_Illumina_PE, TheiaViral_ONT</td>
 </tr>
 <tr>

@@ -7290,7 +7290,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#phylogenetic-construction">Phylogenetic Construction</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
-<td>v4.0.0</td>
+<td>vX.X.X</td>
 <td>Yes</td>
 <td>Sample-level, Set-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_Prep_PHB:main?tab=info">Augur_Prep_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_PHB:main?tab=info">Augur_PHB</a></td>
@@ -7792,7 +7792,7 @@
 <td><strong>flu_subtype</strong></td>
 <td>String</td>
 <td>Required if organism = "flu". The subtype of the flu samples being analyzed; options: "H1N1", "H3N2", "Victoria", "Yamagata", "H5N1"</td>
-<td></td>
+<td>N/A</td>
 <td>Optional, Required</td>
 </tr>
 <tr>
@@ -7808,7 +7808,7 @@
 <td><strong>reference_genbank</strong></td>
 <td>File</td>
 <td>The GenBank .gb file for the same reference genome used for the reference_fasta</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a reference genbank file must be provided otherwise the workflow fails.</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>.</td>
 <td>Optional, Required</td>
 </tr>
 <tr>
@@ -7920,7 +7920,7 @@
 <td><strong>pivot_interval</strong></td>
 <td>Int</td>
 <td>Number of units between pivots</td>
-<td>3</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7928,7 +7928,7 @@
 <td><strong>proportion_wide</strong></td>
 <td>Float</td>
 <td>The proportion of the wide bandwidth to use in the KDE mixture model</td>
-<td>0.2</td>
+<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, the default value is 0.2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8280,7 +8280,7 @@
 <td><strong>precision</strong></td>
 <td>Int</td>
 <td>Precision used by TreeTime to determine the number of grid points that are used for the evaluation of the branch length interpolation objects. Values range from 0 (rough) to 3 (ultra fine) and default to 'auto'</td>
-<td>auto'</td>
+<td>'auto'</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8328,7 +8328,7 @@
 <td><strong>metadata_id_columns</strong></td>
 <td>String</td>
 <td>The names of possible metadata columns containing identifier information, ordered by priority</td>
-<td>('strain', 'name)</td>
+<td>'strain' 'name'</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8744,7 +8744,7 @@
 <td><strong>vadr_skip_length</strong></td>
 <td>Int</td>
 <td>Minimum assembly length (unambiguous) to run VADR</td>
-<td>10000</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>

@@ -8090,7 +8090,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td>SARS-CoV-2, <a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
-<td>v3.1.0</td>
+<td>vX.X.X</td>
 <td>Yes</td>
 <td>Sample-level, Set-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_FASTQ_PHB:main?tab=info">Freyja_FASTQ_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Plot_PHB:main?tab=info">Freyja_Plot_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Dashboard_PHB:main?tab=info">Freyja_Dashboard_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Update_PHB:main?tab=info">Freyja_Update_PHB</a></td>
@@ -8360,7 +8360,7 @@
 <td><strong>adapt</strong></td>
 <td>Float</td>
 <td>adaptive lasso penalty parameter</td>
-<td>0</td>
+<td>0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8440,7 +8440,7 @@
 <td><strong>depth_cutoff</strong></td>
 <td>Int</td>
 <td>The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS!</td>
-<td>10</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8808,7 +8808,7 @@
 <td><strong>kraken_db</strong></td>
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8824,7 +8824,7 @@
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8832,7 +8832,7 @@
 <td><strong>midas_db</strong></td>
 <td>File</td>
 <td>Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8888,7 +8888,7 @@
 <td><strong>trimmomatic_args</strong></td>
 <td>String</td>
 <td>Additional command-line arguments to use with trimmomatic</td>
-<td></td>
+<td>-phred33</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9034,7 +9034,7 @@
 <td><strong>adapt</strong></td>
 <td>Float</td>
 <td>adaptive lasso penalty parameter</td>
-<td>0</td>
+<td>0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9114,7 +9114,7 @@
 <td><strong>depth_cutoff</strong></td>
 <td>Int</td>
 <td>The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS!</td>
-<td>10</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9426,7 +9426,7 @@
 <td><strong>kraken_db</strong></td>
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9442,7 +9442,7 @@
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9450,7 +9450,7 @@
 <td><strong>midas_db</strong></td>
 <td>File</td>
 <td>Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9498,7 +9498,7 @@
 <td><strong>trimmomatic_args</strong></td>
 <td>String</td>
 <td>Additional command-line arguments to use with trimmomatic</td>
-<td></td>
+<td>-phred33</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9644,7 +9644,7 @@
 <td><strong>adapt</strong></td>
 <td>Float</td>
 <td>adaptive lasso penalty parameter</td>
-<td>0</td>
+<td>0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9724,7 +9724,7 @@
 <td><strong>depth_cutoff</strong></td>
 <td>Int</td>
 <td>The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS!</td>
-<td>10</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10020,7 +10020,7 @@
 <td><strong>kraken2_recalculate_abundances_docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10044,7 +10044,7 @@
 <td><strong>kraken_db</strong></td>
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10068,7 +10068,7 @@
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10076,7 +10076,7 @@
 <td><strong>max_length</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>700</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10084,7 +10084,7 @@
 <td><strong>min_length</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>400</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10116,7 +10116,7 @@
 <td><strong>nanoq_max_read_length</strong></td>
 <td>Int</td>
 <td>Maximum read length to use for filtering</td>
-<td></td>
+<td>100000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10124,7 +10124,7 @@
 <td><strong>nanoq_max_read_qual</strong></td>
 <td>Int</td>
 <td>Maximum read quality to use for filtering</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10140,7 +10140,7 @@
 <td><strong>nanoq_min_read_length</strong></td>
 <td>Int</td>
 <td>Minimum read length to use for filtering</td>
-<td></td>
+<td>500</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10148,7 +10148,7 @@
 <td><strong>nanoq_min_read_qual</strong></td>
 <td>Int</td>
 <td>Minimum read quality to use for filtering</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10180,7 +10180,7 @@
 <td><strong>ncbi_scrub_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10252,7 +10252,7 @@
 <td><strong>run_prefix</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>artic_ncov2019</td>
 <td>Optional</td>
 </tr>
 <tr>

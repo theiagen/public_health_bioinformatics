@@ -7086,7 +7086,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#mycotics">Mycotics</a></td>
-<td>v4.0.0</td>
+<td>vX.X.X</td>
 <td>Some optional features incompatible, Yes</td>
 <td>Sample-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaEuk_Illumina_PE_PHB:main?tab=info">TheiaEuk_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaEuk_ONT_PHB:main?tab=info">TheiaEuk_ONT_PHB</a></td>
@@ -7514,7 +7514,7 @@
 <td><strong>skesa_disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>50</td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7530,7 +7530,7 @@
 <td><strong>skesa_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
+<td>16</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7538,7 +7538,7 @@
 <td><strong>spades_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>16</td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7562,7 +7562,7 @@
 <td><strong>spades_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
+<td>16</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7594,7 +7594,7 @@
 <td><strong>abricate_abaum_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7602,7 +7602,7 @@
 <td><strong>abricate_abaum_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7618,7 +7618,7 @@
 <td><strong>abricate_vibrio_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-vibrio-cholera</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7642,7 +7642,7 @@
 <td><strong>agrvate_agr_typing_only</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7650,7 +7650,7 @@
 <td><strong>agrvate_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7738,7 +7738,7 @@
 <td><strong>cladetyper_kmer_size</strong></td>
 <td>Int</td>
 <td>Kmer size for cladetyper</td>
-<td></td>
+<td>11</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7754,7 +7754,7 @@
 <td><strong>cladetyper_ref_clade1</strong></td>
 <td>File</td>
 <td>Reference genome FASTA for <em>Candidozyma auris</em> clade1</td>
-<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fasta</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7762,7 +7762,7 @@
 <td><strong>cladetyper_ref_clade1_annotated</strong></td>
 <td>File</td>
 <td>Reference GBFF annotation for <em>C. auris</em> clade1</td>
-<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435_Cauris_B8441_V2_genomic.gbff</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7850,7 +7850,7 @@
 <td><strong>clockwork_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7858,7 +7858,7 @@
 <td><strong>ectyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ectyper:2.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7866,7 +7866,7 @@
 <td><strong>ectyper_h_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7874,7 +7874,7 @@
 <td><strong>ectyper_h_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7882,7 +7882,7 @@
 <td><strong>ectyper_o_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>90</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7890,7 +7890,7 @@
 <td><strong>ectyper_o_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>90</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7898,7 +7898,7 @@
 <td><strong>ectyper_print_alleles</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7906,7 +7906,7 @@
 <td><strong>ectyper_verify</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7914,7 +7914,7 @@
 <td><strong>emmtyper_align_diff</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7922,7 +7922,7 @@
 <td><strong>emmtyper_cluster_distance</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>500</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7930,7 +7930,7 @@
 <td><strong>emmtyper_culling_limit</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7938,7 +7938,7 @@
 <td><strong>emmtyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/emmtyper:0.2.0--py_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7946,7 +7946,7 @@
 <td><strong>emmtyper_gap</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7954,7 +7954,7 @@
 <td><strong>emmtyper_max_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>2000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7962,7 +7962,7 @@
 <td><strong>emmtyper_min_good</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>15</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7970,7 +7970,7 @@
 <td><strong>emmtyper_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7978,7 +7978,7 @@
 <td><strong>emmtyper_min_perfect</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>15</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7986,7 +7986,7 @@
 <td><strong>emmtyper_mismatch</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7994,7 +7994,7 @@
 <td><strong>emmtyper_wf</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>blast</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8002,7 +8002,7 @@
 <td><strong>emmtypingtool_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8010,7 +8010,7 @@
 <td><strong>genotyphi_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8018,7 +8018,7 @@
 <td><strong>hicap_broken_gene_length</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>60</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8026,7 +8026,7 @@
 <td><strong>hicap_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/hicap:1.0.3--py_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8034,7 +8034,7 @@
 <td><strong>hicap_min_broken_gene_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8042,7 +8042,7 @@
 <td><strong>hicap_min_gene_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8050,7 +8050,7 @@
 <td><strong>hicap_min_gene_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.7</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8058,7 +8058,7 @@
 <td><strong>kaptive_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.0.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8066,7 +8066,7 @@
 <td><strong>kaptive_low_gene_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8074,7 +8074,7 @@
 <td><strong>kaptive_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>90.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8082,7 +8082,7 @@
 <td><strong>kaptive_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8090,7 +8090,7 @@
 <td><strong>kaptive_start_end_margin</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8098,7 +8098,7 @@
 <td><strong>kleborate_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kleborate:2.2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8106,7 +8106,7 @@
 <td><strong>kleborate_min_kaptive_confidence</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>Good</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8114,7 +8114,7 @@
 <td><strong>kleborate_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8122,7 +8122,7 @@
 <td><strong>kleborate_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>90.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8130,7 +8130,7 @@
 <td><strong>kleborate_min_spurious_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>40.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8138,7 +8138,7 @@
 <td><strong>kleborate_min_spurious_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8146,7 +8146,7 @@
 <td><strong>kleborate_skip_kaptive</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8154,7 +8154,7 @@
 <td><strong>kleborate_skip_resistance</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8170,7 +8170,7 @@
 <td><strong>lissero_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/lissero:0.4.9--py_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8178,7 +8178,7 @@
 <td><strong>lissero_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8186,7 +8186,7 @@
 <td><strong>lissero_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8194,7 +8194,7 @@
 <td><strong>meningotype_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/meningotype:0.8.5--pyhdfd78af_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8202,7 +8202,7 @@
 <td><strong>ngmaster_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ngmaster:1.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8226,7 +8226,7 @@
 <td><strong>pasty_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8234,7 +8234,7 @@
 <td><strong>pasty_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8242,7 +8242,7 @@
 <td><strong>pasty_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8250,7 +8250,7 @@
 <td><strong>pbptyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/pbptyper:1.0.4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8258,7 +8258,7 @@
 <td><strong>pbptyper_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8266,7 +8266,7 @@
 <td><strong>pbptyper_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8274,7 +8274,7 @@
 <td><strong>poppunk_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/poppunk:2.4.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8282,7 +8282,7 @@
 <td><strong>poppunk_gps_clusters_csv</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_clusters.csv</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8290,7 +8290,7 @@
 <td><strong>poppunk_gps_dists_npy</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.dists.npy</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8298,7 +8298,7 @@
 <td><strong>poppunk_gps_dists_pkl</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.dists.pkl</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8306,7 +8306,7 @@
 <td><strong>poppunk_gps_external_clusters_csv</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_external_clusters.csv</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8314,7 +8314,7 @@
 <td><strong>poppunk_gps_fit_npz</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_fit.npz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8322,7 +8322,7 @@
 <td><strong>poppunk_gps_fit_pkl</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_fit.pkl</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8330,7 +8330,7 @@
 <td><strong>poppunk_gps_graph_gt</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_graph.gt</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8338,7 +8338,7 @@
 <td><strong>poppunk_gps_h5</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.h5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8346,7 +8346,7 @@
 <td><strong>poppunk_gps_qcreport_txt</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_qcreport.txt</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8354,7 +8354,7 @@
 <td><strong>poppunk_gps_refs</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8362,7 +8362,7 @@
 <td><strong>poppunk_gps_refs_dists_npy</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.dists.npy</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8370,7 +8370,7 @@
 <td><strong>poppunk_gps_refs_dists_pkl</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.dists.pkl</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8378,7 +8378,7 @@
 <td><strong>poppunk_gps_refs_graph_gt</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6refs_graph.gt</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8386,7 +8386,7 @@
 <td><strong>poppunk_gps_refs_h5</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.h5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8394,7 +8394,7 @@
 <td><strong>poppunk_gps_unword_clusters_csv</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_unword_clusters.csv</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8410,7 +8410,7 @@
 <td><strong>seqsero2s_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/seqsero2s:1.1.4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8418,7 +8418,7 @@
 <td><strong>seroba_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/seroba:1.0.2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8426,7 +8426,7 @@
 <td><strong>serotypefinder_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/serotypefinder:2.0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8434,7 +8434,7 @@
 <td><strong>shigatyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8442,7 +8442,7 @@
 <td><strong>shigeifinder_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8450,7 +8450,7 @@
 <td><strong>sistr_cpu</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8458,7 +8458,7 @@
 <td><strong>sistr_disk_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8466,7 +8466,7 @@
 <td><strong>sistr_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/sistr:1.1.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8474,7 +8474,7 @@
 <td><strong>sistr_memory</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8482,7 +8482,7 @@
 <td><strong>sistr_use_full_cgmlst_db</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8546,7 +8546,7 @@
 <td><strong>snippy_query_gene</strong></td>
 <td>String</td>
 <td>Provide a gene to search for using Snippy</td>
-<td>Default depend on detected organism</td>
+<td>Default depends on detected organism</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8578,7 +8578,7 @@
 <td><strong>sonneityping_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1-sonneityping</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8594,7 +8594,7 @@
 <td><strong>spatyper_do_enrich</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8602,7 +8602,7 @@
 <td><strong>spatyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/spatyper:0.3.3--pyhdfd78af_3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8610,7 +8610,7 @@
 <td><strong>srst2_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/srst2:0.2.0-vcholerae</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8658,7 +8658,7 @@
 <td><strong>staphopia_sccmec_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8666,7 +8666,7 @@
 <td><strong>stxtyper_cpu</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8674,7 +8674,7 @@
 <td><strong>stxtyper_disk_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8682,7 +8682,7 @@
 <td><strong>stxtyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.42</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8690,7 +8690,7 @@
 <td><strong>stxtyper_enable_debug</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8698,7 +8698,7 @@
 <td><strong>stxtyper_memory</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8706,7 +8706,7 @@
 <td><strong>tbp_parser_add_cs_lims</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8730,7 +8730,7 @@
 <td><strong>tbp_parser_debug</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8738,7 +8738,7 @@
 <td><strong>tbp_parser_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8746,7 +8746,7 @@
 <td><strong>tbp_parser_etha237_frequency</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8762,7 +8762,7 @@
 <td><strong>tbp_parser_min_depth</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8770,7 +8770,7 @@
 <td><strong>tbp_parser_min_frequency</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8778,7 +8778,7 @@
 <td><strong>tbp_parser_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8786,7 +8786,7 @@
 <td><strong>tbp_parser_min_read_support</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8810,7 +8810,7 @@
 <td><strong>tbp_parser_rpob449_frequency</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8818,7 +8818,7 @@
 <td><strong>tbp_parser_rrl_frequency</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8826,7 +8826,7 @@
 <td><strong>tbp_parser_rrl_read_support</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8834,7 +8834,7 @@
 <td><strong>tbp_parser_rrs_frequency</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8842,7 +8842,7 @@
 <td><strong>tbp_parser_rrs_read_support</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8850,7 +8850,7 @@
 <td><strong>tbp_parser_tngs_data</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8874,7 +8874,7 @@
 <td><strong>tbprofiler_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8882,7 +8882,7 @@
 <td><strong>tbprofiler_mapper</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>bwa</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8890,7 +8890,7 @@
 <td><strong>tbprofiler_min_af</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8898,7 +8898,7 @@
 <td><strong>tbprofiler_min_depth</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8914,7 +8914,7 @@
 <td><strong>tbprofiler_variant_caller</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gatk</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8930,7 +8930,7 @@
 <td><strong>vibecheck_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>watronfire/vibecheck:2025.02.24</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8946,7 +8946,7 @@
 <td><strong>vibecheck_skip_subsampling</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8954,7 +8954,7 @@
 <td><strong>vibecheck_subsampling_fraction</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8962,7 +8962,7 @@
 <td><strong>virulencefinder_database</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>virulence_ecoli</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8970,7 +8970,7 @@
 <td><strong>virulencefinder_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9402,7 +9402,7 @@
 <td><strong>kraken_db</strong></td>
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9418,7 +9418,7 @@
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9426,7 +9426,7 @@
 <td><strong>midas_db</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td>gs://theiagen-public-files-rp/terra/theiaprok-files/midas/midas_db_v1.2.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9788,7 +9788,7 @@
 <td><strong>bandage_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9812,7 +9812,7 @@
 <td><strong>dnaapler_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>1</td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9852,7 +9852,7 @@
 <td><strong>filter_contigs_disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>10</td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9860,7 +9860,7 @@
 <td><strong>filter_contigs_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10188,7 +10188,7 @@
 <td><strong>racon_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>16</td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10244,7 +10244,7 @@
 <td><strong>abricate_abaum_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10252,7 +10252,7 @@
 <td><strong>abricate_abaum_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>80</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10268,7 +10268,7 @@
 <td><strong>abricate_vibrio_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-vibrio-cholera</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10292,7 +10292,7 @@
 <td><strong>agrvate_agr_typing_only</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10300,7 +10300,7 @@
 <td><strong>agrvate_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10380,7 +10380,7 @@
 <td><strong>cladetyper_kmer_size</strong></td>
 <td>Int</td>
 <td>Kmer size for cladetyper</td>
-<td></td>
+<td>11</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10396,7 +10396,7 @@
 <td><strong>cladetyper_ref_clade1</strong></td>
 <td>File</td>
 <td>Reference genome FASTA for <em>Candidozyma auris</em> clade1</td>
-<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.2_Cand_auris_B8441_V2_genomic.fasta</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10404,7 +10404,7 @@
 <td><strong>cladetyper_ref_clade1_annotated</strong></td>
 <td>File</td>
 <td>Reference GBFF annotation for <em>C. auris</em> clade1</td>
-<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435_Cauris_B8441_V2_genomic.gbff</td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10492,7 +10492,7 @@
 <td><strong>clockwork_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10500,7 +10500,7 @@
 <td><strong>ectyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ectyper:2.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10508,7 +10508,7 @@
 <td><strong>ectyper_h_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10516,7 +10516,7 @@
 <td><strong>ectyper_h_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10524,7 +10524,7 @@
 <td><strong>ectyper_o_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>90</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10532,7 +10532,7 @@
 <td><strong>ectyper_o_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>90</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10540,7 +10540,7 @@
 <td><strong>ectyper_print_alleles</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10548,7 +10548,7 @@
 <td><strong>ectyper_verify</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10556,7 +10556,7 @@
 <td><strong>emmtyper_align_diff</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10564,7 +10564,7 @@
 <td><strong>emmtyper_cluster_distance</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>500</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10572,7 +10572,7 @@
 <td><strong>emmtyper_culling_limit</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10580,7 +10580,7 @@
 <td><strong>emmtyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/emmtyper:0.2.0--py_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10588,7 +10588,7 @@
 <td><strong>emmtyper_gap</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10596,7 +10596,7 @@
 <td><strong>emmtyper_max_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>2000</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10604,7 +10604,7 @@
 <td><strong>emmtyper_min_good</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>15</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10612,7 +10612,7 @@
 <td><strong>emmtyper_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10620,7 +10620,7 @@
 <td><strong>emmtyper_min_perfect</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>15</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10628,7 +10628,7 @@
 <td><strong>emmtyper_mismatch</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10636,7 +10636,7 @@
 <td><strong>emmtyper_wf</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>blast</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10644,7 +10644,7 @@
 <td><strong>emmtypingtool_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10652,7 +10652,7 @@
 <td><strong>genotyphi_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10660,7 +10660,7 @@
 <td><strong>hicap_broken_gene_length</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>60</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10668,7 +10668,7 @@
 <td><strong>hicap_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/hicap:1.0.3--py_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10676,7 +10676,7 @@
 <td><strong>hicap_min_broken_gene_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10684,7 +10684,7 @@
 <td><strong>hicap_min_gene_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10692,7 +10692,7 @@
 <td><strong>hicap_min_gene_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.7</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10700,7 +10700,7 @@
 <td><strong>kaptive_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.0.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10708,7 +10708,7 @@
 <td><strong>kaptive_low_gene_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10716,7 +10716,7 @@
 <td><strong>kaptive_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>90.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10724,7 +10724,7 @@
 <td><strong>kaptive_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10732,7 +10732,7 @@
 <td><strong>kaptive_start_end_margin</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10740,7 +10740,7 @@
 <td><strong>kleborate_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kleborate:2.2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10748,7 +10748,7 @@
 <td><strong>kleborate_min_kaptive_confidence</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>Good</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10756,7 +10756,7 @@
 <td><strong>kleborate_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10764,7 +10764,7 @@
 <td><strong>kleborate_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>90.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10772,7 +10772,7 @@
 <td><strong>kleborate_min_spurious_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>40.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10780,7 +10780,7 @@
 <td><strong>kleborate_min_spurious_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>80.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10788,7 +10788,7 @@
 <td><strong>kleborate_skip_kaptive</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10796,7 +10796,7 @@
 <td><strong>kleborate_skip_resistance</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10812,7 +10812,7 @@
 <td><strong>lissero_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/lissero:0.4.9--py_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10820,7 +10820,7 @@
 <td><strong>lissero_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10828,7 +10828,7 @@
 <td><strong>lissero_min_percent_identity</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10836,7 +10836,7 @@
 <td><strong>meningotype_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/meningotype:0.8.5--pyhdfd78af_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10844,7 +10844,7 @@
 <td><strong>ngmaster_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/ngmaster:1.0.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10860,7 +10860,7 @@
 <td><strong>pasty_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10868,7 +10868,7 @@
 <td><strong>pasty_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10876,7 +10876,7 @@
 <td><strong>pasty_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10884,7 +10884,7 @@
 <td><strong>pbptyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/pbptyper:1.0.4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10892,7 +10892,7 @@
 <td><strong>pbptyper_min_percent_coverage</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10900,7 +10900,7 @@
 <td><strong>pbptyper_min_percent_identity</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>95</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10908,7 +10908,7 @@
 <td><strong>poppunk_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/poppunk:2.4.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10916,7 +10916,7 @@
 <td><strong>poppunk_gps_clusters_csv</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_clusters.csv</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10924,7 +10924,7 @@
 <td><strong>poppunk_gps_dists_npy</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.dists.npy</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10932,7 +10932,7 @@
 <td><strong>poppunk_gps_dists_pkl</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.dists.pkl</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10940,7 +10940,7 @@
 <td><strong>poppunk_gps_external_clusters_csv</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_external_clusters.csv</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10948,7 +10948,7 @@
 <td><strong>poppunk_gps_fit_npz</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_fit.npz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10956,7 +10956,7 @@
 <td><strong>poppunk_gps_fit_pkl</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_fit.pkl</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10964,7 +10964,7 @@
 <td><strong>poppunk_gps_graph_gt</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_graph.gt</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10972,7 +10972,7 @@
 <td><strong>poppunk_gps_h5</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.h5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10980,7 +10980,7 @@
 <td><strong>poppunk_gps_qcreport_txt</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_qcreport.txt</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10988,7 +10988,7 @@
 <td><strong>poppunk_gps_refs</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10996,7 +10996,7 @@
 <td><strong>poppunk_gps_refs_dists_npy</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.dists.npy</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11004,7 +11004,7 @@
 <td><strong>poppunk_gps_refs_dists_pkl</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.dists.pkl</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11012,7 +11012,7 @@
 <td><strong>poppunk_gps_refs_graph_gt</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6refs_graph.gt</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11020,7 +11020,7 @@
 <td><strong>poppunk_gps_refs_h5</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.h5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11028,7 +11028,7 @@
 <td><strong>poppunk_gps_unword_clusters_csv</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_unword_clusters.csv</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11060,7 +11060,7 @@
 <td><strong>seqsero2s_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/seqsero2s:1.1.4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11068,7 +11068,7 @@
 <td><strong>seroba_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/seroba:1.0.2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11076,7 +11076,7 @@
 <td><strong>serotypefinder_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/serotypefinder:2.0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11084,7 +11084,7 @@
 <td><strong>shigatyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11092,7 +11092,7 @@
 <td><strong>shigeifinder_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11100,7 +11100,7 @@
 <td><strong>sistr_cpu</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11108,7 +11108,7 @@
 <td><strong>sistr_disk_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11116,7 +11116,7 @@
 <td><strong>sistr_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/sistr:1.1.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11124,7 +11124,7 @@
 <td><strong>sistr_memory</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11132,7 +11132,7 @@
 <td><strong>sistr_use_full_cgmlst_db</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11196,7 +11196,7 @@
 <td><strong>snippy_query_gene</strong></td>
 <td>String</td>
 <td>Provide a gene to search for using Snippy</td>
-<td>Default depend on detected organism</td>
+<td>Default depends on detected organism</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11228,7 +11228,7 @@
 <td><strong>sonneityping_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1-sonneityping</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11244,7 +11244,7 @@
 <td><strong>spatyper_do_enrich</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11252,7 +11252,7 @@
 <td><strong>spatyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/spatyper:0.3.3--pyhdfd78af_3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11260,7 +11260,7 @@
 <td><strong>srst2_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/srst2:0.2.0-vcholerae</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11308,7 +11308,7 @@
 <td><strong>staphopia_sccmec_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11316,7 +11316,7 @@
 <td><strong>stxtyper_cpu</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11324,7 +11324,7 @@
 <td><strong>stxtyper_disk_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>50</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11332,7 +11332,7 @@
 <td><strong>stxtyper_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.42</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11340,7 +11340,7 @@
 <td><strong>stxtyper_enable_debug</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11348,7 +11348,7 @@
 <td><strong>stxtyper_memory</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11356,7 +11356,7 @@
 <td><strong>tbp_parser_add_cs_lims</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11380,7 +11380,7 @@
 <td><strong>tbp_parser_debug</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11388,7 +11388,7 @@
 <td><strong>tbp_parser_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11396,7 +11396,7 @@
 <td><strong>tbp_parser_etha237_frequency</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11412,7 +11412,7 @@
 <td><strong>tbp_parser_min_depth</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11420,7 +11420,7 @@
 <td><strong>tbp_parser_min_frequency</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11428,7 +11428,7 @@
 <td><strong>tbp_parser_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11436,7 +11436,7 @@
 <td><strong>tbp_parser_min_read_support</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11460,7 +11460,7 @@
 <td><strong>tbp_parser_rpob449_frequency</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11468,7 +11468,7 @@
 <td><strong>tbp_parser_rrl_frequency</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11476,7 +11476,7 @@
 <td><strong>tbp_parser_rrl_read_support</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11484,7 +11484,7 @@
 <td><strong>tbp_parser_rrs_frequency</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11492,7 +11492,7 @@
 <td><strong>tbp_parser_rrs_read_support</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11500,7 +11500,7 @@
 <td><strong>tbp_parser_tngs_data</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11524,7 +11524,7 @@
 <td><strong>tbprofiler_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11532,7 +11532,7 @@
 <td><strong>tbprofiler_mapper</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>bwa</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11540,7 +11540,7 @@
 <td><strong>tbprofiler_min_af</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11548,7 +11548,7 @@
 <td><strong>tbprofiler_min_depth</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11564,7 +11564,7 @@
 <td><strong>tbprofiler_variant_caller</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gatk</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11580,7 +11580,7 @@
 <td><strong>vibecheck_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>watronfire/vibecheck:2025.02.24</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11596,7 +11596,7 @@
 <td><strong>vibecheck_skip_subsampling</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11604,7 +11604,7 @@
 <td><strong>vibecheck_subsampling_fraction</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>0.2</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11612,7 +11612,7 @@
 <td><strong>virulencefinder_database</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>virulence_ecoli</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11620,7 +11620,7 @@
 <td><strong>virulencefinder_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11804,7 +11804,7 @@
 <td><strong>artic_guppyplex_cpu</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11812,7 +11812,7 @@
 <td><strong>artic_guppyplex_disk_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11820,7 +11820,7 @@
 <td><strong>artic_guppyplex_docker</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11828,7 +11828,7 @@
 <td><strong>artic_guppyplex_memory</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>16</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11852,7 +11852,7 @@
 <td><strong>kraken2_recalculate_abundances_cpu</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11860,7 +11860,7 @@
 <td><strong>kraken2_recalculate_abundances_disk_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11868,7 +11868,7 @@
 <td><strong>kraken2_recalculate_abundances_docker</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11876,7 +11876,7 @@
 <td><strong>kraken2_recalculate_abundances_memory</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11884,7 +11884,7 @@
 <td><strong>kraken_cpu</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11892,7 +11892,7 @@
 <td><strong>kraken_db</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11900,7 +11900,7 @@
 <td><strong>kraken_disk_size</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11908,7 +11908,7 @@
 <td><strong>kraken_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11924,7 +11924,7 @@
 <td><strong>max_length</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>700</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11932,7 +11932,7 @@
 <td><strong>min_length</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>400</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11972,7 +11972,7 @@
 <td><strong>nanoq_max_read_qual</strong></td>
 <td>Int</td>
 <td>The maximum read quality to keep after trimming</td>
-<td>40</td>
+<td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12060,7 +12060,7 @@
 <td><strong>rasusa_docker</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12100,7 +12100,7 @@
 <td><strong>run_prefix</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td></td>
+<td>artic_ncov2019</td>
 <td>Optional</td>
 </tr>
 <tr>
