@@ -118,7 +118,7 @@
       contains: ["wdl", "theiacov_illumina_se", "done"]
     # bwa
     - path: miniwdl_run/call-ivar_consensus/call-bwa/command
-      md5sum: 333d855970c7a332ee45865bf2c9d7bf
+      md5sum: 4f688fc80cdeba815cd117b365166105
     - path: miniwdl_run/call-ivar_consensus/call-bwa/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-bwa/outputs.json
@@ -129,14 +129,14 @@
     - path: miniwdl_run/call-ivar_consensus/call-bwa/task.log
       contains: ["wdl", "illumina_se", "bwa", "done"]
     - path: miniwdl_run/call-ivar_consensus/call-bwa/work/ERR6319327.sorted.aligned.bam
-      md5sum: 0db7c2f7d36144260d6d61f71a2e3cec
-    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/ERR6319327.sorted.bam.aligned.bai
-      md5sum: d6d6a9d40f5e2dbc950d43b7593b6964
+      md5sum: 5539bd6e4453b09232abd5e45680ea9c
+    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/ERR6319327.sorted.aligned.bam.bai
+      md5sum: d6d6a9d40f5e2db5539bd6e4453b09232abd5e45680ea9cc950d43b7593b6964
     - path: miniwdl_run/call-ivar_consensus/call-bwa/work/_miniwdl_inputs/0/ERR6319327_1.clean.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # primer trim
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/command
-      md5sum: 6e5d253144f85df2e4b1ac9f1fb05b86 
+      md5sum: fd55093425917e2dbe0254968bfc27bf
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/inputs.json
       contains: ["primer_bed", "bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/outputs.json
@@ -151,12 +151,12 @@
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/work/PRIMER_NAME
       md5sum: 3ca99445df901950128cddd3e58d2c52
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/work/ERR6319327.primertrim.sorted.bam
-      md5sum: 8659490b5bdd979f6420e262cdf3fd62
+      md5sum: a2dab5b13555337658be7b28bd0f350a
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/work/ERR6319327.primertrim.sorted.bam.bai
-      md5sum: 603c3cbc771ca910b96d3c032aafe7c9
+      md5sum: 39d434bb5c7b37db501cf8828644a45a
     # stats n coverage primer trim
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/command
-      md5sum: affacdcfda48ad5e371a4510f19520bd
+      md5sum: 2ec88c31ce4b44bc9340695046845535
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/outputs.json
@@ -236,7 +236,7 @@
       md5sum: 03c5ecf22fdfdb6b240ac3880281a056
     # stats n coverage
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/command
-      md5sum: cb4de0e459b3fada21bcf08a8dbea89f
+      md5sum: c8d081587c4c558dbd8314b4d3556e2a
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/outputs.json
@@ -257,14 +257,14 @@
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/ERR6319327.flagstat.txt
       md5sum: 5eba111bff16b151b9a498c1a539d14d
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/ERR6319327.stats.txt
-      md5sum: e5ed401d9f60b1c0fe8b3ca4f49a60bd
+      md5sum: ac1d2535f218b3d2422c45f8359d16ab
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/MEANBASEQ
       md5sum: 88606514c85e100c88b651460a8a6ca9
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/MEANMAPQ
       md5sum: ecf27a776cdfc771defab1c5d19de9ab
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/VERSION
       md5sum: 53be85d2ed9fa57ab45424fe071a6672
-    - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/_miniwdl_inputs/0/ERR6319327.sorted.bam
+    - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/_miniwdl_inputs/0/ERR6319327.sorted.aligned.bam
     # consensus qc
     - path: miniwdl_run/call-consensus_qc/command
       md5sum: b2269039a87de6f1dbac7d4b4a736682
