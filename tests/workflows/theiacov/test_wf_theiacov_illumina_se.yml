@@ -128,15 +128,15 @@
     - path: miniwdl_run/call-ivar_consensus/call-bwa/stdout.txt
     - path: miniwdl_run/call-ivar_consensus/call-bwa/task.log
       contains: ["wdl", "illumina_se", "bwa", "done"]
-    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/ERR6319327.sorted.bam
+    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/ERR6319327.sorted.aligned.bam
       md5sum: 0db7c2f7d36144260d6d61f71a2e3cec
-    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/ERR6319327.sorted.bam.bai
+    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/ERR6319327.sorted.bam.aligned.bai
       md5sum: d6d6a9d40f5e2dbc950d43b7593b6964
     - path: miniwdl_run/call-ivar_consensus/call-bwa/work/_miniwdl_inputs/0/ERR6319327_1.clean.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # primer trim
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/command
-      md5sum: 6e5d253144f85df2e4b1ac9f1fb05b86
+      md5sum: 6e5d253144f85df2e4b1ac9f1fb05b86 
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/inputs.json
       contains: ["primer_bed", "bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/outputs.json

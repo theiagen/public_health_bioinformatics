@@ -164,7 +164,7 @@
       contains: ["wdl", "theiacov_illumina_pe", "done"]
     # bwa
     - path: miniwdl_run/call-ivar_consensus/call-bwa/command
-      md5sum: f276d2744e2647aebd640d9c3e943b74
+      md5sum: 858fff103d50021fc4e5a1ff3d74c8e1
     - path: miniwdl_run/call-ivar_consensus/call-bwa/inputs.json
       contains: ["read1", "read2", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-bwa/outputs.json
@@ -174,9 +174,9 @@
     - path: miniwdl_run/call-ivar_consensus/call-bwa/stdout.txt
     - path: miniwdl_run/call-ivar_consensus/call-bwa/task.log
       contains: ["wdl", "illumina_pe", "bwa", "done"]
-    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/SRR13687078.sorted.bam
+    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/SRR13687078.sorted.aligned.bam
       md5sum: 9ab89984a72a15e743ac7cc2d0916e8a
-    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/SRR13687078.sorted.bam.bai
+    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/SRR13687078.sorted.aligned.bam.bai
       md5sum: 0ca8583831d082323c268ddbe37b19a6
     - path: miniwdl_run/call-ivar_consensus/call-bwa/work/_miniwdl_inputs/0/SRR13687078_1.clean.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
