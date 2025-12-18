@@ -131,7 +131,7 @@
     - path: miniwdl_run/call-ivar_consensus/call-bwa/work/ERR6319327.sorted.aligned.bam
       md5sum: 5539bd6e4453b09232abd5e45680ea9c
     - path: miniwdl_run/call-ivar_consensus/call-bwa/work/ERR6319327.sorted.aligned.bam.bai
-      md5sum: d6d6a9d40f5e2db5539bd6e4453b09232abd5e45680ea9cc950d43b7593b6964
+      md5sum: 5539bd6e4453b09232abd5e45680ea9c
     - path: miniwdl_run/call-ivar_consensus/call-bwa/work/_miniwdl_inputs/0/ERR6319327_1.clean.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # primer trim
