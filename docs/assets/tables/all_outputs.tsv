@@ -797,8 +797,8 @@ pbptyper_predicted_1A_2B_2X	String	PBP type predicted by pbptyper	TheiaProk_FAST
 pbptyper_version	String	Version of pbptyper used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 percent_coverage	Float	The percentage coverage of the reference genome provided if one was provided	TheiaMeta_Illumina_PE
 percent_reference_coverage	Float	Percent coverage of the reference genome after performing primer trimming; calculated as assembly_length_unambiguous / length of the reference genome (SC2: 29903) x 100	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-percentage_mapped_reads	String	Percentage of reads that successfully aligned to the reference genome. This value is calculated by number of mapped reads / total number of reads x 100.	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-percentage_mapped_reads	Float	Percentage of reads that successfully aligned to the reference genome. This value is calculated by number of mapped reads / total number of reads x 100.	TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE
+percentage_mapped_reads	String	Percentage of clean reads that successfully aligned to the reference genome. This value is calculated by number of mapped reads / total number of reads x 100.	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+percentage_mapped_reads	Float	Percentage of clean reads that successfully aligned to the reference genome. This value is calculated by number of mapped reads / total number of reads x 100.	TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE
 phylocompare_phb_version	String	The version of the Public Health Bioinformatics (PHB) repository used	PhyloCompare
 phylovalidate_distance	String	The quantitative distance between two phylogenies' tip/branch arrangements	PhyloCompare
 phylovalidate_flag	String	Flag depicting potential confounding factors during validation status	PhyloCompare
@@ -910,7 +910,7 @@ read_mapping_depth	Float	Average depth from read mapping	TheiaViral_Illumina_PE,
 read_mapping_flagstat	File	Flagstat file from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
 read_mapping_meanbaseq	Float	Mean base quality from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
 read_mapping_meanmapq	Float	Mean mapping quality from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
-read_mapping_percentage_mapped_reads	Float	Percentage of mapped reads	TheiaViral_Illumina_PE, TheiaViral_ONT
+read_mapping_percentage_mapped_reads	Float	Percentage of clean reads that mapped to the reference genome	TheiaViral_Illumina_PE, TheiaViral_ONT
 read_mapping_report	File	Report file from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
 read_mapping_samtools_version	String	Version of samtools used in read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
 read_mapping_statistics	File	Statistics file from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
