@@ -10,6 +10,7 @@ workflow wf_microreact_export {
     String terra_table_name
     String terra_workspace_name
     String terra_project_name
+    String set_id
     String? date_column
     String? project_url
     String? access_token
@@ -33,6 +34,7 @@ workflow wf_microreact_export {
     input:
       project_name = project_name,
       metadata_tsv = select_first([download_terra_table.terra_table, metadata_file]),
+      set_id = set_id,
       matrix_files = matrix_files,
       tree_files = tree_files,
       metadata_columns = metadata_columns,

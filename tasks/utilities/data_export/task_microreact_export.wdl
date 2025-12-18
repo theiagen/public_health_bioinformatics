@@ -8,6 +8,7 @@ task microreact_export {
     String project_name
     String id_column
     File metadata_tsv
+    String set_id
     String? date_column
     Array[String]? metadata_columns
     Array[File]? tree_files
@@ -32,6 +33,7 @@ task microreact_export {
     python /scripts/microreact_export.py \
       --project_name ~{project_name} \
       ~{"--project_url " + project_url} \
+      ~{"--set_id " + set_id} \
       --metadata_tsv ~{metadata_tsv} \
       ~{if defined(matrix_files) && length(select_first([matrix_files, []])) > 0
         then "--matrix_files " else ""} "${matrix_array[@]}" \
