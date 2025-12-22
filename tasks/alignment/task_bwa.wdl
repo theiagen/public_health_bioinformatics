@@ -65,7 +65,7 @@ task bwa {
       -@ ~{cpu} \
       -F 0x904 \
       -b \
-      -o ~{samplename}.sorted.aligned-filtered.bam \
+      -o ~{samplename}.sorted.aligned-primary.bam \
       ~{samplename}.sorted.sam
 
     # convert SAM to BAM that only includes unaligned reads
@@ -89,7 +89,7 @@ task bwa {
         -F 4 \
         -1 ~{samplename}_R1.fastq.gz \
         -2 ~{samplename}_R2.fastq.gz \
-        ~{samplename}.sorted.aligned-filtered.bam
+        ~{samplename}.sorted.aligned-primary.bam
       echo "Generating FASTQs for unaligned reads"
       # note the lowercase 'f' here is imporant
       samtools fastq \
@@ -104,7 +104,7 @@ task bwa {
         -@ ~{cpu} \
         -F 4 \
         -0 ~{samplename}_R1.fastq.gz \
-        ~{samplename}.sorted.aligned-filtered.bam
+        ~{samplename}.sorted.aligned-primary.bam
       echo -e "Generating FASTQs for unaligned single-end reads\n"
       # again, lowercase 'f' is important for getting all unaligned reads
       samtools fastq \
