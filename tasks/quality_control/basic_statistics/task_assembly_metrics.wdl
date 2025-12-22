@@ -38,7 +38,7 @@ task stats_n_coverage {
 
     # parse inputted reads for total read count
     read1_count=$(samtools view -c ~{read1})
-    if [ -s ~{read2} ]; then
+    if [ ~{if defined(read2) then "true" else "false"} == "true" ]; then
       read2_count=$(samtools view -c ~{read2})
       total_reads=$(echo $(($read1_count + $read2_count)))
     else
