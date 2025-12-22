@@ -44,8 +44,8 @@ task stats_n_coverage {
     else
       total_reads=$read1_count
     fi
-    # Parsing stats.txt for mapped reads
-    mapped_reads=$(grep "^SN" ~{samplename}.stats.txt | grep "reads mapped:" | cut -f 3)
+    # exclude supplementary, unmapped, and secondary alignments from the mapped count
+    mapped_reads=$(samtools view -c -F 0x904 ~{bamfile})
 
     # Check for empty values and set defaults to avoid errors
     if [ -z "$total_reads" ]; then total_reads="1"; fi  # Avoid division by zero
