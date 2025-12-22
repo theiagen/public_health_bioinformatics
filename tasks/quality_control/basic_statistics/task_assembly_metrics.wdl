@@ -2,7 +2,7 @@ version 1.0
 
 task stats_n_coverage {
   input {
-    File bamfile
+    File bamfile # aligned reads
     String samplename
     File read1
     File? read2
