@@ -94,7 +94,7 @@
 
         The TheiaViral_Panel workflow accepts Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs.
 
-        For RSV characterization, it is recommended to use TheiaCoV or TheiaViral Illumina PE. RSV-A and RSV-B-specific modules are not available in TheiaViral Panel, due to limitations with distinguishing RSV A and B during read extraction. Subtypes may be inferred from the best retrieved Skani reference depending on the resolution of the NCBI metadata corresponding to that accession. 
+        For RSV characterization, it is recommended to use TheiaCoV or TheiaViral Illumina PE. RSV-A and RSV-B-specific modules are not available in TheiaViral Panel, due to limitations with distinguishing RSV-A and B during read extraction. Subtypes may be inferred from the best retrieved Skani reference depending on the resolution of the NCBI metadata corresponding to that accession. 
 
         ???+ dna_blue "`taxon_ids` optional input parameter"
             **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly, but is optional in Terra.** 
