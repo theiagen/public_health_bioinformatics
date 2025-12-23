@@ -32,6 +32,7 @@
         * For amplicon-derived viral sequencing methods
         * Supports a limited number of [pathogens](../../workflows/genomic_characterization/theiacov.md/#supported-organisms)
         * Uses manually curated, static reference genomes
+        * Uses IRMA assembler for influenza
 
 
     -   :material-database: **TheiaViral Workflows**
@@ -41,6 +42,7 @@
         * Designed for a variety of sequencing methods
         * Supports relatively diverse and recombinant pathogens
         * Dynamically identifies the most similar reference genome for consensus assembly via an intermediate *de novo* assembly
+        * Uses iVar assembler for influenza
 
     </div>
 
@@ -92,8 +94,7 @@
 
         The TheiaViral_Panel workflow accepts Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs.
 
-        For the analysis of RSV and Flu it is recommended that TheiaCov is run for full characterization of RSV and IRMA assembly for Flu. 
-        Due to limitations within the Kraken Database RSV A and B will both be extracted under HRSV. Subtypes can be loosely infered by looking at Skani outputs. 
+        For RSV characterization, it is recommended to use TheiaCoV or TheiaViral Illumina PE. RSV-A and RSV-B-specific modules are not available in TheiaViral Panel, due to limitations with distinguishing RSV A and B during read extraction. Subtypes may be inferred from the best retrieved Skani reference depending on the resolution of the NCBI metadata corresponding to that accession. 
 
         ???+ dna_blue "`taxon_ids` optional input parameter"
             **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly, but is optional in Terra.** 
@@ -362,14 +363,13 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
 
 ### Outputs
 
-
 !!! dna "Output Data"
     === "TheiaViral_Illumina_PE"
 
     === "TheiaViral_ONT"
 
     === "TheiaViral_Panel"
-        The TheiaViral Panel output table corresponds to available outputs in Terra, though TheiaViral Panel will also output to a "taxon table" to Terra with taxon-delineated rows that depict their TheiaViral Illumina PE outputs. Particular outputs available to TheiaViral Panel are noted below:
+        The TheiaViral Panel output table below corresponds to available outputs in Terra, though TheiaViral Panel will also output to a "taxon table" to Terra with taxon-delineated rows that contain all available TheiaViral Illumina PE outputs for each taxon. Particular outputs available to TheiaViral Panel are noted below:
 
         ??? dna "`kraken_extracted_taxon_name` output"
         This output is the curated name retrieved from the inputted taxon and is typically the same.
