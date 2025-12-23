@@ -93,7 +93,7 @@
         The TheiaViral_Panel workflow accepts Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs.
 
         For the analysis of RSV and Flu it is recommended that TheiaCov is run for full characterization of RSV and IRMA assembly for Flu. 
-        Due to limitations within the Kraken Database RSV A and B will both be extracted under HRSV. Subtypes can be losely infered by looking at Skani outputs. 
+        Due to limitations within the Kraken Database RSV A and B will both be extracted under HRSV. Subtypes can be loosely infered by looking at Skani outputs. 
 
         ???+ dna_blue "`taxon_ids` optional input parameter"
             **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly, but is optional in Terra.** 
