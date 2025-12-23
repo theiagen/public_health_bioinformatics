@@ -362,6 +362,22 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
 
 ### Outputs
 
+
+!!! dna "Output Data"
+    === "TheiaViral_Illumina_PE"
+
+    === "TheiaViral_ONT"
+
+    === "TheiaViral_Panel"
+        The TheiaViral Panel output table corresponds to available outputs in Terra, though TheiaViral Panel will also output to a "taxon table" to Terra with taxon-delineated rows that depict their TheiaViral Illumina PE outputs. Particular outputs available to TheiaViral Panel are noted below:
+
+        ??? dna "`kraken_extracted_taxon_name` output"
+        This output is the curated name retrieved from the inputted taxon and is typically the same.
+
+        ??? dna "`skani_reference_taxon_name` output"
+        This output is the NCBI taxonomy name that corresponds to the best hit reference accession when the Skani database was constructed. These names can vary based on the NCBI submission metadata and therefore may not be reliably the same for a particular virus.
+
+
 === "TheiaViral_Illumina_PE"
     /// html | div[class="searchable-table"]
 
