@@ -21,8 +21,6 @@
 
 {{ include_md("common_text/fastqc_task.md", indent=8) }}
 
-{{ include_md("common_text/host_decontaminate_wf.md", indent=4) }}
-
 <!-- if: theiaprok|theiameta -->
 {{ include_md("common_text/midas_task.md", indent=4) }}
 <!-- endif -->
