@@ -136,7 +136,7 @@ workflow theiaviral_illumina_pe {
         refseq = true
     }
   }
-  if (! skip_qc)
+  if (! skip_qc) {
     if (! skip_rasusa) {
       # downsample reads to a specific coverage
       call rasusa_task.rasusa as rasusa {
@@ -154,7 +154,6 @@ workflow theiaviral_illumina_pe {
         read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])
     }
   }
-
   # clean read screening
   if (! skip_screen) {
     call read_screen_task.check_reads as clean_check_reads {
