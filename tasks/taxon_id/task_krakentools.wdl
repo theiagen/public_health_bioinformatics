@@ -35,13 +35,13 @@ task extract_kraken_reads {
 
     if [ -s ~{taxon_id}_1.fastq ]; then
       echo "DEBUG: Taxon ~{taxon_id} reads extracted"
-      echo "true" > CONTINUE
+      echo "PASS" > STATUS
 
       gzip ~{taxon_id}_1.fastq 
       gzip ~{taxon_id}_2.fastq
     else
       echo "DEBUG: No reads were extracted for taxon ~{taxon_id}, removing empty files"
-      echo "false" > CONTINUE
+      echo "FAIL" > STATUS
     fi
     
     if grep -q "~{taxon_id}" "~{kraken2_report}"; then
@@ -58,7 +58,7 @@ task extract_kraken_reads {
     File? extracted_read2 = "~{taxon_id}_2.fastq.gz"
     String organism_name = read_string("ORGANISM_NAME")
     String krakentools_docker = docker
-    Boolean success = read_boolean("CONTINUE")
+    Boolean status = read_boolean("STATUS")
   }
   runtime {
     cpu: cpu
