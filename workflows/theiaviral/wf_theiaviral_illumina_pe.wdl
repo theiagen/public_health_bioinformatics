@@ -126,6 +126,7 @@ workflow theiaviral_illumina_pe {
           read2_lane2 = select_first([kraken2_extract.extracted_read2])
       }
     }
+  }
   if (! defined(genome_length)) {
     # get average genome length for the taxon
     call genome_length_task.datasets_genome_length as est_genome_length {
