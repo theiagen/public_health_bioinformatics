@@ -380,12 +380,12 @@ bakta	prodigal_tf	File	Prodigal training file to use for CDS prediction by bakta
 bakta	proteins	File	Fasta file of trusted protein sequences for CDS annotation		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 basespace_fetch	api_server	String	The API server is the web address to which data transfer requests can be sent by the workflow.	https://api.basespace.illumina.com	Optional	BaseSpace_Fetch	general	
 basespace_fetch	basespace_sample_id	String	The BaseSpace sample ID is an optional additional identifier used in BaseSpace. If a sample has a BaseSpace sample ID it should be available on the sample sheet and must be included in the metadata sheet upload prior to running BaseSpace_Fetch.		Optional	BaseSpace_Fetch	general	
-bbduk	adapters	File	DESCRIPTION		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-bbduk	cpu	Int	DESCRIPTION	4	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
-bbduk	disk_size	Int	DESCRIPTION	100	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
-bbduk	docker	String	DESCRIPTION	us-docker.pkg.dev/general-theiagen/staphb/bbtools:38.76	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
-bbduk	memory	Int	DESCRIPTION	8	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
-bbduk	phix	File	DESCRIPTION		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+bbduk	adapters	File	File with adapter sequences to be removed		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+bbduk	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+bbduk	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+bbduk	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bbtools:38.76	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
+bbduk	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+bbduk	phix	File	A file containing the phix used during Illumina sequencing		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 bcftools_consensus	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_ONT	runtime	
 bcftools_consensus	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
 bcftools_consensus	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bcftools:1.20	Optional	TheiaViral_ONT	docker	
@@ -721,14 +721,9 @@ fasta_utilities	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaV
 fasta_utilities	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
 fasta_utilities	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	TheiaViral_ONT	docker	
 fasta_utilities	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_ONT	runtime	
-fastp	cpu	Int	DESCRIPTION	4	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
-fastp	disk_size	Int	DESCRIPTION	100	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
-fastp	docker	String	DESCRIPTION	us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
-fastp	fastp_args	String	DESCRIPTION		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 fastp	fastp_min_length	Int	DESCRIPTION		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 fastp	fastp_quality_trim_score	Int	DESCRIPTION		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 fastp	fastp_window_size	Int	DESCRIPTION		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-fastp	memory	Int	DESCRIPTION	8	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_clean	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_clean	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
@@ -1038,10 +1033,6 @@ kraken2_dehosted	docker_image	String	The Docker container to use for the task	us
 kraken2_dehosted	kraken2_db	File	The database used to run Kraken2. Must contain viral and human sequences.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaCoV_ClearLabs	database	
 kraken2_dehosted	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs	runtime	
 kraken2_dehosted	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs	general	
-kraken2_extract	cpu	Int	DESCRIPTION	1	Optional	TheiaViral_Illumina_PE	runtime	
-kraken2_extract	disk_size	Int	DESCRIPTION	100	Optional	TheiaViral_Illumina_PE	runtime	
-kraken2_extract	docker	String	DESCRIPTION	us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe	Optional	TheiaViral_Illumina_PE	docker	
-kraken2_extract	memory	Int	DESCRIPTION	4	Optional	TheiaViral_Illumina_PE	runtime	
 kraken2_pe	classified_out	String	Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix	classified#.fastq	Optional	Kraken_PE	general	
 kraken2_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Kraken_PE	runtime	
 kraken2_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	Kraken_PE	runtime	
@@ -1071,25 +1062,13 @@ kraken2_se	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Op
 kraken2_se	read2	File	Internal component, do not modify		Optional	Kraken_ONT, Kraken_SE	general	
 kraken2_se	unclassified_out	String	Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix	unclassified#.fastq	Optional	Kraken_ONT, Kraken_SE	general	
 kraken2_standalone	classified_out	String	DESCRIPTION	classified#.fastq	Optional	TheiaViral_Illumina_PE	general	
-kraken2_standalone	cpu	Int	DESCRIPTION	4	Optional	TheiaViral_Illumina_PE	runtime	
-kraken2_standalone	disk_size	Int	DESCRIPTION	100	Optional	TheiaViral_Illumina_PE	runtime	
-kraken2_standalone	docker	String	DESCRIPTION	us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db	Optional	TheiaViral_Illumina_PE	docker	
 kraken2_standalone	kraken2_args	String	DESCRIPTION		Optional	TheiaViral_Illumina_PE	general	
-kraken2_standalone	memory	Int	DESCRIPTION	32	Optional	TheiaViral_Illumina_PE	runtime	
 kraken2_standalone	unclassified_out	String	DESCRIPTION	unclassified#.fastq	Optional	TheiaViral_Illumina_PE	general	
 kraken2_standalone_clean	classified_out	String	DESCRIPTION	classified#.fastq	Optional	TheiaViral_Panel	general	
-kraken2_standalone_clean	cpu	Int	DESCRIPTION	4	Optional	TheiaViral_Panel	runtime	
-kraken2_standalone_clean	disk_size	Int	DESCRIPTION	100	Optional	TheiaViral_Panel	runtime	
-kraken2_standalone_clean	docker	String	DESCRIPTION	us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db	Optional	TheiaViral_Panel	docker	
 kraken2_standalone_clean	kraken2_args	String	DESCRIPTION		Optional	TheiaViral_Panel	general	
-kraken2_standalone_clean	memory	Int	DESCRIPTION	32	Optional	TheiaViral_Panel	runtime	
 kraken2_standalone_clean	unclassified_out	String	DESCRIPTION	unclassified#.fastq	Optional	TheiaViral_Panel	general	
 kraken2_standalone_raw	classified_out	String	DESCRIPTION	classified#.fastq	Optional	TheiaViral_Panel	general	
-kraken2_standalone_raw	cpu	Int	DESCRIPTION	4	Optional	TheiaViral_Panel	runtime	
-kraken2_standalone_raw	disk_size	Int	DESCRIPTION	100	Optional	TheiaViral_Panel	runtime	
-kraken2_standalone_raw	docker	String	DESCRIPTION	us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db	Optional	TheiaViral_Panel	docker	
 kraken2_standalone_raw	kraken2_args	String	DESCRIPTION		Optional	TheiaViral_Panel	general	
-kraken2_standalone_raw	memory	Int	DESCRIPTION	32	Optional	TheiaViral_Panel	runtime	
 kraken2_standalone_raw	unclassified_out	String	DESCRIPTION	unclassified#.fastq	Optional	TheiaViral_Panel	general	
 kraken_parser	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Panel	runtime	
 kraken_parser	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
