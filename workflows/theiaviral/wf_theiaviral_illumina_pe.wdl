@@ -329,10 +329,11 @@ workflow theiaviral_illumina_pe {
     File? bbduk_read1_clean = bbduk.read1_clean
     File? bbduk_read2_clean = bbduk.read2_clean
     # kraken2 outputs - taxonomic classification and read extraction
-    String? kraken_version = kraken2_standalone.kraken2_version
-    String? kraken_docker = kraken2_standalone.kraken2_docker
-    String? kraken_database = kraken2_standalone.kraken2_database
-    String? kraken_report = kraken2_standalone.kraken2_report
+    String? kraken2_version = kraken2_standalone.kraken2_version
+    String? kraken2_docker = kraken2_standalone.kraken2_docker
+    String? kraken2_database = kraken2_standalone.kraken2_database
+    String? kraken2_report = kraken2_standalone.kraken2_report
+    String? kraken2_status = kraken2_standalone.status
     File? kraken2_extracted_read1 = kraken2_extract.extracted_read1
     File? kraken2_extracted_read2 = kraken2_extract.extracted_read2
     # clean read quality control
