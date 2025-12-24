@@ -63,16 +63,6 @@ workflow theiaviral_illumina_pe {
         taxon = taxon,
         rank = read_extraction_rank
     }
-    if (! defined(genome_length)) {
-      # get average genome length for the taxon
-      call genome_length_task.datasets_genome_length as est_genome_length {
-        input:
-          taxon = select_first([ete4_identify.raw_taxon_id, taxon]),
-          use_ncbi_virus = true,
-          complete = true,
-          refseq = true
-      }
-    }
     # read QC, classification, extraction, and trimming
     call fastq_scan_task.fastq_scan_pe as fastq_scan_raw {
       input:
@@ -136,6 +126,17 @@ workflow theiaviral_illumina_pe {
           read2_lane2 = select_first([kraken2_extract.extracted_read2])
       }
     }
+  if (! defined(genome_length)) {
+    # get average genome length for the taxon
+    call genome_length_task.datasets_genome_length as est_genome_length {
+      input:
+        taxon = select_first([ete4_identify.raw_taxon_id, taxon]),
+        use_ncbi_virus = true,
+        complete = true,
+        refseq = true
+    }
+  }
+  if (! skip_qc)
     if (! skip_rasusa) {
       # downsample reads to a specific coverage
       call rasusa_task.rasusa as rasusa {
@@ -153,6 +154,7 @@ workflow theiaviral_illumina_pe {
         read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])
     }
   }
+
   # clean read screening
   if (! skip_screen) {
     call read_screen_task.check_reads as clean_check_reads {
