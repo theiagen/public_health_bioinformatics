@@ -10,7 +10,6 @@ import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trim
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
 import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
 import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes
-import "../utilities/wf_host_decontaminate.wdl" as host_decontaminate_wf
 
 workflow read_QC_trim_pe {
   meta {
@@ -40,12 +39,6 @@ workflow read_QC_trim_pe {
     String read_qc = "fastq_scan" # options: fastq_scan, fastqc
     String? trimmomatic_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
-    String? host
-    Boolean host_is_accession = false
-    Boolean host_is_genome = false
-    Boolean host_refseq = true
-    Boolean host_complete_only = false
-    Int host_decontaminate_mem = 32
   }
   if (read_qc == "fastqc") {
     call fastqc_task.fastqc as fastqc_raw {
@@ -161,32 +154,18 @@ workflow read_QC_trim_pe {
         read2 = bbduk.read2_clean
     }
   }
-  if (defined(host)) {
-    call host_decontaminate_wf.host_decontaminate {
-      input:
-        samplename = samplename,
-        read1 = bbduk.read1_clean,
-        read2 = bbduk.read2_clean,
-        host = select_first([host]),
-        is_accession = host_is_accession,
-        is_genome = host_is_genome,
-        refseq = host_refseq,
-        complete_only = host_complete_only,
-        minimap2_memory = host_decontaminate_mem
-    }
-  }
   if (read_qc == "fastqc") {
     call fastqc_task.fastqc as fastqc_clean {
       input:
-        read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
-        read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean])
+        read1 = bbduk.read1_clean,
+        read2 = bbduk.read2_clean
     }
   }
   if (read_qc == "fastq_scan") {
     call fastq_scan.fastq_scan_pe as fastq_scan_clean {
       input:
-        read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
-        read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean])
+        read1 = bbduk.read1_clean,
+        read2 = bbduk.read2_clean
     }
   }
   output {
@@ -261,19 +240,5 @@ workflow read_QC_trim_pe {
     Float? midas_secondary_genus_coverage = midas.midas_secondary_genus_coverage
     # readlength
     Float? average_read_length = readlength.average_read_length
-    # host decontamination outputs
-    File? dehost_wf_dehost_read1 = host_decontaminate.dehost_read1
-    File? dehost_wf_dehost_read2 = host_decontaminate.dehost_read2
-    String? dehost_wf_host_accession = host_decontaminate.host_genome_accession
-    File? dehost_wf_host_mapped_bam = host_decontaminate.host_mapped_sorted_bam
-    File? dehost_wf_host_mapped_bai = host_decontaminate.host_mapped_sorted_bai
-    File? dehost_wf_host_fasta = host_decontaminate.host_genome_fasta
-    File? dehost_wf_host_mapping_stats = host_decontaminate.host_mapping_stats
-    File? dehost_wf_host_mapping_cov_hist = host_decontaminate.host_mapping_cov_hist
-    File? dehost_wf_host_flagstat = host_decontaminate.host_flagstat
-    Float? dehost_wf_host_mapping_coverage = host_decontaminate.host_mapping_coverage
-    Float? dehost_wf_host_mapping_mean_depth = host_decontaminate.host_mapping_mean_depth
-    Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.host_percent_mapped_reads
-    File? dehost_wf_host_mapping_metrics = host_decontaminate.host_mapping_metrics
   }
 }
