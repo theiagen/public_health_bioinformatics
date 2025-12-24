@@ -10,7 +10,7 @@
 
 {{ include_md("common_text/trimmomatic_task.md", indent=8) }}  
 
-{{ include_md("common_text/fastp_task.md", indent=8) }}
+{{ include_md("common_text/fastp_task.md", condition="read_qc_trim", indent=8) }}
 
 {{ include_md("common_text/bbduk_task.md", indent=4) }}
 
