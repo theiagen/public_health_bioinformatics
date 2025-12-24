@@ -333,9 +333,9 @@ workflow theiaviral_illumina_pe {
     String? kraken2_docker = kraken2_standalone.kraken2_docker
     String? kraken2_database = kraken2_standalone.kraken2_database
     String? kraken2_report = kraken2_standalone.kraken2_report
-    String? kraken2_status = kraken2_standalone.status
     File? kraken2_extracted_read1 = kraken2_extract.extracted_read1
     File? kraken2_extracted_read2 = kraken2_extract.extracted_read2
+    String? kraken2_extraction_status = kraken2_extract.status
     # clean read quality control
     Int? fastq_scan_num_reads_clean1 = fastq_scan_clean.read1_seq
     Int? fastq_scan_num_reads_clean2 = fastq_scan_clean.read2_seq
