@@ -121,7 +121,7 @@ workflow theiaviral_panel {
         read2 = select_first([kraken2_standalone_clean.kraken2_classified_read2]),
         taxon_id = taxon_id
     }
-    if (krakentools.success) {
+    if (krakentools.status == "PASS") {
       if (extract_unclassified) {
         call cat_lanes_task.cat_lanes {
           input:

@@ -58,7 +58,7 @@ task extract_kraken_reads {
     File? extracted_read2 = "~{taxon_id}_2.fastq.gz"
     String organism_name = read_string("ORGANISM_NAME")
     String krakentools_docker = docker
-    Boolean status = read_boolean("STATUS")
+    Boolean status = read_string("STATUS")
   }
   runtime {
     cpu: cpu
