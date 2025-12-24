@@ -1,7 +1,7 @@
 ??? task "`read_QC_trim`: Read Quality Trimming, Adapter Removal, Quantification, and Identification"
     `read_QC_trim` is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the `read_QC_trim` sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.
 
-<!-- if: theiacov|freyja|theiaviral -->
+<!-- if: theiacov|freyja -->
 {{ include_md("common_text/ncbi_scrub_task.md", indent=4) }}
 <!-- endif -->
 
@@ -21,6 +21,8 @@
 
 {{ include_md("common_text/fastqc_task.md", indent=8) }}
 
+{{ include_md("common_text/host_decontaminate.md", indent=4) }}
+
 <!-- if: theiaprok|theiameta -->
 {{ include_md("common_text/midas_task.md", indent=4) }}
 <!-- endif -->
@@ -31,14 +33,6 @@
 
 <!-- if: theiacov -->
 {{ include_md("common_text/kraken2_task.md", condition="theiacov", indent=4) }}
-<!-- endif -->
-
-<!-- if: theiaviral -->
-{{ include_md("common_text/host_decontaminate_wf.md", condition="theiaviral", indent=4) }}
-
-{{ include_md("common_text/kraken2_task.md", condition="theiaviral", indent=4) }}
-
-{{ include_md("common_text/krakentools_task.md", condition="theiaviral", indent=4) }}
 <!-- endif -->
 
     !!! techdetails "read_QC_trim Technical Details"

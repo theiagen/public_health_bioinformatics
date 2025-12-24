@@ -165,7 +165,19 @@
 
     ??? toggle "Read Quality Control, Trimming, Filtering, Identification and Extraction"
 
-{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiaviral", indent=8, replacements={": Read Quality Trimming, Adapter Removal, Quantification, and Identification" : ""}) }}
+{{ include_md("common_text/fastq_scan_task.md", condition="notclearlabs", indent=8) }}
+
+{{ include_md("common_text/ncbi_scrub_task.md", indent=8) }}
+
+{{ include_md("common_text/fastp_task.md", indent=8) }}
+
+{{ include_md("common_text/bbduk_task.md", indent=8) }}
+
+{{ include_md("common_text/host_decontaminate_wf.md", indent=8) }}
+
+{{ include_md("common_text/kraken2_task.md", condition="theiaviral", indent=8) }}
+
+{{ include_md("common_text/krakentools_task.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/rasusa_task.md", condition="theiaviral", indent=8, replacements={'??? task "`Rasusa`: Read subsampling (optional, on by default)"' : '??? task "`rasusa`"'}) }}
 
@@ -293,7 +305,15 @@
 
     ??? toggle "Read Quality Control, Trimming, Filtering, Identification"
 
-{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiaviral_panel", indent=8) }}
+{{ include_md("common_text/fastq_scan_task.md", condition="notclearlabs", indent=8) }}
+
+{{ include_md("common_text/ncbi_scrub_task.md", indent=8) }}
+
+{{ include_md("common_text/fastp_task.md", indent=8) }}
+
+{{ include_md("common_text/bbduk_task.md", indent=8) }}
+
+{{ include_md("common_text/host_decontaminate_wf.md", indent=8) }}
 
     ??? toggle "Read Extraction and Binning"
 
