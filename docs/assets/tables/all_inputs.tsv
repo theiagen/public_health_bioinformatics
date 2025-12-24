@@ -1070,15 +1070,27 @@ kraken2_se	kraken2_args	String	Allows a user to supply additional kraken2 comman
 kraken2_se	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Kraken_ONT, Kraken_SE	runtime	
 kraken2_se	read2	File	Internal component, do not modify		Optional	Kraken_ONT, Kraken_SE	general	
 kraken2_se	unclassified_out	String	Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix	unclassified#.fastq	Optional	Kraken_ONT, Kraken_SE	general	
-kraken2_standalone	classified_out	String	DESCRIPTION	classified#.fastq	Optional	TheiaViral_Illumina_PE	general	
-kraken2_standalone	kraken2_args	String	DESCRIPTION		Optional	TheiaViral_Illumina_PE	general	
-kraken2_standalone	unclassified_out	String	DESCRIPTION	unclassified#.fastq	Optional	TheiaViral_Illumina_PE	general	
-kraken2_standalone_clean	classified_out	String	DESCRIPTION	classified#.fastq	Optional	TheiaViral_Panel	general	
-kraken2_standalone_clean	kraken2_args	String	DESCRIPTION		Optional	TheiaViral_Panel	general	
-kraken2_standalone_clean	unclassified_out	String	DESCRIPTION	unclassified#.fastq	Optional	TheiaViral_Panel	general	
-kraken2_standalone_raw	classified_out	String	DESCRIPTION	classified#.fastq	Optional	TheiaViral_Panel	general	
-kraken2_standalone_raw	kraken2_args	String	DESCRIPTION		Optional	TheiaViral_Panel	general	
-kraken2_standalone_raw	unclassified_out	String	DESCRIPTION	unclassified#.fastq	Optional	TheiaViral_Panel	general	
+kraken2_standalone	classified_out	String	File name for classified reads	classified#.fastq	Optional	TheiaViral_Illumina_PE	general	
+kraken2_standalone	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime	
+kraken2_standalone	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime	
+kraken2_standalone	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db	Optional	TheiaViral_Illumina_PE	docker	
+kraken2_standalone	kraken2_args	String	Additional kraken2 command-line arguments		Optional	TheiaViral_Illumina_PE	general	
+kraken2_standalone	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Illumina_PE	runtime	
+kraken2_standalone	unclassified_out	String	File name for unclassified reads	unclassified#.fastq	Optional	TheiaViral_Illumina_PE	general	
+kraken2_standalone_clean	classified_out	String	File name for classified reads	classified#.fastq	Optional	TheiaViral_Panel	general	
+kraken2_standalone_clean	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Panel	runtime	
+kraken2_standalone_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
+kraken2_standalone_clean	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db	Optional	TheiaViral_Panel	docker	
+kraken2_standalone_clean	kraken2_args	String	Additional kraken2 command-line arguments		Optional	TheiaViral_Panel	general	
+kraken2_standalone_clean	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Panel	runtime	
+kraken2_standalone_clean	unclassified_out	String	File name for unclassified reads	unclassified#.fastq	Optional	TheiaViral_Panel	general	
+kraken2_standalone_raw	classified_out	String	File name for classified reads	classified#.fastq	Optional	TheiaViral_Panel	general	
+kraken2_standalone_raw	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Panel	runtime	
+kraken2_standalone_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
+kraken2_standalone_raw	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db	Optional	TheiaViral_Panel	docker	
+kraken2_standalone_raw	kraken2_args	String	Additional kraken2 command-line arguments		Optional	TheiaViral_Panel	general	
+kraken2_standalone_raw	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Panel	runtime	
+kraken2_standalone_raw	unclassified_out	String	File name for unclassified reads	unclassified#.fastq	Optional	TheiaViral_Panel	general	
 kraken_parser	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Panel	runtime	
 kraken_parser	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
 kraken_parser	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe	Optional	TheiaViral_Panel	docker	

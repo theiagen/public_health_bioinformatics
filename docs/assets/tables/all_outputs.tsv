@@ -273,8 +273,8 @@ dorado_basecalling_phb_version	String	Version of PHB used for the analysis	Dorad
 dorado_demux_version	String	Version of Dorado used in the `dorado_demux` task	Dorado_Basecalling
 dorado_model_used	String	Model used for basecalling	Dorado_Basecalling
 dorado_trim_version	String	Version of Dorado used in the `dorado_trim` task	Dorado_Basecalling
-downsampled_read1	File	DESCRIPTION	TheiaViral_Illumina_PE
-downsampled_read2	File	DESCRIPTION	TheiaViral_Illumina_PE
+downsampled_read1	File	RASUSA downsampled reads derived from read1 input	TheiaViral_Illumina_PE
+downsampled_read2	File	RASUSA downsampled reads derived from read2 input	TheiaViral_Illumina_PE
 ectyper_database_version	String	Version of the ECTyper database used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_docker	String	Docker image used to run ECTyper	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 ectyper_pathodb_version	String	Version of the ECTyper pathotype database used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -703,7 +703,7 @@ ncbi_scrub_human_spots_removed	Int	Number of spots removed (or masked)	NCBI_Scru
 ncbi_scrub_pe_analysis_date	String	Date of analysis	NCBI_Scrub_PE
 ncbi_scrub_pe_version	String	Version of HRRT software used	NCBI_Scrub_PE
 ncbi_scrub_read1_dehosted	File	Dehosted reads after NCBI scrub	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-ncbi_scrub_read2_dehosted	File	DESCRIPTION	TheiaViral_Illumina_PE, TheiaViral_Panel
+ncbi_scrub_read2_dehosted	File	Dehosted reads after NCBI scrub	TheiaViral_Illumina_PE, TheiaViral_Panel
 ncbi_scrub_se_analysis_date	String	Date of analysis	NCBI_Scrub_SE
 ncbi_scrub_se_version	String	Version of HRRT software used	NCBI_Scrub_SE
 ncbi_taxon_id	String	NCBI taxonomy ID of inputted organism following rank extraction	TheiaViral_Illumina_PE, TheiaViral_ONT
