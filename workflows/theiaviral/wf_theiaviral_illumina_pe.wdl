@@ -56,22 +56,22 @@ workflow theiaviral_illumina_pe {
   call versioning_task.version_capture {
     input:
   }
-  if (! defined(genome_length)) {
-    # get average genome length for the taxon
-    call genome_length_task.datasets_genome_length as est_genome_length {
-      input:
-        taxon = select_first([ete4_identify.raw_taxon_id, taxon]),
-        use_ncbi_virus = true,
-        complete = true,
-        refseq = true
-    }
-  }
   if (!skip_qc) {
     # get the taxon id
     call identify_taxon_id_task.ete4_taxon_id as ete4_identify {
       input:
         taxon = taxon,
         rank = read_extraction_rank
+    }
+    if (! defined(genome_length)) {
+      # get average genome length for the taxon
+      call genome_length_task.datasets_genome_length as est_genome_length {
+        input:
+          taxon = select_first([ete4_identify.raw_taxon_id, taxon]),
+          use_ncbi_virus = true,
+          complete = true,
+          refseq = true
+      }
     }
     # read QC, classification, extraction, and trimming
     call fastq_scan_task.fastq_scan_pe as fastq_scan_raw {
