@@ -7,9 +7,9 @@ task fastp_pe {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2"
     Int disk_size = 100
-    Int? fastp_window_size
-    Int? fastp_quality_trim_score
-    Int? fastp_min_length
+    Int fastp_window_size = 4 # set to mirror v0.23.2 default 
+    Int fastp_quality_trim_score = 20 # set to mirror v0.23.2 default
+    Int fastp_min_length = 15 # set to mirror v0.23.2 default
     # -g enables polyg trimming with default value of 10
     String? fastp_args
     Int cpu = 4
