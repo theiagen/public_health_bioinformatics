@@ -721,17 +721,13 @@ fasta_utilities	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaV
 fasta_utilities	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
 fasta_utilities	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	TheiaViral_ONT	docker	
 fasta_utilities	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_ONT	runtime	
-fastp	cpu	Int	DESCRIPTION	4	Optional	TheiaViral_Illumina_PE	runtime	
 fastp	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Panel	runtime	
-fastp	disk_size	Int	DESCRIPTION	100	Optional	TheiaViral_Illumina_PE	runtime	
 fastp	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
-fastp	docker	String	DESCRIPTION	us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2	Optional	TheiaViral_Illumina_PE	docker	
 fastp	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2	Optional	TheiaViral_Panel	docker	
-fastp	fastp_args	String	DESCRIPTION		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-fastp	fastp_min_length	Int	DESCRIPTION		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-fastp	fastp_quality_trim_score	Int	DESCRIPTION		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-fastp	fastp_window_size	Int	DESCRIPTION		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-fastp	memory	Int	DESCRIPTION	8	Optional	TheiaViral_Illumina_PE	runtime	
+fastp	fastp_args	String	Additional arguments to use with fastp		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+fastp	fastp_min_length	Int	Minimum read length		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+fastp	fastp_quality_trim_score	Int	Minimum mean base quality relative to window size		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+fastp	fastp_window_size	Int	Sliding window size for surveying read quality		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 fastp	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Panel	runtime	
 fastq_scan_clean	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
