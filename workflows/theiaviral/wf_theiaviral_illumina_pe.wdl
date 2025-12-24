@@ -136,8 +136,8 @@ workflow theiaviral_illumina_pe {
         refseq = true
     }
   }
-  if (! skip_qc) {
-    if (! skip_rasusa) {
+  if (!skip_qc) {
+    if (!skip_rasusa) {
       # downsample reads to a specific coverage
       call rasusa_task.rasusa as rasusa {
         input:
