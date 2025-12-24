@@ -56,6 +56,16 @@ workflow theiaviral_illumina_pe {
   call versioning_task.version_capture {
     input:
   }
+  if (! defined(genome_length)) {
+    # get average genome length for the taxon
+    call genome_length_task.datasets_genome_length as est_genome_length {
+      input:
+        taxon = select_first([ete4_identify.raw_taxon_id, taxon]),
+        use_ncbi_virus = true,
+        complete = true,
+        refseq = true
+    }
+  }
   if (!skip_qc) {
     # get the taxon id
     call identify_taxon_id_task.ete4_taxon_id as ete4_identify {
@@ -141,16 +151,6 @@ workflow theiaviral_illumina_pe {
       input:
         read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1]),
         read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])
-    }
-  }
-  if (! defined(genome_length)) {
-    # get average genome length for the taxon
-    call genome_length_task.datasets_genome_length as est_genome_length {
-      input:
-        taxon = select_first([ete4_identify.raw_taxon_id, taxon]),
-        use_ncbi_virus = true,
-        complete = true,
-        refseq = true
     }
   }
   # clean read screening
