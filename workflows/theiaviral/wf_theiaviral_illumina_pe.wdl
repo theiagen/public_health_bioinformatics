@@ -183,7 +183,9 @@ workflow theiaviral_illumina_pe {
         call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
           input:
             bamfile = bwa.sorted_bam,
-            samplename = samplename
+            samplename = samplename,
+            read1 = select_first([rasusa.read1_subsampled, read_QC_trim.kraken2_extracted_read1, read1]),
+            read2 = select_first([rasusa.read2_subsampled, read_QC_trim.kraken2_extracted_read2, read2])
         }
         # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
         call consensus_qc_task.consensus_qc as consensus_qc {

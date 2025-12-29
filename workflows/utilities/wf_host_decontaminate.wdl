@@ -85,7 +85,9 @@ workflow host_decontaminate {
   call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
     input:
       bamfile = parse_mapping.bam,
-      samplename = hostsample
+      samplename = hostsample,
+      read1 = read1,
+      read2 = read2
   }
   output {
     # Datasets download outputs

@@ -11,19 +11,12 @@ task snippy_variants {
     Int cpu = 8
     Int memory = 32
     Int disk_size = 100
-    # Paramters 
-    # --map_qual: Minimum read mapping quality to consider (default '60')
-    # --base_quality: Minimum base quality to consider (default '13')
-    # --min_coverage: Minimum site depth to for calling alleles (default '10') 
-    # --min_frac: Minumum proportion for variant evidence (0=AUTO) (default '0')
-    # --min_quality: Minumum QUALITY in VCF column 6 (default '100')
-    # --maxsoft: Maximum soft clipping to allow (default '10')
-    Int? map_qual
-    Int? base_quality
-    Int min_coverage = 10
-    Float? min_frac
-    Int? min_quality
-    Int? maxsoft
+    Int map_qual = 60 # set to mirror v4.6.0 default
+    Int base_quality = 13 # set to mirror v4.6.0 default
+    Int min_coverage = 10 # set to mirror v4.6.0 default
+    Float min_frac = 0 # set to mirror v4.6.0 default
+    Int min_quality = 100 # set to mirror v4.6.0 default
+    Int maxsoft = 10 # set to mirror v4.6.0 default
   }
   command <<<
     # set -euo pipefail to avoid silent failure
