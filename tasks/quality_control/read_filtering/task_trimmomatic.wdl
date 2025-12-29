@@ -9,7 +9,6 @@ task trimmomatic_pe {
     Int trimmomatic_min_length = 75
     Int trimmomatic_window_size = 4
     Int trimmomatic_window_quality = 30
-    String? trimmomatic_runtime_args
     String? trimmomatic_override_args #Note that trimming steps occur in the same order that they are given on the command line
 
     Boolean trimmomatic_trim_adapters = true
@@ -26,35 +25,39 @@ task trimmomatic_pe {
     trimmomatic -version > VERSION && sed -i -e 's/^/Trimmomatic /' VERSION
 
     # set default adapter trimming file
-    if [[ -n "~{trimmomatic_adapter_fasta}" ]]; then
-      ADAPTER_FILE="~{trimmomatic_adapter_fasta}"
-      echo "Using user supplied adapter FASTA file for adapter trimming: '$ADAPTER_FILE'"
-    else
-      ADAPTER_FILE="TruSeq3-PE-2.fa"
-      echo "Using default file for adapter trimming: '$ADAPTER_FILE'"
-    fi
+    if [[ "~{trimmomatic_trim_adapters}" == "true" ]]; then
+      if [[ -n "~{trimmomatic_adapter_fasta}" ]]; then
+        ADAPTER_FILE="~{trimmomatic_adapter_fasta}"
+        echo "Using user supplied adapter FASTA file for adapter trimming: '$ADAPTER_FILE'"
+      else
+        ADAPTER_FILE="TruSeq3-PE-2.fa"
+        echo "Using default file for adapter trimming: '$ADAPTER_FILE'"
+      fi
 
-    # set default adapter trimming arguments
-    if [[ -n "~{trimmomatic_adapter_trim_args}" ]]; then
-      ADAPTER_TRIM_ARGS="~{trimmomatic_adapter_trim_args}"
-      echo "Using user supplied adapter trimming arguments: '$ADAPTER_TRIM_ARGS'"
-    else
-      ADAPTER_TRIM_ARGS="2:30:10"
-      echo "Using default adapter trimming arguments: '$ADAPTER_TRIM_ARGS'"
-    fi
+      # set default adapter trimming arguments
+      if [[ -n "~{trimmomatic_adapter_trim_args}" ]]; then
+        ADAPTER_TRIM_ARGS="~{trimmomatic_adapter_trim_args}"
+        echo "Using user supplied adapter trimming arguments: '$ADAPTER_TRIM_ARGS'"
+      else
+        ADAPTER_TRIM_ARGS="2:30:10"
+        echo "Using default adapter trimming arguments: '$ADAPTER_TRIM_ARGS'"
+      fi
 
-    # construct adapter trimming command
-    ADAPTER_TRIM_COMMAND="ILLUMINACLIP:${ADAPTER_FILE}:${ADAPTER_TRIM_ARGS}"
+      # construct adapter trimming command
+      ADAPTER_TRIM_COMMAND="ILLUMINACLIP:${ADAPTER_FILE}:${ADAPTER_TRIM_ARGS}"
+    else
+      echo "Adapter trimming disabled"
+      ADAPTER_TRIM_COMMAND=""
+    fi
 
     # set default trimming arguments
     TRIMMOMATIC_ARGS="SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_window_quality} MINLEN:~{trimmomatic_min_length}"
 
     trimmomatic PE \
-      ~{trimmomatic_runtime_args} \
       ~{read1} \
       ~{read2} \
       -baseout ~{samplename}.fastq.gz \
-      ~{if trimmomatic_trim_adapters then '$ADAPTER_TRIM_COMMAND' else ''} \
+      ${ADAPTER_TRIM_COMMAND} \
       ~{if defined(trimmomatic_override_args) then '~{trimmomatic_override_args}' else '$TRIMMOMATIC_ARGS'} \
       &> ~{samplename}.trim.stats.txt
 
@@ -86,7 +89,6 @@ task trimmomatic_se {
     Int trimmomatic_min_length = 25
     Int trimmomatic_window_size = 4
     Int trimmomatic_window_quality = 30
-    String? trimmomatic_runtime_args
     String? trimmomatic_override_args #Note that trimming steps occur in the same order that they are given on the command line
 
     Boolean trimmomatic_trim_adapters = true
@@ -103,34 +105,38 @@ task trimmomatic_se {
     trimmomatic -version > VERSION && sed -i -e 's/^/Trimmomatic /' VERSION
 
     # set default adapter trimming file
-    if [[ -n "~{trimmomatic_adapter_fasta}" ]]; then
-      ADAPTER_FILE="~{trimmomatic_adapter_fasta}"
-      echo "Using user supplied adapter FASTA file for adapter trimming: '$ADAPTER_FILE'"
-    else
-      ADAPTER_FILE="TruSeq3-SE.fa"
-      echo "Using default file for adapter trimming: '$ADAPTER_FILE'"
-    fi
+    if [[ "~{trimmomatic_trim_adapters}" == "true" ]]; then
+      if [[ -n "~{trimmomatic_adapter_fasta}" ]]; then
+        ADAPTER_FILE="~{trimmomatic_adapter_fasta}"
+        echo "Using user supplied adapter FASTA file for adapter trimming: '$ADAPTER_FILE'"
+      else
+        ADAPTER_FILE="TruSeq3-SE.fa"
+        echo "Using default file for adapter trimming: '$ADAPTER_FILE'"
+      fi
 
-    # set default adapter trimming arguments
-    if [[ -n "~{trimmomatic_adapter_trim_args}" ]]; then
-      ADAPTER_TRIM_ARGS="~{trimmomatic_adapter_trim_args}"
-      echo "Using user supplied adapter trimming arguments: '$ADAPTER_TRIM_ARGS'"
-    else
-      ADAPTER_TRIM_ARGS="2:30:10"
-      echo "Using default adapter trimming arguments: '$ADAPTER_TRIM_ARGS'"
-    fi
+      # set default adapter trimming arguments
+      if [[ -n "~{trimmomatic_adapter_trim_args}" ]]; then
+        ADAPTER_TRIM_ARGS="~{trimmomatic_adapter_trim_args}"
+        echo "Using user supplied adapter trimming arguments: '$ADAPTER_TRIM_ARGS'"
+      else
+        ADAPTER_TRIM_ARGS="2:30:10"
+        echo "Using default adapter trimming arguments: '$ADAPTER_TRIM_ARGS'"
+      fi
 
-    # construct adapter trimming command
-    ADAPTER_TRIM_COMMAND="ILLUMINACLIP:${ADAPTER_FILE}:${ADAPTER_TRIM_ARGS}"
+      # construct adapter trimming command
+      ADAPTER_TRIM_COMMAND="ILLUMINACLIP:${ADAPTER_FILE}:${ADAPTER_TRIM_ARGS}"
+    else
+      echo "Adapter trimming disabled"
+      ADAPTER_TRIM_COMMAND=""
+    fi
 
     # set default trimming arguments
     TRIMMOMATIC_ARGS="SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_window_quality} MINLEN:~{trimmomatic_min_length}"
 
     trimmomatic SE \
-      ~{trimmomatic_runtime_args} \
       ~{read1} \
       ~{samplename}_trimmed.fastq.gz \
-      ~{if trimmomatic_trim_adapters then '$ADAPTER_TRIM_COMMAND' else ''} \
+      ${ADAPTER_TRIM_COMMAND} \
       ~{if defined(trimmomatic_override_args) then '~{trimmomatic_override_args}' else '$TRIMMOMATIC_ARGS'} \
       &> ~{samplename}.trim.stats.txt
 

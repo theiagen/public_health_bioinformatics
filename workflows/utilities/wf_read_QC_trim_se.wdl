@@ -21,10 +21,10 @@ workflow read_QC_trim_se {
     Int trim_window_size = 4
     Int bbduk_memory = 8
     String? target_organism
-    File? adapters
-    File? phix
+    File? adapters_fasta
+    File? phix_fasta
     String? workflow_series
-    String? trimmomatic_args
+    String? trimmomatic_override_args
     Boolean call_midas = false
     File? midas_db
     Boolean call_kraken = false
@@ -51,9 +51,9 @@ workflow read_QC_trim_se {
         samplename = samplename,
         read1 = select_first([ncbi_scrub_se.read1_dehosted, read1]),
         trimmomatic_min_length = trim_min_length,
-        trimmomatic_quality_trim_score = trim_quality_min_score,
+        trimmomatic_window_quality = trim_quality_min_score,
         trimmomatic_window_size = trim_window_size,
-        trimmomatic_args = trimmomatic_args
+        trimmomatic_override_args = trimmomatic_override_args
     }
   }
   if (read_processing == "fastp") {
@@ -72,8 +72,8 @@ workflow read_QC_trim_se {
       samplename = samplename,
       read1_trimmed = select_first([trimmomatic_se.read1_trimmed, fastp_se.read1_trimmed]),
       memory = bbduk_memory,
-      adapters = adapters,
-      phix = phix
+      adapters = adapters_fasta,
+      phix = phix_fasta
   }
   if (read_qc == "fastq_scan") {
     call fastq_scan.fastq_scan_se as fastq_scan_raw {
@@ -151,6 +151,8 @@ workflow read_QC_trim_se {
     # bbduk
     File read1_clean = bbduk_se.read1_clean
     String bbduk_docker = bbduk_se.bbduk_docker
+    File bbduk_adapters_stats = bbduk_se.adapter_stats
+    File bbduk_phiX_stats = bbduk_se.phiX_stats
 
     # fastq_scan raw (per read stats)
     Int? fastq_scan_raw1 = fastq_scan_raw.read1_seq

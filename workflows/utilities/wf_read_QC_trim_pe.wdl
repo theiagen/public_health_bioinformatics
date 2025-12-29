@@ -35,12 +35,12 @@ workflow read_QC_trim_pe {
     String? target_organism
     Int taxon_id = 0
     Boolean extract_unclassified = false
-    File? adapters
-    File? phix
+    File? adapters_fasta
+    File? phix_fasta
     String? workflow_series
     String read_processing = "trimmomatic" # options: trimmomatic, fastp
     String read_qc = "fastq_scan" # options: fastq_scan, fastqc
-    String? trimmomatic_args
+    String? trimmomatic_override_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
     String? host
     Boolean host_is_accession = false
@@ -102,9 +102,9 @@ workflow read_QC_trim_pe {
         read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1]),
         read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
         trimmomatic_window_size = trim_window_size,
-        trimmomatic_quality_trim_score = trim_quality_min_score,
+        trimmomatic_window_quality = trim_quality_min_score,
         trimmomatic_min_length = trim_min_length,
-        trimmomatic_args = trimmomatic_args
+        trimmomatic_override_args = trimmomatic_override_args
     }
   }
   if (read_processing == "fastp") {
@@ -122,11 +122,11 @@ workflow read_QC_trim_pe {
   call bbduk_task.bbduk {
     input:
       samplename = samplename,
-      read1_trimmed = select_first([trimmomatic_pe.read1_trimmed, fastp.read1_trimmed]),
-      read2_trimmed = select_first([trimmomatic_pe.read2_trimmed, fastp.read2_trimmed]),
+      read1 = select_first([trimmomatic_pe.read1_trimmed, fastp.read1_trimmed]),
+      read2 = select_first([trimmomatic_pe.read2_trimmed, fastp.read2_trimmed]),
       memory = bbduk_memory,
-      adapters = adapters,
-      phix = phix
+      adapters_fasta = adapters_fasta,
+      phix_fasta = phix_fasta
   }
   if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiameta") {
     if (call_midas) {
@@ -253,6 +253,8 @@ workflow read_QC_trim_pe {
     File read1_clean = bbduk.read1_clean
     File read2_clean = bbduk.read2_clean
     String bbduk_docker = bbduk.bbduk_docker
+    File bbduk_adapters_stats = bbduk.adapter_stats
+    File bbduk_phiX_stats = bbduk.phiX_stats
     # fastq_scan raw (per read stats)
     Int? fastq_scan_raw1 = fastq_scan_raw.read1_seq
     Int? fastq_scan_raw2 = fastq_scan_raw.read2_seq
