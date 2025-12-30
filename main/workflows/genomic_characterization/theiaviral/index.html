@@ -7120,6 +7120,7 @@
 <li>For amplicon-derived viral sequencing methods</li>
 <li>Supports a limited number of <a href="../theiacov/#supported-organisms">pathogens</a></li>
 <li>Uses manually curated, static reference genomes</li>
+<li>Uses IRMA assembler for influenza</li>
 </ul>
 </li>
 <li>
@@ -7129,6 +7130,7 @@
 <li>Designed for a variety of sequencing methods</li>
 <li>Supports relatively diverse and recombinant pathogens</li>
 <li>Dynamically identifies the most similar reference genome for consensus assembly via an intermediate <em>de novo</em> assembly</li>
+<li>Uses iVar assembler for influenza</li>
 </ul>
 </li>
 </ul>
@@ -7221,8 +7223,7 @@
 </div>
 <div class="tabbed-block">
 <p>The TheiaViral_Panel workflow accepts Illumina paired-end read data. Read file extensions should be <code>.fastq</code> or <code>.fq</code>, and can optionally include the <code>.gz</code> compression extension. Theiagen recommends compressing files with <a href="https://www.gnu.org/software/gzip/">gzip</a> to minimize data upload time and storage costs.</p>
-<p>For the analysis of RSV and Flu it is recommended that TheiaCov is run for full characterization of RSV and IRMA assembly for Flu. 
-Due to limitations within the Kraken Database RSV A and B will both be extracted under HRSV. Subtypes can be losely infered by looking at Skani outputs. </p>
+<p>For RSV characterization, it is recommended to use TheiaCoV or TheiaViral Illumina PE. RSV-A and RSV-B-specific modules are not available in TheiaViral Panel, due to limitations with distinguishing RSV-A and B during read extraction. Subtypes may be inferred from the best retrieved Skani reference depending on the resolution of the NCBI metadata corresponding to that accession. </p>
 <details class="dna_blue" open="open">
 <summary><code>taxon_ids</code> optional input parameter</summary>
 <p><strong>The <code>taxon_ids</code> parameter is required for TheiaViral_Panel to run correctly, but is optional in Terra.</strong> </p>
@@ -15849,7 +15850,27 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <li><strong>Rubella</strong> (<code>"11041"</code>, <code>"rubella virus"</code>)</li>
 </ul>
 <h3 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">¶</a></h3>
+<div class="admonition dna">
+<p class="admonition-title">Output Data</p>
 <div class="tabbed-set tabbed-alternate" data-tabs="5:3"><input checked="checked" id="theiaviral_illumina_pe_4" name="__tabbed_5" type="radio"><input id="theiaviral_ont_4" name="__tabbed_5" type="radio"><input id="theiaviral_panel_4" name="__tabbed_5" type="radio"><div class="tabbed-labels"><label for="theiaviral_illumina_pe_4">TheiaViral_Illumina_PE</label><label for="theiaviral_ont_4">TheiaViral_ONT</label><label for="theiaviral_panel_4">TheiaViral_Panel</label></div>
+<div class="tabbed-content">
+<div class="tabbed-block"></div>
+<div class="tabbed-block"></div>
+<div class="tabbed-block">
+<p>The TheiaViral_Panel output table below corresponds to available outputs in the Terra workflow, while the results output to the "taxon table" mostly correspond to TheiaViral_Illumina_PE outputs. Additional outputs unique to TheiaViral_Panel are noted below:</p>
+<details class="dna">
+<summary><code>kraken_extracted_taxon_name</code> output</summary>
+</details>
+<p>This output is the suffix of the curated sample name and corresponds to the inputted taxon ID used during Kraken read classification. These names are retrieved from a static version of NCBI's taxonomy database.</p>
+<details class="dna">
+<summary><code>skani_reference_taxon_name</code> output</summary>
+</details>
+<p>This output corresponds to the best hit reference accession in the custom Skani database. These names are retrieved from NCBI at the time of Skani database construction. These taxon names may therefore vary between Skani database versions based on the NCBI submission metadata.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="tabbed-set tabbed-alternate" data-tabs="6:3"><input checked="checked" id="theiaviral_illumina_pe_5" name="__tabbed_6" type="radio"><input id="theiaviral_ont_5" name="__tabbed_6" type="radio"><input id="theiaviral_panel_5" name="__tabbed_6" type="radio"><div class="tabbed-labels"><label for="theiaviral_illumina_pe_5">TheiaViral_Illumina_PE</label><label for="theiaviral_ont_5">TheiaViral_ONT</label><label for="theiaviral_panel_5">TheiaViral_Panel</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
 <div class="searchable-table">
@@ -18367,7 +18388,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 14, 2025 23:34:46 UTC">2025-11-14</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 30, 2025 00:37:26 UTC">2025-12-30</span>
   </span>
 
     
