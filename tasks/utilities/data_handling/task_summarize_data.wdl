@@ -77,10 +77,10 @@ task summarize_data {
 
   table = table[temporarylist].copy()
 
-
   # create a table to search through containing only columns of interest
   searchtable = table[columns].copy()
 
+  # set index and output to tsv w/index
   if (os.environ["default_column"] == "true"):
     filteredmetadata = searchtable.set_index(table["~{terra_table}_id"])
   else:
@@ -110,7 +110,7 @@ task summarize_data {
     # overwrite genes with newgenes (which now has the phandango coloring suffix)
     genes = newgenes 
   else:
-    print("NOTE: Phandango coloring was not applied")
+    print("DEBUG: Phandango coloring was not applied")
 
   # flattening the list
   genes = list(itertools.chain.from_iterable(genes))
@@ -118,15 +118,24 @@ task summarize_data {
   # removing duplicates but maintaining order
   genes = sorted(set(genes), key=lambda x: genes.index(x))
 
-  # add genes as true/false entries into table
-  for item in genes:
-    if (os.environ["phandango_coloring"] == "true"): # remove coloring suffix (CAUTION: ASSUMES LESS THAN 10 COLUMN NAMES PROVIDED)
-      table[item] = searchtable.apply(lambda row: row.astype(str).str.contains(re.escape(item[:len(item)-3])).any(), axis=1)
-    else:
-      # change here
-      table[item] = searchtable.apply(lambda row: row.astype(str).str.contains(re.escape(item)).any(), axis=1)
+  # force string type for pattern matching
+  searchtable = searchtable.astype(str)
 
-  # replace all "False" cells with empty strings
+  # add genes as true/false entries into table row-by-row
+  # iterate from largest to smallest string size to prevent substrings from matching large strings
+  for item in sorted(genes, key=lambda x: len(x), reverse=True):
+    if (os.environ["phandango_coloring"] == "true"): # remove coloring suffix (CAUTION: ASSUMES LESS THAN 10 COLUMN NAMES PROVIDED)
+      table[item] = searchtable.apply(lambda row: row.str.contains(re.escape(item[:len(item)-3])).any(), axis=1)
+      # remove the entry to prevent future pattern matching
+      searchtable = searchtable.apply(lambda row: row.str.replace(re.escape(item[:len(item)-3]), ""))
+    else:
+      table[item] = searchtable.apply(lambda row: row.str.contains(re.escape(item)).any(), axis=1)
+      searchtable = searchtable.apply(lambda row: row.str.replace(re.escape(item), ""))
+
+  # sort table by original gene index
+  table = table[genes]
+
+  # replace all "False" cells with null values 
   table[table.eq(False)] = np.nan
 
   # dropping columns of interest so only true/false ones remain
