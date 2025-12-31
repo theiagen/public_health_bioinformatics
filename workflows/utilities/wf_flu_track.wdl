@@ -111,6 +111,8 @@ workflow flu_track {
         input:
           bamfile = select_first([irma.seg_ha_bam]),
           samplename = samplename,
+          read1 = select_first([read1]),
+          read2 = read2,
           memory = assembly_metrics_memory,
           cpu = assembly_metrics_cpu,
           disk_size = assembly_metrics_disk_size,
@@ -122,6 +124,8 @@ workflow flu_track {
         input:
           bamfile = select_first([irma.seg_na_bam]),
           samplename = samplename,
+          read1 = select_first([read1]),
+          read2 = read2,
           memory = assembly_metrics_memory,
           cpu = assembly_metrics_cpu,
           disk_size = assembly_metrics_disk_size,

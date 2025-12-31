@@ -56,7 +56,7 @@ workflow theiacov_ont {
     File? qc_check_table
     ## flu specific inputs
     # default set to 50 for ONT data in call block below, following CDC MIRA standards
-    Int? irma_min_consensus_support
+    Int irma_min_consensus_support = 50
   }
   call set_organism_defaults.organism_parameters {
     input:
@@ -133,12 +133,14 @@ workflow theiacov_ont {
         call assembly_metrics.stats_n_coverage {
           input:
             samplename = samplename,
-            bamfile = consensus.sorted_bam
+            bamfile = consensus.sorted_bam,
+            read1 = read_QC_trim.read1_clean
         }
         call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
           input:
             samplename = samplename,
-            bamfile = consensus.trim_sorted_bam
+            bamfile = consensus.trim_sorted_bam,
+            read1 = read_QC_trim.read1_clean
         }
       }
       # assembly via irma for flu organisms
@@ -149,7 +151,7 @@ workflow theiacov_ont {
             samplename = samplename,
             standardized_organism = organism_parameters.standardized_organism,
             seq_method = seq_method,
-            irma_min_consensus_support = select_first([irma_min_consensus_support, 50])
+            irma_min_consensus_support = irma_min_consensus_support
         }
       }
       # nanoplot for basic QC metrics
