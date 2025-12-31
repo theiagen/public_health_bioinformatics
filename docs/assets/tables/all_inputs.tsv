@@ -588,9 +588,9 @@ core_iqtree	alrt	Int	Number of replicates to use for the SH-like approximate lik
 core_iqtree	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Core_Gene_SNP	runtime	
 core_iqtree	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime	
 core_iqtree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7	Optional	Core_Gene_SNP	docker	
-core_iqtree	iqtree_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 core_iqtree	iqtree_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
 core_iqtree	iqtree_opts	String	Additional options for IQ-TREE, see <http://www.iqtree.org/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
+core_iqtree	iqtree_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 core_iqtree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Core_Gene_SNP	runtime	
 core_ksnp3_shared_snps_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	kSNP3	runtime	
 core_ksnp4_shared_snps_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	kSNP4	runtime	
@@ -1743,9 +1743,9 @@ pan_iqtree	alrt	Int	Number of replicates to use for the SH-like approximate like
 pan_iqtree	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Core_Gene_SNP	runtime	
 pan_iqtree	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime	
 pan_iqtree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7	Optional	Core_Gene_SNP	docker	
-pan_iqtree	iqtree_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 pan_iqtree	iqtree_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
 pan_iqtree	iqtree_opts	String	Additional options for IQ-TREE, see <http://www.iqtree.org/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
+pan_iqtree	iqtree_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 pan_iqtree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Core_Gene_SNP	runtime	
 pan_reorder_matrix	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
 pan_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
@@ -2214,13 +2214,13 @@ snippy_tree_wf	gubbins_cpu	Int	Number of CPUs to allocate to the task	4	Optional
 snippy_tree_wf	gubbins_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	gubbins_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/gubbins:3.3--py310pl5321h8472f5a_0	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	gubbins_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
-snippy_tree_wf	iqtree2_bootstraps	Int	Number of replicates for <http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation> (Minimum recommended= 1000)	1000	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	iqtree2_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.1.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	iqtree2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_model	String	Nucelotide substitution model to use when generating the final tree with IQTree2. By default, IQtree runs its ModelFinder algorithm to identify the model it thinks best fits your dataset		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	iqtree2_opts	String	Additional options to pass to IQTree2		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
+snippy_tree_wf	iqtree2_ultrafast_bootstraps	Int	Number of replicates for <http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation> (Minimum recommended= 1000)	1000	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	midpoint_root_tree	Boolean	A True/False option that determines whether the tree used in the SNP matrix re-ordering task should be re-rooted or not. Options: true or false	True	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	phandango_coloring	Boolean	Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true.	False	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	snippy_core_bed	File	User-provided bed file to mask out regions of the genome when creating multiple sequence alignments		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
