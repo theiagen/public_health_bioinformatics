@@ -72,8 +72,8 @@ task irma {
       mkdir padded_assemblies/
 
       # look at list of files that match the above pattern, grab the first one, and extract the type from the filename. We expect: ~{samplename}/B_HA.fasta
-      irma_type="Type_$(find ~{samplename}/*.fasta -type f | head -n1 | xargs -n1 basename | cut -d_ -f1)"
-      echo "$irma_type" > IRMA_TYPE
+      irma_type="$(find ~{samplename}/*.fasta -type f | head -n1 | xargs -n1 basename | cut -d_ -f1)"
+      echo "Type_$irma_type" > IRMA_TYPE
 
       # Helper script to handle the creation of QC summary, renaming and creation of secondary FASTA files, and acquisition of subtype
       python3 /scripts/irma_helper.py -t "${irma_type}" -s ~{samplename} -v
