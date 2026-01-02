@@ -242,6 +242,10 @@ workflow merlin_magic {
     Float? tbp_parser_rpob449_frequency
     Float? tbp_parser_etha237_frequency
     File? tbp_parser_expert_rule_regions_bed
+    Boolean? tbp_parser_treat_r_mutations_as_s
+    Float? tbp_parser_min_percent_locus_covered
+    String? tbp_parser_tngs_read_support_boundaries
+    String? tbp_parser_tngs_frequency_boundaries
     # Vibecheck options
     File? vibecheck_lineage_barcodes
     Float? vibecheck_subsampling_fraction
@@ -514,7 +518,11 @@ workflow merlin_magic {
             rpob449_frequency = tbp_parser_rpob449_frequency,
             etha237_frequency = tbp_parser_etha237_frequency,
             expert_rule_regions_bed = tbp_parser_expert_rule_regions_bed,
-            docker = tbp_parser_docker_image
+            docker = tbp_parser_docker_image,
+            treat_r_mutations_as_s = tbp_parser_treat_r_mutations_as_s,
+            min_percent_locus_covered = tbp_parser_min_percent_locus_covered,
+            tngs_read_support_boundaries = tbp_parser_tngs_read_support_boundaries,
+            tngs_frequency_boundaries = tbp_parser_tngs_frequency_boundaries
         }
       }
     }
