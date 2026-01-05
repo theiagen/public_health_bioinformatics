@@ -380,6 +380,12 @@ bakta	prodigal_tf	File	Prodigal training file to use for CDS prediction by bakta
 bakta	proteins	File	Fasta file of trusted protein sequences for CDS annotation		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 basespace_fetch	api_server	String	The API server is the web address to which data transfer requests can be sent by the workflow.	https://api.basespace.illumina.com	Optional	BaseSpace_Fetch	general	
 basespace_fetch	basespace_sample_id	String	The BaseSpace sample ID is an optional additional identifier used in BaseSpace. If a sample has a BaseSpace sample ID it should be available on the sample sheet and must be included in the metadata sheet upload prior to running BaseSpace_Fetch.		Optional	BaseSpace_Fetch	general	
+bbduk	adapters	File	File with adapter sequences to be removed		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+bbduk	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+bbduk	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+bbduk	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bbtools:38.76	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
+bbduk	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+bbduk	phix	File	A file containing the phix used during Illumina sequencing		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 bcftools_consensus	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_ONT	runtime	
 bcftools_consensus	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
 bcftools_consensus	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bcftools:1.20	Optional	TheiaViral_ONT	docker	
@@ -414,14 +420,14 @@ cat_files_fasta	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaC
 cat_files_fasta	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_FASTA_Batch	runtime	
 cat_files_fasta	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	TheiaCoV_FASTA_Batch	docker	
 cat_files_fasta	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_FASTA_Batch	runtime	
-cat_lanes	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Concatenate_Illumina_Lanes, TheiaViral_Panel	runtime	
-cat_lanes	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Concatenate_Illumina_Lanes, TheiaViral_Panel	runtime	
-cat_lanes	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.2	Optional	Concatenate_Illumina_Lanes, TheiaViral_Panel	docker	
-cat_lanes	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Concatenate_Illumina_Lanes, TheiaViral_Panel	runtime	
-cat_lanes	read1_lane3	File	Internal component, do not modify		Optional	TheiaViral_Panel	general	
-cat_lanes	read1_lane4	File	Internal component, do not modify		Optional	TheiaViral_Panel	general	
-cat_lanes	read2_lane3	File	Internal component, do not modify		Optional	TheiaViral_Panel	general	
-cat_lanes	read2_lane4	File	Internal component, do not modify		Optional	TheiaViral_Panel	general	
+cat_lanes	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Concatenate_Illumina_Lanes, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+cat_lanes	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Concatenate_Illumina_Lanes, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+cat_lanes	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.2	Optional	Concatenate_Illumina_Lanes, TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
+cat_lanes	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Concatenate_Illumina_Lanes, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+cat_lanes	read1_lane3	File	Internal component, do not modify		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+cat_lanes	read1_lane4	File	Internal component, do not modify		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+cat_lanes	read2_lane3	File	Internal component, do not modify		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+cat_lanes	read2_lane4	File	Internal component, do not modify		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 cat_ont_barcodes	cpu	Int	Number of CPUs to allocate to the task	2	Optional	ONT_Barcode_Concatenation	runtime	
 cat_ont_barcodes	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	ONT_Barcode_Concatenation	runtime	
 cat_ont_barcodes	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ont-barcodes:0.0.2	Optional	ONT_Barcode_Concatenation	docker	
@@ -588,9 +594,9 @@ core_iqtree	alrt	Int	Number of replicates to use for the SH-like approximate lik
 core_iqtree	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Core_Gene_SNP	runtime	
 core_iqtree	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime	
 core_iqtree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7	Optional	Core_Gene_SNP	docker	
-core_iqtree	iqtree_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 core_iqtree	iqtree_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
 core_iqtree	iqtree_opts	String	Additional options for IQ-TREE, see <http://www.iqtree.org/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
+core_iqtree	iqtree_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 core_iqtree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Core_Gene_SNP	runtime	
 core_ksnp3_shared_snps_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	kSNP3	runtime	
 core_ksnp4_shared_snps_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	kSNP4	runtime	
@@ -715,18 +721,26 @@ fasta_utilities	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaV
 fasta_utilities	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
 fasta_utilities	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	TheiaViral_ONT	docker	
 fasta_utilities	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_ONT	runtime	
-fastq_scan_clean	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS	runtime	
-fastq_scan_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TBProfiler_tNGS	runtime	
-fastq_scan_clean	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TBProfiler_tNGS	docker	
-fastq_scan_clean	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TBProfiler_tNGS	runtime	
+fastp	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+fastp	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+fastp	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
+fastp	fastp_args	String	Additional arguments to use with fastp		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+fastp	fastp_min_length	Int	Minimum read length	15	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+fastp	fastp_quality_trim_score	Int	Minimum mean base quality relative to window size	20	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+fastp	fastp_window_size	Int	Sliding window size for surveying read quality	4	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+fastp	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+fastq_scan_clean	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+fastq_scan_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+fastq_scan_clean	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
+fastq_scan_clean	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_clean_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_ClearLabs	runtime	
 fastq_scan_clean_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ClearLabs	runtime	
 fastq_scan_clean_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TheiaCoV_ClearLabs	docker	
 fastq_scan_clean_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ClearLabs	runtime	
-fastq_scan_raw	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS	runtime	
-fastq_scan_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TBProfiler_tNGS	runtime	
-fastq_scan_raw	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TBProfiler_tNGS	docker	
-fastq_scan_raw	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TBProfiler_tNGS	runtime	
+fastq_scan_raw	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+fastq_scan_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+fastq_scan_raw	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
+fastq_scan_raw	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_raw_reads	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_ClearLabs	runtime	
 fastq_scan_raw_reads	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_ClearLabs	runtime	
 fastq_scan_raw_reads	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TheiaCoV_ClearLabs	docker	
@@ -958,12 +972,12 @@ gubbins	iterations	Int	Maximum number of trees to iteratively build to remove re
 gubbins	nuc_subst_model	String	Nucleotide substitution model to use with Gubbins: "JC", "K2P", "HKY", "GTR", "GTRGAMMA" or "GTRCAT" (see <https://github.com/nickjcroucher/gubbins/blob/v3.3/docs/gubbins_manual.md#nucleotide-substitution-model-options>)	GTRGAMMA	Optional	Snippy_Tree	general	
 gubbins	tree_args	String	Quoted string of further arguments passed to tree building algorithm		Optional	Snippy_Tree	general	
 gubbins	tree_builder	String	Application to use for Gubbins tree building algorithm: "raxml", "raxmlng", "iqtree", "iqtree-fast", "fasttree", "hybrid" (fasttree is used for the first tree, and raxml is used for later iterations), "rapidnj"	raxml	Optional	Snippy_Tree	general	
-host_decontaminate	complete_only	Boolean	Only download genomes labeled "complete"	False	Optional	TheiaViral_ONT	general	
-host_decontaminate	is_accession	Boolean	Inputted "host" is an accession	False	Optional	TheiaViral_ONT	general	
-host_decontaminate	is_genome	Boolean	Inputted "host" is an assembly FASTA	False	Optional	TheiaViral_ONT	general	
-host_decontaminate	minimap2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_ONT	runtime	
+host_decontaminate	complete_only	Boolean	Only download genomes labeled "complete"	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	is_accession	Boolean	Inputted "host" is an accession	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	is_genome	Boolean	Inputted "host" is an assembly FASTA	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	minimap2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime	
 host_decontaminate	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general	
-host_decontaminate	refseq	Boolean	Only download RefSeq genomes	True	Optional	TheiaViral_ONT	general	
+host_decontaminate	refseq	Boolean	Only download RefSeq genomes	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 iqtree2	alrt	Int	Number of replicates to use for the SH-like approximate likelihood ratio test (Minimum recommended= 1000). Follows IQ-TREE "-alrt" option	1000	Optional	Snippy_Tree	general	
 ivar_consensus	ivar_bwa_cpu	Int	Number of CPUs to allocate to the task	6	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	runtime	
 ivar_consensus	ivar_bwa_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	runtime	
@@ -1024,6 +1038,10 @@ kraken2_dehosted	docker_image	String	The Docker container to use for the task	us
 kraken2_dehosted	kraken2_db	File	The database used to run Kraken2. Must contain viral and human sequences.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaCoV_ClearLabs	database	
 kraken2_dehosted	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs	runtime	
 kraken2_dehosted	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs	general	
+kraken2_extract	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE	runtime	
+kraken2_extract	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime	
+kraken2_extract	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe	Optional	TheiaViral_Illumina_PE	docker	
+kraken2_extract	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime	
 kraken2_pe	classified_out	String	Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix	classified#.fastq	Optional	Kraken_PE	general	
 kraken2_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Kraken_PE	runtime	
 kraken2_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	Kraken_PE	runtime	
@@ -1052,6 +1070,27 @@ kraken2_se	kraken2_args	String	Allows a user to supply additional kraken2 comman
 kraken2_se	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Kraken_ONT, Kraken_SE	runtime	
 kraken2_se	read2	File	Internal component, do not modify		Optional	Kraken_ONT, Kraken_SE	general	
 kraken2_se	unclassified_out	String	Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix	unclassified#.fastq	Optional	Kraken_ONT, Kraken_SE	general	
+kraken2_standalone	classified_out	String	File name for classified reads	classified#.fastq	Optional	TheiaViral_Illumina_PE	general	
+kraken2_standalone	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime	
+kraken2_standalone	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime	
+kraken2_standalone	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db	Optional	TheiaViral_Illumina_PE	docker	
+kraken2_standalone	kraken2_args	String	Additional kraken2 command-line arguments		Optional	TheiaViral_Illumina_PE	general	
+kraken2_standalone	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Illumina_PE	runtime	
+kraken2_standalone	unclassified_out	String	File name for unclassified reads	unclassified#.fastq	Optional	TheiaViral_Illumina_PE	general	
+kraken2_standalone_clean	classified_out	String	File name for classified reads	classified#.fastq	Optional	TheiaViral_Panel	general	
+kraken2_standalone_clean	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Panel	runtime	
+kraken2_standalone_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
+kraken2_standalone_clean	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db	Optional	TheiaViral_Panel	docker	
+kraken2_standalone_clean	kraken2_args	String	Additional kraken2 command-line arguments		Optional	TheiaViral_Panel	general	
+kraken2_standalone_clean	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Panel	runtime	
+kraken2_standalone_clean	unclassified_out	String	File name for unclassified reads	unclassified#.fastq	Optional	TheiaViral_Panel	general	
+kraken2_standalone_raw	classified_out	String	File name for classified reads	classified#.fastq	Optional	TheiaViral_Panel	general	
+kraken2_standalone_raw	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Panel	runtime	
+kraken2_standalone_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
+kraken2_standalone_raw	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db	Optional	TheiaViral_Panel	docker	
+kraken2_standalone_raw	kraken2_args	String	Additional kraken2 command-line arguments		Optional	TheiaViral_Panel	general	
+kraken2_standalone_raw	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Panel	runtime	
+kraken2_standalone_raw	unclassified_out	String	File name for unclassified reads	unclassified#.fastq	Optional	TheiaViral_Panel	general	
 kraken_parser	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Panel	runtime	
 kraken_parser	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
 kraken_parser	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe	Optional	TheiaViral_Panel	docker	
@@ -1672,10 +1711,10 @@ ncbi_datasets_download_genome_accession	include_gbff	Boolean	Set to true if you 
 ncbi_datasets_download_genome_accession	include_gff3	Boolean	Set to true if you would like the Genomic Feature File v3 (GFF3) file included in the output. It contains nucleotide sequence, metadata, and annotations	False	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	general	
 ncbi_datasets_download_genome_accession	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime	
 ncbi_datasets_download_genome_accession	use_ncbi_virus	Boolean	Set to true to download from NCBI Virus Datasets	False	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	general	
-ncbi_scrub_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	NCBI_Scrub_PE	runtime	
-ncbi_scrub_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	NCBI_Scrub_PE	runtime	
-ncbi_scrub_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1	Optional	NCBI_Scrub_PE	docker	
-ncbi_scrub_pe	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	NCBI_Scrub_PE	runtime	
+ncbi_scrub_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	NCBI_Scrub_PE, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+ncbi_scrub_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	NCBI_Scrub_PE, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+ncbi_scrub_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1	Optional	NCBI_Scrub_PE, TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
+ncbi_scrub_pe	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	NCBI_Scrub_PE, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 ncbi_scrub_se	cpu	Int	Number of CPUs to allocate to the task	4	Optional	NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaViral_ONT	runtime	
 ncbi_scrub_se	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaViral_ONT	runtime	
 ncbi_scrub_se	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1	Optional	NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaViral_ONT	docker	
@@ -1743,9 +1782,9 @@ pan_iqtree	alrt	Int	Number of replicates to use for the SH-like approximate like
 pan_iqtree	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Core_Gene_SNP	runtime	
 pan_iqtree	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime	
 pan_iqtree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7	Optional	Core_Gene_SNP	docker	
-pan_iqtree	iqtree_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 pan_iqtree	iqtree_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
 pan_iqtree	iqtree_opts	String	Additional options for IQ-TREE, see <http://www.iqtree.org/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
+pan_iqtree	iqtree_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 pan_iqtree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Core_Gene_SNP	runtime	
 pan_reorder_matrix	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
 pan_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
@@ -1934,7 +1973,7 @@ read_mapping_stats	disk_size	Int	Amount of storage (in GB) to allocate to the ta
 read_mapping_stats	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 read_mapping_stats	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 read_mapping_stats	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general	
-read_QC_trim	adapters	File	File with adapter sequences to be removed		Optional	TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+read_QC_trim	adapters	File	File with adapter sequences to be removed		Optional	TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	artic_guppyplex_cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaCoV_ONT	runtime	
 read_QC_trim	artic_guppyplex_cpu	Int	Internal component, do not modify	8	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	artic_guppyplex_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT	runtime	
@@ -1943,25 +1982,14 @@ read_QC_trim	artic_guppyplex_docker	String	The Docker container to use for the t
 read_QC_trim	artic_guppyplex_docker	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	artic_guppyplex_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaCoV_ONT	runtime	
 read_QC_trim	artic_guppyplex_memory	Int	Internal component, do not modify	16	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
-read_QC_trim	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+read_QC_trim	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 read_QC_trim	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 read_QC_trim	call_kraken	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_ONT	general	
 read_QC_trim	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
-read_QC_trim	call_midas	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+read_QC_trim	call_midas	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE	general	
 read_QC_trim	downsampling_coverage	Float	The desired coverage to sub-sample the reads to with RASUSA	150	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general	
-read_QC_trim	extract_unclassified	Boolean	Internal component, do not modify	False	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
-read_QC_trim	extract_unclassified	Boolean	Allows user to extract unclassified reads	False	Optional	TheiaViral_Panel	general	
-read_QC_trim	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+read_QC_trim	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	fastp_args	String	Additional arguments to use with fastp	-g -5 20 -3 20	Optional	TheiaCoV_Illumina_SE, TheiaProk_Illumina_SE	general	
-read_QC_trim	host	String	Internal component, do not modify		Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
-read_QC_trim	host_complete_only	Boolean	Internal component, do not modify	False	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
-read_QC_trim	host_complete_only	Boolean	Only download host reference genome labeled "complete"	False	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-read_QC_trim	host_decontaminate_mem	Int	Internal component, do not modify	32	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
-read_QC_trim	host_decontaminate_mem	Int	Memory allocated for minimap2 (in GB)	32	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
-read_QC_trim	host_is_accession	Boolean	Internal component, do not modify	False	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
-read_QC_trim	host_is_accession	Boolean	Inputted "host" is an accession	False	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-read_QC_trim	host_is_genome	Boolean	Inputted "host" is a genome URI	False	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-read_QC_trim	host_refseq	Boolean	Internal component, do not modify	True	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 read_QC_trim	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ONT, TheiaProk_ONT	runtime	
 read_QC_trim	kraken2_recalculate_abundances_cpu	Int	Internal component, do not modify	4	Optional	TheiaEuk_ONT	general	
 read_QC_trim	kraken2_recalculate_abundances_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT, TheiaProk_ONT	runtime	
@@ -1970,19 +1998,19 @@ read_QC_trim	kraken2_recalculate_abundances_docker	String	The Docker container t
 read_QC_trim	kraken2_recalculate_abundances_docker	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4	Optional	TheiaEuk_ONT	general	
 read_QC_trim	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ONT, TheiaProk_ONT	runtime	
 read_QC_trim	kraken2_recalculate_abundances_memory	Int	Internal component, do not modify	8	Optional	TheiaEuk_ONT	general	
-read_QC_trim	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+read_QC_trim	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 read_QC_trim	kraken_cpu	Int	Internal component, do not modify	4	Optional	TheiaEuk_ONT	general	
 read_QC_trim	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. Must contain human and viral sequences	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	database	
 read_QC_trim	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
 read_QC_trim	kraken_db	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaEuk_ONT	general	
-read_QC_trim	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+read_QC_trim	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 read_QC_trim	kraken_disk_size	Int	Internal component, do not modify	100	Optional	TheiaEuk_ONT	general	
 read_QC_trim	kraken_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db	Optional	TheiaCoV_ONT, TheiaProk_ONT	docker	
 read_QC_trim	kraken_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db	Optional	TheiaEuk_ONT	general	
-read_QC_trim	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+read_QC_trim	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 read_QC_trim	kraken_memory	Int	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
 read_QC_trim	max_length	Int	Internal component, do not modify	700	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
-read_QC_trim	midas_db	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+read_QC_trim	midas_db	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE	general	
 read_QC_trim	midas_db	File	The database used by the MIDAS task in .tar.gz format	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	database	
 read_QC_trim	min_length	Int	Internal component, do not modify	400	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	nanoq_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
@@ -2001,7 +2029,7 @@ read_QC_trim	ncbi_scrub_docker	String	The Docker container to use for the task	u
 read_QC_trim	ncbi_scrub_docker	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	ncbi_scrub_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ONT	runtime	
 read_QC_trim	ncbi_scrub_memory	Int	Internal component, do not modify	8	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
-read_QC_trim	phix	File	A file containing the phix used during Illumina sequencing; used in the BBDuk task		Optional	TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+read_QC_trim	phix	File	A file containing the phix used during Illumina sequencing; used in the BBDuk task		Optional	TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	rasusa_bases	String	Internal component, do not modify		Optional	TheiaCoV_ONT	general	
 read_QC_trim	rasusa_bases	String	Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored		Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	rasusa_cpu	Int	Internal component, do not modify	4	Optional	TheiaCoV_ONT	general	
@@ -2018,16 +2046,16 @@ read_QC_trim	rasusa_number_of_reads	Int	Internal component, do not modify		Optio
 read_QC_trim	rasusa_number_of_reads	Int	Subsample to a specific number of reads		Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	rasusa_seed	Int	Internal component, do not modify		Optional	TheiaCoV_ONT	general	
 read_QC_trim	rasusa_seed	Int	Random seed to use		Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
-read_QC_trim	read_processing	String	The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp"	trimmomatic	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-read_QC_trim	read_qc	String	The tool used for quality control (QC) of reads. Options are "fastq_scan" (default) and "fastqc"	fastq_scan	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+read_QC_trim	read_processing	String	The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp"	trimmomatic	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
+read_QC_trim	read_qc	String	The tool used for quality control (QC) of reads. Options are "fastq_scan" (default) and "fastqc"	fastq_scan	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	run_prefix	String	Internal component, do not modify	artic_ncov2019	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	target_organism	String	This string is searched for in the kraken2 outputs to extract the read percentage		Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
-read_QC_trim	target_organism	String	Internal component, do not modify		Optional	TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-read_QC_trim	taxon_id	Int	Internal component, do not modify	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Panel	general	
-read_QC_trim	trim_min_length	Int	Specifies minimum length of each read after trimming to be kept	75	Optional	TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-read_QC_trim	trim_quality_min_score	Int	Specifies the average quality of bases in a sliding window to be kept	30	Optional	TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-read_QC_trim	trim_window_size	Int	Specifies window size for trimming (the number of bases to average the quality across)	4	Optional	TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-read_QC_trim	trimmomatic_args	String	Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.	-phred33	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+read_QC_trim	target_organism	String	Internal component, do not modify		Optional	TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_ONT	general	
+read_QC_trim	taxon_id	Int	Internal component, do not modify	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
+read_QC_trim	trim_min_length	Int	Specifies minimum length of each read after trimming to be kept	75	Optional	TheiaMeta_Illumina_PE	general	
+read_QC_trim	trim_quality_min_score	Int	Specifies the average quality of bases in a sliding window to be kept	30	Optional	TheiaMeta_Illumina_PE	general	
+read_QC_trim	trim_window_size	Int	Specifies window size for trimming (the number of bases to average the quality across)	4	Optional	TheiaMeta_Illumina_PE	general	
+read_QC_trim	trimmomatic_args	String	Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.	-phred33	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	workflow_series	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE	general	
 read_QC_trim_ont	artic_guppyplex_cpu	Int	Number of CPUs to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	artic_guppyplex_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
@@ -2072,14 +2100,7 @@ read_QC_trim_pe	adapters	File	A FASTA file containing adapter sequences		Optiona
 read_QC_trim_pe	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	extract_unclassified	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	host	String	Internal component, do not modify		Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	host_complete_only	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	host_decontaminate_mem	Int	Internal component, do not modify	32	Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	host_is_accession	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	host_is_genome	Boolean	Internal component, do not modify	False	Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	host_refseq	Boolean	Internal component, do not modify	True	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	Freyja_FASTQ	database	
 read_QC_trim_pe	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
@@ -2214,13 +2235,13 @@ snippy_tree_wf	gubbins_cpu	Int	Number of CPUs to allocate to the task	4	Optional
 snippy_tree_wf	gubbins_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	gubbins_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/gubbins:3.3--py310pl5321h8472f5a_0	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	gubbins_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
-snippy_tree_wf	iqtree2_bootstraps	Int	Number of replicates for <http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation> (Minimum recommended= 1000)	1000	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	iqtree2_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.1.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	iqtree2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_model	String	Nucelotide substitution model to use when generating the final tree with IQTree2. By default, IQtree runs its ModelFinder algorithm to identify the model it thinks best fits your dataset		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	iqtree2_opts	String	Additional options to pass to IQTree2		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
+snippy_tree_wf	iqtree2_ultrafast_bootstraps	Int	Number of replicates for <http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation> (Minimum recommended= 1000)	1000	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	midpoint_root_tree	Boolean	A True/False option that determines whether the tree used in the SNP matrix re-ordering task should be re-rooted or not. Options: true or false	True	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	phandango_coloring	Boolean	Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true.	False	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	snippy_core_bed	File	User-provided bed file to mask out regions of the genome when creating multiple sequence alignments		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	

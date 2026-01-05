@@ -32,6 +32,7 @@
         * For amplicon-derived viral sequencing methods
         * Supports a limited number of [pathogens](../../workflows/genomic_characterization/theiacov.md/#supported-organisms)
         * Uses manually curated, static reference genomes
+        * Uses IRMA assembler for influenza
 
 
     -   :material-database: **TheiaViral Workflows**
@@ -41,6 +42,7 @@
         * Designed for a variety of sequencing methods
         * Supports relatively diverse and recombinant pathogens
         * Dynamically identifies the most similar reference genome for consensus assembly via an intermediate *de novo* assembly
+        * Uses iVar assembler for influenza
 
     </div>
 
@@ -92,8 +94,7 @@
 
         The TheiaViral_Panel workflow accepts Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs.
 
-        For the analysis of RSV and Flu it is recommended that TheiaCov is run for full characterization of RSV and IRMA assembly for Flu. 
-        Due to limitations within the Kraken Database RSV A and B will both be extracted under HRSV. Subtypes can be losely infered by looking at Skani outputs. 
+        For RSV characterization, it is recommended to use TheiaCoV or TheiaViral Illumina PE. RSV-A and RSV-B-specific modules are not available in TheiaViral Panel, due to limitations with distinguishing RSV-A and B during read extraction. Subtypes may be inferred from the best retrieved Skani reference depending on the resolution of the NCBI metadata corresponding to that accession. 
 
         ???+ dna_blue "`taxon_ids` optional input parameter"
             **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly, but is optional in Terra.** 
@@ -165,7 +166,19 @@
 
     ??? toggle "Read Quality Control, Trimming, Filtering, Identification and Extraction"
 
-{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiaviral", indent=8, replacements={": Read Quality Trimming, Adapter Removal, Quantification, and Identification" : ""}) }}
+{{ include_md("common_text/fastq_scan_task.md", condition="notclearlabs", indent=8) }}
+
+{{ include_md("common_text/ncbi_scrub_task.md", indent=8) }}
+
+{{ include_md("common_text/fastp_task.md", condition="theiaviral", indent=8) }}
+
+{{ include_md("common_text/bbduk_task.md", indent=8) }}
+
+{{ include_md("common_text/host_decontaminate_wf.md", indent=8) }}
+
+{{ include_md("common_text/kraken2_task.md", condition="theiaviral", indent=8) }}
+
+{{ include_md("common_text/krakentools_task.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/rasusa_task.md", condition="theiaviral", indent=8, replacements={'??? task "`Rasusa`: Read subsampling (optional, on by default)"' : '??? task "`rasusa`"'}) }}
 
@@ -293,7 +306,15 @@
 
     ??? toggle "Read Quality Control, Trimming, Filtering, Identification"
 
-{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiaviral_panel", indent=8) }}
+{{ include_md("common_text/fastq_scan_task.md", condition="notclearlabs", indent=8) }}
+
+{{ include_md("common_text/ncbi_scrub_task.md", indent=8) }}
+
+{{ include_md("common_text/fastp_task.md", condition="theiaviral", indent=8) }}
+
+{{ include_md("common_text/bbduk_task.md", indent=8) }}
+
+{{ include_md("common_text/host_decontaminate_wf.md", indent=8) }}
 
     ??? toggle "Read Extraction and Binning"
 
@@ -351,16 +372,31 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
 - **Human Immunodeficiency Virus 1** (`"11676"`, `"human immunodeficiency virus 1"`)
 - **Human Immunodeficiency Virus 2** (`"11709"`, `"human immunodeficiency virus 2"`)
 - **West Nile Virus** (`"11082"`, `"west nile virus"`)
+- **Influenza (general)** (`"11308"`, `"Orthomyxoviridae"`)
 - **Influenza A** (`"11320"`, `"influenza a virus"`)
 - **Influenza B** (`"11520"`, `"influenza b virus"`)
 - **RSV-A** (`"208893"`, `"human respiratory syncytial virus a"`)
 - **RSV-B** (`"208895"`, `"human respiratory syncytial virus b"`)
 - **Measles** (`"11234"`, `"measles"`)
-- **Rabies** (`"11292"`, `"lyssavirus rabies"`)
+- **Rabies** (`"11292"`, `"Lyssavirus rabies"`)
 - **Mumps** (`"2560602"`, `"mumps virus"`, `"Mumps orthorubulavirus"`)
 - **Rubella** (`"11041"`, `"rubella virus"`)
 
 ### Outputs
+
+!!! dna "Output Data"
+    === "TheiaViral_Illumina_PE"
+
+    === "TheiaViral_ONT"
+
+    === "TheiaViral_Panel"
+        The TheiaViral_Panel output table below corresponds to available outputs in the Terra workflow, while the results output to the "taxon table" mostly correspond to TheiaViral_Illumina_PE outputs. Additional outputs unique to TheiaViral_Panel are noted below:
+
+        ??? dna "`kraken_extracted_taxon_name` output"
+        This output is the suffix of the curated sample name and corresponds to the inputted taxon ID used during Kraken read classification. These names are retrieved from a static version of NCBI's taxonomy database.
+
+        ??? dna "`skani_reference_taxon_name` output"
+        This output corresponds to the best hit reference accession in the custom Skani database. These names are retrieved from NCBI at the time of Skani database construction. These taxon names may therefore vary between Skani database versions based on the NCBI submission metadata.
 
 === "TheiaViral_Illumina_PE"
     /// html | div[class="searchable-table"]
@@ -448,6 +484,7 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
     - `skani_status`: If this output is populated with something other than "PASS" and `skani_top_accession` is populated with "N/A", this indicates that Skani did not identify a sufficiently similar reference genome. The Skani database comprises a broad array of NCBI viral genomes, so a failure here likely indicates poor read quality because viral contigs are not found in the *de novo* assembly or are too small. It may be useful to BLAST whatever contigs do exist in the *de novo* to determine if there is contamination that can be removed via the `host` input parameter. Additionally, review CheckV *de novo* outputs to assess if viral contigs were retrieved. Finally, consider keeping `extract_unclassified` to "true", using a higher `read_extraction_rank` if it will not introduce contaminant viruses, and invoking a `host` input to remove host reads if host contigs are present.
     - `megahit_status` / `flye_status`: If this output is populated with something other than "PASS", it indicates the fallback assembler did not successfully complete. The fallback assemblers are permissive, so failure here likely indicates poor read quality. Review read QC to check read quality, particularly following read classification. If read classification is dispensing with a significant number of reads, consider `extract_unclassified`, `read_extraction_rank`, and `host` input adjustment. Otherwise, sequencing quality may be poor.
     - `metaviralspades_status` / `raven_denovo_status`: If this output is populated with something other than "PASS", it indicates the default assembler did not successfully complete or extract viral contigs (MetaviralSPAdes). On their own, these statuses do not correspond directly to workflow failure because fallback *de novo* assemblers are implemented for both TheiaViral workflows.
+    - `kraken2_extraction_status`: If this output is populated with something other than "PASS", it indicates no reads could be extracted, likely because no reads correspond to the inputted taxon. Check the `kraken2_report`
     - `read_screen_clean`: If this output is populated with something other than "PASS", it indicates the reads did not pass the imposed thresholds. Either the reads are poor quality or the thresholds are too stringent, in which case the thresholds can be relaxed or `skip_screen` can be set to "true".
     - `dehost_wf_download_status`: If this output is populated with something other than "PASS", it indicates a host genome could not be retrieved for decontamination. See the `host` input explanation for more information and review the `download_accession`/`download_taxonomy` task output logs for advanced error parsing.
 

@@ -48,7 +48,7 @@ workflow snippy_tree_wf {
     Int? iqtree2_disk_size
     String? iqtree2_opts
     String? iqtree2_docker
-    Int? iqtree2_bootstraps
+    Int? iqtree2_ultrafast_bootstraps
     String? iqtree2_model
     
     String? snp_dists_docker
@@ -117,7 +117,7 @@ workflow snippy_tree_wf {
       cluster_name = tree_name_updated,
       iqtree2_model = iqtree2_model,
       iqtree2_opts = iqtree2_opts,
-      iqtree2_bootstraps = iqtree2_bootstraps,
+      iqtree2_ultrafast_bootstraps = iqtree2_ultrafast_bootstraps,
       docker = iqtree2_docker,
       cpu = iqtree2_cpu,
       memory = iqtree2_memory,
