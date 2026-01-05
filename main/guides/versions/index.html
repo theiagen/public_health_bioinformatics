@@ -7204,6 +7204,12 @@
 <td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
 </tr>
 <tr>
+<td>bbduk</td>
+<td><strong>docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/bbtools:38.76</td>
+<td>TheiaViral_Illumina_PE, TheiaViral_Panel</td>
+</tr>
+<tr>
 <td>bcftools_consensus</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/bcftools:1.20</td>
@@ -7255,7 +7261,7 @@
 <td>cat_lanes</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.2</td>
-<td>Concatenate_Illumina_Lanes, TheiaViral_Panel</td>
+<td>Concatenate_Illumina_Lanes, TheiaViral_Illumina_PE, TheiaViral_Panel</td>
 </tr>
 <tr>
 <td>cat_ont_barcodes</td>
@@ -7528,10 +7534,16 @@
 <td>TheiaViral_ONT</td>
 </tr>
 <tr>
+<td>fastp</td>
+<td><strong>docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2</td>
+<td>TheiaViral_Illumina_PE, TheiaViral_Panel</td>
+</tr>
+<tr>
 <td>fastq_scan_clean</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3</td>
-<td>TBProfiler_tNGS</td>
+<td>TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel</td>
 </tr>
 <tr>
 <td>fastq_scan_clean_reads</td>
@@ -7543,7 +7555,7 @@
 <td>fastq_scan_raw</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3</td>
-<td>TBProfiler_tNGS</td>
+<td>TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel</td>
 </tr>
 <tr>
 <td>fastq_scan_raw_reads</td>
@@ -7744,6 +7756,12 @@
 <td>TheiaCoV_ClearLabs</td>
 </tr>
 <tr>
+<td>kraken2_extract</td>
+<td><strong>docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe</td>
+<td>TheiaViral_Illumina_PE</td>
+</tr>
+<tr>
 <td>kraken2_pe</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
@@ -7772,6 +7790,24 @@
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
 <td>Kraken_ONT, Kraken_SE</td>
+</tr>
+<tr>
+<td>kraken2_standalone</td>
+<td><strong>docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>TheiaViral_Illumina_PE</td>
+</tr>
+<tr>
+<td>kraken2_standalone_clean</td>
+<td><strong>docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>TheiaViral_Panel</td>
+</tr>
+<tr>
+<td>kraken2_standalone_raw</td>
+<td><strong>docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>TheiaViral_Panel</td>
 </tr>
 <tr>
 <td>kraken_parser</td>
@@ -8197,7 +8233,7 @@
 <td>ncbi_scrub_pe</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1</td>
-<td>NCBI_Scrub_PE</td>
+<td>NCBI_Scrub_PE, TheiaViral_Illumina_PE, TheiaViral_Panel</td>
 </tr>
 <tr>
 <td>ncbi_scrub_se</td>

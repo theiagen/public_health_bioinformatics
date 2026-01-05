@@ -8432,6 +8432,54 @@
 <td>Required</td>
 </tr>
 <tr>
+<td>bbduk</td>
+<td><strong>adapters</strong></td>
+<td>File</td>
+<td>File with adapter sequences to be removed</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>bbduk</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>bbduk</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>bbduk</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/bbtools:38.76</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>bbduk</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>bbduk</td>
+<td><strong>phix</strong></td>
+<td>File</td>
+<td>A file containing the phix used during Illumina sequencing</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>bwa</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -8461,6 +8509,70 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>16</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/utility:1.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>read1_lane3</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>read1_lane4</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>read2_lane3</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>cat_lanes</td>
+<td><strong>read2_lane4</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8792,6 +8904,174 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>fastp</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>fastp_args</strong></td>
+<td>String</td>
+<td>Additional arguments to use with fastp</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>fastp_min_length</strong></td>
+<td>Int</td>
+<td>Minimum read length</td>
+<td>15</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>fastp_quality_trim_score</strong></td>
+<td>Int</td>
+<td>Minimum mean base quality relative to window size</td>
+<td>20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>fastp_window_size</strong></td>
+<td>Int</td>
+<td>Sliding window size for surveying read quality</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_clean</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_clean</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_clean</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker image to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_clean</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_raw</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_raw</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_raw</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker image to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_raw</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>host_decontaminate</td>
+<td><strong>complete_only</strong></td>
+<td>Boolean</td>
+<td>Only download genomes labeled "complete"</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>host_decontaminate</td>
+<td><strong>is_accession</strong></td>
+<td>Boolean</td>
+<td>Inputted "host" is an accession</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>host_decontaminate</td>
+<td><strong>is_genome</strong></td>
+<td>Boolean</td>
+<td>Inputted "host" is an assembly FASTA</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>host_decontaminate</td>
+<td><strong>minimap2_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>host_decontaminate</td>
+<td><strong>refseq</strong></td>
+<td>Boolean</td>
+<td>Only download RefSeq genomes</td>
+<td>True</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>ivar_variants</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -8829,6 +9109,94 @@
 <td>File</td>
 <td>A GFF file in the GFF3 format can be supplied to specify coordinates of open reading frames (ORFs) so iVar can identify codons and translate variants into amino acids</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_extract</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_extract</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_extract</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_extract</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone</td>
+<td><strong>classified_out</strong></td>
+<td>String</td>
+<td>File name for classified reads</td>
+<td>classified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone</td>
+<td><strong>kraken2_args</strong></td>
+<td>String</td>
+<td>Additional kraken2 command-line arguments</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone</td>
+<td><strong>unclassified_out</strong></td>
+<td>String</td>
+<td>File name for unclassified reads</td>
+<td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9440,6 +9808,38 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>ncbi_scrub_pe</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_scrub_pe</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_scrub_pe</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_scrub_pe</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>quast_denovo</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -9541,174 +9941,6 @@
 <td>Int</td>
 <td>Random seed for reproducibility</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>adapters</strong></td>
-<td>File</td>
-<td>File with adapter sequences to be removed</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>bbduk_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>call_midas</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>fastp_args</strong></td>
-<td>String</td>
-<td>Additional arguments to use with fastp</td>
-<td>--detect_adapter_for_pe -g -5 20 -3 20</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>host_complete_only</strong></td>
-<td>Boolean</td>
-<td>Only download host reference genome labeled "complete"</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>host_decontaminate_mem</strong></td>
-<td>Int</td>
-<td>Memory allocated for minimap2 (in GB)</td>
-<td>32</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>host_is_accession</strong></td>
-<td>Boolean</td>
-<td>Inputted "host" is an accession</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>host_is_genome</strong></td>
-<td>Boolean</td>
-<td>Inputted "host" is a genome URI</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>host_refseq</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>True</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>midas_db</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>phix</strong></td>
-<td>File</td>
-<td>A file containing the phix used during Illumina sequencing; used in the BBDuk task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>read_processing</strong></td>
-<td>String</td>
-<td>The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp"</td>
-<td>trimmomatic</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>read_qc</strong></td>
-<td>String</td>
-<td>The tool used for quality control (QC) of reads. Options are "fastq_scan" (default) and "fastqc"</td>
-<td>fastq_scan</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>target_organism</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>trim_min_length</strong></td>
-<td>Int</td>
-<td>Specifies minimum length of each read after trimming to be kept</td>
-<td>75</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>trim_quality_min_score</strong></td>
-<td>Int</td>
-<td>Specifies the average quality of bases in a sliding window to be kept</td>
-<td>30</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>trim_window_size</strong></td>
-<td>Int</td>
-<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>trimmomatic_args</strong></td>
-<td>String</td>
-<td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
-<td>-phred33</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12020,6 +12252,54 @@
 <td>Required</td>
 </tr>
 <tr>
+<td>bbduk</td>
+<td><strong>adapters</strong></td>
+<td>File</td>
+<td>File with adapter sequences to be removed</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>bbduk</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>bbduk</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>bbduk</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/bbtools:38.76</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>bbduk</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>bbduk</td>
+<td><strong>phix</strong></td>
+<td>File</td>
+<td>A file containing the phix used during Illumina sequencing</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>cat_lanes</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -12156,6 +12436,174 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>fastp</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>fastp_args</strong></td>
+<td>String</td>
+<td>Additional arguments to use with fastp</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>fastp_min_length</strong></td>
+<td>Int</td>
+<td>Minimum read length</td>
+<td>15</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>fastp_quality_trim_score</strong></td>
+<td>Int</td>
+<td>Minimum mean base quality relative to window size</td>
+<td>20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>fastp_window_size</strong></td>
+<td>Int</td>
+<td>Sliding window size for surveying read quality</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_clean</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_clean</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_clean</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker image to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_clean</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_raw</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_raw</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_raw</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>Docker image to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastq_scan_raw</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>host_decontaminate</td>
+<td><strong>complete_only</strong></td>
+<td>Boolean</td>
+<td>Only download genomes labeled "complete"</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>host_decontaminate</td>
+<td><strong>is_accession</strong></td>
+<td>Boolean</td>
+<td>Inputted "host" is an accession</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>host_decontaminate</td>
+<td><strong>is_genome</strong></td>
+<td>Boolean</td>
+<td>Inputted "host" is an assembly FASTA</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>host_decontaminate</td>
+<td><strong>minimap2_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>host_decontaminate</td>
+<td><strong>refseq</strong></td>
+<td>Boolean</td>
+<td>Only download RefSeq genomes</td>
+<td>True</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>kraken2</td>
 <td><strong>classified_out</strong></td>
 <td>String</td>
@@ -12208,6 +12656,118 @@
 <td><strong>unclassified_out</strong></td>
 <td>String</td>
 <td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
+<td>unclassified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_clean</td>
+<td><strong>classified_out</strong></td>
+<td>String</td>
+<td>File name for classified reads</td>
+<td>classified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_clean</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_clean</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_clean</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_clean</td>
+<td><strong>kraken2_args</strong></td>
+<td>String</td>
+<td>Additional kraken2 command-line arguments</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_clean</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_clean</td>
+<td><strong>unclassified_out</strong></td>
+<td>String</td>
+<td>File name for unclassified reads</td>
+<td>unclassified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_raw</td>
+<td><strong>classified_out</strong></td>
+<td>String</td>
+<td>File name for classified reads</td>
+<td>classified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_raw</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_raw</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_raw</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_raw</td>
+<td><strong>kraken2_args</strong></td>
+<td>String</td>
+<td>Additional kraken2 command-line arguments</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_raw</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_standalone_raw</td>
+<td><strong>unclassified_out</strong></td>
+<td>String</td>
+<td>File name for unclassified reads</td>
 <td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>
@@ -12276,187 +12836,35 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>read_QC_trim</td>
-<td><strong>adapters</strong></td>
-<td>File</td>
-<td>File with adapter sequences to be removed</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>bbduk_memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>call_midas</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>extract_unclassified</strong></td>
-<td>Boolean</td>
-<td>Allows user to extract unclassified reads</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>fastp_args</strong></td>
-<td>String</td>
-<td>Additional arguments to use with fastp</td>
-<td>--detect_adapter_for_pe -g -5 20 -3 20</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>host_complete_only</strong></td>
-<td>Boolean</td>
-<td>Only download host reference genome labeled "complete"</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>host_decontaminate_mem</strong></td>
-<td>Int</td>
-<td>Memory allocated for minimap2 (in GB)</td>
-<td>32</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>host_is_accession</strong></td>
-<td>Boolean</td>
-<td>Inputted "host" is an accession</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>host_is_genome</strong></td>
-<td>Boolean</td>
-<td>Inputted "host" is a genome URI</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>host_refseq</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>True</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_cpu</strong></td>
+<td>ncbi_scrub_pe</td>
+<td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
 <td>4</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_disk_size</strong></td>
+<td>ncbi_scrub_pe</td>
+<td><strong>disk_size</strong></td>
 <td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task. Increase this when using large (&gt;30GB kraken2 databases such as the "k2_standard" database)</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
 <td>100</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_memory</strong></td>
+<td>ncbi_scrub_pe</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/ncbi/sra-human-scrubber:2.2.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>ncbi_scrub_pe</td>
+<td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>midas_db</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>phix</strong></td>
-<td>File</td>
-<td>A file containing the phix used during Illumina sequencing; used in the BBDuk task</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>read_processing</strong></td>
-<td>String</td>
-<td>The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp"</td>
-<td>trimmomatic</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>read_qc</strong></td>
-<td>String</td>
-<td>The tool used for quality control (QC) of reads. Options are "fastq_scan" (default) and "fastqc"</td>
-<td>fastq_scan</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>target_organism</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>taxon_id</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>trim_min_length</strong></td>
-<td>Int</td>
-<td>Specifies minimum length of each read after trimming to be kept</td>
-<td>75</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>trim_quality_min_score</strong></td>
-<td>Int</td>
-<td>Specifies the average quality of bases in a sliding window to be kept</td>
-<td>30</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>trim_window_size</strong></td>
-<td>Int</td>
-<td>Specifies window size for trimming (the number of bases to average the quality across)</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>trimmomatic_args</strong></td>
-<td>String</td>
-<td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
-<td>-phred33</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12756,8 +13164,35 @@
 <details class="toggle">
 <summary>Read Quality Control, Trimming, Filtering, Identification and Extraction</summary>
 <details class="task">
-<summary><code>read_QC_trim</code></summary>
-<p><code>read_QC_trim</code> is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the <code>read_QC_trim</code> sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.</p>
+<summary><code>fastq-scan</code>: Read Quantification (default)</summary>
+<p>Read quantification is available via <code>fastq-scan</code> by default.</p>
+<p><code>fastq-scan</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>fastq-scan</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/rpetit3/fastq-scan/blob/master/README.md">fastq-scan on GitHub</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 <details class="task">
 <summary><code>HRRT</code>: Human Host Sequence Removal</summary>
 <p>All reads of human origin <strong>are removed</strong>, including their mates, by using NCBI's <a href="https://github.com/ncbi/sra-human-scrubber"><strong>human read removal tool (HRRT)</strong></a>. </p>
@@ -12788,77 +13223,10 @@
 </table>
 </div>
 </details>
-<div class="admonition dna">
-<p>By default, <code>read_processing</code> is set to <code>"trimmomatic"</code>. To use <code>fastp</code> instead, set <code>read_processing</code> to <code>"fastp"</code>. These tasks are mutually exclusive.</p>
 <details class="task">
-<summary><code>Trimmomatic</code>: Read Trimming (default)</summary>
-<p>Read proccessing is available via <code>Trimmomatic</code> by default.</p>
-<p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
-<div class="admonition techdetails">
-<p class="admonition-title"><code>Trimmomatic</code> Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/usadellab/Trimmomatic">Trimmomatic on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic Website</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>fastp</code>: Read Trimming (alternative)</summary>
-<p>To activate this task, set <code>read_processing</code> to <code>"fastp"</code>.</p>
-<p><code>fastp</code> trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
-<p><code>fastp</code> also has additional default parameters and features that are not a part of <code>trimmomatic</code>'s default configuration.</p>
-<details class="toggle">
-<summary><code>fastp</code> default read-trimming parameters</summary>
-<table>
-<thead>
-<tr>
-<th>Parameter</th>
-<th>Explanation</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>-g</td>
-<td>enables polyG tail trimming</td>
-</tr>
-<tr>
-<td>-5 20</td>
-<td>enables read end-trimming</td>
-</tr>
-<tr>
-<td>-3 20</td>
-<td>enables read end-trimming</td>
-</tr>
-<tr>
-<td>--detect_adapter_for_pe</td>
-<td>enables adapter-trimming <strong>only for paired-end reads</strong></td>
-</tr>
-</tbody>
-</table>
+<summary><code>fastp</code>: Read Trimming</summary>
+<p><code>fastp</code> trims low-quality regions with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 15 bases).</p>
 <p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
-</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic and fastp Technical Details</p>
 <table>
@@ -12889,7 +13257,6 @@
 </table>
 </div>
 </details>
-</div>
 <details class="task">
 <summary><code>BBDuk</code>: Adapter Trimming and PhiX Removal</summary>
 <p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">Illumina adapters here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
@@ -12924,70 +13291,6 @@
 </table>
 </div>
 </details>
-<div class="admonition dna">
-<p>By default, <code>read_qc</code> is set to <code>"fastq_scan"</code>. To use <code>fastqc</code> instead, set <code>read_qc</code> to <code>"fastqc"</code>. These tasks are mutually exclusive.</p>
-<details class="task">
-<summary><code>fastq-scan</code>: Read Quantification (default)</summary>
-<p>Read quantification is available via <code>fastq-scan</code> by default.</p>
-<p><code>fastq-scan</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
-<div class="admonition techdetails">
-<p class="admonition-title"><code>fastq-scan</code> Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/rpetit3/fastq-scan/blob/master/README.md">fastq-scan on GitHub</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<details class="task">
-<summary><code>FastQC</code>: Read Quantification (alternative)</summary>
-<p>To activate this task, set <code>read_qc</code> to <code>"fastqc"</code>.</p>
-<p><code>FastQC</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
-<p>This tool also provides a graphical visualization of the read quality.</p>
-<div class="admonition techdetails">
-<p class="admonition-title"><code>FastQC</code> Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl">task_fastqc.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/s-andrews/FastQC">FastQC on Github</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC Website</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-</div>
 <details class="task">
 <summary><code>host_decontaminate</code>: Host Read Decontamination</summary>
 <p>Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome that is directly inputted or acquired on-the-fly. The reference host genome can be inputted into the <code>host</code> input field as an assembly file (with <code>is_genome</code> set to "true"), acquired via <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon input, or assembly accession (with <code>is_accession</code> set to "true"). Host Decontaminate maps inputted reads to the host genome using <code>minimap2</code>, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads. </p>
@@ -13256,24 +13559,6 @@
 <tr>
 <td>Original Publication(s)</td>
 <td><a href="https://doi.org/10.1126/scitranslmed.aap9489">Metagenome analysis using the Kraken software suite</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">read_QC_trim Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Subworkflow</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl">wf_read_QC_trim_pe.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl">wf_read_QC_trim_se.wdl</a></td>
 </tr>
 </tbody>
 </table>
@@ -15010,16 +15295,11 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <details class="toggle">
 <summary>Read Quality Control, Trimming, Filtering, Identification</summary>
 <details class="task">
-<summary><code>read_QC_trim</code>: Read Quality Trimming, Adapter Removal, Quantification, and Identification</summary>
-<p><code>read_QC_trim</code> is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the <code>read_QC_trim</code> sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.</p>
-<div class="admonition dna">
-<p>By default, <code>read_processing</code> is set to <code>"trimmomatic"</code>. To use <code>fastp</code> instead, set <code>read_processing</code> to <code>"fastp"</code>. These tasks are mutually exclusive.</p>
-<details class="task">
-<summary><code>Trimmomatic</code>: Read Trimming (default)</summary>
-<p>Read proccessing is available via <code>Trimmomatic</code> by default.</p>
-<p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
+<summary><code>fastq-scan</code>: Read Quantification (default)</summary>
+<p>Read quantification is available via <code>fastq-scan</code> by default.</p>
+<p><code>fastq-scan</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
 <div class="admonition techdetails">
-<p class="admonition-title"><code>Trimmomatic</code> Technical Details</p>
+<p class="admonition-title"><code>fastq-scan</code> Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -15030,59 +15310,54 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_trimmomatic.wdl">task_trimmomatic.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/usadellab/Trimmomatic">Trimmomatic on GitHub</a></td>
+<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="http://www.usadellab.org/cms/?page=trimmomatic">Trimmomatic Website</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4103590/">Trimmomatic: a flexible trimmer for Illumina sequence data</a></td>
+<td><a href="https://github.com/rpetit3/fastq-scan/blob/master/README.md">fastq-scan on GitHub</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
 <details class="task">
-<summary><code>fastp</code>: Read Trimming (alternative)</summary>
-<p>To activate this task, set <code>read_processing</code> to <code>"fastp"</code>.</p>
-<p><code>fastp</code> trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
-<p><code>fastp</code> also has additional default parameters and features that are not a part of <code>trimmomatic</code>'s default configuration.</p>
-<details class="toggle">
-<summary><code>fastp</code> default read-trimming parameters</summary>
+<summary><code>HRRT</code>: Human Host Sequence Removal</summary>
+<p>All reads of human origin <strong>are removed</strong>, including their mates, by using NCBI's <a href="https://github.com/ncbi/sra-human-scrubber"><strong>human read removal tool (HRRT)</strong></a>. </p>
+<p>HRRT is based on the <a href="https://doi.org/10.1186/s13059-021-02490-0">SRA Taxonomy Analysis Tool</a> and employs a k-mer database constructed of k-mers from Eukaryota derived from all human RefSeq records with any k-mers found in non-Eukaryota RefSeq records subtracted from the database.</p>
+<div class="admonition techdetails">
+<p class="admonition-title">NCBI-Scrub Technical Details</p>
 <table>
 <thead>
 <tr>
-<th>Parameter</th>
-<th>Explanation</th>
+<th></th>
+<th>Links</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>-g</td>
-<td>enables polyG tail trimming</td>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_ncbi_scrub.wdl">task_ncbi_scrub.wdl</a></td>
 </tr>
 <tr>
-<td>-5 20</td>
-<td>enables read end-trimming</td>
+<td>Software Source Code</td>
+<td><a href="https://github.com/ncbi/sra-human-scrubber">HRRT on GitHub</a></td>
 </tr>
 <tr>
-<td>-3 20</td>
-<td>enables read end-trimming</td>
-</tr>
-<tr>
-<td>--detect_adapter_for_pe</td>
-<td>enables adapter-trimming <strong>only for paired-end reads</strong></td>
+<td>Software Documentation</td>
+<td><a href="https://ncbiinsights.ncbi.nlm.nih.gov/2023/02/02/scrubbing-human-sequences-sra-submissions/">HRRT on NCBI</a></td>
 </tr>
 </tbody>
 </table>
-<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
+</div>
 </details>
+<details class="task">
+<summary><code>fastp</code>: Read Trimming</summary>
+<p><code>fastp</code> trims low-quality regions with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 15 bases).</p>
+<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic and fastp Technical Details</p>
 <table>
@@ -15113,7 +15388,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </table>
 </div>
 </details>
-</div>
 <details class="task">
 <summary><code>BBDuk</code>: Adapter Trimming and PhiX Removal</summary>
 <p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">Illumina adapters here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
@@ -15148,14 +15422,19 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </table>
 </div>
 </details>
-<div class="admonition dna">
-<p>By default, <code>read_qc</code> is set to <code>"fastq_scan"</code>. To use <code>fastqc</code> instead, set <code>read_qc</code> to <code>"fastqc"</code>. These tasks are mutually exclusive.</p>
 <details class="task">
-<summary><code>fastq-scan</code>: Read Quantification (default)</summary>
-<p>Read quantification is available via <code>fastq-scan</code> by default.</p>
-<p><code>fastq-scan</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
+<summary><code>host_decontaminate</code>: Host Read Decontamination</summary>
+<p>Host genetic data is frequently incidentally sequenced alongside pathogens, which can negatively affect the quality of downstream analysis. Host Decontaminate attempts to remove host reads by aligning to a reference host genome that is directly inputted or acquired on-the-fly. The reference host genome can be inputted into the <code>host</code> input field as an assembly file (with <code>is_genome</code> set to "true"), acquired via <a href="https://www.ncbi.nlm.nih.gov/taxonomy">NCBI Taxonomy-compatible</a> taxon input, or assembly accession (with <code>is_accession</code> set to "true"). Host Decontaminate maps inputted reads to the host genome using <code>minimap2</code>, reports mapping statistics to this host genome, and outputs the unaligned dehosted reads. </p>
+<p>The detailed steps and tasks are as follows:</p>
+<details class="task">
+<summary><code>datasets_genome_length</code></summary>
+<p>The <code>datasets_genome_length</code> task uses <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/taxonomy/"><code>NCBI Datasets</code></a> to acquire genome length metadata for an inputted taxon and retrieve a top reference accession. This task generates a summary file of all successful hits to the input <code>taxon</code>, which includes each genome's accession number, completeness status, genome length, source, and other relevant metadata. The task will then calculate the average expected genome length in basepairs for the input <code>taxon</code>.</p>
+<details class="dna">
+<summary><code>taxon</code> input parameter</summary>
+<p>This parameter accepts either a NCBI taxon ID (e.g. <code>11292</code>) or an organism name (e.g. <code>Lyssavirus rabies</code>).</p>
+</details>
 <div class="admonition techdetails">
-<p class="admonition-title"><code>fastq-scan</code> Technical Details</p>
+<p class="admonition-title">NCBI Datasets Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -15166,27 +15445,30 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastq_scan.wdl">task_fastq_scan.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_identify_taxon_id.wdl">task_identify_taxon_id.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/rpetit3/fastq-scan">fastq-scan on GitHub</a></td>
+<td><a href="https://github.com/ncbi/datasets">NCBI Datasets on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/rpetit3/fastq-scan/blob/master/README.md">fastq-scan on GitHub</a></td>
+<td><a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/">NCBI Datasets Documentation on NCBI</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1038/s41597-024-03571-y">Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
-<details class="task">
-<summary><code>FastQC</code>: Read Quantification (alternative)</summary>
-<p>To activate this task, set <code>read_qc</code> to <code>"fastqc"</code>.</p>
-<p><code>FastQC</code> quantifies the forward and reverse reads in FASTQ files. For paired-end data, it also provide the total number of read pairs. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>
-<p>This tool also provides a graphical visualization of the read quality.</p>
+<details class="toggle">
+<summary>Download Accession</summary>
+<p>The <a href="https://www.ncbi.nlm.nih.gov/datasets/"><code>NCBI Datasets</code></a> task downloads specified assemblies from NCBI using either the <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/virus-genome/">virus</a> or <a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/reference-docs/data-packages/genome/">genome</a> (for all other genome types) package as appropriate.</p>
+<p>This task uses the accession ID output from the <code>skani</code> task to download the the most closely related reference genome to the input assembly. The downloaded reference is then used for downstream analysis, including variant calling and consensus generation.</p>
 <div class="admonition techdetails">
-<p class="admonition-title"><code>FastQC</code> Technical Details</p>
+<p class="admonition-title">NCBI Datasets Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -15197,23 +15479,127 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_fastqc.wdl">task_fastqc.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_ncbi_datasets.wdl">task_ncbi_datasets.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/s-andrews/FastQC">FastQC on Github</a></td>
+<td><a href="https://github.com/ncbi/datasets">NCBI Datasets on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://www.bioinformatics.babraham.ac.uk/projects/fastqc/">FastQC Website</a></td>
+<td><a href="https://www.ncbi.nlm.nih.gov/datasets/docs/v2/">NCBI Datasets Documentation on NCBI</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1038/s41597-024-03571-y">Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets</a></td>
 </tr>
 </tbody>
 </table>
 </div>
 </details>
-</div>
+<details class="toggle">
+<summary>Map Reads to Host</summary>
+<p><code>minimap2</code> is a popular aligner that is used to align reads (or assemblies) to an assembly file. In minimap2, "modes" are a group of preset options.</p>
+<p>The mode used in this task is <code>map-ont</code> which is the default mode for long reads and indicates that long reads of ~10% error rates should be aligned to the reference genome. The output file is in SAM format.</p>
+<p>For more information regarding modes and the available options for <code>minimap2</code>, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
 <div class="admonition techdetails">
-<p class="admonition-title">read_QC_trim Technical Details</p>
+<p class="admonition-title">minimap2 Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl">task_minimap2.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/lh3/minimap2">minimap2 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://lh3.github.io/minimap2">minimap2</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/34/18/3094/4994778">Minimap2: pairwise alignment for nucleotide sequences</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="toggle">
+<summary>Extract Unaligned Reads</summary>
+<p>The <code>bam_to_unaligned_fastq</code> task will extract a FASTQ file of reads that failed to align, while removing unpaired reads. </p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>parse_mapping</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl">task_parse_mapping.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>assembly_metrics</code>: Mapping Statistics</summary>
+<p>The <code>assembly_metrics</code> task generates mapping statistics from a BAM file. It uses samtools to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics.</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>assembly_metrics</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl">task_assembly_metrics.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Host Decontaminate Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -15224,7 +15610,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <tbody>
 <tr>
 <td>Subworkflow</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_pe.wdl">wf_read_QC_trim_pe.wdl</a><br><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_QC_trim_se.wdl">wf_read_QC_trim_se.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_host_decontaminate.wdl">wf_host_decontaminate.wdl</a></td>
 </tr>
 </tbody>
 </table>
@@ -15840,12 +16226,13 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <li><strong>Human Immunodeficiency Virus 1</strong> (<code>"11676"</code>, <code>"human immunodeficiency virus 1"</code>)</li>
 <li><strong>Human Immunodeficiency Virus 2</strong> (<code>"11709"</code>, <code>"human immunodeficiency virus 2"</code>)</li>
 <li><strong>West Nile Virus</strong> (<code>"11082"</code>, <code>"west nile virus"</code>)</li>
+<li><strong>Influenza (general)</strong> (<code>"11308"</code>, <code>"Orthomyxoviridae"</code>)</li>
 <li><strong>Influenza A</strong> (<code>"11320"</code>, <code>"influenza a virus"</code>)</li>
 <li><strong>Influenza B</strong> (<code>"11520"</code>, <code>"influenza b virus"</code>)</li>
 <li><strong>RSV-A</strong> (<code>"208893"</code>, <code>"human respiratory syncytial virus a"</code>)</li>
 <li><strong>RSV-B</strong> (<code>"208895"</code>, <code>"human respiratory syncytial virus b"</code>)</li>
 <li><strong>Measles</strong> (<code>"11234"</code>, <code>"measles"</code>)</li>
-<li><strong>Rabies</strong> (<code>"11292"</code>, <code>"lyssavirus rabies"</code>)</li>
+<li><strong>Rabies</strong> (<code>"11292"</code>, <code>"Lyssavirus rabies"</code>)</li>
 <li><strong>Mumps</strong> (<code>"2560602"</code>, <code>"mumps virus"</code>, <code>"Mumps orthorubulavirus"</code>)</li>
 <li><strong>Rubella</strong> (<code>"11041"</code>, <code>"rubella virus"</code>)</li>
 </ul>
@@ -16169,6 +16556,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Percentage of reads mapped to host reference genome</td>
 </tr>
 <tr>
+<td>downsampled_read1</td>
+<td>File</td>
+<td>RASUSA downsampled reads derived from read1 input</td>
+</tr>
+<tr>
+<td>downsampled_read2</td>
+<td>File</td>
+<td>RASUSA downsampled reads derived from read2 input</td>
+</tr>
+<tr>
 <td>ete4_docker</td>
 <td>String</td>
 <td>Docker image used for ETE4 taxonomy parsing</td>
@@ -16319,6 +16716,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Version of iVar for running the iVar consensus command</td>
 </tr>
 <tr>
+<td>kraken2_database</td>
+<td>String</td>
+<td>Kraken2 database used for the taxonomic assignment</td>
+</tr>
+<tr>
+<td>kraken2_docker</td>
+<td>String</td>
+<td>Docker image used to run kraken2</td>
+</tr>
+<tr>
 <td>kraken2_extracted_read1</td>
 <td>File</td>
 <td>Forward reads extracted by taxonomic classification</td>
@@ -16329,24 +16736,19 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Reverse reads extracted by taxonomic classification</td>
 </tr>
 <tr>
-<td>kraken_database</td>
+<td>kraken2_extraction_status</td>
 <td>String</td>
-<td>Database used for Kraken classification</td>
+<td>PASS/"FAIL" depending on if reads could be extracted</td>
 </tr>
 <tr>
-<td>kraken_docker</td>
+<td>kraken2_report</td>
 <td>String</td>
-<td>Docker image used for Kraken</td>
+<td>TXT document describing taxonomic prediction of every FASTQ record. This file is usually very large and cumbersome to open and view</td>
 </tr>
 <tr>
-<td>kraken_report</td>
+<td>kraken2_version</td>
 <td>String</td>
-<td>Full Kraken report</td>
-</tr>
-<tr>
-<td>kraken_version</td>
-<td>String</td>
-<td>Version of Kraken software used</td>
+<td>The version of kraken2 used</td>
 </tr>
 <tr>
 <td>megahit_docker</td>
@@ -16397,6 +16799,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>ncbi_scrub_human_spots_removed</td>
 <td>Int</td>
 <td>Number of spots removed (or masked)</td>
+</tr>
+<tr>
+<td>ncbi_scrub_read1_dehosted</td>
+<td>File</td>
+<td>Dehosted reads after NCBI scrub</td>
+</tr>
+<tr>
+<td>ncbi_scrub_read2_dehosted</td>
+<td>File</td>
+<td>Dehosted reads after NCBI scrub</td>
 </tr>
 <tr>
 <td>ncbi_taxon_id</td>
@@ -16679,16 +17091,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Version of QUAST used</td>
 </tr>
 <tr>
-<td>read1_dehosted</td>
-<td>File</td>
-<td>The dehosted forward reads file; suggested read file for SRA submission</td>
-</tr>
-<tr>
-<td>read2_dehosted</td>
-<td>File</td>
-<td>The dehosted reverse reads file; suggested read file for SRA submission</td>
-</tr>
-<tr>
 <td>read_mapping_cov_hist</td>
 <td>File</td>
 <td>Coverage histogram from read mapping</td>
@@ -16832,16 +17234,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>theiaviral_illumina_pe_version</td>
 <td>String</td>
 <td>Version of TheiaViral Illumina PE workflow</td>
-</tr>
-<tr>
-<td>trimmomatic_docker</td>
-<td>String</td>
-<td>The docker image used for the trimmomatic module in this workflow</td>
-</tr>
-<tr>
-<td>trimmomatic_version</td>
-<td>String</td>
-<td>The version of Trimmomatic used</td>
 </tr>
 <tr>
 <td>vadr_alerts_list</td>
@@ -18129,66 +18521,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>The version of fastq_scan</td>
 </tr>
 <tr>
-<td>fastqc_clean1_html</td>
-<td>File</td>
-<td>An HTML file that provides a graphical visualization of clean forward read quality from fastqc to open in an internet browser</td>
-</tr>
-<tr>
-<td>fastqc_clean2_html</td>
-<td>File</td>
-<td>An HTML file that provides a graphical visualization of clean reverse read quality from fastqc to open in an internet browser</td>
-</tr>
-<tr>
-<td>fastqc_docker</td>
-<td>String</td>
-<td>The Docker container used for fastqc</td>
-</tr>
-<tr>
-<td>fastqc_num_reads_clean1</td>
-<td>Int</td>
-<td>The number of forward reads after cleaning by fastqc</td>
-</tr>
-<tr>
-<td>fastqc_num_reads_clean2</td>
-<td>Int</td>
-<td>The number of reverse reads after cleaning by fastqc</td>
-</tr>
-<tr>
-<td>fastqc_num_reads_clean_pairs</td>
-<td>String</td>
-<td>The number of read pairs after cleaning by fastqc</td>
-</tr>
-<tr>
-<td>fastqc_num_reads_raw1</td>
-<td>Int</td>
-<td>The number of input forward reads by fastqc before cleaning</td>
-</tr>
-<tr>
-<td>fastqc_num_reads_raw2</td>
-<td>Int</td>
-<td>The number of input reverse reads by fastqc before cleaning</td>
-</tr>
-<tr>
-<td>fastqc_num_reads_raw_pairs</td>
-<td>String</td>
-<td>The number of input read pairs by fastqc before cleaning</td>
-</tr>
-<tr>
-<td>fastqc_raw1_html</td>
-<td>File</td>
-<td>An HTML file that provides a graphical visualization of raw forward read quality from fastqc to open in an internet browser</td>
-</tr>
-<tr>
-<td>fastqc_raw2_html</td>
-<td>File</td>
-<td>An HTML file that provides a graphical visualization of raw reverse read quality from fastqc to open in an internet browser</td>
-</tr>
-<tr>
-<td>fastqc_version</td>
-<td>String</td>
-<td>Version of fastqc software used</td>
-</tr>
-<tr>
 <td>identified_organisms</td>
 <td>Array[String]</td>
 <td>List of organisms extracted and identified from an panel level sample</td>
@@ -18209,6 +18541,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Docker image used to run kraken2</td>
 </tr>
 <tr>
+<td>kraken2_percent_human_clean</td>
+<td>Float</td>
+<td>The percentage of human-classified reads in the sample's clean reads</td>
+</tr>
+<tr>
+<td>kraken2_percent_human_raw</td>
+<td>Float</td>
+<td>The percentage of human-classified reads in the sample's raw reads</td>
+</tr>
+<tr>
 <td>kraken2_report_clean</td>
 <td>File</td>
 <td>The full Kraken report for the sample's clean reads</td>
@@ -18224,16 +18566,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>The version of kraken2 used</td>
 </tr>
 <tr>
-<td>kraken_percent_human_clean</td>
-<td>Float</td>
-<td>Percent of human read data detected using the Kraken2 software after host removal for cleaned reads</td>
-</tr>
-<tr>
-<td>kraken_percent_human_raw</td>
-<td>Float</td>
-<td>Percent of human read data detected using the Kraken2 software after host removal for raw reads</td>
-</tr>
-<tr>
 <td>ncbi_scrub_docker</td>
 <td>String</td>
 <td>The Docker image for NCBI's HRRT (human read removal tool)</td>
@@ -18244,24 +18576,24 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Number of spots removed (or masked)</td>
 </tr>
 <tr>
+<td>ncbi_scrub_read1_dehosted</td>
+<td>File</td>
+<td>Dehosted reads after NCBI scrub</td>
+</tr>
+<tr>
+<td>ncbi_scrub_read2_dehosted</td>
+<td>File</td>
+<td>Dehosted reads after NCBI scrub</td>
+</tr>
+<tr>
 <td>read1_clean</td>
 <td>File</td>
 <td>Forward read file after quality trimming and adapter removal</td>
 </tr>
 <tr>
-<td>read1_dehosted</td>
-<td>File</td>
-<td>The dehosted forward reads file; suggested read file for SRA submission</td>
-</tr>
-<tr>
 <td>read2_clean</td>
 <td>File</td>
 <td>Reverse read file after quality trimming and adapter removal</td>
-</tr>
-<tr>
-<td>read2_dehosted</td>
-<td>File</td>
-<td>The dehosted reverse reads file; suggested read file for SRA submission</td>
 </tr>
 <tr>
 <td>theiaviral_panel_analysis_date</td>
@@ -18272,16 +18604,6 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>theiaviral_panel_version</td>
 <td>String</td>
 <td>The version of the workflow that was run</td>
-</tr>
-<tr>
-<td>trimmomatic_docker</td>
-<td>String</td>
-<td>The docker image used for the trimmomatic module in this workflow</td>
-</tr>
-<tr>
-<td>trimmomatic_version</td>
-<td>String</td>
-<td>The version of Trimmomatic used</td>
 </tr>
 </tbody>
 </table>
@@ -18353,6 +18675,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <li><code>skani_status</code>: If this output is populated with something other than "PASS" and <code>skani_top_accession</code> is populated with "N/A", this indicates that Skani did not identify a sufficiently similar reference genome. The Skani database comprises a broad array of NCBI viral genomes, so a failure here likely indicates poor read quality because viral contigs are not found in the <em>de novo</em> assembly or are too small. It may be useful to BLAST whatever contigs do exist in the <em>de novo</em> to determine if there is contamination that can be removed via the <code>host</code> input parameter. Additionally, review CheckV <em>de novo</em> outputs to assess if viral contigs were retrieved. Finally, consider keeping <code>extract_unclassified</code> to "true", using a higher <code>read_extraction_rank</code> if it will not introduce contaminant viruses, and invoking a <code>host</code> input to remove host reads if host contigs are present.</li>
 <li><code>megahit_status</code> / <code>flye_status</code>: If this output is populated with something other than "PASS", it indicates the fallback assembler did not successfully complete. The fallback assemblers are permissive, so failure here likely indicates poor read quality. Review read QC to check read quality, particularly following read classification. If read classification is dispensing with a significant number of reads, consider <code>extract_unclassified</code>, <code>read_extraction_rank</code>, and <code>host</code> input adjustment. Otherwise, sequencing quality may be poor.</li>
 <li><code>metaviralspades_status</code> / <code>raven_denovo_status</code>: If this output is populated with something other than "PASS", it indicates the default assembler did not successfully complete or extract viral contigs (MetaviralSPAdes). On their own, these statuses do not correspond directly to workflow failure because fallback <em>de novo</em> assemblers are implemented for both TheiaViral workflows.</li>
+<li><code>kraken2_extraction_status</code>: If this output is populated with something other than "PASS", it indicates no reads could be extracted, likely because no reads correspond to the inputted taxon. Check the <code>kraken2_report</code></li>
 <li><code>read_screen_clean</code>: If this output is populated with something other than "PASS", it indicates the reads did not pass the imposed thresholds. Either the reads are poor quality or the thresholds are too stringent, in which case the thresholds can be relaxed or <code>skip_screen</code> can be set to "true".</li>
 <li><code>dehost_wf_download_status</code>: If this output is populated with something other than "PASS", it indicates a host genome could not be retrieved for decontamination. See the <code>host</code> input explanation for more information and review the <code>download_accession</code>/<code>download_taxonomy</code> task output logs for advanced error parsing.</li>
 </ul>
@@ -18388,7 +18711,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="December 30, 2025 00:37:26 UTC">2025-12-30</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="January 5, 2026 17:25:18 UTC">2026-01-05</span>
   </span>
 
     

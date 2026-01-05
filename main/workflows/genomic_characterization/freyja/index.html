@@ -8733,66 +8733,10 @@
 </tr>
 <tr>
 <td>read_QC_trim_pe</td>
-<td><strong>extract_unclassified</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim_pe</td>
 <td><strong>fastp_args</strong></td>
 <td>String</td>
 <td>Additional arguments to use with fastp</td>
 <td>--detect_adapter_for_pe -g -5 20 -3 20</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim_pe</td>
-<td><strong>host</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim_pe</td>
-<td><strong>host_complete_only</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim_pe</td>
-<td><strong>host_decontaminate_mem</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>32</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim_pe</td>
-<td><strong>host_is_accession</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim_pe</td>
-<td><strong>host_is_genome</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim_pe</td>
-<td><strong>host_refseq</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10393,7 +10337,7 @@
 <details class="task">
 <summary><code>fastp</code>: Read Trimming (alternative)</summary>
 <p>To activate this task, set <code>read_processing</code> to <code>"fastp"</code>.</p>
-<p><code>fastp</code> trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
+<p><code>fastp</code> trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4 (10 for TheiaEuk), specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 bases for paired-end, 25 for single-end).</p>
 <p><code>fastp</code> also has additional default parameters and features that are not a part of <code>trimmomatic</code>'s default configuration.</p>
 <details class="toggle">
 <summary><code>fastp</code> default read-trimming parameters</summary>
@@ -10423,8 +10367,8 @@
 </tr>
 </tbody>
 </table>
-<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
 </details>
+<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic and fastp Technical Details</p>
 <table>
@@ -10712,7 +10656,7 @@
 <details class="task">
 <summary><code>fastp</code>: Read Trimming (alternative)</summary>
 <p>To activate this task, set <code>read_processing</code> to <code>"fastp"</code>.</p>
-<p><code>fastp</code> trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 for paired-end, 25 for single-end).</p>
+<p><code>fastp</code> trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4 (10 for TheiaEuk), specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 bases for paired-end, 25 for single-end).</p>
 <p><code>fastp</code> also has additional default parameters and features that are not a part of <code>trimmomatic</code>'s default configuration.</p>
 <details class="toggle">
 <summary><code>fastp</code> default read-trimming parameters</summary>
@@ -10742,8 +10686,8 @@
 </tr>
 </tbody>
 </table>
-<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
 </details>
+<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Trimmomatic and fastp Technical Details</p>
 <table>
