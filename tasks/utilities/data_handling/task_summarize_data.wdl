@@ -71,9 +71,11 @@ task summarize_data {
   # incorporate ID column
   temporarylist = []
   if (os.environ["default_column"] == "true"):
-    temporarylist.append("~{terra_table}_id")
+    id_col = "~{terra_table}_id"
+    temporarylist.append(id_col)
   else:
-    temporarylist.append("~{id_column_name}")
+    id_col = "~{id_column_name}"
+    temporarylist.append(id_col)
   temporarylist += columns
 
   # only represent extracted columns
@@ -135,7 +137,8 @@ task summarize_data {
       searchtable = searchtable.apply(lambda row: row.str.replace(re.escape(item), ""))
 
   # sort table by original gene index
-  final_table = table[genes]
+  final_cols = [id_col] + genes
+  final_table = table[final_cols]
 
   # replace all "False" cells with null values 
   final_table[final_table.eq(False)] = np.nan
