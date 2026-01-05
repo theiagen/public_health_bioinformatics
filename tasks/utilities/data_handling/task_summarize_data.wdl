@@ -68,6 +68,7 @@ task summarize_data {
   # split comma-separated column list into an array
   columns = "~{column_names}".split(",")
 
+  # incorporate ID column
   temporarylist = []
   if (os.environ["default_column"] == "true"):
     temporarylist.append("~{terra_table}_id")
@@ -75,6 +76,7 @@ task summarize_data {
     temporarylist.append("~{id_column_name}")
   temporarylist += columns
 
+  # only represent extracted columns
   table = table[temporarylist].copy()
 
   # create a table to search through containing only columns of interest
@@ -133,13 +135,10 @@ task summarize_data {
       searchtable = searchtable.apply(lambda row: row.str.replace(re.escape(item), ""))
 
   # sort table by original gene index
-  table = table[genes]
+  final_table = table[genes]
 
   # replace all "False" cells with null values 
-  table[table.eq(False)] = np.nan
-
-  # dropping columns of interest so only true/false ones remain
-  table.drop(columns,axis=1,inplace=True)
+  final_table[final_table.eq(False)] = np.nan
 
   table.to_csv("~{output_prefix}_summarized_data.csv", sep=',', index=False)
 
