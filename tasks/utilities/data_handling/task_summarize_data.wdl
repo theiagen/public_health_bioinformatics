@@ -140,7 +140,7 @@ task summarize_data {
   # replace all "False" cells with null values 
   final_table[final_table.eq(False)] = np.nan
 
-  table.to_csv("~{output_prefix}_summarized_data.csv", sep=',', index=False)
+  final_table.to_csv("~{output_prefix}_summarized_data.csv", sep=',', index=False)
 
   CODE
   >>>
