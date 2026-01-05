@@ -41,6 +41,7 @@ task primer_trim {
     File trimmed_bam = "~{samplename}.primertrim.bam"
     File trim_sorted_bam = "~{samplename}.primertrim.sorted.bam"
     File trim_sorted_bai = "~{samplename}.primertrim.sorted.bam.bai"
+    File trim_log = "IVAR_OUT"
     String ivar_version = read_string("IVAR_VERSION")
     String samtools_version = read_string("SAMTOOLS_VERSION")
     String pipeline_date = read_string("DATE")

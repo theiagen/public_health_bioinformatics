@@ -19,6 +19,7 @@ import "../../tasks/taxon_id/task_ete4_taxon_id.wdl" as identify_taxon_id_task
 import "../../tasks/utilities/task_datasets_genome_length.wdl" as genome_length_task
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus_task
+import "../../tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl" as ivar_primer_trim_task
 import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as variant_call_task
 import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
@@ -45,6 +46,7 @@ workflow theiaviral_illumina_pe {
     Boolean skip_rasusa = true 
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     File? reference_gene_locations_bed # optional, if provided will be used for coverage calculations
+    File? primer_bed # optional, if provided, will be used for ivar primer trimming
     Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
     Int min_depth = 10
     Int min_map_quality = 20
@@ -222,10 +224,19 @@ workflow theiaviral_illumina_pe {
             read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
             reference_genome = select_first([reference_fasta, skani.skani_reference_assembly])
         }
+        if defined(primer_bed) {
+          # primer trimming via ivar
+          call ivar_primer_trim_task.primer_trim {
+            input:
+              samplename = samplename,
+              primer_bed = primer_bed,
+              bamfile = bwa.sorted_bam
+          }
+        }
         # consensus calling via ivar
         call ivar_consensus_task.consensus {
           input:
-            bamfile = bwa.sorted_bam,
+            bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
             samplename = samplename,
             reference_genome = select_first([reference_fasta, skani.skani_reference_assembly]),
             min_qual = min_map_quality,
@@ -247,7 +258,7 @@ workflow theiaviral_illumina_pe {
         # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
         call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
           input:
-            bamfile = bwa.sorted_bam,
+            bamfile = select_first([primer_trim.trim_sorted_bam, bwa.sorted_bam]),
             samplename = samplename,
             read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
             read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
@@ -399,6 +410,13 @@ workflow theiaviral_illumina_pe {
     File? bwa_read2_unaligned = bwa.read2_unaligned
     File? bwa_sorted_bam_unaligned = bwa.sorted_bam_unaligned
     File? bwa_sorted_bam_unaligned_bai = bwa.sorted_bam_unaligned_bai
+    # Primer trimming outputs
+    File? ivar_primer_trim_sorted_bam = primer_trim.trim_sorted_bam
+    File? ivar_primer_trim_sorted_bai = primer_trim.trim_sorted_bai
+    File? ivar_primer_trim_log = primer_trim.trim_log
+    Float? ivar_primer_trim_percent_reads_trimmed = primer_trim.primer_trimmed_read_percent
+    String? ivar_primer_trim_version = primer_trim.ivar_version
+    String? ivar_primer_trim_samtools_version = primer_trim.samtools_version
     # Read mapping stats
     File? read_mapping_report = read_mapping_stats.metrics_txt
     File? read_mapping_statistics = read_mapping_stats.stats
