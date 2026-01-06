@@ -224,7 +224,7 @@ workflow theiaviral_illumina_pe {
             read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
             reference_genome = select_first([reference_fasta, skani.skani_reference_assembly])
         }
-        if defined(primer_bed) {
+        if (defined(primer_bed)) {
           # primer trimming via ivar
           call ivar_primer_trim_task.primer_trim {
             input:
