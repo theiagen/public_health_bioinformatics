@@ -229,7 +229,7 @@ workflow theiaviral_illumina_pe {
           call ivar_primer_trim_task.primer_trim {
             input:
               samplename = samplename,
-              primer_bed = primer_bed,
+              primer_bed = select_first([primer_bed]),
               bamfile = bwa.sorted_bam
           }
         }
