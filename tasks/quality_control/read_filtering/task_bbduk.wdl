@@ -98,26 +98,26 @@ task bbduk_se {
     Int memory = 8
     Int cpu = 4
     Int disk_size = 100
-    File? adapters
-    File? phix
+    File? adapters_fasta
+    File? phix_fasta
   }
   command <<<
     # date and version control
     date | tee DATE
 
     # set adapter fasta
-    if [[ ! -z "~{adapters}" ]]; then
+    if [[ ! -z "~{adapters_fasta}" ]]; then
       echo "Using user supplied FASTA file for adapters..."
-      adapter_fasta="~{adapters}"
+      adapter_fasta="~{adapters_fasta}"
     else
       echo "User did not supply adapters FASTA file, using default adapters.fa file..."
       adapter_fasta="/bbmap/resources/adapters.fa" 
     fi
 
     # set phix fasta
-    if [[ ! -z "~{phix}" ]]; then
+    if [[ ! -z "~{phix_fasta}" ]]; then
       echo "Using user supplied FASTA file for phiX..."
-      phix_fasta="~{phix}"
+      phix_fasta="~{phix_fasta}"
     else
       echo "User did not supply phiX FASTA file, using default phix174_ill.ref.fa.gz file..."
       phix_fasta="/bbmap/resources/phix174_ill.ref.fa.gz"

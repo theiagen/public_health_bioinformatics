@@ -72,8 +72,8 @@ workflow read_QC_trim_se {
       samplename = samplename,
       read1_trimmed = select_first([trimmomatic_se.read1_trimmed, fastp_se.read1_trimmed]),
       memory = bbduk_memory,
-      adapters = adapters_fasta,
-      phix = phix_fasta
+      adapters_fasta = adapters_fasta,
+      phix_fasta = phix_fasta
   }
   if (read_qc == "fastq_scan") {
     call fastq_scan.fastq_scan_se as fastq_scan_raw {
