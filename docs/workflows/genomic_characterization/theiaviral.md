@@ -184,6 +184,8 @@
 
 {{ include_md("common_text/read_screen_task.md", condition="theiaviral", indent=8, replacements={'??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"' : '??? task "`clean_check_reads`"'}) }}
 
+{{ include_md("common_text/ivar_trim_task.md", condition="theiaviral", indent=8) }}
+
     ??? toggle "*De novo* Assembly and Reference Selection"
         ???+ warning "These tasks are only performed if no reference genome is provided"
             In this workflow, *de novo* assembly is primarily used to facilitate the selection of a closely related reference genome, though high quality *de novo* assemblies can be used for downstream analysis. If the user provides an input `reference_fasta`, the following assembly generation, assembly evaluation, and reference selections tasks will be **skipped**:
