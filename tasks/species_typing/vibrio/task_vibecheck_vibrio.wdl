@@ -25,7 +25,7 @@ task vibecheck_vibrio {
     vibecheck ~{read1} ~{read2} \
         --outdir . \
         ~{"--barcodes " + lineage_barcodes} \
-        ~{"--subsampling_fraction " + subsampling_fraction} \
+        ~{"--subsample " + subsampling_fraction} \
         ~{true='--no-detect' false='' skip_subsampling}
 
     # Parse Vibecheck results to capture lineage estimate, confidence, and any classification notes produced by Freyja.
