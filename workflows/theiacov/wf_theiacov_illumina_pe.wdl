@@ -22,8 +22,8 @@ workflow theiacov_illumina_pe {
     # sequencing values
     String seq_method = "ILLUMINA"
     File? primer_bed
-    File? adapters
-    File? phix
+    File? adapters_fasta
+    File? phix_fasta
     # reference values
     File? reference_gff
     File? reference_genome
@@ -101,8 +101,8 @@ workflow theiacov_illumina_pe {
         samplename = samplename,
         read1 = read1,
         read2 = read2,
-        adapters = adapters,
-        phix = phix,
+        adapters_fasta = adapters_fasta,
+        phix_fasta = phix_fasta,
         workflow_series = "theiacov",
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
