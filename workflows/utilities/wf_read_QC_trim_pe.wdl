@@ -177,8 +177,6 @@ workflow read_QC_trim_pe {
     File read1_clean = bbduk.read1_clean
     File read2_clean = bbduk.read2_clean
     String bbduk_docker = bbduk.bbduk_docker
-    File bbduk_adapters_stats = bbduk.adapter_stats
-    File bbduk_phiX_stats = bbduk.phiX_stats
     # fastq_scan raw (per read stats)
     Int? fastq_scan_raw1 = fastq_scan_raw.read1_seq
     Int? fastq_scan_raw2 = fastq_scan_raw.read2_seq
