@@ -9,7 +9,6 @@ task vibecheck_vibrio {
     File? read2
     File? lineage_barcodes
     Float subsampling_fraction = 0.2 # set to mirror v2025.02.24 default
-    Boolean skip_subsampling = false
     String docker = "watronfire/vibecheck:2025.02.24"
     Int disk_size = 16
     Int cpu = 2
@@ -25,7 +24,7 @@ task vibecheck_vibrio {
     vibecheck ~{read1} ~{read2} \
         --outdir . \
         ~{"--barcodes " + lineage_barcodes} \
-        ~{if skip_subsampling then "--no-subsample" else "--subsample " + subsampling_fraction}
+        ~{"--subsample " + subsampling_fraction}
 
     # Parse Vibecheck results to capture lineage estimate, confidence, and any classification notes produced by Freyja.
     python3 <<CODE
