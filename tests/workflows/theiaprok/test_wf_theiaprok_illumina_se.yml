@@ -325,7 +325,7 @@
       md5sum: a59bb42644e35c09b8fa8087156fa4c2
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/_miniwdl_inputs/0/SRR2838702_R1.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/command
-      md5sum: a317f1a2182fe1a3b26812b54eff088e
+      md5sum: aeb0dac1976ebac953e8f9fbfa0013e6
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/inputs.json
       contains: ["read", "fastq", "test", "trimmomatic_min_length"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/outputs.json
@@ -337,10 +337,10 @@
       contains: ["wdl", "theiaprok_illumina_se", "trimmomatic_se", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/work/DATE
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/work/VERSION
-      md5sum: 8101a7d1176f0618534a4695fb8c1092
+      md5sum: 4c7654214318ccebb5a6a2694e97e0cc
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/work/_miniwdl_inputs/0/SRR2838702_R1.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/work/test.trim.stats.txt
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
+      md5sum: 74bd59e8562fbc03143db35aa4f11af7
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/work/test_trimmed.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/inputs.json
       contains: ["read_QC_trim", "R1", "fastq", "test"]
@@ -458,7 +458,7 @@
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
       md5sum: ea025d9bc21997113ad5b8acb8195f63
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
-      md5sum: 99b3623752d7c78b2e4a9187399f4107
+      md5sum: b8667126574a667675a6a25ade90c5a4
     - path: miniwdl_run/workflow.log
       contains: ["wdl", "theiaprok_illumina_se", "NOTICE", "done"]
 
