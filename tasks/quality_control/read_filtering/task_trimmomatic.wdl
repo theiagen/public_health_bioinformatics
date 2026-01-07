@@ -11,7 +11,7 @@ task trimmomatic_pe {
     Int trimmomatic_window_quality = 30
     String? trimmomatic_override_args #Note that trimming steps occur in the same order that they are given on the command line
 
-    Boolean trimmomatic_trim_adapters = true
+    Boolean trimmomatic_trim_adapters = false
     File? trimmomatic_adapter_fasta
     String? trimmomatic_adapter_trim_args
 
