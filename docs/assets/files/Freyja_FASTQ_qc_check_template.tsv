@@ -1,0 +1,6 @@
+taxon	num_reads_raw1	num_reads_raw2	num_reads_clean1	num_reads_clean2	kraken_human	kraken_human_dehosted	sc2_s_gene_mean_coverage	sc2_s_gene_percent_coverage
+SARS-CoV-2	100000	100000	100000	100000	20	20	100	85
+HIV					20	20
+WNV					20	20
+MPXV					20	20
+flu					20	20

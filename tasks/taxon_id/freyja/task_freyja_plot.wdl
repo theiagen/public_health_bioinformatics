@@ -10,7 +10,7 @@ task freyja_plot_task {
     String plot_time_interval="MS"
     Int plot_day_window=14
     String freyja_plot_name
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1"
     Int disk_size = 100
     Int mincov = 60
     Int memory = 2
