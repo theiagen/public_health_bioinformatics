@@ -31,8 +31,8 @@ workflow read_QC_trim_pe {
     Int? kraken_cpu
     File? kraken_db
     String? target_organism
-    File? adapters_fasta
-    File? phix_fasta
+    File? adapters
+    File? phix
     String? workflow_series
     String read_processing = "trimmomatic" # options: trimmomatic, fastp
     String read_qc = "fastq_scan" # options: fastq_scan, fastqc
@@ -112,11 +112,11 @@ workflow read_QC_trim_pe {
   call bbduk_task.bbduk {
     input:
       samplename = samplename,
-      read1 = select_first([trimmomatic_pe.read1_trimmed, fastp.read1_trimmed]),
-      read2 = select_first([trimmomatic_pe.read2_trimmed, fastp.read2_trimmed]),
+      read1_trimmed = select_first([trimmomatic_pe.read1_trimmed, fastp.read1_trimmed]),
+      read2_trimmed = select_first([trimmomatic_pe.read2_trimmed, fastp.read2_trimmed]),
       memory = bbduk_memory,
-      adapters_fasta = adapters_fasta,
-      phix_fasta = phix_fasta
+      adapters = adapters,
+      phix = phix
   }
   if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiameta") {
     if (call_midas) {

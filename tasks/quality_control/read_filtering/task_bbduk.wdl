@@ -2,74 +2,43 @@ version 1.0
 
 task bbduk {
   input {
-    File read1
-    File read2
+    File read1_trimmed
+    File read2_trimmed
     String samplename
     Int memory = 8
     Int cpu = 4
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bbtools:38.76"
     Int disk_size = 100
-    File? adapters_fasta
-    File? phix_fasta
+    File? adapters
+    File? phix
   }
   command <<<
     # date and version control
     date | tee DATE
 
-    # Repairing disordered reads (if they exist) so that the first read in file 1 is the same mate of the first read in file 2
-    echo "Repairing paired-end reads to ensure correct order..."
-    repair.sh \
-      in=~{read1} \
-      in2=~{read2} \
-      out=~{samplename}.raw_1.fastq.gz \
-      out2=~{samplename}.raw_2.fastq.gz
-
-    # Set phix fasta
-    if [[ -n "~{phix_fasta}" ]]; then
-      phix_fasta="~{phix_fasta}"
-      echo "Using user supplied FASTA file for phiX: '~{phix_fasta}'"
+    # set adapter fasta
+    if [[ ! -z "~{adapters}" ]]; then
+      echo "Using user supplied FASTA file for adapters..."
+      adapter_fasta="~{adapters}"
     else
+      echo "User did not supply adapters FASTA file, using default adapters.fa file..."
+      adapter_fasta="/bbmap/resources/adapters.fa" 
+    fi
+
+    # set phix fasta
+    if [[ ! -z "~{phix}" ]]; then
+      echo "Using user supplied FASTA file for phiX..."
+      phix_fasta="~{phix}"
+    else
+      echo "User did not supply phiX FASTA file, using default phix174_ill.ref.fa.gz file..."
       phix_fasta="/bbmap/resources/phix174_ill.ref.fa.gz"
-      echo "Using default phiX FASTA file: '/bbmap/resources/phix174_ill.ref.fa.gz'"
     fi
 
-    # Attempt phiX removal first to remove contamination
-    echo "Filtering and removing reads contaminated with phiX..."
-    bbduk.sh \
-      in=~{samplename}.raw_1.fastq.gz \
-      in2=~{samplename}.raw_2.fastq.gz \
-      out=~{samplename}.rm_phix_1.fastq.gz \
-      out2=~{samplename}.rm_phix_2.fastq.gz \
-      ref=${phix_fasta} \
-      stats=~{samplename}.phix.stats.txt \
-      statscolumns=5 \
-      k=31 hdist=1 ordered=t
+    repair.sh in1=~{read1_trimmed} in2=~{read2_trimmed} out1=~{samplename}.paired_1.fastq.gz out2=~{samplename}.paired_2.fastq.gz
 
-    # Set adapter fasta
-    if [[ -n "~{adapters_fasta}" ]]; then
-      adapter_fasta="~{adapters_fasta}"
-      echo "Using user supplied FASTA file for adapters: '~{adapters_fasta}'"
-    else
-      adapter_fasta="/bbmap/resources/adapters.fa"
-      echo "Using default adapters FASTA file: '/bbmap/resources/adapters.fa'"
-    fi
+    bbduk.sh in1=~{samplename}.paired_1.fastq.gz in2=~{samplename}.paired_2.fastq.gz out1=~{samplename}.rmadpt_1.fastq.gz out2=~{samplename}.rmadpt_2.fastq.gz ref=${adapter_fasta} stats=~{samplename}.adapters.stats.txt ktrim=r k=23 mink=11 hdist=1 tpe tbo ordered=t
 
-    # Trim adapters
-    echo "Trimming adapters and capturing those reads..."
-    bbduk.sh \
-      in=~{samplename}.rm_phix_1.fastq.gz \
-      in2=~{samplename}.rm_phix_2.fastq.gz \
-      out=~{samplename}.rm_adpt_1.fastq.gz \
-      out2=~{samplename}.rm_adpt_2.fastq.gz \
-      ref=${adapter_fasta} \
-      stats=~{samplename}.adapters.stats.txt \
-      statscolumns=5 \
-      k=23 ktrim=r mink=11 hdist=1 tpe=t tbo=t ordered=t
-
-    # Rename output files to final cleaned filenames
-    mv ~{samplename}.rm_adpt_1.fastq.gz ~{samplename}_1.clean.fastq.gz
-    mv ~{samplename}.rm_adpt_2.fastq.gz ~{samplename}_2.clean.fastq.gz
-
+    bbduk.sh in1=~{samplename}.rmadpt_1.fastq.gz in2=~{samplename}.rmadpt_2.fastq.gz out1=~{samplename}_1.clean.fastq.gz out2=~{samplename}_2.clean.fastq.gz outm=~{samplename}.matched_phix.fq ref=${phix_fasta} k=31 hdist=1 stats=~{samplename}.phix.stats.txt ordered=t
   >>>
   output {
     File read1_clean = "${samplename}_1.clean.fastq.gz"
@@ -98,26 +67,26 @@ task bbduk_se {
     Int memory = 8
     Int cpu = 4
     Int disk_size = 100
-    File? adapters_fasta
-    File? phix_fasta
+    File? adapters
+    File? phix
   }
   command <<<
     # date and version control
     date | tee DATE
 
     # set adapter fasta
-    if [[ ! -z "~{adapters_fasta}" ]]; then
+    if [[ ! -z "~{adapters}" ]]; then
       echo "Using user supplied FASTA file for adapters..."
-      adapter_fasta="~{adapters_fasta}"
+      adapter_fasta="~{adapters}"
     else
       echo "User did not supply adapters FASTA file, using default adapters.fa file..."
       adapter_fasta="/bbmap/resources/adapters.fa" 
     fi
 
     # set phix fasta
-    if [[ ! -z "~{phix_fasta}" ]]; then
+    if [[ ! -z "~{phix}" ]]; then
       echo "Using user supplied FASTA file for phiX..."
-      phix_fasta="~{phix_fasta}"
+      phix_fasta="~{phix}"
     else
       echo "User did not supply phiX FASTA file, using default phix174_ill.ref.fa.gz file..."
       phix_fasta="/bbmap/resources/phix174_ill.ref.fa.gz"

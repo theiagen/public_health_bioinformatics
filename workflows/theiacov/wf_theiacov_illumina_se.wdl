@@ -20,8 +20,8 @@ workflow theiacov_illumina_se {
     # sequencing values
     String seq_method = "ILLUMINA"
     File? primer_bed
-    File? adapters_fasta
-    File? phix_fasta
+    File? adapters
+    File? phix
     # trimming parameters
     Boolean trim_primers = true
     Int trim_min_length = 25
@@ -97,8 +97,8 @@ workflow theiacov_illumina_se {
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
-        adapters_fasta = adapters_fasta,
-        phix_fasta = phix_fasta,
+        adapters = adapters,
+        phix = phix,
         workflow_series = "theiacov",
         target_organism = organism_parameters.kraken_target_organism
     }
