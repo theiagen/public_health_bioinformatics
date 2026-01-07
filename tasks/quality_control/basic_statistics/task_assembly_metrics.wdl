@@ -2,8 +2,10 @@ version 1.0
 
 task stats_n_coverage {
   input {
-    File bamfile
+    File bamfile # aligned reads
     String samplename
+    File read1
+    File? read2
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
@@ -34,9 +36,16 @@ task stats_n_coverage {
     echo $meanbaseq | tee MEANBASEQ
     echo $meanmapq | tee MEANMAPQ
 
-    # Parsing stats.txt for total and mapped reads
-    total_reads=$(grep "^SN" ~{samplename}.stats.txt | grep "raw total sequences:" | cut -f 3)
-    mapped_reads=$(grep "^SN" ~{samplename}.stats.txt | grep "reads mapped:" | cut -f 3)
+    # parse inputted reads for total read count
+    read1_count=$(samtools view -c ~{read1})
+    if [ ~{if defined(read2) then "true" else "false"} == "true" ]; then
+      read2_count=$(samtools view -c ~{read2})
+      total_reads=$(echo $(($read1_count + $read2_count)))
+    else
+      total_reads=$read1_count
+    fi
+    # exclude supplementary, unmapped, and secondary alignments from the mapped count
+    mapped_reads=$(samtools view -c -F 0x904 ~{bamfile})
 
     # Check for empty values and set defaults to avoid errors
     if [ -z "$total_reads" ]; then total_reads="1"; fi  # Avoid division by zero

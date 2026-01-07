@@ -313,7 +313,7 @@
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/clearlabs.pangolin_report.csv
       md5sum: 147a1c92903eba858476dbd6023564f4
     - path: miniwdl_run/call-stats_n_coverage/command
-      md5sum: ac020678f99ac145b11d3dbc7b9fe9ba
+      md5sum: 57659076a1d0e807b508aacdd2e849c9
     - path: miniwdl_run/call-stats_n_coverage/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-stats_n_coverage/outputs.json
@@ -345,7 +345,7 @@
     - path: miniwdl_run/call-stats_n_coverage/work/clearlabs.stats.txt
       md5sum: bfed5344c91ce6f4db1f688cac0a3ab9
     - path: miniwdl_run/call-stats_n_coverage_primtrim/command
-      md5sum: 2974f886e1959cd5eaae5e495c91f7cc
+      md5sum: 91284f77c43f71227d1dde76bd244f5b
     - path: miniwdl_run/call-stats_n_coverage_primtrim/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-stats_n_coverage_primtrim/outputs.json
