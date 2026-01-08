@@ -15,7 +15,7 @@ task extract_kraken_reads {
   }
   command <<<
     # fail hard
-    set -euo pipefail
+    set -eu
 
     # decompress classified data if it is gzipped
     gunzip -c ~{kraken2_output} > kraken2_output_unzipped.txt
@@ -32,6 +32,7 @@ task extract_kraken_reads {
       --fastq-output \
       --output ~{taxon_id}_1.fastq \
       --output2 ~{taxon_id}_2.fastq \
+      || true # catch failure by output checking downstream
 
     if [ -s ~{taxon_id}_1.fastq ]; then
       echo "DEBUG: Taxon ~{taxon_id} reads extracted"
