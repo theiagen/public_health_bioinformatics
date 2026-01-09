@@ -24,7 +24,7 @@ workflow read_QC_trim_se {
     File? adapters
     File? phix
     String? workflow_series
-    String? trimmomatic_args
+    String? trimmomatic_override_args
     Boolean call_midas = false
     File? midas_db
     Boolean call_kraken = false
@@ -51,9 +51,9 @@ workflow read_QC_trim_se {
         samplename = samplename,
         read1 = select_first([ncbi_scrub_se.read1_dehosted, read1]),
         trimmomatic_min_length = trim_min_length,
-        trimmomatic_quality_trim_score = trim_quality_min_score,
+        trimmomatic_window_quality = trim_quality_min_score,
         trimmomatic_window_size = trim_window_size,
-        trimmomatic_args = trimmomatic_args
+        trimmomatic_override_args = trimmomatic_override_args
     }
   }
   if (read_processing == "fastp") {
