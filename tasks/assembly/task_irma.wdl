@@ -76,7 +76,7 @@ task irma {
       echo "Type_$irma_type" > IRMA_TYPE
 
       # Helper script to handle the creation of QC summary, renaming and creation of secondary FASTA files, and acquisition of subtype
-      python3 /scripts/irma_helper.py -t "${irma_type}" -s ~{samplename} -v
+      python3 /scripts/irma_helper.py -d ~{samplename} -t "${irma_type}" -s ~{samplename} -v
 
       # rename IRMA outputs to include samplename. Example: "B_HA.fasta" -> "sample0001_HA.fasta"
       echo "DEBUG: Renaming IRMA output VCFs, FASTAs, and BAMs to include samplename...."
