@@ -9,13 +9,13 @@ task freyja_one_sample {
     String? freyja_pathogen
     File? freyja_barcodes
     File? freyja_lineage_metadata
-    Float? eps
-    Float? adapt
     Boolean auto_adapt = false
+    Float eps = 0.001 # set to mirror v1.5.3 default
+    Float adapt = 0.0 # set to mirror v1.5.3 default
     Boolean update_db = false
     Boolean confirmed_only = false
     Boolean bootstrap = false
-    Int? number_bootstraps
+    Int number_bootstraps = 100 # set to mirror v1.5.3 default
     Int? depth_cutoff
     Int memory = 8
     Int cpu = 2
