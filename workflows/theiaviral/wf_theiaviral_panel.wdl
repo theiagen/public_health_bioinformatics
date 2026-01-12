@@ -1,14 +1,19 @@
 version 1.0
 
 import "../../tasks/task_versioning.wdl" as versioning
-import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
+import "../../tasks/quality_control/basic_statistics/task_fastq_scan.wdl" as fastq_scan_task
 import "../../tasks/taxon_id/task_ete4_taxon_id.wdl" as identify_taxon_id_task
 import "../../tasks/taxon_id/task_krakentools.wdl" as krakentools_task
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2_task
-import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes
+import "../../tasks/quality_control/read_filtering/task_bbduk.wdl" as bbduk_task
+import "../../tasks/quality_control/read_filtering/task_fastp.wdl" as fastp_task
+import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub_task
+import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes_task
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
 import "../../tasks/utilities/file_handling/task_kraken_parser.wdl" as kraken_parser_task
+import "../utilities/wf_host_decontaminate.wdl" as host_decontaminate_wf
 import "wf_theiaviral_illumina_pe.wdl" as theiaviral_illumina_pe
+
 
 workflow theiaviral_panel {
   input {
@@ -30,7 +35,6 @@ workflow theiaviral_panel {
     ]
     File output_taxon_table = "gs://theiagen-public-resources-rp/reference_data/family_agnostic/theiaviral_panel_taxon_table_20251111.tsv"
     String source_table_name
-
     String terra_project
     String terra_workspace
     File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
@@ -42,21 +46,68 @@ workflow theiaviral_panel {
   call versioning.version_capture {
     input:
   }
+
   # read QC, classification, extraction, and trimming
-  call read_qc.read_QC_trim_pe as read_QC_trim {
+  call fastq_scan_task.fastq_scan_pe as fastq_scan_raw {
     input:
       read1 = read1,
-      read2 = read2,
+      read2 = read2
+  }
+  # human read scrubbing
+  call ncbi_scrub_task.ncbi_scrub_pe {
+    input:
       samplename = samplename,
-      kraken_db = kraken_db,
-      call_kraken = true,
-      host = host,
-      workflow_series = "theiaviral_panel"
+      read1 = read1,
+      read2 = read2
+  }
+  # adapter + read trimming
+  call fastp_task.fastp_pe as fastp {
+    input:
+      samplename = samplename,
+      read1 = ncbi_scrub_pe.read1_dehosted,
+      read2 = ncbi_scrub_pe.read2_dehosted
+  }
+  call bbduk_task.bbduk {
+    input:
+      samplename = samplename,
+      read1_trimmed = fastp.read1_trimmed,
+      read2_trimmed = fastp.read2_trimmed
+  }
+  # host read decontamination
+  if (defined(host)) {
+    call host_decontaminate_wf.host_decontaminate {
+      input:
+        samplename = samplename,
+        read1 = bbduk.read1_clean,
+        read2 = bbduk.read2_clean,
+        host = select_first([host])
+    }
+  }
+  # taxon-based read extraction
+  call kraken2_task.kraken2_standalone as kraken2_standalone_raw {
+    input:
+      samplename = samplename,
+      read1 = read1,
+      read2 = read2,
+      kraken2_db = select_first([kraken_db])
+  }
+  call kraken2_task.kraken2_standalone as kraken2_standalone_clean {
+    input:
+      samplename = samplename,
+      read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
+      read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean]),
+      kraken2_db = select_first([kraken_db])
+  }
+  # clean read stat gathering
+  call fastq_scan_task.fastq_scan_pe as fastq_scan_clean {
+    input:
+      read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
+      read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean])
   }
   # parse the kraken report to get the taxon ids present in the sample, lowering scatter shards
   call kraken_parser_task.kraken_output_parser as kraken_parser {
     input:
-      kraken2_report = select_first([read_QC_trim.kraken_report_clean]),
+      kraken2_report = select_first([kraken2_standalone_clean.kraken2_report]),
       taxon_ids = taxon_ids,
       read_count_threshold = min_read_count
   }
@@ -64,20 +115,20 @@ workflow theiaviral_panel {
   scatter (taxon_id in kraken_parser.parsed_taxon_ids) {
     call krakentools_task.extract_kraken_reads as krakentools {
       input:
-        kraken2_output = select_first([read_QC_trim.kraken_classified_report]),
-        kraken2_report = select_first([read_QC_trim.kraken_report_clean]),
-        read1 = select_first([read_QC_trim.kraken_classified_read1]),
-        read2 = select_first([read_QC_trim.kraken_classified_read2]),
+        kraken2_output = select_first([kraken2_standalone_clean.kraken2_classified_report]),
+        kraken2_report = select_first([kraken2_standalone_clean.kraken2_report]),
+        read1 = select_first([kraken2_standalone_clean.kraken2_classified_read1]),
+        read2 = select_first([kraken2_standalone_clean.kraken2_classified_read2]),
         taxon_id = taxon_id
     }
-    if (krakentools.success) {
+    if (krakentools.status == "PASS") {
       if (extract_unclassified) {
-        call cat_lanes.cat_lanes {
+        call cat_lanes_task.cat_lanes {
           input:
             samplename = samplename + "_" + taxon_id,
-            read1_lane1 = select_first([read_QC_trim.kraken_unclassified_read1]),
+            read1_lane1 = select_first([kraken2_standalone_clean.kraken2_unclassified_read1]),
             read1_lane2 = select_first([krakentools.extracted_read1]),
-            read2_lane1 = select_first([read_QC_trim.kraken_unclassified_read2]),
+            read2_lane1 = select_first([kraken2_standalone_clean.kraken2_unclassified_read2]),
             read2_lane2 = select_first([krakentools.extracted_read2])
         }
       }
@@ -144,6 +195,7 @@ workflow theiaviral_panel {
             "checkv_denovo_weighted_contamination": theiaviral_illumina_pe.checkv_denovo_weighted_contamination,
             "checkv_denovo_total_genes": theiaviral_illumina_pe.checkv_denovo_total_genes,
             "checkv_denovo_version": theiaviral_illumina_pe.checkv_denovo_version,
+            "checkv_denovo_status": theiaviral_illumina_pe.checkv_denovo_status,
             "quast_denovo_report": theiaviral_illumina_pe.quast_denovo_report,
             "quast_denovo_genome_length": theiaviral_illumina_pe.quast_denovo_genome_length,
             "quast_denovo_number_contigs": theiaviral_illumina_pe.quast_denovo_number_contigs,
@@ -199,6 +251,7 @@ workflow theiaviral_panel {
             "checkv_consensus_weighted_contamination": theiaviral_illumina_pe.checkv_consensus_weighted_contamination,
             "checkv_consensus_total_genes": theiaviral_illumina_pe.checkv_consensus_total_genes,
             "checkv_consensus_version": theiaviral_illumina_pe.checkv_consensus_version,
+            "checkv_consensus_status": theiaviral_illumina_pe.checkv_consensus_status,
             "pango_lineage": theiaviral_illumina_pe.pango_lineage,
             "pango_lineage_expanded": theiaviral_illumina_pe.pango_lineage_expanded,
             "pangolin_conflicts": theiaviral_illumina_pe.pangolin_conflicts,
@@ -263,67 +316,53 @@ workflow theiaviral_panel {
     String theiaviral_panel_version = version_capture.phb_version
     String theiaviral_panel_analysis_date = version_capture.date
     # Standalone Kraken2 outputs
-    String kraken2_version = read_QC_trim.kraken_version
-    String kraken2_database = read_QC_trim.kraken_database
-    String kraken2_docker = read_QC_trim.kraken_docker
-    File kraken2_report_raw = read_QC_trim.kraken_report
-    File kraken2_report_clean = select_first([read_QC_trim.kraken_report_clean])
-    File kraken2_classified_report = select_first([read_QC_trim.kraken_classified_report])
-    Float? kraken_percent_human_raw = read_QC_trim.kraken_human_viral_panel
-    Float? kraken_percent_human_clean = read_QC_trim.kraken_human_clean
-    # fastq_scan
-    Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
-    Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
-    String? fastq_scan_raw_pairs = read_QC_trim.fastq_scan_raw_pairs
-    Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
-    Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
-    String? fastq_scan_clean_pairs = read_QC_trim.fastq_scan_clean_pairs
-    String? fastq_scan_version = read_QC_trim.fastq_scan_version
-    String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
-    File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
-    File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
-    File? fastq_scan_clean1_json = read_QC_trim.fastq_scan_clean1_json
-    File? fastq_scan_clean2_json = read_QC_trim.fastq_scan_clean2_json
-    # fastqc
-    Int? fastqc_num_reads_raw1 = read_QC_trim.fastqc_raw1
-    Int? fastqc_num_reads_raw2 = read_QC_trim.fastqc_raw2
-    String? fastqc_num_reads_raw_pairs = read_QC_trim.fastqc_raw_pairs
-    Int? fastqc_num_reads_clean1 = read_QC_trim.fastqc_clean1
-    Int? fastqc_num_reads_clean2 = read_QC_trim.fastqc_clean2
-    String? fastqc_num_reads_clean_pairs = read_QC_trim.fastqc_clean_pairs
-    String? fastqc_version = read_QC_trim.fastqc_version
-    String? fastqc_docker = read_QC_trim.fastqc_docker
-    File? fastqc_raw1_html = read_QC_trim.fastqc_raw1_html
-    File? fastqc_raw2_html = read_QC_trim.fastqc_raw2_html
-    File? fastqc_clean1_html = read_QC_trim.fastqc_clean1_html
-    File? fastqc_clean2_html = read_QC_trim.fastqc_clean2_html
-    # trimming versioning
-    String? trimmomatic_version = read_QC_trim.trimmomatic_version
-    String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
-    String? fastp_version = read_QC_trim.fastp_version
-    File? fastp_html_report = read_QC_trim.fastp_html_report
+    String kraken2_version = kraken2_standalone_raw.kraken2_version
+    String kraken2_database = kraken2_standalone_raw.kraken2_database
+    String kraken2_docker = kraken2_standalone_raw.kraken2_docker
+    File kraken2_report_raw = kraken2_standalone_raw.kraken2_report
+    Float? kraken2_percent_human_raw = kraken2_standalone_clean.kraken2_percent_human
+    File kraken2_report_clean = select_first([kraken2_standalone_clean.kraken2_report])
+    File kraken2_classified_report = select_first([kraken2_standalone_clean.kraken2_classified_report])
+    Float? kraken2_percent_human_clean = kraken2_standalone_clean.kraken2_percent_human
+    # raw read quality control
+    Int? fastq_scan_num_reads_raw1 = fastq_scan_raw.read1_seq
+    Int? fastq_scan_num_reads_raw2 = fastq_scan_raw.read2_seq
+    String? fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
+    String? fastq_scan_version = fastq_scan_raw.version
+    String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
+    File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
+    File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
+    # trimming data
+    String? fastp_version = fastp.version
+    File? fastp_html_report = fastp.fastp_stats
     # host decontamination outputs
-    File? dehost_wf_dehost_read1 = read_QC_trim.dehost_wf_dehost_read1
-    File? dehost_wf_dehost_read2 = read_QC_trim.dehost_wf_dehost_read2
-    String? dehost_wf_host_accession = read_QC_trim.dehost_wf_host_accession
-    File? dehost_wf_host_mapped_bam = read_QC_trim.dehost_wf_host_mapped_bam
-    File? dehost_wf_host_mapped_bai = read_QC_trim.dehost_wf_host_mapped_bai
-    File? dehost_wf_host_fasta = read_QC_trim.dehost_wf_host_fasta
-    File? dehost_wf_host_mapping_stats = read_QC_trim.dehost_wf_host_mapping_stats
-    File? dehost_wf_host_mapping_cov_hist = read_QC_trim.dehost_wf_host_mapping_cov_hist
-    File? dehost_wf_host_flagstat = read_QC_trim.dehost_wf_host_flagstat
-    Float? dehost_wf_host_mapping_coverage = read_QC_trim.dehost_wf_host_mapping_coverage
-    Float? dehost_wf_host_mapping_mean_depth = read_QC_trim.dehost_wf_host_mapping_mean_depth
-    Float? dehost_wf_host_percent_mapped_reads = read_QC_trim.dehost_wf_host_percent_mapped_reads
-    File? dehost_wf_host_mapping_metrics = read_QC_trim.dehost_wf_host_mapping_metrics
+    File? dehost_wf_dehost_read1 = host_decontaminate.dehost_read1
+    File? dehost_wf_dehost_read2 = host_decontaminate.dehost_read2
+    String? dehost_wf_host_accession = host_decontaminate.host_genome_accession
+    File? dehost_wf_host_mapped_bam = host_decontaminate.host_mapped_sorted_bam
+    File? dehost_wf_host_mapped_bai = host_decontaminate.host_mapped_sorted_bai
+    File? dehost_wf_host_fasta = host_decontaminate.host_genome_fasta
+    File? dehost_wf_host_mapping_stats = host_decontaminate.host_mapping_stats
+    File? dehost_wf_host_mapping_cov_hist = host_decontaminate.host_mapping_cov_hist
+    File? dehost_wf_host_flagstat = host_decontaminate.host_flagstat
+    Float? dehost_wf_host_mapping_coverage = host_decontaminate.host_mapping_coverage
+    Float? dehost_wf_host_mapping_mean_depth = host_decontaminate.host_mapping_mean_depth
+    Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.host_percent_mapped_reads
+    File? dehost_wf_host_mapping_metrics = host_decontaminate.host_mapping_metrics
     # NCBI scrubber
-    File? read1_dehosted = read_QC_trim.read1_dehosted
-    File? read2_dehosted = read_QC_trim.read2_dehosted
-    Int? ncbi_scrub_human_spots_removed = read_QC_trim.ncbi_scrub_human_spots_removed
-    String? ncbi_scrub_docker = read_QC_trim.ncbi_scrub_docker
+    File? ncbi_scrub_read1_dehosted = ncbi_scrub_pe.read1_dehosted
+    File? ncbi_scrub_read2_dehosted = ncbi_scrub_pe.read2_dehosted
+    Int? ncbi_scrub_human_spots_removed = ncbi_scrub_pe.human_spots_removed
+    String? ncbi_scrub_docker = ncbi_scrub_pe.ncbi_scrub_docker
     # bbduk
-    File read1_clean = read_QC_trim.read1_clean
-    File read2_clean = read_QC_trim.read2_clean
-    String bbduk_docker = read_QC_trim.bbduk_docker
+    File read1_clean = bbduk.read1_clean
+    File read2_clean = bbduk.read2_clean
+    String bbduk_docker = bbduk.bbduk_docker
+    # clean read quality control
+    Int? fastq_scan_num_reads_clean1 = fastq_scan_clean.read1_seq
+    Int? fastq_scan_num_reads_clean2 = fastq_scan_clean.read2_seq
+    String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
+    File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
+    File? fastq_scan_clean2_json = fastq_scan_clean.read2_fastq_scan_json
   }
 }
