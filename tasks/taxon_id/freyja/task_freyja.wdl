@@ -10,8 +10,8 @@ task freyja_one_sample {
     File? freyja_barcodes
     File? freyja_lineage_metadata
     Boolean auto_adapt = false
-    Float eps = 0.001 # set to mirror v1.5.3 default
-    Float adapt = 0.0 # set to mirror v1.5.3 default
+    Float eps = 0.001 # set to mirror v2.0.1 default
+    Float adapt = 0.0 # set to mirror v2.0.1 default
     Boolean update_db = false
     Boolean confirmed_only = false
     Boolean bootstrap = false
