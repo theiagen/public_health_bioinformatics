@@ -2681,7 +2681,8 @@ theiaviral_illumina_pe	kraken_db	File	Kraken2 database file	gs://theiagen-public
 theiaviral_illumina_pe	min_allele_freq	Float	Minimum allele frequency required for a variant to populate the consensus sequence	0.6	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 theiaviral_illumina_pe	min_depth	Int	Minimum read depth required for a variant to populate the consensus sequence	10	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 theiaviral_illumina_pe	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-theiaviral_illumina_pe	primer_bed	File	The bed file containing the primers used when sequencing was performed		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+theiaviral_illumina_pe	primer_bed	File	The bed file containing the primers used when sequencing was performed		Optional	TheiaViral_Illumina_PE	general	
+theiaviral_illumina_pe	primer_bed	File	Internal component, do not modify		Optional	TheiaViral_Panel	general	
 theiaviral_illumina_pe	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	family	Optional	TheiaViral_Illumina_PE	general	
 theiaviral_illumina_pe	read_extraction_rank	String	Internal component, do not modify	family	Optional	TheiaViral_Panel	general	
 theiaviral_illumina_pe	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
