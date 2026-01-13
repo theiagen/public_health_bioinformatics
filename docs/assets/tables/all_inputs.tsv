@@ -895,7 +895,7 @@ flye_denovo	racon_memory	Int	Amount of memory/RAM (in GB) to allocate to the tas
 flye_denovo	run_porechop	Boolean	If true, trims reads before assembly using Porechop	False	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 flye_denovo	skip_polishing	Boolean	If true, skips polishing	False	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 freyja	adapt	Float	adaptive lasso penalty parameter	0.0	Optional	Freyja_FASTQ	general	
-freyja	auto_adapt	Boolean	DESCRIPTION	False	Optional	Freyja_FASTQ	general	
+freyja	auto_adapt	Boolean	When set to true will use error profile to set adapt value	False	Optional	Freyja_FASTQ	general	
 freyja	bootstrap	Boolean	Perform bootstrapping	False	Optional	Freyja_FASTQ	general	
 freyja	confirmed_only	Boolean	Include only confirmed SARS-CoV-2 lineages	False	Optional	Freyja_FASTQ	general	
 freyja	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
@@ -922,10 +922,10 @@ freyja_fastq	freyja_pathogen	String	Pathogen to be used by Freyja	SARS-CoV-2	Opt
 freyja_fastq	kraken2_target_organism	String	The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.	Severe acute respiratory syndrome coronavirus 2	Optional	Freyja_FASTQ	general	
 freyja_fastq	ont	Boolean	Indicates if the input data is derived from an ONT instrument.	False	Optional	Freyja_FASTQ	general	
 freyja_fastq	primer_bed	File	The bed file containing the primers used when sequencing was performed		Optional	Freyja_FASTQ	general	
-freyja_fastq	qc_check_table	File	DESCRIPTION		Optional	Freyja_FASTQ	general	
+freyja_fastq	qc_check_table	File	TSV containing values to check quality control metrics		Optional	Freyja_FASTQ	general	
 freyja_fastq	read2	File	Illumina reverse read file in FASTQ file format (compression optional)		Optional	Freyja_FASTQ	general	
 freyja_fastq	reference_gff	File	The GFF file for reference; should match the reference used for alignment (Wuhan-Hu-1)		Optional	Freyja_FASTQ	general	
-freyja_fastq	run_qualimap	Boolean	DESCRIPTION	True	Optional	Freyja_FASTQ	general	
+freyja_fastq	run_qualimap	Boolean	When set to true, will run qualimap and provide custom visuals	True	Optional	Freyja_FASTQ	general	
 freyja_fastq	trimmomatic_min_length	Int	The minimum length cut-off when performing read cleaning	25	Optional	Freyja_FASTQ	general	
 freyja_plot	collection_date	Array[String]	An array containing the collection dates for the sample (YYYY-MM-DD format)		Optional	Freyja_Plot	general	
 freyja_plot_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_Plot	runtime	
@@ -958,9 +958,9 @@ gene_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_F
 gene_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
 gene_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	Freyja_FASTQ	docker	
 gene_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
-gene_coverage	min_depth	Int	DESCRIPTION	10	Optional	Freyja_FASTQ	general	
-gene_coverage	sc2_s_gene_start	Int	DESCRIPTION	21563	Optional	Freyja_FASTQ	general	
-gene_coverage	sc2_s_gene_stop	Int	DESCRIPTION	25384	Optional	Freyja_FASTQ	general	
+gene_coverage	min_depth	Int	Minimum depth for coverage	10	Optional	Freyja_FASTQ	general	
+gene_coverage	sc2_s_gene_start	Int	Where the S gene starts	21563	Optional	Freyja_FASTQ	general	
+gene_coverage	sc2_s_gene_stop	Int	Where the S gene stops	25384	Optional	Freyja_FASTQ	general	
 get_fasta_genome_size	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_FASTQ	runtime	
 get_fasta_genome_size	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	Freyja_FASTQ	runtime	
 get_fasta_genome_size	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/seqkit:2.4.0--h9ee0642_0	Optional	Freyja_FASTQ	docker	
