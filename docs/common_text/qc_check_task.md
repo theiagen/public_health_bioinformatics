@@ -31,7 +31,7 @@
         - TheiaEuk_Illumina_PE_PHB: [theiaeuk_qc_check_template.tsv](../../assets/files/TheiaEuk_qc_check_template.tsv)
 <!-- endif -->
 <!-- if: freyja -->
-        - Freyja_FASTQ: [theiaeuk_qc_check_template.tsv](../../assets/files/Freyja_FASTQ_qc_check_template.tsv)
+        - Freyja_FASTQ: [freyja_qc_check_template.tsv](../../assets/files/Freyja_FASTQ_qc_check_template.tsv)
 <!-- endif -->
         !!! warning "Example Purposes Only"
                 The QC threshold values shown in the file above are for example purposes only and should not be presumed to be sufficient for every dataset.
