@@ -22,7 +22,7 @@
     - path: miniwdl_run/call-raw_check_reads/task.log
     # trimmomatic
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/command
-      md5sum: e16dcea259c3bf45ec374c92da0bf2dd
+      md5sum: ac4e59b4aab21af133ec0e9ae39347f7
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/inputs.json
       contains: ["read1", "read2", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/outputs.json
@@ -33,7 +33,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/task.log
       contains: ["wdl", "illumina_pe", "trimmomatic", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/SRR13687078.trim.stats.txt
-      md5sum: 454e9cd06acda96b7a13be30ef29c9d5
+      md5sum: 4e61a1fcbd81f359b33442506696dd7d
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/_miniwdl_inputs/0/SRR13687078_R1_dehosted.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/_miniwdl_inputs/0/SRR13687078_R2_dehosted.fastq.gz
@@ -184,7 +184,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # primer trim
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/command
-      md5sum: c54451f08216810bb850f78b58118d1b
+      md5sum: 9a60dcbc2c5e2cea27de510e40c48e13
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/inputs.json
       contains: ["primer_bed", "bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/outputs.json

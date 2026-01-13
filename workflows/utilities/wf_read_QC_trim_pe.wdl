@@ -31,13 +31,12 @@ workflow read_QC_trim_pe {
     Int? kraken_cpu
     File? kraken_db
     String? target_organism
-    Int taxon_id = 0
     File? adapters
     File? phix
     String? workflow_series
     String read_processing = "trimmomatic" # options: trimmomatic, fastp
     String read_qc = "fastq_scan" # options: fastq_scan, fastqc
-    String? trimmomatic_args
+    String? trimmomatic_override_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
   }
   if (read_qc == "fastqc") {
@@ -93,9 +92,9 @@ workflow read_QC_trim_pe {
         read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1]),
         read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
         trimmomatic_window_size = trim_window_size,
-        trimmomatic_quality_trim_score = trim_quality_min_score,
+        trimmomatic_window_quality = trim_quality_min_score,
         trimmomatic_min_length = trim_min_length,
-        trimmomatic_args = trimmomatic_args
+        trimmomatic_override_args = trimmomatic_override_args
     }
   }
   if (read_processing == "fastp") {

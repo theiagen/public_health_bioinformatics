@@ -22,7 +22,7 @@
     - path: miniwdl_run/call-raw_check_reads/task.log
     # trimmomatic
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/command
-      md5sum: 20b54af347f1644c099dace802097293
+      md5sum: f4931a9b1ac8705470b8badfd6723772
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/outputs.json
@@ -33,7 +33,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/task.log
       contains: ["wdl", "illumina_se", "trimmomatic", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/work/ERR6319327.trim.stats.txt
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
+      md5sum: 1bc2638dbf758d0d41097fa2c7b82942
     - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/work/_miniwdl_inputs/0/ERR6319327_R1_dehosted.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # bbduk
@@ -136,7 +136,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # primer trim
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/command
-      md5sum: fd55093425917e2dbe0254968bfc27bf
+      md5sum: d512f64a98f32b06039abab3e9e240e0
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/inputs.json
       contains: ["primer_bed", "bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/outputs.json
