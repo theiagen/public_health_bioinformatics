@@ -99,8 +99,7 @@ task freyja_one_sample {
     ~{'--barcodes ' + freyja_barcodes} \
     ~{'--depthcutoff ' + depth_cutoff} \
     ~{true='--confirmedonly' false='' confirmed_only} \
-    ~{if defined(adapt) then '--adapt ' + adapt else ''} \
-    ~{true='--autoadapt' false='' auto_adapt} \
+    ~{if auto_adapt then '--autoadapt' else '--adapt ' + adapt} \
     ~{samplename}_freyja_variants.tsv \
     ~{samplename}_freyja_depths.tsv \
     --output ~{samplename}_freyja_demixed.tmp
