@@ -311,7 +311,7 @@ ena_webincli_results	File	File containing the cumulative results of the ENA subm
 est_coverage_clean	Float	Estimated coverage calculated from clean reads and genome length	TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 est_coverage_raw	Float	Estimated coverage calculated from raw reads and genome length	TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 est_genome_length	Int	Estimated genome length	TheiaEuk_ONT
-est_percent_gene_coverage_tsv	File	Percent coverage for each gene in the organism being analyzed (depending on the organism input)	Freyja_FASTQ,TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+est_percent_gene_coverage_tsv	File	Percent coverage for each gene in the organism being analyzed (depending on the organism input)	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 ete4_docker	String	Docker image used for ETE4 taxonomy parsing	TheiaViral_Illumina_PE, TheiaViral_ONT
 ete4_version	String	The version of ETE4 used	TheiaViral_Illumina_PE, TheiaViral_ONT
 excluded_samples	File	A file that contains the names and reasons why a sample was excluded from submission. **For SARS-CoV-2**, there are two sections: First, a section for any samples that failed to meet pre-determined quality thresholds (`number_N` and `vadr_num_alert`). Second, a section that includes a table that describes any missing required metadata for each sample. This table has the sample name for rows and any columns that have missing metadata as headers. If a sample is missing a piece of required metadata, the corresponding cell will be blank. However, if a different sample does have metadata for that column, the associated value will appear in the corresponding cell. **For flu and mpox**, only the second section described above exists. _Please see the example below for more details_.	Mercury_Prep_N_Batch
@@ -846,11 +846,11 @@ primer_trimmed_read_percent	Float	Percentage of read data with primers trimmed a
 prokka_gbk	File	GenBank file produced from Prokka annotation of input FASTA	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 prokka_gff	File	Prokka output GFF3 file containing sequence and annotation (you can view this in IGV)	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 prokka_sqn	File	A Sequin file for GenBank submission	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-qc_check	String	A string that indicates whether or not the sample passes a set of pre-determined and user-provided QC thresholds	Freyja_FASTQ,TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-qc_standard	File	The file used in the QC Check task containing the QC thresholds.	Freyja_FASTQ,TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-qualimap_coverage_plots_html	File	HTML containing interactive plot of coverage across the reference and quality mapping coverage across the reference		Freyja_FASTQ
+qc_check	String	A string that indicates whether or not the sample passes a set of pre-determined and user-provided QC thresholds	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+qc_standard	File	The file used in the QC Check task containing the QC thresholds.	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+qualimap_coverage_plots_html	File	DESCRIPTION	Freyja_FASTQ
 qualimap_docker	String	Qualimap docker image used	Freyja_FASTQ
-qualimap_reports_bundle	File	Tarball of Qualimap reports preserving directory structure		Freyja_FASTQ
+qualimap_reports_bundle	File	DESCRIPTION	Freyja_FASTQ
 qualimap_version	String	Version of Qualimap used	Freyja_FASTQ
 quasitools_coverage_file	File	The coverage report created by Quasitools HyDRA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 quasitools_date	String	Date of Quasitools analysis	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -951,8 +951,8 @@ samtools_version	String	The version of SAMtools used to sort and index the align
 samtools_version_consensus	String	The version of SAMtools used to create the pileup before running iVar consensus	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 samtools_version_primtrim	String	The version of SAMtools used to create the pileup before running iVar trim	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 samtools_version_stats	String	The version of SAMtools used to assess the quality of read mapping	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-sc2_s_gene_mean_coverage	Float	Mean read depth for the S gene in SARS-CoV-2	Freyja_FASTQ,TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-sc2_s_gene_percent_coverage	Float	Percent coverage of the S gene in SARS-CoV-2	Freyja_FASTQ,TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+sc2_s_gene_mean_coverage	Float	Mean read depth for the S gene in SARS-CoV-2	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+sc2_s_gene_percent_coverage	Float	Percent coverage of the S gene in SARS-CoV-2	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 semibin_bins	Array[File]	An array of binned metagenomic assembled genome files	TheiaMeta_Illumina_PE
 semibin_docker	String	The Docker image of semibin	TheiaMeta_Illumina_PE
 semibin_version	String	The version of Semibin used	TheiaMeta_Illumina_PE
