@@ -97,8 +97,8 @@ This workflow runs on the sample level.
 {{ include_md("common_text/read_qc_trim_illumina_wf.md", indent=4, condition="freyja") }}
 {{ include_md("common_text/bwa_task.md", condition="freyja", indent=4) }}
 {{ include_md("common_text/primer_trim_task.md", indent=4) }}
-{{ include_md("common_text/qualimap_task.md", indent=4) }}
-{{ include_md("common_text/qc_check_task.md", indent=4) }}
+{{ include_md("common_text/qualimap_task.md", condition="freyja", indent=4) }}
+{{ include_md("common_text/qc_check_task.md", condition="freyja", indent=4) }}
 
 
 === "Illumina single-end input data"
@@ -106,15 +106,15 @@ This workflow runs on the sample level.
 {{ include_md("common_text/read_qc_trim_illumina_wf.md", indent=4, condition="freyja") }}
 {{ include_md("common_text/bwa_task.md", condition="freyja", indent=4) }}
 {{ include_md("common_text/primer_trim_task.md", indent=4) }}
-{{ include_md("common_text/qualimap_task.md", indent=4) }}
-{{ include_md("common_text/qc_check_task.md", indent=4) }}
+{{ include_md("common_text/qualimap_task.md", condition="freyja", indent=4) }}
+{{ include_md("common_text/qc_check_task.md", condition="freyja", indent=4) }}
 
 === "ONT input data"
 
 {{ include_md("common_text/read_qc_trim_ont_wf.md", indent=4, condition="freyja") }}
 {{ include_md("common_text/minimap2_task.md", condition="only_map_ont", indent=4) }}
-{{ include_md("common_text/qualimap_task.md", indent=4) }}
-{{ include_md("common_text/qc_check_task.md", indent=4) }}
+{{ include_md("common_text/qualimap_task.md", condition="freyja", indent=4) }}
+{{ include_md("common_text/qc_check_task.md", condition="freyja", indent=4) }}
 
 ??? task "`freyja` Details"
     The Freyja task will call variants and capture sequencing depth information to identify the relative abundance of lineages present. Optionally, if `bootstrap` is set to true, bootstrapping will be performed. After the optional bootstrapping step, the variants are demixed.
