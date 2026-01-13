@@ -848,9 +848,9 @@ prokka_gff	File	Prokka output GFF3 file containing sequence and annotation (you 
 prokka_sqn	File	A Sequin file for GenBank submission	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 qc_check	String	A string that indicates whether or not the sample passes a set of pre-determined and user-provided QC thresholds	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 qc_standard	File	The file used in the QC Check task containing the QC thresholds.	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-qualimap_coverage_plots_html	File	DESCRIPTION	Freyja_FASTQ
+qualimap_coverage_plots_html	File	Interactive HTML Plots of Coverage Across the Genome	Freyja_FASTQ
 qualimap_docker	String	Qualimap docker image used	Freyja_FASTQ
-qualimap_reports_bundle	File	DESCRIPTION	Freyja_FASTQ
+qualimap_reports_bundle	File	Zipped bundle of Qualimap reports and plots	Freyja_FASTQ
 qualimap_version	String	Version of Qualimap used	Freyja_FASTQ
 quasitools_coverage_file	File	The coverage report created by Quasitools HyDRA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 quasitools_date	String	Date of Quasitools analysis	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
