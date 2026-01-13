@@ -110,11 +110,6 @@ workflows:
    primaryDescriptorPath: /workflows/freyja/wf_freyja_dashboard.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Freyja_Update_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/freyja/wf_freyja_update.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
  - name: kSNP3_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp3.wdl
