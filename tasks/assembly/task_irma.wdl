@@ -67,10 +67,6 @@ task irma {
       mv -v ~{samplename}/tables/READ_COUNTS.txt ~{samplename}/tables/READ_COUNTS.tsv
       mv -v ~{samplename}/logs/run_info.txt ~{samplename}/logs/run_info.tsv
 
-      # for use in storing padded FASTA files
-      # we are keeping this dir OUTSIDE of the IRMA output dir "~{samplename}" so that we can differentiate these files (manually created by task) from the IRMA output files
-      mkdir padded_assemblies/
-
       # look at list of files that match the above pattern, grab the first one, and extract the type from the filename. We expect: ~{samplename}/B_HA.fasta
       irma_type="$(find ~{samplename}/*.fasta -type f | head -n1 | xargs -n1 basename | cut -d_ -f1)"
       echo "Type_$irma_type" > IRMA_TYPE
@@ -100,8 +96,8 @@ task irma {
 
     else
       echo "No IRMA assembly generated for flu type prediction" | tee IRMA_TYPE
-      echo "No subtype predicted by IRMA" | tee IRMA_SUBTYPE
-      echo "No subtype notes" | tee IRMA_SUBTYPE_NOTES
+      echo "No subtype predicted by IRMA" > IRMA_SUBTYPE.txt
+      echo "No subtype notes" > IRMA_SUBTYPE_NOTES.txt
       echo "Exiting IRMA task early since no IRMA assembly was generated."
       exit 0
     fi
