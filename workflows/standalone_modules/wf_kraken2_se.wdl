@@ -1,17 +1,17 @@
 version 1.0
 
-import "../../tasks/taxon_id/task_kraken2.wdl" as kraken2
-import "../../tasks/taxon_id/task_krona.wdl" as krona_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2
+import "../../tasks/taxon_id/contamination/task_krona.wdl" as krona_task
 
 workflow kraken2_se_wf {
   meta {
     description: "Classify single-end reads using Kraken2"
   }
   input {
-    String  samplename
-    File    read1
-    File    kraken2_db
+    String samplename
+    File read1
+    File kraken2_db
   }
   call kraken2.kraken2_standalone as kraken2_se {
     input:
@@ -24,7 +24,7 @@ workflow kraken2_se_wf {
       kraken2_report = kraken2_se.kraken2_report,
       samplename = samplename
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

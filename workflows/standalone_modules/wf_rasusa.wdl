@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/utilities/task_rasusa.wdl" as rasusa
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/task_rasusa.wdl" as rasusa
 
 workflow rasusa_workflow {
   input {
@@ -9,17 +9,17 @@ workflow rasusa_workflow {
     File? read2
     String samplename
     Float coverage
-    String genome_size
+    String genome_length
   }
   call rasusa.rasusa as rasusa_task {
     input:
       read1 = read1,
       read2 = read2,
       samplename = samplename,
-      genome_size = genome_size,
+      genome_length = genome_length,
       coverage = coverage
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   output {

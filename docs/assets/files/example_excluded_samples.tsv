@@ -1,0 +1,10 @@
+Samples excluded for quality thresholds:
+sample_name	message	
+sample2	VADR skipped due to poor assembly
+sample3	VADR number alerts too high: 3 greater than limit of 0
+sample4	Number of Ns was too high: 10000 greater than limit of 5000
+
+Samples excluded for missing required metadata (will have empty values in indicated columns):
+tablename_id	organism	country	library_layout
+sample5			paired
+sample6	SARS-CoV-2	USA

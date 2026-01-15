@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/utilities/submission/task_gisaid_cli.wdl" as gisaid_cli
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/submission/task_gisaid_cli.wdl" as gisaid_cli
 
 workflow Terra_2_GISAID {
   input {

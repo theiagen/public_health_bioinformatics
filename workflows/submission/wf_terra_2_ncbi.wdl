@@ -1,8 +1,8 @@
 version 1.0
 
-import "../../tasks/utilities/submission/task_submission.wdl" as submission
-import "../../tasks/utilities/submission/task_broad_ncbi_tools.wdl" as ncbi_tools
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/submission/task_broad_ncbi_tools.wdl" as ncbi_tools
+import "../../tasks/utilities/submission/task_submission.wdl" as submission
 
 workflow Terra_2_NCBI {
   input {
@@ -17,8 +17,9 @@ workflow Terra_2_NCBI {
     String sra_transfer_gcp_bucket # used to be gcp_bucket_uri
     Boolean submit_to_production = false # used to be path_on_ftp_server
     String bioproject
+    File? column_mapping_file # Optional file for column mappings
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   call submission.prune_table {
@@ -31,9 +32,10 @@ workflow Terra_2_NCBI {
       biosample_type = biosample_package,
       bioproject = bioproject,
       gcp_bucket_uri = sra_transfer_gcp_bucket,
-      skip_biosample = skip_biosample
+      skip_biosample = skip_biosample,
+      column_mapping_file = column_mapping_file
   }
-  if (skip_biosample == false){
+  if (skip_biosample == false) {
     call ncbi_tools.biosample_submit_tsv_ftp_upload {
       input:
         meta_submit_tsv = prune_table.biosample_table, 

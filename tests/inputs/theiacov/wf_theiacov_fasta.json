@@ -3,5 +3,6 @@
     "theiacov_fasta.assembly_fasta": "tests/data/theiacov/fasta/clearlabs.fasta.gz",
     "theiacov_fasta.seq_method": "clearlabs",
     "theiacov_fasta.input_assembly_method": "clearlabs",
-    "theiacov_fasta.reference_genome": "tests/inputs/completely-empty-for-test.txt"
+    "theiacov_fasta.reference_genome": "tests/inputs/completely-empty-for-test.txt",
+    "theiacov_fasta.vadr_model_file" : "tests/data/theiacov/databases/vadr-models-sarscov2-1.3-2.tar.gz"
 }

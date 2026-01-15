@@ -33,7 +33,7 @@ jobs:
           list-files: json
 
   check:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     name: ${{ matrix.wf }}
     needs: changes
     if: ${{ needs.changes.outputs.workflows != '' && toJson(fromJson(needs.changes.outputs.workflows)) != '[]' }}

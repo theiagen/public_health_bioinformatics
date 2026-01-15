@@ -5,6 +5,11 @@ workflows:
    primaryDescriptorPath: /workflows/theiaeuk/wf_theiaeuk_illumina_pe.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: TheiaEuk_ONT_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaeuk/wf_theiaeuk_ont.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Cauris_CladeTyper_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/theiaeuk/wf_cauris_cladetyper.wdl
@@ -18,11 +23,6 @@ workflows:
  - name: Snippy_Tree_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_tree.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Nullarbor_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_nullarbor.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: TheiaCoV_ClearLabs_PHB
@@ -120,6 +120,11 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp3.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: kSNP4_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp4.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: MashTree_FASTA_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_mashtree_fasta.wdl
@@ -170,6 +175,11 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_se.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Kraken2_ONT_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_ont.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: RASUSA_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_rasusa.wdl
@@ -185,14 +195,19 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/data_import/wf_sra_fetch.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Terra_2_BQ_PHB
+ - name: Fetch_SRR_Accession_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_terra_2_bq.wdl
+   primaryDescriptorPath: /workflows/utilities/data_import/wf_fetch_srr_accession.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: Concatenate_Column_Content_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_column.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: Find_Shared_Variants_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_find_shared_variants.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: Transfer_Column_Content_PHB
@@ -230,9 +245,16 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/wf_theiavalidate.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Samples_to_Ref_Tree_PHB
+ - name: PhyloCompare_PHB
    subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_addToRefTree.wdl
+   primaryDescriptorPath: /workflows/phylogenetics/wf_phylocompare.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: Nextclade_Batch_PHB 
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_batch.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Terra_2_GISAID_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/submission/wf_terra_2_gisaid.wdl
@@ -248,8 +270,73 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/wf_czgenepi_prep.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: TBProfiler_tNGS_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_tbprofiler_tngs.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Rename_FASTQ_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/file_handling/wf_rename_fastq_files.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Gambit_Core_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_gambitcore.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: Create_Terra_Table_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/data_import/wf_create_terra_table.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: Snippy_Streamline_FASTA_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline_fasta.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: Dorado_Basecalling_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_dorado_basecalling.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: Concatenate_Illumina_Lanes_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_illumina_lanes.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: Clair3_Variants_ONT_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_clair3_variants_ont.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: AMR_Search_PHB 
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_amr_search.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: Terra_2_ENA_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/submission/wf_terra_2_ena.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
+ - name: TheiaViral_ONT_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_ont.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: TheiaViral_Illumina_PE_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_illumina_pe.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: TheiaViral_Panel_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_panel.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: ONT_Barcode_Concatenation_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/data_import/wf_ont_barcode_concatenation.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json

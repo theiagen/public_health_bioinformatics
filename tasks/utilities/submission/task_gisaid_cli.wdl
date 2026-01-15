@@ -20,6 +20,9 @@ task gisaid_upload {
     # "catch_none" = I confirm ANY FRAMESHIFTS in this submission and request their release without confirmation by a curator
     
     Int disk_size = 100
+    Int cpu = 1
+    Int memory = 2
+    String docker = "us-docker.pkg.dev/general-theiagen/broadinstitute/gisaid-cli:3.0"
   }
   command <<<
     # capture GISAID CLI version
@@ -56,10 +59,10 @@ task gisaid_upload {
     File failed_uploads = "failed.txt"
   }
   runtime {
-    cpu: 1
-    memory: "2 GB"
-    disks:  "local-disk " + disk_size + " SSD"
+    cpu: cpu
+    memory: memory + " GB"
+    disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    docker: "us-docker.pkg.dev/general-theiagen/broadinstitute/gisaid-cli:3.0"
+    docker: docker
   }
 }

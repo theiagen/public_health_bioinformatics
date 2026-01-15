@@ -18,7 +18,7 @@ task usher {
     # runtime
     String docker = "us-docker.pkg.dev/general-theiagen/pathogengenomics/usher:0.6.2"
     Int memory = 16
-    Int cpus = 4
+    Int cpu = 4
     Int disk_size = 200
   }
   command <<<
@@ -131,7 +131,7 @@ task usher {
   runtime {
     docker: docker
     memory: memory + " GB"
-    cpu :  cpus
+    cpu :  cpu
     disks:  "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB"
     preemptible: 0

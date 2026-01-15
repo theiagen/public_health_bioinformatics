@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 
 workflow gambit_query {
   input {

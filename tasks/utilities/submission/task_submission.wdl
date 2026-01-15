@@ -7,28 +7,35 @@ task prune_table {
     String project_name
     File? input_table
     Array[String] sample_names
-    String biosample_type
+    String? biosample_type
     String bioproject
     String gcp_bucket_uri
     Boolean skip_biosample
     String read1_column_name = "read1"
     String read2_column_name = "read2"
+    Int memory = 8
+    Int cpu = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    Int disk_size = 100
+    File? column_mapping_file # Optional file for column mappings
   }
   meta {
-    # added so that call caching is always turned off
+    # Prevent call caching
     volatile: true
   }
   command <<<
+    set -euo pipefail
+
     # when running on terra, comment out all input_table mentions
     python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --entity_type ~{table_name} --tsv_filename ~{table_name}-data.tsv
-    
-    # when running locally, use the input_table in place of downloading from Terra
+
+    # Uncomment the following for local testing:
     #cp ~{input_table} ~{table_name}-data.tsv
 
-    # transform boolean skip_biosample into string for python comparison
+    # Transform boolean skip_biosample into string for Python comparison
     if ~{skip_biosample}; then
       export skip_bio="true"
-    else 
+    else
       export skip_bio="false"
     fi
 
@@ -37,7 +44,20 @@ task prune_table {
     import numpy as np
     import os
 
-    # set a function to remove NA values and return the cleaned table and a table of excluded samples
+    # Load the exported Terra table.
+    table = pd.read_csv("~{table_name}-data.tsv", sep="\t", header=0, dtype=str)
+
+    # If a column mapping file is provided, load it and apply the mappings.
+    if "~{column_mapping_file}" != "":
+      mapping = pd.read_csv("~{column_mapping_file}", sep="\t", header=0)
+
+      if not set(["Custom", "Required"]).issubset(mapping.columns):
+        raise KeyError("Column mapping file must contain 'Custom' and 'Required' headers.")
+      table = table.rename(columns=dict(zip(mapping["Custom"], mapping["Required"])))
+    else:
+      print("No column mapping file provided; proceeding without renaming.") 
+
+    # Helper function to remove NA values and return the cleaned table and a table of excluded samples
     def remove_nas(table, required_metadata):
       table.replace(r'^\s+$', np.nan, regex=True) # replace blank cells with NaNs 
       excluded_samples = table[table[required_metadata].isna().any(axis=1)] # write out all rows that are required with NaNs to a new table
@@ -48,70 +68,37 @@ task prune_table {
 
       return table, excluded_samples
 
-    # read export table into pandas
-    tablename = "~{table_name}-data.tsv"
-    table = pd.read_csv(tablename, delimiter='\t', header=0, dtype={"~{table_name}_id": 'str'}) # ensure sample_id is always a string)
-
-    # extract the samples for upload from the entire table
+    # extract the samples for upload from the entire table	
     table = table[table["~{table_name}_id"].isin("~{sep='*' sample_names}".split("*"))]
-
-    # set required and optional metadata fields based on the biosample_type package
-    if ("~{biosample_type}".lower() == "microbe"):
-      required_metadata = ["submission_id", "organism", "collection_date", "geo_loc_name", "sample_type"]
-      optional_metadata = ["sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "host", "isolation_source", "altitude", "biomaterial_provider", "collected_by", "depth", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lab_host", "lat_lon", "mating_type", "passage_history", "samp_size", "serotype", "serovar", "specimen_voucher", "temp", "description", "MLST"]
-      # add a column for biosample package -- required for XML submission
-      table["attribute_package"] = "Microbe.1.0"
-      # future qc checks:
-      #   q-score >= 30
-      #   reads > 50 bp
-      #   trailing/leading bases removed
-      #   similar GC content to expected genome
-      #   assembled genome ratio ~1.0
-      #   200 contigs or less
-
-    elif ("~{biosample_type}".lower() == "wastewater"):
-      required_metadata = ["submission_id", "organism", "collection_date", "geo_loc_name", "isolation_source", "ww_population", "ww_sample_duration", "ww_sample_matrix", "ww_sample_type", "ww_surv_target_1", "ww_surv_target_1_known_presence"]
-      optional_metadata = ["sample_title", "bioproject_accession", "attribute_package", "collected_by", "purpose_of_ww_sampling","purpose_of_ww_sequencing", "sequenced_by", "ww_endog_control_1", "ww_endog_control_1_conc", "ww_endog_control_1_protocol", "ww_endog_control_1_units", "ww_endog_control_2", "ww_endog_control_2_conc", "ww_endog_control_2_protocol", "ww_endog_control_2_units", "ww_flow", "ww_industrial_effluent_percent", "ww_ph", "ww_population_source", "ww_pre_treatment", "ww_primary_sludge_retention_time", "ww_processing_protocol", "ww_sample_salinity", "ww_sample_site", "ww_surv_jurisdiction", "ww_surv_system_sample_id", "ww_surv_target_1_conc", "ww_surv_target_1_conc_unit", "ww_surv_target_1_extract", "ww_surv_target_1_extract_unit", "ww_surv_target_1_gene", "ww_surv_target_1_protocol", "ww_surv_target_2", "ww_surv_target_2_conc", "ww_surv_target_2_conc_unit", "ww_surv_target_2_extract", "ww_surv_target_2_extract_unit", "ww_surv_target_2_gene", "ww_surv_target_2_known_present", "ww_surv_target_2_protocol", "ww_temperature", "ww_total_suspended_solids", "description"]
-      # add a column for biosample package -- required for XML submission
-      table["attribute_package"] = "SARS-CoV-2.wwsurv.1.0"
-
-      # qc checks:
-
-   
-    elif ("~{biosample_type}".lower() == "pathogen") or ("pathogen.cl" in "~{biosample_type}".lower()):
-      required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "host", "host_disease", "isolation_source", "lat_lon"]
-      optional_metadata = ["sample_title", "isolation_type", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
-      # add a column for biosample package -- required for XML submission
-      table["attribute_package"] = "Pathogen.cl"
-      # future qc checks:
-      #   gc after trimming 42-47.5%
-      #   average phred after trimming >= 28
-     
-      #   coverage after trimming >= 20X
-      #if "mean_coverage_depth" in table.columns:
-      #  table = table[(table.mean_coverage_depth > 20)]
-    elif ("pathogen.env" in "~{biosample_type}".lower()):
-      required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "isolation_source", "lat_lon"]
-      optional_metadata = ["host", "host_disease", "isolation_type", "sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
-      # add a column for biosample package -- required for XML submission
-      table["attribute_package"] = "Pathogen.env.1.0"
-      # future qc checks:
-      #   gc after trimming 42-47.5%
-      #   average phred after trimming >= 28
-     
-      #   coverage after trimming >= 20X
-      #if "mean_coverage_depth" in table.columns:
-      #  table = table[(table.mean_coverage_depth > 20)]
-
-    elif ("~{biosample_type}".lower() == "virus"):
-      required_metadata = ["submission_id", "organism", "isolate", "collection_date", "geo_loc_name", "isolation_source"]
-      optional_metadata = ["sample_title", "bioprojection_accession","attribute_package", "host", "lab_host", "altitude", "biomaterial_provider", "collected_by", "culture_collection", "depth", "disease", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lat_lon", "passage_history", "samp_size", "serotype", "specimen_voucher", "strain", "temp", "description"]
-
-      table["attribute_package"] = "Virus.1.0"
-
-
+    
+    # Define required and optional metadata fields based on biosample_type
+    if (os.environ["skip_bio"] == "false"):
+      if ("~{biosample_type}".lower() == "microbe"):
+        required_metadata = ["submission_id", "organism", "collection_date", "geo_loc_name", "sample_type"]
+        optional_metadata = ["sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "host", "isolation_source", "altitude", "biomaterial_provider", "collected_by", "depth", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lab_host", "lat_lon", "mating_type", "passage_history", "samp_size", "serotype", "serovar", "specimen_voucher", "temp", "description", "MLST"]
+        table["attribute_package"] = "Microbe.1.0"
+      elif ("~{biosample_type}".lower() == "wastewater"):
+        required_metadata = ["submission_id", "organism", "collection_date", "geo_loc_name", "isolation_source", "ww_population", "ww_sample_duration", "ww_sample_matrix", "ww_sample_type", "ww_surv_target_1", "ww_surv_target_1_known_present"]
+        optional_metadata = ["sample_title", "bioproject_accession", "attribute_package", "collected_by", "purpose_of_ww_sampling","purpose_of_ww_sequencing", "sequenced_by", "ww_endog_control_1", "ww_endog_control_1_conc", "ww_endog_control_1_protocol", "ww_endog_control_1_units", "ww_endog_control_2", "ww_endog_control_2_conc", "ww_endog_control_2_protocol", "ww_endog_control_2_units", "ww_flow", "ww_industrial_effluent_percent", "ww_ph", "ww_population_source", "ww_pre_treatment", "ww_primary_sludge_retention_time", "ww_processing_protocol", "ww_sample_salinity", "ww_sample_site", "ww_surv_jurisdiction", "ww_surv_system_sample_id", "ww_surv_target_1_conc", "ww_surv_target_1_conc_unit", "ww_surv_target_1_extract", "ww_surv_target_1_extract_unit", "ww_surv_target_1_gene", "ww_surv_target_1_protocol", "ww_surv_target_2", "ww_surv_target_2_conc", "ww_surv_target_2_conc_unit", "ww_surv_target_2_extract", "ww_surv_target_2_extract_unit", "ww_surv_target_2_gene", "ww_surv_target_2_known_present", "ww_surv_target_2_protocol", "ww_temperature", "ww_total_suspended_solids", "description"]
+        table["attribute_package"] = "SARS-CoV-2.wwsurv.1.0"
+      elif ("~{biosample_type}".lower() == "pathogen") or ("pathogen.cl" in "~{biosample_type}".lower()):
+        required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "host", "host_disease", "isolation_source", "lat_lon"]
+        optional_metadata = ["sample_title", "isolation_type", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
+        table["attribute_package"] = "Pathogen.cl"
+      elif ("pathogen.env" in "~{biosample_type}".lower()):
+        required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "isolation_source", "lat_lon"]
+        optional_metadata = ["host", "host_disease", "isolation_type", "sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
+        table["attribute_package"] = "Pathogen.env.1.0"
+      elif ("~{biosample_type}".lower() == "virus"):
+        required_metadata = ["submission_id", "organism", "isolate", "collection_date", "geo_loc_name", "isolation_source"]
+        optional_metadata = ["sample_title", "bioprojection_accession","attribute_package", "host", "lab_host", "altitude", "biomaterial_provider", "collected_by", "culture_collection", "depth", "disease", "env_broad_scale", "genotype", "host_tissue_sampled", "identified_by", "lat_lon", "passage_history", "samp_size", "serotype", "specimen_voucher", "strain", "temp", "description"]
+        table["attribute_package"] = "Virus.1.0"
+      else:
+        raise Exception('Unsupported biosample type: ~{biosample_type}. Only "Microbe", "Virus", "Pathogen" and "Wastewater" are supported as acceptable input for the \`biosample_type\` variable at this time.')
     else:
-      raise Exception('Only "Microbe", "Virus", "Pathogen" and "Wastewater" are supported as acceptable input for the \`biosample_type\` variable at this time. You entered ~{biosample_type}.')
+      print("Skipping biosample metadata upload")
+      required_metadata = []
+      optional_metadata = []
 
     # sra metadata is the same regardless of biosample_type package, but I'm separating it out in case we find out this is incorrect
     sra_required = ["~{table_name}_id", "submission_id", "library_ID", "title", "library_strategy", "library_source", "library_selection", "library_layout", "platform", "instrument_model", "design_description", "filetype", "~{read1_column_name}"]
@@ -120,7 +107,6 @@ task prune_table {
     # if biosample accessions are provided, add those to the end of the sra_required field
     if (os.environ["skip_bio"] == "true"):
       sra_required.append("biosample_accession")
-
     # combine all required fields into one array for easy removal of NaN cells
     required_fields = required_metadata + sra_required
 
@@ -149,15 +135,36 @@ task prune_table {
         sra_metadata[column] = table[column]
     sra_metadata.rename(columns={"submission_id" : "sample_name"}, inplace=True)
 
+    # create the full gcp path for renamed public facing read1 files
+    table["read1_public"] = "~{gcp_bucket_uri}" + "/" + sra_metadata["library_ID"] + "_R1.fastq.gz"
+
     # prettify the filenames and rename them to be sra compatible
-    sra_metadata["~{read1_column_name}"] = sra_metadata["~{read1_column_name}"].map(lambda filename: filename.split('/').pop())
+    sra_metadata["~{read1_column_name}"] = table["read1_public"].map(lambda filename: filename.split('/').pop())
     sra_metadata.rename(columns={"~{read1_column_name}" : "filename"}, inplace=True)
-    table["~{read1_column_name}"].to_csv("filepaths.tsv", index=False, header=False) # make a file that contains the names of all the reads so we can use gsutil -m cp
+
+    # create a file that contains the original and new public facing filepaths for read1 so we can use gsutil -m cp
+    fp_df = table[["~{read1_column_name}", "read1_public"]]
+    fp_df.to_csv("filepaths.tsv", sep='\t', index=False, header=False)
+
+    # create a dataframe for mapping samples to their new public read paths for terra upload
+    terra_update_df = table[["~{table_name}_id", "read1_public"]]
+
+    # if read2 column is present, repeat steps above for read2
     if "~{read2_column_name}" in sra_metadata.columns:
-      sra_metadata["~{read2_column_name}"] = sra_metadata["~{read2_column_name}"].map(lambda filename2: filename2.split('/').pop())   
+      table["read2_public"] = "~{gcp_bucket_uri}" + "/" + sra_metadata["library_ID"] + "_R2.fastq.gz"
+
+      sra_metadata["~{read2_column_name}"] = table["read2_public"].map(lambda filename: filename.split('/').pop())
       sra_metadata.rename(columns={"~{read2_column_name}" : "filename2"}, inplace=True)
-      table["~{read2_column_name}"].to_csv("filepaths.tsv", mode='a', index=False, header=False)
-    
+
+      fp_df = table[["~{read2_column_name}", "read2_public"]]
+      fp_df.to_csv("filepaths.tsv", mode='a', sep='\t', index=False, header=False)
+
+      terra_update_df = table[["~{table_name}_id", "read1_public", "read2_public"]]
+
+    # write out tsv file which will be used to update the terra table with the new public facing read paths
+    terra_update_df.rename(columns={terra_update_df.columns[0]: "entity:~{table_name}_id"}, inplace=True)
+    terra_update_df.to_csv("upload-terra.tsv", sep='\t', index=False, header=True)
+
     # write metadata tables to tsv output files
     biosample_metadata.to_csv("biosample_table.tsv", sep='\t', index=False)
     sra_metadata.to_csv("sra_table_to_edit.tsv", sep='\t', index=False)
@@ -170,12 +177,14 @@ task prune_table {
     # copy the raw reads to the bucket specified by user
     export CLOUDSDK_PYTHON=python2.7  # ensure python 2.7 for gsutil commands
     # iterate through file created earlier to grab the uri for each read file
-    while read -r line; do
-      echo "running \`gsutil -m cp ${line} ~{gcp_bucket_uri}\`"
-      gsutil -m cp -n ${line} ~{gcp_bucket_uri}
+    while IFS=$'\t' read -r og_fp new_fp; do
+      echo "running \`gsutil -m cp ${og_fp} ${new_fp}\`"
+      gsutil -m cp -n "${og_fp}" "${new_fp}"
     done < filepaths.tsv
     unset CLOUDSDK_PYTHON   # probably not necessary, but in case I do more things afterwards, this resets that env var
 
+    # upload the read1_public and read2_public columns to the Terra table for tracking purposes
+    python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --tsv upload-terra.tsv
   >>>
   output {
     File biosample_table = "biosample_table.tsv"
@@ -184,10 +193,11 @@ task prune_table {
     File excluded_samples = "excluded_samples.tsv"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
-    memory: "8 GB"
-    cpu: 4
-    disks: "local-disk 100 SSD"
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }
@@ -199,6 +209,10 @@ task add_biosample_accessions {
     String project_name
     String workspace_name
     String table_name
+    Int memory = 8
+    Int cpu = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
+    Int disk_size = 100
   }
   command <<<
     echo "Uploading biosample_accession to the Terra data table"
@@ -260,10 +274,11 @@ task add_biosample_accessions {
     Boolean proceed = read_boolean("PROCEED")
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
-    memory: "8 GB"
-    cpu: 4
-    disks: "local-disk 100 SSD"
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
     preemptible: 0
   }
 }

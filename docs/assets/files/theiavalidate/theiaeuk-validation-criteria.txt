@@ -1,0 +1,13 @@
+column	criteria
+assembly_length	0.01
+busco_results	EXACT
+clade_type	EXACT
+est_coverage_clean	0.01
+est_coverage_raw	0.01
+gambit_predicted_taxon	EXACT
+n50_value	0.01
+num_reads_clean1	EXACT
+num_reads_clean2	EXACT
+number_contigs	0.01
+quast_gc_percent	0.01
+theiaeuk_snippy_variants_hits	SET

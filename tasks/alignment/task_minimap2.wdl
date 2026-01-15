@@ -12,9 +12,10 @@ task minimap2 {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/minimap2:2.22" # newer versions seem to be bugged (infinite loop)
     String mode = "asm20"
     Boolean output_sam = false
+    Boolean long_read_flags = false
     Int disk_size = 100
     Int cpu = 2
-    Int mem = 8
+    Int memory = 8
   }
   command <<<
     # Preset options - https://lh3.github.io/minimap2/minimap2.html
@@ -30,6 +31,7 @@ task minimap2 {
     # Run minimap2 - output can be sam or paf file depending on ~{output_sam}
     minimap2 \
       ~{true="-a" false="" output_sam} \
+      ~{true="-L --cs --MD" false="" long_read_flags} \
       -x "~{mode}" \
       -t "~{cpu}" \
       "~{reference}" \
@@ -43,7 +45,7 @@ task minimap2 {
   }
   runtime {
     docker: "~{docker}"
-    memory: mem + " GB"
+    memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"

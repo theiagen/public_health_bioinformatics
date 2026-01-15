@@ -1,8 +1,8 @@
 version 1.0
 
-import "../../tasks/utilities/task_czgenepi_wrangling.wdl" as czgenepi_wrangling_task
-import "../../tasks/utilities/task_download_terra_table.wdl" as download_table
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_export/task_download_terra_table.wdl" as download_table
+import "../../tasks/utilities/data_handling/task_czgenepi_wrangling.wdl" as czgenepi_wrangling_task
 
 workflow czgenepi_prep {
   input {
@@ -14,15 +14,15 @@ workflow czgenepi_prep {
     String terra_table_name
     
     # required columns
-    String assembly_fasta_column_name = "assembly_fasta"
-    String collection_date_column_name = "collection_date"
+    String assembly_fasta_column_name
+    String collection_date_column_name
     String private_id_column_name = terra_table_name + "_id"
 
     # collection location - required
-    String continent_column_name = "continent"
-    String country_column_name = "country"
-    String state_column_name = "state"
-    String county_column_name = "county"
+    String continent_column_name
+    String country_column_name
+    String state_column_name
+    String county_column_name
 
     # optional columns
     String genbank_accession_column_name = "genbank_accession"
@@ -32,7 +32,7 @@ workflow czgenepi_prep {
     String organism = "sars-cov-2" # options "sars-cov-2" or "mpox"
     Boolean is_private = true
   }
-  call versioning.version_capture{
+  call versioning.version_capture {
     input:
   }
   call download_table.download_terra_table {

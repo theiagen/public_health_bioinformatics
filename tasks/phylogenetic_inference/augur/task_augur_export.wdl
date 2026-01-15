@@ -2,8 +2,8 @@ version 1.0
 
 task augur_export {
   input {
-    File refined_tree
-    File metadata
+    File tree
+    File? metadata
     Array[File] node_data_jsons
     String build_name
 
@@ -15,12 +15,36 @@ task augur_export {
     Boolean include_root_sequence = false # export an additional json containing the root sequence used to identify mutations
   
     Int disk_size = 100
+    Int memory = 64
+    Int cpu = 4
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0"
   }
   command <<<
+    # fail hard
+    set -euo pipefail
+
+    # prepare node_data argument
+    node_data="~{sep=' ' node_data_jsons}"
+    # This conditional checks if the node_data list is NOT empty while removing spaces
+    if [ ! -z $(echo $node_data | sed -e 's/ //g') ]; then
+      node_data_arg="--node-data "${node_data}
+    else
+      node_data_arg=""
+    fi
+
+    # check if the bash variable is empty, then check if the file is (allows for empty file inputs)
+    metadata=~{metadata}
+    metadata_arg=""
+    if [[ ! -z $metadata ]]; then
+      if [ -s $metadata ]; then
+        metadata_arg="--metadata ~{metadata}"
+      fi
+    fi
+
     augur export v2 \
-      --tree ~{refined_tree} \
-      --metadata ~{metadata} \
-      --node-data ~{sep=' ' node_data_jsons} \
+      --tree ~{tree} \
+      $metadata_arg \
+      $node_data_arg \
       --output ~{build_name}_auspice.json \
       ~{"--auspice-config " + auspice_config} \
       ~{"--title " + title} \
@@ -34,10 +58,10 @@ task augur_export {
     File? root_sequence_json = "~{build_name}_auspice_root-sequence.json"
   }
   runtime {
-    docker: "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
-    memory: "64 GB"
-    cpu :   4
-    disks:  "local-disk " + disk_size + " HDD"
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks: "local-disk " + disk_size + " HDD"
     disk: disk_size + " GB"
     dx_instance_type: "mem3_ssd1_v2_x4"
     preemptible: 0

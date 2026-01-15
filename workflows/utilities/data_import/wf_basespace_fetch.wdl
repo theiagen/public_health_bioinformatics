@@ -1,7 +1,7 @@
 version 1.0
 
-import "../../../tasks/utilities/task_basespace_cli.wdl" as basespace
 import "../../../tasks/task_versioning.wdl" as versioning_task
+import "../../../tasks/utilities/data_import/task_basespace_cli.wdl" as basespace
 
 workflow basespace_fetch {
   input {
@@ -9,7 +9,7 @@ workflow basespace_fetch {
     String basespace_sample_name
     String? basespace_sample_id
     String basespace_collection_id
-    String api_server
+    String api_server = "https://api.basespace.illumina.com"
     String access_token
   }
   call basespace.fetch_bs {

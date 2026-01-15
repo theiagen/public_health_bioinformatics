@@ -12,10 +12,11 @@ workflow usher_workflow {
     String tree_name
     String organism # currently available: "sars-cov-2", "mpox", "RSV-A", "RSV-B"
   }
+  String tree_name_updated = sub(tree_name, " ", "_")
   call usher_task.usher {
     input: 
       assembly_fasta = assembly_fasta,
-      tree_name = tree_name,
+      tree_name = tree_name_updated,
       organism = organism
   }
   call versioning.version_capture {

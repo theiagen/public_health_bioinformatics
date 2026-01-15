@@ -1,11 +1,11 @@
 version 1.0
 
-import "../../workflows/standalone_modules/wf_snippy_variants.wdl" as snippy_variants_workflow
-import "../../workflows/phylogenetics/wf_snippy_tree.wdl" as snippy_tree_workflow
-import "../../tasks/phylogenetic_inference/task_centroid.wdl" as centroid_task
-import "../../tasks/phylogenetic_inference/task_referenceseeker.wdl" as referenceseeker_task
-import "../../tasks/utilities/task_ncbi_datasets.wdl" as ncbi_datasets_task
+import "../../tasks/phylogenetic_inference/utilities/task_centroid.wdl" as centroid_task
+import "../../tasks/phylogenetic_inference/utilities/task_referenceseeker.wdl" as referenceseeker_task
 import "../../tasks/task_versioning.wdl" as versioning
+import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets_task
+import "../../workflows/phylogenetics/wf_snippy_tree.wdl" as snippy_tree_workflow
+import "../../workflows/standalone_modules/wf_snippy_variants.wdl" as snippy_variants_workflow
 
 workflow snippy_streamline {
   input {
@@ -16,21 +16,25 @@ workflow snippy_streamline {
     String tree_name
     # this input file can be a FASTA or GBK
     File? reference_genome_file
+    Boolean use_centroid_as_reference = false
   }
+  String tree_name_updated = sub(tree_name, " ", "_")
   # if user does not provide reference genome fasta, determine one for the user by running centroid, referenceseeker, and ncbi datasets to acquire one
   if (! defined(reference_genome_file)) {
     call centroid_task.centroid {
       input:
         assembly_fasta = select_first([assembly_fasta])
     }
-    call referenceseeker_task.referenceseeker {
-      input:
-        assembly_fasta = centroid.centroid_genome_fasta,
-        samplename = centroid.centroid_genome_samplename
-    }
-    call ncbi_datasets_task.ncbi_datasets_download_genome_accession {
-      input:
-        ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
+    if (! use_centroid_as_reference) {
+      call referenceseeker_task.referenceseeker {
+        input:
+          assembly_fasta = centroid.centroid_genome_fasta,
+          samplename = centroid.centroid_genome_samplename
+      }
+      call ncbi_datasets_task.ncbi_datasets_download_genome_accession {
+        input:
+          ncbi_accession = referenceseeker.referenceseeker_top_hit_ncbi_accession
+      }
     }
   }
   # see https://github.com/openwdl/wdl/issues/279 for syntax explanation
@@ -40,16 +44,17 @@ workflow snippy_streamline {
       input:
         read1 = triplet.left.left, # access the left-most object (read 1)
         read2 = triplet.left.right, # access the right-side object on the left (read 2)
-        reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta]),
+        reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta, centroid.centroid_genome_fasta]),
         samplename = triplet.right # access the right-most object (samplename)
     }
   }
   call snippy_tree_workflow.snippy_tree_wf {
     input:
-      tree_name = tree_name,
+      tree_name = tree_name_updated,
       snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball,
       samplenames = samplenames,
-      reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
+      reference_genome_file = select_first([reference_genome_file, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta, centroid.centroid_genome_fasta]),
+      snippy_variants_qc_metrics = snippy_variants_wf.snippy_variants_qc_metrics
   }
   call versioning.version_capture {
     input:
@@ -82,6 +87,8 @@ workflow snippy_streamline {
     Array[File] snippy_variants_outdir_tarball = snippy_variants_wf.snippy_variants_outdir_tarball
     Array[String] snippy_variants_snippy_version = snippy_variants_wf.snippy_variants_version
     Array[String] snippy_variants_snippy_docker = snippy_variants_wf.snippy_variants_docker
+    Array[Float] snippy_variants_percent_reads_aligned = snippy_variants_wf.snippy_variants_percent_reads_aligned
+    Array[Float] snippy_variants_percent_ref_coverage = snippy_variants_wf.snippy_variants_percent_ref_coverage
 
     ### snippy_tree wf outputs ###
     String snippy_tree_snippy_version = snippy_tree_wf.snippy_tree_snippy_version
@@ -91,7 +98,7 @@ workflow snippy_streamline {
     String snippy_iqtree2_model_used = snippy_tree_wf.snippy_iqtree2_model_used
     File snippy_final_alignment = snippy_tree_wf.snippy_final_alignment
     File snippy_final_tree = snippy_tree_wf.snippy_final_tree
-    File snippy_ref = select_first([snippy_tree_wf.snippy_ref, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta])
+    File snippy_ref = select_first([snippy_tree_wf.snippy_ref, ncbi_datasets_download_genome_accession.ncbi_datasets_gbff, ncbi_datasets_download_genome_accession.ncbi_datasets_assembly_fasta, centroid.centroid_genome_fasta])
     File snippy_msa_snps_summary = snippy_tree_wf.snippy_msa_snps_summary
     String? snippy_snp_sites_version = snippy_tree_wf.snippy_snp_sites_version
     String? snippy_snp_sites_docker = snippy_tree_wf.snippy_snp_sites_docker
@@ -101,8 +108,12 @@ workflow snippy_streamline {
     File? snippy_gubbins_branch_stats = snippy_tree_wf.snippy_gubbins_branch_stats
     String snippy_snp_dists_version = snippy_tree_wf.snippy_snp_dists_version
     String snippy_snp_dists_docker = snippy_tree_wf.snippy_snp_dists_docker
-    File snippy_snp_matrix = snippy_tree_wf.snippy_snp_matrix
+    File snippy_wg_snp_matrix = snippy_tree_wf.snippy_wg_snp_matrix
+    File? snippy_cg_snp_matrix = snippy_tree_wf.snippy_cg_snp_matrix
     File? snippy_summarized_data = snippy_tree_wf.snippy_summarized_data
     File? snippy_filtered_metadata = snippy_tree_wf.snippy_filtered_metadata
+    File? snippy_concatenated_variants = snippy_tree_wf.snippy_concatenated_variants
+    File? snippy_shared_variants_table = snippy_tree_wf.snippy_shared_variants_table
+    File? snippy_combined_qc_metrics = snippy_tree_wf.snippy_combined_qc_metrics
   }
 }
