@@ -52,14 +52,7 @@ workflow freyja_fastq {
     input:
       organism = freyja_pathogen,
       reference_genome = reference_genome,
-      genome_length_input = genome_length,
-      nextclade_dataset_tag_input = nextclade_dataset_tag,
-      nextclade_dataset_name_input = nextclade_dataset_name,
-      vadr_max_length = vadr_max_length,
-      vadr_skip_length = vadr_skip_length,
-      vadr_options = vadr_opts,
-      vadr_model = vadr_model_file,
-      vadr_mem = vadr_memory
+      genome_length_input = genome_length
   }
 
   if (! defined(read2) && ! ont) {
