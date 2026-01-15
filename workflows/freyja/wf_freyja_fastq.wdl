@@ -12,6 +12,7 @@ import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as task_pars
 import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
+import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 
 workflow freyja_fastq {
   input {
@@ -46,6 +47,21 @@ workflow freyja_fastq {
         target_organism = kraken2_target_organism
     }
   }
+
+  call set_organism_defaults.organism_parameters {
+    input:
+      organism = freyja_pathogen,
+      reference_genome = reference_genome,
+      genome_length_input = genome_length,
+      nextclade_dataset_tag_input = nextclade_dataset_tag,
+      nextclade_dataset_name_input = nextclade_dataset_name,
+      vadr_max_length = vadr_max_length,
+      vadr_skip_length = vadr_skip_length,
+      vadr_options = vadr_opts,
+      vadr_model = vadr_model_file,
+      vadr_mem = vadr_memory
+  }
+
   if (! defined(read2) && ! ont) {
     call read_qc_se.read_QC_trim_se as read_QC_trim_se {
       input:
@@ -56,6 +72,9 @@ workflow freyja_fastq {
         target_organism = kraken2_target_organism
     }
   }
+
+
+
   if (ont) {
     call fasta_utilities_task.get_fasta_genome_size {
       input:
