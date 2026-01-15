@@ -27,6 +27,12 @@ workflow freyja_fastq {
     File? freyja_lineage_metadata
     Int? depth_cutoff
     Boolean ont = false
+    Int? sc2_s_gene_start
+    Int? sc2_s_gene_stop
+    Int? gene_coverage_min_depth
+    Int? gene_coverage_cpu
+    Int? gene_coverage_disk_size
+    Int? gene_coverage_memory
     String kraken2_target_organism = "Severe acute respiratory syndrome coronavirus 2"
   }
   if (defined(read2)) {
