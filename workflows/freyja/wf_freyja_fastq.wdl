@@ -11,6 +11,7 @@ import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_ont
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as task_parse_mapping
 import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 
 workflow freyja_fastq {
   input {
@@ -97,6 +98,7 @@ workflow freyja_fastq {
         read2 = select_first([read_QC_trim_pe.read2_clean])
     }
   }
+  
   # Called when the primer_bed file is present, primers are trimmed and trimmed bam is passed to freyja
   if (defined(primer_bed)){
     call trim_primers.primer_trim {
@@ -106,6 +108,25 @@ workflow freyja_fastq {
         bamfile = select_first([sam_to_sorted_bam.bam, bwa.sorted_bam])
     }
   }
+
+  if (freyja_pathogen == "SARS-CoV-2"){
+    call gene_coverage_task.gene_coverage {
+        input:
+          bamfile = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
+          bedfile = organism_parameters.gene_locations_bed,
+          samplename = samplename,
+          organism = organism_parameters.standardized_organism,
+          sc2_s_gene_start = sc2_s_gene_start,
+          sc2_s_gene_stop = sc2_s_gene_stop,
+          min_depth = gene_coverage_min_depth,
+          cpu = gene_coverage_cpu,
+          disk_size = gene_coverage_disk_size,
+          docker = gene_coverage_docker,
+          memory = gene_coverage_memory
+    }
+  }
+
+
   call freyja_task.freyja_one_sample as freyja {
     input:
       bamfile = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
@@ -212,6 +233,10 @@ workflow freyja_fastq {
     String? ivar_version_primtrim = primer_trim.ivar_version
     String? samtools_version_primtrim = primer_trim.samtools_version
     String? primer_bed_name = primer_trim.primer_bed_name
+    # Gene Coverage Outputs
+    Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
+    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
+    File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
     # Freyja Analysis outputs
     String freyja_version = freyja.freyja_version
     File freyja_variants = freyja.freyja_variants
