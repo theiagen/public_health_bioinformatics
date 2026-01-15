@@ -10,7 +10,7 @@ task irma {
     Int minimum_consensus_support = 50 # IRMA default is 1, but matching MIRA standards for ONT = 50 and ILMN = 30 via defaults at theiacov workflow level WDLs: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
     Int minimum_read_length = 75 # matching default for TheiaCoV_Illumina_PE; NOTE: IRMA's default is 125 bp
     Int minimum_average_consensus_allele_quality = 10 # IRMA default is 0, we are matching MIRA standards for both ONT and ILMN: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
-    Float minimum_ambiguous_threshold = 0.20
+    Float minimum_ambiguous_threshold = 0.25
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/irma:1.3.1"
     Int memory = 16
     Int cpu = 4
@@ -449,6 +449,7 @@ task irma {
     File? irma_read_counts_tsv = "~{samplename}/tables/READ_COUNTS.tsv"
     File? irma_run_info_tsv = "~{samplename}/logs/run_info.tsv"
     File? irma_nr_read_counts = "~{samplename}/logs/NR_COUNTS_log.txt"
+    File? irma_qc_log = "~{samplename}/logs/QC_log.txt"
     # for now just adding bams for these segments for mean coverage calculation
     File? seg_ha_bam = "~{samplename}_HA.bam"
     File? seg_na_bam = "~{samplename}_NA.bam"

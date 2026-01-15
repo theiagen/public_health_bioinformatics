@@ -398,6 +398,7 @@ workflow theiacov_ont {
     File? irma_np_segment_fasta = flu_track.flu_np_segment_fasta
     File? irma_ns_segment_fasta = flu_track.flu_ns_segment_fasta
     File? irma_qc_summary_tsv = flu_track.irma_qc_summary_tsv
+    File? irma_qc_log = flu_track.irma_qc_log
     File? irma_all_snvs_tsv = flu_track.irma_all_snvs_tsv
     File? irma_all_insertions_tsv = flu_track.irma_all_insertions_tsv
     File? irma_all_deletions_tsv = flu_track.irma_all_deletions_tsv

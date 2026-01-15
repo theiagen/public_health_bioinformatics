@@ -313,6 +313,7 @@ workflow flu_track {
     File flu_np_segment_fasta = select_first([irma.seg_np_assembly, vadr_flu_segments.seg_np_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File flu_ns_segment_fasta = select_first([irma.seg_ns_assembly, vadr_flu_segments.seg_ns_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File? irma_qc_summary_tsv = irma.irma_qc_summary_tsv
+    File? irma_qc_log = irma.irma_qc_log
     File? irma_all_snvs_tsv = irma.irma_all_snvs_tsv
     File? irma_all_insertions_tsv = irma.irma_all_insertions_tsv
     File? irma_all_deletions_tsv = irma.irma_all_deletions_tsv
