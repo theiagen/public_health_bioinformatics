@@ -1,342 +1,197 @@
 version: 1.2
 workflows:
- - name: TheiaEuk_Illumina_PE_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiaeuk/wf_theiaeuk_illumina_pe.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaEuk_ONT_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiaeuk/wf_theiaeuk_ont.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Cauris_CladeTyper_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiaeuk/wf_cauris_cladetyper.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Snippy_Variants_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_snippy_variants.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Snippy_Tree_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_tree.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaCoV_ClearLabs_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiacov/wf_theiacov_clearlabs.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaCoV_ONT_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiacov/wf_theiacov_ont.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaCoV_Illumina_PE_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiacov/wf_theiacov_illumina_pe.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaCoV_Illumina_SE_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiacov/wf_theiacov_illumina_se.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaCoV_FASTA_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiacov/wf_theiacov_fasta.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaCoV_FASTA_Batch_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiacov/wf_theiacov_fasta_batch.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Mercury_Prep_N_Batch_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/submission/wf_mercury_prep_n_batch.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Terra_2_NCBI_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/submission/wf_terra_2_ncbi.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Augur_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_augur.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Augur_Prep_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_augur_prep.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Pangolin_Update_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiacov/updates/wf_pangolin_update.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: VADR_Update_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiacov/updates/wf_vadr_update.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: NCBI_Scrub_SE_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiacov/updates/wf_ncbi_scrub_se.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: NCBI_Scrub_PE_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiacov/updates/wf_ncbi_scrub_pe.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Freyja_FASTQ_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/freyja/wf_freyja_fastq.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Freyja_Plot_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/freyja/wf_freyja_plot.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Freyja_Dashboard_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/freyja/wf_freyja_dashboard.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Freyja_Update_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/freyja/wf_freyja_update.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: kSNP3_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp3.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: kSNP4_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp4.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: MashTree_FASTA_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_mashtree_fasta.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Core_Gene_SNP_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_core_gene_snp.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaProk_Illumina_PE_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaProk_Illumina_SE_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaProk_FASTA_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_fasta.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaProk_ONT_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_ont.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Gambit_Query_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_gambit_query.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: NCBI-AMRFinderPlus_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_amrfinderplus.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Kraken2_PE_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_pe.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Kraken2_SE_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_se.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Kraken2_ONT_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_ont.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: RASUSA_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_rasusa.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: BaseSpace_Fetch_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_basespace_fetch.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: SRA_Fetch_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_sra_fetch.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Fetch_SRR_Accession_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_fetch_srr_accession.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Concatenate_Column_Content_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_column.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Find_Shared_Variants_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_find_shared_variants.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Transfer_Column_Content_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/file_handling/wf_transfer_column.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Zip_Column_Content_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/file_handling/wf_zip_column.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Lyve_SET_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_lyveset.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaMeta_Illumina_PE_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiameta/wf_theiameta_illumina_pe.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Snippy_Streamline_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Assembly_Fetch_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_assembly_fetch.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaValidate_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/wf_theiavalidate.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: PhyloCompare_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_phylocompare.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Nextclade_Batch_PHB 
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_batch.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Terra_2_GISAID_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/submission/wf_terra_2_gisaid.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Usher_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_usher.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: CZGenEpi_Prep_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/wf_czgenepi_prep.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TBProfiler_tNGS_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_tbprofiler_tngs.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Rename_FASTQ_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/file_handling/wf_rename_fastq_files.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Gambit_Core_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_gambitcore.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Create_Terra_Table_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_create_terra_table.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Snippy_Streamline_FASTA_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline_fasta.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Dorado_Basecalling_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_dorado_basecalling.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Concatenate_Illumina_Lanes_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_illumina_lanes.wdl
-   testParameterFiles:
-     - /tests/inputs/empty.json
- - name: Clair3_Variants_ONT_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_clair3_variants_ont.wdl
-   testParameterFiles:
-     - /tests/inputs/empty.json
- - name: AMR_Search_PHB 
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_amr_search.wdl
-   testParameterFiles:
-     - /tests/inputs/empty.json
- - name: Terra_2_ENA_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/submission/wf_terra_2_ena.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: TheiaViral_ONT_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_ont.wdl
-   testParameterFiles:
-     - /tests/inputs/empty.json
- - name: TheiaViral_Illumina_PE_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_illumina_pe.wdl
-   testParameterFiles:
-     - /tests/inputs/empty.json
- - name: TheiaViral_Panel_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_panel.wdl
-   testParameterFiles:
-     - /tests/inputs/empty.json
- - name: ONT_Barcode_Concatenation_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/data_import/wf_ont_barcode_concatenation.wdl
-   testParameterFiles:
-     - /tests/inputs/empty.json
+  - name: Terra_2_ENA
+    subclass: WDL
+    primaryDescriptorPath: /workflows/submission/wf_terra_2_ena.wdl
+  - name: freyja_update
+    subclass: WDL
+    primaryDescriptorPath: /workflows/freyja/wf_freyja_update.wdl
+  - name: mercury_prep_n_batch
+    subclass: WDL
+    primaryDescriptorPath: /workflows/submission/wf_mercury_prep_n_batch.wdl
+  - name: amr_search_workflow
+    subclass: WDL
+    primaryDescriptorPath: /workflows/standalone_modules/wf_amr_search.wdl
+  - name: freyja_fastq
+    subclass: WDL
+    primaryDescriptorPath: /workflows/freyja/wf_freyja_fastq.wdl
+  - name: theiaeuk_ont
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiaeuk/wf_theiaeuk_ont.wdl
+  - name: pangolin_update
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiacov/updates/wf_pangolin_update.wdl
+  - name: snippy_streamline
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline.wdl
+  - name: freyja_plot
+    subclass: WDL
+    primaryDescriptorPath: /workflows/freyja/wf_freyja_plot.wdl
+  - name: create_terra_table
+    subclass: WDL
+    primaryDescriptorPath: /workflows/utilities/data_import/wf_create_terra_table.wdl
+  - name: rasusa_workflow
+    subclass: WDL
+    primaryDescriptorPath: /workflows/standalone_modules/wf_rasusa.wdl
+  - name: clair3_variants_ont
+    subclass: WDL
+    primaryDescriptorPath: /workflows/standalone_modules/wf_clair3_variants_ont.wdl
+  - name: terra_2_bq
+    subclass: WDL
+    primaryDescriptorPath: /workflows/utilities/data_import/wf_terra_2_bq.wdl
+  - name: gambitcore_wf
+    subclass: WDL
+    primaryDescriptorPath: /workflows/standalone_modules/wf_gambitcore.wdl
+  - name: Terra_2_NCBI
+    subclass: WDL
+    primaryDescriptorPath: /workflows/submission/wf_terra_2_ncbi.wdl
+  - name: augur
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_augur.wdl
+  - name: cauris_cladetyper
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiaeuk/wf_cauris_cladetyper.wdl
+  - name: kraken2_pe_wf
+    subclass: WDL
+    primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_pe.wdl
+  - name: theiaprok_fasta
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_fasta.wdl
+  - name: snippy_streamline_fasta
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_snippy_streamline_fasta.wdl
+  - name: nextclade_batch
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_batch.wdl
+  - name: theiacov_clearlabs
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_clearlabs.wdl
+  - name: core_gene_snp_workflow
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_core_gene_snp.wdl
+  - name: concatenate_column_content
+    subclass: WDL
+    primaryDescriptorPath: /workflows/utilities/file_handling/wf_concatenate_column.wdl
+  - name: fetch_sra_to_fastq
+    subclass: WDL
+    primaryDescriptorPath: /workflows/utilities/data_import/wf_sra_fetch.wdl
+  - name: tbprofiler_tngs
+    subclass: WDL
+    primaryDescriptorPath: /workflows/standalone_modules/wf_tbprofiler_tngs.wdl
+  - name: theiaviral_ont
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_ont.wdl
+  - name: theiacov_fasta_batch
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_fasta_batch.wdl
+  - name: theiaeuk_illumina_pe
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiaeuk/wf_theiaeuk_illumina_pe.wdl
+  - name: transfer_column_content
+    subclass: WDL
+    primaryDescriptorPath: /workflows/utilities/file_handling/wf_transfer_column.wdl
+  - name: freyja_dashboard
+    subclass: WDL
+    primaryDescriptorPath: /workflows/freyja/wf_freyja_dashboard.wdl
+  - name: gambit_query
+    subclass: WDL
+    primaryDescriptorPath: /workflows/standalone_modules/wf_gambit_query.wdl
+  - name: usher_workflow
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_usher.wdl
+  - name: theiameta_illumina_pe
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiameta/wf_theiameta_illumina_pe.wdl
+  - name: dehost_pe
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiacov/updates/wf_ncbi_scrub_pe.wdl
+  - name: Terra_2_GISAID
+    subclass: WDL
+    primaryDescriptorPath: /workflows/submission/wf_terra_2_gisaid.wdl
+  - name: dehost_se
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiacov/updates/wf_ncbi_scrub_se.wdl
+  - name: phylocompare
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_phylocompare.wdl
+  - name: kraken2_ont_wf
+    subclass: WDL
+    primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_ont.wdl
+  - name: assembly_fetch
+    subclass: WDL
+    primaryDescriptorPath: /workflows/utilities/data_import/wf_assembly_fetch.wdl
+  - name: theiacov_fasta
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_fasta.wdl
+  - name: mashtree_fasta
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_mashtree_fasta.wdl
+  - name: czgenepi_prep
+    subclass: WDL
+    primaryDescriptorPath: /workflows/utilities/wf_czgenepi_prep.wdl
+  - name: theiaprok_ont
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_ont.wdl
+  - name: theiacov_illumina_se
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_illumina_se.wdl
+  - name: vadr_update
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiacov/updates/wf_vadr_update.wdl
+  - name: shared_variants_wf
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_find_shared_variants.wdl
+  - name: ksnp4_workflow
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp4.wdl
+  - name: dorado_basecalling
+    subclass: WDL
+    primaryDescriptorPath: /workflows/standalone_modules/wf_dorado_basecalling.wdl
+  - name: theiavalidate
+    subclass: WDL
+    primaryDescriptorPath: /workflows/utilities/wf_theiavalidate.wdl
+  - name: theiaprok_illumina_pe
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_illumina_pe.wdl
+  - name: ksnp3_workflow
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp3.wdl
+  - name: rename_fastq_files
+    subclass: WDL
+    primaryDescriptorPath: /workflows/utilities/file_handling/wf_rename_fastq_files.wdl
+  - name: zip_column_content
+    subclass: WDL
+    primaryDescriptorPath: /workflows/utilities/file_handling/wf_zip_column.wdl
+  - name: fetch_srr_accession
+    subclass: WDL
+    primaryDescriptorPath: /workflows/utilities/data_import/wf_fetch_srr_accession.wdl
+  - name: theiacov_illumina_pe
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_illumina_pe.wdl
+  - name: lyveset_workflow
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_lyveset.wdl
+  - name: ont_barcode_concatenation
+    subclass: WDL
+    primaryDescriptorPath: /workflows/utilities/data_import/wf_ont_barcode_concatenation.wdl
+  - name: amrfinderplus_wf
+    subclass: WDL
+    primaryDescriptorPath: /workflows/standalone_modules/wf_amrfinderplus.wdl
+  - name: theiaviral_panel
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_panel.wdl
+  - name: augur_prep
+    subclass: WDL
+    primaryDescriptorPath: /workflows/phylogenetics/wf_augur_prep.wdl
+  - name: basespace_fetch
+    subclass: WDL
+    primaryDescriptorPath: /workflows/utilities/data_import/wf_basespace_fetch.wdl
+  - name: theiacov_ont
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiacov/wf_theiacov_ont.wdl
+  - name: theiaprok_illumina_se
+    subclass: WDL
+    primaryDescriptorPath: /workflows/theiaprok/wf_theiaprok_illumina_se.wdl
+  - name: kraken2_se_wf
+    subclass: WDL
+    primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_se.wdl
