@@ -51,8 +51,7 @@ workflow freyja_fastq {
   call set_organism_defaults.organism_parameters {
     input:
       organism = freyja_pathogen,
-      reference_genome = reference_genome,
-      genome_length_input = genome_length
+      reference_genome = reference_genome
   }
 
   if (! defined(read2) && ! ont) {
