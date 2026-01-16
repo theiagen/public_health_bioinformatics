@@ -138,7 +138,6 @@ workflow freyja_fastq {
           min_depth = gene_coverage_min_depth,
           cpu = gene_coverage_cpu,
           disk_size = gene_coverage_disk_size,
-          docker = gene_coverage_docker,
           memory = gene_coverage_memory
     }
   }
