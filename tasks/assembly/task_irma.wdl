@@ -453,6 +453,9 @@ task irma {
     # for now just adding bams for these segments for mean coverage calculation
     File? seg_ha_bam = "~{samplename}_HA.bam"
     File? seg_na_bam = "~{samplename}_NA.bam"
+
+    # Return interleaved IRMA FASTQ files
+    File? irma_aligned_fastqs = "~{samplename}/intermediate/4-ASSEMBLE_SSW/reads.tar.gz"
   }
   runtime {
     docker: "~{docker}"
