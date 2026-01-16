@@ -8,6 +8,7 @@ import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../../tasks/species_typing/orthomyxoviridae/task_vadr_flu_segments.wdl" as vadr_flu_segments_task
+import "../../tasks/utilities/data_handling/task_bbmap_reformat.wdl" as bbmap_reformat
 
 workflow flu_track {
   meta {
@@ -32,6 +33,7 @@ workflow flu_track {
     Int? irma_min_read_length
     Int? irma_min_avg_consensus_allele_quality
     Float? irma_min_ambiguous_threshold
+    Boolean irma_return_aligned_reads = false
     String? irma_docker_image
     Int? irma_memory
     Int? irma_cpu
@@ -104,6 +106,13 @@ workflow flu_track {
         memory = irma_memory,
         cpu = irma_cpu,
         disk_size = irma_disk_size
+    }
+    if (irma_return_aligned_reads && defined(irma.irma_aligned_fastqs)) {
+      call bbmap_reformat.bbmap_reformat_interleaved{
+        input:
+          samplename = samplename,
+          interleaved_fastq = select_first([irma.irma_aligned_fastqs])
+      }
     }
     # can be redone later to accomodate processing of HA and NA bams together in the task, perhaps with an organism flag
     if (defined(irma.seg_ha_bam)) {
