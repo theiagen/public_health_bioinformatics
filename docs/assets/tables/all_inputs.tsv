@@ -2729,8 +2729,8 @@ trimmomatic	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TBProfiler
 trimmomatic	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TBProfiler_tNGS	runtime	
 trimmomatic	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.40	Optional	TBProfiler_tNGS	docker	
 trimmomatic	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TBProfiler_tNGS	runtime	
-trimmomatic	trimmomatic_adapter_fasta	File	A FASTA file containing adapter sequences	TruSeq3-PE-2.fa	Optional	TBProfiler_tNGS	general	
-trimmomatic	trimmomatic_adapter_trim_args	String	Colon-delimited adapter trimming parameters representing [seed mismatches: palindrome clip threshold: simple clip threshold]	2:30:10	Optional	TBProfiler_tNGS	general	
+trimmomatic	trimmomatic_adapter_fasta	File	A FASTA file containing adapter sequences	TruSeq3-PE-2.fa	Optional	TBProfiler_tNGS	general	True
+trimmomatic	trimmomatic_adapter_trim_args	String	Colon-delimited adapter trimming parameters representing [seed mismatches: palindrome clip threshold: simple clip threshold]	2:30:10	Optional	TBProfiler_tNGS	general	True
 trimmomatic	trimmomatic_min_length	Int	Specifies minimum length of each read after trimming to be kept	75	Optional	TBProfiler_tNGS	general	
 trimmomatic	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	TBProfiler_tNGS	general	
 trimmomatic	trimmomatic_trim_adapters	Boolean	A True/False option that determines if adapters should be trimmed	False	Optional	TBProfiler_tNGS	general	
