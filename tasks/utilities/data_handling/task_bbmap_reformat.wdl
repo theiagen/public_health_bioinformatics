@@ -20,8 +20,7 @@ task bbmap_reformat_interleaved{
     set +e 
     reformat.sh in=~{interleaved_fastq} out=~{samplename}_deinterleaved_R1.fastq \
         out2=~{samplename}_deinterleaved_R2.fastq \
-        verifypaired=t \
-        overwrite=t
+        verifypaired=t
     reformat_exit_code=$?
     echo "DEBUG: Initial reformat exit code $reformat_exit_code"
     # Reset pipefail after initial reformat.sh run
