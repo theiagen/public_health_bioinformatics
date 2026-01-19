@@ -2725,17 +2725,17 @@ trim_genbank_fastas	docker	String	The Docker container to use for the task	us-do
 trim_genbank_fastas	max_length	Int	Only for "sars-cov-2" submissions; the maximum genome length for trimming terminal ambiguous nucleotides. If your sample's genome is higher than this value, the workflow will error/fail.	30000	Optional	Mercury_Prep_N_Batch	general	
 trim_genbank_fastas	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Mercury_Prep_N_Batch	runtime	
 trim_genbank_fastas	min_length	Int	Only for "sars-cov-2" submissions; the minimum genome length for trimming terminal ambiguous nucleotides. If your sample's genome is lower than this value, the workflow will error/fail.	50	Optional	Mercury_Prep_N_Batch	general	
-trimmomatic_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TBProfiler_tNGS	runtime	
-trimmomatic_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TBProfiler_tNGS	runtime	
-trimmomatic_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.40	Optional	TBProfiler_tNGS	docker	
-trimmomatic_pe	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TBProfiler_tNGS	runtime	
-trimmomatic_pe	trimmomatic_adapter_fasta	File	A FASTA file containing adapter sequences	TruSeq3-PE-2.fa	Optional	TBProfiler_tNGS	general	True
-trimmomatic_pe	trimmomatic_adapter_trim_args	String	Colon-delimited adapter trimming parameters representing [seed mismatches: palindrome clip threshold: simple clip threshold]	2:30:10	Optional	TBProfiler_tNGS	general	True
-trimmomatic_pe	trimmomatic_min_length	Int	Specifies minimum length of each read after trimming to be kept	75	Optional	TBProfiler_tNGS	general	
-trimmomatic_pe	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	TBProfiler_tNGS	general	
-trimmomatic_pe	trimmomatic_trim_adapters	Boolean	A True/False option that determines if adapters should be trimmed	True	Optional	TBProfiler_tNGS	general	
-trimmomatic_pe	trimmomatic_window_quality	Int	The trimming window quality score	30	Optional	TBProfiler_tNGS	general	
-trimmomatic_pe	trimmomatic_window_size	Int	The window size for trimming	4	Optional	TBProfiler_tNGS	general	
+trimmomatic	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TBProfiler_tNGS	runtime	
+trimmomatic	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TBProfiler_tNGS	runtime	
+trimmomatic	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.40	Optional	TBProfiler_tNGS	docker	
+trimmomatic	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TBProfiler_tNGS	runtime	
+trimmomatic	trimmomatic_adapter_fasta	File	A FASTA file containing adapter sequences	TruSeq3-PE-2.fa	Optional	TBProfiler_tNGS	general	
+trimmomatic	trimmomatic_adapter_trim_args	String	Colon-delimited adapter trimming parameters representing [seed mismatches: palindrome clip threshold: simple clip threshold]	2:30:10	Optional	TBProfiler_tNGS	general	
+trimmomatic	trimmomatic_min_length	Int	Specifies minimum length of each read after trimming to be kept	75	Optional	TBProfiler_tNGS	general	
+trimmomatic	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	TBProfiler_tNGS	general	
+trimmomatic	trimmomatic_trim_adapters	Boolean	A True/False option that determines if adapters should be trimmed	False	Optional	TBProfiler_tNGS	general	
+trimmomatic	trimmomatic_window_quality	Int	The trimming window quality score	30	Optional	TBProfiler_tNGS	general	
+trimmomatic	trimmomatic_window_size	Int	The window size for trimming	4	Optional	TBProfiler_tNGS	general	
 ts_mlst	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 ts_mlst	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 ts_mlst	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-12-31	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
