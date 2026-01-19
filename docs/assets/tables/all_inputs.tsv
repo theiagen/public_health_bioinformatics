@@ -808,13 +808,14 @@ flu_track	irma_keep_ref_deletions	Boolean	Internal component, do not modify	True
 flu_track	irma_keep_ref_deletions	Boolean	True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting N's or deleting the sequence entirely. False sets this IRMA paramater to "DEL" and true sets it to "NNN"	True	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	True
 flu_track	irma_memory	Int	Internal component, do not modify	16	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
-flu_track	irma_min_ambiguous_threshold	Float	Internal component, do not modify	0.2	Optional	TheiaCoV_FASTA	general	
-flu_track	irma_min_ambiguous_threshold	Float	Minimum called Single Nucleotide Variant (SNV) frequency for mixed based calls in the output consensus assembly (AKA amended consensus).	0.2	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
+flu_track	irma_min_ambiguous_threshold	Float	Internal component, do not modify	0.25	Optional	TheiaCoV_FASTA	general	
+flu_track	irma_min_ambiguous_threshold	Float	Minimum called Single Nucleotide Variant (SNV) frequency for mixed based calls in the output consensus assembly (AKA amended consensus).	0.25	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flu_track	irma_min_avg_consensus_allele_quality	Int	Internal component, do not modify	10	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_min_avg_consensus_allele_quality	Int	Minimum allele coverage depth to call plurality consensus, otherwise calls "N". Setting this value too high can negatively impact final amended consensus.	10	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flu_track	irma_min_consensus_support	Int	Internal component, do not modify	50	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_min_read_length	Int	Internal component, do not modify	75	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_min_read_length	Int	Minimum read length to include reads in read gathering step in IRMA. This value should not be greater than the typical read length.	75	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
+flu_track	irma_return_aligned_reads	Boolean	When true, will return the reads only aligning to the reference, provided by IRMA	False	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flu_track	nextclade_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
 flu_track	nextclade_custom_input_dataset	File	For H5N1 flu samples only. A custom Nextclade dataset in JSON format. If provided, this dataset will be used to process any H5N1 flu samples. If not provided, a custom dataset will be selected depending on the GenoFLU Genotype.	Defaults are GenoFLU Genotype specific. Please find these default values here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	True
 flu_track	nextclade_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	

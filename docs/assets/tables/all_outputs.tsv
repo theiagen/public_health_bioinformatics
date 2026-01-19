@@ -481,6 +481,7 @@ irma_ns_segment_fasta	File	NS (Nonstructural) assembly fasta file	TheiaCoV_Illum
 irma_pa_segment_fasta	File	PA (Polymerase acidic) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_pb1_segment_fasta	File	PB1 (Polymerase basic 1) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_pb2_segment_fasta	File	PB2 (Polymerase basic 2) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+irma_qc_log	File	IRMA QC log file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_qc_summary_tsv	File	TSV file summarizing IRMA quality control metrics	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_subtype	String	Flu subtype as determined by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 irma_subtype_notes	String	Helpful note to user about Flu B subtypes. Output will be blank for Flu A samples. For Flu B samples it will state: "IRMA does not differentiate Victoria and Yamagata Flu B lineages. See abricate_flu_subtype output column"	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -885,7 +886,8 @@ raven_denovo_docker	String	Docker image used for Raven	TheiaViral_ONT
 raven_denovo_status	String	Status of Raven assembly	TheiaViral_ONT
 raven_denovo_version	String	Version of Raven used	TheiaViral_ONT
 read1	File	File containing the forward reads	BaseSpace_Fetch, SRA_Fetch
-read1_aligned	File	Forward read file of only aligned reads	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+read1_aligned	String	Forward read file of only aligned reads	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+read1_aligned	File	Forward read file of only aligned reads	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE
 read1_clean	File	Forward read file after quality trimming and adapter removal	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel
 read1_concatenated	File	Concatenated forward reads	Concatenate_Illumina_Lanes, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 read1_dehosted	File	The dehosted forward reads file; suggested read file for SRA submission 	Freyja_FASTQ, NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaMeta_Illumina_PE
@@ -896,7 +898,7 @@ read1_trimmed	File	Forward read file after quality trimming and adapter removal	
 read1_unaligned	File	Forward read file of unaligned reads	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 read1_unmapped	File	The unmapped forwards reads to the assembly	TheiaMeta_Illumina_PE
 read2	File	File containing the reverse reads (not available for single-end or ONT data)	BaseSpace_Fetch, SRA_Fetch
-read2_aligned	File	Reverse read file of only aligned reads	TheiaCoV_Illumina_PE
+read2_aligned	String	Reverse read file of only aligned reads	TheiaCoV_Illumina_PE
 read2_clean	File	Reverse read file after quality trimming and adapter removal	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Panel
 read2_concatenated	File	Concatenated reverse reads	Concatenate_Illumina_Lanes, TheiaProk_Illumina_PE
 read2_dehosted	File	The dehosted reverse reads file; suggested read file for SRA submission 	Freyja_FASTQ, NCBI_Scrub_PE, TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE
