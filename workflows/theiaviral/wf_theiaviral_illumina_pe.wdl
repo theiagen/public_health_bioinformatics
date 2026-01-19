@@ -324,8 +324,8 @@ workflow theiaviral_illumina_pe {
     Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.host_percent_mapped_reads
     File? dehost_wf_host_mapping_metrics = host_decontaminate.host_mapping_metrics
     # trimming outputs - adapter trimming
-    String? fastp_version = fastp.version
-    String? fastp_docker = fastp.docker
+    String? fastp_version = fastp.fastp_version
+    String? fastp_docker = fastp.fastp_docker
     File? fastp_html_report = fastp.fastp_stats_html
     File? fastp_json_report = fastp.fastp_stats_json
     # bbduk outputs

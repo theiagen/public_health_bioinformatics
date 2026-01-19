@@ -45,8 +45,8 @@ task fastp_pe {
     File read2_trimmed_unpaired = "~{samplename}_2U.fastq.gz"
     File fastp_stats_html = "~{samplename}_fastp.html"
     File fastp_stats_json = "~{samplename}_fastp.json"
-    String version = read_string("VERSION")
-    String docker = "~{docker}"
+    String fastp_version = read_string("VERSION")
+    String fastp_docker = "~{docker}"
     String pipeline_date = read_string("DATE")
   }
   runtime {
