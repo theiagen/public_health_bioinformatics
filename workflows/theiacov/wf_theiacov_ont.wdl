@@ -296,7 +296,7 @@ workflow theiacov_ont {
     File? aligned_bam = consensus.trim_sorted_bam
     File? aligned_bai = consensus.trim_sorted_bai
     File? medaka_vcf = consensus.medaka_pass_vcf
-    File read1_aligned = select_first([consensus.reads_aligned, flu_track.irma_aligned_fastqs])
+    String read1_aligned = select_first([consensus.reads_aligned, flu_track.irma_aligned_fastqs, ""])
     File? read1_trimmed = consensus.trim_fastq
     # Read Alignment - Artic consensus versioning outputs
     String? artic_version = consensus.artic_pipeline_version

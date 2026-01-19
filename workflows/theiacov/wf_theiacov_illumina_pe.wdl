@@ -302,8 +302,8 @@ workflow theiacov_illumina_pe {
     # Read Alignment - bwa and bbmap_reformat(flu) outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version
-    File read1_aligned = select_first([ivar_consensus.read1_aligned, flu_track.bbmap_reformated_R1])
-    File read2_aligned = select_first([ivar_consensus.read2_aligned, flu_track.bbmap_reformated_R2])
+    String read1_aligned = select_first([ivar_consensus.read1_aligned, flu_track.bbmap_reformated_R1, ""])
+    String read2_aligned = select_first([ivar_consensus.read2_aligned, flu_track.bbmap_reformated_R2, ""])
     String aligned_bam = select_first([ivar_consensus.aligned_bam, ""])
     String aligned_bai = select_first([ivar_consensus.aligned_bai, ""])
     File? read1_unaligned = ivar_consensus.read1_unaligned
