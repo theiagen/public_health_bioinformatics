@@ -7638,26 +7638,20 @@
 <tr>
 <td>freyja</td>
 <td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1</td>
 <td>Freyja_FASTQ</td>
 </tr>
 <tr>
 <td>freyja_dashboard_task</td>
 <td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1</td>
 <td>Freyja_Dashboard</td>
 </tr>
 <tr>
 <td>freyja_plot_task</td>
 <td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1</td>
 <td>Freyja_Plot</td>
-</tr>
-<tr>
-<td>freyja_update_refs</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3</td>
-<td>Freyja_Update</td>
 </tr>
 <tr>
 <td>gambit</td>
@@ -7670,6 +7664,12 @@
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/gamma:2.2</td>
 <td>TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
+</tr>
+<tr>
+<td>gene_coverage</td>
+<td><strong>docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
+<td>Freyja_FASTQ</td>
 </tr>
 <tr>
 <td>get_fasta_genome_size</td>
@@ -8347,7 +8347,13 @@
 <td>qc_check_task</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16</td>
-<td>TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
+<td>Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
+</tr>
+<tr>
+<td>qualimap</td>
+<td><strong>docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/qualimap-custom-html:2.3</td>
+<td>Freyja_FASTQ</td>
 </tr>
 <tr>
 <td>quast</td>
@@ -8714,12 +8720,6 @@
 <td><strong>busco_docker_image</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1</td>
 <td>TheiaEuk_ONT</td>
-</tr>
-<tr>
-<td>transfer_files</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine</td>
-<td>Freyja_Update</td>
 </tr>
 <tr>
 <td>transfer_files</td>
