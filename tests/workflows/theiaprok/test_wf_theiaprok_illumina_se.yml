@@ -277,7 +277,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/task.log
       contains: ["wdl", "theiaprok_illumina_se", "bbduk", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/DATE
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/_miniwdl_inputs/0/test_trimmed.fastq.gz
+    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/_miniwdl_inputs/0/test_1P.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/test.adapters.stats.txt
       md5sum: 3606f3701d111c7aedc44fef5d6ae09a
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/test.matched_phix.fq
