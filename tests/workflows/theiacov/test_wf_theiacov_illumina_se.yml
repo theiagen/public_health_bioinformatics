@@ -22,7 +22,7 @@
     - path: miniwdl_run/call-raw_check_reads/task.log
     # bbduk
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/command
-      md5sum: e93b1c3341b2edc19046c06a1f271bfa
+      md5sum: 5623e73be1e5add07b5f1994d39157e2
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/inputs.json
       contains: ["phix", "adapters", "read1", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/outputs.json
@@ -33,10 +33,10 @@
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/task.log
       contains: ["wdl", "illumina_se", "bbduk", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/ERR6319327.adapters.stats.txt
-      md5sum: fe785824715a0c03f0dd64464e936b3d
+      md5sum: b5073f762f90af5428c8d223e196da89
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/ERR6319327.phix.stats.txt
-      md5sum: 3fa3fb32416589385197c7a384ebdade
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/_miniwdl_inputs/0/ERR6319327_trimmed.fastq.gz
+      md5sum: 722f43dfee3cdc6f3f00ec56f75859cc
+    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/_miniwdl_inputs/0/ERR6319327_1P.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # fastq scan raw
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/command
