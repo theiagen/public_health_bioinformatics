@@ -1556,10 +1556,12 @@ merlin_magic	tbprofiler_variant_caller	String	Select a different variant caller 
 merlin_magic	tbprofiler_variant_calling_params	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	tbprofiler_variant_calling_params	String	Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	theiaeuk	Boolean	Internal component, do not modify	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	vibecheck_docker_image	String	Internal component, do not modify	watronfire/vibecheck:2025.02.24	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	vibecheck_docker_image	String	The Docker container to use for the task	watronfire/vibecheck:2025.02.24	Optional	TheiaProk_Illumina_PE	docker	
+merlin_magic	vibecheck_docker_image	String	Internal component, do not modify	watronfire/vibecheck:2025.06.26	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	vibecheck_docker_image	String	The Docker container to use for the task	watronfire/vibecheck:2025.06.26	Optional	TheiaProk_Illumina_PE	docker	
 merlin_magic	vibecheck_lineage_barcodes	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	vibecheck_lineage_barcodes	File	Feather formatted lineage barcodes to use instead of default O1 barcodes		Optional	TheiaProk_Illumina_PE	general	
+merlin_magic	vibecheck_skip_subsampling	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	vibecheck_skip_subsampling	Boolean	When enabled, will not subsample reads prior to classification. Will increase computation time	False	Optional	TheiaProk_Illumina_PE	general	
 merlin_magic	vibecheck_subsampling_fraction	Float	Internal component, do not modify	0.2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	vibecheck_subsampling_fraction	Float	Fraction of reads to use in classification.	0.2	Optional	TheiaProk_Illumina_PE	general	
 merlin_magic	virulencefinder_database	String	Internal component, do not modify	virulence_ecoli	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
