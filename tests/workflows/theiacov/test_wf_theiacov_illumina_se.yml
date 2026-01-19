@@ -36,7 +36,7 @@
       md5sum: fe785824715a0c03f0dd64464e936b3d
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/ERR6319327.phix.stats.txt
       md5sum: 3fa3fb32416589385197c7a384ebdade
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/_miniwdl_inputs/0/ERR6319327_trimmed.fastq.gz
+    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/_miniwdl_inputs/0/ERR6319327_trimmed_1P.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # fastq scan raw
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/command
