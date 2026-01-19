@@ -406,7 +406,7 @@ task irma {
 
     # if returned_aligned_reads is true, decompress reads.tar.gz, concatenate, and gzip into single file.
     if ~{return_aligned_reads}; then 
-      tar -xOzf "~{samplename}/intermediate/4-ASSEMBLE_SSW/reads.tar.gz" | gzip > "~{samplename}/intermediate/4-ASSEMBLE_SSW/~{samplename}_concatenated_reads.fastq.gz"
+      tar -xOzf "~{samplename}/intermediate/4-ASSEMBLE_SSW/reads.tar.gz" | gzip > "~{samplename}/intermediate/4-ASSEMBLE_SSW/~{samplename}_irma_concatenated_reads.fastq.gz"
     fi
   >>>
   output {
@@ -460,7 +460,7 @@ task irma {
     File? seg_na_bam = "~{samplename}_NA.bam"
 
     # Return interleaved IRMA FASTQ files
-    File? irma_aligned_fastqs = "~{samplename}/intermediate/4-ASSEMBLE_SSW/~{samplename}_concatenated_reads.fastq.gz"
+    File? irma_aligned_fastqs = "~{samplename}/intermediate/4-ASSEMBLE_SSW/~{samplename}_irma_concatenated_reads.fastq.gz"
   }
   runtime {
     docker: "~{docker}"

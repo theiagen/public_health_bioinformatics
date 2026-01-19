@@ -108,7 +108,8 @@ workflow flu_track {
         cpu = irma_cpu,
         disk_size = irma_disk_size
     }
-    if (irma_return_aligned_reads && defined(irma.irma_aligned_fastqs)) {
+    # Only perform deinterleaving if IRMA aligned reads are present and are intended to be PE
+    if (irma_return_aligned_reads && defined(irma.irma_aligned_fastqs) && defined(read2)) {
       call bbmap_reformat.bbmap_reformat_interleaved{
         input:
           samplename = samplename,
