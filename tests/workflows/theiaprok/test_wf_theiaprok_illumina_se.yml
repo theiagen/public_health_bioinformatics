@@ -438,7 +438,7 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 481f5fbce5aa1abf93acd912797821cc
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: ea025d9bc21997113ad5b8acb8195f63
+      md5sum: 3a8491c54e3909ce69293b30310f2cfb
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
       md5sum: b8667126574a667675a6a25ade90c5a4
     - path: miniwdl_run/workflow.log
