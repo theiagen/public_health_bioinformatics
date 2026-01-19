@@ -16,9 +16,16 @@ task fastp_pe {
     Int memory = 8
   }
   command <<<
+    # fail hard
+    set -euo pipefail
+
     # date 
     date | tee DATE
 
+    # version
+    fastp -v 2>&1 | sed -E 's/^fastp //g' | tee VERSION
+
+    # trim reads
     fastp \
       --in1 ~{read1} --in2 ~{read2} \
       --out1 ~{samplename}_1P.fastq.gz --out2 ~{samplename}_2P.fastq.gz \
@@ -36,8 +43,10 @@ task fastp_pe {
     File read2_trimmed = "~{samplename}_2P.fastq.gz"
     File read1_trimmed_unpaired = "~{samplename}_1U.fastq.gz"
     File read2_trimmed_unpaired = "~{samplename}_2U.fastq.gz"
-    File fastp_stats = "~{samplename}_fastp.html"
-    String version = "~{docker}"
+    File fastp_stats_html = "~{samplename}_fastp.html"
+    File fastp_stats_json = "~{samplename}_fastp.json"
+    String version = read_string("VERSION")
+    String docker = "~{docker}"
     String pipeline_date = read_string("DATE")
   }
   runtime {

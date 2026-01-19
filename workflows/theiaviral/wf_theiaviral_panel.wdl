@@ -334,7 +334,9 @@ workflow theiaviral_panel {
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
     # trimming data
     String? fastp_version = fastp.version
+    String? fastp_docker = fastp.docker
     File? fastp_html_report = fastp.fastp_stats
+    File? fastp_json_report = fastp.fastp_json
     # host decontamination outputs
     File? dehost_wf_dehost_read1 = host_decontaminate.dehost_read1
     File? dehost_wf_dehost_read2 = host_decontaminate.dehost_read2

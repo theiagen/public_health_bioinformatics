@@ -232,6 +232,8 @@ workflow theiameta_illumina_pe {
     # Read QC - fastp outputs
     String? fastp_version = read_QC_trim.fastp_version
     File? fastp_html_report = read_QC_trim.fastp_html_report
+    File? fastp_json_report = read_QC_trim.fastp_json_report
+    String? fastp_docker = read_QC_trim.fastp_docker
     # Read QC - bbduk outputs
     File read1_clean = read_QC_trim.read1_clean
     File read2_clean = read_QC_trim.read2_clean

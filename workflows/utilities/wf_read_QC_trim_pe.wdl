@@ -230,7 +230,9 @@ workflow read_QC_trim_pe {
     String? trimmomatic_version = trimmomatic_pe.version
     String? trimmomatic_docker = trimmomatic_pe.trimmomatic_docker
     String? fastp_version = fastp.version
-    File? fastp_html_report = fastp.fastp_stats
+    String? fastp_docker = fastp.docker
+    File? fastp_html_report = fastp.fastp_stats_html
+    File? fastp_json_report = fastp.fastp_stats_json
     # midas
     String? midas_docker = midas.midas_docker
     File? midas_report = midas.midas_report
