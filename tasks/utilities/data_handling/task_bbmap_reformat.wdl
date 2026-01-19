@@ -12,27 +12,40 @@ task bbmap_reformat_interleaved{
 
   command <<<
     # set -euo pipefail to avoid silent failure
-    # TODO: Need to set back to -euo and sort out checking the interleaved status. reformat.sh throws an error when not
-    # properly paired so this needs to be supressed somehow. 
-    set -uo pipefail
+    set -euo pipefail
 
-    if reformat.sh in=~{interleaved_fastq} out=stdout.fq verifypaired=t; then
-      echo "DEBUG: FASTQ file appears to be correctly paired."
-      reformat.sh in=~{interleaved_fastq} out=~{samplename}_deinterleaved_R1.fastq \
+    # Capture exit code for checking interleaved status
+    # Removing e from pipefail in order to check for interleaved status as 
+    # reformat.sh will return exit code 1 if not properly interleaved
+    set +e 
+    reformat.sh in=~{interleaved_fastq} out=~{samplename}_deinterleaved_R1.fastq \
         out2=~{samplename}_deinterleaved_R2.fastq \
-        verifypaired=t 
-    else
+        verifypaired=t
+    reformat_exit_code=$?
+    echo "DEBUG: Initial reformat exit code $reformat_exit_code"
+    # Reset pipefail after initial reformat.sh run
+    set -e
+
+    # Check for a non 0 exit code, meaning reads need to be repaired due to mismatched pairs
+    if [ $reformat_exit_code -ne 0 ]; then 
+      # Run repair.sh and reformat on corrected reads
       echo "DEBUG: Names do not appear to be correctly paired in the interleaved FASTQ file. Running repair.sh"
-      repair.sh in=~{interleaved_fastq} out=repaired.fastq repair=t 
+      repair.sh in=~{interleaved_fastq} out=repaired.fastq repair=t
+      echo "DEBUG: repair.sh complete, running reformat.sh to deinterleave " 
       reformat.sh in=repaired.fastq out=~{samplename}_deinterleaved_R1.fastq \
         out2=~{samplename}_deinterleaved_R2.fastq \
         verifypaired=t
     fi
+    
+    # GZIP deinterleaved FASTQ files
+    gzip *_deinterleaved_R*.fastq
+
   >>>
 
   output {
-    File deinterleaved_fastq_R1 = "~{samplename}_deinterleaved_R1.fastq"
-    File deinterleaved_fastq_R2 = "~{samplename}_deinterleaved_R2.fastq"
+    File deinterleaved_fastq_R1 = "~{samplename}_deinterleaved_R1.fastq.gz"
+    File deinterleaved_fastq_R2 = "~{samplename}_deinterleaved_R2.fastq.gz"
+    String bbmap_reformat_docker = docker
   }
 
   runtime {

@@ -291,12 +291,12 @@ workflow theiacov_ont {
     String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
-    # Read Alignment - Artic consensus outputs
+    # Read Alignment - Artic consensus and IRMA Aligned outputs
     String assembly_fasta = select_first([consensus.consensus_seq, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
     File? aligned_bam = consensus.trim_sorted_bam
     File? aligned_bai = consensus.trim_sorted_bai
     File? medaka_vcf = consensus.medaka_pass_vcf
-    File? read1_aligned = consensus.reads_aligned
+    File read1_aligned = select_first([consensus.reads_aligned, flu_track.irma_aligned_fastqs])
     File? read1_trimmed = consensus.trim_fastq
     # Read Alignment - Artic consensus versioning outputs
     String? artic_version = consensus.artic_pipeline_version

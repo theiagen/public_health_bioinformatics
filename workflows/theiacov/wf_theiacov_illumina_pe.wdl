@@ -299,11 +299,11 @@ workflow theiacov_illumina_pe {
     String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
-    # Read Alignment - bwa outputs
+    # Read Alignment - bwa and bbmap_reformat(flu) outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version
-    File? read1_aligned = ivar_consensus.read1_aligned
-    File? read2_aligned = ivar_consensus.read2_aligned
+    File read1_aligned = select_first([ivar_consensus.read1_aligned, flu_track.bbmap_reformated_R1])
+    File read2_aligned = select_first([ivar_consensus.read2_aligned, flu_track.bbmap_reformated_R2])
     String aligned_bam = select_first([ivar_consensus.aligned_bam, ""])
     String aligned_bai = select_first([ivar_consensus.aligned_bai, ""])
     File? read1_unaligned = ivar_consensus.read1_unaligned

@@ -312,6 +312,7 @@ workflow flu_track {
     File? irma_assembly_fasta = irma.irma_assembly_fasta
     File? irma_assembly_fasta_padded = irma.irma_assembly_fasta_padded
     File? irma_assembly_fasta_concatenated_padded = irma.irma_assembly_fasta_concatenated_padded
+    File? irma_aligned_fastqs = irma.irma_aligned_fastqs
     File flu_assembly_fasta_concatenated = select_first([irma.irma_assembly_fasta_concatenated, vadr_flu_segments.assembly_fasta_concatenated, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File flu_ha_segment_fasta = select_first([irma.seg_ha_assembly, vadr_flu_segments.seg_ha_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File flu_na_segment_fasta = select_first([irma.seg_na_assembly, vadr_flu_segments.seg_na_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
@@ -388,5 +389,9 @@ workflow flu_track {
     String? flu_oseltamivir_resistance = flu_antiviral_substitutions.flu_oseltamivir_resistance
     String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
+    # BBMap Reformat Outputs
+    File? bbmap_reformated_R1 = bbmap_reformat_interleaved.deinterleaved_fastq_R1
+    File? bbmap_reformated_R2 = bbmap_reformat_interleaved.deinterleaved_fastq_R2
+    String? bbmap_reformat_docker = bbmap_reformat_interleaved.bbmap_reformat_docker
   }
 }
