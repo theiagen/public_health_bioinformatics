@@ -102,6 +102,7 @@ workflow flu_track {
         minimum_average_consensus_allele_quality = irma_min_avg_consensus_allele_quality,
         minimum_ambiguous_threshold = irma_min_ambiguous_threshold,
         keep_ref_deletions = irma_keep_ref_deletions,
+        return_aligned_reads = irma_return_aligned_reads,
         docker = irma_docker_image,
         memory = irma_memory,
         cpu = irma_cpu,

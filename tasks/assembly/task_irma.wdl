@@ -7,7 +7,7 @@ task irma {
     String seq_method
     String samplename
     Boolean keep_ref_deletions = true # set DEL_TYPE config in irma_config.sh to "DEL" if false, "NNN" if true
-    #Boolean return_aligned_reads = false # when true, returns interleaved reads produced by IRMA that align to the reference
+    Boolean return_aligned_reads = false # when true, returns interleaved reads produced by IRMA that align to the reference
     Int minimum_consensus_support = 50 # IRMA default is 1, but matching MIRA standards for ONT = 50 and ILMN = 30 via defaults at theiacov workflow level WDLs: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
     Int minimum_read_length = 75 # matching default for TheiaCoV_Illumina_PE; NOTE: IRMA's default is 125 bp
     Int minimum_average_consensus_allele_quality = 10 # IRMA default is 0, we are matching MIRA standards for both ONT and ILMN: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
@@ -404,8 +404,10 @@ task irma {
       echo -e "~{samplename}\t${total_reads}\t${pass_qc_reads}\t${segment_mapped_reads}\t${segment_ref_name}\t${segment_pct_ref_cov}\t${segment_median_cov}\t${segment_mean_cov}\t${segment_minor_snv}\t${segment_minor_insertions}\t${segment_minor_deletions}" >> "~{samplename}/~{samplename}_irma_qc_summary.tsv"
     done
 
-    tar -xOzf "~{samplename}/intermediate/4-ASSEMBLE_SSW/reads.tar.gz" | gzip > "~{samplename}/intermediate/4-ASSEMBLE_SSW/~{samplename}_concatenated_reads.fastq.gz"
-    
+    # if returned_aligned_reads is true, decompress reads.tar.gz, concatenate, and gzip into single file.
+    if ~{return_aligned_reads}; then 
+      tar -xOzf "~{samplename}/intermediate/4-ASSEMBLE_SSW/reads.tar.gz" | gzip > "~{samplename}/intermediate/4-ASSEMBLE_SSW/~{samplename}_concatenated_reads.fastq.gz"
+    fi
   >>>
   output {
     # all of these FASTAs are derived from the amended_consensus/*.fa files produced by IRMA
