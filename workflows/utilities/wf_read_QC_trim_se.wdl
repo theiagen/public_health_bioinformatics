@@ -4,7 +4,7 @@ import "../../tasks/quality_control/basic_statistics/task_fastq_scan.wdl" as fas
 import "../../tasks/quality_control/basic_statistics/task_fastqc.wdl" as fastqc_task
 import "../../tasks/quality_control/read_filtering/task_bbduk.wdl" as bbduk_task
 import "../../tasks/quality_control/read_filtering/task_fastp.wdl" as fastp_task
-import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic
+import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
 import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
@@ -46,7 +46,7 @@ workflow read_QC_trim_se {
   }
 
   if (read_processing == "trimmomatic") {
-    call trimmomatic.trimmomatic_se {
+    call trimmomatic_task.trimmomatic {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_se.read1_dehosted, read1]),
@@ -70,7 +70,7 @@ workflow read_QC_trim_se {
   call bbduk_task.bbduk_se {
     input:
       samplename = samplename,
-      read1_trimmed = select_first([trimmomatic_se.read1_trimmed, fastp_se.read1_trimmed]),
+      read1_trimmed = select_first([trimmomatic.read1_trimmed, fastp_se.read1_trimmed]),
       memory = bbduk_memory,
       adapters = adapters,
       phix = phix
@@ -189,8 +189,8 @@ workflow read_QC_trim_se {
     String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone.kraken2_database, kraken_db_warning, ""])
    
     # trimming versioning
-    String? trimmomatic_version = trimmomatic_se.version
-    String? trimmomatic_docker = trimmomatic_se.trimmomatic_docker
+    String? trimmomatic_version = trimmomatic.version
+    String? trimmomatic_docker = trimmomatic.trimmomatic_docker
     String? fastp_version = fastp_se.version
     File? fastp_html_report = fastp_se.fastp_stats
     
