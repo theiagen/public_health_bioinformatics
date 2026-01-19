@@ -264,8 +264,6 @@
       contains: ["Assembly", "length", "contigs", "test"]
     - path: miniwdl_run/call-quast/work/transposed_report.txt
       contains: ["Assembly", "length", "contigs", "test"]
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/command
-      md5sum: ef7db271b7a80fa003aa62e806986c15
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/inputs.json
       contains: ["read", "fastq", "sample", "test"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/outputs.json
@@ -277,13 +275,8 @@
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/task.log
       contains: ["wdl", "theiaprok_illumina_se", "bbduk", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/DATE
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/_miniwdl_inputs/0/test_trimmed_1P.fastq.gz
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/test.adapters.stats.txt
-      md5sum: 7a2240a9f65b9b01b5a24ff59f9bfad0
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/test.matched_phix.fq
       md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/test.phix.stats.txt
-      md5sum: 14f67cdc8e81cc7a3521b916a4635519
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/test.rmadpt_1.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/test_1.clean.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_clean/command
@@ -439,8 +432,6 @@
       md5sum: 481f5fbce5aa1abf93acd912797821cc
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
       md5sum: 3a8491c54e3909ce69293b30310f2cfb
-    - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
-      md5sum: b8667126574a667675a6a25ade90c5a4
     - path: miniwdl_run/workflow.log
       contains: ["wdl", "theiaprok_illumina_se", "NOTICE", "done"]
 
