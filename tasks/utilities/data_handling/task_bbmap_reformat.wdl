@@ -20,7 +20,8 @@ task bbmap_reformat_interleaved{
     set +e 
     reformat.sh in=~{interleaved_fastq} out=~{samplename}_deinterleaved_R1.fastq \
         out2=~{samplename}_deinterleaved_R2.fastq \
-        verifypaired=t
+        verifypaired=t \
+        overwrite=t
     reformat_exit_code=$?
     echo "DEBUG: Initial reformat exit code $reformat_exit_code"
     # Reset pipefail after initial reformat.sh run
@@ -30,13 +31,15 @@ task bbmap_reformat_interleaved{
     if [ $reformat_exit_code -ne 0 ]; then 
       # Run repair.sh and reformat on corrected reads
       echo "DEBUG: Names do not appear to be correctly paired in the interleaved FASTQ file. Running repair.sh"
-      repair.sh in=~{interleaved_fastq} out=repaired.fastq repair=t
+      repair.sh in=~{interleaved_fastq} out=repaired.fastq repair=t overwrite=t
       echo "DEBUG: repair.sh complete, running reformat.sh to deinterleave " 
       reformat.sh in=repaired.fastq out=~{samplename}_deinterleaved_R1.fastq \
         out2=~{samplename}_deinterleaved_R2.fastq \
-        verifypaired=t
+        verifypaired=t \
+        overwrite=t
     fi
     
+    echo "DEBUG: reformat.sh complete, compressing deinterleaved FASTQs"
     # GZIP deinterleaved FASTQ files
     gzip *_deinterleaved_R*.fastq
 
