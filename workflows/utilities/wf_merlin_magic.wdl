@@ -245,6 +245,7 @@ workflow merlin_magic {
     # Vibecheck options
     File? vibecheck_lineage_barcodes
     Float? vibecheck_subsampling_fraction
+    Boolean? vibecheck_skip_subsampling
     # virulencefinder options
     Float? virulencefinder_min_percent_coverage
     Float? virulencefinder_min_percent_identity
@@ -650,6 +651,7 @@ workflow merlin_magic {
             read2 = read2,
             lineage_barcodes = vibecheck_lineage_barcodes,
             subsampling_fraction = vibecheck_subsampling_fraction,
+            skip_subsampling = vibecheck_skip_subsampling,
             docker = vibecheck_docker_image
         }
       }
