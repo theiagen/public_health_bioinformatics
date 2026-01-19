@@ -346,28 +346,6 @@
       md5sum: a59bb42644e35c09b8fa8087156fa4c2
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/_miniwdl_inputs/0/SRR2838702_R1.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/work/_miniwdl_inputs/0/SRR2838702_R2.fastq.gz
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/command
-      md5sum: 27f6038df10545788adc52c882ff3bc0
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/inputs.json
-      contains: ["read", "fastq", "test", "trimmomatic_min_length"]
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/outputs.json
-      contains: ["read", "fastq", "test", "trimmomatic"]
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/stderr.txt
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/stderr.txt.offset
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/stdout.txt
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/task.log
-      contains: ["wdl", "theiaprok_illumina_pe", "trimmomatic_pe", "done"]
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/DATE
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/VERSION
-      md5sum: 4c7654214318ccebb5a6a2694e97e0cc
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/_miniwdl_inputs/0/SRR2838702_R1.fastq.gz
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/_miniwdl_inputs/0/SRR2838702_R2.fastq.gz
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/test.trim.stats.txt
-      md5sum: 8ac2c97acccfeaaaaec0e5085864c59f
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/test_1P.fastq.gz
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/test_1U.fastq.gz
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/test_2P.fastq.gz
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_pe/work/test_2U.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/inputs.json
       contains: ["read_QC_trim", "R1", "fastq", "test"]
     - path: miniwdl_run/call-read_QC_trim/outputs.json

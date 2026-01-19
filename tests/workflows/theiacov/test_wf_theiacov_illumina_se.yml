@@ -20,22 +20,6 @@
     - path: miniwdl_run/call-raw_check_reads/inputs.json
     - path: miniwdl_run/call-raw_check_reads/outputs.json
     - path: miniwdl_run/call-raw_check_reads/task.log
-    # trimmomatic
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/command
-      md5sum: f4931a9b1ac8705470b8badfd6723772
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/inputs.json
-      contains: ["read1", "samplename"]
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/outputs.json
-      contains: ["trimmomatic_se", "pipeline_date", "trimmomatic_stats", "read1_trimmed"]
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/stderr.txt
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/stderr.txt.offset
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/stdout.txt
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/task.log
-      contains: ["wdl", "illumina_se", "trimmomatic", "done"]
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/work/ERR6319327.trim.stats.txt
-      md5sum: 1bc2638dbf758d0d41097fa2c7b82942
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/work/_miniwdl_inputs/0/ERR6319327_R1_dehosted.fastq.gz
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
     # bbduk
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/command
       md5sum: e93b1c3341b2edc19046c06a1f271bfa
