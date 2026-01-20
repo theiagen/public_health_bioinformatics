@@ -1866,11 +1866,11 @@ prep_augur_metadata	disk_size	Int	Amount of storage (in GB) to allocate to the t
 prep_augur_metadata	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Augur_Prep	docker	
 prep_augur_metadata	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	3	Optional	Augur_Prep	runtime	
 prep_augur_metadata	organism	String	The organism to be analyzed in Augur; options: "sars-cov-2", "flu", "MPXV", "rsv-a", "rsv-b"	sars-cov-2	Optional	Augur_Prep	general	
-primer_trim	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
-primer_trim	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-primer_trim	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan	Optional	Freyja_FASTQ	docker	
-primer_trim	keep_noprimer_reads	Boolean	Include reads with no primers	True	Optional	Freyja_FASTQ	general	
-primer_trim	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
+primer_trim	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ, TheiaViral_Illumina_PE	runtime	
+primer_trim	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ, TheiaViral_Illumina_PE	runtime	
+primer_trim	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan	Optional	Freyja_FASTQ, TheiaViral_Illumina_PE	docker	
+primer_trim	keep_noprimer_reads	Boolean	Include reads with no primers	True	Optional	Freyja_FASTQ, TheiaViral_Illumina_PE	general	
+primer_trim	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ, TheiaViral_Illumina_PE	runtime	
 prokka	compliant	Boolean	If true (default), forces Genbank/ENA/DDJB compliant headers in Prokka output files	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 prokka	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 prokka	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
@@ -2060,11 +2060,10 @@ read_QC_trim	read_qc	String	The tool used for quality control (QC) of reads. Opt
 read_QC_trim	run_prefix	String	Internal component, do not modify	artic_ncov2019	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	target_organism	String	This string is searched for in the kraken2 outputs to extract the read percentage		Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	target_organism	String	Internal component, do not modify		Optional	TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_ONT	general	
-read_QC_trim	taxon_id	Int	Internal component, do not modify	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	trim_min_length	Int	Specifies minimum length of each read after trimming to be kept	75	Optional	TheiaMeta_Illumina_PE	general	
 read_QC_trim	trim_quality_min_score	Int	Specifies the average quality of bases in a sliding window to be kept	30	Optional	TheiaMeta_Illumina_PE	general	
 read_QC_trim	trim_window_size	Int	Specifies window size for trimming (the number of bases to average the quality across)	4	Optional	TheiaMeta_Illumina_PE	general	
-read_QC_trim	trimmomatic_args	String	Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.	-phred33	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
+read_QC_trim	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	workflow_series	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE	general	
 read_QC_trim_ont	artic_guppyplex_cpu	Int	Number of CPUs to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	artic_guppyplex_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
@@ -2118,10 +2117,9 @@ read_QC_trim_pe	midas_db	File	Database to use with MIDAS. Not required as one wi
 read_QC_trim_pe	phix	File	The file containing the phix sequence to be used during bbduk task		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	read_processing	String	Options: "trimmomatic" or "fastp" to indicate which read trimming module to use	trimmomatic	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	read_qc	String	Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality.	fastq_scan	Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	taxon_id	Int	Internal component, do not modify	0	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	trim_window_size	Int	The window size to use during trimming	4	Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	trimmomatic_args	String	Additional command-line arguments to use with trimmomatic	-phred33	Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	Freyja_FASTQ	general	
 read_QC_trim_se	adapters	File	A FASTA file containing adapter sequences		Optional	Freyja_FASTQ	general	
 read_QC_trim_se	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_se	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general	
@@ -2137,7 +2135,7 @@ read_QC_trim_se	read_processing	String	Options: "trimmomatic" or "fastp" to indi
 read_QC_trim_se	read_qc	String	Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality.	fastq_scan	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	trim_window_size	Int	The window size to use during trimming	4	Optional	Freyja_FASTQ	general	
-read_QC_trim_se	trimmomatic_args	String	Additional command-line arguments to use with trimmomatic	-phred33	Optional	Freyja_FASTQ	general	
+read_QC_trim_se	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	Freyja_FASTQ	general	
 referenceseeker	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime	
 referenceseeker	disk_size	Int	Amount of storage (in GB) to allocate to the task	200	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	runtime	
 referenceseeker	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/referenceseeker:1.8.0--pyhdfd78af_0	Optional	Assembly_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA	docker	
@@ -2692,6 +2690,8 @@ theiaviral_illumina_pe	kraken_db	File	Kraken2 database file	gs://theiagen-public
 theiaviral_illumina_pe	min_allele_freq	Float	Minimum allele frequency required for a variant to populate the consensus sequence	0.6	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 theiaviral_illumina_pe	min_depth	Int	Minimum read depth required for a variant to populate the consensus sequence	10	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 theiaviral_illumina_pe	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+theiaviral_illumina_pe	primer_bed	File	The bed file containing the primers used when sequencing was performed		Optional	TheiaViral_Illumina_PE	general	
+theiaviral_illumina_pe	primer_bed	File	Internal component, do not modify		Optional	TheiaViral_Panel	general	
 theiaviral_illumina_pe	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	family	Optional	TheiaViral_Illumina_PE	general	
 theiaviral_illumina_pe	read_extraction_rank	String	Internal component, do not modify	family	Optional	TheiaViral_Panel	general	
 theiaviral_illumina_pe	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
@@ -2730,15 +2730,17 @@ trim_genbank_fastas	docker	String	The Docker container to use for the task	us-do
 trim_genbank_fastas	max_length	Int	Only for "sars-cov-2" submissions; the maximum genome length for trimming terminal ambiguous nucleotides. If your sample's genome is higher than this value, the workflow will error/fail.	30000	Optional	Mercury_Prep_N_Batch	general	
 trim_genbank_fastas	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Mercury_Prep_N_Batch	runtime	
 trim_genbank_fastas	min_length	Int	Only for "sars-cov-2" submissions; the minimum genome length for trimming terminal ambiguous nucleotides. If your sample's genome is lower than this value, the workflow will error/fail.	50	Optional	Mercury_Prep_N_Batch	general	
-trimmomatic_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TBProfiler_tNGS	runtime	
-trimmomatic_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TBProfiler_tNGS	runtime	
-trimmomatic_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.39	Optional	TBProfiler_tNGS	docker	
-trimmomatic_pe	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TBProfiler_tNGS	runtime	
-trimmomatic_pe	trimmomatic_args	String	Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.	-phred33	Optional	TBProfiler_tNGS	general	
-trimmomatic_pe	trimmomatic_base_crop	Int	Indicate the number of bases to remove from the start and end of the read (assuming average read length)		Optional	TBProfiler_tNGS	general	
-trimmomatic_pe	trimmomatic_min_length	Int	Specifies minimum length of each read after trimming to be kept	75	Optional	TBProfiler_tNGS	general	
-trimmomatic_pe	trimmomatic_quality_trim_score	Int	The trimming quality score	30	Optional	TBProfiler_tNGS	general	
-trimmomatic_pe	trimmomatic_window_size	Int	The window size for trimming	4	Optional	TBProfiler_tNGS	general	
+trimmomatic	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TBProfiler_tNGS	runtime	
+trimmomatic	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TBProfiler_tNGS	runtime	
+trimmomatic	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.40	Optional	TBProfiler_tNGS	docker	
+trimmomatic	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TBProfiler_tNGS	runtime	
+trimmomatic	trimmomatic_adapter_fasta	File	A FASTA file containing adapter sequences	TruSeq3-PE-2.fa	Optional	TBProfiler_tNGS	general	True
+trimmomatic	trimmomatic_adapter_trim_args	String	Colon-delimited adapter trimming parameters representing [seed mismatches: palindrome clip threshold: simple clip threshold]	2:30:10	Optional	TBProfiler_tNGS	general	True
+trimmomatic	trimmomatic_min_length	Int	Specifies minimum length of each read after trimming to be kept	75	Optional	TBProfiler_tNGS	general	
+trimmomatic	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	TBProfiler_tNGS	general	
+trimmomatic	trimmomatic_trim_adapters	Boolean	A True/False option that determines if adapters should be trimmed	False	Optional	TBProfiler_tNGS	general	
+trimmomatic	trimmomatic_window_quality	Int	The trimming window quality score	30	Optional	TBProfiler_tNGS	general	
+trimmomatic	trimmomatic_window_size	Int	The window size for trimming	4	Optional	TBProfiler_tNGS	general	
 ts_mlst	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 ts_mlst	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 ts_mlst	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-12-31	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	

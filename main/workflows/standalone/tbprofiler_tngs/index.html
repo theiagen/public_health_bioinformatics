@@ -7318,7 +7318,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>trimmomatic_pe</td>
+<td>trimmomatic</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -7326,7 +7326,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>trimmomatic_pe</td>
+<td>trimmomatic</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
@@ -7334,15 +7334,15 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>trimmomatic_pe</td>
+<td>trimmomatic</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.39</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.40</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>trimmomatic_pe</td>
+<td>trimmomatic</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -7350,23 +7350,23 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>trimmomatic_pe</td>
-<td><strong>trimmomatic_args</strong></td>
+<td>trimmomatic</td>
+<td><strong>trimmomatic_adapter_fasta</strong></td>
+<td>File</td>
+<td>A FASTA file containing adapter sequences</td>
+<td>TruSeq3-PE-2.fa</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>trimmomatic</td>
+<td><strong>trimmomatic_adapter_trim_args</strong></td>
 <td>String</td>
-<td>Additional arguments to pass to trimmomatic. "-phred33" specifies the Phred Q score encoding which is almost always phred33 with modern sequence data.</td>
-<td>-phred33</td>
+<td>Colon-delimited adapter trimming parameters representing [seed mismatches: palindrome clip threshold: simple clip threshold]</td>
+<td>2:30:10</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>trimmomatic_pe</td>
-<td><strong>trimmomatic_base_crop</strong></td>
-<td>Int</td>
-<td>Indicate the number of bases to remove from the start and end of the read (assuming average read length)</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>trimmomatic_pe</td>
+<td>trimmomatic</td>
 <td><strong>trimmomatic_min_length</strong></td>
 <td>Int</td>
 <td>Specifies minimum length of each read after trimming to be kept</td>
@@ -7374,15 +7374,31 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>trimmomatic_pe</td>
-<td><strong>trimmomatic_quality_trim_score</strong></td>
+<td>trimmomatic</td>
+<td><strong>trimmomatic_override_args</strong></td>
+<td>String</td>
+<td>Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>trimmomatic</td>
+<td><strong>trimmomatic_trim_adapters</strong></td>
+<td>Boolean</td>
+<td>A True/False option that determines if adapters should be trimmed</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>trimmomatic</td>
+<td><strong>trimmomatic_window_quality</strong></td>
 <td>Int</td>
-<td>The trimming quality score</td>
+<td>The trimming window quality score</td>
 <td>30</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>trimmomatic_pe</td>
+<td>trimmomatic</td>
 <td><strong>trimmomatic_window_size</strong></td>
 <td>Int</td>
 <td>The window size for trimming</td>
