@@ -466,6 +466,7 @@ hicap_results_tsv	File	TSV file of hicap output	TheiaProk_FASTA, TheiaProk_Illum
 hicap_serotype	String	hicap serotype	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 hicap_version	String	hicap version used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 identified_organisms	Array[String]	List of organisms extracted and identified from an panel level sample	TheiaViral_Panel
+irma_aligned_fastqs	File	Reads aligned to Flu reference from IRMA	TheiaViral_ONT
 irma_all_deletions_tsv	File	Concatenated TSV file of all deletions identified by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_all_insertions_tsv	File	Concatenated TSV file of all insertions identified by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_all_snvs_tsv	File	Concatenated TSV file of all SNVs identified by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT
@@ -483,6 +484,8 @@ irma_pb1_segment_fasta	File	PB1 (Polymerase basic 1) assembly fasta file	TheiaCo
 irma_pb2_segment_fasta	File	PB2 (Polymerase basic 2) assembly fasta file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_qc_log	File	IRMA QC log file	TheiaCoV_Illumina_PE, TheiaCoV_ONT
 irma_qc_summary_tsv	File	TSV file summarizing IRMA quality control metrics	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+irma_read1_aligned	File	Read1 aligned to Flu reference from IRMA	TheiaViral_Illumina_PE
+irma_read2_aligned	File	Read2 aligned to Flu reference from IRMA	TheiaViral_Illumina_PE
 irma_subtype	String	Flu subtype as determined by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 irma_subtype_notes	String	Helpful note to user about Flu B subtypes. Output will be blank for Flu A samples. For Flu B samples it will state: "IRMA does not differentiate Victoria and Yamagata Flu B lineages. See abricate_flu_subtype output column"	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 irma_type	String	Flu type as determined by IRMA	TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
