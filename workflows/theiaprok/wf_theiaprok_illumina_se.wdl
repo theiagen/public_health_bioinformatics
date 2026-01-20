@@ -391,6 +391,8 @@ workflow theiaprok_illumina_se {
                 "est_coverage_clean": cg_pipeline_clean.est_coverage,
                 "est_coverage_raw": cg_pipeline_raw.est_coverage,
                 "fastp_html_report": read_QC_trim.fastp_html_report,
+                "fastp_json_report": read_QC_trim.fastp_json_report,
+                "fastp_docker": read_QC_trim.fastp_docker,
                 "fastp_version": read_QC_trim.fastp_version,
                 "fastq_scan_clean1_json": read_QC_trim.fastq_scan_clean1_json,
                 "fastq_scan_num_reads_clean1": read_QC_trim.fastq_scan_clean1,

@@ -191,8 +191,10 @@ workflow read_QC_trim_se {
     # trimming versioning
     String? trimmomatic_version = trimmomatic_se.version
     String? trimmomatic_docker = trimmomatic_se.trimmomatic_docker
-    String? fastp_version = fastp_se.version
-    File? fastp_html_report = fastp_se.fastp_stats
+    String? fastp_version = fastp_se.fastp_version
+    String? fastp_docker = fastp_se.fastp_docker
+    File? fastp_html_report = fastp_se.fastp_stats_html
+    File? fastp_json_report = fastp_se.fastp_stats_json
     
     # midas
     String? midas_docker = midas.midas_docker

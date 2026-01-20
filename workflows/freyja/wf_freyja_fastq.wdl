@@ -219,7 +219,9 @@ workflow freyja_fastq {
     String trimmomatic_docker = select_first([read_QC_trim_pe.trimmomatic_docker, read_QC_trim_se.trimmomatic_docker, ""])
     # Read QC - fastp outputs  - Illumina PE and SE
     String fastp_version = select_first([read_QC_trim_pe.fastp_version, read_QC_trim_se.fastp_version, ""])
+    String fastp_docker = select_first([read_QC_trim_pe.fastp_docker, read_QC_trim_se.fastp_docker, ""])
     String fastp_html_report = select_first([read_QC_trim_pe.fastp_html_report, read_QC_trim_se.fastp_html_report, ""])
+    String fastp_json_report = select_first([read_QC_trim_pe.fastp_json_report, read_QC_trim_se.fastp_json_report, ""])
     # Read QC - nanoq - ONT
     String? nanoq_version = read_QC_trim_ont.nanoq_version
     # Read QC - bbduk outputs - Illumina PE and SE

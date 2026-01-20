@@ -320,8 +320,11 @@ failed_uploads	File	The metadata for any failed uploads	Terra_2_GISAID
 fasta_utilities_fai	File	FASTA index file	TheiaViral_ONT
 fasta_utilities_samtools_docker	String	Docker image used for samtools in fasta utilities	TheiaViral_ONT
 fasta_utilities_samtools_version	String	Version of samtools used in fasta utilities	TheiaViral_ONT
+fastp_docker	String	Docker image used for fastp	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastp_html_report	File	The HTML report made with fastp	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastp_html_report	String	The HTML report made with fastp	Freyja_FASTQ
+fastp_json_report	File	The JSON report made with fastp	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastp_json_report	String	The JSON report made with fastp	Freyja_FASTQ
 fastp_version	String	The version of fastp used	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_dl_date	String	The date of the read data download	SRA_Fetch
 fastq_dl_docker	String	The docker used	SRA_Fetch
