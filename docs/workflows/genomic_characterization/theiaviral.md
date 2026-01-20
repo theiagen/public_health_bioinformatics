@@ -208,6 +208,8 @@
 
     ??? toggle "Variant Calling and Consensus Generation"
 
+{{ include_md("common_text/ivar_trim_task.md", condition="theiaviral", indent=8) }}
+
 {{ include_md("common_text/ivar_variants_task.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/ivar_consensus_task.md", condition="theiaviral", indent=8) }}
