@@ -237,7 +237,9 @@ workflow theiaeuk_illumina_pe {
     String? fastqc_docker = read_QC_trim.fastqc_docker
     # Read QC - fastp outputs
     String? fastp_version = read_QC_trim.fastp_version
+    String? fastp_docker = read_QC_trim.fastp_docker
     File? fastp_html_report = read_QC_trim.fastp_html_report
+    File? fastp_json_report = read_QC_trim.fastp_json_report
     # Read QC - bbduk outputs
     String? bbduk_docker = read_QC_trim.bbduk_docker
     File? read1_clean = read_QC_trim.read1_clean

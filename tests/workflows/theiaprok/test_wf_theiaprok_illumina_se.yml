@@ -384,7 +384,7 @@
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_cg_pipeline.wdl
       md5sum: aefc03d04bb1394f62d7dc73c6d5b706
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_fastp.wdl
-      md5sum: ba763571d0f830eb8497db60ed56de84
+      md5sum: a210bd159c9b96cd68e7fe4c56af1b2e
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_fastq_scan.wdl
       contains: ["version", "fastq_scan", "output"]
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_mummer_ani.wdl
@@ -438,7 +438,7 @@
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 481f5fbce5aa1abf93acd912797821cc
     - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: 3a8491c54e3909ce69293b30310f2cfb
+      md5sum: e9fbaf251dc344037f3a1ead35d9f1ce
     - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
       md5sum: 41773125fa853dc82dca84d40c365f0e
     - path: miniwdl_run/workflow.log
