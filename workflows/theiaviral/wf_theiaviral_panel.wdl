@@ -292,6 +292,8 @@ workflow theiaviral_panel {
             "irma_type": theiaviral_illumina_pe.irma_type,
             "irma_subtype": theiaviral_illumina_pe.irma_subtype,
             "irma_subtype_notes": theiaviral_illumina_pe.irma_subtype_notes,
+            "irma_read1_aligned": theiaviral_illumina_pe.irma_read1_aligned,
+            "irma_read2_aligned": theiaviral_illumina_pe.irma_read2_aligned,
             "genoflu_version": theiaviral_illumina_pe.genoflu_version,
             "genoflu_genotype": theiaviral_illumina_pe.genoflu_genotype,
             "genoflu_all_segments": theiaviral_illumina_pe.genoflu_all_segments,
