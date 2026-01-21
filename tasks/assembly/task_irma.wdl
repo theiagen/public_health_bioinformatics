@@ -407,7 +407,6 @@ task irma {
     if [ -s "~{samplename}/intermediate/4-ASSEMBLE_SSW/reads.tar.gz" ]; then
       if ! tar -xOzf "~{samplename}/intermediate/4-ASSEMBLE_SSW/reads.tar.gz" | gzip > "~{samplename}/intermediate/4-ASSEMBLE_SSW/~{samplename}_irma_concatenated_reads.fastq.gz"; then
         echo "ERROR: Failed to decompress and concatenate reads.tar.gz" >&2
-        exit 1
       fi
     fi
   >>>

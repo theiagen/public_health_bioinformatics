@@ -14,6 +14,11 @@ task bbmap_reformat_interleaved{
     # set -euo pipefail to avoid silent failure
     set -euo pipefail
 
+    if [ "$(zcat ~{interleaved_fastq} | wc -c)" -eq 0 ]; then
+      echo "ERROR: ~{interleaved_fastq} is empty after decompression."
+      exit 0
+    fi
+    
     # Capture exit code for checking interleaved status
     # Removing e from pipefail in order to check for interleaved status as 
     # reformat.sh will return exit code 1 if not properly interleaved
@@ -34,13 +39,13 @@ task bbmap_reformat_interleaved{
       # Ensure repair.sh is run correctly
       if ! repair.sh in=~{interleaved_fastq} out=repaired.fastq repair=t overwrite=t; then
         echo "ERROR: repair.sh has failed to correct read pairs" >&2
-        exit 1
+        exit 0
       fi
 
       # Check for needed repair.sh outputs prior to running reformat.sh
       if [ ! -s repaired.fastq ]; then
         echo "ERROR: repair.sh produced empty output" >&2
-        exit 1
+        exit 0
       fi
 
       # Run reformat.sh on corrected reads. Set overwrite to true to over write any created outputs from initial run.
@@ -56,15 +61,15 @@ task bbmap_reformat_interleaved{
     for fastq_file in "~{samplename}_deinterleaved_R1.fastq" "~{samplename}_deinterleaved_R2.fastq"; do
       if [ ! -s "$fastq_file" ]; then
         echo "ERROR: Expected output file '$fastq_file' is missing or empty" >&2
-        exit 1
+        exit 0
       fi
       gzip "$fastq_file"
     done
   >>>
 
   output {
-    File deinterleaved_fastq_R1 = "~{samplename}_deinterleaved_R1.fastq.gz"
-    File deinterleaved_fastq_R2 = "~{samplename}_deinterleaved_R2.fastq.gz"
+    File? deinterleaved_fastq_R1 = "~{samplename}_deinterleaved_R1.fastq.gz"
+    File? deinterleaved_fastq_R2 = "~{samplename}_deinterleaved_R2.fastq.gz"
     String bbmap_reformat_docker = docker
   }
 
