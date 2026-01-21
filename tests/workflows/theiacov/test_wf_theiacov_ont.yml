@@ -209,9 +209,9 @@
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 35aa27af5fb90d54561ee9d45a3163d5
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: c60c7052f013cca3b15591ef0e577d4a
+      md5sum: 87155102d8c79d3be52849e410351d4a
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 762735b9f8e69efeae463735f0ceed21
+      md5sum: 15cb42a69a86be0bb631042d8e6b9441
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/_miniwdl_inputs/0/ont.medaka.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/ont.pangolin_report.csv
