@@ -37,4 +37,4 @@ SOP	Workflow	SOP version	PHB version compatibility	Pathogen/Category	Current or 
 [Concatenation of ONT Reads in Terra](../assets/sops/TG-ONT-01_Concatenation_of_ONT_Reads_v1.pdf)	ONT	v1	v3	Data Import	Current
 [Analyzing HAI Pathogens using Phoenix Version 2 in Terra](../assets/sops/TG-PX-V2_PhoenixV2_v2.pdf)	Phoenix	v2	v3	HAI	Current
 [Getting Started in Terra](../assets/sops/TG-TER-03_GettingStartedInTerra_v5.pdf)	None	v5	v3	Getting Started	Current
-[Analyzing Bacterial Data in Terra using Theiagen’s TheiaProk Illumina PE](../assets/sops/TG-TP-PE-TheiaProk_IlluminaPE_v4.pdf)	TheiaProk	v3	v4, v3	Bacterial	Current
+[Analyzing Bacterial Data in Terra using Theiagen’s TheiaProk Illumina PE](../assets/sops/TG-TP-PE_TheiaProk_IlluminaPE_v4.pdf)	TheiaProk	v3	v4, v3	Bacterial	Current
