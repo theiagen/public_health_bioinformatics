@@ -404,7 +404,7 @@ task irma {
       echo -e "~{samplename}\t${total_reads}\t${pass_qc_reads}\t${segment_mapped_reads}\t${segment_ref_name}\t${segment_pct_ref_cov}\t${segment_median_cov}\t${segment_mean_cov}\t${segment_minor_snv}\t${segment_minor_insertions}\t${segment_minor_deletions}" >> "~{samplename}/~{samplename}_irma_qc_summary.tsv"
     done
 
-    # if returned_aligned_reads is true, decompress reads.tar.gz, concatenate, and gzip into single file.
+    # if return_aligned_reads is true, decompress reads.tar.gz, concatenate, and gzip into single file.
     if ~{return_aligned_reads}; then 
       tar -xOzf "~{samplename}/intermediate/4-ASSEMBLE_SSW/reads.tar.gz" | gzip > "~{samplename}/intermediate/4-ASSEMBLE_SSW/~{samplename}_irma_concatenated_reads.fastq.gz"
     fi
