@@ -30,7 +30,20 @@ task bbmap_reformat_interleaved{
     if [ $reformat_exit_code -ne 0 ]; then 
       # Run repair.sh and reformat on corrected reads
       echo "DEBUG: Names do not appear to be correctly paired in the interleaved FASTQ file. Running repair.sh"
-      repair.sh in=~{interleaved_fastq} out=repaired.fastq repair=t overwrite=t
+
+      # Ensure repair.sh is run correctly
+      if ! repair.sh in=~{interleaved_fastq} out=repaired.fastq repair=t overwrite=t; then
+        echo "ERROR: repair.sh has failed to correct read pairs" >&2
+        exit 1
+      fi
+
+      # Check for needed repair.sh outputs prior to running reformat.sh
+      if [ ! -s repaired.fastq ]; then
+        echo "ERROR: repair.sh produced empty output" >&2
+        exit 1
+      fi
+
+      # Run reformat.sh on corrected reads. Set overwrite to true to over write any created outputs from initial run.
       echo "DEBUG: repair.sh complete, running reformat.sh to deinterleave " 
       reformat.sh in=repaired.fastq out=~{samplename}_deinterleaved_R1.fastq \
         out2=~{samplename}_deinterleaved_R2.fastq \
@@ -39,9 +52,14 @@ task bbmap_reformat_interleaved{
     fi
     
     echo "DEBUG: reformat.sh complete, compressing deinterleaved FASTQs"
-    # GZIP deinterleaved FASTQ files
-    gzip *_deinterleaved_R*.fastq
-
+    # GZIP deinterleaved FASTQ files with additional error handling for missing and empty reformat output.
+    for fastq_file in "~{samplename}_deinterleaved_R1.fastq" "~{samplename}_deinterleaved_R2.fastq"; do
+      if [ ! -s "$fastq_file" ]; then
+        echo "ERROR: Expected output file '$fastq_file' is missing or empty" >&2
+        exit 1
+      fi
+      gzip "$fastq_file"
+    done
   >>>
 
   output {
