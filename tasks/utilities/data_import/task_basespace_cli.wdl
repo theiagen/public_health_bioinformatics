@@ -41,7 +41,7 @@ task fetch_bs {
     echo "run_id: ${run_id}" 
     if [[ ! -z "${run_id}" ]]; then 
       #Grab BaseSpace Dataset ID from dataset lists within given run 
-      dataset_id_array=($(${bs_command} list dataset --retry --input-run=${run_id} | grep -E "${dataset_name}(_| |$)" | awk -F "|" '{ print $3 }' )) 
+      dataset_id_array=($(${bs_command} list dataset --retry --input-run=${run_id} | grep -E "${dataset_name}(_| )[^_|^ ]* *\|[^\|]*\|[^\|]*\|[^\|]*\|" | awk -F "|" '{ print $3 }' )) 
       echo "dataset_id: ${dataset_id_array[*]}"
     else 
       #Try Grabbing BaseSpace Dataset ID from project name
@@ -50,7 +50,7 @@ task fetch_bs {
       echo "project_id: ${project_id}" 
       if [[ ! -z "${project_id}" ]]; then 
         echo "project_id identified via Basespace, now searching for dataset_id within project_id ${project_id}..."
-        dataset_id_array=($(${bs_command} list dataset --retry --project-id=${project_id} | grep -E "${dataset_name}(_| |$)" | awk -F "|" '{ print $3 }' )) 
+        dataset_id_array=($(${bs_command} list dataset --retry --project-id=${project_id} | grep -E "${dataset_name}(_| )[^_|^ ]* *\|[^\|]*\|[^\|]*\|[^\|]*\|" | awk -F "|" '{ print $3 }' )) 
         echo "dataset_id: ${dataset_id_array[*]}"
       else       
         echo "No run or project id found associated with input basespace_collection_id: ~{basespace_collection_id}" >&2
