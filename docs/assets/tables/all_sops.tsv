@@ -5,7 +5,7 @@ SOP	Workflow	SOP version	PHB version compatibility	Pathogen/Category	Current or 
 [Analyze SARS-COV-2 using TheiaCoV_ONT](../assets/sops/TG-SC2-ONT_SOP_Analysis_SC2_ONT_v4.pdf)	ONT, TheiaCoV	v4	v3	SC2	Current
 [Analyze SARS-COV-2 using TheiaCoV_FASTA](../assets/sops/TG-SC2-FST_Analyzing_SC2_Using_TheiaCoV_FASTA_PHB_v2.pdf)	FASTA, TheiaCoV	v2	v1	SC2	Current
 [Uploading Data, Creating Metadata Tables and TSV files, and Importing Workflows](../assets/sops/TG-TER-03_GettingStartedInTerra_v4.pdf)	None	v4	v3	Data Import	Current
-[Linking BaseSpace and Importing BaseSpace Reads to Terra](../assets/sops/TG-TER-04_BaseSpaceFetch_v3.pdf)	BaseSpace_Fetch	v3	v3	Data Import	Current
+[Linking BaseSpace and Importing BaseSpace Reads to Terra](../assets/sops/TG-TER-04_BaseSpaceFetch_v4.pdf)	BaseSpace_Fetch	v3	v4	Data Import	Current
 [Analyzing Flu Data in Terra using TheiaCov_Illumina_PE and Augur Workflows](../assets/sops/TG-FLU-PE_SOP_Flu_IlluminaPE_v1.pdf)	Augur, PE, TheiaCoV	v1	v1	Flu, Phylogenetic construction	Prior
 [Analyzing SARS-CoV-2 Metagenomic Samples using Freyja FASTQ](../assets/sops/TG-FREY-01_FreyjaFASTQ_v2.pdf)	Freyja	v2	v2	SC2	Current
 [Plotting SARS-CoV-2 Metagenomic Sample Data using Freyja Plot](../assets/sops/TG-FREY-02_FreyjaPlot_v3.pdf)	Freyja	v3	v2	SC2	Current
