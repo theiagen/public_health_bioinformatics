@@ -91,7 +91,7 @@ task qc_check_phb {
     for wdl_dict in qc_check_criteria_dirty:
       key = wdl_dict["left"]
       value = wdl_dict["right"]
-      qc_check_criteria[key] = value
+      qc_check_criteria[key.lower()] = value
 
     # extract the list of taxon to examine
     qc_check_taxa = qc_check_df.index.values.tolist()
@@ -134,7 +134,7 @@ task qc_check_phb {
         
       # perform qc_check on any metrics in the qc_check_table
       if (qc_status != "QC_NA"):
-        qc_check_metrics = taxon_df.columns.values.tolist()
+        qc_check_metrics = [x.lower() for x in taxon_df.columns.values.tolist()]
         print(f"DEBUG: Found qc_check_metrics: {qc_check_metrics}")
 
         # iterate through standard checks first
@@ -213,7 +213,10 @@ task qc_check_phb {
           to_rm = set()
           # iterate through segments
           for index, row in irma_qc_table.iterrows():
-            segment_name = row['Reference'].lower()[:row['Reference'].rfind('_')]
+            if '_' in row['Reference']:
+              segment_name = row['Reference'].lower()[:row['Reference'].rfind('_')]
+            else:
+              segment_name = row['Reference'].lower()
             ref_var = segment_name + "_percent_reference_coverage"
             med_var = segment_name + "_median_coverage"
             snv_var = segment_name + "_snv_max"
