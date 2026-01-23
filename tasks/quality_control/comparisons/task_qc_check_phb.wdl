@@ -210,7 +210,7 @@ task qc_check_phb {
             segment_name = row['Reference'].lower()[:row['Reference'].rfind('_')]
             ref_var = segment_name + "_percent_reference_coverage"
             med_var = segment_name + "_median_coverage"
-            snv_var = segment_name + "_snv_count"
+            snv_var = segment_name + "_snv_max"
             # prioritize segment-specific thresholds if they exist
             if ref_var in qc_check_metrics:
               qc_value = row['% Reference Covered']
@@ -232,10 +232,10 @@ task qc_check_phb {
               qc_value = row['Count of Minor SNVs (AF >= 0.05)']
               qc_note, qc_status = compare(qc_note, snv_var, int(qc_value), "<=", int(taxon_df[snv_var][0]))
               to_rm.add(snv_var)
-            elif "segment_snv_count" in qc_check_metrics:
+            elif "segment_snv_max" in qc_check_metrics:
               qc_value = row['Count of Minor SNVs (AF >= 0.05)']
-              qc_note, qc_status = compare(qc_note, "segment_snv_count", int(qc_value), "<=", int(taxon_df["segment_snv_count"][0]))
-              to_rm.add("segment_snv_count")
+              qc_note, qc_status = compare(qc_note, "segment_snv_max", int(qc_value), "<=", int(taxon_df["segment_snv_max"][0]))
+              to_rm.add("segment_snv_max")
           qc_check_metrics = [m for m in qc_check_metrics if m not in to_rm]
 
         if (len(qc_check_metrics) > 0):
