@@ -164,7 +164,7 @@ task qc_check_phb {
             else:
               raise ValueError(f"qc_check_criteria value type {val_type_str} not recognized; must be 'int' or 'float'")
             # we only process metrics without exception_flag set to true here (assume others are not exceptions)
-            if exception_flag != "false":
+            if exception_flag != "true":
               qc_note, qc_status = compare(qc_note, metric, val_type(obs_val), operator, val_type(taxon_df[metric][0]))
               qc_check_metrics.remove(metric)
 
