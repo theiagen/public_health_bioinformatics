@@ -156,6 +156,7 @@ task qc_check_phb {
             if not operator:
               operator = qc_check_criteria[base_metric][2]
             exception_flag = qc_check_criteria[base_metric][3]
+            print(exception_flag, type(exception_flag))
             if val_type_str == "int":
               val_type = int
             elif val_type_str == "float":
