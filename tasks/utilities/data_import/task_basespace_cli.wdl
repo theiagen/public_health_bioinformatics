@@ -39,6 +39,11 @@ task fetch_bs {
     #Grab BaseSpace Run_ID from given BaseSpace Run Name
     run_id=$(${bs_command} list run --retry | grep "~{basespace_collection_id}" | awk -F "|" '{ print $3 }' | awk '{$1=$1;print}' )
     echo "run_id: ${run_id}" 
+
+    # NOTE: substring matching will occur when the data table does not append a suffix; 
+    # e.g. where "sample1" will retrieve "sample1_1", however, "sample1_L1" will NOT retrieve "sample1_1_L1"
+    # This cannot be resolved without explicitly knowing the suffix prior to parsing. Noted in documentation
+
     if [[ ! -z "${run_id}" ]]; then 
       #Grab BaseSpace Dataset ID from dataset lists within given run 
       dataset_id_array=($(${bs_command} list dataset --retry --input-run=${run_id} | grep -E "${dataset_name}(_| )[^_|^ ]* *\|[^\|]*\|[^\|]*\|[^\|]*\|" | awk -F "|" '{ print $3 }' )) 

@@ -145,6 +145,9 @@ _If you already have a command-line environment available_, you can skip ahead t
 !!! warning "Sample_Name _and_ Sample_ID"
     If the Sample_Name and Sample_ID in the BaseSpace sample sheet are different, set the `basespace_sample_id` input attribute to "`this.basespace_sample_id"`.
 
+!!! warning "Substrings Within Samplenames"
+    Substring matching will occur when no lane suffix is present within the Basespace dataset; e.g. where "sample1" will retrieve "sample1_1", however, "sample1_L1" will NOT retrieve "sample1_1_L1". This should be taken into consideration when using certain naming conventions. 
+
 /// html | div[class="searchable-table"]
 
 {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "BaseSpace_Fetch"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
