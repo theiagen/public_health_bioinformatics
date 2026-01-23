@@ -180,17 +180,18 @@ workflow theiacov_illumina_se {
           input:
             qc_check_table = qc_check_table,
             expected_taxon = organism_parameters.standardized_organism,
-            num_reads_raw1 = select_first([read_QC_trim.fastq_scan_raw1, read_QC_trim.fastqc_raw1]),
-            num_reads_clean1 = select_first([read_QC_trim.fastq_scan_clean1, read_QC_trim.fastqc_clean1]),
-            kraken_human = read_QC_trim.kraken_human,
-            meanbaseq_trim = ivar_consensus.meanbaseq_trim,
-            assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
-            number_N = consensus_qc.number_N,
-            assembly_length_unambiguous = consensus_qc.number_ATCG,
-            number_Degenerate =  consensus_qc.number_Degenerate,
-            percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            vadr_num_alerts = morgana_magic.vadr_num_alerts
-        }
+            qc_check_criteria = {
+              "num_reads_raw1": [select_first([read_QC_trim.fastq_scan_raw1, read_QC_trim.fastqc_raw1]), "int", ">=", "false"],
+              "num_reads_clean1": [select_first([read_QC_trim.fastq_scan_clean1, read_QC_trim.fastqc_clean1]), "int", ">=", "false"],
+              "kraken_human": [read_QC_trim.kraken_human, "float", "<=", "false"],
+              "meanbaseq_trim": [ivar_consensus.meanbaseq_trim, "float", ">=", "false"],
+              "assembly_mean_coverage": [ivar_consensus.assembly_mean_coverage, "float", ">=", "false"],
+              "number_N": [consensus_qc.number_N, "int", "<=", "false"],
+              "assembly_length_unambiguous": [consensus_qc.number_ATCG, "int", ">=", "false"],
+              "number_Degenerate":  [consensus_qc.number_Degenerate, "int", "<=", "false"],
+              "percent_reference_coverage":  [consensus_qc.percent_reference_coverage, "float", ">=", "false"],
+              "vadr_num_alerts": [morgana_magic.vadr_num_alerts, "int", "<=", "true"]
+            }
       }
     }
   }
