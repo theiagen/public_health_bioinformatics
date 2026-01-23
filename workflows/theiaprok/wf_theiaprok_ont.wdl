@@ -253,6 +253,7 @@ workflow theiaprok_ont {
                 "ani_highest_percent": [ani.ani_highest_percent, "float", ">=", "true"],
                 "ani_highest_percent_bases_aligned": [ani.ani_highest_percent_bases_aligned, "float", ">=", "true"]
             }
+          }
         }
         call merlin_magic_workflow.merlin_magic {
           input:
