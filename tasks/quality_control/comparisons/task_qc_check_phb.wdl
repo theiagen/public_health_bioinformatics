@@ -19,6 +19,8 @@ task qc_check_phb {
   }
   File qc_check_criteria_json = write_json(qc_check_criteria)
   command <<<
+    jq -r '[.[] | .left], [.[] | .right]' ~{qc_check_criteria_json} > qc_check_criteria.json
+
     python3 <<CODE
     import csv
     import json
@@ -86,7 +88,7 @@ task qc_check_phb {
     qc_check_df = pd.read_csv("~{qc_check_table}", sep = '\t', index_col = "taxon")
     
     # import the qc_check_criteria json
-    with open("~{qc_check_criteria_json}") as f:
+    with open("qc_check_criteria.json") as f:
       qc_check_criteria = json.load(f)
 
     # extract the list of taxon to examine
