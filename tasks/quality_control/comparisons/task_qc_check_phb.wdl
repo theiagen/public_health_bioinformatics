@@ -140,6 +140,7 @@ task qc_check_phb {
 
         # iterate through standard checks first
         for metric in sorted(qc_check_metrics):
+          # allow "min" and "max" suffixes to be used in qc_check_criteria
           if metric.endswith("_min"):
             operator = ">="
             base_metric = metric[:-4]
@@ -152,6 +153,7 @@ task qc_check_phb {
           if base_metric in qc_check_criteria:
             obs_val = qc_check_criteria[base_metric][0]
             val_type_str = qc_check_criteria[base_metric][1]
+            # yield to the operator from "min" / "max" suffixes if present
             if not operator:
               operator = qc_check_criteria[base_metric][2]
             exception_flag = qc_check_criteria[base_metric][3]
@@ -161,12 +163,14 @@ task qc_check_phb {
               val_type = float
             else:
               raise ValueError(f"qc_check_criteria value type {val_type_str} not recognized; must be 'int' or 'float'")
+            # we only process metrics without exception_flag set to true here
             if not exception_flag:
               qc_note, qc_status = compare(qc_note, metric, val_type(obs_val), operator, val_type(taxon_df[metric][0]))
               qc_check_metrics.remove(metric)
 
         # iterate through special exceptions
         for metric in sorted(qc_check_metrics):
+          # allow "min" and "max" suffixes to be used in qc_check_criteria
           if metric.endswith("_min"):
             operator = ">="
             base_metric = metric[:-4]
@@ -179,9 +183,11 @@ task qc_check_phb {
           if base_metric in qc_check_criteria:
             obs_val = qc_check_criteria[base_metric][0]
             val_type_str = qc_check_criteria[base_metric][1]
+            # yield to the operator from "min" / "max" suffixes if present
             if not operator:
               operator = qc_check_criteria[base_metric][2]
             exception_flag = qc_check_criteria[base_metric][3]
+            # we only process metrics with exception_flag set to true here
             if exception_flag:
               if val_type_str == "int":
                 val_type = int
@@ -206,6 +212,7 @@ task qc_check_phb {
         if "~{irma_qc_table}":
           irma_qc_table = pd.read_csv("~{irma_qc_table}", sep = '\t', index_col = "Sample")
           to_rm = set()
+          # iterate through segments
           for index, row in irma_qc_table.iterrows():
             segment_name = row['Reference'].lower()[:row['Reference'].rfind('_')]
             ref_var = segment_name + "_percent_reference_coverage"
