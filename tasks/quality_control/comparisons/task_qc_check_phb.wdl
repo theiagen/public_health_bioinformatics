@@ -211,6 +211,7 @@ task qc_check_phb {
             ref_var = segment_name + "_percent_reference_coverage"
             med_var = segment_name + "_median_coverage"
             snv_var = segment_name + "_snv_max"
+            print("DEBUG: Checking QC metrics for segment: " + segment_name)
             # prioritize segment-specific thresholds if they exist
             if ref_var in qc_check_metrics:
               qc_value = row['% Reference Covered']
