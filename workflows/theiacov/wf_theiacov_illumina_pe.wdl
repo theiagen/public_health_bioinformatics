@@ -208,7 +208,7 @@ workflow theiacov_illumina_pe {
             input:
               qc_check_table = qc_check_table,
               expected_taxon = organism_parameters.standardized_organism,
-              irma_qc_table = select_first([flu_track.irma_qc_summary_tsv]),
+              irma_qc_table = flu_track.irma_qc_summary_tsv,
               qc_check_criteria = {
                 "num_reads_raw1": [read_QC_trim.fastq_scan_raw1, "int", ">=", "false"],
                 "num_reads_raw2": [read_QC_trim.fastq_scan_raw2, "int", ">=", "false"],

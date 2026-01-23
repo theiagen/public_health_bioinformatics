@@ -203,7 +203,7 @@ task qc_check_phb {
                 qc_check_metrics.remove(metric)
   
         # check segment-level qc metrics via the irma_qc_table if it exists
-        if ("~{irma_qc_table}"):
+        if "~{irma_qc_table}":
           irma_qc_table = pd.read_csv("~{irma_qc_table}", sep = '\t', index_col = "Sample")
           to_rm = set()
           for index, row in irma_qc_table.iterrows():
