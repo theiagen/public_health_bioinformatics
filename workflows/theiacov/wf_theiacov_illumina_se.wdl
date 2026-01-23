@@ -192,6 +192,7 @@ workflow theiacov_illumina_se {
               "percent_reference_coverage":  [consensus_qc.percent_reference_coverage, "float", ">=", "false"],
               "vadr_num_alerts": [morgana_magic.vadr_num_alerts, "int", "<=", "true"]
             }
+        }
       }
     }
   }
