@@ -19,7 +19,7 @@ task qc_check_phb {
   }
   command <<<
     # export qc_check_criteria as json
-    echo '~{write_json(qc_check_criteria)}' > qc_check_criteria.json
+    jq -r '[.[] | .left], [.[] | .right]' ~{qc_check_criteria} > qc_check_criteria.json
 
     python3 <<CODE
     import csv
