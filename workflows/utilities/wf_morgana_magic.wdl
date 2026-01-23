@@ -27,7 +27,6 @@ workflow morgana_magic {
     Int? irma_disk_size
     String? irma_docker_image
     Boolean? irma_keep_ref_deletions
-    Boolean? irma_return_aligned_reads
     Int? irma_memory
     # flu track - genoflu
     Int? genoflu_cpu
@@ -146,7 +145,6 @@ workflow morgana_magic {
         irma_disk_size = irma_disk_size,
         irma_docker_image = irma_docker_image,        
         irma_keep_ref_deletions = irma_keep_ref_deletions,
-        irma_return_aligned_reads = irma_return_aligned_reads,
         irma_memory = irma_memory,
         genoflu_cross_reference = genoflu_cross_reference,
         genoflu_cpu = genoflu_cpu,

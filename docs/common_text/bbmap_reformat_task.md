@@ -2,7 +2,7 @@
     The `bbmap_reformat` task takes in interleaved FASTQ files, repairs them if necessary, and subsequently deinterleaves the repaired or input FASTQ files.
 
 <!-- if: theiacov -->
-    This task is run when `irma_return_aligned_reads = true` and acts on the concatenated segment FASTQ files returned from IRMA. This task is also only applicable to TheiaCov_PE given the necessity to return paired end reads. 
+    This task acts on the concatenated segment FASTQ files returned from IRMA. This task is also only applicable to TheiaCov_PE given the necessity to return paired end reads. 
 <!-- endif -->
 
     !!! techdetails "`bbmap_reformat` Technical Details"

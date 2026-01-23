@@ -189,7 +189,6 @@ workflow theiacov_illumina_pe {
             irma_docker_image = "",        
             irma_keep_ref_deletions = false,
             irma_memory = 0,
-            irma_return_aligned_reads = false,
             genoflu_cpu = 0,
             genoflu_disk_size = 0,
             genoflu_docker = "",

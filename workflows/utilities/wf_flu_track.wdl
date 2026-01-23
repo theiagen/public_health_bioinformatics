@@ -33,7 +33,6 @@ workflow flu_track {
     Int? irma_min_read_length
     Int? irma_min_avg_consensus_allele_quality
     Float? irma_min_ambiguous_threshold
-    Boolean irma_return_aligned_reads = false
     String? irma_docker_image
     Int? irma_memory
     Int? irma_cpu
@@ -108,7 +107,7 @@ workflow flu_track {
         disk_size = irma_disk_size
     }
     # Only perform deinterleaving if IRMA aligned reads are present and are intended to be PE
-    if (irma_return_aligned_reads && defined(irma.irma_aligned_fastqs) && defined(read2)) {
+    if (defined(irma.irma_aligned_fastqs) && defined(read2)) {
       call bbmap_reformat.bbmap_reformat_interleaved{
         input:
           samplename = samplename,
