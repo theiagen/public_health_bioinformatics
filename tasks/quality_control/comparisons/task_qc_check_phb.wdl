@@ -4,10 +4,9 @@ task qc_check_phb {
   input {
     # core inputs
     File? qc_check_table
-    File? irma_qc_table
-
     # {qc_metric: [value, type, operator, use_exception]}
     Map[String, Array[String?]+] qc_check_criteria
+    File? irma_qc_table
 
     String? expected_taxon
     String? gambit_predicted_taxon
@@ -143,8 +142,8 @@ task qc_check_phb {
         for metric in sorted(qc_check_metrics):
           if metric in qc_check_criteria:
             obs_val = qc_check_criteria[metric][0]
-            operator = qc_check_criteria[metric][1]
-            val_type_str = qc_check_criteria[metric][2]
+            val_type_str = qc_check_criteria[metric][1]
+            operator = qc_check_criteria[metric][2]
             exception_flag = qc_check_criteria[metric][3]
             if val_type_str == "int":
               val_type = int
@@ -160,8 +159,8 @@ task qc_check_phb {
         for metric in sorted(qc_check_metrics):
           if metric in qc_check_criteria:
             obs_val = qc_check_criteria[metric][0]
-            operator = qc_check_criteria[metric][1]
-            val_type_str = qc_check_criteria[metric][2]
+            val_type_str = qc_check_criteria[metric][1]
+            operator = qc_check_criteria[metric][2]
             exception_flag = qc_check_criteria[metric][3]
             if exception_flag:
               if val_type_str == "int":
