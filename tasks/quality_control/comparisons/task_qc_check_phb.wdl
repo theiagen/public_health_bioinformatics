@@ -17,10 +17,8 @@ task qc_check_phb {
     Int cpu = 4
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
   }
+  File qc_check_criteria_json = write_json(qc_check_criteria)
   command <<<
-    # export qc_check_criteria as json
-    jq -r '[.[] | .left], [.[] | .right]' ~{qc_check_criteria} > qc_check_criteria.json
-
     python3 <<CODE
     import csv
     import json
@@ -88,7 +86,7 @@ task qc_check_phb {
     qc_check_df = pd.read_csv("~{qc_check_table}", sep = '\t', index_col = "taxon")
     
     # import the qc_check_criteria json
-    with open("qc_check_criteria.json") as f:
+    with open("~{qc_check_criteria_json}") as f:
       qc_check_criteria = json.load(f)
 
     # extract the list of taxon to examine
