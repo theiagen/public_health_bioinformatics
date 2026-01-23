@@ -273,10 +273,10 @@ workflow theiaprok_illumina_pe {
               expected_taxon = expected_taxon,
               gambit_predicted_taxon = gambit.gambit_predicted_taxon,
               qc_check_criteria = {
-                "num_reads_raw1": [read_QC_trim.fastq_scan_raw1, "int", ">=", "false"],
-                "num_reads_raw2": [read_QC_trim.fastq_scan_raw2, "int", ">=", "false"],
-                "num_reads_clean1": [read_QC_trim.fastq_scan_clean1, "int", ">=", "false"],
-                "num_reads_clean2": [read_QC_trim.fastq_scan_clean2, "int", ">=", "false"],
+                "num_reads_raw1": [select_first([read_QC_trim.fastq_scan_raw1, read_QC_trim.fastqc_raw1]), "int", ">=", "false"],
+                "num_reads_raw2": [select_first([read_QC_trim.fastq_scan_raw2, read_QC_trim.fastqc_raw2]), "int", ">=", "false"],
+                "num_reads_clean1": [select_first([read_QC_trim.fastq_scan_clean1, read_QC_trim.fastqc_clean1]), "int", ">=", "false"],
+                "num_reads_clean2": [select_first([read_QC_trim.fastq_scan_clean2, read_QC_trim.fastqc_clean2]), "int", ">=", "false"],
                 "r1_mean_q_raw": [cg_pipeline_raw.r1_mean_q, "float", ">=", "false"],
                 "r2_mean_q_raw": [cg_pipeline_raw.r2_mean_q, "float", ">=", "false"],
                 "combined_mean_q_raw": [cg_pipeline_raw.combined_mean_q, "float", ">=", "false"],
@@ -427,6 +427,8 @@ workflow theiaprok_illumina_pe {
                 "est_coverage_clean": cg_pipeline_clean.est_coverage,
                 "est_coverage_raw": cg_pipeline_raw.est_coverage,
                 "fastp_html_report": read_QC_trim.fastp_html_report,
+                "fastp_json_report": read_QC_trim.fastp_json_report,
+                "fastp_docker": read_QC_trim.fastp_docker,
                 "fastp_version": read_QC_trim.fastp_version,
                 "fastq_scan_clean1_json": read_QC_trim.fastq_scan_clean1_json,
                 "fastq_scan_clean2_json": read_QC_trim.fastq_scan_clean2_json,
@@ -830,7 +832,9 @@ workflow theiaprok_illumina_pe {
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
     # Read QC - fastp outputs
     String? fastp_version = read_QC_trim.fastp_version
+    String? fastp_docker = read_QC_trim.fastp_docker
     File? fastp_html_report = read_QC_trim.fastp_html_report
+    File? fastp_json_report = read_QC_trim.fastp_json_report
     # Read QC - bbduk outputs
     File? read1_clean = read_QC_trim.read1_clean
     File? read2_clean = read_QC_trim.read2_clean

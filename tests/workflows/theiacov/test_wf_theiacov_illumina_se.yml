@@ -20,25 +20,9 @@
     - path: miniwdl_run/call-raw_check_reads/inputs.json
     - path: miniwdl_run/call-raw_check_reads/outputs.json
     - path: miniwdl_run/call-raw_check_reads/task.log
-    # trimmomatic
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/command
-      md5sum: 20b54af347f1644c099dace802097293
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/inputs.json
-      contains: ["read1", "samplename"]
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/outputs.json
-      contains: ["trimmomatic_se", "pipeline_date", "trimmomatic_stats", "read1_trimmed"]
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/stderr.txt
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/stderr.txt.offset
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/stdout.txt
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/task.log
-      contains: ["wdl", "illumina_se", "trimmomatic", "done"]
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/work/ERR6319327.trim.stats.txt
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/work/_miniwdl_inputs/0/ERR6319327_R1_dehosted.fastq.gz
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
     # bbduk
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/command
-      md5sum: e93b1c3341b2edc19046c06a1f271bfa
+      md5sum: 5623e73be1e5add07b5f1994d39157e2
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/inputs.json
       contains: ["phix", "adapters", "read1", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/outputs.json
@@ -49,10 +33,10 @@
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/task.log
       contains: ["wdl", "illumina_se", "bbduk", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/ERR6319327.adapters.stats.txt
-      md5sum: fe785824715a0c03f0dd64464e936b3d
+      md5sum: b5073f762f90af5428c8d223e196da89
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/ERR6319327.phix.stats.txt
-      md5sum: 3fa3fb32416589385197c7a384ebdade
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/_miniwdl_inputs/0/ERR6319327_trimmed.fastq.gz
+      md5sum: 722f43dfee3cdc6f3f00ec56f75859cc
+    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/_miniwdl_inputs/0/ERR6319327_1P.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # fastq scan raw
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/command
@@ -136,7 +120,7 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # primer trim
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/command
-      md5sum: fd55093425917e2dbe0254968bfc27bf
+      md5sum: d512f64a98f32b06039abab3e9e240e0
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/inputs.json
       contains: ["primer_bed", "bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/outputs.json
@@ -313,14 +297,14 @@
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 0b1f8fb5b938fe71631f61234cbf7ab3
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: c60c7052f013cca3b15591ef0e577d4a
+      md5sum: 87155102d8c79d3be52849e410351d4a
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 762735b9f8e69efeae463735f0ceed21
+      md5sum: 15cb42a69a86be0bb631042d8e6b9441
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/command
-      md5sum: ce102ae1cd6a28fcb05d47fb7d5aaca7
+      md5sum: 0b3d043a8cccc02c2029a1365689ced2
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/inputs.json
       contains: ["dataset_name", "dataset_tag", "genome_fasta"]
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/outputs.json
@@ -369,7 +353,7 @@
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/tree.json
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
-      md5sum: 207e4b0df8a35a2d7fa7a4b21fd110be
+      md5sum: 2a39f9ea6fca63a849c65ca44b8945e7
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade output parsing
