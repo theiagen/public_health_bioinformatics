@@ -131,7 +131,6 @@ task qc_check_phb {
         # remove columns where all values are null
         taxon_df = taxon_df.replace(r'^\s*$', np.nan, regex=True)
         taxon_df = taxon_df.dropna(how='all', axis=1)
-        #print(taxon_df)
         
       # perform qc_check on any metrics in the qc_check_table
       if (qc_status != "QC_NA"):
@@ -163,8 +162,8 @@ task qc_check_phb {
               val_type = float
             else:
               raise ValueError(f"qc_check_criteria value type {val_type_str} not recognized; must be 'int' or 'float'")
-            # we only process metrics without exception_flag set to true here
-            if not exception_flag:
+            # we only process metrics without exception_flag set to true here (assume others are not exceptions)
+            if exception_flag != "false":
               qc_note, qc_status = compare(qc_note, metric, val_type(obs_val), operator, val_type(taxon_df[metric][0]))
               qc_check_metrics.remove(metric)
 
@@ -188,7 +187,7 @@ task qc_check_phb {
               operator = qc_check_criteria[base_metric][2]
             exception_flag = qc_check_criteria[base_metric][3]
             # we only process metrics with exception_flag set to true here
-            if exception_flag:
+            if exception_flag == "true":
               if val_type_str == "int":
                 val_type = int
               elif val_type_str == "float":
