@@ -140,11 +140,21 @@ task qc_check_phb {
 
         # iterate through standard checks first
         for metric in sorted(qc_check_metrics):
-          if metric in qc_check_criteria:
-            obs_val = qc_check_criteria[metric][0]
-            val_type_str = qc_check_criteria[metric][1]
-            operator = qc_check_criteria[metric][2]
-            exception_flag = qc_check_criteria[metric][3]
+          if metric.endswith("_min"):
+            operator = ">="
+            base_metric = metric[:-4]
+          elif metric.endswith("_max"):
+            operator = "<="
+            base_metric = metric[:-4]
+          else:
+            operator = None
+            base_metric = metric
+          if base_metric in qc_check_criteria:
+            obs_val = qc_check_criteria[base_metric][0]
+            val_type_str = qc_check_criteria[base_metric][1]
+            if not operator:
+              operator = qc_check_criteria[base_metric][2]
+            exception_flag = qc_check_criteria[base_metric][3]
             if val_type_str == "int":
               val_type = int
             elif val_type_str == "float":
@@ -157,11 +167,21 @@ task qc_check_phb {
 
         # iterate through special exceptions
         for metric in sorted(qc_check_metrics):
-          if metric in qc_check_criteria:
-            obs_val = qc_check_criteria[metric][0]
-            val_type_str = qc_check_criteria[metric][1]
-            operator = qc_check_criteria[metric][2]
-            exception_flag = qc_check_criteria[metric][3]
+          if metric.endswith("_min"):
+            operator = ">="
+            base_metric = metric[:-4]
+          elif metric.endswith("_max"):
+            operator = "<="
+            base_metric = metric[:-4]
+          else:
+            operator = None
+            base_metric = metric
+          if base_metric in qc_check_criteria:
+            obs_val = qc_check_criteria[base_metric][0]
+            val_type_str = qc_check_criteria[base_metric][1]
+            if not operator:
+              operator = qc_check_criteria[base_metric][2]
+            exception_flag = qc_check_criteria[base_metric][3]
             if exception_flag:
               if val_type_str == "int":
                 val_type = int
@@ -178,7 +198,7 @@ task qc_check_phb {
                 try:
                   qc_note, qc_status = compare(qc_note, metric, val_type(obs_val), operator, val_type(taxon_df[metric][0]))
                 except:
-                  qc_note += f"{metric} ({obs_val}) could not be cast to {val_type_str}; "
+                  qc_note += f"{base_metric} ({obs_val}) could not be cast to {val_type_str}; "
                   qc_status = "QC_ALERT"
                 qc_check_metrics.remove(metric)
   
