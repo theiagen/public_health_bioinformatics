@@ -4,9 +4,10 @@ task qc_check_phb {
   input {
     # core inputs
     File? qc_check_table
+    File? irma_qc_table
 
     # {qc_metric: [value, type, operator, use_exception]}
-    Map[String, Array[String, String, String, Boolean]] qc_check_criteria
+    Map[String, Array[String?]+] qc_check_criteria
 
     String? expected_taxon
     String? gambit_predicted_taxon
@@ -135,6 +136,7 @@ task qc_check_phb {
         qc_check_metrics = taxon_df.columns.values.tolist()
         print(f"DEBUG: Found qc_check_metrics: {qc_check_metrics}")
 
+        # iterate through standard checks first
         for metric in sorted(qc_check_metrics):
           if metric in qc_check_criteria:
             obs_val = qc_check_criteria[metric][0]
@@ -147,37 +149,72 @@ task qc_check_phb {
               val_type = float
             else:
               raise ValueError(f"qc_check_criteria value type {val_type_str} not recognized; must be 'int' or 'float'")
-            if exception_flag == True:
-              try:
-                qc_note, qc_status = compare(qc_note, metric, val_type(obs_val), operator, val_type(taxon_df[metric][0]))
-              except:
-                qc_note += f"{metric} ({obs_val}) could not be cast to {val_type_str}; "
-                qc_status = "QC_ALERT"
-            else:
+            if not exception_flag:
               qc_note, qc_status = compare(qc_note, metric, val_type(obs_val), operator, val_type(taxon_df[metric][0]))
-            qc_check_metrics.remove(metric)
+              qc_check_metrics.remove(metric)
 
+        # iterate through special exceptions
+        for metric in sorted(qc_check_metrics):
+          if metric in qc_check_criteria:
+            obs_val = qc_check_criteria[metric][0]
+            operator = qc_check_criteria[metric][1]
+            val_type_str = qc_check_criteria[metric][2]
+            exception_flag = qc_check_criteria[metric][3]
+            if exception_flag:
+              if val_type_str == "int":
+                val_type = int
+              elif val_type_str == "float":
+                val_type = float
+              else:
+                raise ValueError(f"qc_check_criteria value type {val_type_str} not recognized; must be 'int' or 'float'")
+              if metric == "busco_completeness":
+                if "busco_results" in qc_check_criteria:
+                  busco_completeness = qc_check_criteria["busco_results"][0].split("C:")[1].split("%")[0]
+                  qc_note, qc_status = compare(qc_note, "busco_completeness", float(busco_completeness), ">=", float(taxon_df["busco_completeness"][0]))
+                  qc_check_metrics.remove("busco_completeness")
+              else:
+                try:
+                  qc_note, qc_status = compare(qc_note, metric, val_type(obs_val), operator, val_type(taxon_df[metric][0]))
+                except:
+                  qc_note += f"{metric} ({obs_val}) could not be cast to {val_type_str}; "
+                  qc_status = "QC_ALERT"
+                qc_check_metrics.remove(metric)
+  
         # check segment-level qc metrics via the irma_qc_table if it exists
         if ("~{irma_qc_table}"):
           irma_qc_table = pd.read_csv("~{irma_qc_table}", sep = '\t', index_col = "Sample")
+          to_rm = set()
           for index, row in irma_qc_table.iterrows():
             segment_name = row['Reference'].lower()[:row['Reference'].rfind('_')]
             ref_var = segment_name + "_percent_reference_coverage"
             med_var = segment_name + "_median_coverage"
             snv_var = segment_name + "_snv_count"
+            # prioritize segment-specific thresholds if they exist
             if ref_var in qc_check_metrics:
-              qc_value = row['percent_refrence_coverage']
-              qc_note, qc_status = compare(qc_note, segment_name + "_coverage", float(qc_value), ">=", float(taxon_df[segment_name + "_coverage_min"][0]))
-              qc_check_metrics.remove(segment_name + "_coverage_min")
+              qc_value = row['% Reference Covered']
+              qc_note, qc_status = compare(qc_note, ref_var, float(qc_value), ">=", float(taxon_df[ref_var][0]))
+              to_rm.add(ref_var)
             elif "segment_percent_reference_coverage" in qc_check_metrics:
-              qc_value = row['percent_refrence_coverage']
-              qc_note, qc_status = compare(qc_note, "segment_percent_reference_coverage", float(qc_value), ">=", float(taxon_df["segment_percent_reference_coverage_min"][0]))
-              qc_check_metrics.remove("segment_percent_reference_coverage_min")
-            if (segment_name + "_percent_coverage_min" in qc_check_metrics):
-              qc_value = row['Percent_Coverage']
-              qc_note, qc_status = compare(qc_note, segment_name + "_percent_coverage", float(qc_value), ">=", float(taxon_df[segment_name + "_percent_coverage_min"][0]))
-              qc_check_metrics.remove(segment_name + "_percent_coverage_min")
-        qc_check_df = pd.read_csv("~{qc_check_table}", sep = '\t', index_col = "taxon")
+              qc_value = row['% Reference Covered']
+              qc_note, qc_status = compare(qc_note, "segment_percent_reference_coverage", float(qc_value), ">=", float(taxon_df["segment_percent_reference_coverage"][0]))
+              to_rm.add("segment_percent_reference_coverage")
+            if med_var in qc_check_metrics:
+              qc_value = row['Median Coverage']
+              qc_note, qc_status = compare(qc_note, med_var, float(qc_value), ">=", float(taxon_df[med_var][0]))
+              to_rm.add(med_var)
+            elif "segment_median_coverage" in qc_check_metrics:
+              qc_value = row['Median Coverage']
+              qc_note, qc_status = compare(qc_note, "segment_median_coverage", float(qc_value), ">=", float(taxon_df["segment_median_coverage"][0]))
+              to_rm.add("segment_median_coverage")
+            if snv_var in qc_check_metrics:
+              qc_value = row['Count of Minor SNVs (AF >= 0.05)']
+              qc_note, qc_status = compare(qc_note, snv_var, int(qc_value), "<=", int(taxon_df[snv_var][0]))
+              to_rm.add(snv_var)
+            elif "segment_snv_count" in qc_check_metrics:
+              qc_value = row['Count of Minor SNVs (AF >= 0.05)']
+              qc_note, qc_status = compare(qc_note, "segment_snv_count", int(qc_value), "<=", int(taxon_df["segment_snv_count"][0]))
+              to_rm.add("segment_snv_count")
+          qc_check_metrics = [m for m in qc_check_metrics if m not in to_rm]
 
         if (len(qc_check_metrics) > 0):
           qc_status = "QC_ALERT"
