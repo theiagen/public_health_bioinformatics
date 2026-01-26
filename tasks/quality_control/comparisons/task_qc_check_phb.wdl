@@ -90,10 +90,10 @@ task qc_check_phb {
     qc_check_criteria = {}
     for wdl_dict in qc_check_criteria_dirty:
       key = wdl_dict["left"]
-      value = wdl_dict["right"]
+      value_list = wdl_dict["right"]
       # skip NoneType (WDL null) values
-      if value is not None:
-        qc_check_criteria[key.lower()] = value
+      if value_list[0] is not None:
+        qc_check_criteria[key.lower()] = value_list
 
     # extract the list of taxon to examine
     qc_check_taxa = qc_check_df.index.values.tolist()
