@@ -12,7 +12,7 @@ SOP	Workflow	SOP version	PHB version compatibility	Pathogen/Category	Current or 
 [Creating a Dashboard Visualization of SARS-CoV-2 Metagenomic Samples using Freyja Dashboard](../assets/sops/TG-FREY-03-SOP_FreyjaDashboard_v2.pdf)	Freyja	v2	v2	SC2	Current
 [Creating Static Reference Files for Freyja Analysis in Terra using Freyja Update](../assets/sops/TG-FREY-04_FreyjaUpdate_v2.pdf)	Freyja	v2	v2	SC2	Current
 [Analyzing Bacterial Data in Terra using Theiagen’s TheiaProk Illumina PE Workflow](../assets/sops/TG-TP-PE_TheiaProk_IlluminaPE_v2.pdf)	PE, TheiaProk	v2	v1	Bacterial	Prior
-[Analyzing Bacterial Data in Terra using Theiagen’s TheiaProk Illumina PE Workflow](../assets/sops/TG-TP-PE_TheiaProk_IlluminaPE_v3.pdf)	PE, TheiaProk	v3	v2, v3	Bacterial	Current
+[Analyzing Bacterial Data in Terra using Theiagen’s TheiaProk Illumina PE Workflow](../assets/sops/TG-TP-PE_TheiaProk_IlluminaPE_v3.pdf)	PE, TheiaProk	v3	v2, v3	Bacterial	Prior
 [Analyzing HAI Pathogens using Phoenix Version 1 in Terra](../assets/sops/TG-PX-V1_PhoenixV1.pdf)	Phoenix	v1	v1	HAI	Prior
 [Analyzing HAI Pathogens using Phoenix Version 2 in Terra](../assets/sops/TG-PX-V2_PhoenixV2.pdf)	Phoenix	v1	v1	HAI	Prior
 [Analyzing Phylogenetic Relationships in Terra using Theiagen’s Augur Workflows](../assets/sops/TG-AUGUR-01_Augur_v1.pdf)	Augur	v1	v1	Phylogenetic construction	Prior
@@ -37,3 +37,4 @@ SOP	Workflow	SOP version	PHB version compatibility	Pathogen/Category	Current or 
 [Concatenation of ONT Reads in Terra](../assets/sops/TG-ONT-01_Concatenation_of_ONT_Reads_v1.pdf)	ONT	v1	v3	Data Import	Current
 [Analyzing HAI Pathogens using Phoenix Version 2 in Terra](../assets/sops/TG-PX-V2_PhoenixV2_v2.pdf)	Phoenix	v2	v3	HAI	Current
 [Getting Started in Terra](../assets/sops/TG-TER-03_GettingStartedInTerra_v5.pdf)	None	v5	v3	Getting Started	Current
+[Analyzing Bacterial Data in Terra using Theiagen’s TheiaProk Illumina PE](../assets/sops/TG-TP-PE_TheiaProk_IlluminaPE_v4.pdf)	TheiaProk	v3	v4, v3	Bacterial	Current
