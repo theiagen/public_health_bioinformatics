@@ -8,7 +8,7 @@
 <!-- if: theiacov -->
     The `qc_check` task applies quality thresholds according to the specified organism, which should match the _standardized_ `organism` input in the TheiaCoV workflows.
 
-    Segment-based QC can be applied to influenza genomes for "percent reference_coverage", "median_reference_coverage", and "snv_max". To apply thresholds across all individual segments, use the "segment_" prefix columns in the QC check template. To apply thresholds to individual segments, create threshold columns in the QC check table with the following prefixes: "mp_", "pb1_", "pb2_", "na_", "ns_", "np_", "pa_", and "ha_". Segment-specific thresholds are preferentially used over general segment thresholds if both are present. 
+    Segment-based QC can be applied to influenza genomes for "percent_reference_coverage", "median_coverage", and "snv_max". To apply thresholds across all individual segments, use "segment_" as a prefix for the QC threshold column in the QC check template. To apply thresholds to individual segments, use the following prefixes: "mp_", "pb1_", "pb2_", "na_", "ns_", "np_", "pa_", and "ha_". Segment-specific thresholds are preferentially used over general segment thresholds if both are present. 
 <!-- endif -->
 <!-- if: theiaprok|theiaeuk -->
     The `qc_check` task applies quality thresholds according to the sample taxa. The sample taxa is taken from the `gambit_predicted_taxon` value inferred by the GAMBIT module OR can be manually provided by the user using the `expected_taxon` workflow input.
