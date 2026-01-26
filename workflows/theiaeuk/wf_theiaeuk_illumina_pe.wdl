@@ -179,7 +179,7 @@ workflow theiaeuk_illumina_pe {
               "number_contigs": [quast.number_contigs, "int", "<=", "false"],
               "n50_value": [quast.n50_value, "int", ">=", "false"],
               "quast_gc_percent": [quast.gc_percent, "float", ">=", "false"],
-              "busco_results": [busco.busco_results, "float", ">=", "true"]
+              "busco_completeness": [busco.busco_results, "float", ">=", "true"]
             }
         }
       }

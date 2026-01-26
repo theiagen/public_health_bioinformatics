@@ -181,7 +181,7 @@ workflow theiaprok_fasta {
             "number_contigs": [quast.number_contigs, "int", "<=", "false"],
             "n50_value": [quast.n50_value, "int", ">=", "false"],
             "quast_gc_percent": [quast.gc_percent, "float", ">=", "false"],
-            "busco_results": [busco.busco_results, "float", ">=", "true"],
+            "busco_completeness": [busco.busco_results, "float", ">=", "true"],
             "ani_highest_percent": [ani.ani_highest_percent, "float", ">=", "false"],
             "ani_highest_percent_bases_aligned": [ani.ani_highest_percent_bases_aligned, "float", ">=", "false"]
           }

@@ -196,11 +196,10 @@ task qc_check_phb {
                 val_type = float
               else:
                 raise ValueError(f"qc_check_criteria value type {val_type_str} not recognized; must be 'int' or 'float'")
-              if metric == "busco_completeness":
-                if "busco_results" in qc_check_criteria:
-                  busco_completeness = qc_check_criteria["busco_results"][0].split("C:")[1].split("%")[0]
-                  qc_note, qc_status = compare(qc_note, "busco_completeness", float(busco_completeness), ">=", float(taxon_df["busco_completeness"][0]))
-                  qc_check_metrics.remove("busco_completeness")
+              if base_metric == "busco_completeness":
+                  busco_completeness = qc_check_criteria[base_metric][0].split("C:")[1].split("%")[0]
+                  qc_note, qc_status = compare(qc_note, metric, float(busco_completeness), ">=", float(taxon_df[metric][0]))
+                  qc_check_metrics.remove(metric)
               else:
                 try:
                   qc_note, qc_status = compare(qc_note, metric, val_type(obs_val), operator, val_type(taxon_df[metric][0]))
