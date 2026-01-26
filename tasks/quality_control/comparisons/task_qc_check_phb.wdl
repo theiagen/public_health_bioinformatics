@@ -34,7 +34,7 @@ task qc_check_phb {
       qc_status = ""
 
       # check if input value exists
-      if (input_value): 
+      if input_value is not None and not pd.isnull(input_value): 
         # perform check on every possible operator
         if expectation == ">":
           if (input_value > standard):
@@ -241,20 +241,16 @@ task qc_check_phb {
               to_rm.add("segment_median_coverage")
             if snv_var in qc_check_metrics:
               try:
-                print("DEBUG: Comparing " + snv_var + " value " + str(snv_val) + " to threshold " + str(taxon_df[snv_var][0]))
                 qc_note, qc_status = compare(qc_note, snv_var, int(snv_val), "<=", int(taxon_df[snv_var][0]))
               # Catch NaNs: we don't cast to int initially because float casting could cause equalities to fail
               except ValueError:
-                print("DEBUG: Caught ValueError when casting " + snv_var + " value " + str(snv_val) + " to int; trying float cast instead")
                 qc_note, qc_status = compare(qc_note, snv_var, float(snv_val), "<=", int(taxon_df[snv_var][0]))
               to_rm.add(snv_var)
             elif "segment_snv_max" in qc_check_metrics:
               try:
-                print("DEBUG: Comparing " + snv_var + " value " + str(snv_val) + " to threshold " + str(taxon_df["segment_snv_max"][0]))
                 qc_note, qc_status = compare(qc_note, snv_var, int(snv_val), "<=", int(taxon_df["segment_snv_max"][0]))
               # Catch NaNs: we don't cast to int initially because float casting could cause equalities to fail
               except ValueError:
-                print("DEBUG: Caught ValueError when casting " + snv_var + " value " + str(snv_val) + " to int; trying float cast instead")
                 qc_note, qc_status = compare(qc_note, snv_var, float(snv_val), "<=", int(taxon_df["segment_snv_max"][0]))
               to_rm.add("segment_snv_max")
           qc_check_metrics = [m for m in qc_check_metrics if m not in to_rm]
