@@ -223,7 +223,7 @@ task qc_check_phb {
               segment_name = row['Reference'].lower()
             ref_var = segment_name + "_percent_reference_coverage"
             med_var = segment_name + "_median_coverage"
-            snv_var = segment_name + "_snv_max"
+            snv_var = segment_name + "_num_minor_snv"
             print("DEBUG: Checking QC metrics for segment: " + segment_name)
             ref_val = row['% Reference Covered']
             med_val = row['Median Coverage']
@@ -248,13 +248,13 @@ task qc_check_phb {
               except ValueError:
                 qc_note, qc_status = compare(qc_note, snv_var, float(snv_val), "<=", int(taxon_df[snv_var][0]))
               to_rm.add(snv_var)
-            elif "segment_snv_max" in qc_check_metrics:
+            elif "segment_num_minor_snv" in qc_check_metrics:
               try:
-                qc_note, qc_status = compare(qc_note, snv_var, int(snv_val), "<=", int(taxon_df["segment_snv_max"][0]))
+                qc_note, qc_status = compare(qc_note, snv_var, int(snv_val), "<=", int(taxon_df["segment_num_minor_snv"][0]))
               # Catch NaNs: we don't cast to int initially because float casting could cause equalities to fail
               except ValueError:
-                qc_note, qc_status = compare(qc_note, snv_var, float(snv_val), "<=", int(taxon_df["segment_snv_max"][0]))
-              to_rm.add("segment_snv_max")
+                qc_note, qc_status = compare(qc_note, snv_var, float(snv_val), "<=", int(taxon_df["segment_num_minor_snv"][0]))
+              to_rm.add("segment_num_minor_snv")
           qc_check_metrics = [m for m in qc_check_metrics if m not in to_rm]
 
         if (len(qc_check_metrics) > 0):
