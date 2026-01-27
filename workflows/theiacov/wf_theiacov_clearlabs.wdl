@@ -143,18 +143,18 @@ workflow theiacov_clearlabs {
       input:
         qc_check_table = qc_check_table,
         expected_taxon = organism_parameters.standardized_organism,
-        qc_check_criteria = {
-          "num_reads_raw1": [fastq_scan_raw_reads.read1_seq, "int", ">=", "false"],
-          "num_reads_clean1": [fastq_scan_clean_reads.read1_seq, "int", ">=", "false"],
-          "kraken_human": [kraken2_raw.percent_human, "float", "<=", "false"],
-          "kraken_human_dehosted": [kraken2_dehosted.percent_human, "float", "<=", "false"],
-          "meanbaseq_trim": [stats_n_coverage_primtrim.meanbaseq, "float", ">=", "false"],
-          "assembly_mean_coverage": [stats_n_coverage_primtrim.depth, "float", ">=", "false"],
-          "number_N": [consensus_qc.number_N, "int", "<=", "false"],
-          "assembly_length_unambiguous": [consensus_qc.number_ATCG, "int", ">=", "false"],
-          "number_Degenerate": [consensus_qc.number_Degenerate, "int", "<=", "false"],
-          "percent_reference_coverage": [consensus_qc.percent_reference_coverage, "float", ">=", "false"],
-          "vadr_num_alerts": [morgana_magic.vadr_num_alerts, "int", "<=", "true"]
+        qc_check_inputs = {
+          "num_reads_raw1": fastq_scan_raw_reads.read1_seq,
+          "num_reads_clean1": fastq_scan_clean_reads.read1_seq,
+          "kraken_human": kraken2_raw.percent_human,
+          "kraken_human_dehosted": kraken2_dehosted.percent_human,
+          "meanbaseq_trim": stats_n_coverage_primtrim.meanbaseq,
+          "assembly_mean_coverage": stats_n_coverage_primtrim.depth,
+          "number_N": consensus_qc.number_N,
+          "assembly_length_unambiguous": consensus_qc.number_ATCG,
+          "number_Degenerate": consensus_qc.number_Degenerate,
+          "percent_reference_coverage": consensus_qc.percent_reference_coverage,
+          "vadr_num_alerts": morgana_magic.vadr_num_alerts
         }
     }
   }  

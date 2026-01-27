@@ -236,22 +236,22 @@ workflow theiaprok_ont {
               qc_check_table = qc_check_table,
               expected_taxon = expected_taxon,
               gambit_predicted_taxon = gambit.gambit_predicted_taxon,
-              qc_check_criteria = {
-                "num_reads_raw1": [nanoplot_raw.num_reads, "int", ">=", "false"],
-                "num_reads_clean1": [nanoplot_clean.num_reads, "int", ">=", "false"],
-                "r1_mean_q_raw": [nanoplot_raw.mean_q, "float", ">=", "false"],
-                "r1_mean_readlength_raw": [nanoplot_raw.mean_readlength, "float", ">=", "false"],
-                "r1_mean_q_clean": [nanoplot_clean.mean_q, "float", ">=", "false"],
-                "r1_mean_readlength_clean": [nanoplot_clean.mean_readlength, "float", ">=", "false"],
-                "est_coverage_raw": [nanoplot_raw.est_coverage, "float", ">=", "false"],
-                "est_coverage_clean": [nanoplot_clean.est_coverage, "float", ">=", "false"],
-                "assembly_length": [quast.genome_length, "int", ">=", "false"],
-                "number_contigs": [quast.number_contigs, "int", "<=", "false"],
-                "n50_value": [quast.n50_value, "int", ">=", "false"],
-                "quast_gc_percent": [quast.gc_percent, "float", ">=", "false"],
-                "busco_completeness": [busco.busco_results, "float", ">=", "true"],
-                "ani_highest_percent": [ani.ani_highest_percent, "float", ">=", "true"],
-                "ani_highest_percent_bases_aligned": [ani.ani_highest_percent_bases_aligned, "float", ">=", "true"]
+              qc_check_inputs = {
+                "num_reads_raw1": nanoplot_raw.num_reads,
+                "num_reads_clean1": nanoplot_clean.num_reads,
+                "r1_mean_q_raw": nanoplot_raw.mean_q,
+                "r1_mean_readlength_raw": nanoplot_raw.mean_readlength,
+                "r1_mean_q_clean": nanoplot_clean.mean_q,
+                "r1_mean_readlength_clean": nanoplot_clean.mean_readlength,
+                "est_coverage_raw": nanoplot_raw.est_coverage,
+                "est_coverage_clean": nanoplot_clean.est_coverage,
+                "assembly_length": quast.genome_length,
+                "number_contigs": quast.number_contigs,
+                "n50_value": quast.n50_value,
+                "quast_gc_percent": quast.gc_percent,
+                "busco_completeness": busco.busco_results,
+                "ani_highest_percent": ani.ani_highest_percent,
+                "ani_highest_percent_bases_aligned": ani.ani_highest_percent_bases_aligned
             }
           }
         }

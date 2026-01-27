@@ -209,20 +209,20 @@ workflow theiacov_illumina_pe {
               qc_check_table = qc_check_table,
               expected_taxon = organism_parameters.standardized_organism,
               irma_qc_table = flu_track.irma_qc_summary_tsv,
-              qc_check_criteria = {
-                "num_reads_raw1": [select_first([read_QC_trim.fastq_scan_raw1, read_QC_trim.fastqc_raw1]), "int", ">=", "false"],
-                "num_reads_raw2": [select_first([read_QC_trim.fastq_scan_raw2, read_QC_trim.fastqc_raw2]), "int", ">=", "false"],
-                "num_reads_clean1": [select_first([read_QC_trim.fastq_scan_clean1, read_QC_trim.fastqc_clean1]), "int", ">=", "false"],
-                "num_reads_clean2": [select_first([read_QC_trim.fastq_scan_clean2, read_QC_trim.fastqc_clean2]), "int", ">=", "false"],
-                "kraken_human": [read_QC_trim.kraken_human, "float", "<=", "false"],
-                "kraken_human_dehosted": [read_QC_trim.kraken_human_dehosted, "float", "<=", "false"],
-                "meanbaseq_trim": [ivar_consensus.meanbaseq_trim, "float", ">=", "false"],
-                "assembly_mean_coverage": [ivar_consensus.assembly_mean_coverage, "float", ">=", "false"],
-                "number_N": [consensus_qc.number_N, "int", "<=", "false"],
-                "assembly_length_unambiguous": [consensus_qc.number_ATCG, "int", ">=", "false"],
-                "number_Degenerate":  [consensus_qc.number_Degenerate, "int", "<=", "false"],
-                "percent_reference_coverage":  [consensus_qc.percent_reference_coverage, "float", ">=", "false"],
-                "vadr_num_alerts": [morgana_magic.vadr_num_alerts, "int", "<=", "true"]
+              qc_check_inputs = {
+                "num_reads_raw1": select_first([read_QC_trim.fastq_scan_raw1, read_QC_trim.fastqc_raw1]),
+                "num_reads_raw2": select_first([read_QC_trim.fastq_scan_raw2, read_QC_trim.fastqc_raw2]),
+                "num_reads_clean1": select_first([read_QC_trim.fastq_scan_clean1, read_QC_trim.fastqc_clean1]),
+                "num_reads_clean2": select_first([read_QC_trim.fastq_scan_clean2, read_QC_trim.fastqc_clean2]),
+                "kraken_human": read_QC_trim.kraken_human,
+                "kraken_human_dehosted": read_QC_trim.kraken_human_dehosted,
+                "meanbaseq_trim": ivar_consensus.meanbaseq_trim,
+                "assembly_mean_coverage": ivar_consensus.assembly_mean_coverage,
+                "number_N": consensus_qc.number_N,
+                "assembly_length_unambiguous": consensus_qc.number_ATCG,
+                "number_Degenerate":  consensus_qc.number_Degenerate,
+                "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
+                "vadr_num_alerts": morgana_magic.vadr_num_alerts
             }
           }
         }
