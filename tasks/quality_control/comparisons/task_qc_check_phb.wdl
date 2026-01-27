@@ -68,6 +68,12 @@ task qc_check_phb {
       "sc2_s_gene_percent_coverage": {"type": float, "operator": operator.ge},
       "vadr_num_alerts": {"type": int, "operator": operator.le}
     }
+    # create a map for segment-based checks
+    segment_check_criteria = {
+      "median_coverage": {"type": float, "operator": operator.ge, "col": "Median Coverage"},
+      "num_minor_snv": {"type": int, "operator": operator.le, "col": "Count of Minor SNVs (AF >= 0.05)"},
+      "percent_reference_coverage": {"type": float, "operator": operator.ge, "col": "% Reference Covered"}
+    }
 
     # set a function to compare the input to a standard value
     # qc_note: the notes regarding the qc_check to be appended to
@@ -213,46 +219,50 @@ task qc_check_phb {
         if "~{irma_qc_table}":
           irma_qc_table = pd.read_csv("~{irma_qc_table}", sep = '\t', index_col = "Sample")
           to_rm = set()
+          # report segment failures on a metric-by-metric basis, but we iterate segment-by-segment
+          seg2qc_note = {}
           # iterate through segments
           for index, row in irma_qc_table.iterrows():
+            # extract the segment name
             if '_' in row['Reference']:
               segment_name = row['Reference'].lower()[:row['Reference'].rfind('_')]
             else:
               segment_name = row['Reference'].lower()
-            ref_var = segment_name + "_percent_reference_coverage"
-            med_var = segment_name + "_median_coverage"
-            snv_var = segment_name + "_num_minor_snv"
             print("DEBUG: Checking QC metrics for segment: " + segment_name)
-            ref_val = row['% Reference Covered']
-            med_val = row['Median Coverage']
-            snv_val = row['Count of Minor SNVs (AF >= 0.05)']
-            # prioritize segment-specific thresholds if they exist
-            if ref_var in qc_check_metrics:
-              qc_note, qc_status = compare(qc_note, ref_var, float(ref_val), operator.ge, float(taxon_df[ref_var][0]))
-              to_rm.add(ref_var)
-            elif "segment_percent_reference_coverage" in qc_check_metrics:
-              qc_note, qc_status = compare(qc_note, ref_var, float(ref_val), operator.ge, float(taxon_df["segment_percent_reference_coverage"][0]))
-              to_rm.add("segment_percent_reference_coverage")
-            if med_var in qc_check_metrics:
-              qc_note, qc_status = compare(qc_note, med_var, float(med_val), operator.ge, float(taxon_df[med_var][0]))
-              to_rm.add(med_var)
-            elif "segment_median_coverage" in qc_check_metrics:
-              qc_note, qc_status = compare(qc_note, med_var, float(med_val), operator.ge, float(taxon_df["segment_median_coverage"][0]))
-              to_rm.add("segment_median_coverage")
-            if snv_var in qc_check_metrics:
-              try:
-                qc_note, qc_status = compare(qc_note, snv_var, int(snv_val), operator.le, int(taxon_df[snv_var][0]))
-              # Catch NaNs: we don't cast to int initially because float casting could cause equalities to fail
-              except ValueError:
-                qc_note, qc_status = compare(qc_note, snv_var, float(snv_val), operator.le, int(taxon_df[snv_var][0]))
-              to_rm.add(snv_var)
-            elif "segment_num_minor_snv" in qc_check_metrics:
-              try:
-                qc_note, qc_status = compare(qc_note, snv_var, int(snv_val), operator.le, int(taxon_df["segment_num_minor_snv"][0]))
-              # Catch NaNs: we don't cast to int initially because float casting could cause equalities to fail
-              except ValueError:
-                qc_note, qc_status = compare(qc_note, snv_var, float(snv_val), operator.le, int(taxon_df["segment_num_minor_snv"][0]))
-              to_rm.add("segment_num_minor_snv")
+            seg2qc_note[segment_name] = {}
+            # iterate through the segment check criteria
+            for var, metadata in segment_check_criteria.items():
+              val_type = metadata["type"]
+              obs_operator = metadata["operator"]
+              col_name = metadata["col"]
+              obs_val = row[col_name]
+              full_var_name = f"{segment_name}_{var}"
+              gen_var_name = f"segment_{var}"
+              seg_qc_note = ""
+              # prioritize segment-specific thresholds
+              if full_var_name in qc_check_metrics:
+                try:
+                  seg_qc_note, seg_qc_status = compare(seg_qc_note, full_var_name, val_type(obs_val), obs_operator, val_type(taxon_df[full_var_name][0]))
+                # cast to a float if initial cast fails, usually due to NaNs
+                except ValueError:
+                  seg_qc_note, seg_qc_status = compare(seg_qc_note, full_var_name, float(obs_val), obs_operator, val_type(taxon_df[full_var_name][0]))
+                to_rm.add(full_var_name)
+              elif gen_var_name in qc_check_metrics:
+                try:
+                  seg_qc_note, seg_qc_status = compare(seg_qc_note, gen_var_name, val_type(obs_val), obs_operator, val_type(taxon_df[gen_var_name][0]))
+                except ValueError:
+                  seg_qc_note, seg_qc_status = compare(seg_qc_note, gen_var_name, float(obs_val), obs_operator, val_type(taxon_df[gen_var_name][0]))
+                to_rm.add(gen_var_name)
+              seg2qc_note[segment_name][var] = seg_qc_note
+
+          # compile segment qc notes to qc note
+          t_qc_note = ""
+          for var in segment_check_criteria.keys():
+            for segment in seg2qc_note:
+              t_qc_note += seg2qc_note[segment][var]
+          if t_qc_note:
+            qc_status = "QC_ALERT"
+            qc_note += t_qc_note
           qc_check_metrics = [m for m in qc_check_metrics if m not in to_rm]
 
         if (len(qc_check_metrics) > 0):
@@ -267,9 +277,7 @@ task qc_check_phb {
 
       with open("QC_CHECK", 'wt') as out:
         out.write(qc_check)
-      
     CODE
-
   >>>
   output {
     String qc_check = read_string("QC_CHECK")
