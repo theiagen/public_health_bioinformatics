@@ -84,10 +84,7 @@ task fetch_bs {
         echo "Basespace sample name $sample_identifier is present exactly within $filename." 
         SAMPLENAME_RENAMED=$sample_identifier
         continue
-      fi
-      
-      # If the identifier in the filename and sample identifier are discrepant check separators
-      if [[ "$filename" =~ [-] && $sample_identifier =~ [_] ]]; then
+      elif [[ "$filename" =~ [-] && $sample_identifier =~ [_] ]]; then # If the identifier in the filename and sample identifier are discrepant check separators
         echo "Basespace sample name for $filename contains dashes, input sample identifier $sample_identifier contains underscores, renaming identifier..."
         SAMPLENAME_RENAMED=$(echo $sample_identifier | sed 's|_|-|g' | sed 's|\.|-|g')
       elif [[ "$filename" =~ [_] && $sample_identifier =~ [-] ]]; then
