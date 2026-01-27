@@ -3,9 +3,9 @@ version 1.0
 task qc_check_phb {
   input {
     # core inputs
-    File? qc_check_inputs
+    File? qc_check_table
     # {qc_metric: [value, type, operator, use_exception]}
-    Map[String, Array[String?]+] qc_check_criteria
+    Map[String, String?] qc_check_inputs
     File? irma_qc_table
 
     String? expected_taxon
