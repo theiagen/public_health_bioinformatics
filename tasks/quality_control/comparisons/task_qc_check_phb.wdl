@@ -81,9 +81,6 @@ task qc_check_phb {
     # expectation: should this input be >, >=, =, <, <= to the standard
     # standard: the value to compare the input to
     def compare(qc_note, variable_name, input_value, obs_operator, standard):
-      # create empty variable to return
-      qc_status = ""
-
       # operator str reporting map
       op2str = {
         operator.gt: "greater than",
@@ -110,15 +107,10 @@ task qc_check_phb {
           print(f"DEBUG: {variable_name} ({input_value}) was not {op2str[obs_operator]} the threshold of {standard}")
           qc_note += f"{variable_name} ({input_value}) was {op2inv_str[obs_operator]} threshold of {standard}; "
 
-      # if the qc_note has a value, then it has failed a check
-      if qc_note:
-        qc_status = "QC_ALERT"
+      return qc_note
 
-      return qc_note, qc_status
-
-    # create two empty variables for results to be added to
-    qc_status = ""
-    qc_note = ""
+    # create empty variable for results to be added to
+    qc_status, qc_note = "", ""
     
     # import the qc_check_table into a pandas data frame
     qc_check_df = pd.read_csv("~{qc_check_table}", sep = '\t', index_col = "taxon")
@@ -149,7 +141,7 @@ task qc_check_phb {
       qc_note = "No expected_taxon or gambit_predicted_taxon was found; qc_check could not proceed"
     
     # if a qc_taxon was generated, check to see if that taxon is in the qc_check_table
-    if (qc_status != "QC_NA"):
+    if qc_status != "QC_NA":
       matching_taxon = []
       for taxa in qc_check_taxa:
         if taxa in qc_taxon:
@@ -170,7 +162,7 @@ task qc_check_phb {
         taxon_df = taxon_df.dropna(how='all', axis=1)
         
       # perform qc_check on any metrics in the qc_check_table
-      if (qc_status != "QC_NA"):
+      if qc_status != "QC_NA":
         qc_check_metrics = taxon_df.columns.values.tolist()
         print(f"DEBUG: Found qc_check_metrics: {qc_check_metrics}")
 
@@ -198,14 +190,13 @@ task qc_check_phb {
             # special exemption we want to avoid as much as possible
             if base_metric == "busco_completeness":
               busco_completeness = qc_check_inputs[base_metric].split("C:")[1].split("%")[0]
-              qc_note, qc_status = compare(qc_note, metric, float(busco_completeness), obs_operator, float(taxon_df[metric][0]))
+              qc_note = compare(qc_note, metric, float(busco_completeness), obs_operator, float(taxon_df[metric][0]))
             else:
               # catch casting errors, particularly for VADR
               try:
-                qc_note, qc_status = compare(qc_note, metric, val_type(obs_val), obs_operator, val_type(taxon_df[metric][0]))
+                qc_note = compare(qc_note, metric, val_type(obs_val), obs_operator, val_type(taxon_df[metric][0]))
               except:
                 qc_note += f"{base_metric} ({obs_val}) could not be cast to {val_type}; "
-                qc_status = "QC_ALERT"
             qc_check_metrics.remove(metric)
 
         # check segment-level qc metrics via the irma_qc_table if it exists
@@ -235,16 +226,16 @@ task qc_check_phb {
               # prioritize segment-specific thresholds
               if full_var_name in qc_check_metrics:
                 try:
-                  seg_qc_note, seg_qc_status = compare(seg_qc_note, full_var_name, val_type(obs_val), obs_operator, val_type(taxon_df[full_var_name][0]))
+                  seg_qc_note = compare(seg_qc_note, full_var_name, val_type(obs_val), obs_operator, val_type(taxon_df[full_var_name][0]))
                 # cast to a float if initial cast fails, usually due to NaNs
                 except ValueError:
-                  seg_qc_note, seg_qc_status = compare(seg_qc_note, full_var_name, float(obs_val), obs_operator, val_type(taxon_df[full_var_name][0]))
+                  seg_qc_note = compare(seg_qc_note, full_var_name, float(obs_val), obs_operator, val_type(taxon_df[full_var_name][0]))
                 to_rm.add(full_var_name)
               elif gen_var_name in qc_check_metrics:
                 try:
-                  seg_qc_note, seg_qc_status = compare(seg_qc_note, full_var_name, val_type(obs_val), obs_operator, val_type(taxon_df[gen_var_name][0]))
+                  seg_qc_note = compare(seg_qc_note, full_var_name, val_type(obs_val), obs_operator, val_type(taxon_df[gen_var_name][0]))
                 except ValueError:
-                  seg_qc_note, seg_qc_status = compare(seg_qc_note, full_var_name, float(obs_val), obs_operator, val_type(taxon_df[gen_var_name][0]))
+                  seg_qc_note = compare(seg_qc_note, full_var_name, float(obs_val), obs_operator, val_type(taxon_df[gen_var_name][0]))
                 to_rm.add(gen_var_name)
               seg2qc_note[segment_name][var] = seg_qc_note
 
@@ -254,16 +245,17 @@ task qc_check_phb {
             for segment in seg2qc_note:
               t_qc_note += seg2qc_note[segment][var]
           if t_qc_note:
-            qc_status = "QC_ALERT"
             qc_note += t_qc_note
           qc_check_metrics = [m for m in qc_check_metrics if m not in to_rm]
 
         if (len(qc_check_metrics) > 0):
-          qc_status = "QC_ALERT"
           qc_note += f"one or more columns in qc_check_metrics was missing a required input: {qc_check_metrics}"
 
-      if (qc_status != "QC_NA") and (qc_status != "QC_ALERT"):
-        qc_check = "QC_PASS"
+        if qc_note:
+          qc_status = "QC_ALERT"
+          qc_check = qc_status + ": " + qc_note
+        else:
+          qc_status = "QC_PASS"
       else:
         qc_check = qc_status + ": " + qc_note
         qc_check = qc_check.rstrip('; ')
