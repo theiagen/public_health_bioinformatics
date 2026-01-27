@@ -11,24 +11,57 @@ task bbmap_reformat_interleaved{
   }
 
   command <<<
-    # set -euo pipefail to avoid silent failure
-    set -euo pipefail
+    # Pipefail set to -eu to avoid zcat pipes throwing error codes with parsing is stopped
+    set -eu pipefail
 
+    # Check if interleaved_fastq input is empty or not
     if [ "$(zcat ~{interleaved_fastq} | wc -c)" -eq 0 ]; then
       echo "ERROR: ~{interleaved_fastq} is empty after decompression."
       exit 0
+    else
+      echo "DEBUG: ~{interleaved_fastq} is valid."
     fi
+
+    # Check for SRA headers. These require specific reformatting as BBTools does not recognize
+    # the R1 R2 designations and will push all reads to singletons.
+    echo "DEBUG Checking for SRA headers."
+    FIRST_LINE=$(zcat ~{interleaved_fastq} | awk 'NR==1 {print; exit}')
+    echo "DEBUG: First line: $FIRST_LINE"
+
+    # Check for SRA specific information and structure, (SRR or ERR), SRA number, read pair designation
+    # The grep is structured this way to handle the presence and absence of version numbers from the header formats. 
+    # This is also replicated below in the awk command
+    if echo "$FIRST_LINE" | grep -qE "@(SRR|ERR)[0-9]+.*\.(1|2)"; then
+      echo "DEBUG: SRA header format detected. Changing header format from '.1 .2' to '/1 /2'"
+
+      # Decompress, replace .1 .2 designations with /1 /2 for each header line, then compress reformatted file back into fastq.gz format
+      zcat ~{interleaved_fastq} | \
+        awk '/^@(SRR|ERR)[0-9]+.*\.1 / {sub(/\.1 /, "/1 ")} 
+              /^@(SRR|ERR)[0-9]+.*\.2 / {sub(/\.2 /, "/2 ")} 
+              {print}' | \
+        gzip > ~{samplename}_reformatted_sra.fastq.gz
+    else
+      echo "DEBUG: No SRA header format detected. Preserving format."
+    fi
+
+    # Check if the fastq has been reformated and assign INPUT_FASTQ accordingly
+    if [ -s  ~{samplename}_reformatted_sra.fastq.gz ]; then
+      INPUT_FASTQ="~{samplename}_reformatted_sra.fastq.gz"
+    else
+      INPUT_FASTQ="~{interleaved_fastq}"
+    fi
+    
+    echo "DEBUG: INPUT_FASTQ is $INPUT_FASTQ"
     
     # Capture exit code for checking interleaved status
     # Removing e from pipefail in order to check for interleaved status as 
     # reformat.sh will return exit code 1 if not properly interleaved
-    set +e 
-    reformat.sh in=~{interleaved_fastq} out=~{samplename}_deinterleaved_R1.fastq \
+    set +e
+    reformat.sh in=$INPUT_FASTQ out=~{samplename}_deinterleaved_R1.fastq \
         out2=~{samplename}_deinterleaved_R2.fastq \
         verifypaired=t
     reformat_exit_code=$?
     echo "DEBUG: Initial reformat exit code $reformat_exit_code"
-    # Reset pipefail after initial reformat.sh run
     set -e
 
     # Check for a non 0 exit code, meaning reads need to be repaired due to mismatched pairs
@@ -37,7 +70,7 @@ task bbmap_reformat_interleaved{
       echo "DEBUG: Names do not appear to be correctly paired in the interleaved FASTQ file. Running repair.sh"
 
       # Ensure repair.sh is run correctly
-      if ! repair.sh in=~{interleaved_fastq} out=repaired.fastq repair=t overwrite=t; then
+      if ! repair.sh in=$INPUT_FASTQ out=repaired.fastq outs=singletons.fastq repair=t overwrite=t; then
         echo "ERROR: repair.sh has failed to correct read pairs" >&2
         exit 0
       fi
