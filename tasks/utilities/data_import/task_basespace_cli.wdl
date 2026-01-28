@@ -78,20 +78,22 @@ task fetch_bs {
     for elm in ./dataset_${dataset_id}/*.fastq.gz; do
       echo "Checking Basespace file: $elm"
       filename=$(basename "$elm")
-      
-      # Check if the sample identifier is within the filename exactly; matching separators
-      if [[ "$filename" == *"$sample_identifier"* ]]; then
-        echo "Basespace sample name $sample_identifier is present exactly within $filename." 
-        SAMPLENAME_RENAMED=$sample_identifier
-      elif [[ "$filename" =~ [-] && $sample_identifier =~ [_] ]]; then # If the identifier in the filename and sample identifier are discrepant check separators
+
+      if [[ "$filename" =~ [-] && "$sample_identifier" =~ [_] ]]; then
         echo "Basespace sample name for $filename contains dashes, input sample identifier $sample_identifier contains underscores, renaming identifier..."
-        SAMPLENAME_RENAMED=$(echo $sample_identifier | sed 's|_|-|g' | sed 's|\.|-|g')
-      elif [[ "$filename" =~ [_] && $sample_identifier =~ [-] ]]; then
+        SAMPLENAME_RENAMED=$(echo "$sample_identifier" | sed 's|_|-|g' | sed 's|\.|-|g')
+      fi
+      if [[ "$filename" =~ [_] && "$sample_identifier" =~ [-] ]]; then
         echo "Basespace sample name for $filename contains underscores, input sample identifier $sample_identifier contains dashes, renaming identifier..."
-        SAMPLENAME_RENAMED=$(echo $sample_identifier | sed 's|-|_|g')
-      elif [[ ! ("$filename" =~ [_]) || ! ("$filename" =~ [-]) ]]; then
+        SAMPLENAME_RENAMED=$(echo "$sample_identifier" | sed 's|-|_|g')
+      fi
+      if [[ ("$filename" =~ [_] && "$sample_identifier" =~ [_]) || ("$filename" =~ [-] && "$sample_identifier" =~ [-]) ]]; then
+        echo "Both Basespace sample name and input sample identifier for $filename contain matching separators..."
+        SAMPLENAME_RENAMED="$sample_identifier"
+      fi
+      if [[ ! ("$filename" =~ [_]) || ! ("$filename" =~ [-]) ]]; then
         echo "Filename doesn't use underscore or hyphen separators, using input sample identifier as-is"
-        SAMPLENAME_RENAMED=$sample_identifier
+        SAMPLENAME_RENAMED="$sample_identifier"
       fi
     done
 
