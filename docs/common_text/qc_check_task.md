@@ -24,6 +24,7 @@
     ??? toggle "Template _qc_check_table.tsv_ files"    
 <!-- if: theiacov -->
         - TheiaCoV_Illumina_PE: [TheiaCoV_Illumina_PE_qc_check_template.tsv](../../assets/files/TheiaCoV_Illumina_PE_qc_check_template.tsv)
+        - TheiaCoV_ONT: [TheiaCoV_ONT_qc_check_template.tsv](../../assets/files/TheiaCoV_ONT_qc_check_template.tsv)
 <!-- endif -->
 <!-- if: theiaprok -->
         - TheiaProk_Illumina_PE: [theiaprok_illumina_pe_qc_check_template.tsv](../../assets/files/TheiaProk_Illumina_PE_qc_check_template.tsv)
