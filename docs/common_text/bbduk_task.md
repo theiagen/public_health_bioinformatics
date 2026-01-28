@@ -1,6 +1,12 @@
 ??? task "`BBDuk`: Adapter Trimming and PhiX Removal"
     Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about [Illumina adapters here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
 
+<!-- if: theiaviral -->
+    Primers can be trimmed using an alignment-based approach implemented in BBDuk. To activate this functionality, primers must be provided via a standard format FASTA file, with each entry depicting a separate primer, or can be inputted as a comma-delimited string of primers.
+
+    The sensitivity of alignment-based primer trimming can be tuned via the `primers_hamming_distance` integer input.
+<!-- endif -->
+
     The `bbduk` task removes adapters from sequence reads. To do this:
 
     - [Repair](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/) package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files (it _re-pairs_).
