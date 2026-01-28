@@ -270,6 +270,9 @@ task qc_check_phb {
 
         if qc_note:
           qc_status = "QC_ALERT"
+
+      # qc_check population is nested and a failure will be caused if no matching taxon is found
+      # if a soft-fail is desired, populate qc_check and write one indent back
       if qc_status:
         qc_check = qc_status + ": " + qc_note
         qc_check = qc_check.rstrip('; ')
