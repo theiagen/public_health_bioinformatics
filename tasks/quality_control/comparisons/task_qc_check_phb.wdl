@@ -206,7 +206,13 @@ task qc_check_phb {
               try:
                 qc_note = compare(qc_note, metric, val_type(obs_val), obs_operator, val_type(taxon_df[metric][0]))
               except:
-                qc_note += f"{base_metric} ({obs_val}) could not be cast to {val_type}; "
+                if val_type == int:
+                  try:
+                    qc_note = compare(qc_note, metric, int(float(obs_val)), obs_operator, val_type(taxon_df[metric][0]))
+                  except ValueError:
+                    qc_note += f"{base_metric} ({obs_val}) could not be cast to {val_type}; "
+                else:
+                  qc_note += f"{base_metric} ({obs_val}) could not be cast to {val_type}; "
             qc_check_metrics.remove(metric)
 
         # check segment-level qc metrics via the irma_qc_table if it exists
