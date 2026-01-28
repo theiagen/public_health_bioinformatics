@@ -112,8 +112,8 @@ workflow read_QC_trim_pe {
   call bbduk_task.bbduk {
     input:
       samplename = samplename,
-      read1_trimmed = select_first([trimmomatic.read1_trimmed, fastp.read1_trimmed]),
-      read2_trimmed = select_first([trimmomatic.read2_trimmed, fastp.read2_trimmed]),
+      read1 = select_first([trimmomatic.read1_trimmed, fastp.read1_trimmed]),
+      read2 = select_first([trimmomatic.read2_trimmed, fastp.read2_trimmed]),
       memory = bbduk_memory,
       adapters = adapters,
       phix = phix
