@@ -70,8 +70,8 @@ workflow theiaviral_panel {
   call bbduk_task.bbduk {
     input:
       samplename = samplename,
-      read1_trimmed = fastp.read1_trimmed,
-      read2_trimmed = fastp.read2_trimmed
+      read1 = fastp.read1_trimmed,
+      read2 = fastp.read2_trimmed
   }
   # host read decontamination
   if (defined(host)) {
