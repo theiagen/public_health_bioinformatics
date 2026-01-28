@@ -81,7 +81,7 @@ workflow theiacov_fasta {
       irma_disk_size = 0,
       irma_docker_image = "",        
       irma_keep_ref_deletions = false,
-      irma_memory = 0,,
+      irma_memory = 0,
       genoflu_cpu = 0,
       genoflu_disk_size = 0,
       genoflu_docker = "",
