@@ -6,7 +6,7 @@ import "../../tasks/quality_control/basic_statistics/task_readlength.wdl" as rea
 import "../../tasks/quality_control/read_filtering/task_bbduk.wdl" as bbduk_task
 import "../../tasks/quality_control/read_filtering/task_fastp.wdl" as fastp_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
-import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic
+import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic_task
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
 import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
 import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes
@@ -31,13 +31,12 @@ workflow read_QC_trim_pe {
     Int? kraken_cpu
     File? kraken_db
     String? target_organism
-    Int taxon_id = 0
     File? adapters
     File? phix
     String? workflow_series
     String read_processing = "trimmomatic" # options: trimmomatic, fastp
     String read_qc = "fastq_scan" # options: fastq_scan, fastqc
-    String? trimmomatic_args
+    String? trimmomatic_override_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
   }
   if (read_qc == "fastqc") {
@@ -87,15 +86,15 @@ workflow read_QC_trim_pe {
     }
   }
   if (read_processing == "trimmomatic") {
-    call trimmomatic.trimmomatic_pe {
+    call trimmomatic_task.trimmomatic {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1]),
         read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
         trimmomatic_window_size = trim_window_size,
-        trimmomatic_quality_trim_score = trim_quality_min_score,
+        trimmomatic_window_quality = trim_quality_min_score,
         trimmomatic_min_length = trim_min_length,
-        trimmomatic_args = trimmomatic_args
+        trimmomatic_override_args = trimmomatic_override_args
     }
   }
   if (read_processing == "fastp") {
@@ -113,8 +112,8 @@ workflow read_QC_trim_pe {
   call bbduk_task.bbduk {
     input:
       samplename = samplename,
-      read1_trimmed = select_first([trimmomatic_pe.read1_trimmed, fastp.read1_trimmed]),
-      read2_trimmed = select_first([trimmomatic_pe.read2_trimmed, fastp.read2_trimmed]),
+      read1_trimmed = select_first([trimmomatic.read1_trimmed, fastp.read1_trimmed]),
+      read2_trimmed = select_first([trimmomatic.read2_trimmed, fastp.read2_trimmed]),
       memory = bbduk_memory,
       adapters = adapters,
       phix = phix
@@ -227,10 +226,12 @@ workflow read_QC_trim_pe {
     String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone_theiaprok.kraken2_docker, ""])
     String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone_theiaprok.kraken2_database, kraken_db_warning, ""])
     # trimming versioning
-    String? trimmomatic_version = trimmomatic_pe.version
-    String? trimmomatic_docker = trimmomatic_pe.trimmomatic_docker
-    String? fastp_version = fastp.version
-    File? fastp_html_report = fastp.fastp_stats
+    String? trimmomatic_version = trimmomatic.version
+    String? trimmomatic_docker = trimmomatic.trimmomatic_docker
+    String? fastp_version = fastp.fastp_version
+    String? fastp_docker = fastp.fastp_docker
+    File? fastp_html_report = fastp.fastp_stats_html
+    File? fastp_json_report = fastp.fastp_stats_json
     # midas
     String? midas_docker = midas.midas_docker
     File? midas_report = midas.midas_report

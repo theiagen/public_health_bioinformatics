@@ -9,8 +9,9 @@ task freyja_one_sample {
     String? freyja_pathogen
     File? freyja_barcodes
     File? freyja_lineage_metadata
-    Float eps = 0.001 # set to mirror v1.5.3 default
-    Float adapt = 0.0 # set to mirror v1.5.3 default
+    Boolean auto_adapt = false
+    Float eps = 0.001 # set to mirror v2.0.1 default
+    Float adapt = 0.0 # set to mirror v2.0.1 default
     Boolean update_db = false
     Boolean confirmed_only = false
     Boolean bootstrap = false
@@ -18,7 +19,7 @@ task freyja_one_sample {
     Int? depth_cutoff
     Int memory = 8
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:1.5.3"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1"
     Int disk_size = 100
   }
   command <<<
@@ -82,6 +83,7 @@ task freyja_one_sample {
     ~{"--depthcutoff " + depth_cutoff} \
     ~{"--nb " + number_bootstraps } \
     ~{true='--confirmedonly' false='' confirmed_only} \
+    ~{true='--autoadapt' false='' auto_adapt} \
     ~{samplename}_freyja_variants.tsv \
     ~{samplename}_freyja_depths.tsv \
     --output_base ~{samplename} \
@@ -97,7 +99,7 @@ task freyja_one_sample {
     ~{'--barcodes ' + freyja_barcodes} \
     ~{'--depthcutoff ' + depth_cutoff} \
     ~{true='--confirmedonly' false='' confirmed_only} \
-    ~{'--adapt ' + adapt} \
+    ~{if auto_adapt then '--autoadapt' else '--adapt ' + adapt} \
     ~{samplename}_freyja_variants.tsv \
     ~{samplename}_freyja_depths.tsv \
     --output ~{samplename}_freyja_demixed.tmp
