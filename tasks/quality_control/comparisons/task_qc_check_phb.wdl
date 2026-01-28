@@ -263,12 +263,12 @@ task qc_check_phb {
 
         if qc_note:
           qc_status = "QC_ALERT"
-          qc_check = qc_status + ": " + qc_note
-        else:
-          qc_status = "QC_PASS"
-      else:
+      if qc_status:
         qc_check = qc_status + ": " + qc_note
         qc_check = qc_check.rstrip('; ')
+      else:
+        qc_status = "QC_PASS"
+        qc_check = qc_status
 
       with open("QC_CHECK", 'wt') as out:
         out.write(qc_check)
