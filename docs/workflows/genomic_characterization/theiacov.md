@@ -488,6 +488,8 @@ We've provided the following information to help you set up the workflow for eac
 
 {{ include_md("common_text/irma_task.md", indent=4, condition="task") }}
 
+{{ include_md("common_text/bbmap_reformat_task.md", indent=4, condition="theiacov") }}
+
 {{ include_md("common_text/abricate_flu_task.md", indent=4) }}
 
 {{ include_md("common_text/flu_antiviral_substitutions_wf.md", indent=4) }}

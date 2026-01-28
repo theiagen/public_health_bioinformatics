@@ -403,6 +403,12 @@ task irma {
       echo -e "~{samplename}\t${total_reads}\t${pass_qc_reads}\t${segment_mapped_reads}\t${segment_ref_name}\t${segment_pct_ref_cov}\t${segment_median_cov}\t${segment_mean_cov}\t${segment_minor_snv}\t${segment_minor_insertions}\t${segment_minor_deletions}" >> "~{samplename}/~{samplename}_irma_qc_summary.tsv"
     done
 
+    # if reads.tar.gz is present, decompress reads.tar.gz, concatenate, and gzip into single file.
+    if [ -s "~{samplename}/intermediate/4-ASSEMBLE_SSW/reads.tar.gz" ]; then
+      if ! tar -xOzf "~{samplename}/intermediate/4-ASSEMBLE_SSW/reads.tar.gz" | gzip > "~{samplename}/intermediate/4-ASSEMBLE_SSW/~{samplename}_irma_concatenated_reads.fastq.gz"; then
+        echo "ERROR: Failed to decompress and concatenate reads.tar.gz" >&2
+      fi
+    fi
   >>>
   output {
     # all of these FASTAs are derived from the amended_consensus/*.fa files produced by IRMA
@@ -449,9 +455,13 @@ task irma {
     File? irma_read_counts_tsv = "~{samplename}/tables/READ_COUNTS.tsv"
     File? irma_run_info_tsv = "~{samplename}/logs/run_info.tsv"
     File? irma_nr_read_counts = "~{samplename}/logs/NR_COUNTS_log.txt"
+    File? irma_qc_log = "~{samplename}/logs/QC_log.txt"
     # for now just adding bams for these segments for mean coverage calculation
     File? seg_ha_bam = "~{samplename}_HA.bam"
     File? seg_na_bam = "~{samplename}_NA.bam"
+
+    # Return interleaved IRMA FASTQ files
+    File? irma_aligned_fastqs = "~{samplename}/intermediate/4-ASSEMBLE_SSW/~{samplename}_irma_concatenated_reads.fastq.gz"
   }
   runtime {
     docker: "~{docker}"

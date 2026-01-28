@@ -304,11 +304,11 @@ workflow theiacov_illumina_pe {
     String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
-    # Read Alignment - bwa outputs
+    # Read Alignment - bwa and bbmap_reformat(flu) outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version
-    File? read1_aligned = ivar_consensus.read1_aligned
-    File? read2_aligned = ivar_consensus.read2_aligned
+    String read1_aligned = select_first([ivar_consensus.read1_aligned, flu_track.irma_read1_aligned, ""])
+    String read2_aligned = select_first([ivar_consensus.read2_aligned, flu_track.irma_read2_aligned, ""])
     String aligned_bam = select_first([ivar_consensus.aligned_bam, ""])
     String aligned_bai = select_first([ivar_consensus.aligned_bai, ""])
     File? read1_unaligned = ivar_consensus.read1_unaligned
@@ -422,6 +422,7 @@ workflow theiacov_illumina_pe {
     File? irma_np_segment_fasta = flu_track.flu_np_segment_fasta
     File? irma_ns_segment_fasta = flu_track.flu_ns_segment_fasta
     File? irma_qc_summary_tsv = flu_track.irma_qc_summary_tsv
+    File? irma_qc_log = flu_track.irma_qc_log
     File? irma_all_snvs_tsv = flu_track.irma_all_snvs_tsv
     File? irma_all_insertions_tsv = flu_track.irma_all_insertions_tsv
     File? irma_all_deletions_tsv = flu_track.irma_all_deletions_tsv
