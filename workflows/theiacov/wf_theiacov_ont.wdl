@@ -223,6 +223,7 @@ workflow theiacov_ont {
           input:
             qc_check_table = qc_check_table,
             expected_taxon = organism_parameters.standardized_organism,
+            irma_qc_table = flu_track.irma_qc_summary_tsv,
             qc_check_inputs = {
               "num_reads_raw1": nanoplot_raw.num_reads,
               "num_reads_clean1": nanoplot_clean.num_reads,
