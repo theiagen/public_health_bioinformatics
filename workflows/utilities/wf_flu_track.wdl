@@ -390,8 +390,8 @@ workflow flu_track {
     String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
     # BBMap Reformat Outputs
-    File? bbmap_reformated_R1 = bbmap_reformat_interleaved.deinterleaved_fastq_R1
-    File? bbmap_reformated_R2 = bbmap_reformat_interleaved.deinterleaved_fastq_R2
+    File? irma_read1_aligned = bbmap_reformat_interleaved.deinterleaved_fastq_R1
+    File? irma_read2_aligned = bbmap_reformat_interleaved.deinterleaved_fastq_R2
     String? bbmap_reformat_docker = bbmap_reformat_interleaved.bbmap_reformat_docker
   }
 }

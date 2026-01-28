@@ -345,8 +345,8 @@ workflow morgana_magic {
     String? irma_subtype_notes = flu_track.irma_subtype_notes
     File? irma_assembly_fasta = flu_track.irma_assembly_fasta
     File? irma_aligned_fastqs = flu_track.irma_aligned_fastqs
-    File? irma_read1_aligned = flu_track.bbmap_reformated_R1
-    File? irma_read2_aligned = flu_track.bbmap_reformated_R2
+    File? irma_read1_aligned = flu_track.irma_read1_aligned
+    File? irma_read2_aligned = flu_track.irma_read2_aligned
     File? flu_assembly_fasta_concatenated = flu_track.flu_assembly_fasta_concatenated
     Int? irma_minimum_consensus_support = flu_track.irma_minimum_consensus_support
     String? ha_na_assembly_coverage = flu_track.ha_na_assembly_coverage
