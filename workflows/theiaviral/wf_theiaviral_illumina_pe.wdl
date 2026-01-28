@@ -521,6 +521,8 @@ workflow theiaviral_illumina_pe {
     String? irma_type = morgana_magic.irma_type
     String? irma_subtype = morgana_magic.irma_subtype
     String? irma_subtype_notes = morgana_magic.irma_subtype_notes
+    File? irma_read1_aligned = morgana_magic.irma_read1_aligned
+    File? irma_read2_aligned = morgana_magic.irma_read2_aligned
     # Flu GenoFLU Outputs
     String? genoflu_version = morgana_magic.genoflu_version
     String? genoflu_genotype = morgana_magic.genoflu_genotype
