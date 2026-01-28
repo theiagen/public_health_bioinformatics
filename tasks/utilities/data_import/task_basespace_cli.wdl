@@ -39,9 +39,14 @@ task fetch_bs {
     #Grab BaseSpace Run_ID from given BaseSpace Run Name
     run_id=$(${bs_command} list run --retry | grep "~{basespace_collection_id}" | awk -F "|" '{ print $3 }' | awk '{$1=$1;print}' )
     echo "run_id: ${run_id}" 
+
+    # NOTE: substring matching will occur when the data table does not append a suffix; 
+    # e.g. where "sample1" will retrieve "sample1_1", however, "sample1_L1" will NOT retrieve "sample1_1_L1"
+    # This cannot be resolved without explicitly knowing the suffix prior to parsing. Noted in documentation
+
     if [[ ! -z "${run_id}" ]]; then 
       #Grab BaseSpace Dataset ID from dataset lists within given run 
-      dataset_id_array=($(${bs_command} list dataset --retry --input-run=${run_id} | grep -E "${dataset_name}([_]|$)" | awk -F "|" '{ print $3 }' )) 
+      dataset_id_array=($(${bs_command} list dataset --retry --input-run=${run_id} | grep -E "${dataset_name}(_| )[^_|^ ]* *\|[^\|]*\|[^\|]*\|[^\|]*\|" | awk -F "|" '{ print $3 }' )) 
       echo "dataset_id: ${dataset_id_array[*]}"
     else 
       #Try Grabbing BaseSpace Dataset ID from project name
@@ -50,7 +55,7 @@ task fetch_bs {
       echo "project_id: ${project_id}" 
       if [[ ! -z "${project_id}" ]]; then 
         echo "project_id identified via Basespace, now searching for dataset_id within project_id ${project_id}..."
-        dataset_id_array=($(${bs_command} list dataset --retry --project-id=${project_id} | grep "${dataset_name}" | awk -F "|" '{ print $3 }' )) 
+        dataset_id_array=($(${bs_command} list dataset --retry --project-id=${project_id} | grep -E "${dataset_name}(_| )[^_|^ ]* *\|[^\|]*\|[^\|]*\|[^\|]*\|" | awk -F "|" '{ print $3 }' )) 
         echo "dataset_id: ${dataset_id_array[*]}"
       else       
         echo "No run or project id found associated with input basespace_collection_id: ~{basespace_collection_id}" >&2
@@ -72,21 +77,23 @@ task fetch_bs {
     # setting a new bash variable to use for renaming during concatenation of FASTQs
     for elm in ./dataset_${dataset_id}/*.fastq.gz; do
       echo "Checking Basespace file: $elm"
-      if [[ $(echo "$elm" | cut -d '/' -f 3) =~ [-] && $sample_identifier =~ [_] ]]; then
-        echo "Basespace sample name for $(echo "$elm" | cut -d '/' -f 3) contains dashes, input sample identifier $sample_identifier contains underscores, renaming identifier..."
-        SAMPLENAME_RENAMED=$(echo $sample_identifier | sed 's|_|-|g' | sed 's|\.|-|g')
+      filename=$(basename "$elm")
+
+      if [[ "$filename" =~ [-] && "$sample_identifier" =~ [_] ]]; then
+        echo "Basespace sample name for $filename contains dashes, input sample identifier $sample_identifier contains underscores, renaming identifier..."
+        SAMPLENAME_RENAMED=$(echo "$sample_identifier" | sed 's|_|-|g' | sed 's|\.|-|g')
       fi
-      if [[ $(echo "$elm" | cut -d '/' -f 3) =~ [_] && $sample_identifier =~ [-] ]]; then
-        echo "Basespace sample name for $(echo "$elm" | cut -d '/' -f 3) contains underscores, input sample identifier $sample_identifier contains dashes, renaming identifier..."
-        SAMPLENAME_RENAMED=$(echo $sample_identifier | sed 's|-|_|g')
+      if [[ "$filename" =~ [_] && "$sample_identifier" =~ [-] ]]; then
+        echo "Basespace sample name for $filename contains underscores, input sample identifier $sample_identifier contains dashes, renaming identifier..."
+        SAMPLENAME_RENAMED=$(echo "$sample_identifier" | sed 's|-|_|g')
       fi
-      if [[ ($(echo "$elm" | cut -d '/' -f 3) =~ [_] && $sample_identifier =~ [_]) || ($(echo "$elm" | cut -d '/' -f 3) =~ [-] && $sample_identifier =~ [-]) ]]; then
-        echo "Both Basespace sample name and input sample identifier for $(echo "$elm" | cut -d '/' -f 3) contain matching separators..."
-        SAMPLENAME_RENAMED=$sample_identifier
+      if [[ ("$filename" =~ [_] && "$sample_identifier" =~ [_]) || ("$filename" =~ [-] && "$sample_identifier" =~ [-]) ]]; then
+        echo "Both Basespace sample name and input sample identifier for $filename contain matching separators..."
+        SAMPLENAME_RENAMED="$sample_identifier"
       fi
-      if [[ ! ($(echo "$elm" | cut -d '/' -f 3) =~ [_]) || ! ($(echo "$elm" | cut -d '/' -f 3) =~ [-]) ]]; then
+      if [[ ! ("$filename" =~ [_]) || ! ("$filename" =~ [-]) ]]; then
         echo "Filename doesn't use underscore or hyphen separators, using input sample identifier as-is"
-        SAMPLENAME_RENAMED=$sample_identifier
+        SAMPLENAME_RENAMED="$sample_identifier"
       fi
     done
 
