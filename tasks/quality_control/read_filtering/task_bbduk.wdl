@@ -94,7 +94,7 @@ task bbduk {
           # Write grouped primer fasta files
           with open(f"primer_fasta_dir/grouped_primers_k{len(rec.seq)}.fasta", "a") as f:
             print(f">{rec.id}\n{rec.seq}", file=f)
-      else:
+      elif primer_fasta:
         raise FileNotFoundError(f"Primer fasta file '{primer_fasta}' not found.")
 
       # Read literal primer strings and separate primer sequences based on their sequence length
