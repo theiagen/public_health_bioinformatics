@@ -4,7 +4,11 @@
 <!-- if: theiaviral -->
     Primers can be trimmed using an alignment-based approach implemented in BBDuk. To activate this functionality, primers must be provided via a standard format FASTA file (`primers_fasta`), with each entry depicting a separate primer, or can be inputted as a comma-delimited string of primers (`primers_literal`).
 
-    The sensitivity of alignment-based primer trimming can be tuned via the `primers_hamming_distance` integer input. This is set to "1" by default, which indicates that only primers with less than or equal to 1 base mismatch will be removed.
+    The sensitivity of alignment-based primer trimming can be tuned via several parameters:
+    - `primers_hamming_distance`: This variable indicates the number of allowed mismatched bases during the alignment of primers to reads. Default is 1.
+    - `primers_max_start_offset`: This allows the trimming of primers to start "X" number of bases into the read. Default is 10.
+    - `primers_mask_middle`: This is a boolean input that, when set to "true", will mask the middle base of a primer sequence during alignment, which can be useful for handling degenerate primers. Default is "false".
+    - `primers_reverse_complement` This is a boolean input that, when set to "true", enables the trimming of reverse complement sequences of the provided primers. Default is "true".
 <!-- endif -->
 
     The `bbduk` task removes adapters from sequence reads. To do this:

@@ -15,7 +15,7 @@ task bbduk {
     File? primers_fasta
     String? primers_literal
 
-    Int? primers_restrict_trim_length # dynamically assigned based on primer sequence length if not provided
+    Int primers_max_start_offset = 10
     Int primers_hamming_distance = 1
     Boolean primers_mask_middle = false
     Boolean primers_reverse_complement = true
@@ -128,10 +128,15 @@ task bbduk {
         all_primer_stats_file="~{samplename}.primer_trim.stats.txt"
 
         # Only look for kmer matches in the outermost X number of bases so we can prevent trimming from internal matches.
-        # Default is 1.5 times the kmer length if not specified by user.
-        RESTRICT_TRIM_LENGTH=~{if defined(primers_restrict_trim_length) then '~{primers_restrict_trim_length}' else '$((KMER + KMER/2))'}
+        RESTRICT_TRIM_LENGTH=~{primers_max_start_offset}
 
-        # Trim primers
+        # Trim primers: bbduk v.39.38 parameters (and defaults)
+        # k=27                Kmer length used for finding contaminants.  Contaminants shorter than k will not be found.  k must be at least 1.
+        # ktrimtips=0         Set this to a positive number to perform ktrim on both ends, examining only the outermost X bases.
+        # maskmiddle=t        (mm) Treat the middle base of a kmer as a wildcard, to increase sensitivity in the presence of errors.
+        # rcomp=t             Look for reverse-complements of kmers in addition to forward kmers.
+        # hammingdistance=0   (hdist) Maximum Hamming distance for ref kmers (subs only). Memory use is proportional to (3*K)^hdist.
+        # ordered=f           Set to true to output reads in same order as input.
         PRIMER_TRIM_ARGS="k=$KMER ktrimtips=$RESTRICT_TRIM_LENGTH mm=~{primers_mask_middle} rcomp=~{primers_reverse_complement} hdist=~{primers_hamming_distance} ordered=t"
         bbduk.sh \
           in=$primer_trim_in1 \
