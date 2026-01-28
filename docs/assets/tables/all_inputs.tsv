@@ -379,12 +379,24 @@ bakta	prodigal_tf	File	Prodigal training file to use for CDS prediction by bakta
 bakta	proteins	File	Fasta file of trusted protein sequences for CDS annotation		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 basespace_fetch	api_server	String	The API server is the web address to which data transfer requests can be sent by the workflow.	https://api.basespace.illumina.com	Optional	BaseSpace_Fetch	general	
 basespace_fetch	basespace_sample_id	String	The BaseSpace sample ID is an optional additional identifier used in BaseSpace. If a sample has a BaseSpace sample ID it should be available on the sample sheet and must be included in the metadata sheet upload prior to running BaseSpace_Fetch.		Optional	BaseSpace_Fetch	general	
-bbduk	adapters	File	File with adapter sequences to be removed		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+bbduk	adapters_fasta	File	FASTA with adapter sequences to be removed		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 bbduk	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 bbduk	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
-bbduk	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bbtools:38.76	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
+bbduk	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/bbtools:39.38_python	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
 bbduk	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
-bbduk	phix	File	A file containing the phix used during Illumina sequencing		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+bbduk	phix_fasta	File	FASTA file with phiX sequences to be removed		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+bbduk	primers_fasta	File	FASTA file with primer sequences to be removed		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+bbduk	primers_hamming_distance	Int	Hamming distance allowed for primer matching	1	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+bbduk	primers_literal	String	Comma-delimited list of primer sequences		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+bbduk	primers_mask_middle	Boolean	Treat the middle base of a primer kmer as a wildcard to increase sensitivity in the presence of errors	False	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+bbduk	primers_restrict_trim_length	Int	Restrict trim length for primers		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+bbduk	primers_reverse_complement	Boolean	Whether to search for reverse complement primers	True	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+bbduk	primers_fasta	File	Internal component, do not modify		Optional	TheiaViral_Panel	general	
+bbduk	primers_hamming_distance	Int	Internal component, do not modify	1	Optional	TheiaViral_Panel	general	
+bbduk	primers_literal	String	Internal component, do not modify		Optional	TheiaViral_Panel	general	
+bbduk	primers_mask_middle	Boolean	Internal component, do not modify	False	Optional	TheiaViral_Panel	general	
+bbduk	primers_restrict_trim_length	Int	Internal component, do not modify		Optional	TheiaViral_Panel	general	
+bbduk	primers_reverse_complement	Boolean	Internal component, do not modify	True	Optional	TheiaViral_Panel	general	
 bcftools_consensus	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_ONT	runtime	
 bcftools_consensus	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
 bcftools_consensus	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bcftools:1.20	Optional	TheiaViral_ONT	docker	
@@ -1866,11 +1878,11 @@ prep_augur_metadata	disk_size	Int	Amount of storage (in GB) to allocate to the t
 prep_augur_metadata	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Augur_Prep	docker	
 prep_augur_metadata	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	3	Optional	Augur_Prep	runtime	
 prep_augur_metadata	organism	String	The organism to be analyzed in Augur; options: "sars-cov-2", "flu", "MPXV", "rsv-a", "rsv-b"	sars-cov-2	Optional	Augur_Prep	general	
-primer_trim	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ, TheiaViral_Illumina_PE	runtime	
-primer_trim	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ, TheiaViral_Illumina_PE	runtime	
-primer_trim	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan	Optional	Freyja_FASTQ, TheiaViral_Illumina_PE	docker	
-primer_trim	keep_noprimer_reads	Boolean	Include reads with no primers	True	Optional	Freyja_FASTQ, TheiaViral_Illumina_PE	general	
-primer_trim	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ, TheiaViral_Illumina_PE	runtime	
+primer_trim	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
+primer_trim	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
+primer_trim	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan	Optional	Freyja_FASTQ	docker	
+primer_trim	keep_noprimer_reads	Boolean	Include reads with no primers	True	Optional	Freyja_FASTQ	general	
+primer_trim	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 prokka	compliant	Boolean	If true (default), forces Genbank/ENA/DDJB compliant headers in Prokka output files	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 prokka	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 prokka	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
@@ -2690,8 +2702,6 @@ theiaviral_illumina_pe	kraken_db	File	Kraken2 database file	gs://theiagen-public
 theiaviral_illumina_pe	min_allele_freq	Float	Minimum allele frequency required for a variant to populate the consensus sequence	0.6	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 theiaviral_illumina_pe	min_depth	Int	Minimum read depth required for a variant to populate the consensus sequence	10	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 theiaviral_illumina_pe	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-theiaviral_illumina_pe	primer_bed	File	The bed file containing the primers used when sequencing was performed		Optional	TheiaViral_Illumina_PE	general	
-theiaviral_illumina_pe	primer_bed	File	Internal component, do not modify		Optional	TheiaViral_Panel	general	
 theiaviral_illumina_pe	read_extraction_rank	String	Taxonomic rank to use for read extraction - limits taxons to only those within the specified ranks.	family	Optional	TheiaViral_Illumina_PE	general	
 theiaviral_illumina_pe	read_extraction_rank	String	Internal component, do not modify	family	Optional	TheiaViral_Panel	general	
 theiaviral_illumina_pe	reference_fasta	File	Reference genome in FASTA format		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
