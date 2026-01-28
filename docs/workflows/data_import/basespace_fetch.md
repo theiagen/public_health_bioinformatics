@@ -146,7 +146,7 @@ _If you already have a command-line environment available_, you can skip ahead t
     If the Sample_Name and Sample_ID in the BaseSpace sample sheet are different, set the `basespace_sample_id` input attribute to "`this.basespace_sample_id"`.
 
 !!! warning "Nested Samplenames"
-    Nested samplename matching will occur when no lane suffix is present within the Basespace dataset; e.g. where there is an underscore or a space present after a sample name in the absence of a lane suffix within Basespace. To demonstrate this behavior; "sample1" will retrieve "sample1_1", however, "sample1_L1" will NOT retrieve "sample1_1_L1". This should be taken into consideration when using certain naming conventions. 
+    Erroneous matches may occur when a samplename is nested within another samplename in the same batch, separated by an underscore or space. This will occur when no lane suffix is present within the Basespace dataset. For example, "sample1" will retrieve "sample1_1", however, "sample1_L1" will NOT retrieve "sample1_1_L1". This should be taken into consideration when using certain naming conventions. 
 
 /// html | div[class="searchable-table"]
 
