@@ -223,16 +223,19 @@ workflow theiacov_ont {
           input:
             qc_check_table = qc_check_table,
             expected_taxon = organism_parameters.standardized_organism,
-            num_reads_raw1 = nanoplot_raw.num_reads,
-            num_reads_clean1 = nanoplot_clean.num_reads,
-            kraken_human = read_QC_trim.kraken_human,
-            meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq,
-            assembly_mean_coverage = stats_n_coverage_primtrim.depth,
-            number_N = consensus_qc.number_N,
-            assembly_length_unambiguous = consensus_qc.number_ATCG,
-            number_Degenerate =  consensus_qc.number_Degenerate,
-            percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            vadr_num_alerts = morgana_magic.vadr_num_alerts
+            irma_qc_table = flu_track.irma_qc_summary_tsv,
+            qc_check_inputs = {
+              "num_reads_raw1": nanoplot_raw.num_reads,
+              "num_reads_clean1": nanoplot_clean.num_reads,
+              "kraken_human": read_QC_trim.kraken_human,
+              "meanbaseq_trim": stats_n_coverage_primtrim.meanbaseq,
+              "assembly_mean_coverage": stats_n_coverage_primtrim.depth,
+              "number_N": consensus_qc.number_N,
+              "assembly_length_unambiguous": consensus_qc.number_ATCG,
+              "number_Degenerate":  consensus_qc.number_Degenerate,
+              "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
+              "vadr_num_alerts": morgana_magic.vadr_num_alerts
+            }
         }
       }
     }

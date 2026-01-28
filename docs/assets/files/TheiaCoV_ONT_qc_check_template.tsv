@@ -1,0 +1,5 @@
+taxon	num_reads_raw1	num_reads_clean1	kraken_human	meanbaseq_trim	assembly_mean_coverage	number_N	number_Degenerate	assembly_length_unambiguous_min	assembly_length_unambiguous_max	percent_reference_coverage	vadr_num_alerts	segment_percent_reference_coverage	segment_median_coverage	segment_num_minor_snv
+sars-cov-2			20		100	5000	1	25000	30000	83	0			
+HIV			20		100									
+MPXV			20		100									
+flu												90	50	10

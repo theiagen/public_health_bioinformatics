@@ -139,17 +139,19 @@ workflow freyja_fastq {
       input:
         qc_check_table = qc_check_table,
         expected_taxon = freyja_pathogen,
-        # Read counts - handle differences between ONT (Int from nanoplot) and Illumina (Int from fastq_scan)
-        num_reads_raw1 = select_first([nanoplot_raw.num_reads, read_QC_trim_pe.fastq_scan_raw1, read_QC_trim_pe.fastqc_raw1, read_QC_trim_se.fastq_scan_raw1]),
-        num_reads_raw2 = if defined(read2) then select_first([read_QC_trim_pe.fastq_scan_raw2, read_QC_trim_pe.fastqc_raw2]) else read_QC_trim_pe.fastq_scan_raw2,
-        num_reads_clean1 = select_first([nanoplot_clean.num_reads, read_QC_trim_pe.fastq_scan_clean1, read_QC_trim_pe.fastqc_clean1, read_QC_trim_se.fastq_scan_clean1]),
-        num_reads_clean2 = if defined(read2) then select_first([read_QC_trim_pe.fastq_scan_clean2, read_QC_trim_pe.fastqc_clean2]) else read_QC_trim_pe.fastq_scan_clean2,
-        # Kraken metrics - available from all three read QC workflows
-        kraken_human = select_first([read_QC_trim_pe.kraken_human, read_QC_trim_se.kraken_human, read_QC_trim_ont.kraken_human]),
-        kraken_human_dehosted = select_first([read_QC_trim_pe.kraken_human_dehosted, read_QC_trim_se.kraken_human_dehosted, read_QC_trim_ont.kraken_human_dehosted]),
-        # SC2-specific gene coverage - only available when freyja_pathogen == "SARS-CoV-2"
-        sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth,
-        sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
+        qc_check_inputs = {
+          # Read counts - handle differences between ONT (Int from nanoplot) and Illumina (Int from fastq_scan)
+          "num_reads_raw1": select_first([nanoplot_raw.num_reads, read_QC_trim_pe.fastq_scan_raw1, read_QC_trim_pe.fastqc_raw1, read_QC_trim_se.fastq_scan_raw1]),
+          "num_reads_raw2": if defined(read2) then select_first([read_QC_trim_pe.fastq_scan_raw2, read_QC_trim_pe.fastqc_raw2]) else read_QC_trim_pe.fastq_scan_raw2,
+          "num_reads_clean1": select_first([nanoplot_clean.num_reads, read_QC_trim_pe.fastq_scan_clean1, read_QC_trim_pe.fastqc_clean1, read_QC_trim_se.fastq_scan_clean1]),
+          "num_reads_clean2": if defined(read2) then select_first([read_QC_trim_pe.fastq_scan_clean2, read_QC_trim_pe.fastqc_clean2]) else read_QC_trim_pe.fastq_scan_clean2,
+          # Kraken metrics - available from all three read QC workflows
+          "kraken_human": select_first([read_QC_trim_pe.kraken_human, read_QC_trim_se.kraken_human, read_QC_trim_ont.kraken_human]),
+          "kraken_human_dehosted": select_first([read_QC_trim_pe.kraken_human_dehosted, read_QC_trim_se.kraken_human_dehosted, read_QC_trim_ont.kraken_human_dehosted]),
+          # SC2-specific gene coverage - only available when freyja_pathogen == "SARS-CoV-2"
+          "sc2_s_gene_mean_coverage": gene_coverage.sc2_s_gene_depth,
+          "sc2_s_gene_percent_coverage": gene_coverage.sc2_s_gene_percent_coverage
+      }
     }
   }
   if (run_qualimap) {
