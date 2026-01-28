@@ -24,7 +24,7 @@ workflow tbprofiler_tngs {
   call versioning.version_capture {
     input:
   }
-  call fastq_scan.fastq_scan_pe as fastq_scan_raw {
+  call fastq_scan.fastq_scan as fastq_scan_raw {
       input:
         read1 = read1,
         read2 = read2
@@ -46,7 +46,7 @@ workflow tbprofiler_tngs {
     } 
   }
   if (run_trimmomatic || run_clockwork) {
-    call fastq_scan.fastq_scan_pe as fastq_scan_clean {
+    call fastq_scan.fastq_scan as fastq_scan_clean {
       input:
         read1 = select_first([clockwork_decon_reads.clockwork_cleaned_read1, trimmomatic.read1_trimmed]),
         read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2, trimmomatic.read2_trimmed])
