@@ -206,6 +206,7 @@ task qc_check_phb {
               try:
                 qc_note = compare(qc_note, metric, val_type(obs_val), obs_operator, val_type(taxon_df[metric][0]))
               except:
+                # casting a string float to an int will fail directly unless casted to a float first
                 if val_type == int:
                   try:
                     qc_note = compare(qc_note, metric, int(float(obs_val)), obs_operator, val_type(taxon_df[metric][0]))
