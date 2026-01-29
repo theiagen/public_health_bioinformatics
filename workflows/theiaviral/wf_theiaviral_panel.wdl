@@ -70,8 +70,8 @@ workflow theiaviral_panel {
   call bbduk_task.bbduk {
     input:
       samplename = samplename,
-      read1_trimmed = fastp.read1_trimmed,
-      read2_trimmed = fastp.read2_trimmed
+      read1 = fastp.read1_trimmed,
+      read2 = fastp.read2_trimmed
   }
   # host read decontamination
   if (defined(host)) {
@@ -262,15 +262,15 @@ workflow theiaviral_panel {
             "pangolin_versions": theiaviral_illumina_pe.pangolin_versions,
             "nextclade_version": theiaviral_illumina_pe.nextclade_version,
             "nextclade_docker": theiaviral_illumina_pe.nextclade_docker,
-            "nextclade_json_mpxv": theiaviral_illumina_pe.nextclade_json,
-            "auspice_json_mpxv": theiaviral_illumina_pe.auspice_json,
-            "nextclade_tsv_mpxv": theiaviral_illumina_pe.nextclade_tsv,
+            "nextclade_json": theiaviral_illumina_pe.nextclade_json,
+            "auspice_json": theiaviral_illumina_pe.auspice_json,
+            "nextclade_tsv": theiaviral_illumina_pe.nextclade_tsv,
             "nextclade_ds_tag": theiaviral_illumina_pe.nextclade_ds_tag,
-            "nextclade_aa_subs_mpxv": theiaviral_illumina_pe.nextclade_aa_subs,
-            "nextclade_aa_dels_mpxv": theiaviral_illumina_pe.nextclade_aa_dels,
-            "nextclade_clade_mpxv": theiaviral_illumina_pe.nextclade_clade,
-            "nextclade_lineage_mpxv": theiaviral_illumina_pe.nextclade_lineage,
-            "nextclade_qc_mpxv": theiaviral_illumina_pe.nextclade_qc,
+            "nextclade_aa_subs": theiaviral_illumina_pe.nextclade_aa_subs,
+            "nextclade_aa_dels": theiaviral_illumina_pe.nextclade_aa_dels,
+            "nextclade_clade": theiaviral_illumina_pe.nextclade_clade,
+            "nextclade_lineage": theiaviral_illumina_pe.nextclade_lineage,
+            "nextclade_qc": theiaviral_illumina_pe.nextclade_qc,
             "nextclade_json_flu_ha": theiaviral_illumina_pe.nextclade_json_flu_ha,
             "auspice_json_flu_ha": theiaviral_illumina_pe.auspice_json_flu_ha,
             "nextclade_tsv_flu_ha": theiaviral_illumina_pe.nextclade_tsv_flu_ha,
