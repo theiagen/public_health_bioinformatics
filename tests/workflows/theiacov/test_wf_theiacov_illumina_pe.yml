@@ -22,7 +22,7 @@
     - path: miniwdl_run/call-raw_check_reads/task.log
     # bbduk
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/command
-      md5sum: b6f088b9b3b365e4b0574aef6277de14
+      md5sum: 5dd1b485ca8e32fe9b3bfa908c7790ba
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/inputs.json
       contains: ["phix", "adapters", "read1", "read2", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/outputs.json
@@ -33,9 +33,9 @@
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/task.log
       contains: ["wdl", "illumina_pe", "bbduk", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/SRR13687078.adapters.stats.txt
-      md5sum: 41e6facd9074e4cabc0eb2f756aeeff6
+      md5sum: d4611f554b716ab97163482e857d0a96
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/SRR13687078.phix.stats.txt
-      md5sum: 1a338999b186f6752d981ff183656bb0
+      md5sum: 255261b9a5e5b5e8237420b60a77565d
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/_miniwdl_inputs/0/SRR13687078_1P.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/_miniwdl_inputs/0/SRR13687078_2P.fastq.gz

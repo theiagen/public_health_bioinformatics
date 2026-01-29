@@ -385,17 +385,17 @@ bbduk	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Option
 bbduk	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/bbtools:39.38_python	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
 bbduk	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 bbduk	phix_fasta	File	FASTA file with phiX sequences to be removed		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-bbduk	primers_fasta	File	FASTA file with primer sequences to be removed		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-bbduk	primers_hamming_distance	Int	Hamming distance allowed for primer matching	1	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-bbduk	primers_literal	String	Comma-delimited list of primer sequences		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-bbduk	primers_mask_middle	Boolean	Treat the middle base of a primer kmer as a wildcard to increase sensitivity in the presence of errors	False	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-bbduk	primers_max_start_offset	Int	Maximum offset from edge of read for primers to begin		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
-bbduk	primers_reverse_complement	Boolean	Whether to search for reverse complement primers	True	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
+bbduk	primers_fasta	File	FASTA file with primer sequences to be removed		Optional	TheiaViral_Illumina_PE	general	
 bbduk	primers_fasta	File	Internal component, do not modify		Optional	TheiaViral_Panel	general	
+bbduk	primers_hamming_distance	Int	Hamming distance allowed for primer matching	1	Optional	TheiaViral_Illumina_PE	general	
 bbduk	primers_hamming_distance	Int	Internal component, do not modify	1	Optional	TheiaViral_Panel	general	
+bbduk	primers_literal	String	Comma-delimited list of primer sequences		Optional	TheiaViral_Illumina_PE	general	
 bbduk	primers_literal	String	Internal component, do not modify		Optional	TheiaViral_Panel	general	
+bbduk	primers_mask_middle	Boolean	Treat the middle base of a primer kmer as a wildcard to increase sensitivity in the presence of errors	False	Optional	TheiaViral_Illumina_PE	general	
 bbduk	primers_mask_middle	Boolean	Internal component, do not modify	False	Optional	TheiaViral_Panel	general	
-bbduk	primers_max_start_offset	Int	Internal component, do not modify		Optional	TheiaViral_Panel	general	
+bbduk	primers_max_start_offset	Int	Maximum offset from edge of read for primers to begin	10	Optional	TheiaViral_Illumina_PE	general	
+bbduk	primers_max_start_offset	Int	Internal component, do not modify	10	Optional	TheiaViral_Panel	general	
+bbduk	primers_reverse_complement	Boolean	Whether to search for reverse complement primers	True	Optional	TheiaViral_Illumina_PE	general	
 bbduk	primers_reverse_complement	Boolean	Internal component, do not modify	True	Optional	TheiaViral_Panel	general	
 bcftools_consensus	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_ONT	runtime	
 bcftools_consensus	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
@@ -1901,7 +1901,7 @@ qc_check_task	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_F
 qc_check_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 qc_check_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2024-08-27	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 qc_check_task	gambit_predicted_taxon	String	Internal component, do not modify		Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general	
-qc_check_task	irma_qc_table	File	Internal component, do not modify		Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+qc_check_task	irma_qc_table	File	Internal component, do not modify		Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 qc_check_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 qualimap	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
 qualimap	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Freyja_FASTQ	runtime	
