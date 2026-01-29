@@ -1,0 +1,8 @@
+{
+    "theiacov_ont.primer_bed": "this.primer_bed_input",
+    "theiacov_ont.reference_genome": "this.reference_genome_input",
+    "theiacov_ont.organism_parameters.hiv_primer_version": "this.hiv_version_input",
+    "theiacov_ont.organism": "this.organism_input",
+    "theiacov_ont.read1": "this.read1",
+    "theiacov_ont.samplename": "this.theiacov_ont_id"
+}

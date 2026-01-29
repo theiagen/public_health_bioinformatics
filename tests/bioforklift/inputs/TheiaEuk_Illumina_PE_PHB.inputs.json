@@ -1,0 +1,5 @@
+{
+    "theiaeuk_illumina_pe.read1": "this.read1",
+    "theiaeuk_illumina_pe.read2": "this.read2",
+    "theiaeuk_illumina_pe.samplename": "this.theiaeuk_illumina_pe_id"
+}
