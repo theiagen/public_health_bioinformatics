@@ -164,7 +164,7 @@
 
 {{ include_md("common_text/estimate_genome_length_task.md", indent=8) }}
 
-    ??? toggle "Read Quality Control, Trimming, Filtering, Identification and Extraction"
+    ??? toggle "Read Quality Control, Primer/Adapter Trimming, Filtering, Identification and Extraction"
 
 {{ include_md("common_text/fastq_scan_task.md", condition="notclearlabs", indent=8) }}
 
@@ -172,7 +172,7 @@
 
 {{ include_md("common_text/fastp_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/bbduk_task.md", indent=8) }}
+{{ include_md("common_text/bbduk_task.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/host_decontaminate_wf.md", indent=8) }}
 
@@ -207,8 +207,6 @@
 {{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=8, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
 
     ??? toggle "Variant Calling and Consensus Generation"
-
-{{ include_md("common_text/ivar_trim_task.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/ivar_variants_task.md", condition="theiaviral", indent=8) }}
 
