@@ -744,6 +744,8 @@ workflow theiaprok_illumina_se {
     # Read QC - fastp outputs
     String? fastp_version = read_QC_trim.fastp_version
     File? fastp_html_report = read_QC_trim.fastp_html_report
+    String? fastp_docker = read_QC_trim.fastp_docker
+    File? fastp_json_report = read_QC_trim.fastp_json_report
     # Read QC - bbduk outputs
     File? read1_clean = read_QC_trim.read1_clean
     String? bbduk_docker = read_QC_trim.bbduk_docker
