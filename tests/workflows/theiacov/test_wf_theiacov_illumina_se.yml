@@ -22,7 +22,7 @@
     - path: miniwdl_run/call-raw_check_reads/task.log
     # bbduk
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/command
-      md5sum: 5623e73be1e5add07b5f1994d39157e2
+      md5sum: 4fd92a5a15c1cc683f96f7f13e5a6fbc
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/inputs.json
       contains: ["phix", "adapters", "read1", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/outputs.json
