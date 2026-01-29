@@ -288,8 +288,6 @@
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.rm_phix_2.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.phix.stats.txt
       md5sum: 5ca1724d82329dfad4024ad8a0cac1a7
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.rm_adpt_1.fastq.gz
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.rm_adpt_2.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test_1.clean.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test_2.clean.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_clean/command
