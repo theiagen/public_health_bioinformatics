@@ -21078,10 +21078,17 @@
 <details class="task">
 <summary><code>BBDuk</code>: Adapter Trimming and PhiX Removal</summary>
 <p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">Illumina adapters here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
-<p>The <code>bbduk</code> task removes adapters from sequence reads. To do this:</p>
+<p>By default, the <code>bbduk</code> task will:</p>
 <ul>
-<li><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/">Repair</a> from the <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files (it <em>re-pairs</em>).</li>
-<li><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>) is then used to trim the adapters and filter out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>, which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.</li>
+<li>
+<p><strong>Repair disordered read pairs</strong> (if they exist) so that the first read in file 1 is the same mate of the first read in file2. See the <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/"><code>Repair Guide</code></a> from the <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package.</p>
+</li>
+<li>
+<p><strong>Remove PhiX contamination</strong> by filtering out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>. PhiX is a viral genome that is often used as a control in Illumina sequencing runs. Removing PhiX sequences helps to ensure that the data reflects only the target organism's genome. By default this task uses the built-in PhiX reference fasta provided with BBTools (see <a href="https://github.com/bbushnell/BBTools/blob/master/resources/phix174_ill.ref.fa.gz">here</a>), but a custom PhiX reference can be provided via the <code>phix_fasta</code> input parameter.</p>
+</li>
+<li>
+<p><strong>Trim adapters</strong> with <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>). By default this uses the built-in adapter sequences provided with BBTools (see <a href="https://github.com/bbushnell/BBTools/blob/master/resources/adapters.fa">here</a>). If you have custom adapter sequences specific to your library preparation, you can provide them via the <code>adapters_fasta</code> input parameter.</p>
+</li>
 </ul>
 <div class="admonition techdetails">
 <p class="admonition-title">BBDuk Technical Details</p>
@@ -21858,10 +21865,17 @@
 <details class="task">
 <summary><code>BBDuk</code>: Adapter Trimming and PhiX Removal</summary>
 <p>Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about <a href="https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html">Illumina adapters here</a>. For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.</p>
-<p>The <code>bbduk</code> task removes adapters from sequence reads. To do this:</p>
+<p>By default, the <code>bbduk</code> task will:</p>
 <ul>
-<li><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/">Repair</a> from the <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package reorders reads in paired fastq files to ensure the forward and reverse reads of a pair are in the same position in the two fastq files (it <em>re-pairs</em>).</li>
-<li><a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>) is then used to trim the adapters and filter out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>, which is commonly added to Illumina sequencing runs to monitor and/or improve overall run quality.</li>
+<li>
+<p><strong>Repair disordered read pairs</strong> (if they exist) so that the first read in file 1 is the same mate of the first read in file2. See the <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/"><code>Repair Guide</code></a> from the <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/">BBTools</a> package.</p>
+</li>
+<li>
+<p><strong>Remove PhiX contamination</strong> by filtering out all reads that have a 31-mer match to <a href="https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html">PhiX</a>. PhiX is a viral genome that is often used as a control in Illumina sequencing runs. Removing PhiX sequences helps to ensure that the data reflects only the target organism's genome. By default this task uses the built-in PhiX reference fasta provided with BBTools (see <a href="https://github.com/bbushnell/BBTools/blob/master/resources/phix174_ill.ref.fa.gz">here</a>), but a custom PhiX reference can be provided via the <code>phix_fasta</code> input parameter.</p>
+</li>
+<li>
+<p><strong>Trim adapters</strong> with <a href="https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/bbduk-guide/">BBDuk</a>  (<em>"Bestus Bioinformaticus" Decontamination Using Kmers</em>). By default this uses the built-in adapter sequences provided with BBTools (see <a href="https://github.com/bbushnell/BBTools/blob/master/resources/adapters.fa">here</a>). If you have custom adapter sequences specific to your library preparation, you can provide them via the <code>adapters_fasta</code> input parameter.</p>
+</li>
 </ul>
 <div class="admonition techdetails">
 <p class="admonition-title">BBDuk Technical Details</p>
