@@ -7086,7 +7086,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
-<td>vX.X.X</td>
+<td>v4.1.0</td>
 <td>Some optional features incompatible, Yes</td>
 <td>Sample-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_Illumina_PE_PHB:main?tab=info">TheiaViral_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_ONT_PHB:main?tab=info">TheiaViral_ONT_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_Panel_PHB:main?tab=info">TheiaViral_Panel_PHB</a></td>
@@ -8516,7 +8516,7 @@
 <td><strong>primers_max_start_offset</strong></td>
 <td>Int</td>
 <td>Maximum offset from edge of read for primers to begin</td>
-<td></td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12351,24 +12351,8 @@
 <td>bbduk</td>
 <td><strong>primers_fasta</strong></td>
 <td>File</td>
-<td>FASTA file with primer sequences to be removed</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>bbduk</td>
-<td><strong>primers_fasta</strong></td>
-<td>File</td>
 <td>Internal component, do not modify</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>bbduk</td>
-<td><strong>primers_hamming_distance</strong></td>
-<td>Int</td>
-<td>Hamming distance allowed for primer matching</td>
-<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12383,24 +12367,8 @@
 <td>bbduk</td>
 <td><strong>primers_literal</strong></td>
 <td>String</td>
-<td>Comma-delimited list of primer sequences</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>bbduk</td>
-<td><strong>primers_literal</strong></td>
-<td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>bbduk</td>
-<td><strong>primers_mask_middle</strong></td>
-<td>Boolean</td>
-<td>Treat the middle base of a primer kmer as a wildcard to increase sensitivity in the presence of errors</td>
-<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12415,24 +12383,8 @@
 <td>bbduk</td>
 <td><strong>primers_max_start_offset</strong></td>
 <td>Int</td>
-<td>Maximum offset from edge of read for primers to begin</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>bbduk</td>
-<td><strong>primers_max_start_offset</strong></td>
-<td>Int</td>
 <td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>bbduk</td>
-<td><strong>primers_reverse_complement</strong></td>
-<td>Boolean</td>
-<td>Whether to search for reverse complement primers</td>
-<td>True</td>
+<td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
