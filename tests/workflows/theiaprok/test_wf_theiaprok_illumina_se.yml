@@ -265,7 +265,7 @@
     - path: miniwdl_run/call-quast/work/transposed_report.txt
       contains: ["Assembly", "length", "contigs", "test"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/command
-      md5sum: 90e425e5518ae4cc6a0e92d29925fd70
+      md5sum: 6aafca4ec90c4b6bee5e3ba0fc6c40e3
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/inputs.json
       contains: ["read", "fastq", "sample", "test"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/outputs.json
@@ -378,7 +378,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/variant_detection/task_snippy_variants.wdl
       md5sum: d937de15afdd2bbe9ccee89b66e64580
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_bbduk.wdl
-      md5sum: aec6ef024d6dff31723f44290f6b9cf5
+      md5sum: a4fade65c867dd690363edf1a252ed28
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_busco.wdl
       md5sum: 765c33e10de500e0369ce2ac96dff7bb
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_cg_pipeline.wdl

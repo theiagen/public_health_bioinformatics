@@ -268,7 +268,7 @@
     - path: miniwdl_run/call-quast/work/transposed_report.txt
       contains: ["Assembly", "length", "contigs", "test"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/command
-      md5sum: c1069c728364c50d96bbb95ebece0d33
+      md5sum: 24ead0dc4b10f96517b770810a25c688
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/inputs.json
       contains: ["read", "fastq", "sample", "test"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/outputs.json
@@ -283,15 +283,13 @@
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/_miniwdl_inputs/0/test_1P.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/_miniwdl_inputs/0/test_2P.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.adapters.stats.txt
-      md5sum: 6328466d2d542ef57fb6843d5aa89611
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.matched_phix.fq
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.paired_1.fastq.gz
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.paired_2.fastq.gz
+      md5sum: 52293ba51cbb398dd5c6ad0375ab5473
+    - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.rm_phix_1.fastq.gz
+    - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.rm_phix_2.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.phix.stats.txt
-      md5sum: e7c6494642c2131ed1751848c95407f0
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.rmadpt_1.fastq.gz
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.rmadpt_2.fastq.gz
+      md5sum: 5ca1724d82329dfad4024ad8a0cac1a7
+    - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.rm_adpt_1.fastq.gz
+    - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test.rm_adpt_2.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test_1.clean.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-bbduk/work/test_2.clean.fastq.gz
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_clean/command
@@ -400,7 +398,7 @@
     - path: miniwdl_run/wdl/tasks/gene_typing/variant_detection/task_snippy_variants.wdl
       md5sum: d937de15afdd2bbe9ccee89b66e64580
     - path: miniwdl_run/wdl/tasks/quality_control/read_filtering/task_bbduk.wdl
-      md5sum: aec6ef024d6dff31723f44290f6b9cf5
+      md5sum: a4fade65c867dd690363edf1a252ed28
     - path: miniwdl_run/wdl/tasks/quality_control/advanced_metrics/task_busco.wdl
       md5sum: 765c33e10de500e0369ce2ac96dff7bb
     - path: miniwdl_run/wdl/tasks/quality_control/basic_statistics/task_cg_pipeline.wdl
