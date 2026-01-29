@@ -10,7 +10,7 @@ task irma {
     Int minimum_consensus_support = 50 # IRMA default is 1, but matching MIRA standards for ONT = 50 and ILMN = 30 via defaults at theiacov workflow level WDLs: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
     Int minimum_read_length = 75 # matching default for TheiaCoV_Illumina_PE; NOTE: IRMA's default is 125 bp
     Int minimum_average_consensus_allele_quality = 10 # IRMA default is 0, we are matching MIRA standards for both ONT and ILMN: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
-    Float minimum_ambiguous_threshold = 0.20
+    Float minimum_ambiguous_threshold = 0.25
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/irma:1.3.1"
     Int memory = 16
     Int cpu = 4
@@ -403,6 +403,12 @@ task irma {
       echo -e "~{samplename}\t${total_reads}\t${pass_qc_reads}\t${segment_mapped_reads}\t${segment_ref_name}\t${segment_pct_ref_cov}\t${segment_median_cov}\t${segment_mean_cov}\t${segment_minor_snv}\t${segment_minor_insertions}\t${segment_minor_deletions}" >> "~{samplename}/~{samplename}_irma_qc_summary.tsv"
     done
 
+    # if reads.tar.gz is present, decompress reads.tar.gz, concatenate, and gzip into single file.
+    if [ -s "~{samplename}/intermediate/4-ASSEMBLE_SSW/reads.tar.gz" ]; then
+      if ! tar -xOzf "~{samplename}/intermediate/4-ASSEMBLE_SSW/reads.tar.gz" | gzip > "~{samplename}/intermediate/4-ASSEMBLE_SSW/~{samplename}_irma_concatenated_reads.fastq.gz"; then
+        echo "ERROR: Failed to decompress and concatenate reads.tar.gz" >&2
+      fi
+    fi
   >>>
   output {
     # all of these FASTAs are derived from the amended_consensus/*.fa files produced by IRMA
@@ -449,9 +455,13 @@ task irma {
     File? irma_read_counts_tsv = "~{samplename}/tables/READ_COUNTS.tsv"
     File? irma_run_info_tsv = "~{samplename}/logs/run_info.tsv"
     File? irma_nr_read_counts = "~{samplename}/logs/NR_COUNTS_log.txt"
+    File? irma_qc_log = "~{samplename}/logs/QC_log.txt"
     # for now just adding bams for these segments for mean coverage calculation
     File? seg_ha_bam = "~{samplename}_HA.bam"
     File? seg_na_bam = "~{samplename}_NA.bam"
+
+    # Return interleaved IRMA FASTQ files
+    File? irma_aligned_fastqs = "~{samplename}/intermediate/4-ASSEMBLE_SSW/~{samplename}_irma_concatenated_reads.fastq.gz"
   }
   runtime {
     docker: "~{docker}"

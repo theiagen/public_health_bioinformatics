@@ -8,6 +8,7 @@ import "../../tasks/taxon_id/task_nextclade.wdl" as nextclade_task
 import "../utilities/wf_influenza_antiviral_substitutions.wdl" as flu_antiviral
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../../tasks/species_typing/orthomyxoviridae/task_vadr_flu_segments.wdl" as vadr_flu_segments_task
+import "../../tasks/utilities/data_handling/task_bbmap_reformat.wdl" as bbmap_reformat
 
 workflow flu_track {
   meta {
@@ -104,6 +105,14 @@ workflow flu_track {
         memory = irma_memory,
         cpu = irma_cpu,
         disk_size = irma_disk_size
+    }
+    # Only perform deinterleaving if IRMA aligned reads are present and are intended to be PE
+    if (defined(irma.irma_aligned_fastqs) && defined(read2)) {
+      call bbmap_reformat.bbmap_reformat_interleaved{
+        input:
+          samplename = samplename,
+          interleaved_fastq = select_first([irma.irma_aligned_fastqs])
+      }
     }
     # can be redone later to accomodate processing of HA and NA bams together in the task, perhaps with an organism flag
     if (defined(irma.seg_ha_bam)) {
@@ -303,6 +312,7 @@ workflow flu_track {
     File? irma_assembly_fasta = irma.irma_assembly_fasta
     File? irma_assembly_fasta_padded = irma.irma_assembly_fasta_padded
     File? irma_assembly_fasta_concatenated_padded = irma.irma_assembly_fasta_concatenated_padded
+    File? irma_aligned_fastqs = irma.irma_aligned_fastqs
     File flu_assembly_fasta_concatenated = select_first([irma.irma_assembly_fasta_concatenated, vadr_flu_segments.assembly_fasta_concatenated, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File flu_ha_segment_fasta = select_first([irma.seg_ha_assembly, vadr_flu_segments.seg_ha_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File flu_na_segment_fasta = select_first([irma.seg_na_assembly, vadr_flu_segments.seg_na_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
@@ -313,6 +323,7 @@ workflow flu_track {
     File flu_np_segment_fasta = select_first([irma.seg_np_assembly, vadr_flu_segments.seg_np_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File flu_ns_segment_fasta = select_first([irma.seg_ns_assembly, vadr_flu_segments.seg_ns_assembly, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"])
     File? irma_qc_summary_tsv = irma.irma_qc_summary_tsv
+    File? irma_qc_log = irma.irma_qc_log
     File? irma_all_snvs_tsv = irma.irma_all_snvs_tsv
     File? irma_all_insertions_tsv = irma.irma_all_insertions_tsv
     File? irma_all_deletions_tsv = irma.irma_all_deletions_tsv
@@ -378,5 +389,9 @@ workflow flu_track {
     String? flu_oseltamivir_resistance = flu_antiviral_substitutions.flu_oseltamivir_resistance
     String? flu_xofluza_resistance = flu_antiviral_substitutions.flu_xofluza_resistance
     String? flu_zanamivir_resistance = flu_antiviral_substitutions.flu_zanamivir_resistance
+    # BBMap Reformat Outputs
+    File? irma_read1_aligned = bbmap_reformat_interleaved.deinterleaved_fastq_R1
+    File? irma_read2_aligned = bbmap_reformat_interleaved.deinterleaved_fastq_R2
+    String? bbmap_reformat_docker = bbmap_reformat_interleaved.bbmap_reformat_docker
   }
 }
