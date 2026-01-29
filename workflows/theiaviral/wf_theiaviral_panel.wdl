@@ -48,7 +48,7 @@ workflow theiaviral_panel {
   }
 
   # read QC, classification, extraction, and trimming
-  call fastq_scan_task.fastq_scan_pe as fastq_scan_raw {
+  call fastq_scan_task.fastq_scan as fastq_scan_raw {
     input:
       read1 = read1,
       read2 = read2
@@ -99,7 +99,7 @@ workflow theiaviral_panel {
       kraken2_db = select_first([kraken_db])
   }
   # clean read stat gathering
-  call fastq_scan_task.fastq_scan_pe as fastq_scan_clean {
+  call fastq_scan_task.fastq_scan as fastq_scan_clean {
     input:
       read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
       read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean])

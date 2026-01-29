@@ -43,7 +43,7 @@ workflow theiacov_clearlabs {
       nextclade_dataset_name_input = nextclade_dataset_name,
       kraken_target_organism_input = target_organism
   }
-  call fastq_scan.fastq_scan_se as fastq_scan_raw_reads {
+  call fastq_scan.fastq_scan as fastq_scan_raw_reads {
     input:
       read1 = read1
   }
@@ -52,7 +52,7 @@ workflow theiacov_clearlabs {
       samplename = samplename,
       read1 = read1
   }
-  call fastq_scan.fastq_scan_se as fastq_scan_clean_reads {
+  call fastq_scan.fastq_scan as fastq_scan_clean_reads {
     input:
       read1 = ncbi_scrub_se.read1_dehosted
   }
@@ -177,8 +177,8 @@ workflow theiacov_clearlabs {
     Int fastq_scan_num_reads_raw1 = fastq_scan_raw_reads.read1_seq
     Int fastq_scan_num_reads_clean1 = fastq_scan_clean_reads.read1_seq
     String fastq_scan_version = fastq_scan_raw_reads.version
-    File fastq_scan_raw1_json = fastq_scan_raw_reads.fastq_scan_json
-    File fastq_scan_clean1_json = fastq_scan_clean_reads.fastq_scan_json
+    File fastq_scan_raw1_json = fastq_scan_raw_reads.read1_fastq_scan_json
+    File fastq_scan_clean1_json = fastq_scan_clean_reads.read1_fastq_scan_json
     # Read QC - kraken outputs
     String kraken_version = kraken2_raw.version
     Float kraken_human = kraken2_raw.percent_human
