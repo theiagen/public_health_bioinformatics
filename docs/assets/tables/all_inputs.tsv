@@ -789,8 +789,8 @@ flu_track	assembly_metrics_cpu	Int	Internal component, do not modify	2	Optional	
 flu_track	assembly_metrics_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
 flu_track	assembly_metrics_disk_size	Int	Internal component, do not modify	100	Optional	TheiaCoV_FASTA	general	
 flu_track	assembly_metrics_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
-flu_track	assembly_metrics_docker	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaCoV_FASTA	general	
-flu_track	assembly_metrics_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	docker	
+flu_track	assembly_metrics_docker	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23	Optional	TheiaCoV_FASTA	general	
+flu_track	assembly_metrics_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	docker	
 flu_track	assembly_metrics_memory	Int	Internal component, do not modify	8	Optional	TheiaCoV_FASTA	general	
 flu_track	assembly_metrics_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
 flu_track	flu_h1_ha_ref	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1_ha.fasta	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
@@ -1016,11 +1016,11 @@ ivar_consensus	read2	File	Internal component, do not modify		Optional	TheiaCoV_I
 ivar_consensus	skip_N	Boolean	True/False variable that determines if regions with depth less than minimum depth should not be added to the consensus sequence	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	general	
 ivar_consensus	stats_n_coverage_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	runtime	
 ivar_consensus	stats_n_coverage_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	runtime	
-ivar_consensus	stats_n_coverage_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	docker	
+ivar_consensus	stats_n_coverage_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	docker	
 ivar_consensus	stats_n_coverage_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	runtime	
 ivar_consensus	stats_n_coverage_primtrim_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	runtime	
 ivar_consensus	stats_n_coverage_primtrim_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	runtime	
-ivar_consensus	stats_n_coverage_primtrim_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	docker	
+ivar_consensus	stats_n_coverage_primtrim_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	docker	
 ivar_consensus	stats_n_coverage_primtrim_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	runtime	
 ivar_variants	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE	runtime	
 ivar_variants	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime	
@@ -1632,7 +1632,7 @@ morgana_magic	abricate_flu_min_percent_coverage	Int	Minimum DNA percent coverage
 morgana_magic	abricate_flu_min_percent_identity	Int	Minimum DNA percent identity	70	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 morgana_magic	assembly_metrics_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	assembly_metrics_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-morgana_magic	assembly_metrics_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
+morgana_magic	assembly_metrics_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 morgana_magic	assembly_metrics_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	flu_track_antiviral_aa_subs	String	Additional list of antiviral resistance associated amino acid substitutions of interest to be searched against those called on the sample segments. They take the format of :, e.g. NA:A26V		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 morgana_magic	gene_coverage_bam	File	Bam file used for calculating gene coverage		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
@@ -1950,7 +1950,7 @@ raw_check_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	
 raw_check_reads	workflow_series	String	Internal component, do not modify	theiaviral	Optional	TheiaEuk_ONT	general	
 read_mapping_stats	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 read_mapping_stats	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-read_mapping_stats	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
+read_mapping_stats	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 read_mapping_stats	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 read_mapping_stats	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general	
 read_QC_trim	adapters	File	File with adapter sequences to be removed		Optional	TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
@@ -2272,12 +2272,12 @@ sra_tsv_to_xml	docker	String	The Docker container to use for the task	us-docker.
 sra_tsv_to_xml	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Terra_2_NCBI	runtime	
 stats_n_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 stats_n_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
-stats_n_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	docker	
+stats_n_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	docker	
 stats_n_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 stats_n_coverage	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	general	
 stats_n_coverage_primtrim	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 stats_n_coverage_primtrim	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
-stats_n_coverage_primtrim	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	docker	
+stats_n_coverage_primtrim	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	docker	
 stats_n_coverage_primtrim	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 stats_n_coverage_primtrim	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	general	
 submit_ena_data	bam_column	String	Column name containing BAM file paths	bam_file	Optional	Terra_2_ENA	general	

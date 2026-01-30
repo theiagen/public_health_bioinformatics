@@ -312,8 +312,6 @@
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/clearlabs.pangolin_report.csv
       md5sum: 4c62c293db317fb887dd71983985af4d
-    - path: miniwdl_run/call-stats_n_coverage/command
-      md5sum: 57659076a1d0e807b508aacdd2e849c9
     - path: miniwdl_run/call-stats_n_coverage/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-stats_n_coverage/outputs.json
@@ -333,7 +331,7 @@
     - path: miniwdl_run/call-stats_n_coverage/work/MEANMAPQ
       md5sum: 43ab305877efbc03639d3a97adacff8c
     - path: miniwdl_run/call-stats_n_coverage/work/VERSION
-      md5sum: 53be85d2ed9fa57ab45424fe071a6672
+      md5sum: a7118c6ce7b1b2d078a90d50fdc03fb9
     - path: miniwdl_run/call-stats_n_coverage/work/_miniwdl_inputs/0/clearlabs.trimmed.rg.sorted.bam
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     - path: miniwdl_run/call-stats_n_coverage/work/clearlabs.cov.hist
@@ -342,10 +340,6 @@
       md5sum: 72596e3153e78a00e46533db3c1ed863
     - path: miniwdl_run/call-stats_n_coverage/work/clearlabs.flagstat.txt
       md5sum: e0b5f095ba646f1a697acd6d8ec5a54c
-    - path: miniwdl_run/call-stats_n_coverage/work/clearlabs.stats.txt
-      md5sum: bfed5344c91ce6f4db1f688cac0a3ab9
-    - path: miniwdl_run/call-stats_n_coverage_primtrim/command
-      md5sum: 91284f77c43f71227d1dde76bd244f5b
     - path: miniwdl_run/call-stats_n_coverage_primtrim/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-stats_n_coverage_primtrim/outputs.json
@@ -365,7 +359,7 @@
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/MEANMAPQ
       md5sum: 43ab305877efbc03639d3a97adacff8c
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/VERSION
-      md5sum: 53be85d2ed9fa57ab45424fe071a6672
+      md5sum: a7118c6ce7b1b2d078a90d50fdc03fb9
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/_miniwdl_inputs/0/clearlabs.primertrimmed.rg.sorted.bam
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/clearlabs.cov.hist
       md5sum: 9857b51b88673b8b17722f7673c08a24
@@ -373,8 +367,6 @@
       md5sum: 7939c5298ffba56c5898eec17e72b2a1
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/clearlabs.flagstat.txt
       md5sum: e0b5f095ba646f1a697acd6d8ec5a54c
-    - path: miniwdl_run/call-stats_n_coverage_primtrim/work/clearlabs.stats.txt
-      md5sum: 6ad40bcca227c92fdfec23fe9a03c344
     - path: miniwdl_run/call-morgana_magic/call-vadr/command
       md5sum: 6bf3fca92c94e677409dd4ecbf8bb0db
     - path: miniwdl_run/call-morgana_magic/call-vadr/inputs.json
