@@ -185,8 +185,6 @@
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/work/SRR13687078.primertrim.sorted.bam.bai
       md5sum: 6b42dab3ef4936d0ae34f03350e40f75
     # stats n coverage primer trim
-    - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/command
-      md5sum: c186595af740d2421dc01b08ea6d3089
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/outputs.json
@@ -211,9 +209,9 @@
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/SRR13687078.flagstat.txt
       md5sum: adca2828fb050a2aad75c030c1c12e5e
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/SRR13687078.stats.txt
-      md5sum: 26aa7728c15128d783db5a19cf0e975c
+      md5sum: 1115bc56bb25711658b73822b9cfb954
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/VERSION
-      md5sum: 53be85d2ed9fa57ab45424fe071a6672
+      md5sum: a7118c6ce7b1b2d078a90d50fdc03fb9
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/_miniwdl_inputs/0/SRR13687078.primertrim.sorted.bam
     # variant call
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/command
@@ -265,8 +263,6 @@
     - path: miniwdl_run/call-ivar_consensus/call-consensus/work/SRR13687078.ivar.consensus.fasta
       md5sum: 6c63395a125f8618334b8af2de4e2d88
     # stats n coverage
-    - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/command
-      md5sum: a767b03e6a4db16cbfd52d8f284f715b
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/outputs.json
@@ -290,10 +286,6 @@
       md5sum: 8a80c4caac36437d53153ee776aef30f
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/SRR13687078.flagstat.txt
       md5sum: 6ee6edfa11b24818f5c16f73b1dcf211
-    - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/SRR13687078.stats.txt
-      md5sum: bfe256ed556814b7aa29ecb23ad86632
-    - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/VERSION
-      md5sum: 53be85d2ed9fa57ab45424fe071a6672
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/_miniwdl_inputs/0/SRR13687078.sorted.aligned.bam
     # consensus qc
     - path: miniwdl_run/call-consensus_qc/command

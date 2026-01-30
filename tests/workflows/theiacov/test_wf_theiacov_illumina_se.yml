@@ -139,8 +139,6 @@
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/work/ERR6319327.primertrim.sorted.bam.bai
       md5sum: 39d434bb5c7b37db501cf8828644a45a
     # stats n coverage primer trim
-    - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/command
-      md5sum: 14bf52b8284f3260d112a6c8947e23f4
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/outputs.json
@@ -159,7 +157,7 @@
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/MEANMAPQ
       md5sum: ecf27a776cdfc771defab1c5d19de9ab
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/VERSION
-      md5sum: 53be85d2ed9fa57ab45424fe071a6672
+      md5sum: a7118c6ce7b1b2d078a90d50fdc03fb9
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/ERR6319327.cov.hist
       md5sum: fd940935d77c03ca847618f640d91ba7
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/ERR6319327.cov.txt
@@ -167,7 +165,7 @@
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/ERR6319327.flagstat.txt
       md5sum: 381332ecf3fb35300e74bda452016c27
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/ERR6319327.stats.txt
-      md5sum: 30880250632e237b82f91ea2ac44b1a6
+      md5sum: 7256451d66db43d41188b16280365a15
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/_miniwdl_inputs/0/ERR6319327.primertrim.sorted.bam
     # variant call
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/command
@@ -219,8 +217,6 @@
     - path: miniwdl_run/call-ivar_consensus/call-consensus/work/SAMTOOLS_VERSION
       md5sum: 03c5ecf22fdfdb6b240ac3880281a056
     # stats n coverage
-    - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/command
-      md5sum: 7026259b0472d69886712b23a700ea3a
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/outputs.json
@@ -241,13 +237,13 @@
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/ERR6319327.flagstat.txt
       md5sum: 5eba111bff16b151b9a498c1a539d14d
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/ERR6319327.stats.txt
-      md5sum: ac1d2535f218b3d2422c45f8359d16ab
+      md5sum: d2ffb480d2f2a49e034dfe4283ac3e50
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/MEANBASEQ
       md5sum: 88606514c85e100c88b651460a8a6ca9
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/MEANMAPQ
       md5sum: ecf27a776cdfc771defab1c5d19de9ab
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/VERSION
-      md5sum: 53be85d2ed9fa57ab45424fe071a6672
+      md5sum: a7118c6ce7b1b2d078a90d50fdc03fb9
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/_miniwdl_inputs/0/ERR6319327.sorted.aligned.bam
     # consensus qc
     - path: miniwdl_run/call-consensus_qc/command
