@@ -216,6 +216,7 @@ workflow merlin_magic {
     Int srst2_gene_max_mismatch = 2000
     # tbprofiler options
     String? tbprofiler_tbdb_branch
+    String? tbprofiler_tbdb_branch_commit_hash
     File? tbprofiler_custom_db
     Float? tbprofiler_min_af
     Int? tbprofiler_min_depth
@@ -491,6 +492,7 @@ workflow merlin_magic {
           min_af = tbprofiler_min_af,
           tbprofiler_custom_db = tbprofiler_custom_db,
           tbdb_branch = tbprofiler_tbdb_branch,
+          tbdb_branch_commit_hash = tbprofiler_tbdb_branch_commit_hash,
           docker = tbprofiler_docker_image
       }
       if (call_tbp_parser) {
