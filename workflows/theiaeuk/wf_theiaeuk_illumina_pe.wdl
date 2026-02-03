@@ -261,6 +261,7 @@ workflow theiaeuk_illumina_pe {
     File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
     String? assembler = digger_denovo.assembler_used
     String? assembler_version = digger_denovo.assembler_version
+    String? pilon_version = digger_denovo.pilon_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version

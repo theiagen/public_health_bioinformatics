@@ -153,6 +153,7 @@ workflow digger_denovo {
     File? filtered_contigs_metrics = filter_contigs.assembly_filtering_metrics
     File? pilon_changes = pilon.changes
     File? pilon_vcf = pilon.vcf
+    String? pilon_version = pilon.pilon_version
     String assembler_used = assembler
     String? assembler_version = select_first([spades.spades_version, megahit.megahit_version, skesa.skesa_version])
   }
