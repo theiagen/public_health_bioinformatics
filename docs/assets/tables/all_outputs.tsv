@@ -818,7 +818,7 @@ phylovalidate_tree1_clean	File	Cleaned version of the first phylogenetic tree	Ph
 phylovalidate_tree2_clean	File	Cleaned version of the second phylogenetic tree	PhyloCompare
 phylovalidate_version	String	Version of phylovalidate used	PhyloCompare
 pilon_docker	String	The Docker image for pilon	TheiaMeta_Illumina_PE
-pilon_version	String	The version of pilon	TheiaMeta_Illumina_PE
+pilon_version	String	The version of pilon	TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 pirate_core_alignment_fasta	File	Nucleotide alignments of the core genes as created using MAFFT within Pirate. Loci are ordered according to the gene_families.ordered file.	Core_Gene_SNP
 pirate_core_alignment_gff	File	Annotation data for the gene family within the corresponding fasta file	Core_Gene_SNP
 pirate_core_snp_matrix	File	SNP distance matrix created from the core gene alignment	Core_Gene_SNP
