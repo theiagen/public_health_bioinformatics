@@ -36,7 +36,7 @@ task amr_search {
     grep "Resistant" "~{samplename}_amr_results.csv" | awk -F ',' '{print $3}' | tr ';' '\n' | sed 's/ //g' | sort -u | paste -sd ',' -  > RESISTANCES
 
     # Paired resistances with agent
-    grep "Resistant" "~{samplename}_amr_results.csv" | awk -F ',' '{print $1","$3}' | paste -sd "; " - | sed 's/,/: /g' | sed 's/; /,/g' | sed 's/;/; /g' > ASSOCIATED_RESISTANCES
+    grep "Resistant" "~{samplename}_amr_results.csv" | awk -F ',' '{print $1","$3}' | paste -sd ";" - | sed 's/,/: /g' | sed 's/; /,/g' | sed 's/;/; /g' > ASSOCIATED_RESISTANCES
 
     if [[ ! -s RESISTANCES || "$(cat RESISTANCES)" == "none" ]]; then
       echo "No resistances reported" > RESISTANCES
