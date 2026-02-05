@@ -1510,8 +1510,8 @@ merlin_magic	stxtyper_cpu	Int	Internal component, do not modify	1	Optional	Theia
 merlin_magic	stxtyper_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 merlin_magic	stxtyper_disk_size	Int	Internal component, do not modify	50	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	stxtyper_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-merlin_magic	stxtyper_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.42	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	stxtyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.42	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
+merlin_magic	stxtyper_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.45	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	stxtyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.45	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	stxtyper_enable_debug	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	stxtyper_enable_debug	Boolean	When enabled, additional messages are printed and files in $TMPDIR are not removed after running	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	stxtyper_memory	Int	Internal component, do not modify	4	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
