@@ -32,11 +32,12 @@ task amr_search {
     # Fix carriage return characters
     sed -i 's/\r$//' "~{samplename}_amr_results.csv"
 
-    # Pull all resistances
-    grep "Resistant" "~{samplename}_amr_results.csv" | awk -F ',' '{print $3}' | tr ';' '\n' | sed 's/ //g' | sort -u | paste -sd ',' -  > RESISTANCES
+    # Pull all resistances and place them into comma separated string similar to AMRFinder
+    awk -F ',' '/Resistant/ {gsub(/; /, "\n", $3); print $3}' "~{samplename}_amr_results.csv" | sort -u | paste -sd ',' -  > RESISTANCES
 
     # Paired resistances with agent
-    grep "Resistant" "~{samplename}_amr_results.csv" | awk -F ',' '{print $1","$3}' | paste -sd ";" - | sed 's/,/: /g' | sed 's/; /,/g' | sed 's/;/; /g' > ASSOCIATED_RESISTANCES
+    # Place into Agent_1: gene/mutation, gene/mutation; Agent_2: gene/mutation, gene/mutation; format
+    awk -F ',' '/Resistant/ {gsub("; ", ", ", $3); printf "%s: %s; ", $1, $3}' "~{samplename}_amr_results.csv" | sed 's/; $//' > ASSOCIATED_RESISTANCES
 
     if [[ ! -s RESISTANCES || "$(cat RESISTANCES)" == "none" ]]; then
       echo "No resistances reported" > RESISTANCES
