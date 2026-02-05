@@ -28,12 +28,30 @@ task amr_search {
     python3 /scripts/parse_amr_json.py \
         ./~{samplename}_paarsnp_results.jsn \
         ~{samplename}
+    
+    # Fix carriage return characters
+    sed -i 's/\r$//' "~{samplename}_amr_results.csv"
+
+    # Pull all resistances and place them into comma separated string similar to AMRFinder
+    awk -F ',' '/Resistant/ {gsub(/; /, "\n", $3); print $3}' "~{samplename}_amr_results.csv" | sort -u | paste -sd ',' -  > RESISTANCES
+
+    # Paired resistances with agent
+    # Place into Agent_1: gene/mutation, gene/mutation; Agent_2: gene/mutation, gene/mutation; format
+    awk -F ',' '/Resistant/ {gsub("; ", ", ", $3); printf "%s: %s; ", $1, $3}' "~{samplename}_amr_results.csv" | sed 's/; $//' > ASSOCIATED_RESISTANCES
+
+    if [[ ! -s RESISTANCES || "$(cat RESISTANCES)" == "none" ]]; then
+      echo "No resistances reported" > RESISTANCES
+      echo "No resistances reported" > ASSOCIATED_RESISTANCES
+    fi
+
   >>>
   output {
     File amr_search_json_output = "~{samplename}_paarsnp_results.jsn"
     File amr_search_output_csv = "~{samplename}_amr_results.csv"
     File amr_search_output_pdf = "~{samplename}_amr_results.pdf"
     String amr_search_version = read_string("output_amr_version.txt")
+    String amr_search_all_resistances = read_string("RESISTANCES")
+    String amr_search_associated_resistances = read_string("ASSOCIATED_RESISTANCES")
     String amr_search_docker_image = docker
   }
 
