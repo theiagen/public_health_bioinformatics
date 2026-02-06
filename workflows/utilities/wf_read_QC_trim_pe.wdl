@@ -213,7 +213,7 @@ workflow read_QC_trim_pe {
     File? fastqc_clean1_html = fastqc_clean.read1_fastqc_html
     File? fastqc_clean2_html = fastqc_clean.read2_fastqc_html
     # kraken2 - theiacov, theiaprok
-    String kraken_version = select_first([kraken2_theiacov_raw.version, kraken2_standalone_theiaprok.kraken2_version, ""])
+    String kraken_version = select_first([kraken2_theiacov_raw.kraken2_version, kraken2_standalone_theiaprok.kraken2_version, ""])
     Float? kraken_human =  kraken2_theiacov_raw.percent_human
     String? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
     String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
