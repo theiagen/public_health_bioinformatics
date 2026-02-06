@@ -23,7 +23,7 @@ workflow metabuli_wf {
   }
   call krona_task.krona as krona {
     input:
-      metabuli_report = metabuli.metabuli_report,
+      kraken2_report = metabuli.metabuli_report,
       samplename = samplename
   }
   call versioning.version_capture {
