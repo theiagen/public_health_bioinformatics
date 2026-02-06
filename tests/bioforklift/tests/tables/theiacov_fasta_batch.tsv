@@ -1,0 +1,9 @@
+entity:theiacov_fasta_batch_id	assembly_fasta	organism_input
+sample01	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiacov/sars-cov-2/assemblies/Sample_01.medaka.consensus.fasta	sars-cov-2
+sample02	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiacov/sars-cov-2/assemblies/Sample_02.medaka.consensus.fasta	sars-cov-2
+sample03	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiacov/sars-cov-2/assemblies/Sample_03.medaka.consensus.fasta	sars-cov-2
+sample04	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiacov/sars-cov-2/assemblies/Sample_04.medaka.consensus.fasta	sars-cov-2
+sample05	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiacov/sars-cov-2/assemblies/Sample_05.medaka.consensus.fasta	sars-cov-2
+sample06	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiacov/sars-cov-2/assemblies/Sample_06.medaka.consensus.fasta	sars-cov-2
+sample07	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiacov/sars-cov-2/assemblies/Sample_07.medaka.consensus.fasta	sars-cov-2
+sample08	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiacov/sars-cov-2/assemblies/Sample_08.medaka.consensus.fasta	sars-cov-2
