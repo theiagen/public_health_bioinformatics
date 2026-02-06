@@ -11,12 +11,13 @@ task irma {
     Int minimum_read_length = 75 # matching default for TheiaCoV_Illumina_PE; NOTE: IRMA's default is 125 bp
     Int minimum_average_consensus_allele_quality = 10 # IRMA default is 0, we are matching MIRA standards for both ONT and ILMN: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
     Float minimum_ambiguous_threshold = 0.25 # MIRA default is 0.25 despite documentation saying .2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/irma:1.3.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/irma:1.3.1-dev"
     Int memory = 16
     Int cpu = 4
     Int disk_size = 100
   }
   command <<<
+
     # capture irma vesion
     IRMA | head -n1 | awk -F' ' '{ print "IRMA " $5 }' | tee VERSION
 
@@ -24,42 +25,33 @@ task irma {
     set -euo pipefail
 
     ### IRMA configuration ###
-    # CPU config
-    num_cpus_actual=$(nproc)
-    echo "DEBUG: Number of CPUs available: ${num_cpus_actual}. Setting this in irma_config.sh file..."
-    echo "SINGLE_LOCAL_PROC=${num_cpus_actual}" > irma_config.sh
-    # set this variable to half the value of num_cpus_actual, as per the IRMA documentation: https://wonder.cdc.gov/amd/flu/irma/configuration.html
-    echo "DOUBLE_LOCAL_PROC=$((${num_cpus_actual}/2))" >> irma_config.sh
-
-    # any base with less than the minimum support depth will be called N
-    echo "MIN_CONS_SUPPORT=~{minimum_consensus_support}" >> irma_config.sh
-    # any base with less than the minimum quality will be called N
-    echo "MIN_CONS_QUALITY=~{minimum_average_consensus_allele_quality}" >> irma_config.sh
-
-    # minimum called SNV frequency for mixed base calls in amended consensus
-    echo "MIN_AMBIG=~{minimum_ambiguous_threshold}" >> irma_config.sh
-
-    # this is done so that IRMA used PWD as the TMP directory instead of /tmp/root that it tries by default; cromwell doesn't allocate much disk space here (64MB or some small amount)
-    echo "DEBUG: creating an optional IRMA configuration file to set TMP directory to $(pwd)"
-    echo "TMP=$(pwd)" >> irma_config.sh
-
+  
     # set how to handle deletions
     if ~{keep_ref_deletions}; then 
-      echo 'DEL_TYPE="NNN"' >> irma_config.sh
-      echo 'ALIGN_PROG="BLAT"' >> irma_config.sh
+      export DEL_TYPE="NNN"
     else # default in WDL and IRMA
       # IRMA docs state: If sites are completely missing during read gathering use the reference seed (REF), delete by ambiguation (NNN), or just remove (DEL)
-      echo 'DEL_TYPE="DEL"' >> irma_config.sh
-      echo 'ALIGN_PROG="BLAT"' >> irma_config.sh
+      export DEL_TYPE="DEL"
     fi
 
-    # set the minimum read length; matching default for TheiaCoV_Illumina_PE which is 75 bp
-    echo 'MIN_LEN=~{minimum_read_length}' >> irma_config.sh
-
-    echo "DEBUG: Custom irma_config.sh file contents:"
-    cat irma_config.sh
-    echo "DEBUG: End of custom irma_config.sh file contents"
-    ### END IRMA CONFIG ###
+    python3 <<CODE
+    import os 
+    # CPU config
+    num_cpus_actual = os.cpu_count()
+    del_type = os.environ.get("DEL_TYPE")
+    with open("irma_config.sh", "w") as conf_file:
+      lines = [f"SINGLE_LOCAL_PROC={num_cpus_actual}\n",
+              f"DOUBLE_LOCAL_PROC={num_cpus_actual // 2}\n",
+              "MIN_CONS_SUPPORT=~{minimum_consensus_support}\n",
+              "MIN_CONS_QUALITY=~{minimum_average_consensus_allele_quality}\n",
+              "MIN_AMBIG=~{minimum_ambiguous_threshold}\n",
+              "TMP=$(pwd)\n",
+              f"DEL_TYPE='{del_type}'\n",
+              "ALIGN_PROG='BLAT'\n",
+              "MIN_LEN=~{minimum_read_length}"]
+      conf_file.writelines(lines)
+      conf_file.close()
+    CODE
 
     # run IRMA
     # set IRMA module depending on sequencing technology
@@ -70,338 +62,45 @@ task irma {
       IRMA "FLU" "~{read1}" "~{read2}" ~{samplename} --external-config irma_config.sh
     fi
 
-    # capture IRMA type
     if compgen -G "~{samplename}/*fasta"; then
       # capture some IRMA log & config files; rename to use .tsv suffix instead of .txt
       mv -v ~{samplename}/tables/READ_COUNTS.txt ~{samplename}/tables/READ_COUNTS.tsv
       mv -v ~{samplename}/logs/run_info.txt ~{samplename}/logs/run_info.tsv
 
       # look at list of files that match the above pattern, grab the first one, and extract the type from the filename. We expect: ~{samplename}/B_HA.fasta
-      echo "Type_"$(basename "$(echo "$(find ~{samplename}/*.fasta | head -n1)")" | cut -d_ -f1) > IRMA_TYPE
-      # set irma_type bash variable which is used later
-      irma_type=$(cat IRMA_TYPE)
-      
-      # flu segments from largest to smallest
-      # Thank you Molly H. for this code block!
-      # declare associative arrays for segment numbers
-      declare -A FluA=(["PB2"]="1" ["PB1"]="2" ["PA"]="3" ["HA"]="4" ["NP"]="5" ["NA"]="6" ["MP"]="7" ["NS"]="8" )
-      declare -A FluB=(["PB1"]="1" ["PB2"]="2" ["PA"]="3" ["HA"]="4" ["NP"]="5" ["NA"]="6" ["MP"]="7" ["NS"]="8" )
-      # create new array SEGMENT_DICT based on Flu Type (either A or B) to use in the loop below
-      if [[ "${irma_type}" == "Type_A" ]]; then
-        echo "DEBUG: IRMA type is A. Using FluA array for segment order...."
-        declare -A SEGMENT_DICT
-        for key in "${!FluA[@]}"; do
-          SEGMENT_DICT["$key"]="${FluA["$key"]}"
+      irma_type="$(find ~{samplename}/*.fasta -type f | head -n1 | xargs -n1 basename | cut -d_ -f1)"
+      echo "Type_$irma_type" > IRMA_TYPE
+
+      # Helper script to handle the creation of QC summary, renaming and creation of secondary FASTA files, and acquisition of subtype
+      python3 /scripts/irma_helper.py -d ~{samplename} -t "${irma_type}" -s ~{samplename} -v
+
+      # rename IRMA outputs to include samplename. Example: "B_HA.fasta" -> "sample0001_HA.fasta"
+      echo "DEBUG: Renaming IRMA output VCFs, FASTAs, and BAMs to include samplename...."
+      for irma_out in ~{samplename}/*{.vcf,.fasta,.bam}; do
+        new_name="~{samplename}_"$(basename "${irma_out}" | cut -d "_" -f2- )
+        mv -v "${irma_out}" "${new_name}"
+      done
+
+      if ls "~{samplename}"_HA?*.bam 1> /dev/null 2>&1; then
+        echo "DEBUG: Renaming HA BAM files...."
+        for file in "~{samplename}"_HA?*.bam; do
+          mv -v "$file" "${file%_HA*.bam}_HA.bam"
         done
-      elif [[ "${irma_type}" == "Type_B" ]]; then
-        echo "DEBUG: IRMA type is B. Using FluB array for segment order...."
-        declare -A SEGMENT_DICT
-        for key in "${!FluB[@]}"; do
-          SEGMENT_DICT["$key"]="${FluB["$key"]}"
+      fi
+      if ls "~{samplename}"_NA?*.bam 1> /dev/null 2>&1; then
+        echo "DEBUG: Renaming NA BAM files...."
+        for file in "~{samplename}"_NA?*.bam; do
+          mv -v "$file" "${file%_NA*.bam}_NA.bam"
         done
       fi
 
-      # for use in below code block as well as at the end for storing padded FASTA files
-      # we are keeping this dir OUTSIDE of the IRMA output dir "~{samplename}" so that we can differentiate these files (manually created by task) from the IRMA output files
-      mkdir padded_assemblies/
-
-      echo "DEBUG: creating IRMA FASTA file containing all segments in order (largest to smallest)...."
-      ### concatenate files in the order of the FluA or FluB segments array ###
-      # for each segment number in the SEGMENT_DICT array (sorted by order in FluA/FluB arrays), find the file that contains the segment number in the filename
-      for SEGMENT_NUM in $(echo "${SEGMENT_DICT[@]}" | tr ' ' '\n'| sort); do
-        segment_file=$(find "~{samplename}/amended_consensus" -name "*_${SEGMENT_NUM}.fa")
-        echo "DEBUG: segment_file is set to: $segment_file"
-        # if the segment file exists, rename it and added to the final multi FASTA file "~{samplename}.irma.consensus.fasta"
-        if [ -n "$segment_file" ]; then
-          # craziness so we can use the segment number to get the segment string
-          for SEGMENT_STR in "${!SEGMENT_DICT[@]}"; do
-            if [[ ${SEGMENT_DICT[$SEGMENT_STR]} == "$SEGMENT_NUM" ]]; then
-              echo "DEBUG: File containing ${SEGMENT_STR} found. Now adjusting FASTA header & renaming FASTA file to include segment abbreviation ${SEGMENT_STR}...."
-              sed -i "1s|[0-9]$|${SEGMENT_STR}|" "${segment_file}"
-
-              # final filename should be: ~{samplename}/amended_consensus/~{samplename}_HA.fasta
-              mv -v "${segment_file}" "~{samplename}/amended_consensus/~{samplename}_${SEGMENT_STR}.fasta"
-              # reassign segment_file bash variable to the new filename
-              segment_file="~{samplename}/amended_consensus/~{samplename}_${SEGMENT_STR}.fasta"
-            fi
-          done
-
-          echo "DEBUG: Adding ${segment_file} to consensus FASTA"
-          cat "${segment_file}" >> ~{samplename}/amended_consensus/~{samplename}.irma.consensus.fasta
-        else
-          echo "WARNING: No file containing segment number ${SEGMENT_NUM} found for ~{samplename}"
-        fi
-      done
-      
-      echo "DEBUG: creating a smushed and hacky concatenated copy of the IRMA FASTA file..."
-      # remove all newlines from the FASTA file to create a single line FASTA file and remove all headers and create a new headerline
-      grep -v "^>" ~{samplename}/amended_consensus/~{samplename}.irma.consensus.fasta | tr -d '\n' | sed '1i >~{samplename}_irma_concatenated' > ~{samplename}/amended_consensus/~{samplename}.irma.consensus.concatenated.fasta
-      # really hacky way to add an EOF newline but i couldn't be bothered to figure out a better way atm  
-      echo "" >> ~{samplename}/amended_consensus/~{samplename}.irma.consensus.concatenated.fasta
-
-      echo "DEBUG: creating copy of consensus FASTA with periods replaced by Ns...."
-      # use sed to create copy of FASTA file where periods are replaced by Ns, except in the FASTA header lines that begin with '>'
-      sed '/^>/! s/\./N/g' ~{samplename}/amended_consensus/~{samplename}.irma.consensus.fasta > padded_assemblies/~{samplename}.irma.consensus.pad.fasta
     else
       echo "No IRMA assembly generated for flu type prediction" | tee IRMA_TYPE
-      echo "No subtype predicted by IRMA" | tee IRMA_SUBTYPE
-      echo "No subtype notes" | tee IRMA_SUBTYPE_NOTES
+      echo "No subtype predicted by IRMA" > IRMA_SUBTYPE.txt
+      echo "No subtype notes" > IRMA_SUBTYPE_NOTES.txt
       echo "Exiting IRMA task early since no IRMA assembly was generated."
       exit 0
     fi
-
-    # rename IRMA outputs to include samplename. Example: "B_HA.fasta" -> "sample0001_HA.fasta"
-    echo "DEBUG: Renaming IRMA output VCFs, FASTAs, and BAMs to include samplename...."
-    for irma_out in ~{samplename}/*{.vcf,.fasta,.bam}; do
-      new_name="~{samplename}_"$(basename "${irma_out}" | cut -d "_" -f2- )
-      mv -v "${irma_out}" "${new_name}"
-    done
-    
-    # initialize subtype variable as blank so we can check if it's empty later (for Flu B samples)
-    subtype=""
-
-    # capture type A subtype
-    if compgen -G "~{samplename}_HA*.fasta"; then # check if HA segment exists
-      # NOTE: this if block does not get triggered for Flu B samples, because they do not include a subtype in FASTA filename for HA or NA segment
-      if [[ "$(ls ~{samplename}_HA*.fasta)" == *"HA_H"* ]]; then # if so, grab H-type if one is identified in assembly header
-        subtype="$(basename ~{samplename}_HA*.fasta | awk -F _ '{print $NF}' | cut -d. -f1)" # grab H-type from last value in under-score-delimited filename
-        # rename HA FASTA file to not include subtype in filename
-        echo "DEBUG: renaming HA FASTA file to not include subtype in filename...."
-        mv -v ~{samplename}_HA*.fasta ~{samplename}_HA.fasta
-      fi
-      echo "DEBUG: Running sed to change HA segment FASTA header now..."
-      # format HA segment to target output name and rename header to include the samplename. Example FASTA header change: ">B_HA" -> ">sample0001_B_HA"
-      sed -i "1s/>/>~{samplename}_/" "~{samplename}_HA.fasta"
-    fi
-
-    # if there is a file that matches the pattern AND the file contains an N-type in the header, grab the N-type
-    # NOTE: this does not get triggered for Flu B samples, because they do not include a subtype in FASTA filename for HA or NA segment
-    if compgen -G "~{samplename}_NA*.fasta" && [[ "$(ls ~{samplename}_NA*.fasta)" == *"NA_N"* ]]; then # check if NA segment exists with an N-type identified in header
-      subtype+="$(basename ~{samplename}_NA*.fasta | awk -F _ '{print $NF}' | cut -d. -f1)" # grab N-type from last value in under-score-delimited filename
-      echo "DEBUG: subtype is set to: ${subtype}"
-      # rename NA FASTA file to not include subtype in filename
-      echo "DEBUG: renaming NA FASTA file to not include subtype in filename...."
-      mv -v ~{samplename}_NA*.fasta ~{samplename}_NA.fasta
-
-      echo "DEBUG: Running sed to change NA FASTA header now..."
-      # format NA segment to target output name and rename header to include the samplename
-      sed -i "1s/>/>~{samplename}_/" "~{samplename}_NA.fasta"
-    fi
-
-    # if bash variable "subtype" is not empty, write it to a file; 
-    # otherwise, write a message indicating no subtype was predicted
-    if [ -n "${subtype}" ]; then 
-      echo "${subtype}" | tee IRMA_SUBTYPE
-    else
-      echo "No subtype predicted by IRMA" | tee IRMA_SUBTYPE
-    fi
-
-    # if "subtype" is "Type_B" then write a note indicating that IRMA does not differentiate between Victoria and Yamagata lineages
-    if [[ "${irma_type}" == "Type_B" ]]; then
-      echo "IRMA does not differentiate Victoria and Yamagata Flu B lineages. See abricate_flu_subtype output column" | tee IRMA_SUBTYPE_NOTES
-    else
-      # create empty file
-      touch IRMA_SUBTYPE_NOTES
-    fi
-
-    if ls "~{samplename}"_HA?*.bam 1> /dev/null 2>&1; then
-      echo "DEBUG: Renaming HA BAM files...."
-      for file in "~{samplename}"_HA?*.bam; do
-        mv -v "$file" "${file%_HA*.bam}_HA.bam"
-      done
-    fi
-    if ls "~{samplename}"_NA?*.bam 1> /dev/null 2>&1; then
-      echo "DEBUG: Renaming NA BAM files...."
-      for file in "~{samplename}"_NA?*.bam; do
-        mv -v "$file" "${file%_NA*.bam}_NA.bam"
-      done
-    fi
-    
-    echo "DEBUG: Creating padded FASTA files for each individual segment FASTA, the multi-FASTA, and the concatenated all-segment FASTA...."
-    # this loop looks in the PWD for files ending in .fasta, and creates a copy of the file with periods replaced by Ns and dashes are deleted (since they represent gaps)
-    for FASTA in ~{samplename}/amended_consensus/*.fasta; do
-      # if the renamed file ends in .fasta; then create copy of the file with periods replaced by Ns and dashes removed in all lines except FASTA headers that begin with '>'
-      echo "DEBUG: creating padded FASTA file for ${FASTA}"
-      BASENAME=$(basename "${FASTA}")
-      sed '/^>/! s/\./N/g' "${FASTA}" > "padded_assemblies/${BASENAME%.fasta}.temp.fasta"
-      sed '/^>/! s/-//g' "padded_assemblies/${BASENAME%.fasta}.temp.fasta" > "padded_assemblies/${BASENAME%.fasta}.pad.fasta"
-      # clean up temporary FASTA files
-      rm "padded_assemblies/${BASENAME%.fasta}.temp.fasta"
-    done
-
-    # create MIRA-like QC summary TSV file (with header line)
-    # many of these reported columns are based on code from MIRA-NF and are referenced below
-    echo -e "Sample\tTotal Reads\tPass QC\tReads Mapped\tReference\t% Reference Covered\tMedian Coverage\tMean Coverage\tCount of Minor SNVs (AF >= 0.05)\tCount of Minor Insertions (AF >= 0.05)\tCount of Minor Deletions (AF >= 0.05)" > "~{samplename}/~{samplename}_irma_qc_summary.tsv"
-
-    # loop through segments in SEGMENT_DICT to find variant/coverage files and append QC summary info to TSV file
-    for SEGMENT_STR in "${!SEGMENT_DICT[@]}"; do
-
-      # find reference file used for segment, and get length of reference sequence
-      # see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/irma2pandas.py#L266
-      segment_ref_file=$(find "~{samplename}/intermediate/0-ITERATIVE-REFERENCES" -name "R0*_${SEGMENT_STR}*.ref")
-      if [ -n "$segment_ref_file" ]; then
-        echo "DEBUG: segment_reference_file is set to: $segment_ref_file"
-        echo "DEBUG: Getting length of reference sequence for segment ${SEGMENT_STR} for ~{samplename}...."
-        # get length of reference sequence, ignoring header line, assuming single-line FASTA.
-        segment_ref_len=$(awk '/^[^>]/ {print length($0)}' "$segment_ref_file")
-      else
-        echo "WARNING: No reference file found for segment ${SEGMENT_STR} for ~{samplename}"
-        segment_ref_len="N/A"
-      fi
-
-      # set the reference segment column to report the SEGMENT_STR by default
-      # this may be updated below to include the subtype if we can find the full reference name from READ_COUNTS.tsv
-      segment_ref_name="${SEGMENT_STR}"
-
-      # find total number reads, count of reads that passed IRMA QC, and reads mapped to reference segment
-      # see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/irma2pandas.py#L99
-      # see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/prepareIRMAjson.py#L310
-      read_counts_file="~{samplename}/tables/READ_COUNTS.tsv"
-      echo "DEBUG: read_counts_file is set to: $read_counts_file"
-      echo "DEBUG: Parsing READ_COUNTS.tsv file for segment ${SEGMENT_STR} for ~{samplename}...."
-      if [ -f "$read_counts_file" ]; then
-        total_reads=$(grep "1-initial" "$read_counts_file" | awk -F'\t' '{print $2}')
-        pass_qc_reads=$(grep "2-passQC" "$read_counts_file" | awk -F'\t' '{print $2}')
-        segment_mapped_reads=$(sed -n "/^4-.*${SEGMENT_STR}.*/p" "$read_counts_file" | awk -F'\t' '{print $2}')
-        # update segment_mapped_reads to 0 if segment is not listed in READ_COUNTS.tsv (no reads mapped)
-        if [ -z "$segment_mapped_reads" ]; then
-          segment_mapped_reads=0
-        fi
-        # update segment_ref_name to include subtype if file is found
-        mapped_ref_name=$(sed -n "/^4-.*${SEGMENT_STR}.*/p" "$read_counts_file" | awk -F'\t' '{print $1}' | cut -d'_' -f2-)
-        if [ -n "$mapped_ref_name" ]; then
-          segment_ref_name="${mapped_ref_name}"
-        fi
-      else
-        echo "WARNING: READ_COUNTS.tsv file not found for ~{samplename}. Cannot extract read counts for QC summary."
-        total_reads="N/A"
-        pass_qc_reads="N/A"
-        segment_mapped_reads="N/A"
-      fi
-
-      # find and parse coverage statistics file for each segment to get percent reference covered, mean coverage, and median coverage
-      # currently there is no option to do global alignment of the plurality consensus to the HMM profile. so use the standard coverage stats file.
-      # see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/irma2pandas.py#L147
-      segment_coverage_file=$(find "~{samplename}/tables" -name "*_${SEGMENT_STR}*-coverage.txt")
-      if [ -n "$segment_coverage_file" ]; then
-        echo "DEBUG: segment_coverage_file is set to: $segment_coverage_file"
-        # calculate percent reference covered. make sure segment_ref_len is not N/A or zero to avoid division by zero
-        # see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/prepareIRMAjson.py#L355
-        if [ "$segment_ref_len" != "N/A" ] && [ "$segment_ref_len" -gt 0 ]; then
-          echo "DEBUG: Calculating percent reference coverage statistics for segment ${SEGMENT_STR} for ~{samplename}...."
-          # count mapped bases found in the 4th column (excluding "-", "N", "a", "c", "t", "g") and divide by reference length.
-          segment_pct_ref_cov=$(
-            awk -F'\t' -v ref_len="$segment_ref_len" '
-              NR > 1 {
-                base = $4
-                if (base != "-" && base != "N" && base != "a" && base != "c" && base != "t" && base != "g")
-                  mapped_bases++
-              }
-              END {
-                pct_ref_cov = (mapped_bases / ref_len) * 100
-                printf "%.2f\n", pct_ref_cov
-              }
-            ' "$segment_coverage_file"
-          )
-        else
-          echo "WARNING: segment_ref_len is N/A or zero. Cannot calculate percent reference covered."
-          segment_pct_ref_cov="N/A"
-        fi
-        # calculate mean coverage depth (this is not in MIRA-NF but we are adding it here)
-        # get sum of coverage depth column (3rd column) and divide by number of records (NR) minus 1 to exclude header line
-        # the total number of records (excluding header) is equal to the total length of the segment
-        echo "DEBUG: Calculating mean coverage depth for segment ${SEGMENT_STR} for ~{samplename}...."
-        segment_mean_cov=$(
-          awk -F'\t' '
-            NR > 1 {
-              total_cov_depth += $3
-            }
-            END {
-              n = NR - 1                      # number of data rows (subtracting 1 to exclude header)
-              avg_cov = total_cov_depth / n   # calculate mean coverage
-              printf "%.2f\n", avg_cov
-            }
-          ' "${segment_coverage_file}"
-        )
-        # calculate median coverage depth
-        # see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/prepareIRMAjson.py#L387
-        # numerically sort the coverage file by the coverage depth column (3rd column) and exclude the header line
-        # then create an array of coverage depths and calculate the median value
-        echo "DEBUG: Calculating median coverage depth for segment ${SEGMENT_STR} for ~{samplename}...."
-        segment_median_cov=$(
-          awk -F'\t' 'NR > 1 {print $3}' "${segment_coverage_file}" | sort -n |
-          awk -F'\t' '
-            {
-              cov_depth_array[NR] = $1        # store coverage depths in an (1-based) array 
-            }
-            END {
-              n = NR                          # number of data rows (header was excluded during sort)
-              if (n % 2 == 1) {               # calculate median coverage for odd and even number of elements
-                median_cov = cov_depth_array[(n + 1) / 2]
-              }
-              else {
-                median_cov = (cov_depth_array[n / 2] + cov_depth_array[n / 2 + 1]) / 2
-              }
-              printf "%.2f\n", median_cov
-            }
-          '
-        )
-      else
-        echo "WARNING: segment_coverage_file is not set. Cannot calculate coverage statistics for segment ${SEGMENT_STR} for ~{samplename}."
-        segment_pct_ref_cov="N/A"
-        segment_mean_cov="N/A"
-        segment_median_cov="N/A"
-      fi
-
-      # identify and count minor variants (AF >= 0.05) for each segment and create concatenated output files of all SNVs and Indels      #
-      # SNVs:
-      #     - listed in "*-variants.txt"
-      #     - see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/irma2pandas.py#L160
-      #     - see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/prepareIRMAjson.py#L341
-      # INDELS:
-      #     - listed in "*-insertions.txt" and "*-deletions.txt"
-      #     -see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/irma2pandas.py#L210
-      #     -see https://github.com/CDCgov/MIRA-NF/blob/b337abfb5704f84b8a53e84e6eb0f672f9516dec/bin/prepareIRMAjson.py#L334
-      #
-      var_types=("variants" "insertions" "deletions")
-      for var_type in "${var_types[@]}"; do
-        segment_variant_file=$(find "~{samplename}/tables" -name "*_${SEGMENT_STR}*-${var_type}.txt")
-        if [ -n "$segment_variant_file" ]; then
-          echo "DEBUG: segment_variant_file is set to: $segment_variant_file"
-          echo "DEBUG: Counting minor ${var_type} (AF >= 0.05) for segment ${SEGMENT_STR} for ~{samplename}...."
-          # SNVs are found in the *-variants.txt file and the frequency can be found in the 9th column
-          # Indels are found in the *-insertions.txt and *-deletions.txt files and the frequency can be found in the 8th column
-          if [[ "$var_type" == "variants" ]]; then
-            freq_col=9
-          else
-            freq_col=8
-          fi
-          # count number of minor snvs/indels (AF >= 0.05)
-          var_count=$(
-            awk -F'\t' -v freq_col="$freq_col" 'NR > 1 {freq = $freq_col; if (freq >= 0.05) minor_var++} END {print minor_var+0}' "$segment_variant_file"
-          )
-          # create concatenated output file of all snvs/indels with header if it doesn't already exist
-          if [[ ! -f "~{samplename}/tables/~{samplename}_irma_all_${var_type}.tsv" ]]; then
-            awk -F'\t' 'NR==1 {print}' "$segment_variant_file" > "~{samplename}/tables/~{samplename}_irma_all_${var_type}.tsv"
-          fi
-          # append rows of snvs/indels for each segment to concatenated output file
-          awk -F'\t' 'NR > 1 {print}' "$segment_variant_file" >> "~{samplename}/tables/~{samplename}_irma_all_${var_type}.tsv"
-        else
-          echo "WARNING: No ${var_type} file found for segment ${SEGMENT_STR} for ~{samplename}"
-          var_count="N/A"
-        fi
-        # report the total number of minor snvs/indels for each segment, or report "N/A" if variant file was not found
-        if [[ "$var_type" == "variants" ]]; then
-          segment_minor_snv="$var_count"
-        elif [[ "$var_type" == "insertions" ]]; then
-          segment_minor_insertions="$var_count"
-        elif [[ "$var_type" == "deletions" ]]; then
-          segment_minor_deletions="$var_count"
-        fi
-      done
-      # append all QC summary info for segment to TSV file
-      echo -e "~{samplename}\t${total_reads}\t${pass_qc_reads}\t${segment_mapped_reads}\t${segment_ref_name}\t${segment_pct_ref_cov}\t${segment_median_cov}\t${segment_mean_cov}\t${segment_minor_snv}\t${segment_minor_insertions}\t${segment_minor_deletions}" >> "~{samplename}/~{samplename}_irma_qc_summary.tsv"
-    done
 
     # if reads.tar.gz is present, decompress reads.tar.gz, concatenate, and gzip into single file.
     if [ -s "~{samplename}/intermediate/4-ASSEMBLE_SSW/reads.tar.gz" ]; then
@@ -443,8 +142,8 @@ task irma {
     File? irma_all_deletions_tsv = "~{samplename}/tables/~{samplename}_irma_all_deletions.tsv"
 
     String irma_type = read_string("IRMA_TYPE")
-    String irma_subtype = read_string("IRMA_SUBTYPE")
-    String irma_subtype_notes = read_string("IRMA_SUBTYPE_NOTES")
+    String irma_subtype = read_string("IRMA_SUBTYPE.txt")
+    String irma_subtype_notes = read_string("IRMA_SUBTYPE_NOTES.txt")
     Array[File] irma_plurality_consensus_assemblies = glob("~{samplename}*.fasta")
     Array[File] irma_vcfs = glob("~{samplename}*.vcf")
     Array[File] irma_bams = glob("~{samplename}*.bam")
