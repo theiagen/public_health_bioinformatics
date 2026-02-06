@@ -156,29 +156,31 @@ workflow theiaeuk_illumina_pe {
             qc_check_table = qc_check_table,
             expected_taxon = expected_taxon,
             gambit_predicted_taxon = gambit.gambit_predicted_taxon,
-            num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
-            num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
-            num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
-            num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
-            r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
-            r2_mean_q_raw = cg_pipeline_raw.r2_mean_q,
-            combined_mean_q_raw = cg_pipeline_raw.combined_mean_q,
-            r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
-            r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength,  
-            combined_mean_readlength_raw = cg_pipeline_raw.combined_mean_readlength,
-            r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,
-            r2_mean_q_clean = cg_pipeline_clean.r2_mean_q,
-            combined_mean_q_clean = cg_pipeline_clean.combined_mean_q,
-            r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength,
-            r2_mean_readlength_clean = cg_pipeline_clean.r2_mean_readlength,  
-            combined_mean_readlength_clean = cg_pipeline_clean.combined_mean_readlength,    
-            est_coverage_raw = cg_pipeline_raw.est_coverage,
-            est_coverage_clean = cg_pipeline_clean.est_coverage,
-            assembly_length = quast.genome_length,
-            number_contigs = quast.number_contigs,
-            n50_value = quast.n50_value,
-            quast_gc_percent = quast.gc_percent,
-            busco_results = busco.busco_results
+            qc_check_inputs = {
+              "num_reads_raw1": select_first([read_QC_trim.fastq_scan_raw1, read_QC_trim.fastqc_raw1]),
+              "num_reads_raw2": select_first([read_QC_trim.fastq_scan_raw2, read_QC_trim.fastqc_raw2]),
+              "num_reads_clean1": select_first([read_QC_trim.fastq_scan_clean1, read_QC_trim.fastqc_clean1]),
+              "num_reads_clean2": select_first([read_QC_trim.fastq_scan_clean2, read_QC_trim.fastqc_clean2]),
+              "r1_mean_q_raw": cg_pipeline_raw.r1_mean_q,
+              "r2_mean_q_raw": cg_pipeline_raw.r2_mean_q,
+              "combined_mean_q_raw": cg_pipeline_raw.combined_mean_q,
+              "r1_mean_readlength_raw": cg_pipeline_raw.r1_mean_readlength,
+              "r2_mean_readlength_raw": cg_pipeline_raw.r2_mean_readlength,
+              "combined_mean_readlength_raw": cg_pipeline_raw.combined_mean_readlength,
+              "r1_mean_q_clean": cg_pipeline_clean.r1_mean_q,
+              "r2_mean_q_clean": cg_pipeline_clean.r2_mean_q,
+              "combined_mean_q_clean": cg_pipeline_clean.combined_mean_q,
+              "r1_mean_readlength_clean": cg_pipeline_clean.r1_mean_readlength,
+              "r2_mean_readlength_clean": cg_pipeline_clean.r2_mean_readlength,  
+              "combined_mean_readlength_clean": cg_pipeline_clean.combined_mean_readlength,
+              "est_coverage_raw": cg_pipeline_raw.est_coverage,
+              "est_coverage_clean": cg_pipeline_clean.est_coverage,
+              "assembly_length": quast.genome_length,
+              "number_contigs": quast.number_contigs,
+              "n50_value": quast.n50_value,
+              "quast_gc_percent": quast.gc_percent,
+              "busco_completeness": busco.busco_results
+            }
         }
       }
       call merlin_magic_workflow.merlin_magic {
@@ -237,7 +239,9 @@ workflow theiaeuk_illumina_pe {
     String? fastqc_docker = read_QC_trim.fastqc_docker
     # Read QC - fastp outputs
     String? fastp_version = read_QC_trim.fastp_version
+    String? fastp_docker = read_QC_trim.fastp_docker
     File? fastp_html_report = read_QC_trim.fastp_html_report
+    File? fastp_json_report = read_QC_trim.fastp_json_report
     # Read QC - bbduk outputs
     String? bbduk_docker = read_QC_trim.bbduk_docker
     File? read1_clean = read_QC_trim.read1_clean
@@ -257,6 +261,7 @@ workflow theiaeuk_illumina_pe {
     File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
     String? assembler = digger_denovo.assembler_used
     String? assembler_version = digger_denovo.assembler_version
+    String? pilon_version = digger_denovo.pilon_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version

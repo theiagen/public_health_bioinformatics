@@ -258,23 +258,25 @@ workflow theiaprok_illumina_se {
               qc_check_table = qc_check_table,
               expected_taxon = expected_taxon,
               gambit_predicted_taxon = gambit.gambit_predicted_taxon,
-              num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
-              num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
-              r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
-              r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
-              r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,
-              r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength,   
-              est_coverage_raw = cg_pipeline_raw.est_coverage,
-              est_coverage_clean = cg_pipeline_clean.est_coverage,
-              midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
-              midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage,
-              assembly_length = quast.genome_length,
-              number_contigs = quast.number_contigs,
-              n50_value = quast.n50_value,
-              quast_gc_percent = quast.gc_percent,
-              busco_results = busco.busco_results,
-              ani_highest_percent = ani.ani_highest_percent,
-              ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
+              qc_check_inputs = {
+                "num_reads_raw1": select_first([read_QC_trim.fastq_scan_raw1, read_QC_trim.fastqc_raw1]),
+                "num_reads_clean1": select_first([read_QC_trim.fastq_scan_clean1, read_QC_trim.fastqc_clean1]),
+                "r1_mean_q_raw": cg_pipeline_raw.r1_mean_q,
+                "r1_mean_readlength_raw": cg_pipeline_raw.r1_mean_readlength,
+                "r1_mean_q_clean": cg_pipeline_clean.r1_mean_q,
+                "r1_mean_readlength_clean": cg_pipeline_clean.r1_mean_readlength,   
+                "est_coverage_raw": cg_pipeline_raw.est_coverage,
+                "est_coverage_clean": cg_pipeline_clean.est_coverage,
+                "midas_secondary_genus_abundance": read_QC_trim.midas_secondary_genus_abundance,
+                "midas_secondary_genus_coverage": read_QC_trim.midas_secondary_genus_coverage,
+                "assembly_length": quast.genome_length,
+                "number_contigs": quast.number_contigs,
+                "n50_value": quast.n50_value,
+                "quast_gc_percent": quast.gc_percent,
+                "busco_completeness": busco.busco_results,
+                "ani_highest_percent": ani.ani_highest_percent,
+                "ani_highest_percent_bases_aligned": ani.ani_highest_percent_bases_aligned
+              }
           }
         }
         call merlin_magic_workflow.merlin_magic {
@@ -391,6 +393,8 @@ workflow theiaprok_illumina_se {
                 "est_coverage_clean": cg_pipeline_clean.est_coverage,
                 "est_coverage_raw": cg_pipeline_raw.est_coverage,
                 "fastp_html_report": read_QC_trim.fastp_html_report,
+                "fastp_json_report": read_QC_trim.fastp_json_report,
+                "fastp_docker": read_QC_trim.fastp_docker,
                 "fastp_version": read_QC_trim.fastp_version,
                 "fastq_scan_clean1_json": read_QC_trim.fastq_scan_clean1_json,
                 "fastq_scan_num_reads_clean1": read_QC_trim.fastq_scan_clean1,
@@ -742,6 +746,8 @@ workflow theiaprok_illumina_se {
     # Read QC - fastp outputs
     String? fastp_version = read_QC_trim.fastp_version
     File? fastp_html_report = read_QC_trim.fastp_html_report
+    String? fastp_docker = read_QC_trim.fastp_docker
+    File? fastp_json_report = read_QC_trim.fastp_json_report
     # Read QC - bbduk outputs
     File? read1_clean = read_QC_trim.read1_clean
     String? bbduk_docker = read_QC_trim.bbduk_docker
@@ -768,6 +774,7 @@ workflow theiaprok_illumina_se {
     File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
     String? assembler = digger_denovo.assembler_used
     String? assembler_version = digger_denovo.assembler_version
+    String? pilon_version = digger_denovo.pilon_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version

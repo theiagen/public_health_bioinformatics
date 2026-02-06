@@ -4,7 +4,7 @@
 
 {{ include_md("common_text/bwa_task.md", indent=4, condition="theiacov")}}
 
-{{ include_md("common_text/ivar_trim_task.md", indent=4) }}
+{{ include_md("common_text/ivar_trim_task.md", indent=4, condition="theiacov") }}
 
 {{ include_md("common_text/assembly_metrics_task.md", indent=4, condition="theiacov") }}
 

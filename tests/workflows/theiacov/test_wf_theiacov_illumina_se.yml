@@ -20,25 +20,9 @@
     - path: miniwdl_run/call-raw_check_reads/inputs.json
     - path: miniwdl_run/call-raw_check_reads/outputs.json
     - path: miniwdl_run/call-raw_check_reads/task.log
-    # trimmomatic
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/command
-      md5sum: 20b54af347f1644c099dace802097293
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/inputs.json
-      contains: ["read1", "samplename"]
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/outputs.json
-      contains: ["trimmomatic_se", "pipeline_date", "trimmomatic_stats", "read1_trimmed"]
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/stderr.txt
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/stderr.txt.offset
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/stdout.txt
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/task.log
-      contains: ["wdl", "illumina_se", "trimmomatic", "done"]
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/work/ERR6319327.trim.stats.txt
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
-    - path: miniwdl_run/call-read_QC_trim/call-trimmomatic_se/work/_miniwdl_inputs/0/ERR6319327_R1_dehosted.fastq.gz
-      md5sum: d41d8cd98f00b204e9800998ecf8427e
     # bbduk
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/command
-      md5sum: e93b1c3341b2edc19046c06a1f271bfa
+      md5sum: 4fd92a5a15c1cc683f96f7f13e5a6fbc
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/inputs.json
       contains: ["phix", "adapters", "read1", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/outputs.json
@@ -49,10 +33,10 @@
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/task.log
       contains: ["wdl", "illumina_se", "bbduk", "done"]
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/ERR6319327.adapters.stats.txt
-      md5sum: fe785824715a0c03f0dd64464e936b3d
+      md5sum: b5073f762f90af5428c8d223e196da89
     - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/ERR6319327.phix.stats.txt
-      md5sum: 3fa3fb32416589385197c7a384ebdade
-    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/_miniwdl_inputs/0/ERR6319327_trimmed.fastq.gz
+      md5sum: 722f43dfee3cdc6f3f00ec56f75859cc
+    - path: miniwdl_run/call-read_QC_trim/call-bbduk_se/work/_miniwdl_inputs/0/ERR6319327_1P.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # fastq scan raw
     - path: miniwdl_run/call-read_QC_trim/call-fastq_scan_raw/command
@@ -118,7 +102,7 @@
       contains: ["wdl", "theiacov_illumina_se", "done"]
     # bwa
     - path: miniwdl_run/call-ivar_consensus/call-bwa/command
-      md5sum: 333d855970c7a332ee45865bf2c9d7bf
+      md5sum: c40183398167fd3cfceec7a31a333514
     - path: miniwdl_run/call-ivar_consensus/call-bwa/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-bwa/outputs.json
@@ -128,15 +112,15 @@
     - path: miniwdl_run/call-ivar_consensus/call-bwa/stdout.txt
     - path: miniwdl_run/call-ivar_consensus/call-bwa/task.log
       contains: ["wdl", "illumina_se", "bwa", "done"]
-    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/ERR6319327.sorted.bam
-      md5sum: 0db7c2f7d36144260d6d61f71a2e3cec
-    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/ERR6319327.sorted.bam.bai
-      md5sum: d6d6a9d40f5e2dbc950d43b7593b6964
+    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/ERR6319327.sorted.aligned.bam
+      md5sum: 5539bd6e4453b09232abd5e45680ea9c
+    - path: miniwdl_run/call-ivar_consensus/call-bwa/work/ERR6319327.sorted.aligned.bam.bai
+      md5sum: c9f11fb883033cb738de174b35df31ea
     - path: miniwdl_run/call-ivar_consensus/call-bwa/work/_miniwdl_inputs/0/ERR6319327_1.clean.fastq.gz
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # primer trim
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/command
-      md5sum: 6e5d253144f85df2e4b1ac9f1fb05b86
+      md5sum: d512f64a98f32b06039abab3e9e240e0
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/inputs.json
       contains: ["primer_bed", "bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/outputs.json
@@ -151,12 +135,10 @@
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/work/PRIMER_NAME
       md5sum: 3ca99445df901950128cddd3e58d2c52
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/work/ERR6319327.primertrim.sorted.bam
-      md5sum: 8659490b5bdd979f6420e262cdf3fd62
+      md5sum: a2dab5b13555337658be7b28bd0f350a
     - path: miniwdl_run/call-ivar_consensus/call-primer_trim/work/ERR6319327.primertrim.sorted.bam.bai
-      md5sum: 603c3cbc771ca910b96d3c032aafe7c9
+      md5sum: 39d434bb5c7b37db501cf8828644a45a
     # stats n coverage primer trim
-    - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/command
-      md5sum: affacdcfda48ad5e371a4510f19520bd
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/outputs.json
@@ -175,7 +157,7 @@
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/MEANMAPQ
       md5sum: ecf27a776cdfc771defab1c5d19de9ab
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/VERSION
-      md5sum: 53be85d2ed9fa57ab45424fe071a6672
+      md5sum: a7118c6ce7b1b2d078a90d50fdc03fb9
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/ERR6319327.cov.hist
       md5sum: fd940935d77c03ca847618f640d91ba7
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/ERR6319327.cov.txt
@@ -183,7 +165,7 @@
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/ERR6319327.flagstat.txt
       md5sum: 381332ecf3fb35300e74bda452016c27
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/ERR6319327.stats.txt
-      md5sum: 30880250632e237b82f91ea2ac44b1a6
+      md5sum: 7256451d66db43d41188b16280365a15
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage_primtrim/work/_miniwdl_inputs/0/ERR6319327.primertrim.sorted.bam
     # variant call
     - path: miniwdl_run/call-ivar_consensus/call-variant_call/command
@@ -235,8 +217,6 @@
     - path: miniwdl_run/call-ivar_consensus/call-consensus/work/SAMTOOLS_VERSION
       md5sum: 03c5ecf22fdfdb6b240ac3880281a056
     # stats n coverage
-    - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/command
-      md5sum: cb4de0e459b3fada21bcf08a8dbea89f
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/outputs.json
@@ -257,14 +237,14 @@
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/ERR6319327.flagstat.txt
       md5sum: 5eba111bff16b151b9a498c1a539d14d
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/ERR6319327.stats.txt
-      md5sum: e5ed401d9f60b1c0fe8b3ca4f49a60bd
+      md5sum: d2ffb480d2f2a49e034dfe4283ac3e50
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/MEANBASEQ
       md5sum: 88606514c85e100c88b651460a8a6ca9
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/MEANMAPQ
       md5sum: ecf27a776cdfc771defab1c5d19de9ab
     - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/VERSION
-      md5sum: 53be85d2ed9fa57ab45424fe071a6672
-    - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/_miniwdl_inputs/0/ERR6319327.sorted.bam
+      md5sum: a7118c6ce7b1b2d078a90d50fdc03fb9
+    - path: miniwdl_run/call-ivar_consensus/call-stats_n_coverage/work/_miniwdl_inputs/0/ERR6319327.sorted.aligned.bam
     # consensus qc
     - path: miniwdl_run/call-consensus_qc/command
       md5sum: b2269039a87de6f1dbac7d4b4a736682
@@ -313,14 +293,14 @@
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGOLIN_NOTES
       md5sum: 0b1f8fb5b938fe71631f61234cbf7ab3
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/PANGO_ASSIGNMENT_VERSION
-      md5sum: c60c7052f013cca3b15591ef0e577d4a
+      md5sum: 87155102d8c79d3be52849e410351d4a
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/VERSION_PANGOLIN_ALL
-      md5sum: 762735b9f8e69efeae463735f0ceed21
+      md5sum: 15cb42a69a86be0bb631042d8e6b9441
     - path: miniwdl_run/call-morgana_magic/call-pangolin4/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/command
-      md5sum: ce102ae1cd6a28fcb05d47fb7d5aaca7
+      md5sum: 0b3d043a8cccc02c2029a1365689ced2
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/inputs.json
       contains: ["dataset_name", "dataset_tag", "genome_fasta"]
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/outputs.json
@@ -369,7 +349,7 @@
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/sequences.fasta
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/tree.json
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/nextclade_dataset_dir/pathogen.json
-      md5sum: 207e4b0df8a35a2d7fa7a4b21fd110be
+      md5sum: 2a39f9ea6fca63a849c65ca44b8945e7
     - path: miniwdl_run/call-morgana_magic/call-nextclade_v3/work/_miniwdl_inputs/0/ERR6319327.ivar.consensus.fasta
       md5sum: d41d8cd98f00b204e9800998ecf8427e
     # nextclade output parsing

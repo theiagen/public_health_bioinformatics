@@ -56,7 +56,7 @@ workflow theiacov_ont {
     File? qc_check_table
     ## flu specific inputs
     # default set to 50 for ONT data in call block below, following CDC MIRA standards
-    Int? irma_min_consensus_support
+    Int irma_min_consensus_support = 50
   }
   call set_organism_defaults.organism_parameters {
     input:
@@ -133,12 +133,14 @@ workflow theiacov_ont {
         call assembly_metrics.stats_n_coverage {
           input:
             samplename = samplename,
-            bamfile = consensus.sorted_bam
+            bamfile = consensus.sorted_bam,
+            read1 = read_QC_trim.read1_clean
         }
         call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
           input:
             samplename = samplename,
-            bamfile = consensus.trim_sorted_bam
+            bamfile = consensus.trim_sorted_bam,
+            read1 = read_QC_trim.read1_clean
         }
       }
       # assembly via irma for flu organisms
@@ -149,7 +151,7 @@ workflow theiacov_ont {
             samplename = samplename,
             standardized_organism = organism_parameters.standardized_organism,
             seq_method = seq_method,
-            irma_min_consensus_support = select_first([irma_min_consensus_support, 50])
+            irma_min_consensus_support = irma_min_consensus_support
         }
       }
       # nanoplot for basic QC metrics
@@ -221,16 +223,19 @@ workflow theiacov_ont {
           input:
             qc_check_table = qc_check_table,
             expected_taxon = organism_parameters.standardized_organism,
-            num_reads_raw1 = nanoplot_raw.num_reads,
-            num_reads_clean1 = nanoplot_clean.num_reads,
-            kraken_human = read_QC_trim.kraken_human,
-            meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq,
-            assembly_mean_coverage = stats_n_coverage_primtrim.depth,
-            number_N = consensus_qc.number_N,
-            assembly_length_unambiguous = consensus_qc.number_ATCG,
-            number_Degenerate =  consensus_qc.number_Degenerate,
-            percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            vadr_num_alerts = morgana_magic.vadr_num_alerts
+            irma_qc_table = flu_track.irma_qc_summary_tsv,
+            qc_check_inputs = {
+              "num_reads_raw1": nanoplot_raw.num_reads,
+              "num_reads_clean1": nanoplot_clean.num_reads,
+              "kraken_human": read_QC_trim.kraken_human,
+              "meanbaseq_trim": stats_n_coverage_primtrim.meanbaseq,
+              "assembly_mean_coverage": stats_n_coverage_primtrim.depth,
+              "number_N": consensus_qc.number_N,
+              "assembly_length_unambiguous": consensus_qc.number_ATCG,
+              "number_Degenerate":  consensus_qc.number_Degenerate,
+              "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
+              "vadr_num_alerts": morgana_magic.vadr_num_alerts
+            }
         }
       }
     }
@@ -289,12 +294,12 @@ workflow theiacov_ont {
     String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
-    # Read Alignment - Artic consensus outputs
+    # Read Alignment - Artic consensus and IRMA Aligned outputs
     String assembly_fasta = select_first([consensus.consensus_seq, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
     File? aligned_bam = consensus.trim_sorted_bam
     File? aligned_bai = consensus.trim_sorted_bai
     File? medaka_vcf = consensus.medaka_pass_vcf
-    File? read1_aligned = consensus.reads_aligned
+    String read1_aligned = select_first([consensus.reads_aligned, flu_track.irma_aligned_fastqs, ""])
     File? read1_trimmed = consensus.trim_fastq
     # Read Alignment - Artic consensus versioning outputs
     String? artic_version = consensus.artic_pipeline_version
@@ -396,6 +401,7 @@ workflow theiacov_ont {
     File? irma_np_segment_fasta = flu_track.flu_np_segment_fasta
     File? irma_ns_segment_fasta = flu_track.flu_ns_segment_fasta
     File? irma_qc_summary_tsv = flu_track.irma_qc_summary_tsv
+    File? irma_qc_log = flu_track.irma_qc_log
     File? irma_all_snvs_tsv = flu_track.irma_all_snvs_tsv
     File? irma_all_insertions_tsv = flu_track.irma_all_insertions_tsv
     File? irma_all_deletions_tsv = flu_track.irma_all_deletions_tsv

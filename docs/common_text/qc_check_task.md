@@ -7,6 +7,8 @@
 
 <!-- if: theiacov -->
     The `qc_check` task applies quality thresholds according to the specified organism, which should match the _standardized_ `organism` input in the TheiaCoV workflows.
+
+    Segment-based QC can be applied to influenza genomes for "percent_reference_coverage", "median_coverage", and "num_minor_snv". To apply thresholds across all individual segments, use "segment_" as a prefix for the QC threshold column in the QC check template. To apply thresholds to individual segments, use the following prefixes: "mp_", "pb1_", "pb2_", "na_", "ns_", "np_", "pa_", and "ha_". Segment-specific thresholds are preferentially used over general segment thresholds if both are present. 
 <!-- endif -->
 <!-- if: theiaprok|theiaeuk -->
     The `qc_check` task applies quality thresholds according to the sample taxa. The sample taxa is taken from the `gambit_predicted_taxon` value inferred by the GAMBIT module OR can be manually provided by the user using the `expected_taxon` workflow input.
@@ -22,6 +24,7 @@
     ??? toggle "Template _qc_check_table.tsv_ files"    
 <!-- if: theiacov -->
         - TheiaCoV_Illumina_PE: [TheiaCoV_Illumina_PE_qc_check_template.tsv](../../assets/files/TheiaCoV_Illumina_PE_qc_check_template.tsv)
+        - TheiaCoV_ONT: [TheiaCoV_ONT_qc_check_template.tsv](../../assets/files/TheiaCoV_ONT_qc_check_template.tsv)
 <!-- endif -->
 <!-- if: theiaprok -->
         - TheiaProk_Illumina_PE: [theiaprok_illumina_pe_qc_check_template.tsv](../../assets/files/TheiaProk_Illumina_PE_qc_check_template.tsv)
@@ -30,8 +33,11 @@
 <!-- if: theiaeuk -->
         - TheiaEuk_Illumina_PE_PHB: [theiaeuk_qc_check_template.tsv](../../assets/files/TheiaEuk_qc_check_template.tsv)
 <!-- endif -->
+<!-- if: freyja -->
+        - Freyja_FASTQ: [freyja_qc_check_template.tsv](../../assets/files/Freyja_FASTQ_qc_check_template.tsv)
+<!-- endif -->
         !!! warning "Example Purposes Only"
-            The QC threshold values shown in the file above are for example purposes only and should not be presumed to be sufficient for every dataset.
+                The QC threshold values shown in the file above are for example purposes only and should not be presumed to be sufficient for every dataset.
 
     !!! techdetails "qc_check Technical Details"
         |  | Links |
