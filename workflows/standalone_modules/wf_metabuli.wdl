@@ -18,7 +18,7 @@ workflow metabuli_wf {
     input:
       samplename = samplename,
       read1 = read1,
-      read2? = read2,
+      read2 = read2,
       metabuli_db = metabuli_db
   }
   call krona_task.krona as krona {
