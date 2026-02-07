@@ -228,8 +228,6 @@
     - path: miniwdl_run/call-raw_check_reads/work/FLAG
       md5sum: 32c0be4fb7f3030bf9c74c0a836d4f2e
     - path: miniwdl_run/call-raw_check_reads/work/_miniwdl_inputs/0/ont.fastq.gz
-    - path: miniwdl_run/call-stats_n_coverage/command
-      md5sum: c53b7bdb43d4146b5f8f4eadad7f2d52
     - path: miniwdl_run/call-stats_n_coverage/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-stats_n_coverage/outputs.json
@@ -246,15 +244,11 @@
       md5sum: 68f06358611afb96787e55c81f8544e9
     - path: miniwdl_run/call-stats_n_coverage/work/MEANMAPQ
       md5sum: ecf27a776cdfc771defab1c5d19de9ab
-    - path: miniwdl_run/call-stats_n_coverage/work/VERSION
-      md5sum: 53be85d2ed9fa57ab45424fe071a6672
     - path: miniwdl_run/call-stats_n_coverage/work/_miniwdl_inputs/0/ont.trimmed.rg.sorted.bam
     - path: miniwdl_run/call-stats_n_coverage/work/ont.cov.hist
     - path: miniwdl_run/call-stats_n_coverage/work/ont.cov.txt
     - path: miniwdl_run/call-stats_n_coverage/work/ont.flagstat.txt
     - path: miniwdl_run/call-stats_n_coverage/work/ont.stats.txt
-    - path: miniwdl_run/call-stats_n_coverage_primtrim/command
-      md5sum: 38b52a9f0fb456581d689f05b0cdc0bf
     - path: miniwdl_run/call-stats_n_coverage_primtrim/inputs.json
       contains: ["bamfile", "samplename"]
     - path: miniwdl_run/call-stats_n_coverage_primtrim/outputs.json
@@ -271,8 +265,6 @@
       md5sum: 68f06358611afb96787e55c81f8544e9
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/MEANMAPQ
       md5sum: ecf27a776cdfc771defab1c5d19de9ab
-    - path: miniwdl_run/call-stats_n_coverage_primtrim/work/VERSION
-      md5sum: 53be85d2ed9fa57ab45424fe071a6672
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/_miniwdl_inputs/0/ont.primertrimmed.rg.sorted.bam
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/ont.cov.hist
     - path: miniwdl_run/call-stats_n_coverage_primtrim/work/ont.cov.txt
