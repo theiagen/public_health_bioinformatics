@@ -1,8 +1,0 @@
-{
-    "theiaprok_fasta.amrfinderplus_task.separate_betalactam_genes": "this.call_separate_betalactam_genes",
-    "theiaprok_fasta.call_abricate": "this.call_abricate",
-    "theiaprok_fasta.call_kmerfinder": "this.call_kmerfinder_input",
-    "theiaprok_fasta.samplename": "this.theiaprok_fasta_id",
-    "theiaprok_fasta.call_ani": "this.call_ani_input",
-    "theiaprok_fasta.assembly_fasta": "this.assembly_fasta"
-}

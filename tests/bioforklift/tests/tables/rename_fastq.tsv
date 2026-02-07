@@ -1,5 +1,0 @@
-entity:rename_fastq_id	new_name	read1	read2
-SRR6361065	sample1	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiameta/illumina/SRR6361065_1.fastq.gz	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiameta/illumina/SRR6361065_2.fastq.gz
-SRR6361066	sample2	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiameta/illumina/SRR6361066_1.fastq.gz	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiameta/illumina/SRR6361066_2.fastq.gz
-SRR6361067	sample3	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiameta/illumina/SRR6361067_1.fastq.gz	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiameta/illumina/SRR6361067_2.fastq.gz
-SRR6361068	sample4	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiameta/illumina/SRR6361068_1.fastq.gz	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiameta/illumina/SRR6361068_2.fastq.gz

@@ -1,5 +1,0 @@
-entity:theiameta_illumina_pe_id	read1	read2
-SRR6361065	gs://theiagen-large-public-files-rp/terra/phb-validation/theiameta/SRR6361065_1.fastq.gz	gs://theiagen-large-public-files-rp/terra/phb-validation/theiameta/SRR6361065_2.fastq.gz
-SRR6361066	gs://theiagen-large-public-files-rp/terra/phb-validation/theiameta/SRR6361066_1.fastq.gz	gs://theiagen-large-public-files-rp/terra/phb-validation/theiameta/SRR6361066_2.fastq.gz
-SRR6361067	gs://theiagen-large-public-files-rp/terra/phb-validation/theiameta/SRR6361067_1.fastq.gz	gs://theiagen-large-public-files-rp/terra/phb-validation/theiameta/SRR6361067_2.fastq.gz
-SRR6361068	gs://theiagen-large-public-files-rp/terra/phb-validation/theiameta/SRR6361068_1.fastq.gz	gs://theiagen-large-public-files-rp/terra/phb-validation/theiameta/SRR6361068_2.fastq.gz

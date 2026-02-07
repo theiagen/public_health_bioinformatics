@@ -1,7 +1,0 @@
-{
-  "freyja_fastq.primer_bed": "${this.primer_bed}",
-  "freyja_fastq.read1": "${this.read1}",
-  "freyja_fastq.read2": "${this.read2}",
-  "freyja_fastq.reference_genome": "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/nCoV-2019.reference.fasta",
-  "freyja_fastq.samplename": "${this.freyja_sc2_id}"
-}
