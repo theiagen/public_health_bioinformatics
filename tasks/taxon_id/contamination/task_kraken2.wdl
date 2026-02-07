@@ -10,12 +10,13 @@ task kraken2_theiacov {
     Int memory = 8
     String? target_organism
     Int disk_size = 100
-    String docker_image = "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db"
+    String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1"
   }
   command <<<
     # date and version control
     date | tee DATE
-    kraken2 --version | head -n1 | tee VERSION
+    kraken2 --version | head -n1 | tee KRAKEN2_VERSION
+    bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
     num_reads=$(ls *fastq.gz 2> /dev/nul | wc -l)
 
     # Decompress the Kraken2 database
@@ -73,7 +74,8 @@ task kraken2_theiacov {
   >>>
   output {
     String date = read_string("DATE")
-    String version = read_string("VERSION")
+    String kraken2_version = read_string("KRAKEN2_VERSION")
+    String bracken_version = read_string("BRACKEN_VERSION")
     File kraken_report = "~{samplename}_kraken2_report.txt"
     Float percent_human = read_float("PERCENT_HUMAN")
     String percent_sc2 = read_string("PERCENT_SC2")
@@ -101,7 +103,7 @@ task kraken2_standalone {
     File? read2
     File kraken2_db
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1-no-db"
     String kraken2_args = ""
     String classified_out = "classified#.fastq"
     String unclassified_out = "unclassified#.fastq"
@@ -110,7 +112,8 @@ task kraken2_standalone {
     Int disk_size = 100
   }
   command <<<
-    echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee VERSION
+    echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee KRAKEN2_VERSION
+    bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
     date | tee DATE
 
     # Decompress the Kraken2 database
@@ -160,7 +163,8 @@ task kraken2_standalone {
 
   >>>
   output {
-    String kraken2_version = read_string("VERSION")
+    String kraken2_version = read_string("KRAKEN2_VERSION")
+    String bracken_version = read_string("BRACKEN_VERSION")
     String kraken2_docker = docker
     String analysis_date = read_string("DATE")
     File kraken2_report = "~{samplename}.report.txt"

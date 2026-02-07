@@ -170,11 +170,6 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_se.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Kraken2_ONT_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_ont.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
  - name: RASUSA_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_rasusa.wdl
