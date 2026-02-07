@@ -2,7 +2,8 @@ version 1.0
 
 task metabuli {
   input {
-    File read1 # intended for ONT reads only (at this time)
+    File read1
+    File? read2
     String samplename
     String taxon_id
     Boolean extract_unclassified = false
@@ -37,6 +38,7 @@ task metabuli {
     metabuli classify \
       --seq-mode 3 \
       ~{read1} \
+      ~{read2} \
       ${extracted_db} \
       output_dir \
       "~{samplename}" \
