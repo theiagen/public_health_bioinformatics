@@ -1,0 +1,5 @@
+{
+    "theiameta_illumina_pe.read1": "this.read1",
+    "theiameta_illumina_pe.read2": "this.read2",
+    "theiameta_illumina_pe.samplename": "this.theiameta_illumina_pe_id"
+}

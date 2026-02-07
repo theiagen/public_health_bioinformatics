@@ -1,0 +1,7 @@
+{
+    "theiacov_fasta.organism": "this.organism_input",
+    "theiacov_fasta.samplename": "this.theiacov_fasta_id",
+    "theiacov_fasta.assembly_fasta": "this.assembly_fasta",
+    "theiacov_fasta.input_assembly_method": "v1-0-0",
+    "theiacov_fasta.seq_method": "v1-0-0"
+}
