@@ -26,7 +26,8 @@ workflow metabuli_wf {
         input:
           read1 = read1,
           read2 = select_first([read2]),
-          samplename = samplename
+          samplename = samplename,
+          fastp_trim_adapters = true
     }
   }
   # Trim ONT
