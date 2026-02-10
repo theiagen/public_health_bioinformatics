@@ -21,23 +21,14 @@ workflow metabuli_wf {
   }
   # Trim reads if requested
   if (call_fastp) {
-    # Trim Illumina PE
-    if (defined(read2)) {
-      call fastp_task.fastp_pe {
+    # Trim Illumina
+    call fastp_task.fastp {
         input:
           read1 = read1,
           read2 = select_first([read2]),
           samplename = samplename
-      }
     }
-    # Trim Illumina SE
-    if (illumina && !defined(read2)) {
-      call fastp_task.fastp_se {
-        input:
-          read1 = read1,
-          samplename = samplename
-      }
-    }
+  }
   # Trim ONT
   if (call_porechop) {
     call porechop_task.porechop {
@@ -49,20 +40,20 @@ workflow metabuli_wf {
   call metabuli_task.metabuli {
     input:
       samplename = samplename,
-      read1 = select_first([fastp_pe.read1_trimmed, fastp_se.read1_trimmed, porechop.trimmed_reads, read1]),
-      read2 = select_first([fastp_pe.read2_trimmed, read2])
+      read1 = select_first([fastp.read1_trimmed, porechop.trimmed_reads, read1]),
+      read2 = select_first([fastp.read2_trimmed, read2])
   }
   output {
     # PHB Version Captures
     String metabuli_wf_version = version_capture.phb_version
     String metabuli_wf_analysis_date = version_capture.date
     # Read trimming
-    File? fastp_read1_trimmed = select_first([fastp_pe.read1_trimmed, fastp_se.read1_trimmed])
-    File? fastp_read2_trimmed = fastp_pe.read2_trimmed
-    String? fastp_version = select_first([fastp_pe.fastp_version, fastp_se.fastp_version])
-    String? fastp_docker = select_first([fastp_pe.fastp_docker, fastp_se.fastp_docker])
-    File? fastp_stats_html = select_first([fastp_pe.fastp_stats_html, fastp_se.fastp_stats_html])
-    File? fastp_stats_json = select_first([fastp_pe.fastp_stats_json, fastp_se.fastp_stats_json])
+    File? fastp_read1_trimmed = fastp.read1_trimmed
+    File? fastp_read2_trimmed = fastp.read2_trimmed
+    String? fastp_version = fastp.fastp_version
+    String? fastp_docker = fastp.fastp_docker
+    File? fastp_stats_html = fastp.fastp_stats_html
+    File? fastp_stats_json = fastp.fastp_stats_json
     File? porechop_read1_trimmed = porechop.trimmed_reads
     String? porechop_version = porechop.porechop_version
     # Metabuli

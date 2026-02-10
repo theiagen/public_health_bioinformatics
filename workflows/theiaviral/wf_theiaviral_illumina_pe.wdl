@@ -77,7 +77,7 @@ workflow theiaviral_illumina_pe {
         read2 = read2
     }
     # adapter + read trimming
-    call fastp_task.fastp_pe as fastp {
+    call fastp_task.fastp {
       input:
         samplename = samplename,
         read1 = ncbi_scrub_pe.read1_dehosted,
