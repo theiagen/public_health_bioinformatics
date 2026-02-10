@@ -16,14 +16,14 @@ task augur_refine {
 
     # time calibration parameters
     Boolean build_time_tree = false
-    Int? gen_per_year # number of generations per year (default: 50)
+    Int gen_per_year = 50 # number of generations per year (default: 50); set to mirror v31.5.0
     Float? clock_rate # fixed clock rate
     Float? clock_std_dev # standard deviation of the fixed clock_rate estimate
-    Boolean? covariance # account for covariation when estimating rates and/or rerooting (default: true)
+    Boolean covariance = true # account for covariation when estimating rates and/or rerooting (default: true); set to mirror v31.5.0
     Int? precision # precision used to determine the number of grid points; options: 0 (rough) to 3 (ultra fine); default 'auto'
     Boolean date_confidence = true # calculate confidence intervals for node dates
     String date_inference = "marginal" # assign internal nodes to their marginally most likley dates (joint, marginal)
-    String? branch_length_inference # branch length mode of treetime to use (auto, joint, marginal, input; default: auto)
+    String branch_length_inference = "auto" # branch length mode of treetime to use (auto, joint, marginal, input; default: auto); set to mirror v31.5.0
     String? coalescent # coalescent time scale in units of inverse clock rate (float), optimize as scalar ("opt") or skyline (skyline)
     Int? clock_filter_iqd = 4 # remove tips that deviate more than n_iqd interquartile ranges from the root-to-tip vs time regression
 

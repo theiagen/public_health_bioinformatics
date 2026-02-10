@@ -139,7 +139,6 @@ workflow theiacov_illumina_se {
           samplename = samplename,
           assembly_fasta = ivar_consensus.assembly_fasta,
           taxon_name = organism_parameters.standardized_organism,
-          seq_method = seq_method,
           read1 = read_QC_trim.read1_clean,
           number_ATCG = consensus_qc.number_ATCG,
           vadr_max_length = organism_parameters.vadr_maxlength,
@@ -152,6 +151,28 @@ workflow theiacov_illumina_se {
           nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
           nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
           pangolin_docker_image = organism_parameters.pangolin_docker,
+          # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+          seq_method = "",
+          assembly_metrics_cpu = 0,
+          assembly_metrics_disk_size = 0,
+          assembly_metrics_docker = "",
+          assembly_metrics_memory = 0,
+          irma_cpu = 0,
+          irma_disk_size = 0,
+          irma_docker_image = "",        
+          irma_keep_ref_deletions = false,
+          irma_memory = 0,
+          genoflu_cpu = 0,
+          genoflu_disk_size = 0,
+          genoflu_docker = "",
+          genoflu_memory = 0,
+          abricate_flu_cpu = 0,
+          abricate_flu_disk_size = 0,
+          abricate_flu_docker = "",
+          abricate_flu_memory = 0,
+          abricate_flu_min_percent_coverage = 0,
+          abricate_flu_min_percent_identity = 0,
+          flu_track_antiviral_aa_subs = "",
           workflow_type = "theiacov_se"
       }
       if (defined(qc_check_table)) {
@@ -159,16 +180,18 @@ workflow theiacov_illumina_se {
           input:
             qc_check_table = qc_check_table,
             expected_taxon = organism_parameters.standardized_organism,
-            num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
-            num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
-            kraken_human = read_QC_trim.kraken_human,
-            meanbaseq_trim = ivar_consensus.meanbaseq_trim,
-            assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
-            number_N = consensus_qc.number_N,
-            assembly_length_unambiguous = consensus_qc.number_ATCG,
-            number_Degenerate =  consensus_qc.number_Degenerate,
-            percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            vadr_num_alerts = morgana_magic.vadr_num_alerts
+            qc_check_inputs = {
+              "num_reads_raw1": select_first([read_QC_trim.fastq_scan_raw1, read_QC_trim.fastqc_raw1]),
+              "num_reads_clean1": select_first([read_QC_trim.fastq_scan_clean1, read_QC_trim.fastqc_clean1]),
+              "kraken_human": read_QC_trim.kraken_human,
+              "meanbaseq_trim": ivar_consensus.meanbaseq_trim,
+              "assembly_mean_coverage": ivar_consensus.assembly_mean_coverage,
+              "number_N": consensus_qc.number_N,
+              "assembly_length_unambiguous": consensus_qc.number_ATCG,
+              "number_Degenerate":  consensus_qc.number_Degenerate,
+              "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
+              "vadr_num_alerts": morgana_magic.vadr_num_alerts
+            }
         }
       }
     }
@@ -211,7 +234,9 @@ workflow theiacov_illumina_se {
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
     # Read QC - fastp outputs
     String? fastp_version = read_QC_trim.fastp_version
+    String? fastp_docker = read_QC_trim.fastp_docker
     File? fastp_html_report = read_QC_trim.fastp_html_report
+    File? fastp_json_report = read_QC_trim.fastp_json_report
     # Read QC - bbduk outputs
     File? read1_clean = read_QC_trim.read1_clean
     String? bbduk_docker = read_QC_trim.bbduk_docker

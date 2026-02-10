@@ -81,7 +81,8 @@ workflow theiacov_clearlabs {
   call assembly_metrics.stats_n_coverage {
     input:
       samplename = samplename,
-      bamfile = consensus.sorted_bam
+      bamfile = consensus.sorted_bam,
+      read1 = ncbi_scrub_se.read1_dehosted
   }
   call consensus_qc_task.consensus_qc {
     input:
@@ -91,7 +92,8 @@ workflow theiacov_clearlabs {
   call assembly_metrics.stats_n_coverage as stats_n_coverage_primtrim {
     input:
       samplename = samplename,
-      bamfile = consensus.trim_sorted_bam
+      bamfile = consensus.trim_sorted_bam,
+      read1 = ncbi_scrub_se.read1_dehosted
   }
   if (organism_parameters.standardized_organism == "sars-cov-2") {
     # run organism-specific typing
@@ -100,7 +102,6 @@ workflow theiacov_clearlabs {
         samplename = samplename,
         assembly_fasta = consensus.consensus_seq,
         taxon_name = organism_parameters.standardized_organism,
-        seq_method = seq_method,
         read1 = read1,
         number_ATCG = consensus_qc.number_ATCG,
         vadr_max_length = organism_parameters.vadr_maxlength,
@@ -113,6 +114,27 @@ workflow theiacov_clearlabs {
         nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
         nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
         pangolin_docker_image = organism_parameters.pangolin_docker,
+        seq_method = "",
+        assembly_metrics_cpu = 0,
+        assembly_metrics_disk_size = 0,
+        assembly_metrics_docker = "",
+        assembly_metrics_memory = 0,
+        irma_cpu = 0,
+        irma_disk_size = 0,
+        irma_docker_image = "",        
+        irma_keep_ref_deletions = false,
+        irma_memory = 0,
+        genoflu_cpu = 0,
+        genoflu_disk_size = 0,
+        genoflu_docker = "",
+        genoflu_memory = 0,
+        abricate_flu_cpu = 0,
+        abricate_flu_disk_size = 0,
+        abricate_flu_docker = "",
+        abricate_flu_memory = 0,
+        abricate_flu_min_percent_coverage = 0,
+        abricate_flu_min_percent_identity = 0,
+        flu_track_antiviral_aa_subs = "",
         workflow_type = "theiacov_clearlabs"
     }
   }
@@ -121,23 +143,19 @@ workflow theiacov_clearlabs {
       input:
         qc_check_table = qc_check_table,
         expected_taxon = organism_parameters.standardized_organism,
-        num_reads_raw1 = fastq_scan_raw_reads.read1_seq,
-        num_reads_clean1 = fastq_scan_clean_reads.read1_seq,
-        kraken_human = kraken2_raw.percent_human,
-        # kraken_sc2 = kraken2_raw.percent_sc2,
-        # kraken_target_organism = kraken2_raw.percent_target_organism,
-        kraken_human_dehosted = kraken2_dehosted.percent_human,
-        # kraken_sc2_dehosted = kraken2_dehosted.percent_sc2,
-        # kraken_target_organism_dehosted = kraken2_dehosted.percent_target_organism,
-        meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq,
-        assembly_mean_coverage = stats_n_coverage_primtrim.depth,
-        number_N = consensus_qc.number_N,
-        assembly_length_unambiguous = consensus_qc.number_ATCG,
-        number_Degenerate =  consensus_qc.number_Degenerate,
-        percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-        # sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth,
-        # sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage,
-        vadr_num_alerts = morgana_magic.vadr_num_alerts
+        qc_check_inputs = {
+          "num_reads_raw1": fastq_scan_raw_reads.read1_seq,
+          "num_reads_clean1": fastq_scan_clean_reads.read1_seq,
+          "kraken_human": kraken2_raw.percent_human,
+          "kraken_human_dehosted": kraken2_dehosted.percent_human,
+          "meanbaseq_trim": stats_n_coverage_primtrim.meanbaseq,
+          "assembly_mean_coverage": stats_n_coverage_primtrim.depth,
+          "number_N": consensus_qc.number_N,
+          "assembly_length_unambiguous": consensus_qc.number_ATCG,
+          "number_Degenerate": consensus_qc.number_Degenerate,
+          "percent_reference_coverage": consensus_qc.percent_reference_coverage,
+          "vadr_num_alerts": morgana_magic.vadr_num_alerts
+        }
     }
   }  
   call versioning.version_capture {

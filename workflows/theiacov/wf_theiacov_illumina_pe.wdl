@@ -165,7 +165,6 @@ workflow theiacov_illumina_pe {
             samplename = samplename,
             assembly_fasta = select_first([ivar_consensus.assembly_fasta, flu_track.irma_assembly_fasta]),
             taxon_name = organism_parameters.standardized_organism,
-            seq_method = seq_method,
             read1 = read_QC_trim.read1_clean,
             read2 = read_QC_trim.read2_clean,
             number_ATCG = consensus_qc.number_ATCG,
@@ -179,6 +178,28 @@ workflow theiacov_illumina_pe {
             nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
             nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
             pangolin_docker_image = organism_parameters.pangolin_docker,
+            # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
+            seq_method = "",
+            assembly_metrics_cpu = 0,
+            assembly_metrics_disk_size = 0,
+            assembly_metrics_docker = "",
+            assembly_metrics_memory = 0,
+            irma_cpu = 0,
+            irma_disk_size = 0,
+            irma_docker_image = "",        
+            irma_keep_ref_deletions = false,
+            irma_memory = 0,
+            genoflu_cpu = 0,
+            genoflu_disk_size = 0,
+            genoflu_docker = "",
+            genoflu_memory = 0,
+            abricate_flu_cpu = 0,
+            abricate_flu_disk_size = 0,
+            abricate_flu_docker = "",
+            abricate_flu_memory = 0,
+            abricate_flu_min_percent_coverage = 0,
+            abricate_flu_min_percent_identity = 0,
+            flu_track_antiviral_aa_subs = "",
             workflow_type = "theiacov_pe"
         }
         if (defined(qc_check_table)) {
@@ -187,19 +208,22 @@ workflow theiacov_illumina_pe {
             input:
               qc_check_table = qc_check_table,
               expected_taxon = organism_parameters.standardized_organism,
-              num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
-              num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
-              num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
-              num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
-              kraken_human = read_QC_trim.kraken_human,
-              kraken_human_dehosted = read_QC_trim.kraken_human_dehosted,
-              meanbaseq_trim = ivar_consensus.meanbaseq_trim,
-              assembly_mean_coverage = ivar_consensus.assembly_mean_coverage,
-              number_N = consensus_qc.number_N,
-              assembly_length_unambiguous = consensus_qc.number_ATCG,
-              number_Degenerate =  consensus_qc.number_Degenerate,
-              percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-              vadr_num_alerts = morgana_magic.vadr_num_alerts
+              irma_qc_table = flu_track.irma_qc_summary_tsv,
+              qc_check_inputs = {
+                "num_reads_raw1": select_first([read_QC_trim.fastq_scan_raw1, read_QC_trim.fastqc_raw1]),
+                "num_reads_raw2": select_first([read_QC_trim.fastq_scan_raw2, read_QC_trim.fastqc_raw2]),
+                "num_reads_clean1": select_first([read_QC_trim.fastq_scan_clean1, read_QC_trim.fastqc_clean1]),
+                "num_reads_clean2": select_first([read_QC_trim.fastq_scan_clean2, read_QC_trim.fastqc_clean2]),
+                "kraken_human": read_QC_trim.kraken_human,
+                "kraken_human_dehosted": read_QC_trim.kraken_human_dehosted,
+                "meanbaseq_trim": ivar_consensus.meanbaseq_trim,
+                "assembly_mean_coverage": ivar_consensus.assembly_mean_coverage,
+                "number_N": consensus_qc.number_N,
+                "assembly_length_unambiguous": consensus_qc.number_ATCG,
+                "number_Degenerate":  consensus_qc.number_Degenerate,
+                "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
+                "vadr_num_alerts": morgana_magic.vadr_num_alerts
+            }
           }
         }
       }
@@ -259,7 +283,9 @@ workflow theiacov_illumina_pe {
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
     # Read QC - fastp outputs
     String? fastp_version = read_QC_trim.fastp_version
+    String? fastp_docker = read_QC_trim.fastp_docker
     File? fastp_html_report = read_QC_trim.fastp_html_report
+    File? fastp_json_report = read_QC_trim.fastp_json_report
     # Read QC - bbduk outputs
     File? read1_clean = read_QC_trim.read1_clean
     File? read2_clean = read_QC_trim.read2_clean
@@ -278,11 +304,11 @@ workflow theiacov_illumina_pe {
     String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
-    # Read Alignment - bwa outputs
+    # Read Alignment - bwa and bbmap_reformat(flu) outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version
-    File? read1_aligned = ivar_consensus.read1_aligned
-    File? read2_aligned = ivar_consensus.read2_aligned
+    String read1_aligned = select_first([ivar_consensus.read1_aligned, flu_track.irma_read1_aligned, ""])
+    String read2_aligned = select_first([ivar_consensus.read2_aligned, flu_track.irma_read2_aligned, ""])
     String aligned_bam = select_first([ivar_consensus.aligned_bam, ""])
     String aligned_bai = select_first([ivar_consensus.aligned_bai, ""])
     File? read1_unaligned = ivar_consensus.read1_unaligned
@@ -396,6 +422,7 @@ workflow theiacov_illumina_pe {
     File? irma_np_segment_fasta = flu_track.flu_np_segment_fasta
     File? irma_ns_segment_fasta = flu_track.flu_ns_segment_fasta
     File? irma_qc_summary_tsv = flu_track.irma_qc_summary_tsv
+    File? irma_qc_log = flu_track.irma_qc_log
     File? irma_all_snvs_tsv = flu_track.irma_all_snvs_tsv
     File? irma_all_insertions_tsv = flu_track.irma_all_insertions_tsv
     File? irma_all_deletions_tsv = flu_track.irma_all_deletions_tsv

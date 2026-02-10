@@ -176,8 +176,8 @@ We've provided the following information to help you set up the workflow for eac
         | genome_length_input | sars-cov-2 | `29903` |
         | kraken_target_organism_input | sars-cov-2 | `"Severe acute respiratory syndrome coronavirus 2"` |
         | nextclade_dataset_name_input | sars-cov-2 | `"nextstrain/sars-cov-2/wuhan-hu-1/orfs"` |
-        | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.3-pdata-1.36"`|
-        | nextclade_dataset_tag_input | sars-cov-2 | `"2025-09-19--14-53-06Z"` |
+        | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.4-pdata-1.37"`|
+        | nextclade_dataset_tag_input | sars-cov-2 | `"2026-01-06--14-59-32Z"` |
         | reference_genome | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"` |
         | vadr_max_length | sars-cov-2 | `30000` |
         | vadr_skip_length | sars-cov-2 | `10000` |
@@ -196,7 +196,7 @@ We've provided the following information to help you set up the workflow for eac
         | genome_length_input | MPXV | `197200` |
         | kraken_target_organism_input | MPXV | `"Monkeypox virus"` |
         | nextclade_dataset_name_input | MPXV | `"nextstrain/mpox/lineage-b.1"` |
-        | nextclade_dataset_tag_input | MPXV | `"2025-09-09--12-13-13Z"` |
+        | nextclade_dataset_tag_input | MPXV | `"2025-12-10--14-52-38Z"` |
         | primer_bed_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.primer.bed"` |
         | reference_genome | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/MPXV.MT903345.reference.fasta"` |
         | reference_gff_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/viral/mpox/Mpox-MT903345.1.reference.gff3"` |
@@ -241,25 +241,25 @@ We've provided the following information to help you set up the workflow for eac
         | vadr_options | flu | all | all | `"--mkey flu --atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3"` |  |
         | vadr_model_file | flu | all | all | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"` |  |
         | nextclade_dataset_name_input | flu | ha | h1n1 | `"nextstrain/flu/h1n1pdm/ha/MW626062"` |  |
-        | nextclade_dataset_tag_input | flu | ha | h1n1 | `"2025-10-22--18-11-36Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h1n1 | `"2026-01-14--19-24-43Z"` |  |
         | reference_genome | flu | ha | h1n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | h3n2 | `"nextstrain/flu/h3n2/ha/EPI1857216"` |  |
-        | nextclade_dataset_tag_input | flu | ha | h3n2 | `"2025-11-04--15-46-13Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | h3n2 | `"2026-01-14--19-24-43Z"` |  |
         | reference_genome | flu | ha | h3n2 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | victoria | `"nextstrain/flu/vic/ha/KX058884"` |  |
         | nextclade_dataset_tag_input | flu | ha | victoria | `"2025-10-22--18-11-36Z"` |  |
         | reference_genome | flu | ha | victoria | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_vic_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | yamagata | `"nextstrain/flu/yam/ha/JN993010"` |  |
-        | nextclade_dataset_tag_input | flu | ha | yamagata | `"2024-01-30--16-34-55Z"` |  |
+        | nextclade_dataset_tag_input | flu | ha | yamagata | `"2025-09-09--12-13-13Z"` |  |
         | reference_genome | flu | ha | yamagata | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_yam_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | ha | h5n1 | `"community/moncla-lab/iav-h5/ha/all-clades"` |  |
         | nextclade_dataset_tag_input | flu | ha | h5n1 | `"2025-09-09--12-13-13Z"` |  |
         | reference_genome | flu | ha | h5n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | h1n1 | `"nextstrain/flu/h1n1pdm/na/MW626056"` |  |
-        | nextclade_dataset_tag_input | flu | na | h1n1 | `"2025-09-09--12-13-13Z"` |  |
+        | nextclade_dataset_tag_input | flu | na | h1n1 | `"2026-01-14--08-53-00Z"` |  |
         | reference_genome | flu | na | h1n1 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h1n1pdm_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | h3n2 | `"nextstrain/flu/h3n2/na/EPI1857215"` |  |
-        | nextclade_dataset_tag_input | flu | na | h3n2 | `"2025-09-09--12-13-13Z"` |  |
+        | nextclade_dataset_tag_input | flu | na | h3n2 | `"2026-01-14--08-53-00Z"` |  |
         | reference_genome | flu | na | h3n2 | `"gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h3n2_na.fasta"` |  |
         | nextclade_dataset_name_input | flu | na | victoria | `"nextstrain/flu/vic/na/CY073894"` |  |
         | nextclade_dataset_tag_input | flu | na | victoria | `"2025-09-09--12-13-13Z"` |  |
@@ -487,6 +487,8 @@ We've provided the following information to help you set up the workflow for eac
 {{ include_md("common_text/vadr_flu_segments_task.md", indent=4) }}
 
 {{ include_md("common_text/irma_task.md", indent=4, condition="task") }}
+
+{{ include_md("common_text/bbmap_reformat_task.md", indent=4, condition="theiacov") }}
 
 {{ include_md("common_text/abricate_flu_task.md", indent=4) }}
 
