@@ -7,9 +7,11 @@ task fastp {
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastp:1.1.0"
     Int disk_size = 100
-    Int fastp_window_size = 4 # set to mirror v0.23.2 default 
-    Int fastp_quality_trim_score = 20 # set to mirror v0.23.2 default
-    Int fastp_min_length = 15 # set to mirror v0.23.2 default
+    Int fastp_window_size = 4 # set to mirror v1.1.0 default 
+    Int fastp_quality_trim_score = 20 # set to mirror v1.1.0 default
+    Int fastp_min_length = 15 # set to mirror v1.1.0 default
+    Boolean fastp_trim_adapters = false
+    File? fastp_adapter_fasta
     # -g enables polyg trimming with default value of 10
     String? fastp_args
     Int cpu = 4
@@ -27,7 +29,8 @@ task fastp {
 
     # trim reads
     fastp \
-      --in1 ~{read1} --in2 ~{read2} \
+      --in1 ~{read1} \
+      ~{if defined(read2) then "--in2 ~{read2}" else ""} \
       --out1 ~{samplename}_1P.fastq.gz \
       ~{if defined(read2) then "--out2 ~{samplename}_2P.fastq.gz" else ""} \
       --unpaired1 ~{samplename}_1U.fastq.gz --unpaired2 ~{samplename}_2U.fastq.gz \
@@ -35,6 +38,8 @@ task fastp {
       ~{if defined(fastp_window_size) then "--cut_right_window_size ~{fastp_window_size}" else ""} \
       ~{if defined(fastp_quality_trim_score) then "--cut_right_mean_quality ~{fastp_quality_trim_score}" else ""} \
       ~{if defined(fastp_min_length) then "--length_required ~{fastp_min_length}" else ""} \
+      ~{if defined(fastp_adapter_fasta) then "--adapter_fasta ~{fastp_adapter_fasta}" else ""} \
+      ~{if ! fastp_trim_adapters then "--disable_adapter_trimming" else ""} \
       --thread ~{cpu} \
       ~{if defined(fastp_args) then "~{fastp_args}" else ""} \
       --html ~{samplename}_fastp.html --json ~{samplename}_fastp.json
