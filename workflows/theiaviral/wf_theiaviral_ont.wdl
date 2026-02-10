@@ -115,7 +115,7 @@ workflow theiaviral_ont {
     # rasusa downsampling reads to specified coverage level
     call rasusa_task.rasusa as rasusa {
       input:
-        read1 = metabuli.metabuli_read1_extract,
+        read1 = select_first([metabuli.metabuli_read1_extract]),
         samplename = samplename,
         genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
     }
