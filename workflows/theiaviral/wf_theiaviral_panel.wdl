@@ -71,7 +71,7 @@ workflow theiaviral_panel {
     input:
       samplename = samplename,
       read1 = fastp.read1_trimmed,
-      read2 = fastp.read2_trimmed
+      read2 = select_first([fastp.read2_trimmed])
   }
   # host read decontamination
   if (defined(host)) {
