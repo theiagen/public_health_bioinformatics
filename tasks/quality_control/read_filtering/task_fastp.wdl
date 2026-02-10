@@ -5,7 +5,7 @@ task fastp_pe {
     File read1
     File read2
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastp:1.1.0"
     Int disk_size = 100
     Int fastp_window_size = 4 # set to mirror v0.23.2 default 
     Int fastp_quality_trim_score = 20 # set to mirror v0.23.2 default
