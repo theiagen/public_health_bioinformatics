@@ -26,7 +26,7 @@ workflow metabuli_wf {
       call fastp_task.fastp_pe {
         input:
           read1 = read1,
-          read2 = read2,
+          read2 = select_first([read2]),
           samplename = samplename
       }
     }
@@ -47,11 +47,11 @@ workflow metabuli_wf {
       }
     }
   }
-  call metabuli.metabuli as metabuli {
+  call metabuli_task.metabuli {
     input:
       samplename = samplename,
       read1 = select_first([fastp_pe.read1_trimmed, fastp_se.read1_trimmed, porechop.trimmed_reads, read1]),
-      read2 = select_first([fastp_pe.read2_trimmed, fastp_se.read2_trimmed, read2])
+      read2 = select_first([fastp_pe.read2_trimmed, read2])
   }
   output {
     # PHB Version Captures
