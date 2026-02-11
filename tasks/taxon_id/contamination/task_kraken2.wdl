@@ -108,17 +108,17 @@ task kraken2_theiacov {
   }
 }
 
-# standalone version (no default database included)
 task kraken2_standalone {
   input {
     File read1
     File? read2
     File kraken2_db
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1-no-db"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1"
     String kraken2_args = ""
     String classified_out = "classified#.fastq"
     String unclassified_out = "unclassified#.fastq"
+    Boolean call_bracken = true
     Int memory = 32
     Int cpu = 4
     Int disk_size = 100
