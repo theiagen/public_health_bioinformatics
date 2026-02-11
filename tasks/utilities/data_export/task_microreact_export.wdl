@@ -45,7 +45,8 @@ task microreact_export {
           then "--selected_columns " else ""} "${metadata_column_array[@]}" \
       ~{if defined(access_token) then "--access_token " + access_token else ""} \
       ~{true="--restricted_access" false="" restricted_access} \
-      ~{true="--remove_file_columns" false="" remove_file_columns}
+      ~{true="--remove_file_columns" false="" remove_file_columns} \
+      -v 
       
   >>>
   output {
