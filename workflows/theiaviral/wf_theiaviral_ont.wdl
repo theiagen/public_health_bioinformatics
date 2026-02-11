@@ -108,7 +108,8 @@ workflow theiaviral_ont {
       read1 = select_first([host_decontaminate.dehost_read1, ncbi_scrub_se.read1_dehosted]),
       samplename = samplename,
       taxon_id = select_first([ete4_identify.taxon_id]),
-      extract_unclassified = extract_unclassified
+      extract_unclassified = extract_unclassified,
+      seq_mode = 3
   }
   # downsample reads if the user wants, rasusa parameters are set in the task
   if (! skip_rasusa) {
