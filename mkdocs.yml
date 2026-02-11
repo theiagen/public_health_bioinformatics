@@ -65,6 +65,7 @@ nav:
                - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md
                - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
                - Zip_Column_Content: workflows/data_export/zip_column_content.md
+               - Microreact_Export: workflows/data_export/microreact_export.md
             - Standalone:
                - AMR_Search: workflows/standalone/amr_search.md
                - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
@@ -92,6 +93,7 @@ nav:
                - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
                - Fetch_SRR_Accession: workflows/data_import/fetch_srr_accession.md
                - Kraken2: workflows/standalone/kraken2.md
+               - Microreact_Export: workflows/data_export/microreact_export.md
                - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
                - ONT_Barcode_Concatenation: workflows/data_import/ont_barcode_concatenation.md
                - PhyloCompare: workflows/standalone/phylocompare.md
@@ -172,6 +174,7 @@ nav:
             - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md
             - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
             - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
+            - Microreact_Export: workflows/data_export/microreact_export.md
             - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
             - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
             - Nextclade_Batch: workflows/phylogenetic_placement/nextclade_batch.md
