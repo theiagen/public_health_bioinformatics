@@ -72,6 +72,7 @@ nav:
                - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
                - GAMBIT_Query: workflows/standalone/gambit_query.md
                - Kraken2: workflows/standalone/kraken2.md
+               - Metabuli: workflows/standalone/metabuli.md
                - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
                - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
                - PhyloCompare: workflows/standalone/phylocompare.md
@@ -92,6 +93,7 @@ nav:
                - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
                - Fetch_SRR_Accession: workflows/data_import/fetch_srr_accession.md
                - Kraken2: workflows/standalone/kraken2.md
+               - Metabuli: workflows/standalone/metabuli.md
                - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
                - ONT_Barcode_Concatenation: workflows/data_import/ont_barcode_concatenation.md
                - PhyloCompare: workflows/standalone/phylocompare.md
@@ -172,6 +174,7 @@ nav:
             - Lyve_SET: workflows/phylogenetic_construction/lyve_set.md
             - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
             - Mercury_Prep_N_Batch: workflows/public_data_sharing/mercury_prep_n_batch.md
+            - Metabuli: workflows/standalone/metabuli.md
             - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
             - NCBI-Scrub: workflows/standalone/ncbi_scrub.md
             - Nextclade_Batch: workflows/phylogenetic_placement/nextclade_batch.md
