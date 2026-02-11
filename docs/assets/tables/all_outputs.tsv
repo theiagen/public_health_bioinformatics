@@ -321,12 +321,14 @@ failed_uploads	File	The metadata for any failed uploads	Terra_2_GISAID
 fasta_utilities_fai	File	FASTA index file	TheiaViral_ONT
 fasta_utilities_samtools_docker	String	Docker image used for samtools in fasta utilities	TheiaViral_ONT
 fasta_utilities_samtools_version	String	Version of samtools used in fasta utilities	TheiaViral_ONT
-fastp_docker	String	Docker image used for fastp	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastp_docker	String	Docker image used for fastp	Freyja_FASTQ, Metabuli, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastp_html_report	File	The HTML report made with fastp	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastp_html_report	String	The HTML report made with fastp	Freyja_FASTQ
-fastp_json_report	File	The JSON report made with fastp	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastp_json_report	File	The JSON report made with fastp	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastp_json_report	String	The JSON report made with fastp	Freyja_FASTQ
-fastp_version	String	The version of fastp used	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastp_read1_trimmed	File	`read1` input trimmed by Fastp	Metabuli
+fastp_read2_trimmed	File	`read2` input trimmed by Fastp	Metabuli
+fastp_version	String	The version of fastp used	Freyja_FASTQ, Metabuli, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_dl_date	String	The date of the read data download	SRA_Fetch
 fastq_dl_docker	String	The docker used	SRA_Fetch
 fastq_dl_fastq_metadata	File	File containing metadata of the provided accession such as submission_accession, library_selection, instrument_platform, among others	SRA_Fetch
@@ -661,12 +663,17 @@ mercury_prep_n_batch_version	String	Version of the PHB repository that hosts thi
 mercury_script_version	String	Version of the Mercury tool that was used in this workflow	Mercury_Prep_N_Batch
 merlin_tag	String	Merlin tag for the assembly	TheiaEuk_ONT
 metabuli_classified	File	Classified reads from Metabuli	TheiaViral_ONT
+metabuli_classified_read1	File	FASTQ of `read1` input classified by Metabuli	TheiaViral_ONT
+metabuli_classified_read2	File	FASTQ of `read2` input classified by Metabuli	TheiaViral_ONT
+metabuli_classified_report	File	Classification report from Metabuli	TheiaViral_ONT
 metabuli_database	String	Database used for Metabuli	TheiaViral_ONT
-metabuli_docker	String	Docker image used for Metabuli	TheiaViral_ONT
-metabuli_krona_report	File	Krona visualization report from Metabuli	TheiaViral_ONT
+metabuli_docker	String	Docker image used for Metabuli	Metabuli, TheiaViral_ONT
+metabuli_krona_report	File	Krona visualization report from Metabuli	Metabuli, TheiaViral_ONT
 metabuli_read1_extract	File	Extracted reads from Metabuli	TheiaViral_ONT
-metabuli_report	File	Classification report from Metabuli	TheiaViral_ONT
-metabuli_version	String	Version of Metabuli used	TheiaViral_ONT
+metabuli_report	File	Classification report from Metabuli	Metabuli, TheiaViral_ONT
+metabuli_version	String	Version of Metabuli used	Metabuli, TheiaViral_ONT
+metabuli_wf_analysis_date	String	Date analysis was run	Metabuli
+metabuli_wf_version	String	Version of the PHB repository that hosts this workflow	Metabuli
 metaspades_docker	String	The Docker image of metaspades	TheiaMeta_Illumina_PE
 metaspades_version	String	The version of metaspades	TheiaMeta_Illumina_PE
 metaviralspades_docker	String	Docker image used for MetaviralSPAdes	TheiaViral_Illumina_PE
@@ -846,8 +853,9 @@ poppunk_gps_cluster	String	GPS cluster predicted by PopPUNK	TheiaProk_FASTA, The
 poppunk_GPS_db_version	String	Version of GPSC database used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 poppunk_gps_external_cluster_csv	File	GPSC v6 scheme designations	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 poppunk_version	String	Version of PopPUNK used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+porechop_read1_trimmed	File	FASTQ of `read1` input trimmed by Porechop	Metabuli
 porechop_trimmed_read1	File	Trimmed reads from Porechop	TheiaViral_ONT
-porechop_version	String	Version of Porechop used	TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
+porechop_version	String	Version of Porechop used	Metabuli, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
 prepped_ena_data	File	Prepared data formatted for ENA submission	Terra_2_ENA
 primer_bed_name	String	Name of the primer bed files used for primer trimming	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 primer_trimmed_read_percent	Float	Percentage of read data with primers trimmed as determined by iVar trim	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
