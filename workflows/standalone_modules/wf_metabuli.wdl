@@ -42,7 +42,7 @@ workflow metabuli_wf {
           read1 = read1,
           read2 = read2,
           samplename = samplename,
-          fastp_call_trim = true
+          fastp_trim_adapters = true
     }
   }
   # Trim ONT
