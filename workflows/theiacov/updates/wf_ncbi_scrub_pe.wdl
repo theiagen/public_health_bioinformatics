@@ -37,6 +37,6 @@ workflow dehost_pe {
     Float kraken_human_dehosted = kraken2.percent_human
     String kraken_sc2_dehosted = kraken2.percent_sc2
     File kraken_report_dehosted = kraken2.kraken_report
-    String kraken_version_dehosted = kraken2.version
+    String kraken_version_dehosted = kraken2.kraken2_version
   }
 }

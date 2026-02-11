@@ -386,6 +386,8 @@ workflow theiaprok_illumina_pe {
                 "bakta_tsv": bakta.bakta_tsv,
                 "bakta_version": bakta.bakta_version,
                 "bbduk_docker": read_QC_trim.bbduk_docker,
+                "bracken_report": read_QC_trim.bracken_report,
+                "bracken_version": read_QC_trim.bracken_version,
                 "busco_database": busco.busco_database,
                 "busco_docker": busco.busco_docker,
                 "busco_report": busco.busco_report,
@@ -860,6 +862,8 @@ workflow theiaprok_illumina_pe {
     Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
     Float? midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage
     # Read QC - kraken outputs
+    String? bracken_report = read_QC_trim.bracken_report
+    String? bracken_version = read_QC_trim.bracken_version
     String? kraken2_version = read_QC_trim.kraken_version
     String? kraken2_report = read_QC_trim.kraken_report
     String? kraken2_database = read_QC_trim.kraken_database
