@@ -5,6 +5,13 @@
 <!-- if: metabuli -->
     ??? dna "`taxon_id` input parameter"
         `taxon_id` triggers read extraction by retrieving the inputted NCBI taxon ID and all descendant taxon IDs derived from the input.
+
+    ??? dna "Precision mode and `min_score` / `min_sp_score` input parameters"
+        The `min_score` parameter is the minimum score (DNA-level identity) required for a read to be classified and the `min_sp_score` parameter is the minimum score for a read to be classified at or below species rank. Metabuli precision mode is defined by its authors as more stringently setting the `min_score` and `min_sp_score` parameters for specific read types:
+
+        - Illumina short reads: `min_score` = 0.15, `min_sp_score` = 0.5
+        - ONT long reads: `min_score` = 0.008
+
 <!-- endif -->
 
     ??? dna "`taxdump_path` input parameter"
