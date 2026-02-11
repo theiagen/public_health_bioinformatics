@@ -10,7 +10,7 @@ task fastp {
     Int fastp_window_size = 4 # set to mirror v1.1.0 default 
     Int fastp_quality_trim_score = 20 # set to mirror v1.1.0 default
     Int fastp_min_length = 15 # set to mirror v1.1.0 default
-    Boolean fastp_trim_adapters = false
+    Boolean fastp_trim_adapters = true
     File? fastp_adapter_fasta
     # -g enables polyg trimming with default value of 10
     String? fastp_args
