@@ -13,7 +13,7 @@ workflow metabuli_wf {
     String samplename
     File read1
     File? read2
-    Boolean call_trim = false
+    Boolean call_trim = true
     Boolean illumina = false
   }
   call versioning_task.version_capture {
@@ -35,7 +35,7 @@ workflow metabuli_wf {
     Int implicit_pe_mode = 2
   }
   # Trim reads if requested
-  if (call_trim && (illumina || implicit_illumina)) {
+  if (call_trim && (illumina || defined(implicit_illumina))) {
     # Trim Illumina
     call fastp_task.fastp {
         input:
@@ -46,7 +46,7 @@ workflow metabuli_wf {
     }
   }
   # Trim ONT
-  if (call_trim && !(illumina || implicit_illumina)) {
+  if (call_trim && !(illumina || defined(implicit_illumina))) {
     call porechop_task.porechop {
       input:
         read1 = read1,
