@@ -20,7 +20,7 @@ workflow metabuli_wf {
     input:
   }
   # Determine seq_mode
-  if (! defined(read2) && illumina == true) {
+  if (! defined(read2) && select_first([illumina, false])) {
     Int se_mode = 1
   }
   if (defined(read2)) {
