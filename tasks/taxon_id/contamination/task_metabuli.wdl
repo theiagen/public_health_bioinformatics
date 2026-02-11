@@ -9,7 +9,7 @@ task metabuli {
     Int seq_mode = 3 # 1: SE, 2: PE, 3: ONT
     Boolean extract_unclassified = false
     File metabuli_db = "gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz"
-    File taxdump_path = "gs://theiagen-public-resources-rp/reference_data/databases/metabuli/new_taxdump.tar.gz"
+    File taxdump_path = "gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz"
     Float min_score = 0 # metabuli: Min. sequence similarity score (0.0-1.0) [0.000]
     Float min_sp_score = 0 # metabuli: Min. score for species- or lower-level classification. [0.000]
     Float min_percent_coverage = 0 # metabuli: Min. query coverage (0.0-1.0) [0.000]
