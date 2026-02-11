@@ -6,6 +6,7 @@ task metabuli {
     File? read2
     String samplename
     String? taxon_id
+    Int seq_mode = 3 # 1: SE, 2: PE, 3: ONT
     Boolean extract_unclassified = false
     File metabuli_db = "gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz"
     File taxdump_path = "gs://theiagen-public-resources-rp/reference_data/databases/metabuli/new_taxdump.tar.gz"
@@ -36,7 +37,7 @@ task metabuli {
     # Classify the reads
     echo "DEBUG: Classifying reads"
     metabuli classify \
-      --seq-mode 3 \
+      --seq-mode ~{seq_mode} \
       ~{read1} \
       ~{read2} \
       ${extracted_db} \
@@ -53,7 +54,7 @@ task metabuli {
     if [[ ~{if defined(taxon_id) then "true" else "false"} == "true" ]]; then
       echo "DEBUG: Extracting reads"
       metabuli extract \
-        --seq-mode 3 \
+        --seq-mode ~{seq_mode} \
         ~{read1} ~{read2} \
         ./output_dir/~{samplename}_classifications.tsv \
         ${extracted_db} \
