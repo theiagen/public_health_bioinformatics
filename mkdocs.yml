@@ -23,8 +23,6 @@ nav:
      - Workflows: 
         - Workflows by Type: 
             - Overview Table: workflows_overview/workflows_type.md
-            - Data Export:
-               - Microreact_Export: workflows/data_export/microreact_export.md
             - Data Import:
                - Assembly_Fetch: workflows/data_import/assembly_fetch.md
                - BaseSpace_Fetch: workflows/data_import/basespace_fetch.md
@@ -67,6 +65,7 @@ nav:
                - Concatenate_Column_Content: workflows/data_export/concatenate_column_content.md
                - Transfer_Column_Content: workflows/data_export/transfer_column_content.md
                - Zip_Column_Content: workflows/data_export/zip_column_content.md
+               - Microreact_Export: workflows/data_export/microreact_export.md
             - Standalone:
                - AMR_Search: workflows/standalone/amr_search.md
                - Cauris_CladeTyper: workflows/standalone/cauris_cladetyper.md
