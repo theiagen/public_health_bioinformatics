@@ -40,6 +40,9 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
         {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Metabuli"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
+??? dna "`illumina` input parameter
+   Setting `illumina` to "true" enables Illumina mode for single-end reads. Inputting a `read2` implicitly sets `illumina` to "true".
+
 ### Workflow Tasks
 
 {{ include_md("common_text/fastp_task.md", condition="metabuli") }}
@@ -64,8 +67,8 @@ The most important outputs of the Metabuli workflows are the `metabuli_report` f
 
 When assessing the taxonomic identity of a single isolate's sequence, it is normal that a few reads are assigned to very closely rated taxa due to the shared sequence identity between them. "Very closely related taxa" may be genetically similar species in the same genus, or taxa with which the dominant species have undergone horizontal gene transfer. Unrelated taxa or a high abundance of these closely related taxa is indicative of contamination or sequencing of non-target taxa. Interpretation of the results is dependent on the biological context.
 
-??? toggle "Example Kraken2 report"
-    Below is an example `kraken2_report` for a _Klebsiella pneumoniae_ sample. Only the first 30 lines are included here since rows near the bottom are often spurious results with only a few reads assigned to a non-target organism.
+??? toggle "Example Metabuli report"
+    Below is an example `Metabuli_report` for a _Klebsiella pneumoniae_ sample. Only the first 30 lines are included here since rows near the bottom are often spurious results with only a few reads assigned to a non-target organism.
 
     From this report, we can see that 84.35 % of the reads were assigned at the species level (`S` in the 4th column) to "_Klebsiella pneumoniae_". Given almost 6 % of reads were "unclassified" and ~2 % of reads were assigned to very closely related taxa (in the _Klebsiella_ genus), this suggests the reads are from _Klebsiella pneumoniae_ with very little -if any- read contamination. 
     
