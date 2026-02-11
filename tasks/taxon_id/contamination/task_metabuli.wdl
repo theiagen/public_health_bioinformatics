@@ -21,6 +21,9 @@ task metabuli {
   command <<<
     set -euo pipefail
 
+    # set status
+    metabuli_status=SUCCESS
+
     # get version (there is no --version flag for metabuli)
     echo $(metabuli --help) | awk -F'Version: ' '{print $2}' | awk '{print $1}' | tee VERSION
 
@@ -53,46 +56,55 @@ task metabuli {
     # Extract the reads
     if [[ ~{if defined(taxon_id) then "true" else "false"} == "true" ]]; then
       echo "DEBUG: Extracting reads"
-      metabuli extract \
-        ~{read1} ~{read2} \
-        ./output_dir/~{samplename}_classifications.tsv \
-        ${extracted_db} \
-        ~{"--tax-id " + taxon_id} \
-        --seq-mode ~{seq_mode} \
-        --extract-format 2
-  
-      # Metabuli extract removes the "gz" suffix, then the final file extension
-      read1_basename=$(sed -Ee 's/(.*)\.([^\.]+)$/\1/' <<< $(basename ~{read1} .gz))
-  
-      # Metabuli extract will create a file in the input directory, which is variable between
-      # miniwdl and Terra, so we have to dynamically find it -_-
-      find . -type f -name ${read1_basename}_~{taxon_id}.fq -exec mv {} . \;
-  
-      # Output file name of metabuli extract is static. Compress the extracted reads
-      gzip ${read1_basename}_~{taxon_id}.fq
-  
-      # Update the final extracted reads output file name
-      cp ${read1_basename}_~{taxon_id}.fq.gz ~{samplename}_~{taxon_id}_extracted_1.fq.gz
-  
-      if [[ ~{if defined(read2) then "true" else "false"} == "true" ]]; then
-        read2_basename=$(sed -Ee 's/(.*)\.([^\.]+)$/\1/' <<< $(basename ~{read2} .gz))
-        find . -type f -name ${read2_basename}_~{taxon_id}.fq -exec mv {} . \;
-        gzip ${read2_basename}_~{taxon_id}.fq
-        cp ${read2_basename}_~{taxon_id}.fq.gz ~{samplename}_~{taxon_id}_extracted_2.fq.gz
-      fi
-  
-      # Metabuli doesn't have a built-in option for extracting unclassified reads
-      if [[ ~{extract_unclassified} == "true" ]]; then
-        echo "DEBUG: Extracting unclassified reads"
-        grep -P "^0\t" output_dir/~{samplename}_classifications.tsv | cut -f 2 > unclassified_reads.txt
-        seqkit grep -f unclassified_reads.txt ~{read1} | gzip > ~{samplename}_unclassified_1.fq.gz
-        zcat ${read1_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_1.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_1.fq.gz
+      if grep -q "~{taxon_id}" output_dir/~{samplename}_classifications.tsv; then
+        echo "DEBUG: Taxon ID ~{taxon_id} found in classifications, proceeding with read extraction"
+        metabuli extract \
+          ~{read1} ~{read2} \
+          ./output_dir/~{samplename}_classifications.tsv \
+          ${extracted_db} \
+          ~{"--tax-id " + taxon_id} \
+          --seq-mode ~{seq_mode} \
+          --extract-format 2
+    
+        # Metabuli extract removes the "gz" suffix, then the final file extension
+        read1_basename=$(sed -Ee 's/(.*)\.([^\.]+)$/\1/' <<< $(basename ~{read1} .gz))
+    
+        # Metabuli extract will create a file in the input directory, which is variable between
+        # miniwdl and Terra, so we have to dynamically find it -_-
+        find . -type f -name ${read1_basename}_~{taxon_id}.fq -exec mv {} . \;
+    
+        # Output file name of metabuli extract is static. Compress the extracted reads
+        gzip ${read1_basename}_~{taxon_id}.fq
+    
+        # Update the final extracted reads output file name
+        cp ${read1_basename}_~{taxon_id}.fq.gz ~{samplename}_~{taxon_id}_extracted_1.fq.gz
+    
         if [[ ~{if defined(read2) then "true" else "false"} == "true" ]]; then
-          seqkit grep -f unclassified_reads.txt ~{read2} | gzip > ~{samplename}_unclassified_2.fq.gz
-          zcat ${read2_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_2.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_2.fq.gz
+          read2_basename=$(sed -Ee 's/(.*)\.([^\.]+)$/\1/' <<< $(basename ~{read2} .gz))
+          find . -type f -name ${read2_basename}_~{taxon_id}.fq -exec mv {} . \;
+          gzip ${read2_basename}_~{taxon_id}.fq
+          cp ${read2_basename}_~{taxon_id}.fq.gz ~{samplename}_~{taxon_id}_extracted_2.fq.gz
         fi
+    
+        # Metabuli doesn't have a built-in option for extracting unclassified reads
+        if [[ ~{extract_unclassified} == "true" ]]; then
+          echo "DEBUG: Extracting unclassified reads"
+          grep -P "^0\t" output_dir/~{samplename}_classifications.tsv | cut -f 2 > unclassified_reads.txt
+          seqkit grep -f unclassified_reads.txt ~{read1} | gzip > ~{samplename}_unclassified_1.fq.gz
+          zcat ${read1_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_1.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_1.fq.gz
+          if [[ ~{if defined(read2) then "true" else "false"} == "true" ]]; then
+            seqkit grep -f unclassified_reads.txt ~{read2} | gzip > ~{samplename}_unclassified_2.fq.gz
+            zcat ${read2_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_2.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_2.fq.gz
+          fi
+        fi
+  
+      else
+        echo "WARNING: Taxon ID ~{taxon_id} not found in classifications, skipping read extraction"
+        metabuli_status="FAIL; taxon ~{taxon_id} not recovered""
       fi
     fi
+
+    echo $metabuli_status > STATUS
   >>>
   output {
     File metabuli_report = "output_dir/~{samplename}_report.tsv"
@@ -101,6 +113,7 @@ task metabuli {
     File? metabuli_read2_extract = "~{samplename}_~{taxon_id}_extracted_2.fq.gz"
     File metabuli_krona_report = "output_dir/~{samplename}_krona.html"
     String metabuli_version = read_string("VERSION")
+    String metabuli_status = read_string("STATUS")
     String metabuli_docker = docker
     String metabuli_database = metabuli_db
   }

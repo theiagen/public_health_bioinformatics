@@ -95,5 +95,6 @@ workflow metabuli_wf {
     File metabuli_krona_report = metabuli.metabuli_krona_report
     File? metabuli_classified_read1 = metabuli.metabuli_read1_extract
     File? metabuli_classified_read2 = metabuli.metabuli_read2_extract
+    String metabuli_status = metabuli.metabuli_status
   }
 }

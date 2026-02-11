@@ -138,7 +138,7 @@ workflow theiaviral_ont {
         skip_mash = true
     }
   }
-  if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+  if ((select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) && select_first([metabuli.metabuli_status, "FAIL"]) == "PASS") {
     # run de novo if no reference genome is provided so we can select a reference
     if (! defined(reference_fasta)) {
       if (call_raven) {
@@ -318,6 +318,7 @@ workflow theiaviral_ont {
     File? metabuli_classified = metabuli.metabuli_classified
     File? metabuli_read1_extract = metabuli.metabuli_read1_extract
     File? metabuli_krona_report = metabuli.metabuli_krona_report
+    String? metabuli_status = metabuli.metabuli_status
     String? metabuli_database = metabuli.metabuli_database
     String? metabuli_version = metabuli.metabuli_version
     String? metabuli_docker = metabuli.metabuli_docker
