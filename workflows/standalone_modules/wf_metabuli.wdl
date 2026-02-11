@@ -72,6 +72,12 @@ workflow metabuli_wf {
     # PHB Version Captures
     String metabuli_wf_version = version_capture.phb_version
     String metabuli_wf_analysis_date = version_capture.date
+    # Taxon ID
+    String? ncbi_taxon_id = ete4_identify.taxon_id
+    String? ncbi_taxon_name = ete4_identify.taxon_name
+    String? ncbi_read_extraction_rank = ete4_identify.taxon_rank
+    String? ete4_version = ete4_identify.ete4_version
+    String? ete4_docker = ete4_identify.ete4_docker
     # Read trimming
     File? fastp_read1_trimmed = fastp.read1_trimmed
     File? fastp_read2_trimmed = fastp.read2_trimmed
