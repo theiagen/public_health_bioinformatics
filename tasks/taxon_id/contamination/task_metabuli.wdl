@@ -100,7 +100,7 @@ task metabuli {
   
       else
         echo "WARNING: Taxon ID ~{taxon_id} not found in classifications, skipping read extraction"
-        metabuli_status="FAIL; taxon ~{taxon_id} not recovered""
+        metabuli_status="FAIL; taxon ~{taxon_id} not recovered"
       fi
     fi
 
