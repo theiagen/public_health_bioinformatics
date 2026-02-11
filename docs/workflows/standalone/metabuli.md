@@ -40,10 +40,15 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
         {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Metabuli"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
+??? dna "`taxon` input parameter"
+    Inputting a `taxon` (NCBI taxon ID/name) will enable read extraction within the workflow. The input `taxon` will be standardized via querying the NCBI taxonomy hierarchy in the `ete4_identify` task. Additionally, a parent taxonomic `rank` (e.g. "genus", "family", "order", etc.) can be set in `ete4_identify` to extract reads at a higher taxonomic level relative to the input `taxon`.
+
 ??? dna "`illumina` input parameter"
     Setting `illumina` to "true" enables Illumina mode for single-end reads. Inputting a `read2` implicitly sets `illumina` to "true".
 
 ### Workflow Tasks
+
+{{ include_md("common_text/ete4_identify_task.md") }}
 
 {{ include_md("common_text/fastp_task.md", condition="metabuli") }}
 
