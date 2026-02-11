@@ -22,7 +22,7 @@ task metabuli {
     set -euo pipefail
 
     # set status
-    metabuli_status=SUCCESS
+    metabuli_status=PASS
 
     # get version (there is no --version flag for metabuli)
     echo $(metabuli --help) | awk -F'Version: ' '{print $2}' | awk '{print $1}' | tee VERSION
@@ -56,7 +56,7 @@ task metabuli {
     # Extract the reads
     if [[ ~{if defined(taxon_id) then "true" else "false"} == "true" ]]; then
       echo "DEBUG: Extracting reads"
-      if grep -q "~{taxon_id}" output_dir/~{samplename}_classifications.tsv; then
+      if $(cut -f 5 output_dir/~{samplename}_classifications.tsv | grep -q "^~{taxon_id}$"); then
         echo "DEBUG: Taxon ID ~{taxon_id} found in classifications, proceeding with read extraction"
         metabuli extract \
           ~{read1} ~{read2} \
@@ -100,7 +100,7 @@ task metabuli {
   
       else
         echo "ERROR: Taxon ID ~{taxon_id} not found in classifications, skipping read extraction"
-        metabuli_status="FAIL; taxon ~{taxon_id} not recovered"
+        metabuli_status="FAIL; taxon not recovered"
       fi
     fi
 
