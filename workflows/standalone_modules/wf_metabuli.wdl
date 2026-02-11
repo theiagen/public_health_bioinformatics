@@ -1,4 +1,4 @@
-version 1.1
+version 1.0
 
 import "../../tasks/task_versioning.wdl" as versioning_task
 import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
