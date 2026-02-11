@@ -33,7 +33,8 @@ task fastp {
       ~{if defined(read2) then "--in2 ~{read2}" else ""} \
       --out1 ~{samplename}_1P.fastq.gz \
       ~{if defined(read2) then "--out2 ~{samplename}_2P.fastq.gz" else ""} \
-      --unpaired1 ~{samplename}_1U.fastq.gz --unpaired2 ~{samplename}_2U.fastq.gz \
+      --unpaired1 ~{samplename}_1U.fastq.gz \
+      ~{if defined(read2) then "--unpaired2 ~{samplename}_2U.fastq.gz" else ""} \
       ~{if defined(fastp_window_size) || defined(fastp_quality_trim_score) || defined(fastp_min_length) then "--cut_right" else ""} \
       ~{if defined(fastp_window_size) then "--cut_right_window_size ~{fastp_window_size}" else ""} \
       ~{if defined(fastp_quality_trim_score) then "--cut_right_mean_quality ~{fastp_quality_trim_score}" else ""} \

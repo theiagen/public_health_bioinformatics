@@ -25,7 +25,7 @@ workflow metabuli_wf {
     call fastp_task.fastp {
         input:
           read1 = read1,
-          read2 = select_first([read2]),
+          read2 = read2,
           samplename = samplename,
           fastp_trim_adapters = true
     }
