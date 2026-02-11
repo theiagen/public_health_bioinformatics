@@ -14,28 +14,24 @@ workflow metabuli_wf {
     File read1
     File? read2
     Boolean call_trim = true
-    Boolean illumina = false
+    Boolean? illumina
   }
   call versioning_task.version_capture {
     input:
   }
   # Determine seq_mode
-  if (! defined(read2) && illumina) {
+  if (! defined(read2) && illumina == true) {
     Int se_mode = 1
   }
   if (defined(read2)) {
     Int pe_mode = 2
+    Boolean implicit_illumina = true
   }
-  if (! defined(read2) && ! illumina) {
+  if (! defined(read2) && ! select_first([illumina, false])) {
     Int ont_mode = 3
   }
-  # implicitly infer Illumina if read2 is provided
-  if (defined(read2) && ! illumina) {
-    Boolean implicit_illumina = true
-    Int implicit_pe_mode = 2
-  }
   # Trim reads if requested
-  if (call_trim && (illumina || defined(implicit_illumina))) {
+  if (call_trim && (select_first([illumina, false]) || defined(implicit_illumina))) {
     # Trim Illumina
     call fastp_task.fastp {
         input:
@@ -46,7 +42,7 @@ workflow metabuli_wf {
     }
   }
   # Trim ONT
-  if (call_trim && !(illumina || defined(implicit_illumina))) {
+  if (call_trim && ! (select_first([illumina, false]) || defined(implicit_illumina))) {
     call porechop_task.porechop {
       input:
         read1 = read1,
@@ -61,7 +57,7 @@ workflow metabuli_wf {
       samplename = samplename,
       read1 = select_first([fastp.read1_trimmed, porechop.trimmed_reads, read1]),
       read2 = read2_input,
-      seq_mode = select_first([implicit_pe_mode, se_mode, pe_mode, ont_mode])
+      seq_mode = select_first([se_mode, pe_mode, ont_mode])
   }
   output {
     # PHB Version Captures
