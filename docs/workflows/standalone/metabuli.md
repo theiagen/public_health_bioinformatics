@@ -27,7 +27,7 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
 | Database name | Database Description | Suggested Applications | GCP URI (for usage in Terra) | Source | Database Size (GB) | Date of Last Update |
 | --- | --- | --- | --- | --- | --- | --- |
 | **viral** | RefSeq viral | Viral metagenomics | **`gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz`** | <https://metabuli.steineggerlab.workers.dev/> | 4.0 | 2024/04/01 |
-| **GTDB** | Prokaryote (Complete Genome/Chromosome, CheckM completeness > 90 and contamination <5) + human (T2T-CHM13v2.0) | **`gs://theiagen-public-resources-rp/reference_data/databases/metabuli/gtdb.tar.gz`** | <https://metabuli.steineggerlab.workers.dev/> | 68.8 | 2024/04/01 |
+| **GTDB** | Prokaryote (Complete Genome/Chromosome, CheckM completeness > 90, and contamination <5) + human (T2T-CHM13v2.0) | Prokaryote metagenomics | **`gs://theiagen-public-resources-rp/reference_data/databases/metabuli/gtdb.tar.gz`** | <https://metabuli.steineggerlab.workers.dev/> | 68.8 | 2024/04/01 |
 
 </div>
 
@@ -40,8 +40,8 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
         {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Metabuli"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
-??? dna "`illumina` input parameter
-   Setting `illumina` to "true" enables Illumina mode for single-end reads. Inputting a `read2` implicitly sets `illumina` to "true".
+??? dna "`illumina` input parameter"
+    Setting `illumina` to "true" enables Illumina mode for single-end reads. Inputting a `read2` implicitly sets `illumina` to "true".
 
 ### Workflow Tasks
 
