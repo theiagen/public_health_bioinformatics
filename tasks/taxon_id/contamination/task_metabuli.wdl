@@ -54,11 +54,12 @@ task metabuli {
     if [[ ~{if defined(taxon_id) then "true" else "false"} == "true" ]]; then
       echo "DEBUG: Extracting reads"
       metabuli extract \
-        --seq-mode ~{seq_mode} \
         ~{read1} ~{read2} \
         ./output_dir/~{samplename}_classifications.tsv \
         ${extracted_db} \
-        ~{"--tax-id " + taxon_id}
+        ~{"--tax-id " + taxon_id} \
+        --seq-mode ~{seq_mode} \
+        --extract-format 2
   
       # Metabuli extract removes the "gz" suffix, then the final file extension
       read1_basename=$(sed -Ee 's/(.*)\.([^\.]+)$/\1/' <<< $(basename ~{read1} .gz))

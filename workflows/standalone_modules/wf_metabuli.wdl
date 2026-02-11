@@ -4,6 +4,7 @@ import "../../tasks/task_versioning.wdl" as versioning_task
 import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
 import "../../tasks/quality_control/read_filtering/task_fastp.wdl" as fastp_task
 import "../../tasks/quality_control/read_filtering/task_porechop.wdl" as porechop_task
+import "../../tasks/taxon_id/task_ete4_taxon_id.wdl" as identify_taxon_id_task
 
 workflow metabuli_wf {
   meta {
@@ -11,6 +12,7 @@ workflow metabuli_wf {
   }
   input {
     String samplename
+    String? taxon
     File read1
     File? read2
     Boolean call_trim = true
@@ -18,6 +20,12 @@ workflow metabuli_wf {
   }
   call versioning_task.version_capture {
     input:
+  }
+  if (defined(taxon)) {
+    call identify_taxon_id_task.ete4_taxon_id as ete4_identify {
+      input:
+        taxon = select_first([taxon])
+    }
   }
   # Determine seq_mode
   if (! defined(read2) && select_first([illumina, false])) {
@@ -55,6 +63,7 @@ workflow metabuli_wf {
   call metabuli_task.metabuli {
     input:
       samplename = samplename,
+      taxon_id = ete4_identify.taxon_id,
       read1 = select_first([fastp.read1_trimmed, porechop.trimmed_reads, read1]),
       read2 = read2_input,
       seq_mode = select_first([se_mode, pe_mode, ont_mode])

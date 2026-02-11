@@ -107,7 +107,7 @@ workflow theiaviral_ont {
     input:
       read1 = select_first([host_decontaminate.dehost_read1, ncbi_scrub_se.read1_dehosted]),
       samplename = samplename,
-      taxon_id = select_first([ete4_identify.taxon_id]),
+      taxon_id = ete4_identify.taxon_id,
       extract_unclassified = extract_unclassified,
       seq_mode = 3
   }
