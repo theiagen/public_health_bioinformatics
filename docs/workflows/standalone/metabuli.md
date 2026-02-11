@@ -26,7 +26,7 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
 
 | Database name | Database Description | Suggested Applications | GCP URI (for usage in Terra) | Source | Database Size (GB) | Date of Last Update |
 | --- | --- | --- | --- | --- | --- | --- |
-| **viral** | RefSeq viral | Viral metagenomics | **`gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz`** | <https://metabuli.steineggerlab.workers.dev/> | 4.0 | 2024/04/01 |
+| **viral** | RefSeq viral + human (T2T-CHM13v2.0) | Viral metagenomics | **`gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz`** | <https://metabuli.steineggerlab.workers.dev/> | 4.0 | 2024/04/01 |
 | **GTDB** | Prokaryote (Complete Genome/Chromosome, CheckM completeness > 90, and contamination <5) + human (T2T-CHM13v2.0) | Prokaryote metagenomics | **`gs://theiagen-public-resources-rp/reference_data/databases/metabuli/gtdb.tar.gz`** | <https://metabuli.steineggerlab.workers.dev/> | 68.8 | 2024/04/01 |
 
 </div>
