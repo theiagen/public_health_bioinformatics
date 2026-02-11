@@ -23,6 +23,7 @@ workflow theiameta_illumina_pe {
     File? reference
     File kraken2_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_08gb_20230605.tar.gz"
     Boolean output_additional_files = false
+    Boolean call_bracken = true
   }
   call kraken_task.kraken2_standalone as kraken2_raw {
     input:
@@ -32,11 +33,12 @@ workflow theiameta_illumina_pe {
       kraken2_db = kraken2_db,
       kraken2_args = "",
       classified_out = "classified#.fastq",
-      unclassified_out = "unclassified#.fastq"
+      unclassified_out = "unclassified#.fastq",
+      call_bracken = call_bracken
   }
   call krona_task.krona as krona_raw {
     input:
-      kraken2_report = kraken2_raw.kraken2_report,
+      kraken2_report = select_first([kraken2_raw.bracken_report, kraken2_raw.kraken2_report]),
       samplename = samplename
   }
   call read_qc_wf.read_QC_trim_pe as read_QC_trim {
@@ -47,6 +49,7 @@ workflow theiameta_illumina_pe {
         workflow_series = "theiameta",
         kraken_db = kraken2_db,
         call_kraken = false,
+        call_bracken = call_bracken,
         kraken_disk_size = 100,
         kraken_memory = 8
     }
@@ -58,11 +61,12 @@ workflow theiameta_illumina_pe {
       kraken2_db = kraken2_db,
       kraken2_args = "",
       classified_out = "classified#.fastq",
-      unclassified_out = "unclassified#.fastq"
+      unclassified_out = "unclassified#.fastq",
+      call_bracken = call_bracken
   }
   call krona_task.krona as krona_clean {
     input:
-      kraken2_report = kraken2_clean.kraken2_report,
+      kraken2_report = select_first([kraken2_clean.bracken_report, kraken2_clean.kraken2_report]),
       samplename = samplename
   }
   call metaspades_task.metaspades_pe {
@@ -185,6 +189,9 @@ workflow theiameta_illumina_pe {
     String theiameta_illumina_pe_version = version_capture.phb_version
     String theiameta_illumina_pe_analysis_date = version_capture.date
     # Kraken2 outputs
+    String? bracken_version = kraken2_raw.bracken_version
+    File? bracken_report_raw = kraken2_raw.bracken_report
+    String? bracken_report_clean = kraken2_clean.bracken_report
     String kraken2_version = kraken2_raw.kraken2_version
     String kraken2_docker = kraken2_raw.kraken2_docker
     File kraken2_report_raw = kraken2_raw.kraken2_report

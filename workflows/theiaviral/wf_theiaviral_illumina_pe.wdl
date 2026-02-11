@@ -335,9 +335,11 @@ workflow theiaviral_illumina_pe {
     File? bbduk_primer_stats = bbduk.primer_stats
     # kraken2 outputs - taxonomic classification and read extraction
     String? kraken2_version = kraken2_standalone.kraken2_version
+    String? bracken_version = kraken2_standalone.bracken_version
     String? kraken2_docker = kraken2_standalone.kraken2_docker
     String? kraken2_database = kraken2_standalone.kraken2_database
     String? kraken2_report = kraken2_standalone.kraken2_report
+    String? bracken_report = kraken2_standalone.bracken_report
     File? kraken2_extracted_read1 = kraken2_extract.extracted_read1
     File? kraken2_extracted_read2 = kraken2_extract.extracted_read2
     String? kraken2_extraction_status = kraken2_extract.status

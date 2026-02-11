@@ -28,6 +28,8 @@ workflow read_QC_trim_se {
     Boolean call_midas = false
     File? midas_db
     Boolean call_kraken = false
+    Boolean call_bracken = true
+    Int? bracken_read_length
     File? kraken_db
     Int? kraken_disk_size
     Int? kraken_memory
@@ -104,7 +106,9 @@ workflow read_QC_trim_se {
         kraken2_db = kraken_db,
         disk_size = kraken_disk_size,
         memory = kraken_memory,
-        cpu = kraken_cpu
+        cpu = kraken_cpu,
+        call_bracken = call_bracken,
+        bracken_read_length = bracken_read_length
     }
     call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
       input:
@@ -114,7 +118,9 @@ workflow read_QC_trim_se {
         kraken2_db = kraken_db,
         disk_size = kraken_disk_size,
         memory = kraken_memory,
-        cpu = kraken_cpu
+        cpu = kraken_cpu,
+        call_bracken = call_bracken,
+        bracken_read_length = bracken_read_length
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
@@ -136,7 +142,9 @@ workflow read_QC_trim_se {
           kraken2_db = select_first([kraken_db]),
           disk_size = kraken_disk_size,
           memory = kraken_memory,
-          cpu = kraken_cpu
+          cpu = kraken_cpu,
+          call_bracken = call_bracken,
+          bracken_read_length = bracken_read_length
       }
     }  if ((call_kraken) && ! defined(kraken_db)) {
       String kraken_db_warning = "Kraken database not defined"
@@ -176,15 +184,18 @@ workflow read_QC_trim_se {
     
     # kraken2 - raw and dehosted
     String kraken_version = select_first([kraken2_theiacov_raw.kraken2_version, kraken2_standalone.kraken2_version, ""])
+    String bracken_version = select_first([kraken2_theiacov_raw.bracken_version, kraken2_standalone.bracken_version, ""])
     Float? kraken_human = kraken2_theiacov_raw.percent_human
     String? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
     String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
     String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
+    String bracken_report = select_first([kraken2_theiacov_raw.bracken_report, kraken2_standalone.bracken_report, ""])
     Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
     String? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism
     String? kraken_target_organism_name = target_organism
     File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
+    File? bracken_report_dehosted = kraken2_theiacov_dehosted.bracken_report
     String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone.kraken2_docker, ""])
     String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone.kraken2_database, kraken_db_warning, ""])
    

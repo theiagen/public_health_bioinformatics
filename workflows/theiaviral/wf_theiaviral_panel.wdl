@@ -89,7 +89,8 @@ workflow theiaviral_panel {
       samplename = samplename,
       read1 = read1,
       read2 = read2,
-      kraken2_db = select_first([kraken_db])
+      kraken2_db = select_first([kraken_db]),
+      call_bracken = false # false until determined how to propagate report
   }
   call kraken2_task.kraken2_standalone as kraken2_standalone_clean {
     input:

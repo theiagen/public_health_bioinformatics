@@ -45,7 +45,7 @@ task kraken2_theiacov {
       --output ~{samplename}.classifiedreads.txt
 
     # Run Bracken  
-    if [ "~{call_bracken}" = "true" ]; then
+    if [ "~{call_bracken}" == "true" ]; then
       bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
       bracken -d ./db/ \
         -i ~{samplename}_kraken2_report.txt \
@@ -119,6 +119,7 @@ task kraken2_standalone {
     String classified_out = "classified#.fastq"
     String unclassified_out = "unclassified#.fastq"
     Boolean call_bracken = true
+    Int bracken_read_length = 100
     Int memory = 32
     Int cpu = 4
     Int disk_size = 100
@@ -160,7 +161,7 @@ task kraken2_standalone {
     gzip ~{samplename}.classifiedreads.txt
 
     # Run Bracken  
-    if [ "~{call_bracken}" = "true" ]; then
+    if [ "~{call_bracken}" == "true" ]; then
       bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
       bracken -d ./db/ \
         -i ~{samplename}_kraken2_report.txt \

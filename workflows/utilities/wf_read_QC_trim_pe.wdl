@@ -26,6 +26,8 @@ workflow read_QC_trim_pe {
     Boolean call_midas = false
     File? midas_db
     Boolean call_kraken = false
+    Boolean call_bracken = true
+    Int? bracken_read_length
     Int? kraken_disk_size
     Int? kraken_memory
     Int? kraken_cpu
@@ -71,7 +73,9 @@ workflow read_QC_trim_pe {
         kraken2_db = kraken_db,
         disk_size = kraken_disk_size,
         memory = kraken_memory,
-        cpu = kraken_cpu
+        cpu = kraken_cpu,
+        call_bracken = call_bracken,
+        bracken_read_length = bracken_read_length
     }
     call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
       input:
@@ -82,7 +86,9 @@ workflow read_QC_trim_pe {
         kraken2_db = kraken_db,
         disk_size = kraken_disk_size,
         memory = kraken_memory,
-        cpu = kraken_cpu
+        cpu = kraken_cpu,
+        call_bracken = call_bracken,
+        bracken_read_length = bracken_read_length
     }
   }
   if (read_processing == "trimmomatic") {
@@ -139,7 +145,9 @@ workflow read_QC_trim_pe {
           kraken2_db = select_first([kraken_db]),
           disk_size = kraken_disk_size,
           memory = kraken_memory,
-          cpu = kraken_cpu
+          cpu = kraken_cpu,
+          call_bracken = call_bracken,
+          bracken_read_length = bracken_read_length
       }
     }  
     if ((call_kraken) && ! defined(kraken_db)) {
@@ -214,15 +222,18 @@ workflow read_QC_trim_pe {
     File? fastqc_clean2_html = fastqc_clean.read2_fastqc_html
     # kraken2 - theiacov, theiaprok
     String kraken_version = select_first([kraken2_theiacov_raw.kraken2_version, kraken2_standalone_theiaprok.kraken2_version, ""])
+    String bracken_version = select_first([kraken2_theiacov_raw.bracken_version, kraken2_standalone_theiaprok.bracken_version, ""])
     Float? kraken_human =  kraken2_theiacov_raw.percent_human
     String? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
     String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
     String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone_theiaprok.kraken2_report, ""])
+    String? bracken_report = select_first([kraken2_theiacov_raw.bracken_report, kraken2_standalone_theiaprok.bracken_report, ""])
     Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
     String? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism
     String? kraken_target_organism_name = target_organism
     File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
+    File? bracken_report_dehosted = kraken2_theiacov_dehosted.bracken_report
     String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone_theiaprok.kraken2_docker, ""])
     String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone_theiaprok.kraken2_database, kraken_db_warning, ""])
     # trimming versioning
