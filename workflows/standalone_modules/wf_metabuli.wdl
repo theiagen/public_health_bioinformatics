@@ -38,11 +38,14 @@ workflow metabuli_wf {
         samplename = samplename
     }
   }
+  if (defined(read2)) {
+    File read2_input = select_first([fastp.read2_trimmed, read2])
+  }
   call metabuli_task.metabuli {
     input:
       samplename = samplename,
       read1 = select_first([fastp.read1_trimmed, porechop.trimmed_reads, read1]),
-      read2 = select_first([fastp.read2_trimmed, read2])
+      read2 = read2_input
   }
   output {
     # PHB Version Captures
