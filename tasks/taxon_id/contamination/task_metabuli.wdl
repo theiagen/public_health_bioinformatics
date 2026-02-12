@@ -15,7 +15,7 @@ task metabuli {
     Float min_percent_coverage = 0 # metabuli: Min. query coverage (0.0-1.0) [0.000]
     Int cpu = 4
     Int memory = 16
-    Int disk_size = 100
+    Int disk_size = 120
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.1"
   }
   command <<<
