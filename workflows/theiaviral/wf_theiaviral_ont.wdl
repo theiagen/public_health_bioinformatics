@@ -129,7 +129,7 @@ workflow theiaviral_ont {
       est_genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
   }
   # check for minimum number of reads, basepairs, coverage, etc
-  if (! skip_screen) {
+  if (! skip_screen && metabuli.metabuli_status == "PASS") {
     call screen_task.check_reads_se as clean_check_reads {
       input:
         read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
@@ -138,7 +138,7 @@ workflow theiaviral_ont {
         skip_mash = true
     }
   }
-  if ((select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) && select_first([metabuli.metabuli_status, "FAIL"]) == "PASS") {
+  if ((select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) && metabuli.metabuli_status == "PASS") {
     # run de novo if no reference genome is provided so we can select a reference
     if (! defined(reference_fasta)) {
       if (call_raven) {
