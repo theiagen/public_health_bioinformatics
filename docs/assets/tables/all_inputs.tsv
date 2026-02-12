@@ -712,11 +712,13 @@ est_genome_length	disk_size	Int	Amount of storage (in GB) to allocate to the tas
 est_genome_length	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ncbi-datasets:18.9.0-python-jq	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 est_genome_length	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 est_genome_length	summary_limit	Int	Maximum number of genomes to query	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general	
-ete4_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime	
-ete4_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime	
+ete4_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Metabuli, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime	
+ete4_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Metabuli, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime	
 ete4_identify	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ete4:4.3.0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	docker	
+ete4_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ete4:4.3.0	Optional	Metabuli	docker	
 ete4_identify	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime	
-ete4_identify	rank	String	Internal component, do not modify		Optional	TheiaViral_Panel	general	
+ete4_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Metabuli	runtime	
+ete4_identify	rank	String	Internal component, do not modify		Optional	Metabuli, TheiaViral_Panel	general	
 export_taxon_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel	runtime	
 export_taxon_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel	runtime	
 export_taxon_table	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel	docker	
@@ -1594,7 +1596,7 @@ merlin_magic	virulencefinder_min_percent_coverage	Float	The threshold for minimu
 merlin_magic	virulencefinder_min_percent_identity	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	virulencefinder_min_percent_identity	Float	The threshold for minimum blast identity		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 metabuli	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Metabuli, TheiaViral_ONT	runtime	
-metabuli	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Metabuli, TheiaViral_ONT	runtime	
+metabuli	disk_size	Int	Amount of storage (in GB) to allocate to the task	120	Optional	Metabuli, TheiaViral_ONT	runtime	
 metabuli	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.1	Optional	Metabuli, TheiaViral_ONT	docker	
 metabuli	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	False	Optional	Metabuli	general	
 metabuli	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Metabuli, TheiaViral_ONT	runtime	
@@ -1604,10 +1606,10 @@ metabuli	min_score	Float	Minimum sequenece similarity score (0.0 - 1.0)	0	Option
 metabuli	min_sp_score	Float	Minimum score for species- or lower-level classification	0	Optional	Metabuli, TheiaViral_ONT	general	
 metabuli	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general	
 metabuli	taxdump_path	File	Path to compressed taxonomy dump	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz	Optional	Metabuli, TheiaViral_ONT	general	
-metabuli	taxon_id	String	NCBI taxon ID to enable read extraction, including descendant reads 		Optional	Metabuli	general	
 metabuli_wf	call_trim	Boolean	Call adapter and read trimming via Fastp (Illumina) or Porechop (ONT)	True	Optional	Metabuli	general	
 metabuli_wf	illumina	Boolean	Input reads are Illumina - automatically inferred if read2 is populated, ONT is assumed otherwise		Optional	Metabuli	general	
 metabuli_wf	read2	File	FASTQ file containing read2 sequences		Optional	Metabuli	general	
+metabuli_wf	taxon	String	DESCRIPTION		Optional	Metabuli	general	
 metaspades_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaMeta_Illumina_PE	runtime	
 metaspades_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime	
 metaspades_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/spades:3.12.0--h9ee0642_3	Optional	TheiaMeta_Illumina_PE	docker	
