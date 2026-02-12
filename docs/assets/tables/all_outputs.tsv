@@ -671,7 +671,7 @@ metabuli_docker	String	Docker image used for Metabuli	Metabuli, TheiaViral_ONT
 metabuli_krona_report	File	Krona visualization report from Metabuli	Metabuli, TheiaViral_ONT
 metabuli_read1_extract	File	Extracted reads from Metabuli	TheiaViral_ONT
 metabuli_report	File	Classification report from Metabuli	Metabuli, TheiaViral_ONT
-metabuli_status	String	DESCRIPTION	Metabuli, TheiaViral_ONT
+metabuli_status	String	Status of Metabuli read classification	Metabuli, TheiaViral_ONT
 metabuli_version	String	Version of Metabuli used	Metabuli, TheiaViral_ONT
 metabuli_wf_analysis_date	String	Date analysis was run	Metabuli
 metabuli_wf_version	String	Version of the PHB repository that hosts this workflow	Metabuli

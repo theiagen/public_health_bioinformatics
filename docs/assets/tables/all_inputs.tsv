@@ -1609,7 +1609,7 @@ metabuli	taxdump_path	File	Path to compressed taxonomy dump	gs://theiagen-public
 metabuli_wf	call_trim	Boolean	Call adapter and read trimming via Fastp (Illumina) or Porechop (ONT)	True	Optional	Metabuli	general	
 metabuli_wf	illumina	Boolean	Input reads are Illumina - automatically inferred if read2 is populated, ONT is assumed otherwise		Optional	Metabuli	general	
 metabuli_wf	read2	File	FASTQ file containing read2 sequences		Optional	Metabuli	general	
-metabuli_wf	taxon	String	DESCRIPTION		Optional	Metabuli	general	
+metabuli_wf	taxon	String	NCBI taxonomy compatible taxon name/ID to enable read extraction		Optional	Metabuli	general	
 metaspades_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaMeta_Illumina_PE	runtime	
 metaspades_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime	
 metaspades_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/spades:3.12.0--h9ee0642_3	Optional	TheiaMeta_Illumina_PE	docker	
