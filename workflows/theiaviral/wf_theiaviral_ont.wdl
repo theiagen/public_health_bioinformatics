@@ -111,7 +111,7 @@ workflow theiaviral_ont {
       extract_unclassified = extract_unclassified,
       seq_mode = 3
   }
-  if (metabuli.metabbuli_status == "PASS") {
+  if (metabuli.metabuli_status == "PASS") {
     # downsample reads if the user wants, rasusa parameters are set in the task
     if (! skip_rasusa) {
       # rasusa downsampling reads to specified coverage level
