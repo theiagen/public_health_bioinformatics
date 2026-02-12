@@ -56,8 +56,8 @@ task metabuli {
     # Extract the reads
     if [[ ~{if defined(taxon_id) then "true" else "false"} == "true" ]]; then
       echo "DEBUG: Extracting reads"
-      if $(cut -f 5 output_dir/~{samplename}_classifications.tsv | grep -q "^~{taxon_id}$"); then
-        echo "DEBUG: Taxon ID ~{taxon_id} found in classifications, proceeding with read extraction"
+      if $(cut -f 5 output_dir/~{samplename}_report.tsv | grep -q "^~{taxon_id}$"); then
+        echo "DEBUG: Taxon ID ~{taxon_id} found in report, proceeding with read extraction"
         metabuli extract \
           ~{read1} ~{read2} \
           ./output_dir/~{samplename}_classifications.tsv \
@@ -99,7 +99,7 @@ task metabuli {
         fi
   
       else
-        echo "ERROR: Taxon ID ~{taxon_id} not found in classifications, skipping read extraction"
+        echo "ERROR: Taxon ID ~{taxon_id} not found in report, skipping read extraction"
         metabuli_status="FAIL; taxon not recovered"
       fi
     fi
