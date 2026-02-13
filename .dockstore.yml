@@ -245,6 +245,11 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_phylocompare.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Metabuli_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_metabuli.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Nextclade_Batch_PHB 
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_batch.wdl

@@ -313,20 +313,22 @@ est_coverage_clean	Float	Estimated coverage calculated from clean reads and geno
 est_coverage_raw	Float	Estimated coverage calculated from raw reads and genome length	TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 est_genome_length	Int	Estimated genome length	TheiaEuk_ONT
 est_percent_gene_coverage_tsv	File	Percent coverage for each gene in the organism being analyzed (depending on the organism input)	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-ete4_docker	String	Docker image used for ETE4 taxonomy parsing	TheiaViral_Illumina_PE, TheiaViral_ONT
-ete4_version	String	The version of ETE4 used	TheiaViral_Illumina_PE, TheiaViral_ONT
+ete4_docker	String	Docker image used for ETE4 taxonomy parsing	Metabuli, TheiaViral_Illumina_PE, TheiaViral_ONT
+ete4_version	String	The version of ETE4 used	Metabuli, TheiaViral_Illumina_PE, TheiaViral_ONT
 excluded_samples	File	A file that contains the names and reasons why a sample was excluded from submission. **For SARS-CoV-2**, there are two sections: First, a section for any samples that failed to meet pre-determined quality thresholds (`number_N` and `vadr_num_alert`). Second, a section that includes a table that describes any missing required metadata for each sample. This table has the sample name for rows and any columns that have missing metadata as headers. If a sample is missing a piece of required metadata, the corresponding cell will be blank. However, if a different sample does have metadata for that column, the associated value will appear in the corresponding cell. **For flu and mpox**, only the second section described above exists. _Please see the example below for more details_.	Mercury_Prep_N_Batch
 excluded_samples	File	Text file listing samples that were excluded from BioSample submission for missing required metadata	Terra_2_NCBI
 failed_uploads	File	The metadata for any failed uploads	Terra_2_GISAID
 fasta_utilities_fai	File	FASTA index file	TheiaViral_ONT
 fasta_utilities_samtools_docker	String	Docker image used for samtools in fasta utilities	TheiaViral_ONT
 fasta_utilities_samtools_version	String	Version of samtools used in fasta utilities	TheiaViral_ONT
-fastp_docker	String	Docker image used for fastp	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
-fastp_html_report	File	The HTML report made with fastp	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastp_docker	String	Docker image used for fastp	Freyja_FASTQ, Metabuli, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastp_html_report	File	The HTML report made with fastp	Metabuli, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastp_html_report	String	The HTML report made with fastp	Freyja_FASTQ
-fastp_json_report	File	The JSON report made with fastp	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastp_json_report	File	The JSON report made with fastp	Metabuli, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastp_json_report	String	The JSON report made with fastp	Freyja_FASTQ
-fastp_version	String	The version of fastp used	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastp_read1_trimmed	File	`read1` input trimmed by Fastp	Metabuli
+fastp_read2_trimmed	File	`read2` input trimmed by Fastp	Metabuli
+fastp_version	String	The version of fastp used	Freyja_FASTQ, Metabuli, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
 fastq_dl_date	String	The date of the read data download	SRA_Fetch
 fastq_dl_docker	String	The docker used	SRA_Fetch
 fastq_dl_fastq_metadata	File	File containing metadata of the provided accession such as submission_accession, library_selection, instrument_platform, among others	SRA_Fetch
@@ -661,12 +663,18 @@ mercury_prep_n_batch_version	String	Version of the PHB repository that hosts thi
 mercury_script_version	String	Version of the Mercury tool that was used in this workflow	Mercury_Prep_N_Batch
 merlin_tag	String	Merlin tag for the assembly	TheiaEuk_ONT
 metabuli_classified	File	Classified reads from Metabuli	TheiaViral_ONT
+metabuli_classified_read1	File	FASTQ of `read1` input classified by Metabuli	Metabuli
+metabuli_classified_read2	File	FASTQ of `read2` input classified by Metabuli	Metabuli
+metabuli_classified_report	File	Classification report from Metabuli	Metabuli
 metabuli_database	String	Database used for Metabuli	TheiaViral_ONT
-metabuli_docker	String	Docker image used for Metabuli	TheiaViral_ONT
-metabuli_krona_report	File	Krona visualization report from Metabuli	TheiaViral_ONT
+metabuli_docker	String	Docker image used for Metabuli	Metabuli, TheiaViral_ONT
+metabuli_krona_report	File	Krona visualization report from Metabuli	Metabuli, TheiaViral_ONT
 metabuli_read1_extract	File	Extracted reads from Metabuli	TheiaViral_ONT
-metabuli_report	File	Classification report from Metabuli	TheiaViral_ONT
-metabuli_version	String	Version of Metabuli used	TheiaViral_ONT
+metabuli_report	File	Classification report from Metabuli	Metabuli, TheiaViral_ONT
+metabuli_status	String	Status of Metabuli read classification	Metabuli, TheiaViral_ONT
+metabuli_version	String	Version of Metabuli used	Metabuli, TheiaViral_ONT
+metabuli_wf_analysis_date	String	Date analysis was run	Metabuli
+metabuli_wf_version	String	Version of the PHB repository that hosts this workflow	Metabuli
 metaspades_docker	String	The Docker image of metaspades	TheiaMeta_Illumina_PE
 metaspades_version	String	The version of metaspades	TheiaMeta_Illumina_PE
 metaviralspades_docker	String	Docker image used for MetaviralSPAdes	TheiaViral_Illumina_PE
@@ -707,7 +715,7 @@ nanoplot_tsv_raw	File	A TSV report describing the raw reads	Freyja_FASTQ, TheiaC
 nanoplot_version	String	Version of nanoplot used for analysis	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT
 nanoq_filtered_read1	File	Filtered reads from NanoQ	TheiaViral_ONT
 nanoq_version	String	Version of nanoq used in analysis	Freyja_FASTQ, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
-ncbi_read_extraction_rank	String	Read extraction rank used	TheiaViral_Illumina_PE, TheiaViral_ONT
+ncbi_read_extraction_rank	String	Read extraction rank used	Metabuli, TheiaViral_Illumina_PE, TheiaViral_ONT
 ncbi_scrub_docker	String	The Docker image for NCBI's HRRT (human read removal tool)	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaMeta_Illumina_PE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
 ncbi_scrub_human_spots_removed	Int	Number of spots removed (or masked)	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
 ncbi_scrub_pe_analysis_date	String	Date of analysis	NCBI_Scrub_PE
@@ -716,8 +724,8 @@ ncbi_scrub_read1_dehosted	File	Dehosted reads after NCBI scrub	TheiaViral_Illumi
 ncbi_scrub_read2_dehosted	File	Dehosted reads after NCBI scrub	TheiaViral_Illumina_PE, TheiaViral_Panel
 ncbi_scrub_se_analysis_date	String	Date of analysis	NCBI_Scrub_SE
 ncbi_scrub_se_version	String	Version of HRRT software used	NCBI_Scrub_SE
-ncbi_taxon_id	String	NCBI taxonomy ID of inputted organism following rank extraction	TheiaViral_Illumina_PE, TheiaViral_ONT
-ncbi_taxon_name	String	NCBI taxonomy name of inputted taxon following rank extraction	TheiaViral_Illumina_PE, TheiaViral_ONT
+ncbi_taxon_id	String	NCBI taxonomy ID of inputted organism following rank extraction	Metabuli, TheiaViral_Illumina_PE, TheiaViral_ONT
+ncbi_taxon_name	String	NCBI taxonomy name of inputted taxon following rank extraction	Metabuli, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_aa_dels	String	Amino-acid deletions as detected by NextClade. Will be blank for Flu	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 nextclade_aa_dels_flu_h5n1	String	Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for H5N1 whole genome	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
 nextclade_aa_dels_flu_ha	String	Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for HA segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -846,8 +854,9 @@ poppunk_gps_cluster	String	GPS cluster predicted by PopPUNK	TheiaProk_FASTA, The
 poppunk_GPS_db_version	String	Version of GPSC database used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 poppunk_gps_external_cluster_csv	File	GPSC v6 scheme designations	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 poppunk_version	String	Version of PopPUNK used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+porechop_read1_trimmed	File	FASTQ of `read1` input trimmed by Porechop	Metabuli
 porechop_trimmed_read1	File	Trimmed reads from Porechop	TheiaViral_ONT
-porechop_version	String	Version of Porechop used	TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
+porechop_version	String	Version of Porechop used	Metabuli, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
 prepped_ena_data	File	Prepared data formatted for ENA submission	Terra_2_ENA
 primer_bed_name	String	Name of the primer bed files used for primer trimming	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 primer_trimmed_read_percent	Float	Percentage of read data with primers trimmed as determined by iVar trim	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE

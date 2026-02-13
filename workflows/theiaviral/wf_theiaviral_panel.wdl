@@ -61,7 +61,7 @@ workflow theiaviral_panel {
       read2 = read2
   }
   # adapter + read trimming
-  call fastp_task.fastp_pe as fastp {
+  call fastp_task.fastp {
     input:
       samplename = samplename,
       read1 = ncbi_scrub_pe.read1_dehosted,
@@ -71,7 +71,7 @@ workflow theiaviral_panel {
     input:
       samplename = samplename,
       read1 = fastp.read1_trimmed,
-      read2 = fastp.read2_trimmed
+      read2 = select_first([fastp.read2_trimmed])
   }
   # host read decontamination
   if (defined(host)) {
