@@ -19,31 +19,30 @@ task zip_files {
 
     # move files into a single directory before zipping
     for file in "${file_array[@]}"; do
-      echo "debug file found $file"
+    
+      echo "DEBUG: Pulling $file"
       if [ -f "$file" ]; then
-        echo "debug file found $file"
+        echo "DEBUG: $file exists"
         filename=$(basename "$file") # Extract the filename (e.g., test.tsv)
-        ext="${filename##*.}"        # Extract the file extension (e.g., tsv)
-        name="${filename%.*}"        # Extract the file name without extension (e.g., test)
+        dest="~{zipped_file_name}/$filename"
 
-        echo "DEBUG filename $filename"
-        echo "DEBUG ext $ext"
-        echo "DEBUG name $name"
-        
         # Counter is always set to 1 so that if there are 
         # other duplicated filenames they will be counted as well.
         counter=1
-        new_name="$name.$ext"
 
+        echo "DEBUG: Checking for $file in $dest"
         # Check for duplicate files in the destination
-        while [ -e "~{zipped_file_name}/$new_name" ]; do 
-          echo "DEBUG file exists"
-          new_name="${name}_${counter}.$ext"
+        while [ -e "$dest" ]; do 
+          echo "DEBUG: Duplicate filename found, adding a file index for differentiation."
+          dest="~{zipped_file_name}/${filename%.*}_${counter}.${filename##*.}"
+          echo "DEBUG: New filename ${filename%.*}_${counter}.${filename##*.}"
           ((counter++))
         done
 
         # Move the file to the destination with the new name
-        mv "$file" "~{zipped_file_name}/$new_name"
+        # If loop is not entered, filename will remain unchanged. 
+        mv "$file" "$dest"
+
       else
         echo "File not found: $file"
       fi
