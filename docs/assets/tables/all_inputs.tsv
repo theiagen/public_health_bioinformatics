@@ -1596,7 +1596,7 @@ merlin_magic	virulencefinder_min_percent_coverage	Float	The threshold for minimu
 merlin_magic	virulencefinder_min_percent_identity	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	virulencefinder_min_percent_identity	Float	The threshold for minimum blast identity		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 metabuli	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Metabuli, TheiaViral_ONT	runtime	
-metabuli	disk_size	Int	Amount of storage (in GB) to allocate to the task	120	Optional	Metabuli, TheiaViral_ONT	runtime	
+metabuli	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Metabuli, TheiaViral_ONT	runtime	
 metabuli	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.1	Optional	Metabuli, TheiaViral_ONT	docker	
 metabuli	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	False	Optional	Metabuli	general	
 metabuli	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Metabuli, TheiaViral_ONT	runtime	
