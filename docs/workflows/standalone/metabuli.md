@@ -8,7 +8,7 @@
 
 **The Metabuli workflow assesses the taxonomic profile of raw sequencing data (FASTQ files).**
 
-Metabuli is suitable for classifying short reads *AND* long reads, and optionally enables extracting reads from a specific NCBI taxon ID of interest. Metabuli uses a novel k-mer structure, called a "metamer", which incorporates both the DNA sequence for high specificity and amino acid conservation for sensitive homology detection.
+Metabuli is suitable for classifying short reads *AND* long reads by comparing them to reference genomes.Optionally it can enable the extraction of reads from a specific NCBI taxon ID of interest. Metabuli uses a novel k-mer structure, called a "metamer", which incorporates both the DNA sequence for high specificity and amino acid conservation for sensitive homology detection.
 
 The Metabuli_PHB workflow additionally includes read trimming software, Fastp (Illumina) and Porechop (ONT), for adapter trimming (recommended) and basic read preprocessing. 
 
@@ -19,6 +19,9 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
 
 !!! info  "Database selection"
     The Metabuli software is database-dependent and **taxonomic assignments are highly sensitive to the database used**. An appropriate database should contain the expected organism(s) (e.g. *Escherichia coli*) and other taxa that may be present in the reads (e.g. *Citrobacter freundii*, a common contaminant).
+
+!!! warning "Adjusting computational resources"
+    Metabuli can operate within user-specified random-access memory (RAM) limits but the database needs to fit in the storage provided. As such, it's advised to adjust the `disk_space` optional input for the Metabuli task according to the size of database used. Please check the default value in the [*inputs table*](#inputs) below to ensure that the value is adequate for your seletected database. 
 
 #### Suggested databases
 
