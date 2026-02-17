@@ -1147,7 +1147,7 @@ ksnp4_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	O
 ksnp4_task	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ksnp4:4.1	Optional	kSNP4	docker	
 ksnp4_task	kmer_size	Int	The length of kmer containing the SNP you want ksnp4 to use	19	Optional	kSNP4	general	
 ksnp4_task	ksnp4_args	String	Additional arguments you want kSNP4 to use; e.g., "-ML" or "-NJ"		Optional	kSNP4	general	
-ksnp4_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	kSNP4	runtime	
+ksnp4_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	kSNP4	runtime	
 ksnp4_task	previous_ksnp4_snps	File	File with existing SNPs for the current run to be appended to.		Optional	kSNP4	general	
 ksnp4_workflow	cluster_name_updated	String	Internal component, do not modify	cluster_name where ' ' is substituted with '_'	Optional	kSNP4	general	
 ksnp4_workflow	data_summary_column_names	String	A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix); e.g., "amrfinderplus_amr_genes,amrfinderplus_virulence_genes"		Optional	kSNP4	general	
