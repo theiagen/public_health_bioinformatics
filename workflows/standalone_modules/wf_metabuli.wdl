@@ -18,6 +18,8 @@ workflow metabuli_wf {
     File metabuli_db
     Boolean call_trim = true
     Boolean? illumina
+    Int metabuli_mem = 32
+    Int metabuli_disk_size = 250
   }
   call versioning_task.version_capture {
     input:
@@ -68,7 +70,9 @@ workflow metabuli_wf {
       read1 = select_first([fastp.read1_trimmed, porechop.trimmed_reads, read1]),
       read2 = read2_input,
       seq_mode = select_first([se_mode, pe_mode, ont_mode]),
-      metabuli_db = metabuli_db
+      metabuli_db = metabuli_db,
+      memory = metabuli_mem,
+      disk_size = metabuli_disk_size
   }
   output {
     # PHB Version Captures
