@@ -15,6 +15,7 @@ workflow metabuli_wf {
     String? taxon
     File read1
     File? read2
+    File metabuli_db
     Boolean call_trim = true
     Boolean? illumina
   }
@@ -66,7 +67,8 @@ workflow metabuli_wf {
       taxon_id = ete4_identify.taxon_id,
       read1 = select_first([fastp.read1_trimmed, porechop.trimmed_reads, read1]),
       read2 = read2_input,
-      seq_mode = select_first([se_mode, pe_mode, ont_mode])
+      seq_mode = select_first([se_mode, pe_mode, ont_mode]),
+      metabuli_db = metabuli_db
   }
   output {
     # PHB Version Captures
