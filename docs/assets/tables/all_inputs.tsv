@@ -94,6 +94,7 @@ mercury_prep_n_batch	sample_names	Array[String]	The samples you want to submit		
 mercury_prep_n_batch	terra_project_name	String	The name of your Terra project. You can find this information in the URL of the webpage of your Terra dashboard. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is example		Required	Mercury_Prep_N_Batch	general	
 mercury_prep_n_batch	terra_table_name	String	The name of the Terra table where your samples can be found. Do not include the entity: prefix, the _id suffix, or the _set_id suffix, just the name of the sample-level data table as listed in the sidebar on lefthand side of the Terra Data tab.		Required	Mercury_Prep_N_Batch	general	
 mercury_prep_n_batch	terra_workspace_name	String	The name of your Terra workspace where your samples can be found. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is my_workspace		Required	Mercury_Prep_N_Batch	general	
+metabuli_wf	metabuli_db	File		Metabuli database file	Required	Metabuli	general	
 metabuli_wf	read1	File	FASTQ file containing read1 sequences		Required	Metabuli	general	
 metabuli_wf	samplename	String	The name of the sample being analyzed		Required	Metabuli	general	
 nextclade_batch	assembly_fastas	Array[File]	The assembly files for your samples in FASTA format		Required	Nextclade_Batch	general	
@@ -714,10 +715,10 @@ est_genome_length	memory	Int	Amount of memory (in GB) to allocate to the task	4	
 est_genome_length	summary_limit	Int	Maximum number of genomes to query	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 ete4_identify	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Metabuli, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime	
 ete4_identify	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Metabuli, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime	
-ete4_identify	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ete4:4.3.0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	docker	
 ete4_identify	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ete4:4.3.0	Optional	Metabuli	docker	
-ete4_identify	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime	
+ete4_identify	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/ete4:4.3.0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	docker	
 ete4_identify	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Metabuli	runtime	
+ete4_identify	memory	Int	Amount of memory (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime	
 ete4_identify	rank	String	Internal component, do not modify		Optional	Metabuli, TheiaViral_Panel	general	
 export_taxon_table	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel	runtime	
 export_taxon_table	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Panel	runtime	
@@ -1596,11 +1597,11 @@ merlin_magic	virulencefinder_min_percent_coverage	Float	The threshold for minimu
 merlin_magic	virulencefinder_min_percent_identity	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	virulencefinder_min_percent_identity	Float	The threshold for minimum blast identity		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 metabuli	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Metabuli, TheiaViral_ONT	runtime	
-metabuli	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Metabuli, TheiaViral_ONT	runtime	
+metabuli	disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	Metabuli, TheiaViral_ONT	runtime	
 metabuli	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.1	Optional	Metabuli, TheiaViral_ONT	docker	
 metabuli	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	False	Optional	Metabuli	general	
 metabuli	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Metabuli, TheiaViral_ONT	runtime	
-metabuli	metabuli_db	File	Metabuli database file	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz	Optional	Metabuli, TheiaViral_ONT	database	
+metabuli	metabuli_db	File	Metabuli database file	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz	Optional	TheiaViral_ONT	database	
 metabuli	min_percent_coverage	Float	Minimum query coverage threshold (0.0 - 1.0)	0	Optional	Metabuli, TheiaViral_ONT	general	
 metabuli	min_score	Float	Minimum sequenece similarity score (0.0 - 1.0)	0	Optional	Metabuli, TheiaViral_ONT	general	
 metabuli	min_sp_score	Float	Minimum score for species- or lower-level classification	0	Optional	Metabuli, TheiaViral_ONT	general	
