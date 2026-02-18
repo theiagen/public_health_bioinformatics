@@ -5,6 +5,6 @@
   "metabuli_wf.taxon": "this.TAXON",
   "metabuli_wf.read1": "this.read1",
   "metabuli_wf.illumina": "this.ILLUMINA",
-  "metabuli_wf.metabuli.metabuli_db": "this.METABULI_DB"
+  "metabuli_wf.metabuli_db": "this.METABULI_DB"
 }
 
