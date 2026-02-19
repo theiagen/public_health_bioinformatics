@@ -18,14 +18,14 @@
 
 <!-- if: theiaviral | metabuli -->
 ??? task "`fastp`: Read Trimming"
-    `fastp` trims low-quality regions with a sliding window (with a default window size of 4, specified with `trim_window_size`), cutting once the average quality within the window falls below the `trim_quality_trim_score` (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below `trim_minlen` (default of 15 bases).
+    `fastp` trims low-quality regions with a sliding window (with a default window size of 4, specified with `fastp_window_size`), cutting once the average quality within the window falls below the `fastp_quality_trim_score` (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below `fastp_min_length` (default of 15 bases).
 
     Adapter trimming is enabled by default and can be disabled by setting `fastp_trim_adapters` to "false".
 <!-- endif -->
 
     Additional arguments can be passed using the `fastp_args` optional parameter. Please reference the [Fastp GitHub](https://github.com/OpenGene/fastp) for a comprehensive list of arguments.
 
-    !!! techdetails "Trimmomatic and fastp Technical Details"
+    !!! techdetails "fastp Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl) |
