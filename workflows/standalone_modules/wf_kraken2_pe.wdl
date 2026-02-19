@@ -42,6 +42,9 @@ workflow kraken2_pe_wf {
     File kraken2_unclassified_read2 = select_first([kraken2_pe.kraken2_unclassified_read2])
     File kraken2_classified_read1 = kraken2_pe.kraken2_classified_read1
     File kraken2_classified_read2 = select_first([kraken2_pe.kraken2_classified_read2])
+    # Bracken
+    String? bracken_version = kraken2_pe.bracken_version
+    File? bracken_report = kraken2_pe.bracken_report
     # Krona outputs
     String krona_version = krona.krona_version
     String krona_docker = krona.krona_docker

@@ -38,6 +38,9 @@ workflow kraken2_se_wf {
     File kraken2_classified_report = kraken2_se.kraken2_classified_report
     File kraken2_unclassified_read1 = kraken2_se.kraken2_unclassified_read1
     File kraken2_classified_read1 = kraken2_se.kraken2_classified_read1
+    # Bracken
+    String? bracken_version = kraken2_se.bracken_version
+    File? bracken_report = kraken2_se.bracken_report
     # Krona outputs
     String krona_version = krona.krona_version
     String krona_docker = krona.krona_docker
