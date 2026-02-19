@@ -141,7 +141,7 @@ workflow ivar_consensus {
     String ivar_variant_proportion_intermediate = variant_call.variant_proportion_intermediate
     String ivar_variant_version = variant_call.ivar_version
     # assembly outputs
-    String assembly_method_nonflu = "~{bwa.bwa_version}~{if defined(primer_trim.ivar_version) then '; Primer Trim: ' + select_first([primer_trim.ivar_version]) else ''}; Consensus: ~{consensus.ivar_version}"
+    String assembly_method_nonflu = "~{bwa.bwa_version}~{if defined(primer_trim.ivar_version) then '; Primer Trim: ' + primer_trim.ivar_version else ''}; Consensus: ~{consensus.ivar_version}"
     File assembly_fasta = consensus.consensus_seq
     String ivar_version_consensus = consensus.ivar_version
     String samtools_version_consensus = consensus.samtools_version
