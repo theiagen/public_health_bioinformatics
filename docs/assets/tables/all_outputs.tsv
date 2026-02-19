@@ -322,13 +322,18 @@ fasta_utilities_fai	File	FASTA index file	TheiaViral_ONT
 fasta_utilities_samtools_docker	String	Docker image used for samtools in fasta utilities	TheiaViral_ONT
 fasta_utilities_samtools_version	String	Version of samtools used in fasta utilities	TheiaViral_ONT
 fastp_docker	String	Docker image used for fastp	Freyja_FASTQ, Metabuli, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
-fastp_html_report	File	The HTML report made with fastp	Metabuli, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
-fastp_html_report	String	The HTML report made with fastp	Freyja_FASTQ
-fastp_json_report	File	The JSON report made with fastp	Metabuli, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
-fastp_json_report	String	The JSON report made with fastp	Freyja_FASTQ
-fastp_read1_trimmed	File	`read1` input trimmed by Fastp	Metabuli
-fastp_read2_trimmed	File	`read2` input trimmed by Fastp	Metabuli
+fastp_html_report	File	The HTML report conveying fastp results	Metabuli, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastp_html_report	String	The HTML report conveying fastp results	Freyja_FASTQ
+fastp_json_report	File	The JSON report conveying fastp results	Metabuli, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastp_json_report	String	The JSON report conveying fastp results	Freyja_FASTQ
+fastp_read1_trimmed	File	`read1` input trimmed by fastp	Metabuli
+fastp_read2_trimmed	File	`read2` input trimmed by fastp	Metabuli
 fastp_version	String	The version of fastp used	Freyja_FASTQ, Metabuli, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+fastplong_docker	String	Docker image used for fastplong	Metabuli
+fastplong_html_report	File	The HTML report conveying fastplong results	Metabuli
+fastplong_json_report	File	The JSON report conveying fastplong results	Metabuli
+fastplong_read1_trimmed	File	`read1` input trimmed by fastplong	Metabuli
+fastplong_version	String	The version of fastplong used	Metabuli
 fastq_dl_date	String	The date of the read data download	SRA_Fetch
 fastq_dl_docker	String	The docker used	SRA_Fetch
 fastq_dl_fastq_metadata	File	File containing metadata of the provided accession such as submission_accession, library_selection, instrument_platform, among others	SRA_Fetch
@@ -854,9 +859,8 @@ poppunk_gps_cluster	String	GPS cluster predicted by PopPUNK	TheiaProk_FASTA, The
 poppunk_GPS_db_version	String	Version of GPSC database used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 poppunk_gps_external_cluster_csv	File	GPSC v6 scheme designations	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 poppunk_version	String	Version of PopPUNK used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-porechop_read1_trimmed	File	FASTQ of `read1` input trimmed by Porechop	Metabuli
 porechop_trimmed_read1	File	Trimmed reads from Porechop	TheiaViral_ONT
-porechop_version	String	Version of Porechop used	Metabuli, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
+porechop_version	String	Version of Porechop used	TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT
 prepped_ena_data	File	Prepared data formatted for ENA submission	Terra_2_ENA
 primer_bed_name	String	Name of the primer bed files used for primer trimming	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 primer_trimmed_read_percent	Float	Percentage of read data with primers trimmed as determined by iVar trim	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE

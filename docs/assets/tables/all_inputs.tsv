@@ -94,7 +94,7 @@ mercury_prep_n_batch	sample_names	Array[String]	The samples you want to submit		
 mercury_prep_n_batch	terra_project_name	String	The name of your Terra project. You can find this information in the URL of the webpage of your Terra dashboard. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is example		Required	Mercury_Prep_N_Batch	general	
 mercury_prep_n_batch	terra_table_name	String	The name of the Terra table where your samples can be found. Do not include the entity: prefix, the _id suffix, or the _set_id suffix, just the name of the sample-level data table as listed in the sidebar on lefthand side of the Terra Data tab.		Required	Mercury_Prep_N_Batch	general	
 mercury_prep_n_batch	terra_workspace_name	String	The name of your Terra workspace where your samples can be found. For example, if your URL contains #workspaces/example/my_workspace/ then your project name is my_workspace		Required	Mercury_Prep_N_Batch	general	
-metabuli_wf	metabuli_db	File		Metabuli database file	Required	Metabuli	general	
+metabuli_wf	metabuli_db	File			Required	Metabuli	general	
 metabuli_wf	read1	File	FASTQ file containing read1 sequences		Required	Metabuli	general	
 metabuli_wf	samplename	String	The name of the sample being analyzed		Required	Metabuli	general	
 nextclade_batch	assembly_fastas	Array[File]	The assembly files for your samples in FASTA format		Required	Nextclade_Batch	general	
@@ -747,6 +747,20 @@ fastp	fastp_quality_trim_score	Int	Minimum mean base quality relative to window 
 fastp	fastp_trim_adapters	Boolean	Enable adapter trimming via Fastp	True	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 fastp	fastp_window_size	Int	Sliding window size for surveying read quality	4	Optional	Metabuli, TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 fastp	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Metabuli, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
+fastplong	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Metabuli	runtime	
+fastplong	cut_front	Boolean	Apply trimming options from 5' to 3'	False	Optional	Metabuli	general	
+fastplong	cut_tail	Boolean	Apply trimming options from 3' to 5'	False	Optional	Metabuli	general	
+fastplong	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Metabuli	runtime	
+fastplong	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/fastplong:0.4.1	Optional	Metabuli	docker	
+fastplong	fastplong_adapter_fasta	File	FASTA of adapter sequences to trim		Optional	Metabuli	general	
+fastplong	fastplong_args	String	Additional arguments to use with fastplong		Optional	Metabuli	general	
+fastplong	fastplong_end_adapter	String	Adapter sequence to trim from the 3' end		Optional	Metabuli	general	
+fastplong	fastplong_min_length	Int	Minimum read length	15	Optional	Metabuli	general	
+fastplong	fastplong_quality_trim_score	Int	Minimum mean base quality relative to window size	20	Optional	Metabuli	general	
+fastplong	fastplong_start_adapter	String	Adapter sequence to trim from the 5' end		Optional	Metabuli	general	
+fastplong	fastplong_trim_adapters	Boolean	Enable adapter trimming via fastplong	True	Optional	Metabuli	general	
+fastplong	fastplong_window_size	Int	Sliding window size for surveying read quality	4	Optional	Metabuli	general	
+fastplong	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Metabuli	runtime	
 fastq_scan_clean	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	runtime	
 fastq_scan_clean	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3	Optional	TBProfiler_tNGS, TheiaViral_Illumina_PE, TheiaViral_Panel	docker	
@@ -1597,10 +1611,10 @@ merlin_magic	virulencefinder_min_percent_coverage	Float	The threshold for minimu
 merlin_magic	virulencefinder_min_percent_identity	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	virulencefinder_min_percent_identity	Float	The threshold for minimum blast identity		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 metabuli	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Metabuli, TheiaViral_ONT	runtime	
-metabuli	disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	Metabuli, TheiaViral_ONT	runtime	
+metabuli	disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	TheiaViral_ONT	runtime	
 metabuli	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.1	Optional	Metabuli, TheiaViral_ONT	docker	
 metabuli	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	False	Optional	Metabuli	general	
-metabuli	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Metabuli, TheiaViral_ONT	runtime	
+metabuli	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaViral_ONT	runtime	
 metabuli	metabuli_db	File	Metabuli database file	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz	Optional	TheiaViral_ONT	database	
 metabuli	min_percent_coverage	Float	Minimum query coverage threshold (0.0 - 1.0)	0	Optional	Metabuli, TheiaViral_ONT	general	
 metabuli	min_score	Float	Minimum sequenece similarity score (0.0 - 1.0)	0	Optional	Metabuli, TheiaViral_ONT	general	
@@ -1609,6 +1623,8 @@ metabuli	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	g
 metabuli	taxdump_path	File	Path to compressed taxonomy dump	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz	Optional	Metabuli, TheiaViral_ONT	general	
 metabuli_wf	call_trim	Boolean	Call adapter and read trimming via Fastp (Illumina) or Porechop (ONT)	True	Optional	Metabuli	general	
 metabuli_wf	illumina	Boolean	Input reads are Illumina - automatically inferred if read2 is populated, ONT is assumed otherwise		Optional	Metabuli	general	
+metabuli_wf	metabuli_disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	Metabuli	runtime	
+metabuli_wf	metabuli_mem	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Metabuli	runtime	
 metabuli_wf	read2	File	FASTQ file containing read2 sequences		Optional	Metabuli	general	
 metabuli_wf	taxon	String	NCBI taxonomy compatible taxon name/ID to enable read extraction		Optional	Metabuli	general	
 metaspades_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaMeta_Illumina_PE	runtime	
@@ -1881,11 +1897,11 @@ plasmidfinder	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	
 plasmidfinder	method_path	String	Path to files for a user-specified method to use (blast or kma)		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 plasmidfinder	min_percent_coverage	Float	Threshold for minimum coverage, default threshold from PlasmidFinder CLI tool is used (0.60)	0.6	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 plasmidfinder	min_percent_identity	Float	Threshold for mininum blast identity, default threshold from PlasmidFinder CLI tool is used (0.90). This default differs from the default of the PlasmidFinder webtool (0.95)	0.9	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-porechop	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Metabuli, TheiaViral_ONT	runtime	
-porechop	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Metabuli, TheiaViral_ONT	runtime	
-porechop	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/porechop:0.2.4	Optional	Metabuli, TheiaViral_ONT	docker	
-porechop	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Metabuli, TheiaViral_ONT	runtime	
-porechop	trimopts	String	Additional trimming options for Porechop		Optional	Metabuli, TheiaViral_ONT	general	
+porechop	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_ONT	runtime	
+porechop	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
+porechop	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/porechop:0.2.4	Optional	TheiaViral_ONT	docker	
+porechop	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaViral_ONT	runtime	
+porechop	trimopts	String	Additional trimming options for Porechop		Optional	TheiaViral_ONT	general	
 prep_augur_metadata	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur_Prep	runtime	
 prep_augur_metadata	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	Augur_Prep	runtime	
 prep_augur_metadata	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Augur_Prep	docker	
