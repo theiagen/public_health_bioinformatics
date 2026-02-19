@@ -12,7 +12,7 @@ task kraken2_theiacov {
     Boolean call_bracken = true
     Int disk_size = 100
     String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1"
-    Int bracken_read_length = 100
+    Int? bracken_read_length
   }
   command <<<
     # date and version control
@@ -47,6 +47,17 @@ task kraken2_theiacov {
     # Run Bracken  
     if [ "~{call_bracken}" == "true" ]; then
       bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
+
+      if [ -z "~{bracken_read_length}" ]; then
+        # if bracken read length isn't provided, attempt to infer it from the input reads
+        mean_read_length=$(seqkit stats ~{read1} | awk 'NR==2 {print int($7)}')
+        echo "INFO: Using mean read length: ${mean_read_length}"
+        bracken_read_length=${mean_read_length}
+      else
+        bracken_read_length="~{bracken_read_length}"
+        echo "INFO: Using provided Bracken read length: ${bracken_read_length}"
+      fi
+
       bracken -d ./db/ \
         -i ~{samplename}_kraken2_report.txt \
         -o ~{samplename}_bracken_summary.txt \
@@ -120,7 +131,7 @@ task kraken2_standalone {
     String classified_out = "classified#.fastq"
     String unclassified_out = "unclassified#.fastq"
     Boolean call_bracken = true
-    Int bracken_read_length = 100
+    Int? bracken_read_length
     Int memory = 32
     Int cpu = 4
     Int disk_size = 100
@@ -135,18 +146,18 @@ task kraken2_standalone {
 
     # determine if paired-end or not
     if ! [ -z ~{read2} ]; then
-      echo "Reads are paired..."
+      echo "DEBUG: Reads are paired..."
       mode="--paired"
     fi
 
     # determine if reads are compressed
     if [[ ~{read1} == *.gz ]]; then
-      echo "Reads are compressed..."
+      echo "DEBUG: Reads are compressed..."
       compressed="--gzip-compressed"
     fi
 
     # Run Kraken2
-    echo "Running Kraken2..."
+    echo "INFO: Running Kraken2..."
     kraken2 $mode $compressed \
         --db ./db/ \
         --threads ~{cpu} \
@@ -164,6 +175,17 @@ task kraken2_standalone {
     # Run Bracken  
     if [ "~{call_bracken}" == "true" ]; then
       bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
+
+      if [ -z "~{bracken_read_length}" ]; then
+        # if bracken read length isn't provided, attempt to infer it from the input reads
+        mean_read_length=$(seqkit stats ~{read1} | awk 'NR==2 {print int($7)}')
+        echo "INFO: Using mean read length: ${mean_read_length}"
+        bracken_read_length=${mean_read_length}
+      else
+        bracken_read_length="~{bracken_read_length}"
+        echo "INFO: Using provided Bracken read length: ${bracken_read_length}"
+      fi
+
       bracken -d ./db/ \
         -i ~{samplename}_kraken2_report.txt \
         -o ~{samplename}_bracken_summary.txt \
