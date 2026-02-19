@@ -2,18 +2,27 @@ version 1.0
 
 task fastp {
   input {
+    # required inputs
     File read1
     File? read2
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastp:1.1.0"
-    Int disk_size = 100
+
+    # quality trimming options
     Int fastp_window_size = 4 # set to mirror v1.1.0 default 
     Int fastp_quality_trim_score = 20 # set to mirror v1.1.0 default
     Int fastp_min_length = 15 # set to mirror v1.1.0 default
+
+    # adapter trimming options
     Boolean fastp_trim_adapters = true
     File? fastp_adapter_fasta
     # -g enables polyg trimming with default value of 10
+
+    # other options
     String? fastp_args
+
+    # runtime options
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/fastp:1.1.0"
+    Int disk_size = 100
     Int cpu = 4
     Int memory = 8
   }
