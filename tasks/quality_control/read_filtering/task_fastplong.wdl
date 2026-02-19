@@ -39,7 +39,7 @@ task fastplong {
     fastplong \
       -i ~{read1} \
       -o ~{samplename}_trim.fastq.gz \
-      ~{if defined(fastp_long_window_size) then "--cut_window_size ~{fastplong_window_size}" else ""} \
+      ~{if defined(fastplong_window_size) then "--cut_window_size ~{fastplong_window_size}" else ""} \
       ~{if defined(fastplong_quality_trim_score) then "--cut_mean_quality ~{fastplong_quality_trim_score}" else ""} \
       ~{if cut_front then "--cut_front" else ""} \
       ~{if cut_tail then "--cut_tail" else ""} \
