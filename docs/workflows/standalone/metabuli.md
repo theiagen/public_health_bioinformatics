@@ -8,9 +8,9 @@
 
 **The Metabuli workflow assesses the taxonomic profile of raw sequencing data (FASTQ files).**
 
-Metabuli is suitable for classifying short reads *AND* long reads by comparing them to reference genomes.Optionally it can enable the extraction of reads from a specific NCBI taxon ID of interest. Metabuli uses a novel k-mer structure, called a "metamer", which incorporates both the DNA sequence for high specificity and amino acid conservation for sensitive homology detection.
+Metabuli is suitable for classifying short reads *AND* long reads by comparing them to reference genomes. Optionally it can enable the extraction of reads from a specific NCBI taxon ID of interest. Metabuli uses a novel k-mer structure, called a "metamer", which incorporates both the DNA sequence for high specificity and amino acid conservation for sensitive homology detection.
 
-The Metabuli_PHB workflow additionally includes read trimming software, Fastp (Illumina) and Porechop (ONT), for adapter trimming (recommended) and basic read preprocessing. 
+The Metabuli_PHB workflow additionally includes read trimming software, Fastp (Illumina) and fastplong (ONT), for adapter trimming (recommended) and basic read preprocessing. 
 
 !!! caption "Metabuli Workflow Diagram"
     ![Metabuli Workflow Diagram](../../assets/figures/Metabuli.png)
@@ -57,7 +57,7 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
 
 {{ include_md("common_text/fastp_task.md", condition="metabuli") }}
 
-{{ include_md("common_text/porechop_task.md", condition="metabuli") }}
+{{ include_md("common_text/fastplong_task.md", condition="metabuli") }}
 
 {{ include_md("common_text/metabuli_task.md", condition="metabuli") }}
 
