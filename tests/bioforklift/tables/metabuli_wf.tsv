@@ -1,4 +1,4 @@
-entity:metabuli_id	organism	read1	read2	METABULI_DB	TRIM_ADAPTERS	ILLUMINA	TAXON	EXTRACT_UNCLASSIFIED
+entity:metabuli_wf_id	organism	read1	read2	METABULI_DB	TRIM_ADAPTERS	ILLUMINA	TAXON	EXTRACT_UNCLASSIFIED
 ERR11656008-FluB-ONT	11520	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/flu-ont/ERR11656008.FluB-ONT.fastq.gz		gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz	true	false	11520	true
 HSV-1_SRR20796393	10298	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaviral/ont/hsv/HSV-1_SRR20796393.fastq.gz		gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz	true	false	10298	true
 MN-MDH-RSVA-00280	208893	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/rsv-ont/SRR28642467_1.fastq.gz		gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz	true	false	208893	true
