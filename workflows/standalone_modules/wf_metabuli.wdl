@@ -3,7 +3,7 @@ version 1.0
 import "../../tasks/task_versioning.wdl" as versioning_task
 import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli_task
 import "../../tasks/quality_control/read_filtering/task_fastp.wdl" as fastp_task
-import "../../tasks/quality_control/read_filtering/task_porechop.wdl" as porechop_task
+import "../../tasks/quality_control/read_filtering/task_fastplong.wdl" as fastplong_task
 import "../../tasks/taxon_id/task_ete4_taxon_id.wdl" as identify_taxon_id_task
 
 workflow metabuli_wf {
@@ -54,7 +54,7 @@ workflow metabuli_wf {
   }
   # Trim ONT
   if (call_trim && ! (select_first([illumina, false]) || defined(implicit_illumina))) {
-    call porechop_task.porechop {
+    call fastplong_task.fastplong {
       input:
         read1 = read1,
         samplename = samplename
@@ -67,7 +67,7 @@ workflow metabuli_wf {
     input:
       samplename = samplename,
       taxon_id = ete4_identify.taxon_id,
-      read1 = select_first([fastp.read1_trimmed, porechop.trimmed_reads, read1]),
+      read1 = select_first([fastp.read1_trimmed, fastplong.read1_trimmed, read1]),
       read2 = read2_input,
       seq_mode = select_first([se_mode, pe_mode, ont_mode]),
       metabuli_db = metabuli_db,
@@ -91,8 +91,11 @@ workflow metabuli_wf {
     String? fastp_docker = fastp.fastp_docker
     File? fastp_html_report = fastp.fastp_stats_html
     File? fastp_json_report = fastp.fastp_stats_json
-    File? porechop_read1_trimmed = porechop.trimmed_reads
-    String? porechop_version = porechop.porechop_version
+    File? fastplong_read1_trimmed = fastplong.read1_trimmed
+    File? fastplong_html_report = fastplong.fastplong_stats_html
+    File? fastplong_json_report = fastplong.fastplong_stats_json
+    String? fastplong_version = fastplong.fastplong_version
+    String? fastplong_docker = fastplong.fastplong_docker
     # Metabuli
     String metabuli_version = metabuli.metabuli_version
     String metabuli_docker = metabuli.metabuli_docker
