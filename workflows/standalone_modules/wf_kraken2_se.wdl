@@ -21,7 +21,7 @@ workflow kraken2_se_wf {
   }
   call krona_task.krona as krona {
     input:
-      kraken2_report = kraken2_se.kraken2_report,
+      kraken2_report = select_first([kraken2_se.bracken_report, kraken2_se.kraken2_report]),
       samplename = samplename
   }
   call versioning.version_capture {

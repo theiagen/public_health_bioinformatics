@@ -49,7 +49,8 @@ task kraken2_theiacov {
       bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
       bracken -d ./db/ \
         -i ~{samplename}_kraken2_report.txt \
-        -o ~{samplename}_bracken_report.txt \
+        -o ~{samplename}_bracken_summary.txt \
+        -w ~{samplename}_bracken_report.txt \
         -r ~{bracken_read_length} \
         -l S
     fi
@@ -165,7 +166,8 @@ task kraken2_standalone {
       bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
       bracken -d ./db/ \
         -i ~{samplename}_kraken2_report.txt \
-        -o ~{samplename}_bracken_report.txt \
+        -o ~{samplename}_bracken_summary.txt \
+        -w ~{samplename}_bracken_report.txt \
         -r ~{bracken_read_length} \
         -l S
     fi

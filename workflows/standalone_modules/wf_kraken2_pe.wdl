@@ -23,7 +23,7 @@ workflow kraken2_pe_wf {
   }
   call krona_task.krona as krona {
     input:
-      kraken2_report = kraken2_pe.kraken2_report,
+      kraken2_report = select_first([kraken2_pe.bracken_report, kraken2_pe.kraken2_report]),
       samplename = samplename
   }
   call versioning.version_capture {
