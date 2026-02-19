@@ -1,4 +1,0 @@
-entity:kraken_ont_id	kraken_database_input	read1
-ERR6359498	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral_20240112.tar.gz	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiacov/flu/ont/ERR6359498.fastq.gz
-ERR6359501	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral_20240112.tar.gz	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiacov/flu/ont/ERR6359501.fastq.gz
-SRR13439799	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral_20240112.tar.gz	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiacov/flu/ont/SRR13439799_1.fastq.gz
