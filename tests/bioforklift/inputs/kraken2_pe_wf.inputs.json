@@ -2,5 +2,5 @@
   "kraken2_pe_wf.kraken2_db": "this.kraken_database_input",
   "kraken2_pe_wf.read1": "this.read1",
   "kraken2_pe_wf.read2": "this.read2",
-  "kraken2_pe_wf.samplename": "this.kraken_pe_id"
+  "kraken2_pe_wf.samplename": "this.kraken2_pe_wf_id"
 }
