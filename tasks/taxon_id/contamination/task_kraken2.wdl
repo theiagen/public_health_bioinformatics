@@ -19,7 +19,7 @@ task kraken2_theiacov {
     set -eu
 
     # date and version control
-    date | tee DATE
+    echo "INFO: Kraken2 version:"
     kraken2 --version | head -n1 | tee KRAKEN2_VERSION
     num_reads=$(ls *fastq.gz 2> /dev/nul | wc -l)
 
@@ -29,19 +29,20 @@ task kraken2_theiacov {
 
     if ! [ -z ~{read2} ]; then
       mode="--paired"
+      echo "DEBUG: Reads are paired..."
     else
       mode=""
+      echo "DEBUG: Reads are single-end..."
     fi
-    echo $mode
 
      # determine if reads are compressed
     if [[ ~{read1} == *.gz ]]; then
-      echo "Reads are compressed..."
+      echo "DEBUG: Reads are compressed..."
       compressed="--gzip-compressed"
     else
+      echo "DEBUG: Reads are not compressed..."
       compressed=""
     fi
-    echo $compressed
 
     # Run Kraken2
     kraken2 $mode $compressed \
@@ -53,12 +54,17 @@ task kraken2_theiacov {
 
     # Run Bracken  
     if [ "~{call_bracken}" == "true" ]; then
-      bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
+      # check if kraken database is compatible with bracken (i.e. has kmer distribution files)
+      if [ -z "$(ls db/database*mers\.kmer_distrib 2> /dev/null)" ]; then
+        echo "ERROR: Bracken kmer distribution files not found in the Kraken2 database. Skipping" >&2
+      else
+        # if bracken_kmer_length isn't provided, infer as the kmer length directly under the mean read length
+        if [ -z "~{bracken_kmer_length}" ]; then
 
-      # if bracken_kmer_length isn't provided, infer as the kmer length directly under the mean read length
-      if [ -z "~{bracken_kmer_length}" ]; then
-        seqkit stats ~{read1} > read_lengths.tsv
-        python3 <<CODE
+          bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
+
+          seqkit stats ~{read1} > read_lengths.tsv
+          python3 <<CODE
     import os
     import re
     with open("read_lengths.tsv", "r") as f:
@@ -77,18 +83,19 @@ task kraken2_theiacov {
       out.write(str(best_kmer))
     CODE
 
-        bracken_kmer_length=$(cat bracken_kmer_length)
-      else
-        bracken_kmer_length="~{bracken_kmer_length}"
-        echo "INFO: Using provided Bracken read length: ${bracken_kmer_length}"
-      fi
+          bracken_kmer_length=$(cat bracken_kmer_length)
+        else
+          bracken_kmer_length="~{bracken_kmer_length}"
+          echo "INFO: Using provided Bracken read length: ${bracken_kmer_length}"
+        fi
 
-      bracken -d ./db/ \
-        -i ~{samplename}_kraken2_report.txt \
-        -o ~{samplename}_bracken_summary.txt \
-        -w ~{samplename}_bracken_report.txt \
-        -r ${bracken_kmer_length} \
-        -l S || true
+        bracken -d ./db/ \
+          -i ~{samplename}_kraken2_report.txt \
+          -o ~{samplename}_bracken_summary.txt \
+          -w ~{samplename}_bracken_report.txt \
+          -r ${bracken_kmer_length} \
+          -l S || true
+      fi
     fi
 
     # Compress and cleanup
@@ -97,11 +104,12 @@ task kraken2_theiacov {
     # capture human percentage
     percentage_human=$(grep "Homo sapiens" ~{samplename}_kraken2_report.txt | cut -f 1)
     if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
+    echo "INFO: Percentage human:"
     echo $percentage_human | tee PERCENT_HUMAN
 
     # capture target org percentage
     if [ ! -z "~{target_organism}" ]; then
-      echo "Target org designated: ~{target_organism}"
+      echo "DEBUG: Target org designated: ~{target_organism}"
       # if target organisms is sc2, report it in a special legacy column called PERCENT_SC2
       if [[ "~{target_organism}" == "Severe acute respiratory syndrome coronavirus 2" ]]; then
         percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{samplename}_kraken2_report.txt  | cut -f1 )
@@ -116,12 +124,13 @@ task kraken2_theiacov {
       percent_target_organism=""
       percentage_sc2=""
     fi
+    echo "INFO: Percentage SARS-CoV-2:"
     echo $percentage_sc2 | tee PERCENT_SC2
+    echo "INFO: Percentage target organism (~{target_organism}):"
     echo $percent_target_organism | tee PERCENT_TARGET_ORGANISM
 
   >>>
   output {
-    String date = read_string("DATE")
     String kraken2_version = read_string("KRAKEN2_VERSION")
     String? bracken_version = read_string("BRACKEN_VERSION")
     File kraken_report = "~{samplename}_kraken2_report.txt"
@@ -165,8 +174,8 @@ task kraken2_standalone {
     # fail hard
     set -eu
 
+    echo "INFO: Kraken2 version:"
     echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee KRAKEN2_VERSION
-    date | tee DATE
 
     # Decompress the Kraken2 database
     mkdir db
@@ -208,12 +217,17 @@ task kraken2_standalone {
 
     # Run Bracken  
     if [ "~{call_bracken}" == "true" ]; then
-      bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
 
-      # if bracken_kmer_length isn't provided, infer as the kmer length directly under the mean read length
-      if [ -z "~{bracken_kmer_length}" ]; then
-        seqkit stats ~{read1} > read_lengths.tsv
-        python3 <<CODE
+      # check if kraken database is compatible with bracken (i.e. has kmer distribution files)
+      if [ -z "$(ls db/database*mers\.kmer_distrib 2> /dev/null)" ]; then
+        echo "ERROR: Bracken kmer distribution files not found in the Kraken2 database." >&2
+      else
+        bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
+
+        # if bracken_kmer_length isn't provided, infer as the kmer length directly under the mean read length
+        if [ -z "~{bracken_kmer_length}" ]; then
+          seqkit stats ~{read1} > read_lengths.tsv
+          python3 <<CODE
     import os
     import re
     with open("read_lengths.tsv", "r") as f:
@@ -231,23 +245,25 @@ task kraken2_standalone {
     with open("bracken_kmer_length", "w") as out:
       out.write(str(best_kmer))
     CODE
-        bracken_kmer_length=$(cat bracken_kmer_length)
-      else
-        bracken_kmer_length="~{bracken_kmer_length}"
-        echo "INFO: Using provided Bracken read length: ${bracken_kmer_length}"
+          bracken_kmer_length=$(cat bracken_kmer_length)
+        else
+          bracken_kmer_length="~{bracken_kmer_length}"
+          echo "INFO: Using provided Bracken read length: ${bracken_kmer_length}"
+        fi
+  
+        bracken -d ./db/ \
+          -i ~{samplename}_kraken2_report.txt \
+          -o ~{samplename}_bracken_summary.txt \
+          -w ~{samplename}_bracken_report.txt \
+          -r ${bracken_kmer_length} \
+          -l S || true
       fi
-
-      bracken -d ./db/ \
-        -i ~{samplename}_kraken2_report.txt \
-        -o ~{samplename}_bracken_summary.txt \
-        -w ~{samplename}_bracken_report.txt \
-        -r ${bracken_kmer_length} \
-        -l S || true
     fi
 
     # Report percentage of human reads
     percentage_human=$(grep "Homo sapiens" ~{samplename}_kraken2_report.txt | cut -f 1)
     if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
+    echo "INFO: Percentage human:"
     echo $percentage_human | tee PERCENT_HUMAN
     
     # rename classified and unclassified read files if SE
@@ -263,7 +279,6 @@ task kraken2_standalone {
     String kraken2_version = read_string("KRAKEN2_VERSION")
     String? bracken_version = read_string("BRACKEN_VERSION")
     String kraken2_docker = docker
-    String analysis_date = read_string("DATE")
     File kraken2_report = "~{samplename}_kraken2_report.txt"
     File? bracken_report = "~{samplename}_bracken_report.txt"
     File kraken2_classified_report = "~{samplename}.classifiedreads.txt.gz"
@@ -351,11 +366,12 @@ task kraken2_parse_classified {
     # capture human percentage
     percentage_human=$(grep "Homo sapiens" ~{samplename}.report_parsed.txt | cut -f 1)
     if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
+    echo "INFO: Percentage human:"
     echo $percentage_human | tee PERCENT_HUMAN
 
     # capture target org percentage
     if [ ! -z "~{target_organism}" ]; then
-      echo "Target org designated: ~{target_organism}"
+      echo "DEBUG: Target org designated: ~{target_organism}"
       # if target organisms is sc2, report it in a special legacy column called PERCENT_SC2
       if [[ "~{target_organism}" == "Severe acute respiratory syndrome coronavirus 2" ]]; then
         percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" ~{samplename}.report_parsed.txt  | cut -f1 )
@@ -370,7 +386,9 @@ task kraken2_parse_classified {
       percent_target_organism=""
       percentage_sc2=""
     fi
+    echo "INFO: Percentage SARS-CoV-2:"
     echo $percentage_sc2 | tee PERCENT_SC2
+    echo "INFO: Percentage target organism (~{target_organism}):"
     echo $percent_target_organism | tee PERCENT_TARGET_ORGANISM
     
   >>>
