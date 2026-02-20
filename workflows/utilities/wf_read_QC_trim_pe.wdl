@@ -27,7 +27,7 @@ workflow read_QC_trim_pe {
     File? midas_db
     Boolean call_kraken = false
     Boolean call_bracken = true
-    Int? bracken_read_length
+    Int? bracken_kmer_length
     Int? kraken_disk_size
     Int? kraken_memory
     Int? kraken_cpu
@@ -75,7 +75,7 @@ workflow read_QC_trim_pe {
         memory = kraken_memory,
         cpu = kraken_cpu,
         call_bracken = call_bracken,
-        bracken_read_length = bracken_read_length
+        bracken_kmer_length = bracken_kmer_length
     }
     call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
       input:
@@ -88,7 +88,7 @@ workflow read_QC_trim_pe {
         memory = kraken_memory,
         cpu = kraken_cpu,
         call_bracken = call_bracken,
-        bracken_read_length = bracken_read_length
+        bracken_kmer_length = bracken_kmer_length
     }
   }
   if (read_processing == "trimmomatic") {
@@ -147,7 +147,7 @@ workflow read_QC_trim_pe {
           memory = kraken_memory,
           cpu = kraken_cpu,
           call_bracken = call_bracken,
-          bracken_read_length = bracken_read_length
+          bracken_kmer_length = bracken_kmer_length
       }
     }  
     if ((call_kraken) && ! defined(kraken_db)) {

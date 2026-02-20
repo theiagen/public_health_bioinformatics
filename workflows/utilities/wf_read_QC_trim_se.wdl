@@ -29,7 +29,7 @@ workflow read_QC_trim_se {
     File? midas_db
     Boolean call_kraken = false
     Boolean call_bracken = true
-    Int? bracken_read_length
+    Int? bracken_kmer_length
     File? kraken_db
     Int? kraken_disk_size
     Int? kraken_memory
@@ -108,7 +108,7 @@ workflow read_QC_trim_se {
         memory = kraken_memory,
         cpu = kraken_cpu,
         call_bracken = call_bracken,
-        bracken_read_length = bracken_read_length
+        bracken_kmer_length = bracken_kmer_length
     }
     call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
       input:
@@ -120,7 +120,7 @@ workflow read_QC_trim_se {
         memory = kraken_memory,
         cpu = kraken_cpu,
         call_bracken = call_bracken,
-        bracken_read_length = bracken_read_length
+        bracken_kmer_length = bracken_kmer_length
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
@@ -144,7 +144,7 @@ workflow read_QC_trim_se {
           memory = kraken_memory,
           cpu = kraken_cpu,
           call_bracken = call_bracken,
-          bracken_read_length = bracken_read_length
+          bracken_kmer_length = bracken_kmer_length
       }
     }  if ((call_kraken) && ! defined(kraken_db)) {
       String kraken_db_warning = "Kraken database not defined"
