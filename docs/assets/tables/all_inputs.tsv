@@ -465,9 +465,6 @@ cg_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the tas
 cg_reorder_matrix	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1	Optional	Snippy_Tree	docker	
 cg_reorder_matrix	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Tree	runtime	
 cg_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon (overrides midpoint root)		Optional	Snippy_Tree	general	
-cg_snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Tree	runtime	
-cg_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Snippy_Tree	runtime	
-cg_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Tree	runtime	
 checkv_consensus	checkv_db	File	CheckV database file	gs://theiagen-public-resources-rp/reference_data/databases/checkv/checkv-db-v1.5.tar.gz	Optional	TheiaViral_ONT	database	
 checkv_consensus	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 checkv_consensus	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
@@ -2204,6 +2201,10 @@ snippy_streamline	use_centroid_as_reference	Boolean	Set to true if you want to u
 snippy_streamline_fasta	reference_genome_file	File	Reference genome in FASTA or GENBANK format (must be the same reference used in Snippy_Variants workflow); provide this if you want to skip the detection of a suitable reference		Optional	Snippy_Streamline_FASTA	general	
 snippy_streamline_fasta	use_centroid_as_reference	Boolean	Set to true if you want to use the centroid sample as the reference sample instead of using the centroid to detect a suitable one	False	Optional	Snippy_Streamline_FASTA	general	True
 snippy_tree_wf	call_shared_variants	Boolean	When true, workflow generates table that combines variants across all samples and a table showing variants shared across samples	True	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
+snippy_tree_wf	cg_snp_dists_cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
+snippy_tree_wf	cg_snp_dists_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
+snippy_tree_wf	cg_snp_dists_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
+snippy_tree_wf	cg_snp_dists_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	core_genome	Boolean	When true, workflow generates core genome phylogeny; when false, whole genome is used	True	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	data_summary_column_names	String	A comma-separated list of the column names from the sample-level data table for generating a data summary (presence/absence .csv matrix)		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	data_summary_terra_project	String	The billing project for your current workspace. This can be found after the "#workspaces/" section in the workspace's URL		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
@@ -2228,12 +2229,15 @@ snippy_tree_wf	snippy_core_disk_size	Int	Amount of storage (in GB) to allocate t
 snippy_tree_wf	snippy_core_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	snippy_core_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	snippy_variants_qc_metrics	Array[File]	Files produced by the Snippy_Variants workflow used to concatenate the reports for each sample in the tree		Optional	Snippy_Tree	general	
-snippy_tree_wf	snp_dists_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	snp_sites_cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	snp_sites_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	snp_sites_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	snp_sites_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	use_gubbins	Boolean	When "true", workflow removes recombination with gubbins tasks; when "false", gubbins is not used	True	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
+snippy_tree_wf	wg_snp_dists_cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
+snippy_tree_wf	wg_snp_dists_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
+snippy_tree_wf	wg_snp_dists_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
+snippy_tree_wf	wg_snp_dists_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_variants	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Variants	runtime	
 snippy_variants_wf	assembly_fasta	File	The assembly file for your sample in FASTA format		Optional	Snippy_Streamline, Snippy_Variants	general	
 snippy_variants_wf	base_quality	Int	Minimum quality for a nucleotide to be used in variant calling	13	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Variants	general	
@@ -2748,9 +2752,6 @@ wg_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the tas
 wg_reorder_matrix	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1	Optional	Snippy_Tree	docker	
 wg_reorder_matrix	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Tree	runtime	
 wg_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon (overrides midpoint root)		Optional	Snippy_Tree	general	
-wg_snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Tree	runtime	
-wg_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Snippy_Tree	runtime	
-wg_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Tree	runtime	
 zip_files	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Zip_Column_Content	runtime	
 zip_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Zip_Column_Content	runtime	
 zip_files	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Zip_Column_Content	docker	
