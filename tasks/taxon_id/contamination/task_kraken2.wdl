@@ -52,7 +52,8 @@ task kraken2_theiacov {
       --report ~{samplename}_kraken2_report.txt \
       --output ~{samplename}.classifiedreads.txt
 
-    # Run Bracken  
+    # Run Bracken 
+    touch BRACKEN_VERSION 
     if [ "~{call_bracken}" == "true" ]; then
       # check if kraken database is compatible with bracken (i.e. has kmer distribution files)
       if [ -z "$(ls db/database*mers\.kmer_distrib 2> /dev/null)" ]; then
@@ -61,6 +62,7 @@ task kraken2_theiacov {
         # if bracken_kmer_length isn't provided, infer as the kmer length directly under the mean read length
         if [ -z "~{bracken_kmer_length}" ]; then
 
+          echo "INFO: Bracken version:"
           bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
 
           seqkit stats ~{read1} > read_lengths.tsv
@@ -132,7 +134,7 @@ task kraken2_theiacov {
   >>>
   output {
     String kraken2_version = read_string("KRAKEN2_VERSION")
-    String? bracken_version = read_string("BRACKEN_VERSION")
+    String bracken_version = read_string("BRACKEN_VERSION")
     File kraken_report = "~{samplename}_kraken2_report.txt"
     File? bracken_report = "~{samplename}_bracken_report.txt"
     Float percent_human = read_float("PERCENT_HUMAN")
@@ -215,6 +217,7 @@ task kraken2_standalone {
     gzip *.fastq
     gzip ~{samplename}.classifiedreads.txt
 
+    touch BRACKEN_VERSION
     # Run Bracken  
     if [ "~{call_bracken}" == "true" ]; then
 
@@ -222,6 +225,7 @@ task kraken2_standalone {
       if [ -z "$(ls db/database*mers\.kmer_distrib 2> /dev/null)" ]; then
         echo "ERROR: Bracken kmer distribution files not found in the Kraken2 database." >&2
       else
+        echo "INFO: Bracken version:"
         bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
 
         # if bracken_kmer_length isn't provided, infer as the kmer length directly under the mean read length
@@ -277,7 +281,7 @@ task kraken2_standalone {
   >>>
   output {
     String kraken2_version = read_string("KRAKEN2_VERSION")
-    String? bracken_version = read_string("BRACKEN_VERSION")
+    String bracken_version = read_string("BRACKEN_VERSION")
     String kraken2_docker = docker
     File kraken2_report = "~{samplename}_kraken2_report.txt"
     File? bracken_report = "~{samplename}_bracken_report.txt"
