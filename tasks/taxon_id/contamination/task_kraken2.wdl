@@ -12,7 +12,7 @@ task kraken2_theiacov {
     Boolean call_bracken = true
     Int disk_size = 100
     String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1"
-    Int? bracken_read_length
+    Int? bracken_kmer_length
   }
   command <<<
     # fail hard
@@ -51,8 +51,8 @@ task kraken2_theiacov {
     if [ "~{call_bracken}" == "true" ]; then
       bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
 
-      # if bracken_read_length isn't provided, infer as the kmer length directly under the mean read length
-      if [ -z "~{bracken_read_length}" ]; then
+      # if bracken_kmer_length isn't provided, infer as the kmer length directly under the mean read length
+      if [ -z "~{bracken_kmer_length}" ]; then
         seqkit stats ~{read1} > read_lengths.tsv
         python3 <<CODE
     import os
@@ -69,21 +69,21 @@ task kraken2_theiacov {
     # the best kmer is directly under the mean length size
     best_kmer = max([k for k in kmer_dists if k < mean_len], default=min(kmer_dists))
     print(f"INFO: Selected k-mer length for Bracken: {best_kmer}")
-    with open("BRACKEN_READ_LENGTH", "w") as out:
+    with open("bracken_kmer_length", "w") as out:
       out.write(str(best_kmer))
     CODE
 
-        bracken_read_length=$(cat BRACKEN_READ_LENGTH)
+        bracken_kmer_length=$(cat bracken_kmer_length)
       else
-        bracken_read_length="~{bracken_read_length}"
-        echo "INFO: Using provided Bracken read length: ${bracken_read_length}"
+        bracken_kmer_length="~{bracken_kmer_length}"
+        echo "INFO: Using provided Bracken read length: ${bracken_kmer_length}"
       fi
 
       bracken -d ./db/ \
         -i ~{samplename}_kraken2_report.txt \
         -o ~{samplename}_bracken_summary.txt \
         -w ~{samplename}_bracken_report.txt \
-        -r ${bracken_read_length} \
+        -r ${bracken_kmer_length} \
         -l S || true
     fi
 
@@ -152,7 +152,7 @@ task kraken2_standalone {
     String classified_out = "classified#.fastq"
     String unclassified_out = "unclassified#.fastq"
     Boolean call_bracken = true
-    Int? bracken_read_length
+    Int? bracken_kmer_length
     Int memory = 32
     Int cpu = 4
     Int disk_size = 100
@@ -200,8 +200,8 @@ task kraken2_standalone {
     if [ "~{call_bracken}" == "true" ]; then
       bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
 
-      # if bracken_read_length isn't provided, infer as the kmer length directly under the mean read length
-      if [ -z "~{bracken_read_length}" ]; then
+      # if bracken_kmer_length isn't provided, infer as the kmer length directly under the mean read length
+      if [ -z "~{bracken_kmer_length}" ]; then
         seqkit stats ~{read1} > read_lengths.tsv
         python3 <<CODE
     import os
@@ -218,20 +218,20 @@ task kraken2_standalone {
     # the best kmer is directly under the mean length size
     best_kmer = max([k for k in kmer_dists if k < mean_len], default=min(kmer_dists))
     print(f"INFO: Selected k-mer length for Bracken: {best_kmer}")
-    with open("BRACKEN_READ_LENGTH", "w") as out:
+    with open("bracken_kmer_length", "w") as out:
       out.write(str(best_kmer))
     CODE
-        bracken_read_length=$(cat BRACKEN_READ_LENGTH)
+        bracken_kmer_length=$(cat bracken_kmer_length)
       else
-        bracken_read_length="~{bracken_read_length}"
-        echo "INFO: Using provided Bracken read length: ${bracken_read_length}"
+        bracken_kmer_length="~{bracken_kmer_length}"
+        echo "INFO: Using provided Bracken read length: ${bracken_kmer_length}"
       fi
 
       bracken -d ./db/ \
         -i ~{samplename}_kraken2_report.txt \
         -o ~{samplename}_bracken_summary.txt \
         -w ~{samplename}_bracken_report.txt \
-        -r ${bracken_read_length} \
+        -r ${bracken_kmer_length} \
         -l S || true
     fi
 
