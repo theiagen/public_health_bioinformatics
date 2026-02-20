@@ -14,7 +14,7 @@ task ete4_taxon_id {
     set -euo pipefail
 
     date | tee DATE
-    ete4 version | sed 's| Tool path.*||' | tee ete4_VERSION
+    ete4 version | sed 's| Tools path.*||' | tee ete4_VERSION
 
     echo "DEBUG: Obtaining taxon report for taxon: ~{taxon} and rank: ~{rank}"
 
