@@ -15,6 +15,9 @@ task kraken2_theiacov {
     Int? bracken_read_length
   }
   command <<<
+    # fail hard
+    set -eu
+
     # date and version control
     date | tee DATE
     kraken2 --version | head -n1 | tee KRAKEN2_VERSION
@@ -52,23 +55,23 @@ task kraken2_theiacov {
       if [ -z "~{bracken_read_length}" ]; then
         seqkit stats ~{read1} > read_lengths.tsv
         python3 <<CODE
-        import os
-        import re
-        with open("read_lengths.tsv", "r") as f:
-          # last line has the read data
-          for line in f:
-            data = line.strip().split("\t")
-        mean_len = int(data[6])
-        print(f"DEBUG: Inferred mean read length: {mean_len}")
-        # obtain the kmer lengths available
-        kmer_files = [f for f in os.listdir("db/") if f.endswith(".kmer_distrib")]
-        kmer_dists = [int(re.match(r"database(\d+)mers\.kmer_distrib", f).group(1)) for f in kmer_files]
-        # the best kmer is directly under the mean length size
-        best_kmer = max([k for k in kmer_dists if k < mean_len], default=min(kmer_dists))
-        print(f"INFO: Selected k-mer length for Bracken: {best_kmer}")
-        with open("BRACKEN_READ_LENGTH", "w") as out:
-          out.write(str(best_kmer))
-        CODE
+    import os
+    import re
+    with open("read_lengths.tsv", "r") as f:
+      # last line has the read data
+      for line in f:
+        data = line.strip().split()
+    mean_len = round(float(data[6]))
+    print(f"DEBUG: Inferred mean read length: {mean_len}")
+    # obtain the kmer lengths available
+    kmer_files = [f for f in os.listdir("db/") if f.endswith(".kmer_distrib")]
+    kmer_dists = [int(re.match(r"database(\d+)mers\.kmer_distrib", f).group(1)) for f in kmer_files]
+    # the best kmer is directly under the mean length size
+    best_kmer = max([k for k in kmer_dists if k < mean_len], default=min(kmer_dists))
+    print(f"INFO: Selected k-mer length for Bracken: {best_kmer}")
+    with open("BRACKEN_READ_LENGTH", "w") as out:
+      out.write(str(best_kmer))
+    CODE
 
         bracken_read_length=$(cat BRACKEN_READ_LENGTH)
       else
@@ -80,8 +83,8 @@ task kraken2_theiacov {
         -i ~{samplename}_kraken2_report.txt \
         -o ~{samplename}_bracken_summary.txt \
         -w ~{samplename}_bracken_report.txt \
-        -r ~{bracken_read_length} \
-        -l S
+        -r ${bracken_read_length} \
+        -l S || true
     fi
 
     # Compress and cleanup
@@ -155,6 +158,9 @@ task kraken2_standalone {
     Int disk_size = 100
   }
   command <<<
+    # fail hard
+    set -eu
+
     echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee KRAKEN2_VERSION
     date | tee DATE
 
@@ -198,24 +204,23 @@ task kraken2_standalone {
       if [ -z "~{bracken_read_length}" ]; then
         seqkit stats ~{read1} > read_lengths.tsv
         python3 <<CODE
-        import os
-        import re
-        with open("read_lengths.tsv", "r") as f:
-          # last line has the read data
-          for line in f:
-            data = line.strip().split("\t")
-        mean_len = int(data[6])
-        print(f"DEBUG: Inferred mean read length: {mean_len}")
-        # obtain the kmer lengths available
-        kmer_files = [f for f in os.listdir("db/") if f.endswith(".kmer_distrib")]
-        kmer_dists = [int(re.match(r"database(\d+)mers\.kmer_distrib", f).group(1)) for f in kmer_files]
-        # the best kmer is directly under the mean length size
-        best_kmer = max([k for k in kmer_dists if k < mean_len], default=min(kmer_dists))
-        print(f"INFO: Selected k-mer length for Bracken: {best_kmer}")
-        with open("BRACKEN_READ_LENGTH", "w") as out:
-          out.write(str(best_kmer))
-        CODE
-
+    import os
+    import re
+    with open("read_lengths.tsv", "r") as f:
+      # last line has the read data
+      for line in f:
+        data = line.strip().split()
+    mean_len = round(float(data[6]))
+    print(f"DEBUG: Inferred mean read length: {mean_len}")
+    # obtain the kmer lengths available
+    kmer_files = [f for f in os.listdir("db/") if f.endswith(".kmer_distrib")]
+    kmer_dists = [int(re.match(r"database(\d+)mers\.kmer_distrib", f).group(1)) for f in kmer_files]
+    # the best kmer is directly under the mean length size
+    best_kmer = max([k for k in kmer_dists if k < mean_len], default=min(kmer_dists))
+    print(f"INFO: Selected k-mer length for Bracken: {best_kmer}")
+    with open("BRACKEN_READ_LENGTH", "w") as out:
+      out.write(str(best_kmer))
+    CODE
         bracken_read_length=$(cat BRACKEN_READ_LENGTH)
       else
         bracken_read_length="~{bracken_read_length}"
@@ -226,8 +231,8 @@ task kraken2_standalone {
         -i ~{samplename}_kraken2_report.txt \
         -o ~{samplename}_bracken_summary.txt \
         -w ~{samplename}_bracken_report.txt \
-        -r ~{bracken_read_length} \
-        -l S
+        -r ${bracken_read_length} \
+        -l S || true
     fi
 
     # Report percentage of human reads
