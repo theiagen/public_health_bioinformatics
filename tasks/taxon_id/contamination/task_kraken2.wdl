@@ -48,11 +48,29 @@ task kraken2_theiacov {
     if [ "~{call_bracken}" == "true" ]; then
       bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
 
+      # if bracken_read_length isn't provided, infer as the kmer length directly under the mean read length
       if [ -z "~{bracken_read_length}" ]; then
-        # if bracken read length isn't provided, attempt to infer it from the input reads
-        mean_read_length=$(seqkit stats ~{read1} | awk 'NR==2 {print int($7)}')
-        echo "INFO: Using mean read length: ${mean_read_length}"
-        bracken_read_length=${mean_read_length}
+        seqkit stats ~{read1} > read_lengths.tsv
+        python3 <<CODE
+        import os
+        import re
+        with open("read_lengths.tsv", "r") as f:
+          # last line has the read data
+          for line in f:
+            data = line.strip().split("\t")
+        mean_len = int(data[6])
+        print(f"DEBUG: Inferred mean read length: {mean_len}")
+        # obtain the kmer lengths available
+        kmer_files = [f for f in os.listdir("db/") if f.endswith(".kmer_distrib")]
+        kmer_dists = [int(re.match(r"database(\d+)mers\.kmer_distrib", f).group(1)) for f in kmer_files]
+        # the best kmer is directly under the mean length size
+        best_kmer = max([k for k in kmer_dists if k < mean_len], default=min(kmer_dists))
+        print(f"INFO: Selected k-mer length for Bracken: {best_kmer}")
+        with open("BRACKEN_READ_LENGTH", "w") as out:
+          out.write(str(best_kmer))
+        CODE
+
+        bracken_read_length=$(cat BRACKEN_READ_LENGTH)
       else
         bracken_read_length="~{bracken_read_length}"
         echo "INFO: Using provided Bracken read length: ${bracken_read_length}"
@@ -176,11 +194,29 @@ task kraken2_standalone {
     if [ "~{call_bracken}" == "true" ]; then
       bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
 
+      # if bracken_read_length isn't provided, infer as the kmer length directly under the mean read length
       if [ -z "~{bracken_read_length}" ]; then
-        # if bracken read length isn't provided, attempt to infer it from the input reads
-        mean_read_length=$(seqkit stats ~{read1} | awk 'NR==2 {print int($7)}')
-        echo "INFO: Using mean read length: ${mean_read_length}"
-        bracken_read_length=${mean_read_length}
+        seqkit stats ~{read1} > read_lengths.tsv
+        python3 <<CODE
+        import os
+        import re
+        with open("read_lengths.tsv", "r") as f:
+          # last line has the read data
+          for line in f:
+            data = line.strip().split("\t")
+        mean_len = int(data[6])
+        print(f"DEBUG: Inferred mean read length: {mean_len}")
+        # obtain the kmer lengths available
+        kmer_files = [f for f in os.listdir("db/") if f.endswith(".kmer_distrib")]
+        kmer_dists = [int(re.match(r"database(\d+)mers\.kmer_distrib", f).group(1)) for f in kmer_files]
+        # the best kmer is directly under the mean length size
+        best_kmer = max([k for k in kmer_dists if k < mean_len], default=min(kmer_dists))
+        print(f"INFO: Selected k-mer length for Bracken: {best_kmer}")
+        with open("BRACKEN_READ_LENGTH", "w") as out:
+          out.write(str(best_kmer))
+        CODE
+
+        bracken_read_length=$(cat BRACKEN_READ_LENGTH)
       else
         bracken_read_length="~{bracken_read_length}"
         echo "INFO: Using provided Bracken read length: ${bracken_read_length}"
