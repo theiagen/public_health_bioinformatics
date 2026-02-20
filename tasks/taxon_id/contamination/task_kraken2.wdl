@@ -29,6 +29,8 @@ task kraken2_theiacov {
 
     if ! [ -z ~{read2} ]; then
       mode="--paired"
+    else
+      mode=""
     fi
     echo $mode
 
@@ -36,6 +38,8 @@ task kraken2_theiacov {
     if [[ ~{read1} == *.gz ]]; then
       echo "Reads are compressed..."
       compressed="--gzip-compressed"
+    else
+      compressed=""
     fi
     echo $compressed
 
@@ -172,12 +176,18 @@ task kraken2_standalone {
     if ! [ -z ~{read2} ]; then
       echo "DEBUG: Reads are paired..."
       mode="--paired"
+    else
+      echo "DEBUG: Reads are single-end..."
+      mode=""
     fi
 
     # determine if reads are compressed
     if [[ ~{read1} == *.gz ]]; then
       echo "DEBUG: Reads are compressed..."
       compressed="--gzip-compressed"
+    else
+      echo "DEBUG: Reads are not compressed..."
+      compressed=""
     fi
 
     # Run Kraken2
