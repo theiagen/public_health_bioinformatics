@@ -5,7 +5,7 @@ task kraken2_theiacov {
     File read1
     File? read2
     String samplename
-    File kraken2_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
+    File kraken2_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz"
     Int cpu = 4
     Int memory = 8
     String? target_organism

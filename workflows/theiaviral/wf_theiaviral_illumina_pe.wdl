@@ -36,7 +36,7 @@ workflow theiaviral_illumina_pe {
     String read_extraction_rank = "family"
     String samplename
     String? host # host to dehost reads, if provided
-    File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
+    File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz"
     File? checkv_db 
     File? skani_db
     Boolean skip_screen = false # if false, run clean read screening

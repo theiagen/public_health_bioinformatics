@@ -37,7 +37,7 @@ workflow theiaviral_panel {
     String source_table_name
     String terra_project
     String terra_workspace
-    File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
+    File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz"
     Boolean extract_unclassified = false
     Int min_read_count = 1000
     Boolean call_metaviralspades = true
