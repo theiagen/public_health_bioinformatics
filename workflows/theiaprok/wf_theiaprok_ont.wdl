@@ -337,6 +337,7 @@ workflow theiaprok_ont {
                 "bakta_summary": bakta.bakta_txt,
                 "bakta_tsv": bakta.bakta_tsv,
                 "bakta_version": bakta.bakta_version,
+                "bracken_report": read_QC_trim.bracken_report,
                 "busco_database": busco.busco_database,
                 "busco_docker": busco.busco_docker,
                 "busco_report": busco.busco_report,
@@ -412,7 +413,7 @@ workflow theiaprok_ont {
                 "kmerfinder_results_tsv": kmerfinder.kmerfinder_results_tsv,
                 "kmerfinder_template_coverage": kmerfinder.kmerfinder_template_coverage,
                 "kmerfinder_top_hit": kmerfinder.kmerfinder_top_hit,
-                "kraken_docker": read_QC_trim.kraken_docker,
+                "kraken2_docker": read_QC_trim.kraken_docker,
                 "kraken2_database": read_QC_trim.kraken_database,
                 "kraken2_report": read_QC_trim.kraken_report,
                 "kraken2_version": read_QC_trim.kraken_version,
@@ -719,7 +720,8 @@ workflow theiaprok_ont {
     String? kraken2_version = read_QC_trim.kraken_version
     String? kraken2_report = read_QC_trim.kraken_report
     String? kraken2_database = read_QC_trim.kraken_database
-    String? kraken_docker = read_QC_trim.kraken_docker
+    String? kraken2_docker = read_QC_trim.kraken_docker
+    File? bracken_report = read_QC_trim.bracken_report
     # Read QC - rasusa outputs
     String? rasusa_version = read_QC_trim.rasusa_version
     # Assembly - flye_denovo outputs
