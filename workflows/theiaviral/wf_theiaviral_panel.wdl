@@ -37,7 +37,7 @@ workflow theiaviral_panel {
     String source_table_name
     String terra_project
     String terra_workspace
-    File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz"
+    File kraken2_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz"
     Boolean extract_unclassified = false
     Int min_read_count = 1000
     Boolean call_metaviralspades = true
@@ -89,7 +89,7 @@ workflow theiaviral_panel {
       samplename = samplename,
       read1 = read1,
       read2 = read2,
-      kraken2_db = select_first([kraken_db]),
+      kraken2_db = select_first([kraken2_db]),
       call_bracken = false # false until determined how to propagate report
   }
   call kraken2_task.kraken2_standalone as kraken2_standalone_clean {
@@ -97,7 +97,7 @@ workflow theiaviral_panel {
       samplename = samplename,
       read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
       read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean]),
-      kraken2_db = select_first([kraken_db])
+      kraken2_db = select_first([kraken2_db])
   }
   # clean read stat gathering
   call fastq_scan_task.fastq_scan_pe as fastq_scan_clean {
@@ -137,7 +137,7 @@ workflow theiaviral_panel {
         input:
           read1 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
           read2 = select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2]),
-          kraken2_db = kraken_db,
+          kraken2_db = kraken2_db,
           samplename = samplename + "_" + taxon_id
       }
       # get the taxon information from ncbi
@@ -152,7 +152,7 @@ workflow theiaviral_panel {
           samplename = samplename + "_" + taxon_id,
           taxon = taxon_id,
           call_metaviralspades = call_metaviralspades,
-          kraken_db = kraken_db,
+          kraken2_db = kraken2_db,
           skip_qc = true,
           skip_screen = true,
       }
