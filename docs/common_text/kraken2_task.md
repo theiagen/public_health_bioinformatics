@@ -45,6 +45,8 @@
     The Kraken2 software is database-dependent and **taxonomic assignments are highly sensitive to the database used**. An appropriate database should contain the expected organism(s) (e.g. _Escherichia coli_) and other taxa that may be present in the reads (e.g. _Citrobacter freundii_, a common contaminant).
 <!-- endif -->
 
+    Kraken2 tasks will by default refine overall taxonomic assignments using Bracken. The `bracken_report` output is generally recommended to reference over the `kraken2_report` because the Bracken report yields more refined overall classification results. The Bracken report does not alter classification of individual reads. By default, Bracken will be run using the largest sized k-mer database that is below the mean read length of the input. The reference k-mer database size can be directly set using the `bracken_kmer_length` input and it MUST correspond to an available k-mer database within the Kraken2 database, named `database<KMER_LENGTH>mers.kmer_distrib`. Bracken can be turned off by setting the `call_bracken` boolean to "false" and will be skipped if Bracken k-mer libraries are not available in the Kraken2 database. 
+
     !!! techdetails "Kraken2 Technical Details"
         |  | Links |
         | --- | --- |
