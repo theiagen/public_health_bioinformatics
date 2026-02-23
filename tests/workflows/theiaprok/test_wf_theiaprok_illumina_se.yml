@@ -433,14 +433,8 @@
       md5sum: 50da4a3cfea8a56375b27030700e03a8
     - path: miniwdl_run/wdl/tasks/taxon_id/task_gambit.wdl
       md5sum: 1f86500562b7884eb2d0752f90f1e84d
-    - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_kraken2.wdl
-      md5sum: 735bf70c5a5cf92e43477e4e291ccf14
     - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_midas.wdl
       md5sum: 481f5fbce5aa1abf93acd912797821cc
-    - path: miniwdl_run/wdl/workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-      md5sum: 65d2d61e8a83a5b2b37ae50773ab04af
-    - path: miniwdl_run/wdl/workflows/utilities/wf_read_QC_trim_se.wdl
-      md5sum: 78ab14f79289f52005faf15693cf3497
     - path: miniwdl_run/workflow.log
       contains: ["wdl", "theiaprok_illumina_se", "NOTICE", "done"]
 

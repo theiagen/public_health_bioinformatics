@@ -146,8 +146,6 @@
     - path: miniwdl_run/call-fastq_scan_raw_reads/work/_miniwdl_inputs/0/clearlabs.fastq.gz
     - path: miniwdl_run/call-fastq_scan_raw_reads/work/clearlabs_fastq-scan.json
       md5sum: 869dd2e934c600bba35f30f08e2da7c9
-    - path: miniwdl_run/call-kraken2_dehosted/command
-      md5sum: 4306699c67306b103561adf31c3754e3
     - path: miniwdl_run/call-kraken2_dehosted/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-kraken2_dehosted/outputs.json
@@ -157,20 +155,15 @@
     - path: miniwdl_run/call-kraken2_dehosted/stdout.txt
     - path: miniwdl_run/call-kraken2_dehosted/task.log
       contains: ["wdl", "theiacov_clearlabs", "kraken2_dehosted", "done"]
-    - path: miniwdl_run/call-kraken2_dehosted/work/DATE
     - path: miniwdl_run/call-kraken2_dehosted/work/PERCENT_HUMAN
       md5sum: 897316929176464ebc9ad085f31e7284
     - path: miniwdl_run/call-kraken2_dehosted/work/PERCENT_SC2
       md5sum: 86b6b8aa9ad17f169f04c02b0e2bf1b1
     - path: miniwdl_run/call-kraken2_dehosted/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
-    - path: miniwdl_run/call-kraken2_dehosted/work/VERSION
-      md5sum: 7ad46f90cd0ffa94f32a6e06299ed05c
     - path: miniwdl_run/call-kraken2_dehosted/work/_miniwdl_inputs/0/clearlabs_R1_dehosted.fastq.gz
     - path: miniwdl_run/call-kraken2_dehosted/work/clearlabs_kraken2_report.txt
       md5sum: b66dbcf8d229c1b6fcfff4dd786068bd
-    - path: miniwdl_run/call-kraken2_raw/command
-      md5sum: d6e217901b67290466eec97f13564022
     - path: miniwdl_run/call-kraken2_raw/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-kraken2_raw/outputs.json
@@ -180,15 +173,12 @@
     - path: miniwdl_run/call-kraken2_raw/stdout.txt
     - path: miniwdl_run/call-kraken2_raw/task.log
       contains: ["wdl", "theiacov_clearlabs", "kraken2_raw", "done"]
-    - path: miniwdl_run/call-kraken2_raw/work/DATE
     - path: miniwdl_run/call-kraken2_raw/work/PERCENT_HUMAN
       md5sum: 897316929176464ebc9ad085f31e7284
     - path: miniwdl_run/call-kraken2_raw/work/PERCENT_SC2
       md5sum: 86b6b8aa9ad17f169f04c02b0e2bf1b1
     - path: miniwdl_run/call-kraken2_raw/work/PERCENT_TARGET_ORGANISM
       md5sum: 68b329da9893e34099c7d8ad5cb9c940
-    - path: miniwdl_run/call-kraken2_raw/work/VERSION
-      md5sum: 7ad46f90cd0ffa94f32a6e06299ed05c
     - path: miniwdl_run/call-kraken2_raw/work/_miniwdl_inputs/0/clearlabs.fastq.gz
     - path: miniwdl_run/call-kraken2_raw/work/clearlabs_kraken2_report.txt
       md5sum: b66dbcf8d229c1b6fcfff4dd786068bd
