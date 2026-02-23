@@ -73,7 +73,7 @@ task kraken2_theiacov {
       # last line has the read data
       for line in f:
         data = line.strip().split()
-    mean_len = round(float(data[6]))
+    mean_len = round(float(data[6].replace(",",""))) # handle comma in mean read length for large numbers
     print(f"DEBUG: Inferred mean read length: {mean_len}")
     # obtain the kmer lengths available
     kmer_files = [f for f in os.listdir("db/") if f.endswith(".kmer_distrib")]
@@ -238,7 +238,7 @@ task kraken2_standalone {
       # last line has the read data
       for line in f:
         data = line.strip().split()
-    mean_len = round(float(data[6]))
+    mean_len = round(float(data[6].replace(",",""))) # handle comma in mean read length for large numbers
     print(f"DEBUG: Inferred mean read length: {mean_len}")
     # obtain the kmer lengths available
     kmer_files = [f for f in os.listdir("db/") if f.endswith(".kmer_distrib")]
