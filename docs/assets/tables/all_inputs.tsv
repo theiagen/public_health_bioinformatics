@@ -1039,7 +1039,7 @@ kraken2	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Opti
 kraken2	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaViral_Panel	docker	
 kraken2	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE	docker	
 kraken2	kraken2_args	String	Allows a user to supply additional kraken2 command-line arguments		Optional	TheiaViral_Panel	general	
-kraken2	kraken2_db	File	The database used to run Kraken2	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE	database	
+kraken2	kraken2_db	File	The database used to run Kraken2	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE	database	
 kraken2	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE	runtime	
 kraken2	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Panel	runtime	
 kraken2	read2	File	Internal component, do not modify		Optional	NCBI_Scrub_SE	general	
@@ -1054,7 +1054,7 @@ kraken2_dehosted	call_bracken	Boolean	Call Bracken kraken2 report refinement	Tru
 kraken2_dehosted	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ClearLabs	runtime	
 kraken2_dehosted	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaCoV_ClearLabs	runtime	
 kraken2_dehosted	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaCoV_ClearLabs	docker	
-kraken2_dehosted	kraken2_db	File	The database used to run Kraken2. Must contain viral and human sequences.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaCoV_ClearLabs	database	
+kraken2_dehosted	kraken2_db	File	The database used to run Kraken2. Must contain viral and human sequences.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaCoV_ClearLabs	database	
 kraken2_dehosted	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs	runtime	
 kraken2_dehosted	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs	general	
 kraken2_extract	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE	runtime	
@@ -1076,7 +1076,7 @@ kraken2_raw	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_C
 kraken2_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE	runtime	
 kraken2_raw	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaMeta_Illumina_PE	docker	
 kraken2_raw	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaCoV_ClearLabs	docker	
-kraken2_raw	kraken2_db	File	The database used to run Kraken2. Must contain viral and human sequences.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaCoV_ClearLabs	database	
+kraken2_raw	kraken2_db	File	The database used to run Kraken2. Must contain viral and human sequences.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaCoV_ClearLabs	database	
 kraken2_raw	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs	runtime	
 kraken2_raw	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaMeta_Illumina_PE	runtime	
 kraken2_raw	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs	general	
@@ -1990,9 +1990,9 @@ read_QC_trim	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in 
 read_QC_trim	kraken2_recalculate_abundances_memory	Int	Internal component, do not modify	8	Optional	TheiaEuk_ONT	general	
 read_QC_trim	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 read_QC_trim	kraken_cpu	Int	Internal component, do not modify	4	Optional	TheiaEuk_ONT	general	
-read_QC_trim	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. Must contain human and viral sequences	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	database	
-read_QC_trim	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
-read_QC_trim	kraken_db	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaEuk_ONT	general	
+read_QC_trim	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. Must contain human and viral sequences	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	database	
+read_QC_trim	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
+read_QC_trim	kraken_db	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaEuk_ONT	general	
 read_QC_trim	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 read_QC_trim	kraken_disk_size	Int	Internal component, do not modify	100	Optional	TheiaEuk_ONT	general	
 read_QC_trim	kraken_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaCoV_ONT, TheiaProk_ONT	docker	
@@ -2058,7 +2058,7 @@ read_QC_trim_ont	kraken2_recalculate_abundances_disk_size	Int	Amount of storage 
 read_QC_trim_ont	kraken2_recalculate_abundances_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4	Optional	Freyja_FASTQ	docker	
 read_QC_trim_ont	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_ont	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	Freyja_FASTQ	database	
+read_QC_trim_ont	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	Freyja_FASTQ	database	
 read_QC_trim_ont	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	kraken_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	Freyja_FASTQ	docker	
 read_QC_trim_ont	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	Freyja_FASTQ	general	
@@ -2093,7 +2093,7 @@ read_QC_trim_pe	call_kraken	Boolean	True/False variable that determines if the K
 read_QC_trim_pe	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_pe	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	Freyja_FASTQ	database	
+read_QC_trim_pe	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	Freyja_FASTQ	database	
 read_QC_trim_pe	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	midas_db	File	Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	Freyja_FASTQ	database	
@@ -2111,7 +2111,7 @@ read_QC_trim_se	call_kraken	Boolean	True/False variable that determines if the K
 read_QC_trim_se	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	fastp_args	String	Additional arguments to use with fastp	-g -5 20 -3 20	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_se	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	Freyja_FASTQ	database	
+read_QC_trim_se	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	Freyja_FASTQ	database	
 read_QC_trim_se	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_se	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	Freyja_FASTQ	general	
 read_QC_trim_se	midas_db	File	Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	Freyja_FASTQ	database	
@@ -2672,7 +2672,7 @@ theiaviral_illumina_pe	extract_unclassified	Boolean	Internal component, do not m
 theiaviral_illumina_pe	genome_length	Int	Expected genome length of taxon of interest		Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 theiaviral_illumina_pe	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_Illumina_PE	general	
 theiaviral_illumina_pe	host	String	Internal component, do not modify		Optional	TheiaViral_Panel	general	
-theiaviral_illumina_pe	kraken2_db	File	Kraken2 database file	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaViral_Illumina_PE	database	
+theiaviral_illumina_pe	kraken2_db	File	Kraken2 database file	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaViral_Illumina_PE	database	
 theiaviral_illumina_pe	min_allele_freq	Float	Minimum allele frequency required for a variant to populate the consensus sequence	0.6	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 theiaviral_illumina_pe	min_depth	Int	Minimum read depth required for a variant to populate the consensus sequence	10	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
 theiaviral_illumina_pe	min_map_quality	Int	Minimum mapping quality required for read alignments	20	Optional	TheiaViral_Illumina_PE, TheiaViral_Panel	general	
@@ -2700,7 +2700,7 @@ theiaviral_ont	skip_screen	Boolean	True/False to skip read screening check prior
 theiaviral_panel	call_metaviralspades	Boolean	Whether to run metaviralspades for assembly	True	Optional	TheiaViral_Panel	general	
 theiaviral_panel	extract_unclassified	Boolean	True/False that determines if unclassified reads should be extracted and combined with the taxon specific extracted reads	False	Optional	TheiaViral_Panel	general	
 theiaviral_panel	host	String	Host taxon/accession to dehost reads, if provided		Optional	TheiaViral_Panel	general	
-theiaviral_panel	kraken2_db	File	Kraken2 database file in .tar.gz format.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	TheiaViral_Panel	database	
+theiaviral_panel	kraken2_db	File	Kraken2 database file in .tar.gz format.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaViral_Panel	database	
 theiaviral_panel	min_read_count	Int	Minimum number of reads required to consider a taxon for assembly	1000	Optional	TheiaViral_Panel	general	
 theiaviral_panel	output_taxon_table	File	A TSV file containing organism names and their corresponding output table names.	gs://theiagen-public-resources-rp/reference_data/family_agnostic/theiaviral_panel_taxon_table_20251111.tsv	Optional	TheiaViral_Panel	general	
 theiaviral_panel	taxon_ids	Array[String]	An array of taxon IDs user wishes to analyze.	["1618189", "37124", "46839", "12637", "1216928", "59301", "2169701", "118655", "11587", "11029", "11033", "11034", "1608084", "64286", "11082", "11089", "64320", "10804", "12092", "3052230", "12475", "11676", "11709", "68887", "1980456", "3052470", "3052490", "169173", "3052489", "238817", "1980442", "3052496", "3052499", "90961", "80935", "35305", "1221391", "38767", "11021", "38768", "2847089", "3052223", "260964", "35511", "11072", "11577", "38766", "1474807", "12538", "11079", "3052225", "11083", "11292", "11580", "11080", "45270", "11084", "11036", "11039", "1313215", "138948", "138949", "138950", "138951", "1239565", "1239570", "1239573", "142786", "28875", "28876", "36427", "1348384", "1330524", "95341", "2849717", "1424613", "2010960", "565995", "3052302", "3052518", "3052477", "3052307", "3052480", "2169991", "33743", "3052310", "3052148", "3052314", "3052303", "3052317", "33727", "12542", "3052493", "186539", "11588", "2907957", "3052498", "1003835", "1452514", "186540", "186541", "3052503", "1891762", "10376", "10359", "333760", "333761", "337044", "337050", "1671798", "333754", "333767", "746830", "746831", "943908", "10632", "1891764", "1965344", "493803", "1203539", "1497391", "1891767", "1277649", "862909", "862909", "440266", "11234", "152219", "10244", "2560602", "11041", "10335", "10255", "129875", "108098", "129951", "130310", "130308", "130309", "536079", "329641", "11137", "290028", "277944", "31631", "162145", "12730", "2560525", "11216", "2560526", "1803956", "10798", "11250", "11320", "11520", "11552", "1335626", "147711", "147712", "463676", "2901879", "2697049", "10404", "3052505", "337041", "337042", "333757", "337048", "333754", "333766", "337049"]	Optional	TheiaViral_Panel	general	
