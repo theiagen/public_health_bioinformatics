@@ -308,8 +308,6 @@ task kraken2_parse_classified {
     File kraken2_report
     String samplename
     String? target_organism
-    Boolean is_bracken_report = false
-    Float? null
     Int cpu = 4
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
@@ -399,8 +397,7 @@ task kraken2_parse_classified {
     
   >>>
   output {
-    File? kraken_report = '~{if is_bracken_report == false then "~{samplename}.report_parsed.txt" else "~{null}"}'
-    File? bracken_report = '~{if is_bracken_report == true then "~{samplename}.report_parsed.txt" else "~{null}"}'
+    File kraken_report = "~{samplename}.report_parsed.txt"
     Float percent_human = read_float("PERCENT_HUMAN")
     String percent_sc2 = read_string("PERCENT_SC2")
     String percent_target_organism = read_string("PERCENT_TARGET_ORGANISM")
