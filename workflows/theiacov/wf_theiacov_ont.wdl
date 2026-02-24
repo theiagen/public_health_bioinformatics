@@ -227,7 +227,7 @@ workflow theiacov_ont {
             qc_check_inputs = {
               "num_reads_raw1": nanoplot_raw.num_reads,
               "num_reads_clean1": nanoplot_clean.num_reads,
-              "kraken_human": read_QC_trim.kraken_human,
+              "kraken_human": read_QC_trim.kraken2_human,
               "meanbaseq_trim": stats_n_coverage_primtrim.meanbaseq,
               "assembly_mean_coverage": stats_n_coverage_primtrim.depth,
               "number_N": consensus_qc.number_N,
@@ -282,18 +282,18 @@ workflow theiacov_ont {
     Float? nanoplot_r1_median_q_clean = nanoplot_clean.median_q
     Float? nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage
     # Read QC - kraken outputs general
-    String? kraken_version = read_QC_trim.kraken_version
-    String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
+    String? kraken_version = read_QC_trim.kraken2_version
+    String? kraken_target_organism_name = read_QC_trim.kraken2_target_organism_name
     # Read QC - kraken outputs raw
-    Float? kraken_human = read_QC_trim.kraken_human
-    String? kraken_sc2 = read_QC_trim.kraken_sc2
-    String? kraken_target_organism = read_QC_trim.kraken_target_organism
-    File? kraken_report = read_QC_trim.kraken_report
+    Float? kraken_human = read_QC_trim.kraken2_human
+    String? kraken_sc2 = read_QC_trim.kraken2_sc2
+    String? kraken_target_organism = read_QC_trim.kraken2_target_organism
+    File? kraken_report = read_QC_trim.kraken2_report
     # Read QC - kraken outputs dehosted
-    Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
-    String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
-    String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
-    File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
+    Float? kraken_human_dehosted = read_QC_trim.kraken2_human_dehosted
+    String? kraken_sc2_dehosted = read_QC_trim.kraken2_sc2_dehosted
+    String? kraken_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
+    File? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
     # Read Alignment - Artic consensus and IRMA Aligned outputs
     String assembly_fasta = select_first([consensus.consensus_seq, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
     File? aligned_bam = consensus.trim_sorted_bam

@@ -502,10 +502,10 @@ workflow theiaprok_illumina_pe {
                 "kmerfinder_results_tsv": kmerfinder.kmerfinder_results_tsv,
                 "kmerfinder_template_coverage": kmerfinder.kmerfinder_template_coverage,
                 "kmerfinder_top_hit": kmerfinder.kmerfinder_top_hit,
-                "kraken_docker": read_QC_trim.kraken_docker,
-                "kraken2_database": read_QC_trim.kraken_database,
-                "kraken2_report": read_QC_trim.kraken_report,
-                "kraken2_version": read_QC_trim.kraken_version,
+                "kraken_docker": read_QC_trim.kraken2_docker,
+                "kraken2_database": read_QC_trim.kraken2_database,
+                "kraken2_report": read_QC_trim.kraken2_report,
+                "kraken2_version": read_QC_trim.kraken2_version,
                 "legsta_predicted_sbt": merlin_magic.legsta_predicted_sbt,
                 "legsta_results": merlin_magic.legsta_results,
                 "legsta_version": merlin_magic.legsta_version,
@@ -864,10 +864,10 @@ workflow theiaprok_illumina_pe {
     # Read QC - kraken outputs
     String? bracken_report = read_QC_trim.bracken_report
     String? bracken_version = read_QC_trim.bracken_version
-    String? kraken2_version = read_QC_trim.kraken_version
-    String? kraken2_report = read_QC_trim.kraken_report
-    String? kraken2_database = read_QC_trim.kraken_database
-    String? kraken_docker = read_QC_trim.kraken_docker
+    String? kraken2_version = read_QC_trim.kraken2_version
+    String? kraken2_report = read_QC_trim.kraken2_report
+    String? kraken2_database = read_QC_trim.kraken2_database
+    String? kraken_docker = read_QC_trim.kraken2_docker
     # Assembly - digger denovo outputs 
     File? assembly_fasta = digger_denovo.assembly_fasta
     File? contigs_gfa = digger_denovo.contigs_gfa

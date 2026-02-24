@@ -183,7 +183,7 @@ workflow theiacov_illumina_se {
             qc_check_inputs = {
               "num_reads_raw1": select_first([read_QC_trim.fastq_scan_raw1, read_QC_trim.fastqc_raw1]),
               "num_reads_clean1": select_first([read_QC_trim.fastq_scan_clean1, read_QC_trim.fastqc_clean1]),
-              "kraken_human": read_QC_trim.kraken_human,
+              "kraken_human": read_QC_trim.kraken2_human,
               "meanbaseq_trim": ivar_consensus.meanbaseq_trim,
               "assembly_mean_coverage": ivar_consensus.assembly_mean_coverage,
               "number_N": consensus_qc.number_N,
@@ -241,18 +241,18 @@ workflow theiacov_illumina_se {
     File? read1_clean = read_QC_trim.read1_clean
     String? bbduk_docker = read_QC_trim.bbduk_docker
     # Read QC - kraken outputs
-    String? kraken_version = read_QC_trim.kraken_version
+    String? kraken_version = read_QC_trim.kraken2_version
     String? bracken_version = read_QC_trim.bracken_version
-    Float? kraken_human = read_QC_trim.kraken_human
-    String? kraken_sc2 = read_QC_trim.kraken_sc2
-    String? kraken_target_organism = read_QC_trim.kraken_target_organism
-    String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
-    File? kraken_report = read_QC_trim.kraken_report
+    Float? kraken_human = read_QC_trim.kraken2_human
+    String? kraken_sc2 = read_QC_trim.kraken2_sc2
+    String? kraken_target_organism = read_QC_trim.kraken2_target_organism
+    String? kraken_target_organism_name = read_QC_trim.kraken2_target_organism_name
+    File? kraken_report = read_QC_trim.kraken2_report
     File? bracken_report = read_QC_trim.bracken_report
-    Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
-    String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
-    String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
-    File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
+    Float? kraken_human_dehosted = read_QC_trim.kraken2_human_dehosted
+    String? kraken_sc2_dehosted = read_QC_trim.kraken2_sc2_dehosted
+    String? kraken_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
+    File? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
     File? bracken_report_dehosted = read_QC_trim.bracken_report_dehosted
     # Read Alignment - bwa outputs
     String? bwa_version = ivar_consensus.bwa_version

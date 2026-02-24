@@ -412,10 +412,10 @@ workflow theiaprok_ont {
                 "kmerfinder_results_tsv": kmerfinder.kmerfinder_results_tsv,
                 "kmerfinder_template_coverage": kmerfinder.kmerfinder_template_coverage,
                 "kmerfinder_top_hit": kmerfinder.kmerfinder_top_hit,
-                "kraken2_docker": read_QC_trim.kraken_docker,
-                "kraken2_database": read_QC_trim.kraken_database,
-                "kraken2_report": read_QC_trim.kraken_report,
-                "kraken2_version": read_QC_trim.kraken_version,
+                "kraken2_docker": read_QC_trim.kraken2_docker,
+                "kraken2_database": read_QC_trim.kraken2_database,
+                "kraken2_report": read_QC_trim.kraken2_report,
+                "kraken2_version": read_QC_trim.kraken2_version,
                 "legsta_predicted_sbt": merlin_magic.legsta_predicted_sbt,
                 "legsta_results": merlin_magic.legsta_results,
                 "legsta_version": merlin_magic.legsta_version,
@@ -716,10 +716,10 @@ workflow theiaprok_ont {
     String? nanoplot_version = nanoplot_raw.nanoplot_version
     String? nanoplot_docker = nanoplot_raw.nanoplot_docker
     # Read QC - kraken outputs
-    String? kraken2_version = read_QC_trim.kraken_version
-    String? kraken2_report = read_QC_trim.kraken_report
-    String? kraken2_database = read_QC_trim.kraken_database
-    String? kraken2_docker = read_QC_trim.kraken_docker
+    String? kraken2_version = read_QC_trim.kraken2_version
+    String? kraken2_report = read_QC_trim.kraken2_report
+    String? kraken2_database = read_QC_trim.kraken2_database
+    String? kraken2_docker = read_QC_trim.kraken2_docker
     # Read QC - rasusa outputs
     String? rasusa_version = read_QC_trim.rasusa_version
     # Assembly - flye_denovo outputs
