@@ -100,29 +100,30 @@ workflow theiaviral_illumina_pe {
       }
     }
     # taxon-based read extraction
-    call kraken2_task.kraken2_standalone {
+    call kraken2_task.kraken2 {
       input:
         samplename = samplename,
         read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
         read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean]),
-        kraken2_db = kraken2_db
+        kraken2_db = kraken2_db,
+        target_organism = ete4_identify.taxon_name
     }
     call krakentools_task.extract_kraken_reads as kraken2_extract {
       input:
-        read1 = kraken2_standalone.kraken2_classified_read1,
-        read2 = select_first([kraken2_standalone.kraken2_classified_read2]),
+        read1 = kraken2.kraken2_classified_read1,
+        read2 = select_first([kraken2.kraken2_classified_read2]),
         taxon_id = ete4_identify.taxon_id,
-        kraken2_output = kraken2_standalone.kraken2_classified_report,
-        kraken2_report = kraken2_standalone.kraken2_report
+        kraken2_output = kraken2.kraken2_classified_report,
+        kraken2_report = kraken2.kraken2_report
     }
     # inclusion of unclassified reads
     if (extract_unclassified) {
       call cat_lanes_task.cat_lanes {
         input:
           samplename = samplename,
-          read1_lane1 = kraken2_standalone.kraken2_unclassified_read1,
+          read1_lane1 = kraken2.kraken2_unclassified_read1,
           read1_lane2 = select_first([kraken2_extract.extracted_read1]),
-          read2_lane1 = kraken2_standalone.kraken2_unclassified_read2,
+          read2_lane1 = kraken2.kraken2_unclassified_read2,
           read2_lane2 = select_first([kraken2_extract.extracted_read2])
       }
     }
@@ -334,12 +335,12 @@ workflow theiaviral_illumina_pe {
     File? bbduk_read2_clean = bbduk.read2_clean
     File? bbduk_primer_stats = bbduk.primer_stats
     # kraken2 outputs - taxonomic classification and read extraction
-    String? kraken2_version = kraken2_standalone.kraken2_version
-    String? bracken_version = kraken2_standalone.bracken_version
-    String? kraken2_docker = kraken2_standalone.kraken2_docker
-    String? kraken2_database = kraken2_standalone.kraken2_database
-    String? kraken2_report = kraken2_standalone.kraken2_report
-    String? bracken_report = kraken2_standalone.bracken_report
+    String? kraken2_version = kraken2.kraken2_version
+    String? bracken_version = kraken2.bracken_version
+    String? kraken2_docker = kraken2.kraken2_docker
+    String? kraken2_database = kraken2.kraken2_database
+    String? kraken2_report = kraken2.kraken2_report
+    String? bracken_report = kraken2.bracken_report
     File? kraken2_extracted_read1 = kraken2_extract.extracted_read1
     File? kraken2_extracted_read2 = kraken2_extract.extracted_read2
     String? kraken2_extraction_status = kraken2_extract.status

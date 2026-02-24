@@ -15,7 +15,7 @@ task kraken2 {
     Int cpu = 4
     Int memory = 32
     Int disk_size = 100
-    String docker_image = "us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1"
   }
   command <<<
     # fail hard
@@ -171,10 +171,10 @@ task kraken2 {
     File kraken2_classified_read1 = "~{samplename}.classified_1.fastq.gz"
     File? kraken2_classified_read2 = "~{samplename}.classified_2.fastq.gz"
     String kraken2_database = kraken2_db 
-    String docker = docker_image
+    String kraken2_docker = docker
   }
   runtime {
-    docker: docker_image
+    docker: "~{docker}" 
     memory: "~{memory} GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"

@@ -84,7 +84,7 @@ workflow theiaviral_panel {
     }
   }
   # taxon-based read extraction
-  call kraken2_task.kraken2_standalone as kraken2_standalone_raw {
+  call kraken2_task.kraken2 as kraken2_raw {
     input:
       samplename = samplename,
       read1 = read1,
@@ -92,12 +92,12 @@ workflow theiaviral_panel {
       kraken2_db = select_first([kraken2_db]),
       call_bracken = false # false until determined how to propagate report
   }
-  call kraken2_task.kraken2_standalone as kraken2_standalone_clean {
+  call kraken2_task.kraken2 as kraken2_clean {
     input:
       samplename = samplename,
       read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
       read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean]),
-      kraken2_db = select_first([kraken2_db])
+      kraken2_db = kraken2_db
   }
   # clean read stat gathering
   call fastq_scan_task.fastq_scan_pe as fastq_scan_clean {
@@ -108,7 +108,7 @@ workflow theiaviral_panel {
   # parse the kraken report to get the taxon ids present in the sample, lowering scatter shards
   call kraken_parser_task.kraken_output_parser as kraken_parser {
     input:
-      kraken2_report = select_first([kraken2_standalone_clean.kraken2_report]),
+      kraken2_report = select_first([kraken2_clean.kraken2_report]),
       taxon_ids = taxon_ids,
       read_count_threshold = min_read_count
   }
@@ -116,10 +116,10 @@ workflow theiaviral_panel {
   scatter (taxon_id in kraken_parser.parsed_taxon_ids) {
     call krakentools_task.extract_kraken_reads as krakentools {
       input:
-        kraken2_output = select_first([kraken2_standalone_clean.kraken2_classified_report]),
-        kraken2_report = select_first([kraken2_standalone_clean.kraken2_report]),
-        read1 = select_first([kraken2_standalone_clean.kraken2_classified_read1]),
-        read2 = select_first([kraken2_standalone_clean.kraken2_classified_read2]),
+        kraken2_output = select_first([kraken2_clean.kraken2_classified_report]),
+        kraken2_report = select_first([kraken2_clean.kraken2_report]),
+        read1 = select_first([kraken2_clean.kraken2_classified_read1]),
+        read2 = select_first([kraken2_clean.kraken2_classified_read2]),
         taxon_id = taxon_id
     }
     if (krakentools.status == "PASS") {
@@ -127,9 +127,9 @@ workflow theiaviral_panel {
         call cat_lanes_task.cat_lanes {
           input:
             samplename = samplename + "_" + taxon_id,
-            read1_lane1 = select_first([kraken2_standalone_clean.kraken2_unclassified_read1]),
+            read1_lane1 = select_first([kraken2_clean.kraken2_unclassified_read1]),
             read1_lane2 = select_first([krakentools.extracted_read1]),
-            read2_lane1 = select_first([kraken2_standalone_clean.kraken2_unclassified_read2]),
+            read2_lane1 = select_first([kraken2_clean.kraken2_unclassified_read2]),
             read2_lane2 = select_first([krakentools.extracted_read2])
         }
       }
@@ -319,14 +319,14 @@ workflow theiaviral_panel {
     String theiaviral_panel_version = version_capture.phb_version
     String theiaviral_panel_analysis_date = version_capture.date
     # Standalone Kraken2 outputs
-    String kraken2_version = kraken2_standalone_raw.kraken2_version
-    String kraken2_database = kraken2_standalone_raw.kraken2_database
-    String kraken2_docker = kraken2_standalone_raw.kraken2_docker
-    File kraken2_report_raw = kraken2_standalone_raw.kraken2_report
-    Float? kraken2_percent_human_raw = kraken2_standalone_clean.kraken2_percent_human
-    File kraken2_report_clean = select_first([kraken2_standalone_clean.kraken2_report])
-    File kraken2_classified_report = select_first([kraken2_standalone_clean.kraken2_classified_report])
-    Float? kraken2_percent_human_clean = kraken2_standalone_clean.kraken2_percent_human
+    String kraken2_version = kraken2_raw.kraken2_version
+    String kraken2_database = kraken2_raw.kraken2_database
+    String kraken2_docker = kraken2_raw.kraken2_docker
+    File kraken2_report_raw = kraken2_raw.kraken2_report
+    Float? kraken2_percent_human_raw = kraken2_clean.kraken2_percent_human
+    File kraken2_report_clean = select_first([kraken2_clean.kraken2_report])
+    File kraken2_classified_report = select_first([kraken2_clean.kraken2_classified_report])
+    Float? kraken2_percent_human_clean = kraken2_clean.kraken2_percent_human
     # raw read quality control
     Int? fastq_scan_num_reads_raw1 = fastq_scan_raw.read1_seq
     Int? fastq_scan_num_reads_raw2 = fastq_scan_raw.read2_seq

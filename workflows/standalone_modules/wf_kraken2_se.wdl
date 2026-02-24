@@ -13,7 +13,7 @@ workflow kraken2_se_wf {
     File read1
     File kraken2_db
   }
-  call kraken2.kraken2_standalone as kraken2_se {
+  call kraken2.kraken2 as kraken2_se {
     input:
       samplename = samplename,
       read1 = read1,

@@ -98,7 +98,7 @@ workflow read_QC_trim_se {
     }
   }
   if ("~{workflow_series}" == "theiacov") {
-    call kraken.kraken2_theiacov as kraken2_theiacov_raw {
+    call kraken.kraken2 as kraken2_theiacov_raw {
       input:
         samplename = samplename,
         read1 = read1,
@@ -110,7 +110,7 @@ workflow read_QC_trim_se {
         call_bracken = call_bracken,
         bracken_kmer_length = bracken_kmer_length
     }
-    call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
+    call kraken.kraken2 as kraken2_theiacov_dehosted {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_se.read1_dehosted]),
@@ -135,7 +135,7 @@ workflow read_QC_trim_se {
   }
   if ("~{workflow_series}" == "theiaprok") {
     if ((call_kraken) && defined(kraken_db)) {
-      call kraken.kraken2_standalone {
+      call kraken.kraken2 as kraken2_theiaprok {
         input:
           samplename = samplename,
           read1 = read1,
@@ -183,21 +183,21 @@ workflow read_QC_trim_se {
     File? fastqc_clean1_html = fastqc_clean.read1_fastqc_html
     
     # kraken2 - raw and dehosted
-    String kraken_version = select_first([kraken2_theiacov_raw.kraken2_version, kraken2_standalone.kraken2_version, ""])
-    String bracken_version = select_first([kraken2_theiacov_raw.bracken_version, kraken2_standalone.bracken_version, ""])
-    Float? kraken_human = kraken2_theiacov_raw.percent_human
-    String? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
-    String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
-    String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
-    String bracken_report = select_first([kraken2_theiacov_raw.bracken_report, kraken2_standalone.bracken_report, ""])
-    Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
-    String? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
-    String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism
+    String kraken_version = select_first([kraken2_theiacov_raw.kraken2_version, kraken2_theiaprok.kraken2_version, ""])
+    String bracken_version = select_first([kraken2_theiacov_raw.bracken_version, kraken2_theiaprok.bracken_version, ""])
+    Float? kraken_human = kraken2_theiacov_raw.kraken2_percent_human
+    String? kraken_sc2 = kraken2_theiacov_raw.kraken2_percent_sc2
+    String? kraken_target_organism = kraken2_theiacov_raw.kraken2_percent_target_organism
+    String kraken_report = select_first([kraken2_theiacov_raw.kraken2_report, kraken2_theiaprok.kraken2_report, ""])
+    String bracken_report = select_first([kraken2_theiacov_raw.bracken_report, kraken2_theiaprok.bracken_report, ""])
+    Float? kraken_human_dehosted = kraken2_theiacov_dehosted.kraken2_percent_human
+    String? kraken_sc2_dehosted = kraken2_theiacov_dehosted.kraken2_percent_sc2
+    String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.kraken2_percent_target_organism
     String? kraken_target_organism_name = target_organism
-    File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
+    File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken2_report
     File? bracken_report_dehosted = kraken2_theiacov_dehosted.bracken_report
-    String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone.kraken2_docker, ""])
-    String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone.kraken2_database, kraken_db_warning, ""])
+    String kraken_docker = select_first([kraken2_theiacov_raw.kraken2_docker, kraken2_theiaprok.kraken2_docker, ""])
+    String kraken_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken_db_warning, ""])
    
     # trimming versioning
     String? trimmomatic_version = trimmomatic.version

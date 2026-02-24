@@ -25,7 +25,7 @@ workflow theiameta_illumina_pe {
     Boolean output_additional_files = false
     Boolean call_bracken = true
   }
-  call kraken_task.kraken2_standalone as kraken2_raw {
+  call kraken_task.kraken2 as kraken2_raw {
     input:
       samplename = samplename,
       read1 = read1,
@@ -53,7 +53,7 @@ workflow theiameta_illumina_pe {
         kraken_disk_size = 100,
         kraken_memory = 8
     }
-  call kraken_task.kraken2_standalone as kraken2_clean {
+  call kraken_task.kraken2 as kraken2_clean {
     input:
       samplename = samplename,
       read1 = read_QC_trim.read1_clean,
