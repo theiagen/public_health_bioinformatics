@@ -234,8 +234,8 @@ workflow read_QC_trim_pe {
     String? kraken_target_organism_name = target_organism
     File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken2_report
     File? bracken_report_dehosted = kraken2_theiacov_dehosted.bracken_report
-    String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone.kraken2_docker, ""])
-    String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone.kraken2_database, kraken_db_warning, ""])
+    String kraken_docker = select_first([kraken2_theiacov_raw.kraken2_docker, kraken2_standalone.kraken2_docker, ""])
+    String kraken_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_standalone.kraken2_database, kraken_db_warning, ""])
     # trimming versioning
     String? trimmomatic_version = trimmomatic.version
     String? trimmomatic_docker = trimmomatic.trimmomatic_docker

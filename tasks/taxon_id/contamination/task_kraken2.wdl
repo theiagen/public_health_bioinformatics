@@ -144,7 +144,7 @@ task kraken2 {
         echo "" > PERCENT_TARGET_ORGANISM
       else
         echo "" > PERCENT_SC2 
-        percent_target_organism=$(grep "~{target_organism}" $kraken2_report  | cut -f1 | head -n1 )
+        percent_target_organism=$(grep -P "\s~{target_organism}\s" $kraken2_report  | cut -f1 | head -n1 )
         if [ -z "$percent_target_organism" ]; then 
           percent_target_organism="0"
         fi

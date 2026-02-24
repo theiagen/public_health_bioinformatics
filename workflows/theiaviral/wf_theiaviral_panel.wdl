@@ -133,17 +133,18 @@ workflow theiaviral_panel {
             read2_lane2 = select_first([krakentools.extracted_read2])
         }
       }
-      call kraken2_task.kraken2_standalone as kraken2 {
-        input:
-          read1 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
-          read2 = select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2]),
-          kraken2_db = kraken2_db,
-          samplename = samplename + "_" + taxon_id
-      }
       # get the taxon information from ncbi
       call identify_taxon_id_task.ete4_taxon_id as ete4_identify {
         input:
           taxon = taxon_id
+      }
+      call kraken2_task.kraken2 as kraken2_taxon {
+        input:
+          read1 = select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
+          read2 = select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2]),
+          kraken2_db = kraken2_db,
+          samplename = samplename + "_" + taxon_id,
+          target_organism = ete4_identify.taxon_id
       }
       call theiaviral_illumina_pe.theiaviral_illumina_pe {
         input:
@@ -174,12 +175,12 @@ workflow theiaviral_panel {
             "theiaviral_panel_version": version_capture.phb_version,
             "read1": select_first([cat_lanes.read1_concatenated, krakentools.extracted_read1]),
             "read2": select_first([cat_lanes.read2_concatenated, krakentools.extracted_read2]),
-            "kraken2_report": kraken2.kraken2_report,
-            "kraken2_classified_report": kraken2.kraken2_classified_report,
-            "kraken2_percent_human": kraken2.kraken2_percent_human,
-            "kraken2_version": kraken2.kraken2_version,
-            "kraken2_docker": kraken2.kraken2_docker,
-            "kraken2_database": kraken2.kraken2_database,
+            "kraken2_report": kraken2_taxon.kraken2_report,
+            "kraken2_classified_report": kraken2_taxon.kraken2_classified_report,
+            "kraken2_percent_human": kraken2_taxon.kraken2_percent_human,
+            "kraken2_version": kraken2_taxon.kraken2_version,
+            "kraken2_docker": kraken2_taxon.kraken2_docker,
+            "kraken2_database": kraken2_taxon.kraken2_database,
             "taxon_avg_genome_length": theiaviral_illumina_pe.taxon_avg_genome_length,
             "datasets_genome_length_docker": theiaviral_illumina_pe.datasets_genome_length_docker,
             "datasets_genome_length_version": theiaviral_illumina_pe.datasets_genome_length_version,

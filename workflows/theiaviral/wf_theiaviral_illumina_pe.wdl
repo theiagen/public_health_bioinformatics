@@ -106,7 +106,7 @@ workflow theiaviral_illumina_pe {
         read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
         read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean]),
         kraken2_db = kraken2_db,
-        target_organism = ete4_identify.taxon_name
+        target_organism = ete4_identify.taxon_id
     }
     call krakentools_task.extract_kraken_reads as kraken2_extract {
       input:
