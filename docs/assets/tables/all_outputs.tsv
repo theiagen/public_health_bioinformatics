@@ -538,7 +538,7 @@ kraken2_classified_read1	File	FASTQ file of classified forward/R1 reads	Kraken_P
 kraken2_classified_read2	File	FASTQ file of classified reverse/R2 reads (if PE)	Kraken_PE
 kraken2_classified_report	File	Standard Kraken2 output report. TXT filetype, but can be opened in Excel as a TSV file	Kraken_PE, Kraken_SE, TheiaViral_Panel
 kraken2_database	String	Kraken2 database used for the taxonomic assignment	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_Panel
-kraken2_docker	String	Docker image used to run kraken2	Kraken_PE, Kraken_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_SE, TheiaViral_Illumina_PE, TheiaViral_Panel
+kraken2_docker	String	Docker image used to run kraken2	Kraken_PE, Kraken_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_Panel
 kraken2_extracted_read1	File	Forward reads extracted by taxonomic classification	TheiaViral_Illumina_PE
 kraken2_extracted_read2	File	Reverse reads extracted by taxonomic classification	TheiaViral_Illumina_PE
 kraken2_extraction_status	String	"PASS"/"FAIL" depending on if reads could be extracted	TheiaViral_Illumina_PE
@@ -555,7 +555,7 @@ kraken2_se_wf_version	String	Workflow version	Kraken_SE
 kraken2_unclassified_read1	File	FASTQ file of unclassified forward/R1 reads	Kraken_PE, Kraken_SE
 kraken2_unclassified_read2	File	FASTQ file of unclassified reverse/R2 reads (if PE)	Kraken_PE
 kraken2_version	String	The version of kraken2 used	Kraken_PE, Kraken_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_Illumina_PE, TheiaViral_Panel
-kraken_docker	String	Docker image used for Kraken	TheiaProk_Illumina_PE, TheiaProk_ONT
+kraken_docker	String	Docker image used for Kraken	TheiaProk_Illumina_PE
 kraken_human	Float	Percent of human read data detected using the Kraken2 software	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 kraken_human_dehosted	Float	Percent of human read data detected using the Kraken2 software after host removal	Freyja_FASTQ, NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 kraken_report	File	Full Kraken report	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
