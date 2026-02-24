@@ -41,7 +41,6 @@ workflow read_QC_trim_ont {
     # kraken inputs
     String? target_organism
     Boolean call_kraken = false
-    Boolean call_bracken = true
     Int? kraken_cpu
     File? kraken_db
     Int? kraken_disk_size
@@ -107,12 +106,12 @@ workflow read_QC_trim_ont {
         memory = kraken_memory,
         cpu = kraken_cpu,
         docker_image = kraken_docker_image,
-        call_bracken = call_bracken
+        call_bracken = false
     }
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_raw {
       input:
         samplename = samplename,
-        kraken2_report = select_first([kraken2_raw.bracken_report, kraken2_raw.kraken_report]),
+        kraken2_report = kraken2_raw.kraken_report,
         kraken2_classified_report = kraken2_raw.kraken2_classified_report,
         target_organism = target_organism,
         disk_size = kraken2_recalculate_abundances_disk_size,
@@ -130,12 +129,12 @@ workflow read_QC_trim_ont {
         memory = kraken_memory,
         cpu = kraken_cpu,
         docker_image = kraken_docker_image,
-        call_bracken = call_bracken
+        call_bracken = false
     }
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_dehosted {
       input:
         samplename = samplename,
-        kraken2_report = select_first([kraken2_dehosted.bracken_report, kraken2_dehosted.kraken_report]),
+        kraken2_report = kraken2_dehosted.kraken_report,
         kraken2_classified_report = kraken2_dehosted.kraken2_classified_report,
         target_organism = target_organism,
         disk_size = kraken2_recalculate_abundances_disk_size,
@@ -185,12 +184,12 @@ workflow read_QC_trim_ont {
             disk_size = kraken_disk_size,
             memory = kraken_memory,
             cpu = kraken_cpu,
-            call_bracken = call_bracken
+            call_bracken = false
         }
         call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
           input:
             samplename = samplename,
-            kraken2_report = select_first([kraken2_se.bracken_report, kraken2_se.kraken_report]),
+            kraken2_report = kraken2_se.kraken2_report,
             kraken2_classified_report = kraken2_se.kraken2_classified_report
         } 
       } 
@@ -212,14 +211,12 @@ workflow read_QC_trim_ont {
     String? kraken_target_organism = kraken2_recalculate_abundances_raw.percent_target_organism
     String? kraken_target_organism_name = kraken2_raw.kraken_target_organism
     String kraken_report = select_first([kraken2_recalculate_abundances_raw.kraken_report, kraken2_recalculate_abundances.kraken_report, ""])
-    String bracken_report = select_first([kraken2_recalculate_abundances_raw.bracken_report, kraken2_recalculate_abundances.bracken_report, ""])
     Float? kraken_human_dehosted = kraken2_recalculate_abundances_dehosted.percent_human
     String? kraken_sc2_dehosted = kraken2_recalculate_abundances_dehosted.percent_sc2
     String? kraken_target_organism_dehosted = kraken2_recalculate_abundances_dehosted.percent_target_organism
     File? kraken_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken_report
     String kraken_database = select_first([kraken2_raw.database, kraken2_se.kraken2_database, kraken_db_warning, ""])
-    File? bracken_report_dehosted = kraken2_recalculate_abundances_dehosted.bracken_report
-
+   
     # estimated genome length -- by default for TheiaProk this is 5Mb
     Int est_genome_length = genome_length
 

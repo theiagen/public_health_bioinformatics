@@ -337,7 +337,6 @@ workflow theiaprok_ont {
                 "bakta_summary": bakta.bakta_txt,
                 "bakta_tsv": bakta.bakta_tsv,
                 "bakta_version": bakta.bakta_version,
-                "bracken_report": read_QC_trim.bracken_report,
                 "busco_database": busco.busco_database,
                 "busco_docker": busco.busco_docker,
                 "busco_report": busco.busco_report,
@@ -721,7 +720,6 @@ workflow theiaprok_ont {
     String? kraken2_report = read_QC_trim.kraken_report
     String? kraken2_database = read_QC_trim.kraken_database
     String? kraken2_docker = read_QC_trim.kraken_docker
-    File? bracken_report = read_QC_trim.bracken_report
     # Read QC - rasusa outputs
     String? rasusa_version = read_QC_trim.rasusa_version
     # Assembly - flye_denovo outputs
