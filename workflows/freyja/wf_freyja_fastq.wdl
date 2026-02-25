@@ -171,8 +171,8 @@ workflow freyja_fastq {
     call freyja_long_way.freyja_long_way_single as freyja_long_way {
       input:
         samplename = samplename,
-        freyja_lineage = freyja.freyja_lineages,
-        freyja_abundance = freyja.freyja_abundances,
+        freyja_lineages = freyja.freyja_lineages,
+        freyja_abundances = freyja.freyja_abundances,
         collection_date = collection_date,
         collection_site = collection_site,
         latitude = latitude,

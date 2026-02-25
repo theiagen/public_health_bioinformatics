@@ -3,8 +3,8 @@ version 1.0
 task freyja_long_way_single {
     input {
         String samplename
-        String freyja_lineage
-        String freyja_abundance
+        String freyja_lineages
+        String freyja_abundances
         String? collection_date
         String? collection_site
         String? latitude
@@ -17,8 +17,8 @@ task freyja_long_way_single {
 
     command <<<
         # create a metadata file for the sample
-        header="samplename\tfreyja_lineage\tfreyja_abundance\tcollection_date\tcollection_site"
-        row="~{samplename}\t~{freyja_lineage}\t~{freyja_abundance}\t~{collection_date}\t~{collection_site}"
+        header="samplename\tfreyja_lineages\tfreyja_abundances\tcollection_date\tcollection_site"
+        row="~{samplename}\t~{freyja_lineages}\t~{freyja_abundances}\t~{collection_date}\t~{collection_site}"
 
         # cheb if latitude and longitude are provided, add them to the header and row
         if [ -n "~{latitude}" ]; then
