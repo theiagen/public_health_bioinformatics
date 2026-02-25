@@ -10,7 +10,7 @@ task freyja_long_way_single {
         String? latitude
         String? longitude
         String docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:0.1.0"
-        Int disk_size = 100
+        Int disk_size = 50
         Int memory = 4
         Int cpu = 2
     }
@@ -41,5 +41,11 @@ task freyja_long_way_single {
 
     output {
         File freyja_long_format = "~{samplename}_freyja_long_format.tsv"
+    }
+    runtime {
+        docker: docker
+        disk: disk_size
+        memory: memory
+        cpu: cpu
     }
 }
