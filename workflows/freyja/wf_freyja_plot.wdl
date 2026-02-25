@@ -3,6 +3,7 @@ version 1.0
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/freyja/task_freyja_plot.wdl" as plot
 import "../../tasks/taxon_id/freyja/task_freyja_long_way.wdl" as freyja_long_way
+import "../../tasks/taxon_id/freyja/task_freyja_microreact.wdl" as freyja_microreact
 
 workflow freyja_plot {
   input {
@@ -35,6 +36,11 @@ workflow freyja_plot {
         latitudes         = latitude,
         longitudes        = longitude
     }
+    call freyja_microreact.freyja_microreact {
+      input:
+        freyja_long_format_tsv = freyja_long_way_multi.freyja_long_format,
+        freyja_plot_name = freyja_plot_name_updated
+    }
   }
   call versioning.version_capture {
     input:
@@ -50,5 +56,7 @@ workflow freyja_plot {
     File? freyja_plot_metadata = freyja_plot_task.freyja_plot_metadata
     # Freyja Long Way
     File? freyja_long_format = freyja_long_way_multi.freyja_long_format
+    # Freyja Microreact
+    File? freyja_microreact_output = freyja_microreact.freyja_microreact_output
   }
 }
