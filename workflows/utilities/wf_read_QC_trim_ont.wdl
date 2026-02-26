@@ -114,9 +114,10 @@ workflow read_QC_trim_ont {
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_raw {
       input:
         samplename = samplename,
-        kraken2_report = kraken2_theiacov_raw.kraken2_report,
+        kraken2_report = select_first([kraken2_theiacov_raw.bracken_report, kraken2_theiacov_raw.kraken2_report]),
         kraken2_classified_report = kraken2_theiacov_raw.kraken2_classified_report,
         target_organism = target_organism,
+        is_bracken = call_bracken,
         disk_size = kraken2_recalculate_abundances_disk_size,
         memory = kraken2_recalculate_abundances_memory,
         cpu = kraken2_recalculate_abundances_cpu,
@@ -138,9 +139,10 @@ workflow read_QC_trim_ont {
     call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_dehosted {
       input:
         samplename = samplename,
-        kraken2_report = kraken2_theiacov_dehosted.kraken2_report,
+        kraken2_report = select_first([kraken2_theiacov_dehosted.bracken_report, kraken2_theiacov_dehosted.kraken2_report]),
         kraken2_classified_report = kraken2_theiacov_dehosted.kraken2_classified_report,
         target_organism = target_organism,
+        is_bracken = call_bracken,
         disk_size = kraken2_recalculate_abundances_disk_size,
         memory = kraken2_recalculate_abundances_memory,
         cpu = kraken2_recalculate_abundances_cpu,
@@ -188,17 +190,19 @@ workflow read_QC_trim_ont {
             disk_size = kraken_disk_size,
             memory = kraken_memory,
             cpu = kraken_cpu,
-            call_bracken = false
+            call_bracken = call_bracken
+            bracken_kmer_length = bracken_kmer_length
         }
         call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
           input:
             samplename = samplename,
-            kraken2_report = kraken2_theiaprok.kraken2_report,
-            kraken2_classified_report = kraken2_theiaprok.kraken2_classified_report
+            kraken2_report = select_first([kraken2_theiaprok.bracken_report, kraken2_theiaprok.kraken2_report]),
+            kraken2_classified_report = kraken2_theiaprok.kraken2_classified_report,
+            is_bracken = call_bracken
         } 
       } 
     if ((call_kraken) && ! defined(kraken_db)) {
-        String kraken_db_warning = "Kraken database not defined"
+        String kraken2_db_warning = "Kraken database not defined"
       }
     }
   }
@@ -214,12 +218,14 @@ workflow read_QC_trim_ont {
     String? kraken2_sc2 = kraken2_recalculate_abundances_raw.percent_sc2
     String? kraken2_target_organism = kraken2_recalculate_abundances_raw.percent_target_organism
     String? kraken2_target_organism_name = kraken2_theiacov_raw.kraken2_target_organism
-    String kraken2_report = select_first([kraken2_recalculate_abundances_raw.kraken_report, kraken2_recalculate_abundances.kraken_report, ""])
+    File? kraken2_report = select_first([kraken2_recalculate_abundances_raw.kraken2_report, kraken2_recalculate_abundances.kraken2_report])
+    File? bracken_report = select_first([kraken2_recalculate_abundances_raw.bracken_report, kraken2_theiaprok_recalculate_abundances_raw.bracken_report])
     Float? kraken2_human_dehosted = kraken2_recalculate_abundances_dehosted.percent_human
     String? kraken2_sc2_dehosted = kraken2_recalculate_abundances_dehosted.percent_sc2
     String? kraken2_target_organism_dehosted = kraken2_recalculate_abundances_dehosted.percent_target_organism
-    File? kraken2_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken_report
-    String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken_db_warning, ""])
+    File? kraken2_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken2_report
+    File? bracken_report_dehosted = kraken2_recalculate_abundances_dehosted.bracken_report
+    String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken2_db_warning, ""])
    
     # estimated genome length -- by default for TheiaProk this is 5Mb
     Int est_genome_length = genome_length

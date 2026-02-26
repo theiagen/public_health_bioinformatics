@@ -190,6 +190,8 @@ task kraken2_parse_classified {
     File kraken2_report
     String samplename
     String? target_organism
+    Boolean is_bracken = false
+    String? null
     Int cpu = 4
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
@@ -205,6 +207,10 @@ task kraken2_parse_classified {
 
     # Define file paths using the template variables
     reads_file = "~{samplename}.classifiedreads.txt"
+    if "~{is_bracken}" == "true":
+      kraken2_report = "~{samplename}_bracken_report.txt"
+    else:
+      kraken2_report = "~{samplename}_kraken2_report.txt"
     report_file = "~{kraken2_report}"
     output_file = "~{samplename}.report_parsed.txt"
 
@@ -279,11 +285,12 @@ task kraken2_parse_classified {
     
   >>>
   output {
-    File kraken_report = "~{samplename}.report_parsed.txt"
+    File? kraken2_report = "~{samplename}.kraken2_report.txt"
+    File? bracken_report = "~{samplename}.bracken_report.txt"
     Float percent_human = read_float("PERCENT_HUMAN")
     String percent_sc2 = read_string("PERCENT_SC2")
     String percent_target_organism = read_string("PERCENT_TARGET_ORGANISM")
-    String? kraken_target_organism = target_organism
+    String? kraken2_target_organism = target_organism
   }
   runtime {
     docker: docker

@@ -416,6 +416,7 @@ workflow theiaprok_ont {
                 "kraken2_database": read_QC_trim.kraken2_database,
                 "kraken2_report": read_QC_trim.kraken2_report,
                 "kraken2_version": read_QC_trim.kraken2_version,
+                "bracken_report": read_QC_trim.bracken_report,
                 "legsta_predicted_sbt": merlin_magic.legsta_predicted_sbt,
                 "legsta_results": merlin_magic.legsta_results,
                 "legsta_version": merlin_magic.legsta_version,
@@ -718,6 +719,7 @@ workflow theiaprok_ont {
     # Read QC - kraken outputs
     String? kraken2_version = read_QC_trim.kraken2_version
     String? kraken2_report = read_QC_trim.kraken2_report
+    String? bracken_report = read_QC_trim.bracken_report
     String? kraken2_database = read_QC_trim.kraken2_database
     String? kraken2_docker = read_QC_trim.kraken2_docker
     # Read QC - rasusa outputs
