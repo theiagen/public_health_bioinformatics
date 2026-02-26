@@ -3,5 +3,7 @@
   "freyja_fastq.read1": "this.read1",
   "freyja_fastq.read2": "this.read2",
   "freyja_fastq.reference_genome": "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/nCoV-2019.reference.fasta",
-  "freyja_fastq.samplename": "this.freyja_sc2_id"
+  "freyja_fastq.samplename": "this.freyja_sc2_id",
+  "freyja_fastq.ont": "this.ONT",
+  "freyja_fastq.run_qualimap": "this.RUN_QUALIMAP"
 }
