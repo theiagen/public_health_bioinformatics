@@ -294,8 +294,8 @@ workflow theiacov_ont {
     Float? kraken_human_dehosted = read_QC_trim.kraken2_human_dehosted
     String? kraken_sc2_dehosted = read_QC_trim.kraken2_sc2_dehosted
     String? kraken_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
-    File? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
-    File? bracken_report_dehosted = read_QC_trim.bracken_report_dehosted
+    String? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
+    String? bracken_report_dehosted = read_QC_trim.bracken_report_dehosted
     # Read Alignment - Artic consensus and IRMA Aligned outputs
     String assembly_fasta = select_first([consensus.consensus_seq, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
     File? aligned_bam = consensus.trim_sorted_bam
