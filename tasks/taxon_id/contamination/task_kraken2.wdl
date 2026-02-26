@@ -141,6 +141,7 @@ task kraken2 {
           percentage_sc2="0"
         fi
         echo "INFO: Percentage SARS-CoV-2:"
+        echo $percentage_sc2 | tee PERCENT_SC2
         echo "" > PERCENT_TARGET_ORGANISM
       else
         echo "" > PERCENT_SC2 
