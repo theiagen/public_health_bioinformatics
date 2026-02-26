@@ -288,8 +288,8 @@ workflow theiacov_ont {
     Float? kraken_human = read_QC_trim.kraken2_human
     String? kraken_sc2 = read_QC_trim.kraken2_sc2
     String? kraken_target_organism = read_QC_trim.kraken2_target_organism
-    File? kraken_report = read_QC_trim.kraken2_report
-    File? bracken_report = read_QC_trim.bracken_report
+    String? kraken_report = read_QC_trim.kraken2_report
+    String? bracken_report = read_QC_trim.bracken_report
     # Read QC - kraken outputs dehosted
     Float? kraken_human_dehosted = read_QC_trim.kraken2_human_dehosted
     String? kraken_sc2_dehosted = read_QC_trim.kraken2_sc2_dehosted

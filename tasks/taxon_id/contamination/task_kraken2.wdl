@@ -208,11 +208,10 @@ task kraken2_parse_classified {
     # Define file paths using the template variables
     reads_file = "~{samplename}.classifiedreads.txt"
     if "~{is_bracken}" == "true":
-      kraken2_report = "~{samplename}_bracken_report.txt"
+      output_file = "~{samplename}.bracken_report_parsed.txt"
     else:
-      kraken2_report = "~{samplename}_kraken2_report.txt"
+      output_file = "~{samplename}.kraken2_report_parsed.txt"
     report_file = "~{kraken2_report}"
-    output_file = "~{samplename}.report_parsed.txt"
 
     # First pass: read report file and build taxon info dictionary
     taxon_info = {}
