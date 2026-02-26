@@ -218,8 +218,8 @@ workflow read_QC_trim_ont {
     String? kraken2_sc2 = kraken2_recalculate_abundances_raw.percent_sc2
     String? kraken2_target_organism = kraken2_recalculate_abundances_raw.percent_target_organism
     String? kraken2_target_organism_name = kraken2_theiacov_raw.kraken2_target_organism
-    File? kraken2_report = select_first([kraken2_recalculate_abundances_raw.kraken2_refined_report, kraken2_recalculate_abundances.kraken2_refined_report])
-    File? bracken_report = select_first([kraken2_recalculate_abundances_raw.bracken_refined_report, kraken2_recalculate_abundances.bracken_refined_report])
+    String kraken2_report = select_first([kraken2_recalculate_abundances_raw.kraken2_refined_report, kraken2_recalculate_abundances.kraken2_refined_report, ""])
+    String bracken_report = select_first([kraken2_recalculate_abundances_raw.bracken_refined_report, kraken2_recalculate_abundances.bracken_refined_report, ""])
     Float? kraken2_human_dehosted = kraken2_recalculate_abundances_dehosted.percent_human
     String? kraken2_sc2_dehosted = kraken2_recalculate_abundances_dehosted.percent_sc2
     String? kraken2_target_organism_dehosted = kraken2_recalculate_abundances_dehosted.percent_target_organism

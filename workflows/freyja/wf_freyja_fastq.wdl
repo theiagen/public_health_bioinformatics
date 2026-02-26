@@ -243,6 +243,7 @@ workflow freyja_fastq {
     Float kraken_human_dehosted = select_first([read_QC_trim_pe.kraken2_human_dehosted, read_QC_trim_se.kraken2_human_dehosted, read_QC_trim_ont.kraken2_human_dehosted])
     String kraken_sc2_dehosted = select_first([read_QC_trim_pe.kraken2_sc2_dehosted, read_QC_trim_se.kraken2_sc2_dehosted, read_QC_trim_ont.kraken2_sc2_dehosted])
     File kraken_report_dehosted = select_first([read_QC_trim_pe.kraken2_report_dehosted, read_QC_trim_se.kraken2_report_dehosted, read_QC_trim_ont.kraken2_report_dehosted])
+    File bracken_report_dehosted = select_first([read_QC_trim_pe.bracken_report_dehosted, read_QC_trim_se.bracken_report_dehosted, read_QC_trim_ont.bracken_report_dehosted])
     # Read Alignment - bwa outputs
     String? bwa_version = bwa.bwa_version
     String? alignment_method = alignment_method_technology
