@@ -1030,38 +1030,45 @@ kmerfinder	docker	String	The Docker container to use for the task	us-docker.pkg.
 kmerfinder	kmerfinder_args	String	Kmerfinder additional arguments		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 kmerfinder	kmerfinder_db	File	Bacterial database for KmerFinder	gs://theiagen-public-resources-rp/reference_data/databases/kmerfinder/kmerfinder_bacteria_20230911.tar.gz	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
 kmerfinder	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-kraken2	bracken_kmer_length	Int	Kmer length for Bracken to use - must be present in database 		Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Panel	general	
-kraken2	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Panel	general	
-kraken2	classified_out	String	Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix	classified#.fastq	Optional	TheiaViral_Panel	general	
-kraken2	cpu	Int	Number of CPUs to allocate to the task	4	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Panel	runtime	
+kraken2	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database 		Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	general	
+kraken2	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	general	
+kraken2	classified_out	String	Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix	classified#.fastq	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	general	
+kraken2	cpu	Int	Number of CPUs to allocate to the task	4	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	runtime	
 kraken2	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE	runtime	
-kraken2	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
-kraken2	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaViral_Panel	docker	
-kraken2	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE	docker	
-kraken2	kraken2_args	String	Allows a user to supply additional kraken2 command-line arguments		Optional	TheiaViral_Panel	general	
+kraken2	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime	
+kraken2	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	docker	
+kraken2	kraken2_args	String	Allows a user to supply additional kraken2 command-line arguments		Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	general	
 kraken2	kraken2_db	File	The database used to run Kraken2	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE	database	
-kraken2	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE	runtime	
-kraken2	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Panel	runtime	
+kraken2	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	runtime	
 kraken2	read2	File	Internal component, do not modify		Optional	NCBI_Scrub_SE	general	
-kraken2	unclassified_out	String	Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix	unclassified#.fastq	Optional	TheiaViral_Panel	general	
-kraken2_clean	bracken_kmer_length	Int	Kmer length for Bracken to use - must be present in database		Optional	TheiaMeta_Illumina_PE	general	
-kraken2_clean	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaMeta_Illumina_PE	runtime	
+kraken2	unclassified_out	String	Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix	unclassified#.fastq	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	general	
+kraken2_clean	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	TheiaMeta_Illumina_PE, TheiaViral_Panel	general	
+kraken2_clean	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaViral_Panel	general	
+kraken2_clean	classified_out	String	Internal component, do not modify	classified#.fastq	Optional	TheiaViral_Panel	general	
+kraken2_clean	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaMeta_Illumina_PE, TheiaViral_Panel	runtime	
 kraken2_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaMeta_Illumina_PE	runtime	
-kraken2_clean	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaMeta_Illumina_PE	docker	
-kraken2_clean	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaMeta_Illumina_PE	runtime	
-kraken2_dehosted	bracken_kmer_length	Int	Kmer length for Bracken to use - must be present in database		Optional	TheiaCoV_ClearLabs	general	
+kraken2_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
+kraken2_clean	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaMeta_Illumina_PE, TheiaViral_Panel	docker	
+kraken2_clean	kraken2_args	String	Additional kraken2 arguments		Optional	TheiaViral_Panel	general	
+kraken2_clean	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaMeta_Illumina_PE, TheiaViral_Panel	runtime	
+kraken2_clean	target_organism	String	Target organism for reporting percent identified		Optional	TheiaMeta_Illumina_PE, TheiaViral_Panel	general	
+kraken2_clean	unclassified_out	String	Internal component, do not modify	unclassified#.fastq	Optional	TheiaViral_Panel	general	
+kraken2_dehosted	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	TheiaCoV_ClearLabs	general	
 kraken2_dehosted	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaCoV_ClearLabs	general	
+kraken2_dehosted	classified_out	String	Internal component, do not modify	classified#.fastq	Optional	TheiaCoV_ClearLabs	general	
 kraken2_dehosted	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ClearLabs	runtime	
 kraken2_dehosted	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaCoV_ClearLabs	runtime	
-kraken2_dehosted	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaCoV_ClearLabs	docker	
+kraken2_dehosted	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaCoV_ClearLabs	docker	
+kraken2_dehosted	kraken2_args	String	Additional kraken2 arguments		Optional	TheiaCoV_ClearLabs	general	
 kraken2_dehosted	kraken2_db	File	The database used to run Kraken2. Must contain viral and human sequences.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaCoV_ClearLabs	database	
-kraken2_dehosted	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs	runtime	
+kraken2_dehosted	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaCoV_ClearLabs	runtime	
 kraken2_dehosted	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs	general	
+kraken2_dehosted	unclassified_out	String	Internal component, do not modify	unclassified#.fastq	Optional	TheiaCoV_ClearLabs	general	
 kraken2_extract	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE	runtime	
 kraken2_extract	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime	
 kraken2_extract	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe	Optional	TheiaViral_Illumina_PE	docker	
 kraken2_extract	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime	
-kraken2_pe	bracken_kmer_length	Int	Kmer length for Bracken to use - must be present in database		Optional	Kraken_PE	general	
+kraken2_pe	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Kraken_PE	general	
 kraken2_pe	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	Kraken_PE	general	
 kraken2_pe	classified_out	String	Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix	classified#.fastq	Optional	Kraken_PE	general	
 kraken2_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Kraken_PE	runtime	
@@ -1069,18 +1076,22 @@ kraken2_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task. Incr
 kraken2_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	Kraken_PE	docker	
 kraken2_pe	kraken2_args	String	Allows a user to supply additional kraken2 command-line arguments		Optional	Kraken_PE	general	
 kraken2_pe	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Kraken_PE	runtime	
+kraken2_pe	target_organism	String	Target organism for reporting percent identified		Optional	Kraken_PE	general	
 kraken2_pe	unclassified_out	String	Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix	unclassified#.fastq	Optional	Kraken_PE	general	
-kraken2_raw	bracken_kmer_length	Int	Kmer length for Bracken to use - must be present in database		Optional	TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE	general	
+kraken2_raw	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE, TheiaViral_Panel	general	
 kraken2_raw	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaCoV_ClearLabs	general	
-kraken2_raw	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE	runtime	
+kraken2_raw	classified_out	String	Internal component, do not modify	classified#.fastq	Optional	TheiaCoV_ClearLabs, TheiaViral_Panel	general	
+kraken2_raw	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE, TheiaViral_Panel	runtime	
 kraken2_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE	runtime	
-kraken2_raw	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaMeta_Illumina_PE	docker	
-kraken2_raw	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaCoV_ClearLabs	docker	
+kraken2_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
+kraken2_raw	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE, TheiaViral_Panel	docker	
+kraken2_raw	kraken2_args	String	Additional kraken2 arguments		Optional	TheiaCoV_ClearLabs, TheiaViral_Panel	general	
 kraken2_raw	kraken2_db	File	The database used to run Kraken2. Must contain viral and human sequences.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaCoV_ClearLabs	database	
-kraken2_raw	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs	runtime	
-kraken2_raw	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaMeta_Illumina_PE	runtime	
+kraken2_raw	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE, TheiaViral_Panel	runtime	
 kraken2_raw	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs	general	
-kraken2_se	bracken_kmer_length	Int	Kmer length for Bracken to use - must be present in database		Optional	Kraken_SE	general	
+kraken2_raw	target_organism	String	Target organism for reporting percent identified		Optional	TheiaMeta_Illumina_PE, TheiaViral_Panel	general	
+kraken2_raw	unclassified_out	String	Internal component, do not modify	unclassified#.fastq	Optional	TheiaCoV_ClearLabs, TheiaViral_Panel	general	
+kraken2_se	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Kraken_SE	general	
 kraken2_se	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	Kraken_SE	general	
 kraken2_se	classified_out	String	Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix	classified#.fastq	Optional	Kraken_SE	general	
 kraken2_se	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Kraken_SE	runtime	
@@ -1089,33 +1100,17 @@ kraken2_se	docker	String	The Docker container to use for the task	us-docker.pkg.
 kraken2_se	kraken2_args	String	Allows a user to supply additional kraken2 command-line arguments		Optional	Kraken_SE	general	
 kraken2_se	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Kraken_SE	runtime	
 kraken2_se	read2	File	Internal component, do not modify		Optional	Kraken_SE	general	
+kraken2_se	target_organism	String	Target organism for reporting percent identified		Optional	Kraken_SE	general	
 kraken2_se	unclassified_out	String	Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix	unclassified#.fastq	Optional	Kraken_SE	general	
-kraken2_standalone	bracken_kmer_length	Int	Kmer length for Bracken to use - must be present in database		Optional	TheiaViral_Illumina_PE	general	
-kraken2_standalone	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaViral_Illumina_PE	general	
-kraken2_standalone	classified_out	String	File name for classified reads	classified#.fastq	Optional	TheiaViral_Illumina_PE	general	
-kraken2_standalone	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime	
-kraken2_standalone	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime	
-kraken2_standalone	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaViral_Illumina_PE	docker	
-kraken2_standalone	kraken2_args	String	Additional kraken2 command-line arguments		Optional	TheiaViral_Illumina_PE	general	
-kraken2_standalone	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Illumina_PE	runtime	
-kraken2_standalone	unclassified_out	String	File name for unclassified reads	unclassified#.fastq	Optional	TheiaViral_Illumina_PE	general	
-kraken2_standalone_clean	bracken_kmer_length	Int	Kmer length for Bracken to use - must be present in database		Optional	TheiaViral_Panel	general	
-kraken2_standalone_clean	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaViral_Panel	general	
-kraken2_standalone_clean	classified_out	String	File name for classified reads	classified#.fastq	Optional	TheiaViral_Panel	general	
-kraken2_standalone_clean	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Panel	runtime	
-kraken2_standalone_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
-kraken2_standalone_clean	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaViral_Panel	docker	
-kraken2_standalone_clean	kraken2_args	String	Additional kraken2 command-line arguments		Optional	TheiaViral_Panel	general	
-kraken2_standalone_clean	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Panel	runtime	
-kraken2_standalone_clean	unclassified_out	String	File name for unclassified reads	unclassified#.fastq	Optional	TheiaViral_Panel	general	
-kraken2_standalone_raw	bracken_kmer_length	Int	Kmer length for Bracken to use - must be present in database		Optional	TheiaViral_Panel	general	
-kraken2_standalone_raw	classified_out	String	File name for classified reads	classified#.fastq	Optional	TheiaViral_Panel	general	
-kraken2_standalone_raw	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Panel	runtime	
-kraken2_standalone_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
-kraken2_standalone_raw	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaViral_Panel	docker	
-kraken2_standalone_raw	kraken2_args	String	Additional kraken2 command-line arguments		Optional	TheiaViral_Panel	general	
-kraken2_standalone_raw	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Panel	runtime	
-kraken2_standalone_raw	unclassified_out	String	File name for unclassified reads	unclassified#.fastq	Optional	TheiaViral_Panel	general	
+kraken2_taxon	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	TheiaViral_Panel	general	
+kraken2_taxon	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaViral_Panel	general	
+kraken2_taxon	classified_out	String	Internal component, do not modify	classified#.fastq	Optional	TheiaViral_Panel	general	
+kraken2_taxon	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Panel	runtime	
+kraken2_taxon	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
+kraken2_taxon	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaViral_Panel	docker	
+kraken2_taxon	kraken2_args	String	Additional kraken2 arguments		Optional	TheiaViral_Panel	general	
+kraken2_taxon	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Panel	runtime	
+kraken2_taxon	unclassified_out	String	Internal component, do not modify	unclassified#.fastq	Optional	TheiaViral_Panel	general	
 kraken_parser	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Panel	runtime	
 kraken_parser	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
 kraken_parser	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe	Optional	TheiaViral_Panel	docker	
@@ -1971,8 +1966,8 @@ read_QC_trim	artic_guppyplex_docker	String	Internal component, do not modify	us-
 read_QC_trim	artic_guppyplex_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaCoV_ONT	runtime	
 read_QC_trim	artic_guppyplex_memory	Int	Internal component, do not modify	16	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
-read_QC_trim	bracken_kmer_length	Int	Kmer length for Bracken to use - must be present in database		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
-read_QC_trim	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
+read_QC_trim	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+read_QC_trim	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 read_QC_trim	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 read_QC_trim	call_kraken	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_ONT	general	
 read_QC_trim	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
@@ -1997,8 +1992,8 @@ read_QC_trim	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the t
 read_QC_trim	kraken_disk_size	Int	Internal component, do not modify	100	Optional	TheiaEuk_ONT	general	
 read_QC_trim	kraken_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaCoV_ONT, TheiaProk_ONT	docker	
 read_QC_trim	kraken_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaEuk_ONT	general	
-read_QC_trim	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-read_QC_trim	kraken_memory	Int	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
+read_QC_trim	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
+read_QC_trim	kraken_memory	Int	Internal component, do not modify	32	Optional	TheiaEuk_ONT	general	
 read_QC_trim	max_length	Int	Internal component, do not modify	700	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	midas_db	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE	general	
 read_QC_trim	midas_db	File	The database used by the MIDAS task in .tar.gz format	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	database	
@@ -2050,6 +2045,8 @@ read_QC_trim_ont	artic_guppyplex_cpu	Int	Number of CPUs to allocate to the task	
 read_QC_trim_ont	artic_guppyplex_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	artic_guppyplex_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3	Optional	Freyja_FASTQ	docker	
 read_QC_trim_ont	artic_guppyplex_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Freyja_FASTQ	runtime	
+read_QC_trim_ont	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Freyja_FASTQ	general	
+read_QC_trim_ont	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	downsampling_coverage	Float	Internal component, do not modify	150	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	genome_length	Int	Length of the genome	5000000	Optional	Freyja_FASTQ	general	
@@ -2061,7 +2058,7 @@ read_QC_trim_ont	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optiona
 read_QC_trim_ont	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	Freyja_FASTQ	database	
 read_QC_trim_ont	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	kraken_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	Freyja_FASTQ	docker	
-read_QC_trim_ont	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	Freyja_FASTQ	general	
+read_QC_trim_ont	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	max_length	Int	Internal component, do not modify	700	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	min_length	Int	Internal component, do not modify	400	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	nanoq_cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
@@ -2087,7 +2084,7 @@ read_QC_trim_ont	rasusa_seed	Int	Random seed to use		Optional	Freyja_FASTQ	gener
 read_QC_trim_ont	run_prefix	String	Internal component, do not modify	artic_ncov2019	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	adapters	File	A FASTA file containing adapter sequences		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_pe	bracken_kmer_length	Int	Kmer length for Bracken to use - must be present in database		Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general	
@@ -2095,7 +2092,7 @@ read_QC_trim_pe	fastp_args	String	Additional arguments to use with fastp	--detec
 read_QC_trim_pe	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	Freyja_FASTQ	database	
 read_QC_trim_pe	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_pe	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	midas_db	File	Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	Freyja_FASTQ	database	
 read_QC_trim_pe	phix	File	The file containing the phix sequence to be used during bbduk task		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	read_processing	String	Options: "trimmomatic" or "fastp" to indicate which read trimming module to use	trimmomatic	Optional	Freyja_FASTQ	general	
@@ -2105,7 +2102,7 @@ read_QC_trim_pe	trim_window_size	Int	The window size to use during trimming	4	Op
 read_QC_trim_pe	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	Freyja_FASTQ	general	
 read_QC_trim_se	adapters	File	A FASTA file containing adapter sequences		Optional	Freyja_FASTQ	general	
 read_QC_trim_se	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_se	bracken_kmer_length	Int	Kmer length for Bracken to use - must be present in database		Optional	Freyja_FASTQ	general	
+read_QC_trim_se	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Freyja_FASTQ	general	
 read_QC_trim_se	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general	
@@ -2113,7 +2110,7 @@ read_QC_trim_se	fastp_args	String	Additional arguments to use with fastp	-g -5 2
 read_QC_trim_se	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_se	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	Freyja_FASTQ	database	
 read_QC_trim_se	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_se	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task		Optional	Freyja_FASTQ	general	
+read_QC_trim_se	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_se	midas_db	File	Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	Freyja_FASTQ	database	
 read_QC_trim_se	phix	File	The file containing the phix sequence to be used during bbduk task		Optional	Freyja_FASTQ	general	
 read_QC_trim_se	read_processing	String	Options: "trimmomatic" or "fastp" to indicate which read trimming module to use	trimmomatic	Optional	Freyja_FASTQ	general	
