@@ -285,8 +285,8 @@ task kraken2_parse_classified {
     
   >>>
   output {
-    File? kraken2_report = "~{samplename}.kraken2_report.txt"
-    File? bracken_report = "~{samplename}.bracken_report.txt"
+    File? kraken2_refined_report = "~{samplename}.kraken2_report.txt"
+    File? bracken_refined_report = "~{samplename}.bracken_report.txt"
     Float percent_human = read_float("PERCENT_HUMAN")
     String percent_sc2 = read_string("PERCENT_SC2")
     String percent_target_organism = read_string("PERCENT_TARGET_ORGANISM")

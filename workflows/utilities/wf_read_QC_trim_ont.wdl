@@ -190,7 +190,7 @@ workflow read_QC_trim_ont {
             disk_size = kraken_disk_size,
             memory = kraken_memory,
             cpu = kraken_cpu,
-            call_bracken = call_bracken
+            call_bracken = call_bracken,
             bracken_kmer_length = bracken_kmer_length
         }
         call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
@@ -218,13 +218,13 @@ workflow read_QC_trim_ont {
     String? kraken2_sc2 = kraken2_recalculate_abundances_raw.percent_sc2
     String? kraken2_target_organism = kraken2_recalculate_abundances_raw.percent_target_organism
     String? kraken2_target_organism_name = kraken2_theiacov_raw.kraken2_target_organism
-    File? kraken2_report = select_first([kraken2_recalculate_abundances_raw.kraken2_report, kraken2_recalculate_abundances.kraken2_report])
-    File? bracken_report = select_first([kraken2_recalculate_abundances_raw.bracken_report, kraken2_theiaprok_recalculate_abundances_raw.bracken_report])
+    File? kraken2_report = select_first([kraken2_recalculate_abundances_raw.kraken2_refined_report, kraken2_recalculate_abundances.kraken2_refined_report])
+    File? bracken_report = select_first([kraken2_recalculate_abundances_raw.bracken_refined_report, kraken2_recalculate_abundances.bracken_refined_report])
     Float? kraken2_human_dehosted = kraken2_recalculate_abundances_dehosted.percent_human
     String? kraken2_sc2_dehosted = kraken2_recalculate_abundances_dehosted.percent_sc2
     String? kraken2_target_organism_dehosted = kraken2_recalculate_abundances_dehosted.percent_target_organism
-    File? kraken2_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken2_report
-    File? bracken_report_dehosted = kraken2_recalculate_abundances_dehosted.bracken_report
+    File? kraken2_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken2_refined_report
+    File? bracken_report_dehosted = kraken2_recalculate_abundances_dehosted.bracken_refined_report
     String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken2_db_warning, ""])
    
     # estimated genome length -- by default for TheiaProk this is 5Mb
