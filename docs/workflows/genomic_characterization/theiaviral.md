@@ -48,7 +48,7 @@
 
 ???+ question "What about segmented viruses?"
 
-    TheiaViral can properly assemble segmented viruses. The reference genome database used in Step 2 excludes segmented viral _nucleotide_ accessions but includes the RefSeq _assembly_ accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.
+    TheiaViral can assemble segmented viruses. The reference genome database used in Step 2 excludes segmented viral _nucleotide_ accessions but includes the RefSeq _assembly_ accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.
 
 ### Workflow Diagram
 
@@ -93,6 +93,8 @@
     === "TheiaViral_Panel"
 
         The TheiaViral_Panel workflow accepts Illumina paired-end read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs.
+
+        TheiaViral_Panel is tailored toward high-throughput analysis of multiple viral lineages within a single sample. It is recommended to use TheiaViral_Illumina_PE for targeted analysis of a single viral lineage, even if reads are derived from a panel assay.
 
         For RSV characterization, it is recommended to use TheiaCoV or TheiaViral Illumina PE. RSV-A and RSV-B-specific modules are not available in TheiaViral Panel, due to limitations with distinguishing RSV-A and B during read extraction. Subtypes may be inferred from the best retrieved Skani reference depending on the resolution of the NCBI metadata corresponding to that accession. 
 
