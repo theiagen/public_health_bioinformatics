@@ -10,13 +10,17 @@ task ete4_taxon_id {
     Int disk_size = 50
   }
   command <<<
-    # fail hard
-    set -euo pipefail
-
     date | tee DATE
     ete4 version | sed 's| Tools path.*||' | tee ete4_VERSION
 
     echo "DEBUG: Obtaining taxon report for taxon: ~{taxon} and rank: ~{rank}"
+    echo "PASS" > TAXON_ID_STATUS
+    echo "" > "TAXON_ID"
+    echo "" > "TAXON_NAME"
+    echo "" > "TAXON_RANK"
+    echo "" > "RAW_TAXON_ID"
+    echo "" > "RAW_TAXON_NAME"
+    echo "" > "RAW_TAXON_RANK"
 
     python3 <<CODE
     from ete4 import NCBITaxa
@@ -30,6 +34,8 @@ task ete4_taxon_id {
         query_taxid = taxa.get_name_translator(["~{taxon}"]).get("~{taxon}")[0]
       # error out if the taxon was not recovered
       except TypeError:
+        with open("TAXON_ID_STATUS", "w") as f:
+          f.write("FAIL")
         raise ValueError(f"ERROR: Invalid taxon name: '~{taxon}'")
 
     lineage = taxa.get_lineage(query_taxid)
@@ -50,6 +56,8 @@ task ete4_taxon_id {
       reported_taxon_id = query_taxid
     elif check_rank not in rank2lineage:
       reported_taxon_name = reported_taxon_id = reported_taxon_rank = 'N/A'
+      with open("TAXON_ID_STATUS", "w") as f:
+        f.write("FAIL")
       raise ValueError(f"ERROR: Input taxon rank '{check_rank}' is not valid for taxon: '{query_taxon}'.")
     else:
       reported_taxon_id = rank2lineage[check_rank]
@@ -79,6 +87,7 @@ task ete4_taxon_id {
     String raw_taxon_rank = read_string("RAW_TAXON_RANK")
     String ete4_version = read_string("ete4_VERSION")
     String ete4_docker = docker
+    String ete4_status = read_string("TAXON_ID_STATUS")
   }
   runtime {
     memory: "~{memory} GB"

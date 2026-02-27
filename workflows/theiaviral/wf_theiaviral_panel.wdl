@@ -134,6 +134,7 @@ workflow theiaviral_panel {
         }
       }
       # get the taxon information from ncbi
+      # may need to populate a status check here since this doesn't hard fail
       call identify_taxon_id_task.ete4_taxon_id as ete4_identify {
         input:
           taxon = taxon_id
