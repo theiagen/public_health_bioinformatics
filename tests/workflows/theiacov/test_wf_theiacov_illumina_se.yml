@@ -59,7 +59,7 @@
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/inputs.json
       contains: ["read1", "samplename"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/outputs.json
-      contains: ["kraken2", "percent_human", "percent_sc2"]
+      contains: ["kraken2", "kraken2_percent_human", "kraken2_percent_sc2"]
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/stderr.txt
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/stderr.txt.offset
     - path: miniwdl_run/call-read_QC_trim/call-kraken2_theiacov_raw/stdout.txt
