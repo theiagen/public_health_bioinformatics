@@ -15,10 +15,6 @@
     Kraken2 is run on both the raw and clean reads.
 <!-- endif -->
 
-<!-- if: ont -->
-    Kraken2 is run on the raw read data.
-<!-- endif -->
-
 <!-- if: theiaviral -->
     This task runs on cleaned reads passed from the `read_QC_trim` subworkflow and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones.
 <!-- endif -->
@@ -31,7 +27,7 @@
     As an alternative to `MIDAS` (see above), the `Kraken2` task can also be turned on through setting the `call_kraken` input variable as `true` for the identification of reads to detect contamination with non-target taxa.
 <!-- endif -->
 
-<!-- if: theiaprokillumina|ont -->
+<!-- if: theiaprokillumina -->
     A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on [Kraken2 standalone documentation](../standalone/kraken2.md#databases).
 <!-- endif -->
 

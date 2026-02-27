@@ -19,7 +19,7 @@
     2. The best reference from a database of ~200,000 viral genomes is selected using average nucleotide identity (ANI), and
     3. A final consensus assembly is generated through reference-based read mapping and variant calling.
 
-    _De novo_ assembly and reference selection can be skipped by providing a reference genome as input; this enables compatibility with tiled-amplicon sequencing data. Subsequent genomic characterization is currently only functional for the viral lineages [listed below](#taxa-specific-tasks).
+    _De novo_ assembly and reference selection can be skipped by providing a reference genome as input; this enables compatibility with tiled-amplicon sequencing data. Subsequent genomic characterization is currently only functional for the viral lineages [listed below](#taxa-specific-tasks). Note that Skani reference selection will still run to systematically assign a taxon name by identifying the best hit to the supplied reference genome.
 
 ???+ question "What are the main differences between the TheiaViral and TheiaCoV workflows?"
 
@@ -489,8 +489,9 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
     - `metaviralspades_status` / `raven_denovo_status`: The default assembler did not successfully complete or extract viral contigs (MetaviralSPAdes). On their own, these statuses do not correspond directly to workflow failure because fallback *de novo* assemblers are implemented for both TheiaViral workflows.
     - `kraken2_extraction_status`: No reads could be extracted, likely because no reads correspond to the inputted taxon. Check the `kraken2_report`
     - `metabuli_status`: Reads could not be classified or extracted, likely because no reads correspond to the inputted taxon. Check the `metabuli_report` 
-    - `read_screen_clean`: If this output is populated with something other than "PASS", it indicates the reads did not pass the imposed thresholds. Either the reads are poor quality or the thresholds are too stringent, in which case the thresholds can be relaxed or `skip_screen` can be set to "true".
-    - `dehost_wf_download_status`: If this output is populated with something other than "PASS", it indicates a host genome could not be retrieved for decontamination. See the `host` input explanation for more information and review the `download_accession`/`download_taxonomy` task output logs for advanced error parsing.
+    - `read_screen_clean`: Reads did not pass the imposed thresholds. Either the reads are poor quality or the thresholds are too stringent, in which case the thresholds can be relaxed or `skip_screen` can be set to "true".
+    - `dehost_wf_download_status`: A host genome could not be retrieved for decontamination. See the `host` input explanation for more information and review the `download_accession`/`download_taxonomy` task output logs for advanced error parsing.
+    - `ete4_status`: A refined taxon ID could not be retrieved for the inputted `taxon`. Ensure the taxon name is a valid, complete name/Taxon ID listed in [NCBI's Taxonomy Browser](https://www.ncbi.nlm.nih.gov/datasets/taxonomy/tree/) and the `read_extraction_rank` is a taxonomic rank above the inputted `taxon`.
 
 ??? warning "Known errors associated with read quality"
 

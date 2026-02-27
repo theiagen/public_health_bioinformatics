@@ -14,6 +14,14 @@
 
 <!-- endif -->
 
+<!-- if theiacov|freyja -->
+    Metabuli is run on both raw and human dehosted reads
+<!--endif -->
+
+<!-- if theiaprok -->
+    `metabuli_db` must be set to activate this task for TheiaProk
+<!-- endif -->
+
     ??? dna "`taxdump_path` input parameter"
         The `taxdump_path` directs the task toward a taxonkit-generated taxdump file, e.g. [from NCBI](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/) or [from GTDB](https://github.com/shenwei356/gtdb-taxdump/releases). This is not necessary to edit unless users want a more recent taxdump than what Theiagen hosts, or if users want to reference a different taxonomy. By default, Theiagen uses the NCBI taxonomy hierarchy.
 
