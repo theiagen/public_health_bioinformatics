@@ -11,6 +11,13 @@ This workflow allows users to submit Terra data tables as metadata and phylogene
 !!! caption "Microreact_Export Diagram"
     ![Microreact_Export Workflow Diagram](../../assets/figures/Microreact_Export.png)
 
+!!! tip "Updating Projects"
+    When updating an existing project there are a few places to obtain the input for `project_url`. One place to pull this string from is the web address of the project in your account which will look like this, https://microreact.org/project/&lt;project_url&gt;run.
+
+    A second location is within the output of `microreact_api_response` in the `id` field. 
+
+    A third location would be from the My Projects tab. The project id is displayed for each project within your account. 
+
 ### Inputs
 
 /// html | div[class="searchable-table"]
