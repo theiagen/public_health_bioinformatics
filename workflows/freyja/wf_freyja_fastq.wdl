@@ -235,13 +235,13 @@ workflow freyja_fastq {
     File read1_dehosted = select_first([read_QC_trim_pe.read1_dehosted, read_QC_trim_se.read1_dehosted, read_QC_trim_ont.read1_dehosted])
     File? read2_dehosted = read_QC_trim_pe.read2_dehosted
     # Read QC - kraken outputs - all
-    String? kraken_version = select_first([read_QC_trim_pe.kraken2_version, read_QC_trim_se.kraken2_version])
-    Float? kraken_human = select_first([read_QC_trim_pe.kraken2_human, read_QC_trim_se.kraken2_human])
-    String? kraken_sc2 = select_first([read_QC_trim_pe.kraken2_sc2, read_QC_trim_se.kraken2_sc2])
+    String kraken_version = select_first([read_QC_trim_pe.kraken2_version, read_QC_trim_se.kraken2_version, ""])
+    String kraken_human = select_first([read_QC_trim_pe.kraken2_human, read_QC_trim_se.kraken2_human, ""])
+    String kraken_sc2 = select_first([read_QC_trim_pe.kraken2_sc2, read_QC_trim_se.kraken2_sc2, ""])
     String kraken_report = select_first([read_QC_trim_pe.kraken2_report, read_QC_trim_se.kraken2_report, ""])
     String bracken_report = select_first([read_QC_trim_pe.bracken_report, read_QC_trim_se.bracken_report, ""])
-    Float? kraken_human_dehosted = select_first([read_QC_trim_pe.kraken2_human_dehosted, read_QC_trim_se.kraken2_human_dehosted, ""])
-    String? kraken_sc2_dehosted = select_first([read_QC_trim_pe.kraken2_sc2_dehosted, read_QC_trim_se.kraken2_sc2_dehosted, ""])
+    String kraken_human_dehosted = select_first([read_QC_trim_pe.kraken2_human_dehosted, read_QC_trim_se.kraken2_human_dehosted, ""])
+    String kraken_sc2_dehosted = select_first([read_QC_trim_pe.kraken2_sc2_dehosted, read_QC_trim_se.kraken2_sc2_dehosted, ""])
     String kraken_report_dehosted = select_first([read_QC_trim_pe.kraken2_report_dehosted, read_QC_trim_se.kraken2_report_dehosted, ""])
     String bracken_report_dehosted = select_first([read_QC_trim_pe.bracken_report_dehosted, read_QC_trim_se.bracken_report_dehosted, ""])
     # Read QC - metabuli outputs - ONT
@@ -252,7 +252,6 @@ workflow freyja_fastq {
     Float? metabuli_human_dehosted = read_QC_trim_ont.metabuli_percent_human_dehosted
     String? metabuli_sc2_dehosted = read_QC_trim_ont.metabuli_percent_sc2_dehosted
     String? metabuli_report_dehosted = read_QC_trim_ont.metabuli_report_dehosted
-
     # Read Alignment - bwa outputs
     String? bwa_version = bwa.bwa_version
     String? alignment_method = alignment_method_technology
