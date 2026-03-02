@@ -1,6 +1,7 @@
 version 1.0
 
 import "../../tasks/quality_control/read_filtering/task_artic_guppyplex.wdl" as artic_guppyplex
+import "../../tasks/taxon_id/task_ete4_taxon_id.wdl" as ete4_taxon_id
 import "../../tasks/quality_control/read_filtering/task_nanoq.wdl" as nanoq_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli
@@ -67,11 +68,11 @@ workflow read_QC_trim_ont {
     Int? nanoq_max_read_qual
     Int? nanoq_min_read_qual  
   }
-  if defined(target_organism) {
+  if (defined(target_organism)) {
     if (target_organism != "") {
       call ete4_taxon_id.ete4_taxon_id {
         input:
-          String taxon = target_organism,
+          taxon = select_first([target_organism]),
       }
     }
   }
@@ -177,12 +178,13 @@ workflow read_QC_trim_ont {
     String metabuli_docker = select_first([metabuli_theiacov_raw.metabuli_docker, metabuli_theiaprok.metabuli_docker, ""])
     Float? metabuli_percent_human = select_first([metabuli_theiacov_raw.metabuli_percent_human, metabuli_theiaprok.metabuli_percent_human, ""])
     String? metabuli_percent_sc2 = select_first([metabuli_theiacov_raw.metabuli_percent_sc2, metabuli_theiaprok.metabuli_percent_sc2, ""])
-    String? metabuli_target_organism = select_first([metabuli_theiacov_raw.metabuli_target_organism, metabuli_theiaprok.metabuli_target_organism, ""])
-    String? metabuli_taxon_id = select_first([metabuli_theiacov_raw.metabuli_taxon_id, metabuli_theiaprok.metabuli_taxon_id, ""])
+    String? metabuli_target_organism = ete4_taxon_id.taxon_name
+    String? metabuli_percent_target_organism = select_first([metabuli_theiacov_raw.metabuli_percent_target_lineage, metabuli_theiaprok.metabuli_percent_target_lineage, ""])
+    String? metabuli_taxon_id = ete4_taxon_id.taxon_id
     String metabuli_report = select_first([metabuli_theiacov_raw.metabuli_report, metabuli_theiaprok.metabuli_report, ""])
     Float? metabuli_percent_human_dehosted = metabuli_theiacov_dehosted.metabuli_percent_human
     String? metabuli_percent_sc2_dehosted = metabuli_theiacov_dehosted.metabuli_percent_sc2
-    String? metabuli_target_organism_dehosted = metabuli_theiacov_dehosted.metabuli_target_organism
+    String? metabuli_percent_target_organism_dehosted = metabuli_theiacov_dehosted.metabuli_percent_target_lineage
     File? metabuli_report_dehosted = metabuli_theiacov_dehosted.metabuli_report
     String metabuli_database = select_first([metabuli_theiacov_raw.metabuli_database, metabuli_theiaprok.metabuli_database, ""])
    

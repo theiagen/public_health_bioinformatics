@@ -248,10 +248,10 @@ workflow freyja_fastq {
     String? metabuli_version = read_QC_trim_ont.metabuli_version
     Float? metabuli_human = read_QC_trim_ont.metabuli_percent_human
     String? metabuli_sc2 = read_QC_trim_ont.metabuli_percent_sc2
-    String metabuli_report = read_QC_trim_ont.metabuli_report
+    String? metabuli_report = read_QC_trim_ont.metabuli_report
     Float? metabuli_human_dehosted = read_QC_trim_ont.metabuli_percent_human_dehosted
     String? metabuli_sc2_dehosted = read_QC_trim_ont.metabuli_percent_sc2_dehosted
-    String metabuli_report_dehosted = read_QC_trim_ont.metabuli_report_dehosted
+    String? metabuli_report_dehosted = read_QC_trim_ont.metabuli_report_dehosted
 
     # Read Alignment - bwa outputs
     String? bwa_version = bwa.bwa_version

@@ -283,7 +283,7 @@ workflow theiacov_ont {
     Float? nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage
     # Read QC - metabuli outputs general
     String? metabuli_version = read_QC_trim.metabuli_version
-    String? metabuli_target_organism_name = read_QC_trim.metabuli_target_organism_name
+    String? metabuli_target_organism_name = read_QC_trim.metabuli_target_organism
     # Read QC - metabuli outputs raw
     Float? metabuli_human = read_QC_trim.metabuli_percent_human
     String? metabuli_sc2 = read_QC_trim.metabuli_percent_sc2
