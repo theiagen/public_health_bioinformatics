@@ -69,7 +69,7 @@ workflow read_QC_trim_ont {
     Int? nanoq_min_read_qual  
   }
   if (defined(target_organism)) {
-    if (target_organism != "") {
+    if (select_first([target_organism]) != "") {
       call ete4_taxon_id.ete4_taxon_id {
         input:
           taxon = select_first([target_organism]),
