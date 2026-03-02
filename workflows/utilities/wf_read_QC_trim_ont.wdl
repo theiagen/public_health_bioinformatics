@@ -46,7 +46,7 @@ workflow read_QC_trim_ont {
     Int? metabuli_disk_size
     String? metabuli_docker_image
     Int? metabuli_memory
-    File? metabuli_taxdump_path = "gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz"
+    File? metabuli_taxdump_path
 
     # rasusa downsampling inputs
     Float downsampling_coverage = 150
