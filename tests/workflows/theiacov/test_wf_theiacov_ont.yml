@@ -318,8 +318,6 @@
       contains: ["quasi", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/task_versioning.wdl
       contains: ["version", "command", "output", "runtime"]
-    - path: miniwdl_run/wdl/tasks/taxon_id/contamination/task_kraken2.wdl
-      contains: ["kraken", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/tasks/taxon_id/task_nextclade.wdl
       contains: ["nextclade", "command", "output", "runtime"]
     - path: miniwdl_run/wdl/workflows/theiacov/wf_theiacov_ont.wdl
