@@ -15,11 +15,11 @@
 <!-- endif -->
 
 <!-- if theiacov|freyja -->
-    Metabuli is run on both raw and human dehosted reads
+    Metabuli is run on both raw and human dehosted reads.
 <!--endif -->
 
 <!-- if theiaprok -->
-    `metabuli_db` must be set to activate this task for TheiaProk
+    `metabuli_db` must be set to activate Metabuli read classification for TheiaProk.
 <!-- endif -->
 
     ??? dna "`taxdump_path` input parameter"
