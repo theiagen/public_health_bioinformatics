@@ -110,6 +110,7 @@ workflow read_QC_trim_ont {
         memory = metabuli_memory,
         cpu = metabuli_cpu,
         docker = metabuli_docker_image,
+        taxdump_path = metabuli_taxdump_path
     }
     call metabuli.metabuli as metabuli_theiacov_dehosted {
       input:
@@ -122,6 +123,7 @@ workflow read_QC_trim_ont {
         memory = metabuli_memory,
         cpu = metabuli_cpu,
         docker = metabuli_docker_image,
+        taxdump_path = metabuli_taxdump_path
     }
   }
   if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk") {
@@ -166,6 +168,8 @@ workflow read_QC_trim_ont {
           disk_size = metabuli_disk_size,
           memory = metabuli_memory,
           cpu = metabuli_cpu,
+          docker = metabuli_docker_image,
+          taxdump_path = metabuli_taxdump_path,
       } 
     }
   }
