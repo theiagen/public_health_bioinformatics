@@ -495,7 +495,7 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
 
 ??? warning "Known errors associated with read quality"
 
-    - ONT workflows may fail at Metabuli if no reads are classified as the `taxon`. Check the Metabuli `classification.tsv` or `krona` report for the read extraction taxon ID to determine if any reads were classified. This error will report `out of memory (OOM)`, which can be a bonafide memory issue that is resolved by increasing memory, but in some instances, memory increase will not resolve this.
+    - ONT workflows may fail at Metabuli if no reads are classified as the `taxon`. Check the Metabuli `classification.tsv` or `krona` report for the read extraction taxon ID to determine if any reads were classified. This error will report `out of memory (OOM)`, which can be a bonafide memory issue that is resolved by increasing memory, but in some instances, memory increase will not resolve this. Try increasing memory to 128 GB.
     - Illumina workflows may fail at CheckV (*de novo*) with `Error: 80 hmmsearch tasks failed. Program should be rerun` if no viral contigs were identified in the *de novo* assembly.
 
 ### Acknowlegments
