@@ -21,7 +21,7 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
     The Metabuli software is database-dependent and **taxonomic assignments are highly sensitive to the database used**. An appropriate database should contain the expected organism(s) (e.g. *Escherichia coli*) and other taxa that may be present in the reads (e.g. *Citrobacter freundii*, a common contaminant).
 
 !!! warning "Adjusting computational resources"
-    Metabuli can operate within user-specified random-access memory (RAM) limits but the database needs to fit in the storage provided. As such, it's advised to adjust the `disk_space` optional input for the Metabuli task according to the size of database used. Please check the default value in the [*inputs table*](#inputs) below to ensure that the value is adequate for your seletected database. 
+    Default random-access memory (RAM) is typically sufficient for Metabuli, though this may need to be adjusted if an out-of-memory (OOM) error is returned. Additionally, the default `disk_space` is sufficient for the databases noted below, but this input must be adjusted to accommodate larger databases based on their decompressed size.
 
 #### Suggested databases
 
