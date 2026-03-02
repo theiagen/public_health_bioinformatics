@@ -89,8 +89,8 @@ task kraken2 {
     # obtain the kmer lengths available
     kmer_files = [f for f in os.listdir("db/") if f.endswith(".kmer_distrib")]
     kmer_dists = [int(re.match(r"database(\d+)mers\.kmer_distrib", f).group(1)) for f in kmer_files]
-    # the best kmer is directly under the mean length size
-    best_kmer = max([k for k in kmer_dists if k < mean_len], default=min(kmer_dists))
+    # the best kmer is closest to the mean length (above or below)
+    best_kmer = min(kmer_dists, key=lambda x: abs(x - mean_len))
     print(f"INFO: Selected k-mer length for Bracken: {best_kmer}")
     with open("bracken_kmer_length", "w") as out:
       out.write(str(best_kmer))
