@@ -45,7 +45,7 @@ workflow read_QC_trim_ont {
     File? metabuli_db
     Int? metabuli_disk_size
     String? metabuli_docker_image
-    Int? metabuli_memory
+    Int metabuli_memory = 32 # prokaryotes need more
     File? metabuli_taxdump_path
 
     # rasusa downsampling inputs
