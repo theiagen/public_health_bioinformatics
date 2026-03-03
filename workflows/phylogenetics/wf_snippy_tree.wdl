@@ -51,15 +51,10 @@ workflow snippy_tree_wf {
     Int? iqtree2_ultrafast_bootstraps
     String? iqtree2_model
     
-    Int? wg_snp_dists_cpu
-    Int? wg_snp_dists_memory
-    Int? wg_snp_dists_disk_size
-    String? wg_snp_dists_docker
-
-    Int? cg_snp_dists_cpu
-    Int? cg_snp_dists_memory
-    Int? cg_snp_dists_disk_size
-    String? cg_snp_dists_docker
+    Int? snp_dists_cpu
+    Int? snp_dists_memory
+    Int? snp_dists_disk_size
+    String? snp_dists_docker
     
     Int? snp_sites_cpu
     Int? snp_sites_disk_size
@@ -138,10 +133,10 @@ workflow snippy_tree_wf {
     input:
       alignment = select_first([gubbins.gubbins_polymorphic_fasta, snippy_core.snippy_full_alignment_clean]),
       cluster_name = tree_name_updated,
-      docker = wg_snp_dists_docker,
-      cpu = wg_snp_dists_cpu,
-      memory = wg_snp_dists_memory,
-      disk_size = wg_snp_dists_disk_size
+      docker = snp_dists_docker,
+      cpu = snp_dists_cpu,
+      memory = snp_dists_memory,
+      disk_size = snp_dists_disk_size
   }
   # mid-point roots the phylogenetic tree, and reorders the columns in the wgSNP matrix according to the tree tip order
   # NB the tree will remain a core genome tree is core_genome = true, and a whole-genome tree if core_genome = false
@@ -159,10 +154,10 @@ workflow snippy_tree_wf {
       input:
         alignment = select_first([snp_sites.snp_sites_multifasta]),
         cluster_name = tree_name_updated,
-        docker = cg_snp_dists_docker,   
-        cpu = cg_snp_dists_cpu,
-        memory = cg_snp_dists_memory,
-        disk_size = cg_snp_dists_disk_size
+        docker = snp_dists_docker,   
+        cpu = snp_dists_cpu,
+        memory = snp_dists_memory,
+        disk_size = snp_dists_disk_size
     }
     # reorders the columns in the cgSNP matrix according to the tree tip order
     # input tree is the midpoint rooted tree from the wg_reorder_matrix task, and midpoint rooting is turned off here, so the tree remains unchanged
