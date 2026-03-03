@@ -41,7 +41,7 @@ task metabuli {
     echo "DEBUG: Classifying reads"
 
     # Identify available RAM and subtract one for metabuli
-    available_ram=$(free -g | sed -nE '2p' | awk '{print $7-0.5}')
+    available_ram=$(free -g | sed -nE '2p' | awk '{print $7-1}')
 
     metabuli classify \
       --seq-mode ~{seq_mode} \
