@@ -39,6 +39,9 @@ task metabuli {
 
     # Classify the reads
     echo "DEBUG: Classifying reads"
+
+    free -g 
+
     metabuli classify \
       --seq-mode ~{seq_mode} \
       ~{read1} \
