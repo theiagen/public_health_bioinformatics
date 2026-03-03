@@ -11,7 +11,7 @@ task irma {
     Int minimum_read_length = 75 # matching default for TheiaCoV_Illumina_PE; NOTE: IRMA's default is 125 bp
     Int minimum_average_consensus_allele_quality = 10 # IRMA default is 0, we are matching MIRA standards for both ONT and ILMN: https://cdcgov.github.io/MIRA/articles/sequence-qc.html
     Float minimum_ambiguous_threshold = 0.25 # MIRA default is 0.25 despite documentation saying .2
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/irma:1.3.1-dev"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/irma:1.3.1"
     Int memory = 16
     Int cpu = 4
     Int disk_size = 100
