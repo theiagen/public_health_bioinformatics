@@ -51,7 +51,7 @@ task metabuli {
       ~{"--min-sp-score " + min_sp_score} \
       ~{"--min-cov " + min_percent_coverage} \
       --threads ~{cpu} \
-      --max-ram ~{memory}
+      --max-ram ~{memory - 1}
 
     # Quantify percent human
     if $(cut -f 5 output_dir/~{samplename}_report.tsv | grep -q "^9606$"); then
