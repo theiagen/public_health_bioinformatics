@@ -40,9 +40,6 @@ task metabuli {
     # Classify the reads
     echo "DEBUG: Classifying reads"
 
-    # Identify available RAM and subtract one for metabuli
-    available_ram=$(free -g | sed -nE '2p' | awk '{print $7-1}')
-
     metabuli classify \
       --seq-mode ~{seq_mode} \
       ~{read1} \
@@ -54,8 +51,7 @@ task metabuli {
       ~{"--min-score " + min_score} \
       ~{"--min-sp-score " + min_sp_score} \
       ~{"--min-cov " + min_percent_coverage} \
-      --threads ~{cpu} \
-      --max-ram ${available_ram}
+      --threads ~{cpu}
 
     # Quantify percent human
     if $(cut -f 5 output_dir/~{samplename}_report.tsv | grep -q "^9606$"); then
