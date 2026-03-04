@@ -18,7 +18,7 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
 ### Databases
 
 !!! info  "Database selection"
-    The Metabuli software is database-dependent and **taxonomic assignments are highly sensitive to the database used**. An appropriate database should contain the expected organism(s) (e.g. *Escherichia coli*) and other taxa that may be present in the reads (e.g. *Citrobacter freundii*, a common contaminant).
+    The Metabuli software is database-dependent and **taxonomic assignments are highly sensitive to the database used**. An appropriate database should contain the expected organism(s) (e.g. *Escherichia coli*) and other taxa that may be present in the reads (e.g. *Citrobacter freundii*, a common contaminant). To enable read extraction, the database taxon inputs must correspond to an appropriate compressed taxdump, e.g. NCBI taxdump for RefSeq databases and GTDB taxdump for GTDB databases (see [suggested databases](#suggested-databases) for example). 
 
 !!! warning "Adjusting computational resources"
     Default random-access memory (RAM) is typically sufficient for Metabuli, though this may need to be adjusted if an out-of-memory (OOM) error is returned. Additionally, the default `disk_space` is sufficient for the databases noted below, but this input must be adjusted to accommodate larger databases based on their decompressed size.
@@ -27,10 +27,10 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
 
 <div class="searchable-table" markdown="1">
 
-| Database name | Database Description | Suggested Applications | GCP URI (for usage in Terra) | Source | Database Size [Decompressed] (GB) | Date of Last Update |
-| --- | --- | --- | --- | --- | --- | --- |
-| **viral** | RefSeq viral + human (T2T-CHM13v2.0) | Viral metagenomics | **`gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz`** | <https://metabuli.steineggerlab.workers.dev/> | 4.0 [8.1] | 2024/04/01 |
-| **GTDB** | Prokaryote (Complete Genome/Chromosome, CheckM completeness > 90, and contamination <5) + human (T2T-CHM13v2.0) | Prokaryote metagenomics | **`gs://theiagen-public-resources-rp/reference_data/databases/metabuli/gtdb_20240401.tar.gz`** | <https://metabuli.steineggerlab.workers.dev/> | 68.8 [117] | 2024/04/01 |
+| Database name | Database Description | Suggested Applications | GCP URI (for usage in Terra) | Source | Database Size [Decompressed] (GB) | Date of Last Update | Associated taxdump |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| **viral** | RefSeq viral + human (T2T-CHM13v2.0) | Viral metagenomics | **`gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz`** | <https://metabuli.steineggerlab.workers.dev/> | 4.0 [8.1] | 2024/04/01 | gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz |
+| **GTDB** | Prokaryote (Complete Genome/Chromosome, CheckM completeness > 90, and contamination <5) + human (T2T-CHM13v2.0) | Prokaryote metagenomics | **`gs://theiagen-public-resources-rp/reference_data/databases/metabuli/gtdb_20240401.tar.gz`** | <https://metabuli.steineggerlab.workers.dev/> | 68.8 [117] | 2024/04/01 | gs://theiagen-public-resources-rp/reference_data/databases/metabuli/gtdb_taxdump_20250428.tar.gz |
 
 </div>
 
