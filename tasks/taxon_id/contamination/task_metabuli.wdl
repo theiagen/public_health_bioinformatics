@@ -58,8 +58,8 @@ task metabuli {
       --max-ram ${available_ram}
 
     # Quantify percent human
-    if $(cut -f 5 output_dir/~{samplename}_report.tsv | grep -q "^9606$"); then
-      grep -P "\s9606\s" output_dir/~{samplename}_report.tsv | cut -f 1 > PERCENT_HUMAN
+    if $(cut -f 6 output_dir/~{samplename}_report.tsv | grep -q "Homo sapiens"); then
+      grep -P "Homo sapiens" output_dir/~{samplename}_report.tsv | cut -f 1 > PERCENT_HUMAN
       echo "DEBUG: Homo sapiens comprises $(cat PERCENT_HUMAN)% of reads"
     else
       echo "DEBUG: Homo sapiens comprises 0% of reads"
@@ -67,11 +67,11 @@ task metabuli {
     fi
 
     # Quantify percent SARS-CoV-2 
-    if $(cut -f 5 output_dir/~{samplename}_report.tsv | grep -q "^2697049$"); then
-      grep -P "\s2697049\s" output_dir/~{samplename}_report.tsv | cut -f 1 > PERCENT_SC2
-      echo "DEBUG: SARS-CoV-2 comprises $(cat PERCENT_SC2)% of reads"
+    if $(cut -f 6 output_dir/~{samplename}_report.tsv | grep -q "Severe acute respiratory syndrome coronavirus 2"); then
+      grep -P "Severe acute respiratory syndrome coronavirus 2" output_dir/~{samplename}_report.tsv | cut -f 1 > PERCENT_SC2
+      echo "DEBUG: Severe acute respiratory syndrome coronavirus 2 comprises $(cat PERCENT_SC2)% of reads"
     else
-      echo "DEBUG: SARS-CoV-2 comprises 0% of reads"
+      echo "DEBUG: Severe acute respiratory syndrome coronavirus 2 comprises 0% of reads"
       echo "0" > PERCENT_SC2
     fi
 
