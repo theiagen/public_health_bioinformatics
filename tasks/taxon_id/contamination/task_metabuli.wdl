@@ -69,9 +69,9 @@ task metabuli {
     # Quantify percent SARS-CoV-2 
     if $(cut -f 6 output_dir/~{samplename}_report.tsv | grep -q "Severe acute respiratory syndrome coronavirus 2"); then
       grep -P "Severe acute respiratory syndrome coronavirus 2" output_dir/~{samplename}_report.tsv | cut -f 1 > PERCENT_SC2
-      echo "DEBUG: SARS-CoV-2 comprises $(cat PERCENT_SC2)% of reads"
+      echo "DEBUG: Severe acute respiratory syndrome coronavirus 2 comprises $(cat PERCENT_SC2)% of reads"
     else
-      echo "DEBUG: SARS-CoV-2 comprises 0% of reads"
+      echo "DEBUG: Severe acute respiratory syndrome coronavirus 2 comprises 0% of reads"
       echo "0" > PERCENT_SC2
     fi
 
