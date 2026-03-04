@@ -377,6 +377,7 @@ fastqc_raw2_html	File	An HTML file that provides a graphical visualization of ra
 fastqc_version	String	Version of fastqc software used	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 fetch_srr_accession_analysis_date	String	The date the fetch_srr_accession analysis was run.	Fetch_SRR_Accession
 fetch_srr_accession_version	String	The version of the fetch_srr_accession workflow.	Fetch_SRR_Accession
+file_translations	File	A tracking file to use for referencing original filenames and paths when identical files are indexed.	Zip_Column_Content
 filtered_contigs_metrics	File	File containing metrics of contigs filtered	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 flu_A_315675_resistance	String	resistance mutations to A_315675	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
 flu_amantadine_resistance	String	resistance mutations to amantadine	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
