@@ -42,6 +42,7 @@ task zip_files {
         # Move the file to the destination with the new name
         # If loop is not entered, filename will remain unchanged. 
         mv "$file" "$dest"
+        echo -e "$file\t$dest" >> file_translations.tsv
 
       else
         echo "File not found: $file"
@@ -52,6 +53,7 @@ task zip_files {
    >>>
   output {
     File zipped_files = "~{zipped_file_name}.zip"
+    File file_translations = "file_translations.tsv"
   }
   runtime {
     docker: "~{docker_image}"
