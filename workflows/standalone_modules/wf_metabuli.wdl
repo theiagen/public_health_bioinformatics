@@ -16,6 +16,7 @@ workflow metabuli_wf {
     File read1
     File? read2
     File metabuli_db
+    File? taxdump = "gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz"
     Boolean call_trim = true
     Boolean? illumina
     Int metabuli_mem = 32
@@ -71,6 +72,7 @@ workflow metabuli_wf {
       read2 = read2_input,
       seq_mode = select_first([se_mode, pe_mode, ont_mode]),
       metabuli_db = metabuli_db,
+      taxdump_path = taxdump,
       memory = metabuli_mem,
       disk_size = metabuli_disk_size
   }
