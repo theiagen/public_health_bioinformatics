@@ -39,6 +39,10 @@ task metabuli {
 
     # Classify the reads
     echo "DEBUG: Classifying reads"
+
+    # Identify available RAM and subtract one for metabuli
+    available_ram=$(free -g | sed -nE '2p' | awk '{print $7-1}')
+
     metabuli classify \
       --seq-mode ~{seq_mode} \
       ~{read1} \
@@ -51,13 +55,35 @@ task metabuli {
       ~{"--min-sp-score " + min_sp_score} \
       ~{"--min-cov " + min_percent_coverage} \
       --threads ~{cpu} \
-      --max-ram ~{memory}
+      --max-ram ${available_ram}
+
+    # Quantify percent human
+    if $(cut -f 5 output_dir/~{samplename}_report.tsv | grep -q "^9606$"); then
+      grep -P "\s9606\s" output_dir/~{samplename}_report.tsv | cut -f 1 > PERCENT_HUMAN
+      echo "DEBUG: Homo sapiens comprises $(cat PERCENT_HUMAN)% of reads"
+    else
+      echo "DEBUG: Homo sapiens comprises 0% of reads"
+      echo "0" > PERCENT_HUMAN
+    fi
+
+    # Quantify percent SARS-CoV-2 
+    if $(cut -f 5 output_dir/~{samplename}_report.tsv | grep -q "^2697049$"); then
+      grep -P "\s2697049\s" output_dir/~{samplename}_report.tsv | cut -f 1 > PERCENT_SC2
+      echo "DEBUG: SARS-CoV-2 comprises $(cat PERCENT_SC2)% of reads"
+    else
+      echo "DEBUG: SARS-CoV-2 comprises 0% of reads"
+      echo "0" > PERCENT_SC2
+    fi
 
     # Extract the reads
+    echo "" > PERCENT_TARGET_LINEAGE
     if [[ ~{if defined(taxon_id) then "true" else "false"} == "true" ]]; then
       echo "DEBUG: Extracting reads"
       if $(cut -f 5 output_dir/~{samplename}_report.tsv | grep -q "^~{taxon_id}$"); then
+        grep -P "\s~{taxon_id}\s" output_dir/~{samplename}_report.tsv | cut -f 1 > PERCENT_TARGET_LINEAGE
         echo "DEBUG: Taxon ID ~{taxon_id} found in report, proceeding with read extraction"
+        echo "DEBUG: ~{taxon_id} comprises $(cat PERCENT_TARGET_LINEAGE)% of reads"
+
         metabuli extract \
           ~{read1} ~{read2} \
           ./output_dir/~{samplename}_classifications.tsv \
@@ -116,6 +142,9 @@ task metabuli {
     String metabuli_status = read_string("STATUS")
     String metabuli_docker = docker
     String metabuli_database = metabuli_db
+    String metabuli_percent_target_lineage = read_string("PERCENT_TARGET_LINEAGE")
+    String metabuli_percent_human = read_string("PERCENT_HUMAN")
+    String metabuli_percent_sc2 = read_string("PERCENT_SC2")
   }
   runtime {
     docker: "~{docker}"
