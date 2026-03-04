@@ -6,7 +6,6 @@ task metabuli {
     File? read2
     String samplename
     String? taxon_id
-    String? taxon_name
     Int seq_mode = 3 # 1: SE, 2: PE, 3: ONT
     Boolean extract_unclassified = false
     File metabuli_db = "gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz"
@@ -78,36 +77,18 @@ task metabuli {
 
     # Extract the reads
     echo "" > PERCENT_TARGET_LINEAGE
-    if [[ ~{if defined(taxon_id) || defined(taxon_name) then "true" else "false"} == "true" ]]; then
+    if [[ ~{if defined(taxon_id) then "true" else "false"} == "true" ]]; then
       echo "DEBUG: Extracting reads"
-      # set which column to extract
-      if [[ ~{if defined(taxon_id) then "true" else "false"} == "true" ]]; then
-        cut_col=5
-        taxon=~{taxon_id}
-        taxon_query="^~{taxon_id}$"
-        taxon_grep="\s~{taxon_id}\s"
-        taxon_id=~{taxon_id}
-      else
-        cut_col=6
-        taxon=~{taxon_name}
-        taxon_query="~{taxon_name}$"
-        # GTDB has prefixes that make exact matching difficult
-        taxon_grep="[\s|_]~{taxon_name}$"
-      fi
-      if $(cut -f ${cut_col} output_dir/~{samplename}_report.tsv | grep -q "${taxon_query}"); then
-        grep -P "${taxon_grep}" output_dir/~{samplename}_report.tsv | cut -f 1 > PERCENT_TARGET_LINEAGE
-        echo "DEBUG: Taxon ${taxon} found in report, proceeding with read extraction"
-        echo "DEBUG: ${taxon} comprises $(cat PERCENT_TARGET_LINEAGE)% of reads"
-        if [[ defined(taxon_name) then "true" else "false" ]] == "true" ]]; then
-          taxon_id=$(grep -P "${taxon_grep}" output_dir/~{samplename}_report.tsv | cut -f 5 | head -n 1)
-          echo "DEBUG: Taxon ID for ${taxon_name} is ${taxon_id}"
-        fi
+      if $(cut -f 5 output_dir/~{samplename}_report.tsv | grep -q "^~{taxon_id}$"); then
+        grep -P "\s~{taxon_id}\s" output_dir/~{samplename}_report.tsv | cut -f 1 > PERCENT_TARGET_LINEAGE
+        echo "DEBUG: Taxon ID ~{taxon_id} found in report, proceeding with read extraction"
+        echo "DEBUG: ~{taxon_id} comprises $(cat PERCENT_TARGET_LINEAGE)% of reads"
 
         metabuli extract \
           ~{read1} ~{read2} \
           ./output_dir/~{samplename}_classifications.tsv \
           ${extracted_db} \
-          --tax-id ${taxon_id} \
+          ~{"--tax-id " + taxon_id} \
           --seq-mode ~{seq_mode} \
           --extract-format 2
     
@@ -116,19 +97,19 @@ task metabuli {
     
         # Metabuli extract will create a file in the input directory, which is variable between
         # miniwdl and Terra, so we have to dynamically find it -_-
-        find . -type f -name ${read1_basename}_${taxon_id}.fq -exec mv {} . \;
+        find . -type f -name ${read1_basename}_~{taxon_id}.fq -exec mv {} . \;
     
         # Output file name of metabuli extract is static. Compress the extracted reads
-        gzip ${read1_basename}_${taxon_id}.fq
+        gzip ${read1_basename}_~{taxon_id}.fq
     
         # Update the final extracted reads output file name
-        cp ${read1_basename}_${taxon_id}.fq.gz ~{samplename}_extracted_1.fq.gz
+        cp ${read1_basename}_~{taxon_id}.fq.gz ~{samplename}_~{taxon_id}_extracted_1.fq.gz
     
         if [[ ~{if defined(read2) then "true" else "false"} == "true" ]]; then
           read2_basename=$(sed -Ee 's/(.*)\.([^\.]+)$/\1/' <<< $(basename ~{read2} .gz))
-          find . -type f -name ${read2_basename}_${taxon_id}.fq -exec mv {} . \;
-          gzip ${read2_basename}_${taxon_id}.fq
-          cp ${read2_basename}_${taxon_id}.fq.gz ~{samplename}_extracted_2.fq.gz
+          find . -type f -name ${read2_basename}_~{taxon_id}.fq -exec mv {} . \;
+          gzip ${read2_basename}_~{taxon_id}.fq
+          cp ${read2_basename}_~{taxon_id}.fq.gz ~{samplename}_~{taxon_id}_extracted_2.fq.gz
         fi
     
         # Metabuli doesn't have a built-in option for extracting unclassified reads
@@ -136,15 +117,15 @@ task metabuli {
           echo "DEBUG: Extracting unclassified reads"
           grep -P "^0\t" output_dir/~{samplename}_classifications.tsv | cut -f 2 > unclassified_reads.txt
           seqkit grep -f unclassified_reads.txt ~{read1} | gzip > ~{samplename}_unclassified_1.fq.gz
-          zcat ${read1_basename}_${taxon_id}.fq.gz ~{samplename}_unclassified_1.fq.gz | gzip > ~{samplename}_extracted_1.fq.gz
+          zcat ${read1_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_1.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_1.fq.gz
           if [[ ~{if defined(read2) then "true" else "false"} == "true" ]]; then
             seqkit grep -f unclassified_reads.txt ~{read2} | gzip > ~{samplename}_unclassified_2.fq.gz
-            zcat ${read2_basename}_${taxon_id}.fq.gz ~{samplename}_unclassified_2.fq.gz | gzip > ~{samplename}_extracted_2.fq.gz
+            zcat ${read2_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_2.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_2.fq.gz
           fi
         fi
   
       else
-        echo "ERROR: Taxon not found in report, skipping read extraction"
+        echo "ERROR: Taxon ID ~{taxon_id} not found in report, skipping read extraction"
         metabuli_status="FAIL; taxon not recovered"
       fi
     fi
@@ -154,8 +135,8 @@ task metabuli {
   output {
     File metabuli_report = "output_dir/~{samplename}_report.tsv"
     File metabuli_classified = "output_dir/~{samplename}_classifications.tsv"
-    File? metabuli_read1_extract = "~{samplename}_extracted_1.fq.gz"
-    File? metabuli_read2_extract = "~{samplename}_extracted_2.fq.gz"
+    File? metabuli_read1_extract = "~{samplename}_~{taxon_id}_extracted_1.fq.gz"
+    File? metabuli_read2_extract = "~{samplename}_~{taxon_id}_extracted_2.fq.gz"
     File metabuli_krona_report = "output_dir/~{samplename}_krona.html"
     String metabuli_version = read_string("VERSION")
     String metabuli_status = read_string("STATUS")
