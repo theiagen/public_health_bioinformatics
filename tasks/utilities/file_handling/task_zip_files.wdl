@@ -16,6 +16,7 @@ task zip_files {
   command <<<
     file_array=(~{sep=' ' files_to_zip})
     mkdir ~{zipped_file_name}
+    echo -e "origin_path\tnew_path" > file_translations.tsv
 
     # move files into a single directory before zipping
     for file in "${file_array[@]}"; do
