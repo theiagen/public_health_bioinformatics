@@ -474,9 +474,6 @@ cg_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the tas
 cg_reorder_matrix	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1	Optional	Snippy_Tree	docker	
 cg_reorder_matrix	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Tree	runtime	
 cg_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon (overrides midpoint root)		Optional	Snippy_Tree	general	
-cg_snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Tree	runtime	
-cg_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Snippy_Tree	runtime	
-cg_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Tree	runtime	
 checkv_consensus	checkv_db	File	CheckV database file	gs://theiagen-public-resources-rp/reference_data/databases/checkv/checkv-db-v1.5.tar.gz	Optional	TheiaViral_ONT	database	
 checkv_consensus	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 checkv_consensus	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
@@ -628,7 +625,7 @@ core_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon
 core_snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
 core_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
 core_snp_dists	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Core_Gene_SNP, kSNP3, kSNP4	docker	
-core_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
+core_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
 core_snp_sites	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Gene_SNP	runtime	
 core_snp_sites	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime	
 core_snp_sites	docker	String	Docker image to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1	Optional	Core_Gene_SNP	docker	
@@ -1851,7 +1848,7 @@ pan_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon 
 pan_snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
 pan_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
 pan_snp_dists	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Core_Gene_SNP, kSNP3, kSNP4	docker	
-pan_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
+pan_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
 pangolin4	analysis_mode	String	Used to switch between usher and pangolearn analysis modes. Only use usher because pangolearn is no longer supported as of Pangolin v4.3 and higher versions.		Optional	Pangolin_Update	general	
 pangolin4	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Pangolin_Update	runtime	
 pangolin4	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Pangolin_Update	runtime	
@@ -2268,7 +2265,10 @@ snippy_tree_wf	snippy_core_disk_size	Int	Amount of storage (in GB) to allocate t
 snippy_tree_wf	snippy_core_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	snippy_core_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	snippy_variants_qc_metrics	Array[File]	Files produced by the Snippy_Variants workflow used to concatenate the reports for each sample in the tree		Optional	Snippy_Tree	general	
+snippy_tree_wf	snp_dists_cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
+snippy_tree_wf	snp_dists_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	snp_dists_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
+snippy_tree_wf	snp_dists_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	snp_sites_cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	snp_sites_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	snp_sites_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-sites:2.5.1	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
@@ -2293,7 +2293,7 @@ snippy_variants_wf	read2	File	FASTQ file containing read2 sequences		Optional	Sn
 snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime	
 snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime	
 snp_dists	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2	Optional	Augur	docker	
-snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Augur	runtime	
+snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Augur	runtime	
 sort_bam_assembly_correction	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaMeta_Illumina_PE	runtime	
 sort_bam_assembly_correction	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime	
 sort_bam_assembly_correction	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17	Optional	TheiaMeta_Illumina_PE	docker	
@@ -2798,9 +2798,6 @@ wg_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the tas
 wg_reorder_matrix	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1	Optional	Snippy_Tree	docker	
 wg_reorder_matrix	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Tree	runtime	
 wg_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon (overrides midpoint root)		Optional	Snippy_Tree	general	
-wg_snp_dists	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Snippy_Tree	runtime	
-wg_snp_dists	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Snippy_Tree	runtime	
-wg_snp_dists	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Snippy_Tree	runtime	
 zip_files	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Zip_Column_Content	runtime	
 zip_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Zip_Column_Content	runtime	
 zip_files	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Zip_Column_Content	docker	

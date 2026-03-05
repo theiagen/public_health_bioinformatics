@@ -40,6 +40,8 @@ aligned_fai	File	Index file for the reference genome	Clair3_Variants_ONT
 alignment_method	String	The method used to generate the alignment	Freyja_FASTQ
 amr_results_csv	File	CSV formatted AMR profile	AMR_Search
 amr_results_pdf	File	PDF formatted AMR profile	AMR_Search
+amr_search_all_resistances	String	All resistances returned by AMRsearch	AMR_Search, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+amr_search_associated_resistances	String	Resistances paired with their agent returned by AMRsearch	AMR_Search, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 amr_search_csv	File	CSV formatted AMR profile	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 amr_search_docker	String	Docker image used to run AMR_Search	AMR_Search, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 amr_search_results	File	JSON formatted AMR profile including BLAST results	AMR_Search, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -384,6 +386,7 @@ fastqc_raw2_html	File	An HTML file that provides a graphical visualization of ra
 fastqc_version	String	Version of fastqc software used	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 fetch_srr_accession_analysis_date	String	The date the fetch_srr_accession analysis was run.	Fetch_SRR_Accession
 fetch_srr_accession_version	String	The version of the fetch_srr_accession workflow.	Fetch_SRR_Accession
+file_translations	File	A tracking file to use for referencing original filenames and paths when identical files are indexed.	Zip_Column_Content
 filtered_contigs_metrics	File	File containing metrics of contigs filtered	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 flu_A_315675_resistance	String	resistance mutations to A_315675	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
 flu_amantadine_resistance	String	resistance mutations to amantadine	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT
