@@ -145,7 +145,7 @@ workflow freyja_fastq {
           "num_reads_raw2": if defined(read2) then select_first([read_QC_trim_pe.fastq_scan_raw2, read_QC_trim_pe.fastqc_raw2]) else read_QC_trim_pe.fastq_scan_raw2,
           "num_reads_clean1": select_first([nanoplot_clean.num_reads, read_QC_trim_pe.fastq_scan_clean1, read_QC_trim_pe.fastqc_clean1, read_QC_trim_se.fastq_scan_clean1]),
           "num_reads_clean2": if defined(read2) then select_first([read_QC_trim_pe.fastq_scan_clean2, read_QC_trim_pe.fastqc_clean2]) else read_QC_trim_pe.fastq_scan_clean2,
-          # Kraken metrics - available from all three read QC workflows
+          # Kraken2/Metabuli metrics - available from all three read QC workflows
           "classified_human": select_first([read_QC_trim_pe.kraken2_human, read_QC_trim_se.kraken2_human, read_QC_trim_ont.metabuli_percent_human]),
           "classified_human_dehosted": select_first([read_QC_trim_pe.kraken2_human_dehosted, read_QC_trim_se.kraken2_human_dehosted, read_QC_trim_ont.metabuli_percent_human_dehosted]),
           # SC2-specific gene coverage - only available when freyja_pathogen == "SARS-CoV-2"
