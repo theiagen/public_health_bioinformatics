@@ -25,7 +25,6 @@ workflow read_QC_trim_pe {
     Int bbduk_memory = 8
     Boolean call_midas = false
     File? midas_db
-    Boolean call_kraken = false
     Boolean call_bracken = true
     Int? bracken_kmer_length
     Int? kraken_disk_size
@@ -136,7 +135,7 @@ workflow read_QC_trim_pe {
     }
   }
   if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk") {
-    if ((call_kraken) && defined(kraken_db)) {
+    if defined(kraken_db)) {
       call kraken.kraken2 as kraken2_standalone {
         input:
           samplename = samplename,
@@ -150,9 +149,6 @@ workflow read_QC_trim_pe {
           bracken_kmer_length = bracken_kmer_length
       }
     }  
-    if ((call_kraken) && ! defined(kraken_db)) {
-      String kraken_db_warning = "Kraken database not defined"
-    }
   }
   if ("~{workflow_series}" == "theiameta") {
     call readlength_task.readlength {
@@ -235,7 +231,7 @@ workflow read_QC_trim_pe {
     File? kraken2_report_dehosted = kraken2_theiacov_dehosted.kraken2_report
     File? bracken_report_dehosted = kraken2_theiacov_dehosted.bracken_report
     String kraken2_docker = select_first([kraken2_theiacov_raw.kraken2_docker, kraken2_standalone.kraken2_docker, ""])
-    String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_standalone.kraken2_database, kraken_db_warning, ""])
+    String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_standalone.kraken2_database, ""])
     # trimming versioning
     String? trimmomatic_version = trimmomatic.version
     String? trimmomatic_docker = trimmomatic.trimmomatic_docker

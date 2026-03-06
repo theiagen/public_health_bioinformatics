@@ -1975,8 +1975,6 @@ read_QC_trim	artic_guppyplex_memory	Int	Internal component, do not modify	16	Opt
 read_QC_trim	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 read_QC_trim	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 read_QC_trim	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-read_QC_trim	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-read_QC_trim	call_kraken	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_ONT	general	
 read_QC_trim	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	call_midas	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE	general	
 read_QC_trim	downsampling_coverage	Float	The desired coverage to sub-sample the reads to with RASUSA	150	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general	
@@ -2054,7 +2052,6 @@ read_QC_trim_ont	artic_guppyplex_docker	String	The Docker container to use for t
 read_QC_trim_ont	artic_guppyplex_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	Freyja_FASTQ	general	
-read_QC_trim_ont	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	downsampling_coverage	Float	Internal component, do not modify	150	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	genome_length	Int	Length of the genome	5000000	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
@@ -2093,7 +2090,6 @@ read_QC_trim_pe	adapters	File	A FASTA file containing adapter sequences		Optiona
 read_QC_trim_pe	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
@@ -2111,7 +2107,6 @@ read_QC_trim_se	adapters	File	A FASTA file containing adapter sequences		Optiona
 read_QC_trim_se	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_se	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Freyja_FASTQ	general	
 read_QC_trim_se	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	Freyja_FASTQ	general	
-read_QC_trim_se	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	fastp_args	String	Additional arguments to use with fastp	-g -5 20 -3 20	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	

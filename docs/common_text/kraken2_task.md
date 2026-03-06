@@ -1,34 +1,37 @@
-<!-- if: theiaprokillumina|ont -->
-??? task "`Kraken2`: Read Identification (optional)"
-    To activate this task, set `call_kraken` to `true` and provide a value for `kraken_db`.
+<!-- if: theiaprokillumina|theiaeuk -->
+??? task "Kraken2 + Bracken: Read Classification (optional)"
+    To activate this task, provide a value for `kraken_db` under the `read_QC_trim` subworkflow.
 <!-- endif -->
 <!-- if: theiacov|freyja|theiaviral -->
 ??? task "`Kraken2`: Read Identification"
 <!-- endif -->
 <!-- if: kraken -->
-??? task "Kraken2"
+??? task "Kraken2 + Bracken: Read Classification"
 <!-- endif -->
 
     `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
+
+    `Bracken` is a refinement module that improves the resolution of `kraken2` reports.
 
 <!-- if: theiacov|freyja -->
     Kraken2 is run on both the raw and clean reads.
 <!-- endif -->
 
 <!-- if: theiaviral -->
-    This task runs on cleaned reads passed from the `read_QC_trim` subworkflow and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones.
+    This task runs on cleaned reads and outputs a Kraken2 + Bracken report detailing taxonomic classifications. It also separates classified reads from unclassified ones.
 <!-- endif -->
 
+<!-- if theiacov|theiaviral|freyja -->
     !!! info "Database-dependent"
         This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz`.
 <!-- endif -->
   
 <!-- if: theiaprokillumina -->
-    As an alternative to `MIDAS` (see above), the `Kraken2` task can also be turned on through setting the `call_kraken` input variable as `true` for the identification of reads to detect contamination with non-target taxa.
+    As an alternative to `MIDAS` (see above), the `Kraken2` task can be turned on by populating the `kraken_db` input variable for the identification of reads to detect contamination with non-target taxa.
 <!-- endif -->
 
-<!-- if: theiaprokillumina -->
-    A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on [Kraken2 standalone documentation](../standalone/kraken2.md#databases).
+<!-- if: theiaeukillumina -->
+    A database must be provided, which activates this module, through the `kraken_db` optional input within read_QC_trim. A list of suggested databases can be found on [Kraken2 standalone documentation](../standalone/kraken2.md#databases).
 <!-- endif -->
 
 <!-- if: kraken -->
