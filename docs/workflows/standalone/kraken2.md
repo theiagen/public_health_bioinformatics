@@ -14,7 +14,6 @@ There are three Kraken2 workflows:
 
 - `Kraken2_PE` is compatible with **Illumina paired-end data**
 - `Kraken2_SE` is compatible with **Illumina single-end data**
-- `Kraken2_ONT` is compatible with **Oxford Nanopore data**
 
 Besides the data input types, there are minimal differences between these two workflows.
 
