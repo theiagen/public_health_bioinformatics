@@ -1,15 +1,3 @@
-- name: theiacov_fasta_cromwell
-  command: cromwell run -i ./tests/inputs/theiacov/wf_theiacov_fasta.json -m metadata.json ./workflows/theiacov/wf_theiacov_fasta.wdl
-  tags:
-    - wf_theiacov_fasta
-    - wf_theiacov_fasta_cromwell
-  files:
-    - path: log.err # file is empty, so don't check for strings within, just for presence
-    - path: log.out
-      contains: ["workflow finished with status 'Succeeded'", "theiacov_fasta", "Done"]
-    - path: metadata.json
-      contains: ["outputs", "theiacov_fasta", "Succeeded"]
-
 - name: theiacov_fasta_miniwdl
   command: miniwdl run -i ./tests/inputs/theiacov/wf_theiacov_fasta.json -d miniwdl_run/. --verbose --error-json ./workflows/theiacov/wf_theiacov_fasta.wdl
   tags:

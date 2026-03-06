@@ -1,15 +1,3 @@
-- name: theiaprok_illumina_se_cromwell
-  command: cromwell run -i ./tests/inputs/theiaprok/wf_theiaprok_illumina_se_cromwell.json -m metadata.json ./workflows/theiaprok/wf_theiaprok_illumina_se.wdl
-  tags:
-    - wf_theiaprok_illumina_se
-    - wf_theiaprok_illumina_se_cromwell
-  files:
-    - path: log.err # file is empty, so don't check for strings within, just for presence
-    - path: log.out
-      contains: ["workflow finished with status 'Succeeded'", "theiaprok_illumina_se", "Done", "No ST predicted"]
-    - path: metadata.json
-      contains: ["outputs", "theiaprok_illumina_se", "Succeeded", "No ST predicted"]
-
 - name: theiaprok_illumina_se_miniwdl
   command: miniwdl run -i ./tests/inputs/theiaprok/wf_theiaprok_illumina_se.json -d miniwdl_run/. --verbose --error-json ./workflows/theiaprok/wf_theiaprok_illumina_se.wdl
   tags:
