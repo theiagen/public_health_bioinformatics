@@ -1,27 +1,25 @@
 <!-- if: theiaprokillumina|theiaeuk -->
 ??? task "Kraken2 + Bracken: Read Classification (optional)"
-    To activate this task, provide a value for `kraken_db` under the `read_QC_trim` subworkflow.
+    To activate this task, provide a file for `kraken_db` under the `read_QC_trim` subworkflow.
 <!-- endif -->
-<!-- if: theiacov|freyja|theiaviral -->
-??? task "`Kraken2`: Read Identification"
-<!-- endif -->
-<!-- if: kraken -->
+
+<!-- if: theiacov|freyja|theiaviral|kraken -->
 ??? task "Kraken2 + Bracken: Read Classification"
 <!-- endif -->
 
-    `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
+    `kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
 
     `Bracken` is a refinement module that improves the resolution of `kraken2` reports.
 
 <!-- if: theiacov|freyja -->
-    Kraken2 is run on both the raw and clean reads.
+    `kraken2` is run on both the raw and clean reads.
 <!-- endif -->
 
 <!-- if: theiaviral -->
     This task runs on cleaned reads and outputs a Kraken2 + Bracken report detailing taxonomic classifications. It also separates classified reads from unclassified ones.
 <!-- endif -->
 
-<!-- if theiacov|theiaviral|freyja -->
+<!-- if: theiacov|theiaviral|freyja -->
     !!! info "Database-dependent"
         This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz`.
 <!-- endif -->
@@ -45,7 +43,7 @@
 <!-- endif -->
 
     !!! info "Bracken report refinement"
-    Bracken refines Kraken2 taxon classification report by default by using a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken reports are the recommended reference report and are outputted separate from the Kraken2 report. Due to the increased resolution, the `bracken_report` will be used in downstream report-based calculations. By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the `bracken_kmer_length` input, though it MUST correspond to an available k-mer database within the Kraken2 database (named `database<KMER_LENGTH>mers.kmer_distrib`). Bracken can be turned off by setting the `call_bracken` boolean to "false" and will be skipped if there are no k-mer libraries in the Kraken2 database. 
+        Bracken refines the Kraken2 taxon classification report by default by using a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken reports are the recommended reference report and are outputted separate from the Kraken2 report. Due to the increased resolution, the `bracken_report` will be used in downstream report-based calculations. By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the `bracken_kmer_length` input, though it MUST correspond to an available k-mer database within the Kraken2 database (named `database<KMER_LENGTH>mers.kmer_distrib`). Bracken can be turned off by setting the `call_bracken` boolean to "false" and will be skipped if there are no k-mer libraries in the Kraken2 database. 
 
     !!! techdetails "Kraken2 Technical Details"
         |  | Links |

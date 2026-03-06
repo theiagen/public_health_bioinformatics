@@ -56,15 +56,10 @@ Besides the data input types, there are minimal differences between these two wo
         {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Kraken_SE"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
         ///
 
-    === "Kraken_ONT"
-        /// html | div[class="searchable-table"]
-
-        {{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Kraken_ONT"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"], indent=8) }}
-        ///
-
 ### Workflow Tasks
 
 {{ include_md("common_text/kraken2_task.md", condition="kraken") }}
+{{ include_md("common_text/krona_task.md") }}
 
 ### Outputs
 
@@ -80,13 +75,6 @@ Besides the data input types, there are minimal differences between these two wo
         /// html | div[class="searchable-table"]
 
         {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Kraken_SE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
-
-        ///
-
-    === "Kraken_ONT"
-        /// html | div[class="searchable-table"]
-
-        {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "Kraken_ONT"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
 
         ///
 
