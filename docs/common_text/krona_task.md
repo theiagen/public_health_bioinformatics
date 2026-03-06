@@ -1,4 +1,4 @@
-??? task "`Krona`"
+??? task "`Krona`: Read Classification Visualization"
 
     `Krona` enables data exploration for hierarchical datasets, such as taxonomic classification, via multi-layered pie charts. `Bracken` (preferred)/`Kraken2` reports are inputted into the `Krona` task and hierarchical taxonomic classification charts are exported as self-contained HTML files that can be visualized in web browsers.
 
