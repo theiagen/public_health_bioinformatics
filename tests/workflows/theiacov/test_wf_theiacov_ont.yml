@@ -1,20 +1,7 @@
-- name: theiacov_ont_cromwell
-  command: cromwell run -i ./tests/inputs/theiacov/wf_theiacov_ont.json -m metadata.json ./workflows/theiacov/wf_theiacov_ont.wdl
-  tags:
-    - wf_theiacov_ont
-    - wf_theiacov_ont_cromwell
-  files:
-    - path: log.err # file is empty, so don't check for strings within, just for presence
-    - path: log.out
-      contains: ["workflow finished with status 'Succeeded'", "theiacov_ont", "Done"]
-    - path: metadata.json
-      contains: ["outputs", "theiacov_ont", "Succeeded"]
-
 - name: theiacov_ont_miniwdl
   command: miniwdl run -i ./tests/inputs/theiacov/wf_theiacov_ont.json -d miniwdl_run/. --verbose --error-json ./workflows/theiacov/wf_theiacov_ont.wdl
   tags:
     - wf_theiacov_ont
-    - wf_theiacov_ont_miniwdl
   files:
     - path: miniwdl_run/call-clean_check_reads/command
       md5sum: f61163b8928f6dbc69064ac35738dd25
