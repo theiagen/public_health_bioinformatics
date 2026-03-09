@@ -1600,14 +1600,15 @@ merlin_magic	virulencefinder_min_percent_coverage	Float	The threshold for minimu
 merlin_magic	virulencefinder_min_percent_identity	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	virulencefinder_min_percent_identity	Float	The threshold for minimum blast identity		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 metabuli	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_ONT	runtime	
-metabuli	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
-metabuli	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0	Optional	TheiaViral_ONT	docker	
+metabuli	disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	TheiaViral_ONT	runtime	
+metabuli	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.1	Optional	TheiaViral_ONT	docker	
 metabuli	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaViral_ONT	runtime	
 metabuli	metabuli_db	File	Metabuli database file	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz	Optional	TheiaViral_ONT	database	
 metabuli	min_percent_coverage	Float	Minimum query coverage threshold (0.0 - 1.0)	0	Optional	TheiaViral_ONT	general	
 metabuli	min_score	Float	Minimum sequenece similarity score (0.0 - 1.0)	0	Optional	TheiaViral_ONT	general	
 metabuli	min_sp_score	Float	Minimum score for species- or lower-level classification	0	Optional	TheiaViral_ONT	general	
-metabuli	taxonomy_path	File	Path to taxonomy file	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/new_taxdump.tar.gz	Optional	TheiaViral_ONT	general	
+metabuli	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general	
+metabuli	taxdump_path	File	Path to taxonkit-generated taxdump for Metabuli taxonomy parsing	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz	Optional	TheiaViral_ONT	general	
 metaspades_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaMeta_Illumina_PE	runtime	
 metaspades_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaMeta_Illumina_PE	runtime	
 metaspades_pe	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/spades:3.12.0--h9ee0642_3	Optional	TheiaMeta_Illumina_PE	docker	
@@ -1973,33 +1974,25 @@ read_QC_trim	artic_guppyplex_docker	String	Internal component, do not modify	us-
 read_QC_trim	artic_guppyplex_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaCoV_ONT	runtime	
 read_QC_trim	artic_guppyplex_memory	Int	Internal component, do not modify	16	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
-read_QC_trim	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-read_QC_trim	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+read_QC_trim	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
+read_QC_trim	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	call_midas	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE	general	
 read_QC_trim	downsampling_coverage	Float	The desired coverage to sub-sample the reads to with RASUSA	150	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	fastp_args	String	Additional arguments to use with fastp	-g -5 20 -3 20	Optional	TheiaCoV_Illumina_SE, TheiaProk_Illumina_SE	general	
-read_QC_trim	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ONT, TheiaProk_ONT	runtime	
-read_QC_trim	kraken2_recalculate_abundances_cpu	Int	Internal component, do not modify	4	Optional	TheiaEuk_ONT	general	
-read_QC_trim	kraken2_recalculate_abundances_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT, TheiaProk_ONT	runtime	
-read_QC_trim	kraken2_recalculate_abundances_disk_size	Int	Internal component, do not modify	100	Optional	TheiaEuk_ONT	general	
-read_QC_trim	kraken2_recalculate_abundances_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4	Optional	TheiaCoV_ONT, TheiaProk_ONT	docker	
-read_QC_trim	kraken2_recalculate_abundances_docker	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4	Optional	TheiaEuk_ONT	general	
-read_QC_trim	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ONT, TheiaProk_ONT	runtime	
-read_QC_trim	kraken2_recalculate_abundances_memory	Int	Internal component, do not modify	8	Optional	TheiaEuk_ONT	general	
-read_QC_trim	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-read_QC_trim	kraken_cpu	Int	Internal component, do not modify	4	Optional	TheiaEuk_ONT	general	
-read_QC_trim	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. Must contain human and viral sequences	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	database	
-read_QC_trim	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
-read_QC_trim	kraken_db	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaEuk_ONT	general	
-read_QC_trim	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-read_QC_trim	kraken_disk_size	Int	Internal component, do not modify	100	Optional	TheiaEuk_ONT	general	
-read_QC_trim	kraken_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaCoV_ONT, TheiaProk_ONT	docker	
-read_QC_trim	kraken_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	TheiaEuk_ONT	general	
-read_QC_trim	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-read_QC_trim	kraken_memory	Int	Internal component, do not modify	32	Optional	TheiaEuk_ONT	general	
+read_QC_trim	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
+read_QC_trim	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. Must contain human and viral sequences	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	database	
+read_QC_trim	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	database	
+read_QC_trim	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
+read_QC_trim	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 read_QC_trim	max_length	Int	Internal component, do not modify	700	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+read_QC_trim	metabuli_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
+read_QC_trim	metabuli_db	File	Metabuli database for read taxonomy classification, compressed in .tar.gz format	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	database	
+read_QC_trim	metabuli_disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
+read_QC_trim	metabuli_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.1	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	docker	
+read_QC_trim	metabuli_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
+read_QC_trim	metabuli_taxdump_path	File	Path to taxonkit-generated taxdump for Metabuli taxonomy parsing	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	midas_db	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE	general	
 read_QC_trim	midas_db	File	The database used by the MIDAS task in .tar.gz format	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	database	
 read_QC_trim	min_length	Int	Internal component, do not modify	400	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
@@ -2050,20 +2043,15 @@ read_QC_trim_ont	artic_guppyplex_cpu	Int	Number of CPUs to allocate to the task	
 read_QC_trim_ont	artic_guppyplex_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	artic_guppyplex_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3	Optional	Freyja_FASTQ	docker	
 read_QC_trim_ont	artic_guppyplex_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_ont	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Freyja_FASTQ	general	
-read_QC_trim_ont	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	downsampling_coverage	Float	Internal component, do not modify	150	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	genome_length	Int	Length of the genome	5000000	Optional	Freyja_FASTQ	general	
-read_QC_trim_ont	kraken2_recalculate_abundances_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_ont	kraken2_recalculate_abundances_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_ont	kraken2_recalculate_abundances_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4	Optional	Freyja_FASTQ	docker	
-read_QC_trim_ont	kraken2_recalculate_abundances_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_ont	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_ont	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	Freyja_FASTQ	database	
-read_QC_trim_ont	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_ont	kraken_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1	Optional	Freyja_FASTQ	docker	
-read_QC_trim_ont	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	max_length	Int	Internal component, do not modify	700	Optional	Freyja_FASTQ	general	
+read_QC_trim_ont	metabuli_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
+read_QC_trim_ont	metabuli_db	File	Metabuli database for read taxonomy classification, compressed in .tar.gz format	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz	Optional	Freyja_FASTQ	database	
+read_QC_trim_ont	metabuli_disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	Freyja_FASTQ	runtime	
+read_QC_trim_ont	metabuli_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.1	Optional	Freyja_FASTQ	docker	
+read_QC_trim_ont	metabuli_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Freyja_FASTQ	runtime	
+read_QC_trim_ont	metabuli_taxdump_path	File	Path to taxonkit-generated taxdump for Metabuli taxonomy parsing	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	min_length	Int	Internal component, do not modify	400	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	nanoq_cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	nanoq_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
