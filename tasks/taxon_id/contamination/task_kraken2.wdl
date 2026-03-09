@@ -68,7 +68,7 @@ task kraken2 {
     if [ "~{call_bracken}" == "true" ]; then
       # check if kraken database is compatible with bracken (i.e. has kmer distribution files)
       if [ -z "$(ls db/database*mers\.kmer_distrib 2> /dev/null)" ]; then
-        echo "ERROR: Bracken kmer distribution files not found in the Kraken2 database. Skipping" >&2
+        echo "ERROR: Bracken kmer distribution files not found in the Kraken2 database. Skipping Bracken." >&2
       else
         # if bracken_kmer_length isn't provided, infer as the kmer length directly under the mean read length
         if [ -z "~{bracken_kmer_length}" ]; then
