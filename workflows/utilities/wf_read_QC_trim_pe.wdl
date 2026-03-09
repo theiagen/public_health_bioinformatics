@@ -135,7 +135,7 @@ workflow read_QC_trim_pe {
     }
   }
   if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk") {
-    if defined(kraken_db)) {
+    if (defined(kraken_db)) {
       call kraken.kraken2 as kraken2_standalone {
         input:
           samplename = samplename,
