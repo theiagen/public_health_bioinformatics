@@ -6,7 +6,6 @@
     "theiaprok_illumina_pe.read2": "this.read2",
     "theiaprok_illumina_pe.terra_project": "this.terra_project_input",
     "theiaprok_illumina_pe.read_QC_trim.call_midas": "this.call_midas_input",
-    "theiaprok_illumina_pe.read_QC_trim.call_kraken": "this.call_kraken_input",
     "theiaprok_illumina_pe.call_abricate": "this.call_abricate",
     "theiaprok_illumina_pe.read_QC_trim.kraken_db": "this.kraken_db_input",
     "theiaprok_illumina_pe.call_kmerfinder": "this.call_kmerfinder_input",
