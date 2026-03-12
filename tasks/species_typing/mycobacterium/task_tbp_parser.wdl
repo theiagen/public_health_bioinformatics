@@ -14,7 +14,7 @@ task tbp_parser {
     File? lims_report_format_yml
     File? gene_database_yml
     # QC arguments
-    Int min_depth = 10 # default 10; NOTE must explicity set this default for awk to properly interpret threshold
+    Int min_depth = 10 # default 10; NOTE must explicity set this default in order to determine GENOME_PC and AVERAGE_DEPTH
     Float? min_percent_coverage  # default 1.0
     Int? min_read_support # default 10
     Float? min_frequency # default 0.1
@@ -37,6 +37,13 @@ task tbp_parser {
     Int memory = 4
   }
   command <<<
+    # NOTE must explicity set this default in order to determine GENOME_PC and AVERAGE_DEPTH
+    if [[ -z "~{coverage_bed}" ]]; then
+      coverage_bed="/tbp-parser/data/tbdb.bed"
+    else
+      coverage_bed="~{coverage_bed}"
+    fi
+
     # get version
     python3 /tbp-parser/tbp_parser/tbp_parser_main.py --version | tee VERSION
 
@@ -95,7 +102,7 @@ task tbp_parser {
         bam.close()
 
         # iterate BED file regions (1-based coordinates) and run mpileup for each region, accumulating coverage metrics
-        with open("~{coverage_bed}") as bed:
+        with open("${coverage_bed}") as bed:
             for line in bed:
                 line = line.strip()
                 if not line:
@@ -167,7 +174,7 @@ task tbp_parser {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    maxRetries: 3
+    maxRetries: 2
     preemptible: 1
   }
 }
