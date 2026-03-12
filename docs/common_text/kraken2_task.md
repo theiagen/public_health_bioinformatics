@@ -16,7 +16,7 @@
 <!-- endif -->
 
 <!-- if: theiaviral -->
-    This task runs on cleaned reads and outputs a Kraken2 + Bracken report detailing taxonomic classifications. It also separates classified reads from unclassified ones.
+    This task runs on cleaned reads and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones. If `call_bracken` is set to "true" then a Bracken report is additionally outputted.
 <!-- endif -->
 
 <!-- if: theiacov|theiaviral|freyja -->
@@ -43,7 +43,16 @@
 <!-- endif -->
 
     !!! info "Bracken report refinement"
-        Bracken refines the Kraken2 taxon classification report by default by using a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken reports are the recommended reference report and are outputted separate from the Kraken2 report. Due to the increased resolution, the `bracken_report` will be used in downstream report-based calculations. By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the `bracken_kmer_length` input, though it MUST correspond to an available k-mer database within the Kraken2 database (named `database<KMER_LENGTH>mers.kmer_distrib`). Bracken can be turned off by setting the `call_bracken` boolean to "false" and will be skipped if there are no k-mer libraries in the Kraken2 database. 
+        Bracken refines the Kraken2 taxon classification report when `call_bracken` is set to "true". Bracken uses a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken will output a `bracken_report` that:
+
+        - increases report-level classification resolution *up to* the species level
+        - decreases resolution of sub-species report-level classifications, e.g. Severe acute respiratory syndrome coronavirus 2 will be grouped into *Betacoronavirus pandemicum*
+        - does *not* affect read-level classification and extraction
+        - will be used in downstream `percent_human` and `percent_target_organism` calculations
+        - inputted in place of Kraken reports in downstream tasks, such as `qc_check` and `krona`
+        - outputted separate of the `kraken/kraken2_report`
+        
+         By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the `bracken_kmer_length` input, though it MUST correspond to an available k-mer database within the Kraken2 database (named `database<KMER_LENGTH>mers.kmer_distrib`). Bracken will be skipped if there are no k-mer libraries in the Kraken2 database. 
 
     !!! techdetails "Kraken2 Technical Details"
         |  | Links |

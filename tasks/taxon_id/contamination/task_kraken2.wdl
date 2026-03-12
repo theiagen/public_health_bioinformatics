@@ -10,7 +10,7 @@ task kraken2 {
     String classified_out = "classified#.fastq"
     String unclassified_out = "unclassified#.fastq"
     String? target_organism
-    Boolean call_bracken = true
+    Boolean call_bracken = false
     Int? bracken_kmer_length
     Int cpu = 4
     Int memory = 32
@@ -133,18 +133,6 @@ task kraken2 {
     # capture target org percentage
     if [ ! -z "~{target_organism}" ]; then
       echo "DEBUG: Target org designated: ~{target_organism}"
-      # if target organisms is sc2, report it in a special legacy column called PERCENT_SC2
-      if [[ "~{target_organism}" == "Severe acute respiratory syndrome coronavirus 2" ]]; then
-        percentage_sc2=$(grep "Severe acute respiratory syndrome coronavirus 2" $kraken2_report  | cut -f1 )
-        percent_target_organism=""
-        if [ -z "$percentage_sc2" ]; then 
-          percentage_sc2="0"
-        fi
-        echo "INFO: Percentage SARS-CoV-2:"
-        echo $percentage_sc2 | tee PERCENT_SC2
-        echo "" > PERCENT_TARGET_ORGANISM
-      else
-        echo "" > PERCENT_SC2 
         percent_target_organism=$(grep -P "\s~{target_organism}\s" $kraken2_report  | cut -f1 | head -n1 )
         if [ -z "$percent_target_organism" ]; then 
           percent_target_organism="0"
@@ -153,7 +141,6 @@ task kraken2 {
         echo $percent_target_organism | tee PERCENT_TARGET_ORGANISM
       fi
     else
-      echo "" > PERCENT_SC2
       echo "" > PERCENT_TARGET_ORGANISM
     fi
   >>>
@@ -163,7 +150,6 @@ task kraken2 {
     File kraken2_report = "~{samplename}_kraken2_report.txt"
     File? bracken_report = "~{samplename}_bracken_report.txt"
     Float kraken2_percent_human = read_float("PERCENT_HUMAN")
-    String kraken2_percent_sc2 = read_string("PERCENT_SC2")
     String kraken2_percent_target_organism = read_string("PERCENT_TARGET_ORGANISM")
     String? kraken2_target_organism = target_organism
     File kraken2_classified_report = "~{samplename}.classifiedreads.txt.gz"

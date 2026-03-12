@@ -23,7 +23,7 @@ workflow theiameta_illumina_pe {
     File? reference
     File kraken2_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_08gb_20230605.tar.gz"
     Boolean output_additional_files = false
-    Boolean call_bracken = true
+    Boolean call_bracken = false
   }
   call kraken_task.kraken2 as kraken2_raw {
     input:
