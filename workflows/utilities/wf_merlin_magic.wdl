@@ -226,27 +226,23 @@ workflow merlin_magic {
     String? tbprofiler_additional_parameters
     # tbp-parser options
     File? tbp_parser_config
-    String tbp_parser_output_seq_method_type = "WGS"
-    String? tbp_parser_operator
+    File? tbp_parser_coverage_bed
+    File? tbp_parser_err_coverage_bed
+    File? tbp_parser_lims_report_format_yml
+    File? tbp_parser_gene_database_yml
     Int? tbp_parser_min_depth
-    Float? tbp_parser_min_frequency
-    Int? tbp_parser_min_read_support
     Float? tbp_parser_min_percent_coverage
-    File? tbp_parser_coverage_regions_bed
-    Boolean? tbp_parser_debug
-    Boolean? tbp_parser_add_cs_lims
+    Int? tbp_parser_min_read_support
+    Float? tbp_parser_min_frequency
+    Float? tbp_parser_min_percent_loci_covered
     Boolean? tbp_parser_tngs_data
-    Float? tbp_parser_rrs_frequency
-    Int? tbp_parser_rrs_read_support
-    Float? tbp_parser_rrl_frequency
-    Int? tbp_parser_rrl_read_support
-    Float? tbp_parser_rpob449_frequency
-    Float? tbp_parser_etha237_frequency
-    File? tbp_parser_expert_rule_regions_bed
-    Boolean? tbp_parser_treat_r_mutations_as_s
-    Float? tbp_parser_min_percent_locus_covered
+    Boolean? tbp_parser_use_err_as_brr
     String? tbp_parser_tngs_read_support_boundaries
     String? tbp_parser_tngs_frequency_boundaries
+    String tbp_parser_sequencing_method = "WGS"
+    String? tbp_parser_operator
+    Map[String, String]? tbp_parser_find_and_replace
+    Boolean? tbp_parser_debug
     # Vibecheck options
     File? vibecheck_lineage_barcodes
     Float? vibecheck_subsampling_fraction
@@ -501,30 +497,26 @@ workflow merlin_magic {
             tbprofiler_json = tbprofiler.tbprofiler_output_json,
             tbprofiler_bam = tbprofiler.tbprofiler_output_bam,
             tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
-            samplename = samplename, 
+            samplename = samplename,
             config = tbp_parser_config,
-            sequencing_method = tbp_parser_output_seq_method_type,
-            operator = tbp_parser_operator,
+            coverage_bed = tbp_parser_coverage_bed,
+            err_coverage_bed = tbp_parser_err_coverage_bed,
+            lims_report_format_yml = tbp_parser_lims_report_format_yml,
+            gene_database_yml = tbp_parser_gene_database_yml,
             min_depth = tbp_parser_min_depth,
-            min_frequency = tbp_parser_min_frequency,
-            min_read_support = tbp_parser_min_read_support,
             min_percent_coverage = tbp_parser_min_percent_coverage,
-            coverage_regions_bed = tbp_parser_coverage_regions_bed,
-            add_cycloserine_lims = tbp_parser_add_cs_lims,
-            tbp_parser_debug = tbp_parser_debug,
+            min_read_support = tbp_parser_min_read_support,
+            min_frequency = tbp_parser_min_frequency,
+            min_percent_loci_covered = tbp_parser_min_percent_loci_covered,
             tngs_data = tbp_parser_tngs_data,
-            rrs_frequency = tbp_parser_rrs_frequency,
-            rrs_read_support = tbp_parser_rrs_read_support,
-            rrl_frequency = tbp_parser_rrl_frequency,
-            rrl_read_support = tbp_parser_rrl_read_support,
-            rpob449_frequency = tbp_parser_rpob449_frequency,
-            etha237_frequency = tbp_parser_etha237_frequency,
-            expert_rule_regions_bed = tbp_parser_expert_rule_regions_bed,
-            docker = tbp_parser_docker_image,
-            treat_r_mutations_as_s = tbp_parser_treat_r_mutations_as_s,
-            min_percent_locus_covered = tbp_parser_min_percent_locus_covered,
+            use_err_as_brr = tbp_parser_use_err_as_brr,
             tngs_read_support_boundaries = tbp_parser_tngs_read_support_boundaries,
-            tngs_frequency_boundaries = tbp_parser_tngs_frequency_boundaries
+            tngs_frequency_boundaries = tbp_parser_tngs_frequency_boundaries,
+            sequencing_method = tbp_parser_sequencing_method,
+            operator = tbp_parser_operator,
+            find_and_replace = tbp_parser_find_and_replace,
+            tbp_parser_debug = tbp_parser_debug,
+            docker = tbp_parser_docker_image,
         }
       }
     }
@@ -1052,10 +1044,12 @@ workflow merlin_magic {
     Float? tbprofiler_pct_reads_mapped = tbprofiler.tbprofiler_pct_reads_mapped
     String? tbp_parser_version = tbp_parser.tbp_parser_version
     String? tbp_parser_docker = tbp_parser.tbp_parser_docker
-    File? tbp_parser_lims_report_csv = tbp_parser.tbp_parser_lims_report_csv
-    File? tbp_parser_laboratorian_report_csv = tbp_parser.tbp_parser_laboratorian_report_csv
     File? tbp_parser_looker_report_csv = tbp_parser.tbp_parser_looker_report_csv
-    File? tbp_parser_coverage_report = tbp_parser.tbp_parser_coverage_report
+    File? tbp_parser_laboratorian_report_csv = tbp_parser.tbp_parser_laboratorian_report_csv
+    File? tbp_parser_lims_report_csv = tbp_parser.tbp_parser_lims_report_csv
+    File? tbp_parser_lims_report_transposed_csv = tbp_parser.tbp_parser_lims_report_transposed_csv
+    File? tbp_parser_locus_coverage_report = tbp_parser.tbp_parser_locus_coverage_report
+    File? tbp_parser_target_coverage_report = tbp_parser.tbp_parser_target_coverage_report
     Float? tbp_parser_genome_percent_coverage = tbp_parser.tbp_parser_genome_percent_coverage
     Float? tbp_parser_average_genome_depth = tbp_parser.tbp_parser_average_genome_depth
     File? clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
