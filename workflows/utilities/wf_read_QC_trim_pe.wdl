@@ -24,6 +24,8 @@ workflow read_QC_trim_pe {
     Int trim_quality_min_score = 30
     Int trim_window_size = 4
     Int bbduk_memory = 8
+    File? decontaminate_fasta
+    Int? decontaminate_memory
     Boolean call_midas = false
     File? midas_db
     Boolean call_kraken = false
@@ -52,6 +54,20 @@ workflow read_QC_trim_pe {
       input:
         read1 = read1,
         read2 = read2,
+    }
+  }
+  if (defined(decontaminate_fasta)) {
+    call read_decontaminate_wf.host_decontaminate {
+      input:
+        samplename = samplename,
+        read1 = read1,
+        read2 = read2,
+        host = decontaminate_fasta,
+        is_genome = true,
+        is_accession = false,
+        refseq = false,
+        complete_only = false,
+        minimap2_memory = decontaminate_memory
     }
   }
   if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta")) {
