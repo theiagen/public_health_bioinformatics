@@ -48,7 +48,7 @@
         - increases report-level classification resolution *up to* the species level
         - decreases resolution of sub-species report-level classifications, e.g. Severe acute respiratory syndrome coronavirus 2 will be grouped into *Betacoronavirus pandemicum*
         - does *not* affect read-level classification and extraction
-        - will be used in downstream `percent_human` and `percent_target_organism` calculations
+        - will *not* be used in downstream `percent_human` and `percent_target_organism` calculations
         - inputted in place of Kraken reports in downstream tasks, such as `qc_check` and `krona`
         - outputted separate of the `kraken/kraken2_report`
         

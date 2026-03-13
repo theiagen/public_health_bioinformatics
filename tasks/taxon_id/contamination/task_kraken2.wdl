@@ -112,11 +112,7 @@ task kraken2 {
     fi
 
     # Report percentage of human reads
-    if [ -f "~{samplename}_bracken_report.txt" ]; then
-      kraken2_report="~{samplename}_bracken_report.txt"
-    else
-      kraken2_report="~{samplename}_kraken2_report.txt"
-    fi
+    kraken2_report="~{samplename}_kraken2_report.txt"
     percentage_human=$(grep "Homo sapiens" $kraken2_report | cut -f 1)
     if [ -z "$percentage_human" ] ; then percentage_human="0" ; fi
     echo "INFO: Percentage human:"
