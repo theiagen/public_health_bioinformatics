@@ -10,6 +10,7 @@ import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trim
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
 import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
 import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes
+import "../../workflows/utilities/wf_host_decontaminate.wdl" as read_decontaminate_wf
 
 workflow read_QC_trim_pe {
   meta {
