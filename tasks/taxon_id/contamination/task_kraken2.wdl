@@ -129,13 +129,12 @@ task kraken2 {
     # capture target org percentage
     if [ ! -z "~{target_organism}" ]; then
       echo "DEBUG: Target org designated: ~{target_organism}"
-        percent_target_organism=$(grep -P "\s~{target_organism}\s" $kraken2_report  | cut -f1 | head -n1 )
-        if [ -z "$percent_target_organism" ]; then 
-          percent_target_organism="0"
-        fi
-        echo "INFO: Percentage target organism (~{target_organism}):"
-        echo $percent_target_organism | tee PERCENT_TARGET_ORGANISM
+      percent_target_organism=$(grep -P "\s~{target_organism}\s" $kraken2_report  | cut -f1 | head -n1 )
+      if [ -z "$percent_target_organism" ]; then 
+        percent_target_organism="0"
       fi
+      echo "INFO: Percentage target organism (~{target_organism}):"
+      echo $percent_target_organism | tee PERCENT_TARGET_ORGANISM
     else
       echo "" > PERCENT_TARGET_ORGANISM
     fi

@@ -43,7 +43,8 @@ workflow freyja_fastq {
         read2  = select_first([read2]),
         trim_min_length = trimmomatic_min_length,
         workflow_series = "theiacov",
-        target_organism = kraken2_target_organism
+        target_organism = kraken2_target_organism,
+        call_kraken = true
     }
   }
   if (! defined(read2) && ! ont) {
@@ -53,7 +54,8 @@ workflow freyja_fastq {
         read1  = read1,
         trim_min_length = trimmomatic_min_length,
         workflow_series = "theiacov",
-        target_organism = kraken2_target_organism
+        target_organism = kraken2_target_organism,
+        call_kraken = true
     }
   }
   if (ont) {

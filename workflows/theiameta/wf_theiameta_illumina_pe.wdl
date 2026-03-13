@@ -52,7 +52,8 @@ workflow theiameta_illumina_pe {
         kraken_memory = 0,
         kraken_cpu = 0,
         kraken_db = kraken2_db,
-        call_bracken = false
+        call_bracken = false,
+        call_kraken = false
     }
   call kraken_task.kraken2 as kraken2_clean {
     input:

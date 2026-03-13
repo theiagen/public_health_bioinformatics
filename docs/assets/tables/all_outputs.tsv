@@ -569,10 +569,8 @@ kraken_report	File	Full Kraken report	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, 
 kraken_report	String	Full Kraken report	Freyja_FASTQ
 kraken_report_dehosted	File	Full Kraken report after host removal	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 kraken_report_dehosted	String	Full Kraken report after host removal	Freyja_FASTQ
-kraken_sc2	String	Percent of SARS-CoV-2 read data detected using the Kraken2 software	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-kraken_sc2_dehosted	String	Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal	Freyja_FASTQ, NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 kraken_target_organism	String	Percent of target organism read data detected using the Kraken2 software	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-kraken_target_organism_dehosted	String	Percent of target organism read data detected using the Kraken2 software after host removal	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+kraken_target_organism_dehosted	String	Percent of target organism read data detected using the Kraken2 software after host removal	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 kraken_target_organism_name	String	The name of the target organism; e.g., "Monkeypox" or "Human immunodeficiency virus"	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 kraken_version	String	Version of Kraken software used	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 kraken_version_dehosted	String	Version of Kraken2 software used	NCBI_Scrub_PE, NCBI_Scrub_SE
@@ -682,11 +680,9 @@ metabuli_human_dehosted	Float	Percent of human reads detected after removing hum
 metabuli_krona_report	File	Krona visualization report from Metabuli	TheiaViral_ONT
 metabuli_percent_target_lineage	String	Percent of reads classified to the target lineage	TheiaViral_ONT
 metabuli_read1_extract	File	Extracted reads from Metabuli	TheiaViral_ONT
-metabuli_report	File	Classification report from Metabuli	TheiaViral_ONT
 metabuli_report	String	Classification report from Metabuli	Freyja_FASTQ, TheiaCoV_ONT, TheiaProk_ONT
+metabuli_report	File	Classification report from Metabuli	TheiaViral_ONT
 metabuli_report_dehosted	String	Classification report from Metabuli after removing human reads	Freyja_FASTQ, TheiaCoV_ONT
-metabuli_sc2	String	Percent of reads classified to SARS-CoV-2	Freyja_FASTQ, TheiaCoV_ONT
-metabuli_sc2_dehosted	String	Percent of reads classified to SARS-CoV-2 after removing human reads	Freyja_FASTQ, TheiaCoV_ONT
 metabuli_status	String	Status of Metabuli analysis	TheiaViral_ONT
 metabuli_target_organism	String	Percent of reads classified to target organism for Metabuli analysis	TheiaCoV_ONT
 metabuli_target_organism_dehosted	String	Percent of reads classified to target organism for Metabuli analysis after removing human reads	TheiaCoV_ONT
