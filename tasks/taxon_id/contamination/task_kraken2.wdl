@@ -10,7 +10,7 @@ task kraken2 {
     String classified_out = "classified#.fastq"
     String unclassified_out = "unclassified#.fastq"
     String? target_organism
-    Boolean call_bracken = false
+    Boolean call_bracken = true
     Int? bracken_kmer_length
     Int cpu = 4
     Int memory = 32
