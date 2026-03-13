@@ -66,15 +66,6 @@ task metabuli {
       echo "0" > PERCENT_HUMAN
     fi
 
-    # Quantify percent SARS-CoV-2 
-    if $(cut -f 6 output_dir/~{samplename}_report.tsv | grep -q "Severe acute respiratory syndrome coronavirus 2"); then
-      grep -P "Severe acute respiratory syndrome coronavirus 2" output_dir/~{samplename}_report.tsv | cut -f 1 > PERCENT_SC2
-      echo "DEBUG: Severe acute respiratory syndrome coronavirus 2 comprises $(cat PERCENT_SC2)% of reads"
-    else
-      echo "DEBUG: Severe acute respiratory syndrome coronavirus 2 comprises 0% of reads"
-      echo "0" > PERCENT_SC2
-    fi
-
     # Extract the reads
     echo "" > PERCENT_TARGET_LINEAGE
     if [[ ~{if defined(taxon_id) then "true" else "false"} == "true" ]]; then
@@ -144,7 +135,6 @@ task metabuli {
     String metabuli_database = metabuli_db
     String metabuli_percent_target_lineage = read_string("PERCENT_TARGET_LINEAGE")
     String metabuli_percent_human = read_string("PERCENT_HUMAN")
-    String metabuli_percent_sc2 = read_string("PERCENT_SC2")
   }
   runtime {
     docker: "~{docker}"
