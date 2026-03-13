@@ -62,7 +62,7 @@ workflow read_QC_trim_pe {
         samplename = samplename,
         read1 = read1,
         read2 = read2,
-        host = decontaminate_fasta,
+        host = select_first([decontaminate_fasta]),
         is_genome = true,
         is_accession = false,
         refseq = false,
