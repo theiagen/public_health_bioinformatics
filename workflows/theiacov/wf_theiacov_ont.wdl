@@ -286,12 +286,10 @@ workflow theiacov_ont {
     String? metabuli_target_organism_name = read_QC_trim.metabuli_target_organism
     # Read QC - metabuli outputs raw
     Float? metabuli_human = read_QC_trim.metabuli_percent_human
-    String? metabuli_sc2 = read_QC_trim.metabuli_percent_sc2
     String? metabuli_target_organism = read_QC_trim.metabuli_percent_target_organism
     String? metabuli_report = read_QC_trim.metabuli_report
     # Read QC - metabuli outputs dehosted
     Float? metabuli_human_dehosted = read_QC_trim.metabuli_percent_human_dehosted
-    String? metabuli_sc2_dehosted = read_QC_trim.metabuli_percent_sc2_dehosted
     String? metabuli_target_organism_dehosted = read_QC_trim.metabuli_percent_target_organism_dehosted
     String? metabuli_report_dehosted = read_QC_trim.metabuli_report_dehosted
     # Read Alignment - Artic consensus and IRMA Aligned outputs

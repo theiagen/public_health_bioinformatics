@@ -151,7 +151,7 @@ workflow read_QC_trim_pe {
       }
     }
     if (call_kraken && ! defined(kraken_db)) {
-      String kraken_db_warning = "Kraken2 database (kraken_db) not defined"
+      String kraken_db_warning = "Kraken2 database not defined"
     }
   }
   if ("~{workflow_series}" == "theiameta") {

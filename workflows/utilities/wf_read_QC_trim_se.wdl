@@ -148,7 +148,7 @@ workflow read_QC_trim_se {
       }
     }
     if (call_kraken && ! defined(kraken_db)) {
-      String kraken_db_warning = "Kraken2 database (kraken_db) not defined"
+      String kraken_db_warning = "Kraken2 database not defined"
     }
   }
   output {
@@ -196,7 +196,7 @@ workflow read_QC_trim_se {
     File? kraken2_report_dehosted = kraken2_theiacov_dehosted.kraken2_report
     File? bracken_report_dehosted = kraken2_theiacov_dehosted.bracken_report
     String kraken2_docker = select_first([kraken2_theiacov_raw.kraken2_docker, kraken2_theiaprok.kraken2_docker, ""])
-    String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken_db_warning ""])
+    String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken_db_warning, ""])
    
     # trimming versioning
     String? trimmomatic_version = trimmomatic.version
