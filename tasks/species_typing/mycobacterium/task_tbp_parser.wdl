@@ -39,16 +39,16 @@ task tbp_parser {
   command <<<
     # NOTE must explicity set this default in order to determine GENOME_PC and AVERAGE_DEPTH
     if [[ -z "~{coverage_bed}" ]]; then
-      coverage_bed="/tbp-parser/data/tbdb.bed"
+      coverage_bed="/tbp-parser/tbp_parser/data/tbdb.bed"
     else
       coverage_bed="~{coverage_bed}"
     fi
 
     # get version
-    python3 /tbp-parser/tbp_parser/tbp_parser_main.py --version | tee VERSION
+    tbp-parser --version | tee VERSION
 
     # run tbp-parser
-    python3 /tbp-parser/tbp_parser/tbp_parser_main.py ~{tbprofiler_json} ~{tbprofiler_bam} \
+    tbp-parser ~{tbprofiler_json} ~{tbprofiler_bam} \
       ~{"--config " + config} \
       ~{"--coverage_bed " + coverage_bed} \
       ~{"--err_coverage_bed " + err_coverage_bed} \
