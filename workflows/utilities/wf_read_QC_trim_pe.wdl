@@ -56,7 +56,7 @@ workflow read_QC_trim_pe {
         read2 = read2,
     }
   }
-  if (defined(decontaminate_fasta)) {
+  if (defined(contaminate_fasta)) {
     call read_decontaminate_wf.host_decontaminate as read_decontaminate {
       input:
         samplename = samplename,
