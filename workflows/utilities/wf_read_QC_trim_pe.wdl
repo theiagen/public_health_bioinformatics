@@ -24,7 +24,7 @@ workflow read_QC_trim_pe {
     Int trim_quality_min_score = 30
     Int trim_window_size = 4
     Int bbduk_memory = 8
-    File? decontaminate_fasta
+    File? contaminate_fasta
     Int? decontaminate_memory
     Boolean call_midas = false
     File? midas_db
@@ -62,7 +62,7 @@ workflow read_QC_trim_pe {
         samplename = samplename,
         read1 = read1,
         read2 = read2,
-        host = select_first([decontaminate_fasta]),
+        host = select_first([contaminate_fasta]),
         is_genome = true,
         is_accession = false,
         refseq = false,

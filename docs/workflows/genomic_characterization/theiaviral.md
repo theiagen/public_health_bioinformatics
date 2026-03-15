@@ -174,7 +174,7 @@
 
 {{ include_md("common_text/bbduk_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/host_decontaminate_wf.md", indent=8) }}
+{{ include_md("common_text/host_decontaminate_wf.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/kraken2_task.md", condition="theiaviral", indent=8) }}
 
@@ -314,7 +314,7 @@
 
 {{ include_md("common_text/bbduk_task.md", indent=8) }}
 
-{{ include_md("common_text/host_decontaminate_wf.md", indent=8) }}
+{{ include_md("common_text/host_decontaminate_wf.md", condition="theiaviral", indent=8) }}
 
     ??? toggle "Read Extraction and Binning"
 
