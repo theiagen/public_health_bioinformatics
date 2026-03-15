@@ -57,7 +57,7 @@ workflow read_QC_trim_pe {
     }
   }
   if (defined(decontaminate_fasta)) {
-    call read_decontaminate_wf.host_decontaminate {
+    call read_decontaminate_wf.host_decontaminate as read_decontaminate {
       input:
         samplename = samplename,
         read1 = read1,
@@ -74,8 +74,8 @@ workflow read_QC_trim_pe {
     call ncbi_scrub.ncbi_scrub_pe {
       input:
         samplename = samplename,
-        read1 = read1,
-        read2 = read2
+        read1 = select_first([read1, read_decontaminate.dehost_read1]),
+        read2 = select_first([read2, read_decontaminate.dehost_read2])
     }
   }
   if ("~{workflow_series}" == "theiacov") {
@@ -106,8 +106,8 @@ workflow read_QC_trim_pe {
     call trimmomatic_task.trimmomatic {
       input:
         samplename = samplename,
-        read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1]),
-        read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
+        read1 = select_first([ncbi_scrub_pe.read1_dehosted, read_decontaminate.dehost_read1, read1]),
+        read2 = select_first([ncbi_scrub_pe.read2_dehosted, read_decontaminate.dehost_read2, read2]),
         trimmomatic_window_size = trim_window_size,
         trimmomatic_window_quality = trim_quality_min_score,
         trimmomatic_min_length = trim_min_length,
@@ -118,8 +118,8 @@ workflow read_QC_trim_pe {
     call fastp_task.fastp_pe as fastp {
       input:
         samplename = samplename,
-        read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1]),
-        read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
+        read1 = select_first([ncbi_scrub_pe.read1_dehosted, read_decontaminate.dehost_read1, read1]),
+        read2 = select_first([ncbi_scrub_pe.read2_dehosted, read_decontaminate.dehost_read2, read2]),
         fastp_window_size = trim_window_size,
         fastp_quality_trim_score = trim_quality_min_score,
         fastp_min_length = trim_min_length,
@@ -206,6 +206,14 @@ workflow read_QC_trim_pe {
     String? fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
     File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
+    # read decontamination data
+    File? contaminate_bam = read_decontaminate.host_mapped_sorted_bam
+    File? contaminate_bai = read_decontaminate.host_mapped_sorted_bai
+    Float? contaminate_coverage = read_decontaminate.host_mapping_coverage
+    Float? contaminate_mean_depth = read_decontaminate.host_mapping_mean_depth
+    File? contaminate_mapping_stats = read_decontaminate.host_mapping_stats
+    File? contaminate_cov_hist = read_decontaminate.host_mapping_cov_hist
+    File? contaminate_mapping_flagstat = read_decontaminate.host_flagstat
     # fastq_scan clean (per read stats)
     Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
     Int? fastq_scan_clean2 = fastq_scan_clean.read2_seq
