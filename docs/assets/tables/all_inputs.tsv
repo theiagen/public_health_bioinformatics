@@ -1974,6 +1974,8 @@ read_QC_trim	call_kraken	Boolean	True/False variable that determines if the Krak
 read_QC_trim	call_kraken	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_ONT	general	
 read_QC_trim	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	call_midas	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE	general	
+read_QC_trim	contaminate_fasta	File	A FASTA of contaminate sequences to remove by read mapping		Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
+read_QC_trim	decontaminate_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	runtime	
 read_QC_trim	downsampling_coverage	Float	The desired coverage to sub-sample the reads to with RASUSA	150	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	fastp_args	String	Additional arguments to use with fastp	-g -5 20 -3 20	Optional	TheiaCoV_Illumina_SE, TheiaProk_Illumina_SE	general	
@@ -2086,6 +2088,8 @@ read_QC_trim_pe	adapters	File	A FASTA file containing adapter sequences		Optiona
 read_QC_trim_pe	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	contaminate_fasta	File	A FASTA of contaminate sequences to remove by read mapping		Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	decontaminate_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz	Optional	Freyja_FASTQ	database	
