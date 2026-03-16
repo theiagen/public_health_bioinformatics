@@ -43,7 +43,7 @@
 <!-- endif -->
 
     !!! info "Bracken report refinement"
-        Bracken refines the Kraken2 taxon classification report when `call_bracken` is set to "true". Bracken uses a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken will output a `bracken_report` that:
+        Bracken refines the Kraken2 taxon classification report when `call_bracken` is set to "true" (default). Bracken uses a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken will output a `bracken_report` that:
 
         - increases report-level classification resolution *up to* the species level
         - decreases resolution of sub-species report-level classifications, e.g. Severe acute respiratory syndrome coronavirus 2 will be grouped into *Betacoronavirus pandemicum*

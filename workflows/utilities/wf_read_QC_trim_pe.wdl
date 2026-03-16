@@ -25,7 +25,7 @@ workflow read_QC_trim_pe {
     Int bbduk_memory = 8
     Boolean call_midas = false
     File? midas_db
-    Boolean call_bracken = false
+    Boolean call_bracken = true
     Boolean call_kraken = false
     Int? bracken_kmer_length
     Int? kraken_disk_size

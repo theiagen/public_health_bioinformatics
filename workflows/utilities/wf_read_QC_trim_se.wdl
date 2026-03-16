@@ -27,7 +27,7 @@ workflow read_QC_trim_se {
     String? trimmomatic_override_args
     Boolean call_midas = false
     File? midas_db
-    Boolean call_bracken = false
+    Boolean call_bracken = true
     Boolean call_kraken = false
     Int? bracken_kmer_length
     File? kraken_db
