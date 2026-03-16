@@ -52,7 +52,7 @@ task mapping_stats {
     total_mapped_reads = sum(part["reads"] for part in seq2data.values())
     total_cov_bases = sum(part["cov_bases"] for part in seq2data.values())
 
-    total_breadth = total_cov_bases / total_length
+    total_breadth = (total_cov_bases / total_length) * 100
     total_depth = sum(part["meandepth"] * part["length"] for part in seq2data.values()) / total_length
     total_meanbaseq = sum(part["meanbaseq"] * part["cov_bases"] for part in seq2data.values()) / total_cov_bases
     total_meanmapq = sum(part["meanmapq"] * part["reads"] for part in seq2data.values()) / total_mapped_reads
