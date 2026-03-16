@@ -200,6 +200,16 @@ workflow theiameta_illumina_pe {
     File? read1_dehosted = read_QC_trim.read1_dehosted
     File? read2_dehosted = read_QC_trim.read2_dehosted
     String? ncbi_scrub_docker = read_QC_trim.ncbi_scrub_docker
+    # Read QC - decontaminate outputs
+    File? contaminate_bam = read_QC_trim.contaminate_bam
+    File? contaminate_bai = read_QC_trim.contaminate_bai
+    Float? contaminate_coverage = read_QC_trim.contaminate_coverage
+    Float? contaminate_mean_depth = read_QC_trim.contaminate_mean_depth
+    File? contaminate_mapping_stats = read_QC_trim.contaminate_mapping_stats
+    File? contaminate_cov_hist = read_QC_trim.contaminate_cov_hist
+    File? contaminate_mapping_flagstat = read_QC_trim.contaminate_mapping_flagstat
+    Map[String, Float]? contaminate_coverage_by_sequence = read_QC_trim.contaminate_sequence_coverage
+    Map[String, Float]? contaminate_depth_by_sequence = read_QC_trim.contaminate_sequence_depth
     # Read QC - fastq_scan outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
