@@ -207,15 +207,15 @@ workflow read_QC_trim_pe {
     File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
     # read decontamination data
-    File? contaminate_bam = read_decontaminate.host_mapped_sorted_bam
-    File? contaminate_bai = read_decontaminate.host_mapped_sorted_bai
-    Float? contaminate_coverage = read_decontaminate.host_mapping_coverage
-    Float? contaminate_mean_depth = read_decontaminate.host_mapping_mean_depth
-    File? contaminate_mapping_stats = read_decontaminate.host_mapping_stats
-    File? contaminate_cov_hist = read_decontaminate.host_mapping_cov_hist
-    File? contaminate_mapping_flagstat = read_decontaminate.host_flagstat
-    Map[String, Float]? contaminate_sequence_coverage = read_decontaminate.host_coverage_by_sequence
-    Map[String, Float]? contaminate_sequence_depth = read_decontaminate.host_depth_by_sequence
+    File? contaminant_bam = read_decontaminate.host_mapped_sorted_bam
+    File? contaminant_bai = read_decontaminate.host_mapped_sorted_bai
+    Float? contaminant_coverage = read_decontaminate.host_mapping_coverage
+    Float? contaminant_mean_depth = read_decontaminate.host_mapping_mean_depth
+    File? contaminant_mapping_stats = read_decontaminate.host_mapping_stats
+    File? contaminant_cov_hist = read_decontaminate.host_mapping_cov_hist
+    File? contaminant_mapping_flagstat = read_decontaminate.host_flagstat
+    Map[String, Float]? contaminant_sequence_coverage = read_decontaminate.host_coverage_by_sequence
+    Map[String, Float]? contaminant_sequence_depth = read_decontaminate.host_depth_by_sequence
     # fastq_scan clean (per read stats)
     Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
     Int? fastq_scan_clean2 = fastq_scan_clean.read2_seq
