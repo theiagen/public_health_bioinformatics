@@ -56,18 +56,18 @@ workflow read_QC_trim_pe {
         read2 = read2,
     }
   }
-  if (defined(contaminate_fasta)) {
+  if (defined(read_decontaminate_fasta)) {
     call read_decontaminate_wf.host_decontaminate as read_decontaminate {
       input:
         samplename = samplename,
         read1 = read1,
         read2 = read2,
-        host = select_first([contaminate_fasta]),
+        host = select_first([read_decontaminate_fasta]),
         is_genome = true,
         is_accession = false,
         refseq = false,
         complete_only = false,
-        minimap2_memory = decontaminate_memory
+        minimap2_memory = read_decontaminate_memory
     }
   }
   if (("~{workflow_series}" == "theiacov") || ("~{workflow_series}" == "theiameta")) {
@@ -215,7 +215,7 @@ workflow read_QC_trim_pe {
     File? contaminate_cov_hist = read_decontaminate.host_mapping_cov_hist
     File? contaminate_mapping_flagstat = read_decontaminate.host_flagstat
     Map[String, Float]? contaminate_sequence_coverage = read_decontaminate.host_mapping_sequence_coverage
-    Map[String, Float]? contaminate_sequence_depth = read_decontaminate.host_mapping_sequence
+    Map[String, Float]? contaminate_sequence_depth = read_decontaminate.host_mapping_sequence_depth
     # fastq_scan clean (per read stats)
     Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
     Int? fastq_scan_clean2 = fastq_scan_clean.read2_seq
