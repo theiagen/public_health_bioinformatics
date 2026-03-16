@@ -214,6 +214,8 @@ workflow read_QC_trim_pe {
     File? contaminate_mapping_stats = read_decontaminate.host_mapping_stats
     File? contaminate_cov_hist = read_decontaminate.host_mapping_cov_hist
     File? contaminate_mapping_flagstat = read_decontaminate.host_flagstat
+    Map[String, Float]? contaminate_sequence_coverage = read_decontaminate.host_mapping_sequence_coverage
+    Map[String, Float]? contaminate_sequence_depth = read_decontaminate.host_mapping_sequence
     # fastq_scan clean (per read stats)
     Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
     Int? fastq_scan_clean2 = fastq_scan_clean.read2_seq

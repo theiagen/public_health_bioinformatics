@@ -3,7 +3,7 @@ version 1.0
 import "../../tasks/utilities/data_import/task_ncbi_datasets.wdl" as ncbi_datasets
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
-import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
+import "../../tasks/quality_control/basic_statistics/task_mapping_stats.wdl" as mapping_stats_task
 import "../../tasks/utilities/task_datasets_genome_length.wdl" as identify_genome_task
 
 workflow host_decontaminate {
@@ -82,7 +82,7 @@ workflow host_decontaminate {
       paired = defined(read2)
   }
   # calculate read mapping statistics
-  call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
+  call mapping_stats_task.mapping_stats as read_mapping_stats {
     input:
       bamfile = parse_mapping.bam,
       samplename = hostsample,
@@ -110,5 +110,7 @@ workflow host_decontaminate {
     Float? host_mapping_mean_depth = read_mapping_stats.depth
     Float? host_percent_mapped_reads = read_mapping_stats.percentage_mapped_reads
     File? host_mapping_metrics = read_mapping_stats.metrics_txt
+    Map[String, Float]? host_mapping_sequence_coverage = read_mapping_stats.sequence_coverage
+    Map[String, Float]? host_mapping_sequence_depth = read_mapping_stats.sequence_depth
   }
 }

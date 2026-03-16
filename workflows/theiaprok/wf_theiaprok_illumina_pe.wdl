@@ -835,6 +835,8 @@ workflow theiaprok_illumina_pe {
     File? contaminate_mapping_stats = read_QC_trim.contaminate_mapping_stats
     File? contaminate_cov_hist = read_QC_trim.contaminate_cov_hist
     File? contaminate_mapping_flagstat = read_QC_trim.contaminate_mapping_flagstat
+    Map[String, Float]? contaminate_sequence_coverage = read_QC_trim.contaminate_sequence_coverage
+    Map[String, Float]? contaminate_sequence_depth = read_QC_trim.contaminate_sequence_depth
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
