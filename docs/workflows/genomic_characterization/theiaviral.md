@@ -204,7 +204,7 @@
 
 {{ include_md("common_text/bwa_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=8, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
+{{ include_md("common_text/mapping_stats_task.md", condition="theiaviral", indent=8, replacements={'`mapping_stats`' : '`read_mapping_stats`'}) }}
 
     ??? toggle "Variant Calling and Consensus Generation"
 
@@ -276,7 +276,7 @@
 
 {{ include_md("common_text/parse_mapping_task.md", condition="sam_to_sorted_bam", indent=8) }}
 
-{{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=8, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
+{{ include_md("common_text/mapping_stats_task.md", condition="theiaviral", indent=8, replacements={'`mapping_stats`' : '`read_mapping_stats`'}) }}
 
 {{ include_md("common_text/fasta_utilities_task.md", condition="theiaviral", indent=8) }}
 
@@ -343,7 +343,7 @@
 
 {{ include_md("common_text/bwa_task.md", condition="theiaviral", indent=12) }}
 
-{{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=12, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
+{{ include_md("common_text/mapping_stats_task.md", condition="theiaviral", indent=12, replacements={'`mapping_stats`' : '`read_mapping_stats`'}) }}
 
         ??? toggle "Variant Calling and Consensus Generation"
 

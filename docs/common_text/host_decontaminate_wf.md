@@ -22,7 +22,7 @@
 
 {{ include_md("common_text/parse_mapping_task.md", condition="bam_to_unaligned_fastq", indent=4, replacements={'??? task "`parse_mapping`"' : '??? toggle "Extract Unaligned Reads"'}) }}
 
-{{ include_md("common_text/assembly_metrics_task.md", indent=4, replacements={'??? task "`assembly_metrics`"' : '??? toggle "Host/Contaminate Read Mapping Statistics"'}) }}
+{{ include_md("common_text/mapping_stats_task.md", indent=4, replacements={'??? task "`mapping_stats`"' : '??? toggle "Host/Contaminate Read Mapping Statistics"'}) }}
 
     !!! techdetails "Host Decontaminate Technical Details"
         |  | Links |

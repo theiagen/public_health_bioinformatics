@@ -109,7 +109,7 @@ workflow host_decontaminate {
     Float? host_mapping_coverage = read_mapping_stats.coverage
     Float? host_mapping_mean_depth = read_mapping_stats.depth
     Float? host_percent_mapped_reads = read_mapping_stats.percentage_mapped_reads
-    Map[String, Float]? host_mapping_sequence_coverage = read_mapping_stats.sequence_coverage
-    Map[String, Float]? host_mapping_sequence_depth = read_mapping_stats.sequence_depth
+    Map[String, Float]? host_coverage_by_sequence = read_mapping_stats.coverage_by_sequence
+    Map[String, Float]? host_depth_by_sequence = read_mapping_stats.depth_by_sequence
   }
 }

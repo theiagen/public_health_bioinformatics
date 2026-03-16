@@ -101,8 +101,8 @@ task mapping_stats {
   output {
     String date = read_string("DATE")
     String samtools_version = read_string("VERSION")
-    Map[String, Float] sequence_coverage = read_json("SEQ2COVERAGE.json")
-    Map[String, Float] sequence_depth = read_json("SEQ2DEPTH.json")
+    Map[String, Float] coverage_by_sequence = read_json("SEQ2COVERAGE.json")
+    Map[String, Float] depth_by_sequence = read_json("SEQ2DEPTH.json")
     File stats = "~{samplename}.stats.txt"
     File cov_hist = "~{samplename}.cov.hist"
     File cov_stats = "~{samplename}.cov.txt"
