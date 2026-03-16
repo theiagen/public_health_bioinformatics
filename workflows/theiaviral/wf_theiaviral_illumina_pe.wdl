@@ -405,8 +405,8 @@ workflow theiaviral_illumina_pe {
     File? bwa_sorted_bam_unaligned = bwa.sorted_bam_unaligned
     File? bwa_sorted_bam_unaligned_bai = bwa.sorted_bam_unaligned_bai
     # Read mapping stats
-    Map[String, Float]? read_mapping_coverage_by_sequence = read_mapping_stats.sequence_coverage
-    Map[String, Float]? read_mapping_depth_by_sequence = read_mapping_stats.sequence_depth
+    Map[String, Float]? read_mapping_coverage_by_sequence = read_mapping_stats.coverage_by_sequence
+    Map[String, Float]? read_mapping_depth_by_sequence = read_mapping_stats.depth_by_sequence
     File? read_mapping_statistics = read_mapping_stats.stats
     File? read_mapping_cov_hist = read_mapping_stats.cov_hist
     File? read_mapping_cov_stats = read_mapping_stats.cov_stats
