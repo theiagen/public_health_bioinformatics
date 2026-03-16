@@ -3,7 +3,7 @@ import "../../tasks/quality_control/read_filtering/task_porechop.wdl" as porecho
 import "../../tasks/quality_control/read_filtering/task_nanoq.wdl" as nanoq_task
 import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
-import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
+import "../../tasks/quality_control/basic_statistics/task_mapping_stats.wdl" as mapping_stats_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../../tasks/quality_control/advanced_metrics/task_checkv.wdl" as checkv_task
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen_task
@@ -198,7 +198,7 @@ workflow theiaviral_ont {
             min_qual = min_map_quality
         }
         # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-        call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
+        call mapping_stats_task.mapping_stats as read_mapping_stats {
           input:
             bamfile = parse_mapping.bam,
             samplename = samplename,
@@ -387,7 +387,6 @@ workflow theiaviral_ont {
     String? parse_mapping_samtools_version = parse_mapping.samtools_version
     String? parse_mapping_samtools_docker = parse_mapping.samtools_docker
     # assembly_metrics outputs - read mapping quality control
-    File? read_mapping_report = read_mapping_stats.metrics_txt
     File? read_mapping_statistics = read_mapping_stats.stats
     File? read_mapping_cov_hist = read_mapping_stats.cov_hist
     File? read_mapping_cov_stats = read_mapping_stats.cov_stats
@@ -397,6 +396,8 @@ workflow theiaviral_ont {
     Float? read_mapping_meanbaseq = read_mapping_stats.meanbaseq
     Float? read_mapping_meanmapq = read_mapping_stats.meanmapq
     Float? read_mapping_percentage_mapped_reads = read_mapping_stats.percentage_mapped_reads
+    Map[String, Float]? read_mapping_coverage_by_sequence = read_mapping_stats.sequence_coverage
+    Map[String, Float]? read_mapping_depth_by_sequence = read_mapping_stats.sequence_depth
     String? read_mapping_date = read_mapping_stats.date
     String? read_mapping_samtools_version = read_mapping_stats.samtools_version
     # fasta_utilities outputs - samtools faidx reference genome

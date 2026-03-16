@@ -20,7 +20,7 @@ import "../../tasks/utilities/task_datasets_genome_length.wdl" as genome_length_
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus_task
 import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as variant_call_task
-import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
+import "../../tasks/quality_control/basic_statistics/task_mapping_stats.wdl" as mapping_stats_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
 import "../utilities/wf_host_decontaminate.wdl" as host_decontaminate_wf
 import "../utilities/wf_morgana_magic.wdl" as morgana_magic_wf
@@ -245,7 +245,7 @@ workflow theiaviral_illumina_pe {
             variant_min_depth = min_depth
         }
         # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-        call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
+        call mapping_stats_task.mapping_stats as read_mapping_stats {
           input:
             bamfile = bwa.sorted_bam,
             samplename = samplename,
@@ -404,7 +404,8 @@ workflow theiaviral_illumina_pe {
     File? bwa_sorted_bam_unaligned = bwa.sorted_bam_unaligned
     File? bwa_sorted_bam_unaligned_bai = bwa.sorted_bam_unaligned_bai
     # Read mapping stats
-    File? read_mapping_report = read_mapping_stats.metrics_txt
+    Map[String, Float]? read_mapping_coverage_by_sequence = read_mapping_stats.sequence_coverage
+    Map[String, Float]? read_mapping_depth_by_sequence = read_mapping_stats.sequence_depth
     File? read_mapping_statistics = read_mapping_stats.stats
     File? read_mapping_cov_hist = read_mapping_stats.cov_hist
     File? read_mapping_cov_stats = read_mapping_stats.cov_stats
