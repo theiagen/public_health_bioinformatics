@@ -24,8 +24,8 @@ workflow read_QC_trim_pe {
     Int trim_quality_min_score = 30
     Int trim_window_size = 4
     Int bbduk_memory = 8
-    File? contaminate_fasta
-    Int? decontaminate_memory
+    File? read_decontaminate_fasta
+    Int? read_decontaminate_memory
     Boolean call_midas = false
     File? midas_db
     Boolean call_kraken = false

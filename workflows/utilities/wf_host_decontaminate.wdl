@@ -21,7 +21,7 @@ workflow host_decontaminate {
     Boolean complete_only = false
     Int minimap2_memory = 32
   }
-  String hostsample = samplename + "_host"
+  String hostsample = samplename + "_contaminant"
   # gather an accession from a taxon input
   if (! is_accession && ! is_genome) {
     call identify_genome_task.datasets_genome_length as ncbi_identify {
