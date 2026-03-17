@@ -12,7 +12,7 @@ task consensus {
     Int memory = 16
     Int disk_size = 100
     String medaka_model = "r941_min_high_g360"
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0"
   }
   String primer_name = basename(primer_bed)
   command <<<
