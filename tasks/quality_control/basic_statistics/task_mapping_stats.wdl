@@ -49,13 +49,21 @@ task mapping_stats {
 
     # calculate averages across all sequences
     total_length = sum(part["length"] for part in seq2data.values())
+    if not total_length:
+      raise ValueError("Reads were mapped to empty sequences")
     total_mapped_reads = sum(part["reads"] for part in seq2data.values())
     total_cov_bases = sum(part["cov_bases"] for part in seq2data.values())
-
-    total_breadth = (total_cov_bases / total_length) * 100
-    total_depth = sum(part["meandepth"] * part["length"] for part in seq2data.values()) / total_length
-    total_meanbaseq = sum(part["meanbaseq"] * part["cov_bases"] for part in seq2data.values()) / total_cov_bases
-    total_meanmapq = sum(part["meanmapq"] * part["reads"] for part in seq2data.values()) / total_mapped_reads
+    if not total_mapped_reads or not total_cov_bases:
+      print("DEBUG: no reads mapped to sequences")
+      total_breadth = 0
+      total_depth = 0
+      total_meanbaseq = 0
+      total_meanmapq = 0
+    else:
+      total_breadth = (total_cov_bases / total_length) * 100
+      total_depth = sum(part["meandepth"] * part["length"] for part in seq2data.values()) / total_length
+      total_meanbaseq = sum(part["meanbaseq"] * part["cov_bases"] for part in seq2data.values()) / total_cov_bases
+      total_meanmapq = sum(part["meanmapq"] * part["reads"] for part in seq2data.values()) / total_mapped_reads
 
     # report total stats
     with open("COVERAGE", "w") as f:
