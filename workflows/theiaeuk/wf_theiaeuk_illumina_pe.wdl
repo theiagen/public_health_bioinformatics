@@ -217,6 +217,7 @@ workflow theiaeuk_illumina_pe {
     File? contaminant_mapping_stats = read_QC_trim.contaminant_mapping_stats
     File? contaminant_cov_hist = read_QC_trim.contaminant_cov_hist
     File? contaminant_mapping_flagstat = read_QC_trim.contaminant_mapping_flagstat
+    Float? contaminant_percent_mapped_reads = read_QC_trim.contaminant_percent_mapped_reads
     Map[String, Float]? contaminant_coverage_by_sequence = read_QC_trim.contaminant_sequence_coverage
     Map[String, Float]? contaminant_depth_by_sequence = read_QC_trim.contaminant_sequence_depth
     # Read QC - fastq_scan outputs
