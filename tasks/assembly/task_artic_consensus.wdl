@@ -11,84 +11,43 @@ task consensus {
     Int cpu = 8
     Int memory = 16
     Int disk_size = 100
-    String clair3_model = "r1041_e82_400bps_hac_v420"
+    String clair3_model = "r1041_e82_400bps_sup_v500"
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0"
   }
   command <<<
     set -euo pipefail
 
-    # Determine if we're using provided or local schemes - most of the time will be provided
-    # But with newer versions of ARTIC, we can use remote schemes from https://github.com/quick-lab/primerschemes
-    # Check if primer_bed is empty OR its file is empty/nonexistent AND reference_genome is empty/nonexistent
-    if [[ -z "~{primer_bed}" || ! -s "~{primer_bed}" ]] && [[ -z "~{reference_genome}" || ! -s "~{reference_genome}" ]]; then
-      echo "Using remote scheme..."
-      
-      # Set scheme parameters based on organism
-      if [[ "~{organism}" == "sars-cov-2" ]]; then
-        scheme_name="sars-cov-2"
-        scheme_version="v4.0.0"
-        scheme_length="400"
-      elif [[ "~{organism}" == "MPXV" ]]; then
-        scheme_name="artic-inrb-mpox"
-        scheme_version="v1.0.0"
-        scheme_length="400"
-      else
-        echo "Error: Unsupported organism for remote schemes: ~{organism}" >&2
-        echo "Please provide primer bed and reference genome for custom organisms" >&2
-        exit 1
-      fi
-      
-      echo "Using scheme: ${scheme_name} ${scheme_version} ${scheme_length}"
-      # Run ARTIC with remote scheme per newer versions of ARTIC
-      artic minion --model ~{clair3_model} \
-        --normalise ~{normalise} \
-        --threads ~{cpu} \
-        --scheme-directory /data/primer-schemes \
-        --scheme-name ${scheme_name} \
-        --scheme-version ${scheme_version} \
-        --scheme-length ${scheme_length} \
-        --read-file ~{read1} \
-        ~{samplename}
-
-      # Set output file contents for remote scheme
-      echo "${scheme_name}" > REFERENCE_GENOME
-      echo "${scheme_name}_${scheme_version}" > PRIMER_NAME
-
-    else
-      # Newer version of Artic use a different command to launch the pipeline
-      # when using user provided files for bed and reference genome are provided, 
-      # we can now provide the bed and reference genome files to the pipeline directly 
-      # instead of using the --scheme-directory and --scheme-name flags
-      echo "Using user provided files..."
-      
-      if [[ -z "~{primer_bed}" || -z "~{reference_genome}" ]]; then
-        echo "Error: Both primer bed and reference genome must be provided for local scheme" >&2
-        exit 1
-      fi
-
-      # Copy reference files to working directory, this is neccessary for fiadx to work
-      # which is a requirement of clair3, we run into similar issues in the clair3_variants task
-      cp "~{reference_genome}" reference.fasta
-      # Run ARTIC with user provided files
-      artic minion --model ~{clair3_model} \
-        --normalise ~{normalise} \
-        --threads ~{cpu} \
-        --bed ~{primer_bed} \
-        --ref reference.fasta \
-        --read-file ~{read1} \
-        ~{samplename}
-
-      # Set output file contents for local scheme
-      head -n1 "~{reference_genome}" | sed 's/>//' > REFERENCE_GENOME
-      basename "~{primer_bed}" > PRIMER_NAME
+    # Newer version of Artic use a different command to launch the pipeline
+    # when using user provided files for bed and reference genome are provided, 
+    # we can now provide the bed and reference genome files to the pipeline directly 
+    if [[ -z "~{primer_bed}" || -z "~{reference_genome}" ]]; then
+      echo "Error: Both primer bed and reference genome must be provided" >&2
+      exit 1
     fi
 
-    # Capture ARTIC version
-    echo "Artic Pipeline Version $(artic -v)" > VERSION
+    # Copy reference files to working directory, this is necessary for fiadx to work
+    # which is a requirement of clair3, we run into similar issues in the clair3_variants task
+    cp "~{reference_genome}" reference.fasta
+    # Run ARTIC with user provided files
+    artic minion --model ~{clair3_model} \
+      --normalise ~{normalise} \
+      --threads ~{cpu} \
+      --bed ~{primer_bed} \
+      --ref reference.fasta \
+      --read-file ~{read1} \
+      ~{samplename}
 
-    # Grab reads from alignment - cdph wants this
-    # 0x904 means we are now filtering out unaligned, secondary, and supplemental alignments - thanks Curtis
-    samtools fastq -F0x904 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz  
+    # Set output file contents for local scheme
+    head -n1 "~{reference_genome}" | sed 's/>//' > REFERENCE_GENOME
+    basename "~{primer_bed}" > PRIMER_NAME
+  fi
+
+  # Capture ARTIC version
+  artic -v > VERSION
+
+  # Grab reads from alignment - cdph wants this
+  # 0x904 means we are now filtering out unaligned, secondary, and supplemental alignments - thanks Curtis
+  samtools fastq -F0x904 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz  
   >>>
   output {
     File consensus_seq = "~{samplename}.consensus.fasta"
