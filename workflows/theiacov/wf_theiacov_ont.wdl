@@ -298,13 +298,12 @@ workflow theiacov_ont {
     String assembly_fasta = select_first([consensus.consensus_seq, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
     File? aligned_bam = consensus.trim_sorted_bam
     File? aligned_bai = consensus.trim_sorted_bai
-    File? medaka_vcf = consensus.medaka_pass_vcf
+    File? clair3_vcf = consensus.artic_clair3_pass_vcf
     String read1_aligned = select_first([consensus.reads_aligned, flu_track.irma_aligned_fastqs, ""])
-    File? read1_trimmed = consensus.trim_fastq
     # Read Alignment - Artic consensus versioning outputs
     String? artic_version = consensus.artic_pipeline_version
     String? artic_docker = consensus.artic_pipeline_docker
-    String? medaka_reference = consensus.medaka_reference
+    String? artic_pipeline_reference = consensus.artic_pipeline_reference
     String? primer_bed_name = consensus.primer_bed_name
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([consensus.artic_pipeline_version, flu_track.irma_version, ""])
     # Assembly QC - consensus assembly qc outputs
