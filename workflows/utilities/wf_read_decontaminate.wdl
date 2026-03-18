@@ -78,7 +78,7 @@ workflow read_decontaminate {
   call parse_mapping_task.bam_to_unaligned_fastq {
     input:
       bam = parse_mapping.bam,
-      samplename = hostsample,
+      samplename = contaminant_samplename,
       paired = defined(read2)
   }
   # calculate read mapping statistics

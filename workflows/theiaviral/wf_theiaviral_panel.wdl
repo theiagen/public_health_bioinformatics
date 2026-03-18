@@ -11,7 +11,7 @@ import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_
 import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes_task
 import "../../tasks/utilities/data_export/task_export_taxon_table.wdl" as export_taxon_table_task
 import "../../tasks/utilities/file_handling/task_kraken_parser.wdl" as kraken_parser_task
-import "../utilities/wf_host_decontaminate.wdl" as host_decontaminate_wf
+import "../utilities/wf_read_decontaminate.wdl" as host_decontaminate_wf
 import "wf_theiaviral_illumina_pe.wdl" as theiaviral_illumina_pe
 
 
@@ -75,12 +75,12 @@ workflow theiaviral_panel {
   }
   # host read decontamination
   if (defined(host)) {
-    call host_decontaminate_wf.host_decontaminate {
+    call host_decontaminate_wf.read_decontaminate as host_decontaminate {
       input:
         samplename = samplename,
         read1 = bbduk.read1_clean,
         read2 = bbduk.read2_clean,
-        host = select_first([host])
+        contaminant = select_first([host])
     }
   }
   # taxon-based read extraction
@@ -94,15 +94,15 @@ workflow theiaviral_panel {
   call kraken2_task.kraken2_standalone as kraken2_standalone_clean {
     input:
       samplename = samplename,
-      read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
-      read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean]),
+      read1 = select_first([host_decontaminate.decontaminate_read1, bbduk.read1_clean]),
+      read2 = select_first([host_decontaminate.decontaminate_read2, bbduk.read2_clean]),
       kraken2_db = select_first([kraken_db])
   }
   # clean read stat gathering
   call fastq_scan_task.fastq_scan_pe as fastq_scan_clean {
     input:
-      read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
-      read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean])
+      read1 = select_first([host_decontaminate.decontaminate_read1, bbduk.read1_clean]),
+      read2 = select_first([host_decontaminate.decontaminate_read2, bbduk.read2_clean])
   }
   # parse the kraken report to get the taxon ids present in the sample, lowering scatter shards
   call kraken_parser_task.kraken_output_parser as kraken_parser {
@@ -339,20 +339,20 @@ workflow theiaviral_panel {
     File? fastp_html_report = fastp.fastp_stats_html
     File? fastp_json_report = fastp.fastp_stats_json
     # host decontamination outputs
-    File? dehost_wf_dehost_read1 = host_decontaminate.dehost_read1
-    File? dehost_wf_dehost_read2 = host_decontaminate.dehost_read2
-    String? dehost_wf_host_accession = host_decontaminate.host_genome_accession
-    File? dehost_wf_host_mapped_bam = host_decontaminate.host_mapped_sorted_bam
-    File? dehost_wf_host_mapped_bai = host_decontaminate.host_mapped_sorted_bai
-    File? dehost_wf_host_fasta = host_decontaminate.host_genome_fasta
-    File? dehost_wf_host_mapping_stats = host_decontaminate.host_mapping_stats
-    File? dehost_wf_host_mapping_cov_hist = host_decontaminate.host_mapping_cov_hist
-    File? dehost_wf_host_flagstat = host_decontaminate.host_flagstat
-    Float? dehost_wf_host_mapping_coverage = host_decontaminate.host_mapping_coverage
-    Float? dehost_wf_host_mapping_mean_depth = host_decontaminate.host_mapping_mean_depth
-    Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.host_percent_mapped_reads
-    Map[String, Float]? dehost_wf_host_coverage_by_sequence = host_decontaminate.host_coverage_by_sequence
-    Map[String, Float]? dehost_wf_host_depth_by_sequence = host_decontaminate.host_depth_by_sequence
+    File? dehost_wf_dehost_read1 = host_decontaminate.decontaminate_read1
+    File? dehost_wf_dehost_read2 = host_decontaminate.decontaminate_read2
+    String? dehost_wf_host_accession = host_decontaminate.contaminant_genome_accession
+    File? dehost_wf_host_mapped_bam = host_decontaminate.contaminant_mapped_sorted_bam
+    File? dehost_wf_host_mapped_bai = host_decontaminate.contaminant_mapped_sorted_bai
+    File? dehost_wf_host_fasta = host_decontaminate.contaminant_genome_fasta
+    File? dehost_wf_host_mapping_stats = host_decontaminate.contaminant_mapping_stats
+    File? dehost_wf_host_mapping_cov_hist = host_decontaminate.contaminant_mapping_cov_hist
+    File? dehost_wf_host_flagstat = host_decontaminate.contaminant_flagstat
+    Float? dehost_wf_host_mapping_coverage = host_decontaminate.contaminant_mapping_coverage
+    Float? dehost_wf_host_mapping_mean_depth = host_decontaminate.contaminant_mapping_mean_depth
+    Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.contaminant_percent_mapped_reads
+    Map[String, Float]? dehost_wf_host_coverage_by_sequence = host_decontaminate.contaminant_coverage_by_sequence
+    Map[String, Float]? dehost_wf_host_depth_by_sequence = host_decontaminate.contaminant_depth_by_sequence
     # NCBI scrubber
     File? ncbi_scrub_read1_dehosted = ncbi_scrub_pe.read1_dehosted
     File? ncbi_scrub_read2_dehosted = ncbi_scrub_pe.read2_dehosted
