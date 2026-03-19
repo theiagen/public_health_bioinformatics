@@ -24,7 +24,6 @@ task kraken2 {
     # date and version control
     echo "INFO: Kraken2 version:"
     echo $(kraken2 --version 2>&1) | sed 's/^.*Kraken version //;s/ .*$//' | tee KRAKEN2_VERSION
-    num_reads=$(ls *fastq.gz 2> /dev/null | wc -l)
 
     # Decompress the Kraken2 database
     mkdir db
@@ -66,15 +65,15 @@ task kraken2 {
     # Run Bracken 
     touch BRACKEN_VERSION 
     if [ "~{call_bracken}" == "true" ]; then
+      bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
       # check if kraken database is compatible with bracken (i.e. has kmer distribution files)
       if [ -z "$(ls db/database*mers\.kmer_distrib 2> /dev/null)" ]; then
         echo "ERROR: Bracken kmer distribution files not found in the Kraken2 database. Skipping Bracken." >&2
       else
-        # if bracken_kmer_length isn't provided, infer as the kmer length directly under the mean read length
+        # if bracken_kmer_length isn't provided, infer as the kmer length closest available to the mean read length
         if [ -z "~{bracken_kmer_length}" ]; then
 
           echo "INFO: Bracken version:"
-          bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
 
           seqkit stats ~{read1} > read_lengths.tsv
           python3 <<CODE

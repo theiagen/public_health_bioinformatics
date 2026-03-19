@@ -134,7 +134,7 @@ task metabuli {
     String metabuli_docker = docker
     String metabuli_database = metabuli_db
     String metabuli_percent_target_lineage = read_string("PERCENT_TARGET_LINEAGE")
-    String metabuli_percent_human = read_string("PERCENT_HUMAN")
+    Float metabuli_percent_human = read_float("PERCENT_HUMAN")
   }
   runtime {
     docker: "~{docker}"
