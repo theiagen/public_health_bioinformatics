@@ -15,32 +15,43 @@ task consensus {
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0"
   }
   command <<<
-    set -euo pipefail
+  set -euo pipefail
 
-    # Newer version of Artic use a different command to launch the pipeline
-    # when using user provided files for bed and reference genome are provided, 
-    # we can now provide the bed and reference genome files to the pipeline directly 
-    if [[ -z "~{primer_bed}" || -z "~{reference_genome}" ]]; then
-      echo "Error: Both primer bed and reference genome must be provided" >&2
-      exit 1
-    fi
-
-    # Copy reference files to working directory, this is necessary for fiadx to work
-    # which is a requirement of clair3, we run into similar issues in the clair3_variants task
-    cp "~{reference_genome}" reference.fasta
-    # Run ARTIC with user provided files
-    artic minion --model ~{clair3_model} \
-      --normalise ~{normalise} \
-      --threads ~{cpu} \
-      --bed ~{primer_bed} \
-      --ref reference.fasta \
-      --read-file ~{read1} \
-      ~{samplename}
-
-    # Set output file contents for local scheme
-    head -n1 "~{reference_genome}" | sed 's/>//' > REFERENCE_GENOME
-    basename "~{primer_bed}" > PRIMER_NAME
+  # Newer version of Artic use a different command to launch the pipeline
+  # when using user provided files for bed and reference genome are provided, 
+  # we can now provide the bed and reference genome files to the pipeline directly 
+  if [[ -z "~{primer_bed}" || -z "~{reference_genome}" ]]; then
+    echo "Error: Both primer bed and reference genome must be provided" >&2
+    exit 1
   fi
+
+  # Copy reference files to working directory, this is necessary for fiadx to work
+  # which is a requirement of clair3, we run into similar issues in the clair3_variants task
+  cp "~{reference_genome}" reference.fasta
+
+  # ARTIC claims to expect 6 column BED files, but these fail primalbedtools
+  # SPOOF the sequence line
+  python3 <<CODE
+  with open("~{primer_bed}", "r") as infile, open("primer.bed", "w") as outfile:
+    for line in infile:
+      parts = line.strip().split("\t")
+      if len(parts) < 7:
+        parts.append("SPOOF")
+      outfile.write("\t".join(parts) + "\n")
+  CODE
+
+  # Run ARTIC with user provided files
+  artic minion --model ~{clair3_model} \
+    --normalise ~{normalise} \
+    --threads ~{cpu} \
+    --bed primer.bed \
+    --ref reference.fasta \
+    --read-file ~{read1} \
+    ~{samplename}
+
+  # Set output file contents for local scheme
+  head -n1 "~{reference_genome}" | sed 's/>//' > REFERENCE_GENOME
+  basename "~{primer_bed}" > PRIMER_NAME
 
   # Capture ARTIC version
   artic -v > VERSION
@@ -48,6 +59,12 @@ task consensus {
   # Grab reads from alignment - cdph wants this
   # 0x904 means we are now filtering out unaligned, secondary, and supplemental alignments - thanks Curtis
   samtools fastq -F0x904 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz  
+
+
+  # Calculate the primer trimming stats:
+    # primer_trimmed_read_percent
+    # per primer read counts (?)
+  # Based on comparing *primertrimmed.rg.sorted.bam to *trimmed.rg.sorted.bam
   >>>
   output {
     File consensus_seq = "~{samplename}.consensus.fasta"
@@ -56,7 +73,8 @@ task consensus {
     String artic_pipeline_reference = read_string("REFERENCE_GENOME")
     String artic_pipeline_version = read_string("VERSION")
     String artic_pipeline_docker = docker
-    File sorted_bam = "~{samplename}.trimmed.rg.sorted.bam"
+    File sorted_bam = "~{samplename}.sorted.bam"
+    File sorted_bai = "~{samplename}.sorted.bam.bai"
     File trim_sorted_bam = "~{samplename}.primertrimmed.rg.sorted.bam"
     File trim_sorted_bai = "~{samplename}.primertrimmed.rg.sorted.bam.bai"
     File? reads_aligned = "~{samplename}.fastq.gz"
