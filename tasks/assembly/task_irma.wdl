@@ -50,7 +50,6 @@ task irma {
               "ALIGN_PROG='BLAT'\n",
               "MIN_LEN=~{minimum_read_length}"]
       conf_file.writelines(lines)
-      conf_file.close()
     CODE
 
     # run IRMA
