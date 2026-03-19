@@ -237,6 +237,7 @@ workflow merlin_magic {
     Float? tbp_parser_min_percent_loci_covered
     Boolean? tbp_parser_tngs_data
     Boolean? tbp_parser_use_err_as_brr
+    Boolean? tbp_parser_resolve_overlapping_regions
     String? tbp_parser_tngs_read_support_boundaries
     String? tbp_parser_tngs_frequency_boundaries
     String tbp_parser_sequencing_method = "WGS"
@@ -510,6 +511,7 @@ workflow merlin_magic {
             min_percent_loci_covered = tbp_parser_min_percent_loci_covered,
             tngs_data = tbp_parser_tngs_data,
             use_err_as_brr = tbp_parser_use_err_as_brr,
+            resolve_overlapping_regions = tbp_parser_resolve_overlapping_regions,
             tngs_read_support_boundaries = tbp_parser_tngs_read_support_boundaries,
             tngs_frequency_boundaries = tbp_parser_tngs_frequency_boundaries,
             sequencing_method = tbp_parser_sequencing_method,
@@ -1050,6 +1052,7 @@ workflow merlin_magic {
     File? tbp_parser_lims_report_transposed_csv = tbp_parser.tbp_parser_lims_report_transposed_csv
     File? tbp_parser_locus_coverage_report = tbp_parser.tbp_parser_locus_coverage_report
     File? tbp_parser_target_coverage_report = tbp_parser.tbp_parser_target_coverage_report
+    File? tbp_parser_log = tbp_parser.tbp_parser_log
     Float? tbp_parser_genome_percent_coverage = tbp_parser.tbp_parser_genome_percent_coverage
     Float? tbp_parser_average_genome_depth = tbp_parser.tbp_parser_average_genome_depth
     File? clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1

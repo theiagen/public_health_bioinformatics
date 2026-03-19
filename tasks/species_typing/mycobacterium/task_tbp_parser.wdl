@@ -22,6 +22,7 @@ task tbp_parser {
     # tNGS-specific arguments
     Boolean tngs_data = false
     Boolean use_err_as_brr = false
+    Boolean resolve_overlapping_regions = false
     String? tngs_read_support_boundaries # default "10,10"
     String? tngs_frequency_boundaries # default "0.1,0.1"
     # text arguments
@@ -61,6 +62,7 @@ task tbp_parser {
       ~{"--min_percent_loci_covered " + min_percent_loci_covered} \
       ~{true="--tngs" false="" tngs_data} \
       ~{true="--use_err_as_brr" false="" use_err_as_brr} \
+      ~{true="--resolve_overlapping_regions" false="" resolve_overlapping_regions} \
       ~{"--tngs_read_support_boundaries " + tngs_read_support_boundaries} \
       ~{"--tngs_frequency_boundaries " + tngs_frequency_boundaries} \
       ~{"--sequencing_method " + sequencing_method} \
@@ -163,6 +165,7 @@ task tbp_parser {
     File tbp_parser_lims_report_transposed_csv = "~{samplename}.lims_report.transposed.csv"
     File tbp_parser_locus_coverage_report = "~{samplename}.locus_coverage_report.csv"
     File? tbp_parser_target_coverage_report = "~{samplename}.target_coverage_report.csv"
+    File tbp_parser_log = "~{samplename}.log"
     Float tbp_parser_genome_percent_coverage = read_float("GENOME_PC")
     Float tbp_parser_average_genome_depth = read_float("AVG_DEPTH")
     String tbp_parser_version = read_string("VERSION")

@@ -15,7 +15,7 @@ workflow tbprofiler_tngs {
     File read1
     File read2
     String samplename
-    
+
     String? tbdb_branch
 
     Boolean run_trimmomatic = true
@@ -39,11 +39,11 @@ workflow tbprofiler_tngs {
   }
   if (run_clockwork) {
     call clockwork_task.clockwork_decon_reads {
-      input: 
+      input:
         read1 = select_first([trimmomatic_pe.read1_trimmed, read1]),
         read2 = select_first([trimmomatic_pe.read2_trimmed, read2]),
         samplename = samplename
-    } 
+    }
   }
   if (run_trimmomatic || run_clockwork) {
     call fastq_scan.fastq_scan_pe as fastq_scan_clean {
@@ -114,6 +114,7 @@ workflow tbprofiler_tngs {
     File tbp_parser_lims_report_transposed_csv = tbp_parser.tbp_parser_lims_report_transposed_csv
     File tbp_parser_locus_coverage_report = tbp_parser.tbp_parser_locus_coverage_report
     File? tbp_parser_target_coverage_report = tbp_parser.tbp_parser_target_coverage_report
+    File tbp_parser_log = tbp_parser.tbp_parser_log
     Float tbp_parser_genome_percent_coverage = tbp_parser.tbp_parser_genome_percent_coverage
     Float tbp_parser_average_genome_depth = tbp_parser.tbp_parser_average_genome_depth
     String tbp_parser_version = tbp_parser.tbp_parser_version
