@@ -293,6 +293,7 @@ workflow theiaviral_ont {
     Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.contaminant_percent_mapped_reads
     Map[String, Float]? dehost_wf_host_coverage_by_sequence = host_decontaminate.contaminant_coverage_by_sequence
     Map[String, Float]? dehost_wf_host_depth_by_sequence = host_decontaminate.contaminant_depth_by_sequence
+    String? dehost_wf_host_sequence_check = host_decontaminate.contaminant_check_status
     # raw read quality control
     File nanoplot_html_raw = nanoplot_raw.nanoplot_html
     File nanoplot_tsv_raw = nanoplot_raw.nanoplot_tsv

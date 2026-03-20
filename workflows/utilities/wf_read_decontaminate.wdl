@@ -5,6 +5,7 @@ import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
 import "../../tasks/quality_control/basic_statistics/task_mapping_stats.wdl" as mapping_stats_task
 import "../../tasks/utilities/task_datasets_genome_length.wdl" as identify_genome_task
+import "../../tasks/taxon_id/contamination/task_contaminant_check.wdl" as contaminant_check_task
 
 workflow read_decontaminate {
   meta {
@@ -19,6 +20,10 @@ workflow read_decontaminate {
     Boolean is_genome = false
     Boolean refseq = true
     Boolean complete_only = false
+
+    String? expected_sequences
+    Float min_expected_coverage = 0
+    Int min_expected_depth = 0
     Int minimap2_memory = 32
   }
   String contaminant_samplename = samplename + "_contaminant"
@@ -89,6 +94,17 @@ workflow read_decontaminate {
       read1 = read1,
       read2 = read2
   }
+  # run contaminant check
+  if (defined(expected_sequences)) {
+    call contaminant_check_task.contaminant_check {
+      input:
+        expected_sequences = select_first([expected_sequences]),
+        coverage_by_sequence_json = read_mapping_stats.coverage_by_sequence_json,
+        depth_by_sequence_json = read_mapping_stats.depth_by_sequence_json,
+        min_percent_coverage = min_expected_coverage,
+        min_depth = min_expected_depth
+    }
+  }
   output {
     # Datasets download outputs
     File? contaminant_genome_fasta = download_accession.ncbi_datasets_assembly_fasta
@@ -111,5 +127,7 @@ workflow read_decontaminate {
     Float? contaminant_percent_mapped_reads = read_mapping_stats.percentage_mapped_reads
     Map[String, Float]? contaminant_coverage_by_sequence = read_mapping_stats.coverage_by_sequence
     Map[String, Float]? contaminant_depth_by_sequence = read_mapping_stats.depth_by_sequence
+    # Contaminant check outputs
+    String? contaminant_check_status = contaminant_check.contaminant_check_status
   }
 }

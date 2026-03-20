@@ -353,6 +353,7 @@ workflow theiaviral_panel {
     Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.contaminant_percent_mapped_reads
     Map[String, Float]? dehost_wf_host_coverage_by_sequence = host_decontaminate.contaminant_coverage_by_sequence
     Map[String, Float]? dehost_wf_host_depth_by_sequence = host_decontaminate.contaminant_depth_by_sequence
+    String? dehost_wf_host_sequence_check = host_decontaminate.contaminant_check_status
     # NCBI scrubber
     File? ncbi_scrub_read1_dehosted = ncbi_scrub_pe.read1_dehosted
     File? ncbi_scrub_read2_dehosted = ncbi_scrub_pe.read2_dehosted

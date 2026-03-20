@@ -26,6 +26,9 @@ workflow read_QC_trim_pe {
     Int bbduk_memory = 8
     File? read_decontaminate_fasta
     Int? read_decontaminate_memory
+    String? expected_contaminants
+    Float? min_contaminant_coverage
+    Int? min_contaminant_depth
     Boolean call_midas = false
     File? midas_db
     Boolean call_kraken = false
@@ -67,6 +70,9 @@ workflow read_QC_trim_pe {
         is_accession = false,
         refseq = false,
         complete_only = false,
+        expected_sequences = expected_contaminants,
+        min_expected_coverage = min_contaminant_coverage,
+        min_expected_depth = min_contaminant_depth,
         minimap2_memory = read_decontaminate_memory
     }
   }
@@ -217,6 +223,7 @@ workflow read_QC_trim_pe {
     File? contaminant_mapping_flagstat = read_decontaminate.contaminant_flagstat
     Map[String, Float]? contaminant_sequence_coverage = read_decontaminate.contaminant_coverage_by_sequence
     Map[String, Float]? contaminant_sequence_depth = read_decontaminate.contaminant_depth_by_sequence
+    String? contaminant_status = read_decontaminate.contaminant_check_status
     # fastq_scan clean (per read stats)
     Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
     Int? fastq_scan_clean2 = fastq_scan_clean.read2_seq

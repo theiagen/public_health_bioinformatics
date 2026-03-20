@@ -324,6 +324,7 @@ workflow theiaviral_illumina_pe {
     Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.contaminant_percent_mapped_reads
     Map[String, Float]? dehost_wf_host_coverage_by_sequence = host_decontaminate.contaminant_coverage_by_sequence
     Map[String, Float]? dehost_wf_host_depth_by_sequence = host_decontaminate.contaminant_depth_by_sequence
+    String? dehost_wf_host_sequence_check = host_decontaminate.contaminant_check_status
     # trimming outputs - adapter trimming
     String? fastp_version = fastp.fastp_version
     String? fastp_docker = fastp.fastp_docker
