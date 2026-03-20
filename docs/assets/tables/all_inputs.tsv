@@ -994,8 +994,11 @@ gubbins	nuc_subst_model	String	Nucleotide substitution model to use with Gubbins
 gubbins	tree_args	String	Quoted string of further arguments passed to tree building algorithm		Optional	Snippy_Tree	general	
 gubbins	tree_builder	String	Application to use for Gubbins tree building algorithm: "raxml", "raxmlng", "iqtree", "iqtree-fast", "fasttree", "hybrid" (fasttree is used for the first tree, and raxml is used for later iterations), "rapidnj"	raxml	Optional	Snippy_Tree	general	
 host_decontaminate	complete_only	Boolean	Only download genomes labeled "complete"	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	expected_sequences	String	Comma-delimited list of expected sequences that match the host FASTA headers 		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	is_accession	Boolean	Inputted "host" is an accession	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	is_genome	Boolean	Inputted "host" is an assembly FASTA	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	min_expected_coverage	Float	Minimum coverage for expected sequences to be identified	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	min_expected_depth	Int	Minimum depth for expected sequences to be identified	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	minimap2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime	
 host_decontaminate	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general	
 host_decontaminate	refseq	Boolean	Only download RefSeq genomes	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
@@ -1961,7 +1964,7 @@ raw_check_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	
 raw_check_reads	workflow_series	String	Internal component, do not modify	theiaviral	Optional	TheiaEuk_ONT	general	
 read_mapping_stats	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 read_mapping_stats	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-read_mapping_stats	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
+read_mapping_stats	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 read_mapping_stats	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 read_mapping_stats	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general	
 read_QC_trim	adapters	File	File with adapter sequences to be removed		Optional	TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
@@ -1981,6 +1984,7 @@ read_QC_trim	call_kraken	Boolean	Internal component, do not modify	False	Optiona
 read_QC_trim	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	call_midas	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE	general	
 read_QC_trim	downsampling_coverage	Float	The desired coverage to sub-sample the reads to with RASUSA	150	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general	
+read_QC_trim	expected_contaminants	String	Comma-delimited list of expected contaminant sequences. These must match "read_decontaminate_fasta" sequence headers		Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	fastp_args	String	Additional arguments to use with fastp	-g -5 20 -3 20	Optional	TheiaCoV_Illumina_SE, TheiaProk_Illumina_SE	general	
 read_QC_trim	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
@@ -1997,6 +2001,8 @@ read_QC_trim	metabuli_memory	Int	Amount of memory/RAM (in GB) to allocate to the
 read_QC_trim	metabuli_taxdump_path	File	Path to taxonkit-generated taxdump for Metabuli taxonomy parsing	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	midas_db	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE	general	
 read_QC_trim	midas_db	File	The database used by the MIDAS task in .tar.gz format	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	database	
+read_QC_trim	min_contaminant_coverage	Float	Minimum coverage to identify a contaminant sequence	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
+read_QC_trim	min_contaminant_depth	Int	Minimum depth to identify a contaminant sequence	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	min_length	Int	Internal component, do not modify	400	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	nanoq_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
 read_QC_trim	nanoq_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
@@ -2031,6 +2037,8 @@ read_QC_trim	rasusa_number_of_reads	Int	Internal component, do not modify		Optio
 read_QC_trim	rasusa_number_of_reads	Int	Subsample to a specific number of reads		Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	rasusa_seed	Int	Internal component, do not modify		Optional	TheiaCoV_ONT	general	
 read_QC_trim	rasusa_seed	Int	Random seed to use		Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+read_QC_trim	read_decontaminate_fasta	File	FASTA of contaminat sequences to map and remove reads against		Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
+read_QC_trim	read_decontaminate_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	runtime	
 read_QC_trim	read_processing	String	The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp"	trimmomatic	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	read_qc	String	The tool used for quality control (QC) of reads. Options are "fastq_scan" (default) and "fastqc"	fastq_scan	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	run_prefix	String	Internal component, do not modify	artic_ncov2019	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
@@ -2081,13 +2089,18 @@ read_QC_trim_pe	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the
 read_QC_trim_pe	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	call_bracken	Boolean	Call Bracken kraken2 report refinement	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	expected_contaminants	String	Internal component, do not modify		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	Freyja_FASTQ	database	
 read_QC_trim_pe	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	midas_db	File	Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	Freyja_FASTQ	database	
+read_QC_trim_pe	min_contaminant_coverage	Float	Internal component, do not modify	0	Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	min_contaminant_depth	Int	Internal component, do not modify	0	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	phix	File	The file containing the phix sequence to be used during bbduk task		Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	read_decontaminate_fasta	File	FASTA of contaminat sequences to map and remove reads against		Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	read_decontaminate_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	read_processing	String	Options: "trimmomatic" or "fastp" to indicate which read trimming module to use	trimmomatic	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	read_qc	String	Allows the user to decide between fastq_scan (default) and fastqc for the evaluation of read quality.	fastq_scan	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	trim_quality_min_score	Int	The minimum quality score to keep during trimming	30	Optional	Freyja_FASTQ	general	
