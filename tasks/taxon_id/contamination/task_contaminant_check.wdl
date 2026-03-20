@@ -28,36 +28,40 @@ task contaminant_check {
     depth_by_sequence = json.load(f)
 
   # check if any expected sequences are present above the specified thresholds
-  detected_sequences_coverage_prep = set([seq for seq, cov in coverage_by_sequence.items() if seq in expected_sequences and cov >= ~{min_percent_coverage}])
-  detected_sequences_depth_prep = set([seq for seq, depth in depth_by_sequence.items() if seq in expected_sequences and depth >= ~{min_depth}])
+  detected_sequences_coverage_prep = set([seq for seq, cov in coverage_by_sequence.items() if cov >= ~{min_percent_coverage}])
+  detected_sequences_depth_prep = set([seq for seq, depth in depth_by_sequence.items() if depth >= ~{min_depth}])
 
   undetected_sequences_coverage = set([seq for seq, cov in coverage_by_sequence.items() if not cov > 0])
   undetected_sequences_depth = set([seq for seq, depth in depth_by_sequence.items() if not depth > 0])
   undetected_sequences = undetected_sequences_coverage.union(undetected_sequences_depth)
+  # assumes coverage_by_sequence and depth_by_sequence have same keys
+  missing_from_input = expected_sequences.difference(set(coverage_by_sequence.keys()))
 
   detected_sequences_coverage = detected_sequences_coverage_prep.difference(undetected_sequences_coverage)
   detected_sequences_depth = detected_sequences_depth_prep.difference(undetected_sequences_depth)
 
+  expected_id_sequences = expected_sequences.difference(missing_from_input)
+
   # check results
   print(f"DEBUG: expected sequences: {sorted(expected_sequences)}")
-  coverage_hits = detected_sequences_coverage.intersection(expected_sequences)
+  coverage_hits = detected_sequences_coverage.intersection(expected_id_sequences)
   if coverage_hits:
     print(f"DEBUG: passing coverage: {sorted(coverage_hits)}")
   else:
     print("WARNING: no sequences passed coverage threshold")
-  coverage_missing = expected_sequences.difference(coverage_hits)
+  coverage_missing = expected_id_sequences.difference(coverage_hits)
   if coverage_missing:
     print(f"WARNING: failing coverage: {sorted(coverage_missing)}")
-  coverage_extra = detected_sequences_coverage.difference(expected_sequences)
-  depth_hits = detected_sequences_depth.intersection(expected_sequences)
+  coverage_extra = detected_sequences_coverage.difference(expected_id_sequences)
+  depth_hits = detected_sequences_depth.intersection(expected_id_sequences)
   if depth_hits:
     print(f"DEBUG: passing depth: {sorted(depth_hits)}")
   else:
     print("WARNING: no sequences passed depth threshold")
-  depth_missing = expected_sequences.difference(depth_hits)
+  depth_missing = expected_id_sequences.difference(depth_hits)
   if depth_missing:
     print(f"WARNING: failing depth: {sorted(depth_missing)}")
-  depth_extra = detected_sequences_depth.difference(expected_sequences)
+  depth_extra = detected_sequences_depth.difference(expected_id_sequences)
   extraneous_sequences = coverage_extra.union(depth_extra)
   if extraneous_sequences:
     print(f"WARNING: extraneous sequences detected: {sorted(extraneous_sequences)}")
@@ -67,19 +71,21 @@ task contaminant_check {
     if seq in undetected_sequences:
       seq2fail[seq].append("not detected")
     else:
-      seq2fail[seq].append("insufficient coverage")
+      seq2fail[seq].append(f"insufficient coverage ({coverage_by_sequence[seq]})")
   for seq in depth_missing:
     if seq not in undetected_sequences:
-      seq2fail[seq].append("insufficient depth")
+      seq2fail[seq].append(f"insufficient depth ({depth_by_sequence[seq]})")
   for seq in extraneous_sequences:
-    seq2fail[seq].append("extraneous sequence")
+    seq2fail[seq].append("extra sequence")
+  for seq in missing_from_input:
+    seq2fail[seq].append("missing from reference")
 
   # populate a status string
   with open("STATUS", "w") as f:
     if seq2fail:
       status_string = "FAIL: "
       for seq, fail_reasons in sorted(seq2fail.items(), key=lambda x: x[0]):
-        status_string += f"{seq}: {', '.join(fail_reasons)}; "
+        status_string += f"{seq} - {', '.join(fail_reasons)}; "
       status_string = status_string.strip("; ")
       f.write(status_string)
     else:
