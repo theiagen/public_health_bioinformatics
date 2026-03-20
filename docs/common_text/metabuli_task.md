@@ -11,7 +11,6 @@
 
         - Illumina short reads: `min_score` = 0.15, `min_sp_score` = 0.5
         - ONT long reads: `min_score` = 0.008
-
 <!-- endif -->
 
 <!-- if theiacov|freyja -->
