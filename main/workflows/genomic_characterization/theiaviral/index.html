@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -7170,7 +7170,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
-<td>v4.1.0</td>
+<td>vX.X.X</td>
 <td>Some optional features incompatible, Yes</td>
 <td>Sample-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_Illumina_PE_PHB:main?tab=info">TheiaViral_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_ONT_PHB:main?tab=info">TheiaViral_ONT_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_Panel_PHB:main?tab=info">TheiaViral_Panel_PHB</a></td>
@@ -7191,7 +7191,7 @@
 <li>The best reference from a database of ~200,000 viral genomes is selected using average nucleotide identity (ANI), and</li>
 <li>A final consensus assembly is generated through reference-based read mapping and variant calling.</li>
 </ol>
-<p><em>De novo</em> assembly and reference selection can be skipped by providing a reference genome as input; this enables compatibility with tiled-amplicon sequencing data. Subsequent genomic characterization is currently only functional for the viral lineages <a href="#taxa-specific-tasks">listed below</a>.</p>
+<p><em>De novo</em> assembly and reference selection can be skipped by providing a reference genome as input; this enables compatibility with tiled-amplicon sequencing data. Subsequent genomic characterization is currently only functional for the viral lineages <a href="#taxa-specific-tasks">listed below</a>. Note that Skani reference selection will still run to systematically assign a taxon name by identifying the best hit to the supplied reference genome.</p>
 </div>
 <details class="question" open="open">
 <summary>What are the main differences between the TheiaViral and TheiaCoV workflows?</summary>
@@ -7222,7 +7222,7 @@
 </details>
 <details class="question" open="open">
 <summary>What about segmented viruses?</summary>
-<p>TheiaViral can properly assemble segmented viruses. The reference genome database used in Step 2 excludes segmented viral <em>nucleotide</em> accessions but includes the RefSeq <em>assembly</em> accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.</p>
+<p>TheiaViral can assemble segmented viruses. The reference genome database used in Step 2 excludes segmented viral <em>nucleotide</em> accessions but includes the RefSeq <em>assembly</em> accessions that include all viral segments. Consensus assembly modules are constructed to handle multi-segment references.</p>
 </details>
 <h3 id="workflow-diagram">Workflow Diagram<a class="headerlink" href="#workflow-diagram" title="Permanent link">¶</a></h3>
 <div class="tabbed-set tabbed-alternate" data-tabs="1:3"><input checked="checked" id="theiaviral_illumina_pe" name="__tabbed_1" type="radio"><input id="theiaviral_ont" name="__tabbed_1" type="radio"><input id="theiaviral_panel" name="__tabbed_1" type="radio"><div class="tabbed-labels"><label for="theiaviral_illumina_pe">TheiaViral_Illumina_PE</label><label for="theiaviral_ont">TheiaViral_ONT</label><label for="theiaviral_panel">TheiaViral_Panel</label></div>
@@ -7307,6 +7307,7 @@
 </div>
 <div class="tabbed-block">
 <p>The TheiaViral_Panel workflow accepts Illumina paired-end read data. Read file extensions should be <code>.fastq</code> or <code>.fq</code>, and can optionally include the <code>.gz</code> compression extension. Theiagen recommends compressing files with <a href="https://www.gnu.org/software/gzip/">gzip</a> to minimize data upload time and storage costs.</p>
+<p>TheiaViral_Panel is tailored toward high-throughput analysis of multiple viral lineages within a single sample. It is recommended to use TheiaViral_Illumina_PE for targeted analysis of a single viral lineage, even if reads are derived from a panel assay.</p>
 <p>For RSV characterization, it is recommended to use TheiaCoV or TheiaViral Illumina PE. RSV-A and RSV-B-specific modules are not available in TheiaViral Panel, due to limitations with distinguishing RSV-A and B during read extraction. Subtypes may be inferred from the best retrieved Skani reference depending on the resolution of the NCBI metadata corresponding to that accession. </p>
 <details class="dna_blue" open="open">
 <summary><code>taxon_ids</code> optional input parameter</summary>
@@ -8452,7 +8453,7 @@
 </details>
 <details class="dna">
 <summary><code>kraken_db</code> optional input parameter</summary>
-<p>For the reliable extraction of input taxon IDs, it is important to make sure that the taxon IDs used as input are concordant with the contents of the Kraken database. When making changes to this parameter keep in mind the relationship between these two inputs. The default database can be accessed <a href="https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz">here</a>.  </p>
+<p>To ensure reliable read extraction, taxon ID inputs must be concordant with the contents of the Kraken database. When making changes to this parameter keep in mind the relationship between these two inputs. The default database can be accessed <a href="https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz">here</a>.  </p>
 </details>
 <details class="dna">
 <summary><code>extract_unclassified</code> optional input parameter</summary>
@@ -9244,6 +9245,78 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>kraken2</td>
+<td><strong>bracken_kmer_length</strong></td>
+<td>Int</td>
+<td>Kmer length for Bracken to use instead of auto-detection - must be present in database</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>call_bracken</strong></td>
+<td>Boolean</td>
+<td>Call Bracken kraken2 report refinement</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>classified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix</td>
+<td>classified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>kraken2_args</strong></td>
+<td>String</td>
+<td>Allows a user to supply additional kraken2 command-line arguments</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>unclassified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
+<td>unclassified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>kraken2_extract</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -9273,62 +9346,6 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2_standalone</td>
-<td><strong>classified_out</strong></td>
-<td>String</td>
-<td>File name for classified reads</td>
-<td>classified#.fastq</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2_standalone</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2_standalone</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2_standalone</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2_standalone</td>
-<td><strong>kraken2_args</strong></td>
-<td>String</td>
-<td>Additional kraken2 command-line arguments</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2_standalone</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>32</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>kraken2_standalone</td>
-<td><strong>unclassified_out</strong></td>
-<td>String</td>
-<td>File name for unclassified reads</td>
-<td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10253,10 +10270,10 @@
 </tr>
 <tr>
 <td>theiaviral_illumina_pe</td>
-<td><strong>kraken_db</strong></td>
+<td><strong>kraken2_db</strong></td>
 <td>File</td>
 <td>Kraken2 database file</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11018,7 +11035,7 @@
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
+<td>250</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11026,7 +11043,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11071,10 +11088,18 @@
 </tr>
 <tr>
 <td>metabuli</td>
-<td><strong>taxonomy_path</strong></td>
+<td><strong>read2</strong></td>
 <td>File</td>
-<td>Path to taxonomy file</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/metabuli/new_taxdump.tar.gz</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>metabuli</td>
+<td><strong>taxdump_path</strong></td>
+<td>File</td>
+<td>Path to taxonkit-generated taxdump for Metabuli taxonomy parsing</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12784,15 +12809,31 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2</td>
+<td>kraken2_clean</td>
+<td><strong>bracken_kmer_length</strong></td>
+<td>Int</td>
+<td>Kmer length for Bracken to use instead of auto-detection - must be present in database</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_clean</td>
+<td><strong>call_bracken</strong></td>
+<td>Boolean</td>
+<td>Call Bracken kraken2 report refinement</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_clean</td>
 <td><strong>classified_out</strong></td>
 <td>String</td>
-<td>Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix</td>
+<td>Internal component, do not modify</td>
 <td>classified#.fastq</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2</td>
+<td>kraken2_clean</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -12800,7 +12841,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2</td>
+<td>kraken2_clean</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
@@ -12808,23 +12849,23 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2</td>
+<td>kraken2_clean</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2</td>
+<td>kraken2_clean</td>
 <td><strong>kraken2_args</strong></td>
 <td>String</td>
-<td>Allows a user to supply additional kraken2 command-line arguments</td>
+<td>Additional kraken2 arguments</td>
 <td></td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2</td>
+<td>kraken2_clean</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -12832,23 +12873,39 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2</td>
+<td>kraken2_clean</td>
+<td><strong>target_organism</strong></td>
+<td>String</td>
+<td>Target organism for reporting percent identified</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_clean</td>
 <td><strong>unclassified_out</strong></td>
 <td>String</td>
-<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
+<td>Internal component, do not modify</td>
 <td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_clean</td>
+<td>kraken2_raw</td>
+<td><strong>bracken_kmer_length</strong></td>
+<td>Int</td>
+<td>Kmer length for Bracken to use instead of auto-detection - must be present in database</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_raw</td>
 <td><strong>classified_out</strong></td>
 <td>String</td>
-<td>File name for classified reads</td>
+<td>Internal component, do not modify</td>
 <td>classified#.fastq</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_clean</td>
+<td>kraken2_raw</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -12856,7 +12913,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_clean</td>
+<td>kraken2_raw</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
@@ -12864,23 +12921,23 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_clean</td>
+<td>kraken2_raw</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_clean</td>
+<td>kraken2_raw</td>
 <td><strong>kraken2_args</strong></td>
 <td>String</td>
-<td>Additional kraken2 command-line arguments</td>
+<td>Additional kraken2 arguments</td>
 <td></td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_clean</td>
+<td>kraken2_raw</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -12888,23 +12945,47 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_clean</td>
+<td>kraken2_raw</td>
+<td><strong>target_organism</strong></td>
+<td>String</td>
+<td>Target organism for reporting percent identified</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_raw</td>
 <td><strong>unclassified_out</strong></td>
 <td>String</td>
-<td>File name for unclassified reads</td>
+<td>Internal component, do not modify</td>
 <td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_raw</td>
+<td>kraken2_taxon</td>
+<td><strong>bracken_kmer_length</strong></td>
+<td>Int</td>
+<td>Kmer length for Bracken to use instead of auto-detection - must be present in database</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_taxon</td>
+<td><strong>call_bracken</strong></td>
+<td>Boolean</td>
+<td>Call Bracken kraken2 report refinement</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2_taxon</td>
 <td><strong>classified_out</strong></td>
 <td>String</td>
-<td>File name for classified reads</td>
+<td>Internal component, do not modify</td>
 <td>classified#.fastq</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_raw</td>
+<td>kraken2_taxon</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -12912,7 +12993,7 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_raw</td>
+<td>kraken2_taxon</td>
 <td><strong>disk_size</strong></td>
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
@@ -12920,23 +13001,23 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_raw</td>
+<td>kraken2_taxon</td>
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1</td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_raw</td>
+<td>kraken2_taxon</td>
 <td><strong>kraken2_args</strong></td>
 <td>String</td>
-<td>Additional kraken2 command-line arguments</td>
+<td>Additional kraken2 arguments</td>
 <td></td>
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_raw</td>
+<td>kraken2_taxon</td>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
@@ -12944,10 +13025,10 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>kraken2_standalone_raw</td>
+<td>kraken2_taxon</td>
 <td><strong>unclassified_out</strong></td>
 <td>String</td>
-<td>File name for unclassified reads</td>
+<td>Internal component, do not modify</td>
 <td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>
@@ -13169,10 +13250,10 @@
 </tr>
 <tr>
 <td>theiaviral_panel</td>
-<td><strong>kraken_db</strong></td>
+<td><strong>kraken2_db</strong></td>
 <td>File</td>
 <td>Kraken2 database file in .tar.gz format.</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13682,12 +13763,26 @@
 </div>
 </details>
 <details class="task">
-<summary><code>Kraken2</code>: Read Identification</summary>
-<p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
-<p>This task runs on cleaned reads passed from the <code>read_QC_trim</code> subworkflow and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones.</p>
+<summary>Kraken2 + Bracken: Read Classification</summary>
+<p><code>kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
+<p><code>Bracken</code> is a refinement module that improves the resolution of <code>kraken2</code> reports.</p>
+<p>This task runs on cleaned reads and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones. If <code>call_bracken</code> is set to "true" then a Bracken report is additionally outputted.</p>
 <div class="admonition info">
 <p class="admonition-title">Database-dependent</p>
-<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
+<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</code>.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Bracken report refinement</p>
+<p>Bracken refines the Kraken2 taxon classification report when <code>call_bracken</code> is set to "true" (default). Bracken uses a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken will output a <code>bracken_report</code> that:</p>
+<ul>
+<li>increases report-level classification resolution <em>up to</em> the species level</li>
+<li>decreases resolution of sub-species report-level classifications, e.g. Severe acute respiratory syndrome coronavirus 2 will be grouped into <em>Betacoronavirus pandemicum</em></li>
+<li>does <em>not</em> affect read-level classification and extraction</li>
+<li>will <em>not</em> be used in downstream <code>percent_human</code> and <code>percent_target_organism</code> calculations</li>
+<li>inputted in place of Kraken reports in downstream tasks, such as <code>qc_check</code> and <code>krona</code></li>
+<li>outputted separate of the <code>kraken/kraken2_report</code></li>
+</ul>
+<p>By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the <code>bracken_kmer_length</code> input, though it MUST correspond to an available k-mer database within the Kraken2 database (named <code>database&lt;KMER_LENGTH&gt;mers.kmer_distrib</code>). Bracken will be skipped if there are no k-mer libraries in the Kraken2 database. </p>
 </div>
 <div class="admonition techdetails">
 <p class="admonition-title">Kraken2 Technical Details</p>
@@ -13705,15 +13800,15 @@
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/DerrickWood/kraken2/">Kraken2 on GitHub</a></td>
+<td><a href="https://github.com/DerrickWood/kraken2/">Kraken2 on GitHub</a>, <a href="https://github.com/jenniferlu717/Bracken">Bracken on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">Kraken2 Documentation</a></td>
+<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">Kraken2 Documentation</a>, <a href="https://github.com/jenniferlu717/Bracken/blob/master/README.md">Bracken Documentation</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://link.springer.com/article/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
+<td><a href="https://link.springer.com/article/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a>, <a href="https://doi.org/10.7717/peerj-cs.104">Bracken: estimating species abundance in metagenomics data</a></td>
 </tr>
 </tbody>
 </table>
@@ -14858,49 +14953,32 @@
 <summary>Read Classification and Extraction</summary>
 <details class="task">
 <summary><code>metabuli</code></summary>
-<p>The <code>metabuli</code> task is used to classify and extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.</p>
-<details class="dna">
-<summary><code>cpu</code> / <code>memory</code> input parameters</summary>
-<p>Increasing the memory and cpus allocated to Metabuli can substantially increase throughput.</p>
+<p>The <code>metabuli</code> task is used to classify and optionally extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.</p>
 </details>
-<details class="dna">
-<summary><code>extract_unclassified</code> input parameter</summary>
-<p>This parameter determines whether unclassified reads should also be extracted and combined with the <code>taxon</code>-specific extracted reads. By default, this is set to <code>false</code>, meaning that only reads classified to the specified input <code>taxon</code> will be extracted.</p>
-</details>
-<details class="warning" open="open">
-<summary>Descendant taxa reads are extracted</summary>
-<p>This task will extract reads classified to the input <code>taxon</code> and <strong>all of its descendant taxa</strong>. The <code>rank</code> input parameter controls the extraction of reads classified at the specified <code>rank</code> and all subordiante taxonomic levels. See task <code>ncbi_identify</code> under the <strong>Taxonomic Identification</strong> section above for more details on the <code>rank</code> input parameter.</p>
-</details>
-<div class="admonition techdetails">
-<p class="admonition-title">Metabuli Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_metabuli.wdl">task_metabuli.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/steineggerlab/Metabuli">Metabuli on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/steineggerlab/Metabuli/blob/master/README.md">Metabuli Documentation</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1038/s41592-024-02273-y">Metabuli: sensitive and specific metagenomic classification via joint analysis of amino acid and DNA</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-</details>
+<p><!-- if theiacov|freyja -->
+    Metabuli is run on both raw and human dehosted reads.</p>
+<p><!-- if theiaprok -->
+    <code>metabuli_db</code> must be set to activate Metabuli read classification for TheiaProk.</p>
+<div class="language-text highlight"><pre><span></span><code>??? dna "`taxdump_path` input parameter"
+    The `taxdump_path` directs the task toward a taxonkit-generated taxdump file, e.g. [from NCBI](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/) or [from GTDB](https://github.com/shenwei356/gtdb-taxdump/releases). This is not necessary to edit unless users want a more recent taxdump than what Theiagen hosts, or if users want to reference a different taxonomy. By default, Theiagen uses the NCBI taxonomy hierarchy.
+
+??? dna "`cpu` / `memory` input parameters"
+    Increasing the memory and cpus allocated to Metabuli can substantially increase throughput.
+
+??? dna "`extract_unclassified` input parameter"
+    This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
+
+???+ warning "Descendant taxa reads are extracted"
+    This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all subordiante taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section above for more details on the `rank` input parameter.
+
+!!! techdetails "Metabuli Technical Details"
+    |  | Links |
+    | --- | --- |
+    | Task | [task_metabuli.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_metabuli.wdl) |
+    | Software Source Code | [Metabuli on GitHub](https://github.com/steineggerlab/Metabuli) |
+    | Software Documentation | [Metabuli Documentation](https://github.com/steineggerlab/Metabuli/blob/master/README.md) |
+    | Original Publication(s) | [Metabuli: sensitive and specific metagenomic classification via joint analysis of amino acid and DNA](https://doi.org/10.1038/s41592-024-02273-y) |
+</code></pre></div>
 </details>
 <details class="toggle">
 <summary><em>De novo</em> Assembly and Reference Selection</summary>
@@ -16549,6 +16627,16 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Clean reverse reads after BBDuk processing</td>
 </tr>
 <tr>
+<td>bracken_report</td>
+<td>String</td>
+<td>Refined kraken2 report generated by Bracken</td>
+</tr>
+<tr>
+<td>bracken_version</td>
+<td>String</td>
+<td>Version of Bracken used</td>
+</tr>
+<tr>
 <td>bwa_read1_aligned</td>
 <td>File</td>
 <td>Forward reads aligned to reference</td>
@@ -16787,6 +16875,11 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>ete4_docker</td>
 <td>String</td>
 <td>Docker image used for ETE4 taxonomy parsing</td>
+</tr>
+<tr>
+<td>ete4_status</td>
+<td>String</td>
+<td>Status of standardized taxonomy acquisition</td>
 </tr>
 <tr>
 <td>ete4_version</td>
@@ -17804,6 +17897,11 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Docker image used for ETE4 taxonomy parsing</td>
 </tr>
 <tr>
+<td>ete4_status</td>
+<td>String</td>
+<td>Status of standardized taxonomy acquisition</td>
+</tr>
+<tr>
 <td>ete4_version</td>
 <td>String</td>
 <td>The version of ETE4 used</td>
@@ -17939,6 +18037,11 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>Krona visualization report from Metabuli</td>
 </tr>
 <tr>
+<td>metabuli_percent_target_lineage</td>
+<td>String</td>
+<td>Percent of reads classified to the target lineage</td>
+</tr>
+<tr>
 <td>metabuli_read1_extract</td>
 <td>File</td>
 <td>Extracted reads from Metabuli</td>
@@ -17947,6 +18050,11 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <td>metabuli_report</td>
 <td>File</td>
 <td>Classification report from Metabuli</td>
+</tr>
+<tr>
+<td>metabuli_status</td>
+<td>String</td>
+<td>Status of Metabuli analysis</td>
 </tr>
 <tr>
 <td>metabuli_version</td>
@@ -18933,20 +19041,23 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </details>
 <details class="question">
 <summary>Why did the workflow complete without generating a consensus?</summary>
-<p>TheiaViral is designed to "soft fail" when specific steps do not succeed due to input data quality. This means the workflow will be reported as successful, with an output that delineates the step that failed. If the workflow fails, please look for the following outputs in this order (sorted by timing of failure, latest first):</p>
+<p>TheiaViral is designed to "soft fail" when specific steps do not succeed due to input data quality. This means the workflow will be reported as successful, with an output that delineates the step that failed. If the workflow fails, please look for the following status outputs in this order (sorted by timing of failure, latest first), and note if the status is populated with something other than "PASS":</p>
 <ul>
-<li><code>skani_status</code>: If this output is populated with something other than "PASS" and <code>skani_top_accession</code> is populated with "N/A", this indicates that Skani did not identify a sufficiently similar reference genome. The Skani database comprises a broad array of NCBI viral genomes, so a failure here likely indicates poor read quality because viral contigs are not found in the <em>de novo</em> assembly or are too small. It may be useful to BLAST whatever contigs do exist in the <em>de novo</em> to determine if there is contamination that can be removed via the <code>host</code> input parameter. Additionally, review CheckV <em>de novo</em> outputs to assess if viral contigs were retrieved. Finally, consider keeping <code>extract_unclassified</code> to "true", using a higher <code>read_extraction_rank</code> if it will not introduce contaminant viruses, and invoking a <code>host</code> input to remove host reads if host contigs are present.</li>
-<li><code>megahit_status</code> / <code>flye_status</code>: If this output is populated with something other than "PASS", it indicates the fallback assembler did not successfully complete. The fallback assemblers are permissive, so failure here likely indicates poor read quality. Review read QC to check read quality, particularly following read classification. If read classification is dispensing with a significant number of reads, consider <code>extract_unclassified</code>, <code>read_extraction_rank</code>, and <code>host</code> input adjustment. Otherwise, sequencing quality may be poor.</li>
-<li><code>metaviralspades_status</code> / <code>raven_denovo_status</code>: If this output is populated with something other than "PASS", it indicates the default assembler did not successfully complete or extract viral contigs (MetaviralSPAdes). On their own, these statuses do not correspond directly to workflow failure because fallback <em>de novo</em> assemblers are implemented for both TheiaViral workflows.</li>
-<li><code>kraken2_extraction_status</code>: If this output is populated with something other than "PASS", it indicates no reads could be extracted, likely because no reads correspond to the inputted taxon. Check the <code>kraken2_report</code></li>
-<li><code>read_screen_clean</code>: If this output is populated with something other than "PASS", it indicates the reads did not pass the imposed thresholds. Either the reads are poor quality or the thresholds are too stringent, in which case the thresholds can be relaxed or <code>skip_screen</code> can be set to "true".</li>
-<li><code>dehost_wf_download_status</code>: If this output is populated with something other than "PASS", it indicates a host genome could not be retrieved for decontamination. See the <code>host</code> input explanation for more information and review the <code>download_accession</code>/<code>download_taxonomy</code> task output logs for advanced error parsing.</li>
+<li><code>skani_status</code>: If <code>skani_top_accession</code> is populated with "N/A", this indicates that Skani did not identify a sufficiently similar reference genome. The Skani database comprises a broad array of NCBI viral genomes, so a failure here likely indicates poor read quality because viral contigs are not found in the <em>de novo</em> assembly or are too small. It may be useful to BLAST whatever contigs do exist in the <em>de novo</em> to determine if there is contamination that can be removed via the <code>host</code> input parameter. Additionally, review CheckV <em>de novo</em> outputs to assess if viral contigs were retrieved. Finally, consider keeping <code>extract_unclassified</code> to "true", using a higher <code>read_extraction_rank</code> if it will not introduce contaminant viruses, and invoking a <code>host</code> input to remove host reads if host contigs are present.</li>
+<li><code>checkv_status</code>: CheckV failed, often due to not detecting sufficient viral sequence in the <em>de novo</em> assembly. The source of this error can be confirmed by submitting the <em>de novo</em> assembly to <a href="https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&amp;PAGE_TYPE=BlastSearch&amp;LINK_LOC=blasthome">NCBI BLAST</a> and checking if the expected virus is present in the results. If the expected host is retrieved from BLAST, consider removing host reads by mapping to a host genome via <code>host_decontaminate</code> module.</li>
+<li><code>megahit_status</code> / <code>flye_status</code>: The fallback assembler did not successfully complete. The fallback assemblers are permissive, so failure here likely indicates poor read quality. Review read QC to check read quality, particularly following read classification. If read classification is dispensing with a significant number of reads, consider <code>extract_unclassified</code>, <code>read_extraction_rank</code>, and <code>host</code> input adjustment. Otherwise, sequencing quality may be poor.</li>
+<li><code>metaviralspades_status</code> / <code>raven_denovo_status</code>: The default assembler did not successfully complete or extract viral contigs (MetaviralSPAdes). On their own, these statuses do not correspond directly to workflow failure because fallback <em>de novo</em> assemblers are implemented for both TheiaViral workflows.</li>
+<li><code>kraken2_extraction_status</code>: No reads could be extracted, likely because no reads correspond to the inputted taxon. Check the <code>kraken2_report</code></li>
+<li><code>metabuli_status</code>: Reads could not be classified or extracted, likely because no reads correspond to the inputted taxon. Check the <code>metabuli_report</code> </li>
+<li><code>read_screen_clean</code>: Reads did not pass the imposed thresholds. Either the reads are poor quality or the thresholds are too stringent, in which case the thresholds can be relaxed or <code>skip_screen</code> can be set to "true".</li>
+<li><code>dehost_wf_download_status</code>: A host genome could not be retrieved for decontamination. See the <code>host</code> input explanation for more information and review the <code>download_accession</code>/<code>download_taxonomy</code> task output logs for advanced error parsing.</li>
+<li><code>ete4_status</code>: A refined taxon ID could not be retrieved for the inputted <code>taxon</code>. Ensure the taxon name is a valid, complete name/Taxon ID listed in <a href="https://www.ncbi.nlm.nih.gov/datasets/taxonomy/tree/">NCBI's Taxonomy Browser</a> and the <code>read_extraction_rank</code> is a taxonomic rank above the inputted <code>taxon</code>.</li>
 </ul>
 </details>
 <details class="warning">
 <summary>Known errors associated with read quality</summary>
 <ul>
-<li>ONT workflows may fail at Metabuli if no reads are classified as the <code>taxon</code>. Check the Metabuli <code>classification.tsv</code> or <code>krona</code> report for the read extraction taxon ID to determine if any reads were classified. This error will report <code>out of memory (OOM)</code>, but increasing memory will not resolve it.</li>
+<li>ONT workflows may fail at Metabuli if no reads are classified as the <code>taxon</code>. Check the Metabuli <code>classification.tsv</code> or <code>krona</code> report for the read extraction taxon ID to determine if any reads were classified. This error will report <code>out of memory (OOM)</code>, which can be a bonafide memory issue that is resolved by increasing memory, but in some instances, memory increase will not resolve this. Try increasing memory to 128 GB.</li>
 <li>Illumina workflows may fail at CheckV (<em>de novo</em>) with <code>Error: 80 hmmsearch tasks failed. Program should be rerun</code> if no viral contigs were identified in the <em>de novo</em> assembly.</li>
 </ul>
 </details>
@@ -18974,7 +19085,7 @@ This reference is selected by the <code>skani</code> task or provided by the use
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="January 29, 2026 20:53:21 UTC">2026-01-29</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 20, 2026 20:57:02 UTC">2026-03-20</span>
   </span>
 
     

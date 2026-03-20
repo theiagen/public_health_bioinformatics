@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -6766,7 +6766,7 @@
 <td><strong>kraken2_db</strong></td>
 <td>File</td>
 <td>The database used to run Kraken2</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
 <td>NCBI_Scrub_PE, NCBI_Scrub_SE</td>
 </tr>
 <tr>
@@ -6774,7 +6774,7 @@
 <td><strong>kraken2_db</strong></td>
 <td>File</td>
 <td>The database used to run Kraken2. Must contain viral and human sequences.</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
 <td>TheiaCoV_ClearLabs</td>
 </tr>
 <tr>
@@ -6782,7 +6782,7 @@
 <td><strong>kraken2_db</strong></td>
 <td>File</td>
 <td>The database used to run Kraken2. Must contain viral and human sequences.</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
 <td>TheiaCoV_ClearLabs</td>
 </tr>
 <tr>
@@ -6942,16 +6942,24 @@
 <td><strong>kraken_db</strong></td>
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database. Must contain human and viral sequences</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
-<td>TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
+<td>TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
 <td><strong>kraken_db</strong></td>
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
-<td>TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
+<td>TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>metabuli_db</strong></td>
+<td>File</td>
+<td>Metabuli database for read taxonomy classification, compressed in .tar.gz format</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz</td>
+<td>TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -6963,10 +6971,10 @@
 </tr>
 <tr>
 <td>read_QC_trim_ont</td>
-<td><strong>kraken_db</strong></td>
+<td><strong>metabuli_db</strong></td>
 <td>File</td>
-<td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>Metabuli database for read taxonomy classification, compressed in .tar.gz format</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz</td>
 <td>Freyja_FASTQ</td>
 </tr>
 <tr>
@@ -6974,7 +6982,7 @@
 <td><strong>kraken_db</strong></td>
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
 <td>Freyja_FASTQ</td>
 </tr>
 <tr>
@@ -6990,7 +6998,7 @@
 <td><strong>kraken_db</strong></td>
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
 <td>Freyja_FASTQ</td>
 </tr>
 <tr>
@@ -7139,10 +7147,10 @@
 </tr>
 <tr>
 <td>theiaviral_illumina_pe</td>
-<td><strong>kraken_db</strong></td>
+<td><strong>kraken2_db</strong></td>
 <td>File</td>
 <td>Kraken2 database file</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
 <td>TheiaViral_Illumina_PE</td>
 </tr>
 <tr>
@@ -7155,10 +7163,10 @@
 </tr>
 <tr>
 <td>theiaviral_panel</td>
-<td><strong>kraken_db</strong></td>
+<td><strong>kraken2_db</strong></td>
 <td>File</td>
 <td>Kraken2 database file in .tar.gz format.</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
 <td>TheiaViral_Panel</td>
 </tr>
 <tr>
@@ -7824,25 +7832,19 @@
 <tr>
 <td>kraken2</td>
 <td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
-<td>TheiaViral_Panel</td>
-</tr>
-<tr>
-<td>kraken2</td>
-<td><strong>docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
-<td>NCBI_Scrub_PE, NCBI_Scrub_SE</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1</td>
+<td>NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE</td>
 </tr>
 <tr>
 <td>kraken2_clean</td>
 <td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
-<td>TheiaMeta_Illumina_PE</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1</td>
+<td>TheiaMeta_Illumina_PE, TheiaViral_Panel</td>
 </tr>
 <tr>
 <td>kraken2_dehosted</td>
-<td><strong>docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td><strong>docker</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1</td>
 <td>TheiaCoV_ClearLabs</td>
 </tr>
 <tr>
@@ -7854,49 +7856,25 @@
 <tr>
 <td>kraken2_pe</td>
 <td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1</td>
 <td>Kraken_PE</td>
 </tr>
 <tr>
 <td>kraken2_raw</td>
 <td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
-<td>TheiaMeta_Illumina_PE</td>
-</tr>
-<tr>
-<td>kraken2_raw</td>
-<td><strong>docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
-<td>TheiaCoV_ClearLabs</td>
-</tr>
-<tr>
-<td>kraken2_recalculate_abundances</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4</td>
-<td>Kraken_ONT</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1</td>
+<td>TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE, TheiaViral_Panel</td>
 </tr>
 <tr>
 <td>kraken2_se</td>
 <td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
-<td>Kraken_ONT, Kraken_SE</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1</td>
+<td>Kraken_SE</td>
 </tr>
 <tr>
-<td>kraken2_standalone</td>
+<td>kraken2_taxon</td>
 <td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
-<td>TheiaViral_Illumina_PE</td>
-</tr>
-<tr>
-<td>kraken2_standalone_clean</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
-<td>TheiaViral_Panel</td>
-</tr>
-<tr>
-<td>kraken2_standalone_raw</td>
-<td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1</td>
 <td>TheiaViral_Panel</td>
 </tr>
 <tr>
@@ -8202,7 +8180,7 @@
 <tr>
 <td>metabuli</td>
 <td><strong>docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.0</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.1</td>
 <td>TheiaViral_ONT</td>
 </tr>
 <tr>
@@ -8489,15 +8467,9 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>kraken2_recalculate_abundances_docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4</td>
-<td>TheiaCoV_ONT, TheiaProk_ONT</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
-<td>TheiaCoV_ONT, TheiaProk_ONT</td>
+<td><strong>metabuli_docker_image</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.1</td>
+<td>TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT</td>
 </tr>
 <tr>
 <td>read_QC_trim</td>
@@ -8525,14 +8497,8 @@
 </tr>
 <tr>
 <td>read_QC_trim_ont</td>
-<td><strong>kraken2_recalculate_abundances_docker</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4</td>
-<td>Freyja_FASTQ</td>
-</tr>
-<tr>
-<td>read_QC_trim_ont</td>
-<td><strong>kraken_docker_image</strong></td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td><strong>metabuli_docker_image</strong></td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.1</td>
 <td>Freyja_FASTQ</td>
 </tr>
 <tr>
@@ -8857,7 +8823,7 @@
 <td>version_capture</td>
 <td><strong>docker</strong></td>
 <td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
-<td>AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_ONT, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4</td>
+<td>AMRFinderPlus, AMR_Search, Assembly_Fetch, Augur, Augur_Prep, BaseSpace_Fetch, CZGenEpi_Prep, Cauris_CladeTyper, Clair3_Variants_ONT, Concatenate_Column_Content, Concatenate_Illumina_Lanes, Core_Gene_SNP, Dorado_Basecalling, Fetch_SRR_Accession, Find_Shared_Variants, Freyja_Dashboard, Freyja_FASTQ, Freyja_Plot, Gambit_Query, Kraken_PE, Kraken_SE, Lyve_SET, MashTree_FASTA, Mercury_Prep_N_Batch, NCBI_Scrub_PE, NCBI_Scrub_SE, Nextclade_Batch, Pangolin_Update, PhyloCompare, RASUSA, Rename_FASTQ, SRA_Fetch, Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree, Snippy_Variants, TBProfiler_tNGS, Terra_2_ENA, Terra_2_GISAID, Terra_2_NCBI, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaValidate, TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel, Transfer_Column_Content, Usher, VADR_Update, Zip_Column_Content, kSNP3, kSNP4</td>
 </tr>
 <tr>
 <td>wg_reorder_matrix</td>

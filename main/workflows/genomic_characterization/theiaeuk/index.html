@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -9251,6 +9251,22 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>bracken_kmer_length</strong></td>
+<td>Int</td>
+<td>Kmer length for Bracken to use instead of auto-detection - must be present in database</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>call_bracken</strong></td>
+<td>Boolean</td>
+<td>Call Bracken kraken2 report refinement</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>call_kraken</strong></td>
 <td>Boolean</td>
 <td>True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the <code>kraken_db</code> variable must be provided.</td>
@@ -9286,7 +9302,7 @@
 <td><strong>kraken_db</strong></td>
 <td>File</td>
 <td>A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9302,7 +9318,7 @@
 <td><strong>kraken_memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td></td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11709,14 +11725,6 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>call_kraken</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
 <td><strong>downsampling_coverage</strong></td>
 <td>Float</td>
 <td>The desired coverage to sub-sample the reads to with RASUSA</td>
@@ -11725,82 +11733,58 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>kraken2_recalculate_abundances_cpu</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken2_recalculate_abundances_disk_size</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken2_recalculate_abundances_docker</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken2_recalculate_abundances_memory</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_cpu</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_db</strong></td>
-<td>File</td>
-<td>Internal component, do not modify</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_disk_size</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_docker_image</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
-<td><strong>kraken_memory</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
 <td><strong>max_length</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
 <td>700</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>metabuli_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>metabuli_db</strong></td>
+<td>File</td>
+<td>Metabuli database for read taxonomy classification, compressed in .tar.gz format</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>metabuli_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>250</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>metabuli_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/metabuli:1.1.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>metabuli_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>metabuli_taxdump_path</strong></td>
+<td>File</td>
+<td>Path to taxonkit-generated taxdump for Metabuli taxonomy parsing</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12451,15 +12435,24 @@
 </details>
 </div>
 <details class="task">
-<summary><code>Kraken2</code>: Read Identification (optional)</summary>
-<p>To activate this task, set <code>call_kraken</code> to <code>true</code> and provide a value for <code>kraken_db</code>.</p>
-<p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
+<summary>Kraken2 + Bracken: Read Classification (optional)</summary>
+<p>To activate this task, provide a file for <code>kraken_db</code> under the <code>read_QC_trim</code> subworkflow.</p>
+<p><code>kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
+<p><code>Bracken</code> is a refinement module that improves the resolution of <code>kraken2</code> reports.</p>
+<p>As an alternative to <code>MIDAS</code> (see above), the <code>Kraken2</code> task can be turned on by populating the <code>kraken_db</code> input variable for the identification of reads to detect contamination with non-target taxa.</p>
 <div class="admonition info">
-<p class="admonition-title">Database-dependent</p>
-<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
+<p class="admonition-title">Bracken report refinement</p>
+<p>Bracken refines the Kraken2 taxon classification report when <code>call_bracken</code> is set to "true" (default). Bracken uses a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken will output a <code>bracken_report</code> that:</p>
+<ul>
+<li>increases report-level classification resolution <em>up to</em> the species level</li>
+<li>decreases resolution of sub-species report-level classifications, e.g. Severe acute respiratory syndrome coronavirus 2 will be grouped into <em>Betacoronavirus pandemicum</em></li>
+<li>does <em>not</em> affect read-level classification and extraction</li>
+<li>will <em>not</em> be used in downstream <code>percent_human</code> and <code>percent_target_organism</code> calculations</li>
+<li>inputted in place of Kraken reports in downstream tasks, such as <code>qc_check</code> and <code>krona</code></li>
+<li>outputted separate of the <code>kraken/kraken2_report</code></li>
+</ul>
+<p>By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the <code>bracken_kmer_length</code> input, though it MUST correspond to an available k-mer database within the Kraken2 database (named <code>database&lt;KMER_LENGTH&gt;mers.kmer_distrib</code>). Bracken will be skipped if there are no k-mer libraries in the Kraken2 database. </p>
 </div>
-<p>As an alternative to <code>MIDAS</code> (see above), the <code>Kraken2</code> task can also be turned on through setting the <code>call_kraken</code> input variable as <code>true</code> for the identification of reads to detect contamination with non-target taxa.</p>
-<p>A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on <a href="../../standalone/kraken2/#databases">Kraken2 standalone documentation</a>.</p>
 <div class="admonition techdetails">
 <p class="admonition-title">Kraken2 Technical Details</p>
 <table>
@@ -12476,15 +12469,15 @@
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/DerrickWood/kraken2/">Kraken2 on GitHub</a></td>
+<td><a href="https://github.com/DerrickWood/kraken2/">Kraken2 on GitHub</a>, <a href="https://github.com/jenniferlu717/Bracken">Bracken on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">Kraken2 Documentation</a></td>
+<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">Kraken2 Documentation</a>, <a href="https://github.com/jenniferlu717/Bracken/blob/master/README.md">Bracken Documentation</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://link.springer.com/article/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
+<td><a href="https://link.springer.com/article/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a>, <a href="https://doi.org/10.7717/peerj-cs.104">Bracken: estimating species abundance in metagenomics data</a></td>
 </tr>
 </tbody>
 </table>
@@ -12942,45 +12935,30 @@
 </div>
 </details>
 <details class="task">
-<summary><code>Kraken2</code>: Read Identification (optional)</summary>
-<p>To activate this task, set <code>call_kraken</code> to <code>true</code> and provide a value for <code>kraken_db</code>.</p>
-<p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
-<p>Kraken2 is run on the raw read data.</p>
-<div class="admonition info">
-<p class="admonition-title">Database-dependent</p>
-<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
-</div>
-<p>A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on <a href="../../standalone/kraken2/#databases">Kraken2 standalone documentation</a>.</p>
-<div class="admonition techdetails">
-<p class="admonition-title">Kraken2 Technical Details</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>Links</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl">task_kraken2.wdl</a></td>
-</tr>
-<tr>
-<td>Software Source Code</td>
-<td><a href="https://github.com/DerrickWood/kraken2/">Kraken2 on GitHub</a></td>
-</tr>
-<tr>
-<td>Software Documentation</td>
-<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">Kraken2 Documentation</a></td>
-</tr>
-<tr>
-<td>Original Publication(s)</td>
-<td><a href="https://link.springer.com/article/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
-</tr>
-</tbody>
-</table>
-</div>
+<summary><code>metabuli</code></summary>
+<p>The <code>metabuli</code> task is used to classify and optionally extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.</p>
 </details>
+<p><!-- if theiacov|freyja -->
+    Metabuli is run on both raw and human dehosted reads.</p>
+<p><!-- if theiaprok -->
+    <code>metabuli_db</code> must be set to activate Metabuli read classification for TheiaProk.</p>
+<div class="language-text highlight"><pre><span></span><code>??? dna "`taxdump_path` input parameter"
+    The `taxdump_path` directs the task toward a taxonkit-generated taxdump file, e.g. [from NCBI](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/) or [from GTDB](https://github.com/shenwei356/gtdb-taxdump/releases). This is not necessary to edit unless users want a more recent taxdump than what Theiagen hosts, or if users want to reference a different taxonomy. By default, Theiagen uses the NCBI taxonomy hierarchy.
+
+??? dna "`cpu` / `memory` input parameters"
+    Increasing the memory and cpus allocated to Metabuli can substantially increase throughput.
+
+??? dna "`extract_unclassified` input parameter"
+    This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
+
+!!! techdetails "Metabuli Technical Details"
+    |  | Links |
+    | --- | --- |
+    | Task | [task_metabuli.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_metabuli.wdl) |
+    | Software Source Code | [Metabuli on GitHub](https://github.com/steineggerlab/Metabuli) |
+    | Software Documentation | [Metabuli Documentation](https://github.com/steineggerlab/Metabuli/blob/master/README.md) |
+    | Original Publication(s) | [Metabuli: sensitive and specific metagenomic classification via joint analysis of amino acid and DNA](https://doi.org/10.1038/s41592-024-02273-y) |
+</code></pre></div>
 <details class="task">
 <summary><code>NanoPlot</code>: Read Quantification</summary>
 <p>NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect <strong>fewer</strong> clean reads than raw reads.</p>

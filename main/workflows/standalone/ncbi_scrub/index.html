@@ -22,7 +22,7 @@
       
       
       <link rel="icon" href="../../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -7080,6 +7080,30 @@ There are three Kraken2 workflows:</p>
 </tr>
 <tr>
 <td>kraken2</td>
+<td><strong>bracken_kmer_length</strong></td>
+<td>Int</td>
+<td>Kmer length for Bracken to use instead of auto-detection - must be present in database</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>call_bracken</strong></td>
+<td>Boolean</td>
+<td>Call Bracken kraken2 report refinement</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>classified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix</td>
+<td>classified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -7096,10 +7120,18 @@ There are three Kraken2 workflows:</p>
 </tr>
 <tr>
 <td>kraken2</td>
-<td><strong>docker_image</strong></td>
+<td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>kraken2_args</strong></td>
+<td>String</td>
+<td>Allows a user to supply additional kraken2 command-line arguments</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7107,7 +7139,7 @@ There are three Kraken2 workflows:</p>
 <td><strong>kraken2_db</strong></td>
 <td>File</td>
 <td>The database used to run Kraken2</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7115,7 +7147,15 @@ There are three Kraken2 workflows:</p>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td>32</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>unclassified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
+<td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7210,6 +7250,30 @@ There are three Kraken2 workflows:</p>
 </tr>
 <tr>
 <td>kraken2</td>
+<td><strong>bracken_kmer_length</strong></td>
+<td>Int</td>
+<td>Kmer length for Bracken to use instead of auto-detection - must be present in database</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>call_bracken</strong></td>
+<td>Boolean</td>
+<td>Call Bracken kraken2 report refinement</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>classified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix</td>
+<td>classified#.fastq</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -7226,10 +7290,18 @@ There are three Kraken2 workflows:</p>
 </tr>
 <tr>
 <td>kraken2</td>
-<td><strong>docker_image</strong></td>
+<td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/kraken2:2.1.2-no-db</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/kraken2:2.17.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>kraken2_args</strong></td>
+<td>String</td>
+<td>Allows a user to supply additional kraken2 command-line arguments</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7237,7 +7309,7 @@ There are three Kraken2 workflows:</p>
 <td><strong>kraken2_db</strong></td>
 <td>File</td>
 <td>The database used to run Kraken2</td>
-<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</td>
+<td>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7245,7 +7317,7 @@ There are three Kraken2 workflows:</p>
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7254,6 +7326,14 @@ There are three Kraken2 workflows:</p>
 <td>File</td>
 <td>Internal component, do not modify</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>kraken2</td>
+<td><strong>unclassified_out</strong></td>
+<td>String</td>
+<td>Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix</td>
+<td>unclassified#.fastq</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7344,12 +7424,26 @@ There are three Kraken2 workflows:</p>
 </div>
 </details>
 <details class="task">
-<summary><code>Kraken2</code>: Read Identification</summary>
-<p><code>Kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
-<p>Kraken2 is run on both the raw and clean reads.</p>
+<summary>Kraken2 + Bracken: Read Classification</summary>
+<p><code>kraken2</code> is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.</p>
+<p><code>Bracken</code> is a refinement module that improves the resolution of <code>kraken2</code> reports.</p>
+<p><code>kraken2</code> is run on both the raw and clean reads.</p>
 <div class="admonition info">
 <p class="admonition-title">Database-dependent</p>
-<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz</code>.</p>
+<p>This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at <code>gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz</code>.</p>
+</div>
+<div class="admonition info">
+<p class="admonition-title">Bracken report refinement</p>
+<p>Bracken refines the Kraken2 taxon classification report when <code>call_bracken</code> is set to "true" (default). Bracken uses a Bayesian model to probabilistically estimate read abundances at the species/genus-level. Bracken will output a <code>bracken_report</code> that:</p>
+<ul>
+<li>increases report-level classification resolution <em>up to</em> the species level</li>
+<li>decreases resolution of sub-species report-level classifications, e.g. Severe acute respiratory syndrome coronavirus 2 will be grouped into <em>Betacoronavirus pandemicum</em></li>
+<li>does <em>not</em> affect read-level classification and extraction</li>
+<li>will <em>not</em> be used in downstream <code>percent_human</code> and <code>percent_target_organism</code> calculations</li>
+<li>inputted in place of Kraken reports in downstream tasks, such as <code>qc_check</code> and <code>krona</code></li>
+<li>outputted separate of the <code>kraken/kraken2_report</code></li>
+</ul>
+<p>By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the <code>bracken_kmer_length</code> input, though it MUST correspond to an available k-mer database within the Kraken2 database (named <code>database&lt;KMER_LENGTH&gt;mers.kmer_distrib</code>). Bracken will be skipped if there are no k-mer libraries in the Kraken2 database. </p>
 </div>
 <div class="admonition techdetails">
 <p class="admonition-title">Kraken2 Technical Details</p>
@@ -7367,15 +7461,15 @@ There are three Kraken2 workflows:</p>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/DerrickWood/kraken2/">Kraken2 on GitHub</a></td>
+<td><a href="https://github.com/DerrickWood/kraken2/">Kraken2 on GitHub</a>, <a href="https://github.com/jenniferlu717/Bracken">Bracken on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">Kraken2 Documentation</a></td>
+<td><a href="https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown">Kraken2 Documentation</a>, <a href="https://github.com/jenniferlu717/Bracken/blob/master/README.md">Bracken Documentation</a></td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://link.springer.com/article/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a></td>
+<td><a href="https://link.springer.com/article/10.1186/s13059-019-1891-0">Improved metagenomic analysis with Kraken 2</a>, <a href="https://doi.org/10.7717/peerj-cs.104">Bracken: estimating species abundance in metagenomics data</a></td>
 </tr>
 </tbody>
 </table>
@@ -7407,9 +7501,9 @@ There are three Kraken2 workflows:</p>
 <td>Full Kraken report after host removal</td>
 </tr>
 <tr>
-<td>kraken_sc2_dehosted</td>
+<td>kraken_target_organism_dehosted</td>
 <td>String</td>
-<td>Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal</td>
+<td>Percent of target organism read data detected using the Kraken2 software after host removal</td>
 </tr>
 <tr>
 <td>kraken_version_dehosted</td>
@@ -7472,9 +7566,9 @@ There are three Kraken2 workflows:</p>
 <td>Full Kraken report after host removal</td>
 </tr>
 <tr>
-<td>kraken_sc2_dehosted</td>
+<td>kraken_target_organism_dehosted</td>
 <td>String</td>
-<td>Percent of SARS-CoV-2 read data detected using the Kraken2 software after host removal</td>
+<td>Percent of target organism read data detected using the Kraken2 software after host removal</td>
 </tr>
 <tr>
 <td>kraken_version_dehosted</td>

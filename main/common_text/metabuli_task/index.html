@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -6517,17 +6517,41 @@
 
 <details class="task">
 <summary><code>metabuli</code></summary>
-<p>The <code>metabuli</code> task is used to classify and extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.</p>
-<details class="dna">
-<summary><code>cpu</code> / <code>memory</code> input parameters</summary>
-<p>Increasing the memory and cpus allocated to Metabuli can substantially increase throughput.</p>
+<p>The <code>metabuli</code> task is used to classify and optionally extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.</p>
 </details>
-</details>
-<!-- if: theiaviral -->
-<div class="language-text highlight"><pre><span></span><code>??? dna "`extract_unclassified` input parameter"
-    This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
+<!-- if: metabuli -->
+<div class="language-text highlight"><pre><span></span><code>??? dna "`taxon_id` input parameter"
+    `taxon_id` triggers read extraction by retrieving the inputted NCBI taxon ID and all descendant taxon IDs derived from the input.
 
-???+ warning "Descendant taxa reads are extracted"
+??? dna "Precision mode and `min_score` / `min_sp_score` input parameters"
+    The `min_score` parameter is the minimum score (DNA-level identity) required for a read to be classified and the `min_sp_score` parameter is the minimum score for a read to be classified at or below species rank. Metabuli precision mode is defined by its authors as more stringently setting the `min_score` and `min_sp_score` parameters for specific read types:
+
+    - Illumina short reads: `min_score` = 0.15, `min_sp_score` = 0.5
+    - ONT long reads: `min_score` = 0.008
+</code></pre></div>
+<!-- endif -->
+
+<!-- if theiacov|freyja -->
+<div class="language-text highlight"><pre><span></span><code>Metabuli is run on both raw and human dehosted reads.
+</code></pre></div>
+<!--endif -->
+
+<!-- if theiaprok -->
+<div class="language-text highlight"><pre><span></span><code>`metabuli_db` must be set to activate Metabuli read classification for TheiaProk.
+</code></pre></div>
+<!-- endif -->
+
+<div class="language-text highlight"><pre><span></span><code>??? dna "`taxdump_path` input parameter"
+    The `taxdump_path` directs the task toward a taxonkit-generated taxdump file, e.g. [from NCBI](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/) or [from GTDB](https://github.com/shenwei356/gtdb-taxdump/releases). This is not necessary to edit unless users want a more recent taxdump than what Theiagen hosts, or if users want to reference a different taxonomy. By default, Theiagen uses the NCBI taxonomy hierarchy.
+
+??? dna "`cpu` / `memory` input parameters"
+    Increasing the memory and cpus allocated to Metabuli can substantially increase throughput.
+
+??? dna "`extract_unclassified` input parameter"
+    This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
+</code></pre></div>
+<!--if: theiaviral -->
+<div class="language-text highlight"><pre><span></span><code>???+ warning "Descendant taxa reads are extracted"
     This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all subordiante taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section above for more details on the `rank` input parameter.
 </code></pre></div>
 <!-- endif -->
@@ -6562,7 +6586,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="June 25, 2025 14:26:30 UTC">2025-06-25</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 20, 2026 20:57:02 UTC">2026-03-20</span>
   </span>
 
     

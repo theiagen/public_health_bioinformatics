@@ -18,7 +18,7 @@
       
       
       <link rel="icon" href="../../assets/logos/Theiagen-Symbol-Standard-01.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.4">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
     
     
       
@@ -6544,28 +6544,34 @@
         | Software Documentation | [ARTIC Documentation](https://artic.readthedocs.io/en/latest/?badge=latest) |
 
 
-??? task "`Kraken2`: Read Identification"
+??? task "`metabuli`"
 
-    `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
-
-    Kraken2 is run on both the raw and clean reads.
+    The `metabuli` task is used to classify and optionally extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.
 
 
+&lt;!-- if theiacov|freyja --&gt;
+    Metabuli is run on both raw and human dehosted reads.
 
-    !!! info "Database-dependent"
-        This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`.
+&lt;!-- if theiaprok --&gt;
+    `metabuli_db` must be set to activate Metabuli read classification for TheiaProk.
+
+    ??? dna "`taxdump_path` input parameter"
+        The `taxdump_path` directs the task toward a taxonkit-generated taxdump file, e.g. [from NCBI](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/) or [from GTDB](https://github.com/shenwei356/gtdb-taxdump/releases). This is not necessary to edit unless users want a more recent taxdump than what Theiagen hosts, or if users want to reference a different taxonomy. By default, Theiagen uses the NCBI taxonomy hierarchy.
+
+    ??? dna "`cpu` / `memory` input parameters"
+        Increasing the memory and cpus allocated to Metabuli can substantially increase throughput.
+
+    ??? dna "`extract_unclassified` input parameter"
+        This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
 
 
-
-
-
-    !!! techdetails "Kraken2 Technical Details"
+    !!! techdetails "Metabuli Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
-        | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/)  |
-        | Software Documentation | [Kraken2 Documentation](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown) |
-        | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0) |
+        | Task | [task_metabuli.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_metabuli.wdl) |
+        | Software Source Code | [Metabuli on GitHub](https://github.com/steineggerlab/Metabuli) |
+        | Software Documentation | [Metabuli Documentation](https://github.com/steineggerlab/Metabuli/blob/master/README.md) |
+        | Original Publication(s) | [Metabuli: sensitive and specific metagenomic classification via joint analysis of amino acid and DNA](https://doi.org/10.1038/s41592-024-02273-y) |
 </code></pre></div>
 <!-- endif -->
 
@@ -6612,30 +6618,34 @@
         | Original Publication(s) | [Nanoq: ultra-fast quality control for nanopore reads](https://doi.org/10.21105/joss.02991)
 
 
-??? task "`Kraken2`: Read Identification (optional)"
-    To activate this task, set `call_kraken` to `true` and provide a value for `kraken_db`.
+??? task "`metabuli`"
 
-    `Kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
-
-
-    Kraken2 is run on the raw read data.
+    The `metabuli` task is used to classify and optionally extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.
 
 
-    !!! info "Database-dependent"
-        This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz`.
+&lt;!-- if theiacov|freyja --&gt;
+    Metabuli is run on both raw and human dehosted reads.
+
+&lt;!-- if theiaprok --&gt;
+    `metabuli_db` must be set to activate Metabuli read classification for TheiaProk.
+
+    ??? dna "`taxdump_path` input parameter"
+        The `taxdump_path` directs the task toward a taxonkit-generated taxdump file, e.g. [from NCBI](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/) or [from GTDB](https://github.com/shenwei356/gtdb-taxdump/releases). This is not necessary to edit unless users want a more recent taxdump than what Theiagen hosts, or if users want to reference a different taxonomy. By default, Theiagen uses the NCBI taxonomy hierarchy.
+
+    ??? dna "`cpu` / `memory` input parameters"
+        Increasing the memory and cpus allocated to Metabuli can substantially increase throughput.
+
+    ??? dna "`extract_unclassified` input parameter"
+        This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
 
 
-    A database must be provided if this optional module is activated, through the kraken_db optional input. A list of suggested databases can be found on [Kraken2 standalone documentation](../standalone/kraken2.md#databases).
-
-
-
-    !!! techdetails "Kraken2 Technical Details"
+    !!! techdetails "Metabuli Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
-        | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/)  |
-        | Software Documentation | [Kraken2 Documentation](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown) |
-        | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0) |
+        | Task | [task_metabuli.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_metabuli.wdl) |
+        | Software Source Code | [Metabuli on GitHub](https://github.com/steineggerlab/Metabuli) |
+        | Software Documentation | [Metabuli Documentation](https://github.com/steineggerlab/Metabuli/blob/master/README.md) |
+        | Original Publication(s) | [Metabuli: sensitive and specific metagenomic classification via joint analysis of amino acid and DNA](https://doi.org/10.1038/s41592-024-02273-y) |
 </code></pre></div>
 <!-- endif -->
 
@@ -6680,7 +6690,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="September 5, 2025 20:48:28 UTC">2025-09-05</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="March 20, 2026 20:57:02 UTC">2026-03-20</span>
   </span>
 
     
