@@ -78,7 +78,7 @@ task contaminant_check {
   with open("STATUS", "w") as f:
     if seq2fail:
       status_string = "FAIL: "
-      for seq, fail_reasons in seq2fail.items():
+      for seq, fail_reasons in sorted(seq2fail.items(), key=lambda x: x[0]):
         status_string += f"{seq}: {', '.join(fail_reasons)}; "
       status_string = status_string.strip("; ")
       f.write(status_string)
