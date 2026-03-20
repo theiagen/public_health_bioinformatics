@@ -14,6 +14,14 @@
 
 <!-- endif -->
 
+<!-- if theiacov|freyja -->
+    Metabuli is run on both raw and human dehosted reads.
+<!--endif -->
+
+<!-- if theiaprok -->
+    `metabuli_db` must be set to activate Metabuli read classification for TheiaProk.
+<!-- endif -->
+
     ??? dna "`taxdump_path` input parameter"
         The `taxdump_path` directs the task toward a taxonkit-generated taxdump file, e.g. [from NCBI](https://ftp.ncbi.nlm.nih.gov/pub/taxonomy/new_taxdump/) or [from GTDB](https://github.com/shenwei356/gtdb-taxdump/releases). This is not necessary to edit unless users want a more recent taxdump than what Theiagen hosts, or if users want to reference a different taxonomy. By default, Theiagen uses the NCBI taxonomy hierarchy.
 
@@ -23,6 +31,7 @@
     ??? dna "`extract_unclassified` input parameter"
         This parameter determines whether unclassified reads should also be extracted and combined with the `taxon`-specific extracted reads. By default, this is set to `false`, meaning that only reads classified to the specified input `taxon` will be extracted.
 
+<!--if: theiaviral -->
 <!--if: theiaviral -->
     ???+ warning "Descendant taxa reads are extracted"
         This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all subordiante taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section above for more details on the `rank` input parameter.
