@@ -5,6 +5,10 @@
 
     The `qc_check` task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a `qc_check_table` TSV file. If all QC metrics meet the threshold, the `qc_check` output variable will read `QC_PASS`. Otherwise, the output will read `QC_NA` if the task could not proceed or `QC_ALERT` followed by a string indicating what metric failed.
 
+<!-- if: freyja -->
+    Thresholds for percent human classified reads and percent human classified dehosted reads are noted as "classified_human" and "classified_human_dehosted" respectively. In other workflows, these QC check columns are named "kraken_human*" or "metabuli_human*", but Freyja uses the "classified_" prefix because the classification software used will vary depending on read type (kraken2 for Illumina, Metabuli for ONT).
+<!-- endif -->
+
 <!-- if: theiacov -->
     The `qc_check` task applies quality thresholds according to the specified organism, which should match the _standardized_ `organism` input in the TheiaCoV workflows.
 

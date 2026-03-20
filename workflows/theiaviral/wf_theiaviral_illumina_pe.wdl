@@ -36,7 +36,7 @@ workflow theiaviral_illumina_pe {
     String read_extraction_rank = "family"
     String samplename
     String? host # host to dehost reads, if provided
-    File kraken_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/kraken2_humanGRCh38_viralRefSeq_20240828.tar.gz"
+    File kraken2_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz"
     File? checkv_db 
     File? skani_db
     Boolean skip_screen = false # if false, run clean read screening
@@ -63,221 +63,224 @@ workflow theiaviral_illumina_pe {
         taxon = taxon,
         rank = read_extraction_rank
     }
-    # read QC, classification, extraction, and trimming
-    call fastq_scan_task.fastq_scan_pe as fastq_scan_raw {
-      input:
-        read1 = read1,
-        read2 = read2
-    }
-    # human read scrubbing
-    call ncbi_scrub_task.ncbi_scrub_pe {
-      input:
-        samplename = samplename,
-        read1 = read1,
-        read2 = read2
-    }
-    # adapter + read trimming
-    call fastp_task.fastp_pe as fastp {
-      input:
-        samplename = samplename,
-        read1 = ncbi_scrub_pe.read1_dehosted,
-        read2 = ncbi_scrub_pe.read2_dehosted
-    }
-    call bbduk_task.bbduk {
-      input:
-        samplename = samplename,
-        read1 = fastp.read1_trimmed,
-        read2 = fastp.read2_trimmed
-    }
-    # host read decontamination
-    if (defined(host)) {
-      call host_decontaminate_wf.read_decontaminate as host_decontaminate {
+    if (ete4_identify.ete4_status == "PASS") {
+      # read QC, classification, extraction, and trimming
+      call fastq_scan_task.fastq_scan_pe as fastq_scan_raw {
+        input:
+          read1 = read1,
+          read2 = read2
+      }
+      # human read scrubbing
+      call ncbi_scrub_task.ncbi_scrub_pe {
         input:
           samplename = samplename,
-          read1 = bbduk.read1_clean,
-          read2 = bbduk.read2_clean,
-          contaminant = select_first([host])
+          read1 = read1,
+          read2 = read2
       }
-    }
-    # taxon-based read extraction
-    call kraken2_task.kraken2_standalone {
-      input:
-        samplename = samplename,
-        read1 = select_first([host_decontaminate.decontaminate_read1, bbduk.read1_clean]),
-        read2 = select_first([host_decontaminate.decontaminate_read2, bbduk.read2_clean]),
-        kraken2_db = kraken_db
-    }
-    call krakentools_task.extract_kraken_reads as kraken2_extract {
-      input:
-        read1 = kraken2_standalone.kraken2_classified_read1,
-        read2 = select_first([kraken2_standalone.kraken2_classified_read2]),
-        taxon_id = ete4_identify.taxon_id,
-        kraken2_output = kraken2_standalone.kraken2_classified_report,
-        kraken2_report = kraken2_standalone.kraken2_report
-    }
-    # inclusion of unclassified reads
-    if (extract_unclassified) {
-      call cat_lanes_task.cat_lanes {
+      # adapter + read trimming
+      call fastp_task.fastp_pe as fastp {
         input:
           samplename = samplename,
-          read1_lane1 = kraken2_standalone.kraken2_unclassified_read1,
-          read1_lane2 = select_first([kraken2_extract.extracted_read1]),
-          read2_lane1 = kraken2_standalone.kraken2_unclassified_read2,
-          read2_lane2 = select_first([kraken2_extract.extracted_read2])
+          read1 = ncbi_scrub_pe.read1_dehosted,
+          read2 = ncbi_scrub_pe.read2_dehosted
       }
-    }
-  }
-  if (! defined(genome_length)) {
-    # get average genome length for the taxon
-    call genome_length_task.datasets_genome_length as est_genome_length {
-      input:
-        taxon = select_first([ete4_identify.raw_taxon_id, taxon]),
-        use_ncbi_virus = true,
-        complete = true,
-        refseq = true
-    }
-  }
-  if (!skip_qc) {
-    if (!skip_rasusa) {
-      # downsample reads to a specific coverage
-      call rasusa_task.rasusa as rasusa {
+      call bbduk_task.bbduk {
         input:
-          read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
-          read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
           samplename = samplename,
-          genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
+          read1 = fastp.read1_trimmed,
+          read2 = fastp.read2_trimmed
       }
-    }
-    # clean read stat gathering
-    call fastq_scan_task.fastq_scan_pe as fastq_scan_clean {
-      input:
-        read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1]),
-        read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])
-    }
-  }
-  # clean read screening
-  if (! skip_screen) {
-    call read_screen_task.check_reads as clean_check_reads {
-      input:
-        read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
-        read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
-        workflow_series = "theiaviral",
-        expected_genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
-    }
-  }
-  if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-    # run de novo if no reference genome is provided so we can select a reference
-    if (! defined(reference_fasta)) {
-      # de novo assembly - prioritize metaviralspades
-      if (call_metaviralspades) {
-        call spades_task.spades {
+      # host read decontamination
+      if (defined(host)) {
+        call host_decontaminate_wf.read_decontaminate as host_decontaminate {
           input:
-            read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
-            read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
             samplename = samplename,
-            spades_type = "metaviral"
+            read1 = bbduk.read1_clean,
+            read2 = bbduk.read2_clean,
+            contaminant = select_first([host])
         }
       }
-      # fallback to megahit if metaviralspades fails to identify a complete virus
-      if (select_first([spades.spades_status, "FAIL"]) == "FAIL") {
-        call megahit_task.megahit {
-          input:
-            read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
-            read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
-            samplename = samplename
-        }
-      }
-      # fail gracefully if both assemblies fail
-      if (select_first([megahit.megahit_status, spades.spades_status, "FAIL"]) == "PASS") {
-        # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
-        call checkv_task.checkv as checkv_denovo {
-          input:
-            assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
-            samplename = samplename,
-            checkv_db = checkv_db
-        }
-        # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
-        call quast_task.quast as quast_denovo {
-          input:
-            assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
-            samplename = samplename,
-            min_contig_length = 0
-        }
-      }
-    }
-    if (defined(reference_fasta) || select_first([megahit.megahit_status, spades.spades_status, "FAIL"]) == "PASS") {
-      # ANI-based reference genome selection
-      call skani_task.skani as skani {
+      # taxon-based read extraction
+      call kraken2_task.kraken2 {
         input:
-          assembly_fasta = select_first([reference_fasta, spades.assembly_fasta, megahit.assembly_fasta]),
           samplename = samplename,
-          skani_db = skani_db
+          read1 = select_first([host_decontaminate.decontaminate_read1, bbduk.read1_clean]),
+          read2 = select_first([host_decontaminate.decontaminate_read2, bbduk.read2_clean]),
+          kraken2_db = kraken2_db,
+          target_organism = ete4_identify.taxon_id
       }
-      if (defined(reference_fasta) || skani.skani_status == "PASS") {
-        # align reads to reference
-        call bwa_task.bwa {
+      call krakentools_task.extract_kraken_reads as kraken2_extract {
+        input:
+          read1 = kraken2.kraken2_classified_read1,
+          read2 = select_first([kraken2.kraken2_classified_read2]),
+          taxon_id = ete4_identify.taxon_id,
+          kraken2_output = kraken2.kraken2_classified_report,
+          kraken2_report = kraken2.kraken2_report
+      }
+      # inclusion of unclassified reads
+      if (extract_unclassified) {
+        call cat_lanes_task.cat_lanes {
           input:
             samplename = samplename,
-            read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
-            read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
-            reference_genome = select_first([reference_fasta, skani.skani_reference_assembly])
+            read1_lane1 = kraken2.kraken2_unclassified_read1,
+            read1_lane2 = select_first([kraken2_extract.extracted_read1]),
+            read2_lane1 = kraken2.kraken2_unclassified_read2,
+            read2_lane2 = select_first([kraken2_extract.extracted_read2])
         }
-        # consensus calling via ivar
-        call ivar_consensus_task.consensus {
+      }
+    }
+    if (! defined(genome_length)) {
+      # get average genome length for the taxon
+      call genome_length_task.datasets_genome_length as est_genome_length {
+        input:
+          taxon = select_first([ete4_identify.raw_taxon_id, taxon]),
+          use_ncbi_virus = true,
+          complete = true,
+          refseq = true
+      }
+    }
+    if (!skip_qc) {
+      if (!skip_rasusa) {
+        # downsample reads to a specific coverage
+        call rasusa_task.rasusa as rasusa {
           input:
-            bamfile = bwa.sorted_bam,
+            read1 = select_first([cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
+            read2 = select_first([cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
             samplename = samplename,
-            reference_genome = select_first([reference_fasta, skani.skani_reference_assembly]),
-            min_qual = min_map_quality,
-            consensus_min_depth = min_depth,
-            consensus_min_freq = min_allele_freq,
-            all_positions = true
-        }
-        # variant calling via ivar
-        call variant_call_task.variant_call as ivar_variants {
-          input:
-            mpileup = consensus.sample_mpileup,
-            samplename = samplename,
-            reference_genome = select_first([reference_fasta, skani.skani_reference_assembly]),
-            min_qual = min_map_quality,
-            organism = "",
-            variant_min_freq = min_allele_freq,
-            variant_min_depth = min_depth
-        }
-        # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-        call mapping_stats_task.mapping_stats as read_mapping_stats {
-          input:
-            bamfile = bwa.sorted_bam,
-            samplename = samplename,
-            read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
-            read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
-        }
-        # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
-        call consensus_qc_task.consensus_qc as consensus_qc {
-          input:
-            assembly_fasta = consensus.consensus_seq,
-            reference_genome = select_first([reference_fasta, skani.skani_reference_assembly]),
             genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
         }
-        # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
-        call checkv_task.checkv as checkv_consensus {
-          input:
-            assembly = consensus.consensus_seq,
-            samplename = samplename,
-            checkv_db = checkv_db
+      }
+      # clean read stat gathering
+      call fastq_scan_task.fastq_scan_pe as fastq_scan_clean {
+        input:
+          read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1]),
+          read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2])
+      }
+    }
+    # clean read screening
+    if (! skip_screen) {
+      call read_screen_task.check_reads as clean_check_reads {
+        input:
+          read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
+          read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
+          workflow_series = "theiaviral",
+          expected_genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
+      }
+    }
+    if (select_first([clean_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
+      # run de novo if no reference genome is provided so we can select a reference
+      if (! defined(reference_fasta)) {
+        # de novo assembly - prioritize metaviralspades
+        if (call_metaviralspades) {
+          call spades_task.spades {
+            input:
+              read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
+              read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
+              samplename = samplename,
+              spades_type = "metaviral"
+          }
         }
-        # run morgana magic for classification
-        call morgana_magic_wf.morgana_magic {
+        # fallback to megahit if metaviralspades fails to identify a complete virus
+        if (select_first([spades.spades_status, "FAIL"]) == "FAIL") {
+          call megahit_task.megahit {
+            input:
+              read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
+              read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
+              samplename = samplename
+          }
+        }
+        # fail gracefully if both assemblies fail
+        if (select_first([megahit.megahit_status, spades.spades_status, "FAIL"]) == "PASS") {
+          # quality control metrics for de novo assembly (ie. completeness, viral gene count, contamination)
+          call checkv_task.checkv as checkv_denovo {
+            input:
+              assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
+              samplename = samplename,
+              checkv_db = checkv_db
+          }
+          # quality control metrics for de novo assembly (ie. contigs, n50, GC content, genome length)
+          call quast_task.quast as quast_denovo {
+            input:
+              assembly = select_first([spades.assembly_fasta, megahit.assembly_fasta]),
+              samplename = samplename,
+              min_contig_length = 0
+          }
+        }
+      }
+      if (defined(reference_fasta) || select_first([megahit.megahit_status, spades.spades_status, "FAIL"]) == "PASS") {
+        # ANI-based reference genome selection
+        call skani_task.skani as skani {
           input:
+            assembly_fasta = select_first([reference_fasta, spades.assembly_fasta, megahit.assembly_fasta]),
             samplename = samplename,
-            read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
-            read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
-            assembly_fasta = select_first([consensus.consensus_seq]),
-            taxon_name = select_first([ete4_identify.raw_taxon_id, taxon]),
-            seq_method = "illumina_pe",
-            number_ATCG = consensus_qc.number_ATCG,
-            workflow_type = "theiaviral",
-            reference_gene_locations_bed = reference_gene_locations_bed
+            skani_db = skani_db
+        }
+        if (defined(reference_fasta) || skani.skani_status == "PASS") {
+          # align reads to reference
+          call bwa_task.bwa {
+            input:
+              samplename = samplename,
+              read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
+              read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
+              reference_genome = select_first([reference_fasta, skani.skani_reference_assembly])
+          }
+          # consensus calling via ivar
+          call ivar_consensus_task.consensus {
+            input:
+              bamfile = bwa.sorted_bam,
+              samplename = samplename,
+              reference_genome = select_first([reference_fasta, skani.skani_reference_assembly]),
+              min_qual = min_map_quality,
+              consensus_min_depth = min_depth,
+              consensus_min_freq = min_allele_freq,
+              all_positions = true
+          }
+          # variant calling via ivar
+          call variant_call_task.variant_call as ivar_variants {
+            input:
+              mpileup = consensus.sample_mpileup,
+              samplename = samplename,
+              reference_genome = select_first([reference_fasta, skani.skani_reference_assembly]),
+              min_qual = min_map_quality,
+              organism = "",
+              variant_min_freq = min_allele_freq,
+              variant_min_depth = min_depth
+          }
+          # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
+          call mapping_stats_task.mapping_stats as read_mapping_stats {
+            input:
+              bamfile = bwa.sorted_bam,
+              samplename = samplename,
+              read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
+              read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
+          }
+          # quality control metrics for consensus (ie. number of bases, degenerate bases, genome length)
+          call consensus_qc_task.consensus_qc as consensus_qc {
+            input:
+              assembly_fasta = consensus.consensus_seq,
+              reference_genome = select_first([reference_fasta, skani.skani_reference_assembly]),
+              genome_length = select_first([est_genome_length.avg_genome_length, genome_length])
+          }
+          # quality control metrics for consensus (ie. completeness, viral gene count, contamination)
+          call checkv_task.checkv as checkv_consensus {
+            input:
+              assembly = consensus.consensus_seq,
+              samplename = samplename,
+              checkv_db = checkv_db
+          }
+          # run morgana magic for classification
+          call morgana_magic_wf.morgana_magic {
+            input:
+              samplename = samplename,
+              read1 = select_first([rasusa.read1_subsampled, cat_lanes.read1_concatenated, kraken2_extract.extracted_read1, read1]),
+              read2 = select_first([rasusa.read2_subsampled, cat_lanes.read2_concatenated, kraken2_extract.extracted_read2, read2]),
+              assembly_fasta = select_first([consensus.consensus_seq]),
+              taxon_name = select_first([ete4_identify.raw_taxon_id, taxon]),
+              seq_method = "illumina_pe",
+              number_ATCG = consensus_qc.number_ATCG,
+              workflow_type = "theiaviral",
+              reference_gene_locations_bed = reference_gene_locations_bed
+          }
         }
       }
     }
@@ -290,6 +293,7 @@ workflow theiaviral_illumina_pe {
     String? ncbi_taxon_id = ete4_identify.taxon_id
     String? ncbi_taxon_name = ete4_identify.taxon_name
     String? ncbi_read_extraction_rank = ete4_identify.taxon_rank
+    String? ete4_status = ete4_identify.ete4_status
     String? ete4_version = ete4_identify.ete4_version
     String? ete4_docker = ete4_identify.ete4_docker
     # NCBI datasets genome length estimation
@@ -336,10 +340,12 @@ workflow theiaviral_illumina_pe {
     File? bbduk_read2_clean = bbduk.read2_clean
     File? bbduk_primer_stats = bbduk.primer_stats
     # kraken2 outputs - taxonomic classification and read extraction
-    String? kraken2_version = kraken2_standalone.kraken2_version
-    String? kraken2_docker = kraken2_standalone.kraken2_docker
-    String? kraken2_database = kraken2_standalone.kraken2_database
-    String? kraken2_report = kraken2_standalone.kraken2_report
+    String? kraken2_version = kraken2.kraken2_version
+    String? bracken_version = kraken2.bracken_version
+    String? kraken2_docker = kraken2.kraken2_docker
+    String? kraken2_database = kraken2.kraken2_database
+    String? kraken2_report = kraken2.kraken2_report
+    String? bracken_report = kraken2.bracken_report
     File? kraken2_extracted_read1 = kraken2_extract.extracted_read1
     File? kraken2_extracted_read2 = kraken2_extract.extracted_read2
     String? kraken2_extraction_status = kraken2_extract.status
