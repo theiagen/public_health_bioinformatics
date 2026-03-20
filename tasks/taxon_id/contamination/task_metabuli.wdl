@@ -24,6 +24,9 @@ task metabuli {
     # set status
     metabuli_status=PASS
 
+    # set status
+    metabuli_status=PASS
+
     # get version (there is no --version flag for metabuli)
     echo $(metabuli --help) | awk -F'Version: ' '{print $2}' | awk '{print $1}' | tee VERSION
 
