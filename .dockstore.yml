@@ -170,11 +170,6 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_se.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Kraken2_ONT_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_ont.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
  - name: RASUSA_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_rasusa.wdl
@@ -333,5 +328,10 @@ workflows:
  - name: ONT_Barcode_Concatenation_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/data_import/wf_ont_barcode_concatenation.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: Microreact_Export_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/wf_microreact_export.wdl
    testParameterFiles:
      - /tests/inputs/empty.json

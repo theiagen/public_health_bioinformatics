@@ -1,0 +1,52 @@
+version 1.0
+
+import "../../tasks/utilities/data_export/task_download_terra_table.wdl" as task_download_terra_table
+import "../../tasks/utilities/data_export/task_microreact_export.wdl" as microreact_export
+
+workflow wf_microreact_export {
+  input {
+    String project_name
+    String id_column
+    String terra_table_name
+    String terra_workspace_name
+    String terra_project_name
+    String set_id
+    String? date_column
+    String? project_url
+    String? access_token
+    File? metadata_file
+    Array[File]? tree_files
+    Array[File]? matrix_files
+    Array[String]? metadata_columns
+    Boolean remove_file_columns = true
+    Boolean restricted_access = true
+    Boolean download_table = true
+  }
+  if (download_table) {
+    call task_download_terra_table.download_terra_table {
+      input:
+        terra_table_name = terra_table_name,
+        terra_workspace_name = terra_workspace_name,
+        terra_project_name = terra_project_name
+    }
+  }
+  call microreact_export.microreact_export as create_microreact_project {
+    input:
+      project_name = project_name,
+      metadata_tsv = select_first([download_terra_table.terra_table, metadata_file]),
+      set_id = set_id,
+      matrix_files = matrix_files,
+      tree_files = tree_files,
+      metadata_columns = metadata_columns,
+      project_url = project_url,
+      restricted_access = restricted_access,
+      access_token = access_token,
+      id_column = id_column,
+      date_column = date_column,
+      remove_file_columns = remove_file_columns
+  }
+  output {
+    File microreact_input = create_microreact_project.microreact_input
+    File? microreact_api_response = create_microreact_project.microreact_api_response
+  }
+}

@@ -6,7 +6,7 @@
 
 {{ include_md("common_text/artic_guppyplex_task.md", indent=4) }}
 
-{{ include_md("common_text/kraken2_task.md", indent=4, condition="theiacov") }}
+{{ include_md("common_text/metabuli_task.md", indent=4, condition="theiacov") }}
   
 <!-- endif -->
   
@@ -22,7 +22,7 @@
 
 {{ include_md("common_text/nanoq_task.md", indent=4) }}
 
-{{ include_md("common_text/kraken2_task.md", indent=4, condition="ont") }}
+{{ include_md("common_text/metabuli_task.md", indent=4, condition="theiaprok") }}
 <!-- endif -->
 
 {{ include_md("common_text/nanoplot_task.md", indent=4, condition="ont") }}

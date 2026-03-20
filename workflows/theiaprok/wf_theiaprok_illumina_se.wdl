@@ -362,6 +362,8 @@ workflow theiaprok_illumina_se {
                 "bakta_tsv": bakta.bakta_tsv,
                 "bakta_version": bakta.bakta_version,
                 "bbduk_docker": read_QC_trim.bbduk_docker,
+                "bracken_report": read_QC_trim.bracken_report,
+                "bracken_version": read_QC_trim.bracken_version,
                 "busco_database": busco.busco_database,
                 "busco_docker": busco.busco_docker,
                 "busco_report": busco.busco_report,
@@ -454,10 +456,10 @@ workflow theiaprok_illumina_se {
                 "kmerfinder_results_tsv": kmerfinder.kmerfinder_results_tsv,
                 "kmerfinder_template_coverage": kmerfinder.kmerfinder_template_coverage,
                 "kmerfinder_top_hit": kmerfinder.kmerfinder_top_hit,
-                "kraken2_database": read_QC_trim.kraken_database,
-                "kraken2_docker": read_QC_trim.kraken_docker,
-                "kraken2_report": read_QC_trim.kraken_report,
-                "kraken2_version": read_QC_trim.kraken_version,
+                "kraken2_database": read_QC_trim.kraken2_database,
+                "kraken2_docker": read_QC_trim.kraken2_docker,
+                "kraken2_report": read_QC_trim.kraken2_report,
+                "kraken2_version": read_QC_trim.kraken2_version,
                 "legsta_predicted_sbt": merlin_magic.legsta_predicted_sbt,
                 "legsta_results": merlin_magic.legsta_results,
                 "legsta_version": merlin_magic.legsta_version,
@@ -764,10 +766,12 @@ workflow theiaprok_illumina_se {
     Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
     Float? midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage
     # Read QC - kraken outputs
-    String? kraken2_version = read_QC_trim.kraken_version
-    String? kraken2_report = read_QC_trim.kraken_report
-    String? kraken2_docker = read_QC_trim.kraken_docker
-    String? kraken2_database = read_QC_trim.kraken_database
+    String? bracken_report = read_QC_trim.bracken_report
+    String? bracken_version = read_QC_trim.bracken_version
+    String? kraken2_version = read_QC_trim.kraken2_version
+    String? kraken2_report = read_QC_trim.kraken2_report
+    String? kraken2_docker = read_QC_trim.kraken2_docker
+    String? kraken2_database = read_QC_trim.kraken2_database
     #Assembly - digger_denovo outputs
     File? assembly_fasta = digger_denovo.assembly_fasta
     File? contigs_gfa = digger_denovo.contigs_gfa
@@ -846,6 +850,8 @@ workflow theiaprok_illumina_se {
     File? amr_search_results = merlin_magic.amr_search_results
     File? amr_search_csv = merlin_magic.amr_results_csv
     File? amr_search_results_pdf = merlin_magic.amr_results_pdf
+    String? amr_search_all_resistances = merlin_magic.amr_search_all_resistances
+    String? amr_search_associated_resistances = merlin_magic.amr_search_associated_resistances
     String? amr_search_docker = merlin_magic.amr_search_docker
     String? amr_search_version = merlin_magic.amr_search_version
     # Resfinder Outputs

@@ -10,6 +10,8 @@ title: Zip_Column_Content
 
 This workflow will create a zip file containing all of the items from a given column in a Terra Data Table. This is useful when you want to share a collection of result files.
 
+If a column contains files that do not have unique filenames then an index will be appended to identical filenames. Original file paths and names are preserved and referenced within the `file_translations.tsv` output. 
+
 ### Inputs
 
 This workflow runs on the _set_ level.
