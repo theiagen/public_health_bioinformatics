@@ -1059,7 +1059,7 @@ kmerfinder	kmerfinder_args	String	Kmerfinder additional arguments		Optional	Thei
 kmerfinder	kmerfinder_db	File	Bacterial database for KmerFinder	gs://theiagen-public-resources-rp/reference_data/databases/kmerfinder/kmerfinder_bacteria_20230911.tar.gz	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
 kmerfinder	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 kraken2	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database 		Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	general	
-kraken2	call_bracken	Boolean	Call Bracken kraken2 report refinement	False	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	general	
+kraken2	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	general	
 kraken2	classified_out	String	Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix	classified#.fastq	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	general	
 kraken2	cpu	Int	Number of CPUs to allocate to the task	4	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	runtime	
 kraken2	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE	runtime	
@@ -1071,7 +1071,7 @@ kraken2	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optio
 kraken2	read2	File	Internal component, do not modify		Optional	NCBI_Scrub_SE	general	
 kraken2	unclassified_out	String	Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix	unclassified#.fastq	Optional	NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaViral_Illumina_PE	general	
 kraken2_clean	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	TheiaMeta_Illumina_PE, TheiaViral_Panel	general	
-kraken2_clean	call_bracken	Boolean	Call Bracken kraken2 report refinement	False	Optional	TheiaViral_Panel	general	
+kraken2_clean	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaViral_Panel	general	
 kraken2_clean	classified_out	String	Internal component, do not modify	classified#.fastq	Optional	TheiaViral_Panel	general	
 kraken2_clean	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaMeta_Illumina_PE, TheiaViral_Panel	runtime	
 kraken2_clean	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaMeta_Illumina_PE	runtime	
@@ -1082,7 +1082,7 @@ kraken2_clean	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32
 kraken2_clean	target_organism	String	Target organism for reporting percent identified		Optional	TheiaMeta_Illumina_PE, TheiaViral_Panel	general	
 kraken2_clean	unclassified_out	String	Internal component, do not modify	unclassified#.fastq	Optional	TheiaViral_Panel	general	
 kraken2_dehosted	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	TheiaCoV_ClearLabs	general	
-kraken2_dehosted	call_bracken	Boolean	Call Bracken kraken2 report refinement	False	Optional	TheiaCoV_ClearLabs	general	
+kraken2_dehosted	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaCoV_ClearLabs	general	
 kraken2_dehosted	classified_out	String	Internal component, do not modify	classified#.fastq	Optional	TheiaCoV_ClearLabs	general	
 kraken2_dehosted	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ClearLabs	runtime	
 kraken2_dehosted	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaCoV_ClearLabs	runtime	
@@ -1097,7 +1097,7 @@ kraken2_extract	disk_size	Int	Amount of storage (in GB) to allocate to the task	
 kraken2_extract	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/krakentools:d4a2fbe	Optional	TheiaViral_Illumina_PE	docker	
 kraken2_extract	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime	
 kraken2_pe	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Kraken_PE	general	
-kraken2_pe	call_bracken	Boolean	Call Bracken kraken2 report refinement	False	Optional	Kraken_PE	general	
+kraken2_pe	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	Kraken_PE	general	
 kraken2_pe	classified_out	String	Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix	classified#.fastq	Optional	Kraken_PE	general	
 kraken2_pe	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Kraken_PE	runtime	
 kraken2_pe	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	Kraken_PE	runtime	
@@ -1107,7 +1107,7 @@ kraken2_pe	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Op
 kraken2_pe	target_organism	String	Target organism for reporting percent identified		Optional	Kraken_PE	general	
 kraken2_pe	unclassified_out	String	Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix	unclassified#.fastq	Optional	Kraken_PE	general	
 kraken2_raw	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE, TheiaViral_Panel	general	
-kraken2_raw	call_bracken	Boolean	Call Bracken kraken2 report refinement	False	Optional	TheiaCoV_ClearLabs	general	
+kraken2_raw	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaCoV_ClearLabs	general	
 kraken2_raw	classified_out	String	Internal component, do not modify	classified#.fastq	Optional	TheiaCoV_ClearLabs, TheiaViral_Panel	general	
 kraken2_raw	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE, TheiaViral_Panel	runtime	
 kraken2_raw	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaCoV_ClearLabs, TheiaMeta_Illumina_PE	runtime	
@@ -1120,7 +1120,7 @@ kraken2_raw	read2	File	Internal component, do not modify		Optional	TheiaCoV_Clea
 kraken2_raw	target_organism	String	Target organism for reporting percent identified		Optional	TheiaMeta_Illumina_PE, TheiaViral_Panel	general	
 kraken2_raw	unclassified_out	String	Internal component, do not modify	unclassified#.fastq	Optional	TheiaCoV_ClearLabs, TheiaViral_Panel	general	
 kraken2_se	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Kraken_SE	general	
-kraken2_se	call_bracken	Boolean	Call Bracken kraken2 report refinement	False	Optional	Kraken_SE	general	
+kraken2_se	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	Kraken_SE	general	
 kraken2_se	classified_out	String	Allows user to rename the classified FASTQ files output. Must include .fastq as the suffix	classified#.fastq	Optional	Kraken_SE	general	
 kraken2_se	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Kraken_SE	runtime	
 kraken2_se	disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	Kraken_SE	runtime	
@@ -1131,7 +1131,7 @@ kraken2_se	read2	File	Internal component, do not modify		Optional	Kraken_SE	gene
 kraken2_se	target_organism	String	Target organism for reporting percent identified		Optional	Kraken_SE	general	
 kraken2_se	unclassified_out	String	Allows user to rename unclassified FASTQ files output. Must include .fastq as the suffix	unclassified#.fastq	Optional	Kraken_SE	general	
 kraken2_taxon	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	TheiaViral_Panel	general	
-kraken2_taxon	call_bracken	Boolean	Call Bracken kraken2 report refinement	False	Optional	TheiaViral_Panel	general	
+kraken2_taxon	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaViral_Panel	general	
 kraken2_taxon	classified_out	String	Internal component, do not modify	classified#.fastq	Optional	TheiaViral_Panel	general	
 kraken2_taxon	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Panel	runtime	
 kraken2_taxon	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Panel	runtime	
@@ -2004,9 +2004,9 @@ read_QC_trim	artic_guppyplex_memory	Int	Amount of memory/RAM (in GB) to allocate
 read_QC_trim	artic_guppyplex_memory	Int	Internal component, do not modify	16	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 read_QC_trim	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
-read_QC_trim	call_bracken	Boolean	Call Bracken kraken2 report refinement	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
-read_QC_trim	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
+read_QC_trim	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	call_kraken	Boolean	Internal component, do not modify	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE	general	
+read_QC_trim	call_kraken	Boolean	True/False variable that determines if the Kraken2 task should be called; for non-TheiaCoV workflows, the `kraken_db` variable must be provided.	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	call_midas	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE	general	
 read_QC_trim	downsampling_coverage	Float	The desired coverage to sub-sample the reads to with RASUSA	150	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general	
@@ -2108,7 +2108,7 @@ read_QC_trim_ont	run_prefix	String	Internal component, do not modify	artic_ncov2
 read_QC_trim_pe	adapters	File	A FASTA file containing adapter sequences		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	call_bracken	Boolean	Call Bracken kraken2 report refinement	False	Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
@@ -2125,7 +2125,7 @@ read_QC_trim_pe	trimmomatic_override_args	String	Additional arguments to pass to
 read_QC_trim_se	adapters	File	A FASTA file containing adapter sequences		Optional	Freyja_FASTQ	general	
 read_QC_trim_se	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_se	bracken_kmer_length	Int	Kmer length for Bracken to use instead of auto-detection - must be present in database		Optional	Freyja_FASTQ	general	
-read_QC_trim_se	call_bracken	Boolean	Call Bracken kraken2 report refinement	False	Optional	Freyja_FASTQ	general	
+read_QC_trim_se	call_bracken	Boolean	Call Bracken kraken2 report refinement	True	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	fastp_args	String	Additional arguments to use with fastp	-g -5 20 -3 20	Optional	Freyja_FASTQ	general	
 read_QC_trim_se	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
