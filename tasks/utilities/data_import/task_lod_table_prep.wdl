@@ -41,7 +41,7 @@ task lod_table_prep {
     read1_column_name = "~{read1_column_name}"
     read2_column_name = "~{read2_column_name}"
     taxon_column_name = "~{taxon_column_name}"
-    downsampling_levels = sorted([int(x) for x in "~{sep=',' downsampling_levels}"])
+    downsampling_levels = sorted([int(x) for x in "~{sep=',' downsampling_levels}".split(",")])
     # Initialize Terra client
     terra = Terra(
       source_workspace = workspace_name,
@@ -122,7 +122,7 @@ task lod_table_prep {
       f"lod_table_process.ncbi_taxon_id": "this.ncbi_taxon_id",
       f"lod_table_process.ncbi_taxon_name": "this.ncbi_taxon_name",
       f"lod_table_process.ncbi_read_extraction_rank": "this.ncbi_read_extraction_rank",
-      f"lod_table_process.ete4_docker": "this.ete4_docker",
+      f"lod_table_process.ete4_status": "this.ete4_status",
       f"lod_table_process.taxon_avg_genome_length": "this.taxon_avg_genome_length",
       f"lod_table_process.cg_pipeline_est_coverage": "this.cg_pipeline_est_coverage",
       f"lod_table_process.cg_pipeline_report": "this.cg_pipeline_report",
