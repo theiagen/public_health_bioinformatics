@@ -62,7 +62,7 @@ task metabuli {
       --max-ram ${available_ram}
 
     # Quantify percent human
-    awk '$6 == "Homo" && $7 == "sapiens" {print $1}' output_dir/~{samplename}_report.tsv > PERCENT_HUMAN
+    awk -F '\t' '$6 ~ /Homo sapiens$/ {print $1}' output_dir/~{samplename}_report.tsv > PERCENT_HUMAN
     if [[ ! -s PERCENT_HUMAN ]]; then 
       echo "DEBUG: Homo sapiens comprises 0% of reads"
       echo "0" > PERCENT_HUMAN
@@ -74,7 +74,7 @@ task metabuli {
     echo "" > PERCENT_TARGET_LINEAGE
     if [[ -n "~{taxon_id}" ]]; then
       echo "DEBUG: Extracting reads"
-      awk '$5 == "~{taxon_id}" {print $1}' output_dir/~{samplename}_report.tsv > PERCENT_TARGET_LINEAGE
+      awk -F '\t' '$5 == "~{taxon_id}" {print $1}' output_dir/~{samplename}_report.tsv > PERCENT_TARGET_LINEAGE
       if [[ -s PERCENT_TARGET_LINEAGE ]]; then
         echo "DEBUG: Taxon ID ~{taxon_id} found in report, proceeding with read extraction"
         echo "DEBUG: ~{taxon_id} comprises $(cat PERCENT_TARGET_LINEAGE)% of reads"
