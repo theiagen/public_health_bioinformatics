@@ -340,3 +340,8 @@ workflows:
    primaryDescriptorPath: /workflows/utilities/wf_lod_table_prep.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
+ - name: LOD_Table_Process_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/wf_lod_table_process.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
