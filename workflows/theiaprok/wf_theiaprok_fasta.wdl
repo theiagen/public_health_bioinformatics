@@ -176,13 +176,15 @@ workflow theiaprok_fasta {
           qc_check_table = qc_check_table,
           expected_taxon = expected_taxon,
           gambit_predicted_taxon = gambit.gambit_predicted_taxon,
-          assembly_length = quast.genome_length,
-          number_contigs = quast.number_contigs,
-          n50_value = quast.n50_value,
-          quast_gc_percent = quast.gc_percent,
-          busco_results = busco.busco_results,
-          ani_highest_percent = ani.ani_highest_percent,
-          ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
+          qc_check_inputs = {
+            "assembly_length": quast.genome_length,
+            "number_contigs": quast.number_contigs,
+            "n50_value": quast.n50_value,
+            "quast_gc_percent": quast.gc_percent,
+            "busco_completeness": busco.busco_results,
+            "ani_highest_percent": ani.ani_highest_percent,
+            "ani_highest_percent_bases_aligned": ani.ani_highest_percent_bases_aligned
+          }
       }
     }
     if (defined(taxon_tables)) {
@@ -277,9 +279,18 @@ workflow theiaprok_fasta {
             "city": city,
             "collection_date": collection_date,
             "county": county,
+            "ectyper_database_version": merlin_magic.ectyper_database_version,
+            "ectyper_docker": merlin_magic.ectyper_docker,
+            "ectyper_pathodb_version": merlin_magic.ectyper_pathodb_version,
+            "ectyper_pathotype": merlin_magic.ectyper_pathotype,
+            "ectyper_pathotype_count": merlin_magic.ectyper_pathotype_count,
+            "ectyper_pathotype_genes": merlin_magic.ectyper_pathotype_genes,
+            "ectyper_qc_result": merlin_magic.ectyper_qc_result,
             "ectyper_predicted_serotype": merlin_magic.ectyper_predicted_serotype,
             "ectyper_results": merlin_magic.ectyper_results,
+            "ectyper_stx_subtypes": merlin_magic.ectyper_stx_subtypes,
             "ectyper_version": merlin_magic.ectyper_version,
+            "ectyper_warnings": merlin_magic.ectyper_warnings,
             "emmtyper_docker": merlin_magic.emmtyper_docker,
             "emmtyper_emm_type": merlin_magic.emmtyper_emm_type,
             "emmtyper_results_tsv": merlin_magic.emmtyper_results_tsv,
@@ -400,16 +411,19 @@ workflow theiaprok_fasta {
             "resfinder_predicted_resistance_Cip": resfinder_task.resfinder_predicted_resistance_Cip,
             "resfinder_predicted_resistance_Smx": resfinder_task.resfinder_predicted_resistance_Smx,
             "resfinder_predicted_resistance_Tmp": resfinder_task.resfinder_predicted_resistance_Tmp,
+            "resfinder_predicted_resistance_quinolone": resfinder_task.resfinder_predicted_resistance_quinolone,
+            "resfinder_predicted_resistance_quinolone_mechanisms": resfinder_task.resfinder_predicted_resistance_quinolone_mechanisms,
             "resfinder_predicted_xdr_shigella": resfinder_task.resfinder_predicted_xdr_shigella,
             "resfinder_results": resfinder_task.resfinder_results_tab,
             "resfinder_seqs": resfinder_task.resfinder_hit_in_genome_seq,
+            "resfinder_version": resfinder_task.resfinder_version,
             "run_id": run_id,
             "seq_platform": seq_method,
-            "seqsero2_note": merlin_magic.seqsero2_note,
-            "seqsero2_predicted_antigenic_profile": merlin_magic.seqsero2_predicted_antigenic_profile,
-            "seqsero2_predicted_serotype": merlin_magic.seqsero2_predicted_serotype,
-            "seqsero2_report": merlin_magic.seqsero2_report,
-            "seqsero2_version": merlin_magic.seqsero2_version,
+            "seqsero2s_note": merlin_magic.seqsero2s_note,
+            "seqsero2s_predicted_antigenic_profile": merlin_magic.seqsero2s_predicted_antigenic_profile,
+            "seqsero2s_predicted_serotype": merlin_magic.seqsero2s_predicted_serotype,
+            "seqsero2s_report": merlin_magic.seqsero2s_report,
+            "seqsero2s_version": merlin_magic.seqsero2s_version,
             "serotypefinder_docker": merlin_magic.serotypefinder_docker,
             "serotypefinder_report": merlin_magic.serotypefinder_report,
             "serotypefinder_serotype": merlin_magic.serotypefinder_serotype,
@@ -558,6 +572,8 @@ workflow theiaprok_fasta {
     File? amr_search_results = merlin_magic.amr_search_results
     File? amr_search_csv = merlin_magic.amr_results_csv
     File? amr_search_results_pdf = merlin_magic.amr_results_pdf
+    String? amr_search_all_resistances = merlin_magic.amr_search_all_resistances
+    String? amr_search_associated_resistances = merlin_magic.amr_search_associated_resistances
     String? amr_search_docker = merlin_magic.amr_search_docker
     String? amr_search_version = merlin_magic.amr_search_version
     # Resfinder Outputs
@@ -575,6 +591,9 @@ workflow theiaprok_fasta {
     String? resfinder_predicted_resistance_Cip = resfinder_task.resfinder_predicted_resistance_Cip
     String? resfinder_predicted_resistance_Smx = resfinder_task.resfinder_predicted_resistance_Smx
     String? resfinder_predicted_resistance_Tmp = resfinder_task.resfinder_predicted_resistance_Tmp
+    String? resfinder_predicted_resistance_quinolone = resfinder_task.resfinder_predicted_resistance_quinolone
+    Int? resfinder_predicted_resistance_quinolone_mechanisms = resfinder_task.resfinder_predicted_resistance_quinolone_mechanisms
+    String? resfinder_version = resfinder_task.resfinder_version
     String? resfinder_db_version = resfinder_task.resfinder_db_version
     String? resfinder_docker = resfinder_task.resfinder_docker
     # MLST Typing
@@ -684,11 +703,11 @@ workflow theiaprok_fasta {
     String? sistr_h2_antigens = merlin_magic.sistr_h2_antigens
     String? sistr_o_antigens = merlin_magic.sistr_o_antigens
     String? sistr_serotype_cgmlst = merlin_magic.sistr_serotype_cgmlst
-    String? seqsero2_report = merlin_magic.seqsero2_report
-    String? seqsero2_version = merlin_magic.seqsero2_version
-    String? seqsero2_predicted_antigenic_profile = merlin_magic.seqsero2_predicted_antigenic_profile
-    String? seqsero2_predicted_serotype = merlin_magic.seqsero2_predicted_serotype
-    String? seqsero2_note = merlin_magic.seqsero2_note
+    String? seqsero2s_report = merlin_magic.seqsero2s_report
+    String? seqsero2s_version = merlin_magic.seqsero2s_version
+    String? seqsero2s_predicted_antigenic_profile = merlin_magic.seqsero2s_predicted_antigenic_profile
+    String? seqsero2s_predicted_serotype = merlin_magic.seqsero2s_predicted_serotype
+    String? seqsero2s_note = merlin_magic.seqsero2s_note
     # Klebsiella Typing
     File? kleborate_output_file = merlin_magic.kleborate_output_file
     String? kleborate_version = merlin_magic.kleborate_version

@@ -236,21 +236,23 @@ workflow theiaprok_ont {
               qc_check_table = qc_check_table,
               expected_taxon = expected_taxon,
               gambit_predicted_taxon = gambit.gambit_predicted_taxon,
-              num_reads_raw1 = nanoplot_raw.num_reads,
-              num_reads_clean1 = nanoplot_clean.num_reads,
-              r1_mean_q_raw = nanoplot_raw.mean_q,
-              r1_mean_readlength_raw = nanoplot_raw.mean_readlength,
-              r1_mean_q_clean = nanoplot_clean.mean_q,
-              r1_mean_readlength_clean = nanoplot_clean.mean_readlength,
-              est_coverage_raw = nanoplot_raw.est_coverage,
-              est_coverage_clean = nanoplot_clean.est_coverage,
-              assembly_length = quast.genome_length,
-              number_contigs = quast.number_contigs,
-              n50_value = quast.n50_value,
-              quast_gc_percent = quast.gc_percent,
-              busco_results = busco.busco_results,
-              ani_highest_percent = ani.ani_highest_percent,
-              ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
+              qc_check_inputs = {
+                "num_reads_raw1": nanoplot_raw.num_reads,
+                "num_reads_clean1": nanoplot_clean.num_reads,
+                "r1_mean_q_raw": nanoplot_raw.mean_q,
+                "r1_mean_readlength_raw": nanoplot_raw.mean_readlength,
+                "r1_mean_q_clean": nanoplot_clean.mean_q,
+                "r1_mean_readlength_clean": nanoplot_clean.mean_readlength,
+                "est_coverage_raw": nanoplot_raw.est_coverage,
+                "est_coverage_clean": nanoplot_clean.est_coverage,
+                "assembly_length": quast.genome_length,
+                "number_contigs": quast.number_contigs,
+                "n50_value": quast.n50_value,
+                "quast_gc_percent": quast.gc_percent,
+                "busco_completeness": busco.busco_results,
+                "ani_highest_percent": ani.ani_highest_percent,
+                "ani_highest_percent_bases_aligned": ani.ani_highest_percent_bases_aligned
+            }
           }
         }
         call merlin_magic_workflow.merlin_magic {
@@ -345,9 +347,18 @@ workflow theiaprok_ont {
                 "contigs_gfa": flye_denovo.contigs_gfa,
                 "county": county,
                 "flye_version": flye_denovo.flye_version,
+                "ectyper_database_version": merlin_magic.ectyper_database_version,
+                "ectyper_docker": merlin_magic.ectyper_docker,
+                "ectyper_pathodb_version": merlin_magic.ectyper_pathodb_version,
+                "ectyper_pathotype": merlin_magic.ectyper_pathotype,
+                "ectyper_pathotype_count": merlin_magic.ectyper_pathotype_count,
+                "ectyper_pathotype_genes": merlin_magic.ectyper_pathotype_genes,
+                "ectyper_qc_result": merlin_magic.ectyper_qc_result,
                 "ectyper_predicted_serotype": merlin_magic.ectyper_predicted_serotype,
                 "ectyper_results": merlin_magic.ectyper_results,
+                "ectyper_stx_subtypes": merlin_magic.ectyper_stx_subtypes,
                 "ectyper_version": merlin_magic.ectyper_version,
+                "ectyper_warnings": merlin_magic.ectyper_warnings,
                 "emmtyper_docker": merlin_magic.emmtyper_docker,
                 "emmtyper_emm_type": merlin_magic.emmtyper_emm_type,
                 "emmtyper_results_tsv": merlin_magic.emmtyper_results_tsv,
@@ -401,10 +412,6 @@ workflow theiaprok_ont {
                 "kmerfinder_results_tsv": kmerfinder.kmerfinder_results_tsv,
                 "kmerfinder_template_coverage": kmerfinder.kmerfinder_template_coverage,
                 "kmerfinder_top_hit": kmerfinder.kmerfinder_top_hit,
-                "kraken_docker": read_QC_trim.kraken_docker,
-                "kraken2_database": read_QC_trim.kraken_database,
-                "kraken2_report": read_QC_trim.kraken_report,
-                "kraken2_version": read_QC_trim.kraken_version,
                 "legsta_predicted_sbt": merlin_magic.legsta_predicted_sbt,
                 "legsta_results": merlin_magic.legsta_results,
                 "legsta_version": merlin_magic.legsta_version,
@@ -421,6 +428,10 @@ workflow theiaprok_ont {
                 "meningotype_serogroup": merlin_magic.meningotype_serogroup,
                 "meningotype_tsv": merlin_magic.meningotype_tsv,
                 "meningotype_version": merlin_magic.meningotype_version,
+                "metabuli_docker": read_QC_trim.metabuli_docker,
+                "metabuli_database": read_QC_trim.metabuli_database,
+                "metabuli_report": read_QC_trim.metabuli_report,
+                "metabuli_version": read_QC_trim.metabuli_version,
                 "n50_value": quast.n50_value,
                 "nanoplot_docker": nanoplot_raw.nanoplot_docker,
                 "nanoplot_html_clean": nanoplot_clean.nanoplot_html,
@@ -511,17 +522,20 @@ workflow theiaprok_ont {
                 "resfinder_predicted_resistance_Cip": resfinder_task.resfinder_predicted_resistance_Cip,
                 "resfinder_predicted_resistance_Smx": resfinder_task.resfinder_predicted_resistance_Smx,
                 "resfinder_predicted_resistance_Tmp": resfinder_task.resfinder_predicted_resistance_Tmp,
+                "resfinder_predicted_resistance_quinolone": resfinder_task.resfinder_predicted_resistance_quinolone,
+                "resfinder_predicted_resistance_quinolone_mechanisms": resfinder_task.resfinder_predicted_resistance_quinolone_mechanisms,
                 "resfinder_predicted_xdr_shigella": resfinder_task.resfinder_predicted_xdr_shigella,
                 "resfinder_results": resfinder_task.resfinder_results_tab,
                 "resfinder_seqs": resfinder_task.resfinder_hit_in_genome_seq,
+                "resfinder_version": resfinder_task.resfinder_version,
                 "run_id": run_id,
                 "seq_platform": seq_method,
-                "seqsero2_note": merlin_magic.seqsero2_note,
-                "seqsero2_predicted_antigenic_profile": merlin_magic.seqsero2_predicted_antigenic_profile,
-                "seqsero2_predicted_contamination": merlin_magic.seqsero2_predicted_contamination,
-                "seqsero2_predicted_serotype": merlin_magic.seqsero2_predicted_serotype,
-                "seqsero2_report": merlin_magic.seqsero2_report,
-                "seqsero2_version": merlin_magic.seqsero2_version,
+                "seqsero2s_note": merlin_magic.seqsero2s_note,
+                "seqsero2s_predicted_antigenic_profile": merlin_magic.seqsero2s_predicted_antigenic_profile,
+                "seqsero2s_predicted_contamination": merlin_magic.seqsero2s_predicted_contamination,
+                "seqsero2s_predicted_serotype": merlin_magic.seqsero2s_predicted_serotype,
+                "seqsero2s_report": merlin_magic.seqsero2s_report,
+                "seqsero2s_version": merlin_magic.seqsero2s_version,
                 "serotypefinder_docker": merlin_magic.serotypefinder_docker,
                 "serotypefinder_report": merlin_magic.serotypefinder_report,
                 "serotypefinder_serotype": merlin_magic.serotypefinder_serotype,
@@ -701,11 +715,11 @@ workflow theiaprok_ont {
     # Read QC - nanoplot general outputs
     String? nanoplot_version = nanoplot_raw.nanoplot_version
     String? nanoplot_docker = nanoplot_raw.nanoplot_docker
-    # Read QC - kraken outputs
-    String? kraken2_version = read_QC_trim.kraken_version
-    String? kraken2_report = read_QC_trim.kraken_report
-    String? kraken2_database = read_QC_trim.kraken_database
-    String? kraken_docker = read_QC_trim.kraken_docker
+    # Read QC - metabuli outputs
+    String? metabuli_version = read_QC_trim.metabuli_version
+    String? metabuli_report = read_QC_trim.metabuli_report
+    String? metabuli_database = read_QC_trim.metabuli_database
+    String? metabuli_docker = read_QC_trim.metabuli_docker
     # Read QC - rasusa outputs
     String? rasusa_version = read_QC_trim.rasusa_version
     # Assembly - flye_denovo outputs
@@ -791,6 +805,8 @@ workflow theiaprok_ont {
     File? amr_search_results = merlin_magic.amr_search_results
     File? amr_search_csv = merlin_magic.amr_results_csv
     File? amr_search_results_pdf = merlin_magic.amr_results_pdf
+    String? amr_search_all_resistances = merlin_magic.amr_search_all_resistances
+    String? amr_search_associated_resistances = merlin_magic.amr_search_associated_resistances
     String? amr_search_docker = merlin_magic.amr_search_docker
     String? amr_search_version = merlin_magic.amr_search_version    
     # Resfinder Outputs
@@ -808,6 +824,9 @@ workflow theiaprok_ont {
     String? resfinder_predicted_resistance_Cip = resfinder_task.resfinder_predicted_resistance_Cip
     String? resfinder_predicted_resistance_Smx = resfinder_task.resfinder_predicted_resistance_Smx
     String? resfinder_predicted_resistance_Tmp = resfinder_task.resfinder_predicted_resistance_Tmp
+    String? resfinder_predicted_resistance_quinolone = resfinder_task.resfinder_predicted_resistance_quinolone
+    Int? resfinder_predicted_resistance_quinolone_mechanisms = resfinder_task.resfinder_predicted_resistance_quinolone_mechanisms
+    String? resfinder_version = resfinder_task.resfinder_version
     String? resfinder_db_version = resfinder_task.resfinder_db_version
     String? resfinder_docker = resfinder_task.resfinder_docker
     # MLST Typing
@@ -933,12 +952,12 @@ workflow theiaprok_ont {
     String? sistr_h2_antigens = merlin_magic.sistr_h2_antigens
     String? sistr_o_antigens = merlin_magic.sistr_o_antigens
     String? sistr_serotype_cgmlst = merlin_magic.sistr_serotype_cgmlst
-    String? seqsero2_report = merlin_magic.seqsero2_report
-    String? seqsero2_version = merlin_magic.seqsero2_version
-    String? seqsero2_note = merlin_magic.seqsero2_note
-    String? seqsero2_predicted_antigenic_profile = merlin_magic.seqsero2_predicted_antigenic_profile
-    String? seqsero2_predicted_serotype = merlin_magic.seqsero2_predicted_serotype
-    String? seqsero2_predicted_contamination = merlin_magic.seqsero2_predicted_contamination
+    String? seqsero2s_report = merlin_magic.seqsero2s_report
+    String? seqsero2s_version = merlin_magic.seqsero2s_version
+    String? seqsero2s_note = merlin_magic.seqsero2s_note
+    String? seqsero2s_predicted_antigenic_profile = merlin_magic.seqsero2s_predicted_antigenic_profile
+    String? seqsero2s_predicted_serotype = merlin_magic.seqsero2s_predicted_serotype
+    String? seqsero2s_predicted_contamination = merlin_magic.seqsero2s_predicted_contamination
     # Salmonella serotype Typhi Typing
     File? genotyphi_report_tsv = merlin_magic.genotyphi_report_tsv 
     File? genotyphi_mykrobe_json = merlin_magic.genotyphi_mykrobe_json

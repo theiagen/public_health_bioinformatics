@@ -37,7 +37,7 @@ pasty_serogroup	EXACT
 pbptyper_predicted_1A_2B_2X	EXACT
 plasmidfinder_plasmids	SET
 poppunk_gps_cluster	EXACT
-seqsero2_predicted_serotype	EXACT
+seqsero2s_predicted_serotype	EXACT
 seroba_ariba_serotype	EXACT
 seroba_serotype	EXACT
 serotypefinder_serotype	EXACT

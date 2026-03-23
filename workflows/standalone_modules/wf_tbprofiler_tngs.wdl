@@ -1,8 +1,10 @@
 version 1.0
 
-import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic_task
+import "../../tasks/quality_control/basic_statistics/task_fastq_scan.wdl" as fastq_scan
+import "../../tasks/species_typing/mycobacterium/task_clockwork.wdl" as clockwork_task
 import "../../tasks/species_typing/mycobacterium/task_tbprofiler.wdl" as tbprofiler_task
 import "../../tasks/species_typing/mycobacterium/task_tbp_parser.wdl" as tbp_parser_task
+import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 workflow tbprofiler_tngs {
@@ -13,31 +15,49 @@ workflow tbprofiler_tngs {
     File read1
     File read2
     String samplename
-    Int bases_to_crop = 0
+    
+    String? tbdb_branch
+
+    Boolean run_trimmomatic = true
+    Boolean run_clockwork = false
   }
   call versioning.version_capture {
     input:
   }
-  call trimmomatic_task.trimmomatic_pe {
-    input:
-      read1 = read1,
-      read2 = read2,
-      samplename = samplename,
-      trimmomatic_base_crop = bases_to_crop
+  call fastq_scan.fastq_scan_pe as fastq_scan_raw {
+      input:
+        read1 = read1,
+        read2 = read2
   }
-  # call clockwork_task.clockwork_decon_reads {
-  #   input: 
-  #     read1 = trimmomatic_pe.read1_trimmed,
-  #     read2 = trimmomatic_pe.read2_trimmed,
-  #     samplename = samplename
-  # } 
+  if (run_trimmomatic) {
+    call trimmomatic_task.trimmomatic {
+      input:
+        read1 = read1,
+        read2 = read2,
+        samplename = samplename
+    }
+  }
+  if (run_clockwork) {
+    call clockwork_task.clockwork_decon_reads {
+      input: 
+        read1 = select_first([trimmomatic.read1_trimmed, read1]),
+        read2 = select_first([trimmomatic.read2_trimmed, read2]),
+        samplename = samplename
+    } 
+  }
+  if (run_trimmomatic || run_clockwork) {
+    call fastq_scan.fastq_scan_pe as fastq_scan_clean {
+      input:
+        read1 = select_first([clockwork_decon_reads.clockwork_cleaned_read1, trimmomatic.read1_trimmed]),
+        read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2, trimmomatic.read2_trimmed])
+    }
+  }
   call tbprofiler_task.tbprofiler {
     input:
-      # read1 = clockwork_decon_reads.clockwork_cleaned_read1,
-      # read2 = clockwork_decon_reads.clockwork_cleaned_read2,
-      read1 = trimmomatic_pe.read1_trimmed,
-      read2 = trimmomatic_pe.read2_trimmed,
-      samplename = samplename
+      read1 = select_first([clockwork_decon_reads.clockwork_cleaned_read1, trimmomatic.read1_trimmed, read1]),
+      read2 = select_first([clockwork_decon_reads.clockwork_cleaned_read2, trimmomatic.read2_trimmed, read2]),
+      samplename = samplename,
+      tbdb_branch = tbdb_branch
   }
   call tbp_parser_task.tbp_parser {
     input:
@@ -48,16 +68,30 @@ workflow tbprofiler_tngs {
       tngs_data = true
   }
   output {
+    # fastq_scan raw (per read stats)
+    Int fastq_scan_num_reads_raw1 = fastq_scan_raw.read1_seq
+    Int fastq_scan_num_reads_raw2 = fastq_scan_raw.read2_seq
+    String fastq_scan_raw_pairs = fastq_scan_raw.read_pairs
+    File fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
+    File fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
+    String fastq_scan_version = fastq_scan_raw.version
+    String fastq_scan_docker = fastq_scan_raw.fastq_scan_docker
+    # fastq_scan clean (per read stats)
+    Int? fastq_scan_num_reads_clean1 = fastq_scan_clean.read1_seq
+    Int? fastq_scan_num_reads_clean2 = fastq_scan_clean.read2_seq
+    String? fastq_scan_clean_pairs = fastq_scan_clean.read_pairs
+    File? fastq_scan_clean1_json = fastq_scan_clean.read1_fastq_scan_json
+    File? fastq_scan_clean2_json = fastq_scan_clean.read2_fastq_scan_json
     # trimmomatic outputs
-    File trimmomatic_read1_trimmed = trimmomatic_pe.read1_trimmed
-    File trimmomatic_read2_trimmed = trimmomatic_pe.read2_trimmed
-    File trimmomatic_stats = trimmomatic_pe.trimmomatic_stats
-    String trimmomatic_version = trimmomatic_pe.version
-    String trimmomatic_docker = trimmomatic_pe.trimmomatic_docker
+    File? trimmomatic_read1_trimmed = trimmomatic.read1_trimmed
+    File? trimmomatic_read2_trimmed = trimmomatic.read2_trimmed
+    File? trimmomatic_stats = trimmomatic.trimmomatic_stats
+    String? trimmomatic_version = trimmomatic.version
+    String? trimmomatic_docker = trimmomatic.trimmomatic_docker
     # clockwork outputs
-    # File clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
-    # File clockwork_cleaned_read2 = clockwork_decon_reads.clockwork_cleaned_read2
-    # String clockwork_version = clockwork_decon_reads.clockwork_version
+    File? clockwork_decontaminated_read1 = clockwork_decon_reads.clockwork_cleaned_read1
+    File? clockwork_decontaminated_read2 = clockwork_decon_reads.clockwork_cleaned_read2
+    String? clockwork_version = clockwork_decon_reads.clockwork_version
     # tbprofiler outputs
     File tbprofiler_report_csv = tbprofiler.tbprofiler_output_csv
     File tbprofiler_report_tsv = tbprofiler.tbprofiler_output_tsv

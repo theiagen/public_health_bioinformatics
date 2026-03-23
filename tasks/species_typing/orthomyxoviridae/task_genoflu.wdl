@@ -4,7 +4,7 @@ task genoflu {
   input {
     File assembly_fasta
     String samplename
-    Float? min_percent_identity # genoflu default is 98
+    Float min_percent_identity = 98 # genoflu default is 98
     # excel file to cross-reference BLAST findings; probably useful if novel
     #  genotypes are not in the default file used by genoflu.py
     File? cross_reference

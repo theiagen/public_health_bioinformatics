@@ -26,7 +26,7 @@ You can learn more about the kSNP3 workflow, including how to visualize the outp
 ### Workflow Tasks
 
 {{ include_md("common_text/ksnp_task.md", condition="ksnp3") }}
-{{ include_md("common_text/snp_dists_task.md") }}
+{{ include_md("common_text/snp_dists_task.md", condition="ksnp") }}
 {{ include_md("common_text/data_summary_task.md") }}
 
 ### Outputs

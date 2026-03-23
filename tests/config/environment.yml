@@ -3,7 +3,7 @@ channels:
   - conda-forge
   - bioconda
 dependencies:
-  - python >=3.7
+  - python >=3.7,<3.14 
   - cromwell=86
   - miniwdl=1.5.2
   - pytest

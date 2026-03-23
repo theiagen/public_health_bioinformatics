@@ -6,14 +6,14 @@ task augur_traits {
     File? metadata
     File? weights
     #Boolean confidence = true
-    String? metadata_id_columns
+    String metadata_id_columns = "'strain' 'name'" # set to mirror v31.5.0 default
     String columns
     String build_name
 
     Int memory = 30
     Int cpu = 4
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0"
   }
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur traits \

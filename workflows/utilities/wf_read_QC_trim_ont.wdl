@@ -1,9 +1,10 @@
 version 1.0
 
 import "../../tasks/quality_control/read_filtering/task_artic_guppyplex.wdl" as artic_guppyplex
+import "../../tasks/taxon_id/task_ete4_taxon_id.wdl" as ete4_taxon_id
 import "../../tasks/quality_control/read_filtering/task_nanoq.wdl" as nanoq_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
-import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken2
+import "../../tasks/taxon_id/contamination/task_metabuli.wdl" as metabuli
 import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 
 workflow read_QC_trim_ont {
@@ -40,19 +41,13 @@ workflow read_QC_trim_ont {
 
     # kraken inputs
     String? target_organism
-    Boolean call_kraken = false
-    Int? kraken_cpu
-    File? kraken_db
-    Int? kraken_disk_size
-    String? kraken_docker_image
-    Int? kraken_memory
+    Int? metabuli_cpu
+    File? metabuli_db
+    Int? metabuli_disk_size
+    String? metabuli_docker_image
+    Int metabuli_memory = 32 # prokaryotes need more
+    File? metabuli_taxdump_path
 
-    # parse classified reads inputs
-    Int? kraken2_recalculate_abundances_cpu
-    Int? kraken2_recalculate_abundances_disk_size
-    String? kraken2_recalculate_abundances_docker
-    Int? kraken2_recalculate_abundances_memory
-  
     # rasusa downsampling inputs
     Float downsampling_coverage = 150
     Int? rasusa_cpu
@@ -73,6 +68,14 @@ workflow read_QC_trim_ont {
     Int? nanoq_min_read_length
     Int? nanoq_max_read_qual
     Int? nanoq_min_read_qual  
+  }
+  if (defined(target_organism)) {
+    if (select_first([target_organism]) != "") {
+      call ete4_taxon_id.ete4_taxon_id {
+        input:
+          taxon = select_first([target_organism]),
+      }
+    }
   }
   if ("~{workflow_series}" == "theiacov") {
     call ncbi_scrub.ncbi_scrub_se {
@@ -96,50 +99,32 @@ workflow read_QC_trim_ont {
         docker = artic_guppyplex_docker,
         memory = artic_guppyplex_memory
     }
-    call kraken2.kraken2_theiacov as kraken2_raw {
+    call metabuli.metabuli as metabuli_theiacov_raw {
       input:
         samplename = samplename,
         read1 = read1,
-        target_organism = target_organism,
-        kraken2_db = kraken_db,
-        disk_size = kraken_disk_size,
-        memory = kraken_memory,
-        cpu = kraken_cpu,
-        docker_image = kraken_docker_image
+        metabuli_db = metabuli_db,
+        seq_mode = 3,
+        taxon_id = ete4_taxon_id.taxon_id,
+        disk_size = metabuli_disk_size,
+        memory = metabuli_memory,
+        cpu = metabuli_cpu,
+        docker = metabuli_docker_image,
+        taxdump_path = metabuli_taxdump_path
     }
-    call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_raw {
-      input:
-        samplename = samplename,
-        kraken2_report = kraken2_raw.kraken_report,
-        kraken2_classified_report = kraken2_raw.kraken2_classified_report,
-        target_organism = target_organism,
-        disk_size = kraken2_recalculate_abundances_disk_size,
-        memory = kraken2_recalculate_abundances_memory,
-        cpu = kraken2_recalculate_abundances_cpu,
-        docker = kraken2_recalculate_abundances_docker
-    }  
-    call kraken2.kraken2_theiacov as kraken2_dehosted {
+    call metabuli.metabuli as metabuli_theiacov_dehosted {
       input:
         samplename = samplename,
         read1 = ncbi_scrub_se.read1_dehosted,
-        target_organism = target_organism,
-        kraken2_db = kraken_db,
-        disk_size = kraken_disk_size,
-        memory = kraken_memory,
-        cpu = kraken_cpu,
-        docker_image = kraken_docker_image
+        taxon_id = ete4_taxon_id.taxon_id,
+        metabuli_db = metabuli_db,
+        seq_mode = 3,
+        disk_size = metabuli_disk_size,
+        memory = metabuli_memory,
+        cpu = metabuli_cpu,
+        docker = metabuli_docker_image,
+        taxdump_path = metabuli_taxdump_path
     }
-    call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances_dehosted {
-      input:
-        samplename = samplename,
-        kraken2_report = kraken2_dehosted.kraken_report,
-        kraken2_classified_report = kraken2_dehosted.kraken2_classified_report,
-        target_organism = target_organism,
-        disk_size = kraken2_recalculate_abundances_disk_size,
-        memory = kraken2_recalculate_abundances_memory,
-        cpu = kraken2_recalculate_abundances_cpu,
-        docker = kraken2_recalculate_abundances_docker
-    } 
   }
   if ("~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk") {
     # rasusa for random downsampling
@@ -172,27 +157,20 @@ workflow read_QC_trim_ont {
         min_read_qual = nanoq_min_read_qual,
         memory = nanoq_memory 
     }
-    if ("~{workflow_series}" == "theiaprok") {
-      if (call_kraken && defined(kraken_db)) {
-        call kraken2.kraken2_standalone as kraken2_se {
-          input:
-            samplename = samplename,
-            read1 = read1,
-            kraken2_db = select_first([kraken_db]),
-            disk_size = kraken_disk_size,
-            memory = kraken_memory,
-            cpu = kraken_cpu
-        }
-        call kraken2.kraken2_parse_classified as kraken2_recalculate_abundances {
-          input:
-            samplename = samplename,
-            kraken2_report = kraken2_se.kraken2_report,
-            kraken2_classified_report = kraken2_se.kraken2_classified_report
-        } 
+    if ("~{workflow_series}" == "theiaprok" && defined(metabuli_db)) {
+      call metabuli.metabuli as metabuli_theiaprok {
+        input:
+          samplename = samplename,
+          read1 = read1,
+          metabuli_db = metabuli_db,
+          seq_mode = 3,
+          taxon_id = ete4_taxon_id.taxon_id,
+          disk_size = metabuli_disk_size,
+          memory = metabuli_memory,
+          cpu = metabuli_cpu,
+          docker = metabuli_docker_image,
+          taxdump_path = metabuli_taxdump_path,
       } 
-    if ((call_kraken) && ! defined(kraken_db)) {
-        String kraken_db_warning = "Kraken database not defined"
-      }
     }
   }
   output { 
@@ -200,19 +178,18 @@ workflow read_QC_trim_ont {
     # ncbi scrub outputs
     File? read1_dehosted = ncbi_scrub_se.read1_dehosted
     
-    # kraken2 - theiacov and theiaprok
-    String kraken_version = select_first([kraken2_raw.version, kraken2_se.kraken2_version, ""])
-    String kraken_docker = select_first([kraken2_raw.docker, kraken2_se.kraken2_docker, ""])
-    Float? kraken_human = kraken2_recalculate_abundances_raw.percent_human
-    String? kraken_sc2 = kraken2_recalculate_abundances_raw.percent_sc2
-    String? kraken_target_organism = kraken2_recalculate_abundances_raw.percent_target_organism
-    String? kraken_target_organism_name = kraken2_raw.kraken_target_organism
-    String kraken_report = select_first([kraken2_recalculate_abundances_raw.kraken_report, kraken2_recalculate_abundances.kraken_report, ""])
-    Float? kraken_human_dehosted = kraken2_recalculate_abundances_dehosted.percent_human
-    String? kraken_sc2_dehosted = kraken2_recalculate_abundances_dehosted.percent_sc2
-    String? kraken_target_organism_dehosted = kraken2_recalculate_abundances_dehosted.percent_target_organism
-    File? kraken_report_dehosted = kraken2_recalculate_abundances_dehosted.kraken_report
-    String kraken_database = select_first([kraken2_raw.database, kraken2_se.kraken2_database, kraken_db_warning, ""])
+    # metabuli - theiacov and theiaprok
+    String metabuli_version = select_first([metabuli_theiacov_raw.metabuli_version, metabuli_theiaprok.metabuli_version, ""])
+    String metabuli_docker = select_first([metabuli_theiacov_raw.metabuli_docker, metabuli_theiaprok.metabuli_docker, ""])
+    String metabuli_percent_human = select_first([metabuli_theiacov_raw.metabuli_percent_human, metabuli_theiaprok.metabuli_percent_human, ""])
+    String? metabuli_target_organism = ete4_taxon_id.taxon_name
+    String metabuli_percent_target_organism = select_first([metabuli_theiacov_raw.metabuli_percent_target_lineage, metabuli_theiaprok.metabuli_percent_target_lineage, ""])
+    String? metabuli_taxon_id = ete4_taxon_id.taxon_id
+    String metabuli_report = select_first([metabuli_theiacov_raw.metabuli_report, metabuli_theiaprok.metabuli_report, ""])
+    Float? metabuli_percent_human_dehosted = metabuli_theiacov_dehosted.metabuli_percent_human
+    String? metabuli_percent_target_organism_dehosted = metabuli_theiacov_dehosted.metabuli_percent_target_lineage
+    File? metabuli_report_dehosted = metabuli_theiacov_dehosted.metabuli_report
+    String metabuli_database = select_first([metabuli_theiacov_raw.metabuli_database, metabuli_theiaprok.metabuli_database, ""])
    
     # estimated genome length -- by default for TheiaProk this is 5Mb
     Int est_genome_length = genome_length

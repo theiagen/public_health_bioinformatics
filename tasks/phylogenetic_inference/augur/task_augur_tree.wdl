@@ -13,7 +13,7 @@ task augur_tree {
     Int cpu = 64
     Int memory = 32
     Int disk_size = 750
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/augur:22.0.2--pyhdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0"
   }
   command <<<
     set -euo pipefail
@@ -70,7 +70,7 @@ task augur_tree {
   >>>
 
   output {
-    File aligned_tree  = "~{build_name}_~{method}.nwk"
+    File tree  = "~{build_name}_~{method}.nwk"
     String augur_version = read_string("VERSION")
     String iqtree_version = read_string("IQTREE_VERSION")
     String fasttree_version = read_string("FASTTREE_VERSION")

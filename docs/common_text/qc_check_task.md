@@ -5,8 +5,14 @@
 
     The `qc_check` task compares generated QC metrics against user-defined thresholds for each metric. This task will run if the user provides a `qc_check_table` TSV file. If all QC metrics meet the threshold, the `qc_check` output variable will read `QC_PASS`. Otherwise, the output will read `QC_NA` if the task could not proceed or `QC_ALERT` followed by a string indicating what metric failed.
 
+<!-- if: freyja -->
+    Thresholds for percent human classified reads and percent human classified dehosted reads are noted as "classified_human" and "classified_human_dehosted" respectively. In other workflows, these QC check columns are named "kraken_human*" or "metabuli_human*", but Freyja uses the "classified_" prefix because the classification software used will vary depending on read type (kraken2 for Illumina, Metabuli for ONT).
+<!-- endif -->
+
 <!-- if: theiacov -->
     The `qc_check` task applies quality thresholds according to the specified organism, which should match the _standardized_ `organism` input in the TheiaCoV workflows.
+
+    Segment-based QC can be applied to influenza genomes for "percent_reference_coverage", "median_coverage", and "num_minor_snv". To apply thresholds across all segments, use "segment_" as a prefix for the QC threshold column in the QC check template. To apply thresholds to individual segments, use the following prefixes: "mp_", "pb1_", "pb2_", "na_", "ns_", "np_", "pa_", and "ha_". For example, percent reference coverage for the mp segment should have a column labeled `mp_percent_reference_coverage`. Segment-specific thresholds are preferentially used over general segment thresholds if both are present. If all segment-specific thresholds are provided for a metric, the general segment threshold for that metric should be left blank. Otherwise, the `qc_check` output will contain a `QC_ALERT` message. If some segment-specific thresholds are provided for a metric, the general segment threshold will only be used for segments that do not have a provided threshold.
 <!-- endif -->
 <!-- if: theiaprok|theiaeuk -->
     The `qc_check` task applies quality thresholds according to the sample taxa. The sample taxa is taken from the `gambit_predicted_taxon` value inferred by the GAMBIT module OR can be manually provided by the user using the `expected_taxon` workflow input.
@@ -22,6 +28,7 @@
     ??? toggle "Template _qc_check_table.tsv_ files"    
 <!-- if: theiacov -->
         - TheiaCoV_Illumina_PE: [TheiaCoV_Illumina_PE_qc_check_template.tsv](../../assets/files/TheiaCoV_Illumina_PE_qc_check_template.tsv)
+        - TheiaCoV_ONT: [TheiaCoV_ONT_qc_check_template.tsv](../../assets/files/TheiaCoV_ONT_qc_check_template.tsv)
 <!-- endif -->
 <!-- if: theiaprok -->
         - TheiaProk_Illumina_PE: [theiaprok_illumina_pe_qc_check_template.tsv](../../assets/files/TheiaProk_Illumina_PE_qc_check_template.tsv)
@@ -30,8 +37,11 @@
 <!-- if: theiaeuk -->
         - TheiaEuk_Illumina_PE_PHB: [theiaeuk_qc_check_template.tsv](../../assets/files/TheiaEuk_qc_check_template.tsv)
 <!-- endif -->
+<!-- if: freyja -->
+        - Freyja_FASTQ: [freyja_qc_check_template.tsv](../../assets/files/Freyja_FASTQ_qc_check_template.tsv)
+<!-- endif -->
         !!! warning "Example Purposes Only"
-            The QC threshold values shown in the file above are for example purposes only and should not be presumed to be sufficient for every dataset.
+                The QC threshold values shown in the file above are for example purposes only and should not be presumed to be sufficient for every dataset.
 
     !!! techdetails "qc_check Technical Details"
         |  | Links |

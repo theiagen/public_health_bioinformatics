@@ -13,7 +13,7 @@ workflow kraken2_se_wf {
     File read1
     File kraken2_db
   }
-  call kraken2.kraken2_standalone as kraken2_se {
+  call kraken2.kraken2 as kraken2_se {
     input:
       samplename = samplename,
       read1 = read1,
@@ -21,7 +21,7 @@ workflow kraken2_se_wf {
   }
   call krona_task.krona as krona {
     input:
-      kraken2_report = kraken2_se.kraken2_report,
+      kraken2_report = select_first([kraken2_se.bracken_report, kraken2_se.kraken2_report]),
       samplename = samplename
   }
   call versioning.version_capture {
@@ -38,6 +38,9 @@ workflow kraken2_se_wf {
     File kraken2_classified_report = kraken2_se.kraken2_classified_report
     File kraken2_unclassified_read1 = kraken2_se.kraken2_unclassified_read1
     File kraken2_classified_read1 = kraken2_se.kraken2_classified_read1
+    # Bracken
+    String? bracken_version = kraken2_se.bracken_version
+    File? bracken_report = kraken2_se.bracken_report
     # Krona outputs
     String krona_version = krona.krona_version
     String krona_docker = krona.krona_docker

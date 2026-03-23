@@ -15,11 +15,6 @@ workflows:
    primaryDescriptorPath: /workflows/theiaeuk/wf_cauris_cladetyper.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: ChroQueTas_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_chroquetas.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
  - name: Snippy_Variants_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_snippy_variants.wdl
@@ -115,11 +110,6 @@ workflows:
    primaryDescriptorPath: /workflows/freyja/wf_freyja_dashboard.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Freyja_Update_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/freyja/wf_freyja_update.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
  - name: kSNP3_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_ksnp3.wdl
@@ -178,11 +168,6 @@ workflows:
  - name: Kraken2_SE_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_se.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: Kraken2_ONT_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/standalone_modules/wf_kraken2_ont.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: RASUSA_PHB
@@ -255,7 +240,7 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_phylocompare.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
- - name: Nextclade_Batch_PHB 
+ - name: Nextclade_Batch_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_batch.wdl
    testParameterFiles:
@@ -315,7 +300,7 @@ workflows:
    primaryDescriptorPath: /workflows/standalone_modules/wf_clair3_variants_ont.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
- - name: AMR_Search_PHB 
+ - name: AMR_Search_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/standalone_modules/wf_amr_search.wdl
    testParameterFiles:
@@ -335,9 +320,19 @@ workflows:
    primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_illumina_pe.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
+ - name: TheiaViral_Panel_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/theiaviral/wf_theiaviral_panel.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
  - name: ONT_Barcode_Concatenation_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/utilities/data_import/wf_ont_barcode_concatenation.wdl
+   testParameterFiles:
+     - /tests/inputs/empty.json
+ - name: Microreact_Export_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/utilities/wf_microreact_export.wdl
    testParameterFiles:
      - /tests/inputs/empty.json
  - name: LOD_Table_Prep_PHB

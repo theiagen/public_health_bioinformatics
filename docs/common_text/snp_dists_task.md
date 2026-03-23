@@ -1,4 +1,9 @@
+<!-- if: augur -->
+??? task "`snp-dists`: Pairwise SNP Distance Calculation"
+<!-- endif -->
+<!-- if: ksnp -->
 ??? task "SNP-dists"
+<!-- endif -->
 <!-- if: snippy -->  
     ##### SNP-dists
 <!-- endif -->

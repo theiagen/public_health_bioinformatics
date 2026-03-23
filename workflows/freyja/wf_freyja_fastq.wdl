@@ -3,6 +3,7 @@ version 1.0
 import "../../tasks/alignment/task_bwa.wdl" as align
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl" as trim_primers
+import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/freyja/task_freyja.wdl" as freyja_task
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_pe
@@ -11,6 +12,8 @@ import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_ont
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as task_parse_mapping
 import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
+import "../../tasks/quality_control/basic_statistics/task_qualimap.wdl" as qualimap_task
 
 workflow freyja_fastq {
   input {
@@ -27,6 +30,10 @@ workflow freyja_fastq {
     Int? depth_cutoff
     Boolean ont = false
     String kraken2_target_organism = "Severe acute respiratory syndrome coronavirus 2"
+    # qc check parameters
+    File? qc_check_table
+    # run qualimap
+    Boolean run_qualimap = true
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -36,7 +43,8 @@ workflow freyja_fastq {
         read2  = select_first([read2]),
         trim_min_length = trimmomatic_min_length,
         workflow_series = "theiacov",
-        target_organism = kraken2_target_organism
+        target_organism = kraken2_target_organism,
+        call_kraken = true
     }
   }
   if (! defined(read2) && ! ont) {
@@ -46,7 +54,8 @@ workflow freyja_fastq {
         read1  = read1,
         trim_min_length = trimmomatic_min_length,
         workflow_series = "theiacov",
-        target_organism = kraken2_target_organism
+        target_organism = kraken2_target_organism,
+        call_kraken = true
     }
   }
   if (ont) {
@@ -88,13 +97,13 @@ workflow freyja_fastq {
         sam = minimap2.minimap2_out
     }
   }
-  if (! ont){ 
+  if (! ont){
     call align.bwa {
       input:
         samplename = samplename,
         reference_genome = reference_genome,
         read1 = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean]),
-        read2 = select_first([read_QC_trim_pe.read2_clean])
+        read2 = read_QC_trim_pe.read2_clean
     }
   }
   # Called when the primer_bed file is present, primers are trimmed and trimmed bam is passed to freyja
@@ -116,6 +125,43 @@ workflow freyja_fastq {
       reference_genome = reference_genome,
       reference_gff = reference_gff,
       depth_cutoff = depth_cutoff
+  }
+  if (freyja_pathogen == "SARS-CoV-2") {
+    File sc2_gene_bed = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"
+    call gene_coverage_task.gene_coverage {
+      input:
+        bamfile = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
+        bedfile = sc2_gene_bed,
+        samplename = samplename,
+        organism = "sars-cov-2"
+    }
+  }
+  if (defined(qc_check_table)) {
+    call qc_check.qc_check_phb as qc_check_task {
+      input:
+        qc_check_table = qc_check_table,
+        expected_taxon = freyja_pathogen,
+        qc_check_inputs = {
+          # Read counts - handle differences between ONT (Int from nanoplot) and Illumina (Int from fastq_scan)
+          "num_reads_raw1": select_first([nanoplot_raw.num_reads, read_QC_trim_pe.fastq_scan_raw1, read_QC_trim_pe.fastqc_raw1, read_QC_trim_se.fastq_scan_raw1]),
+          "num_reads_raw2": if defined(read2) then select_first([read_QC_trim_pe.fastq_scan_raw2, read_QC_trim_pe.fastqc_raw2]) else read_QC_trim_pe.fastq_scan_raw2,
+          "num_reads_clean1": select_first([nanoplot_clean.num_reads, read_QC_trim_pe.fastq_scan_clean1, read_QC_trim_pe.fastqc_clean1, read_QC_trim_se.fastq_scan_clean1]),
+          "num_reads_clean2": if defined(read2) then select_first([read_QC_trim_pe.fastq_scan_clean2, read_QC_trim_pe.fastqc_clean2]) else read_QC_trim_pe.fastq_scan_clean2,
+          # Kraken2/Metabuli metrics - available from all three read QC workflows
+          "classified_human": select_first([read_QC_trim_pe.kraken2_human, read_QC_trim_se.kraken2_human, read_QC_trim_ont.metabuli_percent_human]),
+          "classified_human_dehosted": select_first([read_QC_trim_pe.kraken2_human_dehosted, read_QC_trim_se.kraken2_human_dehosted, read_QC_trim_ont.metabuli_percent_human_dehosted]),
+          # SC2-specific gene coverage - only available when freyja_pathogen == "SARS-CoV-2"
+          "sc2_s_gene_mean_coverage": gene_coverage.sc2_s_gene_depth,
+          "sc2_s_gene_percent_coverage": gene_coverage.sc2_s_gene_percent_coverage
+      }
+    }
+  }
+  if (run_qualimap) {
+    call qualimap_task.qualimap as qualimap {
+      input:
+        samplename = samplename,
+        bam_file = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam])
+    }
   }
   call versioning.version_capture {
     input:
@@ -177,7 +223,9 @@ workflow freyja_fastq {
     String trimmomatic_docker = select_first([read_QC_trim_pe.trimmomatic_docker, read_QC_trim_se.trimmomatic_docker, ""])
     # Read QC - fastp outputs  - Illumina PE and SE
     String fastp_version = select_first([read_QC_trim_pe.fastp_version, read_QC_trim_se.fastp_version, ""])
+    String fastp_docker = select_first([read_QC_trim_pe.fastp_docker, read_QC_trim_se.fastp_docker, ""])
     String fastp_html_report = select_first([read_QC_trim_pe.fastp_html_report, read_QC_trim_se.fastp_html_report, ""])
+    String fastp_json_report = select_first([read_QC_trim_pe.fastp_json_report, read_QC_trim_se.fastp_json_report, ""])
     # Read QC - nanoq - ONT
     String? nanoq_version = read_QC_trim_ont.nanoq_version
     # Read QC - bbduk outputs - Illumina PE and SE
@@ -189,13 +237,19 @@ workflow freyja_fastq {
     File read1_dehosted = select_first([read_QC_trim_pe.read1_dehosted, read_QC_trim_se.read1_dehosted, read_QC_trim_ont.read1_dehosted])
     File? read2_dehosted = read_QC_trim_pe.read2_dehosted
     # Read QC - kraken outputs - all
-    String kraken_version = select_first([read_QC_trim_pe.kraken_version, read_QC_trim_se.kraken_version, read_QC_trim_ont.kraken_version])
-    Float kraken_human = select_first([read_QC_trim_pe.kraken_human, read_QC_trim_se.kraken_human, read_QC_trim_ont.kraken_human])
-    String kraken_sc2 = select_first([read_QC_trim_pe.kraken_sc2, read_QC_trim_se.kraken_sc2, read_QC_trim_ont.kraken_sc2])
-    String kraken_report = select_first([read_QC_trim_pe.kraken_report, read_QC_trim_se.kraken_report, read_QC_trim_ont.kraken_report])
-    Float kraken_human_dehosted = select_first([read_QC_trim_pe.kraken_human_dehosted, read_QC_trim_se.kraken_human_dehosted, read_QC_trim_ont.kraken_human_dehosted])
-    String kraken_sc2_dehosted = select_first([read_QC_trim_pe.kraken_sc2_dehosted, read_QC_trim_se.kraken_sc2_dehosted, read_QC_trim_ont.kraken_sc2_dehosted])
-    File kraken_report_dehosted = select_first([read_QC_trim_pe.kraken_report_dehosted, read_QC_trim_se.kraken_report_dehosted, read_QC_trim_ont.kraken_report_dehosted])
+    String kraken_version = select_first([read_QC_trim_pe.kraken2_version, read_QC_trim_se.kraken2_version, ""])
+    String kraken_human = select_first([read_QC_trim_pe.kraken2_human, read_QC_trim_se.kraken2_human, ""])
+    String kraken_report = select_first([read_QC_trim_pe.kraken2_report, read_QC_trim_se.kraken2_report, ""])
+    String bracken_report = select_first([read_QC_trim_pe.bracken_report, read_QC_trim_se.bracken_report, ""])
+    String kraken_human_dehosted = select_first([read_QC_trim_pe.kraken2_human_dehosted, read_QC_trim_se.kraken2_human_dehosted, ""])
+    String kraken_report_dehosted = select_first([read_QC_trim_pe.kraken2_report_dehosted, read_QC_trim_se.kraken2_report_dehosted, ""])
+    String bracken_report_dehosted = select_first([read_QC_trim_pe.bracken_report_dehosted, read_QC_trim_se.bracken_report_dehosted, ""])
+    # Read QC - metabuli outputs - ONT
+    String? metabuli_version = read_QC_trim_ont.metabuli_version
+    Float? metabuli_human = read_QC_trim_ont.metabuli_percent_human
+    String? metabuli_report = read_QC_trim_ont.metabuli_report
+    Float? metabuli_human_dehosted = read_QC_trim_ont.metabuli_percent_human_dehosted
+    String? metabuli_report_dehosted = read_QC_trim_ont.metabuli_report_dehosted
     # Read Alignment - bwa outputs
     String? bwa_version = bwa.bwa_version
     String? alignment_method = alignment_method_technology
@@ -231,5 +285,17 @@ workflow freyja_fastq {
     String freyja_summarized = freyja.freyja_summarized
     String freyja_lineages = freyja.freyja_lineages
     String freyja_abundances = freyja.freyja_abundances
+    # Gene Coverage outputs - SARS-CoV-2 only
+    Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
+    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
+    File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
+    # QC Check Results
+    String? qc_check = qc_check_task.qc_check
+    File? qc_standard = qc_check_task.qc_standard
+    # Qualimap outputs
+    String? qualimap_version = qualimap.version
+    String? qualimap_docker = qualimap.qualimap_docker
+    File? qualimap_reports_bundle = qualimap.qualimap_reports_bundle
+    File? qualimap_coverage_plots_html = qualimap.qualimap_coverage_plots_html
   }
 }

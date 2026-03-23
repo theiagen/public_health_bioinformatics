@@ -5,7 +5,7 @@ task iqtree2 {
     File alignment
     String cluster_name
     String? iqtree2_model # For comparison to other tools use HKY for bactopia, GTR+F+I for grandeur, GTR+G4 for nullarbor, GTR+G for dryad
-    Int iqtree2_bootstraps = 1000 #  Ultrafast bootstrap replicates
+    Int iqtree2_ultrafast_bootstraps = 1000 #  Ultrafast bootstrap replicates
     Int alrt = 1000 # SH-like approximate likelihood ratio test (SH-aLRT) replicates
     String? iqtree2_opts
 
@@ -49,7 +49,7 @@ task iqtree2 {
           -nt AUTO \
           -s msa.fasta \
           -m ${IQTREE2_MODEL} \
-          -bb ~{iqtree2_bootstraps} \
+          -bb ~{iqtree2_ultrafast_bootstraps} \
           -alrt ~{alrt} ~{iqtree2_opts}
 
         # write the iqtree2_model used to a txt file for output as a string
@@ -60,7 +60,7 @@ task iqtree2 {
         iqtree2 \
           -nt AUTO \
           -s msa.fasta \
-          -bb ~{iqtree2_bootstraps} \
+          -bb ~{iqtree2_ultrafast_bootstraps} \
           -alrt ~{alrt} ~{iqtree2_opts}
 
         # for scenario where user did not specify iqtree2_model input nor core_genome boolean input, determine iqtree2_model used by parsing log file
