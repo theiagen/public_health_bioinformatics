@@ -74,6 +74,6 @@ workflow lod_table_process {
     String rasusa_status = select_first([rasusa_completed, rasusa_skipped])
     File? read1_subsampled = rasusa.read1_subsampled
     File? read2_subsampled = rasusa.read2_subsampled
-    String? rasusa_version = rasusa.rasusa_version
+    # String? rasusa_version = rasusa.rasusa_version
   }
 }

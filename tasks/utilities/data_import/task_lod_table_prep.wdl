@@ -3,15 +3,16 @@ version 1.0
 task lod_table_prep {
   input {
     File lod_config_yaml
-    String? input_table_name
     String? workspace_name
     String? project_name
+    String? input_table_name
     String? output_table_name
-    String read1_column_name = "read1"
-    String read2_column_name = "read2"
+    String? read1_column_name
+    String? read2_column_name
+    String? taxon_column_name
     Array[Int]? downsampling_levels
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.2.5-dev"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.3.9-dev"
 
     Int memory = 4
     Int cpu = 1
@@ -21,9 +22,10 @@ task lod_table_prep {
     set -euo pipefail
 
     python3 <<CODE
-    from bioforklift.terra import Terra, WorkflowConfig
+    from bioforklift.terra import Terra
     import pandas as pd
     import yaml
+    import json
 
     # load config yaml
     with open("~{lod_config_yaml}", 'r') as f:
@@ -37,6 +39,7 @@ task lod_table_prep {
       'output_table_name': "~{output_table_name}",
       'read1_column_name': "~{read1_column_name}",
       'read2_column_name': "~{read2_column_name}",
+      'taxon_column_name': "~{taxon_column_name}",
       'downsampling_levels': "~{sep=',' downsampling_levels}"
     }
 
@@ -53,6 +56,7 @@ task lod_table_prep {
     output_table_name = "~{output_table_name}" if "~{output_table_name}" else config['workflow']['output_table_name']
     read1_column_name = "~{read1_column_name}" if "~{read1_column_name}" else config['workflow']['read1_column_name']
     read2_column_name = "~{read2_column_name}" if "~{read2_column_name}" else config['workflow']['read2_column_name']
+    taxon_column_name = "~{taxon_column_name}" if "~{taxon_column_name}" else config['workflow']['taxon_column_name']
     downsampling_levels = sorted([int(x) for x in "~{sep=',' downsampling_levels}"]) if "~{sep=',' downsampling_levels}" else sorted([int(x) for x in config['workflow']['downsampling_levels']])
 
     # Initialize Terra client
@@ -71,8 +75,9 @@ task lod_table_prep {
     output_df = pd.DataFrame(
       {
         f"entity:{output_table_name}_id" : input_df[f"entity:{input_table_name}_id"],
-        "read1": input_df[f"{read1_column_name}"],
-        "read2": input_df[f"{read2_column_name}"],
+        f"{read1_column_name}": input_df[f"{read1_column_name}"],
+        f"{read2_column_name}": input_df[f"{read2_column_name}"],
+        f"{taxon_column_name}": input_df[f"{taxon_column_name}"],
       }
     )
     num_rows = len(output_df)
@@ -117,13 +122,52 @@ task lod_table_prep {
     updated_df = terra.entities.upload_entities(data=output_df, target=f"{output_table_name}")
     result = terra.entities.create_entity_set(f"{output_table_name}_set", f"{output_table_name}", updated_df)
     if result.ok:
-        print("Entity set created successfully")
+      print("Entity set created successfully")
+
+    # write input and output json for launching the wf_lod_table_process workflow
+    input_json = {
+      f"lod_table_process.taxon": f"this.{taxon_column_name}",
+      f"lod_table_process.read1": f"this.{read1_column_name}",
+      f"lod_table_process.read2": f"this.{read2_column_name}",
+      f"lod_table_process.samplename": f"this.{output_table_name}_id",
+      f"lod_table_process.downsampling_level": "this.downsampling_level",
+    }
+    with open("wf_lod_table_process.input.json", 'w') as f:
+      json.dump(input_json, f, indent=2)
+
+    output_json = {
+      f"lod_table_process.ncbi_taxon_id": "this.ncbi_taxon_id",
+      f"lod_table_process.ncbi_taxon_name": "this.ncbi_taxon_name",
+      f"lod_table_process.ncbi_read_extraction_rank": "this.ncbi_read_extraction_rank",
+      f"lod_table_process.ete4_docker": "this.ete4_docker",
+      f"lod_table_process.taxon_avg_genome_length": "this.taxon_avg_genome_length",
+      f"lod_table_process.cg_pipeline_est_coverage": "this.cg_pipeline_est_coverage",
+      f"lod_table_process.cg_pipeline_report": "this.cg_pipeline_report",
+      f"lod_table_process.rasusa_status": "this.rasusa_status",
+      f"lod_table_process.read1_subsampled": "this.read1_subsampled",
+      f"lod_table_process.read2_subsampled": "this.read2_subsampled",
+    }
+    with open("wf_lod_table_process.output.json", 'w') as f:
+      json.dump(output_json, f, indent=2)
 
     CODE
 
+    # SUBMISSION TO BIOFORKLIFT
+    DATE=$(date +"%Y-%m-%d %T")
+
+    # wf_lod_table_process SUBMISSION
+    bioforklift launch \
+      --workflow_name "LOD_Table_Process_PHB" \
+      --branch "tj-lod-lift" \
+      --table "~{output_table_name}" \
+      --comment "${DATE} Automated submission of LOD_Table_Process_PHB" \
+      --input_json "wf_lod_table_process.input.json" \
+      --output_json "wf_lod_table_process.output.json" \
+      --verbose
+
   >>>
   output {
-    Array[File] lod_table_tsv = glob("*_datatable.tsv")
+    File lod_table_tsv = "~{output_table_name}_datatable.tsv"
   }
   runtime {
     docker: docker
