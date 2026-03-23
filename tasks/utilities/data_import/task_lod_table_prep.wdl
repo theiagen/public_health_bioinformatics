@@ -3,14 +3,15 @@ version 1.0
 task lod_table_prep {
   input {
     File lod_config_yaml
-    String? workspace_name
-    String? project_name
-    String? input_table_name
-    String? output_table_name
-    String? read1_column_name
-    String? read2_column_name
-    String? taxon_column_name
-    Array[Int]? downsampling_levels
+    String workspace_name
+    String project_name
+    String input_table_name
+    String output_table_name
+
+    String read1_column_name
+    String read2_column_name
+    String taxon_column_name
+    Array[Int] downsampling_levels
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/bioforklift:0.3.9-dev"
 
@@ -32,33 +33,15 @@ task lod_table_prep {
       config = yaml.safe_load(f)
     print("Loaded LOD config YAML file.")
 
-    required_params = {
-      'workspace_name': "~{workspace_name}",
-      'project_name': "~{project_name}",
-      'input_table_name': "~{input_table_name}",
-      'output_table_name': "~{output_table_name}",
-      'read1_column_name': "~{read1_column_name}",
-      'read2_column_name': "~{read2_column_name}",
-      'taxon_column_name': "~{taxon_column_name}",
-      'downsampling_levels': "~{sep=',' downsampling_levels}"
-    }
-
-    # check for required input parameters
-    for param in required_params:
-      if not config['workflow'].get(param) and not required_params[param]:
-        raise ValueError(f"ERROR: Missing required input parameter: '{param}'. Not found in config or optional WDL inputs")
-    print("All required parameters found.")
-
-    # set parameters, giving precedence to WDL inputs if provided
-    workspace_name = "~{workspace_name}" if "~{workspace_name}" else config['workflow']['workspace_name']
-    project_name = "~{project_name}" if "~{project_name}" else config['workflow']['project_name']
-    input_table_name = "~{input_table_name}" if "~{input_table_name}" else config['workflow']['input_table_name']
-    output_table_name = "~{output_table_name}" if "~{output_table_name}" else config['workflow']['output_table_name']
-    read1_column_name = "~{read1_column_name}" if "~{read1_column_name}" else config['workflow']['read1_column_name']
-    read2_column_name = "~{read2_column_name}" if "~{read2_column_name}" else config['workflow']['read2_column_name']
-    taxon_column_name = "~{taxon_column_name}" if "~{taxon_column_name}" else config['workflow']['taxon_column_name']
-    downsampling_levels = sorted([int(x) for x in "~{sep=',' downsampling_levels}"]) if "~{sep=',' downsampling_levels}" else sorted([int(x) for x in config['workflow']['downsampling_levels']])
-
+    # set parameters
+    workspace_name = "~{workspace_name}"
+    project_name = "~{project_name}"
+    input_table_name = "~{input_table_name}"
+    output_table_name = "~{output_table_name}"
+    read1_column_name = "~{read1_column_name}"
+    read2_column_name = "~{read2_column_name}"
+    taxon_column_name = "~{taxon_column_name}"
+    downsampling_levels = sorted([int(x) for x in "~{sep=',' downsampling_levels}"])
     # Initialize Terra client
     terra = Terra(
       source_workspace = workspace_name,
