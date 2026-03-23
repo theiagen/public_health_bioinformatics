@@ -24,9 +24,6 @@ task metabuli {
     # set status
     metabuli_status=PASS
 
-    # set status
-    metabuli_status=PASS
-
     # get version (there is no --version flag for metabuli)
     echo $(metabuli --help) | awk -F'Version: ' '{print $2}' | awk '{print $1}' | tee VERSION
 
@@ -45,6 +42,10 @@ task metabuli {
 
     # Identify available RAM and subtract one for metabuli
     available_ram=$(free -g | sed -nE '2p' | awk '{print $7-1}')
+    if [[ $available_ram -le 0 ]]; then
+      available_ram=1
+    fi
+    echo "DEBUG: Available RAM is ${available_ram} GB"
 
     metabuli classify \
       --seq-mode ~{seq_mode} \
@@ -61,20 +62,20 @@ task metabuli {
       --max-ram ${available_ram}
 
     # Quantify percent human
-    if $(cut -f 6 output_dir/~{samplename}_report.tsv | grep -q "Homo sapiens"); then
-      grep -P "Homo sapiens" output_dir/~{samplename}_report.tsv | cut -f 1 > PERCENT_HUMAN
-      echo "DEBUG: Homo sapiens comprises $(cat PERCENT_HUMAN)% of reads"
-    else
+    awk '$6 == "Homo" && $7 == "sapiens" {print $1}' output_dir/~{samplename}_report.tsv > PERCENT_HUMAN
+    if [[ ! -s PERCENT_HUMAN ]]; then 
       echo "DEBUG: Homo sapiens comprises 0% of reads"
       echo "0" > PERCENT_HUMAN
+    else
+      echo "DEBUG: Homo sapiens comprises $(cat PERCENT_HUMAN)% of reads"
     fi
 
     # Extract the reads
     echo "" > PERCENT_TARGET_LINEAGE
-    if [[ ~{if defined(taxon_id) then "true" else "false"} == "true" ]]; then
+    if [[ -n "~{taxon_id}" ]]; then
       echo "DEBUG: Extracting reads"
-      if $(cut -f 5 output_dir/~{samplename}_report.tsv | grep -q "^~{taxon_id}$"); then
-        grep -P "\s~{taxon_id}\s" output_dir/~{samplename}_report.tsv | cut -f 1 > PERCENT_TARGET_LINEAGE
+      awk '$5 == "~{taxon_id}" {print $1}' output_dir/~{samplename}_report.tsv > PERCENT_TARGET_LINEAGE
+      if [[ -s PERCENT_TARGET_LINEAGE ]]; then
         echo "DEBUG: Taxon ID ~{taxon_id} found in report, proceeding with read extraction"
         echo "DEBUG: ~{taxon_id} comprises $(cat PERCENT_TARGET_LINEAGE)% of reads"
 
@@ -119,6 +120,7 @@ task metabuli {
         fi
   
       else
+        echo "0" > PERCENT_TARGET_LINEAGE
         echo "ERROR: Taxon ID ~{taxon_id} not found in report, skipping read extraction"
         metabuli_status="FAIL; taxon not recovered"
       fi
