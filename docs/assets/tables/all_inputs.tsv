@@ -1631,7 +1631,7 @@ metabuli	min_score	Float	Minimum sequenece similarity score (0.0 - 1.0)	0	Option
 metabuli	min_sp_score	Float	Minimum score for species- or lower-level classification	0	Optional	Metabuli, TheiaViral_ONT	general	
 metabuli	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general	
 metabuli	taxdump_path	File	Path to compressed taxonomy dump	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz	Optional	TheiaViral_ONT	general	
-metabuli_wf	call_trim	Boolean	Call adapter and read trimming via Fastp (Illumina) or Porechop (ONT)	True	Optional	Metabuli	general	
+metabuli_wf	call_trim	Boolean	Call adapter and read trimming via Fastp (Illumina) or Fastplong (ONT)	True	Optional	Metabuli	general	
 metabuli_wf	illumina	Boolean	Input reads are Illumina - automatically inferred if read2 is populated, ONT is assumed otherwise		Optional	Metabuli	general	
 metabuli_wf	metabuli_disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	Metabuli	runtime	
 metabuli_wf	metabuli_mem	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Metabuli	runtime	
