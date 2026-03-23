@@ -157,6 +157,8 @@ task lod_table_prep {
 
     # wf_lod_table_process SUBMISSION
     bioforklift launch \
+      --workspace "~{workspace_name}" \
+      --project "~{project_name}" \
       --workflow_name "LOD_Table_Process_PHB" \
       --branch "tj-lod-lift" \
       --table "~{output_table_name}" \
