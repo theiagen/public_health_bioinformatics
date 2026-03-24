@@ -2706,6 +2706,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../standalone/metabuli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metabuli
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
         
   
@@ -3306,6 +3334,34 @@
     
   
     Kraken2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/metabuli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metabuli
   
 
     
@@ -5851,6 +5907,34 @@
     
   
     Mercury_Prep_N_Batch
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/metabuli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metabuli
   
 
     
@@ -9057,7 +9141,15 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/fastp:1.1.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>fastp_adapter_fasta</strong></td>
+<td>File</td>
+<td>FASTA of adapters to replace Fastp's default adapter search</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9082,6 +9174,14 @@
 <td>Int</td>
 <td>Minimum mean base quality relative to window size</td>
 <td>20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>fastp_trim_adapters</strong></td>
+<td>Boolean</td>
+<td>Enable adapter trimming via Fastp</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9257,7 +9357,7 @@
 <td><strong>call_bracken</strong></td>
 <td>Boolean</td>
 <td>Call Bracken kraken2 report refinement</td>
-<td>False</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11098,7 +11198,7 @@
 <td>metabuli</td>
 <td><strong>taxdump_path</strong></td>
 <td>File</td>
-<td>Path to taxonkit-generated taxdump for Metabuli taxonomy parsing</td>
+<td>Path to compressed taxonomy dump</td>
 <td>gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz</td>
 <td>Optional</td>
 </tr>
@@ -12661,7 +12761,15 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/fastp:0.23.2</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/fastp:1.1.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>fastp_adapter_fasta</strong></td>
+<td>File</td>
+<td>FASTA of adapters to replace Fastp's default adapter search</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12686,6 +12794,14 @@
 <td>Int</td>
 <td>Minimum mean base quality relative to window size</td>
 <td>20</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>fastp</td>
+<td><strong>fastp_trim_adapters</strong></td>
+<td>Boolean</td>
+<td>Enable adapter trimming via Fastp</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12821,7 +12937,7 @@
 <td><strong>call_bracken</strong></td>
 <td>Boolean</td>
 <td>Call Bracken kraken2 report refinement</td>
-<td>False</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12973,7 +13089,7 @@
 <td><strong>call_bracken</strong></td>
 <td>Boolean</td>
 <td>Call Bracken kraken2 report refinement</td>
-<td>False</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13484,12 +13600,14 @@
 </table>
 </div>
 </details>
+<!-- if: theiaviral | metabuli -->
 <details class="task">
 <summary><code>fastp</code>: Read Trimming</summary>
-<p><code>fastp</code> trims low-quality regions with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 15 bases).</p>
-<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
+<p><code>fastp</code> trims low-quality regions with a sliding window (with a default window size of 4, specified with <code>fastp_window_size</code>), cutting once the average quality within the window falls below the <code>fastp_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>fastp_min_length</code> (default of 15 bases).</p>
+<p>Adapter trimming is enabled by default and can be disabled by setting <code>fastp_trim_adapters</code> to "false".</p>
+<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter. Please reference the <a href="https://github.com/OpenGene/fastp">Fastp GitHub</a> for a comprehensive list of arguments.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">Trimmomatic and fastp Technical Details</p>
+<p class="admonition-title">fastp Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -15628,12 +15746,14 @@ This reference is selected by the <code>skani</code> task or provided by the use
 </table>
 </div>
 </details>
+<!-- if: theiaviral | metabuli -->
 <details class="task">
 <summary><code>fastp</code>: Read Trimming</summary>
-<p><code>fastp</code> trims low-quality regions with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 15 bases).</p>
-<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
+<p><code>fastp</code> trims low-quality regions with a sliding window (with a default window size of 4, specified with <code>fastp_window_size</code>), cutting once the average quality within the window falls below the <code>fastp_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>fastp_min_length</code> (default of 15 bases).</p>
+<p>Adapter trimming is enabled by default and can be disabled by setting <code>fastp_trim_adapters</code> to "false".</p>
+<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter. Please reference the <a href="https://github.com/OpenGene/fastp">Fastp GitHub</a> for a comprehensive list of arguments.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">Trimmomatic and fastp Technical Details</p>
+<p class="admonition-title">fastp Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -16894,12 +17014,12 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <tr>
 <td>fastp_html_report</td>
 <td>File</td>
-<td>The HTML report made with fastp</td>
+<td>The HTML report conveying fastp results</td>
 </tr>
 <tr>
 <td>fastp_json_report</td>
 <td>File</td>
-<td>The JSON report made with fastp</td>
+<td>The JSON report conveying fastp results</td>
 </tr>
 <tr>
 <td>fastp_version</td>
@@ -18819,12 +18939,12 @@ This reference is selected by the <code>skani</code> task or provided by the use
 <tr>
 <td>fastp_html_report</td>
 <td>File</td>
-<td>The HTML report made with fastp</td>
+<td>The HTML report conveying fastp results</td>
 </tr>
 <tr>
 <td>fastp_json_report</td>
 <td>File</td>
-<td>The JSON report made with fastp</td>
+<td>The JSON report conveying fastp results</td>
 </tr>
 <tr>
 <td>fastp_version</td>

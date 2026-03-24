@@ -2918,6 +2918,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../standalone/metabuli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metabuli
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../standalone/ncbi_amrfinderplus/" class="md-nav__link">
         
   
@@ -3518,6 +3546,34 @@
     
   
     Kraken2
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../standalone/metabuli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metabuli
   
 
     
@@ -6654,6 +6710,34 @@
   
   
     <li class="md-nav__item">
+      <a href="../../standalone/metabuli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Metabuli
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../../data_export/microreact_export/" class="md-nav__link">
         
   
@@ -8023,6 +8107,14 @@
 <td>Sample-level, Set-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_FASTQ_PHB:main?tab=info">Freyja_FASTQ_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Plot_PHB:main?tab=info">Freyja_Plot_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Dashboard_PHB:main?tab=info">Freyja_Dashboard_PHB</a></td>
 </tr>
+<tr>
+<td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
+<td>SARS-CoV-2, <a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
+<td>vX.X.X</td>
+<td>Yes</td>
+<td>Sample-level, Set-level</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_FASTQ_PHB:main?tab=info">Freyja_FASTQ_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Plot_PHB:main?tab=info">Freyja_Plot_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Dashboard_PHB:main?tab=info">Freyja_Dashboard_PHB</a></td>
+</tr>
 </tbody>
 </table>
 <h2 id="freyja-overview">Freyja Overview<a class="headerlink" href="#freyja-overview" title="Permanent link">¶</a></h2>
@@ -8715,7 +8807,7 @@
 <td><strong>call_bracken</strong></td>
 <td>Boolean</td>
 <td>Call Bracken kraken2 report refinement</td>
-<td>False</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9493,7 +9585,7 @@
 <td><strong>call_bracken</strong></td>
 <td>Boolean</td>
 <td>Call Bracken kraken2 report refinement</td>
-<td>False</td>
+<td>True</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10636,7 +10728,7 @@
 <summary><code>fastp</code>: Read Trimming (alternative)</summary>
 <p>To activate this task, set <code>read_processing</code> to <code>"fastp"</code>.</p>
 <p><code>fastp</code> trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4 (10 for TheiaEuk), specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 bases for paired-end, 25 for single-end).</p>
-<p><code>fastp</code> also has additional default parameters and features that are not a part of <code>trimmomatic</code>'s default configuration.</p>
+<p><code>fastp</code> also has additional default parameters and features that are not a part of <code>trimmomatic</code>'s default configuration. Please note <code>--disable_adapter_trimming</code> is explicitly needed in <code>fastp_args</code> to disable adapter trimming via <code>fastp</code>.</p>
 <details class="toggle">
 <summary><code>fastp</code> default read-trimming parameters</summary>
 <table>
@@ -10661,14 +10753,20 @@
 </tr>
 <tr>
 <td>--detect_adapter_for_pe</td>
-<td>enables adapter-trimming <strong>only for paired-end reads</strong></td>
+<td>More sensitively detects adapters for trimming <strong>only for paired-end reads</strong></td>
 </tr>
 </tbody>
 </table>
 </details>
-<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
+</details>
+<!-- if: theiaviral | metabuli -->
+<details class="task">
+<summary><code>fastp</code>: Read Trimming</summary>
+<p><code>fastp</code> trims low-quality regions with a sliding window (with a default window size of 4, specified with <code>fastp_window_size</code>), cutting once the average quality within the window falls below the <code>fastp_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>fastp_min_length</code> (default of 15 bases).</p>
+<p>Adapter trimming is enabled by default and can be disabled by setting <code>fastp_trim_adapters</code> to "false".</p>
+<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter. Please reference the <a href="https://github.com/OpenGene/fastp">Fastp GitHub</a> for a comprehensive list of arguments.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">Trimmomatic and fastp Technical Details</p>
+<p class="admonition-title">fastp Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -11052,7 +11150,7 @@
 <summary><code>fastp</code>: Read Trimming (alternative)</summary>
 <p>To activate this task, set <code>read_processing</code> to <code>"fastp"</code>.</p>
 <p><code>fastp</code> trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4 (10 for TheiaEuk), specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trim_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>trim_minlen</code> (default of 75 bases for paired-end, 25 for single-end).</p>
-<p><code>fastp</code> also has additional default parameters and features that are not a part of <code>trimmomatic</code>'s default configuration.</p>
+<p><code>fastp</code> also has additional default parameters and features that are not a part of <code>trimmomatic</code>'s default configuration. Please note <code>--disable_adapter_trimming</code> is explicitly needed in <code>fastp_args</code> to disable adapter trimming via <code>fastp</code>.</p>
 <details class="toggle">
 <summary><code>fastp</code> default read-trimming parameters</summary>
 <table>
@@ -11077,14 +11175,20 @@
 </tr>
 <tr>
 <td>--detect_adapter_for_pe</td>
-<td>enables adapter-trimming <strong>only for paired-end reads</strong></td>
+<td>More sensitively detects adapters for trimming <strong>only for paired-end reads</strong></td>
 </tr>
 </tbody>
 </table>
 </details>
-<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter.</p>
+</details>
+<!-- if: theiaviral | metabuli -->
+<details class="task">
+<summary><code>fastp</code>: Read Trimming</summary>
+<p><code>fastp</code> trims low-quality regions with a sliding window (with a default window size of 4, specified with <code>fastp_window_size</code>), cutting once the average quality within the window falls below the <code>fastp_quality_trim_score</code> (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below <code>fastp_min_length</code> (default of 15 bases).</p>
+<p>Adapter trimming is enabled by default and can be disabled by setting <code>fastp_trim_adapters</code> to "false".</p>
+<p>Additional arguments can be passed using the <code>fastp_args</code> optional parameter. Please reference the <a href="https://github.com/OpenGene/fastp">Fastp GitHub</a> for a comprehensive list of arguments.</p>
 <div class="admonition techdetails">
-<p class="admonition-title">Trimmomatic and fastp Technical Details</p>
+<p class="admonition-title">fastp Technical Details</p>
 <table>
 <thead>
 <tr>
@@ -11765,12 +11869,12 @@
 <tr>
 <td>fastp_html_report</td>
 <td><strong>String</strong></td>
-<td>The HTML report made with fastp</td>
+<td>The HTML report conveying fastp results</td>
 </tr>
 <tr>
 <td>fastp_json_report</td>
 <td><strong>String</strong></td>
-<td>The JSON report made with fastp</td>
+<td>The JSON report conveying fastp results</td>
 </tr>
 <tr>
 <td>fastp_version</td>
@@ -12315,12 +12419,12 @@
 <tr>
 <td>fastp_html_report</td>
 <td><strong>String</strong></td>
-<td>The HTML report made with fastp</td>
+<td>The HTML report conveying fastp results</td>
 </tr>
 <tr>
 <td>fastp_json_report</td>
 <td><strong>String</strong></td>
-<td>The JSON report made with fastp</td>
+<td>The JSON report conveying fastp results</td>
 </tr>
 <tr>
 <td>fastp_version</td>
@@ -12865,12 +12969,12 @@
 <tr>
 <td>fastp_html_report</td>
 <td><strong>String</strong></td>
-<td>The HTML report made with fastp</td>
+<td>The HTML report conveying fastp results</td>
 </tr>
 <tr>
 <td>fastp_json_report</td>
 <td><strong>String</strong></td>
-<td>The JSON report made with fastp</td>
+<td>The JSON report conveying fastp results</td>
 </tr>
 <tr>
 <td>fastp_version</td>
