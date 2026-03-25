@@ -110,7 +110,6 @@ workflow read_decontaminate {
     if (! defined(read_mapping_stats.coverage_by_sequence_json)) {
       String contaminant_check_fail = "FAIL: no reads mapped to inputted sequences"
     }
-
   }
   output {
     # Datasets download outputs
