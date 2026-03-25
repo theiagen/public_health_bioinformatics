@@ -76,12 +76,14 @@ task mapping_stats {
       f.write(str(total_meanmapq))
 
     # report sequence specific mapping stats
-    with open("SEQ2COVERAGE.json", "w") as f:
-      json.dump({seq: part["coverage"] for seq, part in seq2data.items() \
-                 if part["coverage"] > 0}, f, indent=4)
-    with open("SEQ2DEPTH.json", "w") as f:
-      json.dump({seq: part["meandepth"] for seq, part in seq2data.items() \
-                 if part["meandepth"] > 0}, f, indent=4)
+    cov_dict = {seq: part["coverage"] for seq, part in seq2data.items() if part["coverage"] > 0}
+    if cov_dict:
+      with open("SEQ2COVERAGE.json", "w") as f:
+        json.dump(cov_dict, f, indent=4)
+    depth_dict = {seq: part["meandepth"] for seq, part in seq2data.items() if part["meandepth"] > 0}
+    if depth_dict:
+      with open("SEQ2DEPTH.json", "w") as f:
+        json.dump(depth_dict, f, indent=4)
     CODE
 
     # parse inputted reads for total read count
@@ -111,10 +113,10 @@ task mapping_stats {
   output {
     String date = read_string("DATE")
     String samtools_version = read_string("VERSION")
-    Map[String, Float] coverage_by_sequence = read_json("SEQ2COVERAGE.json")
-    File coverage_by_sequence_json = "SEQ2COVERAGE.json"
-    Map[String, Float] depth_by_sequence = read_json("SEQ2DEPTH.json")
-    File depth_by_sequence_json = "SEQ2DEPTH.json"
+    Map[String, Float]? coverage_by_sequence = read_json("SEQ2COVERAGE.json")
+    File? coverage_by_sequence_json = "SEQ2COVERAGE.json"
+    Map[String, Float]? depth_by_sequence = read_json("SEQ2DEPTH.json")
+    File? depth_by_sequence_json = "SEQ2DEPTH.json"
     File stats = "~{samplename}.stats.txt"
     File cov_hist = "~{samplename}.cov.hist"
     File cov_stats = "~{samplename}.cov.txt"

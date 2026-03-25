@@ -96,15 +96,21 @@ workflow read_decontaminate {
   }
   # run contaminant check
   if (defined(expected_sequences)) {
-    call contaminant_check_task.contaminant_check {
-      input:
-        expected_sequences = select_first([expected_sequences]),
-        coverage_by_sequence_json = read_mapping_stats.coverage_by_sequence_json,
-        depth_by_sequence_json = read_mapping_stats.depth_by_sequence_json,
-        min_percent_coverage = min_expected_coverage,
-        min_depth = min_expected_depth,
-        cov_stats = read_mapping_stats.cov_stats
+    if (defined(read_mapping_stats.coverage_by_sequence_json)) {
+      call contaminant_check_task.contaminant_check {
+        input:
+          expected_sequences = select_first([expected_sequences]),
+          coverage_by_sequence_json = select_first([read_mapping_stats.coverage_by_sequence_json]),
+          depth_by_sequence_json = select_first([read_mapping_stats.depth_by_sequence_json]),
+          min_percent_coverage = min_expected_coverage,
+          min_depth = min_expected_depth,
+          cov_stats = read_mapping_stats.cov_stats
+      }
     }
+    if (! defined(read_mapping_stats.coverage_by_sequence_json)) {
+      String contaminant_check_fail = "FAIL: no reads mapped to inputted sequences"
+    }
+
   }
   output {
     # Datasets download outputs
@@ -129,6 +135,6 @@ workflow read_decontaminate {
     Map[String, Float]? contaminant_coverage_by_sequence = read_mapping_stats.coverage_by_sequence
     Map[String, Float]? contaminant_depth_by_sequence = read_mapping_stats.depth_by_sequence
     # Contaminant check outputs
-    String? contaminant_check_status = contaminant_check.contaminant_check_status
+    String? contaminant_check_status = select_first([contaminant_check_fail, contaminant_check.contaminant_check_status])
   }
 }
