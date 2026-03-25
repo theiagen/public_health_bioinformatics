@@ -77,9 +77,11 @@ task mapping_stats {
 
     # report sequence specific mapping stats
     with open("SEQ2COVERAGE.json", "w") as f:
-      json.dump({seq: part["coverage"] for seq, part in seq2data.items()}, f, indent=4)
+      json.dump({seq: part["coverage"] for seq, part in seq2data.items() \
+                 if part["coverage"] > 0}, f, indent=4)
     with open("SEQ2DEPTH.json", "w") as f:
-      json.dump({seq: part["meandepth"] for seq, part in seq2data.items()}, f, indent=4)
+      json.dump({seq: part["meandepth"] for seq, part in seq2data.items() \
+                 if part["meandepth"] > 0}, f, indent=4)
     CODE
 
     # parse inputted reads for total read count

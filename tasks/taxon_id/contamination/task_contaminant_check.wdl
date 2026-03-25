@@ -5,6 +5,7 @@ task contaminant_check {
     String expected_sequences # comma-delimited list of expected sequences
     File coverage_by_sequence_json # task_mapping_stats output: coverage_by_sequence_json
     File depth_by_sequence_json # task_mapping_stats output: depth_by_sequence_json
+    File? cov_stats # task_mapping_stats output: cov_stats_txt
     Float min_percent_coverage = 0
     Int min_depth = 0
 
@@ -26,6 +27,11 @@ task contaminant_check {
     coverage_by_sequence = json.load(f)
   with open("~{depth_by_sequence_json}") as f:
     depth_by_sequence = json.load(f)
+  if "~{if defined(cov_stats) then 'true' else 'false'}" == "true":
+    with open("~{cov_stats}") as f:
+      all_sequences = set([line.split("\t")[0].strip() for line in f.readlines()[1:]])
+  else:
+    all_sequences = set()
 
   # check if any expected sequences are present above the specified thresholds
   detected_sequences_coverage_prep = set([seq for seq, cov in coverage_by_sequence.items() if cov >= ~{min_percent_coverage}])
@@ -35,7 +41,7 @@ task contaminant_check {
   undetected_sequences_depth = set([seq for seq, depth in depth_by_sequence.items() if not depth > 0])
   undetected_sequences = undetected_sequences_coverage.union(undetected_sequences_depth)
   # assumes coverage_by_sequence and depth_by_sequence have same keys
-  missing_from_input = expected_sequences.difference(set(coverage_by_sequence.keys()))
+  missing_from_input = expected_sequences.difference(all_sequences)
 
   detected_sequences_coverage = detected_sequences_coverage_prep.difference(undetected_sequences_coverage)
   detected_sequences_depth = detected_sequences_depth_prep.difference(undetected_sequences_depth)
@@ -77,8 +83,10 @@ task contaminant_check {
       seq2fail[seq].append(f"insufficient depth ({depth_by_sequence[seq]})")
   for seq in extraneous_sequences:
     seq2fail[seq].append("extra sequence")
-  for seq in missing_from_input:
-    seq2fail[seq].append("missing from reference")
+  # identify missing from reference if the capacity exists
+  if all_sequences:
+    for seq in missing_from_input:
+      seq2fail[seq].append("missing from reference")
 
   # populate a status string
   with open("STATUS", "w") as f:

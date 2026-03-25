@@ -102,7 +102,8 @@ workflow read_decontaminate {
         coverage_by_sequence_json = read_mapping_stats.coverage_by_sequence_json,
         depth_by_sequence_json = read_mapping_stats.depth_by_sequence_json,
         min_percent_coverage = min_expected_coverage,
-        min_depth = min_expected_depth
+        min_depth = min_expected_depth,
+        cov_stats = read_mapping_stats.cov_stats
     }
   }
   output {
