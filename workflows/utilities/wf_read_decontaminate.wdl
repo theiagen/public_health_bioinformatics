@@ -96,7 +96,7 @@ workflow read_decontaminate {
   }
   # run contaminant check
   if (defined(expected_sequences)) {
-    if (defined(read_mapping_stats.coverage_by_sequence_json)) {
+    if (read_mapping_stats.mapping_stats_status == "PASS") {
       call contaminant_check_task.contaminant_check {
         input:
           expected_sequences = select_first([expected_sequences]),
@@ -107,8 +107,10 @@ workflow read_decontaminate {
           cov_stats = read_mapping_stats.cov_stats
       }
     }
-    if (! defined(read_mapping_stats.coverage_by_sequence_json)) {
+    if (read_mapping_stats.mapping_stats_status == "FAIL") {
       String contaminant_check_fail = "FAIL: no reads mapped to inputted sequences"
+      Map[String, Float] empty_cov = {}
+      Map[String, Float] empty_depth = {}
     }
   }
   output {
@@ -131,8 +133,8 @@ workflow read_decontaminate {
     Float? contaminant_mapping_coverage = read_mapping_stats.coverage
     Float? contaminant_mapping_mean_depth = read_mapping_stats.depth
     Float? contaminant_percent_mapped_reads = read_mapping_stats.percentage_mapped_reads
-    Map[String, Float]? contaminant_coverage_by_sequence = read_mapping_stats.coverage_by_sequence
-    Map[String, Float]? contaminant_depth_by_sequence = read_mapping_stats.depth_by_sequence
+    Map[String, Float]? contaminant_coverage_by_sequence = select_first([empty_cov, read_mapping_stats.coverage_by_sequence])
+    Map[String, Float]? contaminant_depth_by_sequence = select_first([empty_depth, read_mapping_stats.depth_by_sequence])
     # Contaminant check outputs
     String? contaminant_check_status = select_first([contaminant_check_fail, contaminant_check.contaminant_check_status])
   }
