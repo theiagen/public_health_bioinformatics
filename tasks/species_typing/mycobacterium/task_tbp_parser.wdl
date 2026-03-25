@@ -163,8 +163,8 @@ task tbp_parser {
     File tbp_parser_laboratorian_report_csv = "~{samplename}.laboratorian_report.csv"
     File tbp_parser_lims_report_csv = "~{samplename}.lims_report.csv"
     File tbp_parser_lims_report_transposed_csv = "~{samplename}.lims_report.transposed.csv"
-    File tbp_parser_locus_coverage_report = "~{samplename}.locus_coverage_report.csv"
-    File? tbp_parser_target_coverage_report = "~{samplename}.target_coverage_report.csv"
+    File tbp_parser_locus_coverage_report_csv = "~{samplename}.locus_coverage_report.csv"
+    File? tbp_parser_target_coverage_report_csv = "~{samplename}.target_coverage_report.csv"
     File tbp_parser_log = "~{samplename}.log"
     Float tbp_parser_genome_percent_coverage = read_float("GENOME_PC")
     Float tbp_parser_average_genome_depth = read_float("AVG_DEPTH")

@@ -112,8 +112,8 @@ workflow tbprofiler_tngs {
     File tbp_parser_laboratorian_report_csv = tbp_parser.tbp_parser_laboratorian_report_csv
     File tbp_parser_lims_report_csv = tbp_parser.tbp_parser_lims_report_csv
     File tbp_parser_lims_report_transposed_csv = tbp_parser.tbp_parser_lims_report_transposed_csv
-    File tbp_parser_locus_coverage_report = tbp_parser.tbp_parser_locus_coverage_report
-    File? tbp_parser_target_coverage_report = tbp_parser.tbp_parser_target_coverage_report
+    File tbp_parser_locus_coverage_report_csv = tbp_parser.tbp_parser_locus_coverage_report_csv
+    File? tbp_parser_target_coverage_report_csv = tbp_parser.tbp_parser_target_coverage_report_csv
     File tbp_parser_log = tbp_parser.tbp_parser_log
     Float tbp_parser_genome_percent_coverage = tbp_parser.tbp_parser_genome_percent_coverage
     Float tbp_parser_average_genome_depth = tbp_parser.tbp_parser_average_genome_depth
