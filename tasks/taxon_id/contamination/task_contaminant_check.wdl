@@ -30,6 +30,8 @@ task contaminant_check {
   if "~{if defined(cov_stats) then 'true' else 'false'}" == "true":
     with open("~{cov_stats}") as f:
       all_sequences = set([line.split("\t")[0].strip() for line in f.readlines()[1:]])
+      if "" in all_sequences:
+        all_sequences.remove("")
   else:
     all_sequences = set()
 
