@@ -1,0 +1,11 @@
+{
+    "theiaviral_ont.host": "this.HOST",
+    "theiaviral_ont.call_porechop": "this.CALL_PORECHOP",
+    "theiaviral_ont.samplename": "this.theiaviral_ont_id",
+    "theiaviral_ont.read_extraction_rank": "this.READ_EXTRACTION_RANK",
+    "theiaviral_ont.call_raven": "this.CALL_RAVEN",
+    "theiaviral_ont.read1": "this.read1",
+    "theiaviral_ont.extract_unclassified": "this.EXTRACT_UNCLASSIFIED",
+    "theiaviral_ont.taxon": "this.taxon",
+    "theiaviral_ont.reference_fasta": "this.REFERENCE_GENOME"
+}

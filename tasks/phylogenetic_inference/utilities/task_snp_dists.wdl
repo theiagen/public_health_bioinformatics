@@ -6,7 +6,7 @@ task snp_dists {
     String cluster_name
     Int disk_size = 50
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/snp-dists:0.8.2"
-    Int memory = 2
+    Int memory = 4
     Int cpu = 1
   }
   command <<<

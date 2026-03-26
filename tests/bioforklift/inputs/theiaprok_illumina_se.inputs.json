@@ -1,0 +1,13 @@
+{
+    "theiaprok_illumina_se.read_QC_trim.read_qc": "this.read_qc_input",
+    "theiaprok_illumina_se.read_QC_trim.call_kraken": "this.call_kraken_input",
+    "theiaprok_illumina_se.call_resfinder": "this.call_resfinder_input",
+    "theiaprok_illumina_se.terra_project": "this.terra_project_input",
+    "theiaprok_illumina_se.read1": "this.read1",
+    "theiaprok_illumina_se.call_kmerfinder": "this.call_kmerfinder_input",
+    "theiaprok_illumina_se.call_ani": "this.call_ani_input",
+    "theiaprok_illumina_se.read_QC_trim.kraken_db": "this.kraken_db_input",
+    "theiaprok_illumina_se.call_abricate": "this.call_abricate",
+    "theiaprok_illumina_se.samplename": "this.theiaprok_illumina_se_id",
+    "theiaprok_illumina_se.terra_workspace": "this.terra_workspace_input"
+}

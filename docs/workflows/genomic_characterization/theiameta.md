@@ -36,6 +36,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 {{ include_md("common_text/ncbi_scrub_task.md") }}
 {{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiameta") }}
 {{ include_md("common_text/kraken2_task.md", condition="theiameta") }}
+{{ include_md("common_text/krona_task.md") }}
 
 #### Assembly
 
