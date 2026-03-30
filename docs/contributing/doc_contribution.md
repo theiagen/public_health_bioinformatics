@@ -11,7 +11,7 @@ Since the documentation is built off of the `main` branch, it is highly recommen
 To test your documentation changes, you will need to have the following packages installed on your local VM:
 
 ```bash
-pip install mkdocs-material mkdocs-material-extensions mkdocs-git-revision-date-localized-plugin mike mkdocs-glightbox mkdocs-macros-plugin pandas
+pip install mkdocs-material==9.7.6 mkdocs-material-extensions==1.3.1 mkdocs-git-revision-date-localized-plugin==1.5.1 mike==2.1.4 mkdocs-glightbox==0.5.2 mkdocs-macros-plugin==1.5.0 pandas==3.0.1 click==8.2.1
 ```
 
 Once installed, navigate to the top directory in PHB. The live preview server can be activated by running the following command:
