@@ -838,8 +838,8 @@ flu_track	irma_cpu	Int	Internal component, do not modify	4	Optional	TheiaCoV_FAS
 flu_track	irma_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
 flu_track	irma_disk_size	Int	Internal component, do not modify	100	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
-flu_track	irma_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/irma:1.3.1	Optional	TheiaCoV_FASTA	general	
-flu_track	irma_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/irma:1.3.1	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	docker	
+flu_track	irma_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/irma:1.3.1	Optional	TheiaCoV_FASTA	general	
+flu_track	irma_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/irma:1.3.1	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	docker	
 flu_track	irma_keep_ref_deletions	Boolean	Internal component, do not modify	True	Optional	TheiaCoV_FASTA	general	
 flu_track	irma_keep_ref_deletions	Boolean	True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting N's or deleting the sequence entirely. False sets this IRMA paramater to "DEL" and true sets it to "NNN"	True	Optional	TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	True
 flu_track	irma_memory	Int	Internal component, do not modify	16	Optional	TheiaCoV_FASTA	general	
@@ -1689,7 +1689,7 @@ morgana_magic	genoflu_docker	String	The Docker container to use for the task	us-
 morgana_magic	genoflu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	irma_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	irma_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-morgana_magic	irma_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/irma:1.3.1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
+morgana_magic	irma_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/irma:1.3.1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 morgana_magic	irma_keep_ref_deletions	Boolean	True/False variable that determines if sites missed (i.e. 0 reads for a site in the reference genome) during read gathering should be deleted by ambiguation by inserting N's or deleting the sequence entirely. False sets this IRMA paramater to "DEL" and true sets it to "NNN"	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	reference	
 morgana_magic	irma_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	nextclade_auspice_reference_tree_json	File	An Auspice JSON phylogenetic reference tree which serves as a target for phylogenetic placement.	Inherited from nextclade dataset	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	reference	True
