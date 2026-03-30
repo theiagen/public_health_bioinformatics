@@ -17,9 +17,6 @@ task consensus {
   command <<<
   set -euo pipefail
 
-  # Newer version of Artic use a different command to launch the pipeline
-  # when using user provided files for bed and reference genome are provided, 
-  # we can now provide the bed and reference genome files to the pipeline directly 
   if [[ -z "~{primer_bed}" || -z "~{reference_genome}" ]]; then
     echo "Error: Both primer bed and reference genome must be provided" >&2
     exit 1
@@ -29,8 +26,8 @@ task consensus {
   # which is a requirement of clair3, we run into similar issues in the clair3_variants task
   cp "~{reference_genome}" reference.fasta
 
-  # ARTIC claims to expect 6 column BED files, but these fail primalbedtools
-  # SPOOF the sequence line
+  # ARTIC claims to expect 6 column BED files, but BEDs w/o the sequence column fail primalbedtools
+  # SPOOF the sequence column if a 6 column BED file is encountered 
   python3 <<CODE
   with open("~{primer_bed}", "r") as infile, open("primer.bed", "w") as outfile:
     for line in infile:
@@ -40,7 +37,7 @@ task consensus {
       outfile.write("\t".join(parts) + "\n")
   CODE
 
-  # Run ARTIC with user provided files
+  # Run ARTIC with user-provided files
   artic minion --model ~{clair3_model} \
     --normalise ~{normalise} \
     --threads ~{cpu} \
@@ -56,10 +53,9 @@ task consensus {
   # Capture ARTIC version
   artic -v > VERSION
 
-  # Grab reads from alignment - cdph wants this
+  # Grab reads from alignment
   # 0x904 means we are now filtering out unaligned, secondary, and supplemental alignments - thanks Curtis
   samtools fastq -F0x904 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz  
-
 
   # Calculate the primer trimming stats:
     # primer_trimmed_read_percent
