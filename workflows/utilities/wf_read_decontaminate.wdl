@@ -107,7 +107,7 @@ workflow read_decontaminate {
           cov_stats = read_mapping_stats.cov_stats
       }
     }
-    if (read_mapping_stats.mapping_stats_status == "FAIL") {
+    if (read_mapping_stats.mapping_stats_status != "PASS") {
       String contaminant_check_fail = "FAIL: no reads mapped to inputted sequences"
       Map[String, Float] empty_cov = {"": 0}
       Map[String, Float] empty_depth = {"": 0}
