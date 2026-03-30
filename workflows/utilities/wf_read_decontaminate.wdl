@@ -136,6 +136,6 @@ workflow read_decontaminate {
     Map[String, Float]? contaminant_coverage_by_sequence = select_first([empty_cov, read_mapping_stats.coverage_by_sequence])
     Map[String, Float]? contaminant_depth_by_sequence = select_first([empty_depth, read_mapping_stats.depth_by_sequence])
     # Contaminant check outputs
-    String? contaminant_check_status = select_first([contaminant_check_fail, contaminant_check.contaminant_check_status])
+    String? contaminant_check_status = select_first([contaminant_check_fail, contaminant_check.contaminant_check_status, ""])
   }
 }
