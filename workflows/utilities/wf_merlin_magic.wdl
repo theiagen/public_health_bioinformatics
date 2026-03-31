@@ -236,7 +236,7 @@ workflow merlin_magic {
     Float? tbp_parser_min_frequency
     Float? tbp_parser_min_percent_loci_covered
     Boolean? tbp_parser_tngs_data
-    Boolean? tbp_parser_use_err_as_brr
+    Boolean? tbp_parser_use_err_for_qc
     Boolean? tbp_parser_resolve_overlapping_regions
     String? tbp_parser_tngs_read_support_boundaries
     String? tbp_parser_tngs_frequency_boundaries
@@ -510,7 +510,7 @@ workflow merlin_magic {
             min_frequency = tbp_parser_min_frequency,
             min_percent_loci_covered = tbp_parser_min_percent_loci_covered,
             tngs_data = tbp_parser_tngs_data,
-            use_err_as_brr = tbp_parser_use_err_as_brr,
+            use_err_for_qc = tbp_parser_use_err_for_qc,
             resolve_overlapping_regions = tbp_parser_resolve_overlapping_regions,
             tngs_read_support_boundaries = tbp_parser_tngs_read_support_boundaries,
             tngs_frequency_boundaries = tbp_parser_tngs_frequency_boundaries,

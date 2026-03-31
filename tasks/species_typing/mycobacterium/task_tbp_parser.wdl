@@ -21,7 +21,7 @@ task tbp_parser {
     Float? min_percent_loci_covered # default 0.7
     # tNGS-specific arguments
     Boolean tngs_data = false
-    Boolean use_err_as_brr = false
+    Boolean use_err_for_qc = false
     Boolean resolve_overlapping_regions = false
     String? tngs_read_support_boundaries # default "10,10"
     String? tngs_frequency_boundaries # default "0.1,0.1"
@@ -61,7 +61,7 @@ task tbp_parser {
       ~{"--min_frequency " + min_frequency} \
       ~{"--min_percent_loci_covered " + min_percent_loci_covered} \
       ~{true="--tngs" false="" tngs_data} \
-      ~{true="--use_err_as_brr" false="" use_err_as_brr} \
+      ~{true="--use_err_for_qc" false="" use_err_for_qc} \
       ~{true="--resolve_overlapping_regions" false="" resolve_overlapping_regions} \
       ~{"--tngs_read_support_boundaries " + tngs_read_support_boundaries} \
       ~{"--tngs_frequency_boundaries " + tngs_frequency_boundaries} \
