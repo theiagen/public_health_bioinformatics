@@ -68,7 +68,7 @@ Phylogenetics is an approach to understanding evolutionary relationships among o
 
 !!! dna "Resources for phylogenetic tree interpretation"
     - [Understanding phylogenetic trees](https://evolution.berkeley.edu/evolution-101/the-history-of-life-looking-at-the-patterns/understanding-phylogenies/), particularly what they represent
-    - [How to read a phylogenetic tree](https://artic.network/how-to-read-a-tree.html)
+    - [How to read a phylogenetic tree](https://artic.network/guides/how-to-read-a-tree)
     - [How to interpret phylogenetic trees](https://docs.nextstrain.org/en/latest/learn/interpret/how-to-read-a-tree.html) in terms of transmission
 
 ### SNP distances

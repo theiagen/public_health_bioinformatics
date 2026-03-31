@@ -7,7 +7,7 @@
     !!! techdetails "NCBI Datasets Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_identify_taxon_id.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_identify_taxon_id.wdl) |
+        | Task | [task_datasets_genome_length.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/task_datasets_genome_length.wdl) |
         | Software Source Code | [NCBI Datasets on GitHub](https://github.com/ncbi/datasets) |
         | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
         | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |

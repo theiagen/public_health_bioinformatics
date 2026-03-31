@@ -9,5 +9,5 @@
         | --- | --- |
         | Task | [task_genotyphi.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/salmonella/task_genotyphi.wdl) |
         | Software Source Code | [genotyphi on GitHub](https://github.com/typhoidgenomics/genotyphi) |
-        | Software Documentation | [genotyphi on GitHub](https://github.com/typhoidgenomics/genotyphi/master/README.md) |
+        | Software Documentation | [genotyphi on GitHub](https://github.com/typhoidgenomics/genotyphi/main/README.md) |
         | Orginal publication(s) | [An extended genotyping framework for Salmonella enterica serovar Typhi, the cause of human typhoid](https://www.nature.com/articles/ncomms12827/)<br>[Five Years of GenoTyphi: Updates to the Global Salmonella Typhi Genotyping Framework](https://academic.oup.com/jid/article/224/Supplement_7/S775/6358992?login=false)<br>[Typhi Mykrobe: fast and accurate lineage identification and antimicrobial resistance genotyping directly from sequence reads for the typhoid fever agent _Salmonella_ Typhi](https://www.biorxiv.org/content/10.1101/2024.09.30.613582v1) |
