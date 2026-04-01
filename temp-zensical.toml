@@ -1,3 +1,6 @@
+# this is theoretically supposed to behave the same as the mkdocs.yml 
+# but it doesn't not sure why, can't be bothered to figure it out 
+# right now as the mkdocs.yml is supported by zensical.
 [project]
 site_name = "Public Health Bioinformatics"
 site_url = "https://theiagen.github.io/public_health_bioinformatics/"
@@ -6,6 +9,7 @@ site_description = "A collection of bioinformatics workflows for genomic charact
 repo_url = "https://github.com/theiagen/public_health_bioinformatics"
 edit_uri = "edit/main/docs/"
 copyright = "&copy; 2026 <a href=\"https://www.theiagen.com\" target=\"_blank\" rel=\"noopener\">Theiagen Genomics</a>"
+
 
 [project.extra]
 homepage = "https://www.theiagen.com"
@@ -36,17 +40,17 @@ features = [
   "navigation.prune",
   "navigation.top",
   "navigation.tracking",
+  "search.highlight",
   "toc.follow",
-  "search.highlight"
 ]
 
 [[project.theme.palette]]
 media = "(prefers-color-scheme: light)"
-scheme = "light"
+scheme = "default"
 toggle.icon = "material/weather-night"
 toggle.name = "Switch to Dark Mode"
-primary = "custom"
-accent = "custom"
+primary = "indigo"
+accent = "indigo"
 
 [[project.theme.palette]]
 media = "(prefers-color-scheme: dark)"
