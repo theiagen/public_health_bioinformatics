@@ -221,8 +221,8 @@ workflow read_QC_trim_pe {
     File? fastq_scan_raw1_json = fastq_scan_raw.read1_fastq_scan_json
     File? fastq_scan_raw2_json = fastq_scan_raw.read2_fastq_scan_json
     # read decontamination data
-    File? contaminant_bam = read_decontaminate.contaminant_mapped_sorted_bam
-    File? contaminant_bai = read_decontaminate.contaminant_mapped_sorted_bai
+    File? contaminant_bam = read_decontaminate.contaminant_bam
+    File? contaminant_bai = read_decontaminate.contaminant_bai
     Float? contaminant_coverage = read_decontaminate.contaminant_mapping_coverage
     Float? contaminant_mean_depth = read_decontaminate.contaminant_mapping_mean_depth
     Float? contaminant_percent_mapped_reads = read_decontaminate.contaminant_percent_mapped_reads
