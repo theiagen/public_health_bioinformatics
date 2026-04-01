@@ -117,11 +117,10 @@ workflow read_decontaminate {
     String? contaminant_genome_accession = select_first([ncbi_identify.ncbi_datasets_accession, contaminant])
     String? ncbi_datasets_version = download_accession.ncbi_datasets_version
     # Read mapping outputs
-    File? contaminant_mapped_sorted_bam = parse_mapping.bam
-    File? contaminant_mapped_sorted_bai = parse_mapping.bai
     File? decontaminate_read1 = bam_to_unaligned_fastq.read1_unaligned
     File? decontaminate_read2 = bam_to_unaligned_fastq.read2_unaligned
     File? contaminant_bam = parse_mapping.bam
+    File? contaminant_bai = parse_mapping.bai
     String? samtools_version = bam_to_unaligned_fastq.sam_version
     # Read mapping stats
     File? contaminant_mapping_stats = read_mapping_stats.stats
