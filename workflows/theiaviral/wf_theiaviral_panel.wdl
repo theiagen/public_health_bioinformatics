@@ -345,8 +345,8 @@ workflow theiaviral_panel {
     File? dehost_wf_dehost_read1 = host_decontaminate.decontaminate_read1
     File? dehost_wf_dehost_read2 = host_decontaminate.decontaminate_read2
     String? dehost_wf_host_accession = host_decontaminate.contaminant_genome_accession
-    File? dehost_wf_host_mapped_bam = host_decontaminate.contaminant_mapped_sorted_bam
-    File? dehost_wf_host_mapped_bai = host_decontaminate.contaminant_mapped_sorted_bai
+    File? dehost_wf_host_mapped_bam = host_decontaminate.contaminant_bam
+    File? dehost_wf_host_mapped_bai = host_decontaminate.contaminant_bai
     File? dehost_wf_host_fasta = host_decontaminate.contaminant_genome_fasta
     File? dehost_wf_host_mapping_stats = host_decontaminate.contaminant_mapping_stats
     File? dehost_wf_host_mapping_cov_hist = host_decontaminate.contaminant_mapping_cov_hist
