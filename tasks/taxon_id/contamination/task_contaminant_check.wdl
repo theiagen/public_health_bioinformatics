@@ -76,7 +76,7 @@ task contaminant_check {
 
   seq2fail = defaultdict(list)
   for seq in coverage_missing:
-    if seq in undetected_sequences:
+    if seq in undetected_sequences or seq not in coverage_by_sequence:
       seq2fail[seq].append("not detected")
     else:
       seq2fail[seq].append(f"insufficient coverage ({coverage_by_sequence[seq]})")
