@@ -110,6 +110,10 @@ workflow read_decontaminate {
       }
     }
   }
+  if read_mapping_stats.mapping_stats_status == "FAIL" {
+    Map[String, Float] failed_cov_by_sequence = {"": 0}
+    Map[String, Float] failed_depth_by_sequence = {"": 0}
+  }
   output {
     # Datasets download outputs
     File? contaminant_genome_fasta = download_accession.ncbi_datasets_assembly_fasta
@@ -129,8 +133,8 @@ workflow read_decontaminate {
     Float? contaminant_mapping_coverage = read_mapping_stats.coverage
     Float? contaminant_mapping_mean_depth = read_mapping_stats.depth
     Float? contaminant_percent_mapped_reads = read_mapping_stats.percentage_mapped_reads
-    Map[String, Float]? contaminant_coverage_by_sequence = select_first([read_mapping_stats.coverage_by_sequence, {"": 0}])
-    Map[String, Float]? contaminant_depth_by_sequence = select_first([read_mapping_stats.depth_by_sequence, {"": 0}])
+    Map[String, Float]? contaminant_coverage_by_sequence = select_first([failed_cov_by_sequence, read_mapping_stats.coverage_by_sequence])
+    Map[String, Float]? contaminant_depth_by_sequence = select_first([failed_depth_by_sequence, read_mapping_stats.depth_by_sequence])
     # Contaminant check outputs
     String? contaminant_check_status = select_first([contaminant_check.contaminant_check_status, contaminant_check_fail, ""])
   }
