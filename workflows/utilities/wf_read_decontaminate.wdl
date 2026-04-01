@@ -110,7 +110,7 @@ workflow read_decontaminate {
       }
     }
   }
-  if read_mapping_stats.mapping_stats_status != "PASS" {
+  if (read_mapping_stats.mapping_stats_status != "PASS") {
     Map[String, Float] failed_cov_by_sequence = {"": 0}
     Map[String, Float] failed_depth_by_sequence = {"": 0}
   }
