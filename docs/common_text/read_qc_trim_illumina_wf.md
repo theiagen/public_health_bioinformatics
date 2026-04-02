@@ -8,6 +8,8 @@
     !!! dna ""
         By default, `read_processing` is set to `"trimmomatic"`. To use `fastp` instead, set `read_processing` to `"fastp"`. These tasks are mutually exclusive.
 
+{{ include_md("common_text/read_decontaminate_wf.md", indent=8, condition="read_qc_trim") }}
+
 {{ include_md("common_text/trimmomatic_task.md", indent=8) }}  
 
 {{ include_md("common_text/fastp_task.md", condition="read_qc_trim", indent=8) }}

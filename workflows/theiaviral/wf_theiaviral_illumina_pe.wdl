@@ -20,9 +20,9 @@ import "../../tasks/utilities/task_datasets_genome_length.wdl" as genome_length_
 import "../../tasks/alignment/task_bwa.wdl" as bwa_task
 import "../../tasks/assembly/task_ivar_consensus.wdl" as ivar_consensus_task
 import "../../tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl" as variant_call_task
-import "../../tasks/quality_control/basic_statistics/task_assembly_metrics.wdl" as assembly_metrics_task
+import "../../tasks/quality_control/basic_statistics/task_mapping_stats.wdl" as mapping_stats_task
 import "../../tasks/quality_control/basic_statistics/task_consensus_qc.wdl" as consensus_qc_task
-import "../utilities/wf_host_decontaminate.wdl" as host_decontaminate_wf
+import "../utilities/wf_read_decontaminate.wdl" as host_decontaminate_wf
 import "../utilities/wf_morgana_magic.wdl" as morgana_magic_wf
 
 workflow theiaviral_illumina_pe {
@@ -92,20 +92,20 @@ workflow theiaviral_illumina_pe {
       }
       # host read decontamination
       if (defined(host)) {
-        call host_decontaminate_wf.host_decontaminate {
+        call host_decontaminate_wf.read_decontaminate as host_decontaminate {
           input:
             samplename = samplename,
             read1 = bbduk.read1_clean,
             read2 = bbduk.read2_clean,
-            host = select_first([host])
+            contaminant = select_first([host])
         }
       }
       # taxon-based read extraction
       call kraken2_task.kraken2 {
         input:
           samplename = samplename,
-          read1 = select_first([host_decontaminate.dehost_read1, bbduk.read1_clean]),
-          read2 = select_first([host_decontaminate.dehost_read2, bbduk.read2_clean]),
+          read1 = select_first([host_decontaminate.decontaminate_read1, bbduk.read1_clean]),
+          read2 = select_first([host_decontaminate.decontaminate_read2, bbduk.read2_clean]),
           kraken2_db = kraken2_db,
           target_organism = ete4_identify.taxon_id
       }
@@ -247,7 +247,7 @@ workflow theiaviral_illumina_pe {
               variant_min_depth = min_depth
           }
           # quality control metrics for reads mapping to reference (ie. coverage, depth, base/map quality)
-          call assembly_metrics_task.stats_n_coverage as read_mapping_stats {
+          call mapping_stats_task.mapping_stats as read_mapping_stats {
             input:
               bamfile = bwa.sorted_bam,
               samplename = samplename,
@@ -314,19 +314,21 @@ workflow theiaviral_illumina_pe {
     Int? ncbi_scrub_human_spots_removed = ncbi_scrub_pe.human_spots_removed
     String? ncbi_scrub_docker = ncbi_scrub_pe.ncbi_scrub_docker
     # host decontamination outputs
-    File? dehost_wf_dehost_read1 = host_decontaminate.dehost_read1
-    File? dehost_wf_dehost_read2 = host_decontaminate.dehost_read2
-    String? dehost_wf_host_accession = host_decontaminate.host_genome_accession
-    File? dehost_wf_host_mapped_bam = host_decontaminate.host_mapped_sorted_bam
-    File? dehost_wf_host_mapped_bai = host_decontaminate.host_mapped_sorted_bai
-    File? dehost_wf_host_fasta = host_decontaminate.host_genome_fasta
-    File? dehost_wf_host_mapping_stats = host_decontaminate.host_mapping_stats
-    File? dehost_wf_host_mapping_cov_hist = host_decontaminate.host_mapping_cov_hist
-    File? dehost_wf_host_flagstat = host_decontaminate.host_flagstat
-    Float? dehost_wf_host_mapping_coverage = host_decontaminate.host_mapping_coverage
-    Float? dehost_wf_host_mapping_mean_depth = host_decontaminate.host_mapping_mean_depth
-    Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.host_percent_mapped_reads
-    File? dehost_wf_host_mapping_metrics = host_decontaminate.host_mapping_metrics
+    File? dehost_wf_dehost_read1 = host_decontaminate.decontaminate_read1
+    File? dehost_wf_dehost_read2 = host_decontaminate.decontaminate_read2
+    String? dehost_wf_host_accession = host_decontaminate.contaminant_genome_accession
+    File? dehost_wf_host_mapped_bam = host_decontaminate.contaminant_bam
+    File? dehost_wf_host_mapped_bai = host_decontaminate.contaminant_bai
+    File? dehost_wf_host_fasta = host_decontaminate.contaminant_genome_fasta
+    File? dehost_wf_host_mapping_stats = host_decontaminate.contaminant_mapping_stats
+    File? dehost_wf_host_mapping_cov_hist = host_decontaminate.contaminant_mapping_cov_hist
+    File? dehost_wf_host_flagstat = host_decontaminate.contaminant_flagstat
+    Float? dehost_wf_host_mapping_coverage = host_decontaminate.contaminant_mapping_coverage
+    Float? dehost_wf_host_mapping_mean_depth = host_decontaminate.contaminant_mapping_mean_depth
+    Float? dehost_wf_host_percent_mapped_reads = host_decontaminate.contaminant_percent_mapped_reads
+    Map[String, Float]? dehost_wf_host_coverage_by_sequence = host_decontaminate.contaminant_coverage_by_sequence
+    Map[String, Float]? dehost_wf_host_depth_by_sequence = host_decontaminate.contaminant_depth_by_sequence
+    String? dehost_wf_host_sequence_check = host_decontaminate.contaminant_check_status
     # trimming outputs - adapter trimming
     String? fastp_version = fastp.fastp_version
     String? fastp_docker = fastp.fastp_docker
@@ -410,7 +412,8 @@ workflow theiaviral_illumina_pe {
     File? bwa_sorted_bam_unaligned = bwa.sorted_bam_unaligned
     File? bwa_sorted_bam_unaligned_bai = bwa.sorted_bam_unaligned_bai
     # Read mapping stats
-    File? read_mapping_report = read_mapping_stats.metrics_txt
+    Map[String, Float]? read_mapping_coverage_by_sequence = read_mapping_stats.coverage_by_sequence
+    Map[String, Float]? read_mapping_depth_by_sequence = read_mapping_stats.depth_by_sequence
     File? read_mapping_statistics = read_mapping_stats.stats
     File? read_mapping_cov_hist = read_mapping_stats.cov_hist
     File? read_mapping_cov_stats = read_mapping_stats.cov_stats
