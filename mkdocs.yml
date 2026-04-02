@@ -43,7 +43,6 @@ nav:
                - Augur: workflows/phylogenetic_construction/augur.md
                - Core_Gene_SNP: workflows/phylogenetic_construction/core_gene_snp.md
                - Clair3_Variants_ONT: workflows/phylogenetic_construction/clair3_variants.md
-               - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
                - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
                - kSNP3: workflows/phylogenetic_construction/ksnp3.md
                - kSNP4: workflows/phylogenetic_construction/ksnp4.md
@@ -136,7 +135,6 @@ nav:
                - TheiaEuk Workflow Series: workflows/genomic_characterization/theiaeuk.md
             - Viral:
                - Augur: workflows/phylogenetic_construction/augur.md
-               - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
                - Freyja Workflow Series: workflows/genomic_characterization/freyja.md
                - kSNP3: workflows/phylogenetic_construction/ksnp3.md
                - kSNP4: workflows/phylogenetic_construction/ksnp4.md
@@ -164,7 +162,6 @@ nav:
             - Concatenate_Illumina_Lanes: workflows/standalone/concatenate_illumina_lanes.md
             - Core_Gene_SNP: workflows/phylogenetic_construction/core_gene_snp.md
             - Create_Terra_Table: workflows/data_import/create_terra_table.md
-            - CZGenEpi_Prep: workflows/phylogenetic_construction/czgenepi_prep.md
             - Dorado_Basecalling: workflows/standalone/dorado_basecalling.md
             - Fetch_SRR_Accession: workflows/data_import/fetch_srr_accession.md
             - Find_Shared_Variants: workflows/phylogenetic_construction/find_shared_variants.md
