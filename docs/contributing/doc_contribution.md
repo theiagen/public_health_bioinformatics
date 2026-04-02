@@ -1,6 +1,6 @@
 # PHB Documentation Contribution Guide
 
-The documentation for PHB is hosted in the `docs/` directory. This documentation is written in Markdown and is built using [MkDocs](https://www.mkdocs.org/) and the [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) theme.
+The documentation for PHB is hosted in the `docs/` directory. This documentation is written in Markdown and was historically built using [MkDocs](https://www.mkdocs.org/) and the [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/) theme. Currently, we are using [Zensical](https://zensical.org/) to build the documentation, which is a new static site generator built by the same developer as Material for MkDocs. Zensical is still in beta, but we are using it to take advantage of its improved performance and features as future updates to MkDocs will not be backwards compatible. Our documentation is built and deployed using GitHub Actions.
 
 This guide is intended to provide a brief overview of the documentation structure and how to contribute to the documentation, including standard language and formatting conventions.
 
@@ -8,16 +8,16 @@ This guide is intended to provide a brief overview of the documentation structur
 
 Since the documentation is built off of the `main` branch, it is highly recommended to preview your changes before making a PR. You can do this by installing the necessary packages and previewing ("serving") the documentation locally.
 
-To test your documentation changes, you will need to have the following packages installed on your local VM:
+To test your documentation changes, you will need to zzwhave the following packages installed on your local VM:
 
 ```bash
-pip install mkdocs-material==9.7.6 mkdocs-material-extensions==1.3.1 mkdocs-git-revision-date-localized-plugin==1.5.1 mike==2.1.4 mkdocs-glightbox==0.5.2 mkdocs-macros-plugin==1.5.0 pandas==3.0.1 click==8.2.1
+pip install zensical git+https://github.com/squidfunk/mike.git
 ```
 
 Once installed, navigate to the top directory in PHB. The live preview server can be activated by running the following command:
 
 ```bash
-mkdocs serve
+zensical serve
 ```
 
 This will prompt you to open your browser to the appropriate local host address (by default, localhost:8000). Every time you save a change, the documentation will automatically update in the browser.
@@ -33,7 +33,7 @@ Here are some VSCode Extensions can help you write and edit your markdown files 
 ### Helpful Websites
 
 - [Excel to Markdown Table](https://tableconvert.com/excel-to-markdown) - This website will convert an Excel table into markdown format, which can be copied and pasted into your markdown file. Currently, we recommend using the `render_tsv_table()` macro (described below) to import TSV files, but this is a good alternative if you want to create a smaller table from scratch.
-- [Material for MkDocs Reference](https://squidfunk.github.io/mkdocs-material/reference/) - This is the official reference for the Material for MkDocs theme, which will help you understand how to use the theme's features.
+- [Zensical Reference](https://zensical.org/docs/) - This is the official reference for the Zensical static site generator, which will help you understand how to use its features.
 - [Dead Link Check](https://www.deadlinkchecker.com/) - This website will scan your website to ensure that all links are working correctly. This will only work on the deployed version of the documentation, not the local version.
 
 ## Standard Language & Formatting Conventions

@@ -1,7 +1,9 @@
 site_name: Public Health Bioinformatics
 site_author: Theiagen Genomics
 site_description: A collection of bioinformatics workflows for genomic characterization, submission preparation, and genomic epidemiology of pathogens of public health concern.
+
 site_url: https://theiagen.github.io/public_health_bioinformatics/
+edit_uri: "edit/main/docs/"
 
 repo_url: https://github.com/theiagen/public_health_bioinformatics
 
@@ -214,26 +216,25 @@ not_in_nav: |
   common_text/*
 
 theme: 
-  name: material
+  variant: classic
   logo: assets/logos/Theiagen-Logo-White.png
   favicon: assets/logos/Theiagen-Symbol-Standard-01.png
   custom_dir: docs/overrides
   features:
+    - content.action.edit
+    - content.action.view
     - content.code.annotate
     - content.code.copy
     - content.tabs.link
     - content.tooltips
-    #- navigation.expand
     - navigation.instant
-    #- navigation.instant.preview
     - navigation.path
+    - navigation.prune
     - navigation.tabs
     - navigation.top
     - navigation.tracking
     - search.highlight
-    - search.suggest
     - toc.follow
-    #- toc.integrate
   language: en
   palette:
     - media: "(prefers-color-scheme: light)"
@@ -256,7 +257,12 @@ markdown_extensions:
   - def_list
   - footnotes
   - md_in_html
+  - pymdownx.blocks.html
+  - pymdownx.caret
   - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.highlight:
       anchor_linenums: true
       line_spans: __span
@@ -264,22 +270,17 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.keys
   - pymdownx.mark
-  - pymdownx.caret
   - pymdownx.snippets
   - pymdownx.superfences
-  - pymdownx.blocks.html
-  - pymdownx.tasklist:
-      custom_checkbox: true
-  - toc:
-      permalink: true
-  - pymdownx.emoji:
-      emoji_index: !!python/name:material.extensions.emoji.twemoji
-      emoji_generator: !!python/name:material.extensions.emoji.to_svg
   - pymdownx.tabbed:
       alternate_style: true
       slugify: !!python/object/apply:pymdownx.slugs.slugify
         kwds:
           case: lower
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - toc:
+      permalink: true
 
 plugins:
   - git-revision-date-localized:
@@ -290,7 +291,6 @@ plugins:
   - mike
   - macros:
       module_name: macros/main
-  # - section-index
 
 extra_javascript:
   - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js  
@@ -315,4 +315,4 @@ extra:
   homepage: https://www.theiagen.com
 
 copyright: |
-  &copy; 2022-2026 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
+  &copy; 2026 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
