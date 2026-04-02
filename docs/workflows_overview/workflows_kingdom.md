@@ -41,6 +41,7 @@ title: Workflows by Kingdom
 <!-- definitions for workflow type column -->
 *[Sample-level]: This workflow is run once for each sample
 *[Set-level]: This workflow is run once on a group of samples
+*[Table-level]: This workflow creates or processes entire tables of data.
 
 <!-- definitions for taxa column -->
 *[Any taxa]: This workflow is organism-agnostic and can be run with any taxa
