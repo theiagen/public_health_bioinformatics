@@ -240,8 +240,6 @@ concatenate_column_content_analysis_date	String	The date the workflow was run	Co
 concatenate_column_content_version	String	The version of the repository the workflow is hosted in	Concatenate_Column_Content
 concatenate_illumina_lanes_analysis_date	String	Date of analysis	Concatenate_Illumina_Lanes
 concatenate_illumina_lanes_version	String	Version of PHB used for the analysis	Concatenate_Illumina_Lanes
-concatenated_czgenepi_fasta	File	The concatenated fasta file with the renamed headers (the headers are renamed to account for clearlabs data which has unique headers)	CZGenEpi_Prep
-concatenated_czgenepi_metadata	File	The concatenated metadata that was extracted from the terra table using the specified columns	CZGenEpi_Prep
 concatenated_files	File	The file containing all of the items from the column you selected.	Concatenate_Column_Content
 concatenated_variants	File	The concatenated variants without presence/absence	Find_Shared_Variants
 consensus_flagstat	File	Output from the SAMtools flagstat command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
@@ -259,8 +257,6 @@ cophylogeny_plot_with_branch_lengths	File	A cophylogeny plot depicting branching
 cophylogeny_version	String	Version of the TheiaPhylo repository used for analysis	PhyloCompare
 core_gene_snp_wf_analysis_date	String	Date of analysis using Core_Gene_SNP workflow	Core_Gene_SNP
 core_gene_snp_wf_version	String	Version of PHB used for analysis	Core_Gene_SNP
-czgenepi_prep_analysis_date	String	The date the workflow was run	CZGenEpi_Prep
-czgenepi_prep_version	String	The version of PHB the workflow is in	CZGenEpi_Prep
 datasets_genome_length_docker	String	The Docker container used for the task	TheiaViral_Illumina_PE, TheiaViral_ONT
 datasets_genome_length_version	String	The version of NCBI Datasets used for analysis	TheiaViral_Illumina_PE, TheiaViral_ONT
 datatable	File	Sample-level data table TSV file that was used to update the original sample-level data table in the last step of the TheiaCoV_FASTA_Batch workflow.	TheiaCoV_FASTA_Batch
