@@ -85,7 +85,11 @@ arln_stats_docker_version	String	Docker version for task_arln_stats.wdl	TheiaPro
 arln_taxon_assembly_ratio_stdev	String	Reported assembely length standard deviation of the given taxonomy pulled from NCBI aggregated data.	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 arln_taxon_gc_mean	String	Mean GC percent of the taxon.	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 arln_taxon_gc_percent_stdev	String	Reported GC percent standard deviation of the given taxonomy pulled from NCBI aggregated data.	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-artic_docker	String	Docker image utilized for read trimming and consensus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
+artic_amplicon_depths	File	Amplicon-specific depth calculations linked to BED file primer schemes	TheiaCoV_ClearLabs, TheiaCoV_ONT
+artic_docker	String	Docker image utilized for read trimming and consensus genome assembly	TheiaCoV_ONT
+artic_pipeline_docker	String	Docker image utilized for the ARTIC pipeline	TheiaCoV_ClearLabs
+artic_pipeline_reference	String	Reference genome used for the ARTIC pipeline	TheiaCoV_ONT
+artic_reference	String	Reference genome used for the ARTIC pipeline	TheiaCoV_ClearLabs
 artic_version	String	Version of the Artic software utilized for read trimming and conesnsus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
 assembled_viruses	Int	Number of viruses assembled from sample	TheiaViral_Panel
 assembler	String	Assembler used in digger_denovo subworkflow	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -227,7 +231,7 @@ clair3_model_used	String	Name of the Clair3 model used for variant calling	Clair
 clair3_variants_gvcf	File	Optional genome VCF file containing information about all genomic positions, including non-variant sites	Clair3_Variants_ONT
 clair3_variants_vcf	File	Final merged VCF file containing high-confidence variant calls, combining results from both pileup and full-alignment approaches	Clair3_Variants_ONT
 clair3_variants_wf_version	String	Version of the PHB workflow used	Clair3_Variants_ONT
-clair3_vcf	File	Variant calls in VCF format from Clair3	TheiaViral_ONT
+clair3_vcf	File	Variant calls in VCF format from Clair3	TheiaCoV_ONT, TheiaViral_ONT
 clair3_version	String	Clair3 Version being used	Clair3_Variants_ONT, TheiaViral_ONT
 clockwork_decontaminated_read1	File	Decontaminated forward reads by Clockwork	TBProfiler_tNGS, TheiaProk_Illumina_PE
 clockwork_decontaminated_read2	File	Decontaminated reverse reads by Clockwork	TBProfiler_tNGS, TheiaProk_Illumina_PE
@@ -655,8 +659,6 @@ meanbaseq_trim	Float	Mean quality of the nucleotide basecalls aligned to the ref
 meanmapq_trim	String	Mean quality of the mapped reads to the reference genome after primer trimming	TheiaCoV_Illumina_PE
 meanmapq_trim	Float	Mean quality of the mapped reads to the reference genome after primer trimming	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 medaka_model	String	Model used by Medaka	TheiaEuk_ONT, TheiaProk_ONT
-medaka_reference	String	Reference sequence used in medaka task	TheiaCoV_ClearLabs, TheiaCoV_ONT
-medaka_vcf	File	A VCF file containing the identified variants	TheiaCoV_ONT
 medaka_version	String	Version of Medaka used	TheiaEuk_ONT, TheiaProk_ONT
 megahit_docker	String	Docker image used for MEGAHIT	TheiaViral_Illumina_PE
 megahit_status	String	Status of the MEGAHIT assembly	TheiaViral_Illumina_PE
@@ -936,7 +938,6 @@ read1_dehosted	File	The dehosted forward reads file; suggested read file for SRA
 read1_mapped	File	The mapped forward reads to the assembly	TheiaMeta_Illumina_PE
 read1_renamed	File	New read1 FASTQ file renamed to desired filename	Rename_FASTQ
 read1_subsampled	File	Read1 FASTQ files downsampled to desired coverage	RASUSA, TheiaEuk_Illumina_PE
-read1_trimmed	File	Forward read file after quality trimming and adapter removal	TheiaCoV_ONT
 read1_unaligned	File	Forward read file of unaligned reads	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 read1_unmapped	File	The unmapped forwards reads to the assembly	TheiaMeta_Illumina_PE
 read2	File	File containing the reverse reads (not available for single-end or ONT data)	BaseSpace_Fetch, SRA_Fetch
