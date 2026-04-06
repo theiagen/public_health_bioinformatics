@@ -302,6 +302,7 @@ workflow theiacov_ont {
     String? artic_version = consensus.artic_pipeline_version
     String? artic_docker = consensus.artic_pipeline_docker
     String? artic_pipeline_reference = consensus.artic_pipeline_reference
+    File? artic_amplicon_depths = consensus.artic_amplicon_depths
     String? primer_bed_name = consensus.primer_bed_name
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([consensus.artic_pipeline_version, flu_track.irma_version, ""])
     # Assembly QC - consensus assembly qc outputs

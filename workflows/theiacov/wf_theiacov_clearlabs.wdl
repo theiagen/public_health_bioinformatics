@@ -194,6 +194,7 @@ workflow theiacov_clearlabs {
     String artic_version = consensus.artic_pipeline_version
     String artic_pipeline_docker = consensus.artic_pipeline_docker
     String artic_reference = consensus.artic_pipeline_reference
+    File? artic_amplicon_depths = consensus.artic_amplicon_depths
     String primer_bed_name = consensus.primer_bed_name
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): ~{consensus.artic_pipeline_version}"
     # Read Alignment - consensus assembly qc outputs
