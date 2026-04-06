@@ -61,10 +61,21 @@ task consensus {
     # primer_trimmed_read_percent
     # per primer read counts (?)
   # Based on comparing *primertrimmed.rg.sorted.bam to *trimmed.rg.sorted.bam
+
+  # calculate percent of reads that were primer trimmed
+  primers_trimmed=$(tail -n+2 ~{samplename}.alignreport.tsv | wc -l)
+  total_reads=$(samtools view -c ~{samplename}.sorted.bam)
+  if [[ $total_reads -gt 0 ]]; then
+    primer_trimmed_read_percent=$(awk 'BEGIN { print ("$primers_trimmed" / "$total_reads") * 100 }')
+  else
+    primer_trimmed_read_percent=0
+  fi
+  
   >>>
   output {
     File consensus_seq = "~{samplename}.consensus.fasta"
     File artic_clair3_pass_vcf = "~{samplename}.pass.vcf"
+    File? artic_amplicon_depths = "~{samplename}.amplicon_depths.tsv"
     String artic_clair3_model = clair3_model
     String artic_pipeline_reference = read_string("REFERENCE_GENOME")
     String artic_pipeline_version = read_string("VERSION")
