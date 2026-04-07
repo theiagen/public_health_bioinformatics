@@ -125,7 +125,8 @@ workflow theiaprok_illumina_pe {
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
-        workflow_series = "theiaprok"
+        workflow_series = "theiaprok",
+        rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0])
     }
     if (! skip_screen) {
       call screen.check_reads as clean_check_reads {
