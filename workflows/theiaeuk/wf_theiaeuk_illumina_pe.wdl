@@ -8,7 +8,6 @@ import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_che
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
-import "../../tasks/utilities/task_rasusa.wdl" as rasusa
 import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 
@@ -21,7 +20,6 @@ workflow theiaeuk_illumina_pe {
     String seq_method = "ILLUMINA"
     File read1
     File read2
-    Boolean call_rasusa = true
     Int min_reads = 30000
     # Edited default values
     Int min_basepairs = 45000000
@@ -38,8 +36,7 @@ workflow theiaeuk_illumina_pe {
     Boolean skip_screen = false 
     File? qc_check_table
     String? expected_taxon
-    Int? genome_length 
-    Float subsample_coverage = 150 # default coverage for RASUSA is set to 150X
+    Int? genome_length
     Int cpu = 8
     Int memory = 16
     # default gambit outputs
@@ -65,24 +62,16 @@ workflow theiaeuk_illumina_pe {
     }
   }
   if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-    if (call_rasusa) {
-      call rasusa.rasusa as rasusa_task {
-        input:
-          read1 = read1,
-          read2 = read2,
-          samplename = samplename,
-          genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
-          coverage = subsample_coverage
-      }
-    }  
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
-        read1 = select_first([rasusa_task.read1_subsampled, read1]),
-        read2 = select_first([rasusa_task.read2_subsampled, read2]),
+        read1 = read1,
+        read2 = read2,
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
-        trim_window_size = trim_window_size
+        trim_window_size = trim_window_size,
+        workflow_series = "theiaeuk",
+        rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0])
     }
     if (! skip_screen) {
       call screen.check_reads as clean_check_reads {
@@ -199,9 +188,7 @@ workflow theiaeuk_illumina_pe {
     String theiaeuk_illumina_pe_version = version_capture.phb_version
     String theiaeuk_illumina_pe_analysis_date = version_capture.date
     # RASUSA
-    String? rasusa_version = rasusa_task.rasusa_version
-    File? read1_subsampled = rasusa_task.read1_subsampled
-    File? read2_subsampled = rasusa_task.read2_subsampled
+    String? rasusa_version = read_QC_trim.rasusa_version
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
