@@ -25,7 +25,7 @@ task rasusa {
     String? genome_length
     Int? seed
     Float? frac
-    Int? num 
+    Int? num
   }
   command <<<
     # fail hard
@@ -37,11 +37,31 @@ task rasusa {
     else
       OUTPUT_FILES="-o ~{samplename}_subsampled_R1.fastq.gz -o ~{samplename}_subsampled_R2.fastq.gz"
     fi
-    # coverage mode requires genome_length; frac, bases, and num each work standalone
-    if [ -n "~{frac}" ] || [ -n "~{bases}" ] || [ -n "~{num}" ]; then
+
+    # valid options: (coverage + genome_length), frac, bases, or num
+    # frac, bases, and num should be mutually exclusive and take precedence over coverage/genome_length
+    OVERRIDE_PARAMS=0
+    if [ -n "~{frac}" ]; then
+      OVERRIDE_PARAMS=$((OVERRIDE_PARAMS + 1));
+    fi
+    if [ -n "~{bases}" ]; then
+      OVERRIDE_PARAMS=$((OVERRIDE_PARAMS + 1));
+    fi
+    if [ -n "~{num}" ]; then
+      OVERRIDE_PARAMS=$((OVERRIDE_PARAMS + 1));
+    fi
+
+    if [ "$OVERRIDE_PARAMS" -gt 1 ]; then
+      echo "ERROR: frac, bases, and num are mutually exclusive; specify only one"
+      exit 1
+    elif [ "$OVERRIDE_PARAMS" -eq 1 ]; then
+      echo "INFO: Using frac, bases, or num parameter; ignoring coverage and genome_length"
       COVERAGE=""
-    else
+    elif [ -n "~{genome_length}" ] && [ -n "~{coverage}" ]; then
       COVERAGE="--coverage ~{coverage} --genome-size ~{genome_length}"
+    else
+      echo "ERROR: Provide genome_length and coverage, or one of: frac, bases, num"
+      exit 1
     fi
 
     # run rasusa for read sampling
