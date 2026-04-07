@@ -33,7 +33,7 @@ workflow theiaeuk_illumina_pe {
     Int min_contig_length = 1000
     Int busco_memory = 24
     String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
-    Boolean skip_screen = false 
+    Boolean skip_screen = false
     File? qc_check_table
     String? expected_taxon
     Int? genome_length
@@ -45,7 +45,7 @@ workflow theiaeuk_illumina_pe {
   }
   call versioning.version_capture {
     input:
-  } 
+  }
   if (! skip_screen) {
     call screen.check_reads as raw_check_reads {
       input:
@@ -160,7 +160,7 @@ workflow theiaeuk_illumina_pe {
               "r2_mean_q_clean": cg_pipeline_clean.r2_mean_q,
               "combined_mean_q_clean": cg_pipeline_clean.combined_mean_q,
               "r1_mean_readlength_clean": cg_pipeline_clean.r1_mean_readlength,
-              "r2_mean_readlength_clean": cg_pipeline_clean.r2_mean_readlength,  
+              "r2_mean_readlength_clean": cg_pipeline_clean.r2_mean_readlength,
               "combined_mean_readlength_clean": cg_pipeline_clean.combined_mean_readlength,
               "est_coverage_raw": cg_pipeline_raw.est_coverage,
               "est_coverage_clean": cg_pipeline_clean.est_coverage,
@@ -286,7 +286,7 @@ workflow theiaeuk_illumina_pe {
     String? amr_search_all_resistances = merlin_magic.amr_search_all_resistances
     String? amr_search_associated_resistances = merlin_magic.amr_search_associated_resistances
     String? amr_search_docker = merlin_magic.amr_search_docker
-    String? amr_search_version = merlin_magic.amr_search_version    
+    String? amr_search_version = merlin_magic.amr_search_version
     # Cladetyper Outputs
     String? cladetyper_clade = merlin_magic.clade_type
     String? cladetyper_gambit_version = merlin_magic.cladetyper_version
