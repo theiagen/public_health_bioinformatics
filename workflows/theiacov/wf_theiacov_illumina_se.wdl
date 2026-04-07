@@ -100,7 +100,8 @@ workflow theiacov_illumina_se {
         adapters = adapters,
         phix = phix,
         workflow_series = "theiacov",
-        target_organism = organism_parameters.kraken_target_organism
+        target_organism = organism_parameters.kraken_target_organism,
+        rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0])
     }
     if (! skip_screen) {
       call screen.check_reads_se as clean_check_reads {
