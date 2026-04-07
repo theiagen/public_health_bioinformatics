@@ -812,7 +812,7 @@ flu_track	flu_subtype	String	The influenza subtype being analyzed. Used for pick
 flu_track	genoflu_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
 flu_track	genoflu_cross_reference	File	An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py		Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flu_track	genoflu_disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
-flu_track	genoflu_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.06	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	docker	
+flu_track	genoflu_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.07	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	docker	
 flu_track	genoflu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	runtime	
 flu_track	genoflu_min_percent_identity	Float	Percent identity threshold used for calling matches for each genome segment that make up the final GenoFlu genotype	98	Optional	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT	general	
 flu_track	irma_cpu	Int	Internal component, do not modify	4	Optional	TheiaCoV_FASTA	general	
@@ -1666,7 +1666,7 @@ morgana_magic	genoflu_cpu	Int	Number of CPUs to allocate to the task	1	Optional	
 morgana_magic	genoflu_cross_reference	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general	
 morgana_magic	genoflu_cross_reference	File	An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 morgana_magic	genoflu_disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-morgana_magic	genoflu_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.06	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
+morgana_magic	genoflu_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.07	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 morgana_magic	genoflu_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	irma_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	irma_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
