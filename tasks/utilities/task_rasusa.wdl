@@ -22,7 +22,7 @@ task rasusa {
     #  --num [INTEGER] Subsample to a specific number of reads
     String? bases
     Float coverage = 250
-    String genome_length
+    String? genome_length
     Int? seed
     Float? frac
     Int? num 
@@ -37,11 +37,11 @@ task rasusa {
     else
       OUTPUT_FILES="-o ~{samplename}_subsampled_R1.fastq.gz -o ~{samplename}_subsampled_R2.fastq.gz"
     fi
-    # ignore coverage and genome length if frac input provided
-    if [ -z "~{frac}" ]; then
-      COVERAGE="--coverage ~{coverage} --genome-size ~{genome_length}"
-    else
+    # coverage mode requires genome_length; frac, bases, and num each work standalone
+    if [ -n "~{frac}" ] || [ -n "~{bases}" ] || [ -n "~{num}" ]; then
       COVERAGE=""
+    else
+      COVERAGE="--coverage ~{coverage} --genome-size ~{genome_length}"
     fi
 
     # run rasusa for read sampling
