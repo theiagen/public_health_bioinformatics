@@ -38,7 +38,7 @@ task check_reads {
       cat_reads="cat"
     fi
 
-    if [[ $($cat_reads ~{read1} | wc -l) -eq 0 || $($cat_reads ~{read2} | wc -l) -eq 0 ]]; then
+    if [[ $($cat_reads ~{read1} | head -n1 | wc -l) -eq 0 || $($cat_reads ~{read2} | head -n1 |wc -l) -eq 0 ]]; then
       echo "DEBUG: CAUTION! one of the read files is empty!"
       fail_log+="; one or both of the read files are empty"
     else
@@ -224,7 +224,7 @@ task check_reads_se {
       cat_reads="cat"
     fi
 
-    if [[ $($cat_reads ~{read1} | wc -l) -eq 0 ]]; then
+    if [[ $($cat_reads ~{read1} | head -n1 | wc -l) -eq 0 ]]; then
       echo "DEBUG: CAUTION! the read file is empty!"
       fail_log+="; the read file is empty"
     else
