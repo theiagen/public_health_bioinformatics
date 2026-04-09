@@ -73,7 +73,7 @@ column_name_in_table2	column_name_in_table1
 internal_column_name	display_column_name
 ```
 
-Please note that the name in the **second column** will be displayed and used in all output files.
+Please note that the name in the **second column** will be displayed and used in all output files. Make sure that the information in the `columns_to_compare` input variable matches the **new** column names (the second column in the `column_translation_tsv` file).
 
 !!! info "Call Caching Disabled"
     If using TheiaValidate workflow version 1.3.0 or higher, the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is compared fresh. Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.
@@ -117,11 +117,9 @@ To help demonstrate how TheiaValidate works, please observe the following exampl
     | columnE-missing | EXACT |
 
 ???+ toggle "Column Translation"
-    | missing | columnE-missing |
+    | old_name | new_name |
     | --- | --- |
-    | columnA-string | columnA-string |
-
-    _Note: the second row translating_ `columnA-string` _to itself is included to prevent the known bug explained above._
+    | missing | columnE-missing |
 
 If the above inputs are provided, then the following output files will be generated:
 
