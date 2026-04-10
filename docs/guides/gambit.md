@@ -176,6 +176,45 @@ Options:
 
 ### GAMBIT Prokaryotic Databases
 
+#### GAMBIT GTDB Database v2.2.0
+
+??? toggle "Database Details"
+
+    This database is a **minor update** to the v2.1.0 database. This database is identical to the v2.1.0 database, **except for the following modifications**.
+    
+    1. GTDB refers to _Proteus terrae_ subspecies _cibarius_ (NCBI name) as _Proteus cibarius_. This species have been renamed to align with NCBI
+        a. Rationale: This GAMBIT patch database renamed the species to align with NCBI’s naming convention and public health practice.
+    2. The following genomes below were removed. 
+        a. Rationale: These genomes are currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Echerichia coli* query genomes to *Shigella* species.
+
+        GCF_020539805.1
+        GCF_022494035.1
+        GCF_013337165.1
+        GCF_013374815.1
+        GCF_019793575.1
+
+        b. Rationale: This genome is currently named as *Klebsiella oxytoca*, but is actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Klebsiella oxytoca* query genomes to *Escherichia coli* species.
+
+        GCA_900083935.1
+
+        c. Rationale: This genome is currently named as *Clostridium perfringens*, but is actually *Enterococcus lactis* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Enterococcus lactis* query genomes to *Clostridium perfringens* species.
+
+        GCA_013390155.1   
+
+    **Database Files**
+
+    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:
+
+    **GS URI (for [Terra.bio](https://terra.bio) usage):**
+
+    - `gs://gambit-databases-rp/2.2.0/gambit-metadata-2.2.0-20251111.gdb`
+    - `gs://gambit-databases-rp/2.2.0/gambit-signatures-2.2.0-20251111.gs`
+
+    **HTTPS URL (for local download):**
+
+    - <https://storage.cloud.google.com/gambit-databases-rp/2.2.0/gambit-metadata-2.2.0-20251111.gdb>
+    - <https://storage.cloud.google.com/gambit-databases-rp/2.2.0/gambit-signatures-2.2.0-20251111.gs>
+
 #### GAMBIT GTDB Database v2.1.0
 
 ??? toggle "Database Details"
