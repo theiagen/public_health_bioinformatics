@@ -1,0 +1,5 @@
+{
+  "theiaeuk_ont.genome_length": "this.estimated_length",
+  "theiaeuk_ont.read1": "this.read1",
+  "theiaeuk_ont.samplename": "this.theiaeuk_ont_id"
+}

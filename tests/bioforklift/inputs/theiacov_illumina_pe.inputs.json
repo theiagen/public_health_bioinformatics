@@ -1,0 +1,9 @@
+{
+    "theiacov_illumina_pe.reference_genome": "this.reference_genome_input",
+    "theiacov_illumina_pe.organism_parameters.hiv_primer_version": "this.hiv_primer_version_input",
+    "theiacov_illumina_pe.read1": "this.read1",
+    "theiacov_illumina_pe.read2": "this.read2",
+    "theiacov_illumina_pe.primer_bed": "this.primer_bed_input",
+    "theiacov_illumina_pe.samplename": "this.theiacov_illumina_pe_id",
+    "theiacov_illumina_pe.organism": "this.organism_input"
+}

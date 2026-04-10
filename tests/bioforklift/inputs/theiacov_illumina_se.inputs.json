@@ -1,0 +1,7 @@
+{
+    "theiacov_illumina_se.samplename": "this.theiacov_illumina_se_id",
+    "theiacov_illumina_se.primer_bed": "this.primer_bed_input",
+    "theiacov_illumina_se.organism": "this.organism_input",
+    "theiacov_illumina_se.reference_genome": "this.reference_genome_input",
+    "theiacov_illumina_se.read1": "this.read1"
+}
