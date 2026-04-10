@@ -25,7 +25,7 @@ If the **distance between the query genome assembly and the closest genome in th
 
     ---
 
-    [GAMBIT Prokaryotic GTDB Database v2.1.0](#gambit-gtdb-database-v210)
+    [GAMBIT Prokaryotic GTDB Database v2.2.0](#gambit-gtdb-database-v220)
 
     [GAMBIT Fungal Database v1.0.0](#gambit-fungal-database-v100)
 
