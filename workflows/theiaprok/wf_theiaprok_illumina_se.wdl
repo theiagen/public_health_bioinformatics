@@ -61,6 +61,9 @@ workflow theiaprok_illumina_se {
     Int trim_min_length = 25
     Int trim_quality_min_score = 30
     Int trim_window_size = 4
+    # rasusa downsampling parameters
+    Boolean call_rasusa = false
+    Float rasusa_downsampling_coverage = 150
     # module options
     Boolean perform_characterization = true # by default run all characterization steps
     Boolean amrfinder_use_gff = false # by default use nucleotide fasta for amrfinderplus, but user can set this to true if they want to use a gff and protein fasta file
@@ -116,7 +119,9 @@ workflow theiaprok_illumina_se {
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
         workflow_series = "theiaprok",
-        rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0])
+        call_rasusa = call_rasusa,
+        rasusa_downsampling_coverage = rasusa_downsampling_coverage,
+        rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
     }
     if (! skip_screen) {
       call screen.check_reads_se as clean_check_reads {
@@ -773,6 +778,8 @@ workflow theiaprok_illumina_se {
     String? kraken2_report = read_QC_trim.kraken2_report
     String? kraken2_docker = read_QC_trim.kraken2_docker
     String? kraken2_database = read_QC_trim.kraken2_database
+    # Read QC - rasusa outputs
+    String? rasusa_version = read_QC_trim.rasusa_version
     #Assembly - digger_denovo outputs
     File? assembly_fasta = digger_denovo.assembly_fasta
     File? contigs_gfa = digger_denovo.contigs_gfa
