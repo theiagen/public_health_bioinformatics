@@ -21,6 +21,7 @@ workflow theiaeuk_illumina_pe {
     File read1
     File read2
     Boolean call_rasusa = true
+    Float rasusa_downsampling_coverage = 150
     Int min_reads = 30000
     # Edited default values
     Int min_basepairs = 45000000
@@ -73,6 +74,7 @@ workflow theiaeuk_illumina_pe {
         trim_window_size = trim_window_size,
         workflow_series = "theiaeuk",
         call_rasusa = call_rasusa,
+        rasusa_downsampling_coverage = rasusa_downsampling_coverage,
         rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0])
     }
     if (! skip_screen) {
