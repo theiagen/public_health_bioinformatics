@@ -41,7 +41,7 @@ workflow read_QC_trim_se {
 
     # rasusa downsampling inputs
     Boolean call_rasusa = false
-    Float? rasusa_downsampling_coverage = 150
+    Float rasusa_downsampling_coverage = 150
     String? rasusa_genome_length
     Int? rasusa_seed
     String? rasusa_bases
