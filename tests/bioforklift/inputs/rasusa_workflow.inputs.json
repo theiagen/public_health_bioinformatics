@@ -1,0 +1,11 @@
+{
+    "rasusa_workflow.read1": "this.read1",
+    "rasusa_workflow.read2": "this.read2",
+    "rasusa_workflow.samplename": "this.rasusa_workflow_id",
+    "rasusa_workflow.rasusa_task.seed": 67,
+    "rasusa_workflow.rasusa_task.genome_length": "this.GENOME_LENGTH",
+    "rasusa_workflow.rasusa_task.coverage": "this.COVERAGE",
+    "rasusa_workflow.rasusa_task.frac": "this.FRACTION",
+    "rasusa_workflow.rasusa_task.bases": "this.BASES",
+    "rasusa_workflow.rasusa_task.num": "this.NUM_READS"
+}
