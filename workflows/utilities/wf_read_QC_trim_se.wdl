@@ -12,7 +12,7 @@ import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 
 workflow read_QC_trim_se {
   meta {
-    description: "Runs basic QC (fastq-scan), trimming (SeqyClean), and taxonomic ID (Kraken2) on illumina SE reads"
+    description: "Runs basic QC (fastq-scan), trimming (trimmomatic or fastp), optional downsampling (Rasusa), and taxonomic ID (Kraken2) on illumina SE reads"
   }
   input {
     String samplename
