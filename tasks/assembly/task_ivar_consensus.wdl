@@ -6,11 +6,11 @@ task consensus {
     String samplename
     File? reference_genome
     Boolean count_orphans = true
-    Int max_depth = "600000"
+    Int max_depth = 600000
     Boolean disable_baq = true
     Boolean all_positions = false
-    Int min_bq = "0"
-    Int min_qual = "20"
+    Int min_bq = 0
+    Int min_qual = 20
     Float? consensus_min_freq 
     Int? consensus_min_depth
     String char_unknown = "N"

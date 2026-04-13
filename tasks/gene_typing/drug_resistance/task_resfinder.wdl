@@ -232,7 +232,7 @@ task resfinder {
     String resfinder_predicted_resistance_Tmp = read_string("RESFINDER_PREDICTED_RESISTANCE_TMP.txt")
 
     String resfinder_predicted_resistance_quinolone = read_string("RESFINDER_PREDICTED_RESISTANCE_Q.txt")
-    Int resfinder_predicted_resistance_quinolone_mechanisms = read_string("RESFINDER_PREDICTED_RESISTANCE_Q_COUNT.txt")
+    Int resfinder_predicted_resistance_quinolone_mechanisms = read_int("RESFINDER_PREDICTED_RESISTANCE_Q_COUNT.txt")
     
     String resfinder_docker = "~{docker}"
     String resfinder_version = read_string("RESFINDER_VERSION")
