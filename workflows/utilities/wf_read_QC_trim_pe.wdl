@@ -2,7 +2,6 @@ version 1.0
 
 import "../../tasks/quality_control/basic_statistics/task_fastq_scan.wdl" as fastq_scan
 import "../../tasks/quality_control/basic_statistics/task_fastqc.wdl" as fastqc_task
-import "../../tasks/quality_control/basic_statistics/task_readlength.wdl" as readlength_task
 import "../../tasks/quality_control/read_filtering/task_bbduk.wdl" as bbduk_task
 import "../../tasks/quality_control/read_filtering/task_fastp.wdl" as fastp_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
