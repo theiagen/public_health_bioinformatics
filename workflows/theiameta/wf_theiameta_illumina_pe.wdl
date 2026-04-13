@@ -247,6 +247,8 @@ workflow theiameta_illumina_pe {
     File read1_clean = read_QC_trim.read1_clean
     File read2_clean = read_QC_trim.read2_clean
     String bbduk_docker = read_QC_trim.bbduk_docker
+    # Read QC - Read stats
+    Float? average_read_length = read_QC_trim.average_read_length
     # MIDAS outputs
     String? midas_primary_genus = read_QC_trim.midas_primary_genus
     File? midas_report = read_QC_trim.midas_report
