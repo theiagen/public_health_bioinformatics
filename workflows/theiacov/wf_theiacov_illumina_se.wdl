@@ -259,6 +259,8 @@ workflow theiacov_illumina_se {
     File? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
     File? bracken_report_dehosted = read_QC_trim.bracken_report_dehosted
     # Read QC - rasusa outputs
+    File? read1_subsampled_raw = read_QC_trim.read1_subsampled_raw
+    File? rasusa_log = read_QC_trim.rasusa_log
     String? rasusa_version = read_QC_trim.rasusa_version
     # Read Alignment - bwa outputs
     String? bwa_version = ivar_consensus.bwa_version

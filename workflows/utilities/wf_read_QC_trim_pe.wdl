@@ -282,6 +282,9 @@ workflow read_QC_trim_pe {
     # readlength
     Float? average_read_length = readlength.average_read_length
     # rasusa
+    File? read1_subsampled_raw = rasusa.read1_subsampled
+    File? read2_subsampled_raw = rasusa.read2_subsampled
+    File? rasusa_log = rasusa.rasusa_log
     String? rasusa_version = rasusa.rasusa_version
   }
 }

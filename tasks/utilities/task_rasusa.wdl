@@ -65,18 +65,20 @@ task rasusa {
     fi
 
     # run rasusa for read sampling
-    rasusa reads \
+    rasusa reads -v \
       ${COVERAGE} \
       ~{'--seed ' + seed} \
       ~{'--bases ' + bases} \
       ~{'--frac ' + frac} \
       ~{'--num ' + num} \
       ${OUTPUT_FILES} \
-      ~{read1} ~{read2}
+      ~{read1} ~{read2} | \
+      tee rasusa.log
   >>>
   output {
     File read1_subsampled = "~{samplename}_subsampled_R1.fastq.gz"
     File? read2_subsampled = "~{samplename}_subsampled_R2.fastq.gz"
+    File rasusa_log = "rasusa.log"
     String rasusa_version = read_string("VERSION")
   }
   runtime {

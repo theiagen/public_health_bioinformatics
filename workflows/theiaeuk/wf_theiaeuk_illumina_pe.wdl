@@ -192,6 +192,9 @@ workflow theiaeuk_illumina_pe {
     String theiaeuk_illumina_pe_version = version_capture.phb_version
     String theiaeuk_illumina_pe_analysis_date = version_capture.date
     # RASUSA
+    File? read1_subsampled_raw = read_QC_trim.read1_subsampled_raw
+    File? read2_subsampled_raw = read_QC_trim.read2_subsampled_raw
+    File? rasusa_log = read_QC_trim.rasusa_log
     String? rasusa_version = read_QC_trim.rasusa_version
     # Read Metadata
     String seq_platform = seq_method

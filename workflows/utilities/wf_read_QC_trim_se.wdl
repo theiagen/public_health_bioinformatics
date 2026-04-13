@@ -245,6 +245,8 @@ workflow read_QC_trim_se {
     Float? midas_secondary_genus_abundance = midas.midas_secondary_genus_abundance
     Float? midas_secondary_genus_coverage = midas.midas_secondary_genus_coverage
     # rasusa
+    File? read1_subsampled_raw = rasusa.read1_subsampled
+    File? rasusa_log = rasusa.rasusa_log
     String? rasusa_version = rasusa.rasusa_version
   }
 }

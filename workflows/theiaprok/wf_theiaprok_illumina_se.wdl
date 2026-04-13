@@ -779,6 +779,8 @@ workflow theiaprok_illumina_se {
     String? kraken2_docker = read_QC_trim.kraken2_docker
     String? kraken2_database = read_QC_trim.kraken2_database
     # Read QC - rasusa outputs
+    File? read1_subsampled_raw = read_QC_trim.read1_subsampled_raw
+    File? rasusa_log = read_QC_trim.rasusa_log
     String? rasusa_version = read_QC_trim.rasusa_version
     #Assembly - digger_denovo outputs
     File? assembly_fasta = digger_denovo.assembly_fasta
