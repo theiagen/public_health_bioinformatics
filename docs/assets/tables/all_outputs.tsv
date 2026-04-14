@@ -1184,13 +1184,16 @@ stxtyper_version	String	Version of StxTyper used	TheiaProk_FASTA, TheiaProk_Illu
 taxon_avg_genome_length	String	Average genome length for taxon obtained from NCBI datasets summary	TheiaViral_Illumina_PE, TheiaViral_ONT
 taxon_table_status	String	Status of the taxon table upload	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 tbp_parser_average_genome_depth	Float	The mean depth of coverage across all target regions included in the analysis	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-tbp_parser_coverage_report	File	A file containing the breadth of coverage across each target loci	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-tbp_parser_docker	String	The docker image and version tag for the tbp_parser tool	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_ONT
+tbp_parser_docker	String	The docker image and version tag for the tbp_parser tool	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 tbp_parser_genome_percent_coverage	Float	The percent breadth of coverage across the entire genome	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 tbp_parser_laboratorian_report_csv	File	An output file containing information regarding each mutation and its associated drug resistance profile in a CSV file. This file also contains two interpretation fields -- "Looker" and "MDL" which are generated using the CDC's expert rules for interpreting the severity of potential drug resistance mutations.	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-tbp_parser_lims_report_csv	File	An output file formatted specifically for STAR LIMS. This CSV report summarizes the highest severity mutations for each antimicrobial and lists the relevant mutations for each gene.	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+tbp_parser_lims_report_csv	File	A file summarizing the highest severity mutations for each antimicrobial and lists the relevant mutations for each gene.	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+tbp_parser_lims_report_transposed_csv	File	A transposed version of the LIMS report CSV produced by tbp_parser; the rows and columns from the `tbp_parser_lims_report_csv` are swapped so that the report is more human-readable	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+tbp_parser_locus_coverage_report_csv	File	A file containing the breadth of coverage across each locus	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+tbp_parser_log	File	A log file capturing the stdout/stderr from the tbp_parser run	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 tbp_parser_looker_report_csv	File	An output file that contains condensed information suitable for generating a dashboard in Google's Looker studio.	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-tbp_parser_version	String	The version number of tbp_parser	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_ONT
+tbp_parser_target_coverage_report_csv	File	A file containing the breadth of coverage across each target; identical to the locus report if each line in the coverage BED file corresponds to a single locus	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+tbp_parser_version	String	Version of tbp-parser used	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 tbprofiler_dr_type	String	The drug resistance category as determined by TBProfiler (sensitive, Pre-MDR, MDR, Pre-XDR, XDR)	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 tbprofiler_main_lineage	String	The Mycobacterium tuberculosis lineage assignment as made by TBProfiler	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 tbprofiler_median_depth	Float	The median depth of the H37Rv TB reference genome covered by the sample	TBProfiler_tNGS, TheiaProk_Illumina_PE, TheiaProk_ONT
