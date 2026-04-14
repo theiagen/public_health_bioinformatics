@@ -25,6 +25,8 @@ workflow amr_search_workflow {
     File amr_search_results = amr_search.amr_search_json_output
     File amr_results_csv = amr_search.amr_search_output_csv
     File amr_results_pdf = amr_search.amr_search_output_pdf
+    String amr_search_all_resistances = amr_search.amr_search_all_resistances
+    String amr_search_associated_resistances = amr_search.amr_search_associated_resistances
     String amr_search_docker = amr_search.amr_search_docker_image
     String amr_search_version = amr_search.amr_search_version
 

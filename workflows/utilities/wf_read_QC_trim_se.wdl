@@ -4,7 +4,7 @@ import "../../tasks/quality_control/basic_statistics/task_fastq_scan.wdl" as fas
 import "../../tasks/quality_control/basic_statistics/task_fastqc.wdl" as fastqc_task
 import "../../tasks/quality_control/read_filtering/task_bbduk.wdl" as bbduk_task
 import "../../tasks/quality_control/read_filtering/task_fastp.wdl" as fastp_task
-import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic
+import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic_task
 import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_scrub
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
 import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
@@ -24,10 +24,12 @@ workflow read_QC_trim_se {
     File? adapters
     File? phix
     String? workflow_series
-    String? trimmomatic_args
+    String? trimmomatic_override_args
     Boolean call_midas = false
     File? midas_db
+    Boolean call_bracken = true
     Boolean call_kraken = false
+    Int? bracken_kmer_length
     File? kraken_db
     Int? kraken_disk_size
     Int? kraken_memory
@@ -46,18 +48,18 @@ workflow read_QC_trim_se {
   }
 
   if (read_processing == "trimmomatic") {
-    call trimmomatic.trimmomatic_se {
+    call trimmomatic_task.trimmomatic {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_se.read1_dehosted, read1]),
         trimmomatic_min_length = trim_min_length,
-        trimmomatic_quality_trim_score = trim_quality_min_score,
+        trimmomatic_window_quality = trim_quality_min_score,
         trimmomatic_window_size = trim_window_size,
-        trimmomatic_args = trimmomatic_args
+        trimmomatic_override_args = trimmomatic_override_args
     }
   }
   if (read_processing == "fastp") {
-    call fastp_task.fastp_se {
+    call fastp_task.fastp {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_se.read1_dehosted, read1]),
@@ -70,7 +72,7 @@ workflow read_QC_trim_se {
   call bbduk_task.bbduk_se {
     input:
       samplename = samplename,
-      read1_trimmed = select_first([trimmomatic_se.read1_trimmed, fastp_se.read1_trimmed]),
+      read1_trimmed = select_first([trimmomatic.read1_trimmed, fastp.read1_trimmed]),
       memory = bbduk_memory,
       adapters = adapters,
       phix = phix
@@ -96,7 +98,7 @@ workflow read_QC_trim_se {
     }
   }
   if ("~{workflow_series}" == "theiacov") {
-    call kraken.kraken2_theiacov as kraken2_theiacov_raw {
+    call kraken.kraken2 as kraken2_theiacov_raw {
       input:
         samplename = samplename,
         read1 = read1,
@@ -104,9 +106,11 @@ workflow read_QC_trim_se {
         kraken2_db = kraken_db,
         disk_size = kraken_disk_size,
         memory = kraken_memory,
-        cpu = kraken_cpu
+        cpu = kraken_cpu,
+        call_bracken = call_bracken,
+        bracken_kmer_length = bracken_kmer_length
     }
-    call kraken.kraken2_theiacov as kraken2_theiacov_dehosted {
+    call kraken.kraken2 as kraken2_theiacov_dehosted {
       input:
         samplename = samplename,
         read1 = select_first([ncbi_scrub_se.read1_dehosted]),
@@ -114,7 +118,9 @@ workflow read_QC_trim_se {
         kraken2_db = kraken_db,
         disk_size = kraken_disk_size,
         memory = kraken_memory,
-        cpu = kraken_cpu
+        cpu = kraken_cpu,
+        call_bracken = call_bracken,
+        bracken_kmer_length = bracken_kmer_length
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
@@ -128,18 +134,21 @@ workflow read_QC_trim_se {
     }
   }
   if ("~{workflow_series}" == "theiaprok") {
-    if ((call_kraken) && defined(kraken_db)) {
-      call kraken.kraken2_standalone {
+    if (defined(kraken_db) && call_kraken) {
+      call kraken.kraken2 as kraken2_theiaprok {
         input:
           samplename = samplename,
           read1 = read1,
           kraken2_db = select_first([kraken_db]),
           disk_size = kraken_disk_size,
           memory = kraken_memory,
-          cpu = kraken_cpu
+          cpu = kraken_cpu,
+          call_bracken = call_bracken,
+          bracken_kmer_length = bracken_kmer_length
       }
-    }  if ((call_kraken) && ! defined(kraken_db)) {
-      String kraken_db_warning = "Kraken database not defined"
+    }
+    if (call_kraken && ! defined(kraken_db)) {
+      String kraken_db_warning = "Kraken2 database not defined"
     }
   }
   output {
@@ -175,24 +184,27 @@ workflow read_QC_trim_se {
     File? fastqc_clean1_html = fastqc_clean.read1_fastqc_html
     
     # kraken2 - raw and dehosted
-    String kraken_version = select_first([kraken2_theiacov_raw.version, kraken2_standalone.kraken2_version, ""])
-    Float? kraken_human = kraken2_theiacov_raw.percent_human
-    String? kraken_sc2 = kraken2_theiacov_raw.percent_sc2
-    String? kraken_target_organism = kraken2_theiacov_raw.percent_target_organism
-    String kraken_report = select_first([kraken2_theiacov_raw.kraken_report, kraken2_standalone.kraken2_report, ""])
-    Float? kraken_human_dehosted = kraken2_theiacov_dehosted.percent_human
-    String? kraken_sc2_dehosted = kraken2_theiacov_dehosted.percent_sc2
-    String? kraken_target_organism_dehosted = kraken2_theiacov_dehosted.percent_target_organism
-    String? kraken_target_organism_name = target_organism
-    File? kraken_report_dehosted = kraken2_theiacov_dehosted.kraken_report
-    String kraken_docker = select_first([kraken2_theiacov_raw.docker, kraken2_standalone.kraken2_docker, ""])
-    String kraken_database = select_first([kraken2_theiacov_raw.database, kraken2_standalone.kraken2_database, kraken_db_warning, ""])
+    String kraken2_version = select_first([kraken2_theiacov_raw.kraken2_version, kraken2_theiaprok.kraken2_version, ""])
+    String bracken_version = select_first([kraken2_theiacov_raw.bracken_version, kraken2_theiaprok.bracken_version, ""])
+    Float? kraken2_human = kraken2_theiacov_raw.kraken2_percent_human
+    String? kraken2_target_organism = kraken2_theiacov_raw.kraken2_percent_target_organism
+    String kraken2_report = select_first([kraken2_theiacov_raw.kraken2_report, kraken2_theiaprok.kraken2_report, ""])
+    String bracken_report = select_first([kraken2_theiacov_raw.bracken_report, kraken2_theiaprok.bracken_report, ""])
+    Float? kraken2_human_dehosted = kraken2_theiacov_dehosted.kraken2_percent_human
+    String? kraken2_target_organism_dehosted = kraken2_theiacov_dehosted.kraken2_percent_target_organism
+    String? kraken2_target_organism_name = target_organism
+    File? kraken2_report_dehosted = kraken2_theiacov_dehosted.kraken2_report
+    File? bracken_report_dehosted = kraken2_theiacov_dehosted.bracken_report
+    String kraken2_docker = select_first([kraken2_theiacov_raw.kraken2_docker, kraken2_theiaprok.kraken2_docker, ""])
+    String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken_db_warning, ""])
    
     # trimming versioning
-    String? trimmomatic_version = trimmomatic_se.version
-    String? trimmomatic_docker = trimmomatic_se.trimmomatic_docker
-    String? fastp_version = fastp_se.version
-    File? fastp_html_report = fastp_se.fastp_stats
+    String? trimmomatic_version = trimmomatic.version
+    String? trimmomatic_docker = trimmomatic.trimmomatic_docker
+    String? fastp_version = fastp.fastp_version
+    String? fastp_docker = fastp.fastp_docker
+    File? fastp_html_report = fastp.fastp_stats_html
+    File? fastp_json_report = fastp.fastp_stats_json
     
     # midas
     String? midas_docker = midas.midas_docker

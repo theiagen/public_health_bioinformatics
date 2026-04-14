@@ -272,33 +272,35 @@ workflow theiaprok_illumina_pe {
               qc_check_table = qc_check_table,
               expected_taxon = expected_taxon,
               gambit_predicted_taxon = gambit.gambit_predicted_taxon,
-              num_reads_raw1 = read_QC_trim.fastq_scan_raw1,
-              num_reads_raw2 = read_QC_trim.fastq_scan_raw2,
-              num_reads_clean1 = read_QC_trim.fastq_scan_clean1,
-              num_reads_clean2 = read_QC_trim.fastq_scan_clean2,
-              r1_mean_q_raw = cg_pipeline_raw.r1_mean_q,
-              r2_mean_q_raw = cg_pipeline_raw.r2_mean_q,
-              combined_mean_q_raw = cg_pipeline_raw.combined_mean_q,
-              r1_mean_readlength_raw = cg_pipeline_raw.r1_mean_readlength,
-              r2_mean_readlength_raw = cg_pipeline_raw.r2_mean_readlength,  
-              combined_mean_readlength_raw = cg_pipeline_raw.combined_mean_readlength,
-              r1_mean_q_clean = cg_pipeline_clean.r1_mean_q,
-              r2_mean_q_clean = cg_pipeline_clean.r2_mean_q,
-              combined_mean_q_clean = cg_pipeline_clean.combined_mean_q,
-              r1_mean_readlength_clean = cg_pipeline_clean.r1_mean_readlength,
-              r2_mean_readlength_clean = cg_pipeline_clean.r2_mean_readlength,  
-              combined_mean_readlength_clean = cg_pipeline_clean.combined_mean_readlength,    
-              est_coverage_raw = cg_pipeline_raw.est_coverage,
-              est_coverage_clean = cg_pipeline_clean.est_coverage,
-              midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance,
-              midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage,
-              assembly_length = quast.genome_length,
-              number_contigs = quast.number_contigs,
-              n50_value = quast.n50_value,
-              quast_gc_percent = quast.gc_percent,
-              busco_results = busco.busco_results,
-              ani_highest_percent = ani.ani_highest_percent,
-              ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
+              qc_check_inputs = {
+                "num_reads_raw1": select_first([read_QC_trim.fastq_scan_raw1, read_QC_trim.fastqc_raw1]),
+                "num_reads_raw2": select_first([read_QC_trim.fastq_scan_raw2, read_QC_trim.fastqc_raw2]),
+                "num_reads_clean1": select_first([read_QC_trim.fastq_scan_clean1, read_QC_trim.fastqc_clean1]),
+                "num_reads_clean2": select_first([read_QC_trim.fastq_scan_clean2, read_QC_trim.fastqc_clean2]),
+                "r1_mean_q_raw": cg_pipeline_raw.r1_mean_q,
+                "r2_mean_q_raw": cg_pipeline_raw.r2_mean_q,
+                "combined_mean_q_raw": cg_pipeline_raw.combined_mean_q,
+                "r1_mean_readlength_raw": cg_pipeline_raw.r1_mean_readlength,
+                "r2_mean_readlength_raw": cg_pipeline_raw.r2_mean_readlength,  
+                "combined_mean_readlength_raw": cg_pipeline_raw.combined_mean_readlength,
+                "r1_mean_q_clean": cg_pipeline_clean.r1_mean_q,
+                "r2_mean_q_clean": cg_pipeline_clean.r2_mean_q,
+                "combined_mean_q_clean": cg_pipeline_clean.combined_mean_q,
+                "r1_mean_readlength_clean": cg_pipeline_clean.r1_mean_readlength,
+                "r2_mean_readlength_clean": cg_pipeline_clean.r2_mean_readlength,  
+                "combined_mean_readlength_clean": cg_pipeline_clean.combined_mean_readlength,    
+                "est_coverage_raw": cg_pipeline_raw.est_coverage,
+                "est_coverage_clean": cg_pipeline_clean.est_coverage,
+                "midas_secondary_genus_abundance": read_QC_trim.midas_secondary_genus_abundance,
+                "midas_secondary_genus_coverage": read_QC_trim.midas_secondary_genus_coverage,
+                "assembly_length": quast.genome_length,
+                "number_contigs": quast.number_contigs,
+                "n50_value": quast.n50_value,
+                "quast_gc_percent": quast.gc_percent,
+                "busco_completeness": busco.busco_results,
+                "ani_highest_percent": ani.ani_highest_percent,
+                "ani_highest_percent_bases_aligned": ani.ani_highest_percent_bases_aligned
+              }
           }
         }
         call merlin_magic_workflow.merlin_magic {
@@ -384,6 +386,8 @@ workflow theiaprok_illumina_pe {
                 "bakta_tsv": bakta.bakta_tsv,
                 "bakta_version": bakta.bakta_version,
                 "bbduk_docker": read_QC_trim.bbduk_docker,
+                "bracken_report": read_QC_trim.bracken_report,
+                "bracken_version": read_QC_trim.bracken_version,
                 "busco_database": busco.busco_database,
                 "busco_docker": busco.busco_docker,
                 "busco_report": busco.busco_report,
@@ -425,6 +429,8 @@ workflow theiaprok_illumina_pe {
                 "est_coverage_clean": cg_pipeline_clean.est_coverage,
                 "est_coverage_raw": cg_pipeline_raw.est_coverage,
                 "fastp_html_report": read_QC_trim.fastp_html_report,
+                "fastp_json_report": read_QC_trim.fastp_json_report,
+                "fastp_docker": read_QC_trim.fastp_docker,
                 "fastp_version": read_QC_trim.fastp_version,
                 "fastq_scan_clean1_json": read_QC_trim.fastq_scan_clean1_json,
                 "fastq_scan_clean2_json": read_QC_trim.fastq_scan_clean2_json,
@@ -496,10 +502,10 @@ workflow theiaprok_illumina_pe {
                 "kmerfinder_results_tsv": kmerfinder.kmerfinder_results_tsv,
                 "kmerfinder_template_coverage": kmerfinder.kmerfinder_template_coverage,
                 "kmerfinder_top_hit": kmerfinder.kmerfinder_top_hit,
-                "kraken_docker": read_QC_trim.kraken_docker,
-                "kraken2_database": read_QC_trim.kraken_database,
-                "kraken2_report": read_QC_trim.kraken_report,
-                "kraken2_version": read_QC_trim.kraken_version,
+                "kraken_docker": read_QC_trim.kraken2_docker,
+                "kraken2_database": read_QC_trim.kraken2_database,
+                "kraken2_report": read_QC_trim.kraken2_report,
+                "kraken2_version": read_QC_trim.kraken2_version,
                 "legsta_predicted_sbt": merlin_magic.legsta_predicted_sbt,
                 "legsta_results": merlin_magic.legsta_results,
                 "legsta_version": merlin_magic.legsta_version,
@@ -831,7 +837,9 @@ workflow theiaprok_illumina_pe {
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
     # Read QC - fastp outputs
     String? fastp_version = read_QC_trim.fastp_version
+    String? fastp_docker = read_QC_trim.fastp_docker
     File? fastp_html_report = read_QC_trim.fastp_html_report
+    File? fastp_json_report = read_QC_trim.fastp_json_report
     # Read QC - bbduk outputs
     File? read1_clean = read_QC_trim.read1_clean
     File? read2_clean = read_QC_trim.read2_clean
@@ -857,16 +865,19 @@ workflow theiaprok_illumina_pe {
     Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
     Float? midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage
     # Read QC - kraken outputs
-    String? kraken2_version = read_QC_trim.kraken_version
-    String? kraken2_report = read_QC_trim.kraken_report
-    String? kraken2_database = read_QC_trim.kraken_database
-    String? kraken_docker = read_QC_trim.kraken_docker
+    String? bracken_report = read_QC_trim.bracken_report
+    String? bracken_version = read_QC_trim.bracken_version
+    String? kraken2_version = read_QC_trim.kraken2_version
+    String? kraken2_report = read_QC_trim.kraken2_report
+    String? kraken2_database = read_QC_trim.kraken2_database
+    String? kraken_docker = read_QC_trim.kraken2_docker
     # Assembly - digger denovo outputs 
     File? assembly_fasta = digger_denovo.assembly_fasta
     File? contigs_gfa = digger_denovo.contigs_gfa
     File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
     String? assembler = digger_denovo.assembler_used
     String? assembler_version = digger_denovo.assembler_version
+    String? pilon_version = digger_denovo.pilon_version
     # Assembly QC - quast outputs
     File? quast_report = quast.quast_report
     String? quast_version = quast.version
@@ -996,6 +1007,8 @@ workflow theiaprok_illumina_pe {
     File? amr_search_results = merlin_magic.amr_search_results
     File? amr_search_csv = merlin_magic.amr_results_csv
     File? amr_search_results_pdf = merlin_magic.amr_results_pdf
+    String? amr_search_all_resistances = merlin_magic.amr_search_all_resistances
+    String? amr_search_associated_resistances = merlin_magic.amr_search_associated_resistances
     String? amr_search_docker = merlin_magic.amr_search_docker
     String? amr_search_version = merlin_magic.amr_search_version
     # Ecoli Typing

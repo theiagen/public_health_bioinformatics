@@ -112,12 +112,14 @@ workflow theiacov_fasta {
       input:
         qc_check_table = qc_check_table,
         expected_taxon = organism_parameters.standardized_organism,
-        number_N = consensus_qc.number_N,
-        assembly_length_unambiguous = consensus_qc.number_ATCG,
-        number_Degenerate = consensus_qc.number_Degenerate,
-        percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-        vadr_num_alerts = morgana_magic.vadr_num_alerts
-    }
+        qc_check_inputs = {
+          "number_N": consensus_qc.number_N,
+          "assembly_length_unambiguous": consensus_qc.number_ATCG,
+          "number_Degenerate": consensus_qc.number_Degenerate,
+          "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
+          "vadr_num_alerts": morgana_magic.vadr_num_alerts
+        }
+      }
   }
   call versioning.version_capture {
     input:

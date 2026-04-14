@@ -34,7 +34,7 @@ workflow theiacov_ont {
     File? reference_genome
     File? reference_gene_locations_bed
     Int? genome_length
-    # kraken inputs
+    # metabuli inputs
     String? target_organism
     # read screen parameters
     Int min_reads = 57 # min basepairs / 300 (which is the longest available read length of an Illumina product)
@@ -189,7 +189,7 @@ workflow theiacov_ont {
             vadr_model_file = organism_parameters.vadr_model_file,
             vadr_memory = organism_parameters.vadr_memory,
             reference_gene_locations_bed = organism_parameters.gene_locations_bed,
-            gene_coverage_bam = select_first([consensus.trim_sorted_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam, ""]),
+            gene_coverage_bam = select_first([consensus.trim_sorted_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam, "gs://theiagen-public-resources-rp/empty_files/empty.bam"]),
             nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
             nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
             pangolin_docker_image = organism_parameters.pangolin_docker,
@@ -223,16 +223,19 @@ workflow theiacov_ont {
           input:
             qc_check_table = qc_check_table,
             expected_taxon = organism_parameters.standardized_organism,
-            num_reads_raw1 = nanoplot_raw.num_reads,
-            num_reads_clean1 = nanoplot_clean.num_reads,
-            kraken_human = read_QC_trim.kraken_human,
-            meanbaseq_trim = stats_n_coverage_primtrim.meanbaseq,
-            assembly_mean_coverage = stats_n_coverage_primtrim.depth,
-            number_N = consensus_qc.number_N,
-            assembly_length_unambiguous = consensus_qc.number_ATCG,
-            number_Degenerate =  consensus_qc.number_Degenerate,
-            percent_reference_coverage =  consensus_qc.percent_reference_coverage,
-            vadr_num_alerts = morgana_magic.vadr_num_alerts
+            irma_qc_table = flu_track.irma_qc_summary_tsv,
+            qc_check_inputs = {
+              "num_reads_raw1": nanoplot_raw.num_reads,
+              "num_reads_clean1": nanoplot_clean.num_reads,
+              "metabuli_human": read_QC_trim.metabuli_percent_human,
+              "meanbaseq_trim": stats_n_coverage_primtrim.meanbaseq,
+              "assembly_mean_coverage": stats_n_coverage_primtrim.depth,
+              "number_N": consensus_qc.number_N,
+              "assembly_length_unambiguous": consensus_qc.number_ATCG,
+              "number_Degenerate":  consensus_qc.number_Degenerate,
+              "percent_reference_coverage":  consensus_qc.percent_reference_coverage,
+              "vadr_num_alerts": morgana_magic.vadr_num_alerts
+            }
         }
       }
     }
@@ -278,25 +281,23 @@ workflow theiacov_ont {
     Float? nanoplot_r1_mean_q_clean = nanoplot_clean.mean_q
     Float? nanoplot_r1_median_q_clean = nanoplot_clean.median_q
     Float? nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage
-    # Read QC - kraken outputs general
-    String? kraken_version = read_QC_trim.kraken_version
-    String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
-    # Read QC - kraken outputs raw
-    Float? kraken_human = read_QC_trim.kraken_human
-    String? kraken_sc2 = read_QC_trim.kraken_sc2
-    String? kraken_target_organism = read_QC_trim.kraken_target_organism
-    File? kraken_report = read_QC_trim.kraken_report
-    # Read QC - kraken outputs dehosted
-    Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
-    String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
-    String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
-    File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
-    # Read Alignment - Artic consensus outputs
+    # Read QC - metabuli outputs general
+    String? metabuli_version = read_QC_trim.metabuli_version
+    String? metabuli_target_organism_name = read_QC_trim.metabuli_target_organism
+    # Read QC - metabuli outputs raw
+    Float? metabuli_human = read_QC_trim.metabuli_percent_human
+    String? metabuli_target_organism = read_QC_trim.metabuli_percent_target_organism
+    String? metabuli_report = read_QC_trim.metabuli_report
+    # Read QC - metabuli outputs dehosted
+    Float? metabuli_human_dehosted = read_QC_trim.metabuli_percent_human_dehosted
+    String? metabuli_target_organism_dehosted = read_QC_trim.metabuli_percent_target_organism_dehosted
+    String? metabuli_report_dehosted = read_QC_trim.metabuli_report_dehosted
+    # Read Alignment - Artic consensus and IRMA Aligned outputs
     String assembly_fasta = select_first([consensus.consensus_seq, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
     File? aligned_bam = consensus.trim_sorted_bam
     File? aligned_bai = consensus.trim_sorted_bai
     File? medaka_vcf = consensus.medaka_pass_vcf
-    File? read1_aligned = consensus.reads_aligned
+    String read1_aligned = select_first([consensus.reads_aligned, flu_track.irma_aligned_fastqs, ""])
     File? read1_trimmed = consensus.trim_fastq
     # Read Alignment - Artic consensus versioning outputs
     String? artic_version = consensus.artic_pipeline_version
@@ -398,6 +399,7 @@ workflow theiacov_ont {
     File? irma_np_segment_fasta = flu_track.flu_np_segment_fasta
     File? irma_ns_segment_fasta = flu_track.flu_ns_segment_fasta
     File? irma_qc_summary_tsv = flu_track.irma_qc_summary_tsv
+    File? irma_qc_log = flu_track.irma_qc_log
     File? irma_all_snvs_tsv = flu_track.irma_all_snvs_tsv
     File? irma_all_insertions_tsv = flu_track.irma_all_insertions_tsv
     File? irma_all_deletions_tsv = flu_track.irma_all_deletions_tsv

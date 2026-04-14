@@ -15,7 +15,7 @@ task extract_kraken_reads {
   }
   command <<<
     # fail hard
-    set -euo pipefail
+    set -eu
 
     # decompress classified data if it is gzipped
     gunzip -c ~{kraken2_output} > kraken2_output_unzipped.txt
@@ -32,17 +32,20 @@ task extract_kraken_reads {
       --fastq-output \
       --output ~{taxon_id}_1.fastq \
       --output2 ~{taxon_id}_2.fastq \
+      || true # catch failure by output checking downstream
 
     if [ -s ~{taxon_id}_1.fastq ]; then
       echo "DEBUG: Taxon ~{taxon_id} reads extracted"
-      echo "true" > CONTINUE
-
-      gzip ~{taxon_id}_1.fastq 
-      gzip ~{taxon_id}_2.fastq
+      echo "PASS" > STATUS
     else
-      echo "DEBUG: No reads were extracted for taxon ~{taxon_id}, removing empty files"
-      echo "false" > CONTINUE
+      echo "DEBUG: No reads were extracted for taxon ~{taxon_id}"
+      touch ~{taxon_id}_1.fastq
+      touch ~{taxon_id}_2.fastq
+      echo "FAIL" > STATUS
     fi
+
+    gzip ~{taxon_id}_1.fastq 
+    gzip ~{taxon_id}_2.fastq
     
     if grep -q "~{taxon_id}" "~{kraken2_report}"; then
       echo "Taxon ID found in report"
@@ -54,11 +57,11 @@ task extract_kraken_reads {
     fi
   >>>
   output {
-    File? extracted_read1 = "~{taxon_id}_1.fastq.gz"
-    File? extracted_read2 = "~{taxon_id}_2.fastq.gz"
+    File extracted_read1 = "~{taxon_id}_1.fastq.gz"
+    File extracted_read2 = "~{taxon_id}_2.fastq.gz"
     String organism_name = read_string("ORGANISM_NAME")
     String krakentools_docker = docker
-    Boolean success = read_boolean("CONTINUE")
+    String status = read_string("STATUS")
   }
   runtime {
     cpu: cpu

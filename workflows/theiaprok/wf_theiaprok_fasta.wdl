@@ -176,13 +176,15 @@ workflow theiaprok_fasta {
           qc_check_table = qc_check_table,
           expected_taxon = expected_taxon,
           gambit_predicted_taxon = gambit.gambit_predicted_taxon,
-          assembly_length = quast.genome_length,
-          number_contigs = quast.number_contigs,
-          n50_value = quast.n50_value,
-          quast_gc_percent = quast.gc_percent,
-          busco_results = busco.busco_results,
-          ani_highest_percent = ani.ani_highest_percent,
-          ani_highest_percent_bases_aligned = ani.ani_highest_percent_bases_aligned
+          qc_check_inputs = {
+            "assembly_length": quast.genome_length,
+            "number_contigs": quast.number_contigs,
+            "n50_value": quast.n50_value,
+            "quast_gc_percent": quast.gc_percent,
+            "busco_completeness": busco.busco_results,
+            "ani_highest_percent": ani.ani_highest_percent,
+            "ani_highest_percent_bases_aligned": ani.ani_highest_percent_bases_aligned
+          }
       }
     }
     if (defined(taxon_tables)) {
@@ -570,6 +572,8 @@ workflow theiaprok_fasta {
     File? amr_search_results = merlin_magic.amr_search_results
     File? amr_search_csv = merlin_magic.amr_results_csv
     File? amr_search_results_pdf = merlin_magic.amr_results_pdf
+    String? amr_search_all_resistances = merlin_magic.amr_search_all_resistances
+    String? amr_search_associated_resistances = merlin_magic.amr_search_associated_resistances
     String? amr_search_docker = merlin_magic.amr_search_docker
     String? amr_search_version = merlin_magic.amr_search_version
     # Resfinder Outputs

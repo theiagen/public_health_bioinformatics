@@ -9,9 +9,12 @@ task stats_n_coverage {
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.23"
   }
   command <<<
+    # fail hard
+    set -euo pipefail
+
     date | tee DATE
     samtools --version | head -n1 | tee VERSION
 

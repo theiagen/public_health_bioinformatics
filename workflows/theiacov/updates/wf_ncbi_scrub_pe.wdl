@@ -17,7 +17,7 @@ workflow dehost_pe {
       read1 = read1,
       read2 = read2
   }
-  call kraken.kraken2_theiacov as kraken2 {
+  call kraken.kraken2 {
     input:
       samplename = samplename,
       read1 = ncbi_scrub_pe.read1_dehosted,
@@ -34,9 +34,9 @@ workflow dehost_pe {
     File read2_dehosted = ncbi_scrub_pe.read2_dehosted
     Int ncbi_scrub_human_spots_removed = ncbi_scrub_pe.human_spots_removed
     String ncbi_scrub_docker = ncbi_scrub_pe.ncbi_scrub_docker
-    Float kraken_human_dehosted = kraken2.percent_human
-    String kraken_sc2_dehosted = kraken2.percent_sc2
-    File kraken_report_dehosted = kraken2.kraken_report
-    String kraken_version_dehosted = kraken2.version
+    Float kraken_human_dehosted = kraken2.kraken2_percent_human
+    String kraken_target_organism_dehosted = kraken2.kraken2_percent_target_organism
+    File kraken_report_dehosted = kraken2.kraken2_report
+    String kraken_version_dehosted = kraken2.kraken2_version
   }
 }

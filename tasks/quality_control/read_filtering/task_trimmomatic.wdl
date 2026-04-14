@@ -1,97 +1,70 @@
 version 1.0
 
-task trimmomatic_pe {
+task trimmomatic {
   input {
     File read1
-    File read2
+    File? read2
     String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.39"
-    Int trimmomatic_min_length = 75
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.40"
+    Int trimmomatic_min_length = 75 # for PE reads; default is 25 for SE reads
     Int trimmomatic_window_size = 4
-    Int trimmomatic_quality_trim_score = 30
-    Int? trimmomatic_base_crop
-    Int cpu = 4
-    String trimmomatic_args = "-phred33"
+    Int trimmomatic_window_quality = 30
+    String? trimmomatic_override_args #Note that trimming steps occur in the same order that they are given on the command line
+
+    Boolean trimmomatic_trim_adapters = false
+    File? trimmomatic_adapter_fasta
+    String? trimmomatic_adapter_trim_args
+
     Int disk_size = 100
     Int memory = 8
+    Int cpu = 4
   }
   command <<<
     # date and version control
     date | tee DATE
     trimmomatic -version > VERSION && sed -i -e 's/^/Trimmomatic /' VERSION
 
-    CROPPING_VAR=""
-    # if trimmomatic base chop is defined (-n means not empty), determine average readlength of the input reads
-    if [ -n "~{trimmomatic_base_crop}" ]; then
-      # determine the average read length of the input reads
-      read_length_r1=$(zcat ~{read1} | awk '{if(NR%4==2) {bases+=length($0)} } END {print bases/(NR/4)}')
-      read_length_r2=$(zcat ~{read2} | awk '{if(NR%4==2) {bases+=length($0)} } END {print bases/(NR/4)}')
+    # set default adapter trimming file
+    if [[ "~{trimmomatic_trim_adapters}" == "true" ]]; then
+      if [[ -n "~{trimmomatic_adapter_fasta}" ]]; then
+        ADAPTER_FILE="~{trimmomatic_adapter_fasta}"
+        echo "Using user supplied adapter FASTA file for adapter trimming: '$ADAPTER_FILE'"
+      else
+        ADAPTER_FILE=~{if defined(read2) then "TruSeq3-PE-2.fa" else "TruSeq3-SE.fa"}
+        echo "Using default file for adapter trimming: '$ADAPTER_FILE'"
+      fi
 
-      # take the average of the two read lengths without using bc and remove the end base chop
-      avg_readlength=$(python3 -c "print(int(((${read_length_r1} + ${read_length_r2}) / 2) - ~{trimmomatic_base_crop}))")
-    
-      # HEADCROP: number of bases to remove from the start of the read
-      # CROP: number of bases to KEEP, from the start of the read
-      CROPPING_VAR="HEADCROP:~{trimmomatic_base_crop} CROP:$avg_readlength"
+      # set default adapter trimming arguments
+      if [[ -n "~{trimmomatic_adapter_trim_args}" ]]; then
+        ADAPTER_TRIM_ARGS="~{trimmomatic_adapter_trim_args}"
+        echo "Using user supplied adapter trimming arguments: '$ADAPTER_TRIM_ARGS'"
+      else
+        ADAPTER_TRIM_ARGS="2:30:10"
+        echo "Using default adapter trimming arguments: '$ADAPTER_TRIM_ARGS'"
+      fi
+
+      # construct adapter trimming command
+      ADAPTER_TRIM_COMMAND="ILLUMINACLIP:${ADAPTER_FILE}:${ADAPTER_TRIM_ARGS}"
+    else
+      echo "Adapter trimming disabled"
+      ADAPTER_TRIM_COMMAND=""
     fi
-    
-    trimmomatic PE \
-    ~{trimmomatic_args} \
-    -threads ~{cpu} \
-    ~{read1} ~{read2} \
-    -baseout ~{samplename}.fastq.gz \
-    "${CROPPING_VAR}" \
-    SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_quality_trim_score} \
-    MINLEN:~{trimmomatic_min_length} &> ~{samplename}.trim.stats.txt
+
+    # set default trimming arguments
+    TRIMMOMATIC_ARGS="SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_window_quality} MINLEN:~{trimmomatic_min_length}"
+
+    trimmomatic ~{if defined(read2) then "PE" else "SE"} \
+      ~{read1} \
+      ~{read2} \
+      ~{if defined(read2) then "-baseout ~{samplename}.fastq.gz" else "~{samplename}_1P.fastq.gz"} \
+      ${ADAPTER_TRIM_COMMAND} \
+      ~{if defined(trimmomatic_override_args) then '~{trimmomatic_override_args}' else '$TRIMMOMATIC_ARGS'} \
+      &> ~{samplename}.trim.stats.txt
 
   >>>
   output {
     File read1_trimmed = "~{samplename}_1P.fastq.gz"
-    File read2_trimmed = "~{samplename}_2P.fastq.gz"
-    File trimmomatic_stats = "~{samplename}.trim.stats.txt"
-    String version = read_string("VERSION")
-    String pipeline_date = read_string("DATE")
-    String trimmomatic_docker = docker
-  }
-  runtime {
-    docker: "~{docker}"
-    memory: memory + " GB"
-    cpu: cpu
-    disks:  "local-disk " + disk_size + " SSD"
-    disk: disk_size + " GB" # TES
-    preemptible: 0
-    maxRetries: 3
-  }
-}
-
-task trimmomatic_se {
-  input {
-    File read1
-    String samplename
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/trimmomatic:0.39"
-    Int trimmomatic_min_length = 25
-    Int trimmomatic_window_size = 4
-    Int trimmomatic_quality_trim_score = 30
-    Int cpu = 4
-    String trimmomatic_args = "-phred33"
-    Int disk_size = 100
-    Int memory = 8
-  }
-  command <<<
-    # date and version control
-    date | tee DATE
-    trimmomatic -version > VERSION && sed -i -e 's/^/Trimmomatic /' VERSION
-
-    trimmomatic SE \
-    ~{trimmomatic_args} \
-    -threads ~{cpu} \
-    ~{read1} \
-    ~{samplename}_trimmed.fastq.gz \
-    SLIDINGWINDOW:~{trimmomatic_window_size}:~{trimmomatic_quality_trim_score} \
-    MINLEN:~{trimmomatic_min_length} > ~{samplename}.trim.stats.txt
-  >>>
-  output {
-    File read1_trimmed = "~{samplename}_trimmed.fastq.gz"
+    File? read2_trimmed = "~{samplename}_2P.fastq.gz"
     File trimmomatic_stats = "~{samplename}.trim.stats.txt"
     String version = read_string("VERSION")
     String pipeline_date = read_string("DATE")

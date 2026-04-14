@@ -1,0 +1,18 @@
+entity:theiaviral_ont_id	CALL_PORECHOP	CALL_RAVEN	EXTRACT_UNCLASSIFIED	HOST	ORGANISM_NAME	read1	READ_EXTRACTION_RANK	REFERENCE_GENOME	taxon
+ERR11656008-FluB-ONT	false	true	true		Influenza B virus	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/flu-ont/ERR11656008.FluB-ONT.fastq.gz	family		11520
+ERR11656008-FluB-ONT_callporechop	true	true	true		Influenza B virus	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/flu-ont/ERR11656008.FluB-ONT.fastq.gz	family		11520
+HSV-1_SRR20796393	false	true	true		Human alphaherpesvirus 1	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaviral/ont/hsv/HSV-1_SRR20796393.fastq.gz	family		10298
+MN-MDH-RSVA-00280	false	true	true		Respiratory syncytial virus	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/rsv-ont/SRR28642467_1.fastq.gz	family		208893
+MN-MDH-RSVA-00280_ref	false	true	true		Respiratory syncytial virus	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/rsv-ont/SRR28642467_1.fastq.gz	family	gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta	208893
+MN-MDH-RSVB-00299	false	true	true		Respiratory syncytial virus	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/rsv-ont/SRR28689746_1.fastq.gz	family		11250
+MN-MDH-RSVB-00299_ref	false	true	true		Respiratory syncytial virus	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/rsv-ont/SRR28689746_1.fastq.gz	family	gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta	11250
+Norovirus_SRR33430192	false	true	true		Norovirus	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaviral/ont/norovirus/Norovirus_SRR31897965.fastq.gz	family		142786
+Norovirus_SRR33430192_callrasusa	false	true	true		Norovirus	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaviral/ont/norovirus/Norovirus_SRR31897965.fastq.gz	family		142786
+sample02-hiv	false	true	true		Human immunodeficiency virus 1	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/hiv-ont/barcode02_concatenated.fastq.gz	family		3418650
+sample02-hiv_rankorder	false	true	true		Human immunodeficiency virus 1	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/hiv-ont/barcode02_concatenated.fastq.gz	order		3418650
+sample04-mpox	false	true	true		Monkeypox virus	gs://theiagen-large-public-files-rp/terra/phb-validation/theiacov/mpox-ont/barcode92.fastq.gz	family		10244
+sample04-sc2	false	true	true		Severe acute respiratory syndrome coronavirus 2	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiacov/sars-cov-2/ont/barcode04.fastq.gz	family		2697049
+sample04-sc2_ref	false	true	true		Severe acute respiratory syndrome coronavirus 2	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiacov/sars-cov-2/ont/barcode04.fastq.gz	family	gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta	2697049
+SRR17110070	false	true	true		Lyssavirus rabies	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaviral/ont/rabies/SRR17110070.fastq.gz	family		11292
+SRR17110070_extractclassified	false	true	false		Lyssavirus rabies	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaviral/ont/rabies/SRR17110070.fastq.gz	family		11292
+SRR17110070_host	false	true	true	Canis	Lyssavirus rabies	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaviral/ont/rabies/SRR17110070.fastq.gz	family		11292
