@@ -1036,6 +1036,7 @@ workflow merlin_magic {
     String? abricate_abaum_docker = abricate_abaum.abricate_docker
     # Mycobacterium Typing
     File? tbprofiler_output_file = tbprofiler.tbprofiler_output_csv
+    File? tbprofiler_output_json = tbprofiler.tbprofiler_output_json
     File? tbprofiler_output_bam = tbprofiler.tbprofiler_output_bam
     File? tbprofiler_output_bai = tbprofiler.tbprofiler_output_bai
     File? tbprofiler_output_vcf = tbprofiler.tbprofiler_output_vcf

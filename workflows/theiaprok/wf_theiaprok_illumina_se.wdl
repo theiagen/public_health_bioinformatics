@@ -1084,6 +1084,7 @@ workflow theiaprok_illumina_se {
     String? abricate_abaum_docker = merlin_magic.abricate_abaum_docker
     # Mycobacterium Typing
     File? tbprofiler_output_file = merlin_magic.tbprofiler_output_file
+    File? tbprofiler_output_json = merlin_magic.tbprofiler_output_json
     File? tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam
     File? tbprofiler_output_bai = merlin_magic.tbprofiler_output_bai
     File? tbprofiler_output_vcf = merlin_magic.tbprofiler_output_vcf
