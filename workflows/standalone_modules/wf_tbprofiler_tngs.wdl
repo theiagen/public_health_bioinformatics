@@ -93,7 +93,7 @@ workflow tbprofiler_tngs {
     File? clockwork_decontaminated_read2 = clockwork_decon_reads.clockwork_cleaned_read2
     String? clockwork_version = clockwork_decon_reads.clockwork_version
     # tbprofiler outputs
-    File tbprofiler_output_csv = tbprofiler.tbprofiler_output_csv
+    File tbprofiler_output_file = tbprofiler.tbprofiler_output_csv
     File tbprofiler_output_tsv = tbprofiler.tbprofiler_output_tsv
     File tbprofiler_output_json = tbprofiler.tbprofiler_output_json
     File tbprofiler_output_bam = tbprofiler.tbprofiler_output_bam
