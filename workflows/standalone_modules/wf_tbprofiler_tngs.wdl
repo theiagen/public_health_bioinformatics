@@ -93,11 +93,11 @@ workflow tbprofiler_tngs {
     File? clockwork_decontaminated_read2 = clockwork_decon_reads.clockwork_cleaned_read2
     String? clockwork_version = clockwork_decon_reads.clockwork_version
     # tbprofiler outputs
-    File tbprofiler_report_csv = tbprofiler.tbprofiler_output_csv
-    File tbprofiler_report_tsv = tbprofiler.tbprofiler_output_tsv
-    File tbprofiler_report_json = tbprofiler.tbprofiler_output_json
-    File tbprofiler_output_alignment_bam = tbprofiler.tbprofiler_output_bam
-    File tbprofiler_output_alignment_bai = tbprofiler.tbprofiler_output_bai
+    File tbprofiler_output_csv = tbprofiler.tbprofiler_output_csv
+    File tbprofiler_output_tsv = tbprofiler.tbprofiler_output_tsv
+    File tbprofiler_output_json = tbprofiler.tbprofiler_output_json
+    File tbprofiler_output_bam = tbprofiler.tbprofiler_output_bam
+    File tbprofiler_output_bai = tbprofiler.tbprofiler_output_bai
     String tbprofiler_version = tbprofiler.version
     String tbprofiler_main_lineage = tbprofiler.tbprofiler_main_lineage
     String tbprofiler_sub_lineage = tbprofiler.tbprofiler_sub_lineage
