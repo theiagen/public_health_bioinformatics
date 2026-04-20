@@ -13,8 +13,8 @@ workflow freyja_plot {
     Array[String]? freyja_abundances
     Array[String]? collection_date
     Array[String]? collection_site
-    Array[String]? latitude
-    Array[String]? longitude
+    Array[Float]? latitude
+    Array[Float]? longitude
     String freyja_plot_name
   }
   String freyja_plot_name_updated = sub(freyja_plot_name, " ", "_")
