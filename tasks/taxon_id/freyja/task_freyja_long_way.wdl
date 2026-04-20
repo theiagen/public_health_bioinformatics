@@ -7,8 +7,8 @@ task freyja_long_way_single {
         String freyja_abundances
         String? collection_date
         String? collection_site
-        String? latitude
-        String? longitude
+        Float? latitude
+        Float? longitude
         String docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:0.1.0"
         Int disk_size = 50
         Int memory = 4
@@ -57,8 +57,8 @@ task freyja_long_way_multi {
         Array[String] freyja_abundances
         Array[String]? collection_dates
         Array[String]? collection_sites
-        Array[String]? latitudes
-        Array[String]? longitudes
+        Array[Float]? latitudes
+        Array[Float]? longitudes
         String docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:0.1.0"
         Int disk_size = 50
         Int memory = 4

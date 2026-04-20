@@ -38,8 +38,8 @@ workflow freyja_fastq {
     # make freyja long way
     String? collection_date
     String? collection_site
-    String? latitude
-    String? longitude
+    Float? latitude
+    Float? longitude
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
