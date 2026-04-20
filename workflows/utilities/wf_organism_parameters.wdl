@@ -57,13 +57,13 @@ workflow organism_parameters {
     String sc2_nextclade_ds_tag = "2026-01-06--14-59-32Z"
     String sc2_nextclade_ds_name = "nextstrain/sars-cov-2/wuhan-hu-1/orfs"
     String sc2_kraken_target_organism = "Severe acute respiratory syndrome coronavirus 2"
-    String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.4-pdata-1.37"
+    String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.38"
     Int sc2_genome_len = 29903
     Int sc2_vadr_max_length = 30000
     Int sc2_vadr_skip_length = 10000
     String sc2_vadr_options = "--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta"
     Int sc2_vadr_memory = 8
-    File sc2_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"
+    File sc2_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.6.3-1.tar.gz"
 
     File sc2_lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_lat_longs_20251008.tsv"
     File sc2_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_clades_20251008.tsv"

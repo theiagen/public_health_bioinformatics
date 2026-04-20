@@ -176,14 +176,14 @@ We've provided the following information to help you set up the workflow for eac
         | genome_length_input | sars-cov-2 | `29903` |
         | kraken_target_organism_input | sars-cov-2 | `"Severe acute respiratory syndrome coronavirus 2"` |
         | nextclade_dataset_name_input | sars-cov-2 | `"nextstrain/sars-cov-2/wuhan-hu-1/orfs"` |
-        | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.3.4-pdata-1.37"`|
+        | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.38"`|
         | nextclade_dataset_tag_input | sars-cov-2 | `"2026-01-06--14-59-32Z"` |
         | reference_genome | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"` |
         | vadr_max_length | sars-cov-2 | `30000` |
         | vadr_skip_length | sars-cov-2 | `10000` |
         | vadr_mem | sars-cov-2 | `8` |
         | vadr_options | sars-cov-2 | `"--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta"` |
-        | vadr_model_file | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"` |
+        | vadr_model_file | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.6.3-1.tar.gz"` |
 
         </div>
 
