@@ -25,5 +25,6 @@ workflow rasusa_workflow {
     String rasusa_version = rasusa_task.rasusa_version
     File read1_subsampled = rasusa_task.read1_subsampled
     File? read2_subsampled = rasusa_task.read2_subsampled
+    File rasusa_log = rasusa_task.rasusa_log
   }
 }
