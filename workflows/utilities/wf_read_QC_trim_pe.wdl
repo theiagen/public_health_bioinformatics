@@ -46,9 +46,9 @@ workflow read_QC_trim_pe {
     Float rasusa_downsampling_coverage = 150
     String? rasusa_genome_length
     Int? rasusa_seed
-    String? rasusa_bases
-    Float? rasusa_frac
-    Int? rasusa_num
+    String? rasusa_num_bases
+    Float? rasusa_fraction_of_reads
+    Int? rasusa_num_reads
     Int? rasusa_cpu
     Int? rasusa_disk_size
     String? rasusa_docker
@@ -113,9 +113,9 @@ workflow read_QC_trim_pe {
         coverage = rasusa_downsampling_coverage,
         genome_length = rasusa_genome_length,
         seed = rasusa_seed,
-        bases = rasusa_bases,
-        frac = rasusa_frac,
-        num = rasusa_num,
+        num_bases = rasusa_num_bases,
+        fraction_of_reads = rasusa_fraction_of_reads,
+        num_reads = rasusa_num_reads,
         cpu = rasusa_cpu,
         disk_size = rasusa_disk_size,
         memory = rasusa_memory,
