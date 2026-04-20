@@ -66,10 +66,24 @@ task freyja_plot_task {
       ./demixed_files/ \
       --output demixed_aggregate.tsv
 
+  # freyja plot caps distinct lineage colors at 24; if the union of lineages
+  # across samples exceeds that, drop --lineages and fall back to summarized
+  # groups so the task doesn't crash on diverse datasets. this is a freyja plot limitation
+  lineages_flag=""
+  if ~{plot_lineages}; then
+    unique_lineage_count=$(awk -F'\t' 'NR>1 {print $3}' demixed_aggregate.tsv | tr ' ' '\n' | sort -u | grep -cv '^$')
+    echo "Unique lineages across samples: ${unique_lineage_count}"
+    if [ "${unique_lineage_count}" -gt 24 ]; then
+      echo "WARNING: ${unique_lineage_count} unique lineages detected (>24). freyja plot cannot render this many distinct colors; falling back to summarized-group plot (omitting --lineages)." >&2
+    else
+      lineages_flag="--lineages"
+    fi
+  fi
+
   # create freya plot
-  echo "Running: freyja plot demixed_aggregate.tsv --output ~{freyja_plot_name}.pdf ${plot_options}"
+  echo "Running: freyja plot demixed_aggregate.tsv --output ~{freyja_plot_name}.pdf ${lineages_flag} ${plot_options}"
   freyja plot \
-      ~{true='--lineages' false ='' plot_lineages} \
+      ${lineages_flag} \
       --mincov ~{mincov} \
       demixed_aggregate.tsv \
       --output ~{freyja_plot_name}.pdf \
