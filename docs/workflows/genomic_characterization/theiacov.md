@@ -183,7 +183,7 @@ We've provided the following information to help you set up the workflow for eac
         | vadr_skip_length | sars-cov-2 | `10000` |
         | vadr_mem | sars-cov-2 | `8` |
         | vadr_options | sars-cov-2 | `"--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta"` |
-        | vadr_model_file | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"` |
+        | vadr_model_file | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.6.3-1.tar.gz"` |
 
         </div>
 
