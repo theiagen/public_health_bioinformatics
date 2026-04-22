@@ -919,7 +919,7 @@ r2_mean_q_raw	Float	Mean quality score of raw reverse reads	TheiaEuk_Illumina_PE
 r2_mean_readlength_clean	Float	Mean read length of clean reverse reads	TheiaProk_Illumina_PE
 r2_mean_readlength_raw	Float	Mean read length of raw reverse reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
 racon_version	String	Version of Racon used	TheiaEuk_ONT, TheiaProk_ONT
-rasusa_log	File	Log of Rasusa standard error output	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
+rasusa_log	File	Log of Rasusa standard error output	RASUSA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 rasusa_read1_subsampled	File	Subsampled read file from Rasusa	TheiaViral_ONT
 rasusa_read2_subsampled	File	Subsampled read file from Rasusa (paired file)	TheiaViral_ONT
 rasusa_version	String	Version of RASUSA used for the analysis	RASUSA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_ONT

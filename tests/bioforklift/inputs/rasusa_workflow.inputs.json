@@ -5,7 +5,7 @@
     "rasusa_workflow.rasusa_task.seed": 67,
     "rasusa_workflow.rasusa_task.genome_length": "this.GENOME_LENGTH",
     "rasusa_workflow.rasusa_task.coverage": "this.COVERAGE",
-    "rasusa_workflow.rasusa_task.frac": "this.FRACTION",
-    "rasusa_workflow.rasusa_task.bases": "this.BASES",
-    "rasusa_workflow.rasusa_task.num": "this.NUM_READS"
+    "rasusa_workflow.rasusa_task.fraction_of_reads": "this.FRACTION",
+    "rasusa_workflow.rasusa_task.num_bases": "this.BASES",
+    "rasusa_workflow.rasusa_task.num_reads": "this.NUM_READS"
 }
