@@ -67,7 +67,7 @@ task rasusa {
       ~{'--num ' + num_reads} \
       ${OUTPUT_FILES} \
       ~{read1} ~{read2} \
-      2> rasusa.log
+      2>&1 | tee rasusa.log
   >>>
   output {
     File read1_subsampled = "~{samplename}_subsampled_R1.fastq.gz"
