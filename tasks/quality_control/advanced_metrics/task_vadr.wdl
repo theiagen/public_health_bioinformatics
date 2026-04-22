@@ -7,7 +7,7 @@ task vadr {
   input {
     File genome_fasta
     String vadr_opts = "--noseqnamemax --glsearch -s -r --nomisc --mkey sarscov2 --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --out_allfasta"
-    File vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"
+    File vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.6.3-1.tar.gz"
     Int assembly_length_unambiguous
     Int skip_length = 10000
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4"
