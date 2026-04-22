@@ -49,15 +49,15 @@ workflow read_QC_trim_ont {
     File? metabuli_taxdump_path
 
     # rasusa downsampling inputs
-    Float downsampling_coverage = 150
+    Float rasusa_downsampling_coverage = 150
     Int? rasusa_cpu
     Int? rasusa_disk_size
     String? rasusa_docker
     Int? rasusa_memory
-    String? rasusa_bases
+    String? rasusa_num_bases
     Int? rasusa_seed
     Float? rasusa_fraction_of_reads
-    Int? rasusa_number_of_reads
+    Int? rasusa_num_reads
 
     # nanoq inputs
     Int? nanoq_cpu
@@ -132,15 +132,15 @@ workflow read_QC_trim_ont {
       input:
         read1 = read1,
         samplename = samplename,
-        bases = rasusa_bases,
-        coverage = downsampling_coverage,
+        num_bases = rasusa_num_bases,
+        coverage = rasusa_downsampling_coverage,
         cpu = rasusa_cpu,
         disk_size = rasusa_disk_size,
         docker = rasusa_docker,
-        frac = rasusa_fraction_of_reads,
+        fraction_of_reads = rasusa_fraction_of_reads,
         genome_length = genome_length,
         memory = rasusa_memory,
-        num = rasusa_number_of_reads,
+        num_reads = rasusa_num_reads,
         seed = rasusa_seed
     }
     # nanoq for filtering
