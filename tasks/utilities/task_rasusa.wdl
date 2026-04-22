@@ -40,27 +40,21 @@ task rasusa {
 
     # valid options: (coverage + genome_length), fraction_of_reads, num_bases, or num_reads
     # fraction_of_reads, num_bases, and num_reads should be mutually exclusive and take precedence over coverage/genome_length
-    OVERRIDE_PARAMS=0
-    if [ -n "~{fraction_of_reads}" ]; then
-      OVERRIDE_PARAMS=$((OVERRIDE_PARAMS + 1));
-    fi
-    if [ -n "~{num_bases}" ]; then
-      OVERRIDE_PARAMS=$((OVERRIDE_PARAMS + 1));
-    fi
-    if [ -n "~{num_reads}" ]; then
-      OVERRIDE_PARAMS=$((OVERRIDE_PARAMS + 1));
-    fi
+    OVERRIDES=()
+      [ -n "~{fraction_of_reads}" ] && OVERRIDES+=("--frac")
+      [ -n "~{num_bases}" ] && OVERRIDES+=("--bases")
+      [ -n "~{num_reads}" ] && OVERRIDES+=("--num")
 
-    if [ "$OVERRIDE_PARAMS" -gt 1 ]; then
-      echo "ERROR: fraction_of_reads, num_bases, and num_reads are mutually exclusive; specify only one"
+    if [ ${#OVERRIDES[@]} -gt 1 ]; then
+      echo "ERROR: ${OVERRIDES[*]} are mutually exclusive; specify only one" >&2
       exit 1
-    elif [ "$OVERRIDE_PARAMS" -eq 1 ]; then
-      echo "INFO: Using fraction_of_reads, num_bases, or num_reads parameter; ignoring coverage and genome_length"
+    elif [ ${#OVERRIDES[@]} -eq 1 ]; then
+      echo "INFO: Using ${OVERRIDES[0]}; ignoring --coverage and --genome-size"
       COVERAGE=""
-    elif [ -n "~{genome_length}" ] && [ -n "~{coverage}" ]; then
+    elif [ -n "~{genome_length}" ]; then
       COVERAGE="--coverage ~{coverage} --genome-size ~{genome_length}"
     else
-      echo "ERROR: Provide genome_length and coverage, or one of: fraction_of_reads, num_bases, num_reads"
+      echo "ERROR: Provide --genome-size and --coverage, or one of: --frac, --bases, --num" >&2
       exit 1
     fi
 
