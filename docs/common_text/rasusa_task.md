@@ -11,7 +11,7 @@
     | `--num` | Subsample to an explicit number of reads. Overrides coverage. |
     | `--coverage` + `--genome-size` | Default mode. Subsamples to a target depth using an estimated genome length. |
 
-    If more than one of `--bases`, `--frac`, or `--num` is supplied the task will fail fast with a descriptive error. See #inputs section for details on Terra variable names.
+    If more than one of `--bases`, `--frac`, or `--num` is supplied the task will fail with a descriptive error. See [inputs](#inputs) section for details on Terra variable names.
 
 <!-- if: read_qc_trim -->
     To enable/disable this task, set the `call_rasusa` parameter to `true`/`false`. Each workflow has its own default values for `Rasusa` which can be overridden by the user:
@@ -24,9 +24,9 @@
     | `theiaprok_illumina_pe` | `false` | `150` |
     | `theiaprok_illumina_se` | `false` | `150` |
 
-    `Rasusa` executes after host-read removal (`ncbi_scrub`, if applicable) and before read trimming (`trimmomatic` or `fastp`). Classification tasks (`kraken2`, `midas`) always run on the un-downsampled reads regardless of whether `call_rasusa` is enabled. The downsampled (but un-trimmed) reads are exposed as `read1_subsampled_raw` and `read2_subsampled_raw`.
+    `Rasusa` executes after host-read removal (`ncbi_scrub`, if applicable) and before read trimming (`trimmomatic` or `fastp`). Classification tasks (`kraken2`, `midas`) always run on the original/raw reads regardless of whether `call_rasusa` is enabled. The downsampled (but un-trimmed) reads are output to the Terra data table as `read1_subsampled_raw` and `read2_subsampled_raw`.
 
-    When running in coverage mode, `rasusa_genome_length` falls back to `raw_check_reads.est_genome_length` from the `read_screen` task if the user does not supply one directly. If `skip_screen` is set to `true`, you must supply `genome_length` explicitly or use one of the override modes above.
+    When running in coverage mode, it's strongly recommended to manually set the `rasusa_genome_length` input parameter in order to ensure accurate downsampling. If not provided, `rasusa_genome_length` falls back to `raw_check_reads.est_genome_length` from the `read_screen` task. Oftentimes, this value can overestimate the true genome length, particularly for large, high-coverage FASTQ files. If `skip_screen` is set to `true`, you must supply `genome_length` explicitly or use one of the override modes above.
 <!-- endif -->
 
 <!-- if: theiaviral -->
