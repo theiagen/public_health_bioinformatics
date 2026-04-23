@@ -7,7 +7,7 @@ task variant_call {
     String organism = "sars-cov-2" # default to sars-cov-2 to maintain previous behavior
     File? reference_genome
     File? reference_gff 
-    Int min_qual = "20"
+    Int min_qual = 20
     Float? variant_min_freq 
     Int? variant_min_depth 
     Int disk_size = 100
@@ -85,7 +85,7 @@ task variant_call {
     fi
   >>>
   output {
-    Int variant_num = read_string("VARIANT_NUM")
+    Int variant_num = read_int("VARIANT_NUM")
     String variant_proportion_intermediate = read_string("PROPORTION_INTERMEDIATE")
     File sample_variants_tsv = "~{samplename}.variants.tsv"
     File sample_variants_vcf = "~{samplename}.variants.vcf"

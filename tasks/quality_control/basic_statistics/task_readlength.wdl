@@ -23,7 +23,7 @@ task readlength {
     echo $result | tee AVERAGE_READ_LENGTH
   >>>
   output {
-    Float average_read_length = read_string("AVERAGE_READ_LENGTH")
+    Float average_read_length = read_float("AVERAGE_READ_LENGTH")
   }
   runtime {
     docker: "~{docker}"
