@@ -7,7 +7,7 @@ task consensus {
     File read1
     File? primer_bed
     File? reference_genome
-    Int normalise = 20000
+    Int normalise = 0
     Int cpu = 8
     Int memory = 16
     Int disk_size = 100

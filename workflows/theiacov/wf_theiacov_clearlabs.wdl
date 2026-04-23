@@ -23,7 +23,7 @@ workflow theiacov_clearlabs {
     String seq_method = "OXFORD_NANOPORE"
     File primer_bed
     # assembly parameters
-    Int normalise = 20000
+    Int normalise = 0
     String artic_docker = "us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0"
     # reference values
     File? reference_genome
