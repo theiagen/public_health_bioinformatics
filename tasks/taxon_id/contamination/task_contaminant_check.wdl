@@ -9,6 +9,9 @@ task contaminant_check {
     Float min_percent_coverage = 0
     Int min_depth = 0
 
+    Int? min_expected # default is defined in python and all expected_sequences
+    Int max_unexpected = 1
+
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23"
     Int memory = 4
     Int cpu = 2
@@ -21,6 +24,11 @@ task contaminant_check {
 
   # convert comma-separated string of expected sequences into a set
   expected_sequences = set([seq.strip() for seq in "~{expected_sequences}".split(",")])
+  # set default to all expected_sequences
+  if ~{if defined(min_expected) then "true" else "false"} == "true":
+    min_expected = len(expected_sequences)
+  else:
+    min_expected = int(~{min_expected})
 
   # read in coverage and depth by sequence
   with open("~{coverage_by_sequence_json}") as f:
@@ -75,6 +83,7 @@ task contaminant_check {
     print(f"WARNING: extraneous sequences detected: {sorted(extraneous_sequences)}")
 
   seq2fail = defaultdict(list)
+  extra_seq = []
   for seq in coverage_missing:
     if seq in undetected_sequences or seq not in coverage_by_sequence:
       seq2fail[seq].append("not detected")
@@ -85,7 +94,7 @@ task contaminant_check {
     if seq not in undetected_sequences and seq in depth_by_sequence:
       seq2fail[seq].append(f"insufficient depth ({depth_by_sequence[seq]})")
   for seq in extraneous_sequences:
-    seq2fail[seq].append("extra sequence")
+    extra_seq.append(seq)
   # identify missing from reference if the capacity exists
   if all_sequences:
     for seq in missing_from_input:
@@ -93,10 +102,14 @@ task contaminant_check {
 
   # populate a status string
   with open("STATUS", "w") as f:
-    if seq2fail:
+    if len(seq2fail) < min_expected or len(extra_seq) > int(~{max_unexpected}):
       status_string = "FAIL: "
-      for seq, fail_reasons in sorted(seq2fail.items(), key=lambda x: x[0]):
-        status_string += f"{seq} - {', '.join(fail_reasons)}; "
+      if len(seq2fail) < min_expected:
+        for seq, fail_reasons in sorted(seq2fail.items(), key=lambda x: x[0]):
+          status_string += f"{seq} - {', '.join(fail_reasons)}; "
+      else:
+        for seq in extra_seq:
+          status_string += f"{seq} - extra sequence; "
       status_string = status_string.strip("; ")
       f.write(status_string)
     else:
