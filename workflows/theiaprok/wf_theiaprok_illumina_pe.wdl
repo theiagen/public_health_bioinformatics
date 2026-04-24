@@ -829,6 +829,18 @@ workflow theiaprok_illumina_pe {
     File? fastqc_clean2_html = read_QC_trim.fastqc_clean2_html
     String? fastqc_version = read_QC_trim.fastqc_version
     String? fastqc_docker = read_QC_trim.fastqc_docker
+    # Read QC - decontaminate outputs
+    File? contaminant_bam = read_QC_trim.contaminant_bam
+    File? contaminant_bai = read_QC_trim.contaminant_bai
+    Float? contaminant_coverage = read_QC_trim.contaminant_coverage
+    Float? contaminant_mean_depth = read_QC_trim.contaminant_mean_depth
+    File? contaminant_mapping_stats = read_QC_trim.contaminant_mapping_stats
+    File? contaminant_cov_hist = read_QC_trim.contaminant_cov_hist
+    File? contaminant_mapping_flagstat = read_QC_trim.contaminant_mapping_flagstat
+    Float? contaminant_percent_mapped_reads = read_QC_trim.contaminant_percent_mapped_reads
+    Map[String, Float]? contaminant_coverage_by_sequence = read_QC_trim.contaminant_sequence_coverage
+    Map[String, Float]? contaminant_depth_by_sequence = read_QC_trim.contaminant_sequence_depth
+    String? contaminant_status = read_QC_trim.contaminant_status
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
