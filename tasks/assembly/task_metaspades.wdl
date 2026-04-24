@@ -36,7 +36,7 @@ task metaspades_pe {
   runtime {
     docker: "~{docker}"
     memory: "~{memory} GB"
-    cpu: "~{cpu}"
+    cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     maxRetries: 3

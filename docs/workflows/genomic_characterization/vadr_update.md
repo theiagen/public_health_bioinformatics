@@ -10,7 +10,7 @@ VADR_Update_PHB is a standalone workflow dedicated to running VADR. By default, 
 
 | **Organism** | **vadr_model_file** | **vadr_opts** | **max_length** |
 | --- | --- | --- | --- |
-| sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.3-2.tar.gz"` | `"--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta"` | `30000` |
+| sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.6.3-1.tar.gz"` | `"--mkey sarscov2 --glsearch -s -r --nomisc --lowsim5seq 6 --lowsim3seq 6 --alt_fail lowscore,insertnn,deletinn --noseqnamemax --out_allfasta"` | `30000` |
 | MPXV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.4.2-1.tar.gz"` | `"--mkey mpxv --glsearch --minimap2 -s -r --nomisc --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --s_overhang 150 --out_allfasta"` | `210000` |
 | WNV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flavi-1.2-1.tar.gz"` | `"--mkey flavi --nomisc --noprotid --out_allfasta"` | `11000` |
 | flu | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-flu-1.6.3-2.tar.gz"` | `"--mkey flu --atgonly --xnocomp --nomisc --alt_fail extrant5,extrant3"` | `13500` |

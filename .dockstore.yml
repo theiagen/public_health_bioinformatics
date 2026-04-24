@@ -240,6 +240,11 @@ workflows:
    primaryDescriptorPath: /workflows/phylogenetics/wf_phylocompare.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
+ - name: Metabuli_PHB
+   subclass: WDL
+   primaryDescriptorPath: /workflows/standalone_modules/wf_metabuli.wdl
+   testParameterFiles:
+    - /tests/inputs/empty.json
  - name: Nextclade_Batch_PHB 
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_nextclade_batch.wdl
@@ -253,11 +258,6 @@ workflows:
  - name: Usher_PHB
    subclass: WDL
    primaryDescriptorPath: /workflows/phylogenetics/wf_usher.wdl
-   testParameterFiles:
-    - /tests/inputs/empty.json
- - name: CZGenEpi_Prep_PHB
-   subclass: WDL
-   primaryDescriptorPath: /workflows/utilities/wf_czgenepi_prep.wdl
    testParameterFiles:
     - /tests/inputs/empty.json
  - name: TBProfiler_tNGS_PHB
