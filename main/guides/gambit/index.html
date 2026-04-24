@@ -910,6 +910,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#gambit-gtdb-database-v220" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GAMBIT GTDB Database v2.2.0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gambit-gtdb-database-v210" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7110,6 +7121,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#gambit-gtdb-database-v220" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        GAMBIT GTDB Database v2.2.0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gambit-gtdb-database-v210" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -7468,7 +7490,7 @@
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"></path></svg></span> <strong>Latest Database Version</strong></p>
 <hr>
-<p><a href="#gambit-gtdb-database-v210">GAMBIT Prokaryotic GTDB Database v2.1.0</a></p>
+<p><a href="#gambit-gtdb-database-v220">GAMBIT Prokaryotic GTDB Database v2.2.0</a></p>
 <p><a href="#gambit-fungal-database-v100">GAMBIT Fungal Database v1.0.0</a></p>
 </li>
 </ul>
@@ -7580,6 +7602,40 @@
 <p>A billing project <strong>must</strong> be provided in the request to download; otherwise, the following links and GS URIs will not work.</p>
 </div>
 <h3 id="gambit-prokaryotic-databases">GAMBIT Prokaryotic Databases<a class="headerlink" href="#gambit-prokaryotic-databases" title="Permanent link">¶</a></h3>
+<h4 id="gambit-gtdb-database-v220">GAMBIT GTDB Database v2.2.0<a class="headerlink" href="#gambit-gtdb-database-v220" title="Permanent link">¶</a></h4>
+<details class="toggle">
+<summary>Database Details</summary>
+<p>This database is a <strong>minor update</strong> to the v2.1.0 database. This database is identical to the v2.1.0 database, <strong>except for the following modifications</strong>.</p>
+<ol>
+<li>GTDB refers to <em>Proteus terrae</em> subspecies <em>cibarius</em> (NCBI name) as <em>Proteus cibarius</em>. This species have been renamed to align with NCBI
+    a. Rationale: This GAMBIT patch database renamed the species to align with NCBI’s naming convention and public health practice.</li>
+<li>
+<p>The following genomes below were removed. 
+    a. Rationale: These genomes are currently named as <em>Shigella</em> species in NCBI, but are actually <em>Escherichia coli</em> according to the best match type strain using ANI. Their removal from the database prevents false assignment of <em>Echerichia coli</em> query genomes to <em>Shigella</em> species.</p>
+<p>GCF_020539805.1
+GCF_022494035.1
+GCF_013337165.1
+GCF_013374815.1
+GCF_019793575.1</p>
+<p>b. Rationale: This genome is currently named as <em>Klebsiella oxytoca</em>, but is actually <em>Escherichia coli</em> according to the best match type strain using ANI. Their removal from the database prevents false assignment of <em>Klebsiella oxytoca</em> query genomes to <em>Escherichia coli</em> species.</p>
+<p>GCA_900083935.1</p>
+<p>c. Rationale: This genome is currently named as <em>Clostridium perfringens</em>, but is actually <em>Enterococcus lactis</em> according to the best match type strain using ANI. Their removal from the database prevents false assignment of <em>Enterococcus lactis</em> query genomes to <em>Clostridium perfringens</em> species.</p>
+<p>GCA_013390155.1   </p>
+</li>
+</ol>
+<p><strong>Database Files</strong></p>
+<p>These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:</p>
+<p><strong>GS URI (for <a href="https://terra.bio">Terra.bio</a> usage):</strong></p>
+<ul>
+<li><code>gs://gambit-databases-rp/2.2.0/gambit-metadata-2.2.0-20251111.gdb</code></li>
+<li><code>gs://gambit-databases-rp/2.2.0/gambit-signatures-2.2.0-20251111.gs</code></li>
+</ul>
+<p><strong>HTTPS URL (for local download):</strong></p>
+<ul>
+<li><a href="https://storage.cloud.google.com/gambit-databases-rp/2.2.0/gambit-metadata-2.2.0-20251111.gdb">https://storage.cloud.google.com/gambit-databases-rp/2.2.0/gambit-metadata-2.2.0-20251111.gdb</a></li>
+<li><a href="https://storage.cloud.google.com/gambit-databases-rp/2.2.0/gambit-signatures-2.2.0-20251111.gs">https://storage.cloud.google.com/gambit-databases-rp/2.2.0/gambit-signatures-2.2.0-20251111.gs</a></li>
+</ul>
+</details>
 <h4 id="gambit-gtdb-database-v210">GAMBIT GTDB Database v2.1.0<a class="headerlink" href="#gambit-gtdb-database-v210" title="Permanent link">¶</a></h4>
 <details class="toggle">
 <summary>Database Details</summary>
@@ -8176,7 +8232,7 @@ GCF_002248705.1
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="October 1, 2025 19:11:34 UTC">2025-10-01</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 24, 2026 18:58:04 UTC">2026-04-24</span>
   </span>
 
     
