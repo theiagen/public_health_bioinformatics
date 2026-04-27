@@ -6,6 +6,7 @@ import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as amr_sear
 import "../../tasks/species_typing/acinetobacter/task_kaptive.wdl" as kaptive_task
 import "../../tasks/species_typing/escherichia_shigella/task_ectyper.wdl" as ectyper_task
 import "../../tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl" as serotypefinder_task
+import "../../tasks/species_typing/escherichia_shigella/task_shigapass.wdl" as shigapass_task
 import "../../tasks/species_typing/escherichia_shigella/task_shigatyper.wdl" as shigatyper_task
 import "../../tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl" as shigeifinder_task
 import "../../tasks/species_typing/escherichia_shigella/task_sonneityping.wdl" as sonneityping_task
