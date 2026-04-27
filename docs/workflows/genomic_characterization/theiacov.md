@@ -177,7 +177,7 @@ We've provided the following information to help you set up the workflow for eac
         | kraken_target_organism_input | sars-cov-2 | `"Severe acute respiratory syndrome coronavirus 2"` |
         | nextclade_dataset_name_input | sars-cov-2 | `"nextstrain/sars-cov-2/wuhan-hu-1/orfs"` |
         | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.38"`|
-        | nextclade_dataset_tag_input | sars-cov-2 | `"2026-01-06--14-59-32Z"` |
+        | nextclade_dataset_tag_input | sars-cov-2 | `"2026-04-21--09-39-50Z"` |
         | reference_genome | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"` |
         | vadr_max_length | sars-cov-2 | `30000` |
         | vadr_skip_length | sars-cov-2 | `10000` |
