@@ -5,7 +5,7 @@ task shigapass {
     description: "In-silico prediction of Shigella serotypes & EIEC differentiation. This task is designed to run ShigaPass on multiple assemblies at once, and requires an array of assemblies and sample names."
   }
   input {
-    File assembly_fasta
+    File assembly
     String samplename
     
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/shigapass:1.5.0"
@@ -19,10 +19,10 @@ task shigapass {
     ShigaPass.sh -v | sed 's/ShigaPass version //g' | tee VERSION
     
     # shigapass requires a text file containing the filepath instead of the filepath itself 
-    realpath ~{assembly_fasta} > assembly_fasta_path.txt
+    realpath ~{assembly} > assembly_path.txt
 
     ShigaPass.sh \
-      -l assembly_fasta_path.txt \
+      -l assembly_path.txt \
       -p /ShigaPass-1.5.0/SCRIPT/ShigaPass_DataBases/ \
       -t ~{cpu} \
       -k \
@@ -49,7 +49,7 @@ task shigapass {
     File shigapass_summary_tsv = "shigapass/ShigaPass_summary.tsv"
     File? shigapass_flexneri_summary_tsv = "shigapass/ShigaPass_Flex_summary.tsv"
     Array[File] shigapass_intermediate_files = glob("shigapass/~{samplename}/*")
-    
+
     String shigapass_version = read_string("VERSION")
     String shigapass_docker = docker
   }

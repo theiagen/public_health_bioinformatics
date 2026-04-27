@@ -87,6 +87,7 @@ workflow merlin_magic {
     String? seqsero2s_docker_image
     String? seroba_docker_image
     String? serotypefinder_docker_image
+    String? shigapass_docker_image
     String? shigatyper_docker_image
     String? shigeifinder_docker_image
     String? sistr_docker_image
@@ -296,8 +297,11 @@ workflow merlin_magic {
   if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" ) {
     # tools specific to ALL Escherichia and Shigella species
     #
-    # FYI see the GAMBIT task for all merlin_tag designations but all Escherichia and Shigella species are given "Escherichia" merlin_tag designation, except for Shigella sonnei which is given "Shigella sonnei" merlin_tag.
-    # The reason being is that S. sonnei does have a species-specific tool (sonneityping) where the other Shigella species do not (flexneri, dysenteriae, boydii, etc.)
+    # FYI see the GAMBIT task for all merlin_tag designations but all Escherichia and Shigella
+    # species are given "Escherichia" merlin_tag designation, except for Shigella sonnei which
+    # is given "Shigella sonnei" merlin_tag. The reason being is that S. sonnei does have a 
+    # species-specific tool (sonneityping) where the other Shigella species do not (flexneri,
+    # dysenteriae, boydii, etc.)
     call serotypefinder_task.serotypefinder {
       input:
         assembly = assembly,
@@ -344,17 +348,18 @@ workflow merlin_magic {
     }
     call virulencefinder_task.virulencefinder {
       input:
-      #  read1 = read1,
-      #  read2 = read2,
         assembly = assembly,
         samplename = samplename,
-      #  paired_end = paired_end,
-      #  assembly_only = assembly_only,
-      #  ont_data = ont_data,
         min_percent_coverage = virulencefinder_min_percent_coverage,
         min_percent_identity = virulencefinder_min_percent_identity,
         database = virulencefinder_database,
         docker = virulencefinder_docker_image
+    }
+    call shigapass_task.shigapass {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        docker = shigapass_docker_image
     }
   }
   if (merlin_tag == "Shigella sonnei") {
@@ -879,6 +884,13 @@ workflow merlin_magic {
     String? ectyper_pathodb_version = ectyper.ectyper_pathodb_version
     String? ectyper_stx_subtypes = ectyper.ectyper_stx_subtypes
     String? ectyper_docker = ectyper.ectyper_docker
+    String? shigapass_predicted_serotype = shigapass.shigapass_predicted_serotype
+    String? shigapass_predicted_serotype_flexneri = shigapass.shigapass_predicted_serotype_flexneri
+    String? shigapass_ipaH_presence_absence = shigapass.shigapass_ipaH_presence_absence
+    File? shigapass_summary_tsv = shigapass.shigapass_summary_tsv
+    File? shigapass_flexneri_summary_tsv = shigapass.shigapass_flexneri_summary_tsv
+    String? shigapass_docker = shigapass.shigapass_docker
+    String? shigapass_version = shigapass.shigapass_version
     String? shigatyper_predicted_serotype = shigatyper.shigatyper_predicted_serotype
     String? shigatyper_ipaB_presence_absence = shigatyper.shigatyper_ipaB_presence_absence
     String? shigatyper_notes = shigatyper.shigatyper_notes
