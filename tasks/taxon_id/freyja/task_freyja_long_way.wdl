@@ -1,6 +1,6 @@
 version 1.0
 
-task freyja_long_way_single {
+task freyja_long_format_single {
     input {
         String samplename
         String freyja_lineages
@@ -54,7 +54,7 @@ task freyja_long_way_single {
     }
 }
 
-task freyja_long_way_multi {
+task freyja_long_format_multi {
     input {
         Array[String] samplenames
         Array[String] freyja_lineages
