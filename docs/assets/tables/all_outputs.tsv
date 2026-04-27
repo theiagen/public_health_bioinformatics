@@ -1015,6 +1015,13 @@ serotypefinder_serotype	String	Serotype predicted by SerotypeFinder	TheiaProk_FA
 shared_variants_analysis_date	String	The date the workflow was run	Find_Shared_Variants
 shared_variants_table	File	The shared variants table listing presence/absence for each mutation identified in the samples	Find_Shared_Variants
 shared_variants_version	String	The version of PHB the workflow is in	Find_Shared_Variants
+shigapass_docker	String	ShigaPass docker image used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+shigapass_flexneri_summary_tsv	File	Tab-delimited file detailing the phage and plasmid-encoded O-antigen modification (POAC) genes for the predicted _S. flexneri_ genomes	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+shigapass_ipaH_presence_absence	String	An indication if ipaH was present or absent	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+shigapass_predicted_serotype	String	The predicted serotype	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+shigapass_predicted_serotype_flexneri	String	The predicted serotype if _S. flexneri_	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+shigapass_summary_tsv	File	Detailed TSV report from ShigaPass (see <https://github.com/imanyass/ShigaPass#output-files>)	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+shigapass_version	String	Version of ShigaPass used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 shigatyper_docker	String	ShigaTyper docker image used	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 shigatyper_hits_tsv	File	Detailed TSV report from ShigaTyper (see <https://github.com/CFSAN-Biostatistics/shigatyper#example-prefix-hitstsv>)	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 shigatyper_ipaB_presence_absence	String	Presence (+) or absence (-) of ipaB identified by ShigaTyper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
