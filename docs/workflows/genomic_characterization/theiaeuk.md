@@ -22,7 +22,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
 !!! warning "Before running TheiaEuk"
 
-    For some taxa, TheiaEuk_Illumina_PE relies on [Snippy](#organism-specific-characterization) to perform variant calling on the cleaned read dataset and then queries the resulting file for specific mutations that are known to confim antifugal resistance (see [Organism-specific characterization](#organism-specific-characterization) section). This behaviour has been replicated in TheiaEuk_ONT but the variant calling is performed directly on the resulting assemblies. Therefore, the read support reported is, at the moment, non-reliable. Future improvements will include improvements on this module. 
+    For some taxa, TheiaEuk_Illumina_PE relies on [Snippy](#organism-specific-characterization) to perform variant calling on the cleaned read dataset and then queries the resulting file for specific mutations that are known to confim antifugal resistance (see [Organism-specific characterization](#organism-specific-characterization) section). This behaviour has been replicated in TheiaEuk_ONT but the variant calling is performed directly on the resulting assemblies. Therefore, the read support reported is, at the moment, non-reliable. Future improvements will include improvements on this module.
 
 ### Inputs
 
@@ -67,8 +67,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
     === "TheiaEuk_Illumina_PE"
 
 {{ include_md("common_text/read_screen_task.md", condition="theiaeuk", indent=8) }}
-{{ include_md("common_text/rasusa_task.md", indent=8, condition="theiaeukillumina") }}
-{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiaeuk", indent=8) }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiaeukillumina", indent=8) }}
 {{ include_md("common_text/qc_check_task.md", condition="theiaeuk", indent=8) }}
 
         !!! dna ""

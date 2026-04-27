@@ -55,7 +55,7 @@ workflow theiaprok_illumina_pe {
     String terra_project = "NA"
     String terra_workspace = "NA"
     # read screen parameters
-    Boolean skip_screen = false 
+    Boolean skip_screen = false
     Int min_reads = 7472
     Int min_basepairs = 2241820
     Int min_genome_length = 100000
@@ -66,11 +66,14 @@ workflow theiaprok_illumina_pe {
     Int trim_min_length = 75
     Int trim_quality_min_score = 20
     Int trim_window_size = 10
+    # rasusa downsampling parameters
+    Boolean call_rasusa = false
+    Float rasusa_downsampling_coverage = 150
     # module options
     Boolean perform_characterization = true # by default run all characterization steps
     Boolean amrfinder_use_gff = false # by default use nucleotide fasta for amrfinderplus, but user can set this to true if they want to use a gff and protein fasta file
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
-    Boolean call_kmerfinder = false 
+    Boolean call_kmerfinder = false
     Boolean call_resfinder = false
     Boolean call_plasmidfinder = true
     Boolean call_abricate = false
@@ -125,7 +128,10 @@ workflow theiaprok_illumina_pe {
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
-        workflow_series = "theiaprok"
+        workflow_series = "theiaprok",
+        call_rasusa = call_rasusa,
+        rasusa_downsampling_coverage = rasusa_downsampling_coverage,
+        rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
     }
     if (! skip_screen) {
       call screen.check_reads as clean_check_reads {
@@ -220,7 +226,7 @@ workflow theiaprok_illumina_pe {
           }
         }
         call ts_mlst_task.ts_mlst {
-          input: 
+          input:
             assembly = digger_denovo.assembly_fasta,
             samplename = samplename,
             taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
@@ -234,16 +240,16 @@ workflow theiaprok_illumina_pe {
               samplename = samplename
           }
         }
-        if (genome_annotation == "bakta") {  
-          if (bakta_db == "light") {  
-            File bakta_db_light = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_light_2025-01-23.tar.gz"  
-          }  
-          if (bakta_db == "full") {  
-            File bakta_db_full = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_full_2024-01-23.tar.gz"            
-          }  
-          if (!(bakta_db == "light" || bakta_db == "full")) {  
-              File bakta_custom_db = bakta_db  
-          } 
+        if (genome_annotation == "bakta") {
+          if (bakta_db == "light") {
+            File bakta_db_light = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_light_2025-01-23.tar.gz"
+          }
+          if (bakta_db == "full") {
+            File bakta_db_full = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_full_2024-01-23.tar.gz"
+          }
+          if (!(bakta_db == "light" || bakta_db == "full")) {
+              File bakta_custom_db = bakta_db
+          }
           call bakta_task.bakta {
             input:
               assembly = digger_denovo.assembly_fasta,
@@ -281,14 +287,14 @@ workflow theiaprok_illumina_pe {
                 "r2_mean_q_raw": cg_pipeline_raw.r2_mean_q,
                 "combined_mean_q_raw": cg_pipeline_raw.combined_mean_q,
                 "r1_mean_readlength_raw": cg_pipeline_raw.r1_mean_readlength,
-                "r2_mean_readlength_raw": cg_pipeline_raw.r2_mean_readlength,  
+                "r2_mean_readlength_raw": cg_pipeline_raw.r2_mean_readlength,
                 "combined_mean_readlength_raw": cg_pipeline_raw.combined_mean_readlength,
                 "r1_mean_q_clean": cg_pipeline_clean.r1_mean_q,
                 "r2_mean_q_clean": cg_pipeline_clean.r2_mean_q,
                 "combined_mean_q_clean": cg_pipeline_clean.combined_mean_q,
                 "r1_mean_readlength_clean": cg_pipeline_clean.r1_mean_readlength,
-                "r2_mean_readlength_clean": cg_pipeline_clean.r2_mean_readlength,  
-                "combined_mean_readlength_clean": cg_pipeline_clean.combined_mean_readlength,    
+                "r2_mean_readlength_clean": cg_pipeline_clean.r2_mean_readlength,
+                "combined_mean_readlength_clean": cg_pipeline_clean.combined_mean_readlength,
                 "est_coverage_raw": cg_pipeline_raw.est_coverage,
                 "est_coverage_clean": cg_pipeline_clean.est_coverage,
                 "midas_secondary_genus_abundance": read_QC_trim.midas_secondary_genus_abundance,
@@ -386,6 +392,8 @@ workflow theiaprok_illumina_pe {
                 "bakta_tsv": bakta.bakta_tsv,
                 "bakta_version": bakta.bakta_version,
                 "bbduk_docker": read_QC_trim.bbduk_docker,
+                "bracken_report": read_QC_trim.bracken_report,
+                "bracken_version": read_QC_trim.bracken_version,
                 "busco_database": busco.busco_database,
                 "busco_docker": busco.busco_docker,
                 "busco_report": busco.busco_report,
@@ -500,10 +508,10 @@ workflow theiaprok_illumina_pe {
                 "kmerfinder_results_tsv": kmerfinder.kmerfinder_results_tsv,
                 "kmerfinder_template_coverage": kmerfinder.kmerfinder_template_coverage,
                 "kmerfinder_top_hit": kmerfinder.kmerfinder_top_hit,
-                "kraken_docker": read_QC_trim.kraken_docker,
-                "kraken2_database": read_QC_trim.kraken_database,
-                "kraken2_report": read_QC_trim.kraken_report,
-                "kraken2_version": read_QC_trim.kraken_version,
+                "kraken_docker": read_QC_trim.kraken2_docker,
+                "kraken2_database": read_QC_trim.kraken2_database,
+                "kraken2_report": read_QC_trim.kraken2_report,
+                "kraken2_version": read_QC_trim.kraken2_version,
                 "legsta_predicted_sbt": merlin_magic.legsta_predicted_sbt,
                 "legsta_results": merlin_magic.legsta_results,
                 "legsta_version": merlin_magic.legsta_version,
@@ -612,7 +620,7 @@ workflow theiaprok_illumina_pe {
                 "resfinder_version": resfinder_task.resfinder_version,
                 "run_id": run_id,
                 "seq_platform": seq_method,
-                "seqsero2s_note": merlin_magic.seqsero2s_note,              
+                "seqsero2s_note": merlin_magic.seqsero2s_note,
                 "seqsero2s_predicted_antigenic_profile": merlin_magic.seqsero2s_predicted_antigenic_profile,
                 "seqsero2s_predicted_contamination": merlin_magic.seqsero2s_predicted_contamination,
                 "seqsero2s_predicted_serotype": merlin_magic.seqsero2s_predicted_serotype,
@@ -860,11 +868,18 @@ workflow theiaprok_illumina_pe {
     Float? midas_secondary_genus_abundance = read_QC_trim.midas_secondary_genus_abundance
     Float? midas_secondary_genus_coverage = read_QC_trim.midas_secondary_genus_coverage
     # Read QC - kraken outputs
-    String? kraken2_version = read_QC_trim.kraken_version
-    String? kraken2_report = read_QC_trim.kraken_report
-    String? kraken2_database = read_QC_trim.kraken_database
-    String? kraken_docker = read_QC_trim.kraken_docker
-    # Assembly - digger denovo outputs 
+    String? bracken_report = read_QC_trim.bracken_report
+    String? bracken_version = read_QC_trim.bracken_version
+    String? kraken2_version = read_QC_trim.kraken2_version
+    String? kraken2_report = read_QC_trim.kraken2_report
+    String? kraken2_database = read_QC_trim.kraken2_database
+    String? kraken_docker = read_QC_trim.kraken2_docker
+    # Read QC - rasusa outputs
+    File? read1_subsampled_raw = read_QC_trim.read1_subsampled_raw
+    File? read2_subsampled_raw = read_QC_trim.read2_subsampled_raw
+    File? rasusa_log = read_QC_trim.rasusa_log
+    String? rasusa_version = read_QC_trim.rasusa_version
+    # Assembly - digger denovo outputs
     File? assembly_fasta = digger_denovo.assembly_fasta
     File? contigs_gfa = digger_denovo.contigs_gfa
     File? filtered_contigs_metrics = digger_denovo.filtered_contigs_metrics
@@ -1000,6 +1015,8 @@ workflow theiaprok_illumina_pe {
     File? amr_search_results = merlin_magic.amr_search_results
     File? amr_search_csv = merlin_magic.amr_results_csv
     File? amr_search_results_pdf = merlin_magic.amr_results_pdf
+    String? amr_search_all_resistances = merlin_magic.amr_search_all_resistances
+    String? amr_search_associated_resistances = merlin_magic.amr_search_associated_resistances
     String? amr_search_docker = merlin_magic.amr_search_docker
     String? amr_search_version = merlin_magic.amr_search_version
     # Ecoli Typing
@@ -1050,7 +1067,7 @@ workflow theiaprok_illumina_pe {
     File? virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv
     String? virulencefinder_docker = merlin_magic.virulencefinder_docker
     String? virulencefinder_hits = merlin_magic.virulencefinder_hits
-    # stxtyper 
+    # stxtyper
     File? stxtyper_report = merlin_magic.stxtyper_report
     String? stxtyper_docker = merlin_magic.stxtyper_docker
     String? stxtyper_version = merlin_magic.stxtyper_version
@@ -1106,7 +1123,7 @@ workflow theiaprok_illumina_pe {
     String? seqsero2s_predicted_contamination = merlin_magic.seqsero2s_predicted_contamination
     String? seqsero2s_note = merlin_magic.seqsero2s_note
     # Salmonella serotype Typhi Typing
-    File? genotyphi_report_tsv = merlin_magic.genotyphi_report_tsv 
+    File? genotyphi_report_tsv = merlin_magic.genotyphi_report_tsv
     File? genotyphi_mykrobe_json = merlin_magic.genotyphi_mykrobe_json
     String? genotyphi_version = merlin_magic.genotyphi_version
     String? genotyphi_species = merlin_magic.genotyphi_species

@@ -28,12 +28,15 @@ workflow theiacov_illumina_pe {
     File? reference_gff
     File? reference_genome
     File? reference_gene_locations_bed
-    Int? genome_length 
+    Int? genome_length
     # trimming parameters
     Boolean trim_primers = true
     Int trim_min_length = 75
     Int trim_quality_min_score = 30
     Int trim_window_size = 4
+    # rasusa downsampling parameters
+    Boolean call_rasusa = false
+    Float rasusa_downsampling_coverage = 2000
     # assembly parameters
     Int? min_depth # minimum depth to use for consensus and variant calling; default is 100 for non-flu (default value set below in call block for ivar consensus subwf), flu default is 30 for illumina (default set below in flu_track call block)
     Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
@@ -107,7 +110,10 @@ workflow theiacov_illumina_pe {
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
-        target_organism = organism_parameters.kraken_target_organism
+        target_organism = organism_parameters.kraken_target_organism,
+        call_rasusa = call_rasusa,
+        rasusa_downsampling_coverage = rasusa_downsampling_coverage,
+        rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
     }
     if (! skip_screen) {
       call screen.check_reads as clean_check_reads {
@@ -174,7 +180,7 @@ workflow theiacov_illumina_pe {
             vadr_model_file = organism_parameters.vadr_model_file,
             vadr_memory = organism_parameters.vadr_memory,
             reference_gene_locations_bed = organism_parameters.gene_locations_bed,
-            gene_coverage_bam = select_first([ivar_consensus.aligned_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam]),
+            gene_coverage_bam = select_first([ivar_consensus.aligned_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam, "gs://theiagen-public-resources-rp/empty_files/empty.bam"]),
             nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
             nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
             pangolin_docker_image = organism_parameters.pangolin_docker,
@@ -214,8 +220,8 @@ workflow theiacov_illumina_pe {
                 "num_reads_raw2": select_first([read_QC_trim.fastq_scan_raw2, read_QC_trim.fastqc_raw2]),
                 "num_reads_clean1": select_first([read_QC_trim.fastq_scan_clean1, read_QC_trim.fastqc_clean1]),
                 "num_reads_clean2": select_first([read_QC_trim.fastq_scan_clean2, read_QC_trim.fastqc_clean2]),
-                "kraken_human": read_QC_trim.kraken_human,
-                "kraken_human_dehosted": read_QC_trim.kraken_human_dehosted,
+                "kraken_human": read_QC_trim.kraken2_human,
+                "kraken_human_dehosted": read_QC_trim.kraken2_human_dehosted,
                 "meanbaseq_trim": ivar_consensus.meanbaseq_trim,
                 "assembly_mean_coverage": ivar_consensus.assembly_mean_coverage,
                 "number_N": consensus_qc.number_N,
@@ -294,16 +300,22 @@ workflow theiacov_illumina_pe {
     File? read1_dehosted = read_QC_trim.read1_dehosted
     File? read2_dehosted = read_QC_trim.read2_dehosted
     # Read QC - kraken outputs
-    String? kraken_version = read_QC_trim.kraken_version
-    Float? kraken_human = read_QC_trim.kraken_human
-    String? kraken_sc2 = read_QC_trim.kraken_sc2
-    String? kraken_target_organism = read_QC_trim.kraken_target_organism
-    String? kraken_target_organism_name = read_QC_trim.kraken_target_organism_name
-    File? kraken_report = read_QC_trim.kraken_report
-    Float? kraken_human_dehosted = read_QC_trim.kraken_human_dehosted
-    String? kraken_sc2_dehosted = read_QC_trim.kraken_sc2_dehosted
-    String? kraken_target_organism_dehosted = read_QC_trim.kraken_target_organism_dehosted
-    File? kraken_report_dehosted = read_QC_trim.kraken_report_dehosted
+    String? kraken_version = read_QC_trim.kraken2_version
+    String? bracken_version = read_QC_trim.bracken_version
+    Float? kraken_human = read_QC_trim.kraken2_human
+    String? kraken_target_organism = read_QC_trim.kraken2_target_organism
+    String? kraken_target_organism_name = read_QC_trim.kraken2_target_organism_name
+    File? kraken_report = read_QC_trim.kraken2_report
+    String? bracken_report = read_QC_trim.bracken_report
+    Float? kraken_human_dehosted = read_QC_trim.kraken2_human_dehosted
+    String? kraken_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
+    File? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
+    String? bracken_report_dehosted = read_QC_trim.bracken_report_dehosted
+    # Read QC - rasusa outputs
+    File? read1_subsampled_raw = read_QC_trim.read1_subsampled_raw
+    File? read2_subsampled_raw = read_QC_trim.read2_subsampled_raw
+    File? rasusa_log = read_QC_trim.rasusa_log
+    String? rasusa_version = read_QC_trim.rasusa_version
     # Read Alignment - bwa and bbmap_reformat(flu) outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version

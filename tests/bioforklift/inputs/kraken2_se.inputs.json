@@ -1,0 +1,5 @@
+{
+  "kraken2_se_wf.kraken2_db": "this.kraken_database_input",
+  "kraken2_se_wf.read1": "this.read1",
+  "kraken2_se_wf.samplename": "this.kraken2_se_wf_id"
+}

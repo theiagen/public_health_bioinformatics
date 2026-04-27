@@ -35,6 +35,8 @@ task qc_check_phb {
       "assembly_length_unambiguous": {"type": int, "operator": operator.ge},
       "assembly_mean_coverage": {"type": float, "operator": operator.ge},
       "busco_completeness": {"type": float, "operator": operator.ge},
+      "classified_human": {"type": float, "operator": operator.le},
+      "classified_human_dehosted": {"type": float, "operator": operator.le},
       "combined_mean_q_clean": {"type": float, "operator": operator.ge},
       "combined_mean_q_raw": {"type": float, "operator": operator.ge},
       "combined_mean_readlength_clean": {"type": float, "operator": operator.ge},
@@ -44,6 +46,8 @@ task qc_check_phb {
       "kraken_human": {"type": float, "operator": operator.le},
       "kraken_human_dehosted": {"type": float, "operator": operator.le},
       "meanbaseq_trim": {"type": float, "operator": operator.ge},
+      "metabuli_human": {"type": float, "operator": operator.le},
+      "metabuli_human_dehosted": {"type": float, "operator": operator.le},
       "midas_secondary_genus_abundance": {"type": float, "operator": operator.lt},
       "midas_secondary_genus_coverage": {"type": float, "operator": operator.lt},
       "n50_value": {"type": int, "operator": operator.ge},
@@ -220,6 +224,8 @@ task qc_check_phb {
         if "~{irma_qc_table}":
           # keep default NA false to prevent NA segmented converting to null
           irma_qc_table = pd.read_csv("~{irma_qc_table}", sep = '\t', index_col = "Sample", keep_default_na=False)
+          # set all 'N/A' values to 0 for QC Check task
+          irma_qc_table = irma_qc_table.replace({'N/A': '0'})
           to_rm = set()
           # report segment failures on a metric-by-metric basis, but we iterate segment-by-segment
           seg2qc_note = {}

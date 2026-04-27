@@ -22,5 +22,6 @@ workflow zip_column_content {
     String zip_column_content_analysis_date = version_capture.date
 
     File zipped_files = zip_files.zipped_files
+    File file_translations = zip_files.file_translations
   }
 }
