@@ -45,7 +45,7 @@ task shigapass {
 
     File shigapass_summary_tsv = "shigapass/ShigaPass_summary.tsv"
     File? shigapass_flexneri_summary_tsv = "shigapass/ShigaPass_Flex_summary.tsv"
-    Array[File] shigapass_intermediate_files = glob("shigapass/~{samplename}/*")
+    Array[File] shigapass_intermediate_files = glob("~{samplename}/*")
 
     String shigapass_version = read_string("VERSION")
     String shigapass_docker = docker
