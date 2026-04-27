@@ -1,9 +1,6 @@
 version 1.0
 
 task shigapass {
-  meta {
-    description: "In-silico prediction of Shigella serotypes & EIEC differentiation. This task is designed to run ShigaPass on multiple assemblies at once, and requires an array of assemblies and sample names."
-  }
   input {
     File assembly
     String samplename
@@ -61,3 +58,4 @@ task shigapass {
     disk: disk_size + " GB"
     preemptible: 0
   }
+}
