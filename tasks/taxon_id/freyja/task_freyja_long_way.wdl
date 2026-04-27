@@ -41,6 +41,7 @@ task freyja_long_format_single {
             freyja_to_long.py freyja_metadata.tsv ~{samplename}_freyja_long_format.tsv --sample-col samplename --group-by ~{group_by}
         else
             freyja_to_long.py freyja_metadata.tsv ~{samplename}_freyja_long_format.tsv --sample-col samplename
+        fi
     >>>
 
     output {
@@ -108,6 +109,7 @@ task freyja_long_format_multi {
             freyja_to_long.py freyja_metadata.tsv freyja_long_format.tsv --sample-col samplename --group-by ~{group_by}
         else
             freyja_to_long.py freyja_metadata.tsv freyja_long_format.tsv --sample-col samplename
+        fi
     >>>
 
     output {
