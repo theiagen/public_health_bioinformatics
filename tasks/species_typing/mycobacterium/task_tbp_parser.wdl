@@ -34,7 +34,7 @@ task tbp_parser {
     # WDL runtime arguments
     Int cpu = 1
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v3.0.2"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v3.0.3"
     Int memory = 8
   }
   command <<<
