@@ -1,0 +1,3 @@
+entity:tbprofiler_tngs_id	read1	read2
+TexasAM1	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/illumina/SRX11523932_1.fastq	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/illumina/SRX11523932_2.fastq
+TexasAM2	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/illumina/SRX11523936_1.fastq	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/illumina/SRX11523936_2.fastq

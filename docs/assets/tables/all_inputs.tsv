@@ -1528,44 +1528,46 @@ merlin_magic	stxtyper_enable_debug	Boolean	Internal component, do not modify	Fal
 merlin_magic	stxtyper_enable_debug	Boolean	When enabled, additional messages are printed and files in $TMPDIR are not removed after running	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	stxtyper_memory	Int	Internal component, do not modify	4	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	stxtyper_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-merlin_magic	tbp_parser_add_cs_lims	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_add_cs_lims	Boolean	Set to true add cycloserine results to the LIMS report	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	tbp_parser_config	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_config	File	The configuration file to use, in YAML format (overrides all other arguments except input_json and input_bam)		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_coverage_regions_bed	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_coverage_regions_bed	File	A bed file that lists the regions to be considered for QC		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_config	File	The configuration file to use, in YAML format (overrides all other arguments except other file-type arguments)		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_coverage_bed	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_coverage_bed	File	The BED file containing the genes of interest, their locus tags, and their regions for QC/coverage calculations; should be formatted like the TBDB.bed file in TBProfiler		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	tbp_parser_debug	Boolean	Internal component, do not modify	True	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	tbp_parser_debug	Boolean	Activate the debug mode on tbp_parser; increases logging outputs	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	tbp_parser_etha237_frequency	Float	Internal component, do not modify	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_etha237_frequency	Float	Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_expert_rule_regions_bed	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_expert_rule_regions_bed	File	A file that contains the regions where R mutations and expert rules are applied		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v3.0.3	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v3.0.3	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
+merlin_magic	tbp_parser_err_coverage_bed	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_err_coverage_bed	File	The BED file containing the "essential for resistance regions." This file indicates to tbp-parser that these regions should also have breadth of coverage and average depth calculations performed; this file should be formatted like the genes.bed file in TBProfiler and the coverage BED described above		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_find_and_replace	Map[String,String]	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_find_and_replace	Map[String,String]	A JSON string that can be used to specify any text in the output files that should be find-and-replaced with other text. The keys will be the text to find, and the values will be the text to replace it with. This is useful for labs that want to customize the text in their reports (e.g. renaming drugs or genes or output columns).<br>For example, '{"rifampicin": "rifampin", "fbiD": "Rv2983", "mmpR5": "Rv0678", "p.0?": ""}'		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_gene_database_yml	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_gene_database_yml	File	An optional YAML file that specifies the gene database information for the genes of interest; if not provided, a default format will be used		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_lims_report_format_yml	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_lims_report_format_yml	File	An optional YAML file that specifies the format of the LIMS report; if not provided, a default format will be used		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	tbp_parser_min_depth	Int	Internal component, do not modify	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_min_depth	Int	Minimum depth for a variant to pass QC in tbp_parser	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_min_frequency	Float	Internal component, do not modify	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_min_frequency	Float	The minimum frequency for a mutation to pass QC	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_min_percent_coverage	Float	Internal component, do not modify	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_min_percent_coverage	Float	The minimum coverage for a region to pass QC in tbp_parser	100	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_min_read_support	Int	Internal component, do not modify	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_min_read_support	Int	The minimum read support for a mutation to pass QC	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_min_depth	Int	The minimum depth of coverage required for a site to pass QC	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_min_frequency	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_min_frequency	Float	The minimum frequency for a mutation to pass QC (0.1 -> 10%)		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_min_percent_coverage	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_min_percent_coverage	Float	The minimum percentage of a region that has depth above the threshold set by min_depth (used for a gene/locus to pass QC; 1.0 -> 100%)		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_min_percent_loci_covered	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_min_percent_loci_covered	Float	The minimum percentage of loci/genes in the LIMS report that must pass coverage QC for the sample to be identified as MTBC (0.7 -> 70%)		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_min_read_support	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_min_read_support	Int	The minimum read support for a mutation to pass QC		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	tbp_parser_operator	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_operator	String	Fills the "operator" field in the tbp_parser output files	Operator not provided	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	True
-merlin_magic	tbp_parser_output_seq_method_type	String	Internal component, do not modify	WGS	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_output_seq_method_type	String	Fills out the "seq_method" field in the tbp_parser output files	WGS	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_rpob449_frequency	Float	Internal component, do not modify	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_rpob449_frequency	Float	Minimum frequency for a mutation at protein position 449 to pass QC in tbp-parser	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_rrl_frequency	Float	Internal component, do not modify	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_rrl_frequency	Float	Minimum frequency for a mutation in rrl to pass QC in tbp-parser	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_rrl_read_support	Int	Internal component, do not modify	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_rrl_read_support	Int	Minimum read support for a mutation in rrl to pass QC in tbp-parser	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_rrs_frequency	Float	Internal component, do not modify	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_rrs_frequency	Float	Minimum frequency for a mutation in rrs to pass QC in tbp-parser	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_rrs_read_support	Int	Internal component, do not modify	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_rrs_read_support	Int	Minimum read support for a mutation in rrs to pass QC in tbp-parser	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_operator	String	The operator who ran the analysis; used in the LIMS & Looker reports. Enclose in quotes if including a space	Operator not provided	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	True
+merlin_magic	tbp_parser_resolve_overlapping_regions	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_resolve_overlapping_regions	Boolean	Resolve overlapping BED regions to avoid double-counting reads across overlapping targets. Recommended for tNGS data with overlapping amplicon regions.	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_sequencing_method	String	Internal component, do not modify	WGS	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_sequencing_method	String	The sequencing method used to generate the data; used in the LIMS & Looker reports. Enclose in quotes if including a space	WGS	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	tbp_parser_tngs_data	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	tbp_parser_tngs_data	Boolean	Set to true to enable tNGS-specific parameters and runs in tbp-parser	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_tngs_data	Boolean	Indicates that the input data was generated using a tNGS protocol. Turns on tNGS-specific features	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_tngs_frequency_boundaries	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_tngs_frequency_boundaries	String	The frequency boundaries (comma-delimited; lower_f,upper_f) for tNGS QC reporting, used in conjunction with --tngs_read_support_boundaries		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_tngs_read_support_boundaries	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_tngs_read_support_boundaries	String	The read support boundaries (comma-delimited; lower_rs,upper_rs) for tNGS QC reporting, used in conjunction with --tngs_frequency_boundaries		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	tbp_parser_use_err_for_qc	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbp_parser_use_err_for_qc	Boolean	If an ERR BED file is provided, use the ERR coverage regions in place of the typical coverage regions for all QC determinations.<br>Note: This will influence how variants are interpretated and how deletions are reported because the QC thresholds for breadth of coverage and average depth will be based on the coverage found within the ERR regions.	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	tbprofiler_additional_parameters	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	tbprofiler_additional_parameters	String	Additional parameters for TBProfiler		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	tbprofiler_custom_db	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
@@ -1580,6 +1582,8 @@ merlin_magic	tbprofiler_min_depth	Int	Internal component, do not modify	10	Optio
 merlin_magic	tbprofiler_min_depth	Int	The minimum depth for a variant to be called.	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	tbprofiler_tbdb_branch	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	tbprofiler_tbdb_branch	String	TBProfiler uses by default the TBDB database (a combination of the original library and the WHO v2 catalogue). You can opt to use a different mutation library by using this field to specify the name of the TBDB branch to use in TBProfiler; see [the TBProfiler documentation](https://jodyphelan.github.io/tb-profiler-docs/en/mutation-library/) for more information regarding available databases		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
+merlin_magic	tbprofiler_tbdb_branch_commit_hash	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	tbprofiler_tbdb_branch_commit_hash	String	The commit hash for the TBDB branch that TBProfiler should use; this allows pinning the mutation library to a specific commit		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	tbprofiler_variant_caller	String	Internal component, do not modify	gatk	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	tbprofiler_variant_caller	String	Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options.	gatk	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	tbprofiler_variant_calling_params	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
@@ -2320,27 +2324,28 @@ table2asn	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Mercury_Prep
 table2asn	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Mercury_Prep_N_Batch	runtime	
 table2asn	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ncbi-table2asn:1.26.678	Optional	Mercury_Prep_N_Batch	docker	
 table2asn	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	1	Optional	Mercury_Prep_N_Batch	runtime	
-tbp_parser	add_cycloserine_lims	Boolean	Set to true add cycloserine results to the LIMS report	False	Optional	TBProfiler_tNGS	general	
-tbp_parser	config	File	The configuration file to use, in YAML format (overrides all other arguments except input_json and input_bam)		Optional	TBProfiler_tNGS	general	
-tbp_parser	coverage_regions_bed	File	A file that contains the regions to perform coverage analysis on		Optional	TBProfiler_tNGS	general	
+tbp_parser	config	File	The configuration file to use, in YAML format (overrides all other arguments except other file-type arguments)		Optional	TBProfiler_tNGS	general	
+tbp_parser	coverage_bed	File	the BED file containing the genes of interest, their locus tags, and their regions for QC/coverage calculations; should be formatted like the TBDB.bed file in TBProfiler		Optional	TBProfiler_tNGS	general	
 tbp_parser	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TBProfiler_tNGS	runtime	
 tbp_parser	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TBProfiler_tNGS	runtime	
-tbp_parser	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1	Optional	TBProfiler_tNGS	docker	
-tbp_parser	etha237_frequency	Float	Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser	0.1	Optional	TBProfiler_tNGS	general	
-tbp_parser	expert_rule_regions_bed	File	A file that contains the regions where R mutations and expert rules are applied		Optional	TBProfiler_tNGS	general	
-tbp_parser	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TBProfiler_tNGS	runtime	
-tbp_parser	min_depth	Int	Minimum depth for a variant to pass QC in tbp_parser	10	Optional	TBProfiler_tNGS	general	
-tbp_parser	min_frequency	Float	Minimum allele frequency for a variant to pass QC in tbp-parser	0.1	Optional	TBProfiler_tNGS	general	
-tbp_parser	min_percent_coverage	Float	The minimum percentage of a region to exceed the minimum depth for a region to pass QC in tbp_parser	100	Optional	TBProfiler_tNGS	general	
-tbp_parser	min_read_support	Int	Minimum read support for a variant to pass QC in tbp-parser	10	Optional	TBProfiler_tNGS	general	
-tbp_parser	operator	String	Fills the "operator" field in the tbp_parser output files		Optional	TBProfiler_tNGS	general	
-tbp_parser	rpob449_frequency	Float	Minimum frequency for a mutation at protein position 449 to pass QC in tbp-parser	0.1	Optional	TBProfiler_tNGS	general	
-tbp_parser	rrl_frequency	Float	Minimum frequency for a mutation in rrl to pass QC in tbp-parser	0.1	Optional	TBProfiler_tNGS	general	
-tbp_parser	rrl_read_support	Int	Minimum read support for a mutation in rrl to pass QC in tbp-parser	10	Optional	TBProfiler_tNGS	general	
-tbp_parser	rrs_frequency	Float	Minimum frequency for a mutation in rrs to pass QC in tbp-parser	0.1	Optional	TBProfiler_tNGS	general	
-tbp_parser	rrs_read_support	Int	Minimum read support for a mutation in rrs to pass QC in tbp-parser	10	Optional	TBProfiler_tNGS	general	
-tbp_parser	sequencing_method	String	Fills out the "seq_method" field in the tbp_parser output files		Optional	TBProfiler_tNGS	general	
+tbp_parser	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v3.0.3	Optional	TBProfiler_tNGS	docker	
+tbp_parser	err_coverage_bed	File	the BED file containing the "essential for resistance regions." This file indicates to tbp-parser that these regions should also have breadth of coverage and average depth calculations performed; this file should be formatted like the genes.bed file in TBProfiler and the coverage BED described above		Optional	TBProfiler_tNGS	general	
+tbp_parser	find_and_replace	Map[String,String]	A JSON string that can be used to specify any text in the output files that should be find-and-replaced with other text. The keys will be the text to find, and the values will be the text to replace it with. This is useful for labs that want to customize the text in their reports (e.g. renaming drugs or genes or output columns).<br>For example, '{"rifampicin": "rifampin", "fbiD": "Rv2983", "mmpR5": "Rv0678", "p.0?": ""}'		Optional	TBProfiler_tNGS	general	
+tbp_parser	gene_database_yml	File	An optional YAML file that specifies the gene database information for the genes of interest; if not provided, a default format will be used		Optional	TBProfiler_tNGS	general	
+tbp_parser	lims_report_format_yml	File	An optional YAML file that specifies the format of the LIMS report; if not provided, a default format will be used 		Optional	TBProfiler_tNGS	general	
+tbp_parser	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TBProfiler_tNGS	runtime	
+tbp_parser	min_depth	Int	The minimum depth of coverage required for a site to pass QC	10	Optional	TBProfiler_tNGS	general	
+tbp_parser	min_frequency	Float	The minimum frequency for a mutation to pass QC (0.1 -> 10%)		Optional	TBProfiler_tNGS	general	
+tbp_parser	min_percent_coverage	Float	The minimum percentage of a region that has depth above the threshold set by min_depth (used for a gene/locus to pass QC; 1.0 -> 100%)		Optional	TBProfiler_tNGS	general	
+tbp_parser	min_percent_loci_covered	Float	The minimum percentage of loci/genes in the LIMS report that must pass coverage QC for the sample to be identified as MTBC (0.7 -> 70%)		Optional	TBProfiler_tNGS	general	
+tbp_parser	min_read_support	Int	The minimum read support for a mutation to pass QC		Optional	TBProfiler_tNGS	general	
+tbp_parser	operator	String			Optional	TBProfiler_tNGS	general	
+tbp_parser	resolve_overlapping_regions	Boolean	Resolve overlapping BED regions to avoid double-counting reads across overlapping targets. Recommended for tNGS data with overlapping amplicon regions.	False	Optional	TBProfiler_tNGS	general	
+tbp_parser	sequencing_method	String	The sequencing method used to generate the data; used in the LIMS & Looker reports. Enclose in quotes if including a space		Optional	TBProfiler_tNGS	general	
 tbp_parser	tbp_parser_debug	Boolean	Activate the debug mode on tbp_parser; increases logging outputs	True	Optional	TBProfiler_tNGS	general	
+tbp_parser	tngs_frequency_boundaries	String	the frequency boundaries (comma-delimited; lower_f,upper_f) for tNGS QC reporting, used in conjunction with --tngs_read_support_boundaries		Optional	TBProfiler_tNGS	general	
+tbp_parser	tngs_read_support_boundaries	String	the read support boundaries (comma-delimited; lower_rs,upper_rs) for tNGS QC reporting, used in conjunction with --tngs_frequency_boundaries		Optional	TBProfiler_tNGS	general	
+tbp_parser	use_err_for_qc	Boolean	if an ERR BED file is provided, use the ERR coverage regions in place of the typical coverage regions for all QC determinations.<br>Note: This will influence how variants are interpretated and how deletions are reported because the QC thresholds for breadth of coverage and average depth will be based on the coverage found within the ERR regions.	False	Optional	TBProfiler_tNGS	general	
 tbprofiler	additional_parameters	String	Additional parameters for TBProfiler		Optional	TBProfiler_tNGS	general	
 tbprofiler	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TBProfiler_tNGS	runtime	
 tbprofiler	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TBProfiler_tNGS	runtime	
@@ -2350,6 +2355,7 @@ tbprofiler	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Op
 tbprofiler	min_af	Float	The minimum allele frequency to call a variant	0.1	Optional	TBProfiler_tNGS	general	
 tbprofiler	min_depth	Int	The minimum depth for a variant to be called.	10	Optional	TBProfiler_tNGS	general	
 tbprofiler	ont_data	Boolean	Specifies nanopore specific tbprofiler parameters	False	Optional	TBProfiler_tNGS	general	
+tbprofiler	tbdb_branch_commit_hash	String	The commit hash for the TBDB branch that TBProfiler should use; this allows pinning the mutation library to a specific commit		Optional	TBProfiler_tNGS	general	
 tbprofiler	tbprofiler_custom_db	File	TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field		Optional	TBProfiler_tNGS	general	
 tbprofiler	variant_caller	String	Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler's original documentation for available options.	gatk	Optional	TBProfiler_tNGS	general	
 tbprofiler	variant_calling_params	String	Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler		Optional	TBProfiler_tNGS	general	

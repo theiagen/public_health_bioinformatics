@@ -707,14 +707,17 @@ workflow theiaprok_illumina_pe {
                 "stxtyper_report": merlin_magic.stxtyper_report,
                 "stxtyper_stx_frameshifts_or_internal_stop_hits": merlin_magic.stxtyper_stx_frameshifts_or_internal_stop_hits,
                 "stxtyper_version": merlin_magic.stxtyper_version,
-                "tbp_parser_average_genome_depth": merlin_magic.tbp_parser_average_genome_depth,
-                "tbp_parser_coverage_report": merlin_magic.tbp_parser_coverage_report,
+                "tbp_parser_version": merlin_magic.tbp_parser_version,
                 "tbp_parser_docker": merlin_magic.tbp_parser_docker,
-                "tbp_parser_genome_percent_coverage": merlin_magic.tbp_parser_genome_percent_coverage,
+                "tbp_parser_looker_report_csv": merlin_magic.tbp_parser_looker_report_csv,
                 "tbp_parser_laboratorian_report_csv": merlin_magic.tbp_parser_laboratorian_report_csv,
                 "tbp_parser_lims_report_csv": merlin_magic.tbp_parser_lims_report_csv,
-                "tbp_parser_looker_report_csv": merlin_magic.tbp_parser_looker_report_csv,
-                "tbp_parser_version": merlin_magic.tbp_parser_version,
+                "tbp_parser_lims_report_transposed_csv": merlin_magic.tbp_parser_lims_report_transposed_csv,
+                "tbp_parser_locus_coverage_report_csv": merlin_magic.tbp_parser_locus_coverage_report_csv,
+                "tbp_parser_target_coverage_report_csv": merlin_magic.tbp_parser_target_coverage_report_csv,
+                "tbp_parser_log": merlin_magic.tbp_parser_log,
+                "tbp_parser_genome_percent_coverage": merlin_magic.tbp_parser_genome_percent_coverage,
+                "tbp_parser_average_genome_depth": merlin_magic.tbp_parser_average_genome_depth,
                 "tbprofiler_dr_type": merlin_magic.tbprofiler_dr_type,
                 "tbprofiler_main_lineage": merlin_magic.tbprofiler_main_lineage,
                 "tbprofiler_median_depth": merlin_magic.tbprofiler_median_depth,
@@ -1175,6 +1178,7 @@ workflow theiaprok_illumina_pe {
     String? abricate_abaum_docker = merlin_magic.abricate_abaum_docker
     # Mycobacterium Typing
     File? tbprofiler_output_file = merlin_magic.tbprofiler_output_file
+    File? tbprofiler_output_json = merlin_magic.tbprofiler_output_json
     File? tbprofiler_output_bam = merlin_magic.tbprofiler_output_bam
     File? tbprofiler_output_bai = merlin_magic.tbprofiler_output_bai
     File? tbprofiler_output_vcf = merlin_magic.tbprofiler_output_vcf
@@ -1187,10 +1191,13 @@ workflow theiaprok_illumina_pe {
     Float? tbprofiler_pct_reads_mapped = merlin_magic.tbprofiler_pct_reads_mapped
     String? tbp_parser_version = merlin_magic.tbp_parser_version
     String? tbp_parser_docker = merlin_magic.tbp_parser_docker
-    File? tbp_parser_lims_report_csv = merlin_magic.tbp_parser_lims_report_csv
     File? tbp_parser_looker_report_csv = merlin_magic.tbp_parser_looker_report_csv
     File? tbp_parser_laboratorian_report_csv = merlin_magic.tbp_parser_laboratorian_report_csv
-    File? tbp_parser_coverage_report = merlin_magic.tbp_parser_coverage_report
+    File? tbp_parser_lims_report_csv = merlin_magic.tbp_parser_lims_report_csv
+    File? tbp_parser_lims_report_transposed_csv = merlin_magic.tbp_parser_lims_report_transposed_csv
+    File? tbp_parser_locus_coverage_report_csv = merlin_magic.tbp_parser_locus_coverage_report_csv
+    File? tbp_parser_target_coverage_report_csv = merlin_magic.tbp_parser_target_coverage_report_csv
+    File? tbp_parser_log = merlin_magic.tbp_parser_log
     Float? tbp_parser_genome_percent_coverage = merlin_magic.tbp_parser_genome_percent_coverage
     Float? tbp_parser_average_genome_depth = merlin_magic.tbp_parser_average_genome_depth
     File? clockwork_decontaminated_read1 = merlin_magic.clockwork_cleaned_read1
