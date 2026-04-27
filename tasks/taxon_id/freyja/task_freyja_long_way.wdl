@@ -9,7 +9,8 @@ task freyja_long_way_single {
         String? collection_site
         Float? latitude
         Float? longitude
-        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:0.1.0"
+        String? group_by
+        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.0"
         Int disk_size = 50
         Int memory = 4
         Int cpu = 2
@@ -35,8 +36,11 @@ task freyja_long_way_single {
         # write the metadata to a tsv file
         echo -e "${header}\n${row}" > freyja_metadata.tsv
 
-        # freyja the long way
-        freyja_to_long.py freyja_metadata.tsv ~{samplename}_freyja_long_format.tsv --sample-col samplename
+        # freyja the long way, if groupby is provided, set --group-by to the value of group_by
+        if [ -n "~{group_by}" ]; then
+            freyja_to_long.py freyja_metadata.tsv ~{samplename}_freyja_long_format.tsv --sample-col samplename --group-by ~{group_by}
+        else
+            freyja_to_long.py freyja_metadata.tsv ~{samplename}_freyja_long_format.tsv --sample-col samplename
     >>>
 
     output {
@@ -59,7 +63,8 @@ task freyja_long_way_multi {
         Array[String]? collection_sites
         Array[Float]? latitudes
         Array[Float]? longitudes
-        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:0.1.0"
+        String? group_by
+        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.0"
         Int disk_size = 50
         Int memory = 4
         Int cpu = 2
@@ -99,7 +104,10 @@ task freyja_long_way_multi {
                 f.write('\t'.join(row) + '\n')
         CODE
 
-        freyja_to_long.py freyja_metadata.tsv freyja_long_format.tsv --sample-col samplename
+        if [ -n "~{group_by}" ]; then
+            freyja_to_long.py freyja_metadata.tsv freyja_long_format.tsv --sample-col samplename --group-by ~{group_by}
+        else
+            freyja_to_long.py freyja_metadata.tsv freyja_long_format.tsv --sample-col samplename
     >>>
 
     output {
