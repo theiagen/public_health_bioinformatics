@@ -6586,15 +6586,27 @@
 
 <div class="language-text highlight"><pre><span></span><code>??? task "`Rasusa`: Read Subsampling"
 
-
     `Rasusa` is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.
 
+    The `Rasusa` task supports four mutually exclusive subsampling modes:
 
-    The `Rasusa` task performs subsampling on the input raw reads. By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs (0.7 Mb higher than the average bacterial genome length), and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the `genome_length` input parameter. The target subsampling depth can also be adjusted by modifying the `subsample_coverage` variable.
+    | Mode | Behavior |
+    | --- | --- |
+    | `--bases` | Subsample to a target number of bases (e.g. `100M`, `4.3kb`). Overrides coverage. |
+    | `--frac` | Subsample to a fraction of the input reads (e.g. `0.5` keeps half). Overrides coverage. |
+    | `--num` | Subsample to an explicit number of reads. Overrides coverage. |
+    | `--coverage` + `--genome-size` | Default mode. Subsamples to a target depth using an estimated genome length. |
+
+    If more than one of `--bases`, `--frac`, or `--num` is supplied the task will fail with a descriptive error. See [inputs](#inputs) section for details on Terra variable names.
+
+
+
+    The `Rasusa` task performs subsampling on the input raw reads. By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs (0.7 Mb higher than the average bacterial genome length), and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the `genome_length` input parameter. The target subsampling depth can also be adjusted by modifying the `rasusa_downsampling_coverage` variable.
+
 
 
     ???+ warning "Non-deterministic output(s)"
-        This task may yield non-deterministic outputs since it performs _random_ subsampling. To ensure reproducibility, set a a value for the `rasusa_seed` optional input variable.
+        This task may yield non-deterministic outputs since it performs _random_ subsampling. To ensure reproducibility, set a value for the `rasusa_seed` optional input variable.
 
     !!! techdetails "Rasusa Technical Details"
         |  | Links |

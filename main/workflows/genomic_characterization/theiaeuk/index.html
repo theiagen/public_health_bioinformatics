@@ -7198,7 +7198,7 @@
 </div>
 <div class="admonition warning">
 <p class="admonition-title">Before running TheiaEuk</p>
-<p>For some taxa, TheiaEuk_Illumina_PE relies on <a href="#organism-specific-characterization">Snippy</a> to perform variant calling on the cleaned read dataset and then queries the resulting file for specific mutations that are known to confim antifugal resistance (see <a href="#organism-specific-characterization">Organism-specific characterization</a> section). This behaviour has been replicated in TheiaEuk_ONT but the variant calling is performed directly on the resulting assemblies. Therefore, the read support reported is, at the moment, non-reliable. Future improvements will include improvements on this module. </p>
+<p>For some taxa, TheiaEuk_Illumina_PE relies on <a href="#organism-specific-characterization">Snippy</a> to perform variant calling on the cleaned read dataset and then queries the resulting file for specific mutations that are known to confim antifugal resistance (see <a href="#organism-specific-characterization">Organism-specific characterization</a> section). This behaviour has been replicated in TheiaEuk_ONT but the variant calling is performed directly on the resulting assemblies. Therefore, the read support reported is, at the moment, non-reliable. Future improvements will include improvements on this module.</p>
 </div>
 <h3 id="inputs">Inputs<a class="headerlink" href="#inputs" title="Permanent link">¶</a></h3>
 <div class="admonition dna">
@@ -9138,70 +9138,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>rasusa_task</td>
-<td><strong>bases</strong></td>
-<td>String</td>
-<td>Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>rasusa_task</td>
-<td><strong>cpu</strong></td>
-<td>Int</td>
-<td>Number of CPUs to allocate to the task</td>
-<td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>rasusa_task</td>
-<td><strong>disk_size</strong></td>
-<td>Int</td>
-<td>Amount of storage (in GB) to allocate to the task</td>
-<td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>rasusa_task</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>rasusa_task</td>
-<td><strong>frac</strong></td>
-<td>Float</td>
-<td>Explicitly define the fraction of reads to keep in the subsample; when used, genome size and coverage are ignored; acceptable inputs include whole numbers and decimals, e.g. 50.0 will leave 50% of the reads in the subsample</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>rasusa_task</td>
-<td><strong>memory</strong></td>
-<td>Int</td>
-<td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>8</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>rasusa_task</td>
-<td><strong>num</strong></td>
-<td>Int</td>
-<td>Optional: explicitly define the number of reads in the subsample; when used, genome size and coverage are ignored; acceptable metric suffixes include: b, k, m, g, and t for base, kilo, mega, giga, and tera, respectively</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>rasusa_task</td>
-<td><strong>seed</strong></td>
-<td>Int</td>
-<td>Use to assign a name to the "random seed" that is used by the subsampler; i.e. this allows the exact same subsample to be produced from the same input file/s in subsequent runs when providing the seed identifier; do not input values for random downsampling</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>raw_check_reads</td>
 <td><strong>cpu</strong></td>
 <td>Int</td>
@@ -9339,6 +9275,70 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>rasusa_cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>100</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_fraction_of_reads</strong></td>
+<td>Float</td>
+<td>Subsample to a fraction of the reads - e.g., 0.5 samples half the reads</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>8</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_num_bases</strong></td>
+<td>String</td>
+<td>Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_num_reads</strong></td>
+<td>Int</td>
+<td>Subsample to a specific number of reads</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_seed</strong></td>
+<td>Int</td>
+<td>Random seed to use</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>read_processing</strong></td>
 <td>String</td>
 <td>The name of the tool to perform basic read processing; options: "trimmomatic" or "fastp"</td>
@@ -9370,14 +9370,6 @@
 <td>Optional</td>
 </tr>
 <tr>
-<td>read_QC_trim</td>
-<td><strong>workflow_series</strong></td>
-<td>String</td>
-<td>Internal component, do not modify</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
 <td>theiaeuk_illumina_pe</td>
 <td><strong>busco_docker_image</strong></td>
 <td>String</td>
@@ -9397,7 +9389,7 @@
 <td>theiaeuk_illumina_pe</td>
 <td><strong>call_rasusa</strong></td>
 <td>Boolean</td>
-<td>If true, RASUSA will subsample raw reads to  a specified read depth (150X by default)</td>
+<td>True/False variable that determines if the RASUSA task should be called.</td>
 <td>True</td>
 <td>Optional</td>
 </tr>
@@ -9515,6 +9507,14 @@
 </tr>
 <tr>
 <td>theiaeuk_illumina_pe</td>
+<td><strong>rasusa_downsampling_coverage</strong></td>
+<td>Float</td>
+<td>The desired coverage to sub-sample the reads to with RASUSA</td>
+<td>150</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>theiaeuk_illumina_pe</td>
 <td><strong>seq_method</strong></td>
 <td>String</td>
 <td>Sequencing method used for the samples</td>
@@ -9527,14 +9527,6 @@
 <td>Boolean</td>
 <td>Option to skip the read screening prior to analysis; if setting to true, please provide a value for the theiaeuk_pe genome_length optional input, OR set call_rasusa to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail.</td>
 <td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>theiaeuk_illumina_pe</td>
-<td><strong>subsample_coverage</strong></td>
-<td>Float</td>
-<td>Read depth for RASUSA task to subsample reads to</td>
-<td>150</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11725,14 +11717,6 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>downsampling_coverage</strong></td>
-<td>Float</td>
-<td>The desired coverage to sub-sample the reads to with RASUSA</td>
-<td>150</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
 <td><strong>max_length</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
@@ -11893,14 +11877,6 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>rasusa_bases</strong></td>
-<td>String</td>
-<td>Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>read_QC_trim</td>
 <td><strong>rasusa_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -11925,6 +11901,14 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>rasusa_downsampling_coverage</strong></td>
+<td>Float</td>
+<td>The desired coverage to sub-sample the reads to. If --bases is not provided, this option and --genome-size are required</td>
+<td>150</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>rasusa_fraction_of_reads</strong></td>
 <td>Float</td>
 <td>Subsample to a fraction of the reads - e.g., 0.5 samples half the reads</td>
@@ -11941,7 +11925,15 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
-<td><strong>rasusa_number_of_reads</strong></td>
+<td><strong>rasusa_num_bases</strong></td>
+<td>String</td>
+<td>Explicitly set the number of bases required e.g., 4.3kb, 7Tb, 9000, 4.1MB. If this option is given, --coverage and --genome-size are ignored</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>rasusa_num_reads</strong></td>
 <td>Int</td>
 <td>Subsample to a specific number of reads</td>
 <td></td>
@@ -12170,14 +12162,81 @@
 </div>
 </details>
 <details class="task">
-<summary><code>Rasusa</code>: Read subsampling (optional, on by default)</summary>
-<p>To deactivate this task, set <code>call_rasusa</code> to <code>false</code>.</p>
+<summary><code>read_QC_trim</code>: Read Quality Trimming, Adapter Removal, Quantification, and Identification</summary>
+<p><code>read_QC_trim</code> is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the <code>read_QC_trim</code> sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.</p>
+<details class="task">
+<summary><code>Rasusa</code>: Read Subsampling</summary>
 <p><code>Rasusa</code> is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.</p>
-<p>The <code>Rasusa</code> task performs subsampling on the input raw reads. By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs (0.7 Mb higher than the average bacterial genome length), and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the <code>genome_length</code> input parameter. The target subsampling depth can also be adjusted by modifying the <code>subsample_coverage</code> variable.</p>
-<p>For TheiaEuk_Illumina_PE, the estimated genome length is determined by the <code>read_screen</code> task. Please note that the user can prevent the task from being launched by setting the <code>call_rasusa</code> variable to false.</p>
+<p>The <code>Rasusa</code> task supports four mutually exclusive subsampling modes:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--bases</code></td>
+<td>Subsample to a target number of bases (e.g. <code>100M</code>, <code>4.3kb</code>). Overrides coverage.</td>
+</tr>
+<tr>
+<td><code>--frac</code></td>
+<td>Subsample to a fraction of the input reads (e.g. <code>0.5</code> keeps half). Overrides coverage.</td>
+</tr>
+<tr>
+<td><code>--num</code></td>
+<td>Subsample to an explicit number of reads. Overrides coverage.</td>
+</tr>
+<tr>
+<td><code>--coverage</code> + <code>--genome-size</code></td>
+<td>Default mode. Subsamples to a target depth using an estimated genome length.</td>
+</tr>
+</tbody>
+</table>
+<p>If more than one of <code>--bases</code>, <code>--frac</code>, or <code>--num</code> is supplied the task will fail with a descriptive error. See <a href="#inputs">inputs</a> section for details on Terra variable names.</p>
+<p>To enable/disable this task, set the <code>call_rasusa</code> parameter to <code>true</code>/<code>false</code>. Each workflow has its own default values for <code>Rasusa</code> which can be overridden by the user:</p>
+<table>
+<thead>
+<tr>
+<th>Workflow</th>
+<th><code>call_rasusa</code> default</th>
+<th><code>rasusa_downsampling_coverage</code> default</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>theiaeuk_illumina_pe</code></td>
+<td><code>true</code></td>
+<td><code>150</code></td>
+</tr>
+<tr>
+<td><code>theiacov_illumina_pe</code></td>
+<td><code>false</code></td>
+<td><code>2000</code></td>
+</tr>
+<tr>
+<td><code>theiacov_illumina_se</code></td>
+<td><code>false</code></td>
+<td><code>2000</code></td>
+</tr>
+<tr>
+<td><code>theiaprok_illumina_pe</code></td>
+<td><code>false</code></td>
+<td><code>150</code></td>
+</tr>
+<tr>
+<td><code>theiaprok_illumina_se</code></td>
+<td><code>false</code></td>
+<td><code>150</code></td>
+</tr>
+</tbody>
+</table>
+<p><code>Rasusa</code> executes after host-read removal (<code>ncbi_scrub</code>, if applicable) and before read trimming (<code>trimmomatic</code> or <code>fastp</code>). Classification tasks (<code>kraken2</code>, <code>midas</code>) always run on the original/raw reads regardless of whether <code>call_rasusa</code> is enabled. The downsampled (but un-trimmed) reads are output to the Terra data table as <code>read1_subsampled_raw</code> and <code>read2_subsampled_raw</code>.</p>
+<p>When running in coverage mode, it's strongly recommended to manually set the <code>rasusa_genome_length</code> input parameter in order to ensure accurate downsampling. If not provided, <code>rasusa_genome_length</code> falls back to <code>raw_check_reads.est_genome_length</code> from the <code>read_screen</code> task. Oftentimes, this value can overestimate the true genome length, particularly for large, high-coverage FASTQ files. If <code>skip_screen</code> is set to <code>true</code>, you must supply <code>genome_length</code> explicitly or use one of the override modes above.</p>
 <details class="warning" open="open">
 <summary>Non-deterministic output(s)</summary>
-<p>This task may yield non-deterministic outputs since it performs <em>random</em> subsampling. To ensure reproducibility, set a a value for the <code>rasusa_seed</code> optional input variable.</p>
+<p>This task may yield non-deterministic outputs since it performs <em>random</em> subsampling. To ensure reproducibility, set a value for the <code>rasusa_seed</code> optional input variable.</p>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">Rasusa Technical Details</p>
@@ -12209,9 +12268,6 @@
 </table>
 </div>
 </details>
-<details class="task">
-<summary><code>read_QC_trim</code>: Read Quality Trimming, Adapter Removal, Quantification, and Identification</summary>
-<p><code>read_QC_trim</code> is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the <code>read_QC_trim</code> sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.</p>
 <div class="admonition dna">
 <p>By default, <code>read_processing</code> is set to <code>"trimmomatic"</code>. To use <code>fastp</code> instead, set <code>read_processing</code> to <code>"fastp"</code>. These tasks are mutually exclusive.</p>
 <details class="task">
@@ -12872,10 +12928,38 @@
 <details class="task">
 <summary><code>Rasusa</code>: Read Subsampling</summary>
 <p><code>Rasusa</code> is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.</p>
-<p>The <code>Rasusa</code> task performs subsampling on the input raw reads. By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs (0.7 Mb higher than the average bacterial genome length), and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the <code>genome_length</code> input parameter. The target subsampling depth can also be adjusted by modifying the <code>subsample_coverage</code> variable.</p>
+<p>The <code>Rasusa</code> task supports four mutually exclusive subsampling modes:</p>
+<table>
+<thead>
+<tr>
+<th>Mode</th>
+<th>Behavior</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>--bases</code></td>
+<td>Subsample to a target number of bases (e.g. <code>100M</code>, <code>4.3kb</code>). Overrides coverage.</td>
+</tr>
+<tr>
+<td><code>--frac</code></td>
+<td>Subsample to a fraction of the input reads (e.g. <code>0.5</code> keeps half). Overrides coverage.</td>
+</tr>
+<tr>
+<td><code>--num</code></td>
+<td>Subsample to an explicit number of reads. Overrides coverage.</td>
+</tr>
+<tr>
+<td><code>--coverage</code> + <code>--genome-size</code></td>
+<td>Default mode. Subsamples to a target depth using an estimated genome length.</td>
+</tr>
+</tbody>
+</table>
+<p>If more than one of <code>--bases</code>, <code>--frac</code>, or <code>--num</code> is supplied the task will fail with a descriptive error. See <a href="#inputs">inputs</a> section for details on Terra variable names.</p>
+<p>The <code>Rasusa</code> task performs subsampling on the input raw reads. By default, this task will subsample TheiaProk_ONT reads to a depth of 150X using an estimated genome length of 5 million basepairs (0.7 Mb higher than the average bacterial genome length), and TheiaEuk_ONT reads using an estimated genome length of 50 million basepairs. The estimated genome length can be changed by the user by providing a different value for the <code>genome_length</code> input parameter. The target subsampling depth can also be adjusted by modifying the <code>rasusa_downsampling_coverage</code> variable.</p>
 <details class="warning" open="open">
 <summary>Non-deterministic output(s)</summary>
-<p>This task may yield non-deterministic outputs since it performs <em>random</em> subsampling. To ensure reproducibility, set a a value for the <code>rasusa_seed</code> optional input variable.</p>
+<p>This task may yield non-deterministic outputs since it performs <em>random</em> subsampling. To ensure reproducibility, set a value for the <code>rasusa_seed</code> optional input variable.</p>
 </details>
 <div class="admonition techdetails">
 <p class="admonition-title">Rasusa Technical Details</p>
@@ -14439,6 +14523,11 @@
 <td>Mean read length of raw reverse reads</td>
 </tr>
 <tr>
+<td>rasusa_log</td>
+<td><strong>File</strong></td>
+<td>Log of Rasusa standard error output</td>
+</tr>
+<tr>
 <td>rasusa_version</td>
 <td><strong>String</strong></td>
 <td>Version of RASUSA used for the analysis</td>
@@ -14449,9 +14538,9 @@
 <td>Forward read file after quality trimming and adapter removal</td>
 </tr>
 <tr>
-<td>read1_subsampled</td>
+<td>read1_subsampled_raw</td>
 <td><strong>File</strong></td>
-<td>Read1 FASTQ files downsampled to desired coverage</td>
+<td>Raw read1 FASTQ files downsampled before trimming/filtering</td>
 </tr>
 <tr>
 <td>read2_clean</td>
@@ -14459,9 +14548,9 @@
 <td>Reverse read file after quality trimming and adapter removal</td>
 </tr>
 <tr>
-<td>read2_subsampled</td>
+<td>read2_subsampled_raw</td>
 <td><strong>File</strong></td>
-<td>Read2 FASTQ files downsampled to desired coverage</td>
+<td>Raw read2 FASTQ files downsampled before trimming/filtering</td>
 </tr>
 <tr>
 <td>read_screen_clean</td>
@@ -15092,7 +15181,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 10, 2025 15:10:54 UTC">2025-11-10</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 27, 2026 18:19:08 UTC">2026-04-27</span>
   </span>
 
     
