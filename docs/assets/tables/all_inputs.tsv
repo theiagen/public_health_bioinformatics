@@ -931,11 +931,15 @@ freyja_dashboard_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the
 freyja_dashboard_task	mincov	Float	The minimum genome coverage used as a cut-off of data to include in the dashboard. Default is set to 60 by the freyja command-line tool (not a WDL task default, per se)		Optional	Freyja_Dashboard	general	
 freyja_dashboard_task	scale_by_viral_load	Boolean	If set to true, averages samples taken the same day while taking viral load into account	False	Optional	Freyja_Dashboard	general	
 freyja_dashboard_task	thresh	Float	The minimum lineage abundance cut-off value		Optional	Freyja_Dashboard	general	
+freyja_fastq	collection_date	String	Collection date of wastewater sample (YYYY-MM-DD)		Optional	Freyja_FASTQ	general	
+freyja_fastq	collection_site	String	Collection site of wastewater sample		Optional	Freyja_FASTQ	general	
 freyja_fastq	depth_cutoff	Int	The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS!		Optional	Freyja_FASTQ	general	
 freyja_fastq	freyja_barcodes	File	Custom barcode file. Does not need to be provided if update_db is true if the freyja_pathogen is provided.		Optional	Freyja_FASTQ	general	
 freyja_fastq	freyja_lineage_metadata	File	File containing the lineage metadata; the "curated_lineages.json" file found <https://github.com/andersen-lab/Freyja/tree/main/freyja/data> can be used for this variable. Does not need to be provided if update_db is true or if the freyja_pathogen is provided.		Optional, Required	Freyja_FASTQ	general	True
 freyja_fastq	freyja_pathogen	String	Pathogen to be used by Freyja	SARS-CoV-2	Optional	Freyja_FASTQ	general	
 freyja_fastq	kraken2_target_organism	String	The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.	Severe acute respiratory syndrome coronavirus 2	Optional	Freyja_FASTQ	general	
+freyja_fastq	latitude	Float	Latitude of wastewater sample collection site		Optional	Freyja_FASTQ	general	
+freyja_fastq	longitude	Float	Longitude of wastewater sample collection site		Optional	Freyja_FASTQ	general	
 freyja_fastq	ont	Boolean	Indicates if the input data is derived from an ONT instrument.	False	Optional	Freyja_FASTQ	general	
 freyja_fastq	primer_bed	File	The bed file containing the primers used when sequencing was performed		Optional	Freyja_FASTQ	general	
 freyja_fastq	qc_check_table	File	TSV containing values to check quality control metrics		Optional	Freyja_FASTQ	general	
@@ -943,7 +947,21 @@ freyja_fastq	read2	File	Illumina reverse read file in FASTQ file format (compres
 freyja_fastq	reference_gff	File	The GFF file for reference; should match the reference used for alignment (Wuhan-Hu-1)		Optional	Freyja_FASTQ	general	
 freyja_fastq	run_qualimap	Boolean	When set to true, will run qualimap and provide custom visuals	True	Optional	Freyja_FASTQ	general	
 freyja_fastq	trimmomatic_min_length	Int	The minimum length cut-off when performing read cleaning	25	Optional	Freyja_FASTQ	general	
+freyja_long_format	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ, Freyja_Plot	runtime	
+freyja_long_format	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Freyja_FASTQ, Freyja_Plot	runtime	
+freyja_long_format	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.0	Optional	Freyja_FASTQ, Freyja_Plot	docker	
+freyja_long_format	group_by	String	Whether to group samples by collection date or week, options are "date" or "week"		Optional	Freyja_FASTQ, Freyja_Plot	general	
+freyja_long_format	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Freyja_FASTQ, Freyja_Plot	runtime	
+freyja_microreact	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_Plot	runtime	
+freyja_microreact	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Freyja_Plot	runtime	
+freyja_microreact	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.0	Optional	Freyja_Plot	docker	
+freyja_microreact	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Freyja_Plot	runtime	
 freyja_plot	collection_date	Array[String]	An array containing the collection dates for the sample (YYYY-MM-DD format)		Optional	Freyja_Plot	general	
+freyja_plot	collection_site	Array[String]	An array containing the collection sites for the sample		Optional	Freyja_Plot	general	
+freyja_plot	freyja_abundances	Array[String]	An array containing the Freyja abundances for the sample		Optional	Freyja_Plot	general	
+freyja_plot	freyja_lineages	Array[String]	An array containing the Freyja lineages for the sample		Optional	Freyja_Plot	general	
+freyja_plot	latitude	Array[Float]	An array containing the latitudes for the sample collection sites		Optional	Freyja_Plot	general	
+freyja_plot	longitude	Array[Float]	An array containing the longitudes for the sample collection sites		Optional	Freyja_Plot	general	
 freyja_plot_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_Plot	runtime	
 freyja_plot_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_Plot	runtime	
 freyja_plot_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1	Optional	Freyja_Plot	docker	
@@ -2032,8 +2050,8 @@ read_QC_trim	rasusa_disk_size	Int	Internal component, do not modify	100	Optional
 read_QC_trim	rasusa_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 read_QC_trim	rasusa_docker	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/rasusa:2.1.0	Optional	TheiaCoV_ONT, TheiaEuk_ONT	general	
 read_QC_trim	rasusa_downsampling_coverage	Float	The desired coverage to sub-sample the reads to. If --bases is not provided, this option and --genome-size are required	150	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_ONT	general	
-read_QC_trim	rasusa_fraction_of_reads	Float	Internal component, do not modify		Optional	TheiaCoV_ONT	general	
 read_QC_trim	rasusa_fraction_of_reads	Float	Subsample to a fraction of the reads - e.g., 0.5 samples half the reads		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+read_QC_trim	rasusa_fraction_of_reads	Float	Internal component, do not modify		Optional	TheiaCoV_ONT	general	
 read_QC_trim	rasusa_genome_length	String	Input the approximate genome size expected in quotations; this is used to determine the number of bases required to achieve the desired coverage; acceptable metric suffixes include: b, k, m, g, and t for base, kilo, mega, giga, and tera, respectively		Optional	TheiaMeta_Illumina_PE	general	
 read_QC_trim	rasusa_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 read_QC_trim	rasusa_memory	Int	Internal component, do not modify	8	Optional	TheiaCoV_ONT	general	
