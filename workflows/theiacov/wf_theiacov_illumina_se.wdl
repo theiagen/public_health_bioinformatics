@@ -27,6 +27,9 @@ workflow theiacov_illumina_se {
     Int trim_min_length = 25
     Int trim_quality_min_score = 30
     Int trim_window_size = 4
+    # rasusa downsampling parameters
+    Boolean call_rasusa = false
+    Float rasusa_downsampling_coverage = 2000
     # nextclade inputs
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
@@ -100,7 +103,10 @@ workflow theiacov_illumina_se {
         adapters = adapters,
         phix = phix,
         workflow_series = "theiacov",
-        target_organism = organism_parameters.kraken_target_organism
+        target_organism = organism_parameters.kraken_target_organism,
+        call_rasusa = call_rasusa,
+        rasusa_downsampling_coverage = rasusa_downsampling_coverage,
+        rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
     }
     if (! skip_screen) {
       call screen.check_reads_se as clean_check_reads {
@@ -252,6 +258,10 @@ workflow theiacov_illumina_se {
     String? kraken_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
     File? bracken_report_dehosted = read_QC_trim.bracken_report_dehosted
+    # Read QC - rasusa outputs
+    File? read1_subsampled_raw = read_QC_trim.read1_subsampled_raw
+    File? rasusa_log = read_QC_trim.rasusa_log
+    String? rasusa_version = read_QC_trim.rasusa_version
     # Read Alignment - bwa outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version

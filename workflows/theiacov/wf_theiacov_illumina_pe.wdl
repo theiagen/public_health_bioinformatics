@@ -28,12 +28,15 @@ workflow theiacov_illumina_pe {
     File? reference_gff
     File? reference_genome
     File? reference_gene_locations_bed
-    Int? genome_length 
+    Int? genome_length
     # trimming parameters
     Boolean trim_primers = true
     Int trim_min_length = 75
     Int trim_quality_min_score = 30
     Int trim_window_size = 4
+    # rasusa downsampling parameters
+    Boolean call_rasusa = false
+    Float rasusa_downsampling_coverage = 2000
     # assembly parameters
     Int? min_depth # minimum depth to use for consensus and variant calling; default is 100 for non-flu (default value set below in call block for ivar consensus subwf), flu default is 30 for illumina (default set below in flu_track call block)
     Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
@@ -107,7 +110,10 @@ workflow theiacov_illumina_pe {
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
-        target_organism = organism_parameters.kraken_target_organism
+        target_organism = organism_parameters.kraken_target_organism,
+        call_rasusa = call_rasusa,
+        rasusa_downsampling_coverage = rasusa_downsampling_coverage,
+        rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
     }
     if (! skip_screen) {
       call screen.check_reads as clean_check_reads {
@@ -305,6 +311,11 @@ workflow theiacov_illumina_pe {
     String? kraken_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
     String? bracken_report_dehosted = read_QC_trim.bracken_report_dehosted
+    # Read QC - rasusa outputs
+    File? read1_subsampled_raw = read_QC_trim.read1_subsampled_raw
+    File? read2_subsampled_raw = read_QC_trim.read2_subsampled_raw
+    File? rasusa_log = read_QC_trim.rasusa_log
+    String? rasusa_version = read_QC_trim.rasusa_version
     # Read Alignment - bwa and bbmap_reformat(flu) outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version

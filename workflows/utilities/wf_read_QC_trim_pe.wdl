@@ -9,11 +9,11 @@ import "../../tasks/quality_control/read_filtering/task_ncbi_scrub.wdl" as ncbi_
 import "../../tasks/quality_control/read_filtering/task_trimmomatic.wdl" as trimmomatic_task
 import "../../tasks/taxon_id/contamination/task_kraken2.wdl" as kraken
 import "../../tasks/taxon_id/contamination/task_midas.wdl" as midas_task
-import "../../tasks/utilities/file_handling/task_cat_lanes.wdl" as cat_lanes
+import "../../tasks/utilities/task_rasusa.wdl" as rasusa_task
 
 workflow read_QC_trim_pe {
   meta {
-    description: "Runs basic QC (fastq-scan), trimming (trimmomatic), and taxonomic ID (Kraken2) on illumina PE reads"
+    description: "Runs basic QC (fastq-scan), trimming (trimmomatic or fastp), optional downsampling (Rasusa), and taxonomic ID (Kraken2) on illumina PE reads"
   }
   input {
     String samplename
@@ -40,6 +40,19 @@ workflow read_QC_trim_pe {
     String read_qc = "fastq_scan" # options: fastq_scan, fastqc
     String? trimmomatic_override_args
     String fastp_args = "--detect_adapter_for_pe -g -5 20 -3 20"
+
+    # rasusa downsampling inputs
+    Boolean call_rasusa = false
+    Float rasusa_downsampling_coverage = 150
+    String? rasusa_genome_length
+    Int? rasusa_seed
+    String? rasusa_num_bases
+    Float? rasusa_fraction_of_reads
+    Int? rasusa_num_reads
+    Int? rasusa_cpu
+    Int? rasusa_disk_size
+    String? rasusa_docker
+    Int? rasusa_memory
   }
   if (read_qc == "fastqc") {
     call fastqc_task.fastqc as fastqc_raw {
@@ -91,12 +104,30 @@ workflow read_QC_trim_pe {
         bracken_kmer_length = bracken_kmer_length
     }
   }
+  if (call_rasusa) {
+    call rasusa_task.rasusa {
+      input:
+        read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1]),
+        read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
+        samplename = samplename,
+        coverage = rasusa_downsampling_coverage,
+        genome_length = rasusa_genome_length,
+        seed = rasusa_seed,
+        num_bases = rasusa_num_bases,
+        fraction_of_reads = rasusa_fraction_of_reads,
+        num_reads = rasusa_num_reads,
+        cpu = rasusa_cpu,
+        disk_size = rasusa_disk_size,
+        memory = rasusa_memory,
+        docker = rasusa_docker
+    }
+  }
   if (read_processing == "trimmomatic") {
     call trimmomatic_task.trimmomatic {
       input:
         samplename = samplename,
-        read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1]),
-        read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
+        read1 = select_first([rasusa.read1_subsampled, ncbi_scrub_pe.read1_dehosted, read1]),
+        read2 = select_first([rasusa.read2_subsampled, ncbi_scrub_pe.read2_dehosted, read2]),
         trimmomatic_window_size = trim_window_size,
         trimmomatic_window_quality = trim_quality_min_score,
         trimmomatic_min_length = trim_min_length,
@@ -107,8 +138,8 @@ workflow read_QC_trim_pe {
     call fastp_task.fastp {
       input:
         samplename = samplename,
-        read1 = select_first([ncbi_scrub_pe.read1_dehosted, read1]),
-        read2 = select_first([ncbi_scrub_pe.read2_dehosted, read2]),
+        read1 = select_first([rasusa.read1_subsampled, ncbi_scrub_pe.read1_dehosted, read1]),
+        read2 = select_first([rasusa.read2_subsampled, ncbi_scrub_pe.read2_dehosted, read2]),
         fastp_window_size = trim_window_size,
         fastp_quality_trim_score = trim_quality_min_score,
         fastp_min_length = trim_min_length,
@@ -250,5 +281,10 @@ workflow read_QC_trim_pe {
     Float? midas_secondary_genus_coverage = midas.midas_secondary_genus_coverage
     # readlength
     Float? average_read_length = readlength.average_read_length
+    # rasusa
+    File? read1_subsampled_raw = rasusa.read1_subsampled
+    File? read2_subsampled_raw = rasusa.read2_subsampled
+    File? rasusa_log = rasusa.rasusa_log
+    String? rasusa_version = rasusa.rasusa_version
   }
 }

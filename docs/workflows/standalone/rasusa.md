@@ -6,19 +6,12 @@
 
 ## RASUSA_PHB
 
-RASUSA functions to randomly downsample the number of raw reads to a user-defined threshold.
+{{ include_md("common_text/rasusa_task.md") }}
 
 ### 📋 Use Cases
 
 - to reduce computing resources when samples end up with drastically more data than needed to perform analyses
 - to perform limit of detection (LOD) studies to identify appropriate minimum coverage thresholds required to perform downstream analyses
-
-### 🔧 Desired size may be specified by inputting any one of the following
-
-- coverage (e.g. 20X)
-- number of bases (e.g. "5m" for 5 megabases)
-- number of reads (e.g. 100000 total reads)
-- fraction of reads (e.g. 0.5 samples half the reads)
 
 !!! info "Call-caching disabled"
     If using RASUSA_PHB workflow version v2.0.0 or higher, **the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is downloaded fresh.** Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.
