@@ -432,7 +432,9 @@ freyja_fastq_wf_analysis_date	String	Date of analysis	Freyja_FASTQ
 freyja_fastq_wf_version	String	The version of the Public Health Bioinformatics (PHB) repository used	Freyja_FASTQ
 freyja_lineage_metadata_file	String	Metadata file for lineages identified by Freyja	Freyja_FASTQ
 freyja_lineages	String	Lineages in descending order identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
+freyja_long_format_tsv	File	Long format of freyja variants and abundances	Freyja_FASTQ, Freyja_Plot
 freyja_metadata_version	String	Name of lineage metadata file used, or the date if update_db is true	Freyja_FASTQ
+freyja_microreact_output	File	Microreact output file for freyja lineages and abundances	Freyja_Plot
 freyja_plot	File	A PDF of the plot produced by the workflow	Freyja_Plot
 freyja_plot_metadata	File	The metadata used to create the plot	Freyja_Plot
 freyja_plot_version	String	The version of Freyja used	Freyja_Plot

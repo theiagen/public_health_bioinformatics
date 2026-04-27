@@ -14,6 +14,7 @@ import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanop
 import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 import "../../tasks/quality_control/basic_statistics/task_qualimap.wdl" as qualimap_task
+import "../../tasks/taxon_id/freyja/task_freyja_long_way.wdl" as freyja_long_format
 
 workflow freyja_fastq {
   input {
@@ -34,6 +35,11 @@ workflow freyja_fastq {
     File? qc_check_table
     # run qualimap
     Boolean run_qualimap = true
+    # make freyja long way
+    String? collection_date
+    String? collection_site
+    Float? latitude
+    Float? longitude
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -161,6 +167,18 @@ workflow freyja_fastq {
       input:
         samplename = samplename,
         bam_file = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam])
+    }
+  }
+  if (defined(collection_date) && defined(collection_site)) {
+    call freyja_long_format.freyja_long_format_single as freyja_long_format {
+      input:
+        samplename = samplename,
+        freyja_lineages = freyja.freyja_lineages,
+        freyja_abundances = freyja.freyja_abundances,
+        collection_date = collection_date,
+        collection_site = collection_site,
+        latitude = latitude,
+        longitude = longitude
     }
   }
   call versioning.version_capture {
@@ -297,5 +315,7 @@ workflow freyja_fastq {
     String? qualimap_docker = qualimap.qualimap_docker
     File? qualimap_reports_bundle = qualimap.qualimap_reports_bundle
     File? qualimap_coverage_plots_html = qualimap.qualimap_coverage_plots_html
+    # Freyja long format outputs
+    File? freyja_long_format_tsv =  freyja_long_format.freyja_long_format_tsv
   }
 }

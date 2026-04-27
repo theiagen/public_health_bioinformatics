@@ -53,7 +53,7 @@ Additionally, inadequate sequencing depth can hinder Freyja's ability to differe
 
 ### Freyja_FASTQ_PHB {% raw %} {#freyja_fastq} {% endraw %}
 
-Freyja measures SNV frequency and sequencing depth at each position in the genome to return an estimate of the true lineage abundances in the sample. The method uses lineage-defining "barcodes" that, for SARS-CoV-2, are derived from the UShER global phylogenetic tree as a base set for demixing. **Freyja_FASTQ_PHB** returns as output a TSV file that includes the lineages present and their corresponding abundances, along with other values.
+Freyja measures SNV frequency and sequencing depth at each position in the genome to return an estimate of the true lineage abundances in the sample. The method uses lineage-defining "barcodes" that, for SARS-CoV-2, are derived from the UShER global phylogenetic tree as a base set for demixing. **Freyja_FASTQ_PHB** returns as output a TSV file that includes the lineages present and their corresponding abundances, along with other values. Optionally, the workflow can also produce a long-format TSV (`freyja_long_format_tsv`) that pairs the demixed lineage abundances with sample metadata (collection date, collection site, latitude, longitude) for downstream visualization.
 
 The Freyja_FASTQ_PHB workflow is compatible with the multiple input data types: Ilumina Single-End, Illumina Paired-End and Oxford Nanopore. Depending on the type of input data, different input values are used.
 
@@ -127,6 +127,19 @@ This workflow runs on the sample level.
         | Software Source Code | <https://github.com/andersen-lab/Freyja> |
         | Software Documentation | <https://andersen-lab.github.io/Freyja/index.html#> |
 
+??? task "`freyja_long_format` Details"
+    The `freyja_long_format` task converts the demixed lineage abundances for a single sample into a long-format TSV that is paired with the sample's metadata (collection date, collection site, and optionally latitude and longitude). This long-format TSV is suitable for downstream aggregation across samples and for use with visualization tools such as Microreact.
+
+    Lineage grouping can be customized by providing the optional `group_by` input, which will group by collection site + collection date, or by collection site + epiweek and normalize the data.
+
+    !!! techdetails "Freyja Long Format Technical Details"
+
+        |  | Links |
+        | --- | --- |
+        | Task | [task_freyja_long_way.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_long_way.wdl) |
+        | Software Source Code | <https://github.com/andersen-lab/Freyja> |
+        | Software Documentation | <https://andersen-lab.github.io/Freyja/index.html#> |
+
 #### Outputs
 
 The main output file used in subsequent Freyja workflows is found under the `freyja_demixed` column. This TSV file takes on the following format:
@@ -175,6 +188,8 @@ This workflow visualizes aggregated freyja_demixed output files produced by [Fre
 
 Options exist to provide lineage-specific breakdowns and/or sample collection time information.
 
+In addition to the aggregate plot, Freyja_Plot_PHB can produce a long-format metadata TSV (`freyja_long_format_tsv`) that combines lineage abundances with per-sample metadata (collection date, collection site, latitude, longitude), as well as a [Microreact](https://microreact.org/)-compatible upload file (`freyja_microreact_output`) for interactive geospatial and temporal visualization of the aggregated results.
+
 #### Inputs
 
 This workflow runs on the set level.
@@ -197,6 +212,30 @@ This workflow runs on the set level.
         | Task | [wf_freyja_plot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_plot.wdl) |
         | Software Source Code | <https://github.com/andersen-lab/Freyja> |
         | Software Documentation | <https://github.com/andersen-lab/Freyja> |
+
+??? task "`freyja_long_format` Details"
+    The `freyja_long_format` task aggregates the demixed lineage abundances from multiple samples into a single long-format TSV, paired with each sample's metadata (collection date, collection site, and optionally latitude and longitude). This long-format TSV is consumed by the `freyja_microreact` task and is also useful as a standalone input to other visualization or analytical tools.
+
+    Lineage grouping can be customized by providing the optional `group_by` input, which is passed through to the underlying `freyja_to_long.py` helper script.
+
+    !!! techdetails "Freyja Long Format Technical Details"
+
+        |  | Links |
+        | --- | --- |
+        | Task | [task_freyja_long_way.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_long_way.wdl) |
+        | Software Source Code | <https://github.com/andersen-lab/Freyja> |
+        | Software Documentation | <https://github.com/andersen-lab/Freyja> |
+
+??? task "`freyja_microreact` Details"
+    The `freyja_microreact` task converts the aggregated long-format TSV produced by `freyja_long_format` into a [Microreact](https://microreact.org/)-compatible upload file. This output can be uploaded directly to Microreact to interactively explore lineage abundances across samples in time and space. Provide latitutde and longitutde inputs for geospatial mapping. 
+
+    !!! techdetails "Freyja Microreact Technical Details"
+
+        |  | Links |
+        | --- | --- |
+        | Task | [task_freyja_microreact.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_microreact.wdl) |
+        | Software Source Code | <https://github.com/andersen-lab/Freyja> |
+        | Software Documentation | <https://microreact.org/showcase> |
 
 #### Outputs
 
