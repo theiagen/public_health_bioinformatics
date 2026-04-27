@@ -308,6 +308,6 @@ workflow freyja_fastq {
     File? qualimap_reports_bundle = qualimap.qualimap_reports_bundle
     File? qualimap_coverage_plots_html = qualimap.qualimap_coverage_plots_html
     # Freyja long format outputs
-    File? freyja_long_format =  freyja_long_format.freyja_long_format
+    File? freyja_long_format_tsv =  freyja_long_format.freyja_long_format_tsv
   }
 }

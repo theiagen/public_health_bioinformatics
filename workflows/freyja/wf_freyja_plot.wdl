@@ -38,7 +38,7 @@ workflow freyja_plot {
     }
     call freyja_microreact.freyja_microreact {
       input:
-        freyja_long_format_tsv = freyja_long_format.freyja_long_format,
+        freyja_long_format_tsv = freyja_long_format.freyja_long_format_tsv,
         freyja_plot_name = freyja_plot_name_updated
     }
   }
@@ -55,7 +55,7 @@ workflow freyja_plot {
     File freyja_demixed_aggregate = freyja_plot_task.demixed_aggregate
     File? freyja_plot_metadata = freyja_plot_task.freyja_plot_metadata
     # Freyja Long Format
-    File? freyja_long_format = freyja_long_format.freyja_long_format
+    File? freyja_long_format_tsv = freyja_long_format.freyja_long_format_tsv
     # Freyja Microreact
     File? freyja_microreact_output = freyja_microreact.freyja_microreact_output
   }
