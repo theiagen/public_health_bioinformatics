@@ -34,8 +34,8 @@ task shigapass {
       echo "ShigaPass_Flex_summary.csv does not exist, skipping renaming."
     fi
 
-    cut -f6 -d';' shigapass/ShigaPass_summary.csv | tail -n1 > IPAH_PRESENCE_ABSENCE
-    cut -f7 -d';' shigapass/ShigaPass_summary.csv | tail -n1 > PREDICTED_SEROTYPE
+    cut -f7 -d';' shigapass/ShigaPass_summary.csv | tail -n1 > IPAH_PRESENCE_ABSENCE
+    cut -f8 -d';' shigapass/ShigaPass_summary.csv | tail -n1 > PREDICTED_SEROTYPE
     cut -f9 -d';' shigapass/ShigaPass_summary.csv | tail -n1 > PREDICTED_SEROTYPE_FLEXNERI
   >>>
   output {
