@@ -7058,7 +7058,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#standalone">Standalone</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#any-taxa">Any taxa</a></td>
-<td>v3.0.0</td>
+<td>vX.X.X</td>
 <td>No</td>
 <td></td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaValidate_PHB:main?tab=info">TheiaValidate_PHB</a></td>
@@ -7077,7 +7077,7 @@
 <p>TheiaValidate performs basic comparisons between user-designated columns in two separate tables. We anticipate this workflow being run to determine if any differences exist between version releases or two workflows, such as TheiaProk_ONT vs TheiaProk_Illumina_PE. A summary PDF report is produced in addition to a Excel spreadsheet that lists the values for any columns that do not have matching content for a sample.</p>
 <div class="admonition warning">
 <p class="admonition-title">Warning</p>
-<p>The two tables being compared <strong>must</strong> have both identical sample names and an equal number of samples. If not, validation will not work or (in the case of unequal number of samples) not be attempted.</p>
+<p>The two tables being compared <strong>must</strong> have both identical sample names and an equal number of samples. If not, the workflow will fail.</p>
 </div>
 <p>In order to enable this workflow to function for different workflow series, we require users to provide a list of columns they want to compare between the two tables. Feel free to use the information below that Theiagen uses to compare versions of the three main workflow series as a <em><strong>starting point</strong></em> for your own validations:</p>
 <div class="admonition tool">
@@ -7214,7 +7214,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:1.1.2</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:1.1.3</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7337,7 +7337,7 @@
 </span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3"></a>column_name_in_table2   column_name_in_table1
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4"></a>internal_column_name    display_column_name
 </span></code></pre></div></td></tr></tbody></table></div>
-<p>Please note that the name in the <strong>second column</strong> will be displayed and used in all output files.</p>
+<p>Please note that the name in the <strong>second column</strong> will be displayed and used in all output files. Make sure that the information in the <code>columns_to_compare</code> input variable matches the <strong>new</strong> column names (the second column in the <code>column_translation_tsv</code> file).</p>
 <div class="admonition info">
 <p class="admonition-title">Call Caching Disabled</p>
 <p>If using TheiaValidate workflow version 1.3.0 or higher, the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is compared fresh. Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.</p>
@@ -7556,18 +7556,17 @@
 <table>
 <thead>
 <tr>
-<th>missing</th>
-<th>columnE-missing</th>
+<th>old_name</th>
+<th>new_name</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td>columnA-string</td>
-<td>columnA-string</td>
+<td>missing</td>
+<td>columnE-missing</td>
 </tr>
 </tbody>
 </table>
-<p><em>Note: the second row translating</em> <code>columnA-string</code> <em>to itself is included to prevent the known bug explained above.</em></p>
 </details>
 <p>If the above inputs are provided, then the following output files will be generated:</p>
 <p><a href="../../../assets/files/theiavalidate/filtered_example_table1.tsv">filtered_example_table1.tsv</a></p>
@@ -7597,7 +7596,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="November 4, 2025 15:14:19 UTC">2025-11-04</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="April 28, 2026 19:33:37 UTC">2026-04-28</span>
   </span>
 
     
