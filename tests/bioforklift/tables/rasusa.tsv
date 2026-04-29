@@ -1,0 +1,9 @@
+entity:rasusa_workflow_id	GENOME_LENGTH	COVERAGE	FRACTION	BASES	NUM_READS	read1	read2
+155734_COV	5500000	50				gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/illumina/155734_R1.fastq.gz	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/illumina/155734_R2.fastq.gz
+ERR8958704_1_COV	5500000	50				gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/ont/ERR8958704_1.fastq.gz
+155734_FRAC			0.5			gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/illumina/155734_R1.fastq.gz	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/illumina/155734_R2.fastq.gz
+ERR8958704_1_FRAC			0.5			gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/ont/ERR8958704_1.fastq.gz
+155734_BASES				100000000		gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/illumina/155734_R1.fastq.gz	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/illumina/155734_R2.fastq.gz
+ERR8958704_1_BASES				100000000		gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/ont/ERR8958704_1.fastq.gz
+155734_NUM					100000	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/illumina/155734_R1.fastq.gz	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/illumina/155734_R2.fastq.gz
+ERR8958704_1_NUM					100000	gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaprok/ont/ERR8958704_1.fastq.gz
