@@ -47,7 +47,7 @@ task contaminant_check {
   # convert comma-separated string of expected sequences into a set
   expected_sequences = set([seq.strip() for seq in "~{expected_sequences}".split(",")])
   # set default to all expected_sequences
-  if ~{if defined(min_expected) then "true" else "false"} == "true":
+  if ~{if defined(min_expected) then "'true'" else "'false'"} == "true":
     min_expected = len(expected_sequences)
   else:
     min_expected = int(~{min_expected})
