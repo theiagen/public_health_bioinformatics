@@ -24,7 +24,11 @@ task contaminant_check {
 
   def write_json(filename, data):
     with open(filename, "w") as f:
-      json.dump(data, f, indent=4)
+      if data:
+        json.dump(data, f, indent=4)
+      else:
+        # spoof Cromwell (Terra WDL)
+        out.write('{"": 0}')
 
   def compile_failures(passing_sequences_variable, expected_recovered_sequences, var_name):
     # sequences that passed coverage threshold and were expected
