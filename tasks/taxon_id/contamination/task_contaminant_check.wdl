@@ -40,7 +40,7 @@ task contaminant_check {
     # sequences that passed variable threshold but were not expected
     variable_extra = passing_sequences_variable.difference(expected_recovered_sequences)
     unexpected_sequences_variable = {k: variable_by_sequence[k] for k in sorted(variable_extra)}
-    write_json(f"UNEXPECTED_SEQ2{var_name.upper()}", unexpected_sequences_variable)
+    write_json(f"UNEXPECTED_SEQ2{var_name.upper()}.json", unexpected_sequences_variable)
 
     return variable_missing, variable_extra 
   

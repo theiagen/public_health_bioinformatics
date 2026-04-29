@@ -110,7 +110,7 @@ workflow read_decontaminate {
       }
     }
   }
-  if (! defined(expected_sequences)) {
+  if (! defined(expected_sequences) || read_mapping_stats.mapping_stats_status != "PASS") {
     Map[String, Float] expected_cov_by_seq = {"": 0}
     Map[String, Float] expected_depth_by_seq = {"": 0}
     Map[String, Float] unexpected_cov_by_seq = {"": 0}
