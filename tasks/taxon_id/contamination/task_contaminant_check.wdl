@@ -28,7 +28,7 @@ task contaminant_check {
         json.dump(data, f, indent=4)
       else:
         # spoof Cromwell (Terra WDL)
-        out.write('{"": 0}')
+        f.write('{"": 0}')
 
   def compile_failures(passing_sequences_variable, expected_recovered_sequences, var_name):
     # sequences that passed coverage threshold and were expected
