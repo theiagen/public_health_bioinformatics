@@ -5,12 +5,16 @@
 {{ include_md("common_text/ncbi_scrub_task.md", indent=4) }}
 <!-- endif -->
 
+<!-- if: theiacov|theiaprok|theiameta|freyja|theiaeukillumina -->
+{{ include_md("common_text/rasusa_task.md", condition="read_qc_trim", indent=4) }}
+<!-- endif -->
+
     !!! dna ""
         By default, `read_processing` is set to `"trimmomatic"`. To use `fastp` instead, set `read_processing` to `"fastp"`. These tasks are mutually exclusive.
 
 {{ include_md("common_text/read_decontaminate_wf.md", indent=8, condition="read_qc_trim") }}
 
-{{ include_md("common_text/trimmomatic_task.md", indent=8) }}  
+{{ include_md("common_text/trimmomatic_task.md", indent=8) }}
 
 {{ include_md("common_text/fastp_task.md", condition="read_qc_trim", indent=8) }}
 
@@ -27,7 +31,7 @@
 {{ include_md("common_text/midas_task.md", indent=4) }}
 <!-- endif -->
 
-<!-- if: theiaprok|theiaeuk -->
+<!-- if: theiaprok|theiaeukillumina -->
 {{ include_md("common_text/kraken2_task.md", condition="theiaprokillumina", indent=4) }}
 <!-- endif -->
 
