@@ -135,9 +135,9 @@ task contaminant_check {
   output {
     String contaminant_check_status = read_string("STATUS")
     Map[String, Float] expected_coverage_by_sequence = read_json("EXPECTED_SEQ2COVERAGE.json")
-    Map[String, Float] expected_coverage_by_depth = read_json("EXPECTED_SEQ2DEPTH.json")
+    Map[String, Float] expected_depth_by_sequence = read_json("EXPECTED_SEQ2DEPTH.json")
     Map[String, Float] unexpected_coverage_by_sequence = read_json("UNEXPECTED_SEQ2COVERAGE.json")
-    Map[String, Float] unexpected_coverage_by_depth = read_json("UNEXPECTED_SEQ2DEPTH.json")
+    Map[String, Float] unexpected_depth_by_sequence = read_json("UNEXPECTED_SEQ2DEPTH.json")
   }
   runtime {
     docker: "~{docker}"
