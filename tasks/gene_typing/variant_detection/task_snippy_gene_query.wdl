@@ -66,7 +66,7 @@ task snippy_gene_query {
   runtime {
     docker: "~{docker}"
     memory: "~{memory} GB"
-    cpu: "~{cpu}"
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     preemptible: 0
     maxRetries: 3
