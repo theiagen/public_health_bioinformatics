@@ -30,7 +30,7 @@ task contaminant_check {
         # spoof Cromwell (Terra WDL)
         f.write('{"": 0}')
 
-  def compile_failures(passing_sequences_variable, expected_recovered_sequences, var_name):
+  def compile_failures(passing_sequences_variable, expected_recovered_sequences, variable_by_sequence, var_name):
     # sequences that passed coverage threshold and were expected
     variable_hits = passing_sequences_variable.intersection(expected_recovered_sequences)
     if variable_hits:
@@ -94,8 +94,14 @@ task contaminant_check {
 
   # check results
   print(f"DEBUG: expected sequences: {sorted(expected_sequences)}")
-  coverage_missing, coverage_extra = compile_failures(passing_sequences_coverage, expected_recovered_sequences, "coverage")
-  depth_missing, depth_extra = compile_failures(passing_sequences_depth, expected_recovered_sequences, "depth")
+  coverage_missing, coverage_extra = compile_failures(passing_sequences_coverage, 
+                                                      expected_recovered_sequences, 
+                                                      coverage_by_sequence, 
+                                                      "coverage")
+  depth_missing, depth_extra = compile_failures(passing_sequences_depth, 
+                                                expected_recovered_sequences, 
+                                                depth_by_sequence, 
+                                                "depth")
 
   # total unexpected sequences that passed thresholds
   unexpected_sequences = sorted(coverage_extra.union(depth_extra))
