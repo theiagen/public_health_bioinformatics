@@ -24,7 +24,7 @@ task contaminant_check {
 
   def write_json(filename, data):
     with open(filename, "w") as f:
-      json_dump(data, f, indent=4)
+      json.dump(data, f, indent=4)
 
   def compile_failures(passing_sequences_variable, expected_recovered_sequences, var_name):
     # sequences that passed coverage threshold and were expected
