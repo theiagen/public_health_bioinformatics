@@ -24,6 +24,9 @@ workflow read_decontaminate {
     String? expected_sequences
     Float min_expected_coverage = 0
     Int min_expected_depth = 0
+    Int? min_expected_seq
+    Int? max_unexpected_seq
+
     Int minimap2_memory = 32
   }
   String contaminant_samplename = samplename + "_contaminant"
@@ -107,6 +110,8 @@ workflow read_decontaminate {
           min_percent_coverage = min_expected_coverage,
           min_depth = min_expected_depth,
           contaminant_fasta = select_first([download_accession.ncbi_datasets_assembly_fasta, contaminant]),
+          min_expected_seq = min_expected_seq,
+          max_unexpected_seq = max_unexpected_seq,
       }
     }
   }

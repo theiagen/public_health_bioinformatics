@@ -9,8 +9,8 @@ task contaminant_check {
     Float min_percent_coverage = 0
     Int min_depth = 0
 
-    Int? min_expected # default is defined in python and all expected_sequences
-    Int max_unexpected = 1
+    Int? min_expected_seq # default is defined in python and all expected_sequences
+    Int max_unexpected_seq = 1
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23"
     Int memory = 4
@@ -51,10 +51,10 @@ task contaminant_check {
   # convert comma-separated string of expected sequences into a set
   expected_sequences = set([seq.strip() for seq in "~{expected_sequences}".split(",")])
   # set default to all expected_sequences
-  if ~{if defined(min_expected) then "'true'" else "'false'"} == "true":
-    min_expected = len(expected_sequences)
+  if ~{if defined(min_expected_seq) then "'true'" else "'false'"} == "true":
+    min_expected_seq = len(expected_sequences)
   else:
-    min_expected = int(~{min_expected})
+    min_expected_seq = int(~{min_expected_seq})
 
   # read in coverage and depth by sequence
   with open("~{coverage_by_sequence_json}") as f:
@@ -126,10 +126,10 @@ task contaminant_check {
   # populate a status string
   with open("STATUS", "w") as f:
     # check if a pass/fail threshold was infringed 
-    if len(seq2fail) < min_expected or len(unexpected_sequences) > int(~{max_unexpected}):
+    if len(seq2fail) < min_expected_seq or len(unexpected_sequences) > int(~{max_unexpected_seq}):
       status_string = "FAIL: "
       # too few expected sequences recovered
-      if len(seq2fail) < min_expected:
+      if len(seq2fail) < min_expected_seq:
         for seq, fail_reasons in sorted(seq2fail.items(), key=lambda x: x[0]):
           status_string += f"{seq} - {', '.join(fail_reasons)}; "
       # too many unexpected sequences recovered

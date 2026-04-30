@@ -29,6 +29,8 @@ workflow read_QC_trim_pe {
     String? expected_contaminants
     Float? min_contaminant_coverage
     Int? min_contaminant_depth
+    Int? min_expected_contaminants
+    Int? max_unexpected_contaminants
     Boolean call_midas = false
     File? midas_db
     Boolean call_bracken = true
@@ -88,6 +90,8 @@ workflow read_QC_trim_pe {
         expected_sequences = expected_contaminants,
         min_expected_coverage = min_contaminant_coverage,
         min_expected_depth = min_contaminant_depth,
+        min_expected_seq = min_expected_contaminants,
+        max_unexpected_seq = max_unexpected_contaminants,
         minimap2_memory = read_decontaminate_memory
     }
   }
