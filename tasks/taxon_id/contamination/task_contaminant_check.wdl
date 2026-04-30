@@ -51,10 +51,10 @@ task contaminant_check {
   # convert comma-separated string of expected sequences into a set
   expected_sequences = set([seq.strip() for seq in "~{expected_sequences}".split(",")])
   # set default to all expected_sequences
-  if ~{if defined(min_expected_seq) then "True" else ""}:
+  if ~{if defined(min_expected_seq) then "'true'" else "'false'"} == "true":
     min_expected_seq = int(~{min_expected_seq})
     if min_expected_seq > len(expected_sequences):
-      print(f"ERROR: min_expected_seq ({min_expected_seq}) exceeds inputted expected_sequences ({len(expected_sequences)}); setting min_expected_seq to {len(expected_sequences)}")
+      print(f"ERROR: min_expected_seq ({min_expected_seq}) exceeds number of expected_sequences ({len(expected_sequences)}); setting min_expected_seq to {len(expected_sequences)}")
       min_expected_seq = len(expected_sequences)
   else:
     min_expected_seq = len(expected_sequences)
