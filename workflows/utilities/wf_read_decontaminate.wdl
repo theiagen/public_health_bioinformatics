@@ -24,6 +24,7 @@ workflow read_decontaminate {
     String? expected_sequences
     Float min_expected_coverage = 0
     Int min_expected_depth = 0
+    Int min_expected_reads_mapped = 0
     Int? min_expected_seq
     Int? max_unexpected_seq
 
@@ -107,8 +108,10 @@ workflow read_decontaminate {
           expected_sequences = select_first([expected_sequences]),
           coverage_by_sequence_json = select_first([read_mapping_stats.coverage_by_sequence_json]),
           depth_by_sequence_json = select_first([read_mapping_stats.depth_by_sequence_json]),
+          reads_by_sequence_json = select_first([read_mapping_stats.reads_by_sequence_json]),
           min_percent_coverage = min_expected_coverage,
           min_depth = min_expected_depth,
+          min_reads = min_expected_reads_mapped,
           contaminant_fasta = select_first([download_accession.ncbi_datasets_assembly_fasta, contaminant]),
           min_expected_seq = min_expected_seq,
           max_unexpected_seq = max_unexpected_seq,
@@ -116,14 +119,17 @@ workflow read_decontaminate {
     }
   }
   if (! defined(expected_sequences) || read_mapping_stats.mapping_stats_status != "PASS") {
-    Map[String, Float] expected_cov_by_seq = {"": 0}
-    Map[String, Float] expected_depth_by_seq = {"": 0}
-    Map[String, Float] unexpected_cov_by_seq = {"": 0}
-    Map[String, Float] unexpected_depth_by_seq = {"": 0}
+    Map[String, Float] expected_cov_by_sequence = {"": 0}
+    Map[String, Float] expected_depth_by_sequence = {"": 0}
+    Map[String, Float] expected_reads_by_sequence = {"": 0}
+    Map[String, Float] unexpected_cov_by_sequence = {"": 0}
+    Map[String, Float] unexpected_depth_by_sequence = {"": 0}
+    Map[String, Float] unexpected_reads_by_sequence = {"": 0}
   }
   if (read_mapping_stats.mapping_stats_status != "PASS") {
     Map[String, Float] failed_cov_by_sequence = {"": 0}
     Map[String, Float] failed_depth_by_sequence = {"": 0}
+    Map[String, Float] failed_reads_by_sequence = {"": 0}
   }
   output {
     # Datasets download outputs
@@ -146,11 +152,14 @@ workflow read_decontaminate {
     Float? contaminant_percent_mapped_reads = read_mapping_stats.percentage_mapped_reads
     Map[String, Float]? contaminant_coverage_by_sequence = select_first([failed_cov_by_sequence, read_mapping_stats.coverage_by_sequence])
     Map[String, Float]? contaminant_depth_by_sequence = select_first([failed_depth_by_sequence, read_mapping_stats.depth_by_sequence])
+    Map[String, Float]? contaminant_reads_by_sequence = select_first([failed_reads_by_sequence, read_mapping_stats.reads_by_sequence])
     # Contaminant check outputs
     String? contaminant_check_status = select_first([contaminant_check.contaminant_check_status, contaminant_check_fail, ""])
-    Map[String, Float]? contaminant_expected_coverage_by_sequence = select_first([expected_cov_by_seq, contaminant_check.expected_coverage_by_sequence])
-    Map[String, Float]? contaminant_expected_depth_by_sequence = select_first([expected_cov_by_seq, contaminant_check.expected_depth_by_sequence])
-    Map[String, Float]? contaminant_unexpected_coverage_by_sequence = select_first([unexpected_cov_by_seq, contaminant_check.unexpected_coverage_by_sequence])
-    Map[String, Float]? contaminant_unexpected_depth_by_sequence = select_first([unexpected_cov_by_seq, contaminant_check.unexpected_depth_by_sequence])
+    Map[String, Float]? contaminant_expected_coverage_by_sequence = select_first([expected_cov_by_sequence, contaminant_check.expected_coverage_by_sequence])
+    Map[String, Float]? contaminant_expected_depth_by_sequence = select_first([expected_cov_by_sequence, contaminant_check.expected_depth_by_sequence])
+    Map[String, Float]? contaminant_expected_reads_by_sequence = select_first([expected_cov_by_sequence, contaminant_check.expected_reads_by_sequence])
+    Map[String, Float]? contaminant_unexpected_coverage_by_sequence = select_first([unexpected_cov_by_sequence, contaminant_check.unexpected_coverage_by_sequence])
+    Map[String, Float]? contaminant_unexpected_depth_by_sequence = select_first([unexpected_cov_by_sequence, contaminant_check.unexpected_depth_by_sequence])
+    Map[String, Float]? contaminant_unexpected_reads_by_sequence = select_first([unexpected_cov_by_sequence, contaminant_check.unexpected_reads_by_sequence])
   }
 }

@@ -78,12 +78,19 @@ task mapping_stats {
       f.write(str(total_meanmapq))
 
     # report sequence specific mapping stats
+    cov_dict = {}
+    depth_dict = {}
+    read_dict = {}
+    for seq, part in seq2data.items():
+      cov_dict[seq] = part["coverage"]
+      depth_dict[seq] = part["meandepth"]
+      read_dict[seq] = part["reads"]
     with open("SEQ2COVERAGE.json", "w") as f:
-      cov_dict = {seq: part["coverage"] for seq, part in seq2data.items() if part["coverage"] > 0}
       json.dump(cov_dict, f, indent=4)
     with open("SEQ2DEPTH.json", "w") as f:
-      depth_dict = {seq: part["meandepth"] for seq, part in seq2data.items() if part["meandepth"] > 0}
       json.dump(depth_dict, f, indent=4)
+    with open("SEQ2READS.json", "w") as f:
+      json.dump(read_dict, f, indent=4)
 
     if not cov_dict or not depth_dict:
       print("DEBUG: no sequences had coverage or depth above 0")
@@ -122,6 +129,8 @@ task mapping_stats {
     File coverage_by_sequence_json = "SEQ2COVERAGE.json"
     Map[String, Float] depth_by_sequence = read_json("SEQ2DEPTH.json")
     File depth_by_sequence_json = "SEQ2DEPTH.json"
+    Map[String, Float] reads_by_sequence = read_json("SEQ2READS.json")
+    File reads_by_sequence_json = "SEQ2READS.json"
     File stats = "~{samplename}.stats.txt"
     File cov_hist = "~{samplename}.cov.hist"
     File cov_stats = "~{samplename}.cov.txt"

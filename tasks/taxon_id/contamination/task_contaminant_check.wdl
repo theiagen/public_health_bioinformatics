@@ -5,9 +5,11 @@ task contaminant_check {
     String expected_sequences # comma-delimited list of expected sequences
     File coverage_by_sequence_json # task_mapping_stats output: coverage_by_sequence_json
     File depth_by_sequence_json # task_mapping_stats output: depth_by_sequence_json
+    File reads_by_sequence_json # task_mapping_stats output: reads_by_sequence_json
     File contaminant_fasta # FASTA of contaminant sequences
     Float min_percent_coverage = 0
     Int min_depth = 0
+    Int min_reads = 0
 
     Int? min_expected_seq # default is defined in python and all expected_sequences
     Int max_unexpected_seq = 1
@@ -23,6 +25,7 @@ task contaminant_check {
   from collections import defaultdict
 
   def write_json(filename, data):
+    """Write a JSON file compatible with WDL"""
     with open(filename, "w") as f:
       if data:
         json.dump(data, f, indent=4)
@@ -30,24 +33,40 @@ task contaminant_check {
         # spoof Cromwell (Terra WDL)
         f.write('{"": 0}')
 
-  def compile_failures(passing_sequences_variable, expected_recovered_sequences, variable_by_sequence, var_name):
+  def apply_thresholds(variable_by_sequence, min_value):
+    """Apply thresholds for a variable while excluding empty values as missing"""
+    passing_sequences_prep = set([seq for seq, val in variable_by_sequence.items() if val >= min_value])
+    failing_sequences = set([seq for seq, val in variable_by_sequence.items() if not val > 0])
+    passing_sequences = passing_sequences_prep.difference(failing_sequences)
+    return failing_sequences, passing_sequences
+
+  def compile_failures(passing_sequences, expected_recovered_sequences, variable_by_sequence, var_name):
+    """Compile failing sequences based on those that are expected v. unexpected"""
     # sequences that passed coverage threshold and were expected
-    variable_hits = passing_sequences_variable.intersection(expected_recovered_sequences)
-    if variable_hits:
-      print(f"DEBUG: passing {var_name}: {sorted(variable_hits)}")
+    hit_sequences = passing_sequences.intersection(expected_recovered_sequences)
+    if hit_sequences:
+      print(f"DEBUG: passing {var_name}: {sorted(hit_sequences)}")
     else:
       print(f"WARNING: no sequences passed {var_name} threshold")
     # sequences that failed variable threshold and were expected
-    variable_missing = expected_recovered_sequences.difference(variable_hits)
-    if variable_missing:
-      print(f"WARNING: failing {var_name}: {sorted(variable_missing)}")
+    missing_sequences = expected_recovered_sequences.difference(hit_sequences)
+    if missing_sequences:
+      print(f"WARNING: failing {var_name}: {sorted(missing_sequences)}")
     # sequences that passed variable threshold but were not expected
-    variable_extra = passing_sequences_variable.difference(expected_recovered_sequences)
-    unexpected_sequences_variable = {k: variable_by_sequence[k] for k in sorted(variable_extra)}
-    write_json(f"UNEXPECTED_SEQ2{var_name.upper()}.json", unexpected_sequences_variable)
+    extra_sequences = passing_sequences.difference(expected_recovered_sequences)
+    unexpected_sequences = {seq: variable_by_sequence[seq] for seq in sorted(extra_sequences)}
+    write_json(f"UNEXPECTED_SEQ2{var_name.upper()}.json", unexpected_sequences)
+    return missing_sequences, extra_sequences 
 
-    return variable_missing, variable_extra 
-  
+  def annotate_failures(seq2fail, variable_missing, failing_sequences, variable_by_sequence, variable):
+    """Annotate failure type for the status output"""
+    for seq in variable_missing:
+      if seq in failing_sequences or seq not in variable_by_sequence:
+        seq2fail[seq].append("not detected")
+      else:
+        seq2fail[seq].append(f"insufficient {variable} ({variable_by_sequence[seq]})")
+    return seq2fail
+
   # convert comma-separated string of expected sequences into a set
   expected_sequences = set([seq.strip() for seq in "~{expected_sequences}".split(",")])
   # set default to all expected_sequences
@@ -65,6 +84,8 @@ task contaminant_check {
     coverage_by_sequence = json.load(f)
   with open("~{depth_by_sequence_json}") as f:
     depth_by_sequence = json.load(f)
+  with open("~{reads_by_sequence_json}") as f:
+    reads_by_sequence = json.load(f)
   # obtain all sequences in the reference
   reference_sequences = set()
   with open("~{contaminant_fasta}") as f:
@@ -75,28 +96,31 @@ task contaminant_check {
         reference_sequences.add(seq)
 
   # check if any expected sequences are present above the specified thresholds
-  passing_sequences_coverage_prep = set([seq for seq, cov in coverage_by_sequence.items() if cov >= ~{min_percent_coverage}])
-  passing_sequences_depth_prep = set([seq for seq, depth in depth_by_sequence.items() if depth >= ~{min_depth}])
+  failing_sequences_coverage, passing_sequences_coverage = apply_thresholds(coverage_by_sequence, ~{min_percent_coverage})
+  failing_sequences_depth, passing_sequences_depth = apply_thresholds(depth_by_sequence, ~{min_percent_depth})
+  failing_sequences_reads, passing_sequences_reads = apply_thresholds(reads_by_sequence, ~{min_percent_reads})
 
-  failing_sequences_coverage = set([seq for seq, cov in coverage_by_sequence.items() if not cov > 0])
-  failing_sequences_depth = set([seq for seq, depth in depth_by_sequence.items() if not depth > 0])
-  failing_sequences = failing_sequences_coverage.union(failing_sequences_depth)
+  failing_sequences = failing_sequences_coverage.union(failing_sequences_depth).union(failing_sequences_reads)
+  passing_sequences = passing_sequences_coverage.union(passing_sequences_depth).union(passing_sequences_reads)
 
-  passing_sequences_coverage = passing_sequences_coverage_prep.difference(failing_sequences_coverage)
-  passing_sequences_depth = passing_sequences_depth_prep.difference(failing_sequences_depth)
-  passing_sequences = passing_sequences_coverage.union(passing_sequences_depth)
-
-  # assumes coverage_by_sequence and depth_by_sequence have same keys
   # sequences that were desired to be identified, but not recovered
   expected_unrecovered_sequences = expected_sequences.difference(reference_sequences)
   # sequences that were expected and recovered
   expected_recovered_sequences = expected_sequences.difference(expected_unrecovered_sequences)
-  expected_sequences_coverage = {k: coverage_by_sequence[k] for k in sorted(expected_recovered_sequences)}
-  write_json("EXPECTED_SEQ2COVERAGE.json", expected_sequences_coverage)
-  expected_sequences_depth = {k: depth_by_sequence[k] for k in sorted(expected_recovered_sequences)}
-  write_json("EXPECTED_SEQ2DEPTH.json", expected_sequences_depth)
 
-  # check results
+  # write outputs for recovered expected sequences 
+  expected_sequences_coverage = {}
+  expected_sequences_depth = {}
+  expected_sequences_reads = {}
+  for seq in sorted(expected_recovered_sequences):
+    expected_sequences_coverage[seq] = coverage_by_sequence[seq]
+    expected_sequences_depth[seq] = depth_by_sequence[seq]
+    expected_sequences_reads[seq] = reads_by_sequence[seq]
+  write_json("EXPECTED_SEQ2COVERAGE.json", expected_sequences_coverage)
+  write_json("EXPECTED_SEQ2DEPTH.json", expected_sequences_depth)
+  write_json("EXPECTED_SEQ2READS.json", expected_sequences_reads)
+
+  # check results and write outputs for unexpected sequences
   print(f"DEBUG: expected sequences: {sorted(expected_sequences)}")
   coverage_missing, coverage_extra = compile_failures(passing_sequences_coverage, 
                                                       expected_recovered_sequences, 
@@ -106,22 +130,21 @@ task contaminant_check {
                                                 expected_recovered_sequences, 
                                                 depth_by_sequence, 
                                                 "depth")
+  reads_missing, reads_extra = compile_failures(passing_sequences_reads, 
+                                                      expected_recovered_sequences, 
+                                                      reads_by_sequence, 
+                                                      "reads")
 
   # total unexpected sequences that passed thresholds
   unexpected_sequences = sorted(coverage_extra.union(depth_extra))
   if unexpected_sequences:
     print(f"WARNING: extraneous sequences detected: {sorted(unexpected_sequences)}")
 
+  # annotate failing sequences
   seq2fail = defaultdict(list)
-  for seq in coverage_missing:
-    if seq in failing_sequences or seq not in coverage_by_sequence:
-      seq2fail[seq].append("not detected")
-    else:
-      seq2fail[seq].append(f"insufficient coverage ({coverage_by_sequence[seq]})")
-  for seq in depth_missing:
-    # we already accounted for the sequence not being detected outright, so this is a depth-check
-    if seq not in failing_sequences and seq in depth_by_sequence:
-      seq2fail[seq].append(f"insufficient depth ({depth_by_sequence[seq]})")
+  seq2fail = annotate_failures(seq2fail, coverage_missing, failing_sequences, coverage_by_sequence, "coverage")
+  seq2fail = annotate_failures(seq2fail, depth_missing, failing_sequences, depth_by_sequence, "depth")
+  seq2fail = annotate_failures(seq2fail, reads_missing, failing_sequences, reads_by_sequence, "reads")
   # these sequences are missing from the reference because they were expected
   # but not detected/accounted for in the reference FASTA
   for seq in expected_unrecovered_sequences:
@@ -150,8 +173,10 @@ task contaminant_check {
     String contaminant_check_status = read_string("STATUS")
     Map[String, Float] expected_coverage_by_sequence = read_json("EXPECTED_SEQ2COVERAGE.json")
     Map[String, Float] expected_depth_by_sequence = read_json("EXPECTED_SEQ2DEPTH.json")
+    Map[String, Float] expected_reads_by_sequence = read_json("EXPECTED_SEQ2reads.json")
     Map[String, Float] unexpected_coverage_by_sequence = read_json("UNEXPECTED_SEQ2COVERAGE.json")
     Map[String, Float] unexpected_depth_by_sequence = read_json("UNEXPECTED_SEQ2DEPTH.json")
+    Map[String, Float] unexpected_reads_by_sequence = read_json("UNEXPECTED_SEQ2reads.json")
   }
   runtime {
     docker: "~{docker}"

@@ -846,10 +846,13 @@ workflow theiaprok_illumina_pe {
     Float? contaminant_percent_mapped_reads = read_QC_trim.contaminant_percent_mapped_reads
     Map[String, Float]? contaminant_coverage_by_sequence = read_QC_trim.contaminant_sequence_coverage
     Map[String, Float]? contaminant_depth_by_sequence = read_QC_trim.contaminant_sequence_depth
+    Map[String, Float]? contaminant_reads_by_sequence = read_QC_trim.contaminant_sequence_reads
     Map[String, Float]? contaminant_expected_coverage_by_sequence = read_QC_trim.contaminant_expected_sequence_coverage
     Map[String, Float]? contaminant_expected_depth_by_sequence = read_QC_trim.contaminant_expected_sequence_depth
+    Map[String, Float]? contaminant_expected_reads_by_sequence = read_QC_trim.contaminant_expected_sequence_reads
     Map[String, Float]? contaminant_unexpected_coverage_by_sequence = read_QC_trim.contaminant_unexpected_sequence_coverage
     Map[String, Float]? contaminant_unexpected_depth_by_sequence = read_QC_trim.contaminant_unexpected_sequence_depth
+    Map[String, Float]? contaminant_unexpected_reads_by_sequence = read_QC_trim.contaminant_unexpected_sequence_reads
     String? contaminant_status = read_QC_trim.contaminant_status
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version

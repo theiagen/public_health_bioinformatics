@@ -29,6 +29,7 @@ workflow read_QC_trim_pe {
     String? expected_contaminants
     Float? min_contaminant_coverage
     Int? min_contaminant_depth
+    Int? min_contaminant_reads_mapped
     Int? min_expected_contaminants
     Int? max_unexpected_contaminants
     Boolean call_midas = false
@@ -90,6 +91,7 @@ workflow read_QC_trim_pe {
         expected_sequences = expected_contaminants,
         min_expected_coverage = min_contaminant_coverage,
         min_expected_depth = min_contaminant_depth,
+        min_expected_reads_mapped = min_contaminant_reads_mapped,
         min_expected_seq = min_expected_contaminants,
         max_unexpected_seq = max_unexpected_contaminants,
         minimap2_memory = read_decontaminate_memory
@@ -268,8 +270,10 @@ workflow read_QC_trim_pe {
     Map[String, Float]? contaminant_sequence_depth = read_decontaminate.contaminant_depth_by_sequence
     Map[String, Float]? contaminant_expected_sequence_coverage = read_decontaminate.contaminant_expected_coverage_by_sequence
     Map[String, Float]? contaminant_expected_sequence_depth = read_decontaminate.contaminant_expected_depth_by_sequence
+    Map[String, Float]? contaminant_expected_sequence_reads_mapped = read_decontaminate.contaminant_expected_reads_by_sequence
     Map[String, Float]? contaminant_unexpected_sequence_coverage = read_decontaminate.contaminant_unexpected_coverage_by_sequence
     Map[String, Float]? contaminant_unexpected_sequence_depth = read_decontaminate.contaminant_unexpected_depth_by_sequence
+    Map[String, Float]? contaminant_unexpected_sequence_reads_mapped = read_decontaminate.contaminant_unexpected_reads_by_sequence
     String? contaminant_status = read_decontaminate.contaminant_check_status
     # fastq_scan clean (per read stats)
     Int? fastq_scan_clean1 = fastq_scan_clean.read1_seq
