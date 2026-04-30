@@ -51,10 +51,14 @@ task contaminant_check {
   # convert comma-separated string of expected sequences into a set
   expected_sequences = set([seq.strip() for seq in "~{expected_sequences}".split(",")])
   # set default to all expected_sequences
-  if ~{if defined(min_expected_seq) then "'true'" else "'false'"} == "true":
-    min_expected_seq = len(expected_sequences)
-  else:
+  if ~{if defined(min_expected_seq) then "True" else ""}:
     min_expected_seq = int(~{min_expected_seq})
+    if min_expected_seq > len(expected_sequences):
+      print(f"ERROR: min_expected_seq ({min_expected_seq}) exceeds inputted expected_sequences ({len(expected_sequences)}); setting min_expected_seq to {len(expected_sequences)}")
+      min_expected_seq = len(expected_sequences)
+  else:
+    min_expected_seq = len(expected_sequences)
+  print(f"DEBUG: expecting {min_expected_seq} sequences")
 
   # read in coverage and depth by sequence
   with open("~{coverage_by_sequence_json}") as f:
@@ -126,10 +130,10 @@ task contaminant_check {
   # populate a status string
   with open("STATUS", "w") as f:
     # check if a pass/fail threshold was infringed 
-    if len(seq2fail) < min_expected_seq or len(unexpected_sequences) > int(~{max_unexpected_seq}):
+    if len(expected_recovered_sequences) < min_expected_seq or len(unexpected_sequences) > int(~{max_unexpected_seq}):
       status_string = "FAIL: "
       # too few expected sequences recovered
-      if len(seq2fail) < min_expected_seq:
+      if len(expected_recovered_sequences) < min_expected_seq:
         for seq, fail_reasons in sorted(seq2fail.items(), key=lambda x: x[0]):
           status_string += f"{seq} - {', '.join(fail_reasons)}; "
       # too many unexpected sequences recovered
