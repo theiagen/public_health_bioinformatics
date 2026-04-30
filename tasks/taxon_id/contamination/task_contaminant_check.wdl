@@ -77,7 +77,7 @@ task contaminant_check {
       min_expected_seq = len(expected_sequences)
   else:
     min_expected_seq = len(expected_sequences)
-  print(f"DEBUG: expecting {min_expected_seq} sequences")
+  print(f"DEBUG: expecting minimum {min_expected_seq} sequences")
 
   # read in coverage and depth by sequence
   with open("~{coverage_by_sequence_json}") as f:
@@ -131,12 +131,12 @@ task contaminant_check {
                                                 depth_by_sequence, 
                                                 "depth")
   reads_missing, reads_extra = compile_failures(passing_sequences_reads, 
-                                                      expected_recovered_sequences, 
-                                                      reads_by_sequence, 
-                                                      "reads")
+                                                expected_recovered_sequences, 
+                                                reads_by_sequence, 
+                                                "reads")
 
   # total unexpected sequences that passed thresholds
-  unexpected_sequences = sorted(coverage_extra.union(depth_extra))
+  unexpected_sequences = sorted(coverage_extra.union(depth_extra).union(reads_extra))
   if unexpected_sequences:
     print(f"WARNING: extraneous sequences detected: {sorted(unexpected_sequences)}")
 
