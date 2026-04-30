@@ -9,7 +9,7 @@ task contaminant_check {
     File contaminant_fasta # FASTA of contaminant sequences
     Float min_percent_coverage = 0
     Int min_depth = 0
-    Int min_reads = 0
+    Int min_reads_mapped = 0
 
     Int? min_expected_seq # default is defined in python and all expected_sequences
     Int max_unexpected_seq = 1
@@ -97,8 +97,8 @@ task contaminant_check {
 
   # check if any expected sequences are present above the specified thresholds
   failing_sequences_coverage, passing_sequences_coverage = apply_thresholds(coverage_by_sequence, ~{min_percent_coverage})
-  failing_sequences_depth, passing_sequences_depth = apply_thresholds(depth_by_sequence, ~{min_percent_depth})
-  failing_sequences_reads, passing_sequences_reads = apply_thresholds(reads_by_sequence, ~{min_percent_reads})
+  failing_sequences_depth, passing_sequences_depth = apply_thresholds(depth_by_sequence, ~{min_depth})
+  failing_sequences_reads, passing_sequences_reads = apply_thresholds(reads_by_sequence, ~{min_reads_mapped})
 
   failing_sequences = failing_sequences_coverage.union(failing_sequences_depth).union(failing_sequences_reads)
   passing_sequences = passing_sequences_coverage.union(passing_sequences_depth).union(passing_sequences_reads)

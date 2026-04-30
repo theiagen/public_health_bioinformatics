@@ -111,7 +111,7 @@ workflow read_decontaminate {
           reads_by_sequence_json = select_first([read_mapping_stats.reads_by_sequence_json]),
           min_percent_coverage = min_expected_coverage,
           min_depth = min_expected_depth,
-          min_reads = min_expected_reads_mapped,
+          min_reads_mapped = min_expected_reads_mapped,
           contaminant_fasta = select_first([download_accession.ncbi_datasets_assembly_fasta, contaminant]),
           min_expected_seq = min_expected_seq,
           max_unexpected_seq = max_unexpected_seq,

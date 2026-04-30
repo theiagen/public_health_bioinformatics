@@ -268,6 +268,7 @@ workflow read_QC_trim_pe {
     File? contaminant_mapping_flagstat = read_decontaminate.contaminant_flagstat
     Map[String, Float]? contaminant_sequence_coverage = read_decontaminate.contaminant_coverage_by_sequence
     Map[String, Float]? contaminant_sequence_depth = read_decontaminate.contaminant_depth_by_sequence
+    Map[String, Float]? contaminant_sequence_reads_mapped = read_decontaminate.contaminant_reads_by_sequence
     Map[String, Float]? contaminant_expected_sequence_coverage = read_decontaminate.contaminant_expected_coverage_by_sequence
     Map[String, Float]? contaminant_expected_sequence_depth = read_decontaminate.contaminant_expected_depth_by_sequence
     Map[String, Float]? contaminant_expected_sequence_reads_mapped = read_decontaminate.contaminant_expected_reads_by_sequence
