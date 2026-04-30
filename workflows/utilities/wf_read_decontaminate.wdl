@@ -118,6 +118,7 @@ workflow read_decontaminate {
       }
     }
   }
+  # set arbitrary empty Maps for WDL/Terra compatibility
   if (! defined(expected_sequences) || read_mapping_stats.mapping_stats_status != "PASS") {
     Map[String, Float] expected_cov_by_sequence = {"": 0}
     Map[String, Float] expected_depth_by_sequence = {"": 0}
