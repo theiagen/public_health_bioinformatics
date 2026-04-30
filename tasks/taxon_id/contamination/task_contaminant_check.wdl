@@ -144,7 +144,7 @@ task contaminant_check {
   seq2fail = defaultdict(list)
   seq2fail = annotate_failures(seq2fail, coverage_missing, failing_sequences, coverage_by_sequence, "coverage")
   seq2fail = annotate_failures(seq2fail, depth_missing, failing_sequences, depth_by_sequence, "depth")
-  seq2fail = annotate_failures(seq2fail, reads_missing, failing_sequences, reads_by_sequence, "reads")
+  seq2fail = annotate_failures(seq2fail, reads_missing, failing_sequences, reads_by_sequence, "reads mapped")
   # these sequences are missing from the reference because they were expected
   # but not detected/accounted for in the reference FASTA
   for seq in expected_unrecovered_sequences:
@@ -173,10 +173,10 @@ task contaminant_check {
     String contaminant_check_status = read_string("STATUS")
     Map[String, Float] expected_coverage_by_sequence = read_json("EXPECTED_SEQ2COVERAGE.json")
     Map[String, Float] expected_depth_by_sequence = read_json("EXPECTED_SEQ2DEPTH.json")
-    Map[String, Float] expected_reads_by_sequence = read_json("EXPECTED_SEQ2reads.json")
+    Map[String, Float] expected_reads_by_sequence = read_json("EXPECTED_SEQ2READS.json")
     Map[String, Float] unexpected_coverage_by_sequence = read_json("UNEXPECTED_SEQ2COVERAGE.json")
     Map[String, Float] unexpected_depth_by_sequence = read_json("UNEXPECTED_SEQ2DEPTH.json")
-    Map[String, Float] unexpected_reads_by_sequence = read_json("UNEXPECTED_SEQ2reads.json")
+    Map[String, Float] unexpected_reads_by_sequence = read_json("UNEXPECTED_SEQ2READS.json")
   }
   runtime {
     docker: "~{docker}"
