@@ -53,7 +53,7 @@ Additionally, inadequate sequencing depth can hinder Freyja's ability to differe
 
 ### Freyja_FASTQ_PHB {% raw %} {#freyja_fastq} {% endraw %}
 
-Freyja measures SNV frequency and sequencing depth at each position in the genome to return an estimate of the true lineage abundances in the sample. The method uses lineage-defining "barcodes" that, for SARS-CoV-2, are derived from the UShER global phylogenetic tree as a base set for demixing. **Freyja_FASTQ_PHB** returns as output a TSV file that includes the lineages present and their corresponding abundances, along with other values. Optionally, the workflow can also produce a long-format TSV (`freyja_long_format_tsv`) that pairs the demixed lineage abundances with sample metadata (collection date, collection site, latitude, longitude) for downstream visualization.
+Freyja measures SNV frequency and sequencing depth at each position in the genome to return an estimate of the true lineage abundances in the sample. The method uses lineage-defining "barcodes" that, for SARS-CoV-2, are derived from the UShER global phylogenetic tree as a base set for demixing. **Freyja_FASTQ_PHB** returns as output a TSV file that includes the lineages present and their corresponding abundances, along with other values. Optionally, the workflow can also produce a long-format TSV (`freyja_parsed_format_tsv`) that pairs the demixed lineage abundances with sample metadata (collection date, collection site, latitude, longitude) for downstream visualization.
 
 The Freyja_FASTQ_PHB workflow is compatible with the multiple input data types: Ilumina Single-End, Illumina Paired-End and Oxford Nanopore. Depending on the type of input data, different input values are used.
 
@@ -132,6 +132,9 @@ This workflow runs on the sample level.
 
     Lineage grouping can be customized by providing the optional `group_by` input, which will group by collection site + collection date, or by collection site + epiweek and normalize the data.
 
+    !!! warning "Behavior when the sample fails the coverage threshold"
+        The minimum genome coverage threshold is controlled by the `freyja_min_coverage` workflow input (default: **60**) and is passed to `freyja_to_long.py` as `--mincov`. If the sample's `freyja_coverage` falls below this threshold, no lineage rows are written and the resulting `freyja_parsed_format_tsv` instead contains the text `all samples are below coverage`. Lower the `freyja_min_coverage` input if you wish to retain low-coverage samples in downstream visualizations.
+
     !!! techdetails "Freyja Long Format Technical Details"
 
         |  | Links |
@@ -188,7 +191,7 @@ This workflow visualizes aggregated freyja_demixed output files produced by [Fre
 
 Options exist to provide lineage-specific breakdowns and/or sample collection time information.
 
-In addition to the aggregate plot, Freyja_Plot_PHB can produce a long-format metadata TSV (`freyja_long_format_tsv`) that combines lineage abundances with per-sample metadata (collection date, collection site, latitude, longitude), as well as a [Microreact](https://microreact.org/)-compatible upload file (`freyja_microreact_output`) for interactive geospatial and temporal visualization of the aggregated results.
+In addition to the aggregate plot, Freyja_Plot_PHB can produce a long-format metadata TSV (`freyja_parsed_format_tsv`) that combines lineage abundances with per-sample metadata (collection date, collection site, latitude, longitude), as well as a [Microreact](https://microreact.org/)-compatible upload file (`freyja_microreact_output`) for interactive geospatial and temporal visualization of the aggregated results.
 
 #### Inputs
 
@@ -218,6 +221,9 @@ This workflow runs on the set level.
 
     Lineage grouping can be customized by providing the optional `group_by` input, which is passed through to the underlying `freyja_to_long.py` helper script.
 
+    !!! warning "Behavior when all samples fail the coverage threshold"
+        The minimum genome coverage threshold is controlled by the `freyja_min_coverage` workflow input (default: **60**) and is passed to `freyja_to_long.py` as `--mincov`. Samples whose `freyja_coverage` falls below this threshold are dropped from the aggregated output. If **every** sample in the set is below threshold, no lineage rows are written and the resulting `freyja_parsed_format_tsv` instead contains the sentinel text `all samples are below coverage`. The downstream `freyja_microreact` task detects this text and emits an empty `freyja_microreact_output` file rather than failing — see the `freyja_microreact` task block below for details. Lower the `freyja_min_coverage` input if you wish to retain low-coverage samples.
+
     !!! techdetails "Freyja Long Format Technical Details"
 
         |  | Links |
@@ -227,7 +233,10 @@ This workflow runs on the set level.
         | Software Documentation | <https://github.com/andersen-lab/Freyja> |
 
 ??? task "`freyja_microreact` Details"
-    The `freyja_microreact` task converts the aggregated long-format TSV produced by `freyja_long_format` into a [Microreact](https://microreact.org/)-compatible upload file. This output can be uploaded directly to Microreact to interactively explore lineage abundances across samples in time and space. Provide latitutde and longitutde inputs for geospatial mapping. 
+    The `freyja_microreact` task converts the aggregated long-format TSV produced by `freyja_long_format` into a [Microreact](https://microreact.org/)-compatible upload file. This output can be uploaded directly to Microreact to interactively explore lineage abundances across samples in time and space. Provide latitude and longitude inputs for geospatial mapping.
+
+    !!! warning "Behavior when all samples fail the coverage threshold"
+        Before invoking `freyja_microreact.py`, the task inspects the incoming `freyja_parsed_format_tsv` for the text `all samples are below coverage` (written upstream by `freyja_long_format` when no samples passed the `freyja_min_coverage` threshold). If the sentinel is present, the task short-circuits and produces an **empty** `freyja_microreact_output` file rather than failing the workflow. An empty `.microreact` file is therefore the expected signal that no samples cleared the coverage threshold; lower the `freyja_min_coverage` input and rerun if you wish to retain low-coverage samples.
 
     !!! techdetails "Freyja Microreact Technical Details"
 
