@@ -5,6 +5,7 @@ task freyja_long_format_single {
         String samplename
         String freyja_lineages
         String freyja_abundances
+        Float freyja_coverage
         String? collection_date
         String? collection_site
         Float? latitude
@@ -19,8 +20,8 @@ task freyja_long_format_single {
 
     command <<<
         # create a metadata file for the sample
-        header="samplename\tfreyja_lineages\tfreyja_abundances\tcollection_date\tcollection_site"
-        row="~{samplename}\t~{freyja_lineages}\t~{freyja_abundances}\t~{collection_date}\t~{collection_site}"
+        header="samplename\tfreyja_lineages\tfreyja_abundances\tfreyja_coverage\tcollection_date\tcollection_site"
+        row="~{samplename}\t~{freyja_lineages}\t~{freyja_abundances}\t~{freyja_coverage}\t~{collection_date}\t~{collection_site}"
 
         # cheb if latitude and longitude are provided, add them to the header and row
         if [ -n "~{latitude}" ]; then
@@ -61,6 +62,7 @@ task freyja_long_format_multi {
         Array[String] samplenames
         Array[String] freyja_lineages
         Array[String] freyja_abundances
+        Array[Float] freyja_coverages
         Array[String]? collection_dates
         Array[String]? collection_sites
         Array[Float]? latitudes
@@ -87,8 +89,9 @@ task freyja_long_format_multi {
         sites       = read_lines("~{if defined(collection_sites) then write_lines(select_first([collection_sites])) else write_lines([])}")
         lats        = read_lines("~{if defined(latitudes) then write_lines(select_first([latitudes])) else write_lines([])}")
         lons        = read_lines("~{if defined(longitudes) then write_lines(select_first([longitudes])) else write_lines([])}")
+        coverages   = read_lines("~{write_lines(freyja_coverages)}")
 
-        headers = ['samplename', 'freyja_lineages', 'freyja_abundances', 'collection_date', 'collection_site']
+        headers = ['samplename', 'freyja_lineages', 'freyja_abundances', 'freyja_coverage', 'collection_date', 'collection_site']
         if lats:
             headers.append('latitude')
         if lons:
@@ -97,7 +100,7 @@ task freyja_long_format_multi {
         with open('freyja_metadata.tsv', 'w') as f:
             f.write('\t'.join(headers) + '\n')
             for i in range(len(samplenames)):
-                row = [samplenames[i], lineages[i], abundances[i],
+                row = [samplenames[i], lineages[i], abundances[i], coverages[i],
                        dates[i] if dates else '',
                        sites[i] if sites else '']
                 if lats:

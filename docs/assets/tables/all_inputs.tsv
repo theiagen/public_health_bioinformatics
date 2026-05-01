@@ -51,6 +51,7 @@ freyja_dashboard	viral_load	Array[String]	An array containing the number of vira
 freyja_fastq	read1	File	FASTQ file containing read1 sequences (Illumina or (ONT)		Required	Freyja_FASTQ	general	
 freyja_fastq	reference_genome	File	The reference genome to use; should match the reference used for alignment (Wuhan-Hu-1)		Required	Freyja_FASTQ	general	
 freyja_fastq	samplename	String	The name of the sample being analyzed		Required	Freyja_FASTQ	general	
+freyja_plot	freyja_coverages	Array[Float]	An array containing the genome coverage value (freyja_coverage) for each sample; required to enable the freyja_long_format and freyja_microreact tasks and used by --mincov filtering		Optional	Freyja_Plot	general	
 freyja_plot	freyja_demixed	Array[File]	An array containing the output files (freyja_demixed) made by Freyja_FASTQ		Required	Freyja_Plot	general	
 freyja_plot	freyja_min_coverage	Int	Minimum genome coverage threshold; passed as --mincov to freyja_to_long.py and as mincov to the freyja plot task	60	Optional	Freyja_Plot	general	
 freyja_plot	freyja_plot_name	String	The name of the plot to be produced. Example: "my-freyja-plot"		Required	Freyja_Plot	general	

@@ -11,6 +11,7 @@ workflow freyja_plot {
     Array[File] freyja_demixed
     Array[String]? freyja_lineages
     Array[String]? freyja_abundances
+    Array[Float]? freyja_coverages
     Array[String]? collection_date
     Array[String]? collection_site
     Array[Float]? latitude
@@ -27,12 +28,13 @@ workflow freyja_plot {
       freyja_plot_name = freyja_plot_name_updated,
       mincov = freyja_min_coverage
   }
-  if (defined(freyja_lineages) && defined(freyja_abundances) && defined(collection_date) && defined(collection_site)) {
+  if (defined(freyja_lineages) && defined(freyja_abundances) && defined(freyja_coverages) && defined(collection_date) && defined(collection_site)) {
     call freyja_long_format.freyja_long_format_multi as freyja_long_format {
       input:
         samplenames       = samplename,
         freyja_lineages   = select_first([freyja_lineages]),
         freyja_abundances = select_first([freyja_abundances]),
+        freyja_coverages  = select_first([freyja_coverages]),
         collection_dates  = collection_date,
         collection_sites  = collection_site,
         latitudes         = latitude,

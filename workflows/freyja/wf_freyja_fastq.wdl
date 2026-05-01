@@ -176,6 +176,7 @@ workflow freyja_fastq {
         samplename = samplename,
         freyja_lineages = freyja.freyja_lineages,
         freyja_abundances = freyja.freyja_abundances,
+        freyja_coverage = freyja.freyja_coverage,
         collection_date = collection_date,
         collection_site = collection_site,
         latitude = latitude,

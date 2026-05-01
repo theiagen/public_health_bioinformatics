@@ -128,7 +128,9 @@ This workflow runs on the sample level.
         | Software Documentation | <https://andersen-lab.github.io/Freyja/index.html#> |
 
 ??? task "`freyja_long_format` Details"
-    The `freyja_long_format` task converts the demixed lineage abundances for a single sample into a long-format TSV that is paired with the sample's metadata (collection date, collection site, and optionally latitude and longitude). This long-format TSV is suitable for downstream aggregation across samples and for use with visualization tools such as Microreact.
+    The `freyja_long_format` task converts the demixed lineage abundances for a single sample into a long-format TSV that is paired with the sample's metadata (collection date, collection site, genome coverage, and optionally latitude and longitude). This long-format TSV is suitable for downstream aggregation across samples and for use with visualization tools such as Microreact.
+
+    The sample's genome coverage (`freyja.freyja_coverage`) is included automatically so that the `--mincov` threshold can drop the sample from the output when its coverage falls below `freyja_min_coverage`.
 
     Lineage grouping can be customized by providing the optional `group_by` input, which will group by collection site + collection date, or by collection site + epiweek and normalize the data.
 
@@ -217,7 +219,9 @@ This workflow runs on the set level.
         | Software Documentation | <https://github.com/andersen-lab/Freyja> |
 
 ??? task "`freyja_long_format` Details"
-    The `freyja_long_format` task aggregates the demixed lineage abundances from multiple samples into a single long-format TSV, paired with each sample's metadata (collection date, collection site, and optionally latitude and longitude). This long-format TSV is consumed by the `freyja_microreact` task and is also useful as a standalone input to other visualization or analytical tools.
+    The `freyja_long_format` task aggregates the demixed lineage abundances from multiple samples into a single long-format TSV, paired with each sample's metadata (collection date, collection site, per-sample genome coverage, and optionally latitude and longitude). This long-format TSV is consumed by the `freyja_microreact` task and is also useful as a standalone input to other visualization or analytical tools.
+
+    Per-sample genome coverage values must be supplied via the `freyja_coverages` array input (typically populated from the `freyja_coverage` output of `Freyja_FASTQ_PHB`); this is required so that the `--mincov` threshold can filter low-coverage samples out of the aggregated TSV.
 
     Lineage grouping can be customized by providing the optional `group_by` input, which is passed through to the underlying `freyja_to_long.py` helper script.
 
