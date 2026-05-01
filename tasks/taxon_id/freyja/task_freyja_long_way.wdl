@@ -10,7 +10,8 @@ task freyja_long_format_single {
         Float? latitude
         Float? longitude
         String? group_by
-        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.0"
+        Int mincov
+        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1"
         Int disk_size = 50
         Int memory = 4
         Int cpu = 2
@@ -38,9 +39,9 @@ task freyja_long_format_single {
 
         # freyja the long way, if groupby is provided, set --group-by to the value of group_by
         if [ -n "~{group_by}" ]; then
-            freyja_to_long.py freyja_metadata.tsv ~{samplename}_freyja_long_format.tsv --sample-col samplename --group-by ~{group_by}
+            freyja_to_long.py freyja_metadata.tsv ~{samplename}_freyja_long_format.tsv --sample-col samplename --group-by ~{group_by} --mincov ~{mincov}
         else
-            freyja_to_long.py freyja_metadata.tsv ~{samplename}_freyja_long_format.tsv --sample-col samplename
+            freyja_to_long.py freyja_metadata.tsv ~{samplename}_freyja_long_format.tsv --sample-col samplename --mincov ~{mincov}
         fi
     >>>
 
@@ -65,7 +66,8 @@ task freyja_long_format_multi {
         Array[Float]? latitudes
         Array[Float]? longitudes
         String? group_by
-        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.0"
+        Int mincov
+        String docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1"
         Int disk_size = 50
         Int memory = 4
         Int cpu = 2
@@ -106,14 +108,14 @@ task freyja_long_format_multi {
         CODE
 
         if [ -n "~{group_by}" ]; then
-            freyja_to_long.py freyja_metadata.tsv freyja_long_format.tsv --sample-col samplename --group-by ~{group_by}
+            freyja_to_long.py freyja_metadata.tsv freyja_long_format.tsv --sample-col samplename --group-by ~{group_by} --mincov ~{mincov}
         else
-            freyja_to_long.py freyja_metadata.tsv freyja_long_format.tsv --sample-col samplename
+            freyja_to_long.py freyja_metadata.tsv freyja_long_format.tsv --sample-col samplename --mincov ~{mincov}
         fi
     >>>
 
     output {
-        File freyja_long_format_tsv = "freyja_long_format.tsv"
+        File freyja_parsed_format_tsv = "freyja_long_format.tsv"
     }
 
     runtime {

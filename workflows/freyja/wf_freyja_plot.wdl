@@ -16,6 +16,7 @@ workflow freyja_plot {
     Array[Float]? latitude
     Array[Float]? longitude
     String freyja_plot_name
+    Int freyja_min_coverage = 60
   }
   String freyja_plot_name_updated = sub(freyja_plot_name, " ", "_")
   call plot.freyja_plot_task {
@@ -23,7 +24,8 @@ workflow freyja_plot {
       samplename = samplename,
       freyja_demixed = freyja_demixed,
       collection_date = collection_date,
-      freyja_plot_name = freyja_plot_name_updated
+      freyja_plot_name = freyja_plot_name_updated,
+      mincov = freyja_min_coverage
   }
   if (defined(freyja_lineages) && defined(freyja_abundances) && defined(collection_date) && defined(collection_site)) {
     call freyja_long_format.freyja_long_format_multi as freyja_long_format {
@@ -34,11 +36,12 @@ workflow freyja_plot {
         collection_dates  = collection_date,
         collection_sites  = collection_site,
         latitudes         = latitude,
-        longitudes        = longitude
+        longitudes        = longitude,
+        mincov            = freyja_min_coverage
     }
     call freyja_microreact.freyja_microreact {
       input:
-        freyja_long_format_tsv = freyja_long_format.freyja_long_format_tsv,
+        freyja_parsed_format_tsv = freyja_long_format.freyja_parsed_format_tsv,
         freyja_plot_name = freyja_plot_name_updated
     }
   }
@@ -55,7 +58,7 @@ workflow freyja_plot {
     File freyja_demixed_aggregate = freyja_plot_task.demixed_aggregate
     File? freyja_plot_metadata = freyja_plot_task.freyja_plot_metadata
     # Freyja Long Format
-    File? freyja_long_format_tsv = freyja_long_format.freyja_long_format_tsv
+    File? freyja_parsed_format_tsv = freyja_long_format.freyja_parsed_format_tsv
     # Freyja Microreact
     File? freyja_microreact_output = freyja_microreact.freyja_microreact_output
   }
