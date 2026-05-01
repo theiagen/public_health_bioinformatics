@@ -46,7 +46,7 @@ task freyja_long_format_single {
     >>>
 
     output {
-        File freyja_long_format_tsv = "~{samplename}_freyja_long_format.tsv"
+        File freyja_parsed_format_tsv = "~{samplename}_freyja_long_format.tsv"
     }
     runtime {
         docker: docker

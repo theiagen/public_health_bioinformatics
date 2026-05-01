@@ -40,6 +40,7 @@ workflow freyja_fastq {
     String? collection_site
     Float? latitude
     Float? longitude
+    Int freyja_min_coverage = 60
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -178,7 +179,8 @@ workflow freyja_fastq {
         collection_date = collection_date,
         collection_site = collection_site,
         latitude = latitude,
-        longitude = longitude
+        longitude = longitude,
+        mincov = freyja_min_coverage
     }
   }
   call versioning.version_capture {
@@ -316,6 +318,6 @@ workflow freyja_fastq {
     File? qualimap_reports_bundle = qualimap.qualimap_reports_bundle
     File? qualimap_coverage_plots_html = qualimap.qualimap_coverage_plots_html
     # Freyja long format outputs
-    File? freyja_long_format_tsv =  freyja_long_format.freyja_long_format_tsv
+    File? freyja_parsed_format_tsv =  freyja_long_format.freyja_parsed_format_tsv
   }
 }
