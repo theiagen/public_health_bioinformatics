@@ -58,6 +58,7 @@ workflow theiaprok_fasta {
   }
   call versioning.version_capture {
     input:
+      workflow_name = "TheiaProk_FASTA"
   }
   call quast_task.quast {
     input:
@@ -505,6 +506,7 @@ workflow theiaprok_fasta {
     # Version Captures
     String theiaprok_fasta_version = version_capture.phb_version
     String theiaprok_fasta_analysis_date = version_capture.date
+    File? theiaprok_fasta_default_inputs = version_capture.default_inputs
     # Read Metadata
     String seq_platform = seq_method
     # Assembly QC - quast outputs
