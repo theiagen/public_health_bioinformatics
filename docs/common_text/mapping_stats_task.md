@@ -4,7 +4,7 @@
     !!! techdetails "`mapping_stats` Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_mapping_stats.wdl) |
+        | Task | [task_mapping_stats.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_mapping_stats.wdl) |
         | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
         | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
