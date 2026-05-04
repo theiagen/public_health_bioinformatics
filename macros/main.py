@@ -181,7 +181,7 @@ def define_env(env):
     Returns:
       str: Preprocessed Markdown content.
     """
-    docs_dir = Path(env.project_dir) / 'docs'
+    docs_dir = Path('docs')
     include_path = (docs_dir / Path(path)).resolve()
 
     if not include_path.exists():
@@ -281,7 +281,7 @@ def define_env(env):
         return match.group(0)
 
       absolute_path = (Path(base_path).parent / url).resolve()
-      docs_dir = (Path(env.project_dir) / 'docs').resolve()
+      docs_dir = (Path('docs')).resolve()
 
       try:
         relative_path = os.path.relpath(absolute_path, start=docs_dir).replace(os.sep, '/')

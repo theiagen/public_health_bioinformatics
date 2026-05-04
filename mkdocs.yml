@@ -281,16 +281,16 @@ markdown_extensions:
       custom_checkbox: true
   - toc:
       permalink: true
+  - zensical.extensions.macros:
+      module_name: macros/main
+      on_error_fail: true
+  - zensical.extensions.glightbox
 
 plugins:
   - git-revision-date-localized:
       enable_creation_date: true
       type: iso_date
-  - search
-  - glightbox
   - mike
-  - macros:
-      module_name: macros/main
 
 extra_javascript:
   - https://unpkg.com/tablesort@5.3.0/dist/tablesort.min.js  
