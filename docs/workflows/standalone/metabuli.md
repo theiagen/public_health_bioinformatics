@@ -13,7 +13,9 @@ Metabuli is suitable for classifying short reads *AND* long reads by comparing t
 The Metabuli_PHB workflow additionally includes read trimming software, Fastp (Illumina) and fastplong (ONT), for adapter trimming (recommended) and basic read preprocessing. 
 
 !!! caption "Metabuli Workflow Diagram"
-    ![Metabuli Workflow Diagram](../../assets/figures/Metabuli.png)
+    <div style="text-align: center;">
+    ![Metabuli Workflow Diagram](../../assets/figures/Metabuli.png){: onload="this.width/=2;this.onload=null;" }
+    </div>
 
 ### Databases
 

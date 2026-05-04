@@ -224,6 +224,8 @@ task qc_check_phb {
         if "~{irma_qc_table}":
           # keep default NA false to prevent NA segmented converting to null
           irma_qc_table = pd.read_csv("~{irma_qc_table}", sep = '\t', index_col = "Sample", keep_default_na=False)
+          # set all 'N/A' values to 0 for QC Check task
+          irma_qc_table = irma_qc_table.replace({'N/A': '0'})
           to_rm = set()
           # report segment failures on a metric-by-metric basis, but we iterate segment-by-segment
           seg2qc_note = {}

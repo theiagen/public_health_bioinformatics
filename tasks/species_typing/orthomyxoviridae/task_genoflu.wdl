@@ -10,7 +10,7 @@ task genoflu {
     File? cross_reference
     Int cpu = 1
     Int disk_size = 25
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.06"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/genoflu:1.07"
     Int memory = 2
   }
   command <<<
