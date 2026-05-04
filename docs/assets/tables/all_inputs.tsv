@@ -2018,7 +2018,7 @@ read_QC_trim	midas_db	File	The database used by the MIDAS task in .tar.gz format
 read_QC_trim	min_contaminant_coverage	Float	Minimum breadth of coverage to identify a contaminant sequence within the status check (does not affect read cleaning)	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	min_contaminant_depth	Int	Minimum depth to identify a contaminant sequence within the status check (does not affect read cleaning)	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	min_contaminant_reads_mapped	Int	Minimum number of reads mapped to identify a contaminant sequence within the status check (does not affect read cleaning)	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
-read_QC_trim	min_expected_contaminants	Int	Minimum expected sequences detected from contaminant FASTA to pass		Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
+read_QC_trim	min_expected_contaminants	Int	Minimum expected sequences detected from contaminant FASTA to pass status check		Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	min_length	Int	Internal component, do not modify	400	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	nanoq_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
 read_QC_trim	nanoq_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
