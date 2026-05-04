@@ -12,7 +12,7 @@ task version_capture {
   }
   command {
     VERSION_TAG="v4.1.0"
-    echo "PHB ${VERSION_TAG}" > PHB_VERSION
+    echo "PHB $VERSION_TAG" > PHB_VERSION
 
     export TZ=~{timezone}
     date -I > TODAY
@@ -21,8 +21,8 @@ task version_capture {
       echo "No workflow name provided, skipping default input capture."
 
     else
-      echo "getting default inputs for the current workflow from the PHB documentation"
-      wget https://raw.githubusercontent.com/theiagen/public_health_bioinformatics/refs/tags/${VERSION_TAG}/docs/assets/tables/all_inputs.tsv
+      echo "Getting default inputs for the current workflow from the PHB documentation"
+      wget "https://raw.githubusercontent.com/theiagen/public_health_bioinformatics/refs/tags/$VERSION_TAG/docs/assets/tables/all_inputs.tsv"
     
       cut -f-2,5,7-8 all_inputs.tsv | grep ~{workflow_name} > workflow_inputs.tsv 
       awk -F'\t' '$3 != ""' workflow_inputs.tsv > default_workflow_inputs.tsv
@@ -41,7 +41,7 @@ task version_capture {
   output {
     String date = read_string("TODAY")
     String phb_version = read_string("PHB_VERSION")
-    
+
     File? default_workflow_inputs = "default_inputs.tsv"
   }
   runtime {
