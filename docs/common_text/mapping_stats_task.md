@@ -1,5 +1,5 @@
 ??? task "`mapping_stats`: Mapping Statistics"
-    The `mapping_stats` task generates mapping statistics from a BAM file. It uses samtools to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics. These statistics are also reported on a per sequence basis.
+    The `mapping_stats` task generates mapping statistics from a BAM file. It uses `Samtools` to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics. These statistics are also reported on a per sequence basis.
 
     !!! techdetails "`mapping_stats` Technical Details"
         |  | Links |

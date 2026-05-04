@@ -998,9 +998,9 @@ host_decontaminate	expected_sequences	String	Comma-delimited list of expected se
 host_decontaminate	is_accession	Boolean	Inputted "host" is an accession	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	is_genome	Boolean	Inputted "host" is an assembly FASTA	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	max_unexpected_seq	Int	Maximum unexpected sequences detected from inputted FASTA to pass	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
-host_decontaminate	min_expected_coverage	Float	Minimum coverage for sequences to be declared identified	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
-host_decontaminate	min_expected_depth	Int	Minimum depth for sequences to be declared identified	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
-host_decontaminate	min_expected_reads_mapped	Int	Minimum number of reads mapped for a sequence to be declared identified	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	min_expected_coverage	Float	Minimum breadth of coverage to identify a host/contaminant sequence within the status check (does not affect read cleaning)	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	min_expected_depth	Int	Minimum depth to identify a host/contaminant sequence within the status check (does not affect read cleaning) 	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	min_expected_reads_mapped	Int	Minimum number of reads mapped to identify a host/contaminant sequence within the status check (does not affect read cleaning)	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	min_expected_seq	Int	Minimum expected sequences detected from inputted FASTA to pass		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	minimap2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime	
 host_decontaminate	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general	
@@ -2015,9 +2015,9 @@ read_QC_trim	metabuli_memory	Int	Amount of memory/RAM (in GB) to allocate to the
 read_QC_trim	metabuli_taxdump_path	File	Path to taxonkit-generated taxdump for Metabuli taxonomy parsing	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/ncbi_taxdump_20260211.tar.gz	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	midas_db	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE	general	
 read_QC_trim	midas_db	File	The database used by the MIDAS task in .tar.gz format	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	database	
-read_QC_trim	min_contaminant_coverage	Float	Minimum coverage to identify a contaminant sequence	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
-read_QC_trim	min_contaminant_depth	Int	Minimum depth to identify a contaminant sequence	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
-read_QC_trim	min_contaminant_reads_mapped	Int	Minimum number of reads mapped for a sequence to be declared identified	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
+read_QC_trim	min_contaminant_coverage	Float	Minimum breadth of coverage to identify a contaminant sequence within the status check (does not affect read cleaning)	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
+read_QC_trim	min_contaminant_depth	Int	Minimum depth to identify a contaminant sequence within the status check (does not affect read cleaning)	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
+read_QC_trim	min_contaminant_reads_mapped	Int	Minimum number of reads mapped to identify a contaminant sequence within the status check (does not affect read cleaning)	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	min_expected_contaminants	Int	Minimum expected sequences detected from contaminant FASTA to pass		Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	min_length	Int	Internal component, do not modify	400	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	nanoq_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
@@ -2113,9 +2113,9 @@ read_QC_trim_pe	kraken_disk_size	Int	Amount of storage (in GB) to allocate to th
 read_QC_trim_pe	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	max_unexpected_contaminants	Int	Maximum unexpected sequences detected from contaminant FASTA to pass	1	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	midas_db	File	Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	Freyja_FASTQ	database	
-read_QC_trim_pe	min_contaminant_coverage	Float	Internal component, do not modify	0	Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	min_contaminant_depth	Int	Internal component, do not modify	0	Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	min_contaminant_reads_mapped	Int	Minimum number of reads mapped for a sequence to be declared identified	0	Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	min_contaminant_coverage	Float	Minimum breadth of coverage to identify a contaminant sequence within the status check (does not affect read cleaning)	0	Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	min_contaminant_depth	Int	Minimum depth to identify a contaminant sequence within the status check (does not affect read cleaning)	0	Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	min_contaminant_reads_mapped	Int	Minimum number of reads mapped to identify a contaminant sequence within the status check (does not affect read cleaning)	0	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	min_expected_contaminants	Int	Minimum expected sequences detected from contaminant FASTA to pass		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	phix	File	The file containing the phix sequence to be used during bbduk task		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	rasusa_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
