@@ -886,7 +886,6 @@ workflow merlin_magic {
     String? ectyper_stx_subtypes = ectyper.ectyper_stx_subtypes
     String? ectyper_docker = ectyper.ectyper_docker
     String? shigapass_predicted_serotype = shigapass.shigapass_predicted_serotype
-    String? shigapass_predicted_serotype_flexneri = shigapass.shigapass_predicted_serotype_flexneri
     String? shigapass_ipaH_presence_absence = shigapass.shigapass_ipaH_presence_absence
     File? shigapass_summary_tsv = shigapass.shigapass_summary_tsv
     File? shigapass_flexneri_summary_tsv = shigapass.shigapass_flexneri_summary_tsv

@@ -939,7 +939,6 @@ workflow theiaprok_illumina_se {
     String? ectyper_stx_subtypes = merlin_magic.ectyper_stx_subtypes
     String? ectyper_docker = merlin_magic.ectyper_docker
     String? shigapass_predicted_serotype = merlin_magic.shigapass_predicted_serotype
-    String? shigapass_predicted_serotype_flexneri = merlin_magic.shigapass_predicted_serotype_flexneri
     String? shigapass_ipaH_presence_absence = merlin_magic.shigapass_ipaH_presence_absence
     File? shigapass_summary_tsv = merlin_magic.shigapass_summary_tsv
     File? shigapass_flexneri_summary_tsv = merlin_magic.shigapass_flexneri_summary_tsv
