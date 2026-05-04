@@ -9,13 +9,14 @@
 The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequencing data to identify genetic variations compared to a reference genome. It combines minimap2's long-read alignment capabilities with Clair3's deep learning-based variant calling, designed specifically for ONT data characteristics. The workflow first aligns raw reads to a reference genome using ONT-optimized parameters, processes these alignments into sorted and indexed BAM files, and then employs Clair3's specialized models to detect variants including single nucleotide polymorphisms (SNPs) and insertions/deletions (indels). If enabled, the workflow can also identify longer indels and generate genome-wide variant calls in gVCF format for downstream analysis.
 
 !!! caption "Clair3_Variants Workflow Diagram"
-    ![Clair3_Variants Workflow Diagram](../../assets/figures/Clair3_Variants_WF_Diagram.png)
+    <div style="text-align: center;">
+    ![Clair3_Variants Workflow Diagram](../../assets/figures/Clair3_Variants.png){: onload="this.width/=2;this.onload=null;" }
+    </div>
 
 !!! tip "Example Use Cases"
-   - **Variant Discovery**: Identify genetic variations in ONT sequencing data compared to a reference genome
-   - **SNP and Indel Detection**: Accurately detect both small variants and longer indels
-   - **Population Studies**: Generate standardized variant calls suitable for population-level analyses
-
+    - **Variant Discovery**: Identify genetic variations in ONT sequencing data compared to a reference genome
+    - **SNP and Indel Detection**: Accurately detect both small variants and longer indels
+    - **Population Studies**: Generate standardized variant calls suitable for population-level analyses
 
 ### Supported Clair3 Models {% raw %} {#supported-clair3-models} {% endraw %}
 

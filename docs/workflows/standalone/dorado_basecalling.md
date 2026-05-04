@@ -9,7 +9,9 @@
 The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequencing files into `FASTQ` format by using a GPU-accelerated environment. This workflow is ideal for high-throughput applications where fast and accurate basecalling is essential. Users upload POD5 files to a Google Cloud Storage (GCS) bucket, and then provide that directory's path as a workflow input. The workflow basecalls all POD5 files in the provided location, and then outputs final FASTQ files to a user-designated Terra table for downstream analysis.
 
 !!! caption "Dorado_Basecalling_PHB Workflow Diagram"
-    ![Dorado_Basecalling_PHB Workflow Diagram](../../assets/figures/Dorado_Basecalling_PHB.png)
+    <div style="text-align: center;">
+    ![Dorado_Basecalling_PHB Workflow Diagram](../../assets/figures/Dorado_Basecalling_PHB.png){: onload="this.width/=2;this.onload=null;" }
+    </div>
 
 ### Configuring Workflow in Terra
 

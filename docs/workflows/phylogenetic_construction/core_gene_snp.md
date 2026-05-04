@@ -7,7 +7,9 @@
 ## Core_Gene_SNP_PHB
 
 !!! caption "Core Gene SNP Workflow Diagram"
-    ![Core Gene SNP Workflow Diagram](../../assets/figures/Core_Gene_SNP.png){width:45%}
+    <div style="text-align: center;">
+    ![Core Gene SNP Workflow Diagram](../../assets/figures/Core_Gene_SNP.png){: onload="this.width/=2;this.onload=null;" }
+    </div>
 
 The Core_Gene_SNP workflow is intended for pangenome analysis, core gene alignment, and phylogenetic analysis. The workflow takes in gene sequence data in GFF3 format from a set of samples. It first produces a pangenome summary using [`Pirate`](https://github.com/SionBayliss/PIRATE), which clusters genes within the sample set into orthologous gene families. By default, the workflow also instructs `Pirate` to produce both core gene and pangenome alignments. The workflow subsequently triggers the generation of a phylogenetic tree and SNP distance matrix from the core gene alignment. First, [`snp-sites`](https://github.com/sanger-pathogens/snp-sites) extracts polymorphic sites only from the alignment, which are then used by [`iqtree`](https://github.com/iqtree/iqtree2/tree/v1.6.7) to generate the phylogenetic tree. [`snp-dists`](https://github.com/tseemann/snp-dists) subsequently builds the SNP distance matrix from the core gene alignment. Optionally, the workflow will also run this analysis using the pangenome alignment. This workflow also features an optional module, `summarize_data`, that creates a presence/absence matrix for the analyzed samples from a list of indicated columns (such as AMR genes, etc.) that can be used in Phandango.
 
@@ -16,7 +18,7 @@ The Core_Gene_SNP workflow is intended for pangenome analysis, core gene alignme
 
 ### Inputs
 
-For further detail regarding Pirate options, please see [PIRATE's documentation](https://github.com/SionBayliss/PIRATE). For further detail regarding IQ-TREE options, please see `http://www.iqtree.org/doc/Command-Reference`.
+For further detail regarding Pirate options, please see [PIRATE's documentation](https://github.com/SionBayliss/PIRATE). For further detail regarding IQ-TREE options, please see `https://iqtree.github.io/doc/Command-Reference`.
 
 This workflow runs on the set level.
 
