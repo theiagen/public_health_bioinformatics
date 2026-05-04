@@ -37,10 +37,15 @@ task shigapass {
     cut -f7 -d';' shigapass/ShigaPass_summary.csv | tail -n1 > IPAH_PRESENCE_ABSENCE
     cut -f8 -d';' shigapass/ShigaPass_summary.csv | tail -n1 > PREDICTED_SEROTYPE
     cut -f9 -d';' shigapass/ShigaPass_summary.csv | tail -n1 > PREDICTED_SEROTYPE_FLEXNERI
+
+    # append PREDICTED_SEROTYPE_FLEXNERI to PREDICTED_SEROTYPE if it contains content
+    if grep -q '[^[:space:]]' PREDICTED_SEROTYPE_FLEXNERI; then
+      echo "$(cat PREDICTED_SEROTYPE), $(cat PREDICTED_SEROTYPE_FLEXNERI)" > PREDICTED_SEROTYPE
+    fi
+
   >>>
   output {
     String shigapass_predicted_serotype = read_string("PREDICTED_SEROTYPE")
-    String shigapass_predicted_serotype_flexneri = read_string("PREDICTED_SEROTYPE_FLEXNERI")
     String shigapass_ipaH_presence_absence = read_string("IPAH_PRESENCE_ABSENCE")
 
     File shigapass_summary_tsv = "shigapass/ShigaPass_summary.tsv"
