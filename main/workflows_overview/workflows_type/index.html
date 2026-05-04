@@ -89,7 +89,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#data-import" class="md-skip">
+        <a href="#comparative-analysis" class="md-skip">
           Skip to content
         </a>
       
@@ -985,6 +985,17 @@
       Table of contents
     </label>
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
+      
+        <li class="md-nav__item">
+  <a href="#comparative-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparative Analysis
+      
+    </span>
+  </a>
+  
+</li>
       
         <li class="md-nav__item">
   <a href="#data-import" class="md-nav__link">
@@ -6636,6 +6647,17 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix="">
       
         <li class="md-nav__item">
+  <a href="#comparative-analysis" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparative Analysis
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#data-import" class="md-nav__link">
     <span class="md-ellipsis">
       
@@ -6811,7 +6833,43 @@
 
 <p><a href="../workflows_kingdom/">Sort by Kingdom</a> | <a href="../workflows_alphabetically/">Sort Alphabetically</a></p>
 <hr>
-<h3 id="data-import">Data Import<a class="headerlink" href="#data-import" title="Permanent link">¶</a></h3>
+<h3 id="comparative-analysis"><abbr title="These workflows compare results between analyses">Comparative Analysis</abbr><a class="headerlink" href="#comparative-analysis" title="Permanent link">¶</a></h3>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Applicable Kingdom</strong></th>
+<th><strong>Workflow Level</strong></th>
+<th><strong><abbr title="Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either `miniwdl` or `cromwell`.">Command-line Compatibility</abbr></strong></th>
+<th><strong>Last Known Changes</strong></th>
+<th><strong>Dockstore</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../workflows/standalone/phylocompare/"><strong>PhyloCompare</strong></a></td>
+<td>Quantify the difference between two phylogenetic trees with the same tips</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows create or process entire tables of data.">Table-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.0.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/PhyloCompare_PHB:main?tab=info">PhyloCompare_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/standalone/theiavalidate/"><strong>TheiaValidate</strong></a></td>
+<td>This workflow performs basic comparisons between user-designated columns in two separate tables.</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows create or process entire tables of data.">Table-level</abbr></td>
+<td><abbr title="These workflows are not compatible with command-line use even with modifications; these workflows are engineered to run on Terra">No</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaValidate_PHB:main?tab=info">TheiaValidate_PHB</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="data-import"><abbr title="These workflows either import data to Terra or perform file manipulation prior to analysis.">Data Import</abbr><a class="headerlink" href="#data-import" title="Permanent link">¶</a></h3>
 <div class="searchable-table">
 <table>
 <thead>
@@ -6829,421 +6887,88 @@
 <tr>
 <td><a href="../../workflows/data_import/assembly_fetch/"><strong>Assembly_Fetch</strong></a></td>
 <td>Download assemblies from NCBI, after optionally identifying the closest RefSeq reference genome to your own draft assembly</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>v3.1.0</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Assembly_Fetch_PHB:main?tab=info">Assembly_Fetch_PHB</a></td>
 </tr>
 <tr>
 <td><a href="../../workflows/data_import/basespace_fetch/"><strong>BaseSpace_Fetch</strong></a></td>
 <td>Import data from BaseSpace into Terra</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>v4.0.0</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/BaseSpace_Fetch_PHB:main?tab=info">BaseSpace_Fetch_PHB</a></td>
 </tr>
 <tr>
+<td><a href="../../workflows/standalone/concatenate_illumina_lanes/"><strong>Concatenate_Illumina_Lanes</strong></a></td>
+<td>Concatenate Illumina lanes for a single sample</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v2.3.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Concatenate_Illumina_Lanes_PHB:main?tab=info">Concatenate_Illumina_Lanes_PHB</a></td>
+</tr>
+<tr>
 <td><a href="../../workflows/data_import/create_terra_table/"><strong>Create_Terra_Table</strong></a></td>
 <td>Upload data to Terra and then run this workflow to have the table automatically created</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td></td>
-<td><abbr title="This workflow is not compatible with command-line use even with modifications; this workflow is engineered to run on Terra">No</abbr></td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows create or process entire tables of data.">Table-level</abbr></td>
+<td><abbr title="These workflows are not compatible with command-line use even with modifications; these workflows are engineered to run on Terra">No</abbr></td>
 <td>v2.2.0</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Create_Terra_Table_PHB:main?tab=info">Create_Terra_Table_PHB</a></td>
 </tr>
 <tr>
+<td><a href="../../workflows/standalone/dorado_basecalling/"><strong>Dorado_Basecalling</strong></a></td>
+<td>GPU-accelerated basecalling of Oxford Nanopore sequencing data</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are not compatible with command-line use even with modifications; these workflows are engineered to run on Terra">No</abbr></td>
+<td>v3.0.1</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Dorado_Basecalling_PHB:main?tab=info">Dorado_Basecalling_PHB</a></td>
+</tr>
+<tr>
 <td><a href="../../workflows/data_import/fetch_srr_accession/"><strong>Fetch_SRR_Accession</strong></a></td>
 <td>Provided a BioSample accession, identify any associated SRR accession(s)</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>v2.3.0</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Fetch_SRR_Accession_PHB:main?tab=info">Fetch_SRR_Accession_PHB</a></td>
 </tr>
 <tr>
 <td><a href="../../workflows/data_import/ont_barcode_concatenation/"><strong>ONT_Barcode_Concatenation</strong></a></td>
 <td>Creates a Terra table after concatenating barcodes from ONT data</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td></td>
-<td><abbr title="This workflow is not compatible with command-line use even with modifications; this workflow is engineered to run on Terra">No</abbr></td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows create or process entire tables of data.">Table-level</abbr></td>
+<td><abbr title="These workflows are not compatible with command-line use even with modifications; these workflows are engineered to run on Terra">No</abbr></td>
 <td>v4.0.0</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/ONT_Barcode_Concatenation_PHB:main?tab=info">ONT_Barcode_Concatenation_PHB</a></td>
 </tr>
 <tr>
+<td><a href="../../workflows/standalone/rename_fastq/"><strong>Rename_FASTQ</strong></a></td>
+<td>Rename paired-end or single-end read files in a Terra data table in a non-destructive way</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v2.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Rename_FASTQ_PHB:main?tab=info">Rename_FASTQ_PHB</a></td>
+</tr>
+<tr>
 <td><a href="../../workflows/data_import/sra_fetch/"><strong>SRA_Fetch</strong></a></td>
 <td>Import publicly available reads from SRA using SRR#, ERR# or DRR#</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>v2.2.0</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/SRA_Fetch_PHB:main?tab=info">SRA_Fetch_PHB</a></td>
 </tr>
 </tbody>
 </table>
 </div>
-<h3 id="genomic-characterization">Genomic Characterization<a class="headerlink" href="#genomic-characterization" title="Permanent link">¶</a></h3>
-<div class="searchable-table">
-<table>
-<thead>
-<tr>
-<th><strong>Name</strong></th>
-<th><strong>Description</strong></th>
-<th><strong>Applicable Kingdom</strong></th>
-<th><strong>Workflow Level</strong></th>
-<th><strong><abbr title="Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either `miniwdl` or `cromwell`.">Command-line Compatibility</abbr></strong></th>
-<th><strong>Last Known Changes</strong></th>
-<th><strong>Dockstore</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../../workflows/genomic_characterization/freyja/"><strong>Freyja Workflow Series</strong></a></td>
-<td>Recovers relative lineage abundances from mixed sample data and generates visualizations</td>
-<td>SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr>, <abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>vX.X.X</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_FASTQ_PHB:main?tab=info">Freyja_FASTQ_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Plot_PHB:main?tab=info">Freyja_Plot_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Dashboard_PHB:main?tab=info">Freyja_Dashboard_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/genomic_characterization/freyja/"><strong>Freyja Workflow Series</strong></a></td>
-<td>Recovers relative lineage abundances from mixed sample data and generates visualizations</td>
-<td>SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr>, <abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>vX.X.X</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_FASTQ_PHB:main?tab=info">Freyja_FASTQ_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Plot_PHB:main?tab=info">Freyja_Plot_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Dashboard_PHB:main?tab=info">Freyja_Dashboard_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/genomic_characterization/pangolin_update/"><strong>Pangolin_Update</strong></a></td>
-<td>Update Pangolin assignments</td>
-<td>SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v3.0.1</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Pangolin_Update_PHB:main?tab=info">Pangolin_Update_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/genomic_characterization/theiacov/"><strong>TheiaCoV Workflow Series</strong></a></td>
-<td><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr> genome assembly, QC and characterization from amplicon sequencing</td>
-<td>HIV, Influenza, Monkeypox virus, RSV-A, RSV-B, SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a>, WNV</td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr>, <abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="Some optional features of this workflow are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>vX.X.X</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_Illumina_PE_PHB:main?tab=info">TheiaCoV_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_Illumina_SE_PHB:main?tab=info">TheiaCoV_Illumina_SE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_ONT_PHB:main?tab=info">TheiaCoV_ONT_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_ClearLabs_PHB:main?tab=info">TheiaCoV_ClearLabs_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_FASTA_PHB:main?tab=info">TheiaCoV_FASTA_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_FASTA_Batch_PHB:main?tab=info">TheiaCoV_FASTA_Batch_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/genomic_characterization/theiaeuk/"><strong>TheiaEuk Workflow Series</strong></a></td>
-<td>Mycotic genome assembly, QC and characterization from WGS data</td>
-<td><a href="../workflows_kingdom/#mycotics"><abbr title="This workflow is compatible with mycotic pathogens">Mycotics</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="Some optional features of this workflow are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>vX.X.X</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaEuk_Illumina_PE_PHB:main?tab=info">TheiaEuk_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaEuk_ONT_PHB:main?tab=info">TheiaEuk_ONT_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/genomic_characterization/theiameta/"><strong>TheiaMeta</strong></a></td>
-<td>Genome assembly and QC from metagenomic sequencing</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>vX.X.X</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaMeta_Illumina_PE_PHB:main?tab=info">TheiaMeta_Illumina_PE_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/genomic_characterization/theiaprok/"><strong>TheiaProk Workflow Series</strong></a></td>
-<td>Bacterial genome assembly, QC and characterization from WGS data</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="Some optional features of this workflow are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>vX.X.X</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_Illumina_PE_PHB:main?tab=info">TheiaProk_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_Illumina_SE_PHB:main?tab=info">TheiaProk_Illumina_SE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_ONT_PHB:main?tab=info">TheiaProk_ONT_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_FASTA_PHB:main?tab=info">TheiaProk_FASTA_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/genomic_characterization/theiaviral/"><strong>TheiaViral Workflow Series</strong></a></td>
-<td><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr> genome assembly, QC, and characterization from WGS or hybrid-capture panel data.</td>
-<td><a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="Some optional features of this workflow are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>vX.X.X</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_Illumina_PE_PHB:main?tab=info">TheiaViral_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_ONT_PHB:main?tab=info">TheiaViral_ONT_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_Panel_PHB:main?tab=info">TheiaViral_Panel_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/genomic_characterization/vadr_update/"><strong>VADR_Update</strong></a></td>
-<td>Update VADR assignments</td>
-<td>HAV, Influenza, Monkeypox virus, RSV-A, RSV-B, SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a>, WNV</td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v4.0.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/VADR_Update_PHB:main?tab=info">VADR_Update_PHB</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="phylogenetic-construction">Phylogenetic Construction<a class="headerlink" href="#phylogenetic-construction" title="Permanent link">¶</a></h3>
-<div class="searchable-table">
-<table>
-<thead>
-<tr>
-<th><strong>Name</strong></th>
-<th><strong>Description</strong></th>
-<th><strong>Applicable Kingdom</strong></th>
-<th><strong>Workflow Level</strong></th>
-<th><strong><abbr title="Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either `miniwdl` or `cromwell`.">Command-line Compatibility</abbr></strong></th>
-<th><strong>Last Known Changes</strong></th>
-<th><strong>Dockstore</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../../workflows/phylogenetic_construction/augur/"><strong>Augur</strong></a></td>
-<td>Phylogenetic analysis for viral pathogens</td>
-<td><a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr>, <abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v4.1.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_Prep_PHB:main?tab=info">Augur_Prep_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_PHB:main?tab=info">Augur_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/phylogenetic_construction/clair3_variants/"><strong>Clair3_Variants</strong></a></td>
-<td>ONT Variant Caller</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v4.1.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Clair3_Variants_ONT_PHB:main?tab=info">Clair3_Variants_ONT_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/phylogenetic_construction/core_gene_snp/"><strong>Core_Gene_SNP</strong></a></td>
-<td>Pangenome analysis</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="Some optional features of this workflow are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v4.1.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Core_Gene_SNP_PHB:main?tab=info">Core_Gene_SNP_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/phylogenetic_construction/find_shared_variants/"><strong>Find_Shared_Variants</strong></a></td>
-<td>Combines and reshapes variant data from Snippy_Variants to illustrate variants shared across multiple samples</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="This workflow is compatible with mycotic pathogens">Mycotics</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v2.0.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Find_Shared_Variants_PHB:main?tab=info">Find_Shared_Variants_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/phylogenetic_construction/lyve_set/"><strong>Lyve_SET</strong></a></td>
-<td>Alignment of reads to a reference genome, SNP calling, curation of high quality SNPs, phylogenetic analysis</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v4.1.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Lyve_SET_PHB:main?tab=info">Lyve_SET_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/phylogenetic_construction/mashtree_fasta/"><strong>MashTree_FASTA</strong></a></td>
-<td>Mash-distance based phylogenetic analysis from assemblies</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="This workflow is compatible with mycotic pathogens">Mycotics</abbr></a>, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="Some optional features of this workflow are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v4.1.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/MashTree_FASTA_PHB:main?tab=info">MashTree_FASTA_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/phylogenetic_construction/snippy_streamline/"><strong>Snippy_Streamline</strong></a></td>
-<td>Implementation of Snippy workflows for phylogenetic analysis from reads, with optional dynamic reference selection</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="Some optional features of this workflow are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v4.1.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Snippy_Streamline_PHB:main?tab=info">Snippy_Streamline_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/phylogenetic_construction/snippy_streamline_fasta/"><strong>Snippy_Streamline_FASTA</strong></a></td>
-<td>Implementation of Snippy workflows for phylogenetic analysis from assembled genomes (in FASTA format), with optional dynamic reference selection</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="Some optional features of this workflow are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v4.1.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Snippy_Streamline_FASTA_PHB:im-snippy-fasta-dev?tab=info">Snippy_Streamline_FASTA_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/phylogenetic_construction/snippy_tree/"><strong>Snippy_Tree</strong></a></td>
-<td>SNP-based phylogenetic analysis from reads, with option to mask recombination</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="Some optional features of this workflow are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v4.1.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Snippy_Tree_PHB:main?tab=info">Snippy_Tree_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/phylogenetic_construction/snippy_variants/"><strong>Snippy_Variants</strong></a></td>
-<td>Alignment of reads to a reference genome, then SNP calling</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="This workflow is compatible with mycotic pathogens">Mycotics</abbr></a>, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v2.3.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Snippy_Variants_PHB:main?tab=info">Snippy_Variants_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/phylogenetic_construction/ksnp3/"><strong>kSNP3</strong></a></td>
-<td>SNP-based phylogenetic analysis from assemblies</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="This workflow is compatible with mycotic pathogens">Mycotics</abbr></a>, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="Some optional features of this workflow are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v4.1.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/kSNP3_PHB:main?tab=info">kSNP3_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/phylogenetic_construction/ksnp4/"><strong>kSNP4</strong></a></td>
-<td>SNP-based phylogenetic analysis from assemblies</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="This workflow is compatible with mycotic pathogens">Mycotics</abbr></a>, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="Some optional features of this workflow are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>vX.X.X</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/kSNP4_PHB:main?tab=info">kSNP4_PHB</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="phylogenetic-placement">Phylogenetic Placement<a class="headerlink" href="#phylogenetic-placement" title="Permanent link">¶</a></h3>
-<div class="searchable-table">
-<table>
-<thead>
-<tr>
-<th><strong>Name</strong></th>
-<th><strong>Description</strong></th>
-<th><strong>Applicable Kingdom</strong></th>
-<th><strong>Workflow Level</strong></th>
-<th><strong><abbr title="Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either `miniwdl` or `cromwell`.">Command-line Compatibility</abbr></strong></th>
-<th><strong>Last Known Changes</strong></th>
-<th><strong>Dockstore</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../../workflows/phylogenetic_placement/nextclade_batch/"><strong>Nextclade_Batch</strong></a></td>
-<td>Use Nextclade to rapidly and accurately place your samples on any existing phylogenetic tree</td>
-<td>Monkeypox virus, SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v4.0.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Nextclade_Batch_PHB:main?tab=info">Nextclade_Batch_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/phylogenetic_placement/usher/"><strong>Usher</strong></a></td>
-<td>Use UShER to rapidly and accurately place your samples on any existing phylogenetic tree</td>
-<td>Monkeypox virus, SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr>, <abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v2.1.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Usher_PHB:main?tab=info">Usher_PHB</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="public-data-sharing">Public Data Sharing<a class="headerlink" href="#public-data-sharing" title="Permanent link">¶</a></h3>
-<div class="searchable-table">
-<table>
-<thead>
-<tr>
-<th><strong>Name</strong></th>
-<th><strong>Description</strong></th>
-<th><strong>Applicable Kingdom</strong></th>
-<th><strong>Workflow Level</strong></th>
-<th><strong><abbr title="Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either `miniwdl` or `cromwell`.">Command-line Compatibility</abbr></strong></th>
-<th><strong>Last Known Changes</strong></th>
-<th><strong>Dockstore</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../../workflows/public_data_sharing/mercury_prep_n_batch/"><strong>Mercury_Prep_N_Batch</strong></a></td>
-<td>Prepare metadata and sequence data for submission to NCBI and GISAID</td>
-<td>Influenza, Monkeypox virus, SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is not compatible with command-line use even with modifications; this workflow is engineered to run on Terra">No</abbr></td>
-<td>v4.0.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Mercury_Prep_N_Batch_PHB:main?tab=info">Mercury_Prep_N_Batch_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/public_data_sharing/terra_2_gisaid/"><strong>Terra_2_GISAID</strong></a></td>
-<td>Upload of assembly data to GISAID</td>
-<td>SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v1.2.1</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Terra_2_GISAID_PHB:main?tab=info">Terra_2_GISAID_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/public_data_sharing/terra_2_ncbi/"><strong>Terra_2_NCBI</strong></a></td>
-<td>Upload of sequence data to NCBI</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="This workflow is compatible with mycotic pathogens">Mycotics</abbr></a>, <a href="../workflows_kingdom/#viral"><abbr title="This workflow is compatible with any viral pathogen">Viral</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is not compatible with command-line use even with modifications; this workflow is engineered to run on Terra">No</abbr></td>
-<td>v4.0.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Terra_2_NCBI_PHB:main?tab=info">Terra_2_NCBI_PHB</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="exporting-data-from-terra">Exporting Data from Terra<a class="headerlink" href="#exporting-data-from-terra" title="Permanent link">¶</a></h3>
-<div class="searchable-table">
-<table>
-<thead>
-<tr>
-<th><strong>Name</strong></th>
-<th><strong>Description</strong></th>
-<th><strong>Applicable Kingdom</strong></th>
-<th><strong>Workflow Level</strong></th>
-<th><strong><abbr title="Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either `miniwdl` or `cromwell`.">Command-line Compatibility</abbr></strong></th>
-<th><strong>Last Known Changes</strong></th>
-<th><strong>Dockstore</strong></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td><a href="../../workflows/data_export/concatenate_column_content/"><strong>Concatenate_Column_Content</strong></a></td>
-<td>Concatenate contents of a specified Terra data table column for many samples ("entities")</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v2.1.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Concatenate_Column_Content_PHB:main?tab=info">Concatenate_Column_Content_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/data_export/microreact_export/"><strong>Microreact_Export</strong></a></td>
-<td>Generate Microreact upload files from a Terra data table</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>vX.X.X</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Microreact_Export_PHB:main?tab=info">Microreact_Export_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/data_export/transfer_column_content/"><strong>Transfer_Column_Content</strong></a></td>
-<td>Transfer contents of a specified Terra data table column for many samples ("entities") to a GCP storage bucket location</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v1.3.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Transfer_Column_Content_PHB:main?tab=info">Transfer_Column_Content_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/data_export/zip_column_content/"><strong>Zip_Column_Content</strong></a></td>
-<td>Zip contents of a specified Terra data table column for many samples ("entities")</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once on a group of samples">Set-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>vX.X.X</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Zip_Column_Content_PHB:main?tab=info">Zip_Column_Content_PHB</a></td>
-</tr>
-</tbody>
-</table>
-</div>
-<h3 id="standalone">Standalone<a class="headerlink" href="#standalone" title="Permanent link">¶</a></h3>
+<h3 id="genomic-characterization"><abbr title="These workflows perform genomic characterization of samples.">Genomic Characterization</abbr><a class="headerlink" href="#genomic-characterization" title="Permanent link">¶</a></h3>
 <div class="searchable-table">
 <table>
 <thead>
@@ -7261,125 +6986,639 @@
 <tr>
 <td><a href="../../workflows/standalone/amr_search/"><strong>AMR_Search</strong></a></td>
 <td>Perform AMR profiling on microbial assemblies mimicing Pathogenwatch</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>v3.0.1</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/AMR_Search_PHB:fc-amr-search-dev?tab=info">AMR_Search_PHB</a></td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/AMR_Search_PHB:main?tab=info">AMR_Search_PHB</a></td>
 </tr>
 <tr>
 <td><a href="../../workflows/standalone/cauris_cladetyper/"><strong>Cauris_CladeTyper</strong></a></td>
 <td>C. auris clade assignment</td>
-<td><a href="../workflows_kingdom/#mycotics"><abbr title="This workflow is compatible with mycotic pathogens">Mycotics</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>v4.0.0</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Cauris_CladeTyper_PHB:main?tab=info">Cauris_CladeTyper_PHB</a></td>
 </tr>
 <tr>
-<td><a href="../../workflows/standalone/concatenate_illumina_lanes/"><strong>Concatenate_Illumina_Lanes</strong></a></td>
-<td>Concatenate Illumina lanes for a single sample</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
-<td>v2.3.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Concatenate_Illumina_Lanes_PHB:main?tab=info">Concatenate_Illumina_Lanes_PHB</a></td>
-</tr>
-<tr>
-<td><a href="../../workflows/standalone/dorado_basecalling/"><strong>Dorado_Basecalling</strong></a></td>
-<td>GPU-accelerated basecalling of Oxford Nanopore sequencing data</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is not compatible with command-line use even with modifications; this workflow is engineered to run on Terra">No</abbr></td>
-<td>v3.0.1</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Dorado_Basecalling_PHB:main?tab=info">Dorado_Basecalling_PHB</a></td>
+<td><a href="../../workflows/genomic_characterization/freyja/"><strong>Freyja Workflow Series</strong></a></td>
+<td>Recovers relative lineage abundances from mixed sample data and generates visualizations</td>
+<td>SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr>, <abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_FASTQ_PHB:main?tab=info">Freyja_FASTQ_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Plot_PHB:main?tab=info">Freyja_Plot_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Dashboard_PHB:main?tab=info">Freyja_Dashboard_PHB</a></td>
 </tr>
 <tr>
 <td><a href="../../workflows/standalone/gambit_query/"><strong>GAMBIT_Query</strong></a></td>
 <td>Taxon identification of genome assembly using GAMBIT</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="This workflow is compatible with mycotic pathogens">Mycotics</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>v2.0.0</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Gambit_Query_PHB:main?tab=info">Gambit_Query_PHB</a></td>
 </tr>
 <tr>
 <td><a href="../../workflows/standalone/kraken2/"><strong>Kraken2</strong></a></td>
 <td>Taxa identification from reads</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>vX.X.X</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Kraken2_PE_PHB:main?tab=info">Kraken2_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Kraken2_SE_PHB:main?tab=info">Kraken2_SE_PHB</a></td>
 </tr>
 <tr>
 <td><a href="../../workflows/standalone/metabuli/"><strong>Metabuli</strong></a></td>
 <td>Taxa identification from reads, including ONT data</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>vX.X.X</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Metabuli_PHB:main?tab=info">Metabuli_PHB</a></td>
 </tr>
 <tr>
 <td><a href="../../workflows/standalone/ncbi_amrfinderplus/"><strong>NCBI-AMRFinderPlus</strong></a></td>
 <td>Runs NCBI's AMRFinderPlus on genome assemblies (bacterial and fungal)</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="This workflow is compatible with mycotic pathogens">Mycotics</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>v4.1.0</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/NCBI-AMRFinderPlus_PHB:main?tab=info">NCBI-AMRFinderPlus_PHB</a></td>
 </tr>
 <tr>
 <td><a href="../../workflows/standalone/ncbi_scrub/"><strong>NCBI_Scrub</strong></a></td>
 <td>Runs NCBI's HRRT on Illumina FASTQs</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>v2.2.1</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/NCBI_Scrub_PE_PHB:main?tab=info">NCBI_Scrub_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/NCBI_Scrub_SE_PHB:main?tab=info">NCBI_Scrub_SE_PHB</a></td>
 </tr>
 <tr>
+<td><a href="../../workflows/genomic_characterization/pangolin_update/"><strong>Pangolin_Update</strong></a></td>
+<td>Update Pangolin assignments</td>
+<td>SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v3.0.1</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Pangolin_Update_PHB:main?tab=info">Pangolin_Update_PHB</a></td>
+</tr>
+<tr>
 <td><a href="../../workflows/standalone/rasusa/"><strong>RASUSA</strong></a></td>
 <td>Randomly subsample sequencing reads to a specified coverage</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/RASUSA_PHB:main?tab=info">RASUSA_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/genomic_characterization/theiacov/"><strong>TheiaCoV Workflow Series</strong></a></td>
+<td><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr> genome assembly, QC and characterization from amplicon sequencing</td>
+<td>HIV, Influenza, Monkeypox virus, RSV-A, RSV-B, SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a>, WNV</td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr>, <abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="Some optional features of these workflows are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_Illumina_PE_PHB:main?tab=info">TheiaCoV_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_Illumina_SE_PHB:main?tab=info">TheiaCoV_Illumina_SE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_ONT_PHB:main?tab=info">TheiaCoV_ONT_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_ClearLabs_PHB:main?tab=info">TheiaCoV_ClearLabs_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_FASTA_PHB:main?tab=info">TheiaCoV_FASTA_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_FASTA_Batch_PHB:main?tab=info">TheiaCoV_FASTA_Batch_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/genomic_characterization/theiaeuk/"><strong>TheiaEuk Workflow Series</strong></a></td>
+<td>Mycotic genome assembly, QC and characterization from WGS data</td>
+<td><a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="Some optional features of these workflows are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaEuk_Illumina_PE_PHB:main?tab=info">TheiaEuk_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaEuk_ONT_PHB:main?tab=info">TheiaEuk_ONT_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/genomic_characterization/theiameta/"><strong>TheiaMeta</strong></a></td>
+<td>Genome assembly and QC from metagenomic sequencing</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaMeta_Illumina_PE_PHB:main?tab=info">TheiaMeta_Illumina_PE_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/genomic_characterization/theiaprok/"><strong>TheiaProk Workflow Series</strong></a></td>
+<td>Bacterial genome assembly, QC and characterization from WGS data</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="Some optional features of these workflows are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_Illumina_PE_PHB:main?tab=info">TheiaProk_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_Illumina_SE_PHB:main?tab=info">TheiaProk_Illumina_SE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_ONT_PHB:main?tab=info">TheiaProk_ONT_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_FASTA_PHB:main?tab=info">TheiaProk_FASTA_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/genomic_characterization/theiaviral/"><strong>TheiaViral Workflow Series</strong></a></td>
+<td><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr> genome assembly, QC, and characterization from WGS or hybrid-capture panel data.</td>
+<td><a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="Some optional features of these workflows are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_Illumina_PE_PHB:main?tab=info">TheiaViral_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_ONT_PHB:main?tab=info">TheiaViral_ONT_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaViral_Panel_PHB:main?tab=info">TheiaViral_Panel_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/genomic_characterization/vadr_update/"><strong>VADR_Update</strong></a></td>
+<td>Update VADR assignments</td>
+<td>HAV, Influenza, Monkeypox virus, RSV-A, RSV-B, SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a>, WNV</td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.0.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/VADR_Update_PHB:main?tab=info">VADR_Update_PHB</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="phylogenetic-construction"><abbr title="These workflows construct phylogenetic trees or assist in that process.">Phylogenetic Construction</abbr><a class="headerlink" href="#phylogenetic-construction" title="Permanent link">¶</a></h3>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Applicable Kingdom</strong></th>
+<th><strong>Workflow Level</strong></th>
+<th><strong><abbr title="Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either `miniwdl` or `cromwell`.">Command-line Compatibility</abbr></strong></th>
+<th><strong>Last Known Changes</strong></th>
+<th><strong>Dockstore</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/augur/"><strong>Augur</strong></a></td>
+<td>Phylogenetic analysis for viral pathogens</td>
+<td><a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr>, <abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_Prep_PHB:main?tab=info">Augur_Prep_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_PHB:main?tab=info">Augur_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/clair3_variants/"><strong>Clair3_Variants</strong></a></td>
+<td>ONT Variant Caller</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Clair3_Variants_ONT_PHB:main?tab=info">Clair3_Variants_ONT_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/core_gene_snp/"><strong>Core_Gene_SNP</strong></a></td>
+<td>Pangenome analysis</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="Some optional features of these workflows are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Core_Gene_SNP_PHB:main?tab=info">Core_Gene_SNP_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/find_shared_variants/"><strong>Find_Shared_Variants</strong></a></td>
+<td>Combines and reshapes variant data from Snippy_Variants to illustrate variants shared across multiple samples</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v2.0.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Find_Shared_Variants_PHB:main?tab=info">Find_Shared_Variants_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/lyve_set/"><strong>Lyve_SET</strong></a></td>
+<td>Alignment of reads to a reference genome, SNP calling, curation of high quality SNPs, phylogenetic analysis</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Lyve_SET_PHB:main?tab=info">Lyve_SET_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/mashtree_fasta/"><strong>MashTree_FASTA</strong></a></td>
+<td>Mash-distance based phylogenetic analysis from assemblies</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a>, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="Some optional features of these workflows are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/MashTree_FASTA_PHB:main?tab=info">MashTree_FASTA_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/snippy_streamline/"><strong>Snippy_Streamline</strong></a></td>
+<td>Implementation of Snippy workflows for phylogenetic analysis from reads, with optional dynamic reference selection</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="Some optional features of these workflows are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Snippy_Streamline_PHB:main?tab=info">Snippy_Streamline_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/snippy_streamline_fasta/"><strong>Snippy_Streamline_FASTA</strong></a></td>
+<td>Implementation of Snippy workflows for phylogenetic analysis from assembled genomes (in FASTA format), with optional dynamic reference selection</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="Some optional features of these workflows are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Snippy_Streamline_FASTA_PHB:im-snippy-fasta-dev?tab=info">Snippy_Streamline_FASTA_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/snippy_tree/"><strong>Snippy_Tree</strong></a></td>
+<td>SNP-based phylogenetic analysis from reads, with option to mask recombination</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="Some optional features of these workflows are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Snippy_Tree_PHB:main?tab=info">Snippy_Tree_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/snippy_variants/"><strong>Snippy_Variants</strong></a></td>
+<td>Alignment of reads to a reference genome, then SNP calling</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a>, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v2.3.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Snippy_Variants_PHB:main?tab=info">Snippy_Variants_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/ksnp3/"><strong>kSNP3</strong></a></td>
+<td>SNP-based phylogenetic analysis from assemblies</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a>, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="Some optional features of these workflows are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/kSNP3_PHB:main?tab=info">kSNP3_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/ksnp4/"><strong>kSNP4</strong></a></td>
+<td>SNP-based phylogenetic analysis from assemblies</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a>, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="Some optional features of these workflows are incompatible with command-line use and require modification">Some optional features incompatible</abbr>, <abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/kSNP4_PHB:main?tab=info">kSNP4_PHB</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="phylogenetic-placement"><abbr title="These workflows place samples on existing phylogenetic trees.">Phylogenetic Placement</abbr><a class="headerlink" href="#phylogenetic-placement" title="Permanent link">¶</a></h3>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Applicable Kingdom</strong></th>
+<th><strong>Workflow Level</strong></th>
+<th><strong><abbr title="Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either `miniwdl` or `cromwell`.">Command-line Compatibility</abbr></strong></th>
+<th><strong>Last Known Changes</strong></th>
+<th><strong>Dockstore</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../workflows/phylogenetic_placement/nextclade_batch/"><strong>Nextclade_Batch</strong></a></td>
+<td>Use Nextclade to rapidly and accurately place your samples on any existing phylogenetic tree</td>
+<td>Monkeypox virus, SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.0.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Nextclade_Batch_PHB:main?tab=info">Nextclade_Batch_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_placement/usher/"><strong>Usher</strong></a></td>
+<td>Use UShER to rapidly and accurately place your samples on any existing phylogenetic tree</td>
+<td>Monkeypox virus, SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr>, <abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v2.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Usher_PHB:main?tab=info">Usher_PHB</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="public-data-sharing"><abbr title="These workflows help prepare and/or transfer data to public data repositories.">Public Data Sharing</abbr><a class="headerlink" href="#public-data-sharing" title="Permanent link">¶</a></h3>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Applicable Kingdom</strong></th>
+<th><strong>Workflow Level</strong></th>
+<th><strong><abbr title="Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either `miniwdl` or `cromwell`.">Command-line Compatibility</abbr></strong></th>
+<th><strong>Last Known Changes</strong></th>
+<th><strong>Dockstore</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../workflows/public_data_sharing/mercury_prep_n_batch/"><strong>Mercury_Prep_N_Batch</strong></a></td>
+<td>Prepare metadata and sequence data for submission to NCBI and GISAID</td>
+<td>Influenza, Monkeypox virus, SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are not compatible with command-line use even with modifications; these workflows are engineered to run on Terra">No</abbr></td>
+<td>v4.0.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Mercury_Prep_N_Batch_PHB:main?tab=info">Mercury_Prep_N_Batch_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/public_data_sharing/terra_2_gisaid/"><strong>Terra_2_GISAID</strong></a></td>
+<td>Upload of assembly data to GISAID</td>
+<td>SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v1.2.1</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Terra_2_GISAID_PHB:main?tab=info">Terra_2_GISAID_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/public_data_sharing/terra_2_ncbi/"><strong>Terra_2_NCBI</strong></a></td>
+<td>Upload of sequence data to NCBI</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a>, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are not compatible with command-line use even with modifications; these workflows are engineered to run on Terra">No</abbr></td>
+<td>v4.0.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Terra_2_NCBI_PHB:main?tab=info">Terra_2_NCBI_PHB</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="exporting-data-from-terra"><abbr title="These workflows export data from Terra for use in other platforms or tools.">Exporting Data from Terra</abbr><a class="headerlink" href="#exporting-data-from-terra" title="Permanent link">¶</a></h3>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Applicable Kingdom</strong></th>
+<th><strong>Workflow Level</strong></th>
+<th><strong><abbr title="Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either `miniwdl` or `cromwell`.">Command-line Compatibility</abbr></strong></th>
+<th><strong>Last Known Changes</strong></th>
+<th><strong>Dockstore</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../workflows/data_export/concatenate_column_content/"><strong>Concatenate_Column_Content</strong></a></td>
+<td>Concatenate contents of a specified Terra data table column for many samples ("entities")</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v2.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Concatenate_Column_Content_PHB:main?tab=info">Concatenate_Column_Content_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/data_export/microreact_export/"><strong>Microreact_Export</strong></a></td>
+<td>Generate Microreact upload files from a Terra data table</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Microreact_Export_PHB:main?tab=info">Microreact_Export_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/data_export/transfer_column_content/"><strong>Transfer_Column_Content</strong></a></td>
+<td>Transfer contents of a specified Terra data table column for many samples ("entities") to a GCP storage bucket location</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v1.3.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Transfer_Column_Content_PHB:main?tab=info">Transfer_Column_Content_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/data_export/zip_column_content/"><strong>Zip_Column_Content</strong></a></td>
+<td>Zip contents of a specified Terra data table column for many samples ("entities")</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Zip_Column_Content_PHB:main?tab=info">Zip_Column_Content_PHB</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+<h3 id="standalone"><abbr title="These workflows are designed to be run independently of the major workflow groups as either supplements or alternatives.">Standalone</abbr><a class="headerlink" href="#standalone" title="Permanent link">¶</a></h3>
+<div class="searchable-table">
+<table>
+<thead>
+<tr>
+<th><strong>Name</strong></th>
+<th><strong>Description</strong></th>
+<th><strong>Applicable Kingdom</strong></th>
+<th><strong>Workflow Level</strong></th>
+<th><strong><abbr title="Command-line compatibility is determined if the workflow can be run on a local command-line environment, providing all dependencies are installed, with either `miniwdl` or `cromwell`.">Command-line Compatibility</abbr></strong></th>
+<th><strong>Last Known Changes</strong></th>
+<th><strong>Dockstore</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><a href="../../workflows/standalone/amr_search/"><strong>AMR_Search</strong></a></td>
+<td>Perform AMR profiling on microbial assemblies mimicing Pathogenwatch</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v3.0.1</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/AMR_Search_PHB:main?tab=info">AMR_Search_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/standalone/cauris_cladetyper/"><strong>Cauris_CladeTyper</strong></a></td>
+<td>C. auris clade assignment</td>
+<td><a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.0.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Cauris_CladeTyper_PHB:main?tab=info">Cauris_CladeTyper_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/clair3_variants/"><strong>Clair3_Variants</strong></a></td>
+<td>ONT Variant Caller</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Clair3_Variants_ONT_PHB:main?tab=info">Clair3_Variants_ONT_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/data_export/concatenate_column_content/"><strong>Concatenate_Column_Content</strong></a></td>
+<td>Concatenate contents of a specified Terra data table column for many samples ("entities")</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v2.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Concatenate_Column_Content_PHB:main?tab=info">Concatenate_Column_Content_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/standalone/concatenate_illumina_lanes/"><strong>Concatenate_Illumina_Lanes</strong></a></td>
+<td>Concatenate Illumina lanes for a single sample</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v2.3.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Concatenate_Illumina_Lanes_PHB:main?tab=info">Concatenate_Illumina_Lanes_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/data_import/fetch_srr_accession/"><strong>Fetch_SRR_Accession</strong></a></td>
+<td>Provided a BioSample accession, identify any associated SRR accession(s)</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v2.3.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Fetch_SRR_Accession_PHB:main?tab=info">Fetch_SRR_Accession_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/find_shared_variants/"><strong>Find_Shared_Variants</strong></a></td>
+<td>Combines and reshapes variant data from Snippy_Variants to illustrate variants shared across multiple samples</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v2.0.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Find_Shared_Variants_PHB:main?tab=info">Find_Shared_Variants_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/standalone/gambit_query/"><strong>GAMBIT_Query</strong></a></td>
+<td>Taxon identification of genome assembly using GAMBIT</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v2.0.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Gambit_Query_PHB:main?tab=info">Gambit_Query_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/standalone/kraken2/"><strong>Kraken2</strong></a></td>
+<td>Taxa identification from reads</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Kraken2_PE_PHB:main?tab=info">Kraken2_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Kraken2_SE_PHB:main?tab=info">Kraken2_SE_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/standalone/metabuli/"><strong>Metabuli</strong></a></td>
+<td>Taxa identification from reads, including ONT data</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Metabuli_PHB:main?tab=info">Metabuli_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/data_export/microreact_export/"><strong>Microreact_Export</strong></a></td>
+<td>Generate Microreact upload files from a Terra data table</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Microreact_Export_PHB:main?tab=info">Microreact_Export_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/standalone/ncbi_amrfinderplus/"><strong>NCBI-AMRFinderPlus</strong></a></td>
+<td>Runs NCBI's AMRFinderPlus on genome assemblies (bacterial and fungal)</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.1.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/NCBI-AMRFinderPlus_PHB:main?tab=info">NCBI-AMRFinderPlus_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/standalone/ncbi_scrub/"><strong>NCBI_Scrub</strong></a></td>
+<td>Runs NCBI's HRRT on Illumina FASTQs</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v2.2.1</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/NCBI_Scrub_PE_PHB:main?tab=info">NCBI_Scrub_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/NCBI_Scrub_SE_PHB:main?tab=info">NCBI_Scrub_SE_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/genomic_characterization/pangolin_update/"><strong>Pangolin_Update</strong></a></td>
+<td>Update Pangolin assignments</td>
+<td>SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v3.0.1</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Pangolin_Update_PHB:main?tab=info">Pangolin_Update_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/standalone/phylocompare/"><strong>PhyloCompare</strong></a></td>
+<td>Quantify the difference between two phylogenetic trees with the same tips</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows create or process entire tables of data.">Table-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.0.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/PhyloCompare_PHB:main?tab=info">PhyloCompare_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/standalone/rasusa/"><strong>RASUSA</strong></a></td>
+<td>Randomly subsample sequencing reads to a specified coverage</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>vX.X.X</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/RASUSA_PHB:main?tab=info">RASUSA_PHB</a></td>
 </tr>
 <tr>
 <td><a href="../../workflows/standalone/rename_fastq/"><strong>Rename_FASTQ</strong></a></td>
 <td>Rename paired-end or single-end read files in a Terra data table in a non-destructive way</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>v2.1.0</td>
-<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Rename_FASTQ_PHB:im-utilities-rename-files?tab=info">Rename_FASTQ_PHB</a></td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Rename_FASTQ_PHB:main?tab=info">Rename_FASTQ_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/phylogenetic_construction/snippy_variants/"><strong>Snippy_Variants</strong></a></td>
+<td>Alignment of reads to a reference genome, then SNP calling</td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a>, <a href="../workflows_kingdom/#mycotics"><abbr title="These workflows are compatible with mycotic pathogens">Mycotics</abbr></a>, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a></td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v2.3.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Snippy_Variants_PHB:main?tab=info">Snippy_Variants_PHB</a></td>
 </tr>
 <tr>
 <td><a href="../../workflows/standalone/tbprofiler_tngs/"><strong>TBProfiler_tNGS</strong></a></td>
 <td>Performs in silico antimicrobial susceptibility testing on Mycobacterium tuberculosis targeted-NGS samples with TBProfiler and tbp-parser</td>
-<td><a href="../workflows_kingdom/#bacteria"><abbr title="This workflow is compatible with any bacterial pathogen">Bacteria</abbr></a>, TB</td>
-<td><abbr title="This workflow is run once for each sample">Sample-level</abbr></td>
-<td><abbr title="This workflow is compatible with command-line use">Yes</abbr></td>
+<td><a href="../workflows_kingdom/#bacteria"><abbr title="These workflows are compatible with any bacterial pathogen">Bacteria</abbr></a>, TB</td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
 <td>v4.1.0</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TBProfiler_tNGS_PHB:main?tab=info">TBProfiler_tNGS_PHB</a></td>
 </tr>
 <tr>
 <td><a href="../../workflows/standalone/theiavalidate/"><strong>TheiaValidate</strong></a></td>
 <td>This workflow performs basic comparisons between user-designated columns in two separate tables.</td>
-<td><a href="../workflows_kingdom/#any-taxa"><abbr title="This workflow is organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
-<td></td>
-<td><abbr title="This workflow is not compatible with command-line use even with modifications; this workflow is engineered to run on Terra">No</abbr></td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows create or process entire tables of data.">Table-level</abbr></td>
+<td><abbr title="These workflows are not compatible with command-line use even with modifications; these workflows are engineered to run on Terra">No</abbr></td>
 <td>vX.X.X</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaValidate_PHB:main?tab=info">TheiaValidate_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/data_export/transfer_column_content/"><strong>Transfer_Column_Content</strong></a></td>
+<td>Transfer contents of a specified Terra data table column for many samples ("entities") to a GCP storage bucket location</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v1.3.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Transfer_Column_Content_PHB:main?tab=info">Transfer_Column_Content_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/genomic_characterization/vadr_update/"><strong>VADR_Update</strong></a></td>
+<td>Update VADR assignments</td>
+<td>HAV, Influenza, Monkeypox virus, RSV-A, RSV-B, SARS-CoV-2, <a href="../workflows_kingdom/#viral"><abbr title="These workflows are compatible with any viral pathogen">Viral</abbr></a>, WNV</td>
+<td><abbr title="These workflows are run once for each sample">Sample-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>v4.0.0</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/VADR_Update_PHB:main?tab=info">VADR_Update_PHB</a></td>
+</tr>
+<tr>
+<td><a href="../../workflows/data_export/zip_column_content/"><strong>Zip_Column_Content</strong></a></td>
+<td>Zip contents of a specified Terra data table column for many samples ("entities")</td>
+<td><a href="../workflows_kingdom/#any-taxa"><abbr title="These workflows are organism-agnostic and can be run with any taxa">Any taxa</abbr></a></td>
+<td><abbr title="These workflows are run once on a group of samples">Set-level</abbr></td>
+<td><abbr title="These workflows are compatible with command-line use">Yes</abbr></td>
+<td>vX.X.X</td>
+<td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Zip_Column_Content_PHB:main?tab=info">Zip_Column_Content_PHB</a></td>
 </tr>
 </tbody>
 </table>
 </div>
+<!-- definitions for workflow level column -->
+<!-- definitions for applicable kingdom column -->
 <!-- definitions for workflow type column -->
-<!-- definitions for taxa column -->
 <!-- definition for command-line compatible column -->
 
 
@@ -7403,7 +7642,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="August 11, 2025 20:16:11 UTC">2025-08-11</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 4, 2026 15:24:21 UTC">2026-05-04</span>
   </span>
 
     
@@ -7451,7 +7690,6 @@
   
     <div class="md-copyright__highlight">
       © 2022-2026 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
-
     </div>
   
   

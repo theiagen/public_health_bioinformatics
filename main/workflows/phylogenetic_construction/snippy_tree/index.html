@@ -7875,7 +7875,7 @@
 <td>snippy_tree_wf</td>
 <td><strong>iqtree2_ultrafast_bootstraps</strong></td>
 <td>Int</td>
-<td>Number of replicates for <a href="http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation">http://www.iqtree.org/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation</a> (Minimum recommended= 1000)</td>
+<td>Number of replicates for <a href="https://iqtree.github.io/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation">https://iqtree.github.io/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation</a> (Minimum recommended= 1000)</td>
 <td>1000</td>
 <td>Optional</td>
 </tr>
@@ -8237,7 +8237,7 @@
 <summary>IQTree2</summary>
 <h5 id="iqtree2">IQTree2<a class="headerlink" href="#iqtree2" title="Permanent link">¶</a></h5>
 <p>IQTree2 is used to build the final phylogeny. It uses the alignment generated in the previous steps of the workflow. The contents of this alignment will depend on whether any sites were masked with recombination.</p>
-<p>The phylogeny is generated using the maximum-likelihood method and a specified nucleotide substitution model. By default, the Snippy_Tree workflow will run Model Finder to determine the most appropriate nucleotide substitution model for your data, but you may specify the nucleotide substitution model yourself using the <code>iqtree2_model</code> optional input (see <a href="http://www.iqtree.org/doc/Substitution-Models">here</a> for available models).</p>
+<p>The phylogeny is generated using the maximum-likelihood method and a specified nucleotide substitution model. By default, the Snippy_Tree workflow will run Model Finder to determine the most appropriate nucleotide substitution model for your data, but you may specify the nucleotide substitution model yourself using the <code>iqtree2_model</code> optional input (see <a href="https://iqtree.github.io/doc/Substitution-Models">here</a> for available models).</p>
 <p>IQTree will perform assessments of the tree using the Shimodaira–Hasegawa approximate likelihood-ratio test (<a href="https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false">SH-aLRT test</a>), and ultrafast bootstrapping with <a href="https://academic.oup.com/mbe/article/35/2/518/4565479">UFBoot2</a>, a quicker but less biased alternative to standard bootstrapping. A clade should not typically be trusted if it has less than 80% support from the SH-aLRT test and less than 95% support with ultrafast bootstrapping.</p>
 <div class="admonition tip">
 <p class="admonition-title">Nucleotide substitution model</p>
@@ -8264,7 +8264,7 @@
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="http://www.iqtree.org/doc/">IQTree documentation</a> for the latest version (not necessarily the version used in this workflow)</td>
+<td><a href="https://iqtree.github.io/doc/">IQTree documentation</a> for the latest version (not necessarily the version used in this workflow)</td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
@@ -8817,7 +8817,6 @@ The <code>cat_variants</code> task concatenates variant data from multiple sampl
   
     <div class="md-copyright__highlight">
       © 2022-2026 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
-
     </div>
   
   
