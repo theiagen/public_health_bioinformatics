@@ -99,7 +99,7 @@ workflow read_decontaminate {
       read2 = read2
   }
   # run contaminant check
-  if (defined(expected_sequences)) {
+  if (defined(expected_sequences) && expected_sequences != "") {
     # stage fail variable
     String contaminant_check_fail = "FAIL: no reads mapped to inputted sequences"
     if (read_mapping_stats.mapping_stats_status == "PASS") {
@@ -119,7 +119,7 @@ workflow read_decontaminate {
     }
   }
   # set arbitrary empty Maps for WDL/Terra compatibility
-  if (! defined(expected_sequences) || read_mapping_stats.mapping_stats_status != "PASS") {
+  if (! defined(expected_sequences) || expected_sequences == "" || read_mapping_stats.mapping_stats_status != "PASS") {
     Map[String, Float] expected_cov_by_sequence = {"": 0}
     Map[String, Float] expected_depth_by_sequence = {"": 0}
     Map[String, Float] expected_reads_by_sequence = {"": 0}
