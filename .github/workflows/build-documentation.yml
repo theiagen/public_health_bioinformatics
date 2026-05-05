@@ -29,7 +29,7 @@ jobs:
 
       - name: Install dependencies
         run: |
-          pip install zensical git+https://github.com/squidfunk/mike.git
+          pip install zensical==0.0.40 git+https://github.com/squidfunk/mike.git
       
       - name: Build documentation
         run: |
