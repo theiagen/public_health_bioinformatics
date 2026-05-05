@@ -82,7 +82,7 @@ Any metadata present in the final JSON file for Auspice visualization is determi
     ![Augur Metadata Conditionals](../../assets/figures/Augur_Metadata_Conditionals.png){data-description="The metadata and type of tree in the output JSON for Auspice will depend on the metadata that is present in input metadata file. If no metadata file is provided, the output JSON will only contain a distance tree. If date information is present, the distance tree will be replaced by a tree refined by time (time tree). If clade and/or pango lineage (for SARS-CoV-2) information is provided, the tree will display an option to color by lineage. If geographical information is present, a map will load in Auspice using the information provided."}
     </div>
 
-##### **A Note on Optional Inputs**
+##### A Note on Optional Inputs
 
 !!! warning "Defaults change based on the specified organism input"
     Default values that mimic the Nextstrain builds for the following organisms have been preselected:
