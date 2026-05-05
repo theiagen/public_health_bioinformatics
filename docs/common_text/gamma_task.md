@@ -1,3 +1,7 @@
+---
+title: Task Fragment `gamma`
+fragment: true
+---
 ??? task "`GAMMA`: AMR Genotyping (optional)"
 
     To activate this task, set `call_gamma` to `true`.

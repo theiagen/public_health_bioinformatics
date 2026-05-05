@@ -1,3 +1,7 @@
+---
+title: Task Fragment `organism_parameters`
+fragment: true
+---
 ??? task "`organism_parameters`: Setting default values for specific organisms"
 
     Organism Parameters acquires and propagates default files and variable values for specific organisms.

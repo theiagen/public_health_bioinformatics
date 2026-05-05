@@ -1,3 +1,7 @@
+---
+title: Task Fragment `gambit`
+fragment: true
+---
 ??? task "`GAMBIT`: **Taxon Assignment**"
     [`GAMBIT`](https://github.com/jlumpe/gambit) determines the taxon of the genome assembly using a k-mer based approach to match the assembly sequence to the closest complete genome in a database, thereby predicting its identity. Sometimes, GAMBIT can confidently designate the organism to the species level. Other times, it is more conservative and assigns it to a higher taxonomic rank.
 

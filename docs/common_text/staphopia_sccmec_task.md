@@ -1,3 +1,7 @@
+---
+title: Task Fragment `staphopia_sccmec`
+fragment: true
+---
 ??? task "`staphopia-sccmec`: Sequence Typing"
     SCC_mec_ (staphylococcal cassette chromosome _mec_) is a mobile genetic element of _Staphylococcus_ species. It includes a methicilin-resistant _mecA_ gene that is shared between _Staphylococcus_ strains via horizontal gene transfer, which leads to MRSA strains. SCC_mec_ has also been found to confer resistance to non-beta-lactam drugs as well, making it an important target for identifying antimicrobial resistance in _Staphylococcus aureus_.
 

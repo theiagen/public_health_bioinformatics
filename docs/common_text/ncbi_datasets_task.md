@@ -1,3 +1,7 @@
+---
+title: Task Fragment `ncbi_datasets`
+fragment: true
+---
 ??? task "NCBI Datasets"
 <!-- if: snippy|assembly_fetch -->
     ##### NCBI Datasets

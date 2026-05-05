@@ -1,3 +1,7 @@
+---
+title: Task Fragment `flye_denovo`
+fragment: true
+---
 ??? task "`Flye`: _De novo_ Assembly"
     `flye_denovo` is a sub-workflow that performs _de novo_ assembly using Flye for ONT data and supports additional polishing and visualization steps.
 

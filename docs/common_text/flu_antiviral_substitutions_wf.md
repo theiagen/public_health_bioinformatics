@@ -1,3 +1,7 @@
+---
+title: Task Fragment `flu_antiviral_substitutions`
+fragment: true
+---
 ??? task "`flu_antiviral_substitutions`"
 
     This subworkflow determines if any antiviral mutations are present in the HA, NA, and MP segments of H1N1 or H3N2 flu sample, or any in non-subtype-specific PA, PB1, and PB2 segments.

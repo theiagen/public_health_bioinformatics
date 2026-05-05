@@ -1,3 +1,7 @@
+---
+title: Task Fragment `flye`
+fragment: true
+---
 ??? task "`flye`"
 
     Flye is a _de novo_ assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerates the error rate of ONT data.

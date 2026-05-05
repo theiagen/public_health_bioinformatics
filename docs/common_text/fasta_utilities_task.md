@@ -1,3 +1,7 @@
+---
+title: Task Fragment `fasta_utilities`
+fragment: true
+---
 ??? task "`fasta_utilities`"
 
     The `fasta_utilities` task utilizes samtools to index a reference fasta file.

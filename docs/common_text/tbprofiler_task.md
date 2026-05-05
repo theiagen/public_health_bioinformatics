@@ -1,3 +1,7 @@
+---
+title: Task Fragment `tbprofiler`
+fragment: true
+---
 ??? task "`TBProfiler`: Lineage and Drug Susceptibility Prediction ==_for Illumina and ONT only_=="
     [TBProfiler](https://github.com/jodyphelan/TBProfiler) identifies _Mycobacterium tuberculosis_ complex species, lineages, sub-lineages and drug resistance-associated mutations.
 

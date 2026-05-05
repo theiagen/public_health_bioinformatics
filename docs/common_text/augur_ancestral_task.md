@@ -1,3 +1,7 @@
+---
+title: Task Fragment `augur ancestral`
+fragment: true
+---
 ??? task "`augur ancestral`: Ancestral Nucleotide Sequence Reconstruction"
     `augur ancestral` infers ancestral nucleotide sequences based on phylogenetic relatedness using maximum-likelihood via TreeTime. A "joint" maximum likelihood model is used by default, though "marginal" input is permitted. 
 

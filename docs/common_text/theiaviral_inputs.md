@@ -1,3 +1,7 @@
+---
+title: Task Fragment `theiaviral_inputs`
+fragment: true
+---
 ???+ dna_blue "`taxon` _required_ input parameter"
     `taxon` is the standardized taxonomic name (e.g. "Lyssavirus rabies") or NCBI taxon ID (e.g. "11292") of the desired virus to analyze. Inputs must be represented in the [NCBI taxonomy database](https://www.ncbi.nlm.nih.gov/Taxonomy/Browser/wwwtax.cgi) and do not have to be species-level (see `read_extraction_rank` below).
 

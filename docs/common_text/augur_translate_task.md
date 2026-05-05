@@ -1,3 +1,7 @@
+---
+title: Task Fragment `augur translate`
+fragment: true
+---
 ??? task "`augur translate`: Translate Nucleotide Sequences"
     `augur translate` translates nucleotide sequences of nodes in a phylogeny to amino acids based on annotated features in a provided `reference_genbank`. The task will not run without a `reference_genbank` input.
 

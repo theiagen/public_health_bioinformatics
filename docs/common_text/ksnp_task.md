@@ -1,3 +1,7 @@
+---
+title: Task Fragment `ksnp`
+fragment: true
+---
 <!-- if: ksnp3 -->
 ??? task "kSNP3 Details"
 <!-- endif -->

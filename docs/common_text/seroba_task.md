@@ -1,3 +1,7 @@
+---
+title: Task Fragment `seroba`
+fragment: true
+---
 ??? task "`SeroBA`: Serotyping ==_for Illumina_PE only_=="
     SeroBA is a k-mer based method for serotyping using the capsular polysaccharide biosynthesis (_cps_) locus of _Streptococcus pneumoniae_ from paired-end sequencing data. This locus encodes the serotype and is a major virulence factor for the species. Identifying circulating serotypes is important to determine the epidemiological trends and vaccine impact.
 

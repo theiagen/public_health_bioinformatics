@@ -1,3 +1,7 @@
+---
+title: Task Fragment `snp_dists`
+fragment: true
+---
 <!-- if: augur -->
 ??? task "`snp-dists`: Pairwise SNP Distance Calculation"
 <!-- endif -->

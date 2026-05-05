@@ -1,3 +1,7 @@
+---
+title: Task Fragment `kraken2`
+fragment: true
+---
 <!-- if: theiaprokillumina|theiaeuk -->
 ??? task "Kraken2 + Bracken: Read Classification (optional)"
     To activate this task, provide a file for `kraken_db` under the `read_QC_trim` subworkflow.

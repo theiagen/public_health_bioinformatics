@@ -1,3 +1,7 @@
+---
+title: Task Fragment `trimmomatic`
+fragment: true
+---
 ??? task "`Trimmomatic`: Read Trimming (default)"
     Read proccessing is available via `Trimmomatic` by default.
 

@@ -1,3 +1,7 @@
+---
+title: Task Fragment `pasty`
+fragment: true
+---
 ??? task "`pasty`: Serotyping"
     `pasty` is a tool for _in silico_ serogrouping of _Pseudomonas aeruginosa_ isolates. `pasty` was developed by Robert Petit, based on the [PAst](https://github.com/Sandramses/PAst) tool from the Centre for Genomic Epidemiology.
 

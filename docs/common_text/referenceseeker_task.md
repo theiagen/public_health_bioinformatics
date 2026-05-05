@@ -1,3 +1,7 @@
+---
+title: Task Fragment `referenceseeker`
+fragment: true
+---
 ??? task "ReferenceSeeker Details (Optional)"
     ##### ReferenceSeeker
     `ReferenceSeeker` uses your draft assembly to identify closely related bacterial, viral, fungal, or plasmid genome assemblies in [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/).

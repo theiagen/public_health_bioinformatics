@@ -1,3 +1,7 @@
+---
+title: Task Fragment `kmerfinder`
+fragment: true
+---
 ??? task "`KmerFinder`: Taxon Assignment (optional)"
 
     To activate this task, set `call_kmerfinder` to `true`.

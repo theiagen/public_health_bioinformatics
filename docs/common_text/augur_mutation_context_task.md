@@ -1,3 +1,7 @@
+---
+title: Task Fragment `extract mutation context`
+fragment: true
+---
 ??? task "`extract mutation context`: Contextualizing Mpox Mutation ==(only for mpox)=="
     This task quantifies the number of G/A, C/T, and dinucleotide conversions for mpox samples. These mutations have been shown to be a characteristic of APOBEC3-type editing, which indicate adaptation of the virus to circulation among humans.
 

@@ -1,3 +1,12 @@
+---
+title: Task Fragment `poppunk`
+fragment: true
+---
+
+---
+title: Task Fragment `poppunk`
+fragment: true
+---
 ??? task "`PopPUNK`: Global Pneumococcal Sequence Cluster Typing"
     Global Pneumococcal Sequence Clusters (GPSC) define and name pneumococcal strains. Each GPSC is an [international definition of a pneumococcal lineage](https://doi.org/10.1016/j.ebiom.2019.04.021) and can capture all variations across the entire genome, leading to better vaccine development due to increased disease surveillance. GPSC designation is undertaken using the PopPUNK (Population Partitioning Using Nucleotide K-mers) software and the GPSC database.
 

@@ -1,3 +1,7 @@
+---
+title: Task Fragment `rasusa`
+fragment: true
+---
 ??? task "`Rasusa`: Read Subsampling"
 
     `Rasusa` is a tool to randomly subsample sequencing reads to a specified coverage without assuming that all reads are of equal length, making it especially suitable for long-read data while still being applicable to short-read data.

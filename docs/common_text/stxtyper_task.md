@@ -1,3 +1,7 @@
+---
+title: Task Fragment `stxtyper`
+fragment: true
+---
 ??? task "`StxTyper`: Identification and Typing of Shiga toxin (Stx) Genes"
     StxTyper screens bacterial genome assemblies for shiga toxin genes and subtypes them into known subtypes and also looks for novel subtypes in cases where the detected sequences diverge from the reference sequences.
     

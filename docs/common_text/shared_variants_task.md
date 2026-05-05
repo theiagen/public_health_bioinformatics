@@ -1,3 +1,7 @@
+---
+title: Task Fragment `shared_variants`
+fragment: true
+---
 <!-- if: snippy -->
 ??? task "Concatenate Variants (optional)"
     ##### Concatenate Variants (optional)

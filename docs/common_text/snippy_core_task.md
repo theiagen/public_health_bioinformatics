@@ -1,3 +1,7 @@
+---
+title: Task Fragment `snippy_core`
+fragment: true
+---
 ??? task "Snippy"
     ##### Snippy
 <!-- if: snippy_tree -->

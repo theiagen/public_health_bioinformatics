@@ -1,3 +1,7 @@
+---
+title: Task Fragment `seqsero2s`
+fragment: true
+---
 ??? task "`SeqSero2S`: Serotyping"
     [SeqSero2S](https://github.com/LSTUGA/SeqSero2S) is a tool for _Salmonella_ serotype prediction. SeqSero2S is a software package that determines serotype antigens by finding the genes responsible for the flagellar filament (H antigen) and the outermost oligosaccharides of LPS (O antigen) in _Salmonella_ and matches them to known representative alleles for those genes in a curated database. An antigenic formula describes all serotypes; _Salmonella enterica_ subspecies _enterica_ serotypes are also assigned a serotype name by the genotyping tool.
 

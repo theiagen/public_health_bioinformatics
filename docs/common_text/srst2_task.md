@@ -1,3 +1,7 @@
+---
+title: Task Fragment `srst2`
+fragment: true
+---
 ??? task "`SRST2`: _Vibrio_ Characterization ==_for Illumina only_=="
     SRST2 is used to perform general characterization of _Vibrio_ genomes using a database of target sequences that are traditionally used in PCR methods. The sequences included in the database are as follows:
 

@@ -1,3 +1,7 @@
+---
+title: Task Fragment `porechop`
+fragment: true
+---
 ??? task "`porechop`"
 
 <!-- if: theiaprok|theiaeuk  -->

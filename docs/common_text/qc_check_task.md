@@ -1,3 +1,7 @@
+---
+title: Task Fragment `qc_check`
+fragment: true
+---
 
 ??? task "`qc_check`: Check QC Metrics Against User-Defined Thresholds (optional)"
 

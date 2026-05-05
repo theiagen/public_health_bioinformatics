@@ -1,3 +1,7 @@
+---
+title: Task Fragment `read_qc_trim_illumina`
+fragment: true
+---
 ??? task "`read_QC_trim`: Read Quality Trimming, Adapter Removal, Quantification, and Identification"
     `read_QC_trim` is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the `read_QC_trim` sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.
 

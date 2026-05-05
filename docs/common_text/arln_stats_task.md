@@ -1,3 +1,7 @@
+---
+title: Task Fragment `arln_stats`
+fragment: true
+---
 ??? task "`arln_stats`: Quality Assessment for ARLN (optional)"
 
     To activate this task, set `call_arln_stats` to `true`.

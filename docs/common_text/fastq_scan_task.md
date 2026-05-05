@@ -1,3 +1,7 @@
+---
+title: Task Fragment `fastq_scan`
+fragment: true
+---
 <!-- if: notclearlabs -->
 ??? task "`fastq-scan`: Read Quantification (default)"
     Read quantification is available via `fastq-scan` by default.

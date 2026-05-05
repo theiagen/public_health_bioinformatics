@@ -1,3 +1,7 @@
+---
+title: Task Fragment `bakta`
+fragment: true
+---
 ??? task "`Bakta`: Assembly Annotation (alternative)"
 
     To activate this task, set `genome_annotation` to `"bakta"`.

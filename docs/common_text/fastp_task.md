@@ -1,3 +1,7 @@
+---
+title: Task Fragment `fastp`
+fragment: true
+---
 <!-- if: read_qc_trim -->
 ??? task "`fastp`: Read Trimming (alternative)"
     To activate this task, set `read_processing` to `"fastp"`.

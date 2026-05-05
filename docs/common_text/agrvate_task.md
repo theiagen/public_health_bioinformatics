@@ -1,3 +1,7 @@
+---
+title: Task Fragment `agrvate`
+fragment: true
+---
 ??? task "`AgrVATE`: Sequence Typing"
     This tool identifies the accessory gene regulator (_agr_) locus type and reports possible variants in the _agr_ operon. The _agr_ system is a major regulator of virulence phenotypes in _Staphylococcus aureus_. Many _S. aureus_ strains often have nonfunctional _agr_ activity due to various loss-of-function mutations in the _agr_ operon. This may be associated with increased disease severity, making its detection clinically significant.
 

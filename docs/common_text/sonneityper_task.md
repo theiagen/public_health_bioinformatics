@@ -1,3 +1,7 @@
+---
+title: Task Fragment `sonneityper`
+fragment: true
+---
 ??? task "`SonneiTyper`: _Shigella sonnei_ identification, genotyping, and resistance mutation identification ==_for Illumina and ONT data only_=="
     SonneiTyper identifies _Shigella sonnei_, and uses **single-nucleotide variants** for genotyping and prediction of quinolone resistance in _gyrA_ (S83L, D87G, D87Y) and _parC_ (S80I). Outputs are provided in [a TSV format described here](https://github.com/katholt/sonneityping#example-output).
 

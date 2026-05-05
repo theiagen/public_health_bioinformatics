@@ -1,3 +1,7 @@
+---
+title: Task Fragment `read_screen`
+fragment: true
+---
 
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 

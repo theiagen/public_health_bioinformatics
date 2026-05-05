@@ -1,3 +1,7 @@
+---
+title: Task Fragment `pilon`
+fragment: true
+---
 
 ??? task "`Pilon`: Assembly Polishing"
     `Pilon` is a tool that uses read alignments to correct errors in an assembly.

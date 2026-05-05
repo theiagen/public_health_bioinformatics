@@ -1,3 +1,7 @@
+---
+title: Task Fragment `taxon_table`
+fragment: true
+---
 ??? task "`Taxon Tables`: Copy outputs to new data tables based on taxonomic assignment (optional)"
 
 <!-- if: theiaviral_panel -->

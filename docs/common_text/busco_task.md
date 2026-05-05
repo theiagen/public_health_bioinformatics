@@ -1,4 +1,7 @@
-
+---
+title: Task Fragment `busco`
+fragment: true
+---
 ??? task "`BUSCO`: Assembly Quality Assessment"
 
     BUSCO (**B**enchmarking **U**niversal **S**ingle-**C**opy **O**rthologue) attempts to quantify the completeness and contamination of an assembly to generate quality assessment metrics. It uses taxa-specific databases containing genes that are all expected to occur in the given taxa, each in a single copy. BUSCO examines the presence or absence of these genes, whether they are fragmented, and whether they are duplicated (suggestive that additional copies came from contaminants).

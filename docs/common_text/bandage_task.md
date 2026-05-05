@@ -1,3 +1,7 @@
+---
+title: Task Fragment `bandage`
+fragment: true
+---
 ??? task "`Bandage`: Graph Visualization"
     Bandage creates _de novo_ assembly graphs containing the assembled contigs and the connections between those contigs. These graphs are useful for visualizing the assembly structure, identifying potential misassemblies, and understanding the relationships between contigs.
 

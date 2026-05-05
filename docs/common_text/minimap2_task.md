@@ -1,3 +1,7 @@
+---
+title: Task Fragment `minimap2`
+fragment: true
+---
 <!-- if: long_read_flags|only_map_ont -->
 ??? task "`minimap2`: Read Alignment Details"
 <!-- endif -->

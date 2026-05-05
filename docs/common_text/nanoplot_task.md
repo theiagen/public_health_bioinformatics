@@ -1,3 +1,7 @@
+---
+title: Task Fragment `nanoplot`
+fragment: true
+---
 ??? task "`NanoPlot`: Read Quantification"
 
     NanoPlot is used for the determination of mean quality scores, read lengths, and number of reads. This task is run once with raw reads as input and once with clean reads as input. If QC has been performed correctly, you should expect **fewer** clean reads than raw reads.

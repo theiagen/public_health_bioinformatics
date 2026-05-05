@@ -1,3 +1,7 @@
+---
+title: Task Fragment `vibecheck`
+fragment: true
+---
 ??? task "`Vibecheck`: O1 _Vibrio  cholerae_ Lineage Classification ==_for Illumina PE only_=="
     The `Vibecheck` task classifies O1 _V. cholerae_ sequences into canonical lineages (T1-T17) using variant frequency demixing. The O1 designation is determined through the use of the SRST2 task.
 

@@ -8,7 +8,7 @@ This guide is intended to provide a brief overview of the documentation structur
 
 Since the documentation is built off of the `main` branch, it is highly recommended to preview your changes before making a PR. You can do this by installing the necessary packages and previewing ("serving") the documentation locally.
 
-To test your documentation changes, you will need to zzwhave the following packages installed on your local VM:
+To test your documentation changes, you will need to have the following packages installed on your local VM:
 
 ```bash
 pip install zensical git+https://github.com/squidfunk/mike.git

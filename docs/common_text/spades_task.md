@@ -1,3 +1,7 @@
+---
+title: Task Fragment `spades`
+fragment: true
+---
 <!-- if: theiaviral -->
 ??? task "`spades`"
 <!-- endif -->

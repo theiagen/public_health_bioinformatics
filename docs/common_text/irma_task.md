@@ -1,3 +1,7 @@
+---
+title: Task Fragment `irma`
+fragment: true
+---
 <!-- if: assembly -->
 ??? task "`irma`: Assembly and Characterization"
 <!-- endif -->

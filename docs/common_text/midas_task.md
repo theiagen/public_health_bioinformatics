@@ -1,3 +1,7 @@
+---
+title: Task Fragment `midas`
+fragment: true
+---
 ??? task "`MIDAS`: Read Identification (optional)"
     To activate this task, set `call_midas` to `true`.
 

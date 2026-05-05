@@ -1,3 +1,7 @@
+---
+title: Task Fragment `amr_search`
+fragment: true
+---
 <!-- if: amr_search -->
 ??? task "`amr_search`: Antimicrobial resistance profiling"
 <!-- endif -->

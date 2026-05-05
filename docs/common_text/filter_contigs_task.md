@@ -1,3 +1,7 @@
+---
+title: Task Fragment `filter_contigs`
+fragment: true
+---
 <!-- if: flye -->
 ??? task "`Filter Contigs`: Filter contigs below a threshold length and remove homopolymer contigs"
     This task filters the created contigs based on a user-defined minimum length threshold (default of 1000) and eliminates homopolymer contigs (contigs of any length that consist of a single nucleotide).

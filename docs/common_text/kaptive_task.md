@@ -1,3 +1,7 @@
+---
+title: Task Fragment `kaptive`
+fragment: true
+---
 ??? task "`Kaptive`: Capsule and Lipooligosaccharide Outer Core Typing"
 
     The cell-surface capsular polysaccharide (CPS) of *Acinetobacter baumannii* can be used as an epidemiological marker. CPS varies in its composition and structure and is a key determinant in virulence and a target for non-antibiotic therapeutics. Specificity for non-antibiotic therapeutics (e.g. phage therapy) bear particular significance given the extent of antibiotic resistance found in this [ESKAPE](https://journals.asm.org/doi/10.1128/CMR.00181-19) pathogen. 

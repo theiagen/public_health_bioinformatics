@@ -1,3 +1,7 @@
+---
+title: Task Fragment `augur export`
+fragment: true
+---
 ??? task "`augur export`: Exporting Auspice-formatted Phylogenetic Trees"
     `augur export` outputs an Auspice-formatted JSON from an Augur-refined phylogenetic tree and its included metadata. The resulting JSON can be inputted directly into the web-based tree viewer, [auspice.us](https://auspice.us).
 

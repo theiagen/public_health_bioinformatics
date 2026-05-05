@@ -1,3 +1,7 @@
+---
+title: Task Fragment `vadr`
+fragment: true
+---
 ??? task "`vadr`"
 
     VADR (Viral Annotation DefineR) annotates and validates completed assembly files. For details on VADR default models/parameters, see the [*organism-specific parameters and logic* section](./theiacov.md#org-specific). It was primarily developed to test viral sequences to confirm they would be accepted to NCBI's GenBank data repository, but has found wide usage in general sequence validation and annotation.

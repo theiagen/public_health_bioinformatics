@@ -1,3 +1,7 @@
+---
+title: Task Fragment `ngmaster`
+fragment: true
+---
 ??? task "`ngmaster`: _Neisseria gonorrhoeae_ Sequence Typing"
     NG-MAST is currently the most widely used method for epidemiological surveillance of _Neisseria gonorrhoea_. This tool is targeted at clinical and research microbiology laboratories that have performed WGS of _N. gonorrhoeae_ isolates and wish to understand the molecular context of their data in comparison to previously published epidemiological studies. As WGS becomes more routinely performed, NGMASTER has been developed to completely replace PCR-based NG-MAST, reducing time and labor costs.
 

@@ -1,3 +1,7 @@
+---
+title: Task Fragment `ete4_identify`
+fragment: true
+---
 ??? task "`ete4_identify`"
 
     The `ete4_identify` task parses the NCBI taxonomy hierarchy from a user's inputted taxonomy and desired taxonomic rank. This task returns a taxon ID, name, and rank, which facilitates downstream functions, including **read classification, targeted read extraction, and genomic characterization modules**.

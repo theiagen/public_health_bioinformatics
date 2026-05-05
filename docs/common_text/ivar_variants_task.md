@@ -1,3 +1,7 @@
+---
+title: Task Fragment `ivar_variants`
+fragment: true
+---
 ??? task "`ivar_variants`: Variant Calling"
     iVar uses the outputs of `samtools mpileup` to call single nucleotide variants (SNVs) and insertions/deletions (indels). Several key parameters can be set to determine the stringency of variant calling, including minimum quality, minimum allele frequency, and minimum depth.
 

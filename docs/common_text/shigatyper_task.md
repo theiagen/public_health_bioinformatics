@@ -1,3 +1,7 @@
+---
+title: Task Fragment `shigatyper`
+fragment: true
+---
 ??? task "`ShigaTyper`: _Shigella_/EIEC differentiation and serotyping ==_for Illumina and ONT only_=="
     ShigaTyper predicts _Shigella_ spp. serotypes from Illumina or ONT read data. If the genome is not _Shigella_ or enteroinvasive _E. coli_ (EIEC), the results from this tool will state this. In the notes it provides, it also reports on the presence of _ipaB_  which is suggestive of the presence of the "virulent invasion plasmid".
 

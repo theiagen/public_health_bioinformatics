@@ -1,3 +1,7 @@
+---
+title: Task Fragment `parse_mapping`
+fragment: true
+---
 ??? task "`parse_mapping`"
 
 <!-- if: sam_to_sorted_bam-->

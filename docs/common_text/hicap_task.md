@@ -1,3 +1,7 @@
+---
+title: Task Fragment `hicap`
+fragment: true
+---
 ??? task "`hicap`: Serotyping"
     `hicap` identifies the _cap_ locus serotype in _Haemophilus influenzae_ assemblies. As described in the `hicap` documentation:
 

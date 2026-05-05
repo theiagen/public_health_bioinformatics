@@ -1,3 +1,7 @@
+---
+title: Task Fragment `assembly_metrics`
+fragment: true
+---
 ??? task "`assembly_metrics`: Mapping Statistics"
     The `assembly_metrics` task generates mapping statistics from a BAM file. It uses samtools to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics.
 

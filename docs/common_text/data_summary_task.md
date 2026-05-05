@@ -1,4 +1,7 @@
-
+---
+title: Task Fragment `data_summary`
+fragment: true
+---
 ??? task "Data summary (optional)"
 <!-- if: snippy -->  
     ##### Data Summary (optional)

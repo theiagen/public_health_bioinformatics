@@ -1,3 +1,7 @@
+---
+title: Task Fragment `seqsero2`
+fragment: true
+---
 ??? task "`SeqSero2`: Serotyping"
 
     [SeqSero2](https://github.com/denglab/SeqSero2) is a tool for _Salmonella_ serotype prediction. In the TheiaProk Illumina workflows, SeqSero2 takes in raw sequencing reads and performs targeted assembly of serotype determinant alleles, which can be used to predict serotypes including contamination between serotypes. For the TheiaProk ONT and FASTA workflows, SeqSero2 uses the genome assembly as input.

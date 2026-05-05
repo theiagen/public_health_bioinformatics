@@ -1,3 +1,7 @@
+---
+title: Task Fragment `artic_consensus`
+fragment: true
+---
 ??? task "`artic_consensus`: Alignment, Primer Trimming, Variant Detection, and Consensus"
     This task runs the `Artic minion` command which is a pipeline with a number of stages, [described in detail in the ARTIC documentation](https://artic.readthedocs.io/en/latest/minion/#0). Briefly, these stages are as follows:
 

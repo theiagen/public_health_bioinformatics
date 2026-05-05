@@ -1,4 +1,7 @@
-
+---
+title: Task Fragment `centroid`
+fragment: true
+---
 ??? task "Centroid"
     ##### Centroid
     

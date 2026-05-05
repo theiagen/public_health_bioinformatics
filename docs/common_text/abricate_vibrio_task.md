@@ -1,3 +1,7 @@
+---
+title: Task Fragment `abricate_vibrio`
+fragment: true
+---
 ??? task "`abricate_vibrio`: _Vibrio_ Characterization"
     The `abricate_vibrio` task is used to perform general characterization of _Vibrio_ genomes using a database of target sequences that are traditionally used in PCR methods. The sequences included in the database are as follows:
 

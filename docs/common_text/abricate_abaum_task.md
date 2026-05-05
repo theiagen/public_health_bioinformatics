@@ -1,3 +1,7 @@
+---
+title: Task Fragment `abricate_abaum`
+fragment: true
+---
 ??? task "`abricate_abaum`: Plasmid Identification"
     *Acinetobacter* plasmids are not included in the PlasmidFinder database (see [the above section on Plasmid Identification](#plasmid-identification)). Instead, the [AcinetobacterPlasmidTyping](https://github.com/MehradHamidian/AcinetobacterPlasmidTyping) database contains variants of the plasmid *rep* gene for *A. baumannii* plasmid identification. When matched with >/= 95 % identity, this represents a typing scheme for *Acinetobacter baumannii* plasmids.
 

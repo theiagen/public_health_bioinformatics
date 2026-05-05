@@ -1,3 +1,7 @@
+---
+title: Task Fragment `digger_denovo`
+fragment: true
+---
 ??? task "`digger_denovo`: _De novo_ Assembly"
     _De novo_  assembly is the process or product of attempting to reconstruct a genome from scratch (without prior knowledge of the genome) using sequence reads. Assembly of fungal genomes from short-reads will produce multiple contigs per chromosome rather than a single contiguous sequence for each chromosome.
 

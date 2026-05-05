@@ -1,3 +1,7 @@
+---
+title: Task Fragment `ncbi_scrub`
+fragment: true
+---
 ??? task "`HRRT`: Human Host Sequence Removal"
     All reads of human origin **are removed**, including their mates, by using NCBI's [**human read removal tool (HRRT)**](https://github.com/ncbi/sra-human-scrubber). 
 

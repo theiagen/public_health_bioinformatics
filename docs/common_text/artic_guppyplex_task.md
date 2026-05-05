@@ -1,3 +1,7 @@
+---
+title: Task Fragment `artic_guppyplex`
+fragment: true
+---
 ??? task "`artic_guppyplex`: Read Filtering"
     Reads are filtered by length with `artic_guppyplex`, which is a part of the [`ARTIC` protocol](https://artic.network/fieldbioinformatics/fieldbioinformatics-sop.html). Since TheiaCoV was developed primarily for amplicon-based viral sequencing, this task is included to remove chimeric reads that are either too short or too long.
 

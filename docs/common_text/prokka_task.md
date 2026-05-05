@@ -1,3 +1,7 @@
+---
+title: Task Fragment `prokka`
+fragment: true
+---
 ??? task "`Prokka`: Assembly Annotation (default)"
 
     Assembly annotation is available via `Prokka` as default.

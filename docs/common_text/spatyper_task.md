@@ -1,3 +1,7 @@
+---
+title: Task Fragment `spatyper`
+fragment: true
+---
 ??? task "`spaTyper`: Sequence Typing"
     spaTyper works by identifying the number and order of repeats in the _Staphylococcus_ protein A gene (also known as spa) of a _S. aureus_ assembly. The repeats are assigned a numerical code that is used to assign a spa-type. The tool uses the [Ridom SpaServer Database](http://spaserver2.ridom.de/) in order to assign the appropriate spa-type (please note that this link is typically considered unsafe by modern web browsers).
 

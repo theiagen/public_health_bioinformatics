@@ -1,3 +1,7 @@
+---
+title: Task Fragment `virulencefinder`
+fragment: true
+---
 ??? task "`VirulenceFinder`: Virulence Gene Identification"
     VirulenceFinder, from the Center for Genomic Epidemiology (GCE) in TheiaProk is only run on assembly files due to issues regarding discordant results when using read files on the web application versus the command-line. VirulenceFinder uses BLAST and KMA to query against a database of virulence genes in _E. coli_ to identify any virulence factors in the sample.
 

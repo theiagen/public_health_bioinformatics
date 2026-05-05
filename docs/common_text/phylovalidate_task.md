@@ -1,3 +1,7 @@
+---
+title: Task Fragment `phylovalidate`
+fragment: true
+---
 ??? task "`phylovalidate`"
 
     `phylovalidate` will clean two phylogenies and validate if the distance between these two phylogenies' topologies is less than an inputted `max_distance` float (0 by default). Phylogenies are cleaned by converting 0 branch length nodes into polytomies, and any detected polytomies are reported as a flag. Polytomies may arbitrarily yield a non-0 distance, though if a 0 distance is reported with a polytomy then it indicates that the polytomy did not confound distance calculation. Trees can only be compared if the number of nodes between the trees are the same. Additionally, the tips must be the same between trees, though the `resolve_tip_discrepancies` boolean is set to "true" by default to remove discrepant tips.

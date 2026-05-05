@@ -1,3 +1,7 @@
+---
+title: Task Fragment `abricate`
+fragment: true
+---
 ??? task "`ABRicate`: AMR Genotyping (optional)"
     To activate this task, set `call_abricate` to `true`.
 

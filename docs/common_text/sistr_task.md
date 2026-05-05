@@ -1,3 +1,7 @@
+---
+title: Task Fragment `sistr`
+fragment: true
+---
 ??? task "`SISTR`: _Salmonella_ Serovar Prediction"
     [SISTR](https://github.com/phac-nml/sistr_cmd) performs _Salmonella spp_. serotype prediction using antigen gene and cgMLST gene alleles. In TheiaProk, SISTR is run on genome assemblies and uses the default database setting (which contains smaller "centroid" alleles or representative alleles instead of the full set of cgMLST alleles). The full set of cgMLST alleles can be activated by setting the `sistr_use_full_cgmlst_db` optional input variable to `true`. It also runs a QC module to determine the level of confidence in the serovar prediction (please see [the section on QC in the SISTR documentation here](https://github.com/phac-nml/sistr_cmd#qc-by-sistr_cmd---qc)).
 

@@ -1,3 +1,7 @@
+---
+title: Task Fragment `skesa`
+fragment: true
+---
 ??? task "`SKESA`: _De novo_ Assembly (default)"
     This task is activated by default.
 

@@ -1,3 +1,7 @@
+---
+title: Task Fragment `fastplong`
+fragment: true
+---
 ??? task "`fastplong`: ONT Read Trimming"
     `fastplong` trims low-quality regions with a sliding window (with a default window size of 4, specified with `fastplong_window_size`), cutting once the average quality within the window falls below the `fastplong_quality_trim_score` (default of 20). The read is discarded if it is trimmed below `fastplong_min_length` (default of 15 bases). These trimming options are conducted according to a sliding window, but the directionality of this window can be specified by setting `cut_front` (5' to 3') or `cut_tail` (3' to 5') to "true".
 

@@ -1,3 +1,7 @@
+---
+title: Task Fragment `abricate_flu`
+fragment: true
+---
 ??? task "`abricate`"
 
     ABRicate assigns types and subtype/lineages for flu samples using a version of the [INSaFLU](https://github.com/INSaFLU/INSaFLU) ("INSide the FLU") database [described here](https://github.com/epi2me-labs/wf-flu/tree/master/data/primer_schemes/V1/blastdb/insaflu). 

@@ -1,3 +1,7 @@
+---
+title: Task Fragment `lissero`
+fragment: true
+---
 ??? task "`LisSero`: Serogroup Prediction"
     [LisSero](https://github.com/MDU-PHL/LisSero) performs serogroup prediction for _Listeria monocytogenes_ based on the presence or absence of five genes, _lmo1118_, _lmo0737_, ORF2110, ORF2819, and _Prs_. LisSero does not predict somatic (O) or flagellar (H) biosynthesis.
 

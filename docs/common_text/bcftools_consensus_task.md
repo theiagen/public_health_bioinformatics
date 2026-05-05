@@ -1,3 +1,7 @@
+---
+title: Task Fragment `bcftools_consensus`
+fragment: true
+---
 ??? task "`bcftools_consensus`"
 
 <!-- if: theiaviral -->

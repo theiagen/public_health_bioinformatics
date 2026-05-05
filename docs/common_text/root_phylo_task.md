@@ -1,3 +1,7 @@
+---
+title: Task Fragment `root_phylo`
+fragment: true
+---
 ??? task "`root_phylo`"
 
     `root_phylo` returns a rooted phylogeny from inputted outgroup or by rooting upon the midpoint root. Outgroups must be tip names (case-sensitive) that exist within the tree.

@@ -1,3 +1,7 @@
+---
+title: Task Fragment `cophylogeny`
+fragment: true
+---
 ??? task "`cophylogeny`"
 
     The Cophylogeny task will generate cophylogeny plots of two inputted phylogenies. A cophylogeny plot draws lines between two trees' tips as a method for visualizing their topological (tip/branch arrangment) differences. 

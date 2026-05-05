@@ -1,3 +1,7 @@
+---
+title: Task Fragment `bwa`
+fragment: true
+---
 <!-- if: theiameta -->
 ??? task "`bwa`: Read alignment to the assembly"
     ==If a reference is _not_ provided==, BWA (Burrow-Wheeler Aligner) is used to align the clean reads to the Pilon-polished assembly_fasta.

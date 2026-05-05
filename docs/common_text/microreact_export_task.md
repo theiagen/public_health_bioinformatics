@@ -1,3 +1,7 @@
+---
+title: Task Fragment `microreact_export`
+fragment: true
+---
 ??? task "`microreact_export`: Data Export"
     This task creates new Microreact projects or updates existing projects using Terra tables as metadata inputs. This is done by accessing Microreact using a user's access token and interacting with Microreact's API to submit created project files directly to Microreact. 
 

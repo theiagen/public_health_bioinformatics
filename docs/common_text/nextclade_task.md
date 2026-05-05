@@ -1,3 +1,7 @@
+---
+title: Task Fragment `nextclade`
+fragment: true
+---
 ??? task "`nextclade`"
 
     Nextclade is an open-source project used to analyze viral genomes, particularly for clade assignment and mutation calling. Simply, Nextclade works by aligning viral genomes to a reference genome, calling variants between the two sequences, and then assigning clades based on those identified mutations. 

@@ -1,3 +1,7 @@
+---
+title: Task Fragment `shigeifinder`
+fragment: true
+---
 ??? task "`ShigEiFinder`: _Shigella_/EIEC Differentiation and Serotyping"
 
     !!! tip "`ShigEiFinder_reads`: _Shigella_/EIEC Differentiation and Serotyping ==_using Illumina read files as input_== (optional)"

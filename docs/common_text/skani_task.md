@@ -1,3 +1,7 @@
+---
+title: Task Fragment `skani`
+fragment: true
+---
 ??? task "`skani`"
 
     The `skani` task is used to identify and select the most closely related reference genome to the *de novo* assembly. Skani uses an approximate mapping method without base-level alignment to calculate average nucleotide identity (ANI). It is magnitudes faster than BLAST-based methods and almost as accurate.

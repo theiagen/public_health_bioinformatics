@@ -1,3 +1,7 @@
+---
+title: Task Fragment `snippy_variants`
+fragment: true
+---
 <!-- if: snippy_streamline|snippy_variants -->
 ??? task "Snippy_Variants"
     ##### Snippy_Variants

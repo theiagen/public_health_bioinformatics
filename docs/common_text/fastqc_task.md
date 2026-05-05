@@ -1,3 +1,7 @@
+---
+title: Task Fragment `fastqc`
+fragment: true
+---
 ??? task "`FastQC`: Read Quantification (alternative)"
     To activate this task, set `read_qc` to `"fastqc"`.
 

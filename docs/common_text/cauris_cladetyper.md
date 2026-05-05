@@ -1,4 +1,7 @@
-
+---
+title: Task Fragment `cauris_cladetyper`
+fragment: true
+---
 ??? task "Cladetyping: clade determination"
 <!-- if: cauris_cladetyper -->
     The Cauris_Cladetyper Workflow for _Candidozyma auris_ employs GAMBIT for taxonomic identification, comparing whole genome sequencing data against reference databases to accurately classify _Candidozyma auris_ isolates.

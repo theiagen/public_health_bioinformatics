@@ -1,3 +1,7 @@
+---
+title: Task Fragment `read_qc_trim_ont`
+fragment: true
+---
 ??? task "`read_QC_trim_ont`: Read Quality Trimming, Quantification, and Identification"
     `read_QC_trim_ont` is a sub-workflow that filters low-quality reads and trims low-quality regions of reads. It uses several tasks, described below.
 

@@ -1,3 +1,7 @@
+---
+title: Task Fragment `plasmidfinder`
+fragment: true
+---
 ??? task "`PlasmidFinder`: Plasmid Identification (optional)"
     To activate this task, set `call_plasmidfinder` to `true`.
 

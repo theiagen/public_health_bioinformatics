@@ -1,3 +1,7 @@
+---
+title: Task Fragment `ivar_consensus`
+fragment: true
+---
 ??? task "`ivar_consensus`: Consensus Assembly"
     iVar's `consensus` tool generates a reference-based consensus assembly. Several parameters can be set that determine the stringency of the consensus assembly, including minimum quality, minimum allele frequency, and minimum depth.
 

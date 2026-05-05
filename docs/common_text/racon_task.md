@@ -1,3 +1,7 @@
+---
+title: Task Fragment `racon`
+fragment: true
+---
 ??? task "`Racon`: Polishing of Flye assembly (alternative; optional)"
     Polishing is optional and can be skipped by setting the `skip_polishing` variable to true. If polishing is skipped, then neither Medaka or Racon will run.
 

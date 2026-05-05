@@ -1,3 +1,7 @@
+---
+title: Task Fragment `bbmap_reformat`
+fragment: true
+---
 ??? task "`bbmap_reformat`: FASTQ Reformatting"
     The `bbmap_reformat` task takes in interleaved FASTQ files, repairs them if necessary, and subsequently deinterleaves the repaired or input FASTQ files.
 

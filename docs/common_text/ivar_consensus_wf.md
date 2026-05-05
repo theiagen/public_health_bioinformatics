@@ -1,3 +1,7 @@
+---
+title: Task Fragment `ivar_consensus`
+fragment: true
+---
 
 ??? task "`ivar_consensus`: Alignment, Consensus, Variant Detection, and Assembly Statistics"
     `iVar Consensus` is a sub-workflow within TheiaCoV that performs reference-based consensus assembly using the [iVar](https://andersen-lab.github.io/ivar/html/index.html) tool by Nathan Grubaugh from the Andersen lab.

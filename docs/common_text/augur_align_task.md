@@ -1,3 +1,7 @@
+---
+title: Task Fragment `augur align`
+fragment: true
+---
 ??? task "`augur align`: Genome Assembly Alignment"
     `augur align` aligns multiple nucleotide sequences and strips insertions relative to a reference sequence by using the MAFFT aligner. 
 

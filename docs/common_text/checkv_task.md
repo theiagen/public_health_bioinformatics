@@ -1,3 +1,7 @@
+---
+title: Task Fragment `checkv`
+fragment: true
+---
 ??? task "`checkv`"
 
     CheckV is a fully automated command-line pipeline for assessing the quality of viral genomes, including identification of host contamination for integrated proviruses, estimating completeness for genome fragments, and identification of closed genomes.

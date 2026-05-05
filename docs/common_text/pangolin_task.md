@@ -1,3 +1,7 @@
+---
+title: Task Fragment `pangolin`
+fragment: true
+---
 ??? task "`pangolin`"
 
     Pangolin (Phylogenetic Assignment of Named Global Outbreak Lineages) was developed to implement a dynamic nomenclature for designating SARS-CoV-2 lineage assignments and is used by researchers and public health agencies worldwide to track the spread and transmission of SARS-CoV-2.

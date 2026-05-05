@@ -1,3 +1,7 @@
+---
+title: Task Fragment `raven`
+fragment: true
+---
 ??? task "`raven`"
 
     The `raven` task is used to create a *de novo* assembly from cleaned reads. Raven is an overlap-layout-consensus based assembler that accelerates the overlap step, constructs an assembly graph from reads pre-processed with pile-o-grams, applies a novel and robust graph simplification method based on graph drawings, and polishes unambiguous graph paths using Racon. 

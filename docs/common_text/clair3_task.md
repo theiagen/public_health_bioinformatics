@@ -1,3 +1,7 @@
+---
+title: Task Fragment `clair3`
+fragment: true
+---
 ??? task "`clair3`"
 
     `Clair3` performs deep learning-based variant detection using a multi-stage approach. The process begins with pileup-based calling for initial variant identification, followed by full-alignment analysis for comprehensive variant detection. Results are merged into a final high-confidence call set.
