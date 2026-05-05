@@ -2,7 +2,6 @@
 title: Task Fragment `mummer_ani`
 fragment: true
 ---
-
 ??? task "`MUMmer_ANI`: Taxon Assignment using Average Nucleotide Identity (optional)"
     To activate this task, set `call_ani` to `true`.
 

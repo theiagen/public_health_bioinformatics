@@ -2,7 +2,6 @@
 title: Task Fragment `resfinder`
 fragment: true
 ---
-
 ??? task "`ResFinder`: AMR Genotyping and XDR _Shigella_ Prediction (optional)"
     To activate this task, set `call_resfinder` to `true`.
 

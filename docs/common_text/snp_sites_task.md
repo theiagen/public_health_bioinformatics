@@ -2,7 +2,6 @@
 title: Task Fragment `snp_sites`
 fragment: true
 ---
-
 ??? task "SNP-sites (optional)"
     ##### SNP-sites (optional)
 

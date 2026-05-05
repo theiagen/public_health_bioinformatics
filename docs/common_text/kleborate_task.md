@@ -2,11 +2,6 @@
 title: Task Fragment `kleborate`
 fragment: true
 ---
-
----
-title: Task Fragment `kleborate`
-fragment: true
----
 ??? task "`Kleborate`: Species Identification, MLST, Serotyping, AMR and Virulence Characterization"
     [Kleborate](https://github.com/katholt/Kleborate) is a tool to identify the _Klebsiella_ species, MLST sequence type, serotype, virulence factors (ICE_Kp_ and plasmid associated), and AMR genes and mutations. Serotyping is based on the capsular (K antigen) and lipopolysaccharide (LPS) (O antigen) genes. The acquired resistance genes identified by Kleborate can be found in [the Kleborate documentation here](https://kleborate.readthedocs.io/en/latest/kpsc_modules.html#acquired-amr-genes), along with other useful information regarding all of Kleborate's modules.
 

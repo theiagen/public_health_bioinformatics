@@ -2,7 +2,6 @@
 title: Task Fragment `primer_trim`
 fragment: true
 ---
-
 ??? task "`primer_trim` Details"
     This task trims the primer sequences from the aligned bam file with iVar. The optional input, `keep_noprimer_reads`, does not have to be modified.
 

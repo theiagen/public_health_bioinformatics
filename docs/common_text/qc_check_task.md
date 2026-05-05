@@ -2,7 +2,6 @@
 title: Task Fragment `qc_check`
 fragment: true
 ---
-
 ??? task "`qc_check`: Check QC Metrics Against User-Defined Thresholds (optional)"
 
     To activate this task, provide a `qc_check_table` as input.

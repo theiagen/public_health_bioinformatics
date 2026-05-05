@@ -2,7 +2,6 @@
 title: Task Fragment `snippy_qc_concatenation`
 fragment: true
 ---
-
 ??? task "Snippy_Variants QC Metrics Concatenation (optional)"
     ##### Snippy_Variants QC Metric Concatenation (optional)
 

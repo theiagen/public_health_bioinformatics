@@ -2,7 +2,6 @@
 title: Task Fragment `medaka`
 fragment: true
 ---
-
 ??? task "`Medaka`: Polishing of Flye assembly (default; optional)"
     Polishing is optional and can be skipped by setting the `skip_polishing` variable to true. If polishing is skipped, then neither Medaka or Racon will run.
 
