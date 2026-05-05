@@ -189,10 +189,22 @@ def define_env(env):
 
     content = include_path.read_text(encoding='utf-8')
     lines = content.split('\n')
+
     adjusted_lines = []
     include_block = True
+    # Skip YAML front matter only at the very top
+    idx = 0
+    if lines and lines[0].strip() == '---':
+      idx += 1
+      while idx < len(lines) and lines[idx].strip() != '---':
+        idx += 1
+      # Skip the closing ---
+      if idx < len(lines) and lines[idx].strip() == '---':
+        idx += 1
 
-    for line in lines:
+    # Now process the rest of the lines
+    while idx < len(lines):
+      line = lines[idx]
       # Handle conditionals (<!-- if: condition --> and <!-- endif -->)
       if_match = re.match(r'<!--\s*if:\s*([\w|]+)\s*-->', line)
       endif_match = re.match(r'<!--\s*endif\s*-->', line)
@@ -200,9 +212,11 @@ def define_env(env):
       if if_match:
         allowed = [x.strip() for x in if_match.group(1).split('|')]
         include_block = condition in allowed
+        idx += 1
         continue
       elif endif_match:
         include_block = True
+        idx += 1
         continue
 
       if include_block:
@@ -222,12 +236,14 @@ def define_env(env):
           except Exception as e:
             adjusted_lines.append(f"**Error**:Nested include error: {e}")
             print(f"Error including nested file: {e}")
+          idx += 1
           continue
 
         if line.startswith('#'):
           adjusted_lines.append(adjust_heading(line, level_offset, indent))
         else:
           adjusted_lines.append(' ' * indent + resolve_links(line, include_path))
+      idx += 1
 
     result = '\n'.join(adjusted_lines)
 

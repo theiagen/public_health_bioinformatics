@@ -297,6 +297,16 @@ extra_javascript:
 extra_css:
   - stylesheets/extra.css                                         
 
+validation:
+  unresolved_references: false # needs to be false otherwise we have 200+ warnings due to css
+  unresolved_footnotes: true 
+  unused_definitions: true
+  unused_footnotes: true # only three instances of this happening
+  shadowed_definitions: true
+  shadowed_footnotes: true
+  invalid_links: true
+  invalid_link_anchors: true 
+
 extra:
   social:
     - icon: fontawesome/brands/github
@@ -311,5 +321,10 @@ extra:
     alias: true
   homepage: https://www.theiagen.com
 
-hooks:
-  - macros/hooks/on_config.py
+# remove once hooks are supported
+copyright: |
+  &copy; 2022-2026 <a href="https://www.theiagen.com" target="_blank" rel="noopener">Theiagen Genomics</a>
+
+# currently unsupported in zensical
+#hooks:
+#  - macros/hooks/on_config.py
