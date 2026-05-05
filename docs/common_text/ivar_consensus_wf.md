@@ -1,5 +1,5 @@
 ---
-title: Task Fragment `ivar_consensus`
+title: Workflow Fragment `ivar_consensus`
 fragment: true
 ---
 

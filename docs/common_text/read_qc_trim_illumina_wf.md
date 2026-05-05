@@ -1,5 +1,5 @@
 ---
-title: Task Fragment `read_qc_trim_illumina`
+title: Workflow Fragment `read_qc_trim_illumina`
 fragment: true
 ---
 ??? task "`read_QC_trim`: Read Quality Trimming, Adapter Removal, Quantification, and Identification"

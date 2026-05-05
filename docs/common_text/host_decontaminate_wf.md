@@ -1,5 +1,5 @@
 ---
-title: Task Fragment `host_decontaminate`
+title: Workflow Fragment `host_decontaminate`
 fragment: true
 ---
 ??? task "`host_decontaminate`: Host Read Decontamination"

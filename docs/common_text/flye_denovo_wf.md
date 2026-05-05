@@ -1,5 +1,5 @@
 ---
-title: Task Fragment `flye_denovo`
+title: Workflow Fragment `flye_denovo`
 fragment: true
 ---
 ??? task "`Flye`: _De novo_ Assembly"

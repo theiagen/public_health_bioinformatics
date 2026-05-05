@@ -1,5 +1,5 @@
 ---
-title: Task Fragment `read_qc_trim_ont`
+title: Workflow Fragment `read_qc_trim_ont`
 fragment: true
 ---
 ??? task "`read_QC_trim_ont`: Read Quality Trimming, Quantification, and Identification"

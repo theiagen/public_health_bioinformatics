@@ -1,5 +1,5 @@
 ---
-title: Task Fragment `digger_denovo`
+title: Workflow Fragment `digger_denovo`
 fragment: true
 ---
 ??? task "`digger_denovo`: _De novo_ Assembly"

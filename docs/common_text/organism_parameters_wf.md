@@ -1,5 +1,5 @@
 ---
-title: Task Fragment `organism_parameters`
+title: Workflow Fragment `organism_parameters`
 fragment: true
 ---
 ??? task "`organism_parameters`: Setting default values for specific organisms"

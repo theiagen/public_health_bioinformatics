@@ -1,5 +1,5 @@
 ---
-title: Task Fragment `flu_antiviral_substitutions`
+title: Workflow Fragment `flu_antiviral_substitutions`
 fragment: true
 ---
 ??? task "`flu_antiviral_substitutions`"
