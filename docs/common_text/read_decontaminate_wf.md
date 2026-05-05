@@ -22,7 +22,7 @@
 
 {{ include_md("common_text/parse_mapping_task.md", condition="bam_to_unaligned_fastq", indent=4, replacements={'??? task "`parse_mapping`"' : '??? toggle "Extract Unaligned Reads"'}) }}
 
-{{ include_md("common_text/mapping_stats_task.md", indent=4, replacements={'??? task "`mapping_stats`"' : '??? toggle "Host/Contaminate Read Mapping Statistics"'}) }}
+{{ include_md("common_text/mapping_stats_task.md", indent=4, replacements={'??? task "`mapping_stats`"' : '??? toggle "Host/Contaminant Read Mapping Statistics"'}) }}
 
 {{ include_md("common_text/contaminant_check_task.md", indent=4, replacements={'??? task "`contaminant_check`"' : '??? toggle "Contaminant Detection Status"'}) }}
 
