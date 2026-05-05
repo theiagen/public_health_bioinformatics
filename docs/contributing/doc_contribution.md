@@ -61,16 +61,16 @@ The following language conventions should be followed when writing documentation
 - > Citations
     - Use a `>` to activate quote formatting for a citation. Make sure to separate multiple citations with a comment line (`<!-- -->`) to prevent the citations from running together.
     - Use a reputable citation style (e.g., Vancouver, Nature, etc.) for all citations.
-- Callouts/Admonitions - These features are called "call-outs" in Notion, but are "Admonitions" in MkDocs. [I highly recommend referring to the Material for MkDocs documentation page on Admonitions to learn how best to use this feature](https://squidfunk.github.io/mkdocs-material/reference/admonitions/). Use the following syntax to create a callout:
+- Callouts/Admonitions - These features are called "call-outs" in Notion, but are "Admonitions" in Zensical. [I highly recommend referring to the Zensical documentation page on Admonitions to learn how best to use this feature](https://zensical.org/docs/authoring/admonitions/). Use the following syntax to create a callout:
 
     ```markdown
     !!! note "Title"
         This is a note. Observe I am indented with four spaces.
     ```
 
-    Please see the [Admonition documentation](https://squidfunk.github.io/mkdocs-material/reference/admonitions/) for more information on how to change the title, enable toggles, and more.
+    Please see the [Admonition documentation](https://zensical.org/docs/authoring/admonitions/) for more information on how to change the title, enable toggles, and more.
 
-    The following custom callout types are supported _in addition to the standard admonitions supported by our theme_ [more information on the standard admonitions here](https://squidfunk.github.io/mkdocs-material/reference/admonitions/#supported-types):
+    The following custom callout types are supported _in addition to the standard admonitions supported by our theme_ [more information on the standard admonitions here](https://zensical.org/docs/authoring/admonitions/#supported-types):
   
     !!! dna
         This is a DNA admonition. Admire the cute green DNA emoji. You can create this with the `!!! dna` syntax.

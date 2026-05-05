@@ -5,7 +5,7 @@ fragment: true
 ??? task "`BBDuk`: Adapter Trimming and PhiX Removal"
     Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about [Illumina adapters here](https://knowledge.illumina.com/software/general/software-general-reference_material-list/000002905). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
 
-    By default, the `bbduk` task will:
+    By default, the `BBDuk` task will:
 
     - **Repair disordered read pairs** (if they exist) so that the first read in file 1 is the same mate of the first read in file2. See the [`Repair Guide`](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/) package.
 

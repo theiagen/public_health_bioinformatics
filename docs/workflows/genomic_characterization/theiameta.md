@@ -197,7 +197,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 <!-- -->
 >**QUAST:** Alexey Gurevich and others, QUAST: quality assessment tool for genome assemblies, _Bioinformatics_, Volume 29, Issue 8, April 2013, Pages 1072–1075, <https://doi.org/10.1093/bioinformatics/btt086>
 <!-- -->
->**Samtools:** Li, Heng, Bob Handsaker, Alec Wysoker, Tim Fennell, Jue Ruan, Nils Homer, Gabor Marth, Goncalo Abecasis, Richard Durbin, and 1000 Genome Project Data Processing Subgroup. 2009. The Sequence Alignment/Map format and SAMtools. Bioinformatics 25(16): 2078-2079. <https://doi.org/10.1093/bioinformatics/btp352>
+>**samtools:** Li, Heng, Bob Handsaker, Alec Wysoker, Tim Fennell, Jue Ruan, Nils Homer, Gabor Marth, Goncalo Abecasis, Richard Durbin, and 1000 Genome Project Data Processing Subgroup. 2009. The Sequence Alignment/Map format and SAMtools. Bioinformatics 25(16): 2078-2079. <https://doi.org/10.1093/bioinformatics/btp352>
 <!-- -->
 >**BEDtools:** Quinlan AR and Hall IM, 2010. BEDTools: a flexible suite of utilities for comparing genomic features. Bioinformatics. 26, 6, pp. 841–842. <https://doi.org/10.1093/bioinformatics/btq033>
 <!-- -->

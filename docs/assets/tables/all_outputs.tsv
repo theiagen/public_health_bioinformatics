@@ -4,7 +4,7 @@ abricate_abaum_docker	String	Docker file used for running abricate	TheiaProk_FAS
 abricate_abaum_plasmid_tsv	File	<https://github.com/tseemann/abricate#output> containing a row for each A. baumannii plasmid type gene found in the sample	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 abricate_abaum_plasmid_type_genes	String	A. baumannii Plasmid typing genes found in the sample; from GENE column in <https://github.com/tseemann/abricate#output>	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 abricate_abaum_version	String	Version of abricate used for A. baumannii plasmid typing	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-abricate_database	String	Database of reference used with Abricate	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+abricate_database	String	Database of reference used with ABRicate	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 abricate_docker	String	Docker file used for running abricate	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 abricate_flu_database	String	ABRicate database used for analysis	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 abricate_flu_results	File	File containing all results from ABRicate	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -112,8 +112,8 @@ assembly_fetch_referenceseeker_version	String	ReferenceSeeker version used	Assem
 assembly_fetch_version	String	The version of the repository the Assembly Fetch workflow is in	Assembly_Fetch
 assembly_length	Int	Length of assembly (total contig length) as determined by QUAST	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 assembly_length_unambiguous	Int	Number of unambiguous basecalls within the consensus assembly	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-assembly_mean_coverage	String	Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the SAMtools coverage command	TheiaCoV_Illumina_PE, TheiaCoV_ONT
-assembly_mean_coverage	Float	Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the SAMtools coverage command	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE
+assembly_mean_coverage	String	Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the samtools coverage command	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+assembly_mean_coverage	Float	Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the samtools coverage command	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE
 assembly_method	String	Method employed to generate consensus assembly	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 assembly_to_ref_bai	File	BAM index file for reads aligned to reference	TheiaViral_ONT
 assembly_to_ref_bam	File	BAM file of reads aligned to reference	TheiaViral_ONT
@@ -242,14 +242,14 @@ concatenate_illumina_lanes_analysis_date	String	Date of analysis	Concatenate_Ill
 concatenate_illumina_lanes_version	String	Version of PHB used for the analysis	Concatenate_Illumina_Lanes
 concatenated_files	File	The file containing all of the items from the column you selected.	Concatenate_Column_Content
 concatenated_variants	File	The concatenated variants without presence/absence	Find_Shared_Variants
-consensus_flagstat	File	Output from the SAMtools flagstat command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+consensus_flagstat	File	Output from the samtools flagstat command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 consensus_n_variant_min_depth	Int	Minimum read depth to call variants for iVar consensus and iVar variants. Also represents the minimum consensus support threshold used by IRMA with Illumina Influenza data.	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
 consensus_qc_assembly_length_unambiguous	Int	Length of consensus assembly excluding ambiguous bases	TheiaViral_Illumina_PE, TheiaViral_ONT
 consensus_qc_number_Degenerate	Int	Number of degenerate bases in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 consensus_qc_number_N	Int	Number of N bases in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 consensus_qc_number_Total	Int	Total number of bases in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 consensus_qc_percent_reference_coverage	Float	Percent of reference genome covered in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
-consensus_stats	File	Output from the SAMtools stats command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+consensus_stats	File	Output from the samtools stats command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 contig_number	Int	The number of contigs in the assembly_fasta (see description for `assembly_fasta`)	TheiaMeta_Illumina_PE
 contigs_gfa	File	Assembly graph output generated by SPAdes (Illumina: PE, SE) or Flye (ONT), used to visualize and evaluate genome assembly results.	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 cophylogeny_plot	File	A cophylogeny plot depicting branching order differences between two phylogenies without branch lengths	PhyloCompare
@@ -264,7 +264,7 @@ dehost_wf_dehost_read1	File	Reads that did not map to host	TheiaViral_Illumina_P
 dehost_wf_dehost_read2	File	Paired-reads that did not map to host	TheiaViral_Illumina_PE, TheiaViral_Panel
 dehost_wf_host_accession	String	Host genome accession	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
 dehost_wf_host_fasta	File	Host genome FASTA file	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
-dehost_wf_host_flagstat	File	Output from the SAMtools flagstat command to assess quality of the alignment file (BAM)	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
+dehost_wf_host_flagstat	File	Output from the samtools flagstat command to assess quality of the alignment file (BAM)	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
 dehost_wf_host_mapped_bai	File	Indexed bam file of the reads aligned to the host reference	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
 dehost_wf_host_mapped_bam	File	Sorted BAM file containing the alignments of reads to the host reference genome	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
 dehost_wf_host_mapping_cov_hist	File	Coverage histogram from host read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel
@@ -990,10 +990,10 @@ resfinder_results	File	Predicted resistance genes grouped by antibiotic class	Th
 resfinder_seqs	File	FASTA of resistance gene sequences from user’s input sequence	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 resfinder_version	String	The version of ResFinder used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 samtools_docker	String	The Docker image of samtools	TheiaMeta_Illumina_PE
-samtools_version	String	The version of SAMtools used to sort and index the alignment file	Clair3_Variants_ONT, Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaMeta_Illumina_PE
-samtools_version_consensus	String	The version of SAMtools used to create the pileup before running iVar consensus	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-samtools_version_primtrim	String	The version of SAMtools used to create the pileup before running iVar trim	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-samtools_version_stats	String	The version of SAMtools used to assess the quality of read mapping	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+samtools_version	String	The version of samtools used to sort and index the alignment file	Clair3_Variants_ONT, Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaMeta_Illumina_PE
+samtools_version_consensus	String	The version of samtools used to create the pileup before running iVar consensus	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+samtools_version_primtrim	String	The version of samtools used to create the pileup before running iVar trim	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
+samtools_version_stats	String	The version of samtools used to assess the quality of read mapping	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 sc2_s_gene_mean_coverage	Float	Mean read depth for the S gene in SARS-CoV-2	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 sc2_s_gene_percent_coverage	Float	Percent coverage of the S gene in SARS-CoV-2	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 semibin_bins	Array[File]	An array of binned metagenomic assembled genome files	TheiaMeta_Illumina_PE

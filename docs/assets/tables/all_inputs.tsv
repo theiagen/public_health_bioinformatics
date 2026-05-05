@@ -216,8 +216,8 @@ abricate	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FAS
 abricate	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 abricate	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 abricate	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-abricate	min_percent_coverage	Int	Minimum DNA %coverage for the Abricate task	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-abricate	min_percent_identity	Int	Minimum DNA %identity for the Abricate task	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+abricate	min_percent_coverage	Int	Minimum DNA %coverage for the ABRicate task	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+abricate	min_percent_identity	Int	Minimum DNA %identity for the ABRicate task	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 add_biosample_accessions	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Terra_2_NCBI	runtime	
 add_biosample_accessions	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Terra_2_NCBI	runtime	
 add_biosample_accessions	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16	Optional	Terra_2_NCBI	docker	
@@ -2545,10 +2545,10 @@ theiameta_illumina_pe	call_bracken	Boolean	Call Bracken kraken2 report refinemen
 theiameta_illumina_pe	kraken2_db	File	A Kraken2 database in .tar.gz format	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_08gb_20230605.tar.gz	Optional	TheiaMeta_Illumina_PE	database	
 theiameta_illumina_pe	output_additional_files	Boolean	Output additional files such as aligned and unaligned reads to reference	False	Optional	TheiaMeta_Illumina_PE	general	
 theiameta_illumina_pe	reference	File	Reference file for consensus calling, in FASTA format		Optional	TheiaMeta_Illumina_PE	general	
-theiaprok_fasta	abricate_db	String	Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_FASTA	database	
+theiaprok_fasta	abricate_db	String	Database to use with the ABRicate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_FASTA	database	
 theiaprok_fasta	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	False	Optional	TheiaProk_FASTA	general	
 theiaprok_fasta	bakta_db	String	Database selection for Bakta annotation. Options: light (smaller, faster), full (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.	full	Optional	TheiaProk_FASTA	database	
-theiaprok_fasta	call_abricate	Boolean	Set to true to enable the Abricate task	False	Optional	TheiaProk_FASTA	general	
+theiaprok_fasta	call_abricate	Boolean	Set to true to enable the ABRicate task	False	Optional	TheiaProk_FASTA	general	
 theiaprok_fasta	call_ani	Boolean	Set to true to enable the ANI task	False	Optional	TheiaProk_FASTA	general	
 theiaprok_fasta	call_arln_stats	Boolean	Set to true to enable the return of ARLN required Auto PASS/FAIL outputs	False	Optional	TheiaProk_FASTA	general	
 theiaprok_fasta	call_gamma	Boolean	Set to true in order to enable GAMMA task	False	Optional	TheiaProk_FASTA	general	
@@ -2571,10 +2571,10 @@ theiaprok_fasta	taxon_tables	File	File indicating data table names to copy sampl
 theiaprok_fasta	terra_project	String	The name of the Terra Project where you want the taxon tables written to	NA	Optional	TheiaProk_FASTA	general	
 theiaprok_fasta	terra_workspace	String	The name of the Terra Workspace where you want the taxon tables written to	NA	Optional	TheiaProk_FASTA	general	
 theiaprok_fasta	zip	String	Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task		Optional	TheiaProk_FASTA	general	
-theiaprok_illumina_pe	abricate_db	String	Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_Illumina_PE	database	
+theiaprok_illumina_pe	abricate_db	String	Database to use with the ABRicate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_Illumina_PE	database	
 theiaprok_illumina_pe	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	False	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	bakta_db	String	Database selection for Bakta annotation. Options: light (smaller, faster), full (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.	full	Optional	TheiaProk_Illumina_PE	database	
-theiaprok_illumina_pe	call_abricate	Boolean	Set to true to enable the Abricate task	False	Optional	TheiaProk_Illumina_PE	general	
+theiaprok_illumina_pe	call_abricate	Boolean	Set to true to enable the ABRicate task	False	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	call_ani	Boolean	Set to true to enable the ANI task	False	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	call_arln_stats	Boolean	Set to true to enable the return of ARLN required Auto PASS/FAIL outputs	False	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	call_gamma	Boolean	Set to true in order to enable GAMMA task	False	Optional	TheiaProk_Illumina_PE	general	
@@ -2616,10 +2616,10 @@ theiaprok_illumina_pe	trim_min_length	Int	Specifies minimum length of each read 
 theiaprok_illumina_pe	trim_quality_min_score	Int	Specifies the minimum average quality of bases in a sliding window to be kept	20	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	trim_window_size	Int	Specifies window size for trimming (the number of bases to average the quality across)	10	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	zip	String	Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task		Optional	TheiaProk_Illumina_PE	general	
-theiaprok_illumina_se	abricate_db	String	Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_Illumina_SE	database	
+theiaprok_illumina_se	abricate_db	String	Database to use with the ABRicate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_Illumina_SE	database	
 theiaprok_illumina_se	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	False	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	bakta_db	String	Database selection for Bakta annotation. Options: light (smaller, faster), full (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.	full	Optional	TheiaProk_Illumina_SE	database	
-theiaprok_illumina_se	call_abricate	Boolean	Set to true to enable the Abricate task	False	Optional	TheiaProk_Illumina_SE	general	
+theiaprok_illumina_se	call_abricate	Boolean	Set to true to enable the ABRicate task	False	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	call_ani	Boolean	Set to true to enable the ANI task	False	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	call_arln_stats	Boolean	Set to true to enable the return of ARLN required Auto PASS/FAIL outputs	False	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	call_gamma	Boolean	Set to true in order to enable GAMMA task	False	Optional	TheiaProk_Illumina_SE	general	
@@ -2658,10 +2658,10 @@ theiaprok_illumina_se	trim_min_length	Int	Specifies minimum length of each read 
 theiaprok_illumina_se	trim_quality_min_score	Int	Specifies the average quality of bases in a sliding window to be kept	30	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	trim_window_size	Int	Specifies window size for trimming (the number of bases to average the quality across)	4	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	zip	String	Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task		Optional	TheiaProk_Illumina_SE	general	
-theiaprok_ont	abricate_db	String	Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_ONT	database	
+theiaprok_ont	abricate_db	String	Database to use with the ABRicate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_ONT	database	
 theiaprok_ont	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	False	Optional	TheiaProk_ONT	general	
 theiaprok_ont	bakta_db	String	Database selection for Bakta annotation. Options: light (smaller, faster), full (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.	full	Optional	TheiaProk_ONT	database	
-theiaprok_ont	call_abricate	Boolean	Set to true to enable the Abricate task	False	Optional	TheiaProk_ONT	general	
+theiaprok_ont	call_abricate	Boolean	Set to true to enable the ABRicate task	False	Optional	TheiaProk_ONT	general	
 theiaprok_ont	call_ani	Boolean	Set to true to enable the ANI task	False	Optional	TheiaProk_ONT	general	
 theiaprok_ont	call_arln_stats	Boolean	Set to true to enable the return of ARLN required Auto PASS/FAIL outputs	False	Optional	TheiaProk_ONT	general	
 theiaprok_ont	call_gamma	Boolean	Set to true in order to enable GAMMA task	False	Optional	TheiaProk_ONT	general	

@@ -447,7 +447,7 @@ We've provided the following information to help you set up the workflow for eac
     | **VADR Flu Segments** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
     | **Quasitools HyDRA** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
     | **IRMA** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-    | **Abricate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **ABRicate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
     | **% Gene Coverage** | ✅ | ✅ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ |
     | **Antiviral Detection** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
     | **GenoFLU** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
