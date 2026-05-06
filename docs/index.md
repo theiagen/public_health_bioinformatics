@@ -83,21 +83,23 @@ line count as well.
 okay thanks byee
 -->
 
-(Ordered by contribution [# of lines changed] as of 2025-11-17)
+(Ordered by contribution [# of lines changed] as of 2026-05-06)
 
-- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision <!-- 99007 + 115766 - 55316 = 159457 -->
-- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation <!-- 23921 + 18640 = 42561 -->
-- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation <!-- 20852 + 15908 = 36760 -->
-- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation <!-- 16936 + 12596 = 29532 -->
-- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation <!-- 10203 + 5196 = 15399 -->
-- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation <!-- 61479 + 3053 - 55316 = 9216 -->
-- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation <!-- 4170 + 2494 = 6664 -->
-- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation <!-- 3597 + 851 = 4448 -->
+- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Documentation, Supervision <!-- 99625 + 116557 - 55316 = 160866 -->
+- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation, Documentation <!-- 25655 + 23922 = 49577 -->
+- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation, Documentation <!-- 20852 + 15908 = 36760 -->
+- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation, Documentation <!-- 17396 + 14827 = 32223 -->
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation, Documentation <!-- 17777 + 13121 = 30898 -->
+- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation, Documentation <!-- 62354 + 3600 - 55316 = 10638  -->
+- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation, Documentation <!-- 4419 + 2686 = 7105 -->
+- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation, Documentation <!-- 3597 + 851 = 4448 -->
 - **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision <!-- 2908 + 444 = 3352 -->
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision <!-- 84 + 68 = 152 -->
-- **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation <!-- 72 + 39 = 111 -->
-- **Sushmita Sridhar** ([@ss43](https://github.com/ss43)) - Validation <!-- 11 + 12 = 23 -->
-- **Deborah Young** ([@theiadeb](https://github.com/theiadeb)) - Validation <!-- 3 + 3 = 6 -->
+- **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Documentation <!-- 72 + 39 = 111 -->
+- **Sushmita Sridhar** ([@ss43](https://github.com/ss43)) - Documentation <!-- 11 + 12 = 23 -->
+- **Neha Mokashi** ([@nehavm456](https://github.com/nehavm456)) - Documentation <!-- 3 + 4 = 7>
+- **Deborah Young** ([@theiadeb](https://github.com/theiadeb)) - Documentation <!-- 3 + 3 = 6 -->
+- **Bruna Todani** ([@brunatodani](https://github.com/brunatodani)) - Documentation <!-- 2 + 1 = 3 -->
 - **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision <!-- 0 + 0 = 0 -->
 
 ### External Contributors
