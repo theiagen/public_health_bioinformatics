@@ -42,7 +42,6 @@ task shigapass {
     if grep -q '[^[:space:]]' PREDICTED_SEROTYPE_FLEXNERI; then
       echo "$(cat PREDICTED_SEROTYPE), $(cat PREDICTED_SEROTYPE_FLEXNERI)" > PREDICTED_SEROTYPE
     fi
-
   >>>
   output {
     String shigapass_predicted_serotype = read_string("PREDICTED_SEROTYPE")
