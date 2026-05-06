@@ -994,14 +994,14 @@ gubbins	nuc_subst_model	String	Nucleotide substitution model to use with Gubbins
 gubbins	tree_args	String	Quoted string of further arguments passed to tree building algorithm		Optional	Snippy_Tree	general	
 gubbins	tree_builder	String	Application to use for Gubbins tree building algorithm: "raxml", "raxmlng", "iqtree", "iqtree-fast", "fasttree", "hybrid" (fasttree is used for the first tree, and raxml is used for later iterations), "rapidnj"	raxml	Optional	Snippy_Tree	general	
 host_decontaminate	complete_only	Boolean	Only download genomes labeled "complete"	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
-host_decontaminate	expected_sequences	String	Comma-delimited list of expected sequences that match the host FASTA headers. Triggers the status check 		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	expected_sequences	String	Internal component, do not modify 		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	is_accession	Boolean	Inputted "host" is an accession	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	is_genome	Boolean	Inputted "host" is an assembly FASTA	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
-host_decontaminate	max_unexpected_seq	Int	Maximum unexpected sequences detected from inputted FASTA to pass status check	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
-host_decontaminate	min_expected_coverage	Float	Minimum breadth of coverage to identify a host/contaminant sequence within the status check (does not affect read cleaning)	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
-host_decontaminate	min_expected_depth	Int	Minimum depth to identify a host/contaminant sequence within the status check (does not affect read cleaning) 	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
-host_decontaminate	min_expected_reads_mapped	Int	Minimum number of reads mapped to identify a host/contaminant sequence within the status check (does not affect read cleaning)	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
-host_decontaminate	min_expected_seq	Int	Minimum expected sequences detected from inputted FASTA to pass status check		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	max_unexpected_seq	Int	Internal component, do not modify	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	min_expected_coverage	Float	Internal component, do not modify	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	min_expected_depth	Int	Internal component, do not modify 	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	min_expected_reads_mapped	Int	Internal component, do not modify	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	min_expected_seq	Int	Internal component, do not modify		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	minimap2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	runtime	
 host_decontaminate	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general	
 host_decontaminate	refseq	Boolean	Only download RefSeq genomes	True	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
