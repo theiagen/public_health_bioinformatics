@@ -21,7 +21,9 @@ Additional post-processing steps can produce visualizations of aggregated sample
 
 !!! caption "Figure 1: Workflow diagram for Freyja Suite of workflows"
     ##### Figure 1 { #figure1 }
-    ![**Figure 1: Workflow diagram for Freyja Suite of workflows.**](../../assets/figures/Freyja_Suite.png){width=100%}
+    <div style="text-align: center;">
+    ![**Figure 1: Workflow diagram for Freyja Suite of workflows.**](../../assets/figures/Freyja_Suite.png){: onload="this.width/=2;this.onload=null;" }
+    </div>
 
     Depending on the type of data (Illumina or Oxford Nanopore), the Read QC and Filtering steps, as well as the Read Alignment steps use different software. The user can specify if the barcodes and lineages file should be updated with `freyja update` before running Freyja or if bootstrapping is to be performed with `freyja boot`.
 

@@ -11,7 +11,9 @@ The Lyve_SET WDL workflow runs the [Lyve-SET](https://github.com/lskatz/lyve-SET
 ### Lyve-SET Pipeline (from [Lyve-SET paper](https://www.frontiersin.org/articles/10.3389/fmicb.2017.00375/full))
 
 !!! caption "Lyve-SET Workflow Diagram"
+    <div style="text-align: center;">
     ![Lyve-SET Workflow Diagram](../../assets/figures/Lyve_Set.png)
+    </div>
 
 ### Inputs
 

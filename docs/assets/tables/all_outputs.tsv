@@ -919,9 +919,10 @@ r2_mean_q_raw	Float	Mean quality score of raw reverse reads	TheiaEuk_Illumina_PE
 r2_mean_readlength_clean	Float	Mean read length of clean reverse reads	TheiaProk_Illumina_PE
 r2_mean_readlength_raw	Float	Mean read length of raw reverse reads	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
 racon_version	String	Version of Racon used	TheiaEuk_ONT, TheiaProk_ONT
+rasusa_log	File	Log of Rasusa standard error output	RASUSA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 rasusa_read1_subsampled	File	Subsampled read file from Rasusa	TheiaViral_ONT
 rasusa_read2_subsampled	File	Subsampled read file from Rasusa (paired file)	TheiaViral_ONT
-rasusa_version	String	Version of RASUSA used for the analysis	RASUSA, TheiaEuk_Illumina_PE, TheiaProk_ONT, TheiaViral_ONT
+rasusa_version	String	Version of RASUSA used for the analysis	RASUSA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT, TheiaViral_ONT
 rasusa_wf_analysis_date	String	Date of analysis	RASUSA
 rasusa_wf_version	String	Version of PHB used for the analysis	RASUSA
 raven_denovo_docker	String	Docker image used for Raven	TheiaViral_ONT
@@ -935,7 +936,8 @@ read1_concatenated	File	Concatenated forward reads	Concatenate_Illumina_Lanes, T
 read1_dehosted	File	The dehosted forward reads file; suggested read file for SRA submission 	Freyja_FASTQ, NCBI_Scrub_PE, NCBI_Scrub_SE, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaMeta_Illumina_PE
 read1_mapped	File	The mapped forward reads to the assembly	TheiaMeta_Illumina_PE
 read1_renamed	File	New read1 FASTQ file renamed to desired filename	Rename_FASTQ
-read1_subsampled	File	Read1 FASTQ files downsampled to desired coverage	RASUSA, TheiaEuk_Illumina_PE
+read1_subsampled	File	Read1 FASTQ files downsampled to desired coverage	RASUSA
+read1_subsampled_raw	File	Raw read1 FASTQ files downsampled before trimming/filtering	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 read1_trimmed	File	Forward read file after quality trimming and adapter removal	TheiaCoV_ONT
 read1_unaligned	File	Forward read file of unaligned reads	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 read1_unmapped	File	The unmapped forwards reads to the assembly	TheiaMeta_Illumina_PE
@@ -946,7 +948,8 @@ read2_concatenated	File	Concatenated reverse reads	Concatenate_Illumina_Lanes, T
 read2_dehosted	File	The dehosted reverse reads file; suggested read file for SRA submission 	Freyja_FASTQ, NCBI_Scrub_PE, TheiaCoV_Illumina_PE, TheiaMeta_Illumina_PE
 read2_mapped	File	The mapped reverse reads to the assembly	TheiaMeta_Illumina_PE
 read2_renamed	File	New read2 FASTQ file renamed to desired filename	Rename_FASTQ
-read2_subsampled	File	Read2 FASTQ files downsampled to desired coverage	RASUSA, TheiaEuk_Illumina_PE
+read2_subsampled	File	Read2 FASTQ files downsampled to desired coverage	RASUSA
+read2_subsampled_raw	File	Raw read2 FASTQ files downsampled before trimming/filtering	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE
 read2_unaligned	File	Reverse read file of unaligned reads	TheiaCoV_Illumina_PE
 read2_unmapped	File	The unmapped reverse reads to the assembly	TheiaMeta_Illumina_PE
 read_mapping_cov_hist	File	Coverage histogram from read mapping	TheiaViral_Illumina_PE, TheiaViral_ONT
