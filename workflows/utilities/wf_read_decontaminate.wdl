@@ -154,6 +154,6 @@ workflow read_decontaminate {
     Map[String, Float]? contaminant_expected_reads_by_sequence = select_first([spoof_expectation_maps, contaminant_check.expected_reads_by_sequence])
     Map[String, Float]? contaminant_unexpected_coverage_by_sequence = select_first([spoof_expectation_maps, contaminant_check.unexpected_coverage_by_sequence])
     Map[String, Float]? contaminant_unexpected_depth_by_sequence = select_first([spoof_expectation_maps, contaminant_check.unexpected_depth_by_sequence])
-    Map[String, Float]? contaminant_unexpected_reads_by_sequence = select_first([spoof_expectation_Maps, contaminant_check.unexpected_reads_by_sequence])
+    Map[String, Float]? contaminant_unexpected_reads_by_sequence = select_first([spoof_expectation_maps, contaminant_check.unexpected_reads_by_sequence])
   }
 }
