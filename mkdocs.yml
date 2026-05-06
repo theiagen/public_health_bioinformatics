@@ -226,7 +226,6 @@ theme:
     - content.tooltips
     - navigation.instant
     - navigation.path
-    - navigation.prune
     - navigation.tabs
     - navigation.top
     - navigation.tracking
