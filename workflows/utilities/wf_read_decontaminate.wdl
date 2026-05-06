@@ -120,17 +120,10 @@ workflow read_decontaminate {
   }
   # set arbitrary empty Maps for WDL/Terra compatibility
   if (! defined(expected_sequences) || expected_sequences == "" || read_mapping_stats.mapping_stats_status != "PASS") {
-    Map[String, Float] expected_cov_by_sequence = {"": 0}
-    Map[String, Float] expected_depth_by_sequence = {"": 0}
-    Map[String, Float] expected_reads_by_sequence = {"": 0}
-    Map[String, Float] unexpected_cov_by_sequence = {"": 0}
-    Map[String, Float] unexpected_depth_by_sequence = {"": 0}
-    Map[String, Float] unexpected_reads_by_sequence = {"": 0}
+    Map[String, Float] spoof_expectation_maps = {"": 0}
   }
   if (read_mapping_stats.mapping_stats_status != "PASS") {
-    Map[String, Float] failed_cov_by_sequence = {"": 0}
-    Map[String, Float] failed_depth_by_sequence = {"": 0}
-    Map[String, Float] failed_reads_by_sequence = {"": 0}
+    Map[String, Float] spoof_sequence_maps = {"": 0}
   }
   output {
     # Datasets download outputs
@@ -151,16 +144,16 @@ workflow read_decontaminate {
     Float? contaminant_mapping_coverage = read_mapping_stats.coverage
     Float? contaminant_mapping_mean_depth = read_mapping_stats.depth
     Float? contaminant_percent_mapped_reads = read_mapping_stats.percentage_mapped_reads
-    Map[String, Float]? contaminant_coverage_by_sequence = select_first([failed_cov_by_sequence, read_mapping_stats.coverage_by_sequence])
-    Map[String, Float]? contaminant_depth_by_sequence = select_first([failed_depth_by_sequence, read_mapping_stats.depth_by_sequence])
-    Map[String, Float]? contaminant_reads_by_sequence = select_first([failed_reads_by_sequence, read_mapping_stats.reads_by_sequence])
+    Map[String, Float]? contaminant_coverage_by_sequence = select_first([spoof_sequence_maps, read_mapping_stats.coverage_by_sequence])
+    Map[String, Float]? contaminant_depth_by_sequence = select_first([spoof_sequence_maps, read_mapping_stats.depth_by_sequence])
+    Map[String, Float]? contaminant_reads_by_sequence = select_first([spoof_sequence_maps, read_mapping_stats.reads_by_sequence])
     # Contaminant check outputs
     String? contaminant_check_status = select_first([contaminant_check.contaminant_check_status, contaminant_check_fail, ""])
-    Map[String, Float]? contaminant_expected_coverage_by_sequence = select_first([expected_cov_by_sequence, contaminant_check.expected_coverage_by_sequence])
-    Map[String, Float]? contaminant_expected_depth_by_sequence = select_first([expected_cov_by_sequence, contaminant_check.expected_depth_by_sequence])
-    Map[String, Float]? contaminant_expected_reads_by_sequence = select_first([expected_cov_by_sequence, contaminant_check.expected_reads_by_sequence])
-    Map[String, Float]? contaminant_unexpected_coverage_by_sequence = select_first([unexpected_cov_by_sequence, contaminant_check.unexpected_coverage_by_sequence])
-    Map[String, Float]? contaminant_unexpected_depth_by_sequence = select_first([unexpected_cov_by_sequence, contaminant_check.unexpected_depth_by_sequence])
-    Map[String, Float]? contaminant_unexpected_reads_by_sequence = select_first([unexpected_cov_by_sequence, contaminant_check.unexpected_reads_by_sequence])
+    Map[String, Float]? contaminant_expected_coverage_by_sequence = select_first([spoof_expectation_maps, contaminant_check.expected_coverage_by_sequence])
+    Map[String, Float]? contaminant_expected_depth_by_sequence = select_first([spoof_expectation_maps, contaminant_check.expected_depth_by_sequence])
+    Map[String, Float]? contaminant_expected_reads_by_sequence = select_first([spoof_expectation_maps, contaminant_check.expected_reads_by_sequence])
+    Map[String, Float]? contaminant_unexpected_coverage_by_sequence = select_first([spoof_expectation_maps, contaminant_check.unexpected_coverage_by_sequence])
+    Map[String, Float]? contaminant_unexpected_depth_by_sequence = select_first([spoof_expectation_maps, contaminant_check.unexpected_depth_by_sequence])
+    Map[String, Float]? contaminant_unexpected_reads_by_sequence = select_first([spoof_expectation_Maps, contaminant_check.unexpected_reads_by_sequence])
   }
 }
