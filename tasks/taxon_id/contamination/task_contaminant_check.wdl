@@ -11,8 +11,8 @@ task contaminant_check {
     Int min_depth = 0
     Int min_reads_mapped = 0
 
-    Int? min_expected_seq # default is defined in python and all expected_sequences
-    Int max_unexpected_seq = 1
+    Int? min_expected_seq # default is defined in python as all expected_sequences
+    Int max_unexpected_seq = 0 # default is 0
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23"
     Int memory = 4
@@ -30,7 +30,7 @@ task contaminant_check {
     --minimum_depth ~{min_depth} \
     --minimum_reads_mapped ~{min_reads_mapped} \
     ~{if defined(min_expected_seq) then "--minimum_expected_sequences ~{min_expected_seq}" else ""} \
-    ~{if defined(max_unexpected_seq) then "--maximum_unexpected_sequences ~{max_unexpected_seq}" else ""}
+    --max_unexpected_seq
   >>>
   output {
     String contaminant_check_status = read_string("STATUS")
