@@ -18,7 +18,9 @@ There are three Kraken2 workflows:
 Besides the data input types, there are minimal differences between these two workflows.
 
 !!! caption "Kraken2 Workflow Diagram"
-    ![Kraken2 Workflow Diagram](../../assets/figures/Kraken2.png)
+    <div style="text-align: center;">
+    ![Kraken2 Workflow Diagram](../../assets/figures/Kraken2.png){: onload="this.width/=2;this.onload=null;" }
+    </div>
 
 ### Databases
 

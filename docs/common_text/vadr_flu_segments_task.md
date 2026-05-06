@@ -7,4 +7,4 @@
     !!! techdetails "VADR Flu Segments Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_vadr_flu_segments.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/influenza/task_vadr_flu_segments.wdl) |
+        | Task | [task_vadr_flu_segments.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/orthomyxoviridae/task_vadr_flu_segments.wdl) |

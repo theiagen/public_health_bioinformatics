@@ -24,6 +24,6 @@ This PR closes #
 ## 🎯 Reviewer Checklist
 <!--  Indicate NA when not applicable  -->
 - [ ] All changes have been confirmed to be accurate
-- [ ] You have verified all changes render correctly in the documnentation by serving it locally.
+- [ ] You have verified all changes render correctly in the documentation by serving it locally.
 - [ ] The changes adhere to the [documentation style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/doc_contribution/)
 - [ ] The PR author has addressed all comments

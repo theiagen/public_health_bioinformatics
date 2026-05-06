@@ -218,9 +218,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 {{ include_md("common_text/shigatyper_task.md", indent=4) }}
 
-{{ include_md("common_text/shigeifinder_task.md", indent=4, condition="assembly") }}
-
-{{ include_md("common_text/shigeifinder_task.md", indent=4, condition="reads") }}
+{{ include_md("common_text/shigeifinder_task.md", indent=4) }}
 
     !!! tip ""
         `SonneiTyper` is run only when GAMBIT predicts the *S. sonnei* species. This is the most common *Shigella* species in the United States.
