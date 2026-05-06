@@ -55,28 +55,28 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
 
 {{ include_md("common_text/minimap2_task.md", condition="long_read_flags")}}
 
-??? task "`samtools`: BAM Processing"
+??? task "`SAMtools`: BAM Processing"
 
     The bam processing step aligns files through several coordinate-based steps to prepare for variant calling. The task converts SAM format to BAM, sorts the BAM file by coordinate, and creates a BAM index file. This processed BAM is required for Clair3's variant calling pipeline.
 
-    !!! techdetails "samtools Technical Details"
+    !!! techdetails "SAMtools Technical Details"
         | | Links |
         |---|---|
         | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
-        | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
-        | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+        | Software Source Code | [SAMtools on GitHub](https://github.com/samtools/samtools) |
+        | Software Documentation | [SAMtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
 ??? task "`samtools faidx`: Reference Genome Indexing"
 
     `samtools faidx` creates necessary index files for the reference. This indexing step is    essential for enabling efficient random access to the reference sequence during variant calling.
 
-    !!! techdetails "samtools Technical Details"
+    !!! techdetails "SAMtools Technical Details"
         | | Links |
         |---|---|
         | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
-        | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
-        | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+        | Software Source Code | [SAMtools on GitHub](https://github.com/samtools/samtools) |
+        | Software Documentation | [SAMtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
 ??? task "`Clair3`: Variant Calling"

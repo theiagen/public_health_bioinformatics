@@ -2,8 +2,7 @@
 title: Task Fragment `abricate_flu`
 fragment: true
 ---
-??? task "`abricate`"
-
+??? task "`ABRicate`: Influenza Characterization"
     ABRicate assigns types and subtype/lineages for flu samples using a version of the [INSaFLU](https://github.com/INSaFLU/INSaFLU) ("INSide the FLU") database [described here](https://github.com/epi2me-labs/wf-flu/tree/master/data/primer_schemes/V1/blastdb/insaflu). 
 
     ABRicate typically works by screening contigs for the presence of acquired resistance genes, but when using the INSaFLU database, the algorithm works by assigning contigs to the most closely corresponding viral segment in the INSaFLU database, which is used to call the flu type and subtype.

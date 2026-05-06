@@ -2,12 +2,11 @@
 title: Task Fragment `flye`
 fragment: true
 ---
-??? task "`flye`"
-
+??? task "`Flye`: _De novo_ Assembly"
     Flye is a _de novo_ assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerates the error rate of ONT data.
 
 <!-- if: theiaviral -->
-    It can be enabled by setting the `call_raven` parameter to `false`. The `flye` task is used as a fallback option if the `raven` task fails during execution (see task `raven` for more details).
+    It can be enabled by setting the `call_raven` parameter to `false`. Flye is used as a fallback option if Raven fails during execution (see the Raven task for more details).
 <!-- endif -->
 
     ??? dna "`flye_read_type` input parameter" 

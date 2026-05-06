@@ -3,8 +3,7 @@ title: Task Fragment `nanoq`
 fragment: true
 ---
 ??? task "`Nanoq`: Read Filtering"
-
-    Reads are filtered by length and quality using `nanoq`. By default, sequences with less than 500 basepairs and quality scores lower than 10 are filtered out to improve assembly accuracy. These defaults are able to be modified by the user.
+    Reads are filtered by length and quality using Nanoq. By default, sequences with less than 500 basepairs and quality scores lower than 10 are filtered out to improve assembly accuracy. These defaults are able to be modified by the user.
 
     !!! techdetails "Nanoq Technical Details"
         |  | Links |

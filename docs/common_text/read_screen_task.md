@@ -4,7 +4,7 @@ fragment: true
 ---
 ??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"
 
-    The [`screen`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/comparisons/task_screen.wdl) task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [`fastq-scan`](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the `screen` task if any thresholds are not met:
+    The screen task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [fastq-scan](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [Mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the screen task if any thresholds are not met:
 
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
     2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
@@ -60,7 +60,7 @@ fragment: true
 <!-- if: theiaeuk -->
     | Variable  | Rationale |
     | --- | --- | --- |
-    | `skip_screen` | false | Set to true to skip the read screen from running. If you set this value to true, please provide a value for the theiaeuk_illumina_pe `genome_length` optional input, OR set the theiaeuk_illumina_pe `call_rasusa` optional input to false. Otherwise RASUSA will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail. |
+    | `skip_screen` | false | Set to true to skip the read screen from running. If you set this value to true, please provide a value for the theiaeuk_illumina_pe `genome_length` optional input, OR set the theiaeuk_illumina_pe `call_rasusa` optional input to false. Otherwise Rasusa will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail. |
     | `min_reads` | 3000 | Calculated from the minimum number of base pairs required for 20x coverage of the _Hansenula polymorpha_ genome, the smallest fungal genome as of 2015-04-02 (8.97 Mbp), divided by 300 (the longest Illumina read length) |
     | `min_basepairs` | 45000000 | Should be greater than 10x coverage of _Hansenula polymorpha_, the smallest fungal genome as of 2015-04-02 (8.97 Mbp)  |
     | `min_genome_length` | 9000000 | Based on the _Hansenula polymorpha_  genome - the smallest fungal genome as of 2015-04-02 (8.97 Mbp) |
@@ -72,7 +72,7 @@ fragment: true
     !!! techdetails "Screen Technical Details"
         
 <!-- if: theiacov|theiaprok|theiaeuk -->
-        There is a single WDL task for read screening. The `screen` task is run twice, once for raw reads and once for clean reads.
+        There is a single WDL task for read screening. The `creen task is run twice, once for raw reads and once for clean reads.
 <!-- endif -->
 
         |  | Links |

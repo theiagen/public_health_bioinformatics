@@ -29,7 +29,6 @@ fragment: true
         ```
 
     !!! techdetails "LisSero Technical Details"
-        
         |  | Links |
         | --- | --- |
         | Task | [task_lissero.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/listeria/task_lissero.wdl) |

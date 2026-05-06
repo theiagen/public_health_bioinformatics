@@ -2,16 +2,16 @@
 title: Task Fragment `porechop`
 fragment: true
 ---
-??? task "`porechop`"
+??? task "`Porechop`: Read Trimming (optional)"
 
 <!-- if: theiaprok|theiaeuk  -->
-    Read trimming is optional and can be enabled by setting the `run_porchop` input variable to true.
+    Read trimming is optional and can be enabled by setting the `run_porechop` input variable to true.
 <!-- endif -->
 
     Porechop is a tool for finding and removing adapters from ONT data. Adapters on the ends of reads are trimmed, and when a read has an adapter in the middle, the read is split into two.
 
 <!-- if: theiaviral -->
-    The `porechop` task is optional and is turned off by default. It can be enabled by setting the `call_porechop` parameter to `true`.
+    Porechop is optional and is turned off by default. It can be enabled by setting the `call_porechop` parameter to `true`.
 <!-- endif -->
 
     !!! techdetails "Porechop Technical Details"

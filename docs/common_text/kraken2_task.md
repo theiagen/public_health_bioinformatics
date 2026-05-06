@@ -3,24 +3,24 @@ title: Task Fragment `kraken2`
 fragment: true
 ---
 <!-- if: theiaprokillumina|theiaeuk -->
-??? task "Kraken2 + Bracken: Read Classification (optional)"
+??? task `"Kraken2` + `Bracken`: Read Classification (optional)"
     To activate this task, provide a file for `kraken_db` under the `read_QC_trim` subworkflow.
 <!-- endif -->
 
 <!-- if: theiacov|freyja|theiaviral|kraken -->
-??? task "Kraken2 + Bracken: Read Classification"
+??? task "`Kraken2` + `Bracken`: Read Classification"
 <!-- endif -->
 
-    `kraken2` is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
+    Kraken2 is a bioinformatics tool originally designed for metagenomic applications. It has additionally proven valuable for validating taxonomic assignments and checking contamination of single-species (e.g. bacterial isolate, eukaryotic isolate, viral isolate, etc.) whole genome sequence data.
 
-    `Bracken` is a refinement module that improves the resolution of `kraken2` reports.
+    Bracken is a refinement module that improves the resolution of Kraken2 reports.
 
 <!-- if: theiacov|freyja -->
-    `kraken2` is run on both the raw and clean reads.
+    Kraken2 is run on both the raw and clean reads.
 <!-- endif -->
 
 <!-- if: theiaviral -->
-    This task runs on cleaned reads and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones. If `call_bracken` is set to "true" then a Bracken report is additionally outputted.
+    This task runs on cleaned reads and outputs a Kraken2 report detailing taxonomic classifications. It also separates classified reads from unclassified ones. If `call_bracken` is set to "true" a Bracken report is generated.
 <!-- endif -->
 
 <!-- if: theiacov|theiaviral|freyja -->
@@ -29,7 +29,7 @@ fragment: true
 <!-- endif -->
   
 <!-- if: theiaprokillumina -->
-    As an alternative to `MIDAS` (see above), the `Kraken2` task can be turned on by populating the `kraken_db` input variable for the identification of reads to detect contamination with non-target taxa.
+    As an alternative to MIDAS (see above), the Kraken2 task can be turned on by populating the `kraken_db` input variable for the identification of reads to detect contamination with non-target taxa.
 <!-- endif -->
 
 <!-- if: theiaeukillumina -->
@@ -62,6 +62,6 @@ fragment: true
         |  | Links |
         | --- | --- |
         | Task | [task_kraken2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_kraken2.wdl) |
-        | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/), [Bracken on GitHub](https://github.com/jenniferlu717/Bracken)  |
-        | Software Documentation | [Kraken2 Documentation](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown), [Bracken Documentation](https://github.com/jenniferlu717/Bracken/blob/master/README.md) |
-        | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0), [Bracken: estimating species abundance in metagenomics data](https://doi.org/10.7717/peerj-cs.104) |
+        | Software Source Code | [Kraken2 on GitHub](https://github.com/DerrickWood/kraken2/)<br>[Bracken on GitHub](https://github.com/jenniferlu717/Bracken)  |
+        | Software Documentation | [Kraken2 Documentation](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown)<br>[Bracken Documentation](https://github.com/jenniferlu717/Bracken/blob/master/README.md) |
+        | Original Publication(s) | [Improved metagenomic analysis with Kraken 2](https://link.springer.com/article/10.1186/s13059-019-1891-0)<br>[Bracken: estimating species abundance in metagenomics data](https://doi.org/10.7717/peerj-cs.104) |

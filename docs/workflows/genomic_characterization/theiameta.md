@@ -62,15 +62,15 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 ??? task "`minimap2`: Assembly Correction"
 {{ include_md("common_text/minimap2_task.md", condition="sr_mode")}}
 
-??? task "`samtools`: SAM File Conversion "
+??? task "`SAMtools`: SAM File Conversion "
     This task converts the output SAM file from minimap2 and converts it to a BAM file. It then sorts the BAM based on the read names, and then generates an index file.
 
-    !!! techdetails "samtools Technical Details"
+    !!! techdetails "SAMtools Technical Details"
         | | Links |
         |---|---|
         | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
-        | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
-        | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+        | Software Source Code | [SAMtools on GitHub](https://github.com/samtools/samtools) |
+        | Software Documentation | [SAMtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
 {{ include_md("common_text/pilon_task.md", condition="theiameta") }}
@@ -144,15 +144,15 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 ??? task "`minimap2`: Read Alignment to the Assembly"
 {{ include_md("common_text/minimap2_task.md", condition="sr_mode")}}
 
-??? task "`samtools`: SAM File Conversion (Round 2)"
+??? task "`SAMtools`: SAM File Conversion (Round 2)"
     This task converts the output SAM file from minimap2 and converts it to a BAM file. It then sorts the BAM based on the read names, and then generates an index file.
 
-    !!! techdetails "samtools Technical Details"
+    !!! techdetails "SAMtools Technical Details"
         | | Links |
         |---|---|
         | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
-        | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
-        | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+        | Software Source Code | [SAMtools on GitHub](https://github.com/samtools/samtools) |
+        | Software Documentation | [SAMtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
 ??? task "Parsing the BAM file"
@@ -167,8 +167,8 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         | | Links |
         |---|---|
         | Task | [task_parse_mapping.wdl#calculate_coverage](https://github.com/theiagen/public_health_bioinformatics/blob/69223caab616070ab92cf1abedc78c9f92e95f6b/tasks/utilities/data_handling/task_parse_mapping.wdl#L159)<br>[task_parse_mapping.wdl#retrieve_pe_reads_bam](https://github.com/theiagen/public_health_bioinformatics/blob/69223caab616070ab92cf1abedc78c9f92e95f6b/tasks/utilities/data_handling/task_parse_mapping.wdl#L125)<br>[task_parse_mapping.wdl#assembled_reads_percent](https://github.com/theiagen/public_health_bioinformatics/blob/69223caab616070ab92cf1abedc78c9f92e95f6b/tasks/utilities/data_handling/task_parse_mapping.wdl#L206) |
-        | Software Source Code | [bedtools on GitHub](https://github.com/arq5x/bedtools2)<br>[samtools on GitHub](https://github.com/samtools/samtools) |
-        | Software Documentation | [bedtools ReadTheDocs](https://bedtools.readthedocs.io/en/latest/)<br>[samtools](https://www.htslib.org/doc/samtools.html) |
+        | Software Source Code | [bedtools on GitHub](https://github.com/arq5x/bedtools2)<br>[SAMtools on GitHub](https://github.com/samtools/samtools) |
+        | Software Documentation | [bedtools ReadTheDocs](https://bedtools.readthedocs.io/en/latest/)<br>[SAMtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [BEDTools: a flexible suite of utilities for comparing genomic features](https://doi.org/10.1093/bioinformatics/btq033)<br>[The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
 ### Outputs
@@ -197,7 +197,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 <!-- -->
 >**QUAST:** Alexey Gurevich and others, QUAST: quality assessment tool for genome assemblies, _Bioinformatics_, Volume 29, Issue 8, April 2013, Pages 1072–1075, <https://doi.org/10.1093/bioinformatics/btt086>
 <!-- -->
->**samtools:** Li, Heng, Bob Handsaker, Alec Wysoker, Tim Fennell, Jue Ruan, Nils Homer, Gabor Marth, Goncalo Abecasis, Richard Durbin, and 1000 Genome Project Data Processing Subgroup. 2009. The Sequence Alignment/Map format and SAMtools. Bioinformatics 25(16): 2078-2079. <https://doi.org/10.1093/bioinformatics/btp352>
+>**SAMtools:** Li, Heng, Bob Handsaker, Alec Wysoker, Tim Fennell, Jue Ruan, Nils Homer, Gabor Marth, Goncalo Abecasis, Richard Durbin, and 1000 Genome Project Data Processing Subgroup. 2009. The Sequence Alignment/Map format and SAMtools. Bioinformatics 25(16): 2078-2079. <https://doi.org/10.1093/bioinformatics/btp352>
 <!-- -->
 >**BEDtools:** Quinlan AR and Hall IM, 2010. BEDTools: a flexible suite of utilities for comparing genomic features. Bioinformatics. 26, 6, pp. 841–842. <https://doi.org/10.1093/bioinformatics/btq033>
 <!-- -->

@@ -3,7 +3,6 @@ title: Task Fragment `gamma`
 fragment: true
 ---
 ??? task "`GAMMA`: AMR Genotyping (optional)"
-
     To activate this task, set `call_gamma` to `true`.
 
     [GAMMA](https://github.com/rastanton/GAMMA/tree/main) (Gene Allele Mutation Microbial Assessment) is a protein identity based tool that identifies gene matches in microbial genomic data. GAMMA will also translate and annotate each match providing mutational and truncation information for identified matches. This is done much like AMRFinder, however, GAMMA uses BLAT as opposed to BLAST allowing for faster calls with comparable accuracy.  
@@ -13,7 +12,6 @@ fragment: true
     GAMMA also allows for the usage of only nucleotide sequences rather than translated sequences. Using GAMMA-S, enabled with the boolean `run_gammas`, will find the best matches from a multifasta database without translating sequences. 
 
     !!! techdetails "GAMMA Technical Details"
-        
         |  | Links |
         | --- | --- |
         | Task | [task_gamma.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_gamma.wdl) |

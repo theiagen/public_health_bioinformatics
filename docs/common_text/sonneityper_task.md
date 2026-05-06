@@ -8,7 +8,6 @@ fragment: true
     SonneiTyper is a wrapper script around another tool, Mykrobe, that analyses the _S. sonnei_ genomes using the _S. sonnei_-specific genotyping scheme. SonneiTyper parses the Mykrobe predict results and tabulates the results.
 
     !!! techdetails "SonneiTyper Technical Details"
-
         |  | Links |
         | --- | --- |
         | Task | [task_sonneityping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_sonneityping.wdl) |

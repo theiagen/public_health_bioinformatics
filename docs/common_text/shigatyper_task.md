@@ -8,7 +8,6 @@ fragment: true
     ShigaTyper works by mapping the sample sequence to a _Shigella_ reference sequence database using minimap2. Specifically, serotype prediction is made through the serotype-specific _wzx_ gene as O-antigen expression is dependent on this gene. Additional criteria are applied if the serotype could not be solely predicted by this gene; please see the publication for more details.
     
     !!! techdetails "ShigaTyper Technical Details"
-        
         |  | Links |
         | --- | --- |
         | Task | [task_shigatyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_shigatyper.wdl) |

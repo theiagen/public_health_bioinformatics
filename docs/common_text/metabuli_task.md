@@ -2,9 +2,8 @@
 title: Task Fragment `metabuli`
 fragment: true
 ---
-??? task "`metabuli`"
-
-    The `metabuli` task is used to classify and optionally extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.
+??? task "`Metabuli`: Read Classification"
+    Metabuli is used to classify and optionally extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.
 
 <!-- if: metabuli -->
     ??? dna "`taxon_id` input parameter"

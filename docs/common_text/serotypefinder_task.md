@@ -3,7 +3,6 @@ title: Task Fragment `serotypefinder`
 fragment: true
 ---
 ??? task "`SerotypeFinder`: Serotyping"
-
     [SerotypeFinder](https://bitbucket.org/genomicepidemiology/serotypefinder/src/master/), from the Centre for Genomic Epidemiology (CGE), identifies the serotype of total or partially-sequenced isolates of *E. coli*. By using BLAST and KMA, the SerotypeFinder database of specific O-antigen processing system genes (for O typing) and flagellin genes (for H typing) is queried and compared against the target sequence to identify the closest serotype.
     
     !!! techdetails "SerotypeFinder Technical Details"

@@ -2,11 +2,11 @@
 title: Task Fragment `referenceseeker`
 fragment: true
 ---
-??? task "ReferenceSeeker Details (Optional)"
+??? task "ReferenceSeeker: Reference Gnome Identification (Optional)"
     ##### ReferenceSeeker
-    `ReferenceSeeker` uses your draft assembly to identify closely related bacterial, viral, fungal, or plasmid genome assemblies in [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/).
+    ReferenceSeeker uses the draft assembly to identify closely related bacterial, viral, fungal, or plasmid genome assemblies in [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/).
 
-    Databases that can be used with ReferenceSeeker are as follows, and can be used by pasting the GSURI in double quotation marks `" "` into the `referenceseeker_db` optional input:
+    Databases that can be used with ReferenceSeeker are as follows, and can be used by pasting the GSURI in double quotation marks `""` into the `referenceseeker_db` optional input:
 
       - archea:  `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-archaea-refseq-205.v20210406.tar.gz`
       - bacterial (**default**): `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-bacteria-refseq-205.v20210406.tar.gz`

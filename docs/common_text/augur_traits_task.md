@@ -3,9 +3,9 @@ title: Task Fragment `augur traits`
 fragment: true
 ---
 ??? task "`augur traits`: Ancestral Trait Reconstruction"
-    `augur traits` will reconstruct the ancestral traits of provided metadata. By default, only the "pango_lineage" and "clade_membership" columns are included, though the `augur_traits_columns` String inputted can be populated with a comma-delimited string to determine what trait metadata to use.
+    The `augur traits` command will reconstruct the ancestral traits of provided metadata. By default, only the "pango_lineage" and "clade_membership" columns are included, though the `augur_traits_columns` String input can be populated with a comma-delimited string to determine what trait metadata to use.
 
-    !!! techdetails "`augur traits` Technical Details"        
+    !!! techdetails "Augur `traits` Technical Details"        
         |  | Links |
         | --- | --- |
         | Task | [task_augur_traits.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/augur/task_augur_traits.wdl) |

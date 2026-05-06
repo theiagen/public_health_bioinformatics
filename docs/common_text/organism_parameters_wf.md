@@ -3,7 +3,6 @@ title: Workflow Fragment `organism_parameters`
 fragment: true
 ---
 ??? task "`organism_parameters`: Setting default values for specific organisms"
-
     Organism Parameters acquires and propagates default files and variable values for specific organisms.
 
     <!--if: virus -->
@@ -102,7 +101,6 @@ fragment: true
 
   
     !!! techdetails "Organism Parameters Technical Details"        
-
         |  | Links |
         | --- | --- |
         | Task | [wf_organism_parameters.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl) |

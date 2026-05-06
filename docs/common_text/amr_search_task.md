@@ -3,11 +3,11 @@ title: Task Fragment `amr_search`
 fragment: true
 ---
 <!-- if: amr_search -->
-??? task "`amr_search`: Antimicrobial resistance profiling"
+??? task "`AMRsearch`: Antimicrobial Resistance Profiling"
 <!-- endif -->
 
 <!-- if: theiaprok|theiaeuk -->
-??? task "`amr_search`: Antimicrobial Resistance Profiling (optional)"
+??? task "`AMRsearch`: Antimicrobial Resistance Profiling (optional)"
     To activate this task, set `run_amr_search` to be `true`.
 <!-- endif -->
 
@@ -38,7 +38,7 @@ fragment: true
     - **JSON Output**: Contains the complete AMR profile, including detailed resistance state, detected resistance genes/mutations, and supporting BLAST results.
     - **CSV & PDF Tables**: An incorporated Python script, `parse_amr_json.py`, extracts and formats results into a CSV file and PDF summary table for easier visualization.
 
-    !!! techdetails "amr_search Technical Details"    
+    !!! techdetails "AMRsearch Technical Details"    
         |  | Links |
         | --- | --- |
         | Task | [task_amr_search.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_amr_search.wdl) |

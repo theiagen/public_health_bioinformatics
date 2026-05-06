@@ -4,7 +4,7 @@ fragment: true
 ---
 ??? task "`download_terra_table`: Data Retrieval"
 
-    This `download_terra_table` task will return a selected Terra table as a TSV file when provided the Terra project, workspace, and table name. 
+    This task will return a selected Terra table as a TSV file when provided the Terra project, workspace, and table name. 
 
     !!! techdetails "download_terra_table Technical Details"
         |  | Links |

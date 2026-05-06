@@ -3,8 +3,7 @@ title: Task Fragment `versioning`
 fragment: true
 ---
 ??? task "`versioning`: Version Capture"
-
-    The `versioning` task captures the workflow version from the GitHub (code repository) version.
+    The versioning task captures the workflow version from the GitHub (code repository) version.
         
     !!! techdetails "Version Capture Technical details"
 

@@ -7,7 +7,7 @@ fragment: true
 
     If a user does not have an access token they will still receive a finalized project file in JSON format. If a submission to Microreact is attempted a response JSON will be returned to the user for review. 
 
-    !!! techdetails "`microreact_export` Technical Details"
+    !!! techdetails "Microreact Export Technical Details"
         |  | Links |
         | --- | --- |
         | WDL Task | [task_microreact_export.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_export/task_microreact_export.wdl) |

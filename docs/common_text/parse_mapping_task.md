@@ -2,17 +2,17 @@
 title: Task Fragment `parse_mapping`
 fragment: true
 ---
-??? task "`parse_mapping`"
+??? task "`parse_mapping`: BAM File Handling"
 
 <!-- if: sam_to_sorted_bam-->
-    The `sam_to_sorted_bam` sub-task converts the output SAM file from the `minimap2` task and converts it to a BAM file. It then sorts the BAM file by coordinate, and creates a BAM index file.
+    The `sam_to_sorted_bam` sub-task converts the output SAM file from Minimap2 and converts it to a BAM file. It then sorts the BAM file by coordinate, and creates a BAM index file.
 
     ??? dna "`min_map_quality` input parameter"
         This parameter accepts an integer value to set the minimum mapping quality for variant calling and subsequent consensus sequence generation. The default value is `20`.
 <!-- endif -->
 
 <!-- if: bam_to_unaligned_fastq-->
-    The `bam_to_unaligned_fastq` task will extract a FASTQ file of reads that failed to align, while removing unpaired reads. 
+    The `bam_to_unaligned_fastq` sub-task will extract a FASTQ file of reads that failed to align, while removing unpaired reads. 
 <!-- endif -->
 
 <!-- if: theiaviral_mask_low_coverage-->
@@ -22,10 +22,10 @@ fragment: true
         This parameter accepts an integer value to set the minimum read depth for variant calling and subsequent consensus sequence generation. The default value is `10`.
 <!-- endif -->
 
-    !!! techdetails "`parse_mapping` Technical Details"
+    !!! techdetails "Parse Mapping Technical Details"
         | | Links |
         |---|---|
         | Task | [task_parse_mapping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
-        | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
-        | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
+        | Software Source Code | [SAMtools on GitHub](https://github.com/samtools/samtools) |
+        | Software Documentation | [SAMtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |

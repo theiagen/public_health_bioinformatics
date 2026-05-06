@@ -14,7 +14,7 @@ fragment: true
 <!-- endif -->
 
     !!! dna ""
-        By default, `read_processing` is set to `"trimmomatic"`. To use `fastp` instead, set `read_processing` to `"fastp"`. These tasks are mutually exclusive.
+        By default, `read_processing` is set to `"trimmomatic"`. To use fastp instead, set `read_processing` to `"fastp"`. These tasks are mutually exclusive.
 
 {{ include_md("common_text/trimmomatic_task.md", indent=8) }}
 
@@ -23,7 +23,7 @@ fragment: true
 {{ include_md("common_text/bbduk_task.md", indent=4) }}
 
     !!! dna ""
-        By default, `read_qc` is set to `"fastq_scan"`. To use `fastqc` instead, set `read_qc` to `"fastqc"`. These tasks are mutually exclusive.
+        By default, `read_qc` is set to `"fastq_scan"`. To use FastQC instead, set `read_qc` to `"fastqc"`. These tasks are mutually exclusive.
 
 {{ include_md("common_text/fastq_scan_task.md", condition="notclearlabs", indent=8) }}
 

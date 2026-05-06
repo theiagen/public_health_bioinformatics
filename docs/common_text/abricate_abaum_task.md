@@ -2,13 +2,12 @@
 title: Task Fragment `abricate_abaum`
 fragment: true
 ---
-??? task "`abricate_abaum`: Plasmid Identification"
+??? task "`ABRicate`: _A_. _baumannii_ Plasmid Identification"
     *Acinetobacter* plasmids are not included in the PlasmidFinder database (see [the above section on Plasmid Identification](#plasmid-identification)). Instead, the [AcinetobacterPlasmidTyping](https://github.com/MehradHamidian/AcinetobacterPlasmidTyping) database contains variants of the plasmid *rep* gene for *A. baumannii* plasmid identification. When matched with >/= 95 % identity, this represents a typing scheme for *Acinetobacter baumannii* plasmids.
 
     The bioinformatics software for querying sample assemblies against the AcinetobacterPlasmidTyping database is [ABRicate](https://github.com/tseemann/abricate). By default, a 95% minimum identity threshold is set in order for successful classification.
 
-    !!! techdetails "abricate_abaum Technical Details"
-
+    !!! techdetails "ABRicate Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_abricate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_abricate.wdl) |

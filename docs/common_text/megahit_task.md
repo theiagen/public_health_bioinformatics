@@ -3,7 +3,7 @@ title: Task Fragment `megahit`
 fragment: true
 ---
 <!-- if: theiaviral -->
-??? task "`megahit`"
+??? task "`MEGAHIT`: _De novo_ Assembly"
 <!-- endif -->
 <!-- if: theiaprok -->
 ??? task "`MEGAHIT`: _De novo_ Assembly (alternative)"

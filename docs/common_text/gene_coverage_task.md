@@ -2,9 +2,8 @@
 title: Task Fragment `gene_coverage`
 fragment: true
 ---
-??? task "`gene_coverage`"
-
-    This task calculates the percent of a region (typically genes) covered above a minimum depth using `samtools` and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.
+??? task "`gene_coverage`: Breadth of Coverage Calculations"
+    This task calculates the percent of a region (typically genes) covered above a minimum depth using SAMtools and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.
 
     !!! techdetails "Gene Coverage Technical Details"        
         |  | Links |

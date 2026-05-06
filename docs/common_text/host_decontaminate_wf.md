@@ -8,15 +8,15 @@ fragment: true
 
     The detailed steps and tasks are as follows:
 
-{{ include_md("common_text/estimate_genome_length_task.md", indent=4, replacements={'??? task "`estimate_genome_length`"' : '??? toggle "Genome Identification"'}) }}
+{{ include_md("common_text/estimate_genome_length_task.md", indent=4) }}
 
-{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=4, replacements={'??? task "NCBI Datasets"' : '??? toggle "Download Accession"'}) }}
+{{ include_md("common_text/ncbi_datasets_task.md", condition="theiaviral", indent=4) }}
 
-{{ include_md("common_text/minimap2_task.md", condition="only_map_ont", indent=4, replacements={'??? task "`minimap2`: Read Alignment Details"' : '??? toggle "Map Reads to Host"'}) }}
+{{ include_md("common_text/minimap2_task.md", condition="only_map_ont", indent=4) }}
 
-{{ include_md("common_text/parse_mapping_task.md", condition="bam_to_unaligned_fastq", indent=4, replacements={'??? task "`parse_mapping`"' : '??? toggle "Extract Unaligned Reads"'}) }}
+{{ include_md("common_text/parse_mapping_task.md", condition="bam_to_unaligned_fastq", indent=4, replacements={'??? task "`parse_mapping`: BAM File Handling"' : '??? task "`parse_mapping`: Extract Unaligned Reads"'}) }}
 
-{{ include_md("common_text/assembly_metrics_task.md", indent=4, replacements={'??? task "`assembly_metrics`"' : '??? toggle "Host Read Mapping Statistics"'}) }}
+{{ include_md("common_text/assembly_metrics_task.md", indent=4) }}
 
     !!! techdetails "Host Decontaminate Technical Details"
         |  | Links |

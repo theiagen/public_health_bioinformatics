@@ -3,15 +3,15 @@ title: Task Fragment `snippy_variants`
 fragment: true
 ---
 <!-- if: snippy_streamline|snippy_variants -->
-??? task "Snippy_Variants"
+??? task "`Snippy_Variants`: Variant Calling"
     ##### Snippy_Variants
 <!-- endif -->
 <!-- if: snippy_streamline -->
-    `Snippy_Variants` uses Snippy to align the assemblies for each sample against the reference genome to call SNPs, MNPs and INDELs according to optional input parameters. 
+    Snippy_Variants uses Snippy to align the assemblies for each sample against the reference genome to call SNPs, MNPs and INDELs according to optional input parameters. 
 
 <!-- endif -->
 <!-- if: snippy_variants -->
-    `Snippy_Variants` uses Snippy to align reads to the reference and call SNPs, MNPs and INDELs according to optional input parameters.
+    Snippy_Variants uses Snippy to align reads to the reference and call SNPs, MNPs and INDELs according to optional input parameters.
 
 <!-- endif -->
 <!-- if: snippy_streamline|snippy_variants -->
@@ -54,8 +54,8 @@ fragment: true
 
 <!-- endif -->
 <!-- if: cauris|calbicans|afumigatus|cneoformans -->
-??? task "`Snippy_Variants`: Antifungal Resistance Detection"
-    To detect mutations that may confer antifungal resistance, `Snippy` is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance. It's important to note that unlike `amr_search`, this task reports all variants found in the searched targets.
+??? task "Snippy_Variants: Antifungal Resistance Detection"
+    To detect mutations that may confer antifungal resistance, Snippy is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance. It's important to note that unlike AMRSearch, this task reports all variants found in the searched targets.
 <!-- endif -->
 
 <!-- if: cauris -->
@@ -79,7 +79,7 @@ fragment: true
 <!-- endif -->
 
 <!-- if: cauris|calbicans|afumigatus|cneoformans -->
-    We query `Snippy` results to see if any mutations were identified in those genes. By default, we automatically check for the following loci (which can be overwritten by the user). You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name (see below):
+    Snippy results are queried to see if any mutations were identified in those genes. By default, the following loci are automatically checked (which can be overwritten by the user). You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name (see below):
 <!-- endif -->
 
 <!-- if: cauris -->

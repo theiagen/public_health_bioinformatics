@@ -3,9 +3,9 @@ title: Task Fragment `augur align`
 fragment: true
 ---
 ??? task "`augur align`: Genome Assembly Alignment"
-    `augur align` aligns multiple nucleotide sequences and strips insertions relative to a reference sequence by using the MAFFT aligner. 
+    The `augur align` command aligns multiple nucleotide sequences and strips insertions relative to a reference sequence by using the MAFFT aligner. 
 
-    !!! techdetails "`augur align` Technical Details"        
+    !!! techdetails "Augur `align` Technical Details"        
         |  | Links |
         | --- | --- |
         | Task | [task_augur_align.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/augur/task_augur_align.wdl) |

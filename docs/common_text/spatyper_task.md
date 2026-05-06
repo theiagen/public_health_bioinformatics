@@ -7,7 +7,7 @@ fragment: true
 
     Spa-types can be used for accurate and reliable typing of MRSA (methicillin-resistant _Staphylococcus aureus_) strains, and are often used in hospital infection control and epidemiological studies.
 
-    !!! techdetails "spatyper Technical Details"
+    !!! techdetails "spaTyper Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_spatyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/staphylococcus/task_spatyper.wdl) |
