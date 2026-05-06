@@ -26,7 +26,7 @@
 
 {{ include_md("common_text/contaminant_check_task.md", indent=4, replacements={'??? task "`contaminant_check`"' : '??? toggle "Contaminant Detection Status"'}) }}
 
-    !!! techdetails "Host Decontaminate Technical Details"
+    !!! techdetails "Read Decontaminate Technical Details"
         |  | Links |
         | --- | --- |
-        | Subworkflow | [wf_host_decontaminate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_host_decontaminate.wdl) |
+        | Subworkflow | [wf_read_decontaminate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_decontaminate.wdl) |
