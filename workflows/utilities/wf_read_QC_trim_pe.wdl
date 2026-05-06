@@ -101,8 +101,8 @@ workflow read_QC_trim_pe {
     call ncbi_scrub.ncbi_scrub_pe {
       input:
         samplename = samplename,
-        read1 = select_first([read1, read_decontaminate.decontaminate_read1]),
-        read2 = select_first([read2, read_decontaminate.decontaminate_read2])
+        read1 = select_first([read_decontaminate.decontaminate_read1, read1]),
+        read2 = select_first([read_decontaminate.decontaminate_read2, read2])
     }
   }
   if ("~{workflow_series}" == "theiacov") {
