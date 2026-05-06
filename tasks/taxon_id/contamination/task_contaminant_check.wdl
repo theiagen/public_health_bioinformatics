@@ -70,7 +70,7 @@ task contaminant_check {
   # convert comma-separated string of expected sequences into a set
   expected_sequences = set([seq.strip() for seq in "~{expected_sequences}".split(",") if seq.strip()])
   # set default to all expected_sequences
-  if ~{if defined(min_expected_seq) then "'true'" else "'false'"} == "true":
+  if ~{if defined(min_expected_seq) then "True" else "False"}:
     min_expected_seq = int(~{min_expected_seq})
     if min_expected_seq > len(expected_sequences):
       print(f"ERROR: min_expected_seq ({min_expected_seq}) exceeds number of expected_sequences ({len(expected_sequences)}); setting min_expected_seq to {len(expected_sequences)}")
@@ -160,7 +160,7 @@ task contaminant_check {
         for seq, fail_reasons in sorted(seq2fail.items(), key=lambda x: x[0]):
           status_string += f"{seq} - {', '.join(fail_reasons)}; "
       # too many unexpected sequences recovered
-      else:
+      if len(unexpected_sequences) > int(~{max_unexpected_seq}):
         for seq in unexpected_sequences:
           status_string += f"{seq} - extra sequence; "
       status_string = status_string.strip("; ")
