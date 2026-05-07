@@ -8,7 +8,7 @@
 
 !!! caption "Snippy_Streamline_PHB Workflow Diagram"
     <div style="text-align: center;">
-    ![Snippy_Streamline_PHB Workflow Diagram](../../assets/figures/Snippy_Streamline.png){width=50%}
+    ![Snippy_Streamline_PHB Workflow Diagram](../../assets/figures/Snippy_Streamline.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 The `Snippy_Streamline` workflow is an all-in-one approach to generating a reference-based phylogenetic tree and associated SNP-distance matrix. The workflow can be run in multiple ways.
