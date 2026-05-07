@@ -28,7 +28,7 @@ task freyja_long_format_single {
             header="${header}\tlatitude"
             row="${row}\t~{latitude}"
         fi
-        
+
         # long
         if [ -n "~{longitude}" ]; then
             header="${header}\tlongitude"
@@ -40,14 +40,14 @@ task freyja_long_format_single {
 
         # freyja the long way, if groupby is provided, set --group-by to the value of group_by
         if [ -n "~{group_by}" ]; then
-            freyja_to_long.py freyja_metadata.tsv ~{samplename}_freyja_parsed_format.tsv --sample-col samplename --group-by ~{group_by} --mincov ~{mincov}
+            freyja_to_long.py freyja_metadata.tsv ~{samplename}_freyja_demixed_parsed_long.tsv --sample-col samplename --group-by ~{group_by} --mincov ~{mincov}
         else
-            freyja_to_long.py freyja_metadata.tsv ~{samplename}_freyja_parsed_format.tsv --sample-col samplename --mincov ~{mincov}
+            freyja_to_long.py freyja_metadata.tsv ~{samplename}_freyja_demixed_parsed_long.tsv --sample-col samplename --mincov ~{mincov}
         fi
     >>>
 
     output {
-        File freyja_parsed_format_tsv = "~{samplename}_freyja_parsed_format.tsv"
+        File freyja_parsed_format_tsv = "~{samplename}_freyja_demixed_parsed_long.tsv"
     }
     runtime {
         docker: docker
@@ -111,14 +111,14 @@ task freyja_long_format_multi {
         CODE
 
         if [ -n "~{group_by}" ]; then
-            freyja_to_long.py freyja_metadata.tsv freyja_parsed_format.tsv --sample-col samplename --group-by ~{group_by} --mincov ~{mincov}
+            freyja_to_long.py freyja_metadata.tsv freyja_demixed_parsed_long.tsv --sample-col samplename --group-by ~{group_by} --mincov ~{mincov}
         else
-            freyja_to_long.py freyja_metadata.tsv freyja_parsed_format.tsv --sample-col samplename --mincov ~{mincov}
+            freyja_to_long.py freyja_metadata.tsv freyja_demixed_parsed_long.tsv --sample-col samplename --mincov ~{mincov}
         fi
     >>>
 
     output {
-        File freyja_parsed_format_tsv = "freyja_parsed_format.tsv"
+        File freyja_parsed_format_tsv = "freyja_demixed_parsed_long.tsv"
     }
 
     runtime {
