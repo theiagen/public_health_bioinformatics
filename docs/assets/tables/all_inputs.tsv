@@ -2758,7 +2758,7 @@ trimmomatic	trimmomatic_window_quality	Int	The trimming window quality score	30	
 trimmomatic	trimmomatic_window_size	Int	The window size for trimming	4	Optional	TBProfiler_tNGS	general	
 ts_mlst	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 ts_mlst	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-ts_mlst	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mlst:2.23.0-2024-12-31	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
+ts_mlst	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/mlst:2.33.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 ts_mlst	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 ts_mlst	min_percent_coverage	Float	Minimum % breadth of coverage to report an MLST allele	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 ts_mlst	min_percent_identity	Float	Minimum % identity to known MLST gene to report an MLST allele	95	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
