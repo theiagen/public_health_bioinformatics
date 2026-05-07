@@ -8787,14 +8787,6 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>tbp_parser_add_cs_lims</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
 <td><strong>tbp_parser_config</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
@@ -8803,7 +8795,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>tbp_parser_coverage_regions_bed</strong></td>
+<td><strong>tbp_parser_coverage_bed</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -8822,20 +8814,36 @@
 <td><strong>tbp_parser_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v3.0.3</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>tbp_parser_etha237_frequency</strong></td>
-<td>Float</td>
+<td><strong>tbp_parser_err_coverage_bed</strong></td>
+<td>File</td>
 <td>Internal component, do not modify</td>
-<td>0.1</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>tbp_parser_expert_rule_regions_bed</strong></td>
+<td><strong>tbp_parser_find_and_replace</strong></td>
+<td>Map[String,String]</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_gene_database_yml</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_lims_report_format_yml</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -8854,7 +8862,7 @@
 <td><strong>tbp_parser_min_frequency</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td>0.1</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8862,7 +8870,15 @@
 <td><strong>tbp_parser_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td>100</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_min_percent_loci_covered</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8870,7 +8886,7 @@
 <td><strong>tbp_parser_min_read_support</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td>10</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8883,7 +8899,15 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>tbp_parser_output_seq_method_type</strong></td>
+<td><strong>tbp_parser_resolve_overlapping_regions</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_sequencing_method</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
 <td>WGS</td>
@@ -8891,47 +8915,31 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>tbp_parser_rpob449_frequency</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td>0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>tbp_parser_rrl_frequency</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td>0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>tbp_parser_rrl_read_support</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>10</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>tbp_parser_rrs_frequency</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td>0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>tbp_parser_rrs_read_support</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>10</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
 <td><strong>tbp_parser_tngs_data</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_tngs_frequency_boundaries</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_tngs_read_support_boundaries</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_use_err_for_qc</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
 <td>False</td>
@@ -8988,6 +8996,14 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>tbprofiler_tbdb_branch</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_tbdb_branch_commit_hash</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -11237,14 +11253,6 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>tbp_parser_add_cs_lims</strong></td>
-<td>Boolean</td>
-<td>Internal component, do not modify</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
 <td><strong>tbp_parser_config</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
@@ -11253,7 +11261,7 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>tbp_parser_coverage_regions_bed</strong></td>
+<td><strong>tbp_parser_coverage_bed</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -11272,20 +11280,36 @@
 <td><strong>tbp_parser_docker_image</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v3.0.3</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>tbp_parser_etha237_frequency</strong></td>
-<td>Float</td>
+<td><strong>tbp_parser_err_coverage_bed</strong></td>
+<td>File</td>
 <td>Internal component, do not modify</td>
-<td>0.1</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>tbp_parser_expert_rule_regions_bed</strong></td>
+<td><strong>tbp_parser_find_and_replace</strong></td>
+<td>Map[String,String]</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_gene_database_yml</strong></td>
+<td>File</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_lims_report_format_yml</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
 <td></td>
@@ -11304,7 +11328,7 @@
 <td><strong>tbp_parser_min_frequency</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td>0.1</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11312,7 +11336,15 @@
 <td><strong>tbp_parser_min_percent_coverage</strong></td>
 <td>Float</td>
 <td>Internal component, do not modify</td>
-<td>100</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_min_percent_loci_covered</strong></td>
+<td>Float</td>
+<td>Internal component, do not modify</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11320,7 +11352,7 @@
 <td><strong>tbp_parser_min_read_support</strong></td>
 <td>Int</td>
 <td>Internal component, do not modify</td>
-<td>10</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11333,7 +11365,15 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>tbp_parser_output_seq_method_type</strong></td>
+<td><strong>tbp_parser_resolve_overlapping_regions</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_sequencing_method</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
 <td>WGS</td>
@@ -11341,47 +11381,31 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
-<td><strong>tbp_parser_rpob449_frequency</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td>0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>tbp_parser_rrl_frequency</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td>0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>tbp_parser_rrl_read_support</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>10</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>tbp_parser_rrs_frequency</strong></td>
-<td>Float</td>
-<td>Internal component, do not modify</td>
-<td>0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
-<td><strong>tbp_parser_rrs_read_support</strong></td>
-<td>Int</td>
-<td>Internal component, do not modify</td>
-<td>10</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>merlin_magic</td>
 <td><strong>tbp_parser_tngs_data</strong></td>
+<td>Boolean</td>
+<td>Internal component, do not modify</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_tngs_frequency_boundaries</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_tngs_read_support_boundaries</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbp_parser_use_err_for_qc</strong></td>
 <td>Boolean</td>
 <td>Internal component, do not modify</td>
 <td>False</td>
@@ -11438,6 +11462,14 @@
 <tr>
 <td>merlin_magic</td>
 <td><strong>tbprofiler_tbdb_branch</strong></td>
+<td>String</td>
+<td>Internal component, do not modify</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>tbprofiler_tbdb_branch_commit_hash</strong></td>
 <td>String</td>
 <td>Internal component, do not modify</td>
 <td></td>

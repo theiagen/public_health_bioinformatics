@@ -6970,7 +6970,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#standalone">Standalone</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#bacteria">Bacteria</a>, TB</td>
-<td>v4.1.0</td>
+<td>vX.X.X</td>
 <td>Yes</td>
 <td>Sample-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TBProfiler_tNGS_PHB:main?tab=info">TBProfiler_tNGS_PHB</a></td>
@@ -7115,25 +7115,17 @@
 </tr>
 <tr>
 <td>tbp_parser</td>
-<td><strong>add_cycloserine_lims</strong></td>
-<td>Boolean</td>
-<td>Set to true add cycloserine results to the LIMS report</td>
-<td>False</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>tbp_parser</td>
 <td><strong>config</strong></td>
 <td>File</td>
-<td>The configuration file to use, in YAML format (overrides all other arguments except input_json and input_bam)</td>
+<td>The configuration file to use, in YAML format (overrides all other arguments except other file-type arguments)</td>
 <td></td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>tbp_parser</td>
-<td><strong>coverage_regions_bed</strong></td>
+<td><strong>coverage_bed</strong></td>
 <td>File</td>
-<td>A file that contains the regions to perform coverage analysis on</td>
+<td>the BED file containing the genes of interest, their locus tags, and their regions for QC/coverage calculations; should be formatted like the TBDB.bed file in TBProfiler</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -7158,22 +7150,38 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:2.9.1</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v3.0.3</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>tbp_parser</td>
-<td><strong>etha237_frequency</strong></td>
-<td>Float</td>
-<td>Minimum frequency for a mutation in ethA at protein position 237 to pass QC in tbp-parser</td>
-<td>0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>tbp_parser</td>
-<td><strong>expert_rule_regions_bed</strong></td>
+<td><strong>err_coverage_bed</strong></td>
 <td>File</td>
-<td>A file that contains the regions where R mutations and expert rules are applied</td>
+<td>the BED file containing the "essential for resistance regions." This file indicates to tbp-parser that these regions should also have breadth of coverage and average depth calculations performed; this file should be formatted like the genes.bed file in TBProfiler and the coverage BED described above</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tbp_parser</td>
+<td><strong>find_and_replace</strong></td>
+<td>Map[String,String]</td>
+<td>A JSON string that can be used to specify any text in the output files that should be find-and-replaced with other text. The keys will be the text to find, and the values will be the text to replace it with. This is useful for labs that want to customize the text in their reports (e.g. renaming drugs or genes or output columns).<br>For example, '{"rifampicin": "rifampin", "fbiD": "Rv2983", "mmpR5": "Rv0678", "p.0?": ""}'</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tbp_parser</td>
+<td><strong>gene_database_yml</strong></td>
+<td>File</td>
+<td>An optional YAML file that specifies the gene database information for the genes of interest; if not provided, a default format will be used</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tbp_parser</td>
+<td><strong>lims_report_format_yml</strong></td>
+<td>File</td>
+<td>An optional YAML file that specifies the format of the LIMS report; if not provided, a default format will be used</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -7182,14 +7190,14 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>4</td>
+<td>8</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>tbp_parser</td>
 <td><strong>min_depth</strong></td>
 <td>Int</td>
-<td>Minimum depth for a variant to pass QC in tbp_parser</td>
+<td>The minimum depth of coverage required for a site to pass QC</td>
 <td>10</td>
 <td>Optional</td>
 </tr>
@@ -7197,79 +7205,55 @@
 <td>tbp_parser</td>
 <td><strong>min_frequency</strong></td>
 <td>Float</td>
-<td>Minimum allele frequency for a variant to pass QC in tbp-parser</td>
-<td>0.1</td>
+<td>The minimum frequency for a mutation to pass QC (0.1 -&gt; 10%)</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>tbp_parser</td>
 <td><strong>min_percent_coverage</strong></td>
 <td>Float</td>
-<td>The minimum percentage of a region to exceed the minimum depth for a region to pass QC in tbp_parser</td>
-<td>100</td>
+<td>The minimum percentage of a region that has depth above the threshold set by min_depth (used for a gene/locus to pass QC; 1.0 -&gt; 100%)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tbp_parser</td>
+<td><strong>min_percent_loci_covered</strong></td>
+<td>Float</td>
+<td>The minimum percentage of loci/genes in the LIMS report that must pass coverage QC for the sample to be identified as MTBC (0.7 -&gt; 70%)</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>tbp_parser</td>
 <td><strong>min_read_support</strong></td>
 <td>Int</td>
-<td>Minimum read support for a variant to pass QC in tbp-parser</td>
-<td>10</td>
+<td>The minimum read support for a mutation to pass QC</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>tbp_parser</td>
 <td><strong>operator</strong></td>
 <td>String</td>
-<td>Fills the "operator" field in the tbp_parser output files</td>
+<td></td>
 <td></td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>tbp_parser</td>
-<td><strong>rpob449_frequency</strong></td>
-<td>Float</td>
-<td>Minimum frequency for a mutation at protein position 449 to pass QC in tbp-parser</td>
-<td>0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>tbp_parser</td>
-<td><strong>rrl_frequency</strong></td>
-<td>Float</td>
-<td>Minimum frequency for a mutation in rrl to pass QC in tbp-parser</td>
-<td>0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>tbp_parser</td>
-<td><strong>rrl_read_support</strong></td>
-<td>Int</td>
-<td>Minimum read support for a mutation in rrl to pass QC in tbp-parser</td>
-<td>10</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>tbp_parser</td>
-<td><strong>rrs_frequency</strong></td>
-<td>Float</td>
-<td>Minimum frequency for a mutation in rrs to pass QC in tbp-parser</td>
-<td>0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>tbp_parser</td>
-<td><strong>rrs_read_support</strong></td>
-<td>Int</td>
-<td>Minimum read support for a mutation in rrs to pass QC in tbp-parser</td>
-<td>10</td>
+<td><strong>resolve_overlapping_regions</strong></td>
+<td>Boolean</td>
+<td>Resolve overlapping BED regions to avoid double-counting reads across overlapping targets. Recommended for tNGS data with overlapping amplicon regions.</td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>tbp_parser</td>
 <td><strong>sequencing_method</strong></td>
 <td>String</td>
-<td>Fills out the "seq_method" field in the tbp_parser output files</td>
+<td>The sequencing method used to generate the data; used in the LIMS &amp; Looker reports. Enclose in quotes if including a space</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -7279,6 +7263,30 @@
 <td>Boolean</td>
 <td>Activate the debug mode on tbp_parser; increases logging outputs</td>
 <td>True</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tbp_parser</td>
+<td><strong>tngs_frequency_boundaries</strong></td>
+<td>String</td>
+<td>the frequency boundaries (comma-delimited; lower_f,upper_f) for tNGS QC reporting, used in conjunction with --tngs_read_support_boundaries</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tbp_parser</td>
+<td><strong>tngs_read_support_boundaries</strong></td>
+<td>String</td>
+<td>the read support boundaries (comma-delimited; lower_rs,upper_rs) for tNGS QC reporting, used in conjunction with --tngs_frequency_boundaries</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tbp_parser</td>
+<td><strong>use_err_for_qc</strong></td>
+<td>Boolean</td>
+<td>if an ERR BED file is provided, use the ERR coverage regions in place of the typical coverage regions for all QC determinations.<br>Note: This will influence how variants are interpretated and how deletions are reported because the QC thresholds for breadth of coverage and average depth will be based on the coverage found within the ERR regions.</td>
+<td>False</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7351,6 +7359,14 @@
 <td>Boolean</td>
 <td>Specifies nanopore specific tbprofiler parameters</td>
 <td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>tbprofiler</td>
+<td><strong>tbdb_branch_commit_hash</strong></td>
+<td>String</td>
+<td>The commit hash for the TBDB branch that TBProfiler should use; this allows pinning the mutation library to a specific commit</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7600,11 +7616,6 @@
 <td>The mean depth of coverage across all target regions included in the analysis</td>
 </tr>
 <tr>
-<td>tbp_parser_coverage_report</td>
-<td>File</td>
-<td>A file containing the breadth of coverage across each target loci</td>
-</tr>
-<tr>
 <td>tbp_parser_docker</td>
 <td>String</td>
 <td>The docker image and version tag for the tbp_parser tool</td>
@@ -7622,7 +7633,22 @@
 <tr>
 <td>tbp_parser_lims_report_csv</td>
 <td>File</td>
-<td>An output file formatted specifically for STAR LIMS. This CSV report summarizes the highest severity mutations for each antimicrobial and lists the relevant mutations for each gene.</td>
+<td>A file summarizing the highest severity mutations for each antimicrobial and lists the relevant mutations for each gene.</td>
+</tr>
+<tr>
+<td>tbp_parser_lims_report_transposed_csv</td>
+<td>File</td>
+<td>A transposed version of the LIMS report CSV produced by tbp_parser; the rows and columns from the <code>tbp_parser_lims_report_csv</code> are swapped so that the report is more human-readable</td>
+</tr>
+<tr>
+<td>tbp_parser_locus_coverage_report_csv</td>
+<td>File</td>
+<td>A file containing the breadth of coverage across each locus</td>
+</tr>
+<tr>
+<td>tbp_parser_log</td>
+<td>File</td>
+<td>A log file capturing the stdout/stderr from the tbp_parser run</td>
 </tr>
 <tr>
 <td>tbp_parser_looker_report_csv</td>
@@ -7630,9 +7656,14 @@
 <td>An output file that contains condensed information suitable for generating a dashboard in Google's Looker studio.</td>
 </tr>
 <tr>
+<td>tbp_parser_target_coverage_report_csv</td>
+<td>File</td>
+<td>A file containing the breadth of coverage across each target; identical to the locus report if each line in the coverage BED file corresponds to a single locus</td>
+</tr>
+<tr>
 <td>tbp_parser_version</td>
 <td>String</td>
-<td>The version number of tbp_parser</td>
+<td>Version of tbp-parser used</td>
 </tr>
 <tr>
 <td>tbprofiler_dr_type</td>
@@ -7660,34 +7691,34 @@
 <td>The total number of non-drug resistance conferring variants detected by TBProfiler</td>
 </tr>
 <tr>
-<td>tbprofiler_output_alignment_bai</td>
+<td>tbprofiler_output_bai</td>
 <td>File</td>
-<td>The index file associated with the binary alignment map of the input reads against the H37Rv genome</td>
+<td>Index BAM file generated by mapping sequencing reads to reference genome by TBProfiler</td>
 </tr>
 <tr>
-<td>tbprofiler_output_alignment_bam</td>
+<td>tbprofiler_output_bam</td>
 <td>File</td>
-<td>The binary alignment map of the input reads against the H37Rv genome</td>
+<td>BAM alignment file produced by TBProfiler</td>
+</tr>
+<tr>
+<td>tbprofiler_output_file</td>
+<td>File</td>
+<td>CSV report from TBProfiler</td>
+</tr>
+<tr>
+<td>tbprofiler_output_json</td>
+<td>File</td>
+<td>JSON output file from TBProfiler</td>
+</tr>
+<tr>
+<td>tbprofiler_output_tsv</td>
+<td>File</td>
+<td>TSV report output file from TBProfiler</td>
 </tr>
 <tr>
 <td>tbprofiler_pct_reads_mapped</td>
 <td>Float</td>
 <td>The percentage of reads that successfully mapped to the H37Rv genome</td>
-</tr>
-<tr>
-<td>tbprofiler_report_csv</td>
-<td>File</td>
-<td>The raw output file from TBProfiler</td>
-</tr>
-<tr>
-<td>tbprofiler_report_json</td>
-<td>File</td>
-<td>The json output file from TBProfiler</td>
-</tr>
-<tr>
-<td>tbprofiler_report_tsv</td>
-<td>File</td>
-<td>The TSV output file from TBProfiler</td>
 </tr>
 <tr>
 <td>tbprofiler_resistance_genes</td>
