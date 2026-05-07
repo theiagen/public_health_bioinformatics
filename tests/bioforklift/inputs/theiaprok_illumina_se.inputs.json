@@ -9,5 +9,6 @@
     "theiaprok_illumina_se.read_QC_trim.kraken_db": "this.kraken_db_input",
     "theiaprok_illumina_se.call_abricate": "this.call_abricate",
     "theiaprok_illumina_se.samplename": "this.theiaprok_illumina_se_id",
-    "theiaprok_illumina_se.terra_workspace": "this.terra_workspace_input"
+    "theiaprok_illumina_se.terra_workspace": "this.terra_workspace_input",
+    "theiaprok_illumina_se.merlin_magic.call_tbp_parser": "this.call_tbp_parser_input"
 }
