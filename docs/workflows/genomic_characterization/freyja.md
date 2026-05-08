@@ -134,10 +134,10 @@ This workflow runs on the sample level.
 
     The sample's genome coverage (`freyja.freyja_coverage`) is included automatically so that the `--mincov` threshold can drop the sample from the output when its coverage falls below `freyja_min_coverage`.
 
-    Lineage grouping can be customized by providing the optional `group_by` input, which will group by collection site + collection date, or by collection site + epiweek and normalize the data.
+    Lineage grouping can be customized by providing the optional `group_by` input, which will group by collection site + collection date, or by collection site + week and normalize the data.
 
     !!! warning "Behavior when the sample fails the coverage threshold"
-        The minimum genome coverage threshold is controlled by the `freyja_min_coverage` workflow input (default: **60**) and is passed to `freyja_to_long.py` as `--mincov`. If the sample's `freyja_coverage` falls below this threshold, no lineage rows are written and the resulting `freyja_parsed_format_tsv` instead contains the text `all samples are below coverage`. Lower the `freyja_min_coverage` input if you wish to retain low-coverage samples in downstream visualizations.
+        The minimum genome coverage threshold is controlled by the `freyja_min_coverage` workflow input (default: **60**) and is passed to task. If the sample's `freyja_coverage` falls below this threshold, no lineage rows are written and the resulting `freyja_parsed_format_tsv` instead contains the text `all samples are below coverage`. Lower the `freyja_min_coverage` input if you wish to retain low-coverage samples in downstream visualizations.
 
     !!! techdetails "Freyja Long Format Technical Details"
 
