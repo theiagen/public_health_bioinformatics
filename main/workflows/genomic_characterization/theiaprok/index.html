@@ -10016,6 +10016,14 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>shigapass_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/shigapass:1.5.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>shigatyper_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
@@ -13546,6 +13554,14 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>shigapass_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/shigapass:1.5.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>shigatyper_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
@@ -16964,6 +16980,14 @@
 </tr>
 <tr>
 <td>merlin_magic</td>
+<td><strong>shigapass_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/shigapass:1.5.0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
 <td><strong>shigatyper_docker_image</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
@@ -20026,6 +20050,14 @@
 <td>String</td>
 <td>The Docker container to use for the task</td>
 <td>us-docker.pkg.dev/general-theiagen/staphb/serotypefinder:2.0.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>merlin_magic</td>
+<td><strong>shigapass_docker_image</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/shigapass:1.5.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -24987,8 +25019,55 @@
 </div>
 </details>
 <div class="admonition tip">
-<p><code>ShigaTyper</code> and <code>ShigEiFinder</code> are intended for differentiation and serotype prediction for any <em>Shigella</em> species and Enteroinvasive <em>Escherichia coli</em> (EIEC). You can read about differences between these <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC517479/">here</a> and <a href="https://www.microbiologyresearch.org/content/journal/micro/10.1099/00221287-144-9-2667">here</a>. ShigEiFinder can be run using either the assembly (default) or reads. These tasks will report if the samples are neither <em>Shigella</em> nor EIEC.</p>
+<p><code>ShigaPass</code>, <code>ShigaTyper</code>, and <code>ShigEiFinder</code> are intended for differentiation and serotype prediction for any <em>Shigella</em> species and enteroinvasive <em>Escherichia coli</em> (EIEC). You can read about differences between <em>Shigella</em> and EIEC <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC517479/">here</a> and <a href="https://www.microbiologyresearch.org/content/journal/micro/10.1099/00221287-144-9-2667">here</a>. ShigEiFinder can be run using either the assembly (default) or reads. These tasks will report if the samples are neither <em>Shigella</em> nor EIEC.</p>
 </div>
+<details class="task">
+<summary><code>ShigaPass</code>: <em>Shigella</em>/EIEC differentiation and serotyping</summary>
+<p>ShigaPass predicts <em>Shigella</em> spp. serotypes from assembled whole genomes, and can differentiate between <em>Shigella</em>, enteroinvasive <em>E. coli</em> (EIEC), and non-<em>Shigella</em>/EIEC genomes.</p>
+<p>ShigaPass provides enhanced accuracy compared to other tools (e.g., ShigaTyper, and ShigeiFinder) and is recommended by the National Reference Center for <em>E. coli</em>, <em>Shigella</em>, and <em>Salmonella</em> in France. </p>
+<div class="admonition warning">
+<p class="admonition-title"><mark>ShigaPass works best with assemblies generated with SPAdes</mark></p>
+<p>ShigaPass operates optimally using assemblies generated with SPAdes. Other assemblers, like SKESA (TheiaProk_Illumina's default), can lead to incorrect or incomplete results due to missing detetion of critical genes like <em>ipaH</em>. </p>
+<p>Please be aware of this potential limitation in accuracy when interpreting your results.</p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Assembler recommendations for ShigaPass</p>
+<ul>
+<li><strong>TheiaProk_Illumina_PE</strong> &amp; <strong>TheiaProk_Illumina_SE</strong>: We strongly recommend setting the <code>digger_denovo.assembler</code> input parameter to <code>"spades"</code> to ensure the best results from ShigaPass.</li>
+<li><strong>TheiaProk_ONT</strong>: By default, ONT assemblies are generated with <code>flye</code>. While these assemblies can be used successfully with ShigaPass, the results may be less accurate than if the data were assembled with SPAdes. Since SPAdes is not an option for ONT data, please be aware of this potential limitation in accuracy when interpreting your results.</li>
+<li><strong>TheiaProk_FASTA</strong>: Results may be less accurate if the data was not assembled with SPAdes. You may want to consider re-assembling your data with SPAdes for optimal performance of ShigaPass if possible. For publicly available data, you can check the original publication or SRA metadata to see if SPAdes was used for assembly.</li>
+</ul>
+</div>
+<div class="admonition techdetails">
+<p class="admonition-title">ShigaPass Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_shigapass.wdl">task_shigapass.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/imanyass/ShigaPass">ShigaPass on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/imanyass/ShigaPass">ShigaPass on GitHub</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1099/mgen.0.000961">ShigaPass: an <em>in silico</em> tool predicting <em>Shigella</em> serotypes from whole-genome sequencing assemblies</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 <details class="task">
 <summary><code>ShigaTyper</code>: <em>Shigella</em>/EIEC differentiation and serotyping <mark><em>for Illumina and ONT only</em></mark></summary>
 <p>ShigaTyper predicts <em>Shigella</em> spp. serotypes from Illumina or ONT read data. If the genome is not <em>Shigella</em> or enteroinvasive <em>E. coli</em> (EIEC), the results from this tool will state this. In the notes it provides, it also reports on the presence of <em>ipaB</em>  which is suggestive of the presence of the "virulent invasion plasmid".</p>
@@ -27871,6 +27950,36 @@
 <td>Serotype predicted by SerotypeFinder</td>
 </tr>
 <tr>
+<td>shigapass_docker</td>
+<td>String</td>
+<td>ShigaPass docker image used</td>
+</tr>
+<tr>
+<td>shigapass_flexneri_summary_tsv</td>
+<td>File</td>
+<td>Tab-delimited file detailing the phage and plasmid-encoded O-antigen modification (POAC) genes for the predicted <em>S. flexneri</em> genomes</td>
+</tr>
+<tr>
+<td>shigapass_ipaH_presence_absence</td>
+<td>String</td>
+<td>An indication if <em>ipaH</em> was present or absent</td>
+</tr>
+<tr>
+<td>shigapass_predicted_serotype</td>
+<td>String</td>
+<td>The predicted serotype</td>
+</tr>
+<tr>
+<td>shigapass_summary_tsv</td>
+<td>File</td>
+<td>Detailed TSV report from ShigaPass (see <a href="https://github.com/imanyass/ShigaPass#output-files">https://github.com/imanyass/ShigaPass#output-files</a>)</td>
+</tr>
+<tr>
+<td>shigapass_version</td>
+<td>String</td>
+<td>Version of ShigaPass used</td>
+</tr>
+<tr>
 <td>shigatyper_docker</td>
 <td>String</td>
 <td>ShigaTyper docker image used</td>
@@ -29966,6 +30075,36 @@
 <td>Serotype predicted by SerotypeFinder</td>
 </tr>
 <tr>
+<td>shigapass_docker</td>
+<td>String</td>
+<td>ShigaPass docker image used</td>
+</tr>
+<tr>
+<td>shigapass_flexneri_summary_tsv</td>
+<td>File</td>
+<td>Tab-delimited file detailing the phage and plasmid-encoded O-antigen modification (POAC) genes for the predicted <em>S. flexneri</em> genomes</td>
+</tr>
+<tr>
+<td>shigapass_ipaH_presence_absence</td>
+<td>String</td>
+<td>An indication if <em>ipaH</em> was present or absent</td>
+</tr>
+<tr>
+<td>shigapass_predicted_serotype</td>
+<td>String</td>
+<td>The predicted serotype</td>
+</tr>
+<tr>
+<td>shigapass_summary_tsv</td>
+<td>File</td>
+<td>Detailed TSV report from ShigaPass (see <a href="https://github.com/imanyass/ShigaPass#output-files">https://github.com/imanyass/ShigaPass#output-files</a>)</td>
+</tr>
+<tr>
+<td>shigapass_version</td>
+<td>String</td>
+<td>Version of ShigaPass used</td>
+</tr>
+<tr>
 <td>shigatyper_docker</td>
 <td>String</td>
 <td>ShigaTyper docker image used</td>
@@ -31711,6 +31850,36 @@
 <td>Serotype predicted by SerotypeFinder</td>
 </tr>
 <tr>
+<td>shigapass_docker</td>
+<td>String</td>
+<td>ShigaPass docker image used</td>
+</tr>
+<tr>
+<td>shigapass_flexneri_summary_tsv</td>
+<td>File</td>
+<td>Tab-delimited file detailing the phage and plasmid-encoded O-antigen modification (POAC) genes for the predicted <em>S. flexneri</em> genomes</td>
+</tr>
+<tr>
+<td>shigapass_ipaH_presence_absence</td>
+<td>String</td>
+<td>An indication if <em>ipaH</em> was present or absent</td>
+</tr>
+<tr>
+<td>shigapass_predicted_serotype</td>
+<td>String</td>
+<td>The predicted serotype</td>
+</tr>
+<tr>
+<td>shigapass_summary_tsv</td>
+<td>File</td>
+<td>Detailed TSV report from ShigaPass (see <a href="https://github.com/imanyass/ShigaPass#output-files">https://github.com/imanyass/ShigaPass#output-files</a>)</td>
+</tr>
+<tr>
+<td>shigapass_version</td>
+<td>String</td>
+<td>Version of ShigaPass used</td>
+</tr>
+<tr>
 <td>shigeifinder_H_antigen</td>
 <td>String</td>
 <td>H-antigen gene identified by ShigEiFinder</td>
@@ -33166,6 +33335,36 @@
 <td>Serotype predicted by SerotypeFinder</td>
 </tr>
 <tr>
+<td>shigapass_docker</td>
+<td>String</td>
+<td>ShigaPass docker image used</td>
+</tr>
+<tr>
+<td>shigapass_flexneri_summary_tsv</td>
+<td>File</td>
+<td>Tab-delimited file detailing the phage and plasmid-encoded O-antigen modification (POAC) genes for the predicted <em>S. flexneri</em> genomes</td>
+</tr>
+<tr>
+<td>shigapass_ipaH_presence_absence</td>
+<td>String</td>
+<td>An indication if <em>ipaH</em> was present or absent</td>
+</tr>
+<tr>
+<td>shigapass_predicted_serotype</td>
+<td>String</td>
+<td>The predicted serotype</td>
+</tr>
+<tr>
+<td>shigapass_summary_tsv</td>
+<td>File</td>
+<td>Detailed TSV report from ShigaPass (see <a href="https://github.com/imanyass/ShigaPass#output-files">https://github.com/imanyass/ShigaPass#output-files</a>)</td>
+</tr>
+<tr>
+<td>shigapass_version</td>
+<td>String</td>
+<td>Version of ShigaPass used</td>
+</tr>
+<tr>
 <td>shigeifinder_H_antigen</td>
 <td>String</td>
 <td>H-antigen gene identified by ShigEiFinder</td>
@@ -33493,7 +33692,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 4, 2026 15:24:21 UTC">2026-05-04</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 8, 2026 20:32:21 UTC">2026-05-08</span>
   </span>
 
     
