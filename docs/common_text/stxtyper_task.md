@@ -1,4 +1,4 @@
-??? task "`StxTyper`: Identification and Typing of Shiga toxin (Stx) Genes ==_using the assembly file as input_=="
+??? task "`StxTyper`: Identification and Typing of Shiga toxin (Stx) Genes"
     StxTyper screens bacterial genome assemblies for shiga toxin genes and subtypes them into known subtypes and also looks for novel subtypes in cases where the detected sequences diverge from the reference sequences.
     
     Shiga toxin is the main virulence factor of Shiga-toxin-producing E. coli (STEC), though these genes are also found in Shigella species as well as some other genera more rarely, such as Klebsiella. [Please see this review paper that describes shiga toxins in great detail](https://doi.org/10.3390/microorganisms12040687).

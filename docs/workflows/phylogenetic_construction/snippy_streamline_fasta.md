@@ -10,7 +10,7 @@ This workflow is a FASTA-compatible version of [Snippy_Streamline](./snippy_stre
 
 !!! caption "Snippy_Streamline_FASTA_PHB Workflow Diagram"
     <div style="text-align: center;">
-    ![Snippy_Streamline_FASTA_PHB Workflow Diagram](../../assets/figures/Snippy_Streamline_FASTA.png){width=50%}
+    ![Snippy_Streamline_FASTA_PHB Workflow Diagram](../../assets/figures/Snippy_Streamline_FASTA.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a reference-based phylogenetic tree and associated SNP-distance matrix. The workflow can be run in multiple ways.
