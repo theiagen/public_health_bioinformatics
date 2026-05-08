@@ -6,20 +6,21 @@ task tbprofiler {
     File? read2
     String samplename
     Boolean ont_data = false
-    
+
     String mapper = "bwa"
     String variant_caller = "gatk"
     String? variant_calling_params
-    
+
     String? additional_parameters # for tbprofiler
-    
+
     Int min_depth = 10
     Float min_af = 0.1
-    
+
     File? tbprofiler_custom_db
     String? tbdb_branch
-    
-    Int cpu = 8     
+    String? tbdb_branch_commit_hash
+
+    Int cpu = 8
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3"
     Int memory = 16
@@ -27,7 +28,7 @@ task tbprofiler {
   command <<<
     # Print and save version
     tb-profiler version > VERSION && sed -i -e 's/TBProfiler version //' VERSION && sed -n -i '$p' VERSION
-    
+
     # check if file is non existant or non empty
     if [ -z "~{read2}" ] || [ ! -s "~{read2}" ]; then
       INPUT_READS="-1 ~{read1}"
@@ -40,15 +41,24 @@ task tbprofiler {
       echo "Found new database file ~{tbprofiler_custom_db}"
       prefix=$(basename "~{tbprofiler_custom_db}" | sed 's/\.tar\.gz$//')
       tar xfv ~{tbprofiler_custom_db}
-      
+
       tb-profiler load_library ./"$prefix"/"$prefix"
       TBDB="--db $prefix"
 
+    # check if specific branch is provided for tbdb
     elif [ -n "~{tbdb_branch}" ]; then
       echo "Using tbdb branch ~{tbdb_branch}"
-      tb-profiler update_tbdb --branch ~{tbdb_branch}
       TBDB="--db ~{tbdb_branch}"
-    
+
+      UPDATE_TBDB="--branch '~{tbdb_branch}'"
+      # check if specific commit hash is provided for tbdb branch, otherwise will pull latest
+      if [ -n "~{tbdb_branch_commit_hash}" ]; then
+        echo "Checking out commit hash ~{tbdb_branch_commit_hash} for tbdb branch"
+        UPDATE_TBDB+=" --commit '~{tbdb_branch_commit_hash}'"
+      fi
+
+      # update tbdb to specified branch
+      tb-profiler update_tbdb ${UPDATE_TBDB} --debug
     else
       echo "Using default tbdb database"
       TBDB=""
@@ -115,7 +125,7 @@ task tbprofiler {
         main_lineage.write(tsv_dict['main_lineage'])
       with open ("SUB_LINEAGE", 'wt') as sublineage:
         sublineage.write(tsv_dict['sub_lineage'])
-        
+
       with open ("DR_TYPE", 'wt') as dr_type:
         dr_type.write(tsv_dict['drtype'])
       with open ("NUM_DR_VARIANTS", 'wt') as num_dr_variants:
