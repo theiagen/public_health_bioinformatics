@@ -239,10 +239,10 @@ This workflow runs on the set level.
         | Software Documentation | <https://github.com/andersen-lab/Freyja> |
 
 ??? task "`freyja_microreact` Details"
-    The `freyja_microreact` task converts the aggregated long-format TSV produced by `freyja_long_format` into a [Microreact](https://microreact.org/)-compatible upload file. This output can be uploaded directly to Microreact to interactively explore lineage abundances across samples in time and space. Provide latitude and longitude inputs for geospatial mapping.
+    The `freyja_microreact` task converts the aggregated parsed long-format TSV produced by `freyja_long_format` into a [Microreact](https://microreact.org/)-compatible upload file. This output can be uploaded directly to Microreact to interactively explore lineage abundances across samples in time and space. Provide latitude and longitude inputs for geospatial mapping.
 
     !!! warning "Behavior when all samples fail the coverage threshold"
-        Before invoking `freyja_microreact.py`, the task inspects the incoming `freyja_parsed_format_tsv` for the text `all samples are below coverage` (written upstream by `freyja_long_format` when no samples passed the `freyja_min_coverage` threshold). If the sentinel is present, the task short-circuits and produces an **empty** `freyja_microreact_output` file rather than failing the workflow. An empty `.microreact` file is therefore the expected signal that no samples cleared the coverage threshold; lower the `freyja_min_coverage` input and rerun if you wish to retain low-coverage samples.
+        Before creating the microreact file, the task inspects the incoming `freyja_parsed_format_tsv` for the text `all samples are below coverage` (written upstream by `freyja_long_format` when no samples passed the `freyja_min_coverage` threshold). If no samples passed coverage, the task short-circuits and produces an **empty** `freyja_microreact_output` file rather than failing the workflow. An empty `.microreact` file is therefore the expected signal that no samples cleared the coverage threshold; lower the `freyja_min_coverage` input and rerun if you wish to retain low-coverage samples.
 
     !!! techdetails "Freyja Microreact Technical Details"
 
