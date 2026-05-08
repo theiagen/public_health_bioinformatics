@@ -955,6 +955,7 @@ freyja_long_format	disk_size	Int	Amount of storage (in GB) to allocate to the ta
 freyja_long_format	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1	Optional	Freyja_FASTQ, Freyja_Plot	docker	
 freyja_long_format	group_by	String	Whether to group samples by collection date or week, options are "date" or "week"		Optional	Freyja_FASTQ, Freyja_Plot	general	
 freyja_long_format	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Freyja_FASTQ, Freyja_Plot	runtime	
+freyja_long_format	mincov	Int	The minimum genome coverage used as a cut-off of data to include in the parsed long-format TSV. At the workflow level this is set via freyja_min_coverage (default 60).		Optional	Freyja_FASTQ, Freyja_Plot	general	
 freyja_microreact	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_Plot	runtime	
 freyja_microreact	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Freyja_Plot	runtime	
 freyja_microreact	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1	Optional	Freyja_Plot	docker	
@@ -969,7 +970,7 @@ freyja_plot_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyj
 freyja_plot_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_Plot	runtime	
 freyja_plot_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1	Optional	Freyja_Plot	docker	
 freyja_plot_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Freyja_Plot	runtime	
-freyja_plot_task	mincov	Int	The minimum genome coverage used as a cut-off of data to include in the plot	60	Optional	Freyja_Plot	general	
+freyja_plot_task	mincov	Int	The minimum genome coverage used as a cut-off of data to include in the plot. At the workflow level this is set via freyja_min_coverage (default 60).		Optional	Freyja_Plot	general	
 freyja_plot_task	plot_day_window	Int	The width of the rolling average window; only used if plot_time_interval is "D"	14	Optional	Freyja_Plot	general	
 freyja_plot_task	plot_lineages	Boolean	If true, will plot a lineage-specific breakdown	False	Optional	Freyja_Plot	general	
 freyja_plot_task	plot_time	Boolean	If true, will plot sample collection time information (requires the collection_date input variable)	False	Optional	Freyja_Plot	general	
