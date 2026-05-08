@@ -442,8 +442,6 @@ def include_md(
         for old, new in replacements.items():
             result = result.replace(old, new)
     
-    print("\n--- RAW OUTPUT ---\n")
-    print(result)
     return result
 
 # zensical entrypoint
