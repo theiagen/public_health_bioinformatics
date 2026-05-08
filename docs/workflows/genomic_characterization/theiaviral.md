@@ -176,7 +176,7 @@
 
 {{ include_md("common_text/bbduk_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/host_decontaminate_wf.md", indent=8) }}
+{{ include_md("common_text/read_decontaminate_wf.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/kraken2_task.md", condition="theiaviral", indent=8) }}
 
@@ -206,7 +206,7 @@
 
 {{ include_md("common_text/bwa_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=8, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
+{{ include_md("common_text/mapping_stats_task.md", condition="theiaviral", indent=8, replacements={'`mapping_stats`' : '`read_mapping_stats`'}) }}
 
     ??? toggle "Variant Calling and Consensus Generation"
 
@@ -244,7 +244,7 @@
 
 {{ include_md("common_text/ncbi_scrub_task.md", condition="theiaviral", indent=8, replacements={'??? task "`HRRT`: Human Host Sequence Removal"' : '??? task "`ncbi_scrub_se`"'}) }}
 
-{{ include_md("common_text/host_decontaminate_wf.md", condition="theiaviral", indent=8, replacements={'??? task "`host_decontaminate`: Host read decontamination"' : '??? task "`host_decontaminate`"'}) }}
+{{ include_md("common_text/read_decontaminate_wf.md", condition="theiaviral", indent=8, replacements={'??? task "`host_decontaminate`: Host read decontamination"' : '??? task "`host_decontaminate`"'}) }}
 
 {{ include_md("common_text/rasusa_task.md", condition="theiaviral", indent=8, replacements={'??? task "`Rasusa`: Read subsampling (optional, on by default)"' : '??? task "`rasusa`"'}) }}
 
@@ -278,7 +278,7 @@
 
 {{ include_md("common_text/parse_mapping_task.md", condition="sam_to_sorted_bam", indent=8) }}
 
-{{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=8, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
+{{ include_md("common_text/mapping_stats_task.md", condition="theiaviral", indent=8, replacements={'`mapping_stats`' : '`read_mapping_stats`'}) }}
 
 {{ include_md("common_text/fasta_utilities_task.md", condition="theiaviral", indent=8) }}
 
@@ -316,7 +316,7 @@
 
 {{ include_md("common_text/bbduk_task.md", indent=8) }}
 
-{{ include_md("common_text/host_decontaminate_wf.md", indent=8) }}
+{{ include_md("common_text/read_decontaminate_wf.md", condition="theiaviral", indent=8) }}
 
     ??? toggle "Read Extraction and Binning"
 
@@ -345,7 +345,7 @@
 
 {{ include_md("common_text/bwa_task.md", condition="theiaviral", indent=12) }}
 
-{{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=12, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
+{{ include_md("common_text/mapping_stats_task.md", condition="theiaviral", indent=12, replacements={'`mapping_stats`' : '`read_mapping_stats`'}) }}
 
         ??? toggle "Variant Calling and Consensus Generation"
 
