@@ -8681,6 +8681,14 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>expected_contaminants</strong></td>
+<td>String</td>
+<td>Comma-delimited list of expected contaminant sequences to trigger status check. These must match "read_decontaminate_fasta" sequence headers</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>fastp_args</strong></td>
 <td>String</td>
 <td>Additional arguments to use with fastp</td>
@@ -8721,10 +8729,50 @@
 </tr>
 <tr>
 <td>read_QC_trim</td>
+<td><strong>max_unexpected_contaminants</strong></td>
+<td>Int</td>
+<td>Maximum unexpected sequences detected from contaminant FASTA to pass status check</td>
+<td>1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
 <td><strong>midas_db</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
 <td>gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>min_contaminant_coverage</strong></td>
+<td>Float</td>
+<td>Minimum breadth of coverage to identify a contaminant sequence within the status check (does not affect read cleaning)</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>min_contaminant_depth</strong></td>
+<td>Int</td>
+<td>Minimum depth to identify a contaminant sequence within the status check (does not affect read cleaning)</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>min_contaminant_reads_mapped</strong></td>
+<td>Int</td>
+<td>Minimum number of reads mapped to identify a contaminant sequence within the status check (does not affect read cleaning)</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>min_expected_contaminants</strong></td>
+<td>Int</td>
+<td>Minimum expected sequences detected from contaminant FASTA to pass status check</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8789,6 +8837,22 @@
 <td>Int</td>
 <td>Random seed to use</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>read_decontaminate_fasta</strong></td>
+<td>File</td>
+<td>FASTA of contaminat sequences to map and remove reads against</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>read_QC_trim</td>
+<td><strong>read_decontaminate_memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>32</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -16167,6 +16231,152 @@
 <div class="admonition dna">
 <p>By default, <code>read_processing</code> is set to <code>"trimmomatic"</code>. To use <code>fastp</code> instead, set <code>read_processing</code> to <code>"fastp"</code>. These tasks are mutually exclusive.</p>
 <details class="task">
+<summary><code>read_decontaminate</code>: Mapping-based Read Decontamination</summary>
+<p>Known contaminant genetic data can be removed by mapping directly to an inputted <code>read_decontaminate_fasta</code>. This input can be a host genome, common microbial contaminant genome, or intentionally spiked sequences. The mapping statistics and aligned reads to the contaminant FASTA are outputted in JSON-formatted mappings, while downstream quality control tasks will input the decontaminated reads. An optional "pass/fail" status can be outputted based on identification of expected/unexpected sequences if the <code>expected_contaminants</code> input is populated with a comma-delimitted string of expected sequence headers - <code>expected_contaminants</code> must exactly match sequence headers in the input.</p>
+<p>The detailed steps and tasks are as follows:</p>
+<details class="toggle">
+<summary>Map Reads to Host</summary>
+<p><code>minimap2</code> is a popular aligner that is used to align reads (or assemblies) to an assembly file. In minimap2, "modes" are a group of preset options.</p>
+<p>The mode used in this task is <code>map-ont</code> which is the default mode for long reads and indicates that long reads of ~10% error rates should be aligned to the reference genome. The output file is in SAM format.</p>
+<p>For more information regarding modes and the available options for <code>minimap2</code>, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
+<div class="admonition techdetails">
+<p class="admonition-title">minimap2 Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl">task_minimap2.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/lh3/minimap2">minimap2 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://lh3.github.io/minimap2">minimap2</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/34/18/3094/4994778">Minimap2: pairwise alignment for nucleotide sequences</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="toggle">
+<summary>Extract Unaligned Reads</summary>
+<p>The <code>bam_to_unaligned_fastq</code> task will extract a FASTQ file of reads that failed to align, while removing unpaired reads. </p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>parse_mapping</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl">task_parse_mapping.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>mapping_stats</code>: Mapping Statistics</summary>
+<p>The <code>mapping_stats</code> task generates mapping statistics from a BAM file. It uses <code>Samtools</code> to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics. These statistics are also reported on a per sequence basis.</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>mapping_stats</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_mapping_stats.wdl">task_mapping_stats.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>contaminant_check</code>: Contaminant Sequence Status Check</summary>
+<p><code>Contaminant Check</code> outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by inputting a comma-delimited string of <code>expected_sequences</code>, which match sequence headers in the inputted contaminant/host FASTA. Each sequence from the previously inputted contaminant/host FASTA is checked for sufficient read mapping statistics. </p>
+<p>The composite status, <code>contaminant_check_status</code>, will report <code>"PASS"</code> if expected and unexpected sequences are identified within the <code>min_expected_seq</code> and <code>max_unexpected_seq</code> thresholds; if not, <code>"FAIL ..."</code> is reported depicting which <code>expected_sequences</code> failed and why, and which unexpected sequences were identified. </p>
+<p>Additionally, the coverage, depth, and number of reads mapped are reported in JSON mappings for the sets of expected and unexpected sequences. </p>
+<div class="admonition techdetails">
+<p class="admonition-title">contaminant_check Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_contaminant_check.wdl">task_contaminant_check.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Read Decontaminate Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subworkflow</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_decontaminate.wdl">wf_read_decontaminate.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
 <summary><code>Trimmomatic</code>: Read Trimming (default)</summary>
 <p>Read proccessing is available via <code>Trimmomatic</code> by default.</p>
 <p>Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with <code>trim_window_size</code>), cutting once the average quality within the window falls below the <code>trimmomatic_window_quality</code> (default of 30 for both paired-end and single-end). The read is discarded if it is trimmed below <code>trimmomatic_min_length</code> (default of 75 for paired-end, 25 for single-end).</p>
@@ -16842,6 +17052,152 @@
 </details>
 <div class="admonition dna">
 <p>By default, <code>read_processing</code> is set to <code>"trimmomatic"</code>. To use <code>fastp</code> instead, set <code>read_processing</code> to <code>"fastp"</code>. These tasks are mutually exclusive.</p>
+<details class="task">
+<summary><code>read_decontaminate</code>: Mapping-based Read Decontamination</summary>
+<p>Known contaminant genetic data can be removed by mapping directly to an inputted <code>read_decontaminate_fasta</code>. This input can be a host genome, common microbial contaminant genome, or intentionally spiked sequences. The mapping statistics and aligned reads to the contaminant FASTA are outputted in JSON-formatted mappings, while downstream quality control tasks will input the decontaminated reads. An optional "pass/fail" status can be outputted based on identification of expected/unexpected sequences if the <code>expected_contaminants</code> input is populated with a comma-delimitted string of expected sequence headers - <code>expected_contaminants</code> must exactly match sequence headers in the input.</p>
+<p>The detailed steps and tasks are as follows:</p>
+<details class="toggle">
+<summary>Map Reads to Host</summary>
+<p><code>minimap2</code> is a popular aligner that is used to align reads (or assemblies) to an assembly file. In minimap2, "modes" are a group of preset options.</p>
+<p>The mode used in this task is <code>map-ont</code> which is the default mode for long reads and indicates that long reads of ~10% error rates should be aligned to the reference genome. The output file is in SAM format.</p>
+<p>For more information regarding modes and the available options for <code>minimap2</code>, please see the <a href="https://lh3.github.io/minimap2/minimap2.html">minimap2 manpage</a></p>
+<div class="admonition techdetails">
+<p class="admonition-title">minimap2 Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/alignment/task_minimap2.wdl">task_minimap2.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/lh3/minimap2">minimap2 on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://lh3.github.io/minimap2">minimap2</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://academic.oup.com/bioinformatics/article/34/18/3094/4994778">Minimap2: pairwise alignment for nucleotide sequences</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="toggle">
+<summary>Extract Unaligned Reads</summary>
+<p>The <code>bam_to_unaligned_fastq</code> task will extract a FASTQ file of reads that failed to align, while removing unpaired reads. </p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>parse_mapping</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl">task_parse_mapping.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>mapping_stats</code>: Mapping Statistics</summary>
+<p>The <code>mapping_stats</code> task generates mapping statistics from a BAM file. It uses <code>Samtools</code> to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics. These statistics are also reported on a per sequence basis.</p>
+<div class="admonition techdetails">
+<p class="admonition-title"><code>mapping_stats</code> Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_mapping_stats.wdl">task_mapping_stats.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/bioinformatics/btp352">The Sequence Alignment/Map format and SAMtools</a><br><a href="https://doi.org/10.1093/gigascience/giab008">Twelve Years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>contaminant_check</code>: Contaminant Sequence Status Check</summary>
+<p><code>Contaminant Check</code> outputs a pass/fail status based on if contaminant/host sequences pass thresholds for breadth of coverage, depth of coverage, and number of reads mapped. This task is activated by inputting a comma-delimited string of <code>expected_sequences</code>, which match sequence headers in the inputted contaminant/host FASTA. Each sequence from the previously inputted contaminant/host FASTA is checked for sufficient read mapping statistics. </p>
+<p>The composite status, <code>contaminant_check_status</code>, will report <code>"PASS"</code> if expected and unexpected sequences are identified within the <code>min_expected_seq</code> and <code>max_unexpected_seq</code> thresholds; if not, <code>"FAIL ..."</code> is reported depicting which <code>expected_sequences</code> failed and why, and which unexpected sequences were identified. </p>
+<p>Additionally, the coverage, depth, and number of reads mapped are reported in JSON mappings for the sets of expected and unexpected sequences. </p>
+<div class="admonition techdetails">
+<p class="admonition-title">contaminant_check Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/contamination/task_contaminant_check.wdl">task_contaminant_check.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Read Decontaminate Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Subworkflow</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_read_decontaminate.wdl">wf_read_decontaminate.wdl</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 <details class="task">
 <summary><code>Trimmomatic</code>: Read Trimming (default)</summary>
 <p>Read proccessing is available via <code>Trimmomatic</code> by default.</p>
@@ -19028,6 +19384,61 @@
 <td>consensus_stats</td>
 <td>File</td>
 <td>Output from the SAMtools stats command to assess quality of the alignment file (BAM)</td>
+</tr>
+<tr>
+<td>contaminant_bai</td>
+<td>File</td>
+<td>Index of reads aligned to the contaminant FASTA</td>
+</tr>
+<tr>
+<td>contaminant_bam</td>
+<td>File</td>
+<td>Reads aligned to the contaminant FASTA</td>
+</tr>
+<tr>
+<td>contaminant_cov_hist</td>
+<td>File</td>
+<td>Coverage histogram of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>contaminant_coverage</td>
+<td>Float</td>
+<td>Mean coverage of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>contaminant_coverage_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating identified contaminant sequence headers to read mapping coverage</td>
+</tr>
+<tr>
+<td>contaminant_depth_by_sequence</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating identified contaminant sequence headers to read mapping depth</td>
+</tr>
+<tr>
+<td>contaminant_mapping_flagstat</td>
+<td>File</td>
+<td>Samtools flagstat of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>contaminant_mapping_stats</td>
+<td>File</td>
+<td>Samtools statistics of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>contaminant_mean_depth</td>
+<td>Float</td>
+<td>Mean depth of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>contaminant_percent_mapped_reads</td>
+<td>Float</td>
+<td>Percent of reads mapped to contaminant FASTA</td>
+</tr>
+<tr>
+<td>contaminant_status</td>
+<td>String</td>
+<td>Status of identification of contaminant sequence based on sequence-based and overall thresholds</td>
 </tr>
 <tr>
 <td>est_percent_gene_coverage_tsv</td>
