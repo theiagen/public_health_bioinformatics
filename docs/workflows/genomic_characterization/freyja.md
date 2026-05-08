@@ -96,7 +96,7 @@ This workflow runs on the sample level.
 
 === "Illumina paired-end input data"
 
-{{ include_md("common_text/read_qc_trim_illumina_wf.md", indent=4, condition="freyja") }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", indent=4, condition="theiacov") }}
 {{ include_md("common_text/bwa_task.md", condition="freyja", indent=4) }}
 {{ include_md("common_text/ivar_trim_task.md", condition="freyja", indent=4) }}
 {{ include_md("common_text/qualimap_task.md", condition="freyja", indent=4) }}
@@ -105,7 +105,7 @@ This workflow runs on the sample level.
 
 === "Illumina single-end input data"
 
-{{ include_md("common_text/read_qc_trim_illumina_wf.md", indent=4, condition="freyja") }}
+{{ include_md("common_text/read_qc_trim_illumina_wf.md", indent=4, condition="theiacov") }}
 {{ include_md("common_text/bwa_task.md", condition="freyja", indent=4) }}
 {{ include_md("common_text/ivar_trim_task.md", condition="freyja", indent=4) }}
 {{ include_md("common_text/qualimap_task.md", condition="freyja", indent=4) }}

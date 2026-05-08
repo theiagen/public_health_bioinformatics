@@ -7,7 +7,7 @@ fragment: true
 
     In TheiaProk and TheiaEuk Illumina workflows, _de novo_ assembly is performed for samples that have sufficient read quantity and quality using [digger_denovo](https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_digger_denovo.wdl), a subworkflow based off of [Shovill](https://github.com/tseemann/shovill) pipeline. The name "digger" is a nod to Shovill and SPAdes.
     
-    ??? toggle "_De novo_ Assembly"
+    ???+ toggle "_De novo_ Assembly"
         !!! dna "`assembler` with `skesa` (default), `spades`, or `megahit`"
             To activate a particular assembler, set the `assembler` input parameter to either `skesa` (default), `spades`, or `megahit`.
         
@@ -17,13 +17,13 @@ fragment: true
 {{ include_md("common_text/spades_task.md", indent=8, condition="theiaprok") }}
 {{ include_md("common_text/megahit_task.md", indent=8, condition="theiaprok") }}
 
-    ??? toggle "Assembly Polishing (optional)"
+    ???+ toggle "Assembly Polishing (optional)"
         To activate assembly polishing, set `call_pilon` to `true`.
 
 {{ include_md("common_text/bwa_task.md", indent=8, condition="digger") }}
 {{ include_md("common_text/pilon_task.md", indent=8, condition="digger") }}
 
-    ??? toggle "Contig Filtering (optional)"
+    ???+ toggle "Contig Filtering (optional)"
 
 {{ include_md("common_text/filter_contigs_task.md", indent=8, condition="digger") }}
 

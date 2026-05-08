@@ -244,7 +244,7 @@
 
 {{ include_md("common_text/ncbi_scrub_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/read_decontaminate_wf.md", condition="theiaviral", indent=8, replacements={'??? task "`host_decontaminate`: Host read decontamination"' : '??? task "`host_decontaminate`"'}) }}
+{{ include_md("common_text/read_decontaminate_wf.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/rasusa_task.md", condition="theiaviral", indent=8) }}
 

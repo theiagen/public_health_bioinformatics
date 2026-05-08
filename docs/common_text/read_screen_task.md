@@ -24,11 +24,11 @@ fragment: true
     ??? toggle "Default Thresholds and Rationales"
         | Variable  | Description | Default Value | Rationale |
         | --- | --- | --- | --- |
-        | `estimated_genome_length` | Default genome_length is set to 12,500, which approximates the median RNA virus length |
+        | `estimated_genome_length` | | 12500 | This is an approximate of the median RNA virus length |
         | `min_reads` | A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads` | 50 | Minimum number of base pairs for 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus divided by 300 (longest Illumina read length) |
         | `min_basepairs` | A sample will fail the read screening if there are fewer than `min_basepairs` basepairs | 15000 | Greater than 10x coverage of the Hepatitis delta (of the *Deltavirus* genus) virus |
         | `min_genome_size` | A sample will fail the read screening if the estimated genome size is smaller than `min_genome_size` | 1500 |  Based on the Hepatitis delta (of the *Deltavirus* genus) genome- the smallest viral genome as of 2024-04-11 (1,700 bp) |
-        | `max_genome_size` | A sample will fail the read screening if the estimated genome size is smaller than `max_genome_size` |2673870 | Based on the *Pandoravirus salinus* genome, the biggest viral genome, (2,673,870 bp) with 2 Mbp added |
+        | `max_genome_size` | A sample will fail the read screening if the estimated genome size is smaller than `max_genome_size` | 2673870 | Based on the *Pandoravirus salinus* genome, the biggest viral genome, (2,673,870 bp) with 2 Mbp added |
         | `min_coverage` | A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage` | 10 | A bare-minimum coverage for genome characterization. Higher coverage would be required for high-quality phylogenetics. |
         | `min_proportion` | A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files | 40 | Greater than 50% reads are in the read1 file; others are in the read2 file. (PE workflow only) |
 <!-- endif -->
@@ -58,7 +58,7 @@ fragment: true
 <!-- endif -->
 
 <!-- if: theiaeuk -->
-    | Variable  | Rationale |
+    | Variable  | Default Value | Rationale |
     | --- | --- | --- |
     | `skip_screen` | false | Set to true to skip the read screen from running. If you set this value to true, please provide a value for the theiaeuk_illumina_pe `genome_length` optional input, OR set the theiaeuk_illumina_pe `call_rasusa` optional input to false. Otherwise Rasusa will attempt to downsample to an expected genome size of 0 bp, and the workflow will fail. |
     | `min_reads` | 3000 | Calculated from the minimum number of base pairs required for 20x coverage of the _Hansenula polymorpha_ genome, the smallest fungal genome as of 2015-04-02 (8.97 Mbp), divided by 300 (the longest Illumina read length) |
@@ -72,7 +72,7 @@ fragment: true
     !!! techdetails "Screen Technical Details"
         
 <!-- if: theiacov|theiaprok|theiaeuk -->
-        There is a single WDL task for read screening. The `creen task is run twice, once for raw reads and once for clean reads.
+        There is a single WDL task for read screening. The screen task is run twice, once for raw reads and once for clean reads.
 <!-- endif -->
 
         |  | Links |

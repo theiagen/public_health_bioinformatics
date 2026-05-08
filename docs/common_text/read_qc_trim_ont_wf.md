@@ -18,9 +18,6 @@ fragment: true
     !!! dna "A note on estimated genome length"
 
         By default, the estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to [the information of thousands of NCBI bacterial assemblies collated here](https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt). This estimate can be overwritten by the user and is used by `Rasusa`.
-<!-- endif -->
-
-<!-- if: theiaprok -->
 
 {{ include_md("common_text/rasusa_task.md", indent=4, condition="ont") }}
 

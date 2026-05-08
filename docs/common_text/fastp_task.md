@@ -19,7 +19,7 @@ fragment: true
         | --detect_adapter_for_pe | More sensitively detects adapters for trimming **only for paired-end reads** |
 <!-- endif -->
 
-<!-- if: theiaviral | metabuli -->
+<!-- if: theiaviral|metabuli -->
 ??? task "`fastp`: Read Trimming"
     fastp trims low-quality regions with a sliding window (with a default window size of 4, specified with `fastp_window_size`), cutting once the average quality within the window falls below the `fastp_quality_trim_score` (default of 20 for paired-end, 30 for single-end). The read is discarded if it is trimmed below `fastp_min_length` (default of 15 bases).
 
@@ -34,4 +34,4 @@ fragment: true
         | Task | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastp.wdl) |
         | Software Source Code | [fastp on GitHub](https://github.com/OpenGene/fastp) |
         | Software Documentation | [fastp on GitHub](https://github.com/OpenGene/fastp) |
-        | Original Publication(s) | [fastp: an ultra-fast all-in-one FASTQ preprocessor](https://academic.oup.com/bioinformatics/article/34/17/i884/5093234?login=false) |
+        | Original Publication(s) | [fastp: an ultra-fast all-in-one FASTQ preprocessor](https://doi.org/10.1093/bioinformatics/bty560) |

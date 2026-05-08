@@ -15,7 +15,8 @@ fragment: true
 <!-- endif -->
 
 <!-- if: read_qc_trim -->
-??? task "`read_decontaminate`: Mapping-based Read Decontamination"
+??? task "`read_decontaminate`: Mapping-based Read Decontamination (optional)"
+    Activate this task by providing a `read_decontaminate_fasta`.
 
     Known contaminant genetic data can be removed by mapping directly to an inputted `read_decontaminate_fasta`. This input can be a host genome, common microbial contaminant genome, or intentionally spiked sequences. The mapping statistics and aligned reads to the contaminant FASTA are outputted in JSON-formatted mappings, while downstream quality control tasks will input the decontaminated reads. An optional "pass/fail" status can be outputted based on identification of expected/unexpected sequences if the `expected_contaminants` input is populated with a comma-delimitted string of expected sequence headers - `expected_contaminants` must exactly match sequence headers in the input.
 
@@ -26,9 +27,9 @@ fragment: true
 
 {{ include_md("common_text/parse_mapping_task.md", condition="bam_to_unaligned_fastq", indent=4, replacements={'??? task "`parse_mapping`: BAM File Handling"' : '??? task "`parse_mapping`: Extract Unaligned Reads"'}) }}
 
-{{ include_md("common_text/mapping_stats_task.md", indent=4, replacements={'??? task "`mapping_stats`"' : '??? toggle "Host/Contaminant Read Mapping Statistics"'}) }}
+{{ include_md("common_text/mapping_stats_task.md", indent=4, replacements={'??? task "`mapping_stats`"' : '??? task "`mapping_stats`: Host/Contaminant Read Mapping Statistics"'}) }}
 
-{{ include_md("common_text/contaminant_check_task.md", indent=4, replacements={'??? task "`contaminant_check`"' : '??? toggle "Contaminant Detection Status"'}) }}
+{{ include_md("common_text/contaminant_check_task.md", indent=4) }}
 
     !!! techdetails "Read Decontaminate Technical Details"
         |  | Links |

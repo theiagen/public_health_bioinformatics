@@ -16,11 +16,11 @@ fragment: true
         - ONT long reads: `min_score` = 0.008
 <!-- endif -->
 
-<!-- if theiacov|freyja -->
+<!-- if: theiacov|freyja -->
     Metabuli is run on both raw and human dehosted reads.
 <!--endif -->
 
-<!-- if theiaprok -->
+<!-- if: theiaprok -->
     `metabuli_db` must be set to activate Metabuli read classification for TheiaProk.
 <!-- endif -->
 
@@ -45,3 +45,4 @@ fragment: true
         | Software Source Code | [Metabuli on GitHub](https://github.com/steineggerlab/Metabuli) |
         | Software Documentation | [Metabuli Documentation](https://github.com/steineggerlab/Metabuli/blob/master/README.md) |
         | Original Publication(s) | [Metabuli: sensitive and specific metagenomic classification via joint analysis of amino acid and DNA](https://doi.org/10.1038/s41592-024-02273-y) |
+

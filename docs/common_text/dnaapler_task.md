@@ -2,7 +2,7 @@
 title: Task Fragment `dnaapler`
 fragment: true
 ---
-??? toggle "`Dnaapler`: Final Assembly Orientation"
+??? task "`Dnaapler`: Final Assembly Orientation"
     Dnaapler reorients contigs to start at specific reference points. Dnaapler supports the following modes, which can be indicated by filling the `dnaapler_mode` input variable with the desired mode. The default is `all`, which reorients contigs to start with `dnaA`, `terL`, `repA`, or `COG1474`.
 
     - **all**: Reorients contigs to start with `dnaA`, `terL`, `repA`, or `COG1474` (_Default_)
