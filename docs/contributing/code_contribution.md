@@ -14,13 +14,6 @@ Style guide inspired by Scott Frazer’s [WDL Best Practices Style Guide](http
 ***Modularity and Metadata***
 
 - **Best Practice:** Place tasks and workflows in separate files to maintain modularity and clarity.
-- **Add a `meta` block** to every task and workflow to provide a brief description of its purpose.
-
-    ```bash
-    meta {
-      description: "This tool does X"
-    }
-    ```
 
 ***Docker Containers***
 
