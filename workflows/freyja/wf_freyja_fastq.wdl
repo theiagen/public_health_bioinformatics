@@ -2,19 +2,19 @@ version 1.0
 
 import "../../tasks/alignment/task_bwa.wdl" as align
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
-import "../../tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl" as trim_primers
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
+import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
+import "../../tasks/quality_control/basic_statistics/task_qualimap.wdl" as qualimap_task
 import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl" as trim_primers
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/freyja/task_freyja.wdl" as freyja_task
+import "../../tasks/taxon_id/freyja/task_freyja_long_way.wdl" as freyja_long_format
+import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
+import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as task_parse_mapping
+import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_ont
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_pe
 import "../utilities/wf_read_QC_trim_se.wdl" as read_qc_se
-import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_ont
-import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as task_parse_mapping
-import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
-import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
-import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
-import "../../tasks/quality_control/basic_statistics/task_qualimap.wdl" as qualimap_task
-import "../../tasks/taxon_id/freyja/task_freyja_long_way.wdl" as freyja_long_format
 
 workflow freyja_fastq {
   input {
@@ -41,6 +41,7 @@ workflow freyja_fastq {
     Float? latitude
     Float? longitude
     Int freyja_min_coverage = 60
+    String freyja_long_format_docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1"
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -181,7 +182,8 @@ workflow freyja_fastq {
         collection_site = collection_site,
         latitude = latitude,
         longitude = longitude,
-        mincov = freyja_min_coverage
+        mincov = freyja_min_coverage,
+        docker = freyja_long_format_docker
     }
   }
   call versioning.version_capture {
@@ -319,6 +321,7 @@ workflow freyja_fastq {
     File? qualimap_reports_bundle = qualimap.qualimap_reports_bundle
     File? qualimap_coverage_plots_html = qualimap.qualimap_coverage_plots_html
     # Freyja long format outputs
-    File? freyja_parsed_format_tsv =  freyja_long_format.freyja_parsed_format_tsv
+    String? freyja_long_format_docker_used = freyja_long_format.freyja_long_format_docker
+    File? freyja_parsed_format_tsv = freyja_long_format.freyja_parsed_format_tsv
   }
 }
