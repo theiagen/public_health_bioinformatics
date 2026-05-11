@@ -130,7 +130,7 @@ This workflow runs on the sample level.
         | Software Documentation | <https://andersen-lab.github.io/Freyja/index.html#> |
 
 ??? task "`freyja_long_format` Details"
-    The `freyja_long_format` task converts the demixed lineage abundances for a single sample into a long-format TSV that is paired with the sample's metadata (collection date, collection site, genome coverage, and optionally latitude and longitude). This long-format TSV is suitable for downstream aggregation across samples and for use with visualization tools such as Microreact.
+    The `freyja_long_format` task converts the demixed lineage abundances for a single sample into a long-format TSV that is paired with the sample's metadata (collection date, collection site, genome coverage, and optionally latitude and longitude). Collection site, collection date, and genome coverage are necessary inputs to produce the long format. This long-format TSV is suitable for downstream aggregation across samples and for use with visualization tools such as Microreact.
 
     The sample's genome coverage (`freyja.freyja_coverage`) is included automatically so that the `--mincov` threshold can drop the sample from the output when its coverage falls below `freyja_min_coverage`.
 
