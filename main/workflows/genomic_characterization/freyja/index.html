@@ -8069,7 +8069,7 @@
 <p>Additionally, inadequate sequencing depth can hinder Freyja's ability to differentiate between lineages, leading to potential misestimations. Sequencing depth requirements will increase with the complexity of the sample composition and the diversity of lineages present. For samples containing multiple closely related lineages, higher sequencing depth is necessary to resolve subtle differences in genetic variation and accurately estimate lineage abundances. This is particularly important for pathogens with high mutation rates or a large number of cocirculating lineages, such as influenza, where distinguishing between lineages relies on detecting specific single nucleotide variants (SNVs) with high confidence.</p>
 <h2 id="freyja-workflows">Freyja Workflows<a class="headerlink" href="#freyja-workflows" title="Permanent link">¶</a></h2>
 <h3 id="freyja_fastq">Freyja_FASTQ_PHB<a class="headerlink" href="#freyja_fastq" title="Permanent link">¶</a></h3>
-<p>Freyja measures SNV frequency and sequencing depth at each position in the genome to return an estimate of the true lineage abundances in the sample. The method uses lineage-defining "barcodes" that, for SARS-CoV-2, are derived from the UShER global phylogenetic tree as a base set for demixing. <strong>Freyja_FASTQ_PHB</strong> returns as output a TSV file that includes the lineages present and their corresponding abundances, along with other values.</p>
+<p>Freyja measures SNV frequency and sequencing depth at each position in the genome to return an estimate of the true lineage abundances in the sample. The method uses lineage-defining "barcodes" that, for SARS-CoV-2, are derived from the UShER global phylogenetic tree as a base set for demixing. <strong>Freyja_FASTQ_PHB</strong> returns as output a TSV file that includes the lineages present and their corresponding abundances, along with other values. Optionally, the workflow can also produce a long-format TSV (<code>freyja_parsed_format_tsv</code>) that pairs the demixed lineage abundances with sample metadata (collection date, collection site, latitude, longitude) for downstream visualization.</p>
 <p>The Freyja_FASTQ_PHB workflow is compatible with the multiple input data types: Ilumina Single-End, Illumina Paired-End and Oxford Nanopore. Depending on the type of input data, different input values are used.</p>
 <p><strong>Table 1:</strong> Freyja_FASTQ_PHB input configuration for different types of input data.</p>
 <table>
@@ -8274,6 +8274,22 @@
 </tr>
 <tr>
 <td>freyja_fastq</td>
+<td><strong>collection_date</strong></td>
+<td>String</td>
+<td>Collection date of wastewater sample (YYYY-MM-DD)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>collection_site</strong></td>
+<td>String</td>
+<td>Collection site of wastewater sample</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
 <td><strong>depth_cutoff</strong></td>
 <td>Int</td>
 <td>The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS!</td>
@@ -8290,6 +8306,14 @@
 </tr>
 <tr>
 <td>freyja_fastq</td>
+<td><strong>freyja_min_coverage</strong></td>
+<td>Int</td>
+<td>Minimum genome coverage threshold (--mincov) used by freyja_to_long.py when generating the freyja_parsed_format_tsv output</td>
+<td>60</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
 <td><strong>freyja_pathogen</strong></td>
 <td>String</td>
 <td>Pathogen to be used by Freyja</td>
@@ -8302,6 +8326,22 @@
 <td>String</td>
 <td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
 <td>Severe acute respiratory syndrome coronavirus 2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>latitude</strong></td>
+<td>Float</td>
+<td>Latitude of wastewater sample collection site</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>longitude</strong></td>
+<td>Float</td>
+<td>Longitude of wastewater sample collection site</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8358,6 +8398,54 @@
 <td>Int</td>
 <td>The minimum length cut-off when performing read cleaning</td>
 <td>25</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>group_by</strong></td>
+<td>String</td>
+<td>Whether to group samples by collection date or week, options are "date" or "week"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>mincov</strong></td>
+<td>Int</td>
+<td>The minimum genome coverage used as a cut-off of data to include in the parsed long-format TSV. At the workflow level this is set via freyja_min_coverage (default 60).</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9204,6 +9292,22 @@
 </tr>
 <tr>
 <td>freyja_fastq</td>
+<td><strong>collection_date</strong></td>
+<td>String</td>
+<td>Collection date of wastewater sample (YYYY-MM-DD)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>collection_site</strong></td>
+<td>String</td>
+<td>Collection site of wastewater sample</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
 <td><strong>depth_cutoff</strong></td>
 <td>Int</td>
 <td>The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS!</td>
@@ -9220,6 +9324,14 @@
 </tr>
 <tr>
 <td>freyja_fastq</td>
+<td><strong>freyja_min_coverage</strong></td>
+<td>Int</td>
+<td>Minimum genome coverage threshold (--mincov) used by freyja_to_long.py when generating the freyja_parsed_format_tsv output</td>
+<td>60</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
 <td><strong>freyja_pathogen</strong></td>
 <td>String</td>
 <td>Pathogen to be used by Freyja</td>
@@ -9232,6 +9344,22 @@
 <td>String</td>
 <td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
 <td>Severe acute respiratory syndrome coronavirus 2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>latitude</strong></td>
+<td>Float</td>
+<td>Latitude of wastewater sample collection site</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>longitude</strong></td>
+<td>Float</td>
+<td>Longitude of wastewater sample collection site</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9288,6 +9416,54 @@
 <td>Int</td>
 <td>The minimum length cut-off when performing read cleaning</td>
 <td>25</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>group_by</strong></td>
+<td>String</td>
+<td>Whether to group samples by collection date or week, options are "date" or "week"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>mincov</strong></td>
+<td>Int</td>
+<td>The minimum genome coverage used as a cut-off of data to include in the parsed long-format TSV. At the workflow level this is set via freyja_min_coverage (default 60).</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10070,6 +10246,22 @@
 </tr>
 <tr>
 <td>freyja_fastq</td>
+<td><strong>collection_date</strong></td>
+<td>String</td>
+<td>Collection date of wastewater sample (YYYY-MM-DD)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>collection_site</strong></td>
+<td>String</td>
+<td>Collection site of wastewater sample</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
 <td><strong>depth_cutoff</strong></td>
 <td>Int</td>
 <td>The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS!</td>
@@ -10086,6 +10278,14 @@
 </tr>
 <tr>
 <td>freyja_fastq</td>
+<td><strong>freyja_min_coverage</strong></td>
+<td>Int</td>
+<td>Minimum genome coverage threshold (--mincov) used by freyja_to_long.py when generating the freyja_parsed_format_tsv output</td>
+<td>60</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
 <td><strong>freyja_pathogen</strong></td>
 <td>String</td>
 <td>Pathogen to be used by Freyja</td>
@@ -10098,6 +10298,22 @@
 <td>String</td>
 <td>The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.</td>
 <td>Severe acute respiratory syndrome coronavirus 2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>latitude</strong></td>
+<td>Float</td>
+<td>Latitude of wastewater sample collection site</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
+<td><strong>longitude</strong></td>
+<td>Float</td>
+<td>Longitude of wastewater sample collection site</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10154,6 +10370,54 @@
 <td>Int</td>
 <td>The minimum length cut-off when performing read cleaning</td>
 <td>25</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>group_by</strong></td>
+<td>String</td>
+<td>Whether to group samples by collection date or week, options are "date" or "week"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>mincov</strong></td>
+<td>Int</td>
+<td>The minimum genome coverage used as a cut-off of data to include in the parsed long-format TSV. At the workflow level this is set via freyja_min_coverage (default 60).</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12415,6 +12679,41 @@
 </table>
 </div>
 </details>
+<details class="task">
+<summary><code>freyja_long_format</code> Details</summary>
+<p>The <code>freyja_long_format</code> task converts the demixed lineage abundances for a single sample into a long-format TSV that is paired with the sample's metadata (collection date, collection site, genome coverage, and optionally latitude and longitude). Collection site, collection date, and genome coverage are necessary inputs to produce the long format. This long-format TSV is suitable for downstream aggregation across samples and for use with visualization tools such as Microreact.</p>
+<p>The sample's genome coverage (<code>freyja.freyja_coverage</code>) is included automatically so that the <code>--mincov</code> threshold can drop the sample from the output when its coverage falls below <code>freyja_min_coverage</code>.</p>
+<p>Lineage grouping can be customized by providing the optional <code>group_by</code> input, which will group by collection site + collection date, or by collection site + week and normalize the data.</p>
+<div class="admonition warning">
+<p class="admonition-title">Behavior when the sample fails the coverage threshold</p>
+<p>The minimum genome coverage threshold is controlled by the <code>freyja_min_coverage</code> workflow input (default: <strong>60</strong>) and is passed to task. If the sample's <code>freyja_coverage</code> falls below this threshold, no lineage rows are written and the resulting <code>freyja_parsed_format_tsv</code> instead contains the text <code>all samples are below coverage</code>. Lower the <code>freyja_min_coverage</code> input if you wish to retain low-coverage samples in downstream visualizations.</p>
+</div>
+<div class="admonition techdetails">
+<p class="admonition-title">Freyja Long Format Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_long_way.wdl">task_freyja_long_way.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/andersen-lab/Freyja">https://github.com/andersen-lab/Freyja</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://andersen-lab.github.io/Freyja/index.html#">https://andersen-lab.github.io/Freyja/index.html#</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 <h4 id="outputs">Outputs<a class="headerlink" href="#outputs" title="Permanent link">¶</a></h4>
 <p>The main output file used in subsequent Freyja workflows is found under the <code>freyja_demixed</code> column. This TSV file takes on the following format:</p>
 <table>
@@ -12727,6 +13026,11 @@
 <td>Name of lineage metadata file used, or the date if update_db is true</td>
 </tr>
 <tr>
+<td>freyja_parsed_format_tsv</td>
+<td><strong>File</strong></td>
+<td>Long-format TSV pairing freyja lineage abundances with sample metadata (collection date, collection site, latitude, longitude); produced by the freyja_long_format task and consumed by freyja_microreact</td>
+</tr>
+<tr>
 <td>freyja_resid</td>
 <td><strong>String</strong></td>
 <td>Residual of the weighted least absolute deviation problem used to estimate lineage abundances identified by Freyja and parsed from freyja_demixed file</td>
@@ -13277,6 +13581,11 @@
 <td>Name of lineage metadata file used, or the date if update_db is true</td>
 </tr>
 <tr>
+<td>freyja_parsed_format_tsv</td>
+<td><strong>File</strong></td>
+<td>Long-format TSV pairing freyja lineage abundances with sample metadata (collection date, collection site, latitude, longitude); produced by the freyja_long_format task and consumed by freyja_microreact</td>
+</tr>
+<tr>
 <td>freyja_resid</td>
 <td><strong>String</strong></td>
 <td>Residual of the weighted least absolute deviation problem used to estimate lineage abundances identified by Freyja and parsed from freyja_demixed file</td>
@@ -13825,6 +14134,11 @@
 <td>freyja_metadata_version</td>
 <td><strong>String</strong></td>
 <td>Name of lineage metadata file used, or the date if update_db is true</td>
+</tr>
+<tr>
+<td>freyja_parsed_format_tsv</td>
+<td><strong>File</strong></td>
+<td>Long-format TSV pairing freyja lineage abundances with sample metadata (collection date, collection site, latitude, longitude); produced by the freyja_long_format task and consumed by freyja_microreact</td>
 </tr>
 <tr>
 <td>freyja_resid</td>
@@ -14115,6 +14429,7 @@
 <h3 id="freyja_plot">Freyja_Plot_PHB<a class="headerlink" href="#freyja_plot" title="Permanent link">¶</a></h3>
 <p>This workflow visualizes aggregated freyja_demixed output files produced by <a href="./#freyja_fastq">Freyja_FASTQ_PHB</a> in a single plot (pdf format) which provides fractional abundance estimates for all aggregated samples.</p>
 <p>Options exist to provide lineage-specific breakdowns and/or sample collection time information.</p>
+<p>In addition to the aggregate plot, Freyja_Plot_PHB can produce a long-format metadata TSV (<code>freyja_parsed_format_tsv</code>) that combines lineage abundances with per-sample metadata (collection date, collection site, latitude, longitude), as well as a <a href="https://microreact.org/">Microreact</a>-compatible upload file (<code>freyja_microreact_output</code>) for interactive geospatial and temporal visualization of the aggregated results.</p>
 <h4 id="inputs_1">Inputs<a class="headerlink" href="#inputs_1" title="Permanent link">¶</a></h4>
 <p>This workflow runs on the set level.</p>
 <div class="searchable-table">
@@ -14155,10 +14470,146 @@
 <td>Required</td>
 </tr>
 <tr>
+<td>freyja_long_format</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>group_by</strong></td>
+<td>String</td>
+<td>Whether to group samples by collection date or week, options are "date" or "week"</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_long_format</td>
+<td><strong>mincov</strong></td>
+<td>Int</td>
+<td>The minimum genome coverage used as a cut-off of data to include in the parsed long-format TSV. At the workflow level this is set via freyja_min_coverage (default 60).</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_microreact</td>
+<td><strong>cpu</strong></td>
+<td>Int</td>
+<td>Number of CPUs to allocate to the task</td>
+<td>2</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_microreact</td>
+<td><strong>disk_size</strong></td>
+<td>Int</td>
+<td>Amount of storage (in GB) to allocate to the task</td>
+<td>50</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_microreact</td>
+<td><strong>docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_microreact</td>
+<td><strong>memory</strong></td>
+<td>Int</td>
+<td>Amount of memory/RAM (in GB) to allocate to the task</td>
+<td>4</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>freyja_plot</td>
 <td><strong>collection_date</strong></td>
 <td>Array[String]</td>
 <td>An array containing the collection dates for the sample (YYYY-MM-DD format)</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_plot</td>
+<td><strong>collection_site</strong></td>
+<td>Array[String]</td>
+<td>An array containing the collection sites for the sample</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_plot</td>
+<td><strong>freyja_abundances</strong></td>
+<td>Array[String]</td>
+<td>An array containing the Freyja abundances for the sample</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_plot</td>
+<td><strong>freyja_coverages</strong></td>
+<td>Array[Float]</td>
+<td>An array containing the genome coverage value (freyja_coverage) for each sample; required to enable the freyja_long_format and freyja_microreact tasks and used by --mincov filtering</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_plot</td>
+<td><strong>freyja_lineages</strong></td>
+<td>Array[String]</td>
+<td>An array containing the Freyja lineages for the sample</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_plot</td>
+<td><strong>freyja_min_coverage</strong></td>
+<td>Int</td>
+<td>Minimum genome coverage threshold; passed as --mincov to freyja_to_long.py and as mincov to the freyja plot task</td>
+<td>60</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_plot</td>
+<td><strong>latitude</strong></td>
+<td>Array[Float]</td>
+<td>An array containing the latitudes for the sample collection sites</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_plot</td>
+<td><strong>longitude</strong></td>
+<td>Array[Float]</td>
+<td>An array containing the longitudes for the sample collection sites</td>
 <td></td>
 <td>Optional</td>
 </tr>
@@ -14198,8 +14649,8 @@
 <td>freyja_plot_task</td>
 <td><strong>mincov</strong></td>
 <td>Int</td>
-<td>The minimum genome coverage used as a cut-off of data to include in the plot</td>
-<td>60</td>
+<td>The minimum genome coverage used as a cut-off of data to include in the plot. At the workflow level this is set via freyja_min_coverage (default 60).</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14283,6 +14734,74 @@
 </table>
 </div>
 </details>
+<details class="task">
+<summary><code>freyja_long_format</code> Details</summary>
+<p>The <code>freyja_long_format</code> task aggregates the demixed lineage abundances from multiple samples into a single long-format TSV, paired with each sample's metadata (collection date, collection site, per-sample genome coverage, and optionally latitude and longitude). This long-format TSV is consumed by the <code>freyja_microreact</code> task and is also useful as a standalone input to other visualization or analytical tools.</p>
+<p>Per-sample genome coverage values must be supplied via the <code>freyja_coverages</code> array input (typically populated from the <code>freyja_coverage</code> output of <code>Freyja_FASTQ_PHB</code>); this is required so that the <code>--mincov</code> threshold can filter low-coverage samples out of the aggregated TSV.</p>
+<p>Lineage grouping can be customized by providing the optional <code>group_by</code> input, which is passed through to the underlying <code>freyja_to_long.py</code> helper script.</p>
+<div class="admonition warning">
+<p class="admonition-title">Behavior when all samples fail the coverage threshold</p>
+<p>The minimum genome coverage threshold is controlled by the <code>freyja_min_coverage</code> workflow input (default: <strong>60</strong>) and is passed to <code>freyja_to_long.py</code> as <code>--mincov</code>. Samples whose <code>freyja_coverage</code> falls below this threshold are dropped from the aggregated output. If <strong>every</strong> sample in the set is below threshold, no lineage rows are written and the resulting <code>freyja_parsed_format_tsv</code> instead contains the sentinel text <code>all samples are below coverage</code>. The downstream <code>freyja_microreact</code> task detects this text and emits an empty <code>freyja_microreact_output</code> file rather than failing — see the <code>freyja_microreact</code> task block below for details. Lower the <code>freyja_min_coverage</code> input if you wish to retain low-coverage samples.</p>
+</div>
+<div class="admonition techdetails">
+<p class="admonition-title">Freyja Long Format Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_long_way.wdl">task_freyja_long_way.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/andersen-lab/Freyja">https://github.com/andersen-lab/Freyja</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://github.com/andersen-lab/Freyja">https://github.com/andersen-lab/Freyja</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
+<details class="task">
+<summary><code>freyja_microreact</code> Details</summary>
+<p>The <code>freyja_microreact</code> task converts the aggregated parsed long-format TSV produced by <code>freyja_long_format</code> into a <a href="https://microreact.org/">Microreact</a>-compatible upload file. This output can be uploaded directly to Microreact to interactively explore lineage abundances across samples in time and space. Provide latitude and longitude inputs for geospatial mapping.</p>
+<div class="admonition warning">
+<p class="admonition-title">Behavior when all samples fail the coverage threshold</p>
+<p>Before creating the microreact file, the task inspects the incoming <code>freyja_parsed_format_tsv</code> for the text <code>all samples are below coverage</code> (written upstream by <code>freyja_long_format</code> when no samples passed the <code>freyja_min_coverage</code> threshold). If no samples passed coverage, the task short-circuits and produces an <strong>empty</strong> <code>freyja_microreact_output</code> file rather than failing the workflow. An empty <code>.microreact</code> file is therefore the expected signal that no samples cleared the coverage threshold; lower the <code>freyja_min_coverage</code> input and rerun if you wish to retain low-coverage samples.</p>
+</div>
+<div class="admonition techdetails">
+<p class="admonition-title">Freyja Microreact Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_microreact.wdl">task_freyja_microreact.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/andersen-lab/Freyja">https://github.com/andersen-lab/Freyja</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://microreact.org/showcase">https://microreact.org/showcase</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 <h4 id="outputs_1">Outputs<a class="headerlink" href="#outputs_1" title="Permanent link">¶</a></h4>
 <div class="searchable-table">
 <table>
@@ -14298,6 +14817,16 @@
 <td>freyja_demixed_aggregate</td>
 <td>File</td>
 <td>A TSV file that summarizes the <code>freyja_demixed</code> outputs for all samples</td>
+</tr>
+<tr>
+<td>freyja_microreact_output</td>
+<td>File</td>
+<td>Microreact output file for freyja lineages and abundances</td>
+</tr>
+<tr>
+<td>freyja_parsed_format_tsv</td>
+<td>File</td>
+<td>Long-format TSV pairing freyja lineage abundances with sample metadata (collection date, collection site, latitude, longitude); produced by the freyja_long_format task and consumed by freyja_microreact</td>
 </tr>
 <tr>
 <td>freyja_plot</td>
@@ -14661,7 +15190,7 @@
     <span class="md-icon" title="Last update">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21 13.1c-.1 0-.3.1-.4.2l-1 1 2.1 2.1 1-1c.2-.2.2-.6 0-.8l-1.3-1.3c-.1-.1-.2-.2-.4-.2m-1.9 1.8-6.1 6V23h2.1l6.1-6.1zM12.5 7v5.2l4 2.4-1 1L11 13V7zM11 21.9c-5.1-.5-9-4.8-9-9.9C2 6.5 6.5 2 12 2c5.3 0 9.6 4.1 10 9.3-.3-.1-.6-.2-1-.2s-.7.1-1 .2C19.6 7.2 16.2 4 12 4c-4.4 0-8 3.6-8 8 0 4.1 3.1 7.5 7.1 7.9l-.1.2z"></path></svg>
     </span>
-    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 4, 2026 15:24:21 UTC">2026-05-04</span>
+    <span class="git-revision-date-localized-plugin git-revision-date-localized-plugin-iso_date" title="May 11, 2026 20:41:07 UTC">2026-05-11</span>
   </span>
 
     
