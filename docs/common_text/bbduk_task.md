@@ -7,7 +7,7 @@ fragment: true
 
     By default, the BBDuk task will:
 
-    - **Repair disordered read pairs** (if they exist) so that the first read in read1 is the same mate of the first read in read2. See the [`Repair Guide`](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/) package.
+    - **Repair disordered read pairs** (if they exist) so that the first read in `read1` is the same mate of the first read in `read2`. See the [`Repair Guide`](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/) package.
 
     - **Remove PhiX contamination** by filtering out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html). PhiX is a viral genome that is often used as a control in Illumina sequencing runs. Removing PhiX sequences helps to ensure that the data reflects only the target organism's genome. By default this task uses the built-in PhiX reference fasta provided with BBTools (see [here](https://github.com/bbushnell/BBTools/blob/master/resources/phix174_ill.ref.fa.gz)), but a custom PhiX reference can be provided via the `phix_fasta` input parameter.
 
