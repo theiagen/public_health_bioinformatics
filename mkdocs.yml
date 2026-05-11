@@ -327,3 +327,7 @@ copyright: |
 # currently unsupported in zensical
 #hooks:
 #  - macros/hooks/on_config.py
+
+watch: 
+  - docs/common_text
+  - docs/assets
