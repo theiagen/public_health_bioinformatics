@@ -15,14 +15,16 @@ This macro renders a TSV file as a Markdown table. It supports column filtering,
 
 #### `render_tsv_table()` Parameters
 
-| Name            | Type                  | Required | Description |
-|-----------------|-----------------------|----------|-------------|
-| `filename`      | `str`                 | Yes      | Path to the TSV file (relative to the project root). |
-| `filters`       | `Dict[str: str]`      | No       | Dictionary for fields to include (filters for, not out) {"Column name": "Target Value"} |
-| `columns`       | `list[str]`           | No       | Subset of columns (supports wildcards). If not specified, all columns are shown. |
-| `sort_by`       | `str`, `list[str]`, or `list[tuple]` | No | Sort by one or more columns. Use `(column, True)` for descending sort. |
-| `input_table`   | `bool`                | No       | If `True`, bolds the second column (used for emphasizing input names). |
-| `indent`        | `int`                 | No       | Number of spaces to indent the output Markdown. This will likely be a multiple of 4. |
+| Name             | Type                  | Required | Description |
+|------------------|-----------------------|----------|-------------|
+| `filename`       | `str`                 | Yes      | Path to the TSV file (relative to the project root). |
+| `filters`        | `Dict[str: str]`      | No       | Dictionary for fields to include (filters for, not out) {"Column name": "Target Value"} |
+| `exclude_filters`| `Dict[str: str]`      | No       | Dictionary for fields to exclude (filters out, not for) {"Column name": "Target Value"} |
+| `columns`        | `list[str]`           | No       | Subset of columns (supports wildcards). If not specified, all columns are shown. |
+| `sort_by`        | `str`, `list[str]`, or `list[tuple]` | No | Sort by one or more columns. Use `(column, True)` for descending sort. |
+| `input_table`    | `bool`                | No       | If `True`, bolds the second column (used for emphasizing input names). |
+| `indent`         | `int`                 | No       | Number of spaces to indent the output Markdown. This will likely be a multiple of 4. |
+| `replacements`   | `Dict[str: str]`      | No       | Dictionary of literal string replacements in the included content. |
 
 #### `render_tsv_table()` Examples
 
@@ -90,16 +92,27 @@ This example shows how to add a replacements dictionary to replace the `??? task
 {{ include_md("common_text/kraken2_task.md", indent=4, condition="theiacov", replacements={"??? task": "??? toggle"}) }}
 ```
 
-Note: Make sure any **assets** in the included Markdown file are prefixed with `../../` to ensure they are correctly resolved relative to the final output location. This is important for images, files, and othrr assets to ensure they are correctly displayed in the final documentation.
+Note: Make sure any **assets** in the included Markdown file are prefixed with `../../` to ensure they are correctly resolved relative to the final output location. This is important for images, files, and other assets to ensure they are correctly displayed in the final documentation.
 
 #### Conditional Block Syntax
 
 You can include blocks conditionally using comment markers:
 
-```markdown
+```text
 <!-- if: ONT|SE -->
 This content will appear only if condition is "ONT" or "SE".
 <!-- endif -->
+
+# broken conditionals
+<!-- if: ONT | SE --> # spaces are not allowed
+<!-- if ONT|SE| --> # no colon
+```
+
+Make sure to follow the following regular expressions, as if these are not matched, this functionality will fail. NESTED CONDITIONALS NOW WORK!!
+
+```
+IF_RE = re.compile(r'<!--\s*if:\s*([\w|]+)\s*-->') # conditional start
+ENDIF_RE = re.compile(r'<!--\s*endif\s*-->') # conditional end
 ```
 
 ---
@@ -124,29 +137,46 @@ This section is for devs extending the macros or debugging their behavior. The c
 
 Macros are defined in a `define_env(env)` function. This is the entry point that `zensical` calls to register the Python logic.
 
+I also have a cache function but I have no idea how that works and honestly this entire macro is basically vibe coded no shame here 
+
 ### Macro Internals
 
 #### `render_tsv_table(...)`
 
-- Parses TSV files using `csv.DictReader`.
-- Filters rows by matching values in a specific column.
-- Expands wildcard patterns in column names.
-- Sorts output by one or more columns.
-- Outputs a standard Markdown table, with optional formatting for "input" rows.
+- Parses TSV files using `csv.DictReader`
+- Keeps only the desired columns
+- Applies include filters and keeps them
+- Applies exclude filters and removes them
+- Sorts the rows by one or more columns
+- Add appropriate indentation
+- Formats as a MD table, with optional formatting for "input" tables
+- Performs string replacements
+
+##### Supporting Functions
+
+| Function          | Purpose |
+|-------------------|---------|
+| normalize_filters | makes filters into a consistent format { name: [values] } |
+| row_matches       | returns true if a row meets all of a filter's conditions |
+| normalize_sort    | turns sorting parms into a consistent format [(name, reverse flag), ...] |
+
 
 #### `include_md(...)`
 
-- Resolves a Markdown file path relative to `docs/`.
-- Adjusts heading levels via `adjust_heading()`.
-- Resolves relative links and image paths with `resolve_links()`.
-- Removes header content which is necessary for individual page display.
-- Detects and renders conditional blocks using `<!-- if:... -->` and `<!-- endif -->`.
-- Recursively includes other Markdown files when `{{ include_md(...) }}` is found in the included file. Don't go too deep with this, as that just causes brain fog. All conditions and replacements are passed to the nested include as well.
+- Resolves a Markdown file path relative to `docs/`
+- Removes YAML front matter (---\n ... \n---)
+- Detects and renders conditional blocks using `<!-- if:... -->` and `<!-- endif -->`
+- Recursively includes internal include_mds()
+- Adjusts headings
+- Resolves links relative to current directory
+- Adds indentation
+- Performs string replacements
 
 ### Supporting Functions
 
 | Function                | Purpose |
 |-------------------------|---------|
-| `adjust_heading(...)`   | Normalizes Markdown heading levels with optional indentation. |
-| `resolve_links(...)`    | Rewrites relative paths in `[]()` and `![]()` links to match the final structure. |
-| `parse_macro_args(...)` | Parses nested macro arguments from Jinja-style include calls. |
+| `parse_macro_args(...)` | Parses nested macro arguments from Jinja-style include calls |
+| `Class ConditionStack`  | Tracks if a line should be included/excluded based on conditionals; enables nested conditionals |
+| `adjust_heading(...)`   | Normalizes Markdown heading levels with optional indentation |
+| `resolve_links(...)`    | Rewrites relative paths in `[]()` and `![]()` links to match the final structure |
