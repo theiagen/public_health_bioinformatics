@@ -453,6 +453,8 @@ freyja_fastq_wf_version	String	The version of the Public Health Bioinformatics (
 freyja_lineage_metadata_file	String	Metadata file for lineages identified by Freyja	Freyja_FASTQ
 freyja_lineages	String	Lineages in descending order identified by Freyja and parsed from freyja_demixed file	Freyja_FASTQ
 freyja_metadata_version	String	Name of lineage metadata file used, or the date if update_db is true	Freyja_FASTQ
+freyja_microreact_output	File	Microreact output file for freyja lineages and abundances	Freyja_Plot
+freyja_parsed_format_tsv	File	Long-format TSV pairing freyja lineage abundances with sample metadata (collection date, collection site, latitude, longitude); produced by the freyja_long_format task and consumed by freyja_microreact	Freyja_FASTQ, Freyja_Plot
 freyja_plot	File	A PDF of the plot produced by the workflow	Freyja_Plot
 freyja_plot_metadata	File	The metadata used to create the plot	Freyja_Plot
 freyja_plot_version	String	The version of Freyja used	Freyja_Plot
@@ -1039,6 +1041,12 @@ serotypefinder_serotype	String	Serotype predicted by SerotypeFinder	TheiaProk_FA
 shared_variants_analysis_date	String	The date the workflow was run	Find_Shared_Variants
 shared_variants_table	File	The shared variants table listing presence/absence for each mutation identified in the samples	Find_Shared_Variants
 shared_variants_version	String	The version of PHB the workflow is in	Find_Shared_Variants
+shigapass_docker	String	ShigaPass docker image used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+shigapass_flexneri_summary_tsv	File	  Tab-delimited file detailing the phage and plasmid-encoded O-antigen modification (POAC) genes for the predicted _S. flexneri_ genomes	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+shigapass_ipaH_presence_absence	String	An indication if _ipaH_ was present or absent	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+shigapass_predicted_serotype	String	The predicted serotype	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+shigapass_summary_tsv	File	Detailed TSV report from ShigaPass (see <https://github.com/imanyass/ShigaPass#output-files>)	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+shigapass_version	String	Version of ShigaPass used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 shigatyper_docker	String	ShigaTyper docker image used	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 shigatyper_hits_tsv	File	Detailed TSV report from ShigaTyper (see <https://github.com/CFSAN-Biostatistics/shigatyper#example-prefix-hitstsv>)	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 shigatyper_ipaB_presence_absence	String	Presence (+) or absence (-) of ipaB identified by ShigaTyper	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
