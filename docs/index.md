@@ -41,19 +41,21 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
     
     You can also use our workflows on the command-line. Please see our guide on how to get started [**here**](getting_started/commandline.md)!
 
-When undertaking genomic analysis using the command-line, via Terra, or other data visualization platforms, it is essential to consider the necessary and appropriate workflows and resources for your analysis. To help you make these choices, take a look at the relationship between the most commonly used Theiagen workflows.
+### Our Workflows
 
 !!! caption "Analysis Approaches for Genomic Data"
 
+    We have a number of workflows available to help you perform genomic analysis. Take a look below to learn how our workflows are related and how they cooperate with each other.
+
     === "General Workflow Relationships"
-        ![The relationship between the various PHB workflows](assets/figures/WorkflowRelationships.png){data-description="This diagram shows the available workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped into boxes that represent the major types of analysis that they perform. The arrows between the boxes represent the relationships between the workflows, showing which workflows may be used consecutively, while the large arrow underlying everything indicates the general process of analysis."}
+        ![The relationship between the various PHB workflows](assets/figures/WorkflowRelationships.png){data-description="This diagram shows the workflows in the PHB repository. The workflows are grouped in boxes that represent the type of analysis they perform. The arrows between the boxes and the large underlying arrow represent the directional and sequential nature of the workflows."}
 
-        This diagram shows the available workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped into boxes that represent the major types of analysis that they perform. The arrows between the boxes represent the relationships between the workflows, showing which workflows may be used consecutively, while the large arrow underlying everything indicates the general process of analysis.
-
+        This diagram shows the available workflows in the PHB repository. The workflows are grouped in boxes that represent what type of analysis they perform. The arrows between the boxes and the large underlying arrow represent the directional and sequential nature of the workflows.
+        
     === "Available Standalone Workflows"
-        ![All available standalone workflows can be used to supplement the major workflows](assets/figures/WorkflowRelationships_Standalone.png){data-description="This diagram shows the available standalone workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped by colors that represent the major types of analysis that they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives."}
+        ![All available standalone workflows can be used to supplement the major workflows](assets/figures/WorkflowRelationships_Standalone.png){data-description="This diagram shows all standalone workflows in the PHB repository that are available for genomic analysis. Workflows are grouped by colors that represent the type of analysis they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives."}
 
-        This diagram shows the available _standalone_ workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped by colors that represent the major types of analysis that they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives.
+        This diagram shows all standalone workflows in the PHB repository that are available for genomic analysis. Workflows are grouped by colors that represent the type of analysis they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives.
 
 ### PHB development is a cycle
 
@@ -97,7 +99,7 @@ okay thanks byee
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision <!-- 84 + 68 = 152 -->
 - **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Documentation <!-- 72 + 39 = 111 -->
 - **Sushmita Sridhar** ([@ss43](https://github.com/ss43)) - Documentation <!-- 11 + 12 = 23 -->
-- **Neha Mokashi** ([@nehavm456](https://github.com/nehavm456)) - Documentation <!-- 3 + 4 = 7>
+- **Neha Mokashi** ([@nehavm456](https://github.com/nehavm456)) - Documentation <!-- 3 + 4 = 7 -->
 - **Deborah Young** ([@theiadeb](https://github.com/theiadeb)) - Documentation <!-- 3 + 3 = 6 -->
 - **Bruna Todani** ([@brunatodani](https://github.com/brunatodani)) - Documentation <!-- 2 + 1 = 3 -->
 - **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision <!-- 0 + 0 = 0 -->
@@ -147,7 +149,7 @@ Please cite this paper if publishing work using any workflows:
 
 > Libuit, Kevin G., Emma L. Doughty, James R. Otieno, Frank Ambrosio, Curtis J. Kapsak, Emily A. Smith, Sage M. Wright, et al. 2023. "Accelerating Bioinformatics Implementation in Public Health." Microbial Genomics 9 (7). <https://doi.org/10.1099/mgen.0.001051>.
 
-Alternatively, please cite this paper if using the TheiaEuk workflow:
+Please cite this paper if using the TheiaEuk workflow:
 
 > Ambrosio, Frank, Michelle Scribner, Sage Wright, James Otieno, Emma Doughty, Andrew Gorzalski, Danielle Siao, et al. 2023. "TheiaEuk: A Species-Agnostic Bioinformatics Workflow for Fungal Genomic Characterization." Frontiers in Public Health 11. <https://doi.org/10.3389/fpubh.2023.1198213>.
 

@@ -1,22 +1,25 @@
 # Getting Started with Terra
 
 !!! dna "Our Approach"
-    Theiagen’s approach to genomic analysis in public health typically uses the [Terra](https://terra.bio/) platform to run workflows that undertake bioinformatic analysis, then uses other platforms for visualization of the resulting data. This is described in more depth in our paper [_Accelerating bioinformatics implementation in public health_](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.001051), and the application of this approach for genomic surveillance of SARS-CoV-2 in California is described in the paper [_Pathogen genomics in public health laboratories: successes, challenges, and lessons learned from California’s SARS-CoV-2 Whole-Genome Sequencing Initiative, California COVIDNet_](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.001027).
+    Theiagen’s approach to genomic analysis in public health typically uses the [Terra](https://terra.bio/) platform to run workflows that undertake bioinformatic analysis. Visualization of the resulting data typically uses other platforms. Our paper, [_Accelerating bioinformatics implementation in public health_](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.001051), describes this in more detail. 
+
+    We have applied this approach successfully by performing extensive genomic surveillance of SARS-CoV-2 in California, described in this paper: [_Pathogen genomics in public health laboratories: successes, challenges, and lessons learned from California’s SARS-CoV-2 Whole-Genome Sequencing Initiative, California COVIDNet_](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.001027).
 
 !!! tip ""
-    **When undertaking genomic analysis using Terra and other data visualization platforms, it is essential to consider the necessary and appropriate workflows and resources for your analysis. To help you make these choices, take a look at the relationship between the most commonly used Theiagen workflows, and the descriptions of the major stages in genomic data analysis below.**
-
     !!! caption "Analysis Approaches for Genomic Data"
-        
+    
+        We have a number of workflows available to help you perform genomic analysis. Take a look below to learn how our workflows are related and how they cooperate with each other.
+    
         === "General Workflow Relationships"
-            ![The relationship between the various PHB workflows](../assets/figures/WorkflowRelationships.png){data-description="This diagram shows the available workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped into boxes that represent the major types of analysis that they perform. The arrows between the boxes represent the relationships between the workflows, showing which workflows may be used consecutively, while the large arrow underlying everything indicates the general process of analysis."}
-
-            This diagram shows the available workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped into boxes that represent the major types of analysis that they perform. The arrows between the boxes represent the relationships between the workflows, showing which workflows may be used consecutively, while the large arrow underlying everything indicates the general process of analysis.
-
+            ![The relationship between the various PHB workflows](../assets/figures/WorkflowRelationships.png){data-description="This diagram shows the workflows in the PHB repository. The workflows are grouped in boxes that represent the type of analysis they perform. The arrows between the boxes and the large underlying arrow represent the directional and sequential nature of the workflows."}
+    
+            This diagram shows the available workflows in the PHB repository. The workflows are grouped in boxes that represent what type of analysis they perform. The arrows between the boxes and the large underlying arrow represent the directional and sequential nature of the workflows.
+            
         === "Available Standalone Workflows"
-            ![All available standalone workflows can be used to supplement the major workflows](../assets/figures/WorkflowRelationships_Standalone.png){data-description="This diagram shows the available standalone workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped by colors that represent the major types of analysis that they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives."}
+            ![All available standalone workflows can be used to supplement the major workflows](../assets/figures/WorkflowRelationships_Standalone.png){data-description="This diagram shows all standalone workflows in the PHB repository that are available for genomic analysis. Workflows are grouped by colors that represent the type of analysis they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives."}
+    
+            This diagram shows all standalone workflows in the PHB repository that are available for genomic analysis. Workflows are grouped by colors that represent the type of analysis they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives.
 
-            This diagram shows the available _standalone_ workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped by colors that represent the major types of analysis that they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives.
 
 !!! info "Find more SOPs"
     You can see all available SOPs on our [Available SOPs](../guides/sops.md) page. We have provided links to the relevant and **most recent** SOPs in the sections below, but please note that this page offers an incomplete listing.
@@ -29,8 +32,8 @@
 
 To start using Terra for data analysis, you will first need to import your data into your workspace. There are multiple ways to do this:
 
-- **Using Terra’s native features to upload data from your local computer or link to data that’s already in a Google bucket**
-- Data import workflows
+- **Use Terra’s native features** to upload data from your local computer or link to data that’s already in a Google bucket
+- [**Use a Data Import workflow**](../workflows_overview/workflows_type.md#data-import)
     - Using the [SRA_Fetch](../workflows/data_import/sra_fetch.md) workflow to import publicly available data from any repository in the [INSDC](https://www.insdc.org/) (including with [SRA](https://www.ncbi.nlm.nih.gov/sra), [ENA](https://www.ebi.ac.uk/ena/browser/home) and [DRA](https://www.ddbj.nig.ac.jp/dra/index-e.html))
     - Using the [Assembly_Fetch](../workflows/data_import/assembly_fetch.md) workflow to import publicly available genome assemblies from [NCBI](https://www.ncbi.nlm.nih.gov/datasets/)
     - Using the [BaseSpace_Fetch](../workflows/data_import/basespace_fetch.md) workflow to import data from your [Illumina BaseSpace](https://basespace.illumina.com/) account
