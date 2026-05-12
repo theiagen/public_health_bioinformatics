@@ -2,13 +2,12 @@ version 1.0
 
 task fetch_bs {
   input {
-    String sample_name
     String basespace_sample_name
-    String? basespace_sample_id
-    String basespace_collection_id
-    String api_server
+    String? basespace_run_id
+    String? basespace_project_id
     String access_token
-    
+    String api_server = "https://api.basespace.illumina.com"
+
     Int memory = 8
     Int cpu = 2
     Int disk_size = 100
