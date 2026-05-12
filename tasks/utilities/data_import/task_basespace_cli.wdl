@@ -19,10 +19,10 @@ task fetch_bs {
     volatile: true
   }
   command <<<
-    # set basespace name and id variables
-    if [[ ! -z "~{basespace_sample_id}" ]]; then
-      sample_identifier="~{basespace_sample_name}"
-      dataset_name="~{basespace_sample_id}"
+    set -euo pipefail
+
+    # set BaseSpace command prefix; --retry will retry transient errors up to 5 times
+    bs_command="bs --api-server=~{api_server} --access-token=~{access_token} --retry"
     else
       sample_identifier="~{basespace_sample_name}"
       dataset_name="~{basespace_sample_name}"
