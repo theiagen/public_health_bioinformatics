@@ -103,30 +103,32 @@ task fetch_bs {
       --output="./dataset_${dataset_id}" \
       --extension=".fastq.gz"
 
-    echo "Renamed identifier: $SAMPLENAME_RENAMED"
+    # BaseSpace will sometimes replace underscores with hyphens in the sample name
+    # create a flexible pattern match to find and output the downloaded FASTQ files
+    flexible_sample_name=$(echo "~{basespace_sample_name}" | sed 's/[-_]/[-_]/g')
 
     #Combine non-empty read files into single file without BaseSpace filename cruft
     ##FWD Read
     lane_count=0
-    for fwd_read in ./dataset_*/${SAMPLENAME_RENAMED}_*R1_*.fastq.gz; do
+    for fwd_read in $(find ./dataset_* -name "*${flexible_sample_name}*_R1_*.fastq.gz"); do
       if [[ -s $fwd_read ]]; then
-        echo "cat fwd reads: cat $fwd_read >> ~{sample_name}_R1.fastq.gz" 
-        cat $fwd_read >> ~{sample_name}_R1.fastq.gz
+        echo "Concatenating forward reads: ${fwd_read} >> ~{basespace_sample_name}_R1.fastq.gz"
+        cat "${fwd_read}" >> "~{basespace_sample_name}_R1.fastq.gz"
         lane_count=$((lane_count+1))
       fi
     done
     ##REV Read
-    for rev_read in ./dataset_*/${SAMPLENAME_RENAMED}_*R2_*.fastq.gz; do
-      if [[ -s $rev_read ]]; then 
-        echo "cat rev reads: cat $rev_read >> ~{sample_name}_R2.fastq.gz" 
-        cat $rev_read >> ~{sample_name}_R2.fastq.gz
+    for rev_read in $(find ./dataset_* -name "*${flexible_sample_name}*_R2_*.fastq.gz"); do
+      if [[ -s $rev_read ]]; then
+        echo "Concatenating reverse reads: ${rev_read} >> ~{basespace_sample_name}_R2.fastq.gz"
+        cat "${rev_read}" >> "~{basespace_sample_name}_R2.fastq.gz"
       fi
     done
     echo "Lane Count: ${lane_count}"
   >>>
   output {
-    File read1 = "~{sample_name}_R1.fastq.gz"
-    File? read2 = "~{sample_name}_R2.fastq.gz"
+    File read1 = "~{basespace_sample_name}_R1.fastq.gz"
+    File? read2 = "~{basespace_sample_name}_R2.fastq.gz"
   }
   runtime {
     docker: docker
