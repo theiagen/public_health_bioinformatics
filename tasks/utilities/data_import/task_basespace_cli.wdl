@@ -23,6 +23,16 @@ task fetch_bs {
 
     # set BaseSpace command prefix; --retry will retry transient errors up to 5 times
     bs_command="bs --api-server=~{api_server} --access-token=~{access_token} --retry"
+
+    # exactly one of basespace_run_id / basespace_project_id must be provided
+    if [[ -z "~{basespace_run_id}" && -z "~{basespace_project_id}" ]]; then
+      echo "ERROR: must supply 'basespace_run_id' or 'basespace_project_id'" >&2
+      exit 1
+    fi
+    if [[ -n "~{basespace_run_id}" && -n "~{basespace_project_id}" ]]; then
+      echo "ERROR: supply only one of 'basespace_run_id' or 'basespace_project_id'" >&2
+      exit 1
+    fi
     else
       sample_identifier="~{basespace_sample_name}"
       dataset_name="~{basespace_sample_name}"
