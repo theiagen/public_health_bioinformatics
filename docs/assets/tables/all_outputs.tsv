@@ -112,8 +112,8 @@ assembly_fetch_referenceseeker_version	String	ReferenceSeeker version used	Assem
 assembly_fetch_version	String	The version of the repository the Assembly Fetch workflow is in	Assembly_Fetch
 assembly_length	Int	Length of assembly (total contig length) as determined by QUAST	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaMeta_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 assembly_length_unambiguous	Int	Number of unambiguous basecalls within the consensus assembly	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-assembly_mean_coverage	String	Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the samtools coverage command	TheiaCoV_Illumina_PE, TheiaCoV_ONT
-assembly_mean_coverage	Float	Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the samtools coverage command	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE
+assembly_mean_coverage	String	Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the `samtools coverage` command	TheiaCoV_Illumina_PE, TheiaCoV_ONT
+assembly_mean_coverage	Float	Mean sequencing depth throughout the consensus assembly. Generated after performing primer trimming and calculated using the `samtools coverage` command	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE
 assembly_method	String	Method employed to generate consensus assembly	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 assembly_to_ref_bai	File	BAM index file for reads aligned to reference	TheiaViral_ONT
 assembly_to_ref_bam	File	BAM file of reads aligned to reference	TheiaViral_ONT
@@ -242,14 +242,14 @@ concatenate_illumina_lanes_analysis_date	String	Date of analysis	Concatenate_Ill
 concatenate_illumina_lanes_version	String	Version of PHB used for the analysis	Concatenate_Illumina_Lanes
 concatenated_files	File	The file containing all of the items from the column you selected.	Concatenate_Column_Content
 concatenated_variants	File	The concatenated variants without presence/absence	Find_Shared_Variants
-consensus_flagstat	File	Output from the samtools flagstat command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+consensus_flagstat	File	Output from the `samtools flagstat` command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 consensus_n_variant_min_depth	Int	Minimum read depth to call variants for iVar consensus and iVar variants. Also represents the minimum consensus support threshold used by IRMA with Illumina Influenza data.	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaViral_Illumina_PE
 consensus_qc_assembly_length_unambiguous	Int	Length of consensus assembly excluding ambiguous bases	TheiaViral_Illumina_PE, TheiaViral_ONT
 consensus_qc_number_Degenerate	Int	Number of degenerate bases in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 consensus_qc_number_N	Int	Number of N bases in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 consensus_qc_number_Total	Int	Total number of bases in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
 consensus_qc_percent_reference_coverage	Float	Percent of reference genome covered in consensus assembly	TheiaViral_Illumina_PE, TheiaViral_ONT
-consensus_stats	File	Output from the SAMtools stats command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+consensus_stats	File	Output from the `samtools stats` command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 contaminant_bai	File	Index of reads aligned to the contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 contaminant_bam	File	Reads aligned to the contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 contaminant_cov_hist	File	Coverage histogram of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
@@ -259,8 +259,8 @@ contaminant_depth_by_sequence	Map[String,Float]	A JSON map relating identified c
 contaminant_expected_coverage_by_sequence	Map[String,Float]	A JSON map relating expected contaminant sequences to the read mapping coverage 	TheiaProk_Illumina_PE
 contaminant_expected_depth_by_sequence	Map[String,Float]	A JSON map relating expected contaminant sequences to the read mapping depth	TheiaProk_Illumina_PE
 contaminant_expected_reads_by_sequence	Map[String,Float]	A JSON map relating expected contaminant sequences to the number of reads mapped	TheiaProk_Illumina_PE
-contaminant_mapping_flagstat	File	Samtools flagstat of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
-contaminant_mapping_stats	File	Samtools statistics of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+contaminant_mapping_flagstat	File	samtools flagstat of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
+contaminant_mapping_stats	File	samtools statistics of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 contaminant_mean_depth	Float	Mean depth of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 contaminant_percent_mapped_reads	Float	Percent of reads mapped to contaminant FASTA	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE
 contaminant_reads_by_sequence	Map[String,Float]	A JSON map relating contaminant sequences to the number of reads mapped	TheiaProk_Illumina_PE
@@ -1136,7 +1136,7 @@ snippy_variants_coverage_tsv	File	Coverage statistics TSV file output by the `sa
 snippy_variants_docker	String	Docker image for snippy variants task	Snippy_Variants
 snippy_variants_gene_query_results	File	CSV file detailing results for mutations associated with the query strings specified by the user	Snippy_Variants
 snippy_variants_hits	String	A summary of mutations associated with the query strings specified by the user	Snippy_Variants
-snippy_variants_num_reads_aligned	Int	Number of reads that aligned to the reference genome as calculated by samtools view -c command	Snippy_Variants
+snippy_variants_num_reads_aligned	Int	Number of reads that aligned to the reference genome as calculated by `samtools view -c` command	Snippy_Variants
 snippy_variants_num_variants	Int	Number of variants detected between sample and reference genome	Snippy_Variants
 snippy_variants_outdir_tarball	Array[File]	A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree	Snippy_Streamline, Snippy_Streamline_FASTA
 snippy_variants_outdir_tarball	File	A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree	Snippy_Variants
@@ -1264,7 +1264,7 @@ theiaeuk_snippy_variants_bam	String	BAM file of reads aligned to the reference	T
 theiaeuk_snippy_variants_coverage_tsv	String	Coverage statistics TSV file output by the `samtools coverage` command, providing genome-wide metrics such as the proportion of bases covered (depth â‰¥ 1), mean depth, and other related statistics.	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 theiaeuk_snippy_variants_gene_query_results	String	CSV file detailing results for mutations associated with the query strings specified by the user	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 theiaeuk_snippy_variants_hits	String	A summary of mutations associated with the query strings specified by the user	TheiaEuk_Illumina_PE, TheiaEuk_ONT
-theiaeuk_snippy_variants_num_reads_aligned	String	Number of reads that aligned to the reference genome as calculated by samtools view -c command	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+theiaeuk_snippy_variants_num_reads_aligned	String	Number of reads that aligned to the reference genome as calculated by `samtools view -c` command	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 theiaeuk_snippy_variants_num_variants	String	Number of variants detected between sample and reference genome	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 theiaeuk_snippy_variants_outdir_tarball	String	A compressed file containing the whole directory of snippy output files. This is used when running Snippy_Tree	TheiaEuk_Illumina_PE, TheiaEuk_ONT
 theiaeuk_snippy_variants_percent_ref_coverage	String	Proportion of the reference genome covered by reads with a depth greater than or equal to the `min_coverage` threshold (default is 10).	TheiaEuk_Illumina_PE, TheiaEuk_ONT

@@ -26,6 +26,6 @@ fragment: true
         | | Links |
         |---|---|
         | Task | [task_parse_mapping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
-        | Software Source Code | [SAMtools on GitHub](https://github.com/samtools/samtools) |
-        | Software Documentation | [SAMtools](https://www.htslib.org/doc/samtools.html) |
+        | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
+        | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |

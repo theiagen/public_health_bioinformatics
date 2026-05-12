@@ -11,7 +11,7 @@ fragment: true
     The default parameters were set to mimic the parameters used by [Shovill](https://github.com/tseemann/shovill): `--fix bases --minq 60 --minqual 3 --mindepth 0.25`. These can be modified by the user.
 <!-- endif -->
 <!-- if: theiameta -->
-    It is used to polish the assembly produced by metaSPAdes. The input to Pilon is the sorted BAM file produced by SAMtools, and the original draft assembly produced by metaSPAdes.
+    It is used to polish the assembly produced by metaSPAdes. The input to Pilon is the sorted BAM file produced by samtools, and the original draft assembly produced by metaSPAdes.
 <!-- endif -->
 
     !!! techdetails "Pilon Technical Details"

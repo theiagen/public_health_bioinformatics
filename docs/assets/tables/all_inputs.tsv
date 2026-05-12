@@ -570,7 +570,7 @@ consensus	max_depth	Int	For a given position, read at maximum INT number of read
 consensus	medaka_model	String	In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}{device}{caller variant}_{caller_version}. See also <https://github.com/nanoporetech/medaka?tab=readme-ov-file#models>.	r941_min_high_g360	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	general	
 consensus	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 consensus	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE	runtime	
-consensus	min_bq	Int	Minimum base quality required for a base to be considered during samtools mpileup before consensus generation	0	Optional	TheiaViral_Illumina_PE	general	
+consensus	min_bq	Int	Minimum base quality required for a base to be considered during `samtools mpileup` before consensus generation	0	Optional	TheiaViral_Illumina_PE	general	
 consensus	skip_N	Boolean	True/False that determines if "N" bases should be skipped in the consensus sequence	False	Optional	TheiaViral_Illumina_PE	general	
 consensus_qc	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	runtime	
 consensus_qc	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	runtime	
@@ -2835,4 +2835,4 @@ wg_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon (
 zip_files	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Zip_Column_Content	runtime	
 zip_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Zip_Column_Content	runtime	
 zip_files	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Zip_Column_Content	docker	
-zip_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Zip_Column_Content	runtime	
+zip_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Zip_Column_Content	runtime
