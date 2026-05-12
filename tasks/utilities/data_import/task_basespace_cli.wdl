@@ -33,43 +33,31 @@ task fetch_bs {
       echo "ERROR: supply only one of 'basespace_run_id' or 'basespace_project_id'" >&2
       exit 1
     fi
+
+    # determine whether we're looking for datasets within a BaseSpace "Run" or "Project", and set appropriate variables for later use
+    # runs use {{.ExperimentName}} (the user-given label); {{.Name}} is the instrument run id
+    if [[ -n "~{basespace_run_id}" ]]; then
+      bs_app="run"
+      bs_app_id="~{basespace_run_id}"
+      bs_dataset_flag="--input-run"
+      bs_template_value="{{.ExperimentName}},{{.Id}}"
     else
-      sample_identifier="~{basespace_sample_name}"
-      dataset_name="~{basespace_sample_name}"
+      bs_app="project"
+      bs_app_id="~{basespace_project_id}"
+      bs_dataset_flag="--project-id"
+      bs_template_value="{{.Name}},{{.Id}}"
     fi
-    
-    # print all relevant input variables to stdout
-    echo -e "sample_identifier: ${sample_identifier}\ndataset_name: ${dataset_name}\nbasespace_collection_id: ~{basespace_collection_id}"
-      
-    #Set BaseSpace comand prefix
-    bs_command="bs --api-server=~{api_server} --access-token=~{access_token}"
-    echo "bs_command: ${bs_command}"
+    echo "Using BaseSpace ${bs_app} ID: '${bs_app_id}'"
 
-    #Grab BaseSpace Run_ID from given BaseSpace Run Name
-    run_id=$(${bs_command} list run --retry | grep "~{basespace_collection_id}" | awk -F "|" '{ print $3 }' | awk '{$1=$1;print}' )
-    echo "run_id: ${run_id}" 
 
-    # NOTE: substring matching will occur when the data table does not append a suffix; 
-    # e.g. where "sample1" will retrieve "sample1_1", however, "sample1_L1" will NOT retrieve "sample1_1_L1"
-    # This cannot be resolved without explicitly knowing the suffix prior to parsing. Noted in documentation
-
-    if [[ ! -z "${run_id}" ]]; then 
-      #Grab BaseSpace Dataset ID from dataset lists within given run 
-      dataset_id_array=($(${bs_command} list dataset --retry --input-run=${run_id} | grep -E "${dataset_name}(_| )[^_|^ ]* *\|[^\|]*\|[^\|]*\|[^\|]*\|" | awk -F "|" '{ print $3 }' )) 
-      echo "dataset_id: ${dataset_id_array[*]}"
-    else 
-      #Try Grabbing BaseSpace Dataset ID from project name
-      echo "Could not locate a run_id via Basespace runs, attempting to search Basespace projects now..."
-      project_id=$(${bs_command} list project --retry | grep "~{basespace_collection_id}" | awk -F "|" '{ print $3 }' | awk '{$1=$1;print}' )
-      echo "project_id: ${project_id}" 
-      if [[ ! -z "${project_id}" ]]; then 
-        echo "project_id identified via Basespace, now searching for dataset_id within project_id ${project_id}..."
-        dataset_id_array=($(${bs_command} list dataset --retry --project-id=${project_id} | grep -E "${dataset_name}(_| )[^_|^ ]* *\|[^\|]*\|[^\|]*\|[^\|]*\|" | awk -F "|" '{ print $3 }' )) 
-        echo "dataset_id: ${dataset_id_array[*]}"
-      else       
-        echo "No run or project id found associated with input basespace_collection_id: ~{basespace_collection_id}" >&2
-        exit 1
-      fi      
+    # attempt to resolve the run_id/project_id from the user input, which could be either the run_id, run name, project_id, or project name
+    if result=$(${bs_command} get "${bs_app}" --name="${bs_app_id}" --template="${bs_template_value}" 2>/dev/null); then
+      : # found by name
+    elif result=$(${bs_command} get "${bs_app}" --id="${bs_app_id}" --template="${bs_template_value}" 2>/dev/null); then
+      : # found by ID
+    else
+      echo "ERROR: Could not find '${bs_app_id}' in BaseSpace ${bs_app}" >&2
+      exit 1
     fi
 
     #Download reads by dataset ID
@@ -80,6 +68,10 @@ task fetch_bs {
       ${bs_command} download dataset --retry -i ${dataset_id} -o . --retry && cd ..
       echo -e "downloaded data: \n $(ls ./dataset_*/*)"
     done
+    # extract resolved name and ID from the result
+    resolved_name=$(echo "${result}" | awk -F',' '{print $1}')
+    resolved_id=$(echo "${result}" | awk -F',' '{print $2}')
+    echo "Resolved BaseSpace ${bs_app} [name, id]: ['${resolved_name}', '${resolved_id}']"
 
     # rename FASTQ files to add back in underscores that Illumina/Basespace changed into hyphens
     echo "Concatenating and renaming FASTQ files to add back underscores in basespace_sample_name"
