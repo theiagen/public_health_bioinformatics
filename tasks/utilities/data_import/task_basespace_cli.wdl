@@ -60,43 +60,48 @@ task fetch_bs {
       exit 1
     fi
 
-    #Download reads by dataset ID
-    for index in ${!dataset_id_array[@]}; do
-      dataset_id=${dataset_id_array[$index]}
-      mkdir ./dataset_${dataset_id} && cd ./dataset_${dataset_id}
-      echo "dataset download: ${bs_command} download dataset -i ${dataset_id} -o . --retry"
-      ${bs_command} download dataset --retry -i ${dataset_id} -o . --retry && cd ..
-      echo -e "downloaded data: \n $(ls ./dataset_*/*)"
-    done
     # extract resolved name and ID from the result
     resolved_name=$(echo "${result}" | awk -F',' '{print $1}')
     resolved_id=$(echo "${result}" | awk -F',' '{print $2}')
     echo "Resolved BaseSpace ${bs_app} [name, id]: ['${resolved_name}', '${resolved_id}']"
 
-    # rename FASTQ files to add back in underscores that Illumina/Basespace changed into hyphens
-    echo "Concatenating and renaming FASTQ files to add back underscores in basespace_sample_name"
-    # setting a new bash variable to use for renaming during concatenation of FASTQs
-    for elm in ./dataset_${dataset_id}/*.fastq.gz; do
-      echo "Checking Basespace file: $elm"
-      filename=$(basename "$elm")
+    # list datasets within the resolved run/project and substring-match against the Name column to find the dataset ID for the sample of interest
+    dataset_list=$(${bs_command} list dataset "${bs_dataset_flag}=${resolved_id}" --like-type="common.fastq" --template='{{.Name}},{{.Id}}')
+    echo "Looking for sample name: '~{basespace_sample_name}'"
+    echo -e "Data sets in this BaseSpace ${bs_app} include:\n...\n${dataset_list}\n..." | tr ',' '\t'
 
-      if [[ "$filename" =~ [-] && "$sample_identifier" =~ [_] ]]; then
-        echo "Basespace sample name for $filename contains dashes, input sample identifier $sample_identifier contains underscores, renaming identifier..."
-        SAMPLENAME_RENAMED=$(echo "$sample_identifier" | sed 's|_|-|g' | sed 's|\.|-|g')
-      fi
-      if [[ "$filename" =~ [_] && "$sample_identifier" =~ [-] ]]; then
-        echo "Basespace sample name for $filename contains underscores, input sample identifier $sample_identifier contains dashes, renaming identifier..."
-        SAMPLENAME_RENAMED=$(echo "$sample_identifier" | sed 's|-|_|g')
-      fi
-      if [[ ("$filename" =~ [_] && "$sample_identifier" =~ [_]) || ("$filename" =~ [-] && "$sample_identifier" =~ [-]) ]]; then
-        echo "Both Basespace sample name and input sample identifier for $filename contain matching separators..."
-        SAMPLENAME_RENAMED="$sample_identifier"
-      fi
-      if [[ ! ("$filename" =~ [_]) || ! ("$filename" =~ [-]) ]]; then
-        echo "Filename doesn't use underscore or hyphen separators, using input sample identifier as-is"
-        SAMPLENAME_RENAMED="$sample_identifier"
-      fi
-    done
+    # first attempt an exact match against the Name column
+    # if that fails, attempt a substring-match against the Name column. Will error if no matches or multiple matches are found in either case
+    # NOTE: this approach is not perfect and could unintentionally match with other samples if the sample name provided is not specific enough
+    # ex) `sample1` matches both `sample1_L001` and `sample10_L001`
+    match=$(echo "${dataset_list}" | awk -F',' '$1 == "~{basespace_sample_name}"')
+    if [[ -z "${match}" ]]; then
+      match=$(echo "${dataset_list}" | awk -F',' '$1 ~ "~{basespace_sample_name}"')
+    fi
+
+    # exclude blank lines from the count
+    match_count=$(echo "${match}" | awk 'NF' | wc -l)
+
+    if (( match_count == 0 )); then
+      echo "ERROR: no dataset matched '~{basespace_sample_name}'" >&2
+      exit 1
+    elif (( match_count > 1 )); then
+      echo "ERROR: multiple datasets matched '~{basespace_sample_name}' in BaseSpace ${bs_app}:" >&2
+      echo "${match}" | tr ',' '\t' >&2
+      exit 1
+    else
+      # extract the exact dataset name/ID from the the matched line
+      dataset_name=$(echo "${match}" | awk -F',' '{print $1}')
+      dataset_id=$(echo "${match}" | awk -F',' '{print $2}')
+      echo "Found '~{basespace_sample_name}' in match: ${dataset_name} (${dataset_id})"
+    fi
+
+    # download reads by dataset ID
+    mkdir -p ./dataset_${dataset_id}
+    ${bs_command} download dataset \
+      --id="${dataset_id}" \
+      --output="./dataset_${dataset_id}" \
+      --extension=".fastq.gz"
 
     echo "Renamed identifier: $SAMPLENAME_RENAMED"
 
