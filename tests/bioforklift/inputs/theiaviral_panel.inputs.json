@@ -1,0 +1,9 @@
+{
+  "theiaviral_panel.output_taxon_table": "gs://fc-30647862-e6f3-4420-866e-b74acec70e55/viral_panel_taxon_table_20251125.tsv",
+  "theiaviral_panel.read1": "this.read1",
+  "theiaviral_panel.read2": "this.read2",
+  "theiaviral_panel.samplename": "this.theiaviral_panel_id",
+  "theiaviral_panel.source_table_name": "theiaviral_panel",
+  "theiaviral_panel.terra_project": "cdph-terrabio-taborda-manual",
+  "theiaviral_panel.terra_workspace": "CDPH_Bioinformatics_Development"
+}

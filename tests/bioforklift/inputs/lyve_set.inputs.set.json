@@ -1,0 +1,58 @@
+{
+  "cjejuni_0810PADBR-1": 
+    {
+      "inputs": {
+  "lyveset_workflow.dataset_name": "this.phylogenetics_bacterial_set_id",
+  "lyveset_workflow.read1": "this.phylogenetics_bacterials.read1",
+  "lyveset_workflow.read2": "this.phylogenetics_bacterials.read2",
+  "lyveset_workflow.reference_genome": "this.reference_genome_input",
+  "lyveset_workflow.samplename": "this.phylogenetics_bacterials.phylogenetics_bacterial_id"
+},
+      "samples": ["SRR1993270", "SRR1993271", "SRR1993272", "SRR1999649", "SRR1999661", "SRR2984947", "SRR2985018", "SRR2985019", "SRR3214715", "SRR3215024", "SRR3215107", "SRR3215108", "SRR3215123", "SRR3215124", "SRR3215135", "SRR3215209", "SRR3215210", "SRR3215211", "SRR3216118", "SRR3216133", "SRR3216186", "SRR3216366"],
+      "table": "phylogenetics_bacterial"
+    },
+  "ecoli_1405WAEXK-1":
+    {
+      "inputs": {"lyveset_workflow.dataset_name": "this.phylogenetics_bacterial_set_id",
+  "lyveset_workflow.read1": "this.phylogenetics_bacterials.read1",
+  "lyveset_workflow.read2": "this.phylogenetics_bacterials.read2",
+  "lyveset_workflow.reference_genome": "this.reference_genome_input",
+  "lyveset_workflow.samplename": "this.phylogenetics_bacterials.phylogenetics_bacterial_id"
+      },
+      "samples": [ "SRR1609861", "SRR1609862", "SRR1609871", "SRR1610028", "SRR1610029", "SRR1610031", "SRR1610032", "SRR1610033", "SRR1610034" ],
+      "table": "phylogenetics_bacterial"
+    },
+  "lmonocytogenes_1408MLGX6-3WGS":
+    {
+      "inputs": {"lyveset_workflow.dataset_name": "this.phylogenetics_bacterial_set_id",
+  "lyveset_workflow.read1": "this.phylogenetics_bacterials.read1",
+  "lyveset_workflow.read2": "this.phylogenetics_bacterials.read2",
+  "lyveset_workflow.reference_genome": "this.reference_genome_input",
+  "lyveset_workflow.samplename": "this.phylogenetics_bacterials.phylogenetics_bacterial_id"
+      },
+      "samples": [ "SRR1206159", "SRR1393979", "SRR1534987", "SRR1553739", "SRR1553756", "SRR1553773", "SRR1553774", "SRR1553788", "SRR1553791", "SRR1553792", "SRR1553804", "SRR1553816", "SRR1553821", "SRR1553826", "SRR1553827", "SRR1553851", "SRR1553856", "SRR1553867", "SRR1553882", "SRR1553907", "SRR1556288", "SRR1556289", "SRR1556290", "SRR1556291", "SRR1556293", "SRR1556294", "SRR1556295", "SRR1556296", "SRR1556297", "SRR1562157", "SRR1597487" ],
+      "table": "phylogenetics_bacterial"
+    },
+  "senterica_simulated":
+    {
+      "inputs": {"lyveset_workflow.dataset_name": "this.phylogenetics_bacterial_set_id",
+  "lyveset_workflow.read1": "this.phylogenetics_bacterials.read1",
+  "lyveset_workflow.read2": "this.phylogenetics_bacterials.read2",
+  "lyveset_workflow.reference_genome": "this.reference_genome_input",
+  "lyveset_workflow.samplename": "this.phylogenetics_bacterials.phylogenetics_bacterial_id"
+      },
+      "samples": [ "SRR3020612", "SRR3020613", "SRR3020614", "SRR3020615", "SRR3020616", "SRR3020617", "SRR3020618", "SRR3020619", "SRR3020620", "SRR3020621", "SRR3020623", "SRR3020624", "SRR3020625", "SRR3020626", "SRR3020627", "SRR3020628", "SRR3020725", "SRR3020726", "SRR3020727", "SRR3020728", "SRR3020729", "SRR3020730", "SRR3479289" ],
+      "table": "phylogenetics_bacterial"
+    },
+  "senterica_tuna_scrape":
+    {
+      "inputs": {"lyveset_workflow.dataset_name": "this.phylogenetics_bacterial_set_id",
+  "lyveset_workflow.read1": "this.phylogenetics_bacterials.read1",
+  "lyveset_workflow.read2": "this.phylogenetics_bacterials.read2",
+  "lyveset_workflow.reference_genome": "this.reference_genome_input",
+  "lyveset_workflow.samplename": "this.phylogenetics_bacterials.phylogenetics_bacterial_id"
+      },
+      "samples": [ "SRR1258439", "SRR1258440", "SRR1258442", "SRR1258443", "SRR498276", "SRR498369", "SRR498373", "SRR498397", "SRR498399", "SRR498402", "SRR498403", "SRR498404", "SRR498422", "SRR498423", "SRR498425", "SRR498431", "SRR498433", "SRR498434", "SRR498436", "SRR498442", "SRR498444", "SRR500493", "SRR500494" ],
+      "table": "phylogenetics_bacterial"
+    }
+}
