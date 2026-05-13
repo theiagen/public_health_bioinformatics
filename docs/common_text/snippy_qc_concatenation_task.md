@@ -3,7 +3,7 @@ title: Task Fragment `snippy_qc_concatenation`
 fragment: true
 ---
 ??? task "`Snippy_QC_Concatenation`: Sample QC Concatenation (optional)"
-    ##### `Snippy_QC_Concatenation`: Sample QC Concatenation (optional)
+    ##### Snippy QC Concatenation (optional)
 
     Optionally, the user can provide the `snippy_variants_qc_metrics` file produced by the Snippy_Variants workflow as input to the workflow to concatenate the reports for each sample in the tree. These per-sample QC metrics include the following columns:
 

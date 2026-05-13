@@ -5,26 +5,20 @@ fragment: true
 <!-- if: snippy_streamline|snippy_variants -->
 ??? task "`Snippy_Variants`: Variant Calling"
     ##### Snippy_Variants
-<!-- endif -->
 <!-- if: snippy_streamline -->
     Snippy_Variants uses Snippy to align the assemblies for each sample against the reference genome to call SNPs, MNPs and INDELs according to optional input parameters. 
-
 <!-- endif -->
 <!-- if: snippy_variants -->
     Snippy_Variants uses Snippy to align reads to the reference and call SNPs, MNPs and INDELs according to optional input parameters.
-
 <!-- endif -->
-<!-- if: snippy_streamline|snippy_variants -->
+
     Optionally, if the user provides a value for `query_gene`, the variant file will be searched for any mutations in the specified regions or annotations. The query string MUST match the gene name or annotation as specified in the GenBank file and provided in the output variant file in the `snippy_results` column.
 
     ??? toggle "QC Metrics from Snippy_Variants"
-<!-- endif -->
 <!-- if: snippy_streamline -->
         !!! warning 
             The following QC metrics may not be applicable to your dataset as they are geared towards read data, not assemblies. Use these metrics with caution.
-
 <!-- endif -->
-<!-- if: snippy_streamline|snippy_variants -->
         This task also extracts QC metrics from the Snippy output for each sample and saves them in per-sample TSV files (`snippy_variants_qc_metrics`). These per-sample QC metrics include the following columns:
 
         - **samplename**: The name of the sample.
@@ -45,19 +39,18 @@ fragment: true
  
         Note that the last set of columns (`#rname` to `meanmapq`) may repeat for each chromosome or contig in the reference genome.
 
-<!-- endif -->
 <!-- if: snippy_variants -->
     !!! tip "QC Metrics for Phylogenetic Analysis"
         These QC metrics provide valuable insights into the quality and coverage of your sequencing data relative to the reference genome. Monitoring these metrics can help identify samples with low coverage, poor alignment, or potential issues that may affect downstream analyses, and we recommend examining them before proceeding with phylogenetic analysis if performing Snippy_Variants and Snippy_Tree separately.
 
         These per-sample QC metrics can also be combined into a single file (`snippy_combined_qc_metrics`) in downstream workflows, such as `snippy_tree`, providing an overview of QC metrics across all samples.
-
 <!-- endif -->
+<!-- endif -->
+
 <!-- if: cauris|calbicans|afumigatus|cneoformans -->
-??? task "Snippy_Variants: Antifungal Resistance Detection"
+??? task "`Snippy_Variants`: Antifungal Resistance Detection"
     To detect mutations that may confer antifungal resistance, Snippy is used to find all variants relative to the clade-specific reference, then these variants are queried for product names associated with resistance. It's important to note that unlike AMRSearch, this task reports all variants found in the searched targets.
-<!-- endif -->
-
+    
 <!-- if: cauris -->
     - FKS1
     - ERG11 (lanosterol 14-alpha demethylase)
@@ -78,9 +71,7 @@ fragment: true
     - ERG11 (CNA00300)
 <!-- endif -->
 
-<!-- if: cauris|calbicans|afumigatus|cneoformans -->
     Snippy results are queried to see if any mutations were identified in those genes. By default, the following loci are automatically checked (which can be overwritten by the user). You will find the mutations next to the locus tag in the `theiaeuk_snippy_variants_hits` column corresponding gene name (see below):
-<!-- endif -->
 
 <!-- if: cauris -->
     | **TheiaEuk Search Term** | **Corresponding Gene Name** |
@@ -131,7 +122,6 @@ fragment: true
     | CNA00300 | ERG11 |
 <!-- endif -->
 
-<!-- if: cauris|calbicans|afumigatus|cneoformans -->
     ??? toggle "Example Output Interpretation"
         For example, one sample may have the following output for the `theiaeuk_snippy_variants_hits` column:
 

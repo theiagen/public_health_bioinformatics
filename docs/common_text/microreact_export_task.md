@@ -10,4 +10,4 @@ fragment: true
     !!! techdetails "Microreact Export Technical Details"
         |  | Links |
         | --- | --- |
-        | WDL Task | [task_microreact_export.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_export/task_microreact_export.wdl) |
+        | Task | [task_microreact_export.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_export/task_microreact_export.wdl) |

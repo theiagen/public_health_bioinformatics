@@ -363,7 +363,7 @@ augur_tree	exclude_sites	File	File of one-based sites to exclude for raw tree bu
 augur_tree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Augur	runtime	
 augur_tree	method	String	The method used to build the tree. Options: "fasttree", "raxml", "iqtree" (default)	iqtree	Optional	Augur	general	
 augur_tree	override_default_args	Boolean	If true, override default tree builder arguments instead of augmenting them	False	Optional	Augur	general	
-augur_tree	substitution_model	String	The substitution model to use; only available for iqtree. Specify "auto" to run ModelTest; model options can be found here	GTR	Optional	Augur	general	
+augur_tree	substitution_model	String	The substitution model to use; only available for IQ-TREE 2. Specify "auto" to run ModelTest; model options can be found here	GTR	Optional	Augur	general	
 augur_tree	tree_builder_args	String	Additional tree builder arguments either augmenting or overriding the default arguments. FastTree defaults: "-nt -nosupport". RAxML defaults: "-f d -m GTRCAT -c 25 -p 235813". IQ-TREE defaults: "-ninit 2 -n 2 -me 0.05 -nt AUTO -redo"		Optional	Augur	general	
 bakta	bakta_opts	String	Parameters to pass to bakta from <https://github.com/oschwengers/bakta#usage>		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 bakta	compliant	Boolean	If true, forces Genbank/ENA/DDJB compliant headers in Bakta output files	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
@@ -564,11 +564,11 @@ consensus	char_unknown	String	Character used to represent unknown bases in the c
 consensus	count_orphans	Boolean	True/False that determines if anomalous read pairs are NOT skipped in variant calling. Anomalous read pairs are those marked in the FLAG field as paired in sequencing but without the properly-paired flag set.	True	Optional	TheiaViral_Illumina_PE	general	
 consensus	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 consensus	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE	runtime	
-consensus	disable_baq	Boolean	True/False that determines if base alignment quality (BAQ) computation should be disabled during samtools mpileup before consensus generation	True	Optional	TheiaViral_Illumina_PE	general	
+consensus	disable_baq	Boolean	True/False that determines if base alignment quality (BAQ) computation should be disabled during `samtools mpileup` before consensus generation	True	Optional	TheiaViral_Illumina_PE	general	
 consensus	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaViral_Illumina_PE	runtime	
 consensus	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me	Optional	TheiaCoV_ONT	docker	
 consensus	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan	Optional	TheiaViral_Illumina_PE	docker	
-consensus	max_depth	Int	For a given position, read at maximum INT number of reads per input file during samtools mpileup before consensus generation	600000	Optional	TheiaViral_Illumina_PE	general	
+consensus	max_depth	Int	For a given position, read at maximum INT number of reads per input file during `samtools mpileup` before consensus generation	600000	Optional	TheiaViral_Illumina_PE	general	
 consensus	medaka_model	String	In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}{device}{caller variant}_{caller_version}. See also <https://github.com/nanoporetech/medaka?tab=readme-ov-file#models>.	r941_min_high_g360	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	general	
 consensus	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 consensus	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE	runtime	
@@ -2300,8 +2300,8 @@ snippy_tree_wf	iqtree2_cpu	Int	Number of CPUs to allocate to the task	4	Optional
 snippy_tree_wf	iqtree2_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.1.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	iqtree2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
-snippy_tree_wf	iqtree2_model	String	Nucelotide substitution model to use when generating the final tree with IQTree2. By default, IQtree runs its ModelFinder algorithm to identify the model it thinks best fits your dataset		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
-snippy_tree_wf	iqtree2_opts	String	Additional options to pass to IQTree2		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
+snippy_tree_wf	iqtree2_model	String	Nucelotide substitution model to use when generating the final tree with IQ-TREE 2. By default, IQ-TREE 2 runs its ModelFinder algorithm to identify the model it thinks best fits your dataset		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
+snippy_tree_wf	iqtree2_opts	String	Additional options to pass to IQ-TREE 2		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	iqtree2_ultrafast_bootstraps	Int	Number of replicates for <https://iqtree.github.io/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation> (Minimum recommended= 1000)	1000	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	midpoint_root_tree	Boolean	A True/False option that determines whether the tree used in the SNP matrix re-ordering task should be re-rooted or not. Options: true or false	True	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	phandango_coloring	Boolean	Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true.	False	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	

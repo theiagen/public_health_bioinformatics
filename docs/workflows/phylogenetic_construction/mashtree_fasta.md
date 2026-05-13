@@ -22,7 +22,7 @@ This workflow also features an optional module, `summarize_data`, that creates a
 
 ### Workflow Actions
 
-??? task "MashTree_FASTA Details"
+??? task "`MashTree_FASTA` Details"
     `MashTree_FASTA` is run on a set of assembly fastas and creates a phylogenetic tree and matrix.
 
     !!! techdetails "MashTree_FASTA Technical Details"

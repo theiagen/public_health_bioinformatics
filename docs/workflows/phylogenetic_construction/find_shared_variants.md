@@ -26,7 +26,7 @@ All variant data included in the sample set should be generated from aligning se
 ///
 
 ### Tasks
-
+{{ include_md("common_text/concatenate_variants_task.md", condition="find_shared_variants")}}
 {{ include_md("common_text/shared_variants_task.md", condition="find_shared_variants") }}
 
 ### Outputs

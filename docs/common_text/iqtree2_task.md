@@ -1,9 +1,9 @@
 ---
-title: Task Fragment `iqtree2`
+title: Task Fragment `IQ-TREE 2`
 fragment: true
 ---
 ??? task "`IQ-TREE 2`: Phylogeny Construction"
-    ##### IQTree2
+    ##### IQ-TREE 2
 
     IQ-TREE 2 is used to build the final phylogeny. It uses the alignment generated in the previous steps of the workflow. The contents of this alignment will depend on whether any sites were masked with recombination.
 

@@ -19,7 +19,7 @@ fragment: true
     !!! techdetails "Dnaapler Technical Details"
         |  | Links |
         | --- | --- |
-        | WDL Task | [task_dnaapler.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_dnaapler.wdl) |
+        | Task | [task_dnaapler.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_dnaapler.wdl) |
         | Software Source Code | [Dnaapler on GitHub](https://github.com/gbouras13/dnaapler) |
         | Software Documentation | [Dnaapler Documentation](https://github.com/gbouras13/dnaapler?tab=readme-ov-file#dnaapler) |
         | Original Publication(s) | [Dnaapler: a tool to reorient circular microbial genomes](https://joss.theoj.org/papers/10.21105/joss.05968) |

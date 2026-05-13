@@ -19,6 +19,6 @@ fragment: true
     !!! techdetails "Medaka Technical Details"
         |  | Links |
         | --- | --- |
-        | WDL Task | [task_medaka.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_medaka.wdl) |
+        | Task | [task_medaka.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_medaka.wdl) |
         | Software Source Code | [Medaka on GitHub](https://github.com/nanoporetech/medaka) |
         | Software Documentation | [Medaka Documentation](https://github.com/nanoporetech/medaka#medaka) |

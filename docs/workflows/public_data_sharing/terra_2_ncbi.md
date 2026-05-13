@@ -192,8 +192,7 @@ This workflow runs on set-level data tables.
 ///
 
 ??? task "Workflow Tasks"
-
-    ##### Workflow Tasks {% raw %} {#workflow-tasks} {% endraw %}
+    ##### Workflow Tasks
 
     The workflow will perform the following tasks, each highlighted as `code`
 

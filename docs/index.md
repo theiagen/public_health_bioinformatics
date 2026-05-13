@@ -1,4 +1,4 @@
----
+serv---
 title: Home
 ---
 
@@ -59,15 +59,15 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
 ### PHB development is a cycle
 
-We continuously work to improve our codebase and usability of our workflows by the public health community, so changes from version to version are expected. This documentation page reflects the state of the repository at the version stated in the header.
+We continuously work to improve our workflows, so changes are expected between versions. Select the version you are using in the header to see the relevant documentation.
 
 ## Contributing to the PHB Repository
 
 We warmly welcome contributions to this repository! Our code style guide may be found [here](contributing/code_contribution.md) for convenience of formatting and our documentation style guide may be found [here](contributing/doc_contribution.md).
 
-If you would like to submit suggested code changes to our workflows, you may add or modify the WDL files and submit pull requests to the [PHB GitHub](https://github.com/theiagen/public_health_bioinformatics) repository.
+If you would like to make suggested code changes to our workflows, submit pull requests to the [PHB GitHub](https://github.com/theiagen/public_health_bioinformatics) repository.
 
-You can expect a careful review of every PR and feedback as needed before merging, just like we do for PRs submitted by the Theiagen team. Our PR template can help prepare you for the review process. As always, reach out with any questions! We love recieving feedback and contributions from the community. When your PR is merged, we'll add your name to the contributors list below!
+You can expect a careful review of every PR and recieve feedback as needed before merging, just like we do for PRs submitted by the Theiagen team. Our PR template can help prepare you for the review process. As always, reach out with any questions! We love recieving feedback and contributions from the community. When your PR is merged, we'll add your name to the contributors list below!
 
 ## Authorship & Responsibility
 

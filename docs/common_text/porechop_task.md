@@ -17,6 +17,6 @@ fragment: true
     !!! techdetails "Porechop Technical Details"
         |  | Links |
         | --- | --- |
-        | WDL Task | [task_porechop.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_porechop.wdl) |
+        | Task | [task_porechop.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_porechop.wdl) |
         | Software Source Code | [Porechop on GitHub](https://github.com/rrwick/Porechop) |
         | Software Documentation | [https://github.com/rrwick/Porechop#porechop](https://github.com/rrwick/Porechop#porechop) |

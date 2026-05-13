@@ -2,7 +2,7 @@
 title: Task Fragment `gubbins`
 fragment: true
 ---
-??? task "Gubbins (optional): Recombination Masking"
+??? task "`Gubbins`: Recombination Masking (optional)"
     ##### Gubbins (optional)
 
     !!! tip "Turn on Gubbins with `use_gubbins`"
@@ -34,4 +34,3 @@ fragment: true
         | Software Source Code | [Gubbins on GitHub](https://github.com/nickjcroucher/gubbins) |
         | Software Documentation | [Gubbins v3.3 manual](https://github.com/nickjcroucher/gubbins/blob/v3.3/docs/gubbins_manual.md) |
         | Original Publication(s) | [Rapid phylogenetic analysis of large samples of recombinant bacterial whole genome sequences using Gubbins](https://academic.oup.com/nar/article/43/3/e15/2410982) |
-    

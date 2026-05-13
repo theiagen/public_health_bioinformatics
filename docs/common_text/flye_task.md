@@ -29,7 +29,7 @@ fragment: true
     !!! techdetails "Flye Technical Details"
         |  | Links |
         | --- | --- |
-        | WDL Task | [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl) |
+        | Task | [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl) |
         | Software Source Code | [Flye on GitHub](https://github.com/fenderglass/Flye) |
         | Software Documentation | [Flye Documentation](https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md) |
         | Original Publication(s) | [Assembly of long, error-prone reads using repeat graphs](https://www.nature.com/articles/s41587-019-0072-8) |

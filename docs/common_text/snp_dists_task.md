@@ -2,13 +2,10 @@
 title: Task Fragment `snp_dists`
 fragment: true
 ---
-<!-- if: augur -->
+<!-- if: augur|ksnp|snippy -->
 ??? task "`SNP-dists`: Pairwise SNP Distance Calculation"
 <!-- endif -->
-<!-- if: ksnp -->
-??? task "`SNP-dists`: Pairwise SNP Distance Calculation"
-<!-- endif -->
-<!-- if: snippy -->  
+<!-- if: snippy -->
     ##### SNP-dists
 <!-- endif -->
     SNP-dists computes pairwise SNP distances between genomes. It takes the same alignment of genomes used to generate your phylogenetic tree and produces a matrix of pairwise SNP distances between sequences. This means that if you generated pairwise core-genome phylogeny, the output will consist of pairwise core-genome SNP (cgSNP) distances. Otherwise, these will be whole-genome SNP distances. Regardless of whether core-genome or whole-genome SNPs, this SNP distance matrix will exclude all SNPs in masked regions (i.e. masked with a bed file or gubbins). 

@@ -82,7 +82,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 ??? task "`minimap2`: Assembly Alignment and Contig Filtering"
 {{ include_md("common_text/minimap2_task.md", condition="asm20_mode")}}
 
-??? task "Parsing the PAF file into a FASTA file"
+??? task "`parse_mapping`: Parsing the PAF file into a FASTA file"
 
     Following the `minimap2` alignment, the output PAF file is parsed into a FASTA file using `seqkit` and then coverage is calculated using `awk`.
 
@@ -154,7 +154,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
         | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
-??? task "Parsing the BAM file"
+??? task "`parse_mapping`: Parsing the BAM file"
     Several tasks follow that perform the following functions:
 
     1. Calculates the average depth of coverage of the assembly using `bedtools`.

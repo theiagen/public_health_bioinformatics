@@ -11,7 +11,6 @@ fragment: true
 {{ include_md("common_text/artic_guppyplex_task.md", indent=4) }}
 
 {{ include_md("common_text/metabuli_task.md", indent=4, condition="theiacov") }}
-  
 <!-- endif -->
   
 <!-- if: theiaprok -->

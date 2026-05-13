@@ -83,7 +83,7 @@ fragment: true
     !!! techdetails "Screen Technical Details"
         
 <!-- if: theiacov|theiaprok|theiaeuk|theiaeukont -->
-        There is a single WDL task for read screening. The screen task is run twice, once for raw reads and once for clean reads.
+        There is a single task for read screening. The screen task is run twice, once for raw reads and once for clean reads.
 <!-- endif -->
 
         |  | Links |

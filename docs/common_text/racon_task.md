@@ -10,7 +10,7 @@ fragment: true
     !!! techdetails "Racon Technical Details"
         |  | Links |
         | --- | --- |
-        | WDL Task | [task_racon.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_racon.wdl) |
+        | Task | [task_racon.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_racon.wdl) |
         | Software Source Code | [Racon on GitHub](https://github.com/lbcb-sci/racon) |
         | Software Documentation | [Racon Documentation](https://github.com/lbcb-sci/racon#racon) |
         | Original Publication(s) | [Fast and accurate de novo genome assembly from long uncorrected reads](https://genome.cshlp.org/content/27/5/737) |

@@ -13,4 +13,4 @@ fragment: true
         | Task | [task_kleborate.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/klebsiella/task_kleborate.wdl) |
         | Software Source Code | [Kleborate on GitHub](https://github.com/klebgenomics/Kleborate) |
         | Software Documentation | [Kleborate Documentation on ReadTheDocs](https://kleborate.readthedocs.io/en/latest/) |
-        | Original publication | [A genomic surveillance framework and genotyping tool for Klebsiella pneumoniae and its related species complex](https://www.nature.com/articles/s41467-021-24448-3)<br>[Identification of Klebsiella capsule synthesis loci from whole genome data](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000102)<br> |
+        | Original publication(s) | [A genomic surveillance framework and genotyping tool for Klebsiella pneumoniae and its related species complex](https://www.nature.com/articles/s41467-021-24448-3)<br>[Identification of Klebsiella capsule synthesis loci from whole genome data](https://www.microbiologyresearch.org/content/journal/mgen/10.1099/mgen.0.000102)<br> |

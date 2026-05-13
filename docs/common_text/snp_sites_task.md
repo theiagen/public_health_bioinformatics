@@ -2,7 +2,7 @@
 title: Task Fragment `snp_sites`
 fragment: true
 ---
-??? task "SNP-sites (optional): Core Genome Filtering"
+??? task "`SNP-sites`: Core Genome Filtering (optional)"
     ##### SNP-sites (optional)
     !!! tip "Turn on SNP-Sites with `core_genome`"
         SNP-sites runs when the `core_genome` option is set to true.
