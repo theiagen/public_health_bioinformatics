@@ -129,7 +129,7 @@ For the Augur subcommands, please view the [Nextstrain Augur documentation](http
 
 {{ include_md("common_text/augur_align_task.md") }}
 
-{{ include_md("common_text/snp_dists_task.md", condition="augur") }}
+{{ include_md("common_text/snp_dists_task.md") }}
 
 {{ include_md("common_text/augur_tree_task.md") }}
 

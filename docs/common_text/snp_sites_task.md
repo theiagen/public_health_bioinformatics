@@ -2,12 +2,36 @@
 title: Task Fragment `snp_sites`
 fragment: true
 ---
-??? task "`SNP-sites`: Core Genome Filtering (optional)"
+??? task "`SNP-sites`: Genome Filtering"
+<!-- if: snippy -->
     ##### SNP-sites (optional)
-    !!! tip "Turn on SNP-Sites with `core_genome`"
+    !!! tip "Turn on SNP-sites with `core_genome`"
         SNP-sites runs when the `core_genome` option is set to true.
 
-    SNP-sites is used to filter out invariant sites in the whole-genome alignment, thereby creating a core genome alignment for phylogenetic inference. The output is a fasta file containing the core genome of each sample only. If Gubbins has been used, this output fasta will not contain any sites that are predicted to have arisen via recombination.
+    If Gubbins has been used, the output file will not contain any sites that are predicted to have arisen via recombination.
+<!-- endif -->
+    
+    SNP-sites is used to identify variants in a multi-FASTA alignment, and returns _only_ the sites with SNPs in FASTA format. 
+
+    For example, if your input FASTA is as follows:
+
+    ```
+    >sample1
+    ACGT
+    >sample2
+    ACCT
+    ```
+
+    SNP-sites will identify only the SNPs, like so:
+
+    ```
+    >sample1
+    G
+    >sample2
+    C
+    ```
+
+    By default, wildcard bases are output. To turn off this behavior and restrict the output to only ACGT bases, set the `allow_wildcard_bases` parameter to `"false"`.
 
     !!! techdetails "SNP-sites technical details"
         |  | Links |

@@ -9,7 +9,7 @@ fragment: true
 
     The phylogeny is generated using the maximum-likelihood method and a specified nucleotide substitution model. By default, the Snippy_Tree workflow will run Model Finder to determine the most appropriate nucleotide substitution model for your data, but you may specify the nucleotide substitution model yourself using the `iqtree2_model` optional input (see [here](https://iqtree.github.io/doc/Substitution-Models) for available models).
 
-    IQ-Tree 2 will perform assessments of the tree using the Shimodaira–Hasegawa approximate likelihood-ratio test ([SH-aLRT test](https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false)), and ultrafast bootstrapping with [UFBoot2](https://academic.oup.com/mbe/article/35/2/518/4565479), a quicker but less biased alternative to standard bootstrapping. A clade should not typically be trusted if it has less than 80% support from the SH-aLRT test and less than 95% support with ultrafast bootstrapping.
+    IQ-TREE 2 will perform assessments of the tree using the Shimodaira–Hasegawa approximate likelihood-ratio test ([SH-aLRT test](https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false)), and ultrafast bootstrapping with [UFBoot2](https://academic.oup.com/mbe/article/35/2/518/4565479), a quicker but less biased alternative to standard bootstrapping. A clade should not typically be trusted if it has less than 80% support from the SH-aLRT test and less than 95% support with ultrafast bootstrapping.
 
     !!! tip "Nucleotide substitution model"
         When `core_genome`= `true`, the default nucleotide substitution model is set to the General Time Reverside model with Gamma distribution (GTR+G). 

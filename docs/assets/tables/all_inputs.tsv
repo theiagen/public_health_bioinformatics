@@ -1908,8 +1908,8 @@ pirate	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optio
 pirate	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/pirate:1.0.5--hdfd78af_0	Optional	Core_Gene_SNP	docker	
 pirate	features	String	Features to use for pangenome construction [default: CDS]	CDS	Optional	Core_Gene_SNP	general	
 pirate	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Core_Gene_SNP	runtime	
-pirate	nucl	Boolean	Boolean variable that instructs pirate to create a pangenome on CDS features using nucleotide identity, rather than amino acid identity, if true.	False	Optional	Core_Gene_SNP	general	
-pirate	panopt	String	Additional arguments for Pirate		Optional	Core_Gene_SNP	general	
+pirate	nucl	Boolean	Boolean variable that instructs PIRATE to create a pangenome on CDS features using nucleotide identity, rather than amino acid identity, if true.	False	Optional	Core_Gene_SNP	general	
+pirate	panopt	String	Additional arguments for PIRATE		Optional	Core_Gene_SNP	general	
 pirate	steps	String	Identity thresholds to use for pangenome construction	50,60,70,80,90,95,98	Optional	Core_Gene_SNP	general	
 plasmidfinder	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 plasmidfinder	database	String	User-specified database		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
