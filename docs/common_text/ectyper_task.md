@@ -12,4 +12,4 @@ fragment: true
         | Task | [task_ectyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/escherichia_shigella/task_ectyper.wdl) |
         | Software Source Code | [ECTyper on GitHub](https://github.com/phac-nml/ecoli_serotyping) |
         | Software Documentation | [ECTyper on GitHub](https://github.com/phac-nml/ecoli_serotyping) |
-        | Original publication(s)| [ECTyper: in silico Escherichia coli serotype and species prediction from raw and assembled whole-genome sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8767331/) |
+        | Original Publication(s)| [ECTyper: in silico Escherichia coli serotype and species prediction from raw and assembled whole-genome sequence data](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8767331/) |

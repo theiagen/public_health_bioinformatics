@@ -74,7 +74,7 @@ ksnp4_workflow	samplename	Array[String]	The names of the samples being analyzed	
 lyveset_workflow	dataset_name	String	Free text string used to label output files		Required	Lyve_SET	general	
 lyveset_workflow	read1	Array[File]	FASTQ files containing read1 sequences; we recommend using cleaned reads instead of raw reads		Required	Lyve_SET	general	
 lyveset_workflow	read2	Array[File]	FASTQ files containing read2 sequences; we recommend using cleaned reads instead of raw reads		Required	Lyve_SET	general	
-lyveset_workflow	reference_genome	File	Path to reference genome in a Terra-accessible Google bucket. For considerations when choosing a reference genome, see: <https://github.com/lskatz/lyve-SET/master/docs/FAQ.md>		Required	Lyve_SET	general	
+lyveset_workflow	reference_genome	File	Path to reference genome in a Terra-accessible Google bucket. For considerations when choosing a reference genome, see: <https://github.com/lskatz/lyve-SET/blob/master/docs/FAQ.md>		Required	Lyve_SET	general	
 lyveset_workflow	samplename	Array[String]	The names of the samples being analyzed		Required	Lyve_SET	general	
 mashtree_fasta	assembly_fasta	Array[File]	The assembly files for your samples in FASTA format		Required	MashTree_FASTA	general	
 mashtree_fasta	cluster_name	String	Free text string used to label output files		Required	MashTree_FASTA	general	

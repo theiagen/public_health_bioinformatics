@@ -11,7 +11,7 @@
     !!! tip "Assembler recommendations for ShigaPass"
         - **TheiaProk_Illumina_PE** & **TheiaProk_Illumina_SE**: We strongly recommend setting the `digger_denovo.assembler` input parameter to `"spades"` to ensure the best results from ShigaPass.
         - **TheiaProk_ONT**: By default, ONT assemblies are generated with `flye`. While these assemblies can be used successfully with ShigaPass, the results may be less accurate than if the data were assembled with SPAdes. Since SPAdes is not an option for ONT data, please be aware of this potential limitation in accuracy when interpreting your results.
-        - **TheiaProk_FASTA**: Results may be less accurate if the data was not assembled with SPAdes. You may want to consider re-assembling your data with SPAdes for optimal performance of ShigaPass if possible. For publicly available data, you can check the Original publication(s)or SRA metadata to see if SPAdes was used for assembly.
+        - **TheiaProk_FASTA**: Results may be less accurate if the data was not assembled with SPAdes. You may want to consider re-assembling your data with SPAdes for optimal performance of ShigaPass if possible. For publicly available data, you can check the original publication(s) or SRA metadata to see if SPAdes was used for assembly.
     
     !!! techdetails "ShigaPass Technical Details"
         |  | Links |
