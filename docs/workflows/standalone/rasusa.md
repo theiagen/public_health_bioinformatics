@@ -6,12 +6,10 @@
 
 ## RASUSA_PHB
 
-{{ include_md("common_text/rasusa_task.md") }}
+Use the Rasusa workflow to:
 
-### 📋 Use Cases
-
-- to reduce computing resources when samples end up with drastically more data than needed to perform analyses
-- to perform limit of detection (LOD) studies to identify appropriate minimum coverage thresholds required to perform downstream analyses
+- reduce computing resources when samples end up with drastically more data than needed to perform analyses
+- perform limit of detection (LOD) studies to identify appropriate minimum coverage thresholds required to perform downstream analyses
 
 !!! info "Call-caching disabled"
     If using RASUSA_PHB workflow version v2.0.0 or higher, **the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is downloaded fresh.** Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.
@@ -24,6 +22,10 @@
 
 ///
 
+### Workflow Tasks
+
+{{ include_md("common_text/rasusa_task.md") }}
+
 ### Outputs
 
 /// html | div[class="searchable-table"]
@@ -35,11 +37,11 @@
 !!! tip "Don't Forget!"
     Remember to use the subsampled reads in downstream analyses with `this.read1_subsampled` and `this.read2_subsampled` inputs.
 
-!!! info "Verify"
+!!! info "Verify Downsampling"
     Confirm reads were successfully subsampled before downstream analyses by comparing read file size/s to the original read file size/s
 
     _View file sizes by clicking on the read file listed in the Terra data table and looking at the file size_
 
 ## References
 
-> Hall, M. B., (2022). Rasusa: Randomly subsample sequencing reads to a specified coverage. Journal of Open Source Software, 7(69), 3941, <https://doi.org/10.21105/joss.03941>
+> Hall, M. B., (2022). Rasusa: Randomly subsample sequencing reads to a specified coverage. Journal of Open Source Software, 7(69), 3941, <https://doi.org/10.21105/joss.03941>
