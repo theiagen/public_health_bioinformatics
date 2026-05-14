@@ -20,7 +20,6 @@ workflow lyveset_workflow {
       dataset_name = dataset_name_updated,
       reference_genome = reference_genome
   }
-
   call versioning.version_capture {
     input:
   }
