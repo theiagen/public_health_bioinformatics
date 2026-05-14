@@ -12,5 +12,5 @@ fragment: true
         | --- | --- |
         | Task | [task_gambit.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_gambit.wdl) |
         | Software Source Code | [GAMBIT on GitHub](https://github.com/jlumpe/gambit) |
-        | Software Documentation | [GAMBIT ReadTheDocs](https://gambit-genomics.readthedocs.io/en/latest/) |
+        | Software Documentation | [Guide to GAMBIT](https://theiagen.github.io/public_health_bioinformatics/latest/guides/gambit/) |
         | Original Publication(s) | [GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification](https://journals.plos.org/plosone/article?id=10.1371/journal.pone.0277575) |
