@@ -24,8 +24,7 @@ This workflow allows users to submit Terra data tables as metadata and phylogene
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": 
-"Microreact_Export"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Microreact_Export"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -46,4 +45,3 @@ This workflow allows users to submit Terra data tables as metadata and phylogene
 ## References
 
 > **Microreact**: Argimón S, Abudahab K, Goater R, Fedosejev A, Bhai J, Glasner C, Feil E, Holden M, Yeats C, Grundmann H, Spratt B, Aanensen D. 30/11/2016. M Gen 2(11): doi:10.1099/mgen.0.000093
-

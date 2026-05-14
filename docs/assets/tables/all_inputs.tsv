@@ -2846,7 +2846,7 @@ wf_microreact_export	download_table	Boolean	When true, will download th specifie
 wf_microreact_export	matrix_files	Array[File]	A list of matrix files a user would like to upload to the Microreact project. Can be written as [this.matrix1, this.matrix2, etc].		Optional	Microreact_Export	general	
 wf_microreact_export	metadata_columns	Array[String]	A list of column names from the input Terra table that the user would like to be included in their Microreact metadata table		Optional	Microreact_Export	general	
 wf_microreact_export	metadata_file	File	To be used if a separate metadata TSV is required other than downloading a Terra table		Optional	Microreact_Export	general	
-wf_microreact_export	project_url	String	URL used to update a microreact project. Can be found as the code within the webpage URL. "microreact.org/project/<project_url>-<title>""		Optional	Microreact_Export	general	
+wf_microreact_export	project_url	String	URL used to update a microreact project. Can be found as the code within the webpage URL.	"microreact.org/project/<project_url>-<title>"		Optional	Microreact_Export	general	
 wf_microreact_export	remove_file_columns	Boolean	When true, this will remove all columns that contain file opjects to prevent the pushing of Google cloud addresses to the metadata table	True	Optional	Microreact_Export	general	
 wf_microreact_export	restricted_access	Boolean	Sets the access level of the project to restricted when true. Only those specifically added will be able to access.	True	Optional	Microreact_Export	general	
 wf_microreact_export	tree_files	Array[File]	A list of tree files a user would like to upload to the Microreact project. Can be written as [this.tree1, this.tree2, etc].		Optional	Microreact_Export	general	
