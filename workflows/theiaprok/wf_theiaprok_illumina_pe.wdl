@@ -69,6 +69,7 @@ workflow theiaprok_illumina_pe {
     # rasusa downsampling parameters
     Boolean call_rasusa = false
     Float rasusa_downsampling_coverage = 150
+
     # module options
     Boolean perform_characterization = true # by default run all characterization steps
     Boolean amrfinder_use_gff = false # by default use nucleotide fasta for amrfinderplus, but user can set this to true if they want to use a gff and protein fasta file
