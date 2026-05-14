@@ -2,9 +2,8 @@
 title: Task Fragment `ectyper`
 fragment: true
 ---
-??? task "`ECTyper`: Serotyping"
-
-    [ECTyper](https://github.com/phac-nml/ecoli_serotyping) is a serotyping module for *E. coli*. ECTyper provides species identification and quality control for *E. coli*, allowing for complete reports on serotyping, Shiga toxin typing, and pathotyping. Pathotype is identified using an ECTyper internal typing database that looks at toxin and pathotype signature marker sequences. Pathotypes are distinct categories defined by specific virulence factors used to group *E. coli* specimens based on pathogenicity. 
+??? task "`ECTyper`: _E. coli_ Serotyping"
+    [ECTyper](https://github.com/phac-nml/ecoli_serotyping) is a serotyping module for _E. coli_. ECTyper provides species identification and quality control for _E. coli_, allowing for complete reports on serotyping, Shiga toxin typing, and pathotyping. Pathotype is identified using an ECTyper internal typing database that looks at toxin and pathotype signature marker sequences. Pathotypes are distinct categories defined by specific virulence factors used to group _E. coli_ specimens based on pathogenicity. 
     
     !!! techdetails "ECTyper Technical Details"
         |  | Links |

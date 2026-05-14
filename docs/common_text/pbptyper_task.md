@@ -2,7 +2,7 @@
 title: Task Fragment `pbptyper`
 fragment: true
 ---
-??? task "`PBPtyper`: Penicillin-Binding Protein Genotyping"
+??? task "`PBPtyper`: _Streptococcus pneumoniae_ Penicillin-Binding Protein Genotyping"
     The Penicillin-binding proteins (PBP) are responsible for the minimum inhibitory concentration (MIC) phenotypes for beta-lactam antibiotics, which are the drugs of choice for treating pneumococcal infections. In _Streptococcus pneumoniae_, these PBP genes (PBP1a, PBP2b, and PBP2x) can be identified and typed with PBPTyper to help predict beta-lactam resistance levels in _S. pneumoniae_, which can be invaluable in disease surveillance.
 
     PBPtyper uses BLAST and average nucleotide identity (ANI) to identify the closest matching PBP types from a database of known PBP types and uses the PBP typing scheme described by the linked publication below.
