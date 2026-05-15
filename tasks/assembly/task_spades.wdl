@@ -28,12 +28,13 @@ task spades {
 
     # only setup a timeout if it is greater than 0
     if [ ~{timeout} -gt 0 ]; then
-      spades_cmd="timeout ~{timeout}m spades.py"
+      timeout_cmd="timeout ~{timeout}m"
     else
-      spades_cmd="spades.py"
+      timeout_cmd=""
+    fi
 
     if [ -n "~{read2}" ]; then
-      ${spades_cmd} \
+      ${timeout_cmd} spades.py \
         ~{'--' + spades_type} \
         -1 ~{read1} \
         -2 ~{read2} \
@@ -44,7 +45,7 @@ task spades {
         --phred-offset ~{phred_offset} \
         ~{spades_opts}
     else
-      ${spades_cmd} \
+      ${timeout_cmd} spades.py \
         ~{'--' + spades_type} \
         -s ~{read1} \
         ~{'-k ' + kmers} \
