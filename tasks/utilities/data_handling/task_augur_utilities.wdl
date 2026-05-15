@@ -170,7 +170,7 @@ task prep_augur_metadata {
     fi
 
     # write everything to a file
-    echo -e "strain\tvirus\tdate\tregion\tcountry\tdivision\tlocation\t${pangolin_header}\t${nextclade_header}" > augur_metadata.tsv
+    echo -e "strain\tvirus\t~{if defined(collection_date) then collection_date else ''}\tregion\tcountry\tdivision\tlocation\t${pangolin_header}\t${nextclade_header}" > augur_metadata.tsv
     echo -e "${assembly_header}\t${virus}\t~{collection_date}\t~{region}\t~{country}\t~{division}\t~{location}\t~{pango_lineage}\t~{nextclade_clade}" >> augur_metadata.tsv
   >>>
   output {
