@@ -308,6 +308,8 @@ validation:
 
 extra:
   social:
+    - icon: fontawesome/solid/envelope
+      link: mailto:<support@theiagen.com>
     - icon: fontawesome/brands/github
       link: https://github.com/theiagen
     - icon: fontawesome/brands/bluesky

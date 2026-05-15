@@ -11,7 +11,7 @@ Since the documentation is built off of the `main` branch, it is highly recommen
 To test your documentation changes, you will need to have the following packages installed on your local VM:
 
 ```bash
-pip install zensical==0.0.40 git+https://github.com/squidfunk/mike.git
+pip install zensical==0.0.42 git+https://github.com/squidfunk/mike.git
 ```
 
 Once installed, navigate to the top directory in PHB. The live preview server can be activated by running the following command:
