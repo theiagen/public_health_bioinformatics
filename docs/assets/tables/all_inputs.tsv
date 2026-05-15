@@ -295,12 +295,12 @@ augur	remove_reference	Boolean	Whether or not to remove the reference in Augur	F
 augur	sample_metadata_tsvs	Array[File]	An array of the metadata files produced in Augur_Prep_PHB		Optional	Augur	general	
 augur_align	cpu	Int	Number of CPUs to allocate to the task	64	Optional	Augur	runtime	
 augur_align	disk_size	Int	Amount of storage (in GB) to allocate to the task	750	Optional	Augur	runtime	
-augur_align	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_align	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_align	fill_gaps	Boolean	If true, gaps represent missing data rather than true indels and so are replaced by N after aligning.	False	Optional	Augur	general	
 augur_align	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	128	Optional	Augur	runtime	
 augur_ancestral	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Augur	runtime	
 augur_ancestral	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime	
-augur_ancestral	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_ancestral	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_ancestral	infer_ambiguous	Boolean	If true, infer nucleotides and ambiguous sites and replace with most likely	False	Optional	Augur	general	
 augur_ancestral	inference	String	Calculate joint or marginal maximum likelihood ancestral sequence states; options: "joint", "marginal"	joint	Optional	Augur	general	
 augur_ancestral	keep_ambiguous	Boolean	If true, do not infer nucleotides at ambiguous (N) sides	False	Optional	Augur	general	
@@ -308,13 +308,13 @@ augur_ancestral	keep_overhangs	Boolean	If true, do not infer nucleotides for gap
 augur_ancestral	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	50	Optional	Augur	runtime	
 augur_clades	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime	
 augur_clades	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime	
-augur_clades	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_clades	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_clades	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Augur	runtime	
 augur_export	colors_tsv	File	Custom color defintiions, one per line in the format TRAIT_TYPE\tTRAIT_VALUE\tHEX_CODE		Optional	Augur	general	
 augur_export	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Augur	runtime	
 augur_export	description_md	File	Markdown file with description of build and/or acknowledgements		Optional	Augur	general	
 augur_export	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	runtime	
-augur_export	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_export	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_export	include_root_sequence	Boolean	Export an additional JSON containing the root sequence used to identify mutations	False	Optional	Augur	general	
 augur_export	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	64	Optional	Augur	runtime	
 augur_export	title	String	The title to be displayed by auspice		Optional	Augur	general	
@@ -336,7 +336,7 @@ augur_refine	date_confidence	Boolean	If true, calculate confidence intervals for
 augur_refine	date_inference	String	Assign internal nodes to their marginally most likely dates; options: "joint", "marginal"	marginal	Optional	Augur	general	
 augur_refine	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	runtime	
 augur_refine	divergence_units	String	Units in which sequence divergences is exported; options: "mutations" or "mutations-per-site"	mutations	Optional	Augur	general	
-augur_refine	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_refine	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_refine	gen_per_year	Int	Number of generations per year	50	Optional	Augur	general	
 augur_refine	keep_polytomies	Boolean	If true, don't attempt to resolve polytomies	False	Optional	Augur	general	
 augur_refine	keep_root	Boolean	If true, do not reroot the tree; use it as-is (overrides anything specified by root)	True	Optional	Augur	general	
@@ -345,18 +345,18 @@ augur_refine	precision	Int	Precision used by TreeTime to determine the number of
 augur_refine	root	String	Rooting mechanism; options: "best", "least-squares", "min_dev", "oldest", etc.		Optional	Augur	general	
 augur_traits	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Augur	runtime	
 augur_traits	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	runtime	
-augur_traits	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_traits	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_traits	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	30	Optional	Augur	runtime	
 augur_traits	metadata_id_columns	String	The names of possible metadata columns containing identifier information, ordered by priority	'strain' 'name'	Optional	Augur	general	
 augur_traits	weights	File	a dictionary of key/value mappings in JSON format used to weight KDE tip frequencies		Optional	Augur	general	
 augur_translate	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime	
 augur_translate	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime	
-augur_translate	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_translate	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_translate	genes	File	A file containing a list of genes to translate (from nucleotides to amino acids)		Optional	Augur	general	
 augur_translate	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Augur	runtime	
 augur_tree	cpu	Int	Number of CPUs to allocate to the task	64	Optional	Augur	runtime	
 augur_tree	disk_size	Int	Amount of storage (in GB) to allocate to the task	750	Optional	Augur	runtime	
-augur_tree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_tree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_tree	exclude_sites	File	File of one-based sites to exclude for raw tree building (BED format in .bed files, DRM format in tab-delimited files, or one position per line)		Optional	Augur	general	
 augur_tree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Augur	runtime	
 augur_tree	method	String	The method used to build the tree. Options: "fasttree", "raxml", "iqtree" (default)	iqtree	Optional	Augur	general	
@@ -2835,4 +2835,4 @@ wg_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon (
 zip_files	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Zip_Column_Content	runtime	
 zip_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Zip_Column_Content	runtime	
 zip_files	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Zip_Column_Content	docker	
-zip_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Zip_Column_Content	runtime	
+zip_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Zip_Column_Content	runtime
