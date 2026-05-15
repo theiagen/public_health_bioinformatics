@@ -310,12 +310,16 @@ extra:
   social:
     - icon: fontawesome/solid/envelope
       link: mailto:<support@theiagen.com>
+      name: Talk with us
     - icon: fontawesome/brands/github
       link: https://github.com/theiagen
+      name: Code with us
     - icon: fontawesome/brands/bluesky
       link: https://bsky.app/profile/theiagen.bsky.social
+      name: Tweet with us
     - icon: fontawesome/brands/linkedin
       link: https://www.linkedin.com/company/theiagen
+      name: Connect with us
   version:
     provider: mike
     default: latest
