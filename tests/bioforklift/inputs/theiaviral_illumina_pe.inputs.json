@@ -1,5 +1,5 @@
 {
-    "theiaviral_illumina_pe.samplename": "this.theiaviral_illumina_id",
+    "theiaviral_illumina_pe.samplename": "this.theiaviral_illumina_pe_id",
     "theiaviral_illumina_pe.read1": "this.read1",
     "theiaviral_illumina_pe.host": "this.HOST",
     "theiaviral_illumina_pe.read_extraction_rank": "this.READ_EXTRACTION_RANK",
