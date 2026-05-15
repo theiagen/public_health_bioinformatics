@@ -19,7 +19,7 @@ fragment: true
     BWA (Burrow-Wheeler Aligner) is used to align the cleaned read files to a reference genome provided by the user.
 <!-- endif -->
 <!-- if: theiaviral -->
-    BWA (Burrow-Wheeler Aligner) is used to align the cleaned read files to a reference genome either selected by skani or provided by the user with the `reference_fasta` input. This creates a BAM file which is then sorted using SAMtools.
+    BWA (Burrow-Wheeler Aligner) is used to align the cleaned read files to a reference genome either selected by skani or provided by the user with the `reference_fasta` input. This creates a BAM file which is then sorted using samtools.
 <!-- endif -->
     !!! techdetails "BWA Technical Details"
         |  | Links |
