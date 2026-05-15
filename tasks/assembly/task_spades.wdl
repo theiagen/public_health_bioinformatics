@@ -6,6 +6,7 @@ task spades {
     File? read2
     String samplename
     String? spades_type
+    Int timeout = 180 # timeout in minutes
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0"
     Int disk_size = 100
     Int cpu = 4
@@ -26,6 +27,7 @@ task spades {
     echo "DEBUG: Running SPAdes"
 
     if [ -n "~{read2}" ]; then
+      timeout ~{timeout}m \
       spades.py \
         ~{'--' + spades_type} \
         -1 ~{read1} \
