@@ -26,6 +26,7 @@ task spades {
 
     echo "DEBUG: Running SPAdes"
 
+    # only setup a timeout if it is greater than 0
     if [ ~{timeout} -gt 0 ]; then
       spades_cmd="timeout ~{timeout}m spades.py"
     else
