@@ -1,5 +1,5 @@
 {
-  "theiaviral_panel.output_taxon_table": "gs://fc-30647862-e6f3-4420-866e-b74acec70e55/viral_panel_taxon_table_20251125.tsv",
+  "theiaviral_panel.output_taxon_table": "gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaviral/panel/viral_panel_taxon_table_20251125.tsv",
   "theiaviral_panel.read1": "this.read1",
   "theiaviral_panel.read2": "this.read2",
   "theiaviral_panel.samplename": "this.theiaviral_panel_id",
