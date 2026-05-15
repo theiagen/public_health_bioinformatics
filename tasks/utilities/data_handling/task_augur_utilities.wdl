@@ -44,9 +44,9 @@ task tsv_join {
 
     for index in ${!input_tsvs[@]}; do
       if [ $index == 0 ]; then
-        cat ${file} >> merged.tsv
+        cat ${file} >> metadata-merged.tsv
       else
-        tail -n +2 ${file} >> merged.tsv
+        tail -n +2 ${file} >> metadata-merged.tsv
     fi
 
     if (head -n1 merged.tsv | grep -q "date"); then
@@ -56,7 +56,7 @@ task tsv_join {
     fi
   >>>
   output {
-    File out_tsv = "merged.tsv"
+    File out_tsv = "metadata-merged.tsv"
     Boolean has_time = read_boolean("HAS_TIME")
   }
   runtime {

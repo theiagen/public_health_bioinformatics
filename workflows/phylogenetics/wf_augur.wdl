@@ -89,9 +89,7 @@ workflow augur {
     # merge the metadata files
     call augur_utils.tsv_join { 
       input:
-        input_tsvs = select_first([sample_metadata_tsvs]),
-        id_col = augur_id_column,
-        out_basename = "metadata-merged"
+        input_tsvs = select_first([sample_metadata_tsvs])
     }
   }
   if (defined(call_alignment)) {
