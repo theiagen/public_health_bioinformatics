@@ -40,14 +40,16 @@ task tsv_join {
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0"
   }
   command <<<
-    input_tsvs=(~{sep=" " input_tsvs})
+    input_tsvs=(~{sep=' ' input_tsvs})
 
     for index in ${!input_tsvs[@]}; do
+      file=${input_tsvs[$index]}
       if [ $index == 0 ]; then
         cat ${file} >> metadata-merged.tsv
       else
         tail -n +2 ${file} >> metadata-merged.tsv
-    fi
+      fi
+    done
 
     if (head -n1 merged.tsv | grep -q "date"); then
       echo true | tee HAS_TIME
