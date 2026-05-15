@@ -6,7 +6,7 @@ task spades {
     File? read2
     String samplename
     String? spades_type
-    Int timeout = 1440 # timeout in minutes
+    Int timeout = 2160 # timeout in minutes
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0"
     Int disk_size = 100
     Int cpu = 4
