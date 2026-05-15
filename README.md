@@ -54,21 +54,23 @@ well. please see index.md for the math
 okay thanks byee.
 -->
 
-(Ordered by contribution [# of lines changed] as of 2025-11-17)
+(Ordered by contribution [# of lines changed] as of 2026-05-06)
 
-- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision
-- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation
-- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation
-- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation
-- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation
-- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation
-- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation
-- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation
+- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Documentation, Supervision
+- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation, Documentation
+- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation, Documentation
+- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation, Documentation
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation, Documentation
+- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation, Documentation
+- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation, Documentation
+- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation, Documentation
 - **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision
-- **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation
-- **Sushmita Sridhar** ([@ss43](https://github.com/ss43)) - Validation
-- **Deborah Young** ([@theiadeb](https://github.com/theiadeb)) - Validation
+- **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Documentation
+- **Sushmita Sridhar** ([@ss43](https://github.com/ss43)) - Documentation
+- **Neha Mokashi** ([@nehavm456](https://github.com/nehavm456)) - Documentation
+- **Deborah Young** ([@theiadeb](https://github.com/theiadeb)) - Documentation
+- **Bruna Todani** ([@brunatodani](https://github.com/brunatodani)) - Documentation
 - **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision
 
 ### External Contributors

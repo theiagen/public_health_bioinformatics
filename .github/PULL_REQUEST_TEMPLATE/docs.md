@@ -18,7 +18,7 @@ This PR closes #
 ## :microscope: Final Developer Checklist
 <!-- Please mark boxes [X] -->
 - [ ] I have checked my updates for any errors or typos.
-- [ ] I have checked my updates for any rending issues. If not, please explain why or request help below.
+- [ ] I have checked my updates for any rendering issues. If not, please explain why or request help below.
 - [ ] My updates follow the [documentation style guide](https://theiagen.github.io/public_health_bioinformatics/main/contributing/doc_contribution/)
 
 ## 🎯 Reviewer Checklist

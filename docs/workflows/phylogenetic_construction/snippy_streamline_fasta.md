@@ -29,7 +29,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
     1. masking user-specified regions of the genome (_by providing a bed file to `snippy_core_bed`_)
     2. producing either a core or pan-genome phylogeny and SNP-matrix (_by altering `core_genome`; true [default] = core genome, false = pan-genome_)
-    3. choosing the nucleotide substitution (_by altering `iqtree2_model` [see below for possible nucleotide substitution models]_), or allowing IQ-Tree's ModelFinder to identify the best model for your dataset (default)
+    3. choosing the nucleotide substitution (_by altering `iqtree2_model` [see below for possible nucleotide substitution models]_), or allowing IQ-TREE's ModelFinder to identify the best model for your dataset (default)
     4. masking recombination detected by gubbins, or not (_by altering `use_gubbins`; true [default] = recombination masking, false = no recombination masking_)
 
     !!! warning "Multiple Contigs in Reference Genomes"
@@ -57,7 +57,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
         
         - `core_genome` = true (creates core genome phylogeny)
         - `use_gubbins` = true (recombination masked)
-        - nucleotide substitution model will be defined by IQTree's Model Finder
+        - nucleotide substitution model will be defined by IQ-TREE 2's Model Finder
     
     ??? toggle "Phylogenies of _Mycobacterium tuberculosis_ complex"
     
@@ -110,10 +110,11 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 
 {{ include_md("common_text/snippy_core_task.md", condition="snippy_streamline") }}
 {{ include_md("common_text/gubbins_task.md", condition="snippy_streamline") }}
-{{ include_md("common_text/snp_sites_task.md")}}
+{{ include_md("common_text/snp_sites_task.md", condition="snippy")}}
 {{ include_md("common_text/iqtree2_task.md")}}
 {{ include_md("common_text/snp_dists_task.md", condition="snippy")}}
 {{ include_md("common_text/data_summary_task.md", condition="snippy")}}
+{{ include_md("common_text/concatenate_variants_task.md", condition="snippy")}}
 {{ include_md("common_text/shared_variants_task.md", condition="snippy")}}
 {{ include_md("common_text/snippy_qc_concatenation_task.md")}}
 
@@ -131,4 +132,4 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 <!-- -->
 > SNP-sites: Page, Andrew J., Ben Taylor, Aidan J. Delaney, Jorge Soares, Torsten Seemann, Jacqueline A. Keane, and Simon R. Harris. 2016. "SNP-Sites: Rapid Efficient Extraction of SNPs from Multi-FASTA Alignments." Microbial Genomics 2 (4): e000056.
 <!-- -->
-> IQTree: Nguyen, Lam-Tung, Heiko A. Schmidt, Arndt von Haeseler, and Bui Quang Minh. 2015. "IQ-TREE: A Fast and Effective Stochastic Algorithm for Estimating Maximum-Likelihood Phylogenies." Molecular Biology and Evolution 32 (1): 268–74.
+> IQ TREE: Nguyen, Lam-Tung, Heiko A. Schmidt, Arndt von Haeseler, and Bui Quang Minh. 2015. "IQ-TREE: A Fast and Effective Stochastic Algorithm for Estimating Maximum-Likelihood Phylogenies." Molecular Biology and Evolution 32 (1): 268–74.

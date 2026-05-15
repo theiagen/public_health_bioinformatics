@@ -1,9 +1,11 @@
-??? task "`genoflu`"
-
-    This task determines the whole-genome genotype of a H5N1 (==currently only for the 2.3.4.4b clade of H5N1==) flu sample by comparing each segment of the sample against a curated database of H5N1 references. Each segment is assigned a type, and the whole-genome genotype is assigned based on the combination of segment types, according to the [GenoFLU reference table](https://github.com/USDA-VS/GenoFLU/blob/main/docs/Genotyping_reference_for_US_H5_2.3.4.4b.pdf).
+---
+title: Task Fragment `genoflu`
+fragment: true
+---
+??? task "`GenoFLU`: H5N1 Genotyping"
+    GenoFLU determines the whole-genome genotype of a H5N1 (==currently only for the 2.3.4.4b clade of H5N1==) flu sample by comparing each segment of the sample against a curated database of H5N1 references. Each segment is assigned a type, and the whole-genome genotype is assigned based on the combination of segment types, according to the [GenoFLU reference table](https://github.com/USDA-VS/GenoFLU/blob/main/docs/Genotyping_reference_for_US_H5_2.3.4.4b.pdf).
     
     !!! techdetails "GenoFLU Technical Details"
-        
         |  | Links |
         | --- | --- |
         | Task | [task_genoflu.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/orthomyxoviridae/task_genoflu.wdl) |

@@ -1,9 +1,12 @@
-??? task "`flye`"
-
+---
+title: Task Fragment `flye`
+fragment: true
+---
+??? task "`Flye`: _De novo_ Assembly"
     Flye is a _de novo_ assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerates the error rate of ONT data.
 
 <!-- if: theiaviral -->
-    It can be enabled by setting the `call_raven` parameter to `false`. The `flye` task is used as a fallback option if the `raven` task fails during execution (see task `raven` for more details).
+    It can be enabled by setting the `call_raven` parameter to `false`. Flye is used as a fallback option if Raven fails during execution (see the Raven task for more details).
 <!-- endif -->
 
     ??? dna "`flye_read_type` input parameter" 
@@ -26,7 +29,7 @@
     !!! techdetails "Flye Technical Details"
         |  | Links |
         | --- | --- |
-        | WDL Task | [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl) |
+        | Task | [task_flye.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_flye.wdl) |
         | Software Source Code | [Flye on GitHub](https://github.com/fenderglass/Flye) |
         | Software Documentation | [Flye Documentation](https://github.com/fenderglass/Flye/blob/flye/docs/USAGE.md) |
         | Original Publication(s) | [Assembly of long, error-prone reads using repeat graphs](https://www.nature.com/articles/s41587-019-0072-8) |

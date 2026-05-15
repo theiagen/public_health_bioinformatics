@@ -1,3 +1,7 @@
+---
+title: Task Fragment `ts_mlst`
+fragment: true
+---
 ??? task "`TS_MLST`: MLST Profiling"
     [Multilocus sequence typing (MLST)](https://doi.org/10.1073/pnas.95.6.3140) is a typing method reflecting population structure. It was developed as a portable, unambiguous method for global epidemiology using PCR, but can be applied to whole-genome sequences *in silico*. MLST is commonly used for pathogen surveillance, ruling out transmission, and grouping related genomes for comparative analysis.
 

@@ -1,3 +1,7 @@
+---
+title: Task Fragment `template`
+fragment: true
+---
 ??? task "`<tool_name>`: <brief description\>"
 
     _Provide sufficient information about your task here so that users can understand how to use the task, what actions it performs, and any important considerations or requirements. Use admonitions as appropriate to highlight important information, tips, or technical details._

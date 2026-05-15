@@ -3,342 +3,454 @@ import os
 import re
 import fnmatch
 import ast
-import pandas as pd
 from pathlib import Path
-from urllib.parse import urljoin
-from shlex import split as shlex_split
-from itertools import product
+from functools import lru_cache
 
-### THIS IS A MACROS OVERRIDE FOR THE DOCUMENTATION ###
+# cache files to prevent rereading
+@lru_cache(maxsize=256)
+def read_file(path):
+    return Path(path).read_text(encoding="utf-8")
 
-def define_env(env):
-  """
-  Hook function for mkdocs-macros to define custom macros.
+##### RENDER TSV TABLE #####
 
-  Parameters:
-    env: The MkDocs macros environment object.
-  """
-
-  @env.macro
-  def render_tsv_table(filename=None, filters=None, exclude_filters=None, columns=None, sort_by=None, input_table=False, indent=0, replacements=None):
+# parse filtering parameters for rendering tsv
+def normalize_filters(filters):    
     """
-    Render a TSV file as a Markdown table with optional filtering, sorting, and column selection.
+    Converts filter input into a consistent format:
+    { column_name: [list of values] }
 
-    Parameters:
-      filename (str): Path to the TSV file.
-      filters (dict, optional): Dictionary mapping column names to filter values or lists of values.
-      exclude_filters (dict[list], optional): Dictionary mapping column names to values; rows matching all will be excluded.
-      columns (list[str], optional): List of column names or wildcard patterns to display.
-      sort_by (str | list[tuple], optional): Column(s) to sort rows by, optionally as (col, reverse) pairs.
-      input_table (bool): If True, bold the second column of each row.
-      indent (int): Number of spaces to indent the rendered table.
-      replacements (dict, optional): Dictionary of placeholder → replacement text.
-
-    Returns:
-      str: Markdown table as a string.
+    This ensures downstream filtering logic always works with lists,
+    regardless of whether the input was a string, list, or single value.
     """
-    if not filename:
-      return "**Error:** `filename` is required."
+    if not filters:
+        return {}
+    out = {}
 
-    # implement optional filtration
-    filters_dict = {}
-    if filters:
-      for col, values in filters.items():
-        if isinstance(values, str):
-          filters_dict[col] = [v.strip() for v in values.split(',')]
+    # Case 1: filter value is a string; Example: "A,B,C"
+    # Case 2: filter is list or tuple; Example: ["A", "B", "C"]
+    # Case 3: single scalar value (int, bool, etc.); Example: 5 or True
+    for col, val in filters.items():
+        if isinstance(val, str):
+            # Split by comma and remove extra whitespace; discard empty values
+            out[col] = [v.strip() for v in val.split(",") if v.strip()]
+        elif isinstance(val, (list, tuple)):
+            # Convert all values to strings and strip whitespace
+            out[col] = [str(v).strip() for v in val]
         else:
-          filters_dict[col] = values
+            out[col] = [str(val)]
+    return out
 
-    exclude_rows = []
-    if exclude_filters:
-      cols = list(exclude_filters.keys())
-      values_list = [exclude_filters[col] for col in cols]
-
-      for row in product(*values_list):
-        exclude_rows.append(dict(zip(cols, row)))
-
-    with open(filename, newline='') as csvfile:
-      reader = csv.DictReader(csvfile, delimiter='\t')
-      all_headers = reader.fieldnames
-
-      # Check which filter columns exist in the headers
-      filters_exist = {col: col in all_headers for col in filters_dict}
-
-      # Match column to include using wildcards
-      if columns:
-        matched_columns = []
-        for col in columns:
-          matches = fnmatch.filter(all_headers, col)
-          matched_columns.extend(matches)
-        seen = set()
-        headers = [h for h in matched_columns if not (h in seen or seen.add(h))]
-      else:
-        headers = all_headers
-
-      # Filter rows based on multiple filter columns
-      rows = []
-      for row in reader:
-        include_row = True
-
-        # Apply each filter if the column exists
-        for filter_col, filter_vals in filters_dict.items():
-          if filters_exist.get(filter_col, False):
-            # Skip this filter if no values specified
-            if not filter_vals:
-              continue
-
-            # Split comma-separated values in the cell
-            row_values = [v.strip() for v in row[filter_col].split(',')]
-
-            # Check if any filter value matches any value in the cell (exact matching only)
-            match_found = False
-            for search_term in filter_vals:
-              if any(search_term == field for field in row_values):
-                match_found = True
-                break
-
-            if not match_found:
-              include_row = False
-              break
-
-        if include_row:
-          rows.append(row)
-
-    # Exclude rows that match all criteria in any exclude_filters combination
-    if exclude_rows:
-      for row in rows[:]:
-        for exclude in exclude_rows:
-          if all(val in row.get(col, []) for col, val in exclude.items()):
-            rows.remove(row)
-            break
-
-    # sort rows if sort_by is specified
-    if sort_by:
-      if isinstance(sort_by, str):
-        sort_by = [(sort_by, False)] # default to ascending sort order
-      elif isinstance(sort_by, list):
-        sort_by = [(col, False) if isinstance(col, str) else col for col in sort_by]
-
-      row_df = pd.DataFrame(rows)
-
-      # only sort if the columns exist in the DataFrame
-      sort_by = [(col, reverse) for col, reverse in sort_by if col in row_df.columns]
-
-      if len(sort_by) != 0:
-        cols, reverses = zip(*sort_by)
-        reverses = [not reverse for reverse in reverses]  # Convert to ascending order
-
-        row_df = row_df.sort_values(by=list(cols), ascending=reverses, na_position='last', kind='stable', ignore_index=True)
-        rows = row_df.to_dict(orient='records')
-
-    # Add indentation if specified
-    indent_str = ' ' * indent
-
-    # Build Markdown table
-    md = '| ' + ' | '.join(f'**{h}**' for h in headers) + ' |\n'
-    md += indent_str + '| ' + ' | '.join(['---'] * len(headers)) + ' |\n'
-
-    for row in rows:
-      # add input_table specific formatting if true
-      if input_table:
-        temp_list = []
-        md += indent_str + '| '
-        for index, h in enumerate(headers):
-          if index == 1:
-            temp_add = f'**{row.get(h, "")}**'
-            if temp_add is None:
-              raise TypeError(f"Row '{row}' in file {filename} has 'None' value for column '{h}'")
-            temp_list.append(temp_add)
-          else:
-            temp_add = row.get(h, '')
-            if temp_add is None:
-              raise TypeError(f"Row '{row}' in file {filename} has 'None' value for column '{h}'")
-            temp_list.append(temp_add)
-        md += ' | '.join(temp_list) + ' |\n'
-      else:
-        md += indent_str + '| ' + ' | '.join(row.get(h, '') for h in headers) + ' |\n'
-
-    # implement replacements if provided
-    if replacements:
-      for old, new in replacements.items():
-        md = md.replace(old, new)
-
-    return md
-
-  @env.macro
-  def include_md(path, level_offset=None, indent=0, condition=None, replacements=None):
+# extract rows that match filters
+def row_matches(row, filters):    
     """
-    Include and preprocess a Markdown file with optional heading level adjustment, indentation,
-    conditionals, nested includes, and string replacements.
+    Checks whether a single data row satisfies all filter conditions.
 
-    Parameters:
-      path (str): Relative path to the Markdown file within `docs/`.
-      level_offset (int, optional): Heading level adjustment (e.g., 1 turns `#` into `##`).
-      indent (int): Number of spaces to indent each line.
-      condition (str, optional): Conditional key for selectively including blocks.
-      replacements (dict, optional): Dictionary of placeholder → replacement text.
-
-    Returns:
-      str: Preprocessed Markdown content.
+    A row is included only if:
+    - Every filter column exists in the row
+    - At least one allowed value matches the row's cell values
     """
-    docs_dir = Path(env.project_dir) / 'docs'
-    include_path = (docs_dir / Path(path)).resolve()
+    # allowed = list of acceptable values for that column
+    for col, allowed in filters.items():
+        if col not in row:
+            return False
 
-    if not include_path.exists():
-      return f"**Error**: File not found: `{include_path}`"
+        # Split the cell value into a list in case it contains multiple
+        # comma-separated entries (e.g. "A,B,C")
+        cell = [v.strip() for v in row[col].split(",") if v.strip()]
 
-    content = include_path.read_text(encoding='utf-8')
-    lines = content.split('\n')
-    adjusted_lines = []
-    include_block = True
+        if not any(v in cell for v in allowed):
+            return False
+    return True
 
-    for line in lines:
-      # Handle conditionals (<!-- if: condition --> and <!-- endif -->)
-      if_match = re.match(r'<!--\s*if:\s*([\w|]+)\s*-->', line)
-      endif_match = re.match(r'<!--\s*endif\s*-->', line)
+# ensure sorting configuration works
+def normalize_sort(sort_by):
+    """
+    Normalizes sorting configuration into a consistent format:
+    [(column_name, reverse_flag), ...]
 
-      if if_match:
-        allowed = [x.strip() for x in if_match.group(1).split('|')]
-        include_block = condition in allowed
-        continue
-      elif endif_match:
-        include_block = True
-        continue
+    This ensures downstream sorting logic always works with a list of
+    (column, ascending/descending) tuples.
+    """
+    if not sort_by:
+        return []
 
-      if include_block:
-        # Handle nested include_md(...)
-        nested_match = re.match(r'{{\s*include_md\((.*?)\)\s*}}', line)
-        if nested_match:
-          try:
-            args_str = nested_match.group(1)
+    if isinstance(sort_by, str): # single string; ascending sort by default
+        return [(sort_by, False)]
 
-            args = parse_macro_args(args_str)
-            args.setdefault("condition", condition)
-            args["indent"] = indent + int(args.get('indent', 0))
+    result = []
 
-            nested_content = include_md(**args)
-
-            adjusted_lines.append(nested_content)
-          except Exception as e:
-            adjusted_lines.append(f"**Error**:Nested include error: {e}")
-            print(f"Error including nested file: {e}")
-          continue
-
-        if line.startswith('#'):
-          adjusted_lines.append(adjust_heading(line, level_offset, indent))
+    for item in sort_by: # sort instructions
+        if isinstance(item, str):  # column name; ascending
+            result.append((item, False))
+        elif isinstance(item, (tuple, list)) and len(item) == 2: #tuple with reverse flag
+            result.append((item[0], bool(item[1])))
         else:
-          adjusted_lines.append(' ' * indent + resolve_links(line, include_path))
-
-    result = '\n'.join(adjusted_lines)
-
-    # Apply replacements if provided
-    if replacements is not None:
-      for old, new in replacements.items():
-        result = result.replace(old, new)
+            raise ValueError(f"bad sort_by value: {item}")
 
     return result
 
-  def adjust_heading(line, level_offset, indent):
+# add tsv table to markdown
+def render_tsv_table(
+        filename=None, # name of table
+        filters=None, # keep matching rows
+        exclude_filters=None, # remove matching rows
+        columns=None, # columns to include; wildcards allowed
+        sort_by=None, # sorting order
+        input_table=False, # apply specific formatting
+        indent=0, # add indentations
+        replacements=None, # replace certain language
+    ):
     """
-    Adjust a Markdown heading line by modifying the number of `#` symbols.
-
-    Parameters:
-      line (str): The heading line (e.g., `## Title`).
-      level_offset (int): Amount to shift heading level.
-      indent (int): Number of spaces to indent.
-
-    Returns:
-        str: Adjusted heading line.
+    Renders a TSV file into a Markdown table with:
+    - column filtering
+    - row filtering (include/exclude rules)
+    - sorting
+    - optional formatting tweaks
     """
-    match = re.match(r'^(#{1,6})\s*(.*)', line)
-    if match:
-      hashes, text = match.groups()
-      new_level = max(1, min(len(hashes) + (level_offset or 0), 6))
-      adjusted_heading = ' ' * indent + new_level + ' ' + text
-      return adjusted_heading
-    else:
-      return ' ' * indent + line
+    if not filename:
+        return "**Error:** filename required"
 
-  def resolve_links(line, base_path):
+    with open(filename, newline="", encoding="utf-8") as f:
+        rows = list(csv.DictReader(f, delimiter="\t"))
+    headers = list(rows[0].keys()) if rows else []
+
+    # keep only desired columns
+    if columns:
+        picked = []
+        for c in columns:
+            picked.extend(fnmatch.filter(headers, c))
+        headers = list(dict.fromkeys(picked))
+
+    # apply filters and keep them in matching
+    filters = normalize_filters(filters)
+    rows = [r for r in rows if row_matches(r, filters)]
+
+    # apply exclude filters and remove them if matching
+    exclude_filters = normalize_filters(exclude_filters)
+    if exclude_filters:
+        # returns true if row should be excluded
+        def should_remove(row): 
+            for col, vals in exclude_filters.items():
+                if col in row:
+                    cell = [v.strip() for v in row[col].split(",")]
+                    if all(v in cell for v in vals):
+                        return True
+            return False
+
+        rows = [r for r in rows if not should_remove(r)]
+
+    # sort the columns
+    for col, rev in reversed(normalize_sort(sort_by)):
+        rows.sort(key=lambda r: r.get(col, ""), reverse=rev)
+
+    # create indentation string 
+    indent_str = " " * indent
+
+    md = "| " + " | ".join(headers) + " |\n"
+    md += indent_str + "| " + " | ".join(["---"] * len(headers)) + " |\n"
+
+    for row in rows:
+        vals = []
+        for index, header in enumerate(headers):
+            value = row.get(header, "")
+            if input_table and index == 1:
+                value = f"**{value}**"
+
+            vals.append(value)
+
+        md += indent_str + "| " + " | ".join(vals) + " |\n"
+
+    if replacements:
+        for old, new in replacements.items():
+            md = md.replace(old, new)
+
+    return md
+
+############################
+
+######## INCLUDE MD ########
+
+# parse include_md(...) arguments using AST (abstract syntax tree)
+def parse_macro_args(argument_string):
     """
-    Rewrite relative Markdown links and image references to be correct from the including file's perspective.
-
-    Parameters:
-      line (str): Markdown line possibly containing links.
-      base_path (Path): Absolute path to the including Markdown file.
-
-    Returns:
-        str: Line with corrected links.
+    Takes the include_md arguments (`common_text/file.md, indent=4, condition="theiaprok"`)
+    and turns it into a dictionary:
+    { "path": "common_text/file.md", "indent": 4, "condition": "theiaprok" }
     """
-    link_pattern = re.compile(r'(!)?\[(.*?)\]\((.*?)\)')
+    try:
+        # wrap raw macro args into a synthetic Python expression
+        # so AST parsing can safely extract structure
+        ast_wrapped_input = f"f({argument_string})"
 
-    def replace_link(match):
-      is_image = match.group(1) == '!'
-      alt_text = match.group(2)
-      url = match.group(3)
+        # ast.parse converts this into a tree structure
+        parsed_ast = ast.parse(ast_wrapped_input, mode="eval")
+        call = parsed_ast.body
+        if not isinstance(call, ast.Call):
+            raise ValueError("the argument string has bad macro syntax")
 
-      if url.startswith('http://') or url.startswith('https://'):
-        return match.group(0)
+        parsed_args = {}
 
-      absolute_path = (Path(base_path).parent / url).resolve()
-      docs_dir = (Path(env.project_dir) / 'docs').resolve()
+        if call.args:
+            parsed_args["path"] = ast.literal_eval(call.args[0])
 
-      try:
-        relative_path = os.path.relpath(absolute_path, start=docs_dir).replace(os.sep, '/')
-      except ValueError:
-        return match.group(0)
+        for keyword in call.keywords:
+            parsed_args[keyword.arg] = ast.literal_eval(keyword.value)
 
-      resolved_path = os.path.relpath(absolute_path, start=Path(base_path).parent)
-      resolved_path = resolved_path.replace(os.sep, '/')
+        return parsed_args
 
-      # Return the correctly formatted link or image tag
-      if is_image:
-        return f'![{alt_text}]({resolved_path})'
-      else:
-        return f'[{alt_text}]({resolved_path})'
+    except Exception as e:
+        raise ValueError(f"couldn't parse macro args: {e}")
 
-    return link_pattern.sub(replace_link, line)
+"""
+Matches conditional "if" blocks inside Markdown comments:
+  <!-- if: theiaprok|theiaviral -->
 
-  def parse_macro_args(arg_str):
+Captures the allowed condition names (split by "|") so that
+the rendering engine can decide whether to include or skip
+the following block of content.
+"""
+IF_RE = re.compile(r'<!--\s*if:\s*([\w|]+)\s*-->')
+
+""" 
+Matches the closing tag for a conditional block in Markdown:
+  <!-- endif -->
+
+Used to signal the end of a conditionally included section,
+allowing the parser to restore normal rendering behavior.
+"""
+ENDIF_RE = re.compile(r'<!--\s*endif\s*-->')
+
+class ConditionStack:
     """
-    Parse a macro argument string from an include_md call.
+    Tracks whether a line of Markdown should be included or excluded
+    based on conditional blocks like:
 
-    Parameters:
-      arg_str (str): Raw argument string like `"file.md", level_offset=1`.
+        <!-- if: conditionA|conditionB -->
+        ...
+        <!-- endif -->
 
-    Returns:
-        dict: Dictionary of parsed arguments.
+    The stack allows nested conditional blocks to be evaluated correctly.
     """
-    args = {}
-    tokens = [token.strip() for token in arg_str.split(",")]
-    for i, token in enumerate(tokens):
-      if token.startswith("replacements="):
+    def __init__(self, active):
+        # The currently active workflow/condition (e.g. "theiaprok")
+        # This is compared against allowed conditions in IF blocks.
+        self.active = active
+        
+        # Stack representing nested conditional states.
+        # Each entry is a boolean:
+        #   True  -> content in this block is included
+        #   False -> content in this block is skipped
+        #
+        # Start with True because outside any IF block,
+        # content is always included by default.
+        self.stack = [True]
+
+    def update(self, line):   
+        """
+        Processes a single line of Markdown and updates conditional state.
+
+        Returns:
+            - True  → line should be included
+            - False → line should be excluded
+            - None  → line is a control directive (if/endif)
+        """
+        match = IF_RE.match(line)
+        if match:
+            allowed_conditions = [condition.strip() for condition in match.group(1).split("|")]
+            is_included = self.active in allowed_conditions 
+            
+            self.stack.append(is_included)
+            return None
+
+        # Detect end of conditional block: <!-- endif -->
+        if ENDIF_RE.match(line):
+            # Only pop if we are inside a nested block
+            # (prevents popping the base True state)
+            if len(self.stack) > 1:
+                self.stack.pop()
+            return None
+
+        # For normal content lines:
+        # Only include if ALL active conditions are True
+        return all(self.stack)
+
+# adjust markdown headings and add indentations
+def adjust_heading(line, offset, indent_str):    
+    """
+    Adjusts Markdown heading levels and optionally indents the line.
+
+    Example:
+        "# Title" with offset=1 → "## Title"
+    """
+    # Try to detect a Markdown heading:
+    # ^            → start of line
+    # (#{1,6})     → 1 to 6 '#' characters (heading level)
+    # \s+          → at least one space
+    # (.*)         → the rest of the text (heading title)
+    match = re.match(r'^(#{1,6})\s+(.*)', line)
+    # if not a match, just add the identation
+    if not match:
+        return indent_str + line
+
+    # If it IS a heading, split it into parts:
+    # hashes = "###"
+    # text   = "My Heading"
+    hashes, text = match.groups()
+    new_level = len(hashes) + (offset or 0)
+    # keep heading level between 1 and 6 (markdown only supports h1–h6)
+    new_level = max(1, min(new_level, 6))
+
+    # add indentation and new heading
+    return indent_str + ("#" * new_level) + " " + text
+
+# resolve relative links
+def resolve_links(line, current_file, root_file):    
+    """
+    Rewrites relative Markdown links so they remain valid
+    after files are included into a larger documentation structure.
+    """
+    def replace(match):
+        is_img, text, url = match.groups()
+
+        # leave external stuff alone
+        if url.startswith(("http://", "https://", "#", "mailto:")):
+            return match.group(0)
+
+        # convert to absolute filepath
+        target = (current_file.parent / url).resolve()
+
+        # make relative to docs root
         try:
-          replacements_str = "=".join(token.split("=")[1:]).strip()
-          replacements = ast.literal_eval(replacements_str)
+            rel = os.path.relpath(target, root_file.parent)
+        except Exception:
+            # if something breaks just keep original
+            return match.group(0)
 
-          if not isinstance(replacements, dict):
-            raise ValueError("Replacements must be a dictionary.")
+        rel = rel.replace(os.sep, "/")
 
-          args["replacements"] = replacements
-        except Exception as e:
-          raise ValueError(f"Invalid replacements format: {e}")
+        # keep the ! if it was an image
+        prefix = "!" if is_img else ""
+        return f"{prefix}[{text}]({rel})"
 
-      elif "=" in token:
-        key, value = token.split("=", 1)
-        val = value.strip().rstrip(',')
+    # add replacement to all markdown links in the line 
+    # looks for [text](link) syntax with optional ! at front
+    return re.sub(r'(!)?\[(.*?)\]\((.*?)\)', replace, line)
 
-        if val.startswith('"') and val.endswith('"') or val.startswith("'") and val.endswith("'"):
-          val = val[1:-1]
 
-        elif val.isdigit():
-          val = int(val)
-        args[key.strip()] = val
+# match include md jinja calls
+INCLUDE_RE = re.compile(r'{{\s*include_md\((.*?)\)\s*}}')
 
-      elif i == 0:
-        # positional path argument to MD file
-        args['path'] = token.strip('"').strip("'").rstrip(',')
+def include_md(
+        path, # path to md file
+        level_offset=None, # offset headings by x amount
+        indent=0, # add x indentation
+        condition=None, # content to include conditionals
+        replacements=None, # text replacement
+        _visited=None,
+        _root=None,
+    ):   
+    """
+    Recursively includes and processes Markdown files with support for:
+    - nested includes
+    - conditional blocks
+    - heading adjustment
+    - link resolution
+    - indentation control
+    - circular include protection
+    """
+    # resolve path relative to root
+    docs = Path("docs").resolve()
+    file_path = (docs / Path(path)).resolve()
+    
+    # create indentation string 
+    indent_str = " " * indent
 
-      else:
-        raise ValueError(f"Invalid macro argument: {token}")
-    return args
+    # prevent infinite recursion
+    if _visited is None:
+        _visited = set()
+
+    if file_path in _visited:
+        raise RuntimeError(f"circular include: {file_path}")
+
+    _visited.add(file_path)
+
+    # make sure included file exists
+    if not file_path.exists():
+        return f"**Error:** missing file `{file_path}`"
+
+    text = read_file(str(file_path))
+    lines = text.splitlines()
+
+    # remove YAML frontmatter (--- ... ---)
+    if lines and lines[0].strip() == "---":
+        for i in range(1, len(lines)):
+            if lines[i].strip() == "---":
+                lines = lines[i+1:]
+                break
+
+    # process conditions
+    condition = ConditionStack(condition)
+    out = []
+    in_code_block = False
+
+    for line in lines:
+        # check conditional state
+        state = condition.update(line)
+        if state is None or not state:
+            continue
+
+        # check if this is a code block
+        if line.lstrip().startswith("```"):
+            in_code_block = not in_code_block
+                
+        # don't do any fancy with code blocks
+        if not in_code_block:
+            # see if we have a nested includes
+            nested_match = INCLUDE_RE.match(line)
+            if nested_match:
+                # parse arguments inside macro call and inherit parent conditions
+                args = parse_macro_args(nested_match.group(1))
+                args.setdefault("condition", condition)
+                # increase indentation relative to parent include
+                args["indent"] = indent + args.get("indent", 0)
+
+                # process recursively
+                out.append(include_md(
+                    _visited=_visited,
+                    _root=_root,
+                    **args
+                ))
+                continue
+
+            if line.startswith("#"):
+                out.append(adjust_heading(line, level_offset or 0, indent_str))
+            else:
+                # resolve links & only indent if line isn't empty
+                resolved = resolve_links(line, file_path, _root or file_path)
+                out.append(indent_str + resolved if resolved.strip() else "")
+            
+            continue
+        
+        # adjust within code block
+        out.append(indent_str + line)
+        
+    # return output as single string
+    result = "\n".join(out)
+
+    # add post-processing text replacements
+    if replacements:
+        for old, new in replacements.items():
+            result = result.replace(old, new)
+    
+    return result
+
+# zensical entrypoint
+def define_env(env):    
+    """
+    Registers custom macros into the Zensical environment.
+
+    This function is called automatically by the macros plugin
+    when the documentation build environment is initialized.
+    """
+    env.macro(include_md)
+    env.macro(render_tsv_table)

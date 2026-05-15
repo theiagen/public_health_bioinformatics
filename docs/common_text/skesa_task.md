@@ -1,7 +1,11 @@
+---
+title: Task Fragment `skesa`
+fragment: true
+---
 ??? task "`SKESA`: _De novo_ Assembly (default)"
     This task is activated by default.
 
-    `SKESA` (Strategic K-mer Extension for Scrupulous Assemblies) is a _de novo_ assembler that is fairly conservative and introduces breaks in the genome at repeat regions. This leads to higher sequence quality but more fragmented assemblies, which, depending on the final analysis goal, can be either highly preferred or detrimental. Designed for Illumina reads and haploid genomes, SKESA is the default assembler in the `digger_denovo` subworkflow.
+    SKESA (Strategic K-mer Extension for Scrupulous Assemblies) is a _de novo_ assembler that is fairly conservative and introduces breaks in the genome at repeat regions. This leads to higher sequence quality but more fragmented assemblies, which, depending on the final analysis goal, can be either highly preferred or detrimental. Designed for Illumina reads and haploid genomes, SKESA is the default assembler in the `digger_denovo` subworkflow.
 
     !!! techdetails "SKESA Technical Details"
         |  | Links |

@@ -1,8 +1,12 @@
+---
+title: Task Fragment `ksnp`
+fragment: true
+---
 <!-- if: ksnp3 -->
-??? task "kSNP3 Details"
+??? task "`kSNP3`: Phylogenetic Construction"
 <!-- endif -->
 <!-- if: ksnp4 -->
-??? task "kSNP4 Details"
+??? task "`kSNP4`: Phylogenetic Construction"
 <!-- endif -->
     This workflow is run on a set of assembly files to produce both pan-genome and core-genome phylogenies. This also results in alignment files which are used by downstream tasks.
 

@@ -1,9 +1,13 @@
+---
+title: Task Fragment `augur ancestral`
+fragment: true
+---
 ??? task "`augur ancestral`: Ancestral Nucleotide Sequence Reconstruction"
-    `augur ancestral` infers ancestral nucleotide sequences based on phylogenetic relatedness using maximum-likelihood via TreeTime. A "joint" maximum likelihood model is used by default, though "marginal" input is permitted. 
+    The `augur ancestral` command infers ancestral nucleotide sequences based on phylogenetic relatedness using maximum-likelihood via TreeTime. A "joint" maximum likelihood model is used by default, though "marginal" input is permitted. 
 
     NOTE: `keep-ambiguous` and `infer-ambiguous` are mutually-exclusive, incompatible options that will raise an error if selected together.
 
-    !!! techdetails "`augur ancestral` Technical Details"        
+    !!! techdetails "Augur `ancestral` Technical Details"        
         |  | Links |
         | --- | --- |
         | Task | [task_augur_ancestral.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/augur/task_augur_ancestral.wdl) |

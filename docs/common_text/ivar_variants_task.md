@@ -1,5 +1,9 @@
-??? task "`ivar_variants`: Variant Calling"
-    iVar uses the outputs of `samtools mpileup` to call single nucleotide variants (SNVs) and insertions/deletions (indels). Several key parameters can be set to determine the stringency of variant calling, including minimum quality, minimum allele frequency, and minimum depth.
+---
+title: Task Fragment `ivar_variants`
+fragment: true
+---
+??? task "`iVar variants`: Variant Calling"
+    iVar uses the outputs of the `samtools mpileup` command to call single nucleotide variants (SNVs) and insertions/deletions (indels). Several key parameters can be set to determine the stringency of variant calling, including minimum quality, minimum allele frequency, and minimum depth.
 
     This task returns a VCF file containing all called variants, the number of detected variants, and the proportion of those variants with allele frequencies between 0.6 and 0.9 (also known as _intermediate_ variants).
 
@@ -25,6 +29,6 @@
         |  | Links |
         | --- | --- |
         | Task | [task_ivar_variant_call.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_ivar_variant_call.wdl) |
-        | Software Source Code | [Ivar on GitHub](https://andersen-lab.github.io/ivar/html/) |
-        | Software Documentation | [Ivar Documentation](https://andersen-lab.github.io/ivar/html/manualpage.html) |
+        | Software Source Code | [iVar on GitHub](https://andersen-lab.github.io/ivar/html/) |
+        | Software Documentation | [iVar Documentation](https://andersen-lab.github.io/ivar/html/manualpage.html) |
         | Original Publication(s) | [An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](http://dx.doi.org/10.1186/s13059-018-1618-7) |

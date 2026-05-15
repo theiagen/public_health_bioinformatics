@@ -1,6 +1,9 @@
-??? task "`clair3`"
-
-    `Clair3` performs deep learning-based variant detection using a multi-stage approach. The process begins with pileup-based calling for initial variant identification, followed by full-alignment analysis for comprehensive variant detection. Results are merged into a final high-confidence call set.
+---
+title: Task Fragment `clair3`
+fragment: true
+---
+??? task "`Clair3`: Variant Detection"
+    Clair3 performs deep learning-based variant detection using a multi-stage approach. The process begins with pileup-based calling for initial variant identification, followed by full-alignment analysis for comprehensive variant detection. Results are merged into a final high-confidence call set.
 
 <!-- if: theiaviral-->
     The variant calling pipeline employs specialized neural networks trained on ONT data to accurately identify:

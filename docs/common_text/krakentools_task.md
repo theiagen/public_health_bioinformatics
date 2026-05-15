@@ -1,5 +1,8 @@
+---
+title: Task Fragment `krakentools`
+fragment: true
+---
 ??? task "`krakentools`: Read Extraction"
-
     The `task_krakentools.wdl` task extracts reads from the Kraken2 output file. It uses the [KrakenTools](https://github.com/jenniferlu717/KrakenTools) package to extract reads classified at any user-specified taxon ID.
 
 <!-- if: theiaviral -->

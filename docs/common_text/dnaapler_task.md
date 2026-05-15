@@ -1,5 +1,8 @@
-
-??? toggle "`Dnaapler`: Final Assembly Orientation"
+---
+title: Task Fragment `dnaapler`
+fragment: true
+---
+??? task "`Dnaapler`: Final Assembly Orientation"
     Dnaapler reorients contigs to start at specific reference points. Dnaapler supports the following modes, which can be indicated by filling the `dnaapler_mode` input variable with the desired mode. The default is `all`, which reorients contigs to start with `dnaA`, `terL`, `repA`, or `COG1474`.
 
     - **all**: Reorients contigs to start with `dnaA`, `terL`, `repA`, or `COG1474` (_Default_)
@@ -16,7 +19,7 @@
     !!! techdetails "Dnaapler Technical Details"
         |  | Links |
         | --- | --- |
-        | WDL Task | [task_dnaapler.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_dnaapler.wdl) |
+        | Task | [task_dnaapler.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_dnaapler.wdl) |
         | Software Source Code | [Dnaapler on GitHub](https://github.com/gbouras13/dnaapler) |
         | Software Documentation | [Dnaapler Documentation](https://github.com/gbouras13/dnaapler?tab=readme-ov-file#dnaapler) |
         | Original Publication(s) | [Dnaapler: a tool to reorient circular microbial genomes](https://joss.theoj.org/papers/10.21105/joss.05968) |

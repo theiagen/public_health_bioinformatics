@@ -1,8 +1,11 @@
+---
+title: Task Fragment `prokka`
+fragment: true
+---
 ??? task "`Prokka`: Assembly Annotation (default)"
+    Assembly annotation is available via Prokka as default.
 
-    Assembly annotation is available via `Prokka` as default.
-
-    [`Prokka`](https://github.com/tseemann/prokka) is a prokaryotic genome annotation tool used to identify and describe features of interest within the genome sequence. Prokka annotates the genome by querying three core databases: [ISfinder](https://isfinder.biotoul.fr/), [NCBI's Bacterial Antimicrobial Resistance Reference Gene Database](https://www.ncbi.nlm.nih.gov/bioproject/313047), and [UniProtKB (SwissProt)](https://www.uniprot.org/uniprotkb?query=reviewed%3Atrue). Additional databases can be used or specified, with instructions on how to do so [located in the Prokka README](https://github.com/tseemann/prokka#databases).
+    [Prokka](https://github.com/tseemann/prokka) is a prokaryotic genome annotation tool used to identify and describe features of interest within the genome sequence. Prokka annotates the genome by querying three core databases: [ISfinder](https://isfinder.biotoul.fr/), [NCBI's Bacterial Antimicrobial Resistance Reference Gene Database](https://www.ncbi.nlm.nih.gov/bioproject/313047), and [UniProtKB (SwissProt)](https://www.uniprot.org/uniprotkb?query=reviewed%3Atrue). Additional databases can be used or specified, with instructions on how to do so [located in the Prokka README](https://github.com/tseemann/prokka#databases).
 
     The most versatile output from Prokka is likely the GFF3 file, as it contains all of the generated information, though other file formats are available for the instances when a reduction of the GFF3 is useful.
 

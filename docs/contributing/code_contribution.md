@@ -14,13 +14,6 @@ Style guide inspired by Scott Frazer’s [WDL Best Practices Style Guide](http
 ***Modularity and Metadata***
 
 - **Best Practice:** Place tasks and workflows in separate files to maintain modularity and clarity.
-- **Add a `meta` block** to every task and workflow to provide a brief description of its purpose.
-
-    ```bash
-    meta {
-      description: "This tool does X"
-    }
-    ```
 
 ***Docker Containers***
 
@@ -102,10 +95,10 @@ task example_task {
 
   ```bash
   input {
-    Int cpu = 4                              # Number of CPUs
-    Int disk_size = 100                      # Disk space in GB
-    String docker = "us-docker.pkg.dev/example:1.0.0"  # Docker container for the task
-    Int memory = 16                          # Memory in GB
+    Int cpu = 4 # Number of CPUs
+    Int disk_size = 100 # Disk space in GB
+    String docker = "us-docker.pkg.dev/example:1.0.0" # Docker container for the task
+    Int memory = 16 # Memory in GB
   }
   ```
 
@@ -121,7 +114,7 @@ task example_task {
 - Input and output lists should **not** be formatted to have the equal sign aligned, but instead **use a single space** before and after the `=`
 
     ```bash
-    correct_output = "output_file"
+    output = "output_file"
     long_variable_name = "long_file_name"
     ```
 
@@ -184,8 +177,8 @@ task example_task {
 
   ```bash
   output {
-    File result_csv = "output.csv"  # CSV file generated
-    File result_log = "log.txt"     # Log file
+    File result_csv = "output.csv" # CSV file generated
+    File result_log = "log.txt" # Log file
   }
   ```
 
