@@ -23,6 +23,7 @@ workflow digger_denovo {
     Int? spades_cpu
     Int? spades_memory
     Int? spades_disk_size
+    Int spades_timeout = 0
     String? spades_docker
     # Optional parameters for skesa
     Int? skesa_cpu
@@ -68,6 +69,7 @@ workflow digger_denovo {
         kmers = kmers,
         spades_type = spades_type,
         spades_opts = assembler_options,
+        timeout = spades_timeout,
         cpu = spades_cpu,
         memory = spades_memory,
         disk_size = spades_disk_size,
