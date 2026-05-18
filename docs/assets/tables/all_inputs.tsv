@@ -51,9 +51,7 @@ freyja_dashboard	viral_load	Array[String]	An array containing the number of vira
 freyja_fastq	read1	File	FASTQ file containing read1 sequences (Illumina or (ONT)		Required	Freyja_FASTQ	general	
 freyja_fastq	reference_genome	File	The reference genome to use; should match the reference used for alignment (Wuhan-Hu-1)		Required	Freyja_FASTQ	general	
 freyja_fastq	samplename	String	The name of the sample being analyzed		Required	Freyja_FASTQ	general	
-freyja_plot	freyja_coverages	Array[Float]	An array containing the genome coverage value (freyja_coverage) for each sample; required to enable the freyja_long_format and freyja_microreact tasks and used by --mincov filtering		Optional	Freyja_Plot	general	
 freyja_plot	freyja_demixed	Array[File]	An array containing the output files (freyja_demixed) made by Freyja_FASTQ		Required	Freyja_Plot	general	
-freyja_plot	freyja_min_coverage	Int	Minimum genome coverage threshold; passed as --mincov to freyja_to_long.py and as mincov to the freyja plot task	60	Optional	Freyja_Plot	general	
 freyja_plot	freyja_plot_name	String	The name of the plot to be produced. Example: "my-freyja-plot"		Required	Freyja_Plot	general	
 freyja_plot	samplename	Array[String]	The names of the samples being analyzed		Required	Freyja_Plot	general	
 gambit_query	assembly_fasta	File	The assembly file for your sample in FASTA format		Required	Gambit_Query	general	
@@ -282,7 +280,7 @@ augur	clades_tsv	File	TSV file containing clade mutation positions in four colum
 augur	extract_clade_mutations	Boolean	Generate a "clades.tsv" using "clade_membership" column metadata (overrides clades_tsv)	False	Optional	Augur	general	
 augur	flu_segment	String	Required if organism = "flu". The name of the segment to be analyzed; options: "HA" or "NA"	HA	Optional	Augur	general	
 augur	flu_subtype	String	Required if organism = "flu". The subtype of the flu samples being analyzed; options: "H1N1", "H3N2", "Victoria", "Yamagata", "H5N1"	N/A	Optional, Required	Augur	general	True
-augur	lat_longs_tsv	File	Tab-delimited file of geographic location names with corresponding latitude and longitude values	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized.	Optional	Augur	general	True
+augur	lat_longs_tsv	File	Tab-delimited file of geographic location names with corresponding latitude and longitude values	gs://theiagen-public-resources-rp/reference_data/viral/lat_longs.tsv	Optional	Augur	general	True
 augur	midpoint_root_tree	Boolean	Boolean variable that will instruct the workflow to reroot the tree at the midpoint	True	Optional	Augur	general	
 augur	min_date	Float	Minimum date to begin filtering or frequencies calculations	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, the default value is 0.0	Optional	Augur	general	True
 augur	min_num_unambig	Int	Minimum number of called bases in genome to pass prefilter	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, the default value is 0	Optional	Augur	general	True
@@ -297,12 +295,12 @@ augur	remove_reference	Boolean	Whether or not to remove the reference in Augur	F
 augur	sample_metadata_tsvs	Array[File]	An array of the metadata files produced in Augur_Prep_PHB		Optional	Augur	general	
 augur_align	cpu	Int	Number of CPUs to allocate to the task	64	Optional	Augur	runtime	
 augur_align	disk_size	Int	Amount of storage (in GB) to allocate to the task	750	Optional	Augur	runtime	
-augur_align	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_align	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_align	fill_gaps	Boolean	If true, gaps represent missing data rather than true indels and so are replaced by N after aligning.	False	Optional	Augur	general	
 augur_align	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	128	Optional	Augur	runtime	
 augur_ancestral	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Augur	runtime	
 augur_ancestral	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime	
-augur_ancestral	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_ancestral	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_ancestral	infer_ambiguous	Boolean	If true, infer nucleotides and ambiguous sites and replace with most likely	False	Optional	Augur	general	
 augur_ancestral	inference	String	Calculate joint or marginal maximum likelihood ancestral sequence states; options: "joint", "marginal"	joint	Optional	Augur	general	
 augur_ancestral	keep_ambiguous	Boolean	If true, do not infer nucleotides at ambiguous (N) sides	False	Optional	Augur	general	
@@ -310,13 +308,13 @@ augur_ancestral	keep_overhangs	Boolean	If true, do not infer nucleotides for gap
 augur_ancestral	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	50	Optional	Augur	runtime	
 augur_clades	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime	
 augur_clades	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime	
-augur_clades	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_clades	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_clades	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Augur	runtime	
 augur_export	colors_tsv	File	Custom color defintiions, one per line in the format TRAIT_TYPE\tTRAIT_VALUE\tHEX_CODE		Optional	Augur	general	
 augur_export	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Augur	runtime	
 augur_export	description_md	File	Markdown file with description of build and/or acknowledgements		Optional	Augur	general	
 augur_export	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	runtime	
-augur_export	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_export	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_export	include_root_sequence	Boolean	Export an additional JSON containing the root sequence used to identify mutations	False	Optional	Augur	general	
 augur_export	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	64	Optional	Augur	runtime	
 augur_export	title	String	The title to be displayed by auspice		Optional	Augur	general	
@@ -338,7 +336,7 @@ augur_refine	date_confidence	Boolean	If true, calculate confidence intervals for
 augur_refine	date_inference	String	Assign internal nodes to their marginally most likely dates; options: "joint", "marginal"	marginal	Optional	Augur	general	
 augur_refine	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	runtime	
 augur_refine	divergence_units	String	Units in which sequence divergences is exported; options: "mutations" or "mutations-per-site"	mutations	Optional	Augur	general	
-augur_refine	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_refine	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_refine	gen_per_year	Int	Number of generations per year	50	Optional	Augur	general	
 augur_refine	keep_polytomies	Boolean	If true, don't attempt to resolve polytomies	False	Optional	Augur	general	
 augur_refine	keep_root	Boolean	If true, do not reroot the tree; use it as-is (overrides anything specified by root)	True	Optional	Augur	general	
@@ -347,18 +345,18 @@ augur_refine	precision	Int	Precision used by TreeTime to determine the number of
 augur_refine	root	String	Rooting mechanism; options: "best", "least-squares", "min_dev", "oldest", etc.		Optional	Augur	general	
 augur_traits	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Augur	runtime	
 augur_traits	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	runtime	
-augur_traits	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_traits	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_traits	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	30	Optional	Augur	runtime	
 augur_traits	metadata_id_columns	String	The names of possible metadata columns containing identifier information, ordered by priority	'strain' 'name'	Optional	Augur	general	
 augur_traits	weights	File	a dictionary of key/value mappings in JSON format used to weight KDE tip frequencies		Optional	Augur	general	
 augur_translate	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime	
 augur_translate	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Augur	runtime	
-augur_translate	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_translate	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_translate	genes	File	A file containing a list of genes to translate (from nucleotides to amino acids)		Optional	Augur	general	
 augur_translate	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Augur	runtime	
 augur_tree	cpu	Int	Number of CPUs to allocate to the task	64	Optional	Augur	runtime	
 augur_tree	disk_size	Int	Amount of storage (in GB) to allocate to the task	750	Optional	Augur	runtime	
-augur_tree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0	Optional	Augur	docker	
+augur_tree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0	Optional	Augur	docker	
 augur_tree	exclude_sites	File	File of one-based sites to exclude for raw tree building (BED format in .bed files, DRM format in tab-delimited files, or one position per line)		Optional	Augur	general	
 augur_tree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Augur	runtime	
 augur_tree	method	String	The method used to build the tree. Options: "fasttree", "raxml", "iqtree" (default)	iqtree	Optional	Augur	general	
@@ -938,6 +936,7 @@ freyja_fastq	collection_site	String	Collection site of wastewater sample		Option
 freyja_fastq	depth_cutoff	Int	The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS!		Optional	Freyja_FASTQ	general	
 freyja_fastq	freyja_barcodes	File	Custom barcode file. Does not need to be provided if update_db is true if the freyja_pathogen is provided.		Optional	Freyja_FASTQ	general	
 freyja_fastq	freyja_lineage_metadata	File	File containing the lineage metadata; the "curated_lineages.json" file found <https://github.com/andersen-lab/Freyja/tree/main/freyja/data> can be used for this variable. Does not need to be provided if update_db is true or if the freyja_pathogen is provided.		Optional, Required	Freyja_FASTQ	general	True
+freyja_fastq	freyja_long_format_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1	Optional	Freyja_FASTQ	docker	
 freyja_fastq	freyja_min_coverage	Int	Minimum genome coverage threshold (--mincov) used by freyja_to_long.py when generating the freyja_parsed_format_tsv output	60	Optional	Freyja_FASTQ	general	
 freyja_fastq	freyja_pathogen	String	Pathogen to be used by Freyja	SARS-CoV-2	Optional	Freyja_FASTQ	general	
 freyja_fastq	kraken2_target_organism	String	The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.	Severe acute respiratory syndrome coronavirus 2	Optional	Freyja_FASTQ	general	
@@ -952,25 +951,25 @@ freyja_fastq	run_qualimap	Boolean	When set to true, will run qualimap and provid
 freyja_fastq	trimmomatic_min_length	Int	The minimum length cut-off when performing read cleaning	25	Optional	Freyja_FASTQ	general	
 freyja_long_format	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ, Freyja_Plot	runtime	
 freyja_long_format	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Freyja_FASTQ, Freyja_Plot	runtime	
-freyja_long_format	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1	Optional	Freyja_FASTQ, Freyja_Plot	docker	
 freyja_long_format	group_by	String	Whether to group samples by collection date or week, options are "date" or "week"		Optional	Freyja_FASTQ, Freyja_Plot	general	
 freyja_long_format	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Freyja_FASTQ, Freyja_Plot	runtime	
-freyja_long_format	mincov	Int	The minimum genome coverage used as a cut-off of data to include in the parsed long-format TSV. At the workflow level this is set via freyja_min_coverage (default 60).		Optional	Freyja_FASTQ, Freyja_Plot	general	
 freyja_microreact	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_Plot	runtime	
 freyja_microreact	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Freyja_Plot	runtime	
-freyja_microreact	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1	Optional	Freyja_Plot	docker	
 freyja_microreact	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Freyja_Plot	runtime	
 freyja_plot	collection_date	Array[String]	An array containing the collection dates for the sample (YYYY-MM-DD format)		Optional	Freyja_Plot	general	
 freyja_plot	collection_site	Array[String]	An array containing the collection sites for the sample		Optional	Freyja_Plot	general	
 freyja_plot	freyja_abundances	Array[String]	An array containing the Freyja abundances for the sample		Optional	Freyja_Plot	general	
+freyja_plot	freyja_coverages	Array[Float]	An array containing the genome coverage value (freyja_coverage) for each sample; required to enable the freyja_long_format and freyja_microreact tasks and used by --mincov filtering		Optional	Freyja_Plot	general	
 freyja_plot	freyja_lineages	Array[String]	An array containing the Freyja lineages for the sample		Optional	Freyja_Plot	general	
+freyja_plot	freyja_long_format_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1	Optional	Freyja_Plot	docker	
+freyja_plot	freyja_microreact_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1	Optional	Freyja_Plot	docker	
+freyja_plot	freyja_min_coverage	Int	Minimum genome coverage threshold; passed as --mincov to freyja_to_long.py and as mincov to the freyja plot task	60	Optional	Freyja_Plot	general	
 freyja_plot	latitude	Array[Float]	An array containing the latitudes for the sample collection sites		Optional	Freyja_Plot	general	
 freyja_plot	longitude	Array[Float]	An array containing the longitudes for the sample collection sites		Optional	Freyja_Plot	general	
 freyja_plot_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_Plot	runtime	
 freyja_plot_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_Plot	runtime	
 freyja_plot_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1	Optional	Freyja_Plot	docker	
 freyja_plot_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Freyja_Plot	runtime	
-freyja_plot_task	mincov	Int	The minimum genome coverage used as a cut-off of data to include in the plot. At the workflow level this is set via freyja_min_coverage (default 60).		Optional	Freyja_Plot	general	
 freyja_plot_task	plot_day_window	Int	The width of the rolling average window; only used if plot_time_interval is "D"	14	Optional	Freyja_Plot	general	
 freyja_plot_task	plot_lineages	Boolean	If true, will plot a lineage-specific breakdown	False	Optional	Freyja_Plot	general	
 freyja_plot_task	plot_time	Boolean	If true, will plot sample collection time information (requires the collection_date input variable)	False	Optional	Freyja_Plot	general	
@@ -1019,7 +1018,7 @@ host_decontaminate	complete_only	Boolean	Only download genomes labeled "complete
 host_decontaminate	expected_sequences	String	Internal component, do not modify 		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	is_accession	Boolean	Inputted "host" is an accession	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	is_genome	Boolean	Inputted "host" is an assembly FASTA	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
-host_decontaminate	max_unexpected_seq	Int	Internal component, do not modify	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	max_unexpected_seq	Int	Internal component, do not modify	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	min_expected_coverage	Float	Internal component, do not modify	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	min_expected_depth	Int	Internal component, do not modify 	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	min_expected_reads_mapped	Int	Internal component, do not modify	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
@@ -1822,7 +1821,6 @@ organism_parameters	hiv_primer_version	String	The version of HIV primers used. O
 organism_parameters	hiv_primer_version	String	Internal component, do not modify	v1	Optional	VADR_Update	general	
 organism_parameters	kraken_target_organism_input	String	The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.	Default provided for mpox (Monkeypox virus), WNV (West Nile virus), and HIV (Human immunodeficiency virus 1)	Optional	Augur, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_SE	general	True
 organism_parameters	kraken_target_organism_input	String	Internal component, do not modify		Optional	VADR_Update	general	
-organism_parameters	lat_longs_tsv	File	Internal component, do not modify		Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, VADR_Update	general	
 organism_parameters	min_date	Float	Internal component, do not modify		Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, VADR_Update	general	
 organism_parameters	min_num_unambig	Int	Minimum number of called bases in genome to pass prefilter	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>. For an organism without set defaults, the default value is 0	Optional	Pangolin_Update, TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general	True
 organism_parameters	min_num_unambig	Int	Internal component, do not modify		Optional	VADR_Update	general	
@@ -2033,7 +2031,7 @@ read_QC_trim	kraken_db	File	A kraken2 database to use with the kraken2 optional 
 read_QC_trim	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task. Increase this when using large (>30GB kraken2 databases such as the "k2_standard" database)	100	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 read_QC_trim	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 read_QC_trim	max_length	Int	Internal component, do not modify	700	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
-read_QC_trim	max_unexpected_contaminants	Int	Maximum unexpected sequences detected from contaminant FASTA to pass status check	1	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
+read_QC_trim	max_unexpected_contaminants	Int	Maximum unexpected sequences detected from contaminant FASTA to pass status check	0	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	metabuli_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
 read_QC_trim	metabuli_db	File	Metabuli database for read taxonomy classification, compressed in .tar.gz format	gs://theiagen-public-resources-rp/reference_data/databases/metabuli/refseq_virus-v223.tar.gz	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	database	
 read_QC_trim	metabuli_disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
@@ -2138,7 +2136,7 @@ read_QC_trim_pe	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional
 read_QC_trim_pe	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	Freyja_FASTQ	database	
 read_QC_trim_pe	kraken_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	kraken_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_pe	max_unexpected_contaminants	Int	Maximum unexpected sequences detected from contaminant FASTA to pass status check	1	Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	max_unexpected_contaminants	Int	Maximum unexpected sequences detected from contaminant FASTA to pass status check	0	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	midas_db	File	Database to use with MIDAS. Not required as one will be auto-selected when running the MIDAS task.	gs://theiagen-public-resources-rp/reference_data/databases/midas/midas_db_v1.2.tar.gz	Optional	Freyja_FASTQ	database	
 read_QC_trim_pe	min_contaminant_coverage	Float	Minimum breadth of coverage to identify a contaminant sequence within the status check (does not affect read cleaning)	0	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	min_contaminant_depth	Int	Minimum depth to identify a contaminant sequence within the status check (does not affect read cleaning)	0	Optional	Freyja_FASTQ	general	
@@ -2816,11 +2814,10 @@ ts_mlst	min_percent_identity	Float	Minimum % identity to known MLST gene to repo
 ts_mlst	minscore	Float	Minimum score <https://github.com/tseemann/mlst#scoring-system> to assign an MLST profile	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 ts_mlst	nopath	Boolean	true = use mlst --nopath. If set to false, filename paths are not stripped from FILE column in output TSV	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 ts_mlst	scheme	String	Don’t autodetect the MLST scheme; force this scheme on all inputs (see <https://github.com/tseemann/mlst/blob/master/db/scheme_species_map.tab> for accepted strings)	none	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	True
-tsv_join	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Augur	runtime	
+tsv_join	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Augur	runtime	
 tsv_join	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Augur	runtime	
-tsv_join	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33	Optional	Augur	docker	
-tsv_join	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	7	Optional	Augur	runtime	
-tsv_join	out_suffix	String	Suffix of merged tsv files	.tsv	Optional	Augur	general	
+tsv_join	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0	Optional	Augur	docker	
+tsv_join	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Augur	runtime	
 usher	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Usher	runtime	
 usher	disk_size	Int	Amount of storage (in GB) to allocate to the task	200	Optional	Usher	runtime	
 usher	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/pathogengenomics/usher:0.6.2	Optional	Usher	docker	
