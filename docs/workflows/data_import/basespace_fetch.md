@@ -111,10 +111,6 @@ _If you already have a command-line environment available_, you can skip ahead t
     2. In Excel or an alternative spreadsheet software, set up a metadata sheet for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.  
         1. In cell A1, enter the data table name with the "**entity:**TABLENAME**_id**" format
         2. Create a column called `basespace_sample_name` and populate this with the data found under the `Sample_Name` column in the BaseSpace sample sheet.
-
-            !!! warning "Watch out"
-                If the contents of the `Sample_Name` and `Sample_ID` columns in the BaseSpace sample sheet are different, make a `basespace_sample_id` column in your spreadsheet and populate this with the data found under the `Sample_ID` column in the BaseSpace sample sheet.
-
         3. Create a `basespace_collection_id` column, and populate it with the BaseSpace Project or Run identifier
         4. Populate column A of the spreadsheet with the sample names as seen in the sample sheet
 
@@ -141,9 +137,6 @@ _If you already have a command-line environment available_, you can skip ahead t
 
 !!! info "Call-Caching Disabled"
     If using BaseSpace_Fetch workflow version 1.3.0 or higher, the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is downloaded fresh. Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.
-
-!!! warning "Sample_Name _and_ Sample_ID"
-    If the Sample_Name and Sample_ID in the BaseSpace sample sheet are different, set the `basespace_sample_id` input attribute to "`this.basespace_sample_id"`.
 
 !!! warning "Nested Samplenames"
     Erroneous matches may occur when a samplename is nested within another samplename in the same batch, separated by an underscore or space. This will occur when no lane suffix is present within the Basespace dataset. For example, "sample1" will retrieve "sample1_1", however, "sample1_L1" will NOT retrieve "sample1_1_L1". This should be taken into consideration when using certain naming conventions. 
