@@ -40,7 +40,7 @@ workflow augur {
     File? reference_genbank
     Int? min_num_unambig
     File? clades_tsv
-    File? lat_longs_tsv
+    File lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/lat_longs.tsv"
     File? auspice_config
     Int? pivot_interval
     Float? min_date
@@ -75,7 +75,6 @@ workflow augur {
       flu_segment = flu_segment,
       flu_subtype = flu_subtype,
       clades_tsv = clades_tsv,
-      lat_longs_tsv = lat_longs_tsv,
       auspice_config = auspice_config,
       pivot_interval = pivot_interval,
       min_date = min_date,
@@ -90,9 +89,7 @@ workflow augur {
     # merge the metadata files
     call augur_utils.tsv_join { 
       input:
-        input_tsvs = select_first([sample_metadata_tsvs]),
-        id_col = augur_id_column,
-        out_basename = "metadata-merged"
+        input_tsvs = select_first([sample_metadata_tsvs])
     }
   }
   if (defined(call_alignment)) {
@@ -231,7 +228,7 @@ workflow augur {
                           augur_traits.traits_assignments_json,
                           mutation_context.mutation_context_json]),
       build_name = build_name_updated,
-      lat_longs_tsv = select_first([lat_longs_tsv, organism_parameters.augur_lat_longs_tsv]),
+      lat_longs_tsv = lat_longs_tsv,
       auspice_config = select_first([auspice_config, organism_parameters.augur_auspice_config])
   }
 

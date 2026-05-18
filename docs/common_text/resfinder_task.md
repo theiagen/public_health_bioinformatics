@@ -1,10 +1,13 @@
-
+---
+title: Task Fragment `resfinder`
+fragment: true
+---
 ??? task "`ResFinder`: AMR Genotyping and XDR _Shigella_ Prediction (optional)"
     To activate this task, set `call_resfinder` to `true`.
 
     **AMR Genotyping**
 
-    The `ResFinder` task is an optional task that can be used in conjunction with AMRFinderPlus for detection and identification of AMR genes and resistance-associated mutations. This task runs the Centre for Genomic Epidemiology (CGE) ResFinder tool to identify acquired antimicrobial resistance, and uses different databases for AMR detection than AMRFinderPlus. In order to call an AMR gene, there must be at least 90% (0.9) sequence identity and 50% (0.5) coverage of the reference genes. These are the same thresholds used in BioNumerics for AMR detection. 
+    The ResFinder task is an optional task that can be used in conjunction with AMRFinderPlus for detection and identification of AMR genes and resistance-associated mutations. This task runs the Centre for Genomic Epidemiology (CGE) ResFinder tool to identify acquired antimicrobial resistance, and uses different databases for AMR detection than AMRFinderPlus. In order to call an AMR gene, there must be at least 90% (0.9) sequence identity and 50% (0.5) coverage of the reference genes. These are the same thresholds used in BioNumerics for AMR detection. 
 
     Set `call_pointfinder` to `true` to also run the CGE PointFinder tool for detection of chromosomal mutations associated with antimicrobial resistance. 
 
@@ -25,7 +28,7 @@
 
     **XDR _Shigella_ prediction**
 
-    The `ResFinder` Task also has the ability to predict whether or not a sample meets the CDC's definition for extensively drug-resistant (XDR) _Shigella_. 
+    The ResFinder task also has the ability to predict whether or not a sample meets the CDC's definition for extensively drug-resistant (XDR) _Shigella_. 
 
     ???+ caption "How does TheiaProk predict XDR _Shigella_?"
         ![XDR Shigella Identification](../../assets/figures/TheiaProk_XDR_Shigella_Identification.png){data-description="CDC defines XDR Shigella bacteria as strains that are resistant to all commonly recommended empiric and alternative antibiotics — azithromycin, ciprofloxacin, ceftriaxone, trimethoprim-sulfamethoxazole (TMP-SMX), and ampicillin."}

@@ -1,4 +1,7 @@
-
+---
+title: Task Fragment `mummer_ani`
+fragment: true
+---
 ??? task "`MUMmer_ANI`: Taxon Assignment using Average Nucleotide Identity (optional)"
     To activate this task, set `call_ani` to `true`.
 
@@ -16,7 +19,6 @@
     For more information on RGDv2 database of reference genomes, please see [the publication here](https://doi.org/10.3389/fmicb.2023.1225207).
 
     !!! techdetails "MUMmer_ANI Technical Details"
-        
         |  | Links |
         | --- | --- |
         | Task | [task_mummer_ani.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/advanced_metrics/task_mummer_ani.wdl) |

@@ -32,6 +32,10 @@ This workflow runs on the sample level.
 
 ///
 
+### Workflow Tasks
+
+{{ include_md("common_text/vadr_task.md")}}
+
 ### Outputs
 
 /// html | div[class="searchable-table"]

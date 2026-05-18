@@ -1,3 +1,7 @@
+---
+title: Task Fragment `tbp_parser`
+fragment: true
+---
 ??? task "`tbp-parser`: Interpretation and Parsing of TBProfiler JSON outputs (optional)"
     To activate this task, set `call_tbp_parser` to `true`
 

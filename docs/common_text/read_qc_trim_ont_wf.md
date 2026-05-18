@@ -1,3 +1,7 @@
+---
+title: Workflow Fragment `read_qc_trim_ont`
+fragment: true
+---
 ??? task "`read_QC_trim_ont`: Read Quality Trimming, Quantification, and Identification"
     `read_QC_trim_ont` is a sub-workflow that filters low-quality reads and trims low-quality regions of reads. It uses several tasks, described below.
 
@@ -7,16 +11,12 @@
 {{ include_md("common_text/artic_guppyplex_task.md", indent=4) }}
 
 {{ include_md("common_text/metabuli_task.md", indent=4, condition="theiacov") }}
-  
 <!-- endif -->
   
 <!-- if: theiaprok -->
     !!! dna "A note on estimated genome length"
 
         By default, the estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to [the information of thousands of NCBI bacterial assemblies collated here](https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt). This estimate can be overwritten by the user and is used by `Rasusa`.
-<!-- endif -->
-
-<!-- if: theiaprok -->
 
 {{ include_md("common_text/rasusa_task.md", indent=4, condition="ont") }}
 

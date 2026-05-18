@@ -1,6 +1,10 @@
-??? task "`fasta_utilities`"
-
-    The `fasta_utilities` task utilizes samtools to index a reference fasta file.
+---
+title: Task Fragment `fasta_utilities`
+fragment: true
+---
+??? task "`fasta_utilities`: Reference Indexing"
+    The `fasta_utilities` task uses samtools to index a reference fasta file.
+    
 <!-- if: theiaviral-->
     This reference is selected by the `skani` task or provided by the user input `reference_fasta`. This indexed reference genome is used for downstream variant calling and consensus generation tasks.
 <!-- endif -->

@@ -1,5 +1,8 @@
-??? task "`flu_antiviral_substitutions`"
-
+---
+title: Workflow Fragment `flu_antiviral_substitutions`
+fragment: true
+---
+??? task "`flu_antiviral_substitutions`: Antiviral Mutation Identification"
     This subworkflow determines if any antiviral mutations are present in the HA, NA, and MP segments of H1N1 or H3N2 flu sample, or any in non-subtype-specific PA, PB1, and PB2 segments.
             
     These mutations are identified by generating a multiple sequence alignment (MSA) between each individual flu segment and the respective reference genome using MAFFT. Amino acid mutations are then called from the MSA. The resulting mutations are compared against [a list of known amino-acid substitutions associated with antiviral resistance](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_flu_antiviral_subs.wdl) and any matches are reported. 

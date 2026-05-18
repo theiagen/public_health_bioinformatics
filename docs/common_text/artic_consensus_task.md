@@ -1,5 +1,9 @@
-??? task "`artic_consensus`: Alignment, Primer Trimming, Variant Detection, and Consensus"
-    This task runs the `Artic minion` command which is a pipeline with a number of stages, [described in detail in the ARTIC documentation](https://artic.readthedocs.io/en/latest/minion/#0). Briefly, these stages are as follows:
+---
+title: Task Fragment `artic_consensus`
+fragment: true
+---
+??? task "`artic consensus`: Alignment, Primer Trimming, Variant Detection, and Consensus"
+    This task runs the `artic minion` command which is a pipeline with a number of stages, [described in detail in the ARTIC documentation](https://artic.readthedocs.io/en/latest/minion/#0). Briefly, these stages are as follows:
 
     Input reads are aligned to the appropriate reference and only mapped reads are retained. Alignment post-processing occurs, where primers are removed and various trimming steps are undertaken. Variants are detected, and a consensus assembly file is generated.
 

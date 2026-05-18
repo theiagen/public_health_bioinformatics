@@ -1,5 +1,8 @@
+---
+title: Task Fragment `amrfinderplus`
+fragment: true
+---
 ??? task "`AMRFinderPlus`: AMR Genotyping"
-
     NCBI's [AMRFinderPlus](https://github.com/ncbi/amr/wiki) is the default antimicrobial resistance (AMR) detection tool used in TheiaProk. ResFinder may be used alternatively and if so, AMRFinderPlus is not run. 
 
     AMRFinderPlus identifies acquired antimicrobial resistance (AMR) genes, virulence genes, and stress genes.  Such AMR genes confer resistance to antibiotics, metals, biocides, heat, or acid. For some taxa (see [here](https://github.com/ncbi/amr/wiki/Running-AMRFinderPlus#--organism-option)), AMRFinderPlus will provide taxa-specific results including filtering out genes that are almost ubiquitous in the taxa (intrinsic genes) and identifying resistance-associated point mutations.  In TheiaProk, the taxon used by AMRFinderPlus is specified based on the `gambit_predicted_taxon` or a user-provided `expected_taxon`. AMRFinderPlus also has the ability to utilize a GFF and protein FASTA file which can be enabled via `amrfinder_use_gff` allowing for more accurate calls.
@@ -10,7 +13,6 @@
         The *bla*OXA-51-like genes, also known as _oxaAB_, are considered intrinsic to _Acinetobacter baumannii_ but are not found in other *Acinetobacter* species. **Identification of a *bla*OXA-51-like gene with this tool is therefore considered to confirm the species' identity as _A. baumannii_.**
 
     !!! techdetails "AMRFinderPlus Technical Details"
-        
         |  | Links |
         | --- | --- |
         | Task | [task_amrfinderplus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/drug_resistance/task_amrfinderplus.wdl) |

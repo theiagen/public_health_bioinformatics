@@ -1,6 +1,9 @@
-
-??? task "Snippy_Variants QC Metrics Concatenation (optional)"
-    ##### Snippy_Variants QC Metric Concatenation (optional)
+---
+title: Task Fragment `snippy_qc_concatenation`
+fragment: true
+---
+??? task "`Snippy_QC_Concatenation`: Sample QC Concatenation (optional)"
+    ##### Snippy QC Concatenation (optional)
 
     Optionally, the user can provide the `snippy_variants_qc_metrics` file produced by the Snippy_Variants workflow as input to the workflow to concatenate the reports for each sample in the tree. These per-sample QC metrics include the following columns:
 
@@ -25,7 +28,7 @@
     !!! tip "QC Metrics for Phylogenetic Analysis"
         These QC metrics provide valuable insights into the quality and coverage of your sequencing data relative to the reference genome. Monitoring these metrics can help identify samples with low coverage, poor alignment, or potential issues that may affect downstream analyses, and we recommend examining them before proceeding with phylogenetic analysis if performing Snippy_Variants and Snippy_Tree separately.
 
-    !!! techdetails "Technical Details"
+    !!! techdetails "Snippy_QC_Concatenation Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_cat_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_cat_files.wdl) |

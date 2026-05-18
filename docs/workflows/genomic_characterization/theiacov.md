@@ -2,7 +2,7 @@
 
 ## Quick Facts
 
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaCov Workflow Series**](../workflows/genomic_characterization/theiacov.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level", "Dockstore"]) }}
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Name": "[**TheiaCoV Workflow Series**](../workflows/genomic_characterization/theiacov.md)"}, columns=["Workflow Type", "Applicable Kingdom", "Last Known Changes", "Command-line Compatibility","Workflow Level", "Dockstore"]) }}
 
 ## TheiaCoV Workflows
 
@@ -391,6 +391,7 @@ We've provided the following information to help you set up the workflow for eac
 
 !!! caption ""
     === "TheiaCoV_Illumina_PE"
+{{ include_md("common_text/read_screen_task.md", condition="theiacov", indent=8) }}
 {{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiacov", indent=8) }}
 
         **_If non-influenza_**
@@ -400,18 +401,21 @@ We've provided the following information to help you set up the workflow for eac
 {{ include_md("common_text/irma_task.md", condition="assembly", indent=8)}}
 
     === "TheiaCoV_Illumina_SE"
+{{ include_md("common_text/read_screen_task.md", condition="theiacov", indent=8) }}
 {{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiacov", indent=8) }}
 {{ include_md("common_text/ivar_consensus_wf.md", condition="theiacov", indent=8) }}
 
     === "TheiaCoV_ONT"
+{{ include_md("common_text/read_screen_task.md", condition="theiacov", indent=8) }}
 {{ include_md("common_text/read_qc_trim_ont_wf.md", condition="theiacov", indent=8) }}
 
         **_If non-influenza_**
 {{ include_md("common_text/artic_consensus_task.md", condition="theiacov", indent=8) }}
-{{ include_md("common_text/assembly_metrics_task.md", indent=8, condition="theiacov") }}
 
         **_If influenza_**
 {{ include_md("common_text/irma_task.md", condition="assembly", indent=8) }}
+
+        ---
 {{ include_md("common_text/assembly_metrics_task.md", indent=8, condition="theiacov") }}
 
     === "TheiaCoV_ClearLabs"
@@ -447,7 +451,7 @@ We've provided the following information to help you set up the workflow for eac
     | **VADR Flu Segments** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
     | **Quasitools HyDRA** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
     | **IRMA** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-    | **Abricate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **ABRicate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
     | **% Gene Coverage** | ✅ | ✅ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ |
     | **Antiviral Detection** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
     | **GenoFLU** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
@@ -457,74 +461,57 @@ We've provided the following information to help you set up the workflow for eac
     ❌ This task will not run for these organisms
 
 === "SARS-CoV-2"
-
 {{ include_md("common_text/pangolin_task.md", indent=4) }}
-
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-
 {{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "Mpox"
-
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-
 {{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "West Nile Virus"
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "Influenza"
-
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_flu_segments_task.md", indent=4) }}
-
 {{ include_md("common_text/irma_task.md", indent=4, condition="task") }}
-
 {{ include_md("common_text/bbmap_reformat_task.md", indent=4, condition="theiacov") }}
-
 {{ include_md("common_text/abricate_flu_task.md", indent=4) }}
-
 {{ include_md("common_text/flu_antiviral_substitutions_wf.md", indent=4) }}
-
 {{ include_md("common_text/genoflu_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "RSV-A"
-
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "RSV-B"
-
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "HIV"
-
 {{ include_md("common_text/quasitools_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "Measles"
-
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "Mumps"
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "Rubella"
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 ### Outputs
 

@@ -1,5 +1,8 @@
-
-??? task "Data summary (optional)"
+---
+title: Task Fragment `summarize_data`
+fragment: true
+---
+??? task "`summarize_data`: Presence/Absence Data Summary  (optional)"
 <!-- if: snippy -->  
     ##### Data Summary (optional)
 <!-- endif -->  

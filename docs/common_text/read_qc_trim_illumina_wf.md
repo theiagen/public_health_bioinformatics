@@ -1,42 +1,46 @@
+---
+title: Workflow Fragment `read_qc_trim_illumina`
+fragment: true
+---
 ??? task "`read_QC_trim`: Read Quality Trimming, Adapter Removal, Quantification, and Identification"
     `read_QC_trim` is a sub-workflow that removes low-quality reads, low-quality regions of reads, and sequencing adapters to improve data quality. It uses a number of tasks, described below. The differences between the PE and SE versions of the `read_QC_trim` sub-workflow lie in the default parameters, the use of two or one input read file(s), and the different output files.
 
-<!-- if: theiacov|freyja -->
+    !!! dna ""
+        By default, `read_qc` is set to `"fastq_scan"`. To use FastQC instead, set `read_qc` to `"fastqc"`. These tasks are mutually exclusive.
+
+{{ include_md("common_text/fastq_scan_task.md", condition="notclearlabs", indent=8) }}
+{{ include_md("common_text/fastqc_task.md", indent=8) }}
+
+{{ include_md("common_text/read_decontaminate_wf.md", indent=4, condition="read_qc_trim") }}
+
+<!-- if: theiacov|theiameta -->
 {{ include_md("common_text/ncbi_scrub_task.md", indent=4) }}
 <!-- endif -->
 
-<!-- if: theiacov|theiaprok|theiameta|freyja|theiaeukillumina -->
-{{ include_md("common_text/rasusa_task.md", condition="read_qc_trim", indent=4) }}
-<!-- endif -->
+{{ include_md("common_text/rasusa_task.md", condition="read_qc_trim", indent=4, replacements={'??? task "`Rasusa`: Read Subsampling"': '??? task "`Rasusa`: Read Subsampling (optional)"'}) }}
 
     !!! dna ""
-        By default, `read_processing` is set to `"trimmomatic"`. To use `fastp` instead, set `read_processing` to `"fastp"`. These tasks are mutually exclusive.
-
-{{ include_md("common_text/read_decontaminate_wf.md", indent=8, condition="read_qc_trim") }}
+        By default, `read_processing` is set to `"trimmomatic"`. To use fastp instead, set `read_processing` to `"fastp"`. These tasks are mutually exclusive.
 
 {{ include_md("common_text/trimmomatic_task.md", indent=8) }}
-
 {{ include_md("common_text/fastp_task.md", condition="read_qc_trim", indent=8) }}
 
 {{ include_md("common_text/bbduk_task.md", indent=4) }}
-
-    !!! dna ""
-        By default, `read_qc` is set to `"fastq_scan"`. To use `fastqc` instead, set `read_qc` to `"fastqc"`. These tasks are mutually exclusive.
-
-{{ include_md("common_text/fastq_scan_task.md", condition="notclearlabs", indent=8) }}
-
-{{ include_md("common_text/fastqc_task.md", indent=8) }}
 
 <!-- if: theiaprok|theiameta -->
 {{ include_md("common_text/midas_task.md", indent=4) }}
 <!-- endif -->
 
-<!-- if: theiaprok|theiaeukillumina -->
-{{ include_md("common_text/kraken2_task.md", condition="theiaprokillumina", indent=4) }}
+<!-- if: theiaprok|theiaeuk -->
+{{ include_md("common_text/kraken2_task.md", condition="theiaprok", indent=4) }}
 <!-- endif -->
 
 <!-- if: theiacov -->
 {{ include_md("common_text/kraken2_task.md", condition="theiacov", indent=4) }}
+<!-- endif -->
+
+<!-- if: theiameta -->
+{{ include_md("common_text/readlength_task.md", indent=4) }}
 <!-- endif -->
 
     !!! techdetails "read_QC_trim Technical Details"

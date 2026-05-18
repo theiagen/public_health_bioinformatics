@@ -1,4 +1,8 @@
-??? task "`PopPUNK`: Global Pneumococcal Sequence Cluster Typing"
+---
+title: Task Fragment `poppunk`
+fragment: true
+---
+??? task "`PopPUNK`: _Streptococcus pneumoniae_ Global Pneumococcal Sequence Cluster Typing"
     Global Pneumococcal Sequence Clusters (GPSC) define and name pneumococcal strains. Each GPSC is an [international definition of a pneumococcal lineage](https://doi.org/10.1016/j.ebiom.2019.04.021) and can capture all variations across the entire genome, leading to better vaccine development due to increased disease surveillance. GPSC designation is undertaken using the PopPUNK (Population Partitioning Using Nucleotide K-mers) software and the GPSC database.
 
     PopPUNK works by using variable-length k-mers to distinguish between sample divergences in shared genomic content. Clusters are assigned based on the resulting pairwise distance distributions. 
@@ -14,4 +18,3 @@
         | Software Source Code | [PopPUNK on GitHub](https://github.com/bacpop/PopPUNK)<br>[Global Pneumococcal Sequencing Project](https://www.pneumogen.net/gps/#/)<br>[GPSC Database](https://www.pneumogen.net/gps/#/gpsc#lineages) |
         | Software Documentation | [PopPUNK Documentation](https://poppunk-docs.bacpop.org/)<br>[GPS Training Documentation](https://www.pneumogen.net/gps/#/training) |
         | Original Publication(s) | _PopPUNK tool_: [Fast and flexible bacterial genomic epidemiology with PopPUNK](https://genome.cshlp.org/content/29/2/304)<br>_GPSC database_: [International genomic definition of pneumococcal lineages, to contextualise disease, antibiotic resistance and vaccine impact](https://doi.org/10.1016/j.ebiom.2019.04.021) |
-    
