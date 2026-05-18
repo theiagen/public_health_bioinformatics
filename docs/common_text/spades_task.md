@@ -23,6 +23,9 @@ fragment: true
 
     ??? dna "`call_metaviralspades` input parameter"
         This parameter controls whether or not the `spades` task is called by the workflow. By default, `call_metaviralspades` is set to `true` because MetaviralSPAdes is used as the primary assembler. MetaviralSPAdes is generally recommended for most users, but it might not perform optimally on all datasets. If users encounter issues with MetaviralSPAdes, they can set the `call_metaviralspades` variable to `false` to bypass the SPAdes task and instead *de novo* assemble using [MEGAHIT](https://github.com/voutcn/megahit). Additionally, if the SPAdes task fails during execution, the workflow will automatically fall back to using MEGAHIT for *de novo* assembly.
+
+    ??? dna "`timeout` input parameter"
+        This parameter sets an automated timeout, in minutes, as a workaround to [indefinite stalls](https://github.com/ablab/spades/issues/1436) associated with SPAdes. If this timeout is reached, the fallback assembler will be called. By default, `timeout` is set to `360` minutes. Set to `0` to disable.
 <!-- endif -->
 
     ???+ warning "Non-deterministic output(s)"
