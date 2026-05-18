@@ -218,8 +218,8 @@ abricate	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FAS
 abricate	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 abricate	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 abricate	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-abricate	min_percent_coverage	Int	Minimum DNA %coverage for the Abricate task	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-abricate	min_percent_identity	Int	Minimum DNA %identity for the Abricate task	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+abricate	min_percent_coverage	Int	Minimum DNA %coverage for the ABRicate task	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+abricate	min_percent_identity	Int	Minimum DNA %identity for the ABRicate task	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 add_biosample_accessions	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Terra_2_NCBI	runtime	
 add_biosample_accessions	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Terra_2_NCBI	runtime	
 add_biosample_accessions	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16	Optional	Terra_2_NCBI	docker	
@@ -363,7 +363,7 @@ augur_tree	exclude_sites	File	File of one-based sites to exclude for raw tree bu
 augur_tree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Augur	runtime	
 augur_tree	method	String	The method used to build the tree. Options: "fasttree", "raxml", "iqtree" (default)	iqtree	Optional	Augur	general	
 augur_tree	override_default_args	Boolean	If true, override default tree builder arguments instead of augmenting them	False	Optional	Augur	general	
-augur_tree	substitution_model	String	The substitution model to use; only available for iqtree. Specify "auto" to run ModelTest; model options can be found here	GTR	Optional	Augur	general	
+augur_tree	substitution_model	String	The substitution model to use; only available for IQ-TREE 2. Specify "auto" to run ModelTest; model options can be found here	GTR	Optional	Augur	general	
 augur_tree	tree_builder_args	String	Additional tree builder arguments either augmenting or overriding the default arguments. FastTree defaults: "-nt -nosupport". RAxML defaults: "-f d -m GTRCAT -c 25 -p 235813". IQ-TREE defaults: "-ninit 2 -n 2 -me 0.05 -nt AUTO -redo"		Optional	Augur	general	
 bakta	bakta_opts	String	Parameters to pass to bakta from <https://github.com/oschwengers/bakta#usage>		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 bakta	compliant	Boolean	If true, forces Genbank/ENA/DDJB compliant headers in Bakta output files	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
@@ -564,15 +564,15 @@ consensus	char_unknown	String	Character used to represent unknown bases in the c
 consensus	count_orphans	Boolean	True/False that determines if anomalous read pairs are NOT skipped in variant calling. Anomalous read pairs are those marked in the FLAG field as paired in sequencing but without the properly-paired flag set.	True	Optional	TheiaViral_Illumina_PE	general	
 consensus	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 consensus	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE	runtime	
-consensus	disable_baq	Boolean	True/False that determines if base alignment quality (BAQ) computation should be disabled during samtools mpileup before consensus generation	True	Optional	TheiaViral_Illumina_PE	general	
+consensus	disable_baq	Boolean	True/False that determines if base alignment quality (BAQ) computation should be disabled during `samtools mpileup` before consensus generation	True	Optional	TheiaViral_Illumina_PE	general	
 consensus	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaViral_Illumina_PE	runtime	
 consensus	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me	Optional	TheiaCoV_ONT	docker	
 consensus	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan	Optional	TheiaViral_Illumina_PE	docker	
-consensus	max_depth	Int	For a given position, read at maximum INT number of reads per input file during samtools mpileup before consensus generation	600000	Optional	TheiaViral_Illumina_PE	general	
+consensus	max_depth	Int	For a given position, read at maximum INT number of reads per input file during `samtools mpileup` before consensus generation	600000	Optional	TheiaViral_Illumina_PE	general	
 consensus	medaka_model	String	In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}{device}{caller variant}_{caller_version}. See also <https://github.com/nanoporetech/medaka?tab=readme-ov-file#models>.	r941_min_high_g360	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	general	
 consensus	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 consensus	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE	runtime	
-consensus	min_bq	Int	Minimum base quality required for a base to be considered during samtools mpileup before consensus generation	0	Optional	TheiaViral_Illumina_PE	general	
+consensus	min_bq	Int	Minimum base quality required for a base to be considered during `samtools mpileup` before consensus generation	0	Optional	TheiaViral_Illumina_PE	general	
 consensus	skip_N	Boolean	True/False that determines if "N" bases should be skipped in the consensus sequence	False	Optional	TheiaViral_Illumina_PE	general	
 consensus_qc	cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	runtime	
 consensus_qc	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT, VADR_Update	runtime	
@@ -1908,8 +1908,8 @@ pirate	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optio
 pirate	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/pirate:1.0.5--hdfd78af_0	Optional	Core_Gene_SNP	docker	
 pirate	features	String	Features to use for pangenome construction [default: CDS]	CDS	Optional	Core_Gene_SNP	general	
 pirate	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Core_Gene_SNP	runtime	
-pirate	nucl	Boolean	Boolean variable that instructs pirate to create a pangenome on CDS features using nucleotide identity, rather than amino acid identity, if true.	False	Optional	Core_Gene_SNP	general	
-pirate	panopt	String	Additional arguments for Pirate		Optional	Core_Gene_SNP	general	
+pirate	nucl	Boolean	Boolean variable that instructs PIRATE to create a pangenome on CDS features using nucleotide identity, rather than amino acid identity, if true.	False	Optional	Core_Gene_SNP	general	
+pirate	panopt	String	Additional arguments for PIRATE		Optional	Core_Gene_SNP	general	
 pirate	steps	String	Identity thresholds to use for pangenome construction	50,60,70,80,90,95,98	Optional	Core_Gene_SNP	general	
 plasmidfinder	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 plasmidfinder	database	String	User-specified database		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
@@ -2300,8 +2300,8 @@ snippy_tree_wf	iqtree2_cpu	Int	Number of CPUs to allocate to the task	4	Optional
 snippy_tree_wf	iqtree2_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.1.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	iqtree2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
-snippy_tree_wf	iqtree2_model	String	Nucelotide substitution model to use when generating the final tree with IQTree2. By default, IQtree runs its ModelFinder algorithm to identify the model it thinks best fits your dataset		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
-snippy_tree_wf	iqtree2_opts	String	Additional options to pass to IQTree2		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
+snippy_tree_wf	iqtree2_model	String	Nucelotide substitution model to use when generating the final tree with IQ-TREE 2. By default, IQ-TREE 2 runs its ModelFinder algorithm to identify the model it thinks best fits your dataset		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
+snippy_tree_wf	iqtree2_opts	String	Additional options to pass to IQ-TREE 2		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	iqtree2_ultrafast_bootstraps	Int	Number of replicates for <https://iqtree.github.io/doc/Tutorial#assessing-branch-supports-with-ultrafast-bootstrap-approximation> (Minimum recommended= 1000)	1000	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	midpoint_root_tree	Boolean	A True/False option that determines whether the tree used in the SNP matrix re-ordering task should be re-rooted or not. Options: true or false	True	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	phandango_coloring	Boolean	Boolean variable that tells the data summary task and the reorder matrix task to include a suffix that enables consistent coloring on Phandango; by default, this suffix is not added. To add this suffix set this variable to true.	False	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
@@ -2596,10 +2596,10 @@ theiameta_illumina_pe	call_bracken	Boolean	Call Bracken kraken2 report refinemen
 theiameta_illumina_pe	kraken2_db	File	A Kraken2 database in .tar.gz format	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_standard_08gb_20230605.tar.gz	Optional	TheiaMeta_Illumina_PE	database	
 theiameta_illumina_pe	output_additional_files	Boolean	Output additional files such as aligned and unaligned reads to reference	False	Optional	TheiaMeta_Illumina_PE	general	
 theiameta_illumina_pe	reference	File	Reference file for consensus calling, in FASTA format		Optional	TheiaMeta_Illumina_PE	general	
-theiaprok_fasta	abricate_db	String	Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_FASTA	database	
+theiaprok_fasta	abricate_db	String	Database to use with the ABRicate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_FASTA	database	
 theiaprok_fasta	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	False	Optional	TheiaProk_FASTA	general	
 theiaprok_fasta	bakta_db	String	Database selection for Bakta annotation. Options: light (smaller, faster), full (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.	full	Optional	TheiaProk_FASTA	database	
-theiaprok_fasta	call_abricate	Boolean	Set to true to enable the Abricate task	False	Optional	TheiaProk_FASTA	general	
+theiaprok_fasta	call_abricate	Boolean	Set to true to enable the ABRicate task	False	Optional	TheiaProk_FASTA	general	
 theiaprok_fasta	call_ani	Boolean	Set to true to enable the ANI task	False	Optional	TheiaProk_FASTA	general	
 theiaprok_fasta	call_arln_stats	Boolean	Set to true to enable the return of ARLN required Auto PASS/FAIL outputs	False	Optional	TheiaProk_FASTA	general	
 theiaprok_fasta	call_gamma	Boolean	Set to true in order to enable GAMMA task	False	Optional	TheiaProk_FASTA	general	
@@ -2622,10 +2622,10 @@ theiaprok_fasta	taxon_tables	File	File indicating data table names to copy sampl
 theiaprok_fasta	terra_project	String	The name of the Terra Project where you want the taxon tables written to	NA	Optional	TheiaProk_FASTA	general	
 theiaprok_fasta	terra_workspace	String	The name of the Terra Workspace where you want the taxon tables written to	NA	Optional	TheiaProk_FASTA	general	
 theiaprok_fasta	zip	String	Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task		Optional	TheiaProk_FASTA	general	
-theiaprok_illumina_pe	abricate_db	String	Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_Illumina_PE	database	
+theiaprok_illumina_pe	abricate_db	String	Database to use with the ABRicate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_Illumina_PE	database	
 theiaprok_illumina_pe	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	False	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	bakta_db	String	Database selection for Bakta annotation. Options: light (smaller, faster), full (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.	full	Optional	TheiaProk_Illumina_PE	database	
-theiaprok_illumina_pe	call_abricate	Boolean	Set to true to enable the Abricate task	False	Optional	TheiaProk_Illumina_PE	general	
+theiaprok_illumina_pe	call_abricate	Boolean	Set to true to enable the ABRicate task	False	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	call_ani	Boolean	Set to true to enable the ANI task	False	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	call_arln_stats	Boolean	Set to true to enable the return of ARLN required Auto PASS/FAIL outputs	False	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	call_gamma	Boolean	Set to true in order to enable GAMMA task	False	Optional	TheiaProk_Illumina_PE	general	
@@ -2667,10 +2667,10 @@ theiaprok_illumina_pe	trim_min_length	Int	Specifies minimum length of each read 
 theiaprok_illumina_pe	trim_quality_min_score	Int	Specifies the minimum average quality of bases in a sliding window to be kept	20	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	trim_window_size	Int	Specifies window size for trimming (the number of bases to average the quality across)	10	Optional	TheiaProk_Illumina_PE	general	
 theiaprok_illumina_pe	zip	String	Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task		Optional	TheiaProk_Illumina_PE	general	
-theiaprok_illumina_se	abricate_db	String	Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_Illumina_SE	database	
+theiaprok_illumina_se	abricate_db	String	Database to use with the ABRicate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_Illumina_SE	database	
 theiaprok_illumina_se	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	False	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	bakta_db	String	Database selection for Bakta annotation. Options: light (smaller, faster), full (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.	full	Optional	TheiaProk_Illumina_SE	database	
-theiaprok_illumina_se	call_abricate	Boolean	Set to true to enable the Abricate task	False	Optional	TheiaProk_Illumina_SE	general	
+theiaprok_illumina_se	call_abricate	Boolean	Set to true to enable the ABRicate task	False	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	call_ani	Boolean	Set to true to enable the ANI task	False	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	call_arln_stats	Boolean	Set to true to enable the return of ARLN required Auto PASS/FAIL outputs	False	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	call_gamma	Boolean	Set to true in order to enable GAMMA task	False	Optional	TheiaProk_Illumina_SE	general	
@@ -2709,10 +2709,10 @@ theiaprok_illumina_se	trim_min_length	Int	Specifies minimum length of each read 
 theiaprok_illumina_se	trim_quality_min_score	Int	Specifies the average quality of bases in a sliding window to be kept	30	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	trim_window_size	Int	Specifies window size for trimming (the number of bases to average the quality across)	4	Optional	TheiaProk_Illumina_SE	general	
 theiaprok_illumina_se	zip	String	Will be used in the "zip" column in any taxon-specific tables created in the Export Taxon Tables task		Optional	TheiaProk_Illumina_SE	general	
-theiaprok_ont	abricate_db	String	Database to use with the Abricate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_ONT	database	
+theiaprok_ont	abricate_db	String	Database to use with the ABRicate tool. Options: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB	vfdb	Optional	TheiaProk_ONT	database	
 theiaprok_ont	amrfinder_use_gff	Boolean	Whether or not to use the GFF and protein FASTA files for AMRFinderPlus	False	Optional	TheiaProk_ONT	general	
 theiaprok_ont	bakta_db	String	Database selection for Bakta annotation. Options: light (smaller, faster), full (more comprehensive), or a Google Storage URI (gs://...) pointing to a custom Bakta database archive (.tar.gz). The selected database will be extracted before annotation.	full	Optional	TheiaProk_ONT	database	
-theiaprok_ont	call_abricate	Boolean	Set to true to enable the Abricate task	False	Optional	TheiaProk_ONT	general	
+theiaprok_ont	call_abricate	Boolean	Set to true to enable the ABRicate task	False	Optional	TheiaProk_ONT	general	
 theiaprok_ont	call_ani	Boolean	Set to true to enable the ANI task	False	Optional	TheiaProk_ONT	general	
 theiaprok_ont	call_arln_stats	Boolean	Set to true to enable the return of ARLN required Auto PASS/FAIL outputs	False	Optional	TheiaProk_ONT	general	
 theiaprok_ont	call_gamma	Boolean	Set to true in order to enable GAMMA task	False	Optional	TheiaProk_ONT	general	
@@ -2846,7 +2846,7 @@ wf_microreact_export	download_table	Boolean	When true, will download th specifie
 wf_microreact_export	matrix_files	Array[File]	A list of matrix files a user would like to upload to the Microreact project. Can be written as [this.matrix1, this.matrix2, etc].		Optional	Microreact_Export	general	
 wf_microreact_export	metadata_columns	Array[String]	A list of column names from the input Terra table that the user would like to be included in their Microreact metadata table		Optional	Microreact_Export	general	
 wf_microreact_export	metadata_file	File	To be used if a separate metadata TSV is required other than downloading a Terra table		Optional	Microreact_Export	general	
-wf_microreact_export	project_url	String	URL used to update a microreact project. Can be found as the code within the webpage URL. "microreact.org/project/<project_url>-<title>""		Optional	Microreact_Export	general	
+wf_microreact_export	project_url	String	URL used to update a microreact project. Can be found as the code within the webpage URL.	"microreact.org/project/<project_url>-<title>"		Optional	Microreact_Export	general	
 wf_microreact_export	remove_file_columns	Boolean	When true, this will remove all columns that contain file opjects to prevent the pushing of Google cloud addresses to the metadata table	True	Optional	Microreact_Export	general	
 wf_microreact_export	restricted_access	Boolean	Sets the access level of the project to restricted when true. Only those specifically added will be able to access.	True	Optional	Microreact_Export	general	
 wf_microreact_export	tree_files	Array[File]	A list of tree files a user would like to upload to the Microreact project. Can be written as [this.tree1, this.tree2, etc].		Optional	Microreact_Export	general	
@@ -2858,4 +2858,4 @@ wg_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon (
 zip_files	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Zip_Column_Content	runtime	
 zip_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Zip_Column_Content	runtime	
 zip_files	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Zip_Column_Content	docker	
-zip_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Zip_Column_Content	runtime	
+zip_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Zip_Column_Content	runtime
