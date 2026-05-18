@@ -6786,7 +6786,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#phylogenetic-construction">Phylogenetic Construction</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
-<td>v4.1.0</td>
+<td>vX.X.X</td>
 <td>Yes</td>
 <td>Sample-level, Set-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_Prep_PHB:main?tab=info">Augur_Prep_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Augur_PHB:main?tab=info">Augur_PHB</a></td>
@@ -7043,7 +7043,6 @@
 <ul>
 <li>min_num_unambig = 27000</li>
 <li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_clades_20251008.tsv"</code></li>
-<li>lat_longs_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_lat_longs_20251008.tsv"</code></li>
 <li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"</code></li>
 <li>reference_genbank = <code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_reference_seq_20251008.gb"</code></li>
 <li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_auspice_config_20251008.json"</code></li>
@@ -7057,7 +7056,6 @@
 <details class="toggle">
 <summary>Default values for Flu</summary>
 <ul>
-<li>lat_longs_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"</code></li>
 <li>min_num_unambig = 900</li>
 <li>min_date = 2020.0</li>
 <li>pivot_interval = 1</li>
@@ -7141,7 +7139,6 @@
 <ul>
 <li>min_num_unambig = 150000</li>
 <li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_clades.tsv"</code></li>
-<li>lat_longs_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"</code></li>
 <li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/NC_063383.1.reference.fasta"</code></li>
 <li>reference_genbank = <code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/NC_063383.1_reference.gb"</code></li>
 <li>auspice_config = <code>"gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_auspice_config_mpxv.json"</code></li>
@@ -7156,7 +7153,6 @@
 <ul>
 <li>min_num_unambig = 10850</li>
 <li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_a_clades.tsv"</code></li>
-<li>lat_longs_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"</code></li>
 <li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"</code></li>
 <li>reference_genbank = <code>""gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.gb"</code></li>
 <li>auspice_config = <code>""gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"</code></li>
@@ -7171,7 +7167,6 @@
 <ul>
 <li>min_num_unambig = 10850</li>
 <li>clades_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_b_clades.tsv"</code></li>
-<li>lat_longs_tsv = <code>"gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"</code></li>
 <li>reference_fasta = <code>"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"</code></li>
 <li>reference_genbank = <code>""gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.gb"</code></li>
 <li>auspice_config = <code>""gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config.json"</code></li>
@@ -7362,7 +7357,7 @@
 <td><strong>lat_longs_tsv</strong></td>
 <td>File</td>
 <td>Tab-delimited file of geographic location names with corresponding latitude and longitude values</td>
-<td>Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments and subtypes) here: <a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl">https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl</a>. For an organism without set defaults, a minimal lat-long file is provided to prevent workflow failure, "gs://theiagen-public-resources-rp/empty_files/minimal-lat-longs.tsv", but will not be as useful as a detailed lat-longs file covering all the locations for the samples to be visualized.</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/lat_longs.tsv</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7466,7 +7461,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7506,7 +7501,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7570,7 +7565,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7618,7 +7613,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7738,7 +7733,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7810,7 +7805,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7858,7 +7853,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7898,7 +7893,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0</td>
+<td>us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8322,7 +8317,7 @@
 <td><strong>cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
-<td>2</td>
+<td>1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8338,7 +8333,7 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/broadinstitute/viral-core:2.1.33</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/alpine-plus-bash:3.20.0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8346,15 +8341,7 @@
 <td><strong>memory</strong></td>
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
-<td>7</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>tsv_join</td>
-<td><strong>out_suffix</strong></td>
-<td>String</td>
-<td>Suffix of merged tsv files</td>
-<td>.tsv</td>
+<td>4</td>
 <td>Optional</td>
 </tr>
 <tr>

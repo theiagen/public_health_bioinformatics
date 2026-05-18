@@ -7396,6 +7396,14 @@
 </tr>
 <tr>
 <td>freyja_fastq</td>
+<td><strong>freyja_long_format_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
 <td><strong>freyja_min_coverage</strong></td>
 <td>Int</td>
 <td>Minimum genome coverage threshold (--mincov) used by freyja_to_long.py when generating the freyja_parsed_format_tsv output</td>
@@ -7508,14 +7516,6 @@
 </tr>
 <tr>
 <td>freyja_long_format</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>freyja_long_format</td>
 <td><strong>group_by</strong></td>
 <td>String</td>
 <td>Whether to group samples by collection date or week, options are "date" or "week"</td>
@@ -7528,14 +7528,6 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>freyja_long_format</td>
-<td><strong>mincov</strong></td>
-<td>Int</td>
-<td>The minimum genome coverage used as a cut-off of data to include in the parsed long-format TSV. At the workflow level this is set via freyja_min_coverage (default 60).</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8247,7 +8239,7 @@
 <td><strong>max_unexpected_contaminants</strong></td>
 <td>Int</td>
 <td>Maximum unexpected sequences detected from contaminant FASTA to pass status check</td>
-<td>1</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8918,6 +8910,14 @@
 </tr>
 <tr>
 <td>freyja_fastq</td>
+<td><strong>freyja_long_format_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
 <td><strong>freyja_min_coverage</strong></td>
 <td>Int</td>
 <td>Minimum genome coverage threshold (--mincov) used by freyja_to_long.py when generating the freyja_parsed_format_tsv output</td>
@@ -9030,14 +9030,6 @@
 </tr>
 <tr>
 <td>freyja_long_format</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>freyja_long_format</td>
 <td><strong>group_by</strong></td>
 <td>String</td>
 <td>Whether to group samples by collection date or week, options are "date" or "week"</td>
@@ -9050,14 +9042,6 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>freyja_long_format</td>
-<td><strong>mincov</strong></td>
-<td>Int</td>
-<td>The minimum genome coverage used as a cut-off of data to include in the parsed long-format TSV. At the workflow level this is set via freyja_min_coverage (default 60).</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9769,7 +9753,7 @@
 <td><strong>max_unexpected_contaminants</strong></td>
 <td>Int</td>
 <td>Maximum unexpected sequences detected from contaminant FASTA to pass status check</td>
-<td>1</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10440,6 +10424,14 @@
 </tr>
 <tr>
 <td>freyja_fastq</td>
+<td><strong>freyja_long_format_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
 <td><strong>freyja_min_coverage</strong></td>
 <td>Int</td>
 <td>Minimum genome coverage threshold (--mincov) used by freyja_to_long.py when generating the freyja_parsed_format_tsv output</td>
@@ -10552,14 +10544,6 @@
 </tr>
 <tr>
 <td>freyja_long_format</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>freyja_long_format</td>
 <td><strong>group_by</strong></td>
 <td>String</td>
 <td>Whether to group samples by collection date or week, options are "date" or "week"</td>
@@ -10572,14 +10556,6 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>freyja_long_format</td>
-<td><strong>mincov</strong></td>
-<td>Int</td>
-<td>The minimum genome coverage used as a cut-off of data to include in the parsed long-format TSV. At the workflow level this is set via freyja_min_coverage (default 60).</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11291,7 +11267,7 @@
 <td><strong>max_unexpected_contaminants</strong></td>
 <td>Int</td>
 <td>Maximum unexpected sequences detected from contaminant FASTA to pass status check</td>
-<td>1</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13822,6 +13798,11 @@ Following the trimming of primer sequences, iVar then trims the reads based on a
 <td>Lineages in descending order identified by Freyja and parsed from freyja_demixed file</td>
 </tr>
 <tr>
+<td>freyja_long_format_docker_used</td>
+<td><strong>String</strong></td>
+<td>Docker image used</td>
+</tr>
+<tr>
 <td>freyja_metadata_version</td>
 <td><strong>String</strong></td>
 <td>Name of lineage metadata file used, or the date if update_db is true</td>
@@ -14377,6 +14358,11 @@ Following the trimming of primer sequences, iVar then trims the reads based on a
 <td>Lineages in descending order identified by Freyja and parsed from freyja_demixed file</td>
 </tr>
 <tr>
+<td>freyja_long_format_docker_used</td>
+<td><strong>String</strong></td>
+<td>Docker image used</td>
+</tr>
+<tr>
 <td>freyja_metadata_version</td>
 <td><strong>String</strong></td>
 <td>Name of lineage metadata file used, or the date if update_db is true</td>
@@ -14930,6 +14916,11 @@ Following the trimming of primer sequences, iVar then trims the reads based on a
 <td>freyja_lineages</td>
 <td><strong>String</strong></td>
 <td>Lineages in descending order identified by Freyja and parsed from freyja_demixed file</td>
+</tr>
+<tr>
+<td>freyja_long_format_docker_used</td>
+<td><strong>String</strong></td>
+<td>Docker image used</td>
 </tr>
 <tr>
 <td>freyja_metadata_version</td>
@@ -15288,14 +15279,6 @@ Following the trimming of primer sequences, iVar then trims the reads based on a
 </tr>
 <tr>
 <td>freyja_long_format</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>freyja_long_format</td>
 <td><strong>group_by</strong></td>
 <td>String</td>
 <td>Whether to group samples by collection date or week, options are "date" or "week"</td>
@@ -15308,14 +15291,6 @@ Following the trimming of primer sequences, iVar then trims the reads based on a
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>freyja_long_format</td>
-<td><strong>mincov</strong></td>
-<td>Int</td>
-<td>The minimum genome coverage used as a cut-off of data to include in the parsed long-format TSV. At the workflow level this is set via freyja_min_coverage (default 60).</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15332,14 +15307,6 @@ Following the trimming of primer sequences, iVar then trims the reads based on a
 <td>Int</td>
 <td>Amount of storage (in GB) to allocate to the task</td>
 <td>50</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>freyja_microreact</td>
-<td><strong>docker</strong></td>
-<td>String</td>
-<td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15388,6 +15355,22 @@ Following the trimming of primer sequences, iVar then trims the reads based on a
 <td>Array[String]</td>
 <td>An array containing the Freyja lineages for the sample</td>
 <td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_plot</td>
+<td><strong>freyja_long_format_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_plot</td>
+<td><strong>freyja_microreact_docker</strong></td>
+<td>String</td>
+<td>The Docker container to use for the task</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15444,14 +15427,6 @@ Following the trimming of primer sequences, iVar then trims the reads based on a
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>2</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>freyja_plot_task</td>
-<td><strong>mincov</strong></td>
-<td>Int</td>
-<td>The minimum genome coverage used as a cut-off of data to include in the plot. At the workflow level this is set via freyja_min_coverage (default 60).</td>
-<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -15618,6 +15593,16 @@ Following the trimming of primer sequences, iVar then trims the reads based on a
 <td>freyja_demixed_aggregate</td>
 <td>File</td>
 <td>A TSV file that summarizes the <code>freyja_demixed</code> outputs for all samples</td>
+</tr>
+<tr>
+<td>freyja_long_format_docker_used</td>
+<td>String</td>
+<td>Docker image used</td>
+</tr>
+<tr>
+<td>freyja_microreact_docker_used</td>
+<td>String</td>
+<td>Docker image used</td>
 </tr>
 <tr>
 <td>freyja_microreact_output</td>
