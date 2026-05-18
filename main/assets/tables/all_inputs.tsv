@@ -670,6 +670,7 @@ digger_denovo	spades_cpu	Int	Number of CPUs to allocate to the task	4	Optional	T
 digger_denovo	spades_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
 digger_denovo	spades_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	docker	
 digger_denovo	spades_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
+digger_denovo	spades_timeout	Int	Timeout, in minutes, to kill SPAdes runs - 0 disables this function	0	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 digger_denovo	spades_type	String	SPAdes assembly mode (isolate, meta, rna, etc.), more can be found [here](https://ablab.github.io/spades/running.html)	isolate	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 dorado_basecall	cpu	Int	Number of CPUs to allocate to the task	8	Optional	Dorado_Basecalling	runtime	
 dorado_basecall	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Dorado_Basecalling	runtime	
@@ -2350,6 +2351,7 @@ spades	kmers	String	list of k-mer sizes (must be odd and less than 128)	auto	Opt
 spades	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaViral_Illumina_PE	runtime	
 spades	phred_offset	Int	PHRED quality offset in the input reads (33 or 64)	33	Optional	TheiaViral_Illumina_PE	general	
 spades	spades_opts	String	Additional parameters for Spades assembler		Optional	TheiaViral_Illumina_PE	general	
+spades	timeout	Int	Timeout, in minutes, to kill SPAdes runs - 0 disables this function	360	Optional	TheiaViral_Illumina_PE	general	
 sra_tsv_to_xml	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Terra_2_NCBI	runtime	
 sra_tsv_to_xml	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Terra_2_NCBI	runtime	
 sra_tsv_to_xml	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/broadinstitute/ncbi-tools:2.10.7.10	Optional	Terra_2_NCBI	docker	

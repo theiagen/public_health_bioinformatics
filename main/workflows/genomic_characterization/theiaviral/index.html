@@ -9807,6 +9807,14 @@
 <td>Optional</td>
 </tr>
 <tr>
+<td>spades</td>
+<td><strong>timeout</strong></td>
+<td>Int</td>
+<td>Timeout, in minutes, to kill SPAdes runs - 0 disables this function</td>
+<td>360</td>
+<td>Optional</td>
+</tr>
+<tr>
 <td>theiaviral_illumina_pe</td>
 <td><strong>call_metaviralspades</strong></td>
 <td>Boolean</td>
@@ -13748,6 +13756,10 @@
 <summary><code>call_metaviralspades</code> input parameter</summary>
 <p>This parameter controls whether or not the <code>spades</code> task is called by the workflow. By default, <code>call_metaviralspades</code> is set to <code>true</code> because MetaviralSPAdes is used as the primary assembler. MetaviralSPAdes is generally recommended for most users, but it might not perform optimally on all datasets. If users encounter issues with MetaviralSPAdes, they can set the <code>call_metaviralspades</code> variable to <code>false</code> to bypass the SPAdes task and instead <em>de novo</em> assemble using <a href="https://github.com/voutcn/megahit">MEGAHIT</a>. Additionally, if the SPAdes task fails during execution, the workflow will automatically fall back to using MEGAHIT for <em>de novo</em> assembly.</p>
 </details>
+<details class="dna">
+<summary><code>timeout</code> input parameter</summary>
+<p>This parameter sets an automated timeout, in minutes, as a workaround to <a href="https://github.com/ablab/spades/issues/1436">indefinite stalls</a> associated with SPAdes. If this timeout is reached, the fallback assembler will be called. By default, <code>timeout</code> is set to <code>360</code> minutes. Set to <code>0</code> to disable.</p>
+</details>
 <details class="warning" open="open">
 <summary>Non-deterministic output(s)</summary>
 <p>This task may yield non-deterministic outputs.</p>
@@ -15897,6 +15909,10 @@
 <details class="dna">
 <summary><code>call_metaviralspades</code> input parameter</summary>
 <p>This parameter controls whether or not the <code>spades</code> task is called by the workflow. By default, <code>call_metaviralspades</code> is set to <code>true</code> because MetaviralSPAdes is used as the primary assembler. MetaviralSPAdes is generally recommended for most users, but it might not perform optimally on all datasets. If users encounter issues with MetaviralSPAdes, they can set the <code>call_metaviralspades</code> variable to <code>false</code> to bypass the SPAdes task and instead <em>de novo</em> assemble using <a href="https://github.com/voutcn/megahit">MEGAHIT</a>. Additionally, if the SPAdes task fails during execution, the workflow will automatically fall back to using MEGAHIT for <em>de novo</em> assembly.</p>
+</details>
+<details class="dna">
+<summary><code>timeout</code> input parameter</summary>
+<p>This parameter sets an automated timeout, in minutes, as a workaround to <a href="https://github.com/ablab/spades/issues/1436">indefinite stalls</a> associated with SPAdes. If this timeout is reached, the fallback assembler will be called. By default, <code>timeout</code> is set to <code>360</code> minutes. Set to <code>0</code> to disable.</p>
 </details>
 <details class="warning" open="open">
 <summary>Non-deterministic output(s)</summary>
