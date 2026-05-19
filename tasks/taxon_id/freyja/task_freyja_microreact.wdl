@@ -7,7 +7,7 @@ task freyja_microreact {
   input {
     File freyja_parsed_format_tsv
     String freyja_plot_name
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.2"
     Int disk_size = 50
     Int memory = 4
     Int cpu = 2
