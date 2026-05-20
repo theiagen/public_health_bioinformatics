@@ -198,7 +198,7 @@ workflow theiaeuk_ont {
     String? gambit_next_taxon_rank = gambit.gambit_next_taxon_rank
     String? gambit_version = gambit.gambit_version
     String? gambit_db_version = gambit.gambit_db_version
-    String? manwe_tag = gambit.manwe_tag
+    String? manwe_tag = gambit.merlin_tag
     String? gambit_docker = gambit.gambit_docker
     # C. auris specific outputs for cladetyper
     String? cladetyper_clade = manwe_magic.clade_type
