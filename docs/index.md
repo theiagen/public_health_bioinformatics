@@ -20,7 +20,7 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
     Learn how to use our workflows on Terra!</center>
 
--   <center>[v4.1.0 Release Notes](https://theiagen.notion.site/public-health-bioinformatics-v4-1-0-minor-release-notes){ .md-button .md-button--secondary }
+-   <center>[v4.2.0 Release Notes](https://theiagen.notion.site/public-health-bioinformatics-v4-2-0-minor-release-notes){ .md-button .md-button--secondary }
 
     ---
 
@@ -37,8 +37,8 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 !!! dna "Our Open Source Philosophy"
     PHB source code is publicly available on [GitHub](https://github.com/theiagen/public_health_bioinformatics) and available under [GNU Affero General Public License v3.0](https://github.com/theiagen/public_health_bioinformatics/blob/main/LICENSE)!
 
-    All workflows can be imported directly to [Terra](https://terra.bio/) via the [**Dockstore PHB collection**](https://dockstore.org/organizations/Theiagen/collections/public-health-bioinformatics)! 
-    
+    All workflows can be imported directly to [Terra](https://terra.bio/) via the [**Dockstore PHB collection**](https://dockstore.org/organizations/Theiagen/collections/public-health-bioinformatics)!
+
     You can also use our workflows on the command-line. Please see our guide on how to get started [**here**](getting_started/commandline.md)!
 
 ### Our Workflows
@@ -51,7 +51,7 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
         ![The relationship between the various PHB workflows](assets/figures/WorkflowRelationships.png){data-description="This diagram shows the workflows in the PHB repository. The workflows are grouped in boxes that represent the type of analysis they perform. The arrows between the boxes and the large underlying arrow represent the directional and sequential nature of the workflows."}
 
         This diagram shows the available workflows in the PHB repository. The workflows are grouped in boxes that represent what type of analysis they perform. The arrows between the boxes and the large underlying arrow represent the directional and sequential nature of the workflows.
-        
+
     === "Available Standalone Workflows"
         ![All available standalone workflows can be used to supplement the major workflows](assets/figures/WorkflowRelationships_Standalone.png){data-description="This diagram shows all standalone workflows in the PHB repository that are available for genomic analysis. Workflows are grouped by colors that represent the type of analysis they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives."}
 
@@ -73,13 +73,13 @@ You can expect a careful review of every PR and recieve feedback as needed befor
 
 ### Authorship
 
-<!-- 
+<!--
 A Public Service Announcement regarding calculating the contribution math:
 
-Andrew Hale added a .txt database file to docs/assets that artifically inflates his line 
-count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract 
-55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt 
-database in a later commit (on 2025-09-03), so also please subtract 55,316 from Sage Wright's 
+Andrew Hale added a .txt database file to docs/assets that artifically inflates his line
+count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract
+55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt
+database in a later commit (on 2025-09-03), so also please subtract 55,316 from Sage Wright's
 line count as well.
 
 okay thanks byee

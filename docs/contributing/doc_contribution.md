@@ -71,7 +71,7 @@ The following language conventions should be followed when writing documentation
     Please see the [Admonition documentation](https://zensical.org/docs/authoring/admonitions/) for more information on how to change the title, enable toggles, and more.
 
     The following custom callout types are supported _in addition to the standard admonitions supported by our theme_ [more information on the standard admonitions here](https://zensical.org/docs/authoring/admonitions/#supported-types):
-  
+
     !!! dna
         This is a DNA admonition. Admire the cute green DNA emoji. You can create this with the `!!! dna` syntax.
 

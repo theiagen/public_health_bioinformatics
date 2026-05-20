@@ -8,12 +8,13 @@ task version_capture {
   meta {
     volatile: true
   }
-  command {
-    PHB_Version="PHB v4.1.0"
-    ~{default='' 'export TZ=' + timezone}
-    date +"%Y-%m-%d" > TODAY
-    echo "$PHB_Version" > PHB_VERSION
-  }
+  command <<<
+    VERSION_TAG="v4.2.0"
+    echo "PHB ${VERSION_TAG}" > PHB_VERSION
+
+    export TZ=~{timezone}
+    date -I > TODAY
+  >>>
   output {
     String date = read_string("TODAY")
     String phb_version = read_string("PHB_VERSION")
@@ -23,8 +24,7 @@ task version_capture {
     cpu: 1
     docker: docker
     disks: "local-disk 10 HDD"
-    dx_instance_type: "mem1_ssd1_v2_x2" 
+    dx_instance_type: "mem1_ssd1_v2_x2"
     preemptible: 1
   }
 }
-
