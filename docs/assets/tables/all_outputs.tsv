@@ -661,6 +661,7 @@ lyveset_pooled_snps_vcf	File	SNPs vcf	Lyve_SET
 lyveset_raxml_tree	File	RAxML-generated tree in newick format	Lyve_SET
 lyveset_wf_analysis_date	String	Date analysis was run	Lyve_SET
 lyveset_wf_version	String	Version of PHB used when running Lyveset_PHB	Lyve_SET
+manwe_tag	String	DESCRIPTION	TheiaEuk_ONT
 mashtree_docker	String	The Docker image used to run the mashtree task	MashTree_FASTA
 mashtree_filtered_metadata	File	Optional output file with filtered metadata that is only produced if the optional `summarize_data` task is used	MashTree_FASTA
 mashtree_matrix	File	The distance matrix made	MashTree_FASTA
@@ -698,7 +699,6 @@ meningotype_version	String	Version of meningotype used	TheiaProk_FASTA, TheiaPro
 mercury_prep_n_batch_analysis_date	String	Date analysis was run	Mercury_Prep_N_Batch
 mercury_prep_n_batch_version	String	Version of the PHB repository that hosts this workflow	Mercury_Prep_N_Batch
 mercury_script_version	String	Version of the Mercury tool that was used in this workflow	Mercury_Prep_N_Batch
-merlin_tag	String	Merlin tag for the assembly	TheiaEuk_ONT
 metabuli_classified	File	Classified reads from Metabuli	TheiaViral_ONT
 metabuli_classified_read1	File	FASTQ of `read1` input classified by Metabuli	Metabuli
 metabuli_classified_read2	File	FASTQ of `read2` input classified by Metabuli	Metabuli
