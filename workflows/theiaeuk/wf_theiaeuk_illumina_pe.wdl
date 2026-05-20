@@ -8,7 +8,7 @@ import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_che
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
-import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
+import "../utilities/wf_manwe_magic.wdl" as manwe_magic_workflow
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 
 workflow theiaeuk_illumina_pe {
@@ -176,14 +176,13 @@ workflow theiaeuk_illumina_pe {
             }
         }
       }
-      call merlin_magic_workflow.merlin_magic {
+      call manwe_magic_workflow.manwe_magic {
         input:
-          merlin_tag = gambit.merlin_tag,
+          manwe_tag = gambit.merlin_tag,
           assembly = digger_denovo.assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean,
-          theiaeuk = true
+          read2 = read_QC_trim.read2_clean
       }
     }
   }
@@ -299,34 +298,34 @@ workflow theiaeuk_illumina_pe {
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
     # AMR_Search
-    File? amr_search_results = merlin_magic.amr_search_results
-    File? amr_search_csv = merlin_magic.amr_results_csv
-    File? amr_search_results_pdf = merlin_magic.amr_results_pdf
-    String? amr_search_all_resistances = merlin_magic.amr_search_all_resistances
-    String? amr_search_associated_resistances = merlin_magic.amr_search_associated_resistances
-    String? amr_search_docker = merlin_magic.amr_search_docker
-    String? amr_search_version = merlin_magic.amr_search_version
+    File? amr_search_results = manwe_magic.amr_search_results
+    File? amr_search_csv = manwe_magic.amr_results_csv
+    File? amr_search_results_pdf = manwe_magic.amr_results_pdf
+    String? amr_search_all_resistances = manwe_magic.amr_search_all_resistances
+    String? amr_search_associated_resistances = manwe_magic.amr_search_associated_resistances
+    String? amr_search_docker = manwe_magic.amr_search_docker
+    String? amr_search_version = manwe_magic.amr_search_version
     # Cladetyper Outputs
-    String? cladetyper_clade = merlin_magic.clade_type
-    String? cladetyper_gambit_version = merlin_magic.cladetyper_version
-    String? cladetyper_docker_image = merlin_magic.cladetyper_docker_image
-    String? cladetyper_annotated_reference = merlin_magic.cladetype_annotated_ref
+    String? cladetyper_clade = manwe_magic.clade_type
+    String? cladetyper_gambit_version = manwe_magic.cladetyper_version
+    String? cladetyper_docker_image = manwe_magic.cladetyper_docker_image
+    String? cladetyper_annotated_reference = manwe_magic.cladetype_annotated_ref
     # Snippy Outputs
-    String? theiaeuk_snippy_variants_version = merlin_magic.snippy_variants_version
-    String? theiaeuk_snippy_variants_query = merlin_magic.snippy_variants_query
-    String? theiaeuk_snippy_variants_query_check = merlin_magic.snippy_variants_query_check
-    String? theiaeuk_snippy_variants_hits = merlin_magic.snippy_variants_hits
-    String? theiaeuk_snippy_variants_reference_genome = merlin_magic.snippy_variants_reference_genome
-    String? theiaeuk_snippy_variants_gene_query_results = merlin_magic.snippy_variants_gene_query_results
-    # Array[File]? snippy_outputs = merlin_magic.snippy_outputs
-    String? theiaeuk_snippy_variants_results = merlin_magic.snippy_variants_results
-    String? theiaeuk_snippy_variants_bam = merlin_magic.snippy_variants_bam
-    String? theiaeuk_snippy_variants_bai = merlin_magic.snippy_variants_bai
-    String? theiaeuk_snippy_variants_outdir_tarball = merlin_magic.snippy_variants_outdir_tarball
-    String? theiaeuk_snippy_variants_summary = merlin_magic.snippy_variants_summary
-    String? theiaeuk_snippy_variants_num_reads_aligned = merlin_magic.snippy_variants_num_reads_aligned
-    String? theiaeuk_snippy_variants_coverage_tsv = merlin_magic.snippy_variants_coverage_tsv
-    String? theiaeuk_snippy_variants_num_variants = merlin_magic.snippy_variants_num_variants
-    String? theiaeuk_snippy_variants_percent_ref_coverage = merlin_magic.snippy_variants_percent_ref_coverage
+    String? theiaeuk_snippy_variants_version = manwe_magic.snippy_variants_version
+    String? theiaeuk_snippy_variants_query = manwe_magic.snippy_variants_query
+    String? theiaeuk_snippy_variants_query_check = manwe_magic.snippy_variants_query_check
+    String? theiaeuk_snippy_variants_hits = manwe_magic.snippy_variants_hits
+    String? theiaeuk_snippy_variants_reference_genome = manwe_magic.snippy_variants_reference_genome
+    String? theiaeuk_snippy_variants_gene_query_results = manwe_magic.snippy_variants_gene_query_results
+    # Array[File]? snippy_outputs = manwe_magic.snippy_outputs
+    String? theiaeuk_snippy_variants_results = manwe_magic.snippy_variants_results
+    String? theiaeuk_snippy_variants_bam = manwe_magic.snippy_variants_bam
+    String? theiaeuk_snippy_variants_bai = manwe_magic.snippy_variants_bai
+    String? theiaeuk_snippy_variants_outdir_tarball = manwe_magic.snippy_variants_outdir_tarball
+    String? theiaeuk_snippy_variants_summary = manwe_magic.snippy_variants_summary
+    String? theiaeuk_snippy_variants_num_reads_aligned = manwe_magic.snippy_variants_num_reads_aligned
+    String? theiaeuk_snippy_variants_coverage_tsv = manwe_magic.snippy_variants_coverage_tsv
+    String? theiaeuk_snippy_variants_num_variants = manwe_magic.snippy_variants_num_variants
+    String? theiaeuk_snippy_variants_percent_ref_coverage = manwe_magic.snippy_variants_percent_ref_coverage
   }
 }
