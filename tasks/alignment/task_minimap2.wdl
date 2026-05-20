@@ -35,7 +35,7 @@ task minimap2 {
       -x "~{mode}" \
       -t "~{cpu}" \
       "~{reference}" \
-      ${INPUT_QUERY} > "~{samplename}"_minimap2.out 
+      ${INPUT_QUERY} > "~{samplename}"_minimap2.out
 
   >>>
   output {

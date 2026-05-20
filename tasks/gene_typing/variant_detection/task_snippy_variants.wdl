@@ -38,7 +38,7 @@ task snippy_variants {
       echo "ERROR: No reads or assembly provided"
       exit 1
     fi
-    
+
     # call snippy
     snippy \
       --reference ~{reference_genome_file} \
@@ -76,7 +76,7 @@ task snippy_variants {
 
     # filter depth file to only include positions with depth >= min_coverage
     awk -F "\t" -v cov_var=~{min_coverage} '{ if ($3 >= cov_var) print;}' "~{samplename}/~{samplename}_depth.tsv" > "~{samplename}/~{samplename}_depth_~{min_coverage}.tsv"
-    
+
     # compute proportion of genome with depth >= min_coverage
     reference_length_passed_depth=$(cat "~{samplename}/~{samplename}_depth_~{min_coverage}.tsv" | wc -l)
     echo $reference_length_passed_depth | tee REFERENCE_LENGTH_PASSED_DEPTH

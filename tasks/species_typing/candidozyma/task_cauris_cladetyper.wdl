@@ -6,7 +6,7 @@ task cauris_cladetyper {
     String samplename
     Int kmer_size = 11
     Float max_distance = 0.1
-    
+
     Int cpu = 8
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0"
@@ -73,11 +73,11 @@ task cauris_cladetyper {
         top_clade = raw.read().strip()
     gzip_exts = ('.gz')
     fa_exts = ('.fasta', '.fna', '.ffn', '.faa', '.frn', '.fa')
-    ref2annotation = {"~{ref_clade1}": ["~{if defined(ref_clade1_annotated) then ref_clade1_annotated else 'None'}", "Clade1"], 
+    ref2annotation = {"~{ref_clade1}": ["~{if defined(ref_clade1_annotated) then ref_clade1_annotated else 'None'}", "Clade1"],
                       "~{ref_clade2}": ["~{if defined(ref_clade2_annotated) then ref_clade2_annotated else 'None'}", "Clade2"],
                       "~{ref_clade3}": ["~{if defined(ref_clade3_annotated) then ref_clade3_annotated else 'None'}", "Clade3"],
-                      "~{ref_clade4}": ["~{if defined(ref_clade4_annotated) then ref_clade4_annotated else 'None'}", "Clade4"], 
-                      "~{ref_clade5}": ["~{if defined(ref_clade5_annotated) then ref_clade5_annotated else 'None'}", "Clade5"], 
+                      "~{ref_clade4}": ["~{if defined(ref_clade4_annotated) then ref_clade4_annotated else 'None'}", "Clade4"],
+                      "~{ref_clade5}": ["~{if defined(ref_clade5_annotated) then ref_clade5_annotated else 'None'}", "Clade5"],
                       "~{ref_clade6}": ["~{if defined(ref_clade6_annotated) then ref_clade6_annotated else 'None'}", "Clade6"]}
     claderef, cladetype = "None", ""
     for ref, annotation in ref2annotation.items():
@@ -90,7 +90,7 @@ task cauris_cladetyper {
             claderef = annotation[0]
             cladetype = annotation[1]
             break
-    
+
     # report top clade
     with open("CLADEREF", 'w') as claderef_file:
         claderef_file.write(claderef)
@@ -107,7 +107,7 @@ task cauris_cladetyper {
   runtime {
     docker: docker
     memory: "~{memory} GB"
-    cpu: cpu    
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0

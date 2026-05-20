@@ -39,7 +39,7 @@ task terra_to_bigquery {
   echo "Terra Projects array length: $terra_project_array_len"
   echo "Workspace name array length: $workspace_name_array_len"
   echo "Table Name array length: $table_name_array_len"
-  echo "Table ID array length: $table_id_array_len" 
+  echo "Table ID array length: $table_id_array_len"
   echo "GCS URI prefixes array length: $gcs_uri_prefix_array_len"
   echo "Output filename prefix array: $output_filename_prefix_array_len"
   echo
@@ -47,43 +47,43 @@ task terra_to_bigquery {
   echo "comparing arrays: terra_project_array_len and workspace_name_array_len"
   if [ $terra_project_array_len -eq $workspace_name_array_len ]; then
     echo "Input arrays are of equal length."
-  else 
+  else
     echo "Input arrays are of unequal length. Exiting"
     exit 1
-  fi 
-  
+  fi
+
   echo "comparing arrays: terra_project_array_len and table_name_array_len"
   if [ $terra_project_array_len -eq $table_name_array_len ]; then
     echo "Input arrays are of equal length."
-  else 
+  else
     echo "Input arrays are of unequal length. Exiting. Please check your inputs!"
     exit 1
   fi
-  
+
   echo "comparing arrays: terra_project_array_len and table_id_array_len"
   if [ $terra_project_array_len -eq $table_id_array_len ]; then
     echo "Input arrays are of equal length."
-  else 
+  else
     echo "Input arrays are of unequal length. Exiting. Please check your inputs!"
     exit 1
   fi
-  
+
   echo "comparing arrays: terra_project_array_len and gcs_uri_prefix_array_len"
   if [ $terra_project_array_len -eq $gcs_uri_prefix_array_len ]; then
     echo "Input arrays are of equal length."
-  else 
+  else
     echo "Input arrays are of unequal length. Exiting. Please check your inputs!"
     exit 1
   fi
-  
+
    echo "comparing arrays: terra_project_array_len and output_filename_prefix_array_len"
   if [ $terra_project_array_len -eq $output_filename_prefix_array_len ]; then
     echo "Input arrays are of equal length."
-  else 
+  else
     echo "Input arrays are of unequal length. Exiting. Please check your inputs!"
     exit 1
   fi
-  
+
   # [ $terra_project_array_len -eq $output_filename_prefix_array_len ]; then
   #   echo "Input arrays are of equal length."
   #   echo "Proceeding to transfer the following Terra Data Tables to their specified GCS URIs: ${#gcs_uri_prefix_array[@]}"
@@ -122,7 +122,7 @@ task terra_to_bigquery {
       terra_project=${terra_project_array[$index]}
       workspace_name=${workspace_name_array[$index]}
       table_name=${table_name_array[$index]}
-      # re-enabling table_id to use to fill out the "source_terra_table" field in output JSON instead of using the table_name 
+      # re-enabling table_id to use to fill out the "source_terra_table" field in output JSON instead of using the table_name
       # allows to differentiate between identically-named data tables coming from different counties or labs. eg. "sample" data table for all ClearLabs users
       table_id=${table_id_array[$index]}
       gcs_uri=${gcs_uri_prefix_array[$index]}
@@ -201,11 +201,11 @@ task terra_to_bigquery {
   #   writer = csv.DictWriter(outf, headers.keys(), delimiter='\t', dialect=csv.unix_dialect, quoting=csv.QUOTE_MINIMAL)
   #   writer.writeheader()
   #   writer.writerows(rows)
-  
+
   print("adding source_terra_table column to TSV...")
 
   # TSV add additional column
-  # Add column to capture source terra table (table_name) 
+  # Add column to capture source terra table (table_name)
   with open(table_name + '_' + date_tag +'.tsv','r') as csvinput:
     with open(table_name+'.tsv', 'w') as csvoutput:
         writer = csv.writer(csvoutput, delimiter='\t')
@@ -281,7 +281,7 @@ task terra_to_bigquery {
         echo "${table_name}_${date_tag}.json copied to ${gcs_uri}"
         echo
       fi
-      
+
       echo -e "***Finished exporting and copying of table ${table_name} to the specified google bucket. Moving to the next data table!***"
       echo
 

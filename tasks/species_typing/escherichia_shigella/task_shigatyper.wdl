@@ -5,7 +5,7 @@ task shigatyper {
     description: "ShigaTyper is a quick and easy tool designed to determine Shigella serotype using Illumina (single or paired-end) or Oxford Nanopore reads with low computation requirement. https://github.com/CFSAN-Biostatistics/shigatyper"
   }
   input {
-    File read1 
+    File read1
     File? read2
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5"
@@ -16,7 +16,7 @@ task shigatyper {
   }
   command <<<
     set -euo pipefail
-    
+
     # get version information
     shigatyper --version | sed 's/ShigaTyper //' | tee VERSION.txt
 
@@ -32,7 +32,7 @@ task shigatyper {
       INPUT_READS="--R1 ~{read1} --R2 ~{read2}"
     fi
     echo "INPUT_READS set to: ${INPUT_READS}"
-    echo 
+    echo
 
     # run shigatyper. 2 output files will be ~{samplename}.tsv and ~{samplename}-hits.tsv
     echo "Running ShigaTyper..."

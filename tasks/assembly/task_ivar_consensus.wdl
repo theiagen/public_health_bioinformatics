@@ -11,7 +11,7 @@ task consensus {
     Boolean all_positions = false
     Int min_bq = "0"
     Int min_qual = "20"
-    Float? consensus_min_freq 
+    Float? consensus_min_freq
     Int? consensus_min_depth
     String char_unknown = "N"
     Boolean skip_N = false
@@ -35,7 +35,7 @@ task consensus {
       bwa index "~{reference_genome}"
       # move to primer_schemes dir; bwa fails if reference file not in this location
     else
-      ref_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"  
+      ref_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"
     fi
 
     contig_count=$(grep -c "^>" ${ref_genome})

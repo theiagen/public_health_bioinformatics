@@ -14,10 +14,10 @@ task legsta {
   }
   command <<<
     echo $(legsta --version 2>&1) | sed 's/^.*legsta //; s/ .*\$//;' | tee VERSION
-    
+
     legsta \
       ~{assembly} > ~{samplename}.tsv
-    
+
     # parse outputs
     if [ ! -f ~{samplename}.tsv ]; then
       SBT="No SBT predicted"
@@ -29,7 +29,7 @@ task legsta {
           if [ "$SBT" == "ST" ]; then
             SBT="No SBT predicted"
           fi
-        fi  
+        fi
     fi
 
     echo $SBT | tee LEGSTA_SBT

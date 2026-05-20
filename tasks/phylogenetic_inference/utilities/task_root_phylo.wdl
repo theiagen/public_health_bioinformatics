@@ -5,7 +5,7 @@ task root_phylo {
     File tree
     String? outgroup
     Boolean? midpoint = false
-    
+
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.1.8"
     Int disk_size = 10
     Int memory = 4
@@ -35,7 +35,7 @@ task root_phylo {
     fi
   >>>
   runtime {
-    docker: docker 
+    docker: docker
     memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " HDD"

@@ -25,9 +25,9 @@ task irma {
     set -euo pipefail
 
     ### IRMA configuration ###
-  
+
     # set how to handle deletions
-    if ~{keep_ref_deletions}; then 
+    if ~{keep_ref_deletions}; then
       export DEL_TYPE="NNN"
     else # default in WDL and IRMA
       # IRMA docs state: If sites are completely missing during read gathering use the reference seed (REF), delete by ambiguation (NNN), or just remove (DEL)
@@ -35,7 +35,7 @@ task irma {
     fi
 
     python3 <<CODE
-    import os 
+    import os
     # CPU config
     num_cpus_actual = os.cpu_count()
     del_type = os.environ.get("DEL_TYPE")
@@ -120,7 +120,7 @@ task irma {
     File? seg_mp_assembly = "~{samplename}/amended_consensus/~{samplename}_MP.fasta"
     File? seg_np_assembly = "~{samplename}/amended_consensus/~{samplename}_NP.fasta"
     File? seg_ns_assembly = "~{samplename}/amended_consensus/~{samplename}_NS.fasta"
-    
+
     # adding these "padded" assemblies as outputs to be passed to VADR and MAFFT (antiviral substitutions tasks)
     # we may remove these outputs in the future if IRMA code is updated to not output periods in the consensus sequences
     File? irma_assembly_fasta_padded = "padded_assemblies/~{samplename}.irma.consensus.pad.fasta"

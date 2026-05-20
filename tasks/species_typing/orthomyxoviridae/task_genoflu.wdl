@@ -41,7 +41,7 @@ task genoflu {
       echo "$GENOTYPE" | tee GENOTYPE
       echo "$ALL_SEGMENTS" | tee ALL_SEGMENTS
     fi
-    
+
     mv -v ~{samplename}_*_stats.tsv ~{samplename}_stats.tsv
   >>>
   output {

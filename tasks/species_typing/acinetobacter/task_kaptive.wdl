@@ -10,7 +10,7 @@ task kaptive {
     Int cpu = 4
     Int memory = 8
     # Parameters
-    Int start_end_margin = 10 # determines flexibility in identifying the start and end of a locus - if this value is 10, a locus match that is missing the first 8 base pairs will still count as capturing the start of the locus (default: 10) 
+    Int start_end_margin = 10 # determines flexibility in identifying the start and end of a locus - if this value is 10, a locus match that is missing the first 8 base pairs will still count as capturing the start of the locus (default: 10)
     Float min_percent_coverage = 90.0 # minimum required percent coverage for the gene BLAST search via tBLASTn (default: 90.0)
     Float min_percent_identity = 80.0 # minimum required percent identity for the gene BLAST search via tBLASTn (default: 80.0)
     Float low_gene_percent_identity = 95.0 # percent identity threshold for what counts as a low identity match in the gene BLAST search (default: 95.0)
@@ -20,13 +20,13 @@ task kaptive {
   command <<<
     #find absolute path of kaptive directory
     KAPTIVE_DIR=$(dirname "$(which kaptive.py)")
-    
+
     # Print and save date
     date | tee DATE
-    
+
     # Print and save version
-    kaptive.py --version | tee VERSION 
-    
+    kaptive.py --version | tee VERSION
+
     # Run Kaptive on the input assembly for the K locus
     kaptive.py \
     -t ~{cpu} \
@@ -39,7 +39,7 @@ task kaptive {
     --out ~{samplename}_kaptive_out_k \
     --assembly ~{assembly} \
     --k_refs ${KAPTIVE_DIR}/reference_database/Acinetobacter_baumannii_k_locus_primary_reference.gbk
-    
+
     # parse outputs
     python3 <<CODE
     import csv
@@ -81,7 +81,7 @@ task kaptive {
         other_out_k=tsv_dict['Expected genes outside locus, details']
         Other_Outside_K.write(other_out_k)
     CODE
-    
+
     # Run Kaptive on the input assembly for the OC locus
     kaptive.py \
     -t ~{cpu} \
@@ -94,7 +94,7 @@ task kaptive {
     --out ~{samplename}_kaptive_out_oc \
     --assembly ~{assembly} \
     --k_refs ${KAPTIVE_DIR}/reference_database/Acinetobacter_baumannii_OC_locus_primary_reference.gbk
-    
+
     python3 <<CODE
     import csv
     with open("./~{samplename}_kaptive_out_oc_table.txt",'r') as tsv_file:

@@ -29,7 +29,7 @@ task hicap {
       --broken_gene_length ~{broken_gene_length} \
       --broken_gene_identity ~{min_broken_gene_percent_identity} \
       --threads ~{cpu}
-      
+
     filename=$(basename ~{assembly})
 
     # if there are no hits for a cap locus, no file is produced
@@ -53,7 +53,7 @@ task hicap {
   runtime {
     docker: "~{docker}"
     memory: memory + " GB"
-    cpu: cpu    
+    cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     preemptible: 0

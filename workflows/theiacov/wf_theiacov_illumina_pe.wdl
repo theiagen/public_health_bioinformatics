@@ -73,7 +73,7 @@ workflow theiacov_illumina_pe {
       gene_locations_bed_file = reference_gene_locations_bed,
       genome_length_input = genome_length,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
-      nextclade_dataset_name_input = nextclade_dataset_name,     
+      nextclade_dataset_name_input = nextclade_dataset_name,
       vadr_max_length = vadr_max_length,
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
@@ -192,7 +192,7 @@ workflow theiacov_illumina_pe {
             assembly_metrics_memory = 0,
             irma_cpu = 0,
             irma_disk_size = 0,
-            irma_docker_image = "",        
+            irma_docker_image = "",
             irma_keep_ref_deletions = false,
             irma_memory = 0,
             genoflu_cpu = 0,
@@ -295,7 +295,7 @@ workflow theiacov_illumina_pe {
     File? fastqc_clean1_html = read_QC_trim.fastqc_clean1_html
     File? fastqc_clean2_html = read_QC_trim.fastqc_clean2_html
     String? fastqc_version = read_QC_trim.fastqc_version
-    String? fastqc_docker = read_QC_trim.fastqc_docker    
+    String? fastqc_docker = read_QC_trim.fastqc_docker
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker

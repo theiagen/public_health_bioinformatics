@@ -48,7 +48,7 @@ task ncbi_sftp_upload {
   output {
     Array[File] reports_xmls = glob("*report*.xml")
   }
-  runtime { 
+  runtime {
     cpu: cpu
     memory: memory + " GB"
     disks: "local-disk " + disk_size + " HDD"
@@ -59,7 +59,7 @@ task ncbi_sftp_upload {
   }
 }
 
-task sra_tsv_to_xml { 
+task sra_tsv_to_xml {
   input {
     File meta_submit_tsv
     File config_js
@@ -99,7 +99,7 @@ task sra_tsv_to_xml {
   }
 }
 
-task biosample_submit_tsv_ftp_upload { 
+task biosample_submit_tsv_ftp_upload {
   input {
     File meta_submit_tsv
     File config_js
@@ -146,13 +146,13 @@ task biosample_submit_tsv_ftp_upload {
     grep "accession=" ~{base}-report.*.xml | cut -d ' ' -f12-13 | sed 's/accession="//' | sed 's/" spuid="/\t/' | sed 's/"//' >> generated_accessions-potential-duplicates.tsv
 
     # remove duplicates if any present (depends on which report.xml files are present)
-    sort -u generated_accessions-potential-duplicates.tsv > generated_accessions.tsv 
+    sort -u generated_accessions-potential-duplicates.tsv > generated_accessions.tsv
 
     # extract any "error-stop" messages and their spuids, reasons, and invalid attribute
     # this -A 4 means that it grabs the next 4 lines after the match; may need to be adjusted in the future
     # if no error-stop, will exit code 1 :( so we will reset error code with an echo that will succeed.
     grep -A 4 "error-stop" ~{base}-report.*.xml  > biosample_failures.txt || echo "reset exit code in case of failure"
-    
+
     if [ -f /opt/converter/files/~{base}-submission.xml ]; then # avoid failures???
       cp -v /opt/converter/files/*submission.xml ./~{base}-submission.xml # we upload -- should always be produced.
     fi

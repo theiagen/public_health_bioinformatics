@@ -18,7 +18,7 @@ task raven {
     # date and version control
     raven --version | tee VERSION
 
-    # run Raven 
+    # run Raven
     raven \
       --polishing-rounds ~{raven_polishing_iterations} \
       ~{"--identity " + raven_identity} \

@@ -39,7 +39,7 @@ task prune_table {
       export skip_bio="false"
     fi
 
-    python3 <<CODE 
+    python3 <<CODE
     import pandas as pd
     import numpy as np
     import os
@@ -55,22 +55,22 @@ task prune_table {
         raise KeyError("Column mapping file must contain 'Custom' and 'Required' headers.")
       table = table.rename(columns=dict(zip(mapping["Custom"], mapping["Required"])))
     else:
-      print("No column mapping file provided; proceeding without renaming.") 
+      print("No column mapping file provided; proceeding without renaming.")
 
     # Helper function to remove NA values and return the cleaned table and a table of excluded samples
     def remove_nas(table, required_metadata):
-      table.replace(r'^\s+$', np.nan, regex=True) # replace blank cells with NaNs 
+      table.replace(r'^\s+$', np.nan, regex=True) # replace blank cells with NaNs
       excluded_samples = table[table[required_metadata].isna().any(axis=1)] # write out all rows that are required with NaNs to a new table
       excluded_samples.set_index("~{table_name}_id".lower(), inplace=True) # convert the sample names to the index so we can determine what samples are missing what
       excluded_samples = excluded_samples[excluded_samples.columns.intersection(required_metadata)] # remove all optional columns so only required columns are shown
-      excluded_samples = excluded_samples.loc[:, excluded_samples.isna().any()] # remove all NON-NA columns so only columns with NAs remain; Shelly is a wizard and I love her 
+      excluded_samples = excluded_samples.loc[:, excluded_samples.isna().any()] # remove all NON-NA columns so only columns with NAs remain; Shelly is a wizard and I love her
       table.dropna(subset=required_metadata, axis=0, how='any', inplace=True) # remove all rows that are required with NaNs from table
 
       return table, excluded_samples
 
-    # extract the samples for upload from the entire table	
+    # extract the samples for upload from the entire table
     table = table[table["~{table_name}_id"].isin("~{sep='*' sample_names}".split("*"))]
-    
+
     # Define required and optional metadata fields based on biosample_type
     if (os.environ["skip_bio"] == "false"):
       if ("~{biosample_type}".lower() == "microbe"):
@@ -83,11 +83,11 @@ task prune_table {
         table["attribute_package"] = "SARS-CoV-2.wwsurv.1.0"
       elif ("~{biosample_type}".lower() == "pathogen") or ("pathogen.cl" in "~{biosample_type}".lower()):
         required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "host", "host_disease", "isolation_source", "lat_lon"]
-        optional_metadata = ["sample_title", "isolation_type", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
+        optional_metadata = ["sample_title", "isolation_type", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"]
         table["attribute_package"] = "Pathogen.cl"
       elif ("pathogen.env" in "~{biosample_type}".lower()):
         required_metadata = ["submission_id", "organism", "collected_by", "collection_date", "geo_loc_name", "isolation_source", "lat_lon"]
-        optional_metadata = ["host", "host_disease", "isolation_type", "sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"] 
+        optional_metadata = ["host", "host_disease", "isolation_type", "sample_title", "bioproject_accession", "attribute_package", "strain", "isolate", "culture_collection", "genotype", "host_age", "host_description", "host_disease_outcome", "host_disease_stage", "host_health_state", "host_sex", "host_subject_id", "host_tissue_sampled", "passage_history", "pathotype", "serotype", "serovar", "specimen_voucher", "subgroup", "subtype", "description"]
         table["attribute_package"] = "Pathogen.env.1.0"
       elif ("~{biosample_type}".lower() == "virus"):
         required_metadata = ["submission_id", "organism", "isolate", "collection_date", "geo_loc_name", "isolation_source"]
@@ -118,7 +118,7 @@ task prune_table {
 
     # add bioproject_accesion to table
     table["bioproject_accession"] = "~{bioproject}"
-    
+
     # extract the required metadata from the table
     biosample_metadata = table[required_metadata].copy()
 
@@ -128,7 +128,7 @@ task prune_table {
         biosample_metadata[column] = table[column]
     biosample_metadata.rename(columns={"submission_id" : "sample_name"}, inplace=True)
 
-    # extract the required metadata from the table; rename first column 
+    # extract the required metadata from the table; rename first column
     sra_metadata = table[sra_required].copy()
     for column in sra_optional:
       if column in table.columns:
@@ -217,12 +217,12 @@ task add_biosample_accessions {
   command <<<
     echo "Uploading biosample_accession to the Terra data table"
 
-    ## check if any biosample accessions were made 
+    ## check if any biosample accessions were made
     tail -n +2 ~{generated_accessions} > removed_header
     if [ -s removed_header ]; then
       echo true > PROCEED
       echo "Biosample accessions were generated! Proceeding to SRA submission" > BIOSAMPLE_STATUS
-      
+
       # add biosample accessions to sra_metadata table:
 
       # extract the table_id column from sra_metadata and the biosample accession from attributes and output to table
@@ -230,7 +230,7 @@ task add_biosample_accessions {
       #  BEGIN {OFS="\t"} sets the output field separator to tab
       #  FNR==NR is an if statement saying that you do the first command when true, and the second when false
       #     this is false when attributes is finished being read and the sra_metadata file starts being read
-      #  {a[$2]=$1; next} creates and array where the 2nd column of generated_accessions (sample_name) is the index 
+      #  {a[$2]=$1; next} creates and array where the 2nd column of generated_accessions (sample_name) is the index
       #     and is set equal to column 1 (biosample accession)
       #  {print $1, a[$2]} prints the table_id column and then the biosample_accession in the array that matches
       #     the second column of sra_metadata (sample_name)
@@ -255,11 +255,11 @@ task add_biosample_accessions {
       # echo out the header for the updated sra_metadata file
       echo -e "$(head -n 1 sra_temp.tsv)\tbiosample_accession" > "sra_table_with_biosample_accessions-with-sample-names.tsv"
 
-      # join the biosample_temp with the sra_metadata; using tail to skip the header 
+      # join the biosample_temp with the sra_metadata; using tail to skip the header
       # this join will remove any sra numbers do not have biosample accessions
       join -t $'\t' <(sort <(tail -n+2 sra_temp.tsv)) <(sort <(tail -n+2 biosample_temp.tsv)) >> "sra_table_with_biosample_accessions-with-sample-names.tsv"
 
-      # remove the unnecessary submission_id column 
+      # remove the unnecessary submission_id column
       cut -f2- "sra_table_with_biosample_accessions-with-sample-names.tsv" > "sra_table_with_biosample_accessions.tsv"
 
     else # no biosample_accessions generated

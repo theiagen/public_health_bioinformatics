@@ -15,8 +15,8 @@ task fastqc {
   command <<<
       # get fastqc version
     fastqc --version | tee VERSION
-    
-    # run fastqc: 
+
+    # run fastqc:
     # --extract: uncompress output files
     fastqc \
       --outdir . \
@@ -36,7 +36,7 @@ task fastqc {
     else
       read_pairs="Uneven pairs: R1=${read1_seqs}, R2=${read2_seqs}"
     fi
-    
+
     echo "$read_pairs" | tee READ_PAIRS
   >>>
   output {
@@ -44,7 +44,7 @@ task fastqc {
     File read1_fastqc_zip = "~{read1_name}_fastqc.zip"
     File read2_fastqc_html = "~{read2_name}_fastqc.html"
     File read2_fastqc_zip = "~{read2_name}_fastqc.zip"
-    
+
     Int read1_seq = read_int("READ1_SEQS")
     Int read2_seq = read_int("READ2_SEQS")
     String read_pairs = read_string("READ_PAIRS")
@@ -75,21 +75,21 @@ task fastqc_se {
   command <<<
       # get fastqc version
     fastqc --version | tee VERSION
-        
-    # run fastqc: 
+
+    # run fastqc:
     # --extract: uncompress output files
     fastqc \
       --outdir . \
       --threads ~{cpu} \
       --extract \
-      ~{read1} 
+      ~{read1}
 
     grep "Total Sequences" ~{read1_name}_fastqc/fastqc_data.txt | cut -f 2 | tee READ1_SEQS
   >>>
   output {
     File read1_fastqc_html = "~{read1_name}_fastqc.html"
     File read1_fastqc_zip = "~{read1_name}_fastqc.zip"
-    
+
     Int read1_seq = read_int("READ1_SEQS")
     String version = read_string("VERSION")
     String fastqc_docker = docker

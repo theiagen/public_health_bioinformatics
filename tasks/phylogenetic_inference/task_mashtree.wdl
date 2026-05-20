@@ -19,7 +19,7 @@ task mashtree_fasta {
     # date and version control
     date | tee DATE
     mashtree -v | tee VERSION
-    
+
     # organize input assemblies
     mkdir mash_assemblies
     mv ~{sep=' ' assembly_fasta} mash_assemblies
@@ -35,7 +35,7 @@ task mashtree_fasta {
       ~{'--outmatrix ' + cluster_name + '.tsv'} \
       ~{'--outtree ' + cluster_name + '.nwk'} \
       mash_assemblies/*
-      
+
   >>>
   output {
     String date = read_string("DATE")

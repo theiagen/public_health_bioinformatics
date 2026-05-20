@@ -6,7 +6,7 @@ workflow organism_parameters {
   }
   input {
     String organism
-    
+
     # hiv information
     String hiv_primer_version = "v1"
 
@@ -100,7 +100,7 @@ workflow organism_parameters {
     Int mpox_pivot_interval = 1
     Float mpox_narrow_bandwidth = 0.1666667
     Float mpox_proportion_wide = 0.0
-  }  
+  }
   if (organism == "WNV" || organism == "wnv" || organism == "West Nile virus" || organism == "11082") {
     String wnv_org_name = "WNV"
     String wnv_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/wnv/NC_009942.1_wnv_L1.fasta"
@@ -169,7 +169,7 @@ workflow organism_parameters {
         String yam_ha_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam_20251030.json"
       }
       if (flu_subtype == "H5N1") {
-        # H5N1 is a special case where the dataset used is the h5nx all clades dataset 
+        # H5N1 is a special case where the dataset used is the h5nx all clades dataset
         String h5n1_ha_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.fasta"
         String h5n1_ha_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.gb"
         String h5n1_ha_nextclade_ds_tag = "2026-04-14--11-55-23Z"
@@ -245,7 +245,7 @@ workflow organism_parameters {
     String rsv_b_nextclade_ds_tag = "2026-04-14--11-55-23Z"
     String rsv_b_nextclade_ds_name = "nextstrain/rsv/b/EPI_ISL_1653999"
     Int rsv_b_genome_len = 15500
-    String rsv_b_kraken_target_organism = "human respiratory syncytial virus" 
+    String rsv_b_kraken_target_organism = "human respiratory syncytial virus"
     String rsv_b_vadr_options = "--mkey rsv --xnocomp -r"
     Int rsv_b_vadr_max_length = 15500
     Int rsv_b_vadr_skip_length = 5000
@@ -271,7 +271,7 @@ workflow organism_parameters {
       String hiv_v1_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"
       String hiv_v1_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"
       String hiv_v1_target_organism = "Human immunodeficiency virus 1"
-      Int hiv_v1_genome_len = 9181 
+      Int hiv_v1_genome_len = 9181
     }
     if (hiv_primer_version == "v2" || organism == "11709") {
       String hiv_v2_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"

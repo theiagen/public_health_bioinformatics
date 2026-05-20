@@ -17,10 +17,10 @@ task midas {
     # Decompress the Midas database
     mkdir db
     echo "Decompressing Midas database. Please be patient, this may take a few minutes."
-    tar -C ./db/ -xzf ~{midas_db}  
+    tar -C ./db/ -xzf ~{midas_db}
 
     # Run Midas
-    run_midas.py species ~{samplename} -1 ~{read1} ~{'-2 ' + read2} -d db/midas_db_v1.2/ -t ~{cpu} 
+    run_midas.py species ~{samplename} -1 ~{read1} ~{'-2 ' + read2} -d db/midas_db_v1.2/ -t ~{cpu}
 
     # rename output files
     mv -v ~{samplename}/species/species_profile.txt ~{samplename}/species/~{samplename}_species_profile.tsv
@@ -36,11 +36,11 @@ task midas {
     df = df.round(4)
     # sort by relative abundance
     sorted_df = df.sort_values(by=['relative_abundance'], ascending=False)
-    # split species_id column 
+    # split species_id column
     sorted_df[['genus','species','strain']] = sorted_df['species_id'].str.split(pat = '_',expand=True,n=2)
     # capture primary genus
     primary_genus = sorted_df.genus.iloc[0]
-    # remove rows where genus is primary_genus 
+    # remove rows where genus is primary_genus
     filtered_df = sorted_df[sorted_df['genus'].str.contains(str(primary_genus))==False ]
     # re-sort by relative abundance, just in case
     filtered_sorted_df = filtered_df.sort_values(by=['relative_abundance'], ascending=False)

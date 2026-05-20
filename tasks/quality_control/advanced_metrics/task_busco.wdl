@@ -16,7 +16,7 @@ task busco {
   command <<<
     # get version
     busco --version | tee "VERSION"
- 
+
     # run busco
     # -i input assembly
     # -m geno for genome input
@@ -39,7 +39,7 @@ task busco {
       # sed is to remove extra comma and to add parentheses around the date and remove all tabs
       # finally write to a file called DATABASE
       cat ~{samplename}/short_summary.specific.*.~{samplename}.txt | grep "dataset is:" | cut -d' ' -f 6,9 | sed 's/,//; s/ / (/; s/$/)/; s|[\t]||g' | tee DATABASE
-      
+
       # extract the results string; strip off all tab and space characters; write to a file called BUSCO_RESULTS
       cat ~{samplename}/short_summary.specific.*.~{samplename}.txt | grep "C:" | sed 's|[\t]||g; s| ||g' | tee BUSCO_RESULTS
 

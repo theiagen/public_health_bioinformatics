@@ -16,7 +16,7 @@ task gambitcore {
   command <<<
     # capture date
     date | tee DATE
-    
+
     # copy database to a findable location within the execution directory
     # also, capture the version of the database used
     gambit_db_version="$(basename -- '~{gambit_db_genomes}'); $(basename -- '~{gambit_db_signatures}')"
@@ -26,7 +26,7 @@ task gambitcore {
     cp ~{gambit_db_signatures} ${gambit_db_dir}
 
     echo ${gambit_db_version} | tee GAMBIT_DB_VERSION
-    
+
     # run gambit core check on the assembly
     echo "Running gambitcore with: gambitcore ${gambit_db_dir} ~{assembly}"
     gambitcore \

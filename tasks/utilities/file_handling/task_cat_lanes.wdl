@@ -3,7 +3,7 @@ version 1.0
 task cat_lanes {
   input {
     String samplename
-    
+
     File read1_lane1
     File read1_lane2
     File? read1_lane3
@@ -25,7 +25,7 @@ task cat_lanes {
   command <<<
     # exit task if anything throws an error (important for proper gzip format)
     set -euo pipefail
-    
+
     exists() { [[ -f $1 ]]; }
 
     cat ~{read1_lane1} ~{read1_lane2} ~{read1_lane3} ~{read1_lane4} > "~{samplename}_merged_R1.fastq.gz"

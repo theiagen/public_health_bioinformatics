@@ -19,7 +19,7 @@ task freyja_plot_task {
   command <<<
   # capture version
   freyja --version | tee FREYJA_VERSION
-  
+
   freyja_demixed_array="~{sep=' ' freyja_demixed}"
   samplename_array=(~{sep=' ' samplename})
   samplename_array_len=$(echo "${#samplename_array[@]}")

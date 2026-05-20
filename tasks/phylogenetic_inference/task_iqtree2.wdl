@@ -33,7 +33,7 @@ task iqtree2 {
     echo "DEBUG: IQTREE2_MODEL is set to: " ${IQTREE2_MODEL}
 
     # make sure there are more than 3 genomes in the dataset
-    numGenomes=$(grep -o '>' ~{alignment} | wc -l)    
+    numGenomes=$(grep -o '>' ~{alignment} | wc -l)
     if [ "$numGenomes" -gt 3 ]; then
       cp ~{alignment} ./msa.fasta
 
@@ -42,7 +42,7 @@ task iqtree2 {
       #   -s : input alignment file
       #   -m : model
       #   -bb : number of bootstrap replicates
-      #   -alrt : number of replicates to perform SH-like approximate likelihood ration test  
+      #   -alrt : number of replicates to perform SH-like approximate likelihood ration test
       if [[ -v IQTREE2_MODEL ]] ; then # iqtree2 model set; use -m tag
         echo "DEBUG: running iqtree2 with the -m flag which is used to provide a model; user-specified " ${IQTREE2_MODEL}
         iqtree2 \

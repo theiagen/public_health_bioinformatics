@@ -33,7 +33,7 @@ task augur_traits {
     memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " HDD"
-    disk: disk_size + " GB" 
+    disk: disk_size + " GB"
     dx_instance_type: "mem3_ssd2_x4"
     preemptible: 0
     maxRetries: 3

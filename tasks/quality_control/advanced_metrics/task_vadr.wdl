@@ -79,7 +79,7 @@ task vadr {
       # package up FASTA files into zip file for output. Note: this will work whether the --out_allfasta flag is included or not (there are just more when the option is used)
       mkdir -v vadr_fasta_files
       cp -v ~{out_base}/*.fa vadr_fasta_files
-      zip ~{out_base}_vadr-fasta-files.zip vadr_fasta_files/*.fa 
+      zip ~{out_base}_vadr-fasta-files.zip vadr_fasta_files/*.fa
 
       # prep alerts into a tsv file for parsing
       cut -f 5 "~{out_base}/~{out_base}.vadr.alt.list" | tail -n +2 > "~{out_base}.vadr.alerts.tsv"

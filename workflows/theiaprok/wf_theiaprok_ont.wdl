@@ -43,7 +43,7 @@ workflow theiaprok_ont {
     String terra_project = "NA"
     String terra_workspace = "NA"
     # read screen parameters
-    Boolean skip_screen = false 
+    Boolean skip_screen = false
     Boolean skip_mash = true
     Int min_reads = 5000 # reduced from 7472 because less reads are needed to get to higher coverage due to longer read length
     Int min_basepairs = 2241820
@@ -52,7 +52,7 @@ workflow theiaprok_ont {
     Int min_coverage = 5 # reduced from 10 because some institutions sequence at lower depth because of longer read length
     # module options
     Boolean perform_characterization = true # by default run all characterization steps
-    Boolean amrfinder_use_gff = false # by default use nucleotide fasta for amrfinderplus, but user can set this to true if they want to use a gff and protein fasta file    
+    Boolean amrfinder_use_gff = false # by default use nucleotide fasta for amrfinderplus, but user can set this to true if they want to use a gff and protein fasta file
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_kmerfinder = false
     Boolean call_resfinder = false
@@ -184,7 +184,7 @@ workflow theiaprok_ont {
           }
         }
         call ts_mlst_task.ts_mlst {
-          input: 
+          input:
             assembly = flye_denovo.assembly_fasta,
             samplename = samplename,
             taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
@@ -198,16 +198,16 @@ workflow theiaprok_ont {
               samplename = samplename
           }
         }
-        if (genome_annotation == "bakta") {  
-          if (bakta_db == "light") {  
-            File bakta_db_light = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_light_2025-01-23.tar.gz"  
-          }  
-          if (bakta_db == "full") {  
-            File bakta_db_full = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_full_2024-01-23.tar.gz"            
-          }  
-          if (!(bakta_db == "light" || bakta_db == "full")) {  
-              File bakta_custom_db = bakta_db  
-          } 
+        if (genome_annotation == "bakta") {
+          if (bakta_db == "light") {
+            File bakta_db_light = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_light_2025-01-23.tar.gz"
+          }
+          if (bakta_db == "full") {
+            File bakta_db_full = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_full_2024-01-23.tar.gz"
+          }
+          if (!(bakta_db == "light" || bakta_db == "full")) {
+              File bakta_custom_db = bakta_db
+          }
           call bakta_task.bakta {
             input:
               assembly = flye_denovo.assembly_fasta,
@@ -231,7 +231,7 @@ workflow theiaprok_ont {
           }
         }
         if (defined(qc_check_table)) {
-          call qc_check.qc_check_phb as qc_check_task { 
+          call qc_check.qc_check_phb as qc_check_task {
             input:
               qc_check_table = qc_check_table,
               expected_taxon = expected_taxon,
@@ -803,7 +803,7 @@ workflow theiaprok_ont {
     File? gamma_gff = gamma.gamma_gff
     File? gamma_fasta = gamma.gamma_fasta
     String? gamma_version = gamma.gamma_version
-    String? gamma_docker = gamma.gamma_docker    
+    String? gamma_docker = gamma.gamma_docker
     # AMR_Search
     File? amr_search_results = merlin_magic.amr_search_results
     File? amr_search_csv = merlin_magic.amr_results_csv
@@ -811,7 +811,7 @@ workflow theiaprok_ont {
     String? amr_search_all_resistances = merlin_magic.amr_search_all_resistances
     String? amr_search_associated_resistances = merlin_magic.amr_search_associated_resistances
     String? amr_search_docker = merlin_magic.amr_search_docker
-    String? amr_search_version = merlin_magic.amr_search_version    
+    String? amr_search_version = merlin_magic.amr_search_version
     # Resfinder Outputs
     File? resfinder_pheno_table = resfinder_task.resfinder_pheno_table
     File? resfinder_pheno_table_species = resfinder_task.resfinder_pheno_table_species
@@ -912,7 +912,7 @@ workflow theiaprok_ont {
     File? virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv
     String? virulencefinder_docker = merlin_magic.virulencefinder_docker
     String? virulencefinder_hits = merlin_magic.virulencefinder_hits
-    # stxtyper 
+    # stxtyper
     File? stxtyper_report = merlin_magic.stxtyper_report
     String? stxtyper_docker = merlin_magic.stxtyper_docker
     String? stxtyper_version = merlin_magic.stxtyper_version
@@ -968,7 +968,7 @@ workflow theiaprok_ont {
     String? seqsero2s_predicted_serotype = merlin_magic.seqsero2s_predicted_serotype
     String? seqsero2s_predicted_contamination = merlin_magic.seqsero2s_predicted_contamination
     # Salmonella serotype Typhi Typing
-    File? genotyphi_report_tsv = merlin_magic.genotyphi_report_tsv 
+    File? genotyphi_report_tsv = merlin_magic.genotyphi_report_tsv
     File? genotyphi_mykrobe_json = merlin_magic.genotyphi_mykrobe_json
     String? genotyphi_version = merlin_magic.genotyphi_version
     String? genotyphi_species = merlin_magic.genotyphi_species
@@ -1107,7 +1107,7 @@ workflow theiaprok_ont {
     String? abricate_vibrio_ompW = merlin_magic.abricate_vibrio_ompW
     String? abricate_vibrio_toxR = merlin_magic.abricate_vibrio_toxR
     String? abricate_vibrio_biotype = merlin_magic.abricate_vibrio_biotype
-    String? abricate_vibrio_serogroup = merlin_magic.abricate_vibrio_serogroup 
+    String? abricate_vibrio_serogroup = merlin_magic.abricate_vibrio_serogroup
     # export taxon table output
     String? taxon_table_status = export_taxon_table.status
     # ARLN required outputs

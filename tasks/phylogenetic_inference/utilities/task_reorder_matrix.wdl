@@ -8,7 +8,7 @@ task reorder_matrix {
 
     String? outgroup_root # will preferentially root with outgroup if defined
     Boolean? midpoint_root_tree
-    
+
     Int disk_size = 100
     Int cpu = 1
     Int memory = 2
@@ -27,13 +27,13 @@ task reorder_matrix {
 
     # read in newick tree
     tree = Phylo.read("temporary_tree.nwk", "newick")
-    
+
     # read in matrix into pandas data frame
     snps = pd.read_csv("temporary_matrix.tsv", header=0, index_col=0, delimiter="\t")
 
     # ensure all header and index values are strings for proper reindexing
-    # this is because if sample_name is entirely composed of integers, pandas 
-    # auto-casts them as integers; get_terminals() interprets those as strings. 
+    # this is because if sample_name is entirely composed of integers, pandas
+    # auto-casts them as integers; get_terminals() interprets those as strings.
     # this incompatibility leads to failure and an empty ordered SNP matrix
     snps.columns = snps.columns.astype(str)
     snps.index = snps.index.astype(str)

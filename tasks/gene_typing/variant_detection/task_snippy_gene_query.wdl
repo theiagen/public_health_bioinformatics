@@ -13,21 +13,21 @@ task snippy_gene_query {
   }
   command <<<
     # set variable for if no hits are detected for query genes
-    if [ -z "~{query_gene}" ]; then 
+    if [ -z "~{query_gene}" ]; then
         no_hit="NA: No query gene was provided"
-    else 
-        no_hit="No variants identified in queried genes (~{query_gene}) relative to the reference genome " 
+    else
+        no_hit="No variants identified in queried genes (~{query_gene}) relative to the reference genome "
     fi
 
     # if provided, check that query gene strings are present in reference genome
-    if [ -z "~{reference}" ]; then 
+    if [ -z "~{reference}" ]; then
       echo "No reference genome was provided, query genes were not verified to be in reference genome" >> QUERY_CHECK
-    else 
-      echo "DEBUG: Reference genome was provided, checking that gene queries are in reference genome" 
-      for qgene in $(echo "~{query_gene}" | sed "s/,/ /g"); do 
+    else
+      echo "DEBUG: Reference genome was provided, checking that gene queries are in reference genome"
+      for qgene in $(echo "~{query_gene}" | sed "s/,/ /g"); do
           echo "DEBUG: checking reference genome for ${qgene}"
           num_lines=$(grep "${qgene}" ~{reference} | wc -l)
-          if [ $num_lines -gt 0 ]; then               
+          if [ $num_lines -gt 0 ]; then
             echo "${QUERY_CHECK}${qgene} was found in reference genome" >> QUERY_CHECK
           else
             echo "${QUERY_CHECK}${qgene} was NOT found in reference genome" >> QUERY_CHECK
@@ -40,8 +40,8 @@ task snippy_gene_query {
     # parse gene-specific outputs from snps.tab
     echo -e "samplename,$(head -n 1 ~{snippy_variants_results})" > ./gene_query.csv
     for qgene in $(echo "~{query_gene}" | sed "s/,/ /g"); do
-      # capture queried hits to single file 
-      if grep -q  "${qgene}" ~{snippy_variants_results}; then 
+      # capture queried hits to single file
+      if grep -q  "${qgene}" ~{snippy_variants_results}; then
         grep "${qgene}" ~{snippy_variants_results} | awk '{print "'~{samplename}'," $0}' >> ./gene_query.csv
         # curate relevant columns of queried hits to single output
         # awk syntax: see https://stackoverflow.com/questions/29642102/how-to-make-awk-ignore-the-field-delimiter-inside-double-quotes?noredirect=1&lq=1

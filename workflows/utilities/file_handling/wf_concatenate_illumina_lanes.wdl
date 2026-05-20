@@ -6,12 +6,12 @@ import "../../../tasks/task_versioning.wdl" as versioning
 workflow concatenate_illumina_lanes {
   input {
     String samplename
-    
+
     File read1_lane1
     File read1_lane2
     File? read1_lane3
     File? read1_lane4
-    
+
     File? read2_lane1
     File? read2_lane2
     File? read2_lane3

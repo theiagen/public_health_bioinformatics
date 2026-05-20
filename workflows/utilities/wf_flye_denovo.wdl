@@ -15,15 +15,15 @@ workflow flye_denovo {
     description: "This workflow assembles long-read sequencing data using Flye, optionally trims reads with Porechop, and generates an assembly graph visualization with Bandage. It supports consensus polishing with Medaka or Racon for long reads, or Polypolish for hybrid assemblies with Illumina short reads. The workflow concludes by reorienting contigs with Dnaapler for a final assembly."
   }
   input {
-    File read1 
-    File? illumina_read1                   
-    File? illumina_read2                  
+    File read1
+    File? illumina_read1
+    File? illumina_read2
     String samplename
     String polisher = "medaka"
-    Int polish_rounds = 1                   
+    Int polish_rounds = 1
     Boolean run_porechop = false # Default: Run Porechop
     Boolean skip_polishing = false # Default: Polishing enabled
-    
+
     # Porechop inputs
     Int? porechop_cpu
     Int? porechop_memory
@@ -200,14 +200,14 @@ workflow flye_denovo {
     }
     call task_dnaapler.dnaapler {
       input:
-        input_fasta = filter_contigs.filtered_fasta,   
+        input_fasta = filter_contigs.filtered_fasta,
         samplename = samplename,
         dnaapler_mode = dnaapler_mode,
         cpu = dnaapler_cpu,
         memory = dnaapler_memory,
         disk_size = dnaapler_disk_size
     }
-  output { 
+  output {
     File assembly_fasta = dnaapler.reoriented_fasta
     File bandage_plot = bandage.plot
     File? contigs_gfa = flye.assembly_graph_gfa

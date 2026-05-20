@@ -26,7 +26,7 @@ task animummer {
       REF_GENOME="$(ls /RGDv2/*.fasta)"
       echo "user did not define a reference genome, defaulting to 43 genomes in RGDv2"
       echo "REF_GENOME is set to: ${REF_GENOME}"
-    else 
+    else
       echo "User specified a reference genome, will use this instead of RGDv2"
       REF_GENOME="~{ref_genome}"
       echo "REF_GENOME is set to: ${REF_GENOME}"
@@ -95,13 +95,13 @@ task animummer {
             elif ! awk "BEGIN{ exit (${ANI_HIGHEST_PERCENT_BASES_ALIGNED} < ~{percent_bases_aligned_threshold} )}"; then
               echo "The highest ANI percent bases aligned value ${ANI_HIGHEST_PERCENT_BASES_ALIGNED} is less than the user-defined threshold of ~{percent_bases_aligned_threshold}"
               # overwrite ANI_TOP_SPECIES_MATCH.txt when percent_bases_aligned threshold is not surpassed
-              echo "ANI top species match did not surpass the user-defined percent bases aligned threshold of ~{percent_bases_aligned_threshold}" > ANI_TOP_SPECIES_MATCH.txt 
+              echo "ANI top species match did not surpass the user-defined percent bases aligned threshold of ~{percent_bases_aligned_threshold}" > ANI_TOP_SPECIES_MATCH.txt
             else
               echo "The highest ANI value ${ANI_HIGHEST_PERCENT} is greater than the user-defined threshold ~{ani_threshold}"
               echo "The highest percent bases aligned value ${ANI_HIGHEST_PERCENT_BASES_ALIGNED} is greater than the user-defined threshold ~{percent_bases_aligned_threshold}"
             fi
           fi
-        else 
+        else
           # User specified a reference genome, use fasta filename as output string
           basename "${REF_GENOME}" > ANI_TOP_SPECIES_MATCH.txt
           echo "Reference genome used for ANI is: ${REF_GENOME}"
