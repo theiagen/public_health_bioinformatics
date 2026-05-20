@@ -207,17 +207,13 @@ workflow manwe_magic {
       "Candida auris" : "498019",
       "Candidozyma auris" : "498019"
     }
-    # Check for Salmonella typing first then default to manwe_tag
-    String taxon = select_first([seqsero2s.seqsero2s_predicted_serotype, 
-      seqsero2s_assembly.seqsero2s_predicted_serotype,sistr.sistr_predicted_serotype, manwe_tag])
-
     # Checks for a match to the AMR_Search available taxon codes
-    if (taxon == "Candida auris" || taxon == "Candidozyma auris") {
+    if (manwe_tag == "Candida auris" || manwe_tag == "Candidozyma auris") {
       call amr_search_task.amr_search {
         input:
           input_fasta = assembly,
           samplename = samplename,
-          amr_search_database = taxon_code[taxon],
+          amr_search_database = taxon_code[manwe_tag],
           cpu = amr_search_cpu,
           memory = amr_search_memory,
           disk_size = amr_search_disk_size,
