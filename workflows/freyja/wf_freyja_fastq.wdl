@@ -321,7 +321,7 @@ workflow freyja_fastq {
     File? qualimap_reports_bundle = qualimap.qualimap_reports_bundle
     File? qualimap_coverage_plots_html = qualimap.qualimap_coverage_plots_html
     # Freyja long format outputs
-    String? freyja_long_format_docker = freyja_long_format.freyja_long_format_docker
+    String? freyja_long_format_docker_used = freyja_long_format.freyja_long_format_docker
     File? freyja_parsed_format_tsv = freyja_long_format.freyja_parsed_format_tsv
   }
 }

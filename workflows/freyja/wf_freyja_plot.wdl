@@ -57,8 +57,8 @@ workflow freyja_plot {
   output {
     # Freyja Plot Visualization
     File freyja_demixed_aggregate = freyja_plot_task.demixed_aggregate
-    String? freyja_long_format_docker = freyja_long_format.freyja_long_format_docker
-    String? freyja_microreact_docker = freyja_microreact.freyja_microreact_docker
+    String? freyja_long_format_docker_used = freyja_long_format.freyja_long_format_docker
+    String? freyja_microreact_docker_used = freyja_microreact.freyja_microreact_docker
     File? freyja_microreact_output = freyja_microreact.freyja_microreact_output
     File? freyja_parsed_format_tsv = freyja_long_format.freyja_parsed_format_tsv
     File freyja_plot = freyja_plot_task.freyja_plot
