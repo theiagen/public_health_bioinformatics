@@ -18,8 +18,8 @@ workflow freyja_plot {
     Array[Float]? longitude
     String freyja_plot_name
     Int freyja_min_coverage = 60
-    String freyja_long_format_docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1"
-    String freyja_microreact_docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1"
+    String freyja_long_format_docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.2"
+    String freyja_microreact_docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.2"
   }
   String freyja_plot_name_updated = sub(freyja_plot_name, " ", "_")
   call plot.freyja_plot_task {
