@@ -6729,7 +6729,7 @@
 </li>
 <li>
 <p><strong>Paste the GCS Path into the Workflow Input</strong></p>
-<p>Open the workflow configuration screen in Terra. Paste the copied GCS path into the <code>pod5_bucket_path</code> input field for the Dorado Basecalling Workflow. </p>
+<p>Open the workflow configuration screen in Terra. Paste the copied GCS path into the <code>pod5_bucket_path</code> input field for the Dorado Basecalling Workflow.</p>
 <p>Make sure the select the <code>"Run workflow with inputs defined by file paths"</code> option, as shown.</p>
 <div class="admonition caption">
 <p class="admonition-title">Workflow Inputs</p>
@@ -7183,7 +7183,7 @@
 <li>POD5 files are pre-processed via signal scaling and normalization.</li>
 <li>The machine learning algorithm decodes the sequence signals into nucleotide base calls. There are different machine learning models that can be specified as input; more details can be found above <a href="#model-type-selection">here</a>.</li>
 <li>
-<p><a href="https://dorado-docs.readthedocs.io/en/latest/barcoding/barcoding/">Barcode classification</a> is performed based on the indicated kit name to enable downstream demultiplexing. </p>
+<p><a href="https://dorado-docs.readthedocs.io/en/latest/barcoding/barcoding/">Barcode classification</a> is performed based on the indicated kit name to enable downstream demultiplexing.</p>
 <div class="admonition info">
 <p class="admonition-title">Barcode Trimming</p>
 <p>Barcode trimming is purposefully <strong>disabled</strong> during the basecalling step to ensure accurate demultiplexing in subsequent workflow steps.</p>
@@ -7226,7 +7226,7 @@
 <p>This task takes every basecalled BAM files and demultiplexes them based on the identified barcodes found during basecalling. An individual FASTQ file is generated for each barcode found per BAM file. All FASTQ files that are associated with a single barcode are then merged.</p>
 <div class="admonition info">
 <p class="admonition-title">Disabling Barcode Trimming</p>
-<p>By default, barcodes <em>are</em> trimmed during demultiplexing. </p>
+<p>By default, barcodes <em>are</em> trimmed during demultiplexing.</p>
 <p>This can be disabled by setting the optional input variable <code>demux_no_trim</code> to <code>true</code>. This allows users to retain untrimmed reads for troubleshooting, such as inspecting reads in the "unclassified" folder when reads are mis-binned or other data issues occur.</p>
 </div>
 <div class="admonition techdetails">
@@ -7261,7 +7261,7 @@
 <p>To determine how to format the FASTA file that is expected in <code>custom_primers</code> please see the <a href="https://dorado-docs.readthedocs.io/en/latest/barcoding/custom_primers/">Dorado documentation</a>, specifically the section on "Custom adapter/primer file format".</p>
 <div class="admonition tip">
 <p class="admonition-title">Older Dorado Version Used</p>
-<p>The Dorado version used in this task is not the most up-to-date version (set to v0.8.3) due to a bug in the Dorado subcommand in the latest version (v0.9.0). This will be updated in the future when the bug has been resolved by the Dorado developers. </p>
+<p>The Dorado version used in this task is not the most up-to-date version (set to v0.8.3) due to a bug in the Dorado subcommand in the latest version (v0.9.0). This will be updated in the future when the bug has been resolved by the Dorado developers.</p>
 </div>
 <div class="admonition techdetails">
 <p class="admonition-title">Dorado Trimming Technical Details</p>

@@ -6703,6 +6703,7 @@
 <p class="admonition-title">Please ensure your code adheres to our philosophy of failures</p>
 <p>At Theiagen, we believe our workflows should only fail because of technical issues, not because of poor quality data. Our goal is to create workflows that can handle data in any condition and still provide meaningful results, especially if that data isn’t perfect. For more information, see our <a href="../../getting_started/philosophy/">Workflow Failure Philosophy</a>.</p>
 </div>
+<p>All trailing whitespace should be removed (unless in a TSV, where a trailing tab character is considered valid data).</p>
 <p><strong><em>Modularity and Metadata</em></strong></p>
 <ul>
 <li><strong>Best Practice:</strong> Place tasks and workflows in separate files to maintain modularity and clarity.</li>
@@ -6967,7 +6968,7 @@
 </span><span id="__span-19-8"><a id="__codelineno-19-8" name="__codelineno-19-8" href="#__codelineno-19-8"></a><span class="w">    </span>String<span class="w"> </span>input
 </span><span id="__span-19-9"><a id="__codelineno-19-9" name="__codelineno-19-9" href="#__codelineno-19-9"></a><span class="w">    </span>String<span class="w"> </span><span class="nv">task1_docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-docker.pkg.dev/general-theiagen/task_1:version&quot;</span>
 </span><span id="__span-19-10"><a id="__codelineno-19-10" name="__codelineno-19-10" href="#__codelineno-19-10"></a><span class="w">    </span>String<span class="w"> </span><span class="nv">task2_docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">&quot;us-docker.pkg.dev/general-theiagen//task_2:version&quot;</span>
-</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="w">    </span>String?<span class="w"> </span>hidden_task3_argument<span class="w"> </span>
+</span><span id="__span-19-11"><a id="__codelineno-19-11" name="__codelineno-19-11" href="#__codelineno-19-11"></a><span class="w">    </span>String?<span class="w"> </span>hidden_task3_argument
 </span><span id="__span-19-12"><a id="__codelineno-19-12" name="__codelineno-19-12" href="#__codelineno-19-12"></a><span class="w">    </span>String?<span class="w"> </span>hidden_task3_docker
 </span><span id="__span-19-13"><a id="__codelineno-19-13" name="__codelineno-19-13" href="#__codelineno-19-13"></a><span class="w">    </span>String?<span class="w"> </span>hidden_task4_docker
 </span><span id="__span-19-14"><a id="__codelineno-19-14" name="__codelineno-19-14" href="#__codelineno-19-14"></a><span class="w">  </span><span class="o">}</span>
@@ -6977,7 +6978,7 @@
 </span><span id="__span-19-18"><a id="__codelineno-19-18" name="__codelineno-19-18" href="#__codelineno-19-18"></a><span class="w">      </span><span class="nv">docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>task1_docker
 </span><span id="__span-19-19"><a id="__codelineno-19-19" name="__codelineno-19-19" href="#__codelineno-19-19"></a><span class="w">  </span><span class="o">}</span>
 </span><span id="__span-19-20"><a id="__codelineno-19-20" name="__codelineno-19-20" href="#__codelineno-19-20"></a><span class="w">  </span>call<span class="w"> </span>task2_task.task2<span class="w"> </span><span class="o">{</span>
-</span><span id="__span-19-21"><a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="w">    </span>input:<span class="w"> </span>
+</span><span id="__span-19-21"><a id="__codelineno-19-21" name="__codelineno-19-21" href="#__codelineno-19-21"></a><span class="w">    </span>input:
 </span><span id="__span-19-22"><a id="__codelineno-19-22" name="__codelineno-19-22" href="#__codelineno-19-22"></a><span class="w">      </span><span class="nv">input</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>input,
 </span><span id="__span-19-23"><a id="__codelineno-19-23" name="__codelineno-19-23" href="#__codelineno-19-23"></a><span class="w">      </span><span class="nv">docker</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>task2_docker
 </span><span id="__span-19-24"><a id="__codelineno-19-24" name="__codelineno-19-24" href="#__codelineno-19-24"></a><span class="w">  </span><span class="o">}</span>
@@ -7004,7 +7005,7 @@
 </span><span id="__span-19-45"><a id="__codelineno-19-45" name="__codelineno-19-45" href="#__codelineno-19-45"></a><span class="w">    </span><span class="c1"># Subworkflow outputs for task 4</span>
 </span><span id="__span-19-46"><a id="__codelineno-19-46" name="__codelineno-19-46" href="#__codelineno-19-46"></a><span class="w">    </span>String<span class="w"> </span><span class="nv">task4_output</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>subworkflow.task4_output
 </span><span id="__span-19-47"><a id="__codelineno-19-47" name="__codelineno-19-47" href="#__codelineno-19-47"></a><span class="w">    </span>String<span class="w"> </span><span class="nv">task4_version</span><span class="w"> </span><span class="o">=</span><span class="w"> </span>subworkflow.task4_version
-</span><span id="__span-19-48"><a id="__codelineno-19-48" name="__codelineno-19-48" href="#__codelineno-19-48"></a><span class="w">  </span><span class="o">}</span><span class="w">      </span>
+</span><span id="__span-19-48"><a id="__codelineno-19-48" name="__codelineno-19-48" href="#__codelineno-19-48"></a><span class="w">  </span><span class="o">}</span>
 </span><span id="__span-19-49"><a id="__codelineno-19-49" name="__codelineno-19-49" href="#__codelineno-19-49"></a><span class="o">}</span>
 </span></code></pre></div>
 </details>
@@ -7020,7 +7021,7 @@
 </span><span id="__span-20-8"><a id="__codelineno-20-8" name="__codelineno-20-8" href="#__codelineno-20-8"></a><span class="w">    </span><span class="c1"># optional inputs for tasks inside subworkflows cannot</span>
 </span><span id="__span-20-9"><a id="__codelineno-20-9" name="__codelineno-20-9" href="#__codelineno-20-9"></a><span class="w">    </span><span class="c1">#  be seen on Terra, so make them available at the subworkflow</span>
 </span><span id="__span-20-10"><a id="__codelineno-20-10" name="__codelineno-20-10" href="#__codelineno-20-10"></a><span class="w">    </span><span class="c1">#  level so they can be modified by a Terra user</span>
-</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="w">    </span>String?<span class="w"> </span>task3_argument<span class="w"> </span>
+</span><span id="__span-20-11"><a id="__codelineno-20-11" name="__codelineno-20-11" href="#__codelineno-20-11"></a><span class="w">    </span>String?<span class="w"> </span>task3_argument
 </span><span id="__span-20-12"><a id="__codelineno-20-12" name="__codelineno-20-12" href="#__codelineno-20-12"></a><span class="w">    </span>String?<span class="w"> </span>task3_docker
 </span><span id="__span-20-13"><a id="__codelineno-20-13" name="__codelineno-20-13" href="#__codelineno-20-13"></a><span class="w">    </span>String?<span class="w"> </span>task4_docker
 </span><span id="__span-20-14"><a id="__codelineno-20-14" name="__codelineno-20-14" href="#__codelineno-20-14"></a><span class="w">  </span><span class="o">}</span>
