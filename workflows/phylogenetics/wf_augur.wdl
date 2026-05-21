@@ -57,7 +57,7 @@ workflow augur {
   String build_name_updated = sub(build_name, " ", "_")
 
   # capture the version
-  call versioning.version_capture { 
+  call versioning.version_capture {
     input:
   }
   # skip alignment if alignment_fasta is inputted
@@ -84,17 +84,17 @@ workflow augur {
   # skip clade extraction if augur_clade_columns is not defined
   if (defined(clades_tsv) || (defined(organism_parameters.augur_clades_tsv) && (basename(organism_parameters.augur_clades_tsv) != "minimal-clades.tsv"))) {
     Boolean call_clades = true
-  } 
+  }
   if (defined(sample_metadata_tsvs)) {
     # merge the metadata files
-    call augur_utils.tsv_join { 
+    call augur_utils.tsv_join {
       input:
         input_tsvs = select_first([sample_metadata_tsvs])
     }
   }
   if (defined(call_alignment)) {
     # concatenate all of the input fasta files together
-    call file_handling.cat_files {       
+    call file_handling.cat_files {
       input:
         files_to_cat = assembly_fastas,
         concatenated_file_name = "~{build_name_updated}_concatenated.fasta",
@@ -105,28 +105,28 @@ workflow augur {
   # Alignment preparation
   # remove any sequences that do not meet the quality threshold
   # perform prior to alignment to increase throughput
-  call augur_utils.filter_sequences_by_length { 
+  call augur_utils.filter_sequences_by_length {
     input:
       sequences_fasta = select_first([cat_files.concatenated_files, alignment_fasta]),
       min_non_N = select_first([min_num_unambig, organism_parameters.augur_min_num_unambig]),
   }
   if (defined(call_alignment)) {
     # perform mafft alignment on the sequences
-    call align_task.augur_align { 
+    call align_task.augur_align {
       input:
         assembly_fasta = filter_sequences_by_length.filtered_fasta,
         reference_fasta = select_first([reference_fasta, organism_parameters.reference]),
         remove_reference = remove_reference
     }
   }
-  call augur_utils.fasta_to_ids { 
+  call augur_utils.fasta_to_ids {
     # extract list of remaining sequences (so we know which ones were dropped)
     input:
       sequences_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta])
   }
 
   # create a snp matrix from the alignment
-  call snp_dists_task.snp_dists { 
+  call snp_dists_task.snp_dists {
     input:
       cluster_name = build_name_updated,
       alignment = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta])
@@ -134,13 +134,13 @@ workflow augur {
 
   # Phylogenetic tree reconstruction
   # create a phylogenetic tree
-  call tree_task.augur_tree { 
+  call tree_task.augur_tree {
     input:
       aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
       build_name = build_name_updated
   }
   # root the phylogeny and reorder the SNP matrix to match the phylogeny's tip order
-  call reorder_matrix_task.reorder_matrix { 
+  call reorder_matrix_task.reorder_matrix {
     input:
       input_tree = augur_tree.tree,
       matrix = snp_dists.snp_matrix,
@@ -150,7 +150,7 @@ workflow augur {
   }
 
   # refine and potentially create a time-calibrated phylogenetic tree
-  call refine_task.augur_refine { 
+  call refine_task.augur_refine {
     input:
       aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
       draft_augur_tree = reorder_matrix.tree,
@@ -161,7 +161,7 @@ workflow augur {
 
   if (defined(tsv_join.out_tsv)) {
     # infer ancestral sequences
-    call ancestral_task.augur_ancestral { 
+    call ancestral_task.augur_ancestral {
       input:
         refined_tree = augur_refine.refined_tree,
         aligned_fasta = select_first([augur_align.aligned_fasta, filter_sequences_by_length.filtered_fasta]),
@@ -169,7 +169,7 @@ workflow augur {
     }
     # translate gene regions from nucleotides to amino acids
     if (defined(select_first([reference_genbank, organism_parameters.reference_gbk]))) {
-      call translate_task.augur_translate { 
+      call translate_task.augur_translate {
         input:
           refined_tree = augur_refine.refined_tree,
           ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
@@ -205,7 +205,7 @@ workflow augur {
         }
       }
       # assign clades to nodes based on amino-acid or nucleotide signatures
-      call clades_task.augur_clades { 
+      call clades_task.augur_clades {
         input:
           refined_tree = augur_refine.refined_tree,
           ancestral_nt_muts_json = augur_ancestral.ancestral_nt_muts_json,
@@ -216,7 +216,7 @@ workflow augur {
     }
   }
   # export json files suitable for auspice visualization
-  call export_task.augur_export { 
+  call export_task.augur_export {
     input:
       tree = select_first([augur_refine.refined_tree, augur_tree.tree]),
       metadata = select_first([tsv_join.out_tsv, "gs://theiagen-public-resources-rp/empty_files/empty.fasta"]),
@@ -262,9 +262,9 @@ workflow augur {
     # clade assignments
     File? augur_clade_mutations = clade_extraction_task.clades_tsv
 
-    # list of samples that were kept and met the length filters    
+    # list of samples that were kept and met the length filters
     File augur_keep_list = fasta_to_ids.ids_txt
-  
+
     # snp matrix output
     File augur_snp_matrix = reorder_matrix.ordered_matrix
   }

@@ -19,7 +19,7 @@ task cg_pipeline {
     run_assembly_readMetrics.pl ~{cg_pipe_opts} ~{read1} ~{read2} -e ~{genome_length} > ~{samplename}_readMetrics.tsv
 
     # repeat for concatenated read file
-    # run_assembly_readMetrics.pl extension awareness    
+    # run_assembly_readMetrics.pl extension awareness
     if [[ "~{read1}" == *".gz" ]] ; then
       extension=".gz"
     else
@@ -27,7 +27,7 @@ task cg_pipeline {
     fi
     cat ~{read1} ~{read2} > ~{samplename}_concat.fastq"${extension}"
     run_assembly_readMetrics.pl ~{cg_pipe_opts} ~{samplename}_concat.fastq"${extension}" -e ~{genome_length} > ~{samplename}_concat_readMetrics.tsv
-        
+
     python3 <<CODE
     import csv
     #grab output average quality and coverage scores by column header
@@ -47,7 +47,7 @@ task cg_pipeline {
           except ValueError:
             continue
           print(coverage)
-          
+
         else:
           with open("R2_MEAN_Q", 'wt') as r2_mean_q:
             r2_mean_q.write(line["avgQuality"])
@@ -71,7 +71,7 @@ task cg_pipeline {
           with open("COMBINED_MEAN_Q", 'wt') as combined_mean_q:
             combined_mean_q.write(line["avgQuality"])
           with open("COMBINED_MEAN_LENGTH", 'wt') as combined_mean_length:
-            combined_mean_length.write(line["avgReadLength"])            
+            combined_mean_length.write(line["avgReadLength"])
 
     CODE
 
@@ -82,7 +82,7 @@ task cg_pipeline {
     # same for R2_MEAN_LENGTH
     if [[ ! -f R2_MEAN_LENGTH ]] ; then
       echo "0.0" > R2_MEAN_LENGTH
-    fi    
+    fi
   >>>
   output {
     File cg_pipeline_report = "${samplename}_readMetrics.tsv"

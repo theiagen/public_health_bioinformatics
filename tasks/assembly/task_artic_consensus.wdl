@@ -42,7 +42,7 @@ task consensus {
       if [[ ! -z "~{reference_genome}" ]]; then
         ref_genome="~{reference_genome}"
       else
-        # use reference file in docker--different paths depending on image specified 
+        # use reference file in docker--different paths depending on image specified
         if [[ -d "/fieldbioinformatics" ]]; then
           ref_genome=$(find /fieldbioinformatics/*/primer*schemes/nCoV-2019/V3/ -name "nCoV-2019.reference.fasta")
         else
@@ -69,7 +69,7 @@ task consensus {
     grep -v ">" ~{samplename}.consensus.fasta >> ~{samplename}.medaka.consensus.fasta
 
     # grab reads from alignment
-    samtools fastq -F4 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz  
+    samtools fastq -F4 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz
   >>>
   output {
     File consensus_seq = "~{samplename}.medaka.consensus.fasta"

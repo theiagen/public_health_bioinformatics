@@ -10,14 +10,14 @@ task centroid {
   }
   command <<<
     centroid.py --version | tee CENTROID_VER
-    
+
     mkdir INPUT_DIR
     # copy all asms to a single directory
     cp -v ~{sep=' ' assembly_fasta} INPUT_DIR
-    
+
     # centroid.py expects a positional argument with a path to a directory of FASTA files
     centroid.py INPUT_DIR/
-    
+
     # set bash variable which ONLY has the filename, e.g. "SAMN19774644_contigs.fasta"
     CENTROID_FASTA_FILENAME=$(cat centroid_out.txt)
 

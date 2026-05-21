@@ -104,9 +104,9 @@ task filter_sequences_by_length {
         if (len(ungapseq) - ungapseq.count('N')) >= ~{min_non_N}:
           n_kept += 1
           Bio.SeqIO.write(seq, outf, 'fasta')
-  
+
   n_dropped = n_total-n_kept
-  
+
   with open('IN_COUNT', 'wt') as outf:
     outf.write(str(n_total)+'\n')
   with open('OUT_COUNT', 'wt') as outf:
@@ -149,7 +149,7 @@ task prep_augur_metadata {
     Int cpu = 1
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1"
   }
-  command <<<   
+  command <<<
     # Set strain name by assembly header
     assembly_header=$(grep -e ">" ~{assembly} | sed 's/\s.*$//' |  sed 's/>//g' )
 
@@ -157,11 +157,11 @@ task prep_augur_metadata {
     nextclade_header=""
 
     # if pango_lineage defined, add to metadata
-    if [[ "~{pango_lineage}" ]]; then 
+    if [[ "~{pango_lineage}" ]]; then
       pangolin_header="pango_lineage"
     fi
     # if pango_lineage defined, add to metadata
-    if [[ "~{nextclade_clade}" ]]; then 
+    if [[ "~{nextclade_clade}" ]]; then
       nextclade_header="clade_membership"
     fi
 

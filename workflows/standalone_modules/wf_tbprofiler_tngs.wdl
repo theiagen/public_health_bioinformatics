@@ -39,7 +39,7 @@ workflow tbprofiler_tngs {
   }
   if (run_clockwork) {
     call clockwork_task.clockwork_decon_reads {
-      input: 
+      input:
         read1 = select_first([trimmomatic.read1_trimmed, read1]),
         read2 = select_first([trimmomatic.read2_trimmed, read2]),
         samplename = samplename

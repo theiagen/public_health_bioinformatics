@@ -10,7 +10,7 @@ task dnaapler {
     Int memory = 16
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dnaapler:1.0.1"
   }
-  command <<< 
+  command <<<
     set -euo pipefail
 
     # dnaapler version

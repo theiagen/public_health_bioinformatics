@@ -10,13 +10,13 @@ task flye {
 
     Int flye_polishing_iterations = 1
     Int? minimum_overlap
-    
+
     Float? read_error_rate
     Boolean uneven_coverage_mode = false
     Boolean keep_haplotypes = false
     Boolean no_alt_contigs = false
     Boolean scaffold = false
-      
+
     String? additional_parameters # Any extra Flye-specific parameters
 
     Int cpu = 4
@@ -26,7 +26,7 @@ task flye {
   }
   command <<<
     flye --version | tee VERSION
-    
+
     # genome size parameter requires asm_coverage
     flye \
       "~{read_type}" "~{read1}" \
@@ -57,8 +57,8 @@ task flye {
   >>>
   output {
     File? assembly_fasta = "~{samplename}.assembly.fasta"
-    File? assembly_graph_gfa = "~{samplename}.assembly_graph.gfa" 
-    File? assembly_info = "~{samplename}.assembly_info.txt" 
+    File? assembly_graph_gfa = "~{samplename}.assembly_graph.gfa"
+    File? assembly_info = "~{samplename}.assembly_info.txt"
     String flye_status = read_string("STATUS")
     String flye_version = read_string("VERSION")
     String flye_docker = "~{docker}"

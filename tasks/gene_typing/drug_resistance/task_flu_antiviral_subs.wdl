@@ -41,41 +41,41 @@ task aa_subs {
   python3 <<CODE
   from Bio import AlignIO
   from Bio.Seq import Seq
-  
+
   # Load the alignment file
   #alignment_file_path = 'sequences_aln.fasta'  # Replace with your actual file path
   alignment = AlignIO.read("~{alignment}", "fasta")
-  
+
   # Identify the reference sequence
   reference_id = "${reference_id}"
   reference_sequence_record = next((record for record in alignment if reference_id in record.id), None)
-  
+
   if reference_sequence_record is None:
     raise ValueError(f"Reference sequence with ID ${reference_id} not found in the alignment.")
-  
+
   # Find the position of the first and last non-gap character in the reference sequence
   first_base_pos = next((pos for pos, base in enumerate(reference_sequence_record.seq) if base != '-'), None)
   last_base_pos = next((pos for pos, base in enumerate(reversed(reference_sequence_record.seq)) if base != '-'), None)
-  
+
   # If the alignment is to be trimmed at the end, calculate the correct end position
   if last_base_pos is not None:
     last_base_pos = len(reference_sequence_record.seq) - last_base_pos
-  
+
   # Ensure that the reference sequence is properly defined
   if first_base_pos is None or last_base_pos is None:
     raise ValueError("Could not find valid start and end positions in the reference sequence.")
-  
+
   # Trim the reference sequence to remove leading and trailing gap columns
   reference_sequence = reference_sequence_record.seq[first_base_pos:last_base_pos]
-  
+
   # Function to replace ambiguous nucleotides with 'N'
   def replace_ambiguous_nucleotides(sequence):
     return sequence.upper().replace('-', 'N')
-  
+
   # Function to translate the sequence and handle 'NNN' codons
   def safe_translate(sequence):
     return str(Seq(replace_ambiguous_nucleotides(sequence)).translate())
-  
+
   # Function to find amino acid mutations with protein prefix
   def find_amino_acid_mutations_with_protein_prefix(ref_protein, query_protein, protein_prefix):
     mutations = []
@@ -83,12 +83,12 @@ task aa_subs {
       if ref_aa != query_aa and query_aa != '*':  # Exclude stop codons (*)
         mutations.append(f"{protein_prefix}:{ref_aa}{position}{query_aa}")
     return mutations
-  
+
   # Translate the reference sequence to amino acids
   reference_protein = safe_translate(reference_sequence)
-  
+
   # Open a TSV file for writing the results
-  output_file_path = 'aa_changes.tsv' 
+  output_file_path = 'aa_changes.tsv'
   with open(output_file_path, 'w') as output_file:
     # Write the header to the TSV file
     output_file.write("samplename\taa_changes\n")
@@ -152,7 +152,7 @@ task antiviral_mutations_parser {
     touch OSELTAMIVIR_AASUBS
     touch XOFLUZA_AASUBS
     touch ZANAMIVIR_AASUBS
-    
+
     # Parse outputs using python3
     python3 <<CODE
     import csv
@@ -185,7 +185,7 @@ task antiviral_mutations_parser {
 
     pimodivir_aa_subs = ["PB2:Q306H", "PB2:S324I", "PB2:S324N", "PB2:S324R", "PB2:F404Y", "PB2:M431I", "PB2:N510T"]
     pimodivir_aa_subs = pimodivir_aa_subs + "~{antiviral_aa_subs}".split(',')
-    
+
     rimantadine_aa_subs = ["MP:L26F", "MP:L26I", "MP:V27A", "MP:A30S", "MP:A30T", "MP:S31N", "MP:G34E"]
     rimantadine_aa_subs = rimantadine_aa_subs + "~{antiviral_aa_subs}".split(',')
 
@@ -267,7 +267,7 @@ task antiviral_mutations_parser {
 }
 
 task serialization {
-  input { 
+  input {
     Array[String] flu_A_315675_resistance_array = [""]
     Array[String] flu_amantadine_resistance_array = [""]
     Array[String] flu_compound_367_resistance_array = [""]
@@ -291,27 +291,27 @@ task serialization {
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_A_315675_resistance_array}'.split(',') if mutation != '']))" > flu_A_315675_resistance.txt
 
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_amantadine_resistance_array}'.split(',') if mutation != '']))" > flu_amantadine_resistance.txt
-    
+
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_compound_367_resistance_array}'.split(',') if mutation != '']))" > flu_compound_367_resistance.txt
-    
+
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_favipiravir_resistance_array}'.split(',') if mutation != '']))" > flu_favipiravir_resistance.txt
-    
+
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_fludase_resistance_array}'.split(',') if mutation != '']))" > flu_fludase_resistance.txt
-    
+
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_L_742_001_resistance_array}'.split(',') if mutation != '']))" > flu_L_742_001_resistance.txt
-    
+
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_laninamivir_resistance_array}'.split(',') if mutation != '']))" > flu_laninamivir_resistance.txt
-    
+
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_peramivir_resistance_array}'.split(',') if mutation != '']))" > flu_peramivir_resistance.txt
-    
+
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_pimodivir_resistance_array}'.split(',') if mutation != '']))" > flu_pimodivir_resistance.txt
-    
+
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_oseltamivir_resistance_array}'.split(',') if mutation != '']))" > flu_oseltamivir_resistance.txt
 
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_rimantadine_resistance_array}'.split(',') if mutation != '']))" > flu_rimantadine_resistance.txt
-    
+
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_xofluza_resistance_array}'.split(',') if mutation != '']))" > flu_xofluza_resistance.txt
-    
+
     python3 -c "print(', '.join([mutation for mutation in '~{sep=',' flu_zanamivir_resistance_array}'.split(',') if mutation != '']))" > flu_zanamivir_resistance.txt
   >>>
   output {

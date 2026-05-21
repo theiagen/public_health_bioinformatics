@@ -4,7 +4,7 @@ task usher {
   input {
     Array[File] assembly_fasta
     String tree_name
-    
+
     # the protobuf tree used to place sequences onto -- required if not mpox or sc2
     File? mutation_annotated_tree_pb
 
@@ -27,7 +27,7 @@ task usher {
       wget "https://hgdownload.gi.ucsc.edu/hubs/GCF/014/621/545/GCF_014621545.1/UShER_hMPXV/mpxv.latest.masked.pb.gz"
       # unzip protobuf file into renamed file
       gunzip -c mpxv.latest.masked.pb.gz > mutation.annotated.tree.pb
-      
+
       # download versioning information of protobuf
       wget "https://hgdownload.gi.ucsc.edu/hubs/GCF/014/621/545/GCF_014621545.1/UShER_hMPXV/mpxv.latest.version.txt"
       cat mpxv.latest.version.txt > PROTOBUF_VERSION
@@ -46,7 +46,7 @@ task usher {
       # download versioning information of protobuf
       wget "https://hgdownload.soe.ucsc.edu/goldenPath/wuhCor1/UShER_SARS-CoV-2/public-latest.version.txt"
       cat public-latest.version.txt > PROTOBUF_VERSION
-      
+
       # copy the usher SC2 reference to expected name
       cp /HOME/usher/test/NC_045512v2.fa reference_genome.fasta
       echo "DEBUG: finished downloading sars-cov-2 data"

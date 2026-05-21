@@ -8,7 +8,7 @@ workflow fetch_srr_accession {
     description: "This workflow retrieves the Sequence Read Archive (SRA) accession (SRR) associated with a given sample accession. It uses the fastq-dl tool to fetch metadata from SRA and outputs the SRR accession."
   }
   input {
-    String sample_accession  
+    String sample_accession
   }
   call versioning_task.version_capture {
     input:

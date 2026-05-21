@@ -39,14 +39,14 @@ task stxtyper {
       echo "No hits found by StxTyper" > stxtyper_hits.txt
       echo "0" > stxtyper_num_hits.txt
       echo "DEBUG: No hits found in StxTyper output TSV. Exiting task with exit code 0 now."
-      
+
       # create empty output files
       touch stxtyper_all_hits.txt stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt  stx_novel_hits.txt stxtyper_extended_operons.txt stxtyper_ambiguous_hits.txt
       # put "none" into all of them so task does not fail
       echo "None" | tee stxtyper_all_hits.txt stxtyper_complete_operons.txt stxtyper_partial_hits.txt stxtyper_stx_frameshifts_or_internal_stop_hits.txt stx_novel_hits.txt stxtyper_extended_operons.txt stxtyper_ambiguous_hits.txt
       exit 0
     fi
-    
+
     # check for output file with more than 1 line (meaning hits found); count lines & parse output TSV if so
     if [ "$(wc -l < ~{samplename}_stxtyper.tsv)" -gt 1 ]; then
       echo "Hits found by StxTyper. Counting lines & parsing output TSV now..."
@@ -103,7 +103,7 @@ task stxtyper {
       if [ "$(grep --silent 'AMBIGUOUS' ~{samplename}_stxtyper.tsv; echo $?)" -gt 0 ]; then
         echo "None" > stxtyper_ambiguous_hits.txt
       fi
-      
+
       echo "DEBUG: generating stx_type_all string output now..."
       # sort and uniq so there are no duplicates; then paste into a single comma-separated line with commas
       # sed is to remove any instances of "None" from the output

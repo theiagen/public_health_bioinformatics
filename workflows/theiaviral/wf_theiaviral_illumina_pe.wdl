@@ -37,12 +37,12 @@ workflow theiaviral_illumina_pe {
     String samplename
     String? host # host to dehost reads, if provided
     File kraken2_db = "gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz"
-    File? checkv_db 
+    File? checkv_db
     File? skani_db
     Boolean skip_screen = false # if false, run clean read screening
     Boolean skip_qc = false # If false, run read quality control
     Boolean call_metaviralspades = true # if false, move to megahit immediately
-    Boolean skip_rasusa = true 
+    Boolean skip_rasusa = true
     File? reference_fasta # optional, if provided, will be used instead of dynamic reference selection
     File? reference_gene_locations_bed # optional, if provided will be used for coverage calculations
     Boolean extract_unclassified = true # if true, unclassified reads will be extracted from kraken2 output
@@ -460,14 +460,14 @@ workflow theiaviral_illumina_pe {
     String? vadr_docker = morgana_magic.vadr_docker
     File? vadr_fastas_zip_archive = morgana_magic.vadr_fastas_zip_archive
     # Pangolin outputs
-    String? pango_lineage = morgana_magic.pango_lineage 
-    String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded 
-    String? pangolin_conflicts = morgana_magic.pangolin_conflicts 
-    String? pangolin_notes = morgana_magic.pangolin_notes 
-    String? pangolin_assignment_version = morgana_magic.pangolin_assignment_version 
-    File? pango_lineage_report = morgana_magic.pango_lineage_report 
-    String? pangolin_docker = morgana_magic.pangolin_docker 
-    String? pangolin_versions = morgana_magic.pangolin_versions 
+    String? pango_lineage = morgana_magic.pango_lineage
+    String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded
+    String? pangolin_conflicts = morgana_magic.pangolin_conflicts
+    String? pangolin_notes = morgana_magic.pangolin_notes
+    String? pangolin_assignment_version = morgana_magic.pangolin_assignment_version
+    File? pango_lineage_report = morgana_magic.pango_lineage_report
+    String? pangolin_docker = morgana_magic.pangolin_docker
+    String? pangolin_versions = morgana_magic.pangolin_versions
     # Nextclade outputs for all organisms
     String? nextclade_version = morgana_magic.nextclade_version
     String? nextclade_docker = morgana_magic.nextclade_docker

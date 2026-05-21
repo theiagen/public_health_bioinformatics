@@ -11,7 +11,7 @@ task nextclade_v3 {
     File? gene_annotations_gff
     File? nextclade_pathogen_json
     File? input_ref
-    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.21.0" 
+    String docker = "us-docker.pkg.dev/general-theiagen/nextstrain/nextclade:3.21.0"
     String? dataset_name
     String verbosity = "warn" # other options are: "off" "error" "info" "debug" and "trace"
     String? dataset_tag
@@ -59,7 +59,7 @@ task nextclade_v3 {
     disks:  "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB" # TES
     dx_instance_type: "mem1_ssd1_v2_x2"
-    maxRetries: 3 
+    maxRetries: 3
   }
   output {
     String nextclade_version = read_string("NEXTCLADE_VERSION")
@@ -183,7 +183,7 @@ task nextclade_v3_set {
         -o nextclade_dataset_dir \
         --verbosity ~{verbosity}
     fi
-    
+
 
     # If no reference sequence is provided, use the reference tree from the dataset
     if [ -z "~{reference_tree_json}" ]; then

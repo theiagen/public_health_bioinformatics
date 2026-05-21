@@ -14,7 +14,7 @@ workflow theiaeuk_ont {
   input {
     File read1
     String samplename
-    Int genome_length = 50000000 
+    Int genome_length = 50000000
     String workflow_series = "theiaeuk"
     Int busco_memory = 24
     String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
@@ -213,7 +213,7 @@ workflow theiaeuk_ont {
     String? amr_search_all_resistances = merlin_magic.amr_search_all_resistances
     String? amr_search_associated_resistances = merlin_magic.amr_search_associated_resistances
     String? amr_search_docker = merlin_magic.amr_search_docker
-    String? amr_search_version = merlin_magic.amr_search_version  
+    String? amr_search_version = merlin_magic.amr_search_version
     # Snippy variants outputs
     String? theiaeuk_snippy_variants_version = merlin_magic.snippy_variants_version
     String? theiaeuk_snippy_variants_query = merlin_magic.snippy_variants_query

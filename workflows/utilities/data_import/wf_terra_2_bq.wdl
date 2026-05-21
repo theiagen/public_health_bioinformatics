@@ -21,4 +21,3 @@ workflow terra_2_bq {
         output_filename_prefix = output_filename_prefixs
     }
 }
-

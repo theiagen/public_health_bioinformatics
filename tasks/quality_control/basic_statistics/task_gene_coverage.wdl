@@ -8,7 +8,7 @@ task gene_coverage {
     Int sc2_s_gene_start = 21563
     Int sc2_s_gene_stop = 25384
     Int min_depth = 10
-    
+
     String organism
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15"
     Int disk_size = 100
@@ -30,7 +30,7 @@ task gene_coverage {
 
       if [ -z "s_gene_depth" ] ; then s_gene_depth="0"; fi
       echo "$s_gene_depth" | tee S_GENE_DEPTH
-      
+
       sgene=$(samtools depth -J -r "${chromosome}:~{sc2_s_gene_start}-~{sc2_s_gene_stop}" ~{bamfile} | awk -F "\t" '{if ($3 > ~{min_depth}) print;}' | wc -l )
       sgene_pc=$(python3 -c "print ( round( ($sgene / 3822 ) * 100, 2 ) )")
       echo "$sgene_pc" | tee S_GENE_PC

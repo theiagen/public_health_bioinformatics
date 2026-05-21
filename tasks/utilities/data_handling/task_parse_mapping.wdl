@@ -16,15 +16,15 @@ task retrieve_aligned_contig_paf {
   command <<<
     # retrieve contig name
     cut -f1 "~{paf}" > contig_names.txt
-    
+
     # extract mapped contigs in FASTA format
     seqkit grep -f contig_names.txt "~{assembly}" > "~{samplename}".fasta
 
     echo "Original contig number:"
-    cat ~{assembly} | grep ">" | wc -l 
-    
+    cat ~{assembly} | grep ">" | wc -l
+
     echo "Filtered contig number:"
-    cat "~{samplename}".fasta | grep ">" | wc -l 
+    cat "~{samplename}".fasta | grep ">" | wc -l
 
     if [ ! -s "~{samplename}".fasta ]; then
       echo "Filtered assembly file is empty! Removing..."
@@ -134,7 +134,7 @@ task bam_to_unaligned_fastq {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.17"
     Int disk_size = 100
     Int cpu = 2
-    Int memory = 8   
+    Int memory = 8
   }
   command <<<
     # Samtools verion capture

@@ -18,8 +18,8 @@ workflow ivar_consensus {
     File? reference_gff
     Boolean trim_primers
     Int min_depth
-    Float variant_min_freq 
-    Float consensus_min_freq 
+    Float variant_min_freq
+    Float consensus_min_freq
     File? primer_bed
     Boolean? skip_N
     Int? ivar_bwa_cpu

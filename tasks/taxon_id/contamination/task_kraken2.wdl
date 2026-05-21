@@ -27,7 +27,7 @@ task kraken2 {
 
     # Decompress the Kraken2 database
     mkdir db
-    tar -C ./db/ -xzvf ~{kraken2_db} 
+    tar -C ./db/ -xzvf ~{kraken2_db}
 
     if ! [ -z ~{read2} ]; then
       echo "DEBUG: Reads are paired..."
@@ -62,8 +62,8 @@ task kraken2 {
     gzip *.fastq
     gzip ~{samplename}.classifiedreads.txt
 
-    # Run Bracken 
-    touch BRACKEN_VERSION 
+    # Run Bracken
+    touch BRACKEN_VERSION
     if [ "~{call_bracken}" == "true" ]; then
       bracken -v | sed 's/^Bracken //' | tee BRACKEN_VERSION
       # check if kraken database is compatible with bracken (i.e. has kmer distribution files)
@@ -129,7 +129,7 @@ task kraken2 {
     if [ ! -z "~{target_organism}" ]; then
       echo "DEBUG: Target org designated: ~{target_organism}"
       percent_target_organism=$(grep -P "\s~{target_organism}$" $kraken2_report  | cut -f1 | head -n1 )
-      if [ -z "$percent_target_organism" ]; then 
+      if [ -z "$percent_target_organism" ]; then
         percent_target_organism="0"
       fi
       echo "INFO: Percentage target organism (~{target_organism}):"
@@ -151,11 +151,11 @@ task kraken2 {
     File? kraken2_unclassified_read2 = "~{samplename}.unclassified_2.fastq.gz"
     File kraken2_classified_read1 = "~{samplename}.classified_1.fastq.gz"
     File? kraken2_classified_read2 = "~{samplename}.classified_2.fastq.gz"
-    String kraken2_database = kraken2_db 
+    String kraken2_database = kraken2_db
     String kraken2_docker = docker
   }
   runtime {
-    docker: "~{docker}" 
+    docker: "~{docker}"
     memory: "~{memory} GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " SSD"

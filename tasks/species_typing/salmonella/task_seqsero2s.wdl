@@ -6,25 +6,25 @@ task seqsero2s {
     File? read2
     String samplename
     String mode = "a"
-    
+
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/seqsero2s:1.1.4"
     Int disk_size = 100
     Int memory = 16
     Int cpu = 4
-    
+
     Boolean paired_end
   }
   command <<<
     set -euo pipefail
-    
+
     # Print and save version
     SeqSero2S.py --version | tee VERSION
 
-    # Usage: SeqSero2S.py 
+    # Usage: SeqSero2S.py
     # -m <string> (which workflow to apply, 'a' (raw reads allele micro-assembly), 'k' (raw reads and genome assembly k-mer), default=a)
     # -t <string> (input data type; HARDCODED TO EITHER '2' (separated paired-end reads) OR '3' (single reads) SINCE ASSEMBLY INPUT IS HANDLED SEPARATELY)
     # -i <file> (/path/to/input/file)
-    # -p <int> (number of threads for allele mode) 
+    # -p <int> (number of threads for allele mode)
     # -d <string> (output directory name)
     # -n <string> (sets the sample name in the report output)
 
@@ -41,20 +41,20 @@ task seqsero2s {
     import csv
     with open("./~{samplename}_seqsero2s_output_dir/SeqSero_result.tsv",'r') as tsv_file:
       tsv_reader = list(csv.DictReader(tsv_file, delimiter="\t"))
-      
+
       for line in tsv_reader:
         with open ("PREDICTED_ANTIGENIC_PROFILE", 'wt') as Predicted_Antigen_Prof:
           pred_ant_prof=line['Predicted antigenic profile']
           if not pred_ant_prof:
             pred_ant_prof = "None"
           Predicted_Antigen_Prof.write(pred_ant_prof)
-        
+
         with open ("PREDICTED_SEROTYPE", 'wt') as Predicted_Sero:
           pred_sero=line['Predicted serotype']
           if not pred_sero:
             pred_sero = "None"
           Predicted_Sero.write(pred_sero)
-        
+
         with open ("CONTAMINATION", 'wt') as Contamination_Detected:
           cont_detect=line['Potential inter-serotype contamination']
           if not cont_detect:
@@ -103,11 +103,11 @@ task seqsero2s_assembly {
     # Print and save version
     SeqSero2S.py --version | tee VERSION
 
-    # Usage: SeqSero2S.py 
+    # Usage: SeqSero2S.py
     # -m <string> (which workflow to apply; HARDCODED TO 'k' (raw reads and genome assembly k-mer) SINCE THE OTHER MODE DOES NOT WORK ON ASSEMBLIES)
     # -t <string> (input data type; HARDCODED TO '4' SINCE ONLY ASSEMBLIES ARE USED HERE)
     # -i <file> (/path/to/input/file)
-    # -p <int> (number of threads for allele mode, if p > 4, only 4 threads will be used for assembly since the amount of extracted reads is small) 
+    # -p <int> (number of threads for allele mode, if p > 4, only 4 threads will be used for assembly since the amount of extracted reads is small)
     # -d <string> (output directory name)
     # -n <string> (sets the sample name in the report output)
 
@@ -125,20 +125,20 @@ task seqsero2s_assembly {
     import csv
     with open("./~{samplename}_seqsero2s_output_dir/SeqSero_result.tsv",'r') as tsv_file:
       tsv_reader = list(csv.DictReader(tsv_file, delimiter="\t"))
-      
+
       for line in tsv_reader:
         with open ("PREDICTED_ANTIGENIC_PROFILE", 'wt') as Predicted_Antigen_Prof:
           pred_ant_prof=line['Predicted antigenic profile']
           if not pred_ant_prof:
             pred_ant_prof = "None"
           Predicted_Antigen_Prof.write(pred_ant_prof)
-        
+
         with open ("PREDICTED_SEROTYPE", 'wt') as Predicted_Sero:
           pred_sero=line['Predicted serotype']
           if not pred_sero:
             pred_sero = "None"
           Predicted_Sero.write(pred_sero)
-          
+
         with open ("NOTE", 'wt') as Note:
           note=line['Note']
           if not note:

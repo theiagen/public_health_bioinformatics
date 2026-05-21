@@ -2,7 +2,7 @@ version 1.0
 
 task fetch_srr_accession {
   input {
-    String sample_accession 
+    String sample_accession
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-dl:2.0.4--pyhdfd78af_0"
     Int disk_size = 10
     Int cpu = 2
@@ -11,7 +11,7 @@ task fetch_srr_accession {
   meta {
     volatile: true
   }
-  command <<< 
+  command <<<
     set -euo pipefail
 
     # Output the current date and fastq-dl version for debugging

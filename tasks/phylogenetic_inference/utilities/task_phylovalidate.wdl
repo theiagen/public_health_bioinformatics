@@ -6,7 +6,7 @@ task phylovalidate {
     File tree2
     Float? max_distance
     Boolean resolve_tip_discrepancies = true
-    
+
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.2.0"
     Int disk_size = 10
     Int memory = 4
@@ -83,7 +83,7 @@ task phylovalidate {
     fi
   >>>
   runtime {
-    docker: docker 
+    docker: docker
     memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " HDD"

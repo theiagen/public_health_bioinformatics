@@ -32,12 +32,12 @@ task pirate {
   ~{true="--nucl" false="" nucl} \
   ~{true="--align" false="" align} \
   ~{'--pan-opt ' + panopt} \
-  ~{'--threads ' + cpu} 
-   
+  ~{'--threads ' + cpu}
+
   # generate gene_presence_absence.csv
   PIRATE_to_roary.pl -i PIRATE/PIRATE.*.tsv -o ~{cluster_name}_gene_presence_absence.csv
-  
-  # rename outputs with cluster name 
+
+  # rename outputs with cluster name
   mv PIRATE/PIRATE.pangenome_summary.txt PIRATE/~{cluster_name}_pangenome_summary.txt
   mv PIRATE/PIRATE.log PIRATE/~{cluster_name}.log
   mv PIRATE/PIRATE.gene_families.ordered.tsv PIRATE/~{cluster_name}_gene_families.ordered.tsv
@@ -60,14 +60,14 @@ task pirate {
     File pirate_unique_alleles = "PIRATE/~{cluster_name}_unique_alleles.tsv"
     File pirate_binary_fasta = "PIRATE/~{cluster_name}_binary_presence_absence.fasta"
     File pirate_binary_tree = "PIRATE/~{cluster_name}_binary_presence_absence.nwk"
-    File pirate_pangenome_gfa = "PIRATE/~{cluster_name}_pangenome.gfa" 
-    File? pirate_pangenome_alignment_fasta = "PIRATE/~{cluster_name}_pangenome_alignment.fasta" 
-    File? pirate_pangenome_alignment_gff = "PIRATE/~{cluster_name}_pangenome_alignment.gff" 
-    File? pirate_core_alignment_fasta = "PIRATE/~{cluster_name}_core_alignment.fasta" 
-    File? pirate_core_alignment_gff = "PIRATE/~{cluster_name}_core_alignment.gff" 
+    File pirate_pangenome_gfa = "PIRATE/~{cluster_name}_pangenome.gfa"
+    File? pirate_pangenome_alignment_fasta = "PIRATE/~{cluster_name}_pangenome_alignment.fasta"
+    File? pirate_pangenome_alignment_gff = "PIRATE/~{cluster_name}_pangenome_alignment.gff"
+    File? pirate_core_alignment_fasta = "PIRATE/~{cluster_name}_core_alignment.fasta"
+    File? pirate_core_alignment_gff = "PIRATE/~{cluster_name}_core_alignment.gff"
     File? pirate_presence_absence_csv = "~{cluster_name}_gene_presence_absence.csv"
     String pirate_docker_image = docker_image
-  } 
+  }
   runtime {
     docker: "~{docker_image}"
     memory: "~{memory} GB"

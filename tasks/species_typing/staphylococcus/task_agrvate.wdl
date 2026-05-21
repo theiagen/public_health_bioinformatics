@@ -25,10 +25,10 @@ task agrvate {
     agrvate \
         ~{true="--typing-only" false="" typing_only} \
         -i ~{assembly} \
-        -m 
+        -m
 
     # agrvate names output directory and file based on name of .fasta file, so <prefix>.fasta as input results in <prefix>-results/ outdir
-    # and results in <prefix>-results/<prefix>-summary.tab files 
+    # and results in <prefix>-results/<prefix>-summary.tab files
     basename=$(basename ~{assembly})
     # strip off anything after the period
     fasta_prefix=${basename%.*}
@@ -50,7 +50,7 @@ task agrvate {
       echo "0. non-canonical agrD" >AGR_CANONICAL
     elif [[ $(cat AGR_CANONICAL) == "u" ]]; then
       echo "u. unknown agrD" >AGR_CANNONICAL
-    else 
+    else
       echo "result unrecognized, please see summary agrvate TSV file" >AGR_CANONICAL
     fi
 
@@ -61,7 +61,7 @@ task agrvate {
       echo "m. multiple agr groups found" >AGR_MULTIPLE
     elif [[ $(cat AGR_MULTIPLE) == "u" ]]; then
       echo "u. unknown agr groups found" >AGR_MULTIPLE
-    else 
+    else
       echo "result unrecognized, please see summary agrvate TSV file" >AGR_MULTIPLE
     fi
 
