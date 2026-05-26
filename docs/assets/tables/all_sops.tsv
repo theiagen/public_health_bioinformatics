@@ -39,3 +39,4 @@ SOP	Workflow	SOP version	PHB version compatibility	Pathogen/Category	Current or 
 [Getting Started in Terra](../assets/sops/TG-TER-03_GettingStartedInTerra_v5.pdf)	None	v5	v3	Getting Started	Current
 [Analyzing Bacterial Data in Terra using Theiagen’s TheiaProk Illumina PE](../assets/sops/TG-TP-PE_TheiaProk_IlluminaPE_v4.pdf)	TheiaProk	v3	v4, v3	Bacterial	Current
 [TEST](../assets/sops/TG-TP-PE_TheiaProk_IlluminaPE_v4.pdf)	TheiaProk	v3	v4, v3	Bacterial	Current
+[Submitting Sequence Data to NCBI using Theiagen’s Terra_2_NCBI_PHB Workflow] (../assets/sops/TG-NCBI-01_Terra2NCBI_v1.pdf) None v1 v3 Data Import Current
