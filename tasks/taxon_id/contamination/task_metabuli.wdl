@@ -63,7 +63,7 @@ task metabuli {
 
     # Quantify percent human
     awk -F '\t' '$6 ~ /Homo sapiens$/ {print $1}' output_dir/~{samplename}_report.tsv > PERCENT_HUMAN
-    if [[ ! -s PERCENT_HUMAN ]]; then 
+    if [[ ! -s PERCENT_HUMAN ]]; then
       echo "DEBUG: Homo sapiens comprises 0% of reads"
       echo "0" > PERCENT_HUMAN
     else
@@ -86,27 +86,27 @@ task metabuli {
           ~{"--tax-id " + taxon_id} \
           --seq-mode ~{seq_mode} \
           --extract-format 2
-    
+
         # Metabuli extract removes the "gz" suffix, then the final file extension
         read1_basename=$(sed -Ee 's/(.*)\.([^\.]+)$/\1/' <<< $(basename ~{read1} .gz))
-    
+
         # Metabuli extract will create a file in the input directory, which is variable between
         # miniwdl and Terra, so we have to dynamically find it -_-
         find . -type f -name ${read1_basename}_~{taxon_id}.fq -exec mv {} . \;
-    
+
         # Output file name of metabuli extract is static. Compress the extracted reads
         gzip ${read1_basename}_~{taxon_id}.fq
-    
+
         # Update the final extracted reads output file name
         cp ${read1_basename}_~{taxon_id}.fq.gz ~{samplename}_~{taxon_id}_extracted_1.fq.gz
-    
+
         if [[ ~{if defined(read2) then "true" else "false"} == "true" ]]; then
           read2_basename=$(sed -Ee 's/(.*)\.([^\.]+)$/\1/' <<< $(basename ~{read2} .gz))
           find . -type f -name ${read2_basename}_~{taxon_id}.fq -exec mv {} . \;
           gzip ${read2_basename}_~{taxon_id}.fq
           cp ${read2_basename}_~{taxon_id}.fq.gz ~{samplename}_~{taxon_id}_extracted_2.fq.gz
         fi
-    
+
         # Metabuli doesn't have a built-in option for extracting unclassified reads
         if [[ ~{extract_unclassified} == "true" ]]; then
           echo "DEBUG: Extracting unclassified reads"
@@ -118,7 +118,7 @@ task metabuli {
             zcat ${read2_basename}_~{taxon_id}.fq.gz ~{samplename}_unclassified_2.fq.gz | gzip > ~{samplename}_~{taxon_id}_extracted_2.fq.gz
           fi
         fi
-  
+
       else
         echo "0" > PERCENT_TARGET_LINEAGE
         echo "ERROR: Taxon ID ~{taxon_id} not found in report, skipping read extraction"

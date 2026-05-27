@@ -143,8 +143,8 @@ workflow merlin_magic {
     Float? lissero_min_percent_coverage
     # pasty options
     Int? pasty_min_percent_identity
-    Int? pasty_min_percent_coverage      
-    # pbptyper options 
+    Int? pasty_min_percent_coverage
+    # pbptyper options
     Int? pbptyper_min_percent_identity
     Int? pbptyper_min_percent_coverage
     # popppunk options - primarily files we host
@@ -241,7 +241,7 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         database = "AcinetobacterPlasmidTyping",
-        min_percent_identity = abricate_abaum_min_percent_identity, 
+        min_percent_identity = abricate_abaum_min_percent_identity,
         min_percent_coverage = abricate_abaum_min_percent_coverage,
         docker = abricate_abaum_docker_image
     }
@@ -264,7 +264,7 @@ workflow merlin_magic {
     #
     # FYI see the GAMBIT task for all merlin_tag designations but all Escherichia and Shigella
     # species are given "Escherichia" merlin_tag designation, except for Shigella sonnei which
-    # is given "Shigella sonnei" merlin_tag. The reason being is that S. sonnei does have a 
+    # is given "Shigella sonnei" merlin_tag. The reason being is that S. sonnei does have a
     # species-specific tool (sonneityping) where the other Shigella species do not (flexneri,
     # dysenteriae, boydii, etc.)
     call serotypefinder_task.serotypefinder {
@@ -329,7 +329,7 @@ workflow merlin_magic {
   }
   if (merlin_tag == "Shigella sonnei") {
     if (!assembly_only) {
-      call sonneityping_task.sonneityping { 
+      call sonneityping_task.sonneityping {
         input:
           read1 = select_first([read1]),
           read2 = read2,
@@ -352,7 +352,7 @@ workflow merlin_magic {
   }
   if (merlin_tag == "Salmonella") {
     call sistr_task.sistr {
-      input: 
+      input:
         assembly = assembly,
         samplename = samplename,
         use_full_cgmlst_db = sistr_use_full_cgmlst_db,
@@ -362,7 +362,7 @@ workflow merlin_magic {
         disk_size = sistr_disk_size
     }
     if (!ont_data && !assembly_only) {
-      call seqsero2s_task.seqsero2s { 
+      call seqsero2s_task.seqsero2s {
         input:
           read1 = select_first([read1]),
           read2 = read2,
@@ -381,7 +381,7 @@ workflow merlin_magic {
     }
     if ((select_first([seqsero2s.seqsero2s_predicted_serotype, seqsero2s_assembly.seqsero2s_predicted_serotype]) == "Typhi" || sistr.sistr_predicted_serotype == "Typhi") && !assembly_only) {
       call genotyphi.genotyphi as genotyphi_task {
-        input: 
+        input:
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
@@ -538,7 +538,7 @@ workflow merlin_magic {
         min_percent_identity = pbptyper_min_percent_identity,
         min_percent_coverage = pbptyper_min_percent_coverage,
         docker = pbptyper_docker_image
-    }      
+    }
     if (call_poppunk) {
       call poppunk_spneumo.poppunk as poppunk_task {
         input:
@@ -559,8 +559,8 @@ workflow merlin_magic {
           GPS_unword_clusters_csv = poppunk_gps_unword_clusters_csv,
           GPS_refs_graph_gt = poppunk_gps_refs_graph_gt,
           GPS_external_clusters_csv = poppunk_gps_external_clusters_csv,
-          docker = poppunk_docker_image, 
-      }  
+          docker = poppunk_docker_image,
+      }
     }
   }
   if (merlin_tag == "Streptococcus pyogenes") {
@@ -639,7 +639,7 @@ workflow merlin_magic {
   } 
   # Running AMR Search
   if (run_amr_search) {
-    # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search. 
+    # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search.
     Map[String, String] taxon_code = {
       "Neisseria gonorrhoeae" : "485",
       "Staphylococcus aureus" : "1280",
@@ -651,7 +651,7 @@ workflow merlin_magic {
       "Vibrio cholerae" : "666"
     }
     # Check for Salmonella typing first then default to merlin_tag
-    String taxon = select_first([seqsero2s.seqsero2s_predicted_serotype, 
+    String taxon = select_first([seqsero2s.seqsero2s_predicted_serotype,
       seqsero2s_assembly.seqsero2s_predicted_serotype,sistr.sistr_predicted_serotype, merlin_tag])
 
     # Checks for a match to the AMR_Search available taxon codes
@@ -674,7 +674,7 @@ workflow merlin_magic {
   }
   output {
     # theiaprok
-    # AMR_Search 
+    # AMR_Search
     File? amr_search_results = amr_search.amr_search_json_output
     File? amr_results_csv = amr_search.amr_search_output_csv
     File? amr_results_pdf = amr_search.amr_search_output_pdf
@@ -736,7 +736,7 @@ workflow merlin_magic {
     File? virulencefinder_report_tsv = virulencefinder.virulencefinder_report_tsv
     String? virulencefinder_docker = virulencefinder.virulencefinder_docker
     String? virulencefinder_hits = virulencefinder.virulencefinder_hits
-    # stxtyper 
+    # stxtyper
     File? stxtyper_report = stxtyper.stxtyper_report
     String? stxtyper_docker = stxtyper.stxtyper_docker
     String? stxtyper_version = stxtyper.stxtyper_version
@@ -792,7 +792,7 @@ workflow merlin_magic {
     String? seqsero2s_predicted_contamination = seqsero2s.seqsero2s_predicted_contamination
     String seqsero2s_note = select_first([seqsero2s.seqsero2s_note, seqsero2s_assembly.seqsero2s_note, ""])
     # Salmonella serotype Typhi typing
-    File? genotyphi_report_tsv = genotyphi_task.genotyphi_report_tsv 
+    File? genotyphi_report_tsv = genotyphi_task.genotyphi_report_tsv
     File? genotyphi_mykrobe_json = genotyphi_task.genotyphi_mykrobe_json
     String? genotyphi_version = genotyphi_task.genotyphi_version
     String? genotyphi_species = genotyphi_task.genotyphi_species

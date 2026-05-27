@@ -25,7 +25,7 @@ task bwa {
       bwa index "~{reference_genome}"
       # move to primer_schemes dir; bwa fails if reference file not in this location
     else
-      ref_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"  
+      ref_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"
     fi
 
     # set cat command based on compression
@@ -47,7 +47,7 @@ task bwa {
     samtools sort \
       -@ ~{cpu} - \
       > ~{samplename}.sorted.sam
-    
+
     # convert SAM to BAM that does not include unaligned reads; "-F 4" = exclude unaligned reads
     # FYI - secondary and supplementary alignments are included in output BAM file
     samtools view \
@@ -115,7 +115,7 @@ task bwa {
     fi
 
     # index BAMs
-    samtools index ~{samplename}.sorted.aligned.bam 
+    samtools index ~{samplename}.sorted.aligned.bam
     samtools index ~{samplename}.sorted.unaligned-reads.bam
 
     # count output reads to ensure we are outputting all reads, regardless if the aligned or not
@@ -180,7 +180,7 @@ task bwa_all {
     else
       echo "Reference genome is already indexed: ~{draft_assembly_fasta}"
     fi
-    
+
     bwa mem -t ~{cpu} -a ~{draft_assembly_fasta} ~{read1} > ~{samplename}_R1.sam
     bwa mem -t ~{cpu} -a ~{draft_assembly_fasta} ~{read2} > ~{samplename}_R2.sam
 

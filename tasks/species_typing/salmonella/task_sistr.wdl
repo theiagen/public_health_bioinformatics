@@ -13,7 +13,7 @@ task sistr {
     Int disk_size = 100
 
     # Parameters
-    # --use-full-cgmlst-db  Use the full set of cgMLST alleles which can include highly similar alleles. By default the smaller "centroid" alleles or representative alleles are used for each marker. 
+    # --use-full-cgmlst-db  Use the full set of cgMLST alleles which can include highly similar alleles. By default the smaller "centroid" alleles or representative alleles are used for each marker.
     Boolean use_full_cgmlst_db = false
   }
   command <<<
@@ -31,10 +31,10 @@ task sistr {
       --output-prediction ~{samplename} \
       --output-format tab \
       ~{assembly}
-    
+
     # rename to .tsv suffix
     mv ~{samplename}.tab ~{samplename}.tsv
-    
+
     # parse sistr TSV
     cut -f 16 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROTYPE
     cut -f 15 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROGROUP
@@ -43,7 +43,7 @@ task sistr {
     cut -f 12 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_O_ANTIGEN
     cut -f 18 ~{samplename}.tsv | tail -n 1 | tee PREDICTED_SEROTYPE_CGMLST
     cut -f 1 ~{samplename}.tsv | tail -n 1 | tee ANTIGENIC_FORMULA
-    
+
   >>>
   output {
     File sistr_results = "~{samplename}.tsv"

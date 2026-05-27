@@ -30,7 +30,7 @@ task contaminant_check {
     --minimum_depth ~{min_depth} \
     --minimum_reads_mapped ~{min_reads_mapped} \
     --maximum_unexpected_sequences ~{max_unexpected_seq} \
-    ~{if defined(min_expected_seq) then "--minimum_expected_sequences ~{min_expected_seq}" else ""} 
+    ~{if defined(min_expected_seq) then "--minimum_expected_sequences ~{min_expected_seq}" else ""}
   >>>
   output {
     String contaminant_check_status = read_string("STATUS")

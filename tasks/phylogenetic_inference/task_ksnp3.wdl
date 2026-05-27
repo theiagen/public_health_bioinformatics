@@ -18,7 +18,7 @@ task ksnp3 {
   assembly_array_len=$(echo "${#assembly_array[@]}")
   samplename_array=(~{sep=' ' samplename})
   samplename_array_len=$(echo "${#samplename_array[@]}")
-  
+
   # Ensure assembly, and samplename arrays are of equal length
   if [ "$assembly_array_len" -ne "$samplename_array_len" ]; then
     echo "Assembly array (length: $assembly_array_len) and samplename array (length: $samplename_array_len) are of unequal length." >&2
@@ -28,7 +28,7 @@ task ksnp3 {
   assembly_renamed_array=()
   for index in ${!assembly_array[@]}; do
       assembly=${assembly_array[$index]}
-      # ensure kSNP file naming convention is met by removing non-id, dot-separated info, 
+      # ensure kSNP file naming convention is met by removing non-id, dot-separated info,
       # e.g. sample01.ivar.consensus.fasta will be renamed to sample01.fasta
       assembly_renamed=$(echo $assembly | sed 's/\.\(.*\)\././')
       echo "ASSEMBLY: $assembly"
@@ -44,7 +44,7 @@ task ksnp3 {
     samplename=${samplename_array[$index]}
     echo -e "${assembly}\t${samplename}" >> ksnp3_input.tsv
   done
-  
+
   echo "ksnp3_input.tsv:: "
   cat ksnp3_input.tsv
 
@@ -58,12 +58,12 @@ task ksnp3 {
     ~{'-SNPs_all ' + previous_ksnp3_snps} \
     -CPU ~{cpu} \
     ~{ksnp3_args}
-  
-  # rename ksnp3 outputs with cluster name 
+
+  # rename ksnp3 outputs with cluster name
   # sometimes the core nwk and fasta outputs do not have content
   mv -v ksnp3/core_SNPs_matrix.fasta ksnp3/~{cluster_name}_core_SNPs_matrix.fasta
   mv -v ksnp3/tree.core.tre ksnp3/~{cluster_name}_core.nwk
-  
+
   # to allow appending new genomes to an existing tree, save the SNPs_all file
   mv -v ksnp3/SNPs_all ksnp3/~{cluster_name}_SNPs_all
 
@@ -75,7 +75,7 @@ task ksnp3 {
 
   # capture sample name of genome used as reference
   ls ksnp3/*.vcf | cut -d '.' -f 2 | tee KSNP3_VCF_REF_SAMPLENAME.txt
-  
+
   # capture number of SNPs
   cut -f 2 -d ':' ksnp3/COUNT_SNPs | tr -d ' ' > ksnp3/NUMBER_SNPS
   # capture number of core SNPs
@@ -88,12 +88,12 @@ task ksnp3 {
   mv -v ksnp3/SNPs_all_matrix.fasta ksnp3/~{cluster_name}_pan_SNPs_matrix.fasta
   mv -v ksnp3/tree.parsimony.tre ksnp3/~{cluster_name}_pan_parsimony.nwk
 
-  if [ -f ksnp3/tree.ML.tre ]; then  
+  if [ -f ksnp3/tree.ML.tre ]; then
     mv -v ksnp3/tree.ML.tre ksnp3/~{cluster_name}_ML.nwk
-  fi 
-  if [ -f ksnp3/tree.NJ.tre ]; then  
+  fi
+  if [ -f ksnp3/tree.NJ.tre ]; then
     mv -v ksnp3/tree.NJ.tre ksnp3/~{cluster_name}_NJ.nwk
-  fi 
+  fi
 
   >>>
   output {

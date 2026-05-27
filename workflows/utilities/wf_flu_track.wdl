@@ -143,7 +143,7 @@ workflow flu_track {
     }
     # combine HA & NA assembly coverages
     String ha_na_assembly_coverage_string = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + ", NA: " + select_first([na_assembly_coverage.depth, ""])
-    
+
     # combine HA & NA mapped reads percentages
     String ha_na_percentage_mapped_reads = "HA: " + select_first([ha_assembly_coverage.percentage_mapped_reads, ""]) + ", NA: " + select_first([na_assembly_coverage.percentage_mapped_reads, ""])
   }
@@ -177,7 +177,7 @@ workflow flu_track {
         flu_segment = "HA",
         flu_subtype = select_first([flu_subtype, algorithmic_flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"])
     }
-    # these are necessary because these are optional values and cannot be directly compared in before the nextclade task. 
+    # these are necessary because these are optional values and cannot be directly compared in before the nextclade task.
     # checking for variable definition can be done though, which is why we create variables here
     if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA") { # this "NA" is Not Applicable, not the NA segment
       Boolean do_not_run_flu_na_nextclade = true
@@ -194,7 +194,7 @@ workflow flu_track {
         vadr_outputs_tgz = select_first([vadr_outputs_tgz])
     }
   }
-  # if IRMA was run successfully, run the flu_antiviral substitutions task 
+  # if IRMA was run successfully, run the flu_antiviral substitutions task
   # this block must be placed beneath the previous block because it is used in this subworkflow
   if ((defined(irma.seg_na_assembly) && defined(irma.seg_ha_assembly) && defined(irma.seg_pa_assembly) && defined(irma.seg_pb1_assembly) && defined(irma.seg_pb2_assembly) && defined(irma.seg_mp_assembly)) ||
       (defined(vadr_flu_segments.seg_na_assembly) && defined(vadr_flu_segments.seg_ha_assembly) && defined(vadr_flu_segments.seg_pa_assembly) && defined(vadr_flu_segments.seg_pb1_assembly) && defined(vadr_flu_segments.seg_pb2_assembly) && defined(vadr_flu_segments.seg_mp_assembly))) {
@@ -302,7 +302,7 @@ workflow flu_track {
     }
   }
   output {
-    # IRMA outputs 
+    # IRMA outputs
     String? irma_version = irma.irma_version
     String? irma_docker = irma.irma_docker
     Int? irma_minimum_consensus_support = irma.irma_minimum_consensus_support

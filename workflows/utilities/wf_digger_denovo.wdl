@@ -49,7 +49,7 @@ workflow digger_denovo {
     Int? pilon_min_base_quality = 3 # Shovill default
     Float? pilon_min_depth = 0.25 # Shovill default
     String? pilon_fix = "bases" # Options: all, snps, indels, gaps
-    # Optional parameters for filtering 
+    # Optional parameters for filtering
     Int filter_contigs_min_length = 200 # Default we set before
     Float filter_contigs_min_coverage = 2.0 # Default we set before
     Boolean filter_contigs_skip_length_filter = false

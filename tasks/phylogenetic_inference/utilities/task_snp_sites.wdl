@@ -15,7 +15,7 @@ task snp_sites {
     Int cpu = 1
     Int memory = 2
   }
-  command <<< 
+  command <<<
     snp-sites -V > VERSION
 
     # Usage: snp-sites [-mvph] [-o output_filename] <file>
@@ -31,7 +31,7 @@ task snp_sites {
     # if the only specified output file is the multifasta (-m) then the output alignment file will be named based on -o ~{output_name}
     # example command: snp-sites -c -m -o "snpsites-flags-cmo" "test.aln"
     # will result in an output alignment file of "snpsites-flags-cmo"
-    
+
     # else if there are additional specified outputs, like -v or -p or -r in any combination...
     # then the output multifasta alignment file WILL have the suffix of ".snp_sites.aln"
     # example command: snp-sites -p -c -m -o "snpsites-flags-pcmo" "test.aln"

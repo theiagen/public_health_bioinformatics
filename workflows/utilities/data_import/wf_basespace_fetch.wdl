@@ -27,7 +27,7 @@ workflow basespace_fetch {
   output {
     String basespace_fetch_version = version_capture.phb_version
     String basespace_fetch_analysis_date = version_capture.date
-    
+
     File read1 = fetch_bs.read1
     File? read2 = fetch_bs.read2
   }

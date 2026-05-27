@@ -4,7 +4,7 @@ task cophylogeny {
   input {
     File tree1
     File tree2
-    
+
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiaphylo:0.2.0"
     Int disk_size = 10
     Int memory = 4
@@ -21,7 +21,7 @@ task cophylogeny {
     Rscript /theiaphylo/theiaphylo/gen_cophylo.R ~{tree1} ~{tree2}
   >>>
   runtime {
-    docker: docker 
+    docker: docker
     memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " HDD"

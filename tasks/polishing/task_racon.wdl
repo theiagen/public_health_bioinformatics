@@ -6,12 +6,12 @@ task racon {
     File read1
     String samplename
     Int polishing_rounds = 1 # Default: 1 polishing round
-    Int cpu = 8                  
-    Int memory = 32            
-    Int disk_size = 100 
+    Int cpu = 8
+    Int memory = 32
+    Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/racon:1.5.0-minimap2-generic-v3"
   }
-  command <<< 
+  command <<<
     set -euo pipefail
 
     minimap2 --version | tee MINIMAP2_VERSION
@@ -46,9 +46,9 @@ task racon {
     echo "Polishing complete. Final assembly saved as ~{samplename}_final_polished.fasta"
   >>>
   output {
-    File polished_fasta = "~{samplename}_final_polished.fasta"  
-    String racon_version = read_string("RACON_VERSION")   
-    String minimap2_version = read_string("MINIMAP2_VERSION") 
+    File polished_fasta = "~{samplename}_final_polished.fasta"
+    String racon_version = read_string("RACON_VERSION")
+    String minimap2_version = read_string("MINIMAP2_VERSION")
   }
   runtime {
     docker: "~{docker}"
@@ -59,4 +59,3 @@ task racon {
     preemptible: 0
   }
 }
-

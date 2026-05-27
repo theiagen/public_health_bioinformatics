@@ -13,7 +13,7 @@ task augur_align {
   }
   command <<<
     set -euo pipefail
-    
+
     # capture version information
     augur version > VERSION
     echo

@@ -9,12 +9,12 @@ task dorado_demux {
     Boolean demux_no_trim = false
     String dorado_model_used
 
-    Int cpu = 4 
+    Int cpu = 4
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0"    
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0"
     Int memory = 16
   }
-  command <<< 
+  command <<<
     set -euo pipefail
 
     dorado --version 2>&1 | head -n1 | tee DORADO_VERSION
@@ -22,8 +22,8 @@ task dorado_demux {
 
     echo "DEBUG: moving bam files"
     mkdir input_bams
-    for bam_file in ~{sep=" " bam_files}; do 
-      echo "$bam_file" 
+    for bam_file in ~{sep=" " bam_files}; do
+      echo "$bam_file"
       mv $bam_file input_bams/
     done
 

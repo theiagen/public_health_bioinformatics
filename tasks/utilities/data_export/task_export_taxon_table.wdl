@@ -30,7 +30,7 @@ task export_taxon_table {
 
     # replace whitespace from gambit_predicted_taxon with an underscore
     sample_taxon=$(echo ~{gambit_predicted_taxon} | tr ' ' '_')
-  
+
     # prevent failures
     sample_table=""
     # set taxon and table vars
@@ -41,7 +41,7 @@ task export_taxon_table {
       if [[ "${sample_taxon,,}" == *"${taxon,,}"* ]]; then
         sample_table=${table}
         break
-      else 
+      else
         echo "${sample_taxon} does not match ${taxon}."
       fi
     done
@@ -59,9 +59,9 @@ task export_taxon_table {
     if [ -n "${sample_table}" ]; then
 
       jq -r '[.[] | .left], [.[] | .right] | @tsv' ~{columns_to_export_json} > exported_columns.tsv
-     
+
       UPLOAD_DATE=$(date -I)
-    
+
       echo -e "entity:${sample_table}_id\tupload_date\ttable_created_by\t$(head -n1 exported_columns.tsv)" > terra_table_to_upload.tsv
       awk -v date="$UPLOAD_DATE" -v samplename="~{samplename}" 'NR > 1 {print samplename"\t"date"\texport_taxon_table\t" $0}' exported_columns.tsv >> terra_table_to_upload.tsv
 

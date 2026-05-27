@@ -3,7 +3,7 @@ version 1.0
 import "../../tasks/gene_typing/variant_detection/task_clair3_variants.wdl" as clair3
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
 import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as parse_mapping_task
-import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task 
+import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
 import "../../tasks/task_versioning.wdl" as versioning
 
 # MVP Clair3 variant calling workflow for ONT data
@@ -88,4 +88,3 @@ workflow clair3_variants_ont {
     String clair3_model_used = clair3_variants.clair3_model_used
   }
 }
-

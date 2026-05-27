@@ -39,7 +39,7 @@ task export_two_tsvs {
 
     if [[ $(wc -l ~{datatable1}_table1.tsv | cut -f1 -d' ') -eq $(wc -l ~{datatable2}_table2.tsv | cut -f1 -d' ') ]]; then
       echo true | tee CONTINUE
-    else 
+    else
       echo false | tee CONTINUE
     fi
   >>>

@@ -9,7 +9,7 @@ task kleborate {
     Int disk_size = 100
     Int cpu = 8
     Int memory = 16
-    
+
     # Parameters
     Boolean skip_resistance = false # Turn on resistance genes screening (default: no resistance gene screening)
     Boolean skip_kaptive = false # Equivalent to --kaptive_k --kaptive_
@@ -22,9 +22,9 @@ task kleborate {
   command <<<
     # Print and save date
     date | tee DATE
-    
+
     # Print and save version
-    kleborate --version | tee VERSION 
+    kleborate --version | tee VERSION
 
     # Run Kleborate on the input assembly with the --all flag and output with samplename prefix
     kleborate \
@@ -38,7 +38,7 @@ task kleborate {
     --outfile ~{samplename}_kleborate_out.tsv \
     --assemblies ~{assembly} \
     --all
-    
+
     # parse outputs
     python3 <<CODE
     import csv

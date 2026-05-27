@@ -61,7 +61,7 @@ task fastq_scan_pe {
     else
       read_pairs="Uneven pairs: R1=${read1_seqs}, R2=${read2_seqs}"
     fi
-    
+
     # use simple redirect so STDOUT is not confusing
     echo "$read_pairs" > READ_PAIRS
     echo "DEBUG: number of read pairs: $(cat READ_PAIRS)"
@@ -97,12 +97,12 @@ task fastq_scan_se {
     Int memory = 2
     Int cpu = 1
     String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/fastq-scan:1.0.1--h4ac6f70_3"
-  }  
+  }
   String read1_name = basename(basename(basename(read1, ".gz"), ".fastq"), ".fq")
   command <<<
     # exit task in case anything fails in one-liners or variables are unset
     set -euo pipefail
-    
+
     # capture version
     fastq-scan -v | tee VERSION
 

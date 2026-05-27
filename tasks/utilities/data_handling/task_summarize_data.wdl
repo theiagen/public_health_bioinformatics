@@ -12,8 +12,8 @@ task summarize_data {
 
     Int disk_size = 100
     Int cpu = 8
-    Int memory = 1 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16" 
+    Int memory = 1
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-03-16"
     # commenting out this option since it's for local dev. Prefer this option to not appear in Terra
     #File? input_table
     Boolean phandango_coloring = false
@@ -22,19 +22,19 @@ task summarize_data {
     # added so that call caching is always turned off
     volatile: true
   }
-  command <<<   
+  command <<<
     set -euo pipefail
-    
+
     # when running on terra, comment out all input_table mentions
-    python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{terra_project}" --workspace "~{terra_workspace}" --entity_type ~{terra_table} --tsv_filename ~{terra_table}-data.tsv 
-    
+    python3 /scripts/export_large_tsv/export_large_tsv.py --project "~{terra_project}" --workspace "~{terra_workspace}" --entity_type ~{terra_table} --tsv_filename ~{terra_table}-data.tsv
+
     # when running locally, use the input_table in place of downloading from Terra
     # TO RENABLE: uncomment line below, and add back tilde in front of {input_table}
     #cp {input_table} ~{terra_table}-data.tsv
-    
+
     if ~{phandango_coloring}; then
       export phandango_coloring="true"
-    else 
+    else
       export phandango_coloring="false"
     fi
 
@@ -45,7 +45,7 @@ task summarize_data {
       export default_column="false"
     fi
 
-    python3 <<CODE 
+    python3 <<CODE
   import pandas as pd
   import numpy as np
   import itertools
@@ -53,18 +53,18 @@ task summarize_data {
   import re
 
   # read exported Terra table into pandas
-  tablename = "~{terra_table}-data.tsv" 
+  tablename = "~{terra_table}-data.tsv"
   table = pd.read_csv(tablename, delimiter='\t', header=0, index_col=False, dtype={"~{terra_table}_id": 'str'}) # ensure sample_id is always a string
 
   # extract the samples for upload from the entire table
   if (os.environ["default_column"] == "true"):
     table = table[table["~{terra_table}_id"].isin("~{sep='*' sample_names}".split("*"))]
   else:
-    table = table[table["~{id_column_name}"].isin("~{sep='*' sample_names}".split("*"))] 
+    table = table[table["~{id_column_name}"].isin("~{sep='*' sample_names}".split("*"))]
 
   # cast entire table as str
   table = table.astype(str)
-  
+
   # split comma-separated column list into an array
   columns = "~{column_names}".split(",")
 
@@ -103,16 +103,16 @@ task summarize_data {
     for group in genes: # iterate through gene list by items found within a column
       if (i < 10):
         newgroup = [] # create a new temporary sublist
-        for item in group: # for every item in a column, 
+        for item in group: # for every item in a column,
           newitem = str(item) + ":o" + str(i) # add a unique :o coloring (as indicated by the str(i))
           newgroup.append(newitem) # add phandango-suffixed item to the new sublist
         newgenes.append(newgroup) # add the new sublist to the new list
-        i += 1 # increment the i value so each column gets its own coloring     
+        i += 1 # increment the i value so each column gets its own coloring
       else:
         print("DEBUG: Some items will be ignored because a maximum of ten columns can be presented at once with phandango coloring.")
 
     # overwrite genes with newgenes (which now has the phandango coloring suffix)
-    genes = newgenes 
+    genes = newgenes
   else:
     print("DEBUG: Phandango coloring was not applied")
 
@@ -140,7 +140,7 @@ task summarize_data {
   final_cols = [id_col] + genes
   final_table = table[final_cols]
 
-  # replace all "False" cells with null values 
+  # replace all "False" cells with null values
   final_table[final_table.eq(False)] = np.nan
 
   final_table.to_csv("~{output_prefix}_summarized_data.csv", sep=',', index=False)

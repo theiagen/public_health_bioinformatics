@@ -62,7 +62,7 @@ task cat_variants {
     file_array_len=$(echo "${#file_array[@]}")
     samplename_array=(~{sep=' ' samplenames})
     samplename_array_len=$(echo "${#samplename_array[@]}")
-    
+
     touch ~{concatenated_file_name}
 
     # Ensure file, and samplename arrays are of equal length

@@ -29,7 +29,7 @@ task create_terra_table {
     echo "DEBUG: new_table_name: ~{new_table_name_updated}" >&2
     echo "DEBUG: data_location_path: ~{data_location_path}" >&2
     echo "DEBUG: paired_end: ~{paired_end}" >&2
-    echo "DEBUG: assembly_data: ~{assembly_data}" >&2 
+    echo "DEBUG: assembly_data: ~{assembly_data}" >&2
     echo "DEBUG: file_ending: ~{file_ending}" >&2
 
     if ~{paired_end} && ~{assembly_data}; then
@@ -111,7 +111,7 @@ task create_terra_table {
         done
       else
         # samplename is everything before the first underscore and first decimal (name.banana.hello_yes_please.fastq.gz -> name)
-        no_underscore_samplename=${file%%_*} 
+        no_underscore_samplename=${file%%_*}
         samplename=${no_underscore_samplename%%.*}
       fi
 
@@ -124,7 +124,7 @@ task create_terra_table {
         if ~{paired_end}; then
           READ1_PATTERN="_R*1.*\b\.f(q|astq)(\.gz)?\b$"
           READ2_PATTERN="_R*2.*\b\.f(q|astq)(\.gz)?\b$"
-          # search for the appropriate file in the list of filenames that exclude the path (filelist-filename.txt) 
+          # search for the appropriate file in the list of filenames that exclude the path (filelist-filename.txt)
           #  and then search for that file in the full-path filelist (filelist-fullpath.txt)
           read1=$(grep $(grep -E "$READ1_PATTERN" filelist-filename.txt | grep "$samplename") filelist-fullpath.txt)
           read2=$(grep $(grep -E "$READ2_PATTERN" filelist-filename.txt | grep "$samplename") filelist-fullpath.txt)
@@ -137,8 +137,8 @@ task create_terra_table {
             # occasionally the readnames will be prefixed with `filelist-fullpath.txt:` so we need to remove that
             read1=$(echo $read1 | sed -e 's/^filelist-fullpath.txt://')
             read2=$(echo $read2 | sed -e 's/^filelist-fullpath.txt://')
-            
-            echo -e "$samplename\t$read1\t$read2\t$UPLOAD_DATE\t~{responsible_workflow}" >> terra_table_to_upload.tsv 
+
+            echo -e "$samplename\t$read1\t$read2\t$UPLOAD_DATE\t~{responsible_workflow}" >> terra_table_to_upload.tsv
           fi
         else
           echo -e "$samplename\t$filepath\t$UPLOAD_DATE\t~{responsible_workflow}" >> terra_table_to_upload.tsv
@@ -148,7 +148,7 @@ task create_terra_table {
     done <filelist-fullpath.txt
 
     echo "DEBUG: terra table created, now beginning upload"
-    
+
     # set error handling to exit if the subsequent import_large_tsv.py task fails
     set -euo pipefail
 

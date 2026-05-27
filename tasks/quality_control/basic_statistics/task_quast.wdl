@@ -17,7 +17,7 @@ task quast {
 
     quast.py ~{assembly} -o . --min-contig ~{min_contig_length}
     mv report.tsv ~{samplename}_report.tsv
-    
+
     python <<CODE
     import csv
     #grab output genome length and number contigs by column header
@@ -56,7 +56,7 @@ task quast {
     Float gc_percent = read_float("GC_PERCENT")
     Int largest_contig = read_int("LARGEST_CONTIG")
     Float uncalled_bases = read_float("UNCALLED_BASES")
-    String quast_docker = docker    
+    String quast_docker = docker
   }
   runtime {
     docker:  "~{docker}"

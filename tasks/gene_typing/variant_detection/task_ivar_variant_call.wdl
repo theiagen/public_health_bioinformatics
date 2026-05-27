@@ -6,10 +6,10 @@ task variant_call {
     String samplename
     String organism = "sars-cov-2" # default to sars-cov-2 to maintain previous behavior
     File? reference_genome
-    File? reference_gff 
+    File? reference_gff
     Int min_qual = "20"
-    Float? variant_min_freq 
-    Int? variant_min_depth 
+    Float? variant_min_freq
+    Int? variant_min_depth
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
@@ -27,9 +27,9 @@ task variant_call {
       bwa index "~{reference_genome}"
       # move to primer_schemes dir; bwa fails if reference file not in this location
     else
-      ref_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"  
+      ref_genome="/artic-ncov2019/primer_schemes/nCoV-2019/V3/nCoV-2019.reference.fasta"
     fi
-    
+
     # set reference gff
     if [[ ! -z "~{reference_gff}" ]]; then
       echo "User reference identified; ~{reference_gff} will be used for alignement"
@@ -43,7 +43,7 @@ task variant_call {
     else
       ref_gff_call=""
     fi
-    
+
     # call variants
     cat ~{mpileup} | \
     ivar variants \
@@ -60,8 +60,8 @@ task variant_call {
     # Variant calculations
 
     # keep only unique nucleotide substitutions:
-    # the same nucleotide substitution can be listed in multiple rows if it is within 
-    # more than one coding region, so remove columns with coding region information 
+    # the same nucleotide substitution can be listed in multiple rows if it is within
+    # more than one coding region, so remove columns with coding region information
     # then keep only unique rows
     cut -f 1-14 ~{samplename}.variants.tsv | awk '!seen[$0]++ {print}' > unique_variants.tsv
 
@@ -73,7 +73,7 @@ task variant_call {
     echo $variants_num | tee VARIANT_NUM
 
     # calculate proportion of variants with allele frequencies between 0.6 and 0.9
-    # find number of variants at intermediate frequencies 
+    # find number of variants at intermediate frequencies
     awk -F "\t" '{ if(($11 >= 0.6) && ($11 <= 0.9)) {print }}' passed_variants.tsv > intermediate_variants.tsv
     intermediates_num=$(wc -l < intermediate_variants.tsv)
 

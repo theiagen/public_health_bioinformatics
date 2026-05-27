@@ -937,7 +937,7 @@ freyja_fastq	collection_site	String	Collection site of wastewater sample		Option
 freyja_fastq	depth_cutoff	Int	The minimum coverage depth with which to exclude sites below this value and group identical barcodes -- THIS MAY NOT WORK FOR NON-SARS-COV-2 ORGANISMS!		Optional	Freyja_FASTQ	general	
 freyja_fastq	freyja_barcodes	File	Custom barcode file. Does not need to be provided if update_db is true if the freyja_pathogen is provided.		Optional	Freyja_FASTQ	general	
 freyja_fastq	freyja_lineage_metadata	File	File containing the lineage metadata; the "curated_lineages.json" file found <https://github.com/andersen-lab/Freyja/tree/main/freyja/data> can be used for this variable. Does not need to be provided if update_db is true or if the freyja_pathogen is provided.		Optional, Required	Freyja_FASTQ	general	True
-freyja_fastq	freyja_long_format_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1	Optional	Freyja_FASTQ	docker	
+freyja_fastq	freyja_long_format_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.2	Optional	Freyja_FASTQ	docker	
 freyja_fastq	freyja_min_coverage	Int	Minimum genome coverage threshold (--mincov) used by freyja_to_long.py when generating the freyja_parsed_format_tsv output	60	Optional	Freyja_FASTQ	general	
 freyja_fastq	freyja_pathogen	String	Pathogen to be used by Freyja	SARS-CoV-2	Optional	Freyja_FASTQ	general	
 freyja_fastq	kraken2_target_organism	String	The organism whose abundance the user wants to check in their reads. This should be a proper taxonomic name recognized by the Kraken database.	Severe acute respiratory syndrome coronavirus 2	Optional	Freyja_FASTQ	general	
@@ -962,8 +962,8 @@ freyja_plot	collection_site	Array[String]	An array containing the collection sit
 freyja_plot	freyja_abundances	Array[String]	An array containing the Freyja abundances for the sample		Optional	Freyja_Plot	general	
 freyja_plot	freyja_coverages	Array[Float]	An array containing the genome coverage value (freyja_coverage) for each sample; required to enable the freyja_long_format and freyja_microreact tasks and used by --mincov filtering		Optional	Freyja_Plot	general	
 freyja_plot	freyja_lineages	Array[String]	An array containing the Freyja lineages for the sample		Optional	Freyja_Plot	general	
-freyja_plot	freyja_long_format_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1	Optional	Freyja_Plot	docker	
-freyja_plot	freyja_microreact_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1	Optional	Freyja_Plot	docker	
+freyja_plot	freyja_long_format_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.2	Optional	Freyja_Plot	docker	
+freyja_plot	freyja_microreact_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.2	Optional	Freyja_Plot	docker	
 freyja_plot	freyja_min_coverage	Int	Minimum genome coverage threshold; passed as --mincov to freyja_to_long.py and as mincov to the freyja plot task	60	Optional	Freyja_Plot	general	
 freyja_plot	latitude	Array[Float]	An array containing the latitudes for the sample collection sites		Optional	Freyja_Plot	general	
 freyja_plot	longitude	Array[Float]	An array containing the longitudes for the sample collection sites		Optional	Freyja_Plot	general	

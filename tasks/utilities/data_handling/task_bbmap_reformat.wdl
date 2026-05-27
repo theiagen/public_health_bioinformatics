@@ -29,15 +29,15 @@ task bbmap_reformat_interleaved{
     echo "DEBUG: First line: $FIRST_LINE"
 
     # Check for SRA specific information and structure, (SRR or ERR), SRA number, read pair designation
-    # The grep is structured this way to handle the presence and absence of version numbers from the header formats. 
+    # The grep is structured this way to handle the presence and absence of version numbers from the header formats.
     # This is also replicated below in the awk command
     if echo "$FIRST_LINE" | grep -qE "@(SRR|ERR)[0-9]+.*\.(1|2)"; then
       echo "DEBUG: SRA header format detected. Changing header format from '.1 .2' to '/1 /2'"
 
       # Decompress, replace .1 .2 designations with /1 /2 for each header line, then compress reformatted file back into fastq.gz format
       zcat ~{interleaved_fastq} | \
-        awk '/^@(SRR|ERR)[0-9]+.*\.1 / {sub(/\.1 /, "/1 ")} 
-              /^@(SRR|ERR)[0-9]+.*\.2 / {sub(/\.2 /, "/2 ")} 
+        awk '/^@(SRR|ERR)[0-9]+.*\.1 / {sub(/\.1 /, "/1 ")}
+              /^@(SRR|ERR)[0-9]+.*\.2 / {sub(/\.2 /, "/2 ")}
               {print}' | \
         gzip > ~{samplename}_reformatted_sra.fastq.gz
     else
@@ -50,11 +50,11 @@ task bbmap_reformat_interleaved{
     else
       INPUT_FASTQ="~{interleaved_fastq}"
     fi
-    
+
     echo "DEBUG: INPUT_FASTQ is $INPUT_FASTQ"
-    
+
     # Capture exit code for checking interleaved status
-    # Removing e from pipefail in order to check for interleaved status as 
+    # Removing e from pipefail in order to check for interleaved status as
     # reformat.sh will return exit code 1 if not properly interleaved
     set +e
     reformat.sh in=$INPUT_FASTQ out=~{samplename}_deinterleaved_R1.fastq \
@@ -65,7 +65,7 @@ task bbmap_reformat_interleaved{
     set -e
 
     # Check for a non 0 exit code, meaning reads need to be repaired due to mismatched pairs
-    if [ $reformat_exit_code -ne 0 ]; then 
+    if [ $reformat_exit_code -ne 0 ]; then
       # Run repair.sh and reformat on corrected reads
       echo "DEBUG: Names do not appear to be correctly paired in the interleaved FASTQ file. Running repair.sh"
 
@@ -82,13 +82,13 @@ task bbmap_reformat_interleaved{
       fi
 
       # Run reformat.sh on corrected reads. Set overwrite to true to over write any created outputs from initial run.
-      echo "DEBUG: repair.sh complete, running reformat.sh to deinterleave " 
+      echo "DEBUG: repair.sh complete, running reformat.sh to deinterleave "
       reformat.sh in=repaired.fastq out=~{samplename}_deinterleaved_R1.fastq \
         out2=~{samplename}_deinterleaved_R2.fastq \
         verifypaired=t \
         overwrite=t
     fi
-    
+
     echo "DEBUG: reformat.sh complete, compressing deinterleaved FASTQs"
     # GZIP deinterleaved FASTQ files with additional error handling for missing and empty reformat output.
     for fastq_file in "~{samplename}_deinterleaved_R1.fastq" "~{samplename}_deinterleaved_R2.fastq"; do

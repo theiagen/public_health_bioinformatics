@@ -27,7 +27,7 @@ task ete4_taxon_id {
 
     taxa = NCBITaxa()
     # check if the taxon is an integer taxid or a string name
-    try: 
+    try:
       query_taxid = int("~{taxon}")
     except ValueError:
       try:

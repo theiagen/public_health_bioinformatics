@@ -13,7 +13,7 @@ task medaka {
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/medaka:2.0.1"
   }
-  command <<<    
+  command <<<
     set -euo pipefail
 
     medaka --version | tee MEDAKA_VERSION

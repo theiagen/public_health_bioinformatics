@@ -34,7 +34,7 @@ task fastq_dl_sra {
     if [ -f "~{sra_accession}.fastq.gz" ] && [ ! -f "~{sra_accession}_1.fastq.gz" ]; then
       mv "~{sra_accession}.fastq.gz" "~{sra_accession}_1.fastq.gz"
     fi
-    
+
     # check if the first quality control string is set to SRA-Lite
     # SRA-Lite filetype has all the quality enconding set to the '?' or '$' character
     # corresponding to a phred-score of 30 or 3
@@ -45,7 +45,7 @@ task fastq_dl_sra {
     #   [?] look for this character
     #   +$ and only this character until the end of the line
     zcat "~{sra_accession}_1.fastq.gz" | head -n 4 | awk 'NR==4 {if ($0 ~ /^[?$]+$/) {print "Potential SRA-Lite FASTQ detected"} else {print ""}}' > WARNING
-    
+
   >>>
   output {
     File read1 = "~{sra_accession}_1.fastq.gz"

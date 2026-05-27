@@ -14,12 +14,12 @@ workflow dorado_basecalling {
   }
   input {
     String pod5_bucket_path  # GCS bucket path containing POD5 files
-    String dorado_model = "sup" 
+    String dorado_model = "sup"
     String kit_name
     String new_table_name
     String terra_project
     String terra_workspace
-    String output_file_prefix 
+    String output_file_prefix
     Boolean demux_no_trim = false
     File? custom_primers
 
@@ -42,7 +42,7 @@ workflow dorado_basecalling {
   scatter (i in range(select_first([alt_number_chunks, number_chunks]))) {
     Int start_line = (i * chunk_size + 1)
     Int end_line = if (i == number_chunks - 1) then number_of_files else (i + 1) * chunk_size
-    # since wdl v1 doesn't do array splicing (:sob:), we have to mimic that behavior with line splicing out of a file 
+    # since wdl v1 doesn't do array splicing (:sob:), we have to mimic that behavior with line splicing out of a file
     call chunk_file.chunk_files {
       input:
         file_list = write_lines(find_files.file_paths),
@@ -79,10 +79,10 @@ workflow dorado_basecalling {
       output_file_column_name = "read1",
       data_source = "Dorado_Basecalling_PHB",
       columns_to_export = {
-        "dorado_docker": dorado_basecall.dorado_docker[0], 
+        "dorado_docker": dorado_basecall.dorado_docker[0],
         "dorado_version": dorado_basecall.dorado_version[0],
-        "dorado_model_name": dorado_demux.dorado_model_name, 
-        "dorado_basecalling_phb_verrsion": version_capture.phb_version, 
+        "dorado_model_name": dorado_demux.dorado_model_name,
+        "dorado_basecalling_phb_verrsion": version_capture.phb_version,
         "dorado_basecalling_analysis_date": version_capture.date
       },
       terra_project = terra_project,

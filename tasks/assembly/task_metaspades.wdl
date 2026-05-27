@@ -43,4 +43,3 @@ task metaspades_pe {
     preemptible: 0
   }
 }
-

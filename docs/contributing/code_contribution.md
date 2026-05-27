@@ -11,6 +11,8 @@ Style guide inspired by Scott Frazer’s [WDL Best Practices Style Guide](http
 !!! tip "Please ensure your code adheres to our philosophy of failures"
     At Theiagen, we believe our workflows should only fail because of technical issues, not because of poor quality data. Our goal is to create workflows that can handle data in any condition and still provide meaningful results, especially if that data isn’t perfect. For more information, see our [Workflow Failure Philosophy](../getting_started/philosophy.md).
 
+All trailing whitespace should be removed (unless in a TSV, where a trailing tab character is considered valid data).
+
 ***Modularity and Metadata***
 
 - **Best Practice:** Place tasks and workflows in separate files to maintain modularity and clarity.
@@ -41,7 +43,7 @@ Style guide inspired by Scott Frazer’s [WDL Best Practices Style Guide](http
 ***Bracket and Spacing Conventions***
 
 - Avoid line breaks for opening braces. Keep them on the same line as the declaration. i.e `input {` instead of `input\n{`
-  
+
   ```bash
     # Correct
   input {
@@ -78,7 +80,7 @@ task example_task {
 
   }
   command <<<
-  
+
   >>>
   output {
 
@@ -142,7 +144,7 @@ task example_task {
     if [ condition ]; then
       action1(variable)
     fi
-    
+
     # Perform task step 2
     if [ another_condition ]; then
       action2(variable)
@@ -287,7 +289,7 @@ output {
         String input
         String task1_docker = "us-docker.pkg.dev/general-theiagen/task_1:version"
         String task2_docker = "us-docker.pkg.dev/general-theiagen//task_2:version"
-        String? hidden_task3_argument 
+        String? hidden_task3_argument
         String? hidden_task3_docker
         String? hidden_task4_docker
       }
@@ -297,7 +299,7 @@ output {
           docker = task1_docker
       }
       call task2_task.task2 {
-        input: 
+        input:
           input = input,
           docker = task2_docker
       }
@@ -324,7 +326,7 @@ output {
         # Subworkflow outputs for task 4
         String task4_output = subworkflow.task4_output
         String task4_version = subworkflow.task4_version
-      }      
+      }
     }
     ```
 
@@ -337,11 +339,11 @@ output {
     workflow subworkflow {
       input {
         String input
-        
+
         # optional inputs for tasks inside subworkflows cannot
         #  be seen on Terra, so make them available at the subworkflow
         #  level so they can be modified by a Terra user
-        String? task3_argument 
+        String? task3_argument
         String? task3_docker
         String? task4_docker
       }

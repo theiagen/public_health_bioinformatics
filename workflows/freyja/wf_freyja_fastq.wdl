@@ -41,7 +41,7 @@ workflow freyja_fastq {
     Float? latitude
     Float? longitude
     Int freyja_min_coverage = 60
-    String freyja_long_format_docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.1"
+    String freyja_long_format_docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.2"
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -70,7 +70,7 @@ workflow freyja_fastq {
     call fasta_utilities_task.get_fasta_genome_size {
       input:
         fasta = reference_genome
-    } 
+    }
     call nanoplot_task.nanoplot as nanoplot_raw {
       input:
         read1 = read1,
@@ -293,10 +293,10 @@ workflow freyja_fastq {
     String freyja_version = freyja.freyja_version
     File freyja_variants = freyja.freyja_variants
     File freyja_depths = freyja.freyja_depths
-    File freyja_demixed = freyja.freyja_demixed 
+    File freyja_demixed = freyja.freyja_demixed
     Float freyja_coverage = freyja.freyja_coverage
     String freyja_barcode_file = select_first([freyja_barcodes, freyja.freyja_sc2_barcode_file, ""])
-    String freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, freyja.freyja_sc2_lineage_metadata_file, ""]) 
+    String freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, freyja.freyja_sc2_lineage_metadata_file, ""])
     String freyja_barcode_version = freyja.freyja_barcode_version
     String freyja_metadata_version = freyja.freyja_metadata_version
     String? freyja_bootstrap_lineages = freyja.freyja_bootstrap_lineages

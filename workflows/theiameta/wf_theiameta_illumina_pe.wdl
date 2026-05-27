@@ -80,7 +80,7 @@ workflow theiameta_illumina_pe {
   call minimap2_task.minimap2 as minimap2_assembly_correction {
     input:
       query1 = read_QC_trim.read1_clean,
-      query2 = read_QC_trim.read2_clean, 
+      query2 = read_QC_trim.read2_clean,
       reference = metaspades_pe.assembly_fasta,
       samplename = samplename,
       mode = "sr",
@@ -98,7 +98,7 @@ workflow theiameta_illumina_pe {
       bai = sort_bam_assembly_correction.bai,
       samplename = samplename
   }
-    # if reference is provided, perform mapping of assembled contigs to 
+    # if reference is provided, perform mapping of assembled contigs to
     # reference with minimap2, and extract those as final assembly
     if (defined(reference)) {
       call minimap2_task.minimap2 as minimap2_assembly {
@@ -131,7 +131,7 @@ workflow theiameta_illumina_pe {
       call minimap2_task.minimap2 as minimap2_reads {
         input:
           query1 = read_QC_trim.read1_clean,
-          query2 = read_QC_trim.read2_clean, 
+          query2 = read_QC_trim.read2_clean,
           reference = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
           samplename = samplename,
           mode = "sr",
@@ -165,7 +165,7 @@ workflow theiameta_illumina_pe {
       call parse_mapping_task.assembled_reads_percent {
         input:
           bam = sam_to_sorted_bam.bam,
-      } 
+      }
     }
     if (! defined(reference)) {
       call bwa_task.bwa as bwa {
@@ -264,7 +264,7 @@ workflow theiameta_illumina_pe {
     # MIDAS outputs
     String? midas_primary_genus = read_QC_trim.midas_primary_genus
     File? midas_report = read_QC_trim.midas_report
-    # Assembly - metaspades 
+    # Assembly - metaspades
     File assembly_fasta = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta])
     String metaspades_version = metaspades_pe.metaspades_version
     String metaspades_docker = metaspades_pe.metaspades_docker
@@ -292,7 +292,7 @@ workflow theiameta_illumina_pe {
     # Read retrieval
     File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
     File? read2_unmapped = retrieve_unaligned_pe_reads_sam.read2
-    File? read1_mapped = retrieve_aligned_pe_reads_sam.read1 
+    File? read1_mapped = retrieve_aligned_pe_reads_sam.read1
     File? read2_mapped = retrieve_aligned_pe_reads_sam.read2
     # Assembly stats
     Float? percentage_mapped_reads = assembled_reads_percent.percentage_mapped

@@ -69,14 +69,14 @@ workflow theiacov_illumina_se {
       gene_locations_bed_file = reference_gene_locations_bed,
       genome_length_input = genome_length,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
-      nextclade_dataset_name_input = nextclade_dataset_name,     
+      nextclade_dataset_name_input = nextclade_dataset_name,
       vadr_max_length = vadr_max_length,
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
       vadr_model = vadr_model_file,
       vadr_mem = vadr_memory,
       primer_bed_file = primer_bed,
-      pangolin_docker_image = pangolin_docker_image  
+      pangolin_docker_image = pangolin_docker_image
   }
   if (! skip_screen) {
     call screen.check_reads_se as raw_check_reads {
@@ -165,7 +165,7 @@ workflow theiacov_illumina_se {
           assembly_metrics_memory = 0,
           irma_cpu = 0,
           irma_disk_size = 0,
-          irma_docker_image = "",        
+          irma_docker_image = "",
           irma_keep_ref_deletions = false,
           irma_memory = 0,
           genoflu_cpu = 0,

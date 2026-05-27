@@ -213,7 +213,7 @@ workflow read_QC_trim_se {
     String? fastqc_docker = fastqc_raw.fastqc_docker
     File? fastqc_raw1_html = fastqc_raw.read1_fastqc_html
     File? fastqc_clean1_html = fastqc_clean.read1_fastqc_html
-    
+
     # kraken2 - raw and dehosted
     String kraken2_version = select_first([kraken2_theiacov_raw.kraken2_version, kraken2_theiaprok.kraken2_version, ""])
     String bracken_version = select_first([kraken2_theiacov_raw.bracken_version, kraken2_theiaprok.bracken_version, ""])
@@ -228,7 +228,7 @@ workflow read_QC_trim_se {
     File? bracken_report_dehosted = kraken2_theiacov_dehosted.bracken_report
     String kraken2_docker = select_first([kraken2_theiacov_raw.kraken2_docker, kraken2_theiaprok.kraken2_docker, ""])
     String kraken2_database = select_first([kraken2_theiacov_raw.kraken2_database, kraken2_theiaprok.kraken2_database, kraken_db_warning, ""])
-   
+
     # trimming versioning
     String? trimmomatic_version = trimmomatic.version
     String? trimmomatic_docker = trimmomatic.trimmomatic_docker
@@ -236,7 +236,7 @@ workflow read_QC_trim_se {
     String? fastp_docker = fastp.fastp_docker
     File? fastp_html_report = fastp.fastp_stats_html
     File? fastp_json_report = fastp.fastp_stats_json
-    
+
     # midas
     String? midas_docker = midas.midas_docker
     File? midas_report = midas.midas_report

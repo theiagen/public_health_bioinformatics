@@ -10,7 +10,7 @@ task find_files {
     String docker = "us-docker.pkg.dev/general-theiagen/cloudsdktool/google-cloud-cli:427.0.0-alpine"
     Int memory = 2
   }
-  command <<< 
+  command <<<
     set -euo pipefail
 
     echo "Listing files with extension ~{file_extension} in ~{bucket_path}"

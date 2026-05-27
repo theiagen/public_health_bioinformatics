@@ -9,7 +9,7 @@ task bandage_plot {
       Int disk_size = 10
       String docker = "us-docker.pkg.dev/general-theiagen/staphb/bandage:0.8.1"
     }
-    command <<< 
+    command <<<
       set -euo pipefail
       Bandage --version | tee VERSION
       Bandage image ~{assembly_graph_gfa} ~{samplename}_bandage_plot.png

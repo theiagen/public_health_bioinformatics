@@ -42,7 +42,7 @@ workflow theiaviral_ont {
     Int min_map_quality = 20 # minimum read mapping quality
     Boolean extract_unclassified = true
     Boolean call_porechop = false
-    Boolean skip_rasusa = true 
+    Boolean skip_rasusa = true
     Boolean skip_screen = false
     Boolean call_raven = true
   }
@@ -136,7 +136,7 @@ workflow theiaviral_ont {
           input:
             read1 = select_first([rasusa.read1_subsampled, metabuli.metabuli_read1_extract]),
             workflow_series = "theiaviral",
-            expected_genome_length = select_first([est_genome_length.avg_genome_length, genome_length]),  
+            expected_genome_length = select_first([est_genome_length.avg_genome_length, genome_length]),
             skip_mash = true
         }
       }
