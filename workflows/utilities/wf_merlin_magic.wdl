@@ -636,7 +636,7 @@ workflow merlin_magic {
         min_percent_coverage = abricate_vibrio_min_percent_coverage,
         docker = abricate_vibrio_docker_image
     }
-  } 
+  }
   # Running AMR Search
   if (run_amr_search) {
     # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search.
@@ -655,9 +655,9 @@ workflow merlin_magic {
       seqsero2s_assembly.seqsero2s_predicted_serotype,sistr.sistr_predicted_serotype, merlin_tag])
 
     # Checks for a match to the AMR_Search available taxon codes
-    if (taxon == "Neisseria gonorrhoeae" || taxon == "Staphylococcus aureus" || 
-        taxon == "Streptococcus pneumoniae" || 
-        taxon == "Klebsiella" || taxon == "Klebsiella pneumoniae" || 
+    if (taxon == "Neisseria gonorrhoeae" || taxon == "Staphylococcus aureus" ||
+        taxon == "Streptococcus pneumoniae" ||
+        taxon == "Klebsiella" || taxon == "Klebsiella pneumoniae" ||
         taxon == "Vibrio cholerae" || taxon == "Typhi" || taxon == "Salmonella typhi")
     {
       call amr_search_task.amr_search {
@@ -963,6 +963,6 @@ workflow merlin_magic {
     Float? vibecheck_confidence = vibecheck_vibrio.vibecheck_confidence
     String? vibecheck_classification_notes = vibecheck_vibrio.vibecheck_classification_notes
     String? vibecheck_version = vibecheck_vibrio.vibecheck_version
-    String? vibecheck_docker = vibecheck_vibrio.vibecheck_docker  
+    String? vibecheck_docker = vibecheck_vibrio.vibecheck_docker
   }
 }

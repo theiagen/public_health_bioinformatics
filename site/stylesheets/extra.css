@@ -1,0 +1,261 @@
+/* color scheme */
+[data-md-color-scheme="light"] {
+  --md-primary-bg-color: #ffffff;
+  --md-primary-fg-color: #116eb7;
+  --md-accent-bg-color: #ffffff;
+  --md-accent-fg-color: #1da74a;
+  th {
+    background: #ffffff;
+    color: #262626;
+  }
+}
+[data-md-color-scheme="light"] img[src$="#only-dark"],
+[data-md-color-scheme="light"] img[src$="#gh-dark-mode-only"] {
+  display: none; /* Hide dark images in light mode */
+}
+[data-md-color-scheme="slate"] img[src$="#only-light"],
+[data-md-color-scheme="slate"] img[src$="#gh-light-mode-only"] {
+  display: none; /* Hide light images in dark mode */
+}
+[data-md-color-scheme="slate"] {
+  --md-primary-bg-color: #1da74a;
+  --md-primary-fg-color: #262626;
+  --md-accent-bg-color: #ffffff;
+  --md-accent-fg-color: #1da74a;
+  th {
+    background: #1F2029;
+    color: #ffffff;
+  }
+}
+
+/* dna admonition */
+:root {
+  --md-admonition-icon--dna: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4V2m14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4V2m-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42l1.83-1.19M7 3h10v1l-.06.5H7.06L7 4V3m.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06l.51-.44m-2.03 3h9.88l.06.5v1H7v-1l.06-.5Z"/></svg>')
+}
+.md-typeset .admonition.dna,
+.md-typeset details.dna {
+  border-color: rgb(43, 155, 70);
+}
+.md-typeset .dna > .admonition-title,
+.md-typeset .dna > summary {
+  background-color: rgba(43, 155, 70, 0.1);
+}
+.md-typeset .dna > .admonition-title::before,
+.md-typeset .dna > summary::before {
+  background-color: #1da74a;
+  -webkit-mask-image: var(--md-admonition-icon--dna);
+          mask-image: var(--md-admonition-icon--dna);
+}
+.md-typeset .dna > h5 {
+  /* this renders the heading readable by screen readers but does not display it */
+  margin: -1px; padding: 0; border: 0; 
+  visibility: hidden;
+  margin-top: -15px; /* this makes the header in the TOC jump to the top of the admonition box */
+  position: relative;
+}
+
+/* dna_blue admonition*/
+:root {
+  --md-admonition-icon--dna_blue: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 2h2v2c0 1.44.68 2.61 1.88 3.78.86.83 2.01 1.63 3.21 2.42l-1.83 1.19C8.27 10.72 7.31 10 6.5 9.21 5.07 7.82 4 6.1 4 4V2m14 0h2v2c0 2.1-1.07 3.82-2.5 5.21-1.41 1.38-3.21 2.52-4.96 3.63-1.75 1.12-3.45 2.21-4.66 3.38C6.68 17.39 6 18.56 6 20v2H4v-2c0-2.1 1.07-3.82 2.5-5.21 1.41-1.38 3.21-2.52 4.96-3.63 1.75-1.12 3.45-2.21 4.66-3.38C17.32 6.61 18 5.44 18 4V2m-3.26 10.61c.99.67 1.95 1.39 2.76 2.18C18.93 16.18 20 17.9 20 20v2h-2v-2c0-1.44-.68-2.61-1.88-3.78-.86-.83-2.01-1.63-3.21-2.42l1.83-1.19M7 3h10v1l-.06.5H7.06L7 4V3m.68 3h8.64c-.24.34-.52.69-.9 1.06l-.51.44H9.07l-.49-.44c-.38-.37-.66-.72-.9-1.06m1.41 10.5h5.84l.49.44c.38.37.66.72.9 1.06H7.68c.24-.34.52-.69.9-1.06l.51-.44m-2.03 3h9.88l.06.5v1H7v-1l.06-.5Z"/></svg>')
+}
+.md-typeset .admonition.dna_blue,
+.md-typeset details.dna_blue {
+  border-color: rgb(43, 120, 155);
+}
+.md-typeset .dna_blue > .admonition-title,
+.md-typeset .dna_blue > summary {
+  background-color: rgba(43, 120, 155, 0.1);
+}
+.md-typeset .dna_blue > .admonition-title::before,
+.md-typeset .dna_blue > summary::before {
+  background-color: rgb(43, 105, 155);
+  -webkit-mask-image: var(--md-admonition-icon--dna_blue);
+          mask-image: var(--md-admonition-icon--dna_blue);
+}
+.md-typeset .dna_blue > h5 {
+  /* this renders the heading readable by screen readers but does not display it */
+  margin: -1px; padding: 0; border: 0;
+  visibility: hidden;
+  margin-top: -15px; /* this makes the header in the TOC jump to the top of the admonition box */
+  position: relative;
+}
+
+/* technical details admonition */
+:root {
+  --md-admonition-icon--techdetails: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M17 22v-2h3v-3h2v3.5c0 .39-.16.74-.46 1.04-.3.3-.65.46-1.04.46H17M7 22H3.5c-.39 0-.74-.16-1.04-.46-.3-.3-.46-.65-.46-1.04V17h2v3h3v2M17 2h3.5c.39 0 .74.16 1.04.46.3.3.46.65.46 1.04V7h-2V4h-3V2M7 2v2H4v3H2V3.5c0-.39.16-.74.46-1.04.3-.3.65-.46 1.04-.46H7m3.5 4C13 6 15 8 15 10.5c0 .88-.25 1.7-.69 2.4l3.26 3.26-1.41 1.41-3.26-3.26c-.7.44-1.52.69-2.4.69C8 15 6 13 6 10.5S8 6 10.5 6m0 2a2.5 2.5 0 0 0 0 5 2.5 2.5 0 0 0 0-5Z"/></svg>')
+}
+.md-typeset .admonition.techdetails,
+.md-typeset details.techdetails {
+  border-color: rgb(70, 18, 116);
+}
+.md-typeset .admonition.techdetails {
+  max-width: auto;
+  margin-inline: auto;
+}
+.md-typeset .techdetails > .admonition-title,
+.md-typeset .techdetails > summary {
+  background-color: rgba(132, 89, 168, 0.1)
+}
+.md-typeset .techdetails > .admonition-title::before,
+.md-typeset .techdetails > summary::before {
+  background-color: rgb(70, 18, 116);;
+  -webkit-mask-image: var(--md-admonition-icon--techdetails);
+          mask-image: var(--md-admonition-icon--techdetails);
+}
+
+/* text toggle admonition */
+:root {
+  --md-admonition-icon--toggle: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M21.5 14.5 16 20l-5.5-5.5 1.41-1.41L15 16.17V10.5C15 8 13 6 10.5 6H4V4h6.5a6.5 6.5 0 0 1 6.5 6.5v5.67l3.09-3.09z"/></svg>')
+}
+.md-typeset .admonition.toggle,
+.md-typeset details.toggle {
+  border-color: rgba(255, 255, 255, 0);
+}
+.md-typeset .toggle > .admonition-title,
+.md-typeset .toggle > summary {
+  background-color: rgba(255, 255, 255, 0);
+}
+.md-typeset .toggle > .admonition-title::before,
+.md-typeset .toggle > summary::before {
+  background-color: rgb(125, 125, 125);
+  -webkit-mask-image: var(--md-admonition-icon--toggle);
+          mask-image: var(--md-admonition-icon--toggle);
+}
+.md-typeset .toggle > h5 {
+  /* this renders the heading readable by screen readers but does not display it */
+  margin: -1px; padding: 0; border: 0; 
+  visibility: hidden;
+  margin-top: -15px; /* this makes the header in the TOC jump to the top of the admonition box */
+  position: relative;
+}
+
+/* task toggle admonition */
+:root {
+  --md-admonition-icon--task: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.6.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M495.9 166.6c3.2 8.7.5 18.4-6.4 24.6l-43.3 39.4c1.1 8.3 1.7 16.8 1.7 25.4s-.6 17.1-1.7 25.4l43.3 39.4c6.9 6.2 9.6 15.9 6.4 24.6-4.4 11.9-9.7 23.3-15.8 34.3l-4.7 8.1c-6.6 11-14 21.4-22.1 31.2-5.9 7.2-15.7 9.6-24.5 6.8l-55.7-17.7c-13.4 10.3-28.2 18.9-44 25.4l-12.5 57.1c-2 9.1-9 16.3-18.2 17.8-13.8 2.3-28 3.5-42.5 3.5s-28.7-1.2-42.5-3.5c-9.2-1.5-16.2-8.7-18.2-17.8l-12.5-57.1c-15.8-6.5-30.6-15.1-44-25.4l-55.6 17.8c-8.8 2.8-18.6.3-24.5-6.8-8.1-9.8-15.5-20.2-22.1-31.2l-4.7-8.1c-6.1-11-11.4-22.4-15.8-34.3-3.2-8.7-.5-18.4 6.4-24.6l43.3-39.4c-1.1-8.4-1.7-16.9-1.7-25.5s.6-17.1 1.7-25.4l-43.3-39.4c-6.9-6.2-9.6-15.9-6.4-24.6 4.4-11.9 9.7-23.3 15.8-34.3l4.7-8.1c6.6-11 14-21.4 22.1-31.2 5.9-7.2 15.7-9.6 24.5-6.8l55.7 17.7c13.4-10.3 28.2-18.9 44-25.4l12.5-57.1c2-9.1 9-16.3 18.2-17.8C227.3 1.2 241.5 0 256 0s28.7 1.2 42.5 3.5c9.2 1.5 16.2 8.7 18.2 17.8l12.5 57.1c15.8 6.5 30.6 15.1 44 25.4l55.7-17.7c8.8-2.8 18.6-.3 24.5 6.8 8.1 9.8 15.5 20.2 22.1 31.2l4.7 8.1c6.1 11 11.4 22.4 15.8 34.3zM256 336a80 80 0 1 0 0-160 80 80 0 1 0 0 160"/></svg>')
+}
+.md-typeset .admonition.task,
+.md-typeset details.task {
+  border-color: rgba(255, 255, 255, 0);
+}
+.md-typeset .task > .admonition-title,
+.md-typeset .task > summary {
+  background-color: rgba(255, 255, 255, 0);
+}
+.md-typeset .task > .admonition-title::before,
+.md-typeset .task > summary::before {
+  background-color: rgb(125, 125, 125);
+  -webkit-mask-image: var(--md-admonition-icon--task);
+          mask-image: var(--md-admonition-icon--task);
+}
+.md-typeset .task > h5 {
+  /* this renders the heading readable by screen readers but does not display it */
+  margin: -1px; padding: 0; border: 0; 
+  visibility: hidden;
+  margin-top: -15px; /* this makes the header in the TOC jump to the top of the admonition box */
+  position: relative;
+}
+
+/* caption admonition */
+:root {
+  --md-admonition-icon--caption: url('data:image/svg+xml;charset=utf-8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 14.29 6.5 19h10.96l-2.71-3.54-1.97 2.34L10 14.29M5 21V7h13.96v14H5m7-18.6 2.61 2.63H9.37L12 2.4M5 5.03c-.5 0-1 .19-1.39.58C3.2 6 3 6.46 3 7v14c0 .5.2 1 .61 1.39C4 22.8 4.5 23 5 23h13.96c.54 0 1-.2 1.41-.61.4-.39.63-.89.63-1.39V7c0-.54-.23-1-.63-1.39-.41-.39-.87-.58-1.41-.58H16L12 1 7.96 5.03H5Z"/></svg>')
+}
+.md-typeset .admonition.caption,
+.md-typeset details.caption {
+  border-color: rgb(135, 142, 143);
+}
+.md-typeset .caption > .admonition-title,
+.md-typeset .caption > summary {
+  background-color: rgba(72, 119, 127, 0.1);
+}
+.md-typeset .caption > .admonition-title::before,
+.md-typeset .caption > summary::before {
+  background-color: rgb(135, 142, 143);
+  -webkit-mask-image: var(--md-admonition-icon--caption);
+          mask-image: var(--md-admonition-icon--caption);
+}
+.md-typeset .caption > h5 {
+  /* this renders the heading readable by screen readers but does not display it */
+  margin: -1px; padding: 0; border: 0; 
+  visibility: hidden;
+  margin-top: -15px; /* this makes the header in the TOC jump to the top of the admonition box */
+  position: relative;
+}
+
+/* edit the tip admonition */
+.md-typeset .tip > h5 {
+  /* this renders the heading readable by screen readers but does not display it */
+  margin: -1px; padding: 0; border: 0; 
+  visibility: hidden;
+  margin-top: -15px; /* this makes the header in the TOC jump to the top of the admonition box */
+  position: relative;
+}
+
+/* content width */
+.md-grid {
+  max-width: initial;
+}
+
+.md-typeset .admonition.narrow {
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-block; /* make the admonition width fit the content */
+}
+
+/* scrollbar and resizable columns in tables */
+table {
+  overflow-y: scroll;
+  max-height: 500px;
+  max-width: 100vw;
+  display: block;
+}
+th {
+  position: sticky;
+  top: 0;
+  resize: horizontal;
+  overflow: auto;
+}
+td {
+  word-break: break-all;
+  overflow-wrap: anywhere;
+}
+/* Base styles for the search box */
+div.searchable-table input.table-search-input {
+  width: 25%;
+  padding: 10px;
+  margin-bottom: 12px;
+  font-size: 12px;
+  box-sizing: border-box;
+  border-radius: 2px; 
+}
+
+/* Light mode styles */
+[data-md-color-scheme="light"] div.searchable-table input.table-search-input {
+  background-color: #fff;
+  color: #000;
+  border: 1px solid #E0E1E1;
+}
+[data-md-color-scheme="light"] div.searchable-table input.table-search-input::placeholder {
+  color: #888;
+  font-style: italic;
+}
+
+/* Dark mode styles */
+[data-md-color-scheme="slate"] div.searchable-table input.table-search-input {
+  background-color: #1d2125;
+  color: #fff;
+  border: 1px solid #373B40;
+}
+[data-md-color-scheme="slate"] div.searchable-table input.table-search-input::placeholder {
+  color: #bbb;
+  font-style: italic;
+}
+
+/* modify heading level 5 appearance */
+.md-content h5 {
+  all: unset;
+  margin: px2em(16px, 12.8px) 0;
+  font-weight: 500;
+  font-size: px2em(12.8px);
+  letter-spacing: -0.01em;
+}

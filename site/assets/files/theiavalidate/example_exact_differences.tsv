@@ -1,0 +1,8 @@
+	columnA-string	columnA-string	columnB-set	columnB-set	columnC-ignore	columnC-ignore	columnD-float	columnD-float	columnE-missing	columnE-missing
+	example_table1.tsv	example_table2.tsv	example_table1.tsv	example_table2.tsv	example_table1.tsv	example_table2.tsv	example_table1.tsv	example_table2.tsv	example_table1.tsv	example_table2.tsv
+samples										
+sample1			item1,item2,item3	item1,item3,item2	cheese	cheesecake	1000.0	999.0		
+sample2	option1	option2	item1,item3,item2	item1,item2,item3	cheesecake	batter				
+sample3	option2	option1	item1,item2,item3	item1,item2	cake	cheese	14.0	24.0	present	
+sample4			item2,item1	item1,item2			3492.0	728.0		
+sample5			item1,item2	item1,item2,item3			3.0	4.0		

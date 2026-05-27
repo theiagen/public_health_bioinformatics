@@ -1,0 +1,26 @@
+entity:augur_id	collection_date	region	country	division	pango_lineage
+Sample_01	2021-04-12	North America 	USA	Nevada	B.1.1.7
+Sample_02	2021-04-15	North America 	USA	Nevada	B.1.1.7
+Sample_03	2021-04-14	North America 	USA	Nevada	B.1.1.7
+Sample_04	2021-04-14	North America 	USA	Nevada	B.1.1.7
+Sample_05	2021-04-14	North America 	USA	Nevada	B.1.1.7
+Sample_06	2021-04-16	North America 	USA	Nevada	B.1.1.7
+Sample_07	2021-04-15	North America 	USA	Nevada	B.1.1.7
+Sample_08	2021-04-15	North America 	USA	Nevada	B.1.1.7
+Sample_09	2021-04-16	North America 	USA	Nevada	B.1.1.7
+Sample_10	2021-04-16	North America 	USA	Nevada	B.1.1.7
+Sample_11	2021-04-17	North America 	USA	Washington	B.1.1.7
+Sample_12	2021-04-16	North America 	USA	Nevada	B.1.1.7
+Sample_13	2021-04-17	North America 	USA	Nevada	B.1.1.7
+Sample_14	2021-04-17	North America 	USA	Nevada	B.1.1.7
+Sample_15	2021-04-19	North America 	USA	Nevada	B.1.1.7
+Sample_16	2021-04-19	North America 	USA	California	B.1.427
+Sample_17	2021-04-19	North America 	USA	California	B.1.427
+Sample_18	2021-04-19	North America 	USA	Nevada	B.1.1.7
+Sample_19	2021-03-10	North America 	USA	California	B.1.427
+Sample_20	2021-03-10	North America 	USA	California	B.1.427
+Sample_21	2021-04-16	North America 	USA	Nevada	B.1.1.7
+Sample_22	2021-04-14	North America 	USA	Washington	B.1.427
+Sample_23	2021-04-14	North America 	USA	Nevada	B.1.1.7
+Sample_24	2021-04-16	North America 	USA	Nevada	B.1.1.7
+Sample_25	2021-04-19	North America 	USA	Nevada	B.1.1.7

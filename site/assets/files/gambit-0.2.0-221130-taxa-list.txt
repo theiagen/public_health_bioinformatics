@@ -1,0 +1,263 @@
+NCBI TaxID	Species Name	Species Diameter	Rank	Number of Genomes
+1450171	Aaosphaeria arxii	0.561	species	2
+5341	Agaricus bisporus	0.5163	species	8
+5599	Alternaria alternata	0.3961	species	83
+156630	Alternaria arborescens	0.3151	species	7
+119953	Alternaria atra	0.1308	species	2
+1187904	Alternaria burnsii	0.4142	species	2
+1187941	Alternaria rosae	0.4421	species	2
+5101	Amorphotheca resinae	0.4418	species	3
+327061	Annulohypoxylon truncatum	0.4156	species	2
+105984	Apiotrichum porosum	0.3835	species	2
+462254	Aplosporella prunicola	0.0003	species	2
+5454	Ascochyta rabiei	0.0573	species	3
+487661	Aspergillus aculeatinus	0.0517	species	2
+209559	Aspergillus alliaceus	0.2451	species	2
+182096	Aspergillus chevalieri	0.1187	species	4
+5057	Aspergillus clavatus	0.0592	species	2
+36630	Aspergillus fischeri	0.1787	species	5
+746128	Aspergillus fumigatus	0.2135	species	320
+34381	Aspergillus japonicus	0.2955	species	3
+293939	Aspergillus lentulus	0.2747	species	13
+1069201	Aspergillus luchuensis	0.3719	species	13
+162425	Aspergillus nidulans	0.0852	species	5
+138278	Aspergillus ochraceoroseus	0.0203	species	2
+1506151	Aspergillus pseudonomiae	0.104	species	2
+396024	Aspergillus ruber	0.0993	species	3
+75750	Aspergillus sydowii	0.3403	species	3
+1220188	Aspergillus tanneri	0.0225	species	3
+33178	Aspergillus terreus	0.7059	species	14
+5068	Aspergillus tubingensis	0.3915	species	9
+91492	Aspergillus udagawae	0.3645	species	6
+446911	Aspergillus uvarum	0.156	species	3
+75553	Aspergillus viridinutans	0.0269	species	2
+5066	Aspergillus wentii	0.04	species	2
+5580	Aureobasidium pullulans	0.6686	species	71
+1042127	Aureobasidium subglaciale	0.73	species	8
+45609	Babjeviella inositovora	0.0512	species	2
+109871	Batrachochytrium dendrobatidis	0.0766	species	3
+176275	Beauveria bassiana	0.5526	species	25
+5016	Bipolaris maydis	0.0688	species	3
+101162	Bipolaris oryzae	0.0647	species	2
+45130	Bipolaris sorokiniana	0.1386	species	8
+5017	Bipolaris zeicola	0.0596	species	3
+5039	Blastomyces dermatitidis	0.2468	species	4
+40559	Botrytis cinerea	0.2861	species	37
+87229	Botrytis porri	0.033	species	2
+5007	Brettanomyces bruxellensis	0.5547	species	12
+5476	Candida albicans	0.3601	species	86
+42374	Candida dubliniensis	0.0333	species	3
+273371	Candida orthopsilosis	0.4321	species	5
+5480	Candida parapsilosis	0.1384	species	29
+1198502	Candida theae	0.2049	species	2
+5482	Candida tropicalis	0.4679	species	18
+122368	Cercospora beticola	0.1328	species	3
+84275	Cercospora kikuchii	0.0635	species	3
+38033	Chaetomium globosum	0.2095	species	9
+89940	Cladophialophora bantiana	0.0883	species	2
+86049	Cladophialophora carrionii	0.6505	species	2
+569365	Cladophialophora immunda	0.1433	species	2
+36911	Clavispora lusitaniae	0.3678	species	35
+5501	Coccidioides immitis	0.239	species	5
+199306	Coccidioides posadasii	0.3092	species	11
+90255	Cokeromyces recurvatus	0.0348	species	2
+1215731	Colletotrichum aenigma	0.3671	species	2
+690256	Colletotrichum fructicola	0.1175	species	13
+31870	Colletotrichum graminicola	0.1089	species	2
+80884	Colletotrichum higginsianum	0.1728	species	4
+1209932	Colletotrichum scovillei	0.0276	species	4
+5467	Colletotrichum truncatum	0.3348	species	4
+5346	Coprinopsis cinerea	0.1813	species	2
+73501	Cordyceps militaris	0.3267	species	3
+5116	Cryphonectria parasitica	0.0963	species	93
+104669	Cryptococcus amylolentus	0.0814	species	2
+37769	Cryptococcus gattii VGI	0.1612	species	5
+5619	Cryptococcus wingfieldii	0.0095	species	2
+879819	Cutaneotrichosporon oleaginosum	0.0067	species	3
+4903	Cyberlindnera jadinii	0.3253	species	5
+326644	Daldinia caldariorum	0.4386	species	2
+103429	Daldinia loculata	0.3374	species	2
+58627	Debaryomyces fabryi	0.0171	species	2
+83186	Diaporthe citri	0.2463	species	4
+114155	Dichomitus squalens	0.4	species	4
+100019	Didymella exigua	0.0025	species	2
+98403	Drechmeria coniospora	0.1282	species	2
+698440	Drepanopeziza brunnea	0.7662	species	5
+6035	Encephalitozoon cuniculi	0.1121	species	5
+27973	Encephalitozoon hellem	0.4268	species	3
+58839	Encephalitozoon intestinalis	0.0151	species	2
+33169	Eremothecium gossypii	0.0283	species	2
+5970	Exophiala dermatitidis	0.381	species	9
+212818	Exophiala mesophila	0.0157	species	2
+91928	Exophiala spinifera	0.3981	species	9
+93612	Exserohilum turcicum	0.0681	species	3
+5210	Filobasidium floriforme	0.4288	species	2
+979981	Fonsecaea multimorphosa	0.0015	species	2
+40355	Fonsecaea pedrosoi	0.5015	species	2
+5499	Fulvia fulva	0.0479	species	2
+231269	Fusarium coffeatum	0.263	species	2
+2675880	Fusarium flagelliforme	0.2016	species	3
+5127	Fusarium fujikuroi	0.2842	species	22
+5518	Fusarium graminearum	0.4338	species	123
+192010	Fusarium mangiferae	0.0704	species	2
+1042133	Fusarium musae	0.2106	species	2
+5507	Fusarium oxysporum	0.6916	species	696
+36050	Fusarium poae	0.2032	species	3
+948311	Fusarium proliferatum	0.3787	species	20
+101028	Fusarium pseudograminearum	0.4944	species	5
+48865	Fusarium redolens	0.3249	species	4
+169388	Fusarium solani	0.2943	species	4
+42677	Fusarium subglutinans	0.2715	species	3
+56646	Fusarium venenatum	0.0658	species	4
+117187	Fusarium verticillioides	0.2024	species	8
+101098	Gamsiella multidivaricata	0.056	species	2
+1094350	Geosmithia morbida	0.0002	species	2
+101096	Gilbertella persicaria	0.1607	species	2
+101852	Glarea lozoyensis	0.0014	species	2
+226899	Grosmannia clavigera	0.029	species	2
+984962	Heterobasidion irregulare	0.6787	species	13
+111463	Hirsutella rhossiliensis	0.0318	species	2
+5037	Histoplasma capsulatum	0.6789	species	7
+717740	Hyphopichia burtonii	0.3198	species	3
+63214	Hypoxylon fragiforme	0.1293	species	2
+61262	Kazachstania barnettii	0.0169	species	2
+28985	Kluyveromyces lactis	0.6141	species	2
+4911	Kluyveromyces marxianus	0.4206	species	17
+460519	Komagataella phaffii	0.2906	species	134
+463800	Kwoniella mangrovensis	0.1597	species	3
+381046	Lachancea thermotolerans	0.2251	species	3
+5630	Laetiporus sulphureus	0.7962	species	5
+45133	Lasiodiplodia theobromae	0.5828	species	9
+5353	Lentinula edodes	0.5274	species	9
+5022	Leptosphaeria maculans	0.05	species	5
+64571	Lobosporangium transversale	0.0674	species	2
+36914	Lodderomyces elongisporus	0.3943	species	3
+76773	Malassezia globosa	0.3851	species	4
+77020	Malassezia pachydermatis	0.583	species	3
+76775	Malassezia restricta	0.4613	species	5
+76777	Malassezia sympodialis	0.1015	species	9
+181124	Marasmius oreades	0.2327	species	2
+92637	Metarhizium acridum	0.1334	species	3
+568076	Metarhizium robertsii	0.0229	species	2
+4929	Meyerozyma guilliermondii	0.0897	species	12
+34349	Mixia osmundae	0.0042	species	2
+84753	Moesziomyces antarcticus	0.1575	species	3
+1174673	Morchella importuna	0.0227	species	2
+1174677	Morchella sextelata	0.0719	species	3
+27288	Naumovozyma castellii	0.0639	species	7
+586133	Nematocida parisii	0.1613	species	8
+1658444	Neoarthrinium moseri	0.231	species	3
+5141	Neurospora crassa	0.0882	species	4
+40127	Neurospora tetrasperma	0.1364	species	2
+40302	Nosema ceranae	0.2488	species	3
+870730	Ogataea angusta	0.1558	species	10
+1937702	Ogataea haglerorum	0.077	species	22
+1005962	Ogataea parapolymorpha	0.3075	species	4
+1378263	Ogataea philodendri	0.0347	species	2
+460523	Ogataea polymorpha	0.1737	species	15
+1387563	Ophidiomyces ophidiicola	0.5982	species	83
+2813651	Orbilia oligospora	0.7034	species	20
+174685	Ordospora colligata	0.0652	species	4
+121759	Paracoccidioides brasiliensis	0.2643	species	4
+13684	Parastagonospora nodorum	0.3286	species	177
+36651	Penicillium digitatum	0.0399	species	6
+27334	Penicillium expansum	0.2823	species	10
+5078	Penicillium griseofulvum	0.1341	species	3
+69781	Penicillium oxalicum	0.1592	species	11
+5082	Penicillium roqueforti	0.2453	species	38
+1108849	Penicillium rubens	0.1394	species	5
+60172	Penicillium solitum	0.1193	species	8
+4909	Pichia kudriavzevii	0.4164	species	34
+5322	Pleurotus ostreatus	0.8003	species	6
+42068	Pneumocystis jirovecii	0.2297	species	3
+280754	Pochonia chlamydosporia	0.5213	species	2
+2587412	Podospora anserina	0.0436	species	4
+104341	Postia placenta	0.5217	species	3
+2754530	Protomyces lactucae-debilis	0.0147	species	2
+655981	Pseudogymnoascus destructans	0.0471	species	3
+5297	Puccinia graminis	0.5852	species	5
+27350	Puccinia striiformis	0.3489	species	22
+33203	Purpureocillium lilacinum	0.3822	species	8
+45151	Pyrenophora tritici-repentis	0.4261	species	65
+148305	Pyricularia grisea	0.1529	species	10
+318829	Pyricularia oryzae	0.4198	species	366
+1578925	Pyricularia pennisetigena	0.0602	species	2
+86056	Rhinocladiella mackenziei	0.1344	species	3
+588596	Rhizophagus irregularis	0.6347	species	31
+58291	Rhizopus microsporus	0.7713	species	9
+34475	Rhodofomes roseus	0.3385	species	2
+4932	Saccharomyces cerevisiae	0.6259	species	1031
+1080349	Saccharomyces eubayanus	0.1282	species	5
+36035	Saccharomycodes ludwigii	0.4498	species	5
+5606	Saitoella complicata	0.0038	species	2
+563466	Scedosporium apiospermum	0.3365	species	2
+4924	Scheffersomyces stipitis	0.1188	species	3
+5334	Schizophyllum commune	0.8711	species	34
+4896	Schizosaccharomyces pombe	0.175	species	20
+5180	Sclerotinia sclerotiorum	0.0916	species	5
+85982	Serpula lacrymans	0.7978	species	5
+5147	Sordaria macrospora	0.0211	species	2
+340170	Spathaspora passalidarum	0.0022	species	2
+280036	Sporisorium graminicola	0.2013	species	2
+29908	Sporothrix schenckii	0.5343	species	4
+1196081	Talaromyces amestolkiae	0.0824	species	2
+37727	Talaromyces marneffei	0.2464	species	9
+2587410	Thermothielavioides terrestris	0.2436	species	2
+5217	Tremella mesenterica	0.4226	species	2
+101201	Trichoderma asperellum	0.6822	species	13
+63577	Trichoderma atroviride	0.6442	species	7
+58853	Trichoderma citrinoviride	0.2403	species	3
+398673	Trichoderma gamsii	0.3163	species	2
+51453	Trichoderma reesei	0.3776	species	11
+29875	Trichoderma virens	0.5079	species	7
+5551	Trichophyton rubrum	0.044	species	25
+82508	Trichosporon asahii	0.3162	species	9
+152316	Truncatella angustata	0.148	species	2
+1159556	Ustilaginoidea virens	0.0828	species	5
+120017	Ustilago hordei	0.2972	species	11
+5270	Ustilago maydis	0.1352	species	38
+1051613	Verticillium alfalfae	0.086	species	2
+27337	Verticillium dahliae	0.2272	species	38
+1051616	Verticillium nonalfalfae	0.061	species	8
+245174	Wallemia ichthyophaga	0.159	species	22
+1708541	Wallemia mellicola	0.1954	species	26
+45607	Wickerhamiella sorbophila	0.0185	species	2
+4927	Wickerhamomyces anomalus	0.6377	species	10
+1041607	Wickerhamomyces ciferrii	0.3355	species	2
+4952	Yarrowia lipolytica	0.1135	species	25
+4956	Zygosaccharomyces rouxii	0.541	species	6
+42260	Zygotorulaspora mrakii	0.0118	species	2
+1047171	Zymoseptoria tritici	0.4585	species	28
+498019	Candida auris	0.4314	species	126
+5478	Candida glabrata	0.1872	species	42
+45357	Candida haemuloni	0.3122	species	4
+418784	Candida pseudohaemuloni	0.4419	species	2
+1231522	Candida duobushaemulonis	0.0156	species	2
+	Colletotrichum gloeosporioides subgroup 1	0.4176		6
+	Colletotrichum gloeosporioides subgroup 2	0.2351		2
+	Colletotrichum gloeosporioides subgroup 3	0.0596		2
+	Colletotrichum siamense subgroup 1	0.3671		5
+	Colletotrichum siamense subgroup 2	0.3344		7
+	Cryptococcus neoformans subgroup 1	0.1018		3
+	Cryptococcus neoformans subgroup 2	0.4573		109
+	Debaryomyces hansenii subgroup 1	0.0126		2
+	Debaryomyces hansenii subgroup 2	0.0223		2
+	Debaryomyces hansenii subgroup 3	0.2355		3
+	Rhizoctonia solani subgroup 1	0.5143		10
+	Rhizoctonia solani subgroup 2	0.4493		5
+	Rhizoctonia solani subgroup 3	0.4868		5
+	Rhizoctonia solani subgroup 4	0.209		2
+	Rhizoctonia solani subgroup 5	0.4105		2
+	Rhodotorula toruloides subgroup 1	0.0344		6
+	Rhodotorula toruloides subgroup 2	0.5737		9
+	Saccharomyces paradoxus subgroup 1	0.0558		5
+	Saccharomyces paradoxus subgroup 2	0.1018		23
+	Saccharomyces paradoxus subgroup 3	0.4988		8
+	Saccharomyces paradoxus subgroup 4	0.0243		6
+	Torulaspora delbrueckii subgroup 1	0.1508		2
+	Torulaspora delbrueckii subgroup 2	0.0881		5
+	Torulaspora delbrueckii subgroup 3	0.6648		69
+	Trichoderma harzianum subgroup 1	0.3234		4
+	Trichoderma harzianum subgroup 2	0.1262		6
+	Aspergillus flavus/Aspergillus oryzae	0.5309	species	314
+	Aspergillus niger/Aspergillus welwitschiae	0.4826	species	74
