@@ -16,6 +16,7 @@ nav:
           - Workflow Failure Philosophy: getting_started/philosophy.md
       - Other Resources:
           - Available SOPs: guides/sops.md
+          - All Tools: guides/all_tools.md
           - Database and Docker Versions: guides/versions.md
       - Guides:
           - Guide to GAMBIT: guides/gambit.md
@@ -209,7 +210,7 @@ nav:
           - Contributing to the Code: contributing/code_contribution.md
 
 not_in_nav: |
-  assets/* 
+  assets/*
   common_text/*
 
 theme:
