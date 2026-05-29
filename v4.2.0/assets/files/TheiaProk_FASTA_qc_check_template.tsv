@@ -1,0 +1,15 @@
+taxon	assembly_length_min	assembly_length_max	number_contigs	n50_value	quast_gc_percent_min	quast_gc_percent_max	busco_completeness	ani_highest_percent	ani_highest_percent_bases_aligned
+Listeria_monocytogenes	2800000	3200000	500	10000			95	92	70
+Escherichia_coli	4900000	6000000	500	10000			95	92	70
+Shigella	4200000	4900000	500	10000			95	92	70
+Salmonella	4400000	5700000	500	10000			95	92	70
+Campylobacter	1400000	2200000	500	10000			95	92	70
+Vibrio_cholerae	3800000	4300000	500	10000			95	92	70
+Vibrio_parahaemolyticus	4900000	5500000	500	10000			95	92	70
+Vibrio_vulnificus	4700000	5300000	500	10000			95	92	70
+Pseudomonas			500	10000			95		
+Streptococcus			500	10000			95		
+Acinetobacter			500	10000			95		
+Mycobacterium			500	10000			95		
+Legionella			500	10000			95		
+Klebsiella			500	10000			95		

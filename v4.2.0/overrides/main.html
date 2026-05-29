@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block outdated %}
+  You're not viewing the latest version release.
+  <a href="{{ '../' ~ base_url }}"> 
+    <strong>Click here to go to the latest version release.</strong>
+  </a>
+{% endblock %}
+
+{# Banner for pages with 'fragment' metadata #}
+{% block content %}
+  {% if page.meta.fragment %}
+    <div style="background: #ffeeba; color: #856404; padding: 1em; border: 1px solid #ffeeba; border-radius: 4px; margin-bottom: 1.5em; text-align: center;">
+      <strong>Note:</strong> This page is a <em>fragment</em> and may not render correctly.
+    </div>
+  {% endif %}
+  {{ super() }}
+{% endblock %}
+
