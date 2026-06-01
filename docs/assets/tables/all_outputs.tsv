@@ -661,7 +661,6 @@ lyveset_pooled_snps_vcf	File	SNPs vcf	Lyve_SET
 lyveset_raxml_tree	File	RAxML-generated tree in newick format	Lyve_SET
 lyveset_wf_analysis_date	String	Date analysis was run	Lyve_SET
 lyveset_wf_version	String	Version of PHB used when running Lyveset_PHB	Lyve_SET
-medea_tag	String	DESCRIPTION	TheiaEuk_ONT
 mashtree_docker	String	The Docker image used to run the mashtree task	MashTree_FASTA
 mashtree_filtered_metadata	File	Optional output file with filtered metadata that is only produced if the optional `summarize_data` task is used	MashTree_FASTA
 mashtree_matrix	File	The distance matrix made	MashTree_FASTA
@@ -683,6 +682,7 @@ medaka_model	String	Model used by Medaka	TheiaEuk_ONT, TheiaProk_ONT
 medaka_reference	String	Reference sequence used in medaka task	TheiaCoV_ClearLabs, TheiaCoV_ONT
 medaka_vcf	File	A VCF file containing the identified variants	TheiaCoV_ONT
 medaka_version	String	Version of Medaka used	TheiaEuk_ONT, TheiaProk_ONT
+medea_tag	String	Curated name of GAMBIT predicted taxon	TheiaEuk_ONT
 megahit_docker	String	Docker image used for MEGAHIT	TheiaViral_Illumina_PE
 megahit_status	String	Status of the MEGAHIT assembly	TheiaViral_Illumina_PE
 megahit_version	String	Version of MEGAHIT used	TheiaViral_Illumina_PE
