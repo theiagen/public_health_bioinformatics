@@ -5,13 +5,13 @@ import "../../tasks/gene_typing/variant_detection/task_snippy_variants.wdl" as s
 import "../../tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl" as cauris_cladetyper
 import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as amr_search_task
 
-workflow manwe_magic {
+workflow medea_magic {
   meta {
     description: "Workflow for fungal species typing"
   }
   input {
     String samplename
-    String manwe_tag
+    String medea_tag
     File assembly
     File? read1
     File? read2
@@ -54,7 +54,7 @@ workflow manwe_magic {
     Int? snippy_min_quality
     Int? snippy_maxsoft
   }
-  if (manwe_tag == "Candidozyma auris" || manwe_tag == "Candida auris") {
+  if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
     call cauris_cladetyper.cauris_cladetyper as cladetyper {
       input: 
         assembly_fasta = assembly,
@@ -118,7 +118,7 @@ workflow manwe_magic {
       }
     }
   }
-  if (manwe_tag == "Aspergillus fumigatus") {
+  if (medea_tag == "Aspergillus fumigatus") {
     if (!assembly_only && !ont_data) {
       call snippy.snippy_variants as snippy_afumigatus {
         input:
@@ -159,7 +159,7 @@ workflow manwe_magic {
         docker = snippy_gene_query_docker_image
     }
   }
-  if (manwe_tag == "Cryptococcus neoformans") {
+  if (medea_tag == "Cryptococcus neoformans") {
     if (!assembly_only && !ont_data) {
       call snippy.snippy_variants as snippy_crypto {
         input:
@@ -208,12 +208,12 @@ workflow manwe_magic {
       "Candidozyma auris" : "498019"
     }
     # Checks for a match to the AMR_Search available taxon codes
-    if (manwe_tag == "Candida auris" || manwe_tag == "Candidozyma auris") {
+    if (medea_tag == "Candida auris" || medea_tag == "Candidozyma auris") {
       call amr_search_task.amr_search {
         input:
           input_fasta = assembly,
           samplename = samplename,
-          amr_search_database = taxon_code[manwe_tag],
+          amr_search_database = taxon_code[medea_tag],
           cpu = amr_search_cpu,
           memory = amr_search_memory,
           disk_size = amr_search_disk_size,
