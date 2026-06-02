@@ -1,12 +1,12 @@
 version 1.0
 
-task gene_coverage {
+task sars_gene_coverage {
   input {
     File bamfile
     File bedfile
     String samplename
-    Int gene_start_coordinate = 21563
-    Int gene_stop_coordinate = 25384
+    Int sc2_s_gene_start = 21563
+    Int sc2_s_gene_stop = 25384
     Int min_depth = 10
 
     String organism
@@ -25,13 +25,13 @@ task gene_coverage {
     export chromosome
 
     if [ "~{organism}" == "sars-cov-2" ]; then
-      samtools coverage -r "$chromosome:~{gene_start_coordinate}-~{gene_stop_coordinate}" ~{bamfile} > ~{samplename}.s_gene.coverage.txt
+      samtools coverage -r "$chromosome:~{sc2_s_gene_start}-~{sc2_s_gene_stop}" ~{bamfile} > ~{samplename}.s_gene.coverage.txt
       s_gene_depth=$(cut -f 7 ~{samplename}.s_gene.coverage.txt | tail -n 1)
 
       if [ -z "s_gene_depth" ] ; then s_gene_depth="0"; fi
       echo "$s_gene_depth" | tee S_GENE_DEPTH
 
-      sgene=$(samtools depth -J -r "${chromosome}:~{gene_start_coordinate}-~{gene_stop_coordinate}" ~{bamfile} | awk -F "\t" '{if ($3 > ~{min_depth}) print;}' | wc -l )
+      sgene=$(samtools depth -J -r "${chromosome}:~{sc2_s_gene_start}-~{sc2_s_gene_stop}" ~{bamfile} | awk -F "\t" '{if ($3 > ~{min_depth}) print;}' | wc -l )
       sgene_pc=$(python3 -c "print ( round( ($sgene / 3822 ) * 100, 2 ) )")
       echo "$sgene_pc" | tee S_GENE_PC
     else
