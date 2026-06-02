@@ -2,7 +2,7 @@ version 1.0
 
 import "../../tasks/alignment/task_bwa.wdl" as align
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
-import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
+import "../../tasks/quality_control/basic_statistics/task_sars_gene_coverage.wdl" as gene_coverage_task
 import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
 import "../../tasks/quality_control/basic_statistics/task_qualimap.wdl" as qualimap_task
 import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
