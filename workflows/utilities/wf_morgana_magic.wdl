@@ -173,7 +173,7 @@ workflow morgana_magic {
   if ((workflow_type == "theiacov_pe" || workflow_type == "theiacov_se" || workflow_type == "theiacov_ont" || workflow_type == "theiacov_clearlabs") && (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(organism_parameters.gene_locations_bed))) {
     if (basename(organism_parameters.gene_locations_bed) != "empty.bed") {
       # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
-      call gene_coverage_task.gene_coverage {
+      call gene_coverage_task.sars_gene_coverage as gene_coverage {
         input:
           bamfile = select_first([gene_coverage_bam]),
           bedfile = organism_parameters.gene_locations_bed,

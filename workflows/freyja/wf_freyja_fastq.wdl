@@ -136,7 +136,7 @@ workflow freyja_fastq {
   }
   if (freyja_pathogen == "SARS-CoV-2") {
     File sc2_gene_bed = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"
-    call gene_coverage_task.gene_coverage {
+    call gene_coverage_task.sars_gene_coverage as gene_coverage {
       input:
         bamfile = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
         bedfile = sc2_gene_bed,
