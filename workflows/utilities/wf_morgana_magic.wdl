@@ -6,7 +6,7 @@ import "../utilities/wf_flu_track.wdl" as flu_track_wf
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../../tasks/species_typing/lentivirus/task_quasitools.wdl" as quasitools_task
 import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
-import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
+import "../../tasks/quality_control/basic_statistics/task_sars_gene_coverage.wdl" as gene_coverage_task
 
 workflow morgana_magic {
   input {
