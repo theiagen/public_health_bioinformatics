@@ -1,0 +1,52 @@
+version 1.0
+
+task gene_coverage {
+  input {
+    File bamfile
+    File? bedfile
+    File? reference_gbff
+    String samplename
+    String query_genes # comma-delimited list of strings
+    
+    String feature_type = "mRNA" # GBFF feature type to use for coordinate extraction
+    String feature_qualifier = "product" # GBFF feature qualifier to use for comparison to query gene
+    Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
+
+    Int min_depth = 1 # minimum depth to count a base in breadth of coverage caclulations
+
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1"
+    Int disk_size = 100
+    Int memory = 8
+    Int cpu = 2
+  }
+  command <<<
+    # fail hard
+    set -euo pipefail
+
+    python3 /usr/bin/gene_coverage.py \
+      --bamfile ~{bamfile} \
+      --query_genes ~{query_genes} \
+      --feature_type ~{feature_type} \
+      --feature_qualifier ~{feature_qualifier} \
+      --min_depth ~{min_depth} \
+      ~{if exact_match then "--exact_match" else ""} \
+      ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
+      ~{if defined(bedfile) then "--reference_gbff ~{reference_gbff}" else ""} \
+
+    mv COVERAGE_STATS.csv ~{samplename}.coverage_stats.csv
+  >>>
+  output {
+    File gene_coverage_stats = "~{samplename}.coverage_stats.csv"
+    Map[String, Float] depth_by_gene = read_json("DEPTH_DICT.json")
+    Map[String, Float] coverage_by_gene = read_json("COVERAGE_DICT.json")
+  }
+  runtime {
+    docker: docker
+    memory: memory + " GB"
+    cpu: cpu
+    disks:  "local-disk " + disk_size + " SSD"
+    disk: disk_size + " GB"
+    preemptible: 0
+    maxRetries: 3
+  }
+}
