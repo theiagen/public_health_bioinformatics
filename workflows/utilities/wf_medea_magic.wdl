@@ -208,23 +208,23 @@ workflow medea_magic {
           docker = snippy_variants_docker_image
       }
     }
-      call snippy_gene_query.snippy_gene_query as snippy_gene_query_crypto {
-        input:
-          samplename = samplename,
-          snippy_variants_results = select_first([snippy_crypto.snippy_variants_results, snippy_crypto_ont.snippy_variants_results]),
-          reference = cryptoneo_reference_gbff,
-          query_gene = select_first([query_genes, "CNA00300"]), # CNA00300 is ERG11 for this reference genome
-          docker = snippy_gene_query_docker_image
-      }
-      call gene_coverage_task.gene_coverage as gene_coverage_cryptoneo {
-        input:
-          samplename = samplename,
-          bam = select_first([snippy_crypto.snippy_variants_bam, snippy_crypto_ont.snippy_variants_bam]),
-          bai = select_first([snippy_crypto.snippy_variants_bai, snippy_crypto_ont.snippy_variants_bai]),
-          reference_gbff = cryptoneo_reference_gbff,
-          query_genes = select_first([query_genes, "CNA00300"])
-      }
+    call snippy_gene_query.snippy_gene_query as snippy_gene_query_crypto {
+      input:
+        samplename = samplename,
+        snippy_variants_results = select_first([snippy_crypto.snippy_variants_results, snippy_crypto_ont.snippy_variants_results]),
+        reference = cryptoneo_reference_gbff,
+        query_gene = select_first([query_genes, "CNA00300"]), # CNA00300 is ERG11 for this reference genome
+        docker = snippy_gene_query_docker_image
     }
+    call gene_coverage_task.gene_coverage as gene_coverage_cryptoneo {
+      input:
+        samplename = samplename,
+        bam = select_first([snippy_crypto.snippy_variants_bam, snippy_crypto_ont.snippy_variants_bam]),
+        bai = select_first([snippy_crypto.snippy_variants_bai, snippy_crypto_ont.snippy_variants_bai]),
+        reference_gbff = cryptoneo_reference_gbff,
+        query_genes = select_first([query_genes, "CNA00300"])
+    }
+  }
   # Running AMR Search
   if (run_amr_search) {
     # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search. 
