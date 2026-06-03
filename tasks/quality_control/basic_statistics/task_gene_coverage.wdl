@@ -2,7 +2,8 @@ version 1.0
 
 task gene_coverage {
   input {
-    File bamfile
+    File bam
+    File bai
     File? bedfile
     File? reference_gbff
     String samplename
@@ -14,7 +15,7 @@ task gene_coverage {
 
     Int min_depth = 1 # minimum depth to count a base in breadth of coverage caclulations
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1-dev"
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
@@ -24,19 +25,19 @@ task gene_coverage {
     set -euo pipefail
 
     python3 /usr/bin/gene_coverage.py \
-      --bamfile ~{bamfile} \
+      --bam ~{bam} \
       --query_genes ~{query_genes} \
       --feature_type ~{feature_type} \
       --feature_qualifier ~{feature_qualifier} \
       --min_depth ~{min_depth} \
       ~{if exact_match then "--exact_match" else ""} \
       ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
-      ~{if defined(bedfile) then "--reference_gbff ~{reference_gbff}" else ""} \
+      ~{if defined(reference_gbff) then "--reference_gbff ~{reference_gbff}" else ""} \
 
-    mv COVERAGE_STATS.csv ~{samplename}.coverage_stats.csv
+    mv COVERAGE_STATS.tsv ~{samplename}.coverage_stats.tsv
   >>>
   output {
-    File gene_coverage_stats = "~{samplename}.coverage_stats.csv"
+    File gene_coverage_stats = "~{samplename}.coverage_stats.tsv"
     Map[String, Float] depth_by_gene = read_json("DEPTH_DICT.json")
     Map[String, Float] coverage_by_gene = read_json("COVERAGE_DICT.json")
   }
