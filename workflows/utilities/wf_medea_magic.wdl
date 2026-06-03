@@ -191,15 +191,15 @@ workflow medea_magic {
           docker = snippy_variants_docker_image
       }
     }
-      call snippy_gene_query.snippy_gene_query as snippy_gene_query_crypto {
-        input:
-          samplename = samplename,
-          snippy_variants_results = select_first([snippy_crypto.snippy_variants_results, snippy_crypto_ont.snippy_variants_results]),
-          reference = snippy_reference_cryptoneo,
-          query_gene = select_first([snippy_query_gene, "CNA00300"]), # CNA00300 is ERG11 for this reference genome
-          docker = snippy_gene_query_docker_image
-      }
+    call snippy_gene_query.snippy_gene_query as snippy_gene_query_crypto {
+      input:
+        samplename = samplename,
+        snippy_variants_results = select_first([snippy_crypto.snippy_variants_results, snippy_crypto_ont.snippy_variants_results]),
+        reference = snippy_reference_cryptoneo,
+        query_gene = select_first([snippy_query_gene, "CNA00300"]), # CNA00300 is ERG11 for this reference genome
+        docker = snippy_gene_query_docker_image
     }
+  }
   # Running AMR Search
   if (run_amr_search) {
     # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search. 
