@@ -115,7 +115,7 @@ workflow theiaeuk_ont {
           samplename = samplename,
           medea_tag = gambit.merlin_tag,
           assembly = flye_denovo.assembly_fasta,
-          assembly_only = true
+          assembly_only = true # can only run assembly mode on Snippy variants for long reads
       }
     }
   }
