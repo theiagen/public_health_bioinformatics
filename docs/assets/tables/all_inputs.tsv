@@ -1243,7 +1243,7 @@ medea_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional
 medea_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	amr_search_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
 medea_magic	amr_search_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
-medea_magic	assembly_only	Boolean	Set to true if only analyzing input assembly	False	Optional	TheiaEuk_Illumina_PE	general	
+medea_magic	assembly_only	Boolean	Set to true to run Snippy variants only on the assembly for supported taxa	False	Optional	TheiaEuk_Illumina_PE	general	
 medea_magic	cauris_cladetyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
 medea_magic	cladetyper_kmer_size	Int	Kmer size for GAMBIT classification	11	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	cladetyper_max_distance	Float	The maximum GAMBIT distance to report a clade hit	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
@@ -1259,8 +1259,6 @@ medea_magic	cladetyper_ref_clade5	File	Reference genome FASTA for *Candidozyma a
 medea_magic	cladetyper_ref_clade5_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	cladetyper_ref_clade6	File	Reference genome FASTA for *Candidozyma auris* clade6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	cladetyper_ref_clade6_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade6		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	ont_data	Boolean	Set to true if your data is ONT FASTQ files	False	Optional	TheiaEuk_Illumina_PE	general	
-medea_magic	paired_end	Boolean	Set to true if your data is paired-end FASTQ files	True	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	read1	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
 medea_magic	read2	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
 medea_magic	run_amr_search	Boolean	Set to true to run AMR_Search workflow for support taxa. See AMR_Search documentation	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
