@@ -4,8 +4,8 @@ task gene_coverage {
   input {
     File bam
     File bai
-    File? bedfile
-    File? reference_gbff
+    File? bedfile # BEDfile including region names and/or coordinates
+    File? reference_gbff # GBFF including annotated regions 
     String samplename
     String query_genes # comma-delimited list of strings
     
