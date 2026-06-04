@@ -168,8 +168,8 @@ workflow medea_magic {
     call gene_coverage_task.gene_coverage as gene_coverage_afumigatus {
       input:
         samplename = samplename,
-        bam = select_first([snippy_afumigatus.snippy_variants_bam, snippy_afumigatus_ont.snippy_variants_bam]),
-        bai = select_first([snippy_afumigatus.snippy_variants_bai, snippy_afumigatus_ont.snippy_variants_bai]),
+        bam = select_first([snippy_afumigatus.snippy_variants_bam, snippy_afumigatus_assembly.snippy_variants_bam]),
+        bai = select_first([snippy_afumigatus.snippy_variants_bai, snippy_afumigatus_assembly.snippy_variants_bai]),
         reference_gbff = afumigatus_reference_gbff,
         query_genes = select_first([query_genes, "Cyp51A,HapE,AFUA_4G08340"])
     }
@@ -217,8 +217,8 @@ workflow medea_magic {
     call gene_coverage_task.gene_coverage as gene_coverage_cryptoneo {
       input:
         samplename = samplename,
-        bam = select_first([snippy_crypto.snippy_variants_bam, snippy_crypto_ont.snippy_variants_bam]),
-        bai = select_first([snippy_crypto.snippy_variants_bai, snippy_crypto_ont.snippy_variants_bai]),
+        bam = select_first([snippy_crypto.snippy_variants_bam, snippy_crypto_assembly.snippy_variants_bam]),
+        bai = select_first([snippy_crypto.snippy_variants_bai, snippy_crypto_assembly.snippy_variants_bai]),
         reference_gbff = cryptoneo_reference_gbff,
         query_genes = select_first([query_genes, "CNA00300"])
     }
