@@ -12,6 +12,7 @@ task gene_coverage {
     String feature_type = "mRNA" # GBFF feature type to use for coordinate extraction
     String feature_qualifier = "product" # GBFF feature qualifier to use for comparison to query gene
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
+    Boolean ambiguous_contig = false # apply coordinates from BED to first identified contig in BAM
 
     Int min_depth = 1 # minimum depth to count a base in breadth of coverage caclulations
 
@@ -26,10 +27,10 @@ task gene_coverage {
 
     python3 /usr/bin/gene_coverage.py \
       --bam ~{bam} \
-      --query_genes ~{query_genes} \
       --feature_type ~{feature_type} \
       --feature_qualifier ~{feature_qualifier} \
       --min_depth ~{min_depth} \
+      ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
       ~{if exact_match then "--exact_match" else ""} \
       ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
       ~{if defined(reference_gbff) then "--reference_gbff ~{reference_gbff}" else ""} \
