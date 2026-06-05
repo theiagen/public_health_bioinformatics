@@ -78,8 +78,6 @@ workflow morgana_magic {
     File? gene_coverage_bai
     Int? gene_coverage_min_depth
     Int? gene_coverage_min_quality
-    Int? sc2_s_gene_start
-    Int? sc2_s_gene_stop
     Int? gene_coverage_cpu
     Int? gene_coverage_disk_size
     Int? gene_coverage_memory
@@ -395,8 +393,8 @@ workflow morgana_magic {
     # Gene Coverage Outputs
     Map[String, Float] gene_coverage_depth_by_gene = select_first([gene_coverage.depth_by_gene, {"": 0}])
     Map[String, Float] gene_coverage_coverage_by_gene = select_first([gene_coverage.coverage_by_gene, {"": 0}])
-    Float? sc2_s_gene_mean_coverage = select_first([gene_coverage.coverage_by_gene["S"], 0])
-    Float? sc2_s_gene_percent_coverage = select_first([gene_coverage.coverage_by_gene["S"], 0])
+    Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
+    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_coverage
     File? est_percent_gene_coverage_tsv = gene_coverage.gene_coverage_stats
     # Flu Track Percentage Mapped Reads
     String? percentage_mapped_reads = flu_track.percentage_mapped_reads

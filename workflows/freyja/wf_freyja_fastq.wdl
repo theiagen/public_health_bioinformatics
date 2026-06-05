@@ -142,6 +142,7 @@ workflow freyja_fastq {
         bedfile = sc2_gene_bed,
         ambiguous_contig = true,
         samplename = samplename,
+        organism = freyja_pathogen
     }
   }
   if (defined(qc_check_table)) {
@@ -159,8 +160,8 @@ workflow freyja_fastq {
           "classified_human": select_first([read_QC_trim_pe.kraken2_human, read_QC_trim_se.kraken2_human, read_QC_trim_ont.metabuli_percent_human]),
           "classified_human_dehosted": select_first([read_QC_trim_pe.kraken2_human_dehosted, read_QC_trim_se.kraken2_human_dehosted, read_QC_trim_ont.metabuli_percent_human_dehosted]),
           # SC2-specific gene coverage - only available when freyja_pathogen == "SARS-CoV-2"
-          "sc2_s_gene_mean_coverage": select_first([gene_coverage.depth_by_gene["S"], 0]),
-          "sc2_s_gene_percent_coverage": select_first([gene_coverage.coverage_by_gene["S"], 0])
+          "sc2_s_gene_mean_coverage": gene_coverage.sc2_s_gene_depth,
+          "sc2_s_gene_percent_coverage": gene_coverage.sc2_s_gene_coverage
       }
     }
   }
@@ -311,8 +312,8 @@ workflow freyja_fastq {
     # Gene Coverage outputs - SARS-CoV-2 only
     Map[String, Float]? gene_coverage_depth_by_gene = select_first([gene_coverage.depth_by_gene, {"": 0}])
     Map[String, Float]? gene_coverage_coverage_by_gene = select_first([gene_coverage.coverage_by_gene, {"": 0}])
-    Float? sc2_s_gene_mean_coverage = select_first([gene_coverage.depth_by_gene["S"], 0])
-    Float? sc2_s_gene_percent_coverage = select_first([gene_coverage.coverage_by_gene["S"], 0])
+    Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
+    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_coverage
     File? est_percent_gene_coverage_tsv = gene_coverage.gene_coverage_stats
     # QC Check Results
     String? qc_check = qc_check_task.qc_check
