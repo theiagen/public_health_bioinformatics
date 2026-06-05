@@ -310,10 +310,6 @@ workflow theiaeuk_illumina_pe {
     String? cladetyper_gambit_version = medea_magic.cladetyper_version
     String? cladetyper_docker_image = medea_magic.cladetyper_docker_image
     String? cladetyper_annotated_reference = medea_magic.cladetype_annotated_ref
-    String? cladetyper_clade = medea_magic.clade_type
-    String? cladetyper_gambit_version = medea_magic.cladetyper_version
-    String? cladetyper_docker_image = medea_magic.cladetyper_docker_image
-    String? cladetyper_annotated_reference = medea_magic.cladetype_annotated_ref
     # Snippy Outputs
     String? theiaeuk_snippy_variants_version = medea_magic.snippy_variants_version
     String? theiaeuk_snippy_variants_query = medea_magic.snippy_variants_query
