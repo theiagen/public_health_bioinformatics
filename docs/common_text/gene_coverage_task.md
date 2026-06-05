@@ -16,9 +16,9 @@ fragment: true
 
 
     ??? dna "Viral analysis input notes: BED file usage"
-        In viral characterization workflows, gene coverage regions are supplied with a BED file.
+        In viral characterization workflows, gene coverage regions are supplied with a BED file. 
 
-        - To extract custom regions of interest, populate the `reference_gene_locations_bed` input (task `theiacov` / `morgana_magic`)
+        - To extract custom regions of interest, populate the `reference_gene_locations_bed` input (task `theiacov` / `morgana_magic`) - please note, SARS-CoV-2 "S" gene extraction must be labeled as a capital "S" to propagate to the Freyja `quality_check` task and Freyja/TheiaCoV `sc2_s_*` outputs
         - If no custom BED is provided, organism defaults are used when available
         - BED files should include a gene name in column 4 to label output
 <!-- endif -->
