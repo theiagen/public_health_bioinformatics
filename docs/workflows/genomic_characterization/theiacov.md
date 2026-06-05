@@ -464,16 +464,16 @@ We've provided the following information to help you set up the workflow for eac
 {{ include_md("common_text/pangolin_task.md", indent=4) }}
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4, condition="viral") }}
 
 === "Mpox"
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4, condition="viral") }}
 
 === "West Nile Virus"
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4, condition="viral") }}
 
 === "Influenza"
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
@@ -484,34 +484,34 @@ We've provided the following information to help you set up the workflow for eac
 {{ include_md("common_text/abricate_flu_task.md", indent=4) }}
 {{ include_md("common_text/flu_antiviral_substitutions_wf.md", indent=4) }}
 {{ include_md("common_text/genoflu_task.md", indent=4) }}
-{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4, condition="viral") }}
 
 === "RSV-A"
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4, condition="viral") }}
 
 === "RSV-B"
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4, condition="viral") }}
 
 === "HIV"
 {{ include_md("common_text/quasitools_task.md", indent=4) }}
-{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4, condition="viral") }}
 
 === "Measles"
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4, condition="viral") }}
 
 === "Mumps"
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4, condition="viral") }}
 
 === "Rubella"
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4, condition="viral") }}
 
 ### Outputs
 
