@@ -118,8 +118,8 @@ workflow medea_magic {
       call gene_coverage_task.gene_coverage as gene_coverage_cauris {
         input:
           samplename = samplename,
-          bam = select_first([snippy_cauris.snippy_variants_bam, snippy_cauris_ont.snippy_variants_bam]),
-          bai = select_first([snippy_cauris.snippy_variants_bai, snippy_cauris_ont.snippy_variants_bai]),
+          bam = select_first([snippy_cauris.snippy_variants_bam, snippy_cauris_assembly.snippy_variants_bam]),
+          bai = select_first([snippy_cauris.snippy_variants_bai, snippy_cauris_assembly.snippy_variants_bai]),
           reference_gbff = cladetyper.annotated_reference,
           query_genes = select_first([query_genes, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"])
       }
