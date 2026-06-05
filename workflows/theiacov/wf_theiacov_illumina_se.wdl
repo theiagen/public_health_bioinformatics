@@ -40,6 +40,7 @@ workflow theiacov_illumina_se {
     Int? genome_length
     # assembly parameters
     Int min_depth = 100
+    Int? gene_coverage_min_quality # minimum base quality to include bases in gene coverage breadth/depth
     Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
     Float variant_min_freq = 0.6 # minimum frequency for a variant to be reported in ivar outputs
     # read screen parameters
@@ -154,6 +155,7 @@ workflow theiacov_illumina_se {
           vadr_memory = organism_parameters.vadr_memory,
           reference_gene_locations_bed = organism_parameters.gene_locations_bed,
           gene_coverage_bam = ivar_consensus.aligned_bam,
+          gene_coverage_min_quality = gene_coverage_min_quality,
           nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
           nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
           pangolin_docker_image = organism_parameters.pangolin_docker,
@@ -301,6 +303,8 @@ workflow theiacov_illumina_se {
     Int? number_Total = consensus_qc.number_Total
     Float? percent_reference_coverage = consensus_qc.percent_reference_coverage
     # SC2 specific coverage outputs
+    Map[String, Float]? gene_coverage_depth_by_gene = morgana_magic.gene_coverage_depth_by_gene
+    Map[String, Float]? gene_coverage_coverage_by_gene = morgana_magic.gene_coverage_coverage_by_gene
     Float? sc2_s_gene_mean_coverage = morgana_magic.sc2_s_gene_mean_coverage
     Float? sc2_s_gene_percent_coverage = morgana_magic.sc2_s_gene_percent_coverage
     File? est_percent_gene_coverage_tsv = morgana_magic.est_percent_gene_coverage_tsv

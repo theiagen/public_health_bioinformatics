@@ -27,6 +27,7 @@ workflow theiacov_ont {
     Int normalise = 200
     Int max_length = 700
     Int min_length = 400
+    Int? gene_coverage_min_quality # minimum base quality to include bases in gene coverage breadth/depth
     # nextclade inputs
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
@@ -190,6 +191,7 @@ workflow theiacov_ont {
             vadr_memory = organism_parameters.vadr_memory,
             reference_gene_locations_bed = organism_parameters.gene_locations_bed,
             gene_coverage_bam = select_first([consensus.trim_sorted_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam, "gs://theiagen-public-resources-rp/empty_files/empty.bam"]),
+            gene_coverage_min_quality = gene_coverage_min_quality,
             nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
             nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
             pangolin_docker_image = organism_parameters.pangolin_docker,
@@ -322,6 +324,8 @@ workflow theiacov_ont {
     Float? est_coverage_raw = nanoplot_raw.est_coverage
     Float? est_coverage_clean = nanoplot_clean.est_coverage
     # SC2 specific coverage outputs
+    Map[String, Float]? gene_coverage_depth_by_gene = morgana_magic.gene_coverage_depth_by_gene
+    Map[String, Float]? gene_coverage_coverage_by_gene = morgana_magic.gene_coverage_coverage_by_gene
     Float? sc2_s_gene_mean_coverage = morgana_magic.sc2_s_gene_mean_coverage
     Float? sc2_s_gene_percent_coverage = morgana_magic.sc2_s_gene_percent_coverage
     File? est_percent_gene_coverage_tsv = morgana_magic.est_percent_gene_coverage_tsv
