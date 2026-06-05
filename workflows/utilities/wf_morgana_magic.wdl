@@ -75,7 +75,6 @@ workflow morgana_magic {
     # gene coverage inputs
     File? reference_gene_locations_bed
     File? gene_coverage_bam
-    File? gene_coverage_bai
     Int? gene_coverage_min_depth
     Int? gene_coverage_min_quality
     Int? gene_coverage_cpu

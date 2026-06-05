@@ -139,6 +139,7 @@ workflow freyja_fastq {
     call gene_coverage_task.gene_coverage {
       input:
         bam = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
+        bai = select_first([primer_trim.trim_sorted_bai, sam_to_sorted_bam.bai, bwa.sorted_bai]),
         bedfile = sc2_gene_bed,
         ambiguous_contig = true,
         samplename = samplename,
