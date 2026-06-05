@@ -1239,6 +1239,40 @@ mask_low_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Thei
 mask_low_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
 mask_low_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0	Optional	TheiaViral_ONT	docker	
 mask_low_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_ONT	runtime	
+medea_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
+medea_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
+medea_magic	amr_search_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
+medea_magic	amr_search_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
+medea_magic	assembly_only	Boolean	Set to true to run Snippy variants only on the assembly for supported taxa	False	Optional	TheiaEuk_Illumina_PE	general	
+medea_magic	cauris_cladetyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
+medea_magic	cladetyper_kmer_size	Int	Kmer size for GAMBIT classification	11	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	cladetyper_max_distance	Float	The maximum GAMBIT distance to report a clade hit	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	cladetyper_ref_clade1	File	Reference genome FASTA for *Candidozyma auris* clade1	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade1_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade1	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade2	File	Reference genome FASTA for *Candidozyma auris* clade2	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade2_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade2	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade3	File	Reference genome FASTA for *Candidozyma auris* clade3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade3_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade4	File	Reference genome FASTA for *Candidozyma auris* clade4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade4_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade5	File	Reference genome FASTA for *Candidozyma auris* clade5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade5_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade6	File	Reference genome FASTA for *Candidozyma auris* clade6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	cladetyper_ref_clade6_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade6		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	read1	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
+medea_magic	read2	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
+medea_magic	run_amr_search	Boolean	Set to true to run AMR_Search workflow for support taxa. See AMR_Search documentation	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	snippy_base_quality	Int	Minimum quality for a nucelotide to be used in variant calling	13	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	snippy_gene_query_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
+medea_magic	snippy_map_qual	Int	Minimum mapping quality to accept in variant calling	60	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	snippy_maxsoft	Int	Number of bases of alignment to soft-clip before discarding the alignment	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	snippy_min_coverage	Int	Minimum read coverage of a position to identify a mutation	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	snippy_min_frac	Float	Minimum fraction of bases at a given position to identify a mutation	0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	snippy_min_quality	Int	Minimum VCF variant call "quality"	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	snippy_query_gene	String	Provide a gene to search for using Snippy		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	snippy_reference_afumigatus	File	Snippy reference for *Aspergillus fumigatus*	gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	snippy_reference_cryptoneo	File	Snippy reference for *Cryptococcus neoformans*	gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	snippy_variants_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
 megahit	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime	
 megahit	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime	
 megahit	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/megahit:1.2.9	Optional	TheiaViral_Illumina_PE	docker	
@@ -1282,355 +1316,194 @@ mercury_prep_n_batch	authors_sbt	File	Only for "mpox" submissions; a file that c
 mercury_prep_n_batch	organism	String	The organism that you want submission prepare for — each organism requires different metadata fields so please ensure this field is accurate. Options: "flu", "mpox"" or "sars-cov-2"	sars-cov-2	Optional	Mercury_Prep_N_Batch	general	
 mercury_prep_n_batch	output_name	String	Free text prefix for all output files	mercury	Optional	Mercury_Prep_N_Batch	general	
 mercury_prep_n_batch	skip_ncbi	Boolean	Set to true if you only want to prepare GISAID submission files	False	Optional	Mercury_Prep_N_Batch	general	
-merlin_magic	abricate_abaum_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	abricate_abaum_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-abaum-plasmid	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	abricate_abaum_min_percent_coverage	Int	Internal component, do not modify	80	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	abricate_abaum_min_percent_coverage	Int	Minimum DNA percent coverage	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	abricate_abaum_min_percent_identity	Int	Internal component, do not modify	95	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	abricate_abaum_min_percent_identity	Int	Minimum DNA percent identity; set to 95 because there is a strict threshold of 95% identity for typing purposes	95	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	abricate_vibrio_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-vibrio-cholera	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	abricate_vibrio_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/abricate:1.0.1-vibrio-cholera	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	abricate_vibrio_min_percent_coverage	Int	Internal component, do not modify	80	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	abricate_vibrio_min_percent_coverage	Int	Minimum DNA percent coverage	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	abricate_vibrio_min_percent_identity	Int	Internal component, do not modify	80	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	abricate_vibrio_min_percent_identity	Int	Minimum DNA percent identity	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	agrvate_agr_typing_only	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	agrvate_agr_typing_only	Boolean	Set to true to skip agr operon extraction and frameshift detection	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	agrvate_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	agrvate_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-merlin_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-merlin_magic	amr_search_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	amr_search_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-merlin_magic	assembly_only	Boolean	Set to true if only analyzing input assembly	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	call_poppunk	Boolean	Internal component, do not modify	True	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
+merlin_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
+merlin_magic	amr_search_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
+merlin_magic	amr_search_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
+merlin_magic	assembly_only	Boolean	Set to true if only analyzing input assembly	False	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	call_poppunk	Boolean	If true, runs PopPUNK for GPSC cluster designation for S. pneumoniae	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	call_shigeifinder_reads_input	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	call_shigeifinder_reads_input	Boolean	If set to "true", the ShigEiFinder task will run again but using read files as input instead of the assembly file. Input is shown but not used for TheiaProk_FASTA.	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	call_stxtyper	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	call_stxtyper	Boolean	If set to "true", the StxTyper task will run on all samples regardless of the gambit_predicted_taxon output. Useful if you suspect a non-E.coli or non-Shigella sample contains stx genes.	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	call_tbp_parser	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	call_tbp_parser	Boolean	Internal component, do not modify	False	Optional	TheiaProk_FASTA	general	
 merlin_magic	call_tbp_parser	Boolean	If set to "true", activates the tbp_parser module and results in more outputs, including tbp_parser_looker_report_csv, tbp_parser_laboratorian_report_csv,  tbp_parser_lims_report_csv, tbp_parser_coverage_report, and tbp_parser_genome_percent_coverage	False	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	cauris_cladetyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
-merlin_magic	cauris_cladetyper_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	cladetyper_kmer_size	Int	Kmer size for cladetyper	11	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	cladetyper_kmer_size	Int	Internal component, do not modify	11	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	cladetyper_max_distance	Float	The maximum GAMBIT distance to report a *C. auris* clade hit	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	cladetyper_max_distance	Float	Internal component, do not modify	0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	cladetyper_ref_clade1	File	Reference genome FASTA for *Candidozyma auris* clade1	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-merlin_magic	cladetyper_ref_clade1	File	*Provide an empty file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.fasta	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	reference	
-merlin_magic	cladetyper_ref_clade1_annotated	File	Reference GBFF annotation for *C. auris* clade1	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-merlin_magic	cladetyper_ref_clade1_annotated	File	*Provide an empty file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade1_GCA_002759435.3_Cand_auris_B8441_V3_genomic.gbff	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	reference	
-merlin_magic	cladetyper_ref_clade2	File	Reference genome FASTA for *C. auris* clade2	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-merlin_magic	cladetyper_ref_clade2	File	*Provide an empty file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.fasta	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	reference	
-merlin_magic	cladetyper_ref_clade2_annotated	File	Reference GBFF annotation for *C. auris* clade2	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-merlin_magic	cladetyper_ref_clade2_annotated	File	*Provide an empty file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade2_GCA_003013715.2_ASM301371v2_genomic.gbff	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	reference	
-merlin_magic	cladetyper_ref_clade3	File	Reference genome FASTA for *C. auris* clade3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-merlin_magic	cladetyper_ref_clade3	File	*Provide an empty file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.fasta	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	reference	
-merlin_magic	cladetyper_ref_clade3_annotated	File	Reference GBFF annotation for *C. auris* clade3	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-merlin_magic	cladetyper_ref_clade3_annotated	File	*Provide an empty file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade3_GCF_002775015.1_Cand_auris_B11221_V1_genomic.gbff	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	reference	
-merlin_magic	cladetyper_ref_clade4	File	Reference genome FASTA for *C. auris* clade4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-merlin_magic	cladetyper_ref_clade4	File	*Provide an empty file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.fasta	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	reference	
-merlin_magic	cladetyper_ref_clade4_annotated	File	Reference GBFF annotation for *C. auris* clade4	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-merlin_magic	cladetyper_ref_clade4_annotated	File	*Provide an empty file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade4_GCA_003014415.1_Cand_auris_B11243_genomic.gbff	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	reference	
-merlin_magic	cladetyper_ref_clade5	File	Reference genome FASTA for *C. auris* clade5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-merlin_magic	cladetyper_ref_clade5	File	*Provide an empty file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.fasta	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	reference	
-merlin_magic	cladetyper_ref_clade5_annotated	File	Reference GBFF annotation for *C. auris* clade5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-merlin_magic	cladetyper_ref_clade5_annotated	File	*Provide an empty file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	reference	
-merlin_magic	cladetyper_ref_clade6	File	Reference genome FASTA for *C. auris* clade6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-merlin_magic	cladetyper_ref_clade6	File	The reference assembly for clade 6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	reference	
-merlin_magic	cladetyper_ref_clade6_annotated	File	Reference GBFF annotation for *C. auris* clade6		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	cladetyper_ref_clade6_annotated	File	The path to the annotated reference for clade 6		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	clockwork_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	clockwork_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/cdcgov/varpipe_wgs_with_refs:2bc7234074bd53d9e92a1048b0485763cd9bbf6f4d12d5a1cc82bfec8ca7d75e	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	ectyper_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/ectyper:2.0.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	ectyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ectyper:2.0.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	ectyper_h_min_percent_coverage	Int	Internal component, do not modify	50	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	ectyper_h_min_percent_coverage	Int	Minumum percent coverage required for an H antigen allele match	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	ectyper_h_min_percent_identity	Int	Internal component, do not modify	95	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	ectyper_h_min_percent_identity	Int	Percent identity required for an H antigen allele match	95	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	ectyper_o_min_percent_coverage	Int	Internal component, do not modify	90	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	ectyper_o_min_percent_coverage	Int	Minumum percent coverage required for an O antigen allele match	90	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	ectyper_o_min_percent_identity	Int	Internal component, do not modify	90	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	ectyper_o_min_percent_identity	Int	Percent identity required for an O antigen allele match	90	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	ectyper_print_alleles	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	ectyper_print_alleles	Boolean	Set to true to print the allele sequences as the final column	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	ectyper_verify	Boolean	Internal component, do not modify	True	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	ectyper_verify	Boolean	Set to true to enable E. coli species verification	True	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	emmtyper_align_diff	Int	Internal component, do not modify	5	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	emmtyper_align_diff	Int	Threshold for difference between alignment length and subject length in BLAST hit.	5	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	emmtyper_cluster_distance	Int	Internal component, do not modify	500	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	emmtyper_cluster_distance	Int	Distance between cluster of matches to consider as different clusters.	500	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	emmtyper_culling_limit	Int	Internal component, do not modify	5	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	emmtyper_culling_limit	Int	Total hits to return in a position.	5	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	emmtyper_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/biocontainers/emmtyper:0.2.0--py_0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	emmtyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/emmtyper:0.2.0--py_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	emmtyper_gap	Int	Internal component, do not modify	2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	emmtyper_gap	Int	Threshold gap to allow in BLAST hit.	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	emmtyper_max_size	Int	Internal component, do not modify	2000	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	emmtyper_max_size	Int	Maximum size of PCR product.	2000	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	emmtyper_min_good	Int	Internal component, do not modify	15	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	emmtyper_min_good	Int	Minimum size where there must be 2 matches for each mismatch.	15	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	emmtyper_min_percent_identity	Int	Internal component, do not modify	95	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	emmtyper_min_percent_identity	Int	Minimal percent identity of sequence.	95	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	emmtyper_min_perfect	Int	Internal component, do not modify	15	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	emmtyper_min_perfect	Int	Minimum size of perfect match at 3' primer end.	15	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	emmtyper_mismatch	Int	Internal component, do not modify	4	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	emmtyper_mismatch	Int	Threshold for number of mismatch to allow in BLAST hit.	4	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	emmtyper_wf	String	Internal component, do not modify	blast	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	emmtyper_wf	String	Choose workflow [blast|pcr]	blast	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	emmtypingtool_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	emmtypingtool_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/emmtypingtool:0.0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	genotyphi_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	genotyphi_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.11.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	hicap_broken_gene_length	Int	Internal component, do not modify	60	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	hicap_broken_gene_length	Int	Minimum length to consider a broken gene	60	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	hicap_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/biocontainers/hicap:1.0.3--py_0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	hicap_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/hicap:1.0.3--py_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	hicap_min_broken_gene_percent_identity	Float	Internal component, do not modify	0.8	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	hicap_min_broken_gene_percent_identity	Float	Minimum percentage identity to consider a broken gene	0.8	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	hicap_min_gene_percent_coverage	Float	Internal component, do not modify	0.8	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	hicap_min_gene_percent_coverage	Float	Minimum percentage coverage to consider a single gene complete	0.8	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	hicap_min_gene_percent_identity	Float	Internal component, do not modify	0.7	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	hicap_min_gene_percent_identity	Float	Minimum percentage identity to consider a single gene complete	0.7	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	kaptive_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.0.3	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	kaptive_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/kaptive:2.0.3	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	kaptive_low_gene_percent_identity	Float	Internal component, do not modify	95.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	kaptive_low_gene_percent_identity	Float	Percent identity threshold for what counts as a low identity match in the gene BLAST search	95.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	kaptive_min_percent_coverage	Float	Internal component, do not modify	90.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	kaptive_min_percent_coverage	Float	Minimum required percent coverage for the gene BLAST search via tBLASTn	90.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	kaptive_min_percent_identity	Float	Internal component, do not modify	80.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	kaptive_min_percent_identity	Float	Minimum required percent identity for the gene BLAST search via tBLASTn	80.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	kaptive_start_end_margin	Int	Internal component, do not modify	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	kaptive_start_end_margin	Int	Determines flexibility in identifying the start and end of a locus - if this value is 10, a locus match that is missing the first 8 base pairs will still count as capturing the start of the locus	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	kleborate_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/kleborate:2.2.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	kleborate_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/kleborate:2.2.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	kleborate_min_kaptive_confidence	String	Internal component, do not modify	Good	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	kleborate_min_kaptive_confidence	String	{None,Low,Good,High,Very_high,Perfect} Minimum Kaptive confidence to call K/O loci - confidence levels below this will be reported as unknown	Good	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	kleborate_min_percent_coverage	Float	Internal component, do not modify	80.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	kleborate_min_percent_coverage	Float	Minimum alignment percent coverage for main results	80.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	kleborate_min_percent_identity	Float	Internal component, do not modify	90.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	kleborate_min_percent_identity	Float	Minimum alignment percent identity for main results	90.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	kleborate_min_spurious_percent_coverage	Float	Internal component, do not modify	40.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	kleborate_min_spurious_percent_coverage	Float	Minimum alignment percent coverage for spurious results	40.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	kleborate_min_spurious_percent_identity	Float	Internal component, do not modify	80.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	kleborate_min_spurious_percent_identity	Float	Minimum alignment percent identity for spurious results	80.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	kleborate_skip_kaptive	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	kleborate_skip_kaptive	Boolean	Equivalent to --kaptive_k --kaptive_	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	kleborate_skip_resistance	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	kleborate_skip_resistance	Boolean	Set to true to turn on resistance genes screening (default: no resistance gene screening)	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	legsta_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
 merlin_magic	legsta_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/biocontainers/legsta:0.5.1--hdfd78af_2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	lissero_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/biocontainers/lissero:0.4.9--py_0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	lissero_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/lissero:0.4.9--py_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	lissero_min_percent_coverage	Float	Internal component, do not modify	95.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	lissero_min_percent_coverage	Float	Minimum percent coverage of the gene to accept a match	95.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	lissero_min_percent_identity	Float	Internal component, do not modify	95.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	lissero_min_percent_identity	Float	Minimum percent identity to accept a match	95.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	meningotype_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/biocontainers/meningotype:0.8.5--pyhdfd78af_0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	meningotype_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/meningotype:0.8.5--pyhdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	ngmaster_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/ngmaster:1.0.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	ngmaster_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ngmaster:1.0.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	ont_data	Boolean	Set to true if your data is ONT FASTQ files	False	Optional	TheiaEuk_Illumina_PE, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
-merlin_magic	paired_end	Boolean	Set to true if your data is paired-end FASTQ files	True	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_Illumina_PE, TheiaProk_ONT	general	
-merlin_magic	pasty_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	ont_data	Boolean	Set to true if your data is ONT FASTQ files	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
+merlin_magic	paired_end	Boolean	Set to true if your data is paired-end FASTQ files	True	Optional	TheiaProk_Illumina_PE, TheiaProk_ONT	general	
 merlin_magic	pasty_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/pasty:1.0.3	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	pasty_min_percent_coverage	Int	Internal component, do not modify	95	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	pasty_min_percent_coverage	Int	Minimum coverage of a O-antigen to be considered for serogrouping by pasty	95	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	pasty_min_percent_identity	Int	Internal component, do not modify	95	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	pasty_min_percent_identity	Int	Minimum percent identity for a blast hit to be considered for serogrouping	95	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	pbptyper_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/pbptyper:1.0.4	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	pbptyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/pbptyper:1.0.4	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	pbptyper_min_percent_coverage	Int	Internal component, do not modify	95	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	pbptyper_min_percent_coverage	Int	Minimum percent coverage to count a hit	95	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	pbptyper_min_percent_identity	Int	Internal component, do not modify	95	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	pbptyper_min_percent_identity	Int	Minimum percent identity to count a hit	95	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	poppunk_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/poppunk:2.4.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/poppunk:2.4.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	poppunk_gps_clusters_csv	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_clusters.csv	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_clusters_csv	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_clusters.csv	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_dists_npy	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.dists.npy	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_dists_npy	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.dists.npy	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_dists_pkl	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.dists.pkl	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_dists_pkl	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.dists.pkl	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_external_clusters_csv	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_external_clusters.csv	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_external_clusters_csv	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_external_clusters.csv	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_fit_npz	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_fit.npz	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_fit_npz	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_fit.npz	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_fit_pkl	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_fit.pkl	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_fit_pkl	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_fit.pkl	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_graph_gt	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_graph.gt	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_graph_gt	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_graph.gt	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_h5	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.h5	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_h5	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.h5	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_qcreport_txt	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_qcreport.txt	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_qcreport_txt	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_qcreport.txt	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_refs	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_refs	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_refs_dists_npy	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.dists.npy	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_refs_dists_npy	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.dists.npy	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_refs_dists_pkl	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.dists.pkl	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_refs_dists_pkl	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.dists.pkl	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_refs_graph_gt	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6refs_graph.gt	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_refs_graph_gt	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6refs_graph.gt	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_refs_h5	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.h5	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_refs_h5	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6.refs.h5	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	poppunk_gps_unword_clusters_csv	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_unword_clusters.csv	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	poppunk_gps_unword_clusters_csv	File	Poppunk database file *Provide an empty or local file if running TheiaProk on the command-line	gs://theiagen-public-resources-rp/reference_data/databases/poppunk/GPS_v6/GPS_v6_unword_clusters.csv	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	read1	File	Internal component, do not modify		Optional	TheiaEuk_ONT, TheiaProk_FASTA	general	
-merlin_magic	read2	File	Internal component, do not modify		Optional	TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	run_amr_search	Boolean	If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs.	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	seqsero2s_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/seqsero2s:1.1.4	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	read1	File	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
+merlin_magic	read2	File	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	run_amr_search	Boolean	If set to true AMR_Search workflow will be run if species is part of supported taxon, see AMR_Search docs.	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	seqsero2s_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/seqsero2s:1.1.4	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	seroba_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/seroba:1.0.2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	seroba_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/seroba:1.0.2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	serotypefinder_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/serotypefinder:2.0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	serotypefinder_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/serotypefinder:2.0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	shigapass_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/shigapass:1.5.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	shigatyper_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+merlin_magic	shigapass_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/shigapass:1.5.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
 merlin_magic	shigatyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/shigatyper:2.0.5	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	shigeifinder_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	shigeifinder_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/shigeifinder:1.3.5	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	sistr_cpu	Int	Internal component, do not modify	2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	sistr_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-merlin_magic	sistr_disk_size	Int	Internal component, do not modify	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	sistr_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-merlin_magic	sistr_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/sistr:1.1.3	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	sistr_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/sistr:1.1.3	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	sistr_memory	Int	Internal component, do not modify	8	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	sistr_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-merlin_magic	sistr_use_full_cgmlst_db	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	sistr_use_full_cgmlst_db	Boolean	Set to true to use the full set of cgMLST alleles which can include highly similar alleles. By default the smaller "centroid" alleles or representative alleles are used for each marker	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
-merlin_magic	snippy_base_quality	Int	Minimum quality for a nucleotide to be used in variant calling	13	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	snippy_base_quality	Int	Internal component, do not modify	13	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	snippy_gene_query_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
-merlin_magic	snippy_gene_query_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-06-21	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	snippy_map_qual	Int	Minimum mapping quality to accept in variant calling	60	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	snippy_map_qual	Int	Internal component, do not modify	60	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	snippy_maxsoft	Int	Number of bases of alignment to soft-clip before discarding the alignment	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	snippy_maxsoft	Int	Internal component, do not modify	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	snippy_min_coverage	Int	Minimum read coverage of a position to identify a mutation	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	snippy_min_coverage	Int	Internal component, do not modify	10	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	snippy_min_frac	Float	Minimum fraction of bases at a given position to identify a mutation	0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	snippy_min_frac	Float	Internal component, do not modify	0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	snippy_min_quality	Int	Minimum VCF variant call "quality"	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-merlin_magic	snippy_min_quality	Int	Internal component, do not modify	100	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	snippy_query_gene	String	Provide a gene to search for using Snippy	Default depends on detected organism	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	True
-merlin_magic	snippy_query_gene	String	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	snippy_reference_afumigatus	File	Snippy reference for Aspergillus fumigatus	gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-merlin_magic	snippy_reference_afumigatus	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	snippy_reference_cryptoneo	File	Snippy reference for Cryptococcus neoformans	gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-merlin_magic	snippy_reference_cryptoneo	File	Internal component, do not modify	gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	snippy_variants_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
-merlin_magic	snippy_variants_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	sonneityping_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1-sonneityping	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	sonneityping_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/mykrobe:0.12.1-sonneityping	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	sonneityping_mykrobe_opts	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	sonneityping_mykrobe_opts	String	Additional options for mykrobe in sonneityping		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	spatyper_do_enrich	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	spatyper_do_enrich	Boolean	Set to true to enable PCR product enrichment	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	spatyper_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/biocontainers/spatyper:0.3.3--pyhdfd78af_3	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	spatyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/spatyper:0.3.3--pyhdfd78af_3	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	srst2_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/srst2:0.2.0-vcholerae	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	srst2_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/srst2:0.2.0-vcholerae	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	srst2_gene_max_mismatch	Int	Internal component, do not modify	2000	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	srst2_gene_max_mismatch	Int	Maximum number of mismatches for SRST2 to call a gene as present	2000	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	srst2_max_divergence	Int	Internal component, do not modify	20	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	srst2_max_divergence	Int	Maximum divergence, in percentage, for SRST2 to call a gene as present	20	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	srst2_min_depth	Int	Internal component, do not modify	5	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	srst2_min_depth	Int	Minimum depth of coverage for SRST2 to call a gene as present	5	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	srst2_min_edge_depth	Int	Internal component, do not modify	2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	srst2_min_edge_depth	Int	Minimum edge depth for SRST2 to call a gene as present	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	srst2_min_percent_coverage	Int	Internal component, do not modify	80	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	srst2_min_percent_coverage	Int	Minimum breadth of coverage for SRST2 to call a gene as present	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	staphopia_sccmec_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	staphopia_sccmec_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/staphopia-sccmec:1.0.0--hdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	stxtyper_cpu	Int	Internal component, do not modify	1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	stxtyper_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-merlin_magic	stxtyper_disk_size	Int	Internal component, do not modify	50	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	stxtyper_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-merlin_magic	stxtyper_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.45	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	stxtyper_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/stxtyper:1.0.45	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	stxtyper_enable_debug	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	stxtyper_enable_debug	Boolean	When enabled, additional messages are printed and files in $TMPDIR are not removed after running	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	stxtyper_memory	Int	Internal component, do not modify	4	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	stxtyper_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
-merlin_magic	tbp_parser_config	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_config	File	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_config	File	The configuration file to use, in YAML format (overrides all other arguments except other file-type arguments)		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_coverage_bed	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_coverage_bed	File	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_coverage_bed	File	The BED file containing the genes of interest, their locus tags, and their regions for QC/coverage calculations; should be formatted like the TBDB.bed file in TBProfiler		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_debug	Boolean	Internal component, do not modify	True	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_debug	Boolean	Internal component, do not modify	True	Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_debug	Boolean	Activate the debug mode on tbp_parser; increases logging outputs	True	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v3.0.3	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v3.0.3	Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/tbp-parser:v3.0.3	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	tbp_parser_err_coverage_bed	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_err_coverage_bed	File	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_err_coverage_bed	File	The BED file containing the "essential for resistance regions." This file indicates to tbp-parser that these regions should also have breadth of coverage and average depth calculations performed; this file should be formatted like the genes.bed file in TBProfiler and the coverage BED described above		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_find_and_replace	Map[String,String]	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_find_and_replace	Map[String,String]	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_find_and_replace	Map[String,String]	A JSON string that can be used to specify any text in the output files that should be find-and-replaced with other text. The keys will be the text to find, and the values will be the text to replace it with. This is useful for labs that want to customize the text in their reports (e.g. renaming drugs or genes or output columns).<br>For example, '{"rifampicin": "rifampin", "fbiD": "Rv2983", "mmpR5": "Rv0678", "p.0?": ""}'		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_gene_database_yml	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_gene_database_yml	File	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_gene_database_yml	File	An optional YAML file that specifies the gene database information for the genes of interest; if not provided, a default format will be used		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_lims_report_format_yml	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_lims_report_format_yml	File	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_lims_report_format_yml	File	An optional YAML file that specifies the format of the LIMS report; if not provided, a default format will be used		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_min_depth	Int	Internal component, do not modify	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_min_depth	Int	Internal component, do not modify	10	Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_min_depth	Int	The minimum depth of coverage required for a site to pass QC	10	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_min_frequency	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_min_frequency	Float	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_min_frequency	Float	The minimum frequency for a mutation to pass QC (0.1 -> 10%)		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_min_percent_coverage	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_min_percent_coverage	Float	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_min_percent_coverage	Float	The minimum percentage of a region that has depth above the threshold set by min_depth (used for a gene/locus to pass QC; 1.0 -> 100%)		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_min_percent_loci_covered	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_min_percent_loci_covered	Float	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_min_percent_loci_covered	Float	The minimum percentage of loci/genes in the LIMS report that must pass coverage QC for the sample to be identified as MTBC (0.7 -> 70%)		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_min_read_support	Int	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_min_read_support	Int	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_min_read_support	Int	The minimum read support for a mutation to pass QC		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_operator	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_operator	String	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_operator	String	The operator who ran the analysis; used in the LIMS & Looker reports. Enclose in quotes if including a space	Operator not provided	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	True
-merlin_magic	tbp_parser_resolve_overlapping_regions	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_resolve_overlapping_regions	Boolean	Internal component, do not modify	False	Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_resolve_overlapping_regions	Boolean	Resolve overlapping BED regions to avoid double-counting reads across overlapping targets. Recommended for tNGS data with overlapping amplicon regions.	False	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_sequencing_method	String	Internal component, do not modify	WGS	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_sequencing_method	String	Internal component, do not modify	WGS	Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_sequencing_method	String	The sequencing method used to generate the data; used in the LIMS & Looker reports. Enclose in quotes if including a space	WGS	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_tngs_data	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_tngs_data	Boolean	Internal component, do not modify	False	Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_tngs_data	Boolean	Indicates that the input data was generated using a tNGS protocol. Turns on tNGS-specific features	False	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_tngs_frequency_boundaries	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_tngs_frequency_boundaries	String	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_tngs_frequency_boundaries	String	The frequency boundaries (comma-delimited; lower_f,upper_f) for tNGS QC reporting, used in conjunction with --tngs_read_support_boundaries		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_tngs_read_support_boundaries	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_tngs_read_support_boundaries	String	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_tngs_read_support_boundaries	String	The read support boundaries (comma-delimited; lower_rs,upper_rs) for tNGS QC reporting, used in conjunction with --tngs_frequency_boundaries		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbp_parser_use_err_for_qc	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbp_parser_use_err_for_qc	Boolean	Internal component, do not modify	False	Optional	TheiaProk_FASTA	general	
 merlin_magic	tbp_parser_use_err_for_qc	Boolean	If an ERR BED file is provided, use the ERR coverage regions in place of the typical coverage regions for all QC determinations.<br>Note: This will influence how variants are interpretated and how deletions are reported because the QC thresholds for breadth of coverage and average depth will be based on the coverage found within the ERR regions.	False	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbprofiler_additional_parameters	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbprofiler_additional_parameters	String	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbprofiler_additional_parameters	String	Additional parameters for TBProfiler		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbprofiler_custom_db	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbprofiler_custom_db	File	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbprofiler_custom_db	File	TBProfiler uses by default the TBDB database; if you have a custom database you wish to use, you must provide a custom database in this field		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbprofiler_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbprofiler_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3	Optional	TheiaProk_FASTA	general	
 merlin_magic	tbprofiler_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/tbprofiler:6.6.3	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	tbprofiler_mapper	String	Internal component, do not modify	bwa	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbprofiler_mapper	String	Internal component, do not modify	bwa	Optional	TheiaProk_FASTA	general	
 merlin_magic	tbprofiler_mapper	String	The mapping tool used in TBProfiler to align the reads to the reference genome; see TBProfiler’s original documentation for available options.	bwa	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbprofiler_min_af	Float	Internal component, do not modify	0.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbprofiler_min_af	Float	Internal component, do not modify	0.1	Optional	TheiaProk_FASTA	general	
 merlin_magic	tbprofiler_min_af	Float	The minimum allele frequency to call a variant	0.1	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbprofiler_min_depth	Int	Internal component, do not modify	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbprofiler_min_depth	Int	Internal component, do not modify	10	Optional	TheiaProk_FASTA	general	
 merlin_magic	tbprofiler_min_depth	Int	The minimum depth for a variant to be called.	10	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbprofiler_tbdb_branch	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbprofiler_tbdb_branch	String	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbprofiler_tbdb_branch	String	TBProfiler uses by default the TBDB database (a combination of the original library and the WHO v2 catalogue). You can opt to use a different mutation library by using this field to specify the name of the TBDB branch to use in TBProfiler; see [the TBProfiler documentation](https://jodyphelan.github.io/tb-profiler-docs/en/mutation-library/) for more information regarding available databases		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	True
-merlin_magic	tbprofiler_tbdb_branch_commit_hash	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbprofiler_tbdb_branch_commit_hash	String	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbprofiler_tbdb_branch_commit_hash	String	The commit hash for the TBDB branch that TBProfiler should use; this allows pinning the mutation library to a specific commit		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbprofiler_variant_caller	String	Internal component, do not modify	gatk	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbprofiler_variant_caller	String	Internal component, do not modify	gatk	Optional	TheiaProk_FASTA	general	
 merlin_magic	tbprofiler_variant_caller	String	Select a different variant caller for TBProfiler to use by writing it in this block; see TBProfiler’s original documentation for available options.	gatk	Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	tbprofiler_variant_calling_params	String	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA	general	
+merlin_magic	tbprofiler_variant_calling_params	String	Internal component, do not modify		Optional	TheiaProk_FASTA	general	
 merlin_magic	tbprofiler_variant_calling_params	String	Enter additional variant calling parameters in this free text input to customize how the variant caller works in TBProfiler		Optional	TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	theiaeuk	Boolean	Internal component, do not modify	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	vibecheck_docker_image	String	Internal component, do not modify	watronfire/vibecheck:2025.06.26	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	vibecheck_docker_image	String	Internal component, do not modify	watronfire/vibecheck:2025.06.26	Optional	TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	vibecheck_docker_image	String	The Docker container to use for the task	watronfire/vibecheck:2025.06.26	Optional	TheiaProk_Illumina_PE	docker	
-merlin_magic	vibecheck_lineage_barcodes	File	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	vibecheck_lineage_barcodes	File	Internal component, do not modify		Optional	TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	vibecheck_lineage_barcodes	File	Feather formatted lineage barcodes to use instead of default O1 barcodes		Optional	TheiaProk_Illumina_PE	general	
-merlin_magic	vibecheck_skip_subsampling	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	vibecheck_skip_subsampling	Boolean	Internal component, do not modify	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	vibecheck_skip_subsampling	Boolean	When enabled, will not subsample reads prior to classification. Will increase computation time	False	Optional	TheiaProk_Illumina_PE	general	
-merlin_magic	vibecheck_subsampling_fraction	Float	Internal component, do not modify	0.2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	vibecheck_subsampling_fraction	Float	Internal component, do not modify	0.2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	vibecheck_subsampling_fraction	Float	Fraction of reads to use in classification.	0.2	Optional	TheiaProk_Illumina_PE	general	
-merlin_magic	virulencefinder_database	String	Internal component, do not modify	virulence_ecoli	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	virulencefinder_database	String	The specific database to use	virulence_ecoli	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	database	
-merlin_magic	virulencefinder_docker_image	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	virulencefinder_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/virulencefinder:2.0.4	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	virulencefinder_min_percent_coverage	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	virulencefinder_min_percent_coverage	Float	The threshold for minimum coverage		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
-merlin_magic	virulencefinder_min_percent_identity	Float	Internal component, do not modify		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 merlin_magic	virulencefinder_min_percent_identity	Float	The threshold for minimum blast identity		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 metabuli	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Metabuli, TheiaViral_ONT	runtime	
 metabuli	disk_size	Int	Amount of storage (in GB) to allocate to the task	250	Optional	TheiaViral_ONT	runtime	
@@ -2857,4 +2730,4 @@ wg_reorder_matrix	outgroup_root	String	Tip name to root phylogenetic tree upon (
 zip_files	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Zip_Column_Content	runtime	
 zip_files	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Zip_Column_Content	runtime	
 zip_files	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Zip_Column_Content	docker	
-zip_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Zip_Column_Content	runtime
+zip_files	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Zip_Column_Content	runtime	
