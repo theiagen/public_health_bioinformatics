@@ -12,29 +12,29 @@ fragment: true
     By default, this task runs for SARS-CoV-2 and Mpox.
 
     !!! warning "Region coordinates must be relevant to the reference genome"
-        Please note that default files may depict gene coordinates that deviate from user-provided reference genomes or dynamically selected reference genomes (TheiaViral workflows).
+        Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).
 
 
-    ??? dna "Viral analysis input notes: BED file usage"
+    ??? dna "BED file usage"
         In viral characterization workflows, gene coverage regions are supplied with a BED file. 
 
-        - To extract custom regions of interest, populate the `reference_gene_locations_bed` input (task `theiacov` / `morgana_magic`) - please note, SARS-CoV-2 "S" gene extraction must be labeled as a capital "S" to propagate to the Freyja `quality_check` task and Freyja/TheiaCoV `sc2_s_*` outputs
+        - To extract custom regions of interest, populate the `reference_gene_locations_bed` input (task `theiacov` / `morgana_magic`) - please note, custom SARS-CoV-2 "S" gene coordinates must be labeled as a capital "S" to propagate to the Freyja `quality_check` task and Freyja/TheiaCoV `sc2_s_*` outputs
         - If no custom BED is provided, organism defaults are used when available
         - BED files should include a gene name in column 4 to label output
 <!-- endif -->
 
 <!-- if: theiaeuk|fungal -->
-    ??? dna "Fungal pathogen input notes: GBFF and BED usage"
+    ??? dna "GBFF and BED file usage"
         For fungal pathogens, either a GBFF or a BED file may be used for gene coverage coordinate selection.
 
         - If a GBFF is used, a comma-delimited `query_genes` list must be provided (for example: `geneA,geneB,geneC`) to extract gene coordinates
         - If a BED is used, gene names can be taken from the BED entries; if `query_genes` is supplied, particular regions will be extracted
 
-        By default in `medea_magic`, the following query genes are used:
+        The following query genes are used by default:
 
-        - *Cryptococcus neoformans*: `CNA00300` (ERG11 in the default reference).
-        - *Candidozyma auris*: `FKS1`, `lanosterol.14-alpha.demethylase`, `uracil.phosphoribosyltransferase`, `B9J08_005340`, `B9J08_000401`, `B9J08_003102`, `B9J08_003737`, `B9J08_005343`.
-        - *Aspergillus fumigatus*: `Cyp51A`, `HapE`, `AFUA_4G08340` (COX10 in the default reference).
+        - *Aspergillus fumigatus*: `Cyp51A`, `HapE`, `AFUA_4G08340` (COX10 in the default reference)
+        - *Candidozyma auris*: `FKS1`, `lanosterol.14-alpha.demethylase`, `uracil.phosphoribosyltransferase`, `B9J08_005340`, `B9J08_000401`, `B9J08_003102`, `B9J08_003737`, `B9J08_005343`
+        - *Cryptococcus neoformans*: `CNA00300` (ERG11 in the default reference)
 <!-- endif -->
 
     !!! techdetails "Gene Coverage Technical Details"        
