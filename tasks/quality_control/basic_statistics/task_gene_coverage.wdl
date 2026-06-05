@@ -16,6 +16,7 @@ task gene_coverage {
     Boolean ambiguous_contig = false # apply coordinates from BED to first identified contig in BAM
 
     Int min_depth = 1 # minimum depth to count a base in breadth of coverage caclulations
+    Int min_quality = 0 # minimum base quality to count a base in breadth of coverage caclulations
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1-dev"
     Int disk_size = 100
@@ -32,6 +33,7 @@ task gene_coverage {
       --feature_type ~{feature_type} \
       --feature_qualifier ~{feature_qualifier} \
       --min_depth ~{min_depth} \
+      --min_quality ~{min_quality} \
       ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
       ~{if exact_match then "--exact_match" else ""} \
       ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
