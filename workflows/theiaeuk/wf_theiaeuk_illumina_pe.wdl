@@ -9,6 +9,7 @@ import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
 import "../utilities/wf_medea_magic.wdl" as medea_magic_workflow
+import "../utilities/wf_medea_magic.wdl" as medea_magic_workflow
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 
 workflow theiaeuk_illumina_pe {
