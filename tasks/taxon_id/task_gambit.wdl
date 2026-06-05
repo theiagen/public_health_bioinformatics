@@ -120,10 +120,22 @@ task gambit {
     # The purpose of the merlin_tag output is for use as a trigger for organism-specific or taxon-specific workflows
     # One primary & important example is running NCBI amrfinderplus with the appropriate 'amrfinder --organism <organism>' option
 
-    merlin_tag_designations = {"Escherichia" : "Escherichia", "Shigella" : "Escherichia", "Shigella sonnei" : "Shigella sonnei",
-        "Klebsiella" : "Klebsiella", "Klebsiella pneumoniae" : "Klebsiella pneumoniae", "Klebsiella oxytoca" : "Klebsiella oxytoca",
-        "Klebsiella aerogenes" : "Klebsiella aerogenes", "Listeria" : "Listeria", "Salmonella" : "Salmonella", "Vibrio" : "Vibrio",
-        "Vibrio cholerae" : "Vibrio cholerae"
+    merlin_tag_designations = {
+        "Escherichia": "Escherichia",
+        "Shigella": "Escherichia",
+        "Shigella sonnei": "Shigella sonnei",
+        "Klebsiella": "Klebsiella",
+        "Klebsiella pneumoniae": "Klebsiella pneumoniae",
+        "Klebsiella oxytoca": "Klebsiella oxytoca",
+        "Klebsiella aerogenes": "Klebsiella aerogenes",
+        "Listeria": "Listeria",
+        "Salmonella": "Salmonella",
+        "Vibrio": "Vibrio",
+        "Vibrio cholerae": "Vibrio cholerae",
+        "Campylobacter": "Campylobacter",
+        "Yersinia": "Yersinia",
+        "Cronobacter": "Cronobacter",
+        "Clostridium botulinum": "Clostridium botulinum",
     }
 
     try:
