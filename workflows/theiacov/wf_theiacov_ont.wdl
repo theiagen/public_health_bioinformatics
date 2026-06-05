@@ -27,7 +27,6 @@ workflow theiacov_ont {
     Int normalise = 200
     Int max_length = 700
     Int min_length = 400
-    Int? gene_coverage_min_quality # minimum base quality to include bases in gene coverage breadth/depth
     # nextclade inputs
     String? nextclade_dataset_tag
     String? nextclade_dataset_name
@@ -191,7 +190,6 @@ workflow theiacov_ont {
             vadr_memory = organism_parameters.vadr_memory,
             reference_gene_locations_bed = organism_parameters.gene_locations_bed,
             gene_coverage_bam = select_first([consensus.trim_sorted_bam, flu_track.irma_ha_bam, flu_track.irma_na_bam, "gs://theiagen-public-resources-rp/empty_files/empty.bam"]),
-            gene_coverage_min_quality = gene_coverage_min_quality,
             nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
             nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
             pangolin_docker_image = organism_parameters.pangolin_docker,

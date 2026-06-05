@@ -25,7 +25,6 @@ workflow theiacov_clearlabs {
     # assembly parameters
     Int normalise = 20000
     String medaka_docker = "us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3"
-    Int? gene_coverage_min_quality # minimum base quality to include bases in gene coverage breadth/depth
     # reference values
     File? reference_genome
     # nextclade inputs
@@ -112,7 +111,6 @@ workflow theiacov_clearlabs {
         vadr_memory = organism_parameters.vadr_memory,
         reference_gene_locations_bed = organism_parameters.gene_locations_bed,
         gene_coverage_bam = consensus.trim_sorted_bam,
-        gene_coverage_min_quality = gene_coverage_min_quality,
         nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
         nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
         pangolin_docker_image = organism_parameters.pangolin_docker,

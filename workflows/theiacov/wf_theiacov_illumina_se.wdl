@@ -40,7 +40,6 @@ workflow theiacov_illumina_se {
     Int? genome_length
     # assembly parameters
     Int min_depth = 100
-    Int? gene_coverage_min_quality # minimum base quality to include bases in gene coverage breadth/depth
     Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
     Float variant_min_freq = 0.6 # minimum frequency for a variant to be reported in ivar outputs
     # read screen parameters
@@ -155,7 +154,6 @@ workflow theiacov_illumina_se {
           vadr_memory = organism_parameters.vadr_memory,
           reference_gene_locations_bed = organism_parameters.gene_locations_bed,
           gene_coverage_bam = ivar_consensus.aligned_bam,
-          gene_coverage_min_quality = gene_coverage_min_quality,
           nextclade_dataset_name = organism_parameters.nextclade_dataset_name,
           nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
           pangolin_docker_image = organism_parameters.pangolin_docker,
