@@ -175,7 +175,6 @@ workflow morgana_magic {
       call gene_coverage_task.gene_coverage {
         input:
           bam = select_first([gene_coverage_bam]),
-          bai = gene_coverage_bai,
           bedfile = organism_parameters.gene_locations_bed,
           samplename = samplename,
           min_depth = gene_coverage_min_depth,
