@@ -6,7 +6,7 @@ import "../utilities/wf_flu_track.wdl" as flu_track_wf
 import "../utilities/wf_organism_parameters.wdl" as set_organism_defaults
 import "../../tasks/species_typing/lentivirus/task_quasitools.wdl" as quasitools_task
 import "../../tasks/quality_control/advanced_metrics/task_vadr.wdl" as vadr_task
-import "../../tasks/quality_control/basic_statistics/task_sars_gene_coverage.wdl" as gene_coverage_task
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 
 workflow morgana_magic {
   input {
@@ -75,6 +75,7 @@ workflow morgana_magic {
     # gene coverage inputs
     File? reference_gene_locations_bed
     File? gene_coverage_bam
+    File? gene_coverage_bai
     Int? gene_coverage_min_depth
     Int? sc2_s_gene_start
     Int? sc2_s_gene_stop
@@ -173,15 +174,14 @@ workflow morgana_magic {
   if ((workflow_type == "theiacov_pe" || workflow_type == "theiacov_se" || workflow_type == "theiacov_ont" || workflow_type == "theiacov_clearlabs") && (organism_parameters.standardized_organism == "sars-cov-2" || organism_parameters.standardized_organism == "MPXV" || defined(organism_parameters.gene_locations_bed))) {
     if (basename(organism_parameters.gene_locations_bed) != "empty.bed") {
       # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
-      call gene_coverage_task.sars_gene_coverage as gene_coverage {
+      call gene_coverage_task.gene_coverage {
         input:
-          bamfile = select_first([gene_coverage_bam]),
+          bam = select_first([gene_coverage_bam]),
+          bai = gene_coverage_bai,
           bedfile = organism_parameters.gene_locations_bed,
           samplename = samplename,
-          organism = organism_parameters.standardized_organism,
-          sc2_s_gene_start = sc2_s_gene_start,
-          sc2_s_gene_stop = sc2_s_gene_stop,
           min_depth = gene_coverage_min_depth,
+          ambiguous_contig = true, # this allows BED files to work for coordinates w/o direct tie to the reference
           cpu = gene_coverage_cpu,
           disk_size = gene_coverage_disk_size,
           docker = gene_coverage_docker,
@@ -391,9 +391,11 @@ workflow morgana_magic {
     File? quasitools_hydra_vcf = quasitools.hydra_vcf
     File? quasitools_mutations_report = quasitools.mutations_report
     # Gene Coverage Outputs
-    Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
-    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
-    File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
+    Map[String, Float] gene_coverage_depth_by_gene = select_first([gene_coverage.depth_by_gene, {"": 0}])
+    Map[String, Float] gene_coverage_coverage_by_gene = select_first([gene_coverage.coverage_by_gene, {"": 0}])
+    Float? sc2_s_gene_mean_coverage = select_first([gene_coverage.coverage_by_gene["S"], 0])
+    Float? sc2_s_gene_percent_coverage = select_first([gene_coverage.coverage_by_gene["S"], 0])
+    File? est_percent_gene_coverage_tsv = gene_coverage.gene_coverage_stats
     # Flu Track Percentage Mapped Reads
     String? percentage_mapped_reads = flu_track.percentage_mapped_reads
   }
