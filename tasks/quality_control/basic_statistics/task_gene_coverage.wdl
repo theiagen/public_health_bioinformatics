@@ -18,6 +18,8 @@ task gene_coverage {
     Int min_depth = 1 # minimum depth to count a base in breadth of coverage caclulations
     Int min_quality = 0 # minimum base quality to count a base in breadth of coverage caclulations
 
+    String? organism
+
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1-dev"
     Int disk_size = 100
     Int memory = 8
@@ -41,11 +43,30 @@ task gene_coverage {
       ~{if ambiguous_contig then "--ambiguous_contig" else ""}
 
     mv COVERAGE_STATS.tsv ~{samplename}.coverage_stats.tsv
+
+    # deprecated outputs v4.2.0
+    python3 <<CODE
+    import json
+    for key in ["COVERAGE", "DEPTH"]:
+      with open(f"{key}_DICT.json", "r") as f:
+        data_dict = {k.upper(): v for k, v in json.load(f).items()}
+
+      if "S" in data_dict and "~{organism}".lower() == "sars-cov-2":
+        sc2_s_gene_data = data_dict["S"]
+      else:
+        sc2_s_gene_data = 0.0
+
+      with open(f"SC2_S_GENE_{key}", "w") as f:
+        f.write(str(sc2_s_gene_data))
+    CODE
   >>>
   output {
     File gene_coverage_stats = "~{samplename}.coverage_stats.tsv"
     Map[String, Float] depth_by_gene = read_json("DEPTH_DICT.json")
     Map[String, Float] coverage_by_gene = read_json("COVERAGE_DICT.json")
+    # deprecated v4.2.0
+    Float sc2_s_gene_depth = read_string("SC2_S_GENE_DEPTH")
+    Float sc2_s_gene_coverage = read_string("SC2_S_GENE_COVERAGE")
   }
   runtime {
     docker: docker
