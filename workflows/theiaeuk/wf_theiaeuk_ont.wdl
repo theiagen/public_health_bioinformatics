@@ -4,7 +4,6 @@ import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc
 import "../utilities/wf_flye_denovo.wdl" as flye_workflow
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit
 import "../utilities/wf_medea_magic.wdl" as medea_magic_workflow
-import "../utilities/wf_medea_magic.wdl" as medea_magic_workflow
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
