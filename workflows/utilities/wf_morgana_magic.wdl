@@ -177,6 +177,7 @@ workflow morgana_magic {
           bam = select_first([gene_coverage_bam]),
           bedfile = organism_parameters.gene_locations_bed,
           samplename = samplename,
+          organism = organism_parameters.standardized_organism,
           min_depth = gene_coverage_min_depth,
           min_quality = gene_coverage_min_quality,
           ambiguous_contig = true, # this allows BED files to work for coordinates w/o direct tie to the reference
