@@ -258,10 +258,10 @@ workflow freyja_fastq {
     String? bbduk_docker = select_first([read_QC_trim_pe.bbduk_docker, read_QC_trim_se.bbduk_docker, ""])
     # Read QC - clean reads - all
     File read1_clean = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean, read_QC_trim_ont.read1_clean, read1, ""])
-    File? read2_clean = select_first([read_QC_trim_pe.read2_clean, read2])
+    File? read2_clean = select_first([read_QC_trim_pe.read2_clean, read2, ""])
     # Read QC - dehosting outputs - all
     File read1_dehosted = select_first([read_QC_trim_pe.read1_dehosted, read_QC_trim_se.read1_dehosted, read_QC_trim_ont.read1_dehosted, read1, ""])
-    File? read2_dehosted = select_first([read_QC_trim_pe.read2_dehosted, read2])
+    File? read2_dehosted = select_first([read_QC_trim_pe.read2_dehosted, read2, ""])
     # Read QC - kraken outputs - all
     String? kraken_version = select_first([read_QC_trim_pe.kraken2_version, read_QC_trim_se.kraken2_version, ""])
     String? kraken_human = select_first([read_QC_trim_pe.kraken2_human, read_QC_trim_se.kraken2_human, ""])
