@@ -10,7 +10,7 @@ task pilon {
     Int? min_base_quality
     Float? min_depth
     String? fix
-    String docker = "us-docker.pkg.dev/general-theiagen/biocontainers/pilon:1.24--hdfd78af_0"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pilon:1.24"
     Int cpu = 8
     Int memory = 32
     Int disk_size = 100
