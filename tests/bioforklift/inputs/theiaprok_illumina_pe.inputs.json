@@ -15,6 +15,6 @@
     "theiaprok_illumina_pe.read_QC_trim.read_qc": "this.read_qc_input",
     "theiaprok_illumina_pe.call_ani": "this.call_ani_input",
     "theiaprok_illumina_pe.merlin_magic.call_tbp_parser": "this.call_tbp_parser_input",
-    "theiaprok_illumina_pe.read_decontaminate_fasta": "this.read_decontaminate_input",
-    "theiaprok_illumina_pe.expected_contaminants": "this.expected_contaminants_input"
+    "theiaprok_illumina_pe.read_QC_trim.read_decontaminate_fasta": "this.read_decontaminate_input",
+    "theiaprok_illumina_pe.read_QC_trim.expected_contaminants": "this.expected_contaminants_input"
 }
