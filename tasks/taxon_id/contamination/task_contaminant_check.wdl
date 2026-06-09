@@ -14,7 +14,7 @@ task contaminant_check {
     Int? min_expected_seq # default is defined in python as all expected_sequences
     Int max_unexpected_seq = 0 # default is 0
 
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1-dev"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1"
     Int memory = 4
     Int cpu = 2
     Int disk_size = 100
