@@ -998,12 +998,12 @@ gene_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	10
 gene_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1	Optional	Freyja_FASTQ	docker	
 gene_coverage	exact_match	Boolean	Search for exact matches to query_genes / BED file gene queries	False	Optional	Freyja_FASTQ	general	
 gene_coverage	feature_qualifier	String	Feature qualifier to use in parsing GBFF for coverage calculations	product	Optional	Freyja_FASTQ	general	
-gene_coverage	feature_type	String	Feature type to use in parsing GBFF for coverage calculations	CDS	Optional	Freyja_FASTQ	general
+gene_coverage	feature_type	String	Feature type to use in parsing GBFF for coverage calculations	CDS	Optional	Freyja_FASTQ	general	
 gene_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 gene_coverage	min_depth	Int	Minimum depth to call a base covered	1	Optional	Freyja_FASTQ	general	
 gene_coverage	min_quality	Int	Minimum base quality to call a base covered	0	Optional	Freyja_FASTQ	general	
 gene_coverage	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	Freyja_FASTQ	general	
-gene_coverage	reference_gbff	File	GenBank flat file depicting the reference genome		Optional	Freyja_FASTQ	general
+gene_coverage	reference_gbff	File	GenBank flat file depicting the reference genome		Optional	Freyja_FASTQ	general	
 get_fasta_genome_size	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_FASTQ	runtime	
 get_fasta_genome_size	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	Freyja_FASTQ	runtime	
 get_fasta_genome_size	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/seqkit:2.4.0--h9ee0642_0	Optional	Freyja_FASTQ	docker	
@@ -1244,7 +1244,7 @@ mask_low_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Thei
 mask_low_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
 mask_low_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0	Optional	TheiaViral_ONT	docker	
 mask_low_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_ONT	runtime	
-medea_magic	afumigatus_reference_gbff	File	GenBank flat file depicting the reference genome for *Aspergillus fumigatus*	gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference
+medea_magic	afumigatus_reference_gbff	File	GenBank flat file depicting the reference genome for *Aspergillus fumigatus*	gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	amr_search_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
@@ -1265,8 +1265,8 @@ medea_magic	cladetyper_ref_clade5	File	Reference genome FASTA for *Candidozyma a
 medea_magic	cladetyper_ref_clade5_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	cladetyper_ref_clade6	File	Reference genome FASTA for *Candidozyma auris* clade6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	cladetyper_ref_clade6_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade6		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	cryptoneo_reference_gbff	File	GenBank flat file depicting the reference genome for *Cryptococcus neoformans*	gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference
-medea_magic	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+medea_magic	cryptoneo_reference_gbff	File	GenBank flat file depicting the reference genome for *Cryptococcus neoformans*	gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	read1	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
 medea_magic	read2	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
 medea_magic	run_amr_search	Boolean	Set to true to run AMR_Search workflow for support taxa. See AMR_Search documentation	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
@@ -1880,7 +1880,7 @@ raw_check_reads	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	
 raw_check_reads	workflow_series	String	Internal component, do not modify	theiaviral	Optional	TheiaEuk_ONT	general	
 read_mapping_stats	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 read_mapping_stats	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-read_mapping_stats	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
+read_mapping_stats	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 read_mapping_stats	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 read_mapping_stats	read2	File	Internal component, do not modify		Optional	TheiaViral_ONT	general	
 read_QC_trim	adapters	File	File with adapter sequences to be removed		Optional	TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
