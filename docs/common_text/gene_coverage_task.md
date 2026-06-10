@@ -22,13 +22,11 @@ fragment: true
         "GENE2": 1
     }
 
-
 <!-- if: viral -->
     By default, this task runs for SARS-CoV-2 and Mpox.
 
     !!! warning "Region coordinates must be relevant to the reference genome"
         Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).
-
 
     ??? dna "BED file usage"
         In viral characterization workflows, gene coverage regions are supplied with a BED file. 
