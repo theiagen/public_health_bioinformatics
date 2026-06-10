@@ -290,7 +290,7 @@ workflow flu_track {
           memory = nextclade_memory,
           disk_size = nextclade_disk_size
       }
-      call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_h5n1 {
+      call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_h5 {
         input:
           nextclade_tsv = nextclade_flu_h5.nextclade_tsv,
           organism = standardized_organism,
@@ -350,13 +350,13 @@ workflow flu_track {
     String? nextclade_version = nextclade_flu_ha.nextclade_version
     String? nextclade_docker = nextclade_flu_ha.nextclade_docker
     # Nextclade H5N1 outputs
-    File? nextclade_json_flu_h5n1 = nextclade_flu_h5.nextclade_json
-    File? auspice_json_flu_h5n1 = nextclade_flu_h5.auspice_json
-    File? nextclade_tsv_flu_h5n1 = nextclade_flu_h5.nextclade_tsv
-    String? nextclade_aa_subs_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_aa_subs
-    String? nextclade_aa_dels_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_aa_dels
-    String? nextclade_clade_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_clade
-    String? nextclade_qc_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_qc
+    File? nextclade_json_flu_h5 = nextclade_flu_h5.nextclade_json
+    File? auspice_json_flu_h5 = nextclade_flu_h5.auspice_json
+    File? nextclade_tsv_flu_h5 = nextclade_flu_h5.nextclade_tsv
+    String? nextclade_aa_subs_flu_h5 = nextclade_output_parser_flu_h5.nextclade_aa_subs
+    String? nextclade_aa_dels_flu_h5 = nextclade_output_parser_flu_h5.nextclade_aa_dels
+    String? nextclade_clade_flu_h5 = nextclade_output_parser_flu_h5.nextclade_clade
+    String? nextclade_qc_flu_h5 = nextclade_output_parser_flu_h5.nextclade_qc
     # Nextclade HA outputs
     File? nextclade_json_flu_ha = nextclade_flu_ha.nextclade_json
     File? auspice_json_flu_ha =  nextclade_flu_ha.auspice_json

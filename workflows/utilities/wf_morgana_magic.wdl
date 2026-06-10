@@ -312,13 +312,13 @@ workflow morgana_magic {
     String? nextclade_lineage_rabies = rabies_output_parser.nextclade_lineage
     String? nextclade_qc_rabies = rabies_output_parser.nextclade_qc
     # Nextclade outputs for flu H5N1
-    File? nextclade_json_flu_h5n1 = flu_track.nextclade_json_flu_h5n1
-    File? auspice_json_flu_h5n1 = flu_track.auspice_json_flu_h5n1
-    File? nextclade_tsv_flu_h5n1 = flu_track.nextclade_tsv_flu_h5n1
-    String? nextclade_aa_subs_flu_h5n1 = flu_track.nextclade_aa_subs_flu_h5n1
-    String? nextclade_aa_dels_flu_h5n1 = flu_track.nextclade_aa_dels_flu_h5n1
-    String? nextclade_clade_flu_h5n1 = flu_track.nextclade_clade_flu_h5n1
-    String? nextclade_qc_flu_h5n1 = flu_track.nextclade_qc_flu_h5n1
+    File? nextclade_json_flu_h5 = flu_track.nextclade_json_flu_h5
+    File? auspice_json_flu_h5 = flu_track.auspice_json_flu_h5
+    File? nextclade_tsv_flu_h5 = flu_track.nextclade_tsv_flu_h5
+    String? nextclade_aa_subs_flu_h5 = flu_track.nextclade_aa_subs_flu_h5
+    String? nextclade_aa_dels_flu_h5 = flu_track.nextclade_aa_dels_flu_h5
+    String? nextclade_clade_flu_h5 = flu_track.nextclade_clade_flu_h5
+    String? nextclade_qc_flu_h5 = flu_track.nextclade_qc_flu_h5
     # Nextclade outputs for flu HA
     File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
     File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha
