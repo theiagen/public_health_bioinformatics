@@ -486,9 +486,9 @@ gamma_results	File	The .gamma file reporting gene matches	TheiaProk_FASTA, Theia
 gamma_version	String	The version of GAMMA used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 genbank_fasta	File	**Only for SARS-CoV-2 submission**: GenBank fasta file for upload	Mercury_Prep_N_Batch
 genbank_metadata	File	**Only for SARS-CoV-2 submission**: GenBank metadata for upload	Mercury_Prep_N_Batch
-gene_coverage_coverage_by_gene	Map[String,Float]	A JSON map relating gene queries to their breadth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT
-gene_coverage_depth_by_gene	Map[String,Float]	A JSON map relating gene queries to their depth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT
-gene_coverage_stats	File	A tab-delimited table depicting gene coverage depth and breadth on a gene-by-gene basis	TheiaEuk_Illumina_PE, TheiaEuk_ONT
+gene_coverage_depth_by_gene	Map[String,Float]	A JSON map relating gene queries to their depth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+gene_coverage_percent_coverage_by_gene	Map[String,Float]	A JSON map relating gene queries to their percent breadth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+gene_coverage_stats	File	A tab-delimited table depicting gene coverage depth and breadth on a gene-by-gene basis	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 generated_accessions	File	Text file mapping the BioSample accession with its sample name.	Terra_2_NCBI
 genoflu_all_segments	String	The genotypes for each individual flu segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 genoflu_genotype	String	The genotype of the whole genome, based off of the individual segments types	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -1022,8 +1022,8 @@ samtools_version	String	The version of samtools used to sort and index the align
 samtools_version_consensus	String	The version of samtools used to create the pileup before running iVar consensus	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 samtools_version_primtrim	String	The version of samtools used to create the pileup before running iVar trim	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 samtools_version_stats	String	The version of samtools used to assess the quality of read mapping	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-sc2_s_gene_mean_coverage	Float	Mean read depth for the S gene in SARS-CoV-2	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-sc2_s_gene_percent_coverage	Float	Percent coverage of the S gene in SARS-CoV-2	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+sc2_s_gene_mean_coverage	Float	Mean read depth for the S gene in SARS-CoV-2	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+sc2_s_gene_percent_coverage	Float	Percent coverage of the S gene in SARS-CoV-2	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 semibin_bins	Array[File]	An array of binned metagenomic assembled genome files	TheiaMeta_Illumina_PE
 semibin_docker	String	The Docker image of semibin	TheiaMeta_Illumina_PE
 semibin_version	String	The version of Semibin used	TheiaMeta_Illumina_PE
