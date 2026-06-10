@@ -52,6 +52,11 @@ workflow medea_magic {
     Float? snippy_min_frac
     Int? snippy_min_quality
     Int? snippy_maxsoft
+    # gene coverage options
+    String? gene_coverage_feature_type
+    String? gene_coverage_feature_qualifier
+    Int? gene_coverage_min_depth
+    Int? gene_coverage_min_quality
   }
   if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
     call cauris_cladetyper.cauris_cladetyper as cladetyper {
@@ -121,7 +126,11 @@ workflow medea_magic {
           bam = select_first([snippy_cauris.snippy_variants_bam, snippy_cauris_assembly.snippy_variants_bam]),
           bai = select_first([snippy_cauris.snippy_variants_bai, snippy_cauris_assembly.snippy_variants_bai]),
           reference_gbff = cladetyper.annotated_reference,
-          query_genes = select_first([query_genes, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"])
+          query_genes = select_first([query_genes, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"]),
+          feature_type = gene_coverage_feature_type,
+          feature_qualifier = gene_coverage_feature_qualifier,
+          min_depth = gene_coverage_min_depth,
+          min_quality = gene_coverage_min_quality
       }
     }
   }
@@ -171,7 +180,11 @@ workflow medea_magic {
         bam = select_first([snippy_afumigatus.snippy_variants_bam, snippy_afumigatus_assembly.snippy_variants_bam]),
         bai = select_first([snippy_afumigatus.snippy_variants_bai, snippy_afumigatus_assembly.snippy_variants_bai]),
         reference_gbff = afumigatus_reference_gbff,
-        query_genes = select_first([query_genes, "Cyp51A,HapE,AFUA_4G08340"])
+        query_genes = select_first([query_genes, "Cyp51A,HapE,AFUA_4G08340"]),
+        feature_type = gene_coverage_feature_type,
+        feature_qualifier = gene_coverage_feature_qualifier,
+        min_depth = gene_coverage_min_depth,
+        min_quality = gene_coverage_min_quality
     }
   }
   if (medea_tag == "Cryptococcus neoformans") {
@@ -220,7 +233,11 @@ workflow medea_magic {
         bam = select_first([snippy_crypto.snippy_variants_bam, snippy_crypto_assembly.snippy_variants_bam]),
         bai = select_first([snippy_crypto.snippy_variants_bai, snippy_crypto_assembly.snippy_variants_bai]),
         reference_gbff = cryptoneo_reference_gbff,
-        query_genes = select_first([query_genes, "CNA00300"])
+        query_genes = select_first([query_genes, "CNA00300"]),
+        feature_type = gene_coverage_feature_type,
+        feature_qualifier = gene_coverage_feature_qualifier,
+        min_depth = gene_coverage_min_depth,
+        min_quality = gene_coverage_min_quality
     }
   }
   # Running AMR Search
