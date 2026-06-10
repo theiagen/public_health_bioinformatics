@@ -18,7 +18,7 @@ task gene_coverage {
     Int min_depth = 10 # minimum depth to count a base in breadth of coverage caclulations
     Int min_quality = 0 # minimum base quality to count a base in breadth of coverage caclulations
 
-    String? organism
+    String? organism # used to determine if S gene coverage should be reported for SARS-CoV-2
 
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1"
     Int disk_size = 100
