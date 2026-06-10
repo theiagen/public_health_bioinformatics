@@ -15,7 +15,7 @@ task gene_coverage {
     Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
     Boolean ambiguous_contig = false # apply coordinates from BED to first identified contig in BAM
 
-    Int min_depth = 1 # minimum depth to count a base in breadth of coverage caclulations
+    Int min_depth = 10 # minimum depth to count a base in breadth of coverage caclulations
     Int min_quality = 0 # minimum base quality to count a base in breadth of coverage caclulations
 
     String? organism
