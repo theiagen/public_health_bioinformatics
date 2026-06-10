@@ -1000,7 +1000,7 @@ gene_coverage	exact_match	Boolean	Search for exact matches to query_genes / BED 
 gene_coverage	feature_qualifier	String	Feature qualifier to use in parsing GBFF for coverage calculations	product	Optional	Freyja_FASTQ	general	
 gene_coverage	feature_type	String	Feature type to use in parsing GBFF for coverage calculations	CDS	Optional	Freyja_FASTQ	general	
 gene_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
-gene_coverage	min_depth	Int	Minimum depth to call a base covered	1	Optional	Freyja_FASTQ	general	
+gene_coverage	min_depth	Int	Minimum depth to call a base covered	10	Optional	Freyja_FASTQ	general	
 gene_coverage	min_quality	Int	Minimum base quality to call a base covered	0	Optional	Freyja_FASTQ	general	
 gene_coverage	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	Freyja_FASTQ	general	
 gene_coverage	reference_gbff	File	GenBank flat file depicting the reference genome		Optional	Freyja_FASTQ	general	
@@ -1570,7 +1570,7 @@ morgana_magic	gene_coverage_cpu	Int	Number of CPUs to allocate to the task	2	Opt
 morgana_magic	gene_coverage_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	gene_coverage_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 morgana_magic	gene_coverage_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-morgana_magic	gene_coverage_min_depth	Int	The minimum depth to determine if a position was covered	1	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
+morgana_magic	gene_coverage_min_depth	Int	The minimum depth to determine if a position was covered	10	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 morgana_magic	gene_coverage_min_quality	Int	The minimum alignment quality to determine if a position was covered	0	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 morgana_magic	genoflu_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	genoflu_cross_reference	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general	
