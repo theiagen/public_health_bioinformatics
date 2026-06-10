@@ -21,6 +21,7 @@ fragment: true
         "GENE1": 10,
         "GENE2": 1
     }
+    ```
 
 <!-- if: viral -->
     By default, this task runs for SARS-CoV-2 and Mpox.
