@@ -312,7 +312,7 @@ workflow freyja_fastq {
     String freyja_abundances = freyja.freyja_abundances
     # Gene Coverage outputs - SARS-CoV-2 only
     Map[String, Float]? gene_coverage_depth_by_gene = select_first([gene_coverage.depth_by_gene, {"": 0}])
-    Map[String, Float]? gene_coverage_coverage_by_gene = select_first([gene_coverage.coverage_by_gene, {"": 0}])
+    Map[String, Float]? gene_coverage_percent_coverage_by_gene = select_first([gene_coverage.breadth_by_gene, {"": 0}])
     Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
     Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_coverage
     File? est_percent_gene_coverage_tsv = gene_coverage.gene_coverage_stats
