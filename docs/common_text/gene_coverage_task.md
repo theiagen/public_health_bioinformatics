@@ -10,7 +10,7 @@ fragment: true
     `percent_coverage_by_gene`:
     ```
     {
-        "GENE1": 99.5
+        "GENE1": 99.5,
         "GENE2": 10
     }
     ```
