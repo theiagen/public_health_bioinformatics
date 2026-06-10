@@ -330,6 +330,6 @@ workflow theiaeuk_illumina_pe {
     # Gene Coverage Outputs
     File? gene_coverage_stats = medea_magic.gene_coverage_stats
     Map[String, Float]? gene_coverage_depth_by_gene = medea_magic.depth_by_gene
-    Map[String, Float]? gene_coverage_coverage_by_gene = medea_magic.coverage_by_gene
+    Map[String, Float]? gene_coverage_percent_coverage_by_gene = medea_magic.percent_coverage_by_gene
   }
 }

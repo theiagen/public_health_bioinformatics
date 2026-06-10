@@ -533,5 +533,11 @@ workflow theiaviral_illumina_pe {
     File? quasitools_dr_report = morgana_magic.quasitools_dr_report
     File? quasitools_hydra_vcf = morgana_magic.quasitools_hydra_vcf
     File? quasitools_mutations_report = morgana_magic.quasitools_mutations_report
+    # Gene Coverage Outputs
+    Map[String, Float]? gene_coverage_depth_by_gene = morgana_magic.gene_coverage_depth_by_gene
+    Map[String, Float]? gene_coverage_percent_coverage_by_gene = morgana_magic.gene_coverage_percent_coverage_by_gene
+    Float? sc2_s_gene_mean_coverage = morgana_magic.sc2_s_gene_mean_coverage
+    Float? sc2_s_gene_percent_coverage = morgana_magic.sc2_s_gene_percent_coverage
+    File? gene_coverage_stats = morgana_magic.gene_coverage_stats
   }
 }

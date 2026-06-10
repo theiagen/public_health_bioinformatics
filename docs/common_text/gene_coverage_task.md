@@ -5,7 +5,22 @@ fragment: true
 ??? task "`gene_coverage`: Depth and Breadth of Coverage Calculations"
     This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.
 
-    Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage.  
+    Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:
+
+    `percent_coverage_by_gene`:
+    ```
+    {
+        "GENE1": 99.5
+        "GENE2": 10
+    }
+    ```
+
+    `depth_by_gene`:
+    ```
+    {
+        "GENE1": 10,
+        "GENE2": 1
+    }
 
 
 <!-- if: viral -->

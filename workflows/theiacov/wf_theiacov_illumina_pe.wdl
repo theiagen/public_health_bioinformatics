@@ -369,12 +369,12 @@ workflow theiacov_illumina_pe {
     Int? number_Degenerate =  consensus_qc.number_Degenerate
     Int? number_Total = consensus_qc.number_Total
     Float? percent_reference_coverage =  consensus_qc.percent_reference_coverage
-    # SC2 specific coverage outputs
+    # Gene coverage outputs
     Map[String, Float]? gene_coverage_depth_by_gene = morgana_magic.gene_coverage_depth_by_gene
-    Map[String, Float]? gene_coverage_coverage_by_gene = morgana_magic.gene_coverage_coverage_by_gene
+    Map[String, Float]? gene_coverage_percent_coverage_by_gene = morgana_magic.gene_coverage_percent_coverage_by_gene
     Float? sc2_s_gene_mean_coverage = morgana_magic.sc2_s_gene_mean_coverage
     Float? sc2_s_gene_percent_coverage = morgana_magic.sc2_s_gene_percent_coverage
-    File? est_percent_gene_coverage_tsv = morgana_magic.est_percent_gene_coverage_tsv
+    File? est_percent_gene_coverage_tsv = morgana_magic.gene_coverage_stats
     # Pangolin outputs
     String? pango_lineage = morgana_magic.pango_lineage
     String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded

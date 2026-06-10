@@ -63,7 +63,7 @@ task gene_coverage {
   output {
     File gene_coverage_stats = "~{samplename}.coverage_stats.tsv"
     Map[String, Float] depth_by_gene = read_json("DEPTH_DICT.json")
-    Map[String, Float] coverage_by_gene = read_json("COVERAGE_DICT.json")
+    Map[String, Float] breadth_by_gene = read_json("COVERAGE_DICT.json")
     # deprecated v4.2.0
     Float sc2_s_gene_depth = read_string("SC2_S_GENE_DEPTH")
     Float sc2_s_gene_coverage = read_string("SC2_S_GENE_COVERAGE")

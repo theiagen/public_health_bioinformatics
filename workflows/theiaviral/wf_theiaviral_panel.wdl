@@ -304,7 +304,10 @@ workflow theiaviral_panel {
             "abricate_flu_subtype":  theiaviral_illumina_pe.abricate_flu_subtype,
             "abricate_flu_results": theiaviral_illumina_pe.abricate_flu_results,
             "abricate_flu_database":  theiaviral_illumina_pe.abricate_flu_database,
-            "abricate_flu_version": theiaviral_illumina_pe.abricate_flu_version
+            "abricate_flu_version": theiaviral_illumina_pe.abricate_flu_version,
+            "gene_coverage_depth_by_gene": theiaviral_illumina_pe.gene_coverage_depth_by_gene,
+            "gene_coverage_percent_coverage_by_gene": theiaviral_illumina_pe.gene_coverage_percent_coverage_by_gene,
+            "gene_coverage_stats": theiaviral_illumina_pe.gene_coverage_stats,
           }
       }
     }  

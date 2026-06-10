@@ -294,6 +294,6 @@ workflow medea_magic {
     # gene coverage
     File gene_coverage_stats = select_first([gene_coverage_cauris.gene_coverage_stats, gene_coverage_afumigatus.gene_coverage_stats, gene_coverage_cryptoneo.gene_coverage_stats, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
     Map[String, Float] depth_by_gene = select_first([gene_coverage_cauris.depth_by_gene, gene_coverage_afumigatus.depth_by_gene, gene_coverage_cryptoneo.depth_by_gene, {"": 0}])
-    Map[String, Float] coverage_by_gene = select_first([gene_coverage_cauris.coverage_by_gene, gene_coverage_afumigatus.coverage_by_gene, gene_coverage_cryptoneo.coverage_by_gene, {"": 0}])
+    Map[String, Float] percent_coverage_by_gene = select_first([gene_coverage_cauris.breadth_by_gene, gene_coverage_afumigatus.breadth_by_gene, gene_coverage_cryptoneo.breadth_by_gene, {"": 0}])
   }
 }
