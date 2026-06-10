@@ -314,6 +314,7 @@ workflow theiaprok_illumina_pe {
             merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
             assembly = digger_denovo.assembly_fasta,
             samplename = samplename,
+            gambit_predicted_taxon = gambit.gambit_predicted_taxon,
             read1 = read_QC_trim.read1_clean,
             read2 = read_QC_trim.read2_clean
         }

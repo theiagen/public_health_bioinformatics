@@ -260,6 +260,7 @@ workflow theiaprok_ont {
             merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
             assembly = flye_denovo.assembly_fasta,
             samplename = samplename,
+            gambit_predicted_taxon = gambit.gambit_predicted_taxon,
             read1 = read_QC_trim.read1_clean,
             ont_data = true
         }

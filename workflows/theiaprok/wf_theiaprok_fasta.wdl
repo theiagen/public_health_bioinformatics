@@ -167,6 +167,7 @@ workflow theiaprok_fasta {
         merlin_tag = select_first([expected_taxon, gambit.merlin_tag]),
         assembly = assembly_fasta,
         samplename = samplename,
+        gambit_predicted_taxon = gambit.gambit_predicted_taxon,
         assembly_only = true,
         paired_end = false
     }

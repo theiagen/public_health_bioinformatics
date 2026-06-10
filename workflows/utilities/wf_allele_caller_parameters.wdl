@@ -1,6 +1,6 @@
 version 1.0
 
-workflow allelecaller_parameters {
+workflow allele_caller_parameters {
   meta {
     description: "Organizes all PulseNet 2.0 Allele Calling parameters into a single location for easier maintainence; similarity thresholds were extracted from <https://github.com/ncezid-biome/pulsenet2.0-bfx/blob/47644186f2df27e9f01a000d47c451135a75f65d/main/utils/utils.nf#L42>"
   }
@@ -40,7 +40,7 @@ workflow allelecaller_parameters {
     File yersinia_db = "gs://theiagen-public-resources-rp/reference_data/bacterial/pn2.0-mlst-databases/YERSINIA.tar.gz"
   }
   output {
-    Float similarity = select_first([campy_similarity, cbot_similarity, crono_similarity, stec_similarity, listeria_similarity, salm_similarity vibrio_similarity, yersinia_similarity, 0])
+    Float similarity = select_first([campy_similarity, cbot_similarity, crono_similarity, stec_similarity, listeria_similarity, salm_similarity, vibrio_similarity, yersinia_similarity, 0])
     File db = select_first([campy_db, cbot_db, crono_db, stec_db, listeria_db, salm_db, vibrio_db, yersinia_db, ""])
   }
 }

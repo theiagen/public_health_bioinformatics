@@ -46,10 +46,10 @@ workflow merlin_magic {
   input {
     String samplename
     String merlin_tag
+    String gambit_predicted_taxon
     File assembly
     File? read1
     File? read2
-    String? gambit_predicted_taxon
     # subworkflow logic
     Boolean assembly_only = false
     Boolean ont_data = false
@@ -680,7 +680,7 @@ workflow merlin_magic {
   }
   if (run_allele_caller) {
     if (merlin_tag == "Campylobacter" || merlin_tag == "Clostridium botulinum" || merlin_tag == "Cronobacter" || merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" || merlin_tag == "Listeria" || merlin_tag == "Salmonella" || merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae" || merlin_tag == "Yersinia") {
-      call allele_caller_parameters_wf.allelecaller_parameters {
+      call allele_caller_parameters_wf.allele_caller_parameters {
         input:
           merlin_tag = merlin_tag
       }
@@ -688,9 +688,9 @@ workflow merlin_magic {
         input:
           samplename = samplename,
           assembly = assembly,
-          organism = gambit_predicted_taxon,
+          organism = select_first([gambit_predicted_taxon]),
           blast_db = allele_caller_parameters.db,
-          similarity = allele_caller_parameters.similarity
+          similarity_threshold = allele_caller_parameters.similarity
       }
     }
   }
