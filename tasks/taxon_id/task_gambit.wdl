@@ -121,6 +121,9 @@ task gambit {
     # One primary & important example is running NCBI amrfinderplus with the appropriate 'amrfinder --organism <organism>' option
 
     merlin_tag_designations = {
+        "Campylobacter": "Campylobacter",
+        "Clostridium botulinum": "Clostridium botulinum",
+        "Cronobacter": "Cronobacter",
         "Escherichia": "Escherichia",
         "Shigella": "Escherichia",
         "Shigella sonnei": "Shigella sonnei",
@@ -132,10 +135,7 @@ task gambit {
         "Salmonella": "Salmonella",
         "Vibrio": "Vibrio",
         "Vibrio cholerae": "Vibrio cholerae",
-        "Campylobacter": "Campylobacter",
         "Yersinia": "Yersinia",
-        "Cronobacter": "Cronobacter",
-        "Clostridium botulinum": "Clostridium botulinum",
     }
 
     try:
