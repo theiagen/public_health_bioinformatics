@@ -1266,6 +1266,10 @@ medea_magic	cladetyper_ref_clade5_annotated	File	Reference GBFF annotation for *
 medea_magic	cladetyper_ref_clade6	File	Reference genome FASTA for *Candidozyma auris* clade6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	cladetyper_ref_clade6_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade6		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	cryptoneo_reference_gbff	File	GenBank flat file depicting the reference genome for *Cryptococcus neoformans*	gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	gene_coverage_feature_qualifier	String	GenBank flat file feature qualifier to parse for query region names	product	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	gene_coverage_feature_type	String	GenBank flat file feature type to parse for query region coordinates	CDS	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	gene_coverage_min_depth	Int	Minimum read depth to consider a region covered for breadth of coverage calculations	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	gene_coverage_min_quality	Int	Minimum base quality to consider a region covered for breadth of coverage calculations	0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
 medea_magic	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	read1	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
 medea_magic	read2	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
