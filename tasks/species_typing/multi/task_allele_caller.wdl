@@ -64,17 +64,17 @@ task allele_caller {
       --organism.genus ${GENUS} \
       --organism.species ${SPECIES}
 
-ngs-run AlleleCalling \
-  --sample-id campy \
-  --publish-dir . \
-  --assembly campylobacter_jejuni.fasta.gz \
-  --blast-kb.similarity 70 \
-  --blast-kb.path tests/files/blast_kb \
-  --blast-kb.db CAMPY \
-  --blast-kb.loci CAMPY/loci.tsv \
-  --qc-kb.path tests/files/qc_kb/ \
-  --organism.genus Campylobacter \
-  --organism.species jejuni
+# ngs-run AlleleCalling \
+#   --sample-id campy \
+#   --publish-dir . \
+#   --assembly campylobacter_jejuni.fasta.gz \
+#   --blast-kb.similarity 70 \
+#   --blast-kb.path tests/files/blast_kb \
+#   --blast-kb.db CAMPY \
+#   --blast-kb.loci CAMPY/loci.tsv \
+#   --qc-kb.path tests/files/qc_kb/ \
+#   --organism.genus Campylobacter \
+#   --organism.species jejuni
 
   echo "test" > ALLELE_CALLER_RESULT
 
