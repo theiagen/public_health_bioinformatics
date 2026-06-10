@@ -23,7 +23,7 @@ fragment: true
         - BED files should include a gene name in column 4 to label output
 <!-- endif -->
 
-<!-- if: theiaeuk|fungal -->
+<!-- if: theiaeuk -->
     ??? dna "GBFF and BED file usage"
         For fungal pathogens, either a GBFF or a BED file may be used for gene coverage coordinate selection.
 
