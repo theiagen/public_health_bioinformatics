@@ -16,10 +16,11 @@ task allele_caller {
 
     Int cpu = 8
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/pulsenet2-0/allelecaller:1.0.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/pulsenet2-0/allelecaller:1.0.1"
     Int memory = 32
   }
   command <<<
+    # extra scheme name from blast database
     SCHEME=$(basename ~{blast_db} .tar.gz | tee ALLELE_CALLER_SCHEME)
     # tool fails if not run in /app directory
     cd /app
@@ -57,44 +58,45 @@ task allele_caller {
     sed -i '/^>/s/[[:space:]].*$//' assembly.fasta
     gzip assembly.fasta
 
-    echo $SPECIES $GENUS
-
     # run allele calling algorithm
-    if ngs-run AlleleCalling \
-        --sample-id ~{samplename} \
-        --publish-dir . \
-        --n-threads ~{cpu} \
-        --assembly assembly.fasta.gz \
-        --blast-kb.path tests/files/blast_kb \
-        --blast-kb.similarity ~{similarity_threshold} \
-        --blast-kb.db ${SCHEME} \
-        --blast-kb.loci ${LOCI_LIST} \
-        --qc-kb.path tests/files/qc_kb \
-        --organism.genus ${SCHEME}; then
-      echo "PASS" > ALLELE_CALLER_RESULT
+    ngs-run AlleleCalling \
+      --sample-id ~{samplename} \
+      --publish-dir . \
+      --n-threads ~{cpu} \
+      --assembly assembly.fasta.gz \
+      --blast-kb.path tests/files/blast_kb \
+      --blast-kb.similarity ~{similarity_threshold} \
+      --blast-kb.db ${SCHEME} \
+      --blast-kb.loci ${LOCI_LIST} \
+      --qc-kb.path tests/files/qc_kb \
+      --organism.genus ${SCHEME} \
+      --organism.species ${SPECIES}
 
-      cp * /mnt/miniwdl_task_container/work/
-      cd /mnt/miniwdl_task_container/work/
-    else
-      echo "FAIL" > ALLELE_CALLER_RESULT
-    fi
+    # move all results to the expected wdl directory
+    cp *.gz /mnt/miniwdl_task_container/work/
+    cd /mnt/miniwdl_task_container/work/
 
-
-    cat outputs.json
-
-    # parse outputs.json for the QC metrics
+    # parse the results file `outputs.json` for the QC metrics
     python3 <<CODE
     import json
 
+    # extract the "QC" section from the outputs.json file
     with open("outputs.json") as infile:
-      metrics = json.load(infile)["qc"]["metrics"]
+      data = json.load(infile)["qc"]
 
+    qc_result = data["result"]
+    metrics = data["metrics"]
+
+    # write the qc pass/fail result to a file
+    with open("ALLELE_CALLER_RESULT", "w") as outfile:
+      outfile.write(str(qc_result))
+
+    # get various qc metrics and write to file
     for field in ("coreCount", "corePercentage", "accessoryCount", "accessoryPercentage", "totalLociCount"):
       with open(field.upper(), "w") as outfile:
         outfile.write(str(metrics[field]))
 
     CODE
-
   >>>
   output {
     String allele_caller_scheme = read_string("ALLELE_CALLER_SCHEME")
