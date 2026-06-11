@@ -21,12 +21,14 @@ task allele_caller {
   }
   command <<<
     SCHEME=$(basename ~{blast_db} .tar.gz | tee ALLELE_CALLER_SCHEME)
+    # tool fails if not run in /app directory
     cd /app
 
     tar -xzf ~{blast_db}
 
-    GENUS=$(echo ${organism} | cut -f1 -d' ')
-    SPECIES=$(echo ${organism} | cut -f2 -d' ')
+    # parse genus and species inputs
+    GENUS=$(echo ~{organism} | cut -f1 -d' ')
+    SPECIES=$(echo ~{organism} | cut -f2 -d' ')
     LOCI_LIST="${SCHEME}/loci.tsv"
 
     if [[ $GENUS == $SPECIES ]]; then
@@ -43,55 +45,69 @@ task allele_caller {
       fi
     fi
 
-    # check if fasta is gzipped or not
+    # check if fasta is gzipped or not; then copy to standard name
     if gzip -t ~{assembly}; then
-      cp ~{assembly} assembly.fasta.gz
+      # unzip assembly to enable stripping headers of extra content
+      gunzip ~{assembly} -c > assembly.fasta
     else
       cp ~{assembly} assembly.fasta
-      gzip assembly.fasta
     fi
 
-    ngs-run AlleleCalling \
-      --sample-id ~{samplename} \
-      --publish-dir . \
-      --n-threads ~{cpu} \
-      --assembly assembly.fasta.gz \
-      --blast-kb.path tests/files/blast_kb \
-      --blast-kb.similarity ~{similarity_threshold} \
-      --blast-kb.db ${SCHEME} \
-      --blast-kb.loci ${LOCI_LIST} \
-      --qc-kb.path tests/files/qc_kb \
-      --organism.genus ${GENUS} \
-      --organism.species ${SPECIES}
+    # strip headers of extra content and rezip
+    sed -i '/^>/s/[[:space:]].*$//' assembly.fasta
+    gzip assembly.fasta
 
-# ngs-run AlleleCalling \
-#   --sample-id campy \
-#   --publish-dir . \
-#   --assembly campylobacter_jejuni.fasta.gz \
-#   --blast-kb.similarity 70 \
-#   --blast-kb.path tests/files/blast_kb \
-#   --blast-kb.db CAMPY \
-#   --blast-kb.loci CAMPY/loci.tsv \
-#   --qc-kb.path tests/files/qc_kb/ \
-#   --organism.genus Campylobacter \
-#   --organism.species jejuni
+    echo $SPECIES $GENUS
 
-  echo "test" > ALLELE_CALLER_RESULT
+    # run allele calling algorithm
+    if ngs-run AlleleCalling \
+        --sample-id ~{samplename} \
+        --publish-dir . \
+        --n-threads ~{cpu} \
+        --assembly assembly.fasta.gz \
+        --blast-kb.path tests/files/blast_kb \
+        --blast-kb.similarity ~{similarity_threshold} \
+        --blast-kb.db ${SCHEME} \
+        --blast-kb.loci ${LOCI_LIST} \
+        --qc-kb.path tests/files/qc_kb \
+        --organism.genus ${SCHEME}; then
+      echo "PASS" > ALLELE_CALLER_RESULT
 
+      cp * /mnt/miniwdl_task_container/work/
+      cd /mnt/miniwdl_task_container/work/
+    else
+      echo "FAIL" > ALLELE_CALLER_RESULT
+    fi
+
+
+    cat outputs.json
+
+    # parse outputs.json for the QC metrics
+    python3 <<CODE
+    import json
+
+    with open("outputs.json") as infile:
+      metrics = json.load(infile)["qc"]["metrics"]
+
+    for field in ("coreCount", "corePercentage", "accessoryCount", "accessoryPercentage", "totalLociCount"):
+      with open(field.upper(), "w") as outfile:
+        outfile.write(str(metrics[field]))
+
+    CODE
 
   >>>
   output {
     String allele_caller_scheme = read_string("ALLELE_CALLER_SCHEME")
     String allele_caller_result = read_string("ALLELE_CALLER_RESULT")
     File allele_caller_wgmlst_json = "calls_standard.json.gz"
-    File allele_caller_cgmlst_json = "calls_core_standard.json.gz"
+    File allele_caller_cgmlst_json = "calls_core_standard.csv.gz"
     File allele_caller_detailed_json = "allele_calls.json.gz"
     # QC metrics
-    # Int allele_caller_core_count = read_int("CORE_COUNT")
-    # Float allele_caller_core_percentage = read_float("CORE_PERCENTAGE")
-    # Int allele_caller_accessory_count = read_int("ACCESSORY_COUNT")
-    # Float allele_caller_accessory_percentage = read_float("ACCESSORY_PERCENTAGE")
-    # Int allele_caller_total_loci_count = read_int("TOTAL_LOCI_COUNT")
+    Int allele_caller_core_count = read_int("CORECOUNT")
+    Float allele_caller_core_percentage = read_float("COREPERCENTAGE")
+    Int allele_caller_accessory_count = read_int("ACCESSORYCOUNT")
+    Float allele_caller_accessory_percentage = read_float("ACCESSORYPERCENTAGE")
+    Int allele_caller_total_loci_count = read_int("TOTALLOCICOUNT")
     # Versioning
     # String allele_caller_docker = docker
   }
