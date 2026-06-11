@@ -12,7 +12,7 @@ task consensus {
     Int memory = 16
     Int disk_size = 100
     String clair3_model = "r1041_e82_400bps_sup_v500"
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0-dev"
   }
   command <<<
   set -euo pipefail
