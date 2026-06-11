@@ -6755,7 +6755,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td>HIV, Influenza, Monkeypox virus, RSV-A, RSV-B, SARS-CoV-2, <a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a>, WNV</td>
-<td>v4.2.0</td>
+<td>vX.X.X</td>
 <td>Some optional features incompatible, Yes</td>
 <td>Sample-level, Set-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_Illumina_PE_PHB:main?tab=info">TheiaCoV_Illumina_PE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_Illumina_SE_PHB:main?tab=info">TheiaCoV_Illumina_SE_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_ONT_PHB:main?tab=info">TheiaCoV_ONT_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_ClearLabs_PHB:main?tab=info">TheiaCoV_ClearLabs_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_FASTA_PHB:main?tab=info">TheiaCoV_FASTA_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaCoV_FASTA_Batch_PHB:main?tab=info">TheiaCoV_FASTA_Batch_PHB</a></td>
@@ -14821,6 +14821,18 @@
 </div>
 </div>
 <div class="tabbed-block">
+<div class="admonition dna">
+<p class="admonition-title">Defaults available for several subtypes</p>
+<p>We have default Nextclade parameters available for the following subtypes:</p>
+<ul>
+<li>H1N1 (HA and NA segments)</li>
+<li>H3N2 (HA and NA segments)</li>
+<li>Victoria (HA and NA segments)</li>
+<li>Yamagata (HA segment)</li>
+<li>H5Nx (HA segment)</li>
+</ul>
+<p>You can find more details below.</p>
+</div>
 <div class="searchable-table" markdown="block">
 <table>
 <thead>
@@ -15118,9 +15130,9 @@
 </table>
 </div>
 <div class="admonition tip">
-<p class="admonition-title">H5N1 Additional Defaults</p>
-<p>If the sample is designated as H5N1 by either ABRicate or IRMA, an H5N1-specific Nextclade task will run with the following datasets depending on the GenoFLU genotype. </p>
-<p>Alternatively, if a <code>nextclade_custom_input_dataset</code> variable is provided (available under the <code>flu_track</code> task name), the workflow will run that custom dataset on all H5N1 samples, regardless of the GenoFLU genotype.</p>
+<p class="admonition-title">H5 Additional Defaults</p>
+<p>If the HA segment of a sample is designated as H5 by either ABRicate or IRMA, an H5Nx-specific Nextclade task will run with the following datasets depending on the GenoFLU genotype.</p>
+<p>Alternatively, if a <code>nextclade_custom_input_dataset</code> variable is provided (available under the <code>flu_track</code> task name), the workflow will run that custom dataset on all H5Nx samples, regardless of the GenoFLU genotype.</p>
 <table>
 <thead>
 <tr>
@@ -19185,7 +19197,7 @@
 <td>Auspice-compatable JSON output generated from Nextclade analysis that includes the Nextclade default samples for clade-typing and the single sample placed on this tree</td>
 </tr>
 <tr>
-<td>auspice_json_flu_h5n1</td>
+<td>auspice_json_flu_h5</td>
 <td>File</td>
 <td>Auspice-compatable JSON output generated from Nextclade analysis on Influenza H5N1 whole genome that includes the samples included in the "avian-flu/h5n1-cattle-outbreak" nextstrain build that is focused on B3.13 genotype and the single sample placed on this tree</td>
 </tr>
@@ -19750,7 +19762,7 @@
 <td>Amino-acid deletions as detected by NextClade. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_aa_dels_flu_h5n1</td>
+<td>nextclade_aa_dels_flu_h5</td>
 <td>String</td>
 <td>Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for H5N1 whole genome</td>
 </tr>
@@ -19770,7 +19782,7 @@
 <td>Amino-acid substitutions as detected by Nextclade. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_aa_subs_flu_h5n1</td>
+<td>nextclade_aa_subs_flu_h5</td>
 <td>String</td>
 <td>Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for H5N1 whole genome</td>
 </tr>
@@ -19790,7 +19802,7 @@
 <td>Nextclade clade designation, will be blank for Flu.</td>
 </tr>
 <tr>
-<td>nextclade_clade_flu_h5n1</td>
+<td>nextclade_clade_flu_h5</td>
 <td>String</td>
 <td>Nextclade clade designation, specific to Flu 5N1 whole genome. NOTE: Output will be blank or <code>NA</code> since this nextclade dataset does assign clades</td>
 </tr>
@@ -19830,7 +19842,7 @@
 <td>Nextclade output in JSON file format. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_json_flu_h5n1</td>
+<td>nextclade_json_flu_h5</td>
 <td>File</td>
 <td>Nextclade output in JSON file format, specific to Flu H5N1 whole genome</td>
 </tr>
@@ -19855,7 +19867,7 @@
 <td>QC metric as determined by Nextclade. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_qc_flu_h5n1</td>
+<td>nextclade_qc_flu_h5</td>
 <td>String</td>
 <td>QC metric as determined by Nextclade, specific to Flu H5N1 whole genome</td>
 </tr>
@@ -19875,7 +19887,7 @@
 <td>Nextclade output in TSV file format. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_tsv_flu_h5n1</td>
+<td>nextclade_tsv_flu_h5</td>
 <td>File</td>
 <td>Nextclade output in TSV file format, specific to Flu H5N1 whole genome</td>
 </tr>
@@ -20845,7 +20857,7 @@
 <td>Auspice-compatable JSON output generated from Nextclade analysis that includes the Nextclade default samples for clade-typing and the single sample placed on this tree</td>
 </tr>
 <tr>
-<td>auspice_json_flu_h5n1</td>
+<td>auspice_json_flu_h5</td>
 <td>File</td>
 <td>Auspice-compatable JSON output generated from Nextclade analysis on Influenza H5N1 whole genome that includes the samples included in the "avian-flu/h5n1-cattle-outbreak" nextstrain build that is focused on B3.13 genotype and the single sample placed on this tree</td>
 </tr>
@@ -21250,7 +21262,7 @@
 <td>Amino-acid deletions as detected by NextClade. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_aa_dels_flu_h5n1</td>
+<td>nextclade_aa_dels_flu_h5</td>
 <td>String</td>
 <td>Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for H5N1 whole genome</td>
 </tr>
@@ -21270,7 +21282,7 @@
 <td>Amino-acid substitutions as detected by Nextclade. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_aa_subs_flu_h5n1</td>
+<td>nextclade_aa_subs_flu_h5</td>
 <td>String</td>
 <td>Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for H5N1 whole genome</td>
 </tr>
@@ -21290,7 +21302,7 @@
 <td>Nextclade clade designation, will be blank for Flu.</td>
 </tr>
 <tr>
-<td>nextclade_clade_flu_h5n1</td>
+<td>nextclade_clade_flu_h5</td>
 <td>String</td>
 <td>Nextclade clade designation, specific to Flu 5N1 whole genome. NOTE: Output will be blank or <code>NA</code> since this nextclade dataset does assign clades</td>
 </tr>
@@ -21330,7 +21342,7 @@
 <td>Nextclade output in JSON file format. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_json_flu_h5n1</td>
+<td>nextclade_json_flu_h5</td>
 <td>File</td>
 <td>Nextclade output in JSON file format, specific to Flu H5N1 whole genome</td>
 </tr>
@@ -21355,7 +21367,7 @@
 <td>QC metric as determined by Nextclade. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_qc_flu_h5n1</td>
+<td>nextclade_qc_flu_h5</td>
 <td>String</td>
 <td>QC metric as determined by Nextclade, specific to Flu H5N1 whole genome</td>
 </tr>
@@ -21375,7 +21387,7 @@
 <td>Nextclade output in TSV file format. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_tsv_flu_h5n1</td>
+<td>nextclade_tsv_flu_h5</td>
 <td>File</td>
 <td>Nextclade output in TSV file format, specific to Flu H5N1 whole genome</td>
 </tr>
@@ -21665,7 +21677,7 @@
 <td>Auspice-compatable JSON output generated from Nextclade analysis that includes the Nextclade default samples for clade-typing and the single sample placed on this tree</td>
 </tr>
 <tr>
-<td>auspice_json_flu_h5n1</td>
+<td>auspice_json_flu_h5</td>
 <td>File</td>
 <td>Auspice-compatable JSON output generated from Nextclade analysis on Influenza H5N1 whole genome that includes the samples included in the "avian-flu/h5n1-cattle-outbreak" nextstrain build that is focused on B3.13 genotype and the single sample placed on this tree</td>
 </tr>
@@ -21770,7 +21782,7 @@
 <td>Amino-acid deletions as detected by NextClade. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_aa_dels_flu_h5n1</td>
+<td>nextclade_aa_dels_flu_h5</td>
 <td>String</td>
 <td>Amino-acid deletions as detected by NextClade. Specific to flu; it includes deletions for H5N1 whole genome</td>
 </tr>
@@ -21790,7 +21802,7 @@
 <td>Amino-acid substitutions as detected by Nextclade. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_aa_subs_flu_h5n1</td>
+<td>nextclade_aa_subs_flu_h5</td>
 <td>String</td>
 <td>Amino-acid substitutions as detected by Nextclade. Specific to Flu; it includes substitutions for H5N1 whole genome</td>
 </tr>
@@ -21810,7 +21822,7 @@
 <td>Nextclade clade designation, will be blank for Flu.</td>
 </tr>
 <tr>
-<td>nextclade_clade_flu_h5n1</td>
+<td>nextclade_clade_flu_h5</td>
 <td>String</td>
 <td>Nextclade clade designation, specific to Flu 5N1 whole genome. NOTE: Output will be blank or <code>NA</code> since this nextclade dataset does assign clades</td>
 </tr>
@@ -21850,7 +21862,7 @@
 <td>Nextclade output in JSON file format. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_json_flu_h5n1</td>
+<td>nextclade_json_flu_h5</td>
 <td>File</td>
 <td>Nextclade output in JSON file format, specific to Flu H5N1 whole genome</td>
 </tr>
@@ -21875,7 +21887,7 @@
 <td>QC metric as determined by Nextclade. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_qc_flu_h5n1</td>
+<td>nextclade_qc_flu_h5</td>
 <td>String</td>
 <td>QC metric as determined by Nextclade, specific to Flu H5N1 whole genome</td>
 </tr>
@@ -21895,7 +21907,7 @@
 <td>Nextclade output in TSV file format. Will be blank for Flu</td>
 </tr>
 <tr>
-<td>nextclade_tsv_flu_h5n1</td>
+<td>nextclade_tsv_flu_h5</td>
 <td>File</td>
 <td>Nextclade output in TSV file format, specific to Flu H5N1 whole genome</td>
 </tr>
