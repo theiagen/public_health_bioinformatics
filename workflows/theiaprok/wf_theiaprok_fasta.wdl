@@ -833,5 +833,15 @@ workflow theiaprok_fasta {
     String? arln_taxon_gc_mean = arln_stats.taxon_gc_mean
     String? arln_assembly_zscore = arln_stats.assembly_zscore
     String? arln_stats_docker_version = arln_stats.docker_version
+    # allele caller outputs
+    File? allele_caller_wgmlst_json = merlin_magic.allele_caller_wgmlst_json
+    File? allele_caller_cgmlst_json = merlin_magic.allele_caller_cgmlst_json
+    File? allele_caller_detailed_json = merlin_magic.allele_caller_detailed_json
+    Int? allele_caller_core_count = merlin_magic.allele_caller_core_count
+    Float? allele_caller_core_percentage = merlin_magic.allele_caller_core_percentage
+    Int? allele_caller_accessory_count = merlin_magic.allele_caller_accessory_count
+    Float? allele_caller_accessory_percentage = merlin_magic.allele_caller_accessory_percentage
+    Int? allele_caller_total_loci_count = merlin_magic.allele_caller_total_loci_count
+    String allele_caller_docker = merlin_magic.allele_caller_docker
   }
 }

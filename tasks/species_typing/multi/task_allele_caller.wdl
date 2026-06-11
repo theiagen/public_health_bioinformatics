@@ -73,7 +73,8 @@ task allele_caller {
       --organism.species ${SPECIES}
 
     # move all results to the expected wdl directory
-    cp *.gz /mnt/miniwdl_task_container/work/
+    # and then change to that directory for output parsing
+    cp *.gz *.json /mnt/miniwdl_task_container/work/
     cd /mnt/miniwdl_task_container/work/
 
     # parse the results file `outputs.json` for the QC metrics
@@ -111,7 +112,7 @@ task allele_caller {
     Float allele_caller_accessory_percentage = read_float("ACCESSORYPERCENTAGE")
     Int allele_caller_total_loci_count = read_int("TOTALLOCICOUNT")
     # Versioning
-    # String allele_caller_docker = docker
+    String allele_caller_docker = docker
   }
   runtime {
     docker: docker
