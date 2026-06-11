@@ -57,11 +57,6 @@ task consensus {
   # 0x904 means we are now filtering out unaligned, secondary, and supplemental alignments - thanks Curtis
   samtools fastq -F0x904 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz  
 
-  # Calculate the primer trimming stats:
-    # primer_trimmed_read_percent
-    # per primer read counts (?)
-  # Based on comparing *primertrimmed.rg.sorted.bam to *trimmed.rg.sorted.bam
-
   # calculate percent of reads that were primer trimmed
   primers_trimmed=$(tail -n+2 ~{samplename}.alignreport.tsv | wc -l)
   total_reads=$(samtools view -c ~{samplename}.sorted.bam)
