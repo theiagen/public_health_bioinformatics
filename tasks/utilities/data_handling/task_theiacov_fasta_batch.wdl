@@ -21,7 +21,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
 
     String theiacov_fasta_analysis_date
     String theiacov_fasta_version
-    
+
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/terra-tools:2023-08-28-v4"
     Int cpu = 8
@@ -34,17 +34,17 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     if [ -f ~{nextclade_json} ]; then
       # this line splits into individual json files
       jq -c '.results = (.results[] | [.]) ' ~{nextclade_json} | awk '{ print > "out" NR ".json"}'
-    
+
       # rename each individual json file with the sample name
       for file in out*.json; do
         samplename=$(jq -r '.results[].seqName' ${file})
         cp -v ${file} ${samplename}.nextclade.json
       done
-    
+
       # transfer all the json files to the bucket for access in Terra -- not sure if this works on Terra
       gcloud storage cp -v *.nextclade.json gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/nextclade_json/
     fi
-    
+
     # check if pangolin lineage report file exists
     if [ -f ~{pango_lineage_report} ]; then
       # split the pangolin lineage report into individual csv files named by the taxon
@@ -53,20 +53,20 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
       # transfer all pangolin lineage report files to the bucket for access in Terra
       gcloud storage cp -v *pangolin_report.csv gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/pangolin_report/
     fi
-    
+
     echo "DEBUG: Now entering Python block to perform parsing of data for populating sample-level table"
 
-    python3 <<CODE 
-    import pandas as pd 
-    import numpy as np 
+    python3 <<CODE
+    import pandas as pd
+    import numpy as np
     import json
     import csv
-    import os 
+    import os
     import re
 
     # create array with sample names
     samplenames_array = '~{sep="*" samplenames}'.split('*')
-    
+
     # create a sample-level table to upload to terra
     upload_table = pd.DataFrame(samplenames_array, columns=["entity:~{table_name}_id"]).set_index("entity:~{table_name}_id")
 
@@ -82,8 +82,8 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
       upload_table["nextclade_version"] = "~{nextclade_version}"
       upload_table["nextclade_docker"] = "~{nextclade_docker}"
       upload_table["nextclade_ds_tag"] = "~{nextclade_ds_tag}"
-      
-      for sample_name in samplenames_array:        
+
+      for sample_name in samplenames_array:
 
         if nextclade["seqName"].str.contains(sample_name).any():
           if ("~{organism}" == "sars-cov-2"):
@@ -140,7 +140,7 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
     if os.path.exists("~{pango_lineage_report}"):
       print("DEBUG: PANGOLIN lineage report file identified; now parsing into a dataframe")
       pango_lineage_report = pd.read_csv("~{pango_lineage_report}", delimiter=',')
-      
+
       upload_table["pangolin_docker"] = "~{pangolin_docker}"
 
       pangolin_version = pango_lineage_report.loc[pango_lineage_report["taxon"] == sample_name]["pangolin_version"].item()
@@ -148,8 +148,8 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
       upload_table["pangolin_version"] = "pangolin {}; {}".format(pangolin_version, version)
 
       # iterate through results and add to table
-      for sample_name in samplenames_array:        
- 
+      for sample_name in samplenames_array:
+
         if pango_lineage_report["taxon"].str.contains(sample_name).any():
           # parse pango_lineage from pango lineage report
           pango_lineage = pango_lineage_report.loc[pango_lineage_report["taxon"] == sample_name]["lineage"].item()
@@ -177,19 +177,19 @@ task sm_theiacov_fasta_wrangling { # the sm stands for supermassive
           if "pangolin_notes" not in upload_table.columns:
             upload_table["pangolin_notes"] = ""
           upload_table.at[sample_name, "pangolin_notes"] = pangolin_notes
-          
+
           # add path to individual csv to table
           if "pango_lineage_report" not in upload_table.columns:
             upload_table["pango_lineage_report"] = ""
           upload_table.at[sample_name, "pango_lineage_report"] = "gs://~{bucket_name}/theiacov_fasta_batch-~{theiacov_fasta_analysis_date}/pangolin_report/{}.pangolin_report.csv".format(sample_name)
 
     # to-do: add VADR outputs
-    
+
     upload_table.to_csv("terra-table-to-upload.tsv", sep='\t', index=True)
 
     CODE
 
-    # upload results to terra databable 
+    # upload results to terra databable
     python3 /scripts/import_large_tsv/import_large_tsv.py --project "~{project_name}" --workspace "~{workspace_name}" --tsv terra-table-to-upload.tsv
 
     echo "DEBUG: upload to terra table complete"

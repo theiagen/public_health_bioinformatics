@@ -1,5 +1,5 @@
 {
-  "metabuli_wf.samplename": "this.metabuli_id",
+  "metabuli_wf.samplename": "this.metabuli_wf_id",
   "metabuli_wf.call_trim": "this.TRIM_READS",
   "metabuli_wf.read2": "this.read2",
   "metabuli_wf.taxon": "this.TAXON",

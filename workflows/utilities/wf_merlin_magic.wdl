@@ -1,11 +1,11 @@
 version 1.0
 
-# theiaprok
 import "../../tasks/gene_typing/drug_resistance/task_abricate.wdl" as abricate_task
 import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as amr_search_task
 import "../../tasks/species_typing/acinetobacter/task_kaptive.wdl" as kaptive_task
 import "../../tasks/species_typing/escherichia_shigella/task_ectyper.wdl" as ectyper_task
 import "../../tasks/species_typing/escherichia_shigella/task_serotypefinder.wdl" as serotypefinder_task
+import "../../tasks/species_typing/escherichia_shigella/task_shigapass.wdl" as shigapass_task
 import "../../tasks/species_typing/escherichia_shigella/task_shigatyper.wdl" as shigatyper_task
 import "../../tasks/species_typing/escherichia_shigella/task_shigeifinder.wdl" as shigeifinder_task
 import "../../tasks/species_typing/escherichia_shigella/task_sonneityping.wdl" as sonneityping_task
@@ -36,16 +36,9 @@ import "../../tasks/species_typing/vibrio/task_srst2_vibrio.wdl" as srst2_vibrio
 import "../../tasks/species_typing/vibrio/task_abricate_vibrio.wdl" as abricate_vibrio_task
 import "../../tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl" as vibecheck_vibrio_task
 
-
-# theiaeuk
-import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as snippy_gene_query
-import "../../tasks/gene_typing/variant_detection/task_snippy_variants.wdl" as snippy
-import "../../tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl" as cauris_cladetyper
-
-
 workflow merlin_magic {
   meta {
-    description: "Workflow for bacterial and fungal species typing; based on the Bactopia subworkflow Merlin (https://bactopia.github.io/bactopia-tools/merlin/)"
+    description: "Workflow for bacterial species typing; based on the Bactopia subworkflow Merlin (https://bactopia.github.io/bactopia-tools/merlin/)"
   }
   input {
     String samplename
@@ -57,7 +50,6 @@ workflow merlin_magic {
     Boolean assembly_only = false
     Boolean ont_data = false
     Boolean paired_end = true
-    Boolean theiaeuk = false
     Boolean run_amr_search = false
     # activating tool logic
     Boolean call_poppunk = true
@@ -68,7 +60,6 @@ workflow merlin_magic {
     String? abricate_vibrio_docker_image
     String? agrvate_docker_image
     String? amr_search_docker_image
-    String? cauris_cladetyper_docker_image
     String? clockwork_docker_image
     String? ectyper_docker_image
     String? emmtyper_docker_image
@@ -87,11 +78,10 @@ workflow merlin_magic {
     String? seqsero2s_docker_image
     String? seroba_docker_image
     String? serotypefinder_docker_image
+    String? shigapass_docker_image
     String? shigatyper_docker_image
     String? shigeifinder_docker_image
     String? sistr_docker_image
-    String? snippy_gene_query_docker_image
-    String? snippy_variants_docker_image
     String? sonneityping_docker_image
     String? spatyper_docker_image
     String? srst2_docker_image
@@ -112,21 +102,6 @@ workflow merlin_magic {
     Int? amr_search_cpu
     Int? amr_search_memory
     Int? amr_search_disk_size
-    # cladetyper options - primarily files we host
-    Int? cladetyper_kmer_size
-    File? cladetyper_ref_clade1
-    File? cladetyper_ref_clade1_annotated
-    File? cladetyper_ref_clade2
-    File? cladetyper_ref_clade2_annotated
-    File? cladetyper_ref_clade3
-    File? cladetyper_ref_clade3_annotated
-    File? cladetyper_ref_clade4
-    File? cladetyper_ref_clade4_annotated
-    File? cladetyper_ref_clade5
-    File? cladetyper_ref_clade5_annotated
-    File? cladetyper_ref_clade6
-    File? cladetyper_ref_clade6_annotated
-    Float? cladetyper_max_distance
     # ectyper options
     Int? ectyper_o_min_percent_identity
     Int? ectyper_h_min_percent_identity
@@ -168,8 +143,8 @@ workflow merlin_magic {
     Float? lissero_min_percent_coverage
     # pasty options
     Int? pasty_min_percent_identity
-    Int? pasty_min_percent_coverage      
-    # pbptyper options 
+    Int? pasty_min_percent_coverage
+    # pbptyper options
     Int? pbptyper_min_percent_identity
     Int? pbptyper_min_percent_coverage
     # popppunk options - primarily files we host
@@ -193,17 +168,6 @@ workflow merlin_magic {
     Int? sistr_cpu
     Int? sistr_memory
     Int? sistr_disk_size
-    # snippy options - mostly files we host
-    String? snippy_query_gene
-    File snippy_reference_afumigatus = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff"
-    File snippy_reference_cryptoneo = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff"
-    Int? snippy_map_qual
-    Int? snippy_base_quality
-    Int? snippy_min_coverage
-    Float? snippy_min_frac
-    Int? snippy_min_quality
-    Int? snippy_maxsoft
-    #File snippy_reference_calbicans = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Candida_albicans_GCF_000182965.3_ASM18296v3_genomic.gbff"
     # sonneityping options
     String? sonneityping_mykrobe_opts
     # spatyper options
@@ -216,6 +180,7 @@ workflow merlin_magic {
     Int srst2_gene_max_mismatch = 2000
     # tbprofiler options
     String? tbprofiler_tbdb_branch
+    String? tbprofiler_tbdb_branch_commit_hash
     File? tbprofiler_custom_db
     Float? tbprofiler_min_af
     Int? tbprofiler_min_depth
@@ -225,23 +190,24 @@ workflow merlin_magic {
     String? tbprofiler_additional_parameters
     # tbp-parser options
     File? tbp_parser_config
-    String tbp_parser_output_seq_method_type = "WGS"
-    String? tbp_parser_operator
+    File? tbp_parser_coverage_bed
+    File? tbp_parser_err_coverage_bed
+    File? tbp_parser_lims_report_format_yml
+    File? tbp_parser_gene_database_yml
     Int? tbp_parser_min_depth
-    Float? tbp_parser_min_frequency
-    Int? tbp_parser_min_read_support
     Float? tbp_parser_min_percent_coverage
-    File? tbp_parser_coverage_regions_bed
-    Boolean? tbp_parser_debug
-    Boolean? tbp_parser_add_cs_lims
+    Int? tbp_parser_min_read_support
+    Float? tbp_parser_min_frequency
+    Float? tbp_parser_min_percent_loci_covered
     Boolean? tbp_parser_tngs_data
-    Float? tbp_parser_rrs_frequency
-    Int? tbp_parser_rrs_read_support
-    Float? tbp_parser_rrl_frequency
-    Int? tbp_parser_rrl_read_support
-    Float? tbp_parser_rpob449_frequency
-    Float? tbp_parser_etha237_frequency
-    File? tbp_parser_expert_rule_regions_bed
+    Boolean? tbp_parser_use_err_for_qc
+    Boolean? tbp_parser_resolve_overlapping_regions
+    String? tbp_parser_tngs_read_support_boundaries
+    String? tbp_parser_tngs_frequency_boundaries
+    String tbp_parser_sequencing_method = "WGS"
+    String? tbp_parser_operator
+    Map[String, String]? tbp_parser_find_and_replace
+    Boolean? tbp_parser_debug
     # Vibecheck options
     File? vibecheck_lineage_barcodes
     Float? vibecheck_subsampling_fraction
@@ -275,7 +241,7 @@ workflow merlin_magic {
         assembly = assembly,
         samplename = samplename,
         database = "AcinetobacterPlasmidTyping",
-        min_percent_identity = abricate_abaum_min_percent_identity, 
+        min_percent_identity = abricate_abaum_min_percent_identity,
         min_percent_coverage = abricate_abaum_min_percent_coverage,
         docker = abricate_abaum_docker_image
     }
@@ -296,8 +262,11 @@ workflow merlin_magic {
   if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" ) {
     # tools specific to ALL Escherichia and Shigella species
     #
-    # FYI see the GAMBIT task for all merlin_tag designations but all Escherichia and Shigella species are given "Escherichia" merlin_tag designation, except for Shigella sonnei which is given "Shigella sonnei" merlin_tag.
-    # The reason being is that S. sonnei does have a species-specific tool (sonneityping) where the other Shigella species do not (flexneri, dysenteriae, boydii, etc.)
+    # FYI see the GAMBIT task for all merlin_tag designations but all Escherichia and Shigella
+    # species are given "Escherichia" merlin_tag designation, except for Shigella sonnei which
+    # is given "Shigella sonnei" merlin_tag. The reason being is that S. sonnei does have a
+    # species-specific tool (sonneityping) where the other Shigella species do not (flexneri,
+    # dysenteriae, boydii, etc.)
     call serotypefinder_task.serotypefinder {
       input:
         assembly = assembly,
@@ -344,22 +313,23 @@ workflow merlin_magic {
     }
     call virulencefinder_task.virulencefinder {
       input:
-      #  read1 = read1,
-      #  read2 = read2,
         assembly = assembly,
         samplename = samplename,
-      #  paired_end = paired_end,
-      #  assembly_only = assembly_only,
-      #  ont_data = ont_data,
         min_percent_coverage = virulencefinder_min_percent_coverage,
         min_percent_identity = virulencefinder_min_percent_identity,
         database = virulencefinder_database,
         docker = virulencefinder_docker_image
     }
+    call shigapass_task.shigapass {
+      input:
+        assembly = assembly,
+        samplename = samplename,
+        docker = shigapass_docker_image
+    }
   }
   if (merlin_tag == "Shigella sonnei") {
     if (!assembly_only) {
-      call sonneityping_task.sonneityping { 
+      call sonneityping_task.sonneityping {
         input:
           read1 = select_first([read1]),
           read2 = read2,
@@ -382,7 +352,7 @@ workflow merlin_magic {
   }
   if (merlin_tag == "Salmonella") {
     call sistr_task.sistr {
-      input: 
+      input:
         assembly = assembly,
         samplename = samplename,
         use_full_cgmlst_db = sistr_use_full_cgmlst_db,
@@ -392,7 +362,7 @@ workflow merlin_magic {
         disk_size = sistr_disk_size
     }
     if (!ont_data && !assembly_only) {
-      call seqsero2s_task.seqsero2s { 
+      call seqsero2s_task.seqsero2s {
         input:
           read1 = select_first([read1]),
           read2 = read2,
@@ -411,7 +381,7 @@ workflow merlin_magic {
     }
     if ((select_first([seqsero2s.seqsero2s_predicted_serotype, seqsero2s_assembly.seqsero2s_predicted_serotype]) == "Typhi" || sistr.sistr_predicted_serotype == "Typhi") && !assembly_only) {
       call genotyphi.genotyphi as genotyphi_task {
-        input: 
+        input:
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
@@ -487,6 +457,7 @@ workflow merlin_magic {
           min_af = tbprofiler_min_af,
           tbprofiler_custom_db = tbprofiler_custom_db,
           tbdb_branch = tbprofiler_tbdb_branch,
+          tbdb_branch_commit_hash = tbprofiler_tbdb_branch_commit_hash,
           docker = tbprofiler_docker_image
       }
       if (call_tbp_parser) {
@@ -495,26 +466,27 @@ workflow merlin_magic {
             tbprofiler_json = tbprofiler.tbprofiler_output_json,
             tbprofiler_bam = tbprofiler.tbprofiler_output_bam,
             tbprofiler_bai = tbprofiler.tbprofiler_output_bai,
-            samplename = samplename, 
+            samplename = samplename,
             config = tbp_parser_config,
-            sequencing_method = tbp_parser_output_seq_method_type,
-            operator = tbp_parser_operator,
+            coverage_bed = tbp_parser_coverage_bed,
+            err_coverage_bed = tbp_parser_err_coverage_bed,
+            lims_report_format_yml = tbp_parser_lims_report_format_yml,
+            gene_database_yml = tbp_parser_gene_database_yml,
             min_depth = tbp_parser_min_depth,
-            min_frequency = tbp_parser_min_frequency,
-            min_read_support = tbp_parser_min_read_support,
             min_percent_coverage = tbp_parser_min_percent_coverage,
-            coverage_regions_bed = tbp_parser_coverage_regions_bed,
-            add_cycloserine_lims = tbp_parser_add_cs_lims,
-            tbp_parser_debug = tbp_parser_debug,
+            min_read_support = tbp_parser_min_read_support,
+            min_frequency = tbp_parser_min_frequency,
+            min_percent_loci_covered = tbp_parser_min_percent_loci_covered,
             tngs_data = tbp_parser_tngs_data,
-            rrs_frequency = tbp_parser_rrs_frequency,
-            rrs_read_support = tbp_parser_rrs_read_support,
-            rrl_frequency = tbp_parser_rrl_frequency,
-            rrl_read_support = tbp_parser_rrl_read_support,
-            rpob449_frequency = tbp_parser_rpob449_frequency,
-            etha237_frequency = tbp_parser_etha237_frequency,
-            expert_rule_regions_bed = tbp_parser_expert_rule_regions_bed,
-            docker = tbp_parser_docker_image
+            use_err_for_qc = tbp_parser_use_err_for_qc,
+            resolve_overlapping_regions = tbp_parser_resolve_overlapping_regions,
+            tngs_read_support_boundaries = tbp_parser_tngs_read_support_boundaries,
+            tngs_frequency_boundaries = tbp_parser_tngs_frequency_boundaries,
+            sequencing_method = tbp_parser_sequencing_method,
+            operator = tbp_parser_operator,
+            find_and_replace = tbp_parser_find_and_replace,
+            tbp_parser_debug = tbp_parser_debug,
+            docker = tbp_parser_docker_image,
         }
       }
     }
@@ -566,7 +538,7 @@ workflow merlin_magic {
         min_percent_identity = pbptyper_min_percent_identity,
         min_percent_coverage = pbptyper_min_percent_coverage,
         docker = pbptyper_docker_image
-    }      
+    }
     if (call_poppunk) {
       call poppunk_spneumo.poppunk as poppunk_task {
         input:
@@ -587,8 +559,8 @@ workflow merlin_magic {
           GPS_unword_clusters_csv = poppunk_gps_unword_clusters_csv,
           GPS_refs_graph_gt = poppunk_gps_refs_graph_gt,
           GPS_external_clusters_csv = poppunk_gps_external_clusters_csv,
-          docker = poppunk_docker_image, 
-      }  
+          docker = poppunk_docker_image,
+      }
     }
   }
   if (merlin_tag == "Streptococcus pyogenes") {
@@ -665,159 +637,9 @@ workflow merlin_magic {
         docker = abricate_vibrio_docker_image
     }
   }
-  
-  # theiaeuk
-  if (theiaeuk) {
-    if (merlin_tag == "Candidozyma auris" || merlin_tag == "Candida auris") {
-      call cauris_cladetyper.cauris_cladetyper as cladetyper {
-        input: 
-          assembly_fasta = assembly,
-          samplename = samplename,
-          kmer_size = cladetyper_kmer_size,
-          ref_clade1 = cladetyper_ref_clade1,
-          ref_clade1_annotated = cladetyper_ref_clade1_annotated,
-          ref_clade2 = cladetyper_ref_clade2,
-          ref_clade2_annotated = cladetyper_ref_clade2_annotated,
-          ref_clade3 = cladetyper_ref_clade3,
-          ref_clade3_annotated = cladetyper_ref_clade3_annotated,
-          ref_clade4 = cladetyper_ref_clade4,
-          ref_clade4_annotated = cladetyper_ref_clade4_annotated,
-          ref_clade5 = cladetyper_ref_clade5,
-          ref_clade5_annotated = cladetyper_ref_clade5_annotated,
-          ref_clade6 = cladetyper_ref_clade6,
-          ref_clade6_annotated = cladetyper_ref_clade6_annotated,
-          max_distance = cladetyper_max_distance,
-          docker = cauris_cladetyper_docker_image
-      }
-      # only run snippy if cladetyper retrieves an annotated_reference (e.g. non-functional for clade VI)
-      if (cladetyper.annotated_reference != "None") {
-        if (!assembly_only && !ont_data) {
-          call snippy.snippy_variants as snippy_cauris { # no ONT support right now
-            input:
-              reference_genome_file = cladetyper.annotated_reference,
-              read1 = select_first([read1]),
-              read2 = read2,
-              samplename = samplename,
-              map_qual = snippy_map_qual,
-              base_quality = snippy_base_quality,
-              min_coverage = snippy_min_coverage,
-              min_frac = snippy_min_frac,
-              min_quality = snippy_min_quality,
-              maxsoft = snippy_maxsoft,
-              docker = snippy_variants_docker_image
-          }
-        }
-        if (assembly_only && ont_data) {
-          call snippy.snippy_variants as snippy_cauris_ont {
-            input:
-              reference_genome_file = cladetyper.annotated_reference,
-              assembly_fasta = assembly,
-              samplename = samplename,
-              map_qual = snippy_map_qual,
-              base_quality = snippy_base_quality,
-              min_coverage = snippy_min_coverage,
-              min_frac = snippy_min_frac,
-              min_quality = snippy_min_quality,
-              maxsoft = snippy_maxsoft,
-              docker = snippy_variants_docker_image
-          }
-        }
-        call snippy_gene_query.snippy_gene_query as snippy_gene_query_cauris {
-          input:
-            samplename = samplename,
-            snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_cauris_ont.snippy_variants_results]),
-            reference = cladetyper.annotated_reference,
-            query_gene = select_first([snippy_query_gene,"FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"]),
-            docker = snippy_gene_query_docker_image
-        }
-      }
-    }
-    if (merlin_tag == "Aspergillus fumigatus") {
-      if (!assembly_only && !ont_data) {
-        call snippy.snippy_variants as snippy_afumigatus {
-          input:
-            reference_genome_file = snippy_reference_afumigatus,
-            read1 = select_first([read1]),
-            read2 = read2,
-            samplename = samplename,
-            map_qual = snippy_map_qual,
-            base_quality = snippy_base_quality,
-            min_coverage = snippy_min_coverage,
-            min_frac = snippy_min_frac,
-            min_quality = snippy_min_quality,
-            maxsoft = snippy_maxsoft,
-            docker = snippy_variants_docker_image
-        }
-      }
-      if (assembly_only && ont_data) {
-        call snippy.snippy_variants as snippy_afumigatus_ont {
-          input:
-            reference_genome_file = snippy_reference_afumigatus,
-            assembly_fasta = assembly,
-            samplename = samplename,
-            map_qual = snippy_map_qual,
-            base_quality = snippy_base_quality,
-            min_coverage = snippy_min_coverage,
-            min_frac = snippy_min_frac,
-            min_quality = snippy_min_quality,
-            maxsoft = snippy_maxsoft,
-            docker = snippy_variants_docker_image
-        }
-      }
-      call snippy_gene_query.snippy_gene_query as snippy_gene_query_afumigatus {
-        input:
-          samplename = samplename,
-          snippy_variants_results = select_first([snippy_afumigatus.snippy_variants_results, snippy_afumigatus_ont.snippy_variants_results]),
-          reference = snippy_reference_afumigatus,
-          query_gene = select_first([snippy_query_gene, "Cyp51A,HapE,AFUA_4G08340"]), # AFUA_4G08340 is COX10 according to MARDy
-          docker = snippy_gene_query_docker_image
-      }
-    }
-    if (merlin_tag == "Cryptococcus neoformans") {
-      if (!assembly_only && !ont_data) {
-        call snippy.snippy_variants as snippy_crypto {
-          input:
-            reference_genome_file = snippy_reference_cryptoneo,
-            read1 = select_first([read1]),
-            read2 = read2,
-            samplename = samplename,
-            map_qual = snippy_map_qual,
-            base_quality = snippy_base_quality,
-            min_coverage = snippy_min_coverage,
-            min_frac = snippy_min_frac,
-            min_quality = snippy_min_quality,
-            maxsoft = snippy_maxsoft,
-            docker = snippy_variants_docker_image
-        }
-      }
-      if (assembly_only && ont_data) {
-        call snippy.snippy_variants as snippy_crypto_ont {
-          input:
-            reference_genome_file = snippy_reference_cryptoneo,
-            assembly_fasta = assembly,
-            samplename = samplename,
-            map_qual = snippy_map_qual,
-            base_quality = snippy_base_quality,
-            min_coverage = snippy_min_coverage,
-            min_frac = snippy_min_frac,
-            min_quality = snippy_min_quality,
-            maxsoft = snippy_maxsoft,
-            docker = snippy_variants_docker_image
-        }
-      }
-        call snippy_gene_query.snippy_gene_query as snippy_gene_query_crypto {
-          input:
-            samplename = samplename,
-            snippy_variants_results = select_first([snippy_crypto.snippy_variants_results, snippy_crypto_ont.snippy_variants_results]),
-            reference = snippy_reference_cryptoneo,
-            query_gene = select_first([snippy_query_gene, "CNA00300"]), # CNA00300 is ERG11 for this reference genome
-            docker = snippy_gene_query_docker_image
-        }
-      }
-    }
   # Running AMR Search
   if (run_amr_search) {
-    # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search. 
+    # Map containing the taxon tag reported by typing paired with it's taxon code for AMR search.
     Map[String, String] taxon_code = {
       "Neisseria gonorrhoeae" : "485",
       "Staphylococcus aureus" : "1280",
@@ -826,19 +648,16 @@ workflow merlin_magic {
       "Streptococcus pneumoniae" : "1313",
       "Klebsiella" : "570",
       "Klebsiella pneumoniae" : "573",
-      "Candida auris" : "498019",
-      "Candidozyma auris" : "498019",
       "Vibrio cholerae" : "666"
     }
     # Check for Salmonella typing first then default to merlin_tag
-    String taxon = select_first([seqsero2s.seqsero2s_predicted_serotype, 
+    String taxon = select_first([seqsero2s.seqsero2s_predicted_serotype,
       seqsero2s_assembly.seqsero2s_predicted_serotype,sistr.sistr_predicted_serotype, merlin_tag])
 
     # Checks for a match to the AMR_Search available taxon codes
-    if (taxon == "Neisseria gonorrhoeae" || taxon == "Staphylococcus aureus" || 
-        taxon == "Streptococcus pneumoniae" || 
-        taxon == "Klebsiella" || taxon == "Klebsiella pneumoniae" || 
-        taxon == "Candida auris" || taxon == "Candidozyma auris" || 
+    if (taxon == "Neisseria gonorrhoeae" || taxon == "Staphylococcus aureus" ||
+        taxon == "Streptococcus pneumoniae" ||
+        taxon == "Klebsiella" || taxon == "Klebsiella pneumoniae" ||
         taxon == "Vibrio cholerae" || taxon == "Typhi" || taxon == "Salmonella typhi")
     {
       call amr_search_task.amr_search {
@@ -855,7 +674,7 @@ workflow merlin_magic {
   }
   output {
     # theiaprok
-    # AMR_Search 
+    # AMR_Search
     File? amr_search_results = amr_search.amr_search_json_output
     File? amr_results_csv = amr_search.amr_search_output_csv
     File? amr_results_pdf = amr_search.amr_search_output_pdf
@@ -879,6 +698,12 @@ workflow merlin_magic {
     String? ectyper_pathodb_version = ectyper.ectyper_pathodb_version
     String? ectyper_stx_subtypes = ectyper.ectyper_stx_subtypes
     String? ectyper_docker = ectyper.ectyper_docker
+    String? shigapass_predicted_serotype = shigapass.shigapass_predicted_serotype
+    String? shigapass_ipaH_presence_absence = shigapass.shigapass_ipaH_presence_absence
+    File? shigapass_summary_tsv = shigapass.shigapass_summary_tsv
+    File? shigapass_flexneri_summary_tsv = shigapass.shigapass_flexneri_summary_tsv
+    String? shigapass_docker = shigapass.shigapass_docker
+    String? shigapass_version = shigapass.shigapass_version
     String? shigatyper_predicted_serotype = shigatyper.shigatyper_predicted_serotype
     String? shigatyper_ipaB_presence_absence = shigatyper.shigatyper_ipaB_presence_absence
     String? shigatyper_notes = shigatyper.shigatyper_notes
@@ -911,7 +736,7 @@ workflow merlin_magic {
     File? virulencefinder_report_tsv = virulencefinder.virulencefinder_report_tsv
     String? virulencefinder_docker = virulencefinder.virulencefinder_docker
     String? virulencefinder_hits = virulencefinder.virulencefinder_hits
-    # stxtyper 
+    # stxtyper
     File? stxtyper_report = stxtyper.stxtyper_report
     String? stxtyper_docker = stxtyper.stxtyper_docker
     String? stxtyper_version = stxtyper.stxtyper_version
@@ -967,7 +792,7 @@ workflow merlin_magic {
     String? seqsero2s_predicted_contamination = seqsero2s.seqsero2s_predicted_contamination
     String seqsero2s_note = select_first([seqsero2s.seqsero2s_note, seqsero2s_assembly.seqsero2s_note, ""])
     # Salmonella serotype Typhi typing
-    File? genotyphi_report_tsv = genotyphi_task.genotyphi_report_tsv 
+    File? genotyphi_report_tsv = genotyphi_task.genotyphi_report_tsv
     File? genotyphi_mykrobe_json = genotyphi_task.genotyphi_mykrobe_json
     String? genotyphi_version = genotyphi_task.genotyphi_version
     String? genotyphi_species = genotyphi_task.genotyphi_species
@@ -1032,6 +857,7 @@ workflow merlin_magic {
     String? abricate_abaum_docker = abricate_abaum.abricate_docker
     # Mycobacterium Typing
     File? tbprofiler_output_file = tbprofiler.tbprofiler_output_csv
+    File? tbprofiler_output_json = tbprofiler.tbprofiler_output_json
     File? tbprofiler_output_bam = tbprofiler.tbprofiler_output_bam
     File? tbprofiler_output_bai = tbprofiler.tbprofiler_output_bai
     File? tbprofiler_output_vcf = tbprofiler.tbprofiler_output_vcf
@@ -1044,10 +870,13 @@ workflow merlin_magic {
     Float? tbprofiler_pct_reads_mapped = tbprofiler.tbprofiler_pct_reads_mapped
     String? tbp_parser_version = tbp_parser.tbp_parser_version
     String? tbp_parser_docker = tbp_parser.tbp_parser_docker
-    File? tbp_parser_lims_report_csv = tbp_parser.tbp_parser_lims_report_csv
-    File? tbp_parser_laboratorian_report_csv = tbp_parser.tbp_parser_laboratorian_report_csv
     File? tbp_parser_looker_report_csv = tbp_parser.tbp_parser_looker_report_csv
-    File? tbp_parser_coverage_report = tbp_parser.tbp_parser_coverage_report
+    File? tbp_parser_laboratorian_report_csv = tbp_parser.tbp_parser_laboratorian_report_csv
+    File? tbp_parser_lims_report_csv = tbp_parser.tbp_parser_lims_report_csv
+    File? tbp_parser_lims_report_transposed_csv = tbp_parser.tbp_parser_lims_report_transposed_csv
+    File? tbp_parser_locus_coverage_report_csv = tbp_parser.tbp_parser_locus_coverage_report_csv
+    File? tbp_parser_target_coverage_report_csv = tbp_parser.tbp_parser_target_coverage_report_csv
+    File? tbp_parser_log = tbp_parser.tbp_parser_log
     Float? tbp_parser_genome_percent_coverage = tbp_parser.tbp_parser_genome_percent_coverage
     Float? tbp_parser_average_genome_depth = tbp_parser.tbp_parser_average_genome_depth
     File? clockwork_cleaned_read1 = clockwork_decon_reads.clockwork_cleaned_read1
@@ -1135,28 +964,5 @@ workflow merlin_magic {
     String? vibecheck_classification_notes = vibecheck_vibrio.vibecheck_classification_notes
     String? vibecheck_version = vibecheck_vibrio.vibecheck_version
     String? vibecheck_docker = vibecheck_vibrio.vibecheck_docker
-    
-    # theiaeuk
-    # c auris 
-    String? clade_type = cladetyper.gambit_cladetype
-    String? cladetyper_version = cladetyper.gambit_version
-    String? cladetyper_docker_image = cladetyper.gambit_cladetyper_docker_image
-    String? cladetype_annotated_ref = cladetyper.annotated_reference
-    # snippy variants
-    String snippy_variants_reference_genome = select_first([snippy_cauris.snippy_variants_reference_genome, snippy_cauris_ont.snippy_variants_reference_genome, snippy_afumigatus.snippy_variants_reference_genome, snippy_afumigatus_ont.snippy_variants_reference_genome, snippy_crypto.snippy_variants_reference_genome, snippy_crypto_ont.snippy_variants_reference_genome, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
-    String snippy_variants_version = select_first([snippy_cauris.snippy_variants_version, snippy_cauris_ont.snippy_variants_version,snippy_afumigatus.snippy_variants_version, snippy_afumigatus_ont.snippy_variants_version, snippy_crypto.snippy_variants_version, snippy_crypto_ont.snippy_variants_version, "No matching taxon detected"])
-    String snippy_variants_query = select_first([snippy_gene_query_cauris.snippy_variants_query, snippy_gene_query_afumigatus.snippy_variants_query, snippy_gene_query_crypto.snippy_variants_query, "No matching taxon detected"])
-    String snippy_variants_query_check = select_first([snippy_gene_query_cauris.snippy_variants_query_check, snippy_gene_query_afumigatus.snippy_variants_query_check, snippy_gene_query_crypto.snippy_variants_query_check, "No matching taxon detected"])
-    String snippy_variants_hits = select_first([snippy_gene_query_cauris.snippy_variants_hits, snippy_gene_query_afumigatus.snippy_variants_hits, snippy_gene_query_crypto.snippy_variants_hits, "No matching taxon detected"])
-    String snippy_variants_gene_query_results = select_first([snippy_gene_query_cauris.snippy_variants_gene_query_results, snippy_gene_query_afumigatus.snippy_variants_gene_query_results, snippy_gene_query_crypto.snippy_variants_gene_query_results, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
-    String snippy_variants_outdir_tarball = select_first([snippy_cauris.snippy_variants_outdir_tarball, snippy_cauris_ont.snippy_variants_outdir_tarball, snippy_afumigatus.snippy_variants_outdir_tarball, snippy_afumigatus_ont.snippy_variants_outdir_tarball, snippy_crypto.snippy_variants_outdir_tarball, snippy_crypto_ont.snippy_variants_outdir_tarball, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
-    String snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_cauris_ont.snippy_variants_results,snippy_afumigatus.snippy_variants_results, snippy_afumigatus_ont.snippy_variants_results, snippy_crypto.snippy_variants_results, snippy_crypto_ont.snippy_variants_results, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
-    String snippy_variants_bam = select_first([snippy_cauris.snippy_variants_bam, snippy_cauris_ont.snippy_variants_bam, snippy_afumigatus.snippy_variants_bam, snippy_afumigatus_ont.snippy_variants_bam, snippy_crypto.snippy_variants_bam, snippy_crypto_ont.snippy_variants_bam, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
-    String snippy_variants_bai = select_first([snippy_cauris.snippy_variants_bai, snippy_cauris_ont.snippy_variants_bai, snippy_afumigatus.snippy_variants_bai, snippy_afumigatus_ont.snippy_variants_bai, snippy_crypto.snippy_variants_bai, snippy_crypto_ont.snippy_variants_bai, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
-    String snippy_variants_summary = select_first([snippy_cauris.snippy_variants_summary, snippy_cauris_ont.snippy_variants_summary, snippy_afumigatus.snippy_variants_summary, snippy_afumigatus_ont.snippy_variants_summary, snippy_crypto.snippy_variants_summary, snippy_crypto_ont.snippy_variants_summary, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
-    String snippy_variants_num_reads_aligned = select_first([snippy_cauris.snippy_variants_num_reads_aligned, snippy_cauris_ont.snippy_variants_num_reads_aligned, snippy_afumigatus.snippy_variants_num_reads_aligned, snippy_afumigatus_ont.snippy_variants_num_reads_aligned, snippy_crypto.snippy_variants_num_reads_aligned, snippy_crypto_ont.snippy_variants_num_reads_aligned, "No matching taxon detected"])
-    String snippy_variants_coverage_tsv = select_first([snippy_cauris.snippy_variants_coverage_tsv, snippy_cauris_ont.snippy_variants_coverage_tsv, snippy_afumigatus.snippy_variants_coverage_tsv, snippy_afumigatus_ont.snippy_variants_coverage_tsv, snippy_crypto.snippy_variants_coverage_tsv, snippy_crypto_ont.snippy_variants_coverage_tsv, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
-    String snippy_variants_num_variants = select_first([snippy_cauris.snippy_variants_num_variants, snippy_cauris_ont.snippy_variants_num_variants, snippy_afumigatus.snippy_variants_num_variants, snippy_afumigatus_ont.snippy_variants_num_variants, snippy_crypto.snippy_variants_num_reads_aligned, snippy_crypto_ont.snippy_variants_num_variants, "No matching taxon detected"])
-    String snippy_variants_percent_ref_coverage = select_first([snippy_cauris.snippy_variants_percent_ref_coverage, snippy_cauris_ont.snippy_variants_percent_ref_coverage, snippy_afumigatus.snippy_variants_percent_ref_coverage, snippy_afumigatus_ont.snippy_variants_percent_ref_coverage, snippy_crypto.snippy_variants_percent_ref_coverage, snippy_crypto_ont.snippy_variants_percent_ref_coverage, "No matching taxon detected"])
   }
 }

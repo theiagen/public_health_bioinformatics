@@ -7,16 +7,16 @@
 ## Core_Gene_SNP_PHB
 
 !!! caption "Core Gene SNP Workflow Diagram"
-    ![Core Gene SNP Workflow Diagram](../../assets/figures/Core_Gene_SNP.png){width:45%}
+    <div style="text-align: center;">
+    ![Core Gene SNP Workflow Diagram](../../assets/figures/Core_Gene_SNP.png){: onload="this.width/=2;this.onload=null;" }
+    </div>
 
-The Core_Gene_SNP workflow is intended for pangenome analysis, core gene alignment, and phylogenetic analysis. The workflow takes in gene sequence data in GFF3 format from a set of samples. It first produces a pangenome summary using [`Pirate`](https://github.com/SionBayliss/PIRATE), which clusters genes within the sample set into orthologous gene families. By default, the workflow also instructs `Pirate` to produce both core gene and pangenome alignments. The workflow subsequently triggers the generation of a phylogenetic tree and SNP distance matrix from the core gene alignment. First, [`snp-sites`](https://github.com/sanger-pathogens/snp-sites) extracts polymorphic sites only from the alignment, which are then used by [`iqtree`](https://github.com/iqtree/iqtree2/tree/v1.6.7) to generate the phylogenetic tree. [`snp-dists`](https://github.com/tseemann/snp-dists) subsequently builds the SNP distance matrix from the core gene alignment. Optionally, the workflow will also run this analysis using the pangenome alignment. This workflow also features an optional module, `summarize_data`, that creates a presence/absence matrix for the analyzed samples from a list of indicated columns (such as AMR genes, etc.) that can be used in Phandango.
+The Core_Gene_SNP workflow is intended for core genome and pangenome phylogenetic analysis using [PIRATE](https://github.com/SionBayliss/PIRATE) and [IQ-TREE v1.6.7](https://github.com/iqtree/iqtree2/tree/v1.6.7).
 
 !!! info "Default Parameters"
     Please note that while default parameters for pangenome construction and phylogenetic tree generation are provided, **these default parameters may not suit every dataset and have not been validated against known phylogenies**. Users should take care to select the parameters that are most appropriate for their dataset. Please reach out to [support@theiagen.com](mailto:support@theiagen.com) or one of the other resources listed at the bottom of this page if you would like assistance with this task.
 
 ### Inputs
-
-For further detail regarding Pirate options, please see [PIRATE's documentation](https://github.com/SionBayliss/PIRATE). For further detail regarding IQ-TREE options, please see `http://www.iqtree.org/doc/Command-Reference`.
 
 This workflow runs on the set level.
 
@@ -28,15 +28,26 @@ This workflow runs on the set level.
 
 ### Workflow Tasks
 
-By default, the Core_Gene_SNP workflow will begin by analyzing the input sample set using [PIRATE](https://github.com/SionBayliss/PIRATE). Pirate takes in GFF3 files and classifies the genes into gene families by sequence identity, outputting a pangenome summary file. The workflow will instruct Pirate to create core gene and pangenome alignments using this gene family data. Setting the "align" input variable to false will turn off this behavior, and the workflow will output only the pangenome summary. The workflow will then by default extract SNP sites from the `Pirate` core gene alignment via [`SNP-sites`](https://github.com/sanger-pathogens/snp-sites). The SNP alignment is used to infer a phylogenetic tree using [`IQ-TREE v1.6.7`](https://github.com/iqtree/iqtree2/tree/v1.6.7). It will also produce an SNP distance matrix from this alignment using [snp-dists](https://github.com/tseemann/snp-dists). This behavior can be turned off by setting the `core_tree` input variable to false. The workflow will not create a pangenome tree or SNP-matrix by default, but this behavior can be turned on by setting the `pan_tree` input variable to true.
+{{ include_md("common_text/pirate_task.md") }}
 
-The optional `summarize_data` task performs the following only if all of the `data_summary_*` and `sample_names` optional variables are filled out:
+!!! dna "Core Tree Generation"
+    Turn **off** this behavior by setting `core_tree` to `"false"`.
 
-1. Digests a _comma-separated_  list of column names, such as `"amrfinderplus_virulence_genes,amrfinderplus_stress_genes"`, etc. that can be found within the origin Terra data table.
-2. It will then parse through those column contents and extract each value; for example, if the `amrfinder_amr_genes` column for a sample contains these values: `"aph(3')-IIIa,tet(O),blaOXA-193"`, the `summarize_data` task will check each sample in the set to see if they also have those AMR genes detected.
-3. Outputs a .csv file that indicates presence (TRUE) or absence (empty) for each item in those columns; that is, it will check each sample in the set against the detected items in each column to see if that value was also detected.
+{{ include_md("common_text/snp_sites_task.md", indent=4) }}
+{{ include_md("common_text/iqtree1_task.md", indent=4) }}
+{{ include_md("common_text/snp_dists_task.md", indent=4) }}
+{{ include_md("common_text/reorder_matrix_task.md", indent=4) }}
 
-By default, this task appends a Phandango coloring tag to color all items from the same column the same; this can be turned off by setting the optional `phandango_coloring` variable to `false`.
+
+!!! dna "Pangenome Tree Generation"
+    Turn **on** this behavior by setting `pan_tree` to `"true"`.
+
+{{ include_md("common_text/snp_sites_task.md", indent=4) }}
+{{ include_md("common_text/iqtree1_task.md", indent=4) }}
+{{ include_md("common_text/snp_dists_task.md", indent=4) }}
+{{ include_md("common_text/reorder_matrix_task.md", indent=4) }}
+
+{{ include_md("common_text/data_summary_task.md") }}
 
 ### Outputs
 

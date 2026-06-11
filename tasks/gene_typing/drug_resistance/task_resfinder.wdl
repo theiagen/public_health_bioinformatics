@@ -46,12 +46,12 @@ task resfinder {
       fi
     done
 
-    # run resfinder with either resfinder_organism and pointfinder, or not 
+    # run resfinder with either resfinder_organism and pointfinder, or not
     if [[ -z "$resfinder_organism" ]]; then
       echo "Either Gambit predicted taxon is not supported by resfinder or the user did not supply an organism as input."
       echo "Skipping the use of resfinder --species optional parameter."
       echo "WARNING: This will disable PointFinder due to the requirement of --species flag."
-  
+
       run_resfinder.py \
         --inputfasta ~{assembly} \
         --outputPath . \
@@ -59,7 +59,7 @@ task resfinder {
         ~{true="--acquired" false="" acquired} \
         ~{'--min_cov ' + min_percent_coverage} \
         ~{'--threshold ' + min_percent_identity}
-    else 
+    else
 
       run_resfinder.py \
         --inputfasta ~{assembly} \
@@ -97,7 +97,7 @@ task resfinder {
 
     # strip off 18 lines from top of file (18th line is the header with the columns: antimicrobial, class, WGS-predicted phenotype, Match, Genetic Background), and convert all letters in first column (antibiotic) to uppercase for readability of output string
     tail +18 ~{samplename}_pheno_table.tsv |  awk -F '\t' 'BEGIN{OFS="\t"} { $1=toupper($1) } 1' > ~{samplename}_pheno_table.headerless.uppercase.tsv
-    
+
     # if column 3 shows 'Resistant', then print list of drugs followed by the genes/point mutations responsible - alphabetized & whitespace trimmed w/ xargs
     awk -F '\t' 'BEGIN{OFS=":"; ORS="; "} { if($3 == "Resistant") {print $1,$5}}' ~{samplename}_pheno_table.headerless.uppercase.tsv | sed 's/..$//' | tr ';' '\n' | sort | tr '\n' ';' | xargs > RESFINDER_PREDICTED_PHENO_RESISTANCE.txt
 
@@ -127,7 +127,7 @@ task resfinder {
       echo "Skipping XDR Shigella check."
       echo "Not Shigella based on gambit_predicted_taxon or user input" | tee RESFINDER_PREDICTED_XDR_SHIGELLA.txt
     fi
-        
+
     # function to set output strings for "Resistance" or "No resistance predicted" for drug
     check_resistance() {
       local drug="$1"
@@ -199,7 +199,7 @@ task resfinder {
     # If the output file is empty, write "No resistance predicted"; otherwise prefix and suffix with Resistance (...)
     if [[ ! -s RESFINDER_PREDICTED_RESISTANCE_Q.txt ]]; then
       echo "No resistance predicted" > RESFINDER_PREDICTED_RESISTANCE_Q.txt
-    else 
+    else
       # add prefix and suffix
       sed -i '1s/^/Resistance (/;1s/$/)/' RESFINDER_PREDICTED_RESISTANCE_Q.txt
     fi
@@ -209,7 +209,7 @@ task resfinder {
   >>>
   output {
     File resfinder_pheno_table = "~{samplename}_pheno_table.tsv"
-    
+
     # only if resfinder_organism is set
     File? resfinder_pheno_table_species = "~{samplename}_pheno_table_species.tsv"
 
@@ -233,7 +233,7 @@ task resfinder {
 
     String resfinder_predicted_resistance_quinolone = read_string("RESFINDER_PREDICTED_RESISTANCE_Q.txt")
     Int resfinder_predicted_resistance_quinolone_mechanisms = read_string("RESFINDER_PREDICTED_RESISTANCE_Q_COUNT.txt")
-    
+
     String resfinder_docker = "~{docker}"
     String resfinder_version = read_string("RESFINDER_VERSION")
     String resfinder_db_version = read_string("RESFINDER_DB_VERSION")
@@ -244,6 +244,6 @@ task resfinder {
     docker: docker
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
-    maxRetries: 3  
+    maxRetries: 3
   }
 }

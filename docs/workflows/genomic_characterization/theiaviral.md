@@ -84,7 +84,7 @@
 
         The TheiaViral_ONT workflow inputs base-called Oxford Nanopore Technology (ONT) read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs.
 
-        It is recommended to trim adapter sequencings via `dorado` basecalling prior to running TheiaViral_ONT, though `porechop` can optionally be called to trim adapters within the workflow.
+        It is recommended to trim adapter sequencings via Dorado basecalling prior to running TheiaViral_ONT, though Porechop can optionally be called to trim adapters within the workflow.
 
         **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaViral_ONT workflow must be quality assessed before reporting results. We recommend using the [Dorado_Basecalling_PHB](../standalone/dorado_basecalling.md) workflow if applicable.**
         
@@ -96,7 +96,7 @@
 
         TheiaViral_Panel is tailored toward high-throughput analysis of multiple viral lineages within a single sample. It is recommended to use TheiaViral_Illumina_PE for targeted analysis of a single viral lineage, even if reads are derived from a panel assay.
 
-        For RSV characterization, it is recommended to use TheiaCoV or TheiaViral Illumina PE. RSV-A and RSV-B-specific modules are not available in TheiaViral Panel, due to limitations with distinguishing RSV-A and B during read extraction. Subtypes may be inferred from the best retrieved Skani reference depending on the resolution of the NCBI metadata corresponding to that accession. 
+        For RSV characterization, it is recommended to use TheiaCoV or TheiaViral Illumina PE. RSV-A and RSV-B-specific modules are not available in TheiaViral Panel, due to limitations with distinguishing RSV-A and B during read extraction. Subtypes may be inferred from the best retrieved skani reference depending on the resolution of the NCBI metadata corresponding to that accession. 
 
         ???+ dna_blue "`taxon_ids` optional input parameter"
             **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly, but is optional in Terra.** 
@@ -176,15 +176,15 @@
 
 {{ include_md("common_text/bbduk_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/host_decontaminate_wf.md", indent=8) }}
+{{ include_md("common_text/read_decontaminate_wf.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/kraken2_task.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/krakentools_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/rasusa_task.md", condition="theiaviral", indent=8, replacements={'??? task "`Rasusa`: Read subsampling (optional, on by default)"' : '??? task "`rasusa`"'}) }}
+{{ include_md("common_text/rasusa_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/read_screen_task.md", condition="theiaviral", indent=8, replacements={'??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"' : '??? task "`clean_check_reads`"'}) }}
+{{ include_md("common_text/read_screen_task.md", condition="theiaviral", indent=8, replacements={'??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"' : '??? task "`clean_check_reads`: Total Raw Read Quantification and Genome Size Estimation"'}) }}
 
     ??? toggle "*De novo* Assembly and Reference Selection"
         ???+ warning "These tasks are only performed if no reference genome is provided"
@@ -206,7 +206,7 @@
 
 {{ include_md("common_text/bwa_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=8, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
+{{ include_md("common_text/mapping_stats_task.md", condition="theiaviral", indent=8, replacements={'`mapping_stats`' : '`read_mapping_stats`'}) }}
 
     ??? toggle "Variant Calling and Consensus Generation"
 
@@ -216,9 +216,9 @@
 
     ??? toggle "Assembly Evaluation and Consensus Quality Control"
 
-{{ include_md("common_text/quast_task.md", condition="theiaviral", indent=8, replacements={'??? task "`quast`: Assembly Quality Assessment"' : '??? task "`quast_denovo`"'}) }}
+{{ include_md("common_text/quast_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/checkv_task.md", condition="theiaviral", indent=8, replacements={'??? task "`checkv`"' : '??? task "`checkv_denovo` & `checkv_consensus`"'}) }}
+{{ include_md("common_text/checkv_task.md", condition="theiaviral", indent=8, replacements={'??? task "`CheckV`: Assembly Quality Assessment"' : '??? task "`CheckV_denovo` & `CheckV_consensus`: Assembly Quality Assessment"'}) }}
 
 {{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=8) }}
 
@@ -236,19 +236,19 @@
 
     ??? toggle "Read Quality Control, Trimming, and Filtering"
 
-{{ include_md("common_text/nanoplot_task.md", condition="theiaviral", indent=8, replacements={'??? task "`nanoplot`"' : '??? task "`nanoplot_raw` & `nanoplot_clean`"'}) }}
+{{ include_md("common_text/nanoplot_task.md", condition="theiaviral", indent=8, replacements={'??? task "`nanoplot`: Read Quantification"' : '??? task "`nanoplot_raw` & `nanoplot_clean`: Read Quantification"'}) }}
 
 {{ include_md("common_text/porechop_task.md", condition="theiaviral", indent=8) }}
 
 {{ include_md("common_text/nanoq_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/ncbi_scrub_task.md", condition="theiaviral", indent=8, replacements={'??? task "`HRRT`: Human Host Sequence Removal"' : '??? task "`ncbi_scrub_se`"'}) }}
+{{ include_md("common_text/ncbi_scrub_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/host_decontaminate_wf.md", condition="theiaviral", indent=8, replacements={'??? task "`host_decontaminate`: Host read decontamination"' : '??? task "`host_decontaminate`"'}) }}
+{{ include_md("common_text/read_decontaminate_wf.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/rasusa_task.md", condition="theiaviral", indent=8, replacements={'??? task "`Rasusa`: Read subsampling (optional, on by default)"' : '??? task "`rasusa`"'}) }}
+{{ include_md("common_text/rasusa_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/read_screen_task.md", condition="theiaviral", indent=8, replacements={'??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"' : '??? task "`clean_check_reads`"'}) }}
+{{ include_md("common_text/read_screen_task.md", condition="theiaviral", indent=8, replacements={'??? task "`screen`: Total Raw Read Quantification and Genome Size Estimation"' : '??? task "`clean_check_reads`: Total Raw Read Quantification and Genome Size Estimation"'}) }}
 
     ??? toggle "Read Classification and Extraction"
 
@@ -274,11 +274,11 @@
 
     ??? toggle "Reference Mapping"
 
-{{ include_md("common_text/minimap2_task.md", condition="long_read_flags", indent=8, replacements={'??? task "`minimap2`: Read Alignment Details"' : '??? task "`minimap2`"'}) }}
+{{ include_md("common_text/minimap2_task.md", condition="long_read_flags", indent=8) }}
 
 {{ include_md("common_text/parse_mapping_task.md", condition="sam_to_sorted_bam", indent=8) }}
 
-{{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=8, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
+{{ include_md("common_text/mapping_stats_task.md", condition="theiaviral", indent=8, replacements={'`mapping_stats`' : '`read_mapping_stats`'}) }}
 
 {{ include_md("common_text/fasta_utilities_task.md", condition="theiaviral", indent=8) }}
 
@@ -292,9 +292,9 @@
 
     ??? toggle "Assembly Evaluation and Consensus Quality Control"
 
-{{ include_md("common_text/quast_task.md", condition="theiaviral", indent=8, replacements={'??? task "`quast`: Assembly Quality Assessment"' : '??? task "`quast_denovo`"'}) }}
+{{ include_md("common_text/quast_task.md", condition="theiaviral", indent=8) }}
 
-{{ include_md("common_text/checkv_task.md", condition="theiaviral", indent=8, replacements={'??? task "`checkv`"' : '??? task "`checkv_denovo` & `checkv_consensus`"'}) }}
+{{ include_md("common_text/checkv_task.md", condition="theiaviral", indent=8, replacements={'??? task "`CheckV`: Assembly Quality Assessment"' : '??? task "`CheckV_denovo` & `CheckV_consensus`: Assembly Quality Assessment"'}) }}
 
 {{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=8) }}
 
@@ -316,7 +316,7 @@
 
 {{ include_md("common_text/bbduk_task.md", indent=8) }}
 
-{{ include_md("common_text/host_decontaminate_wf.md", indent=8) }}
+{{ include_md("common_text/read_decontaminate_wf.md", condition="theiaviral", indent=8) }}
 
     ??? toggle "Read Extraction and Binning"
 
@@ -345,7 +345,7 @@
 
 {{ include_md("common_text/bwa_task.md", condition="theiaviral", indent=12) }}
 
-{{ include_md("common_text/assembly_metrics_task.md", condition="theiaviral", indent=12, replacements={'`assembly_metrics`' : '`read_mapping_stats`'}) }}
+{{ include_md("common_text/mapping_stats_task.md", condition="theiaviral", indent=12, replacements={'`mapping_stats`' : '`read_mapping_stats`'}) }}
 
         ??? toggle "Variant Calling and Consensus Generation"
 
@@ -355,9 +355,9 @@
 
         ??? toggle "Assembly Evaluation and Consensus Quality Control"
 
-{{ include_md("common_text/quast_task.md", condition="theiaviral", indent=12, replacements={'??? task "`quast`: Assembly Quality Assessment"' : '??? task "`quast_denovo`"'}) }}
+{{ include_md("common_text/quast_task.md", condition="theiaviral", indent=12) }}
 
-{{ include_md("common_text/checkv_task.md", condition="theiaviral", indent=12, replacements={'??? task "`checkv`"' : '??? task "`checkv_denovo` & `checkv_consensus`"'}) }}
+{{ include_md("common_text/checkv_task.md", condition="theiaviral", indent=12, replacements={'??? task "`CheckV`: Assembly Quality Assessment"' : '??? task "`CheckV_denovo` & `CheckV_consensus`: Assembly Quality Assessment"'}) }}
 
 {{ include_md("common_text/consensus_qc_task.md", condition="theiaviral", indent=12) }}
 
@@ -386,20 +386,6 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
 
 ### Outputs
 
-!!! dna "Output Data"
-    === "TheiaViral_Illumina_PE"
-
-    === "TheiaViral_ONT"
-
-    === "TheiaViral_Panel"
-        The TheiaViral_Panel output table below corresponds to available outputs in the Terra workflow, while the results output to the "taxon table" mostly correspond to TheiaViral_Illumina_PE outputs. Additional outputs unique to TheiaViral_Panel are noted below:
-
-        ??? dna "`kraken_extracted_taxon_name` output"
-        This output is the suffix of the curated sample name and corresponds to the inputted taxon ID used during Kraken read classification. These names are retrieved from a static version of NCBI's taxonomy database.
-
-        ??? dna "`skani_reference_taxon_name` output"
-        This output corresponds to the best hit reference accession in the custom Skani database. These names are retrieved from NCBI at the time of Skani database construction. These taxon names may therefore vary between Skani database versions based on the NCBI submission metadata.
-
 === "TheiaViral_Illumina_PE"
     /// html | div[class="searchable-table"]
 
@@ -415,6 +401,12 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
     ///
 
 === "TheiaViral_Panel"
+    !!! dna ""
+        The TheiaViral_Panel output table below corresponds to the outputs generated for the entire sample. In addition, results for the identified taxa in the sample are output to individual taxon tables. Those output tables mostly correspond to the outputs generated by TheiaViral_Illumina_PE, but with the following additions:
+
+        - `kraken_extracted_taxon_name`: This output is the suffix of the curated sample name and corresponds to the inputted taxon ID used during Kraken read classification. These names are retrieved from a static version of NCBI's taxonomy database.
+        - `skani_reference_taxon_name`: This output corresponds to the best hit reference accession in the custom Skani database. These names are retrieved from NCBI at the time of Skani database construction. These taxon names may therefore vary between Skani database versions based on the NCBI submission metadata.
+
     /// html | div[class="searchable-table"]
 
     {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaViral_Panel"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}

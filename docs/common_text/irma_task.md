@@ -1,11 +1,9 @@
-<!-- if: assembly -->
-??? task "`irma`: Assembly and Characterization"
-<!-- endif -->
-<!-- if: task -->
-??? task "`irma`"
-<!-- endif -->
-
-    Cleaned reads are assembled using `irma` which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps read to collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by `irma` will be ordered from largest to smallest assembled flu segment. `irma` also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the `abricate` task outputs which will provide this information.
+---
+title: Task Fragment `irma`
+fragment: true
+---
+??? task "`IRMA`: Influenza Assembly and Characterization"
+    Cleaned reads are assembled using IRMA which stands for Iterative Refinement Meta-Assembler. IRMA first sorts reads to Flu genome segments using LABEL, then iteratively maps read to collection of reference sequences (in this case for Influenza virus) and iteratively edits the references to account for high population diversity and mutational rates that are characteristic of Influenza genomes. Assemblies produced by IRMA will be ordered from largest to smallest assembled flu segment. IRMA also performs typing and subtyping as part of the assembly process. Note: IRMA does not differentiate between Flu B Victoria and Yamagata lineages. For determining this information, please review the ABRicate task outputs which will provide this information.
 
 <!-- if: assembly -->
     Due to the segmented nature of the Influenza genome and the various downstream bioinformatics tools that require the genome assembly, the IRMA task & TheiaCoV workflows output various genome assembly files. Briefly they are:

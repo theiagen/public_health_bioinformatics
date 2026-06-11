@@ -1,14 +1,17 @@
+---
+title: Task Fragment `midas`
+fragment: true
+---
 ??? task "`MIDAS`: Read Identification (optional)"
     To activate this task, set `call_midas` to `true`.
 
-    The `MIDAS` task is for the identification of reads to detect contamination with non-target taxa.
+    MIDAS is used to detect contamination with non-target taxa.
 
     The MIDAS tool was originally designed for metagenomic sequencing data but has been co-opted for use with bacterial isolate WGS methods. It can be used to detect contamination present in raw sequencing data by estimating bacterial species abundance in bacterial isolate WGS data. If a secondary genus is detected above a relative frequency of 0.01 (1%), then the sample should fail QC and be investigated further for potential contamination.
 
     This task is similar to those used in commercial software, BioNumerics, for estimating secondary species abundance.
 
     ??? toggle "How are the MIDAS output columns determined?"
-        
         Example MIDAS report in the `midas_report` column:
         
         | species_id | count_reads | coverage | relative_abundance |

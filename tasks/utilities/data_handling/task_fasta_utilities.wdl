@@ -29,7 +29,7 @@ task get_fasta_genome_size {
     # extract the length of the genome - assumes the value is in the fifth column in the last line
     # header: file    format  type    num_seqs        sum_len min_len avg_len max_len
     cat SEQKIT_STDOUT | tail -1 | cut -f 5  | tee GENOME_LENGTH
-    
+
   >>>
   output {
     Int fasta_length = read_int("GENOME_LENGTH")

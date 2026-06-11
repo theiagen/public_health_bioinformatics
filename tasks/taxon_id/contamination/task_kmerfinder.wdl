@@ -14,7 +14,7 @@ task kmerfinder_bacteria {
   command <<<
     # Decompress the kmerfinder bacterial database
     mkdir db
-    tar -C ./db/ -xzvf ~{kmerfinder_db}  
+    tar -C ./db/ -xzvf ~{kmerfinder_db}
 
     # Run kmerfinder
     kmerfinder.py \
@@ -22,7 +22,7 @@ task kmerfinder_bacteria {
         -tax ./db/bacteria/bacteria.tax \
         -i ~{assembly} \
         -o ~{samplename} \
-        ~{kmerfinder_args} 
+        ~{kmerfinder_args}
 
     # parse outputs
     if [ ! -f ~{samplename}/results.txt ]; then

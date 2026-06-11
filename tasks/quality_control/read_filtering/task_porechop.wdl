@@ -10,7 +10,7 @@ task porechop {
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/porechop:0.2.4"
   }
-  command <<< 
+  command <<<
     set -euo pipefail
 
     echo "Porechop version:"

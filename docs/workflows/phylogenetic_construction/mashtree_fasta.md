@@ -20,15 +20,15 @@ This workflow also features an optional module, `summarize_data`, that creates a
 
 ///
 
-### Workflow Actions
+### Workflow Tasks
 
-??? task "MashTree_FASTA Details"
+??? task "`MashTree_FASTA` Details"
     `MashTree_FASTA` is run on a set of assembly fastas and creates a phylogenetic tree and matrix.
 
     !!! techdetails "MashTree_FASTA Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_mashtree_fasta.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_mashtree_fasta.wdl) |
+        | Task | [task_mashtree.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_mashtree.wdl) |
         | Software Source Code | [Mashtree on GitHub](https://github.com/lskatz/mashtree) |
         | Software Documentation | [Mashtree on GitHub](https://github.com/lskatz/mashtree) |
         | Original Publication(s) | [Mashtree: a rapid comparison of whole genome sequence files](https://doi.org/10.21105/joss.01762) |

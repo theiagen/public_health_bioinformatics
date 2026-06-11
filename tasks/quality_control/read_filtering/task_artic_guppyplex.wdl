@@ -18,7 +18,7 @@ task read_filtering {
     cp ~{read1} ~{samplename}/
     echo "DIRNAME: ~{samplename}"
 
-    # run artic guppyplex 
+    # run artic guppyplex
     artic guppyplex --min-length ~{min_length} --max-length ~{max_length} --directory ~{samplename} --prefix ~{run_prefix}
   >>>
   output {

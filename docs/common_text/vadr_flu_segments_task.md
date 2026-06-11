@@ -1,4 +1,8 @@
-??? task "`vadr_flu_segments`"
+---
+title: Task Fragment `vadr_flu_segments`
+fragment: true
+---
+??? task "`vadr_flu_segments`: Flu Segment Separation"
 
     This task processes a full or partial influenza genome assembly in multifasta format, along with the output `.tar.gz` file from a VADR run. It extracts each segment into its own fasta file and also generates a concatenated fasta containing all segments combined into a single sequence. Segment names are assigned based on the specified flu type (A or B) and the segment classification found in the [VADR .sqc file](https://github.com/ncbi/vadr/blob/master/documentation/formats.md#sqc).
 
@@ -7,4 +11,4 @@
     !!! techdetails "VADR Flu Segments Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_vadr_flu_segments.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/influenza/task_vadr_flu_segments.wdl) |
+        | Task | [task_vadr_flu_segments.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/orthomyxoviridae/task_vadr_flu_segments.wdl) |

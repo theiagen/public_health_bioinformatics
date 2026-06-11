@@ -1,4 +1,7 @@
-
+---
+title: Task Fragment `medaka`
+fragment: true
+---
 ??? task "`Medaka`: Polishing of Flye assembly (default; optional)"
     Polishing is optional and can be skipped by setting the `skip_polishing` variable to true. If polishing is skipped, then neither Medaka or Racon will run.
 
@@ -16,6 +19,6 @@
     !!! techdetails "Medaka Technical Details"
         |  | Links |
         | --- | --- |
-        | WDL Task | [task_medaka.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_medaka.wdl) |
+        | Task | [task_medaka.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/polishing/task_medaka.wdl) |
         | Software Source Code | [Medaka on GitHub](https://github.com/nanoporetech/medaka) |
         | Software Documentation | [Medaka Documentation](https://github.com/nanoporetech/medaka#medaka) |

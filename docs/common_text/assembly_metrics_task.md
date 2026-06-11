@@ -1,11 +1,15 @@
+---
+title: Task Fragment `assembly_metrics`
+fragment: true
+---
 ??? task "`assembly_metrics`: Mapping Statistics"
-    The `assembly_metrics` task generates mapping statistics from a BAM file. It uses samtools to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics.
+    The assembly metrics task generates mapping statistics from a BAM file. It uses samtools to generate a summary of the mapping statistics, which includes coverage, depth, average base quality, average mapping quality, and other relevant metrics.
 
 <!-- if: theiacov -->
     This task is run twice: once on the untrimmed reads and, if primer trimming is enabled, once on the primer-trimmed reads. This allows for a comparison of mapping statistics before and after primer trimming, which can be useful for assessing the impact of primer trimming on the quality of the alignment and subsequent analyses.
 <!-- endif -->
 
-    !!! techdetails "`assembly_metrics` Technical Details"
+    !!! techdetails "Assembly Metrics Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_assembly_metrics.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_assembly_metrics.wdl) |

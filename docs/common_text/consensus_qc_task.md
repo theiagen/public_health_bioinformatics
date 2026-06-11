@@ -1,3 +1,7 @@
+---
+title: Task Fragment `consensus_qc`
+fragment: true
+---
 ??? task "`consensus_qc`: Assembly Statistics"
     The consensus_qc task generates a summary of genomic statistics from a consensus genome. This includes the total number of bases, "N" bases, degenerate bases, and an estimate of the percent coverage to the reference genome.
 

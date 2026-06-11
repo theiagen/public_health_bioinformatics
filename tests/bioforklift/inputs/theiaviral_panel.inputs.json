@@ -1,0 +1,9 @@
+{
+  "theiaviral_panel.output_taxon_table": "gs://theiagen-public-resources-rp/validation_datasets/phb_validation/theiaviral/panel/viral_panel_taxon_table_20251125.tsv",
+  "theiaviral_panel.read1": "this.read1",
+  "theiaviral_panel.read2": "this.read2",
+  "theiaviral_panel.samplename": "this.theiaviral_panel_id",
+  "theiaviral_panel.source_table_name": "theiaviral_panel",
+  "theiaviral_panel.terra_project": "theiagen-validations",
+  "theiaviral_panel.terra_workspace": "Theiagen_Bioinformatics_Development"
+}

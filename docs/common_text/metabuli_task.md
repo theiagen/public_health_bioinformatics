@@ -1,6 +1,9 @@
-??? task "`metabuli`"
-
-    The `metabuli` task is used to classify and optionally extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.
+---
+title: Task Fragment `metabuli`
+fragment: true
+---
+??? task "`Metabuli`: Read Classification"
+    Metabuli is used to classify and optionally extract reads against a reference database. Metabuli uses a novel k-mer structure, called metamer, to analyze both amino acid (AA) and DNA sequences. It leverages AA conservation for sensitive homology detection and DNA mutations for specific differentiation between closely related taxa.
 
 <!-- if: metabuli -->
     ??? dna "`taxon_id` input parameter"
@@ -13,11 +16,11 @@
         - ONT long reads: `min_score` = 0.008
 <!-- endif -->
 
-<!-- if theiacov|freyja -->
+<!-- if: theiacov|freyja -->
     Metabuli is run on both raw and human dehosted reads.
 <!--endif -->
 
-<!-- if theiaprok -->
+<!-- if: theiaprok -->
     `metabuli_db` must be set to activate Metabuli read classification for TheiaProk.
 <!-- endif -->
 
@@ -42,3 +45,4 @@
         | Software Source Code | [Metabuli on GitHub](https://github.com/steineggerlab/Metabuli) |
         | Software Documentation | [Metabuli Documentation](https://github.com/steineggerlab/Metabuli/blob/master/README.md) |
         | Original Publication(s) | [Metabuli: sensitive and specific metagenomic classification via joint analysis of amino acid and DNA](https://doi.org/10.1038/s41592-024-02273-y) |
+

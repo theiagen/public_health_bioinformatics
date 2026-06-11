@@ -25,7 +25,7 @@ task microreact_export {
   command <<<
     # set -euo pipefail to avoid silent failure
     set -euo pipefail
-    
+
     tree_array=(~{sep=' ' tree_files})
     matrix_array=(~{sep=' ' matrix_files})
     metadata_column_array=(~{sep=' ' metadata_columns})
@@ -39,15 +39,15 @@ task microreact_export {
         then "--matrix_files " else ""} "${matrix_array[@]}" \
       --id_column ~{id_column} \
       ~{"--date_column " + date_column} \
-      ~{if defined(tree_files) && length(select_first([tree_files, []])) > 0 
+      ~{if defined(tree_files) && length(select_first([tree_files, []])) > 0
         then "--tree_files " else ""} "${tree_array[@]}" \
       ~{if defined(metadata_columns) && length(select_first([metadata_columns, []])) > 0
           then "--selected_columns " else ""} "${metadata_column_array[@]}" \
       ~{if defined(access_token) then "--access_token " + access_token else ""} \
       ~{true="--restricted_access" false="" restricted_access} \
       ~{true="--remove_file_columns" false="" remove_file_columns} \
-      -v 
-      
+      -v
+
   >>>
   output {
     File microreact_input = "~{project_name}_input.microreact"

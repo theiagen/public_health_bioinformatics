@@ -9,7 +9,9 @@
 This workflow allows users to submit Terra data tables as metadata and phylogenetic trees resulting from other Terra run workflows directly to Microreact using their Access Token. A user can also update an existing Microreact project with a new metadata file or additional tree files. If an access token is unavailable users can manually upload the output project file to Microreact.   
 
 !!! caption "Microreact_Export Diagram"
-    ![Microreact_Export Workflow Diagram](../../assets/figures/Microreact_Export.png)
+    <div style="text-align: center;">
+    ![Microreact_Export Workflow Diagram](../../assets/figures/Microreact_Export.png){: onload="this.width/=1.5;this.onload=null;" }
+    </div>
 
 !!! tip "Updating Projects"
     When updating an existing project there are a few places to obtain the input for `project_url`. One place to pull this string from is the web address of the project in your account which will look like this, https://microreact.org/project/&lt;project_url&gt;run.
@@ -22,8 +24,7 @@ This workflow allows users to submit Terra data tables as metadata and phylogene
 
 /// html | div[class="searchable-table"]
 
-{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": 
-"Microreact_Export"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
+{{ render_tsv_table("docs/assets/tables/all_inputs.tsv", input_table=True, filters={"Workflow": "Microreact_Export"}, columns=["Terra Task Name", "Variable", "Type", "Description", "Default Value", "Terra Status"], sort_by=[("Terra Status", True), "Terra Task Name", "Variable"]) }}
 
 ///
 
@@ -44,4 +45,3 @@ This workflow allows users to submit Terra data tables as metadata and phylogene
 ## References
 
 > **Microreact**: Argimón S, Abudahab K, Goater R, Fedosejev A, Bhai J, Glasner C, Feil E, Holden M, Yeats C, Grundmann H, Spratt B, Aanensen D. 30/11/2016. M Gen 2(11): doi:10.1099/mgen.0.000093
-

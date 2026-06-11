@@ -17,7 +17,7 @@ task vibecheck_vibrio {
   }
   command <<<
     set -ex
-   
+
     # Capture Vibecheck version information.
     vibecheck -v | tee VERSION
 

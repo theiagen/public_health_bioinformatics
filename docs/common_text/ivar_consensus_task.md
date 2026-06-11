@@ -1,5 +1,9 @@
-??? task "`ivar_consensus`: Consensus Assembly"
-    iVar's `consensus` tool generates a reference-based consensus assembly. Several parameters can be set that determine the stringency of the consensus assembly, including minimum quality, minimum allele frequency, and minimum depth.
+---
+title: Task Fragment `ivar_consensus`
+fragment: true
+---
+??? task "`iVar consensus`: Consensus Assembly"
+    iVar's `consensus` command generates a reference-based consensus assembly. Several parameters can be set that determine the stringency of the consensus assembly, including minimum quality, minimum allele frequency, and minimum depth.
 
 <!-- if: theiacov -->
     For TheiaCoV, the following default parameters are used:
@@ -26,6 +30,6 @@
         |  | Links |
         | --- | --- |
         | Task | [task_ivar_consensus.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_ivar_consensus.wdl) |
-        | Software Source Code | [Ivar on GitHub](https://andersen-lab.github.io/ivar/html/) |
-        | Software Documentation | [Ivar Documentation](https://andersen-lab.github.io/ivar/html/manualpage.html) |
+        | Software Source Code | [iVar on GitHub](https://andersen-lab.github.io/ivar/html/) |
+        | Software Documentation | [iVar Documentation](https://andersen-lab.github.io/ivar/html/manualpage.html) |
         | Original Publication(s) | [An amplicon-based sequencing framework for accurately measuring intrahost virus diversity using PrimalSeq and iVar](http://dx.doi.org/10.1186/s13059-018-1618-7) |

@@ -31,10 +31,11 @@ SOP	Workflow	SOP version	PHB version compatibility	Pathogen/Category	Current or 
 [Analyze SARS-COV-2 using TheiaCoV_Illumina_PE_PHB](../assets/sops/TG-SC2-PE_SC2_TheiaCoV_IlluminaPE_v3.pdf)	PE, TheiaCoV	v3	v2	SC2	Prior
 [Comparing Terra Data Tables using Theiagen’s TheiaValidate Workflow](../assets/sops/TG-VAL-01_TheiaValidate_v3.pdf)	TheiaValidate	v3	v2, v3	Validations	Current
 [Running Influenza A, H3N2 Metagenomic Samples in Terra using Theiagen’s Freyja FASTQ Workflow](../assets/sops/TG-FREY-H3N2_FreyjaFASTQ_v1.pdf)	Freyja	v1	v3	Flu	Current
-[Linking BaseSpace and Importing BaseSpace Reads to Terra](../assets/sops/TG-TER-04_BaseSpaceFetch_v2.pdf)	BaseSpace_Fetch	v2	v2	Data Import	Prior
 [Uploading Data, Creating Metadata Tables and TSV files, and Importing Workflows](../assets/sops/TG-TER-03_GettingStartedInTerra_v3.pdf)	None	v3	v1, v2	Data Import	Prior
 [Running Influenza A, H5Nx Metagenomic Samples in Terra using Theiagen’s Freyja FASTQ Workflow](../assets/sops/TG-FREY-H5Nx_FreyjaFASTQ_H5Nx_v1.pdf)	Freyja	v1	v3	Flu	Current
 [Concatenation of ONT Reads in Terra](../assets/sops/TG-ONT-01_Concatenation_of_ONT_Reads_v1.pdf)	ONT	v1	v3	Data Import	Current
 [Analyzing HAI Pathogens using Phoenix Version 2 in Terra](../assets/sops/TG-PX-V2_PhoenixV2_v2.pdf)	Phoenix	v2	v3	HAI	Current
 [Getting Started in Terra](../assets/sops/TG-TER-03_GettingStartedInTerra_v5.pdf)	None	v5	v3	Getting Started	Current
 [Analyzing Bacterial Data in Terra using Theiagen’s TheiaProk Illumina PE](../assets/sops/TG-TP-PE_TheiaProk_IlluminaPE_v4.pdf)	TheiaProk	v3	v4, v3	Bacterial	Current
+[Submitting Sequence Data to NCBI using Theiagen’s Terra_2_NCBI_PHB Workflow](../assets/sops/TG-NCBI-01_Terra2NCBI_v1.pdf)	None	v1	v4, v3	Data Import	Current
+[Running Theiagen’s kSNP4 Workflow in Terra for Phylogenetic Analysis of Bacterial Genomes](../assets/sops/TG-kSNP4-01_SOP_v1.pdf)	Bacterial	v1	v4, v3	Phylogenetic construction	Current

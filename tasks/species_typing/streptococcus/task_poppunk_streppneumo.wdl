@@ -33,10 +33,10 @@ task poppunk {
   command <<<
     # get version information
     poppunk --version | sed 's/poppunk //' | tee VERSION
-    
+
     # create input TSV
     echo -e "~{samplename}\t~{assembly}" > ~{samplename}_poppunk_input.tsv
-    
+
     # determine the database name, which is also used as a prefix for all files included in database. Also used as GPS_DB_NAME directory to put database files in
     # doing this for future proofing
     # get file name of primary h5 file, strip off suffix

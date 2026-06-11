@@ -6,7 +6,7 @@ workflow organism_parameters {
   }
   input {
     String organism
-    
+
     # hiv information
     String hiv_primer_version = "v1"
 
@@ -43,7 +43,6 @@ workflow organism_parameters {
     # augur parameters
     Int? min_num_unambig
     File? clades_tsv
-    File? lat_longs_tsv
     File? auspice_config
     Int? pivot_interval
     Float? min_date
@@ -54,7 +53,7 @@ workflow organism_parameters {
     String sc2_org_name = "sars-cov-2"
     String sc2_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"
     String sc2_gene_locations_bed = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"
-    String sc2_nextclade_ds_tag = "2026-01-06--14-59-32Z"
+    String sc2_nextclade_ds_tag = "2026-04-21--09-39-50Z"
     String sc2_nextclade_ds_name = "nextstrain/sars-cov-2/wuhan-hu-1/orfs"
     String sc2_kraken_target_organism = "Severe acute respiratory syndrome coronavirus 2"
     String sc2_pangolin_docker = "us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.38"
@@ -65,7 +64,6 @@ workflow organism_parameters {
     Int sc2_vadr_memory = 8
     File sc2_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-sarscov2-1.6.3-1.tar.gz"
 
-    File sc2_lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_lat_longs_20251008.tsv"
     File sc2_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_clades_20251008.tsv"
     File sc2_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_auspice_config_20251030.json"
     File sc2_reference_genbank = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_reference_seq_20251008.gb"
@@ -93,7 +91,6 @@ workflow organism_parameters {
     Int mpox_genome_len = 197200
 
     # augur options for mpxv
-    File mpox_lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"
     File mpox_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_clades.tsv"
     File mpox_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/NC_063383.1_reference.gb"
     File mpox_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/mpox/mpox_auspice_config_mpxv.json"
@@ -103,7 +100,7 @@ workflow organism_parameters {
     Int mpox_pivot_interval = 1
     Float mpox_narrow_bandwidth = 0.1666667
     Float mpox_proportion_wide = 0.0
-  }  
+  }
   if (organism == "WNV" || organism == "wnv" || organism == "West Nile virus" || organism == "11082") {
     String wnv_org_name = "WNV"
     String wnv_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/wnv/NC_009942.1_wnv_L1.fasta"
@@ -123,7 +120,6 @@ workflow organism_parameters {
     Int flu_genome_len = 13500
 
     # augur options for flu
-    File flu_lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"
     Int flu_min_num_unambig = 900
     Float flu_min_date = 2020.0
     Int flu_pivot_interval = 1
@@ -172,8 +168,8 @@ workflow organism_parameters {
         String yam_ha_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_yam_ha.tsv"
         String yam_ha_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam_20251030.json"
       }
-      if (flu_subtype == "H5N1") {
-        # H5N1 is a special case where the dataset used is the h5nx all clades dataset 
+      if (sub(flu_subtype, "^H5N.*$", "MATCH") == "MATCH" || flu_subtype == "H5") {
+        # H5N1 is a special case where the dataset used is the h5nx all clades dataset
         String h5n1_ha_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.fasta"
         String h5n1_ha_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.gb"
         String h5n1_ha_nextclade_ds_tag = "2026-04-14--11-55-23Z"
@@ -233,7 +229,6 @@ workflow organism_parameters {
     File rsv_a_vadr_model_file = "gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"
 
     # augur options for rsv-a
-    File rsv_a_lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"
     File rsv_a_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_a_clades.tsv"
     File rsv_a_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.gb"
     File rsv_a_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config_20251030.json"
@@ -250,7 +245,7 @@ workflow organism_parameters {
     String rsv_b_nextclade_ds_tag = "2026-04-14--11-55-23Z"
     String rsv_b_nextclade_ds_name = "nextstrain/rsv/b/EPI_ISL_1653999"
     Int rsv_b_genome_len = 15500
-    String rsv_b_kraken_target_organism = "human respiratory syncytial virus" 
+    String rsv_b_kraken_target_organism = "human respiratory syncytial virus"
     String rsv_b_vadr_options = "--mkey rsv --xnocomp -r"
     Int rsv_b_vadr_max_length = 15500
     Int rsv_b_vadr_skip_length = 5000
@@ -259,7 +254,6 @@ workflow organism_parameters {
 
 
     # augur options for rsv-b
-    File rsv_b_lat_longs_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/lat_longs.tsv"
     File rsv_b_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_b_clades.tsv"
     File rsv_b_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.gb"
     File rsv_b_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/rsv/rsv_auspice_config_20251030.json"
@@ -277,7 +271,7 @@ workflow organism_parameters {
       String hiv_v1_reference_gff = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/NC_001802.1.gff3"
       String hiv_v1_primer_bed = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/HIV-1_v1.0.primer.hyphen.bed"
       String hiv_v1_target_organism = "Human immunodeficiency virus 1"
-      Int hiv_v1_genome_len = 9181 
+      Int hiv_v1_genome_len = 9181
     }
     if (hiv_primer_version == "v2" || organism == "11709") {
       String hiv_v2_reference_genome = "gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.headerchanged.fasta"
@@ -358,7 +352,6 @@ workflow organism_parameters {
     # augur options
     Int augur_min_num_unambig = select_first([min_num_unambig, sc2_min_num_unambig, mpox_min_num_unambig, flu_min_num_unambig, rsv_a_min_num_unambig, rsv_b_min_num_unambig, 0])
     File augur_clades_tsv = select_first([clades_tsv, sc2_clades_tsv, h1n1_ha_clades_tsv, h3n2_ha_clades_tsv, vic_ha_clades_tsv, yam_ha_clades_tsv, h5n1_ha_clades_tsv, rsv_a_clades_tsv, rsv_b_clades_tsv, mpox_clades_tsv, "gs://theiagen-public-resources-rp/empty_files/minimal-clades.tsv"])
-    File augur_lat_longs_tsv = select_first([lat_longs_tsv, sc2_lat_longs_tsv, flu_lat_longs_tsv, mpox_lat_longs_tsv, rsv_a_lat_longs_tsv, rsv_b_lat_longs_tsv, "gs://theiagen-public-resources-rp/empty_files/minimal-lat_longs_20251028.tsv"])
     File reference_gbk = select_first([reference_genbank, sc2_reference_genbank, h1n1_ha_reference_gbk, h3n2_ha_reference_gbk, vic_ha_reference_gbk, yam_ha_reference_gbk, h5n1_ha_reference_gbk, h1n1_na_reference_gbk, h3n2_na_reference_gbk, vic_na_reference_gbk, yam_na_reference_gbk, rsv_a_reference_gbk, rsv_b_reference_gbk, mpox_reference_gbk, "gs://theiagen-public-resources-rp/empty_files/empty.gbk"])
     File augur_auspice_config = select_first([auspice_config, sc2_auspice_config, h1n1_ha_auspice_config, h3n2_ha_auspice_config, vic_ha_auspice_config, yam_ha_auspice_config, h5n1_ha_auspice_config, h1n1_na_auspice_config, h3n2_na_auspice_config, vic_na_auspice_config, yam_na_auspice_config, rsv_a_auspice_config, rsv_b_auspice_config, mpox_auspice_config, "gs://theiagen-public-resources-rp/empty_files/minimal-auspice-config.json"])
     Float augur_min_date = select_first([min_date, sc2_min_date, flu_min_date, rsv_a_min_date, rsv_b_min_date, mpox_min_date, 0.0])

@@ -11,7 +11,9 @@ The Lyve_SET WDL workflow runs the [Lyve-SET](https://github.com/lskatz/lyve-SET
 ### Lyve-SET Pipeline (from [Lyve-SET paper](https://www.frontiersin.org/articles/10.3389/fmicb.2017.00375/full))
 
 !!! caption "Lyve-SET Workflow Diagram"
+    <div style="text-align: center;">
     ![Lyve-SET Workflow Diagram](../../assets/figures/Lyve_Set.png)
+    </div>
 
 ### Inputs
 
@@ -21,7 +23,7 @@ The Lyve_SET WDL workflow runs the [Lyve-SET](https://github.com/lskatz/lyve-SET
 
 ///
 
-### Workflow Actions
+### Workflow Tasks
 
 The Lyve_SET WDL workflow is run using read data from a set of samples. The workflow will produce a pairwise SNP matrix for the sample set and a maximum likelihood phylogenetic tree. Details regarding the default implementation of Lyve_SET and optional modifications are listed below.
 

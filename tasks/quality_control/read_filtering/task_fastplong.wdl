@@ -7,7 +7,7 @@ task fastplong {
     String samplename
 
     # quality trimming options
-    Int fastplong_window_size = 4 # set to mirror v0.4.1 default 
+    Int fastplong_window_size = 4 # set to mirror v0.4.1 default
     Int fastplong_quality_trim_score = 20 # set to mirror v0.4.1 default
     Int fastplong_min_length = 15 # set to mirror v0.4.1 default
     Boolean cut_front = false # 5' to 3'

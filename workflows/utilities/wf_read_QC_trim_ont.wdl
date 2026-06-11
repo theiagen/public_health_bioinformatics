@@ -18,7 +18,7 @@ workflow read_QC_trim_ont {
     # kmc has been observed to be unreliable for genome length estimation, so we are now using a fixed value
     # setting this to be 5Mb which is around .7Mb greater than the mean genome length of bacteria (based on https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt)
     # this default will not be used for TheiaCoV as that workflow series pass in the expected length based on the organism tag
-    Int genome_length = 5000000 
+    Int genome_length = 5000000
 
     String? workflow_series
 
@@ -26,7 +26,7 @@ workflow read_QC_trim_ont {
     Int? min_length
     Int? max_length
     String? run_prefix
-    
+
     # ncbi-scrub inputs
     Int? ncbi_scrub_cpu
     Int? ncbi_scrub_disk_size
@@ -49,15 +49,15 @@ workflow read_QC_trim_ont {
     File? metabuli_taxdump_path
 
     # rasusa downsampling inputs
-    Float downsampling_coverage = 150
+    Float rasusa_downsampling_coverage = 150
     Int? rasusa_cpu
     Int? rasusa_disk_size
     String? rasusa_docker
     Int? rasusa_memory
-    String? rasusa_bases
+    String? rasusa_num_bases
     Int? rasusa_seed
     Float? rasusa_fraction_of_reads
-    Int? rasusa_number_of_reads
+    Int? rasusa_num_reads
 
     # nanoq inputs
     Int? nanoq_cpu
@@ -67,7 +67,7 @@ workflow read_QC_trim_ont {
     Int? nanoq_max_read_length
     Int? nanoq_min_read_length
     Int? nanoq_max_read_qual
-    Int? nanoq_min_read_qual  
+    Int? nanoq_min_read_qual
   }
   if (defined(target_organism)) {
     if (select_first([target_organism]) != "") {
@@ -132,15 +132,15 @@ workflow read_QC_trim_ont {
       input:
         read1 = read1,
         samplename = samplename,
-        bases = rasusa_bases,
-        coverage = downsampling_coverage,
+        num_bases = rasusa_num_bases,
+        coverage = rasusa_downsampling_coverage,
         cpu = rasusa_cpu,
         disk_size = rasusa_disk_size,
         docker = rasusa_docker,
-        frac = rasusa_fraction_of_reads,
+        fraction_of_reads = rasusa_fraction_of_reads,
         genome_length = genome_length,
         memory = rasusa_memory,
-        num = rasusa_number_of_reads,
+        num_reads = rasusa_num_reads,
         seed = rasusa_seed
     }
     # nanoq for filtering
@@ -155,7 +155,7 @@ workflow read_QC_trim_ont {
         min_read_length = nanoq_min_read_length,
         max_read_qual = nanoq_max_read_qual,
         min_read_qual = nanoq_min_read_qual,
-        memory = nanoq_memory 
+        memory = nanoq_memory
     }
     if ("~{workflow_series}" == "theiaprok" && defined(metabuli_db)) {
       call metabuli.metabuli as metabuli_theiaprok {
@@ -170,14 +170,14 @@ workflow read_QC_trim_ont {
           cpu = metabuli_cpu,
           docker = metabuli_docker_image,
           taxdump_path = metabuli_taxdump_path,
-      } 
+      }
     }
   }
-  output { 
+  output {
     # theiacov outputs
     # ncbi scrub outputs
     File? read1_dehosted = ncbi_scrub_se.read1_dehosted
-    
+
     # metabuli - theiacov and theiaprok
     String metabuli_version = select_first([metabuli_theiacov_raw.metabuli_version, metabuli_theiaprok.metabuli_version, ""])
     String metabuli_docker = select_first([metabuli_theiacov_raw.metabuli_docker, metabuli_theiaprok.metabuli_docker, ""])
@@ -190,7 +190,7 @@ workflow read_QC_trim_ont {
     String? metabuli_percent_target_organism_dehosted = metabuli_theiacov_dehosted.metabuli_percent_target_lineage
     File? metabuli_report_dehosted = metabuli_theiacov_dehosted.metabuli_report
     String metabuli_database = select_first([metabuli_theiacov_raw.metabuli_database, metabuli_theiaprok.metabuli_database, ""])
-   
+
     # estimated genome length -- by default for TheiaProk this is 5Mb
     Int est_genome_length = genome_length
 
@@ -199,6 +199,6 @@ workflow read_QC_trim_ont {
     String? nanoq_version = nanoq.version
 
     # rasusa outputs
-    String? rasusa_version = rasusa.rasusa_version  
+    String? rasusa_version = rasusa.rasusa_version
   }
 }

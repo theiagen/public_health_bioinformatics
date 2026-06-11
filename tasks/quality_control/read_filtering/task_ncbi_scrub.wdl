@@ -109,7 +109,7 @@ task ncbi_scrub_se {
     echo "DEGUB: Running HRRT..."
     echo "DEBUG: /opt/scrubber/scripts/scrub.sh -p ~{cpu} -x -i ${read1_unzip}"
     /opt/scrubber/scripts/scrub.sh -p ~{cpu} -x -i ${read1_unzip} > STDOUT 2> STDERR
-    
+
     #tail -n1 STDERR | awk -F" " '{print $1}' > SPOTS_REMOVED ; capture the number of spots removed by fetching the first item on the last line of stderr
     tail -n1 STDERR | awk -F" " '{print $1}' > SPOTS_REMOVED
 

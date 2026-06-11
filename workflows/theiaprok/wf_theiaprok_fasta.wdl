@@ -39,7 +39,7 @@ workflow theiaprok_fasta {
     String terra_workspace="NA"
     # module options
     Boolean perform_characterization = true # by default run all characterization steps
-    Boolean amrfinder_use_gff = false # by default use nucleotide fasta for amrfinderplus, but user can set this to true if they want to use a gff and protein fasta file    
+    Boolean amrfinder_use_gff = false # by default use nucleotide fasta for amrfinderplus, but user can set this to true if they want to use a gff and protein fasta file
     Boolean call_ani = false # by default do not call ANI task, but user has ability to enable this task if working with enteric pathogens or supply their own high-quality reference genome
     Boolean call_kmerfinder = false
     Boolean call_resfinder = false
@@ -74,7 +74,7 @@ workflow theiaprok_fasta {
       input:
         assembly = assembly_fasta,
         samplename = samplename
-    }    
+    }
     if (call_ani) {
       call ani_task.animummer as ani {
         input:
@@ -116,7 +116,7 @@ workflow theiaprok_fasta {
       }
     }
     call ts_mlst_task.ts_mlst {
-      input: 
+      input:
         assembly = assembly_fasta,
         samplename = samplename,
         taxonomy = select_first([expected_taxon, gambit.gambit_predicted_taxon]),
@@ -130,16 +130,16 @@ workflow theiaprok_fasta {
           samplename = samplename
       }
     }
-    if (genome_annotation == "bakta") {  
-      if (bakta_db == "light") {  
-        File bakta_db_light = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_light_2025-01-23.tar.gz"  
-      }  
-      if (bakta_db == "full") {  
-        File bakta_db_full = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_full_2024-01-23.tar.gz"            
-      }  
-      if (!(bakta_db == "light" || bakta_db == "full")) {  
-          File bakta_custom_db = bakta_db  
-      } 
+    if (genome_annotation == "bakta") {
+      if (bakta_db == "light") {
+        File bakta_db_light = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_light_2025-01-23.tar.gz"
+      }
+      if (bakta_db == "full") {
+        File bakta_db_full = "gs://theiagen-public-resources-rp/reference_data/databases/bakta/bakta_db_full_2024-01-23.tar.gz"
+      }
+      if (!(bakta_db == "light" || bakta_db == "full")) {
+          File bakta_custom_db = bakta_db
+      }
       call bakta_task.bakta {
         input:
           assembly = assembly_fasta,
@@ -500,7 +500,7 @@ workflow theiaprok_fasta {
           workflow_type = "fasta"
       }
     }
-  }   
+  }
   output {
     # Version Captures
     String theiaprok_fasta_version = version_capture.phb_version
@@ -567,7 +567,7 @@ workflow theiaprok_fasta {
     File? gamma_gff = gamma.gamma_gff
     File? gamma_fasta = gamma.gamma_fasta
     String? gamma_version = gamma.gamma_version
-    String? gamma_docker = gamma.gamma_docker    
+    String? gamma_docker = gamma.gamma_docker
     # AMR_Search
     File? amr_search_results = merlin_magic.amr_search_results
     File? amr_search_csv = merlin_magic.amr_results_csv
@@ -650,6 +650,12 @@ workflow theiaprok_fasta {
     String? ectyper_pathodb_version = merlin_magic.ectyper_pathodb_version
     String? ectyper_stx_subtypes = merlin_magic.ectyper_stx_subtypes
     String? ectyper_docker = merlin_magic.ectyper_docker
+    String? shigapass_predicted_serotype = merlin_magic.shigapass_predicted_serotype
+    String? shigapass_ipaH_presence_absence = merlin_magic.shigapass_ipaH_presence_absence
+    File? shigapass_summary_tsv = merlin_magic.shigapass_summary_tsv
+    File? shigapass_flexneri_summary_tsv = merlin_magic.shigapass_flexneri_summary_tsv
+    String? shigapass_docker = merlin_magic.shigapass_docker
+    String? shigapass_version = merlin_magic.shigapass_version
     File? shigeifinder_report = merlin_magic.shigeifinder_report
     String? shigeifinder_docker = merlin_magic.shigeifinder_docker
     String? shigeifinder_version = merlin_magic.shigeifinder_version
@@ -664,7 +670,7 @@ workflow theiaprok_fasta {
     File? virulencefinder_report_tsv = merlin_magic.virulencefinder_report_tsv
     String? virulencefinder_docker = merlin_magic.virulencefinder_docker
     String? virulencefinder_hits = merlin_magic.virulencefinder_hits
-    # stxtyper 
+    # stxtyper
     File? stxtyper_report = merlin_magic.stxtyper_report
     String? stxtyper_docker = merlin_magic.stxtyper_docker
     String? stxtyper_version = merlin_magic.stxtyper_version
@@ -816,7 +822,7 @@ workflow theiaprok_fasta {
     String? abricate_vibrio_ompW = merlin_magic.abricate_vibrio_ompW
     String? abricate_vibrio_toxR = merlin_magic.abricate_vibrio_toxR
     String? abricate_vibrio_biotype = merlin_magic.abricate_vibrio_biotype
-    String? abricate_vibrio_serogroup = merlin_magic.abricate_vibrio_serogroup 
+    String? abricate_vibrio_serogroup = merlin_magic.abricate_vibrio_serogroup
     # export taxon table output
     String? taxon_table_status = export_taxon_table.status
     # ARLN required outputs

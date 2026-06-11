@@ -5,7 +5,7 @@ task mutation_context {
     File refined_tree
     File ancestral_nt_muts_json
     String build_name
-    
+
     Int cpu = 1
     Int memory = 4
     Int disk_size = 50
@@ -13,7 +13,7 @@ task mutation_context {
   }
   command <<<
     # capture version information
-    
+
     echo "DEBUG: Running mutation_context.py script now..."
     # run mutation_context.py script
     python3 /scripts/mutation_context.py \

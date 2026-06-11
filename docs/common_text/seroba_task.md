@@ -1,4 +1,8 @@
-??? task "`SeroBA`: Serotyping ==_for Illumina_PE only_=="
+---
+title: Task Fragment `seroba`
+fragment: true
+---
+??? task "`SeroBA`: _Streptococcus pneumoniae_ Serotyping ==_for Illumina_PE only_=="
     SeroBA is a k-mer based method for serotyping using the capsular polysaccharide biosynthesis (_cps_) locus of _Streptococcus pneumoniae_ from paired-end sequencing data. This locus encodes the serotype and is a major virulence factor for the species. Identifying circulating serotypes is important to determine the epidemiological trends and vaccine impact.
 
     By adapting a database from [PneumoCaT (Pneumococcal Capsular Typing)](https://github.com/ukhsa-collaboration/PneumoCaT), SeroBA uses [KMC](https://github.com/refresh-bio/KMC) to generate a k-mer database and then uses a capsular type variant database and an [ARIBA](https://github.com/sanger-pathogens/ariba)-compatible database that clusters all serotypes by serogroups. A k-mer analysis is performed and the serotype with the highest normalized sequence converage is selected. ARIBA then is used to build an assembly to confirm the selected serotype from the read data and aligns the _cps_ sequence against a reference to identify variants.

@@ -13,7 +13,7 @@ task abricate_vibrio {
     Int disk_size = 100
   }
   command <<<
-    date | tee DATE    
+    date | tee DATE
     abricate -v | tee ABRICATE_VERSION
     # run abricate
     abricate \
@@ -23,7 +23,7 @@ task abricate_vibrio {
       --threads ~{cpu} \
       --nopath \
       ~{assembly} > ~{samplename}_abricate_hits.tsv
-    
+
     # presence or absence genes - ctxA, ompW and toxR
     # if empty report as (not detected)
     grep -E 'ctxA' ~{samplename}_abricate_hits.tsv > ctxA
@@ -36,12 +36,12 @@ task abricate_vibrio {
     # biotype - tcpA classical or tcpA ElTor
     grep -E 'tcpA_classical' ~{samplename}_abricate_hits.tsv > tcpA_classical
     grep -E 'tcpA_ElTor' ~{samplename}_abricate_hits.tsv > tcpA_ElTor
-    if [ ! -s tcpA_classical ] && [ ! -s tcpA_ElTor ]; then 
-      echo "(not detected)" > BIOTYPE; 
-    else 
-      if [ ! -s tcpA_classical ] && [ -s tcpA_ElTor ]; then 
-        echo "tcpA_ElTor" > BIOTYPE; 
-      else 
+    if [ ! -s tcpA_classical ] && [ ! -s tcpA_ElTor ]; then
+      echo "(not detected)" > BIOTYPE;
+    else
+      if [ ! -s tcpA_classical ] && [ -s tcpA_ElTor ]; then
+        echo "tcpA_ElTor" > BIOTYPE;
+      else
         echo 'tcpA_Classical' > BIOTYPE
       fi
     fi
@@ -49,12 +49,12 @@ task abricate_vibrio {
     # serogroup - O1 or O139
     grep -E 'wbeN_O1' ~{samplename}_abricate_hits.tsv > wbeN_O1
     grep -E 'wbfR_O139' ~{samplename}_abricate_hits.tsv > wbfR_O139
-    if [ ! -s wbeN_O1 ] && [ ! -s wbfR_O139 ]; then 
-      echo "(not detected)" > SEROGROUP; 
-    else 
-      if [ ! -s wbeN_O1 ] && [ -s wbfR_O139 ]; then 
-        echo "O139" > SEROGROUP; 
-      else 
+    if [ ! -s wbeN_O1 ] && [ ! -s wbfR_O139 ]; then
+      echo "(not detected)" > SEROGROUP;
+    else
+      if [ ! -s wbeN_O1 ] && [ -s wbfR_O139 ]; then
+        echo "O139" > SEROGROUP;
+      else
         echo 'O1' > SEROGROUP
       fi
     fi

@@ -5,7 +5,7 @@ task bakta {
     File assembly
     String samplename
     Int cpu = 8
-    Int memory = 24 
+    Int memory = 24
     Int disk_size = 200
     File bakta_db_selected
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/bakta:1.10.3"
@@ -14,7 +14,7 @@ task bakta {
     File? proteins # Proteins: Fasta file of trusted protein sequences for CDS annotation
     String? bakta_opts # Additional Bakta arguments
   }
-  command <<<  
+  command <<<
   set -euo pipefail
 
   date | tee DATE

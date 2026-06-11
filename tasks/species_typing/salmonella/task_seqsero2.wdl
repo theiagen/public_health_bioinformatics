@@ -15,14 +15,14 @@ task seqsero2 {
   }
   command <<<
     set -euo pipefail
-    
+
     # Print and save version
     SeqSero2_package.py --version | tee VERSION
 
     # Run SeqSero2 on the input read data
     # explanation of parameters:
     # -p <int> (number of threads for allele mode)
-    # -m <string> (which workflow to apply, either 'a' for raw reads allele micro-assembly 
+    # -m <string> (which workflow to apply, either 'a' for raw reads allele micro-assembly
     #              or 'k' for raw reads and genome assembly k-mer; default=a)
     # -t <int> (input data type; '2' for separated paired-end reads, '3' for single reads)
     # -n <string> (optional, to specify sample name in report output)
@@ -41,20 +41,20 @@ task seqsero2 {
     import csv
     with open("./~{samplename}_seqsero2_output_dir/SeqSero_result.tsv",'r') as tsv_file:
       tsv_reader = list(csv.DictReader(tsv_file, delimiter="\t"))
-      
+
       for line in tsv_reader:
         with open ("PREDICTED_ANTIGENIC_PROFILE", 'wt') as Predicted_Antigen_Prof:
           pred_ant_prof=line['Predicted antigenic profile']
           if not pred_ant_prof:
             pred_ant_prof = "None"
           Predicted_Antigen_Prof.write(pred_ant_prof)
-        
+
         with open ("PREDICTED_SEROTYPE", 'wt') as Predicted_Sero:
           pred_sero=line['Predicted serotype']
           if not pred_sero:
             pred_sero = "None"
           Predicted_Sero.write(pred_sero)
-        
+
         with open ("CONTAMINATION", 'wt') as Contamination_Detected:
           cont_detect=line['Potential inter-serotype contamination']
           if not cont_detect:
@@ -124,20 +124,20 @@ task seqsero2_assembly {
     import csv
     with open("./~{samplename}_seqsero2_output_dir/SeqSero_result.tsv",'r') as tsv_file:
       tsv_reader = list(csv.DictReader(tsv_file, delimiter="\t"))
-      
+
       for line in tsv_reader:
         with open ("PREDICTED_ANTIGENIC_PROFILE", 'wt') as Predicted_Antigen_Prof:
           pred_ant_prof=line['Predicted antigenic profile']
           if not pred_ant_prof:
             pred_ant_prof = "None"
           Predicted_Antigen_Prof.write(pred_ant_prof)
-        
+
         with open ("PREDICTED_SEROTYPE", 'wt') as Predicted_Sero:
           pred_sero=line['Predicted serotype']
           if not pred_sero:
             pred_sero = "None"
           Predicted_Sero.write(pred_sero)
-          
+
         with open ("NOTE", 'wt') as Note:
           note=line['Note']
           if not note:

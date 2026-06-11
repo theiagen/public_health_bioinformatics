@@ -1,9 +1,13 @@
+---
+title: Task Fragment `bbduk`
+fragment: true
+---
 ??? task "`BBDuk`: Adapter Trimming and PhiX Removal"
-    Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about [Illumina adapters here](https://emea.support.illumina.com/bulletins/2020/06/illumina-adapter-portfolio.html). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
+    Adapters are manufactured oligonucleotide sequences attached to DNA fragments during the library preparation process. In Illumina sequencing, these adapter sequences are required for attaching reads to flow cells. You can read more about [Illumina adapters here](https://knowledge.illumina.com/software/general/software-general-reference_material-list/000002905). For genome analysis, it's important to remove these sequences since they're not actually from your sample. If you don't remove them, the downstream analysis may be affected.
 
-    By default, the `bbduk` task will:
+    By default, the BBDuk task will:
 
-    - **Repair disordered read pairs** (if they exist) so that the first read in file 1 is the same mate of the first read in file2. See the [`Repair Guide`](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/) package.
+    - **Repair disordered read pairs** (if they exist) so that the first read in `read1` is the same mate of the first read in `read2`. See the [`Repair Guide`](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/bb-tools-user-guide/repair-guide/) from the [BBTools](https://archive.jgi.doe.gov/data-and-tools/software-tools/bbtools/) package.
 
     - **Remove PhiX contamination** by filtering out all reads that have a 31-mer match to [PhiX](https://emea.illumina.com/products/by-type/sequencing-kits/cluster-gen-sequencing-reagents/phix-control-v3.html). PhiX is a viral genome that is often used as a control in Illumina sequencing runs. Removing PhiX sequences helps to ensure that the data reflects only the target organism's genome. By default this task uses the built-in PhiX reference fasta provided with BBTools (see [here](https://github.com/bbushnell/BBTools/blob/master/resources/phix174_ill.ref.fa.gz)), but a custom PhiX reference can be provided via the `phix_fasta` input parameter.
 
@@ -19,7 +23,7 @@
     - `primers_hamming_distance`: This variable indicates the number of allowed mismatched bases during the alignment of primers to reads. Default is `1`.
     - `primers_max_start_offset`: This allows the trimming of primers to start "X" number of bases into the read. Default is `10`.
     - `primers_mask_middle`: This is a boolean input that, when set to "true", will mask the middle base of a primer sequence during alignment, which can be useful for handling degenerate primers. Default is `"false"`.
-    - `primers_reverse_complement` This is a boolean input that, when set to "true", enables the trimming of reverse complement sequences of the provided primers. Default is `"true"`.
+    - `primers_reverse_complement`: This is a boolean input that, when set to "true", enables the trimming of reverse complement sequences of the provided primers. Default is `"true"`.
 <!-- endif -->
 
     !!! techdetails "BBDuk Technical Details"

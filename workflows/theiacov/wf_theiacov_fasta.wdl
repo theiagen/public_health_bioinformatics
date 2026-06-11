@@ -79,7 +79,7 @@ workflow theiacov_fasta {
       assembly_metrics_memory = 0,
       irma_cpu = 0,
       irma_disk_size = 0,
-      irma_docker_image = "",        
+      irma_docker_image = "",
       irma_keep_ref_deletions = false,
       irma_memory = 0,
       genoflu_cpu = 0,
@@ -192,13 +192,13 @@ workflow theiacov_fasta {
     String? genoflu_all_segments = flu_track.genoflu_all_segments
     File? genoflu_output_tsv = flu_track.genoflu_output_tsv
     # Nextclade outputs for flu H5N1
-    File? nextclade_json_flu_h5n1 = flu_track.nextclade_json_flu_h5n1
-    File? auspice_json_flu_h5n1 = flu_track.auspice_json_flu_h5n1
-    File? nextclade_tsv_flu_h5n1 = flu_track.nextclade_tsv_flu_h5n1
-    String? nextclade_aa_subs_flu_h5n1 = flu_track.nextclade_aa_subs_flu_h5n1
-    String? nextclade_aa_dels_flu_h5n1 = flu_track.nextclade_aa_dels_flu_h5n1
-    String? nextclade_clade_flu_h5n1 = flu_track.nextclade_clade_flu_h5n1
-    String? nextclade_qc_flu_h5n1 = flu_track.nextclade_qc_flu_h5n1
+    File? nextclade_json_flu_h5 = flu_track.nextclade_json_flu_h5
+    File? auspice_json_flu_h5 = flu_track.auspice_json_flu_h5
+    File? nextclade_tsv_flu_h5 = flu_track.nextclade_tsv_flu_h5
+    String? nextclade_aa_subs_flu_h5 = flu_track.nextclade_aa_subs_flu_h5
+    String? nextclade_aa_dels_flu_h5 = flu_track.nextclade_aa_dels_flu_h5
+    String? nextclade_clade_flu_h5 = flu_track.nextclade_clade_flu_h5
+    String? nextclade_qc_flu_h5 = flu_track.nextclade_qc_flu_h5
     # Nextclade outputs for flu HA
     File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
     File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha

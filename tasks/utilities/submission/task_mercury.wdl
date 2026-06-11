@@ -41,7 +41,7 @@ task mercury {
     String gisaid_submitter = ""
     String submitter_email = ""
     String metadata_organism = ""
-  
+
     # runtime parameters
     Int cpu = 2
     Int disk_size = 100

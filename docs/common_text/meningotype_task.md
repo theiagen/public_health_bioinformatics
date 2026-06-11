@@ -1,3 +1,7 @@
+---
+title: Task Fragment `meningotype`
+fragment: true
+---
 ??? task "`meningotype`: _Neisseria meningitidis_ Serotyping"
     This tool performs _in silico_ typing of _N. meningitidis_. It performs the following functions: serogrouping, finetyping of _porA_ and _fetA_, _porB_ sequencing typing, and Bexsero Antigen Sequencing Typing (BAST) (_fHbp_, _NHBA_, _NadA_, and _PorA_). These results are all parsed and provided to the user as outputs.
 

@@ -6,6 +6,7 @@ task spades {
     File? read2
     String samplename
     String? spades_type
+    Int timeout = 360 # timeout in minutes
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/spades:4.1.0"
     Int disk_size = 100
     Int cpu = 4
@@ -25,8 +26,15 @@ task spades {
 
     echo "DEBUG: Running SPAdes"
 
+    # only setup a timeout if it is greater than 0
+    if [ ~{timeout} -gt 0 ]; then
+      timeout_cmd="timeout ~{timeout}m"
+    else
+      timeout_cmd=""
+    fi
+
     if [ -n "~{read2}" ]; then
-      spades.py \
+      ${timeout_cmd} spades.py \
         ~{'--' + spades_type} \
         -1 ~{read1} \
         -2 ~{read2} \
@@ -37,7 +45,7 @@ task spades {
         --phred-offset ~{phred_offset} \
         ~{spades_opts}
     else
-      spades.py \
+      ${timeout_cmd} spades.py \
         ~{'--' + spades_type} \
         -s ~{read1} \
         ~{'-k ' + kmers} \

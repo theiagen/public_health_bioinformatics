@@ -17,7 +17,7 @@ task abricate {
     abricate -v | tee ABRICATE_VERSION
     abricate --list
     abricate --check
-    
+
     abricate \
       --db ~{database} \
       ~{'--minid ' + min_percent_identity} \
@@ -25,7 +25,7 @@ task abricate {
       --threads ~{cpu} \
       --nopath \
       ~{assembly} > ~{samplename}_abricate_hits.tsv
-    
+
     # parse out gene names into list of strings, comma-separated, final comma at end removed by sed
     abricate_genes=$(awk -F '\t' '{ print $6 }' ~{samplename}_abricate_hits.tsv | tail -n+2 | tr '\n' ',' | sed 's/.$//')
 
@@ -42,7 +42,7 @@ task abricate {
     String abricate_genes = read_string("ABRICATE_GENES")
     String abricate_database = database
     String abricate_version = read_string("ABRICATE_VERSION")
-    String abricate_docker = docker 
+    String abricate_docker = docker
   }
   runtime {
     memory: memory + " GB"
@@ -66,7 +66,7 @@ task abricate_flu {
     Int disk_size = 100
   }
   command <<<
-    date | tee DATE    
+    date | tee DATE
     abricate -v | tee ABRICATE_VERSION
     # run abricate
     abricate \

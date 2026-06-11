@@ -8,7 +8,7 @@
 
 !!! caption "Snippy_Streamline_PHB Workflow Diagram"
     <div style="text-align: center;">
-    ![Snippy_Streamline_PHB Workflow Diagram](../../assets/figures/Snippy_Streamline.png){width=50%}
+    ![Snippy_Streamline_PHB Workflow Diagram](../../assets/figures/Snippy_Streamline.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 The `Snippy_Streamline` workflow is an all-in-one approach to generating a reference-based phylogenetic tree and associated SNP-distance matrix. The workflow can be run in multiple ways.
@@ -29,7 +29,7 @@ The `Snippy_Streamline` workflow is an all-in-one approach to generating a refer
 
     1. masking user-specified regions of the genome (_by providing a bed file to `snippy_core_bed`_)
     2. producing either a core or pan-genome phylogeny and SNP-matrix (_by altering `core_genome`; true [default] = core genome, false = pan-genome_)
-    3. choosing the nucleotide substitution (_by altering `iqtree2_model` [see below for possible nucleotide substitution models]_), or allowing IQ-Tree's ModelFinder to identify the best model for your dataset (default)
+    3. choosing the nucleotide substitution (_by altering `iqtree2_model` [see below for possible nucleotide substitution models]_), or allowing IQ-TREE's ModelFinder to identify the best model for your dataset (default)
     4. masking recombination detected by gubbins, or not (_by altering `use_gubbins`; true [default] = recombination masking, false = no recombination masking_)
 
     !!! warning "Multiple Contigs in Reference Genomes"
@@ -112,10 +112,11 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
 
 {{ include_md("common_text/snippy_core_task.md", condition="snippy_streamline") }}
 {{ include_md("common_text/gubbins_task.md", condition="snippy_streamline") }}
-{{ include_md("common_text/snp_sites_task.md")}}
+{{ include_md("common_text/snp_sites_task.md", condition="snippy")}}
 {{ include_md("common_text/iqtree2_task.md")}}
 {{ include_md("common_text/snp_dists_task.md", condition="snippy")}}
 {{ include_md("common_text/data_summary_task.md", condition="snippy")}}
+{{ include_md("common_text/concatenate_variants_task.md", condition="snippy")}}
 {{ include_md("common_text/shared_variants_task.md", condition="snippy")}}
 {{ include_md("common_text/snippy_qc_concatenation_task.md")}}
 

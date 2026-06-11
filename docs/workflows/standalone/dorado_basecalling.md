@@ -9,7 +9,9 @@
 The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequencing files into `FASTQ` format by using a GPU-accelerated environment. This workflow is ideal for high-throughput applications where fast and accurate basecalling is essential. Users upload POD5 files to a Google Cloud Storage (GCS) bucket, and then provide that directory's path as a workflow input. The workflow basecalls all POD5 files in the provided location, and then outputs final FASTQ files to a user-designated Terra table for downstream analysis.
 
 !!! caption "Dorado_Basecalling_PHB Workflow Diagram"
-    ![Dorado_Basecalling_PHB Workflow Diagram](../../assets/figures/Dorado_Basecalling_PHB.png)
+    <div style="text-align: center;">
+    ![Dorado_Basecalling_PHB Workflow Diagram](../../assets/figures/Dorado_Basecalling_PHB.png){: onload="this.width/=2;this.onload=null;" }
+    </div>
 
 ### Configuring Workflow in Terra
 
@@ -19,22 +21,22 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
     To run the Dorado Basecalling Workflow, you must first upload your `POD5 files` to a Google Cloud Storage (GCS) bucket within your Terra workspace. Follow these steps:
 
     1. **Use the Terra Data Uploader**
-        
+
         Go to the **"Data"** tab in your Terra workspace. Click **"Upload Files"** and select your `POD5` files for upload. Confirm the upload process and wait for the files to be uploaded.
 
     2. **Copy the GCS Path**
-        
+
         After the upload is complete, right-click the collection name and select "Copy link address"
 
         !!! caption "Copy link address"
             ![Data Uploader](../../assets/figures/dorado_pod5_bucket_path.png)
 
     3. **Paste the GCS Path into the Workflow Input**
-        
-        Open the workflow configuration screen in Terra. Paste the copied GCS path into the `pod5_bucket_path` input field for the Dorado Basecalling Workflow. 
-        
+
+        Open the workflow configuration screen in Terra. Paste the copied GCS path into the `pod5_bucket_path` input field for the Dorado Basecalling Workflow.
+
         Make sure the select the `"Run workflow with inputs defined by file paths"` option, as shown.
-    
+
         !!! caption "Workflow Inputs"
             ![Workflow Inputs](../../assets/figures/dorado_workflow_inputs.png)
 
@@ -109,7 +111,7 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
         !!! tip "`output_file_prefix` suggestions"
             - _Avoid special characters_: Do not include special characters (such as `/`, or `&`) or whitespace in the `output_file_prefix` variable
             - _Use a clear, simple prefix_: The prefix `projectname` will be automatically prepended to identifiers like `-barcodeXX.fastq.gz` or `-unclassified.fastq.gz` to name each output file, ensuring each one is distinct.
-  
+
     - **kit_name**: Ensure the correct kit name is provided, as it determines the barcoding and adapter trimming behavior. See the [Supported Kit Names](#supported-kit-names) section for a list of accepted kit names.
 
 !!! tip "Increasing Chunk Size"
@@ -152,7 +154,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
 
     1. POD5 files are pre-processed via signal scaling and normalization.
     2. The machine learning algorithm decodes the sequence signals into nucleotide base calls. There are different machine learning models that can be specified as input; more details can be found above [here](#model-type-selection).
-    3. [Barcode classification](https://dorado-docs.readthedocs.io/en/latest/barcoding/barcoding/) is performed based on the indicated kit name to enable downstream demultiplexing. 
+    3. [Barcode classification](https://dorado-docs.readthedocs.io/en/latest/barcoding/barcoding/) is performed based on the indicated kit name to enable downstream demultiplexing.
 
         !!! info "Barcode Trimming"
             Barcode trimming is purposefully **disabled** during the basecalling step to ensure accurate demultiplexing in subsequent workflow steps.
@@ -173,7 +175,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
     This task takes every basecalled BAM files and demultiplexes them based on the identified barcodes found during basecalling. An individual FASTQ file is generated for each barcode found per BAM file. All FASTQ files that are associated with a single barcode are then merged.
 
     !!! info "Disabling Barcode Trimming"
-        By default, barcodes _are_ trimmed during demultiplexing. 
+        By default, barcodes _are_ trimmed during demultiplexing.
 
         This can be disabled by setting the optional input variable `demux_no_trim` to `true`. This allows users to retain untrimmed reads for troubleshooting, such as inspecting reads in the "unclassified" folder when reads are mis-binned or other data issues occur.
 
@@ -190,7 +192,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
     To determine how to format the FASTA file that is expected in `custom_primers` please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/barcoding/custom_primers/), specifically the section on "Custom adapter/primer file format".
 
     !!! tip "Older Dorado Version Used"
-        The Dorado version used in this task is not the most up-to-date version (set to v0.8.3) due to a bug in the Dorado subcommand in the latest version (v0.9.0). This will be updated in the future when the bug has been resolved by the Dorado developers. 
+        The Dorado version used in this task is not the most up-to-date version (set to v0.8.3) due to a bug in the Dorado subcommand in the latest version (v0.9.0). This will be updated in the future when the bug has been resolved by the Dorado developers.
 
     !!! techdetails "Dorado Trimming Technical Details"
         |  | Links |
@@ -217,7 +219,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
         |  | Links |
         | --- | --- |
         | Task | [task_create_terra_table.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_import/task_array_to_terra.wdl) |
-        
+
 ### Outputs
 
 Please note that if you run this workflow with the `"Run workflow with inputs defined by file paths"` option selected in Terra, these outputs will not be visible in a Terra table, but can be found in the Job Manager.

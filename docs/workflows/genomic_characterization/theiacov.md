@@ -31,22 +31,22 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
         - [TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json)
         - [TheiaCoV_ONT_HIV_v1_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_ONT_HIV_v1_2024-04-19.json)
         - [TheiaCoV_ONT_HIV_v2_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_ONT_HIV_v2_2024-04-19.json)
-        
+
     ??? toggle "WNV Input JSONs"
         - [TheiaCoV_Illumina_PE_WNV_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_WNV_2024-04-19.json)
         - [TheiaCoV_Illumina_SE_WNV_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_SE_WNV_2024-04-19.json)
         - [TheiaCoV_FASTA_WNV_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_WNV_2024-04-19.json)
-        
+
     ??? toggle "Flu Input JSONs"
         - [TheiaCoV_Illumina_PE_flu_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_flu_2024-04-19.json)
         - [TheiaCoV_ONT_flu_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_ONT_flu_2024-04-19.json)
         - [TheiaCoV_FASTA_flu_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_flu_2024-04-19.json)
-        
+
     ??? toggle "RSV-A Input JSONs"
         - [TheiaCoV_Illumina_PE_RSV-A_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_RSV-A_2024-04-19.json)
         - [TheiaCoV_FASTA_RSV-A_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_RSV-A_2024-04-19.json)
 
-    ??? toggle "RSV-B Input JSONs" 
+    ??? toggle "RSV-B Input JSONs"
         - [TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json)
         - [TheiaCoV_FASTA_RSV-B_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_RSV-B_2024-04-19.json)
 
@@ -177,7 +177,7 @@ We've provided the following information to help you set up the workflow for eac
         | kraken_target_organism_input | sars-cov-2 | `"Severe acute respiratory syndrome coronavirus 2"` |
         | nextclade_dataset_name_input | sars-cov-2 | `"nextstrain/sars-cov-2/wuhan-hu-1/orfs"` |
         | pangolin_docker_image | sars-cov-2 | `"us-docker.pkg.dev/general-theiagen/staphb/pangolin:4.4-pdata-1.38"`|
-        | nextclade_dataset_tag_input | sars-cov-2 | `"2026-01-06--14-59-32Z"` |
+        | nextclade_dataset_tag_input | sars-cov-2 | `"2026-04-21--09-39-50Z"` |
         | reference_genome | sars-cov-2 | `"gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/MN908947.fasta"` |
         | vadr_max_length | sars-cov-2 | `30000` |
         | vadr_skip_length | sars-cov-2 | `10000` |
@@ -205,7 +205,7 @@ We've provided the following information to help you set up the workflow for eac
         | vadr_mem | MPXV | `8` |
         | vadr_options | MPXV | `"--mkey mpxv --glsearch --minimap2 -s -r --nomisc --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --s_overhang 150 --out_allfasta"` |
         | vadr_model_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.4.2-1.tar.gz"` |
-        
+
         </div>
 
     === "West Nile Virus"
@@ -228,6 +228,17 @@ We've provided the following information to help you set up the workflow for eac
         </div>
 
     === "Influenza"
+        !!! dna "Defaults available for several subtypes"
+            We have default Nextclade parameters available for the following subtypes:
+
+            - H1N1 (HA and NA segments)
+            - H3N2 (HA and NA segments)
+            - Victoria (HA and NA segments)
+            - Yamagata (HA segment)
+            - H5Nx (HA segment)
+
+            You can find more details below.
+
         <div class="searchable-table" markdown="block">
 
         | **Overwrite Variable Name** | **Organism** | **Flu Segment** | **Flu Subtype** | **Default Value** | **Notes** |
@@ -270,10 +281,10 @@ We've provided the following information to help you set up the workflow for eac
 
         </div>
 
-        !!! tip "H5N1 Additional Defaults"
-            If the sample is designated as H5N1 by either ABRicate or IRMA, an H5N1-specific Nextclade task will run with the following datasets depending on the GenoFLU genotype. 
-            
-            Alternatively, if a `nextclade_custom_input_dataset` variable is provided (available under the `flu_track` task name), the workflow will run that custom dataset on all H5N1 samples, regardless of the GenoFLU genotype.
+        !!! tip "H5 Additional Defaults"
+            If the HA segment of a sample is designated as H5 by either ABRicate or IRMA, an H5Nx-specific Nextclade task will run with the following datasets depending on the GenoFLU genotype.
+
+            Alternatively, if a `nextclade_custom_input_dataset` variable is provided (available under the `flu_track` task name), the workflow will run that custom dataset on all H5Nx samples, regardless of the GenoFLU genotype.
 
             | **Overwrite Variable Name** | **GenoFLU Genotype** | **Default Value** | **Notes** |
             |---|---|---|---|
@@ -331,7 +342,7 @@ We've provided the following information to help you set up the workflow for eac
         | reference_gff_file | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"` | This version of HIV originates from Southern Africa |
 
         </div>
-    
+
     === "Measles"
         <div class="searchable-table" markdown="block">
 
@@ -391,6 +402,7 @@ We've provided the following information to help you set up the workflow for eac
 
 !!! caption ""
     === "TheiaCoV_Illumina_PE"
+{{ include_md("common_text/read_screen_task.md", condition="theiacov", indent=8) }}
 {{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiacov", indent=8) }}
 
         **_If non-influenza_**
@@ -400,18 +412,21 @@ We've provided the following information to help you set up the workflow for eac
 {{ include_md("common_text/irma_task.md", condition="assembly", indent=8)}}
 
     === "TheiaCoV_Illumina_SE"
+{{ include_md("common_text/read_screen_task.md", condition="theiacov", indent=8) }}
 {{ include_md("common_text/read_qc_trim_illumina_wf.md", condition="theiacov", indent=8) }}
 {{ include_md("common_text/ivar_consensus_wf.md", condition="theiacov", indent=8) }}
 
     === "TheiaCoV_ONT"
+{{ include_md("common_text/read_screen_task.md", condition="theiacov", indent=8) }}
 {{ include_md("common_text/read_qc_trim_ont_wf.md", condition="theiacov", indent=8) }}
 
         **_If non-influenza_**
 {{ include_md("common_text/artic_consensus_task.md", condition="theiacov", indent=8) }}
-{{ include_md("common_text/assembly_metrics_task.md", indent=8, condition="theiacov") }}
 
         **_If influenza_**
 {{ include_md("common_text/irma_task.md", condition="assembly", indent=8) }}
+
+        ---
 {{ include_md("common_text/assembly_metrics_task.md", indent=8, condition="theiacov") }}
 
     === "TheiaCoV_ClearLabs"
@@ -447,7 +462,7 @@ We've provided the following information to help you set up the workflow for eac
     | **VADR Flu Segments** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
     | **Quasitools HyDRA** | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ |
     | **IRMA** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
-    | **Abricate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
+    | **ABRicate** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
     | **% Gene Coverage** | ✅ | ✅ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ | ➕ |
     | **Antiviral Detection** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
     | **GenoFLU** | ❌ | ❌ | ❌ | ✅ | ❌ | ❌ | ❌ | ❌ | ❌ | ❌ |
@@ -457,74 +472,57 @@ We've provided the following information to help you set up the workflow for eac
     ❌ This task will not run for these organisms
 
 === "SARS-CoV-2"
-
 {{ include_md("common_text/pangolin_task.md", indent=4) }}
-
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-
 {{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "Mpox"
-
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-
 {{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "West Nile Virus"
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "Influenza"
-
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_flu_segments_task.md", indent=4) }}
-
 {{ include_md("common_text/irma_task.md", indent=4, condition="task") }}
-
 {{ include_md("common_text/bbmap_reformat_task.md", indent=4, condition="theiacov") }}
-
 {{ include_md("common_text/abricate_flu_task.md", indent=4) }}
-
 {{ include_md("common_text/flu_antiviral_substitutions_wf.md", indent=4) }}
-
 {{ include_md("common_text/genoflu_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "RSV-A"
-
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "RSV-B"
-
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "HIV"
-
 {{ include_md("common_text/quasitools_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "Measles"
-
 {{ include_md("common_text/nextclade_task.md", indent=4) }}
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "Mumps"
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 === "Rubella"
-
 {{ include_md("common_text/vadr_task.md", indent=4) }}
+{{ include_md("common_text/gene_coverage_task.md", indent=4) }}
 
 ### Outputs
 

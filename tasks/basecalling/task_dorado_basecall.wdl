@@ -11,12 +11,12 @@ task dorado_basecall {
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/dorado:0.9.0-cuda12.2.0"
     Int memory = 32
   }
-  command <<< 
+  command <<<
     set -euo pipefail
 
     dorado --version > DORADO_VERSION 2>&1
     echo "Captured Dorado version: " $(cat DORADO_VERSION)
- 
+
     # if user provides fast, hac, or sup, pass those strings to dorado basecaller command
     if [ "~{dorado_model}" == "fast" ] || [ "~{dorado_model}" == "hac" ] || [ "~{dorado_model}" == "sup" ]; then
       dorado_model_variable=~{dorado_model}
@@ -65,7 +65,7 @@ task dorado_basecall {
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
     gpuCount: 1
-    gpuType: "nvidia-tesla-t4"  
+    gpuType: "nvidia-tesla-t4"
     preemptible: 0
     maxRetries: 1
   }

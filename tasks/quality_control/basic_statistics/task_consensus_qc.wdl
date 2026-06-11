@@ -18,7 +18,7 @@ task consensus_qc {
     else
       # set SC2 default
       GENOME_LEN=29903
-    fi 
+    fi
 
     # capture date and version
     date | tee DATE
@@ -30,7 +30,7 @@ task consensus_qc {
     num_ACTG=$( grep -v ">" ~{assembly_fasta} | grep -o -E "C|A|T|G" | wc -l )
     if [ -z "$num_ACTG" ] ; then num_ACTG="0" ; fi
     echo $num_ACTG | tee NUM_ACTG
-  
+
     # calculate percent coverage (Wu Han-1 genome length: 29903bp)
     python3 -c "print ( round( ($num_ACTG / $GENOME_LEN ) * 100, 2 ) )" | tee PERCENT_REF_COVERAGE
 

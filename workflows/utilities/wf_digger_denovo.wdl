@@ -23,6 +23,7 @@ workflow digger_denovo {
     Int? spades_cpu
     Int? spades_memory
     Int? spades_disk_size
+    Int spades_timeout = 0
     String? spades_docker
     # Optional parameters for skesa
     Int? skesa_cpu
@@ -48,7 +49,7 @@ workflow digger_denovo {
     Int? pilon_min_base_quality = 3 # Shovill default
     Float? pilon_min_depth = 0.25 # Shovill default
     String? pilon_fix = "bases" # Options: all, snps, indels, gaps
-    # Optional parameters for filtering 
+    # Optional parameters for filtering
     Int filter_contigs_min_length = 200 # Default we set before
     Float filter_contigs_min_coverage = 2.0 # Default we set before
     Boolean filter_contigs_skip_length_filter = false
@@ -68,6 +69,7 @@ workflow digger_denovo {
         kmers = kmers,
         spades_type = spades_type,
         spades_opts = assembler_options,
+        timeout = spades_timeout,
         cpu = spades_cpu,
         memory = spades_memory,
         disk_size = spades_disk_size,

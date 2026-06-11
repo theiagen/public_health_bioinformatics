@@ -66,7 +66,7 @@ workflow theiacov_ont {
       genome_length_input = genome_length,
       kraken_target_organism_input = target_organism,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
-      nextclade_dataset_name_input = nextclade_dataset_name,     
+      nextclade_dataset_name_input = nextclade_dataset_name,
       vadr_max_length = vadr_max_length,
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
@@ -174,7 +174,7 @@ workflow theiacov_ont {
             assembly_fasta =  select_first([flu_track.irma_assembly_fasta, consensus.consensus_seq]),
             reference_genome = organism_parameters.reference,
             genome_length = organism_parameters.genome_length
-        }      
+        }
         # run organism-specific typing
         call morgana_magic_wf.morgana_magic {
           input:
@@ -194,14 +194,14 @@ workflow theiacov_ont {
             nextclade_dataset_tag = organism_parameters.nextclade_dataset_tag,
             pangolin_docker_image = organism_parameters.pangolin_docker,
             # Setting flu_track related inputs to default values as they are not utilized in TheiaCov, decreasing external input bloat
-            seq_method = "", 
+            seq_method = "",
             assembly_metrics_cpu = 0,
             assembly_metrics_disk_size = 0,
             assembly_metrics_docker = "",
             assembly_metrics_memory = 0,
             irma_cpu = 0,
             irma_disk_size = 0,
-            irma_docker_image = "",        
+            irma_docker_image = "",
             irma_keep_ref_deletions = false,
             irma_memory = 0,
             genoflu_cpu = 0,
@@ -256,7 +256,7 @@ workflow theiacov_ont {
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
     # Read QC - dehosting outputs
     File? read1_dehosted = read_QC_trim.read1_dehosted
-    # Read QC - nanoplot outputs    
+    # Read QC - nanoplot outputs
     String? nanoplot_version = nanoplot_raw.nanoplot_version
     String? nanoplot_docker = nanoplot_raw.nanoplot_docker
     # Read QC - nanoplot raw outputs
@@ -348,13 +348,13 @@ workflow theiacov_ont {
     String? nextclade_lineage = morgana_magic.nextclade_lineage
     String? nextclade_qc = morgana_magic.nextclade_qc
     # Nextclade outputs for flu H5N1
-    File? nextclade_json_flu_h5n1 = flu_track.nextclade_json_flu_h5n1
-    File? auspice_json_flu_h5n1 = flu_track.auspice_json_flu_h5n1
-    File? nextclade_tsv_flu_h5n1 = flu_track.nextclade_tsv_flu_h5n1
-    String? nextclade_aa_subs_flu_h5n1 = flu_track.nextclade_aa_subs_flu_h5n1
-    String? nextclade_aa_dels_flu_h5n1 = flu_track.nextclade_aa_dels_flu_h5n1
-    String? nextclade_clade_flu_h5n1 = flu_track.nextclade_clade_flu_h5n1
-    String? nextclade_qc_flu_h5n1 = flu_track.nextclade_qc_flu_h5n1
+    File? nextclade_json_flu_h5 = flu_track.nextclade_json_flu_h5
+    File? auspice_json_flu_h5 = flu_track.auspice_json_flu_h5
+    File? nextclade_tsv_flu_h5 = flu_track.nextclade_tsv_flu_h5
+    String? nextclade_aa_subs_flu_h5 = flu_track.nextclade_aa_subs_flu_h5
+    String? nextclade_aa_dels_flu_h5 = flu_track.nextclade_aa_dels_flu_h5
+    String? nextclade_clade_flu_h5 = flu_track.nextclade_clade_flu_h5
+    String? nextclade_qc_flu_h5 = flu_track.nextclade_qc_flu_h5
     # Nextclade outputs for flu HA
     File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
     File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha

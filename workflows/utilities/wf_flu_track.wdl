@@ -143,7 +143,7 @@ workflow flu_track {
     }
     # combine HA & NA assembly coverages
     String ha_na_assembly_coverage_string = "HA: " + select_first([ha_assembly_coverage.depth, ""]) + ", NA: " + select_first([na_assembly_coverage.depth, ""])
-    
+
     # combine HA & NA mapped reads percentages
     String ha_na_percentage_mapped_reads = "HA: " + select_first([ha_assembly_coverage.percentage_mapped_reads, ""]) + ", NA: " + select_first([na_assembly_coverage.percentage_mapped_reads, ""])
   }
@@ -177,7 +177,7 @@ workflow flu_track {
         flu_segment = "HA",
         flu_subtype = select_first([flu_subtype, algorithmic_flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"])
     }
-    # these are necessary because these are optional values and cannot be directly compared in before the nextclade task. 
+    # these are necessary because these are optional values and cannot be directly compared in before the nextclade task.
     # checking for variable definition can be done though, which is why we create variables here
     if (set_flu_na_nextclade_values.nextclade_dataset_tag == "NA") { # this "NA" is Not Applicable, not the NA segment
       Boolean do_not_run_flu_na_nextclade = true
@@ -194,7 +194,7 @@ workflow flu_track {
         vadr_outputs_tgz = select_first([vadr_outputs_tgz])
     }
   }
-  # if IRMA was run successfully, run the flu_antiviral substitutions task 
+  # if IRMA was run successfully, run the flu_antiviral substitutions task
   # this block must be placed beneath the previous block because it is used in this subworkflow
   if ((defined(irma.seg_na_assembly) && defined(irma.seg_ha_assembly) && defined(irma.seg_pa_assembly) && defined(irma.seg_pb1_assembly) && defined(irma.seg_pb2_assembly) && defined(irma.seg_mp_assembly)) ||
       (defined(vadr_flu_segments.seg_na_assembly) && defined(vadr_flu_segments.seg_ha_assembly) && defined(vadr_flu_segments.seg_pa_assembly) && defined(vadr_flu_segments.seg_pb1_assembly) && defined(vadr_flu_segments.seg_pb2_assembly) && defined(vadr_flu_segments.seg_mp_assembly))) {
@@ -262,8 +262,8 @@ workflow flu_track {
         disk_size = nextclade_output_parser_disk_size
     }
   }
-  # only run GenoFLU and custom nextclade dataset if the subtype is H5N1 and the clade is 2.3.4.4b as they are specific to this subtype and clade.
-  if (select_first([flu_subtype, algorithmic_flu_subtype, abricate_flu.abricate_flu_subtype, "N/A"]) == "H5N1" && select_first([nextclade_output_parser_flu_ha.nextclade_clade, ""]) == "2.3.4.4b") {
+  # only run GenoFLU and custom nextclade dataset if the clade is 2.3.4.4b as this dataset is specific to this clade.
+  if (select_first([nextclade_output_parser_flu_ha.nextclade_clade, ""]) == "2.3.4.4b") {
     call genoflu_task.genoflu {
       input:
         assembly_fasta = select_first([irma.irma_assembly_fasta, assembly_fasta]),
@@ -275,24 +275,24 @@ workflow flu_track {
         docker = genoflu_docker,
         memory = genoflu_memory
     }
-    call set_organism_defaults.organism_parameters as set_flu_h5n1_nextclade_values {
+    call set_organism_defaults.organism_parameters as set_flu_h5_nextclade_values {
       input:
         organism = standardized_organism,
         flu_genoflu_genotype = genoflu.genoflu_genotype
     }
     if (genoflu.genoflu_genotype == "B3.13" || genoflu.genoflu_genotype == "D1.1" || defined(nextclade_custom_input_dataset)) {
-      call nextclade_task.nextclade_v3 as nextclade_flu_h5n1 {
+      call nextclade_task.nextclade_v3 as nextclade_flu_h5 {
         input:
           genome_fasta = select_first([irma.irma_assembly_fasta_concatenated, vadr_flu_segments.assembly_fasta_concatenated, assembly_fasta]),
-          custom_input_dataset = select_first([nextclade_custom_input_dataset, set_flu_h5n1_nextclade_values.nextclade_custom_dataset]),
+          custom_input_dataset = select_first([nextclade_custom_input_dataset, set_flu_h5_nextclade_values.nextclade_custom_dataset]),
           docker = nextclade_docker_image,
           cpu = nextclade_cpu,
           memory = nextclade_memory,
           disk_size = nextclade_disk_size
       }
-      call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_h5n1 {
+      call nextclade_task.nextclade_output_parser as nextclade_output_parser_flu_h5 {
         input:
-          nextclade_tsv = nextclade_flu_h5n1.nextclade_tsv,
+          nextclade_tsv = nextclade_flu_h5.nextclade_tsv,
           organism = standardized_organism,
           docker = nextclade_output_parser_docker,
           cpu = nextclade_output_parser_cpu,
@@ -302,7 +302,7 @@ workflow flu_track {
     }
   }
   output {
-    # IRMA outputs 
+    # IRMA outputs
     String? irma_version = irma.irma_version
     String? irma_docker = irma.irma_docker
     Int? irma_minimum_consensus_support = irma.irma_minimum_consensus_support
@@ -350,13 +350,13 @@ workflow flu_track {
     String? nextclade_version = nextclade_flu_ha.nextclade_version
     String? nextclade_docker = nextclade_flu_ha.nextclade_docker
     # Nextclade H5N1 outputs
-    File? nextclade_json_flu_h5n1 = nextclade_flu_h5n1.nextclade_json
-    File? auspice_json_flu_h5n1 = nextclade_flu_h5n1.auspice_json
-    File? nextclade_tsv_flu_h5n1 = nextclade_flu_h5n1.nextclade_tsv
-    String? nextclade_aa_subs_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_aa_subs
-    String? nextclade_aa_dels_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_aa_dels
-    String? nextclade_clade_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_clade
-    String? nextclade_qc_flu_h5n1 = nextclade_output_parser_flu_h5n1.nextclade_qc
+    File? nextclade_json_flu_h5 = nextclade_flu_h5.nextclade_json
+    File? auspice_json_flu_h5 = nextclade_flu_h5.auspice_json
+    File? nextclade_tsv_flu_h5 = nextclade_flu_h5.nextclade_tsv
+    String? nextclade_aa_subs_flu_h5 = nextclade_output_parser_flu_h5.nextclade_aa_subs
+    String? nextclade_aa_dels_flu_h5 = nextclade_output_parser_flu_h5.nextclade_aa_dels
+    String? nextclade_clade_flu_h5 = nextclade_output_parser_flu_h5.nextclade_clade
+    String? nextclade_qc_flu_h5 = nextclade_output_parser_flu_h5.nextclade_qc
     # Nextclade HA outputs
     File? nextclade_json_flu_ha = nextclade_flu_ha.nextclade_json
     File? auspice_json_flu_ha =  nextclade_flu_ha.auspice_json

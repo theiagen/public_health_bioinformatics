@@ -61,7 +61,7 @@ workflow theiacov_clearlabs {
       samplename = samplename,
       read1 = read1,
       target_organism = organism_parameters.kraken_target_organism
-  }  
+  }
   call kraken2.kraken2 as kraken2_dehosted {
     input:
       samplename = samplename,
@@ -121,7 +121,7 @@ workflow theiacov_clearlabs {
         assembly_metrics_memory = 0,
         irma_cpu = 0,
         irma_disk_size = 0,
-        irma_docker_image = "",        
+        irma_docker_image = "",
         irma_keep_ref_deletions = false,
         irma_memory = 0,
         genoflu_cpu = 0,
@@ -157,7 +157,7 @@ workflow theiacov_clearlabs {
           "vadr_num_alerts": morgana_magic.vadr_num_alerts
         }
     }
-  }  
+  }
   call versioning.version_capture {
     input:
   }

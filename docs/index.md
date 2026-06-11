@@ -20,7 +20,7 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
     Learn how to use our workflows on Terra!</center>
 
--   <center>[v4.1.0 Release Notes](https://theiagen.notion.site/public-health-bioinformatics-v4-1-0-minor-release-notes){ .md-button .md-button--secondary }
+-   <center>[v4.2.0 Release Notes](https://theiagen.notion.site/public-health-bioinformatics-v4-2-0){ .md-button .md-button--secondary }
 
     ---
 
@@ -37,67 +37,71 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 !!! dna "Our Open Source Philosophy"
     PHB source code is publicly available on [GitHub](https://github.com/theiagen/public_health_bioinformatics) and available under [GNU Affero General Public License v3.0](https://github.com/theiagen/public_health_bioinformatics/blob/main/LICENSE)!
 
-    All workflows can be imported directly to [Terra](https://terra.bio/) via the [**Dockstore PHB collection**](https://dockstore.org/organizations/Theiagen/collections/public-health-bioinformatics)! 
-    
+    All workflows can be imported directly to [Terra](https://terra.bio/) via the [**Dockstore PHB collection**](https://dockstore.org/organizations/Theiagen/collections/public-health-bioinformatics)!
+
     You can also use our workflows on the command-line. Please see our guide on how to get started [**here**](getting_started/commandline.md)!
 
-When undertaking genomic analysis using the command-line, via Terra, or other data visualization platforms, it is essential to consider the necessary and appropriate workflows and resources for your analysis. To help you make these choices, take a look at the relationship between the most commonly used Theiagen workflows.
+### Our Workflows
 
 !!! caption "Analysis Approaches for Genomic Data"
 
-    === "General Workflow Relationships"
-        ![The relationship between the various PHB workflows](assets/figures/WorkflowRelationships.png){data-description="This diagram shows the available workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped into boxes that represent the major types of analysis that they perform. The arrows between the boxes represent the relationships between the workflows, showing which workflows may be used consecutively, while the large arrow underlying everything indicates the general process of analysis."}
+    We have a number of workflows available to help you perform genomic analysis. Take a look below to learn how our workflows are related and how they cooperate with each other.
 
-        This diagram shows the available workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped into boxes that represent the major types of analysis that they perform. The arrows between the boxes represent the relationships between the workflows, showing which workflows may be used consecutively, while the large arrow underlying everything indicates the general process of analysis.
+    === "General Workflow Relationships"
+        ![The relationship between the various PHB workflows](assets/figures/WorkflowRelationships.png){data-description="This diagram shows the workflows in the PHB repository. The workflows are grouped in boxes that represent the type of analysis they perform. The arrows between the boxes and the large underlying arrow represent the directional and sequential nature of the workflows."}
+
+        This diagram shows the available workflows in the PHB repository. The workflows are grouped in boxes that represent what type of analysis they perform. The arrows between the boxes and the large underlying arrow represent the directional and sequential nature of the workflows.
 
     === "Available Standalone Workflows"
-        ![All available standalone workflows can be used to supplement the major workflows](assets/figures/WorkflowRelationships_Standalone.png){data-description="This diagram shows the available standalone workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped by colors that represent the major types of analysis that they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives."}
+        ![All available standalone workflows can be used to supplement the major workflows](assets/figures/WorkflowRelationships_Standalone.png){data-description="This diagram shows all standalone workflows in the PHB repository that are available for genomic analysis. Workflows are grouped by colors that represent the type of analysis they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives."}
 
-        This diagram shows the available _standalone_ workflows in the PHB repository, represented by circles, that are available for analysis of genomic data. Workflows are grouped by colors that represent the major types of analysis that they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives.
+        This diagram shows all standalone workflows in the PHB repository that are available for genomic analysis. Workflows are grouped by colors that represent the type of analysis they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives.
 
 ### PHB development is a cycle
 
-We continuously work to improve our codebase and usability of our workflows by the public health community, so changes from version to version are expected. This documentation page reflects the state of the repository at the version stated in the header.
+We continuously work to improve our workflows, so changes are expected between versions. Select the version you are using in the header to see the relevant documentation.
 
 ## Contributing to the PHB Repository
 
 We warmly welcome contributions to this repository! Our code style guide may be found [here](contributing/code_contribution.md) for convenience of formatting and our documentation style guide may be found [here](contributing/doc_contribution.md).
 
-If you would like to submit suggested code changes to our workflows, you may add or modify the WDL files and submit pull requests to the [PHB GitHub](https://github.com/theiagen/public_health_bioinformatics) repository.
+If you would like to make suggested code changes to our workflows, submit pull requests to the [PHB GitHub](https://github.com/theiagen/public_health_bioinformatics) repository.
 
-You can expect a careful review of every PR and feedback as needed before merging, just like we do for PRs submitted by the Theiagen team. Our PR template can help prepare you for the review process. As always, reach out with any questions! We love recieving feedback and contributions from the community. When your PR is merged, we'll add your name to the contributors list below!
+You can expect a careful review of every PR and recieve feedback as needed before merging, just like we do for PRs submitted by the Theiagen team. Our PR template can help prepare you for the review process. As always, reach out with any questions! We love recieving feedback and contributions from the community. When your PR is merged, we'll add your name to the contributors list below!
 
 ## Authorship & Responsibility
 
 ### Authorship
 
-<!-- 
+<!--
 A Public Service Announcement regarding calculating the contribution math:
 
-Andrew Hale added a .txt database file to docs/assets that artifically inflates his line 
-count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract 
-55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt 
-database in a later commit (on 2025-09-03), so also please subtract 55,316 from Sage Wright's 
+Andrew Hale added a .txt database file to docs/assets that artifically inflates his line
+count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract
+55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt
+database in a later commit (on 2025-09-03), so also please subtract 55,316 from Sage Wright's
 line count as well.
 
 okay thanks byee
 -->
 
-(Ordered by contribution [# of lines changed] as of 2025-11-17)
+(Ordered by contribution [# of lines changed] as of 2026-05-06)
 
-- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Supervision <!-- 99007 + 115766 - 55316 = 159457 -->
-- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation <!-- 23921 + 18640 = 42561 -->
-- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation <!-- 20852 + 15908 = 36760 -->
-- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation <!-- 16936 + 12596 = 29532 -->
-- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation <!-- 10203 + 5196 = 15399 -->
-- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation <!-- 61479 + 3053 - 55316 = 9216 -->
-- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation <!-- 4170 + 2494 = 6664 -->
-- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation <!-- 3597 + 851 = 4448 -->
+- **Sage Wright** ([@sage-wright](https://github.com/sage-wright)) - Conceptualization, Software, Validation, Documentation, Supervision <!-- 99625 + 116557 - 55316 = 160866 -->
+- **Inês Mendes** ([@cimendes](https://github.com/cimendes)) - Software, Validation, Documentation <!-- 25655 + 23922 = 49577 -->
+- **Curtis Kapsak** ([@kapsakcj](https://github.com/kapsakcj)) - Conceptualization, Software, Validation, Documentation <!-- 20852 + 15908 = 36760 -->
+- **Zachary Konkel** ([@xonq](https://github.com/xonq)) - Software, Validation, Documentation <!-- 17396 + 14827 = 32223 -->
+- **Theron James** ([@MrTheronJ](https://github.com/MrTheronJ)) - Software, Validation, Documentation <!-- 17777 + 13121 = 30898 -->
+- **Andrew Hale** ([@awh082834](https://github.com/awh082834)) - Software, Validation, Documentation <!-- 62354 + 3600 - 55316 = 10638  -->
+- **Michal Babinski** ([@Michal-Babins](https://github.com/Michal-Babins)) - Software, Validation, Documentation <!-- 4419 + 2686 = 7105 -->
+- **Michelle Scribner** ([@michellescribner](https://github.com/michellescribner)) - Software, Validation, Documentation <!-- 3597 + 851 = 4448 -->
 - **Kevin Libuit** ([@kevinlibuit](https://github.com/kevinlibuit)) - Conceptualization, Project Administration, Software, Validation, Supervision <!-- 2908 + 444 = 3352 -->
 - **Andrew Lang** ([@AndrewLangVt](https://github.com/AndrewLangVt)) - Software, Supervision <!-- 84 + 68 = 152 -->
-- **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Validation <!-- 72 + 39 = 111 -->
-- **Sushmita Sridhar** ([@ss43](https://github.com/ss43)) - Validation <!-- 11 + 12 = 23 -->
-- **Deborah Young** ([@theiadeb](https://github.com/theiadeb)) - Validation <!-- 3 + 3 = 6 -->
+- **Kelsey Kropp** ([@kelseykropp](https://github.com/kelseykropp)) - Documentation <!-- 72 + 39 = 111 -->
+- **Sushmita Sridhar** ([@ss43](https://github.com/ss43)) - Documentation <!-- 11 + 12 = 23 -->
+- **Neha Mokashi** ([@nehavm456](https://github.com/nehavm456)) - Documentation <!-- 3 + 4 = 7 -->
+- **Deborah Young** ([@theiadeb](https://github.com/theiadeb)) - Documentation <!-- 3 + 3 = 6 -->
+- **Bruna Todani** ([@brunatodani](https://github.com/brunatodani)) - Documentation <!-- 2 + 1 = 3 -->
 - **Joel Sevinsky** ([@sevinsky](https://github.com/sevinsky)) - Conceptualization, Project Administration, Supervision <!-- 0 + 0 = 0 -->
 
 ### External Contributors
@@ -145,7 +149,7 @@ Please cite this paper if publishing work using any workflows:
 
 > Libuit, Kevin G., Emma L. Doughty, James R. Otieno, Frank Ambrosio, Curtis J. Kapsak, Emily A. Smith, Sage M. Wright, et al. 2023. "Accelerating Bioinformatics Implementation in Public Health." Microbial Genomics 9 (7). <https://doi.org/10.1099/mgen.0.001051>.
 
-Alternatively, please cite this paper if using the TheiaEuk workflow:
+Please cite this paper if using the TheiaEuk workflow:
 
 > Ambrosio, Frank, Michelle Scribner, Sage Wright, James Otieno, Emma Doughty, Andrew Gorzalski, Danielle Siao, et al. 2023. "TheiaEuk: A Species-Agnostic Bioinformatics Workflow for Fungal Genomic Characterization." Frontiers in Public Health 11. <https://doi.org/10.3389/fpubh.2023.1198213>.
 

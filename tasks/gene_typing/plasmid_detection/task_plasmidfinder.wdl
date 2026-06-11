@@ -16,10 +16,10 @@ task plasmidfinder {
     # minimum blast identity threshold
     Float min_percent_identity = 0.9 # set to mirror v2.1.6 default
   }
-  command <<<  
+  command <<<
   date | tee DATE
 
-  if [[ ! -z "~{database}" ]]; then 
+  if [[ ! -z "~{database}" ]]; then
     echo "User database identified; ~{database} will be utilized for analysis"
     plasmidfinder_db_version="~{database}"
   else
@@ -35,7 +35,7 @@ task plasmidfinder {
   ~{'-p ' + database_path} \
   ~{'-mp ' + method_path} \
   ~{'-l ' + min_percent_coverage} \
-  ~{'-t ' + min_percent_identity} 
+  ~{'-t ' + min_percent_identity}
 
   # parse outputs
   if [ ! -f results_tab.tsv ]; then
@@ -44,7 +44,7 @@ task plasmidfinder {
     PF="$(tail -n +2 results_tab.tsv | uniq | cut -f 2 | sort | paste -s -d, - )"
       if [ "$PF" == "" ]; then
         PF="No plasmids detected in database"
-      fi  
+      fi
   fi
   echo "$PF" | tee PLASMIDS
 

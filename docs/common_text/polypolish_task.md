@@ -1,3 +1,7 @@
+---
+title: Task Fragment `polypolish`
+fragment: true
+---
 ??? task "`Polypolish`: Hybrid Assembly Polishing ==_for ONT and Illumina data_=="
     If short reads are provided with the optional `illumina_read1` and `illumina_read2` inputs, Polypolish will use those short-reads to correct errors in the long-read assemblies. Uniquely, Polypolish uses the short-read alignments where each read is aligned to _all_ possible locations, meaning that even repeat regions will have error correction.
 

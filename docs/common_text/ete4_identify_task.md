@@ -1,6 +1,9 @@
-??? task "`ete4_identify`"
-
-    The `ete4_identify` task parses the NCBI taxonomy hierarchy from a user's inputted taxonomy and desired taxonomic rank. This task returns a taxon ID, name, and rank, which facilitates downstream functions, including **read classification, targeted read extraction, and genomic characterization modules**.
+---
+title: Task Fragment `ete4_identify`
+fragment: true
+---
+??? task "`ete4_identify`: Taxonomic Identification"
+    The ETE Toolkit uses ete4 to parses the NCBI taxonomy hierarchy from a user's inputted taxonomy and desired taxonomic rank. This task returns a taxon ID, name, and rank, which facilitates downstream functions, including **read classification, targeted read extraction, and genomic characterization modules**.
 
     ??? dna "`taxon` input parameter"
         This parameter accepts either a NCBI taxon ID (e.g. `11292`) or an organism name (e.g. `Lyssavirus rabies`).
@@ -16,10 +19,10 @@
         - If your input `taxon` is `Lyssavirus rabies` (species level) with `rank` set to `family`, the task will return information for the family of `Lyssavirus rabies`: taxon ID for Rhabdoviridae (11270), name "Rhabdoviridae", and rank "family".
         - If your input `taxon` is `Lyssavirus` (genus level) with `rank` set to `species`, the task will fail because it cannot determine species information from an inputted genus.
 
-    !!! techdetails "ete4 Identify Technical Details"
+    !!! techdetails "ETE Toolkit Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_ete4_taxon_id.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/task_ete4_taxon_id.wdl) |
-        | Software Source Code | [ete4 on GitHub](https://github.com/ncbi/datasets) |
-        | Software Documentation | [NCBI Datasets Documentation on NCBI](https://www.ncbi.nlm.nih.gov/datasets/docs/v2/) |
-        | Original Publication(s) | [Exploring and retrieving sequence and metadata for species across the tree of life with NCBI Datasets](https://doi.org/10.1038/s41597-024-03571-y) |
+        | Software Source Code | [ETE Toolkit on GitHub](https://github.com/etetoolkit/ete) |
+        | Software Documentation | [ETE Toolkit Documentation](https://etetoolkit.github.io/ete/) |
+        | Original Publication(s) | [ETE 3: Reconstruction, analysis and visualization of phylogenomic data](https://doi.org/10.1093/molbev/msw046) |

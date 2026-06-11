@@ -8,8 +8,7 @@ import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_che
 import "../../tasks/quality_control/comparisons/task_screen.wdl" as screen
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit_task
-import "../../tasks/utilities/task_rasusa.wdl" as rasusa
-import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
+import "../utilities/wf_medea_magic.wdl" as medea_magic_workflow
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc
 
 workflow theiaeuk_illumina_pe {
@@ -22,6 +21,7 @@ workflow theiaeuk_illumina_pe {
     File read1
     File read2
     Boolean call_rasusa = true
+    Float rasusa_downsampling_coverage = 150
     Int min_reads = 30000
     # Edited default values
     Int min_basepairs = 45000000
@@ -35,11 +35,10 @@ workflow theiaeuk_illumina_pe {
     Int min_contig_length = 1000
     Int busco_memory = 24
     String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
-    Boolean skip_screen = false 
+    Boolean skip_screen = false
     File? qc_check_table
     String? expected_taxon
-    Int? genome_length 
-    Float subsample_coverage = 150 # default coverage for RASUSA is set to 150X
+    Int? genome_length
     Int cpu = 8
     Int memory = 16
     # default gambit outputs
@@ -48,7 +47,7 @@ workflow theiaeuk_illumina_pe {
   }
   call versioning.version_capture {
     input:
-  } 
+  }
   if (! skip_screen) {
     call screen.check_reads as raw_check_reads {
       input:
@@ -65,24 +64,18 @@ workflow theiaeuk_illumina_pe {
     }
   }
   if (select_first([raw_check_reads.read_screen, ""]) == "PASS" || skip_screen) {
-    if (call_rasusa) {
-      call rasusa.rasusa as rasusa_task {
-        input:
-          read1 = read1,
-          read2 = read2,
-          samplename = samplename,
-          genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
-          coverage = subsample_coverage
-      }
-    }  
     call read_qc.read_QC_trim_pe as read_QC_trim {
       input:
         samplename = samplename,
-        read1 = select_first([rasusa_task.read1_subsampled, read1]),
-        read2 = select_first([rasusa_task.read2_subsampled, read2]),
+        read1 = read1,
+        read2 = read2,
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
-        trim_window_size = trim_window_size
+        trim_window_size = trim_window_size,
+        workflow_series = "theiaeuk",
+        call_rasusa = call_rasusa,
+        rasusa_downsampling_coverage = rasusa_downsampling_coverage,
+        rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0])
     }
     if (! skip_screen) {
       call screen.check_reads as clean_check_reads {
@@ -171,7 +164,7 @@ workflow theiaeuk_illumina_pe {
               "r2_mean_q_clean": cg_pipeline_clean.r2_mean_q,
               "combined_mean_q_clean": cg_pipeline_clean.combined_mean_q,
               "r1_mean_readlength_clean": cg_pipeline_clean.r1_mean_readlength,
-              "r2_mean_readlength_clean": cg_pipeline_clean.r2_mean_readlength,  
+              "r2_mean_readlength_clean": cg_pipeline_clean.r2_mean_readlength,
               "combined_mean_readlength_clean": cg_pipeline_clean.combined_mean_readlength,
               "est_coverage_raw": cg_pipeline_raw.est_coverage,
               "est_coverage_clean": cg_pipeline_clean.est_coverage,
@@ -183,14 +176,13 @@ workflow theiaeuk_illumina_pe {
             }
         }
       }
-      call merlin_magic_workflow.merlin_magic {
+      call medea_magic_workflow.medea_magic {
         input:
-          merlin_tag = gambit.merlin_tag,
+          medea_tag = gambit.merlin_tag,
           assembly = digger_denovo.assembly_fasta,
           samplename = samplename,
           read1 = read_QC_trim.read1_clean,
-          read2 = read_QC_trim.read2_clean,
-          theiaeuk = true
+          read2 = read_QC_trim.read2_clean
       }
     }
   }
@@ -199,9 +191,10 @@ workflow theiaeuk_illumina_pe {
     String theiaeuk_illumina_pe_version = version_capture.phb_version
     String theiaeuk_illumina_pe_analysis_date = version_capture.date
     # RASUSA
-    String? rasusa_version = rasusa_task.rasusa_version
-    File? read1_subsampled = rasusa_task.read1_subsampled
-    File? read2_subsampled = rasusa_task.read2_subsampled
+    File? read1_subsampled_raw = read_QC_trim.read1_subsampled_raw
+    File? read2_subsampled_raw = read_QC_trim.read2_subsampled_raw
+    File? rasusa_log = read_QC_trim.rasusa_log
+    String? rasusa_version = read_QC_trim.rasusa_version
     # Read Metadata
     String seq_platform = seq_method
     # Sample Screening
@@ -209,6 +202,18 @@ workflow theiaeuk_illumina_pe {
     File? read_screen_raw_tsv = raw_check_reads.read_screen_tsv
     String? read_screen_clean = clean_check_reads.read_screen
     File? read_screen_clean_tsv = clean_check_reads.read_screen_tsv
+    # Read QC - decontaminate outputs
+    File? contaminant_bam = read_QC_trim.contaminant_bam
+    File? contaminant_bai = read_QC_trim.contaminant_bai
+    Float? contaminant_coverage = read_QC_trim.contaminant_coverage
+    Float? contaminant_mean_depth = read_QC_trim.contaminant_mean_depth
+    File? contaminant_mapping_stats = read_QC_trim.contaminant_mapping_stats
+    File? contaminant_cov_hist = read_QC_trim.contaminant_cov_hist
+    File? contaminant_mapping_flagstat = read_QC_trim.contaminant_mapping_flagstat
+    Float? contaminant_percent_mapped_reads = read_QC_trim.contaminant_percent_mapped_reads
+    Map[String, Float]? contaminant_coverage_by_sequence = read_QC_trim.contaminant_sequence_coverage
+    Map[String, Float]? contaminant_depth_by_sequence = read_QC_trim.contaminant_sequence_depth
+    String? contaminant_status = read_QC_trim.contaminant_status
     # Read QC - fastq_scan outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
@@ -293,34 +298,34 @@ workflow theiaeuk_illumina_pe {
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
     # AMR_Search
-    File? amr_search_results = merlin_magic.amr_search_results
-    File? amr_search_csv = merlin_magic.amr_results_csv
-    File? amr_search_results_pdf = merlin_magic.amr_results_pdf
-    String? amr_search_all_resistances = merlin_magic.amr_search_all_resistances
-    String? amr_search_associated_resistances = merlin_magic.amr_search_associated_resistances
-    String? amr_search_docker = merlin_magic.amr_search_docker
-    String? amr_search_version = merlin_magic.amr_search_version    
+    File? amr_search_results = medea_magic.amr_search_results
+    File? amr_search_csv = medea_magic.amr_results_csv
+    File? amr_search_results_pdf = medea_magic.amr_results_pdf
+    String? amr_search_all_resistances = medea_magic.amr_search_all_resistances
+    String? amr_search_associated_resistances = medea_magic.amr_search_associated_resistances
+    String? amr_search_docker = medea_magic.amr_search_docker
+    String? amr_search_version = medea_magic.amr_search_version
     # Cladetyper Outputs
-    String? cladetyper_clade = merlin_magic.clade_type
-    String? cladetyper_gambit_version = merlin_magic.cladetyper_version
-    String? cladetyper_docker_image = merlin_magic.cladetyper_docker_image
-    String? cladetyper_annotated_reference = merlin_magic.cladetype_annotated_ref
+    String? cladetyper_clade = medea_magic.clade_type
+    String? cladetyper_gambit_version = medea_magic.cladetyper_version
+    String? cladetyper_docker_image = medea_magic.cladetyper_docker_image
+    String? cladetyper_annotated_reference = medea_magic.cladetype_annotated_ref
     # Snippy Outputs
-    String? theiaeuk_snippy_variants_version = merlin_magic.snippy_variants_version
-    String? theiaeuk_snippy_variants_query = merlin_magic.snippy_variants_query
-    String? theiaeuk_snippy_variants_query_check = merlin_magic.snippy_variants_query_check
-    String? theiaeuk_snippy_variants_hits = merlin_magic.snippy_variants_hits
-    String? theiaeuk_snippy_variants_reference_genome = merlin_magic.snippy_variants_reference_genome
-    String? theiaeuk_snippy_variants_gene_query_results = merlin_magic.snippy_variants_gene_query_results
-    # Array[File]? snippy_outputs = merlin_magic.snippy_outputs
-    String? theiaeuk_snippy_variants_results = merlin_magic.snippy_variants_results
-    String? theiaeuk_snippy_variants_bam = merlin_magic.snippy_variants_bam
-    String? theiaeuk_snippy_variants_bai = merlin_magic.snippy_variants_bai
-    String? theiaeuk_snippy_variants_outdir_tarball = merlin_magic.snippy_variants_outdir_tarball
-    String? theiaeuk_snippy_variants_summary = merlin_magic.snippy_variants_summary
-    String? theiaeuk_snippy_variants_num_reads_aligned = merlin_magic.snippy_variants_num_reads_aligned
-    String? theiaeuk_snippy_variants_coverage_tsv = merlin_magic.snippy_variants_coverage_tsv
-    String? theiaeuk_snippy_variants_num_variants = merlin_magic.snippy_variants_num_variants
-    String? theiaeuk_snippy_variants_percent_ref_coverage = merlin_magic.snippy_variants_percent_ref_coverage
+    String? theiaeuk_snippy_variants_version = medea_magic.snippy_variants_version
+    String? theiaeuk_snippy_variants_query = medea_magic.snippy_variants_query
+    String? theiaeuk_snippy_variants_query_check = medea_magic.snippy_variants_query_check
+    String? theiaeuk_snippy_variants_hits = medea_magic.snippy_variants_hits
+    String? theiaeuk_snippy_variants_reference_genome = medea_magic.snippy_variants_reference_genome
+    String? theiaeuk_snippy_variants_gene_query_results = medea_magic.snippy_variants_gene_query_results
+    # Array[File]? snippy_outputs = medea_magic.snippy_outputs
+    String? theiaeuk_snippy_variants_results = medea_magic.snippy_variants_results
+    String? theiaeuk_snippy_variants_bam = medea_magic.snippy_variants_bam
+    String? theiaeuk_snippy_variants_bai = medea_magic.snippy_variants_bai
+    String? theiaeuk_snippy_variants_outdir_tarball = medea_magic.snippy_variants_outdir_tarball
+    String? theiaeuk_snippy_variants_summary = medea_magic.snippy_variants_summary
+    String? theiaeuk_snippy_variants_num_reads_aligned = medea_magic.snippy_variants_num_reads_aligned
+    String? theiaeuk_snippy_variants_coverage_tsv = medea_magic.snippy_variants_coverage_tsv
+    String? theiaeuk_snippy_variants_num_variants = medea_magic.snippy_variants_num_variants
+    String? theiaeuk_snippy_variants_percent_ref_coverage = medea_magic.snippy_variants_percent_ref_coverage
   }
 }

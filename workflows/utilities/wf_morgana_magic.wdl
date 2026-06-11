@@ -17,7 +17,7 @@ workflow morgana_magic {
     File? read1
     File? read2
     Int? number_ATCG # needed for vadr
-    # assembly metrics 
+    # assembly metrics
     Int? assembly_metrics_cpu
     Int? assembly_metrics_disk_size
     String? assembly_metrics_docker
@@ -106,7 +106,7 @@ workflow morgana_magic {
       pangolin_docker_image = pangolin_docker_image,
       gene_locations_bed_file = reference_gene_locations_bed,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
-      nextclade_dataset_name_input = nextclade_dataset_name,     
+      nextclade_dataset_name_input = nextclade_dataset_name,
       vadr_max_length = vadr_max_length,
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
@@ -143,7 +143,7 @@ workflow morgana_magic {
         assembly_metrics_memory = assembly_metrics_memory,
         irma_cpu = irma_cpu,
         irma_disk_size = irma_disk_size,
-        irma_docker_image = irma_docker_image,        
+        irma_docker_image = irma_docker_image,
         irma_keep_ref_deletions = irma_keep_ref_deletions,
         irma_memory = irma_memory,
         genoflu_cross_reference = genoflu_cross_reference,
@@ -216,7 +216,7 @@ workflow morgana_magic {
         dataset_tag = organism_parameters.nextclade_dataset_tag,
         auspice_reference_tree_json = nextclade_auspice_reference_tree_json,
         gene_annotations_gff = nextclade_reference_gff_file,
-        nextclade_pathogen_json = nextclade_pathogen_json, 
+        nextclade_pathogen_json = nextclade_pathogen_json,
         input_ref = nextclade_input_ref,
         verbosity = nextclade_verbosity,
         cpu = nextclade_cpu,
@@ -312,13 +312,13 @@ workflow morgana_magic {
     String? nextclade_lineage_rabies = rabies_output_parser.nextclade_lineage
     String? nextclade_qc_rabies = rabies_output_parser.nextclade_qc
     # Nextclade outputs for flu H5N1
-    File? nextclade_json_flu_h5n1 = flu_track.nextclade_json_flu_h5n1
-    File? auspice_json_flu_h5n1 = flu_track.auspice_json_flu_h5n1
-    File? nextclade_tsv_flu_h5n1 = flu_track.nextclade_tsv_flu_h5n1
-    String? nextclade_aa_subs_flu_h5n1 = flu_track.nextclade_aa_subs_flu_h5n1
-    String? nextclade_aa_dels_flu_h5n1 = flu_track.nextclade_aa_dels_flu_h5n1
-    String? nextclade_clade_flu_h5n1 = flu_track.nextclade_clade_flu_h5n1
-    String? nextclade_qc_flu_h5n1 = flu_track.nextclade_qc_flu_h5n1
+    File? nextclade_json_flu_h5 = flu_track.nextclade_json_flu_h5
+    File? auspice_json_flu_h5 = flu_track.auspice_json_flu_h5
+    File? nextclade_tsv_flu_h5 = flu_track.nextclade_tsv_flu_h5
+    String? nextclade_aa_subs_flu_h5 = flu_track.nextclade_aa_subs_flu_h5
+    String? nextclade_aa_dels_flu_h5 = flu_track.nextclade_aa_dels_flu_h5
+    String? nextclade_clade_flu_h5 = flu_track.nextclade_clade_flu_h5
+    String? nextclade_qc_flu_h5 = flu_track.nextclade_qc_flu_h5
     # Nextclade outputs for flu HA
     File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
     File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha

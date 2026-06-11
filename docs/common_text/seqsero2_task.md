@@ -1,5 +1,8 @@
-??? task "`SeqSero2`: Serotyping"
-
+---
+title: Task Fragment `seqsero2`
+fragment: true
+---
+??? task "`SeqSero2`: _Salmonella_ Serotyping"
     [SeqSero2](https://github.com/denglab/SeqSero2) is a tool for _Salmonella_ serotype prediction. In the TheiaProk Illumina workflows, SeqSero2 takes in raw sequencing reads and performs targeted assembly of serotype determinant alleles, which can be used to predict serotypes including contamination between serotypes. For the TheiaProk ONT and FASTA workflows, SeqSero2 uses the genome assembly as input.
 
     If reads are provided, SeqSero2 performs allele micro-assembly by default. This occurs through targeted assembly of serotype determinant alleles, and any assembled alleles are used to predict the sample's serotype, and can predict potential contamination. If the `seqsero2_mode` optional variable is changed to `"k"` (for k-mer mode), SeqSero2 will perform serotyping based on unique k-mers of serotype determinants. If the input data is an assembly FASTA, the k-mer mode must be used, and the genome assembly is used to generate the search k-mers instead of the raw reads. 

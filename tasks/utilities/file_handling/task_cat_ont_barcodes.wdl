@@ -6,7 +6,7 @@ task cat_ont_barcodes {
     String output_bucket_path # include trailing slash if directory
     String file_extension = ".fastq.gz" # default extension for ONT barcodes
     File? barcode_renaming_file # file containing barcode renaming mappings
-    
+
     Int cpu = 2
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/ont-barcodes:0.0.2"
@@ -26,7 +26,7 @@ task cat_ont_barcodes {
       --file_extension ~{file_extension} \
       ~{"--map_file " + barcode_renaming_file} \
       --gcp --verbose
-    
+
     echo "Concatenation script completed."
 
   >>>

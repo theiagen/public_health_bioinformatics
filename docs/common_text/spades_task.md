@@ -1,12 +1,16 @@
+---
+title: Task Fragment `spades`
+fragment: true
+---
 <!-- if: theiaviral -->
-??? task "`spades`"
+??? task "`SPAdes`: _De novo_ Assembly"
 <!-- endif -->
 <!-- if: theiaprok -->
 ??? task "`SPAdes`: _De novo_ Assembly (alternative)"
-    To activate this task, set `assembler` to `spades`.
+    To activate this task, set `assembler` to `"spades"`.
 <!-- endif -->
 
-    `SPAdes` (St. Petersburg genome assembler) is a _de novo_ assembly tool that uses de Bruijn graphs to assemble genomes from Illumina short reads.
+    SPAdes (St. Petersburg genome assembler) is a _de novo_ assembly tool that uses de Bruijn graphs to assemble genomes from Illumina short reads.
 
 <!-- if: theiaprok -->
     In TheiaProk, SPAdes is run in `--isolate` mode, which is the recommended flag for high-coverage isolate and multi-cell Illumina data, which is typical of most bacterial sequencing projects. This method is optimized for improving assembly quality and decreasing runtime.
@@ -15,10 +19,13 @@
 <!-- if: theiaviral -->
     It is run with the `--metaviral` option, which is recommended for viral genomes. MetaviralSPAdes pipeline consists of three independent steps, `ViralAssembly` for finding putative viral subgraphs in a metagenomic assembly graph and generating contigs in these graphs, `ViralVerify` for checking whether the resulting contigs have viral origin and `ViralComplete` for checking whether these contigs represent complete viral genomes. For more details, please see the original publication.
 
-    MetaviralSPAdes was selected as the default assembler because it produces the most complete viral genomes within TheiaViral, determined by CheckV quality assessment (see task `checkv` for technical details).
+    MetaviralSPAdes was selected as the default assembler because it produces the most complete viral genomes within TheiaViral, determined by CheckV quality assessment.
 
     ??? dna "`call_metaviralspades` input parameter"
-        This parameter controls whether or not the `spades` task is called by the workflow. By default, `call_metaviralspades` is set to `true` because MetaviralSPAdes is used as the primary assembler. MetaviralSPAdes is generally recommended for most users, but it might not perform optimally on all datasets. If users encounter issues with MetaviralSPAdes, they can set the `call_metaviralspades` variable to `false` to bypass the `spades` task and instead *de novo* assemble using [MEGAHIT](https://github.com/voutcn/megahit) (see task `megahit` for details). Additionally, if the `spades` task fails during execution, the workflow will automatically fall back to using MEGAHIT for *de novo* assembly.
+        This parameter controls whether or not the `spades` task is called by the workflow. By default, `call_metaviralspades` is set to `true` because MetaviralSPAdes is used as the primary assembler. MetaviralSPAdes is generally recommended for most users, but it might not perform optimally on all datasets. If users encounter issues with MetaviralSPAdes, they can set the `call_metaviralspades` variable to `false` to bypass the SPAdes task and instead *de novo* assemble using [MEGAHIT](https://github.com/voutcn/megahit). Additionally, if the SPAdes task fails during execution, the workflow will automatically fall back to using MEGAHIT for *de novo* assembly.
+
+    ??? dna "`timeout` input parameter"
+        This parameter sets an automated timeout, in minutes, as a workaround to [indefinite stalls](https://github.com/ablab/spades/issues/1436) associated with SPAdes. If this timeout is reached, the fallback assembler will be called. By default, `timeout` is set to `360` minutes. Set to `0` to disable.
 <!-- endif -->
 
     ???+ warning "Non-deterministic output(s)"

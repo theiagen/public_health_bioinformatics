@@ -1,7 +1,11 @@
+---
+title: Task Fragment `augur export`
+fragment: true
+---
 ??? task "`augur export`: Exporting Auspice-formatted Phylogenetic Trees"
-    `augur export` outputs an Auspice-formatted JSON from an Augur-refined phylogenetic tree and its included metadata. The resulting JSON can be inputted directly into the web-based tree viewer, [auspice.us](https://auspice.us).
+    This task exports an Auspice-formatted JSON from an Augur-refined phylogenetic tree and its included metadata. The resulting JSON can be inputted directly into the web-based tree viewer [auspice.us](https://auspice.us).
 
-    !!! techdetails "`augur export` Technical Details"
+    !!! techdetails "Augur `export` Technical Details"
         |  | Links |
         | --- | --- |
         | Task | [task_augur_export.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/augur/task_augur_export.wdl) |

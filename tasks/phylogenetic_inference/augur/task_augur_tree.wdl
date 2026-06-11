@@ -13,11 +13,11 @@ task augur_tree {
     Int cpu = 64
     Int memory = 32
     Int disk_size = 750
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0"
   }
   command <<<
     set -euo pipefail
-    
+
     # capture version information
     augur version > VERSION
     echo
@@ -35,7 +35,7 @@ task augur_tree {
       fasttree -help 2>&1 | grep -m 1 "FastTree" | cut -d ' ' -f 2 | tee FASTTREE_VERSION
     elif [ "~{method}" == "raxml" ]; then
       echo "raxml version:"
-      raxmlHPC -v | grep RAxML | sed -e 's/.*RAxML version //' -e 's/released.*//' | tee RAXML_VERSION 
+      raxmlHPC -v | grep RAxML | sed -e 's/.*RAxML version //' -e 's/released.*//' | tee RAXML_VERSION
     fi
 
     echo
@@ -65,7 +65,7 @@ task augur_tree {
       echo "" > FINAL_MODEL.txt
     fi
 
-    echo 
+    echo
     echo "DEBUG: FINAL_MODEL.txt is: $(cat FINAL_MODEL.txt)"
   >>>
 

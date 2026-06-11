@@ -99,18 +99,18 @@ task lyveset {
 
     mkdir -v input-fastqs
 
-    # Firstly, rename samplename so that underscores are replaced with dashes 
+    # Firstly, rename samplename so that underscores are replaced with dashes
     # Then, rename read files with samplenames followed by "_[1,2].fastq.gz"
     # Also, place files within input-fastqs/ directory
 
     echo "DEBUG: FASTQ file renaming. Renaming FASTQs to match lyveset naming convention..."
     # for every sample in the samplename array, move and rename the read1 and read2 files
-    for SAMPLENAME in "${!samplename_array[@]}"; do 
+    for SAMPLENAME in "${!samplename_array[@]}"; do
       SAMPLENAME_NO_UNDERSCORES=$(echo "${samplename_array[$SAMPLENAME]}" | sed -E 's/_/-/g')
       # sed line replaces underscores with dashes, except surrounding R1 or R2
       echo "DEBUG: SAMPLENAME_NO_UNDERSCORES= ${SAMPLENAME_NO_UNDERSCORES}"
       mv -v ${read1_array[$SAMPLENAME]} input-fastqs/${SAMPLENAME_NO_UNDERSCORES}_1.fastq.gz
-      echo 
+      echo
       mv -v ${read2_array[$SAMPLENAME]} input-fastqs/${SAMPLENAME_NO_UNDERSCORES}_2.fastq.gz
     done
 
@@ -120,7 +120,7 @@ task lyveset {
 
     echo "DEBUG: merging R1 and R2 FASTQ files into interleaved FASTQ files with shuffleSplitReads.pl now..."
     shuffleSplitReads.pl --numcpus ~{cpu} -o "./~{dataset_name}/reads" input-fastqs/*.fastq.gz
-    
+
     # make directory for reference genome and copy reference genome into it. Also rename to reference.fasta
     mkdir -v ~{dataset_name}/ref/
     cp -v ~{reference_genome} ~{dataset_name}/ref/reference.fasta
@@ -143,7 +143,7 @@ task lyveset {
     ~{'--mapper ' + mapper} \
     ~{'--snpcaller ' + snpcaller} \
      -ref ~{dataset_name}/ref/reference.fasta ~{dataset_name}
-    
+
     # rename tree file to nwk file ending
     if [ -f ~{dataset_name}/msa/out.RAxML_bipartitions ]; then
       mv ~{dataset_name}/msa/out.RAxML_bipartitions ~{dataset_name}/msa/out.RAxML_bipartitions.nwk

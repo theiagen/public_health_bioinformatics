@@ -28,12 +28,15 @@ workflow theiacov_illumina_pe {
     File? reference_gff
     File? reference_genome
     File? reference_gene_locations_bed
-    Int? genome_length 
+    Int? genome_length
     # trimming parameters
     Boolean trim_primers = true
     Int trim_min_length = 75
     Int trim_quality_min_score = 30
     Int trim_window_size = 4
+    # rasusa downsampling parameters
+    Boolean call_rasusa = false
+    Float rasusa_downsampling_coverage = 2000
     # assembly parameters
     Int? min_depth # minimum depth to use for consensus and variant calling; default is 100 for non-flu (default value set below in call block for ivar consensus subwf), flu default is 30 for illumina (default set below in flu_track call block)
     Float consensus_min_freq = 0.6 # minimum frequency for a variant to be called as SNP in consensus genome
@@ -70,7 +73,7 @@ workflow theiacov_illumina_pe {
       gene_locations_bed_file = reference_gene_locations_bed,
       genome_length_input = genome_length,
       nextclade_dataset_tag_input = nextclade_dataset_tag,
-      nextclade_dataset_name_input = nextclade_dataset_name,     
+      nextclade_dataset_name_input = nextclade_dataset_name,
       vadr_max_length = vadr_max_length,
       vadr_skip_length = vadr_skip_length,
       vadr_options = vadr_options,
@@ -107,7 +110,10 @@ workflow theiacov_illumina_pe {
         trim_min_length = trim_min_length,
         trim_quality_min_score = trim_quality_min_score,
         trim_window_size = trim_window_size,
-        target_organism = organism_parameters.kraken_target_organism
+        target_organism = organism_parameters.kraken_target_organism,
+        call_rasusa = call_rasusa,
+        rasusa_downsampling_coverage = rasusa_downsampling_coverage,
+        rasusa_genome_length = select_first([genome_length, raw_check_reads.est_genome_length, 0]),
     }
     if (! skip_screen) {
       call screen.check_reads as clean_check_reads {
@@ -186,7 +192,7 @@ workflow theiacov_illumina_pe {
             assembly_metrics_memory = 0,
             irma_cpu = 0,
             irma_disk_size = 0,
-            irma_docker_image = "",        
+            irma_docker_image = "",
             irma_keep_ref_deletions = false,
             irma_memory = 0,
             genoflu_cpu = 0,
@@ -255,6 +261,18 @@ workflow theiacov_illumina_pe {
     String? fastq_scan_docker = read_QC_trim.fastq_scan_docker
     File? fastq_scan_raw1_json = read_QC_trim.fastq_scan_raw1_json
     File? fastq_scan_raw2_json = read_QC_trim.fastq_scan_raw2_json
+    # Read QC - decontaminate outputs
+    File? contaminant_bam = read_QC_trim.contaminant_bam
+    File? contaminant_bai = read_QC_trim.contaminant_bai
+    Float? contaminant_coverage = read_QC_trim.contaminant_coverage
+    Float? contaminant_mean_depth = read_QC_trim.contaminant_mean_depth
+    File? contaminant_mapping_stats = read_QC_trim.contaminant_mapping_stats
+    File? contaminant_cov_hist = read_QC_trim.contaminant_cov_hist
+    File? contaminant_mapping_flagstat = read_QC_trim.contaminant_mapping_flagstat
+    Float? contaminant_percent_mapped_reads = read_QC_trim.contaminant_percent_mapped_reads
+    Map[String, Float]? contaminant_coverage_by_sequence = read_QC_trim.contaminant_sequence_coverage
+    Map[String, Float]? contaminant_depth_by_sequence = read_QC_trim.contaminant_sequence_depth
+    String? contaminant_status = read_QC_trim.contaminant_status
     # Read QC - fastq_scan clean outputs
     Int? fastq_scan_num_reads_clean1 = read_QC_trim.fastq_scan_clean1
     Int? fastq_scan_num_reads_clean2 = read_QC_trim.fastq_scan_clean2
@@ -277,7 +295,7 @@ workflow theiacov_illumina_pe {
     File? fastqc_clean1_html = read_QC_trim.fastqc_clean1_html
     File? fastqc_clean2_html = read_QC_trim.fastqc_clean2_html
     String? fastqc_version = read_QC_trim.fastqc_version
-    String? fastqc_docker = read_QC_trim.fastqc_docker    
+    String? fastqc_docker = read_QC_trim.fastqc_docker
     # Read QC - trimmomatic outputs
     String? trimmomatic_version = read_QC_trim.trimmomatic_version
     String? trimmomatic_docker = read_QC_trim.trimmomatic_docker
@@ -305,6 +323,11 @@ workflow theiacov_illumina_pe {
     String? kraken_target_organism_dehosted = read_QC_trim.kraken2_target_organism_dehosted
     File? kraken_report_dehosted = read_QC_trim.kraken2_report_dehosted
     String? bracken_report_dehosted = read_QC_trim.bracken_report_dehosted
+    # Read QC - rasusa outputs
+    File? read1_subsampled_raw = read_QC_trim.read1_subsampled_raw
+    File? read2_subsampled_raw = read_QC_trim.read2_subsampled_raw
+    File? rasusa_log = read_QC_trim.rasusa_log
+    String? rasusa_version = read_QC_trim.rasusa_version
     # Read Alignment - bwa and bbmap_reformat(flu) outputs
     String? bwa_version = ivar_consensus.bwa_version
     String? samtools_version = ivar_consensus.samtools_version
@@ -373,13 +396,13 @@ workflow theiacov_illumina_pe {
     String? nextclade_lineage = morgana_magic.nextclade_lineage
     String? nextclade_qc = morgana_magic.nextclade_qc
     # Nextclade outputs for flu H5N1
-    File? nextclade_json_flu_h5n1 = flu_track.nextclade_json_flu_h5n1
-    File? auspice_json_flu_h5n1 = flu_track.auspice_json_flu_h5n1
-    File? nextclade_tsv_flu_h5n1 = flu_track.nextclade_tsv_flu_h5n1
-    String? nextclade_aa_subs_flu_h5n1 = flu_track.nextclade_aa_subs_flu_h5n1
-    String? nextclade_aa_dels_flu_h5n1 = flu_track.nextclade_aa_dels_flu_h5n1
-    String? nextclade_clade_flu_h5n1 = flu_track.nextclade_clade_flu_h5n1
-    String? nextclade_qc_flu_h5n1 = flu_track.nextclade_qc_flu_h5n1
+    File? nextclade_json_flu_h5 = flu_track.nextclade_json_flu_h5
+    File? auspice_json_flu_h5 = flu_track.auspice_json_flu_h5
+    File? nextclade_tsv_flu_h5 = flu_track.nextclade_tsv_flu_h5
+    String? nextclade_aa_subs_flu_h5 = flu_track.nextclade_aa_subs_flu_h5
+    String? nextclade_aa_dels_flu_h5 = flu_track.nextclade_aa_dels_flu_h5
+    String? nextclade_clade_flu_h5 = flu_track.nextclade_clade_flu_h5
+    String? nextclade_qc_flu_h5 = flu_track.nextclade_qc_flu_h5
     # Nextclade outputs for flu HA
     File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
     File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha

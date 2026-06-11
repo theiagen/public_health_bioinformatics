@@ -2,18 +2,19 @@ version 1.0
 
 import "../../tasks/alignment/task_bwa.wdl" as align
 import "../../tasks/alignment/task_minimap2.wdl" as minimap2_task
-import "../../tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl" as trim_primers
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
+import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
+import "../../tasks/quality_control/basic_statistics/task_qualimap.wdl" as qualimap_task
 import "../../tasks/quality_control/comparisons/task_qc_check_phb.wdl" as qc_check
+import "../../tasks/quality_control/read_filtering/task_ivar_primer_trim.wdl" as trim_primers
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/taxon_id/freyja/task_freyja.wdl" as freyja_task
+import "../../tasks/taxon_id/freyja/task_freyja_long_way.wdl" as freyja_long_format
+import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
+import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as task_parse_mapping
+import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_ont
 import "../utilities/wf_read_QC_trim_pe.wdl" as read_qc_pe
 import "../utilities/wf_read_QC_trim_se.wdl" as read_qc_se
-import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc_ont
-import "../../tasks/utilities/data_handling/task_parse_mapping.wdl" as task_parse_mapping
-import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
-import "../../tasks/utilities/data_handling/task_fasta_utilities.wdl" as fasta_utilities_task
-import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
-import "../../tasks/quality_control/basic_statistics/task_qualimap.wdl" as qualimap_task
 
 workflow freyja_fastq {
   input {
@@ -34,6 +35,13 @@ workflow freyja_fastq {
     File? qc_check_table
     # run qualimap
     Boolean run_qualimap = true
+    # make freyja long way
+    String? collection_date
+    String? collection_site
+    Float? latitude
+    Float? longitude
+    Int freyja_min_coverage = 60
+    String freyja_long_format_docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.2"
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -62,7 +70,7 @@ workflow freyja_fastq {
     call fasta_utilities_task.get_fasta_genome_size {
       input:
         fasta = reference_genome
-    } 
+    }
     call nanoplot_task.nanoplot as nanoplot_raw {
       input:
         read1 = read1,
@@ -161,6 +169,21 @@ workflow freyja_fastq {
       input:
         samplename = samplename,
         bam_file = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam])
+    }
+  }
+  if (defined(collection_date) && defined(collection_site)) {
+    call freyja_long_format.freyja_long_format_single as freyja_long_format {
+      input:
+        samplename = samplename,
+        freyja_lineages = freyja.freyja_lineages,
+        freyja_abundances = freyja.freyja_abundances,
+        freyja_coverage = freyja.freyja_coverage,
+        collection_date = collection_date,
+        collection_site = collection_site,
+        latitude = latitude,
+        longitude = longitude,
+        mincov = freyja_min_coverage,
+        docker = freyja_long_format_docker
     }
   }
   call versioning.version_capture {
@@ -270,10 +293,10 @@ workflow freyja_fastq {
     String freyja_version = freyja.freyja_version
     File freyja_variants = freyja.freyja_variants
     File freyja_depths = freyja.freyja_depths
-    File freyja_demixed = freyja.freyja_demixed 
+    File freyja_demixed = freyja.freyja_demixed
     Float freyja_coverage = freyja.freyja_coverage
     String freyja_barcode_file = select_first([freyja_barcodes, freyja.freyja_sc2_barcode_file, ""])
-    String freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, freyja.freyja_sc2_lineage_metadata_file, ""]) 
+    String freyja_lineage_metadata_file = select_first([freyja_lineage_metadata, freyja.freyja_sc2_lineage_metadata_file, ""])
     String freyja_barcode_version = freyja.freyja_barcode_version
     String freyja_metadata_version = freyja.freyja_metadata_version
     String? freyja_bootstrap_lineages = freyja.freyja_bootstrap_lineages
@@ -297,5 +320,8 @@ workflow freyja_fastq {
     String? qualimap_docker = qualimap.qualimap_docker
     File? qualimap_reports_bundle = qualimap.qualimap_reports_bundle
     File? qualimap_coverage_plots_html = qualimap.qualimap_coverage_plots_html
+    # Freyja long format outputs
+    String? freyja_long_format_docker_used = freyja_long_format.freyja_long_format_docker
+    File? freyja_parsed_format_tsv = freyja_long_format.freyja_parsed_format_tsv
   }
 }

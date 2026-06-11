@@ -13,11 +13,11 @@ task augur_export {
     File? colors_tsv # custom color definitions, one per line
     File? lat_longs_tsv # latitudes and longitudes for geography traits
     Boolean include_root_sequence = false # export an additional json containing the root sequence used to identify mutations
-  
+
     Int disk_size = 100
     Int memory = 64
     Int cpu = 4
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0"
   }
   command <<<
     # fail hard

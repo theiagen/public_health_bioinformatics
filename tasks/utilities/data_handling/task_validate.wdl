@@ -11,8 +11,8 @@ task theiavalidate {
     File? column_translation_tsv
     String? na_values
     Boolean debug_output = false
-    
-    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:1.1.2"
+
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/theiavalidate:1.1.3"
     Int disk_size = 10
     Int memory = 4
     Int cpu = 2
@@ -39,7 +39,7 @@ task theiavalidate {
       ~{true="--debug" false="--verbose" debug_output}
   >>>
   runtime {
-    docker: docker 
+    docker: docker
     memory: memory + " GB"
     cpu: cpu
     disks:  "local-disk " + disk_size + " HDD"

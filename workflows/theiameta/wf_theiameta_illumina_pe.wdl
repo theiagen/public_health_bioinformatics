@@ -80,7 +80,7 @@ workflow theiameta_illumina_pe {
   call minimap2_task.minimap2 as minimap2_assembly_correction {
     input:
       query1 = read_QC_trim.read1_clean,
-      query2 = read_QC_trim.read2_clean, 
+      query2 = read_QC_trim.read2_clean,
       reference = metaspades_pe.assembly_fasta,
       samplename = samplename,
       mode = "sr",
@@ -98,7 +98,7 @@ workflow theiameta_illumina_pe {
       bai = sort_bam_assembly_correction.bai,
       samplename = samplename
   }
-    # if reference is provided, perform mapping of assembled contigs to 
+    # if reference is provided, perform mapping of assembled contigs to
     # reference with minimap2, and extract those as final assembly
     if (defined(reference)) {
       call minimap2_task.minimap2 as minimap2_assembly {
@@ -131,7 +131,7 @@ workflow theiameta_illumina_pe {
       call minimap2_task.minimap2 as minimap2_reads {
         input:
           query1 = read_QC_trim.read1_clean,
-          query2 = read_QC_trim.read2_clean, 
+          query2 = read_QC_trim.read2_clean,
           reference = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta]),
           samplename = samplename,
           mode = "sr",
@@ -165,7 +165,7 @@ workflow theiameta_illumina_pe {
       call parse_mapping_task.assembled_reads_percent {
         input:
           bam = sam_to_sorted_bam.bam,
-      } 
+      }
     }
     if (! defined(reference)) {
       call bwa_task.bwa as bwa {
@@ -209,6 +209,18 @@ workflow theiameta_illumina_pe {
     File? read1_dehosted = read_QC_trim.read1_dehosted
     File? read2_dehosted = read_QC_trim.read2_dehosted
     String? ncbi_scrub_docker = read_QC_trim.ncbi_scrub_docker
+    # Read QC - decontaminate outputs
+    File? contaminant_bam = read_QC_trim.contaminant_bam
+    File? contaminant_bai = read_QC_trim.contaminant_bai
+    Float? contaminant_coverage = read_QC_trim.contaminant_coverage
+    Float? contaminant_mean_depth = read_QC_trim.contaminant_mean_depth
+    File? contaminant_mapping_stats = read_QC_trim.contaminant_mapping_stats
+    File? contaminant_cov_hist = read_QC_trim.contaminant_cov_hist
+    File? contaminant_mapping_flagstat = read_QC_trim.contaminant_mapping_flagstat
+    Float? contaminant_percent_mapped_reads = read_QC_trim.contaminant_percent_mapped_reads
+    Map[String, Float]? contaminant_coverage_by_sequence = read_QC_trim.contaminant_sequence_coverage
+    Map[String, Float]? contaminant_depth_by_sequence = read_QC_trim.contaminant_sequence_depth
+    String? contaminant_status = read_QC_trim.contaminant_status
     # Read QC - fastq_scan outputs
     Int? fastq_scan_num_reads_raw1 = read_QC_trim.fastq_scan_raw1
     Int? fastq_scan_num_reads_raw2 = read_QC_trim.fastq_scan_raw2
@@ -252,7 +264,7 @@ workflow theiameta_illumina_pe {
     # MIDAS outputs
     String? midas_primary_genus = read_QC_trim.midas_primary_genus
     File? midas_report = read_QC_trim.midas_report
-    # Assembly - metaspades 
+    # Assembly - metaspades
     File assembly_fasta = select_first([retrieve_aligned_contig_paf.final_assembly, pilon.assembly_fasta])
     String metaspades_version = metaspades_pe.metaspades_version
     String metaspades_docker = metaspades_pe.metaspades_docker
@@ -280,7 +292,7 @@ workflow theiameta_illumina_pe {
     # Read retrieval
     File? read1_unmapped = retrieve_unaligned_pe_reads_sam.read1
     File? read2_unmapped = retrieve_unaligned_pe_reads_sam.read2
-    File? read1_mapped = retrieve_aligned_pe_reads_sam.read1 
+    File? read1_mapped = retrieve_aligned_pe_reads_sam.read1
     File? read2_mapped = retrieve_aligned_pe_reads_sam.read2
     # Assembly stats
     Float? percentage_mapped_reads = assembled_reads_percent.percentage_mapped

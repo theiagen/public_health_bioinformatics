@@ -14,7 +14,7 @@ task augur_ancestral {
     Int disk_size = 50
     Int memory = 50
     Int cpu = 4
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:31.5.0"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/augur:33.2.0"
   }
   command <<<
     AUGUR_RECURSION_LIMIT=10000 augur ancestral \
@@ -25,7 +25,7 @@ task augur_ancestral {
       --inference ~{default="joint" inference} \
       ~{true="--keep-ambiguous" false="" keep_ambiguous} \
       ~{true="--infer-ambiguous" false="" infer_ambiguous} \
-      ~{true="--keep-overhangs" false="" keep_overhangs} 
+      ~{true="--keep-overhangs" false="" keep_overhangs}
   >>>
   output {
     File ancestral_nt_muts_json = "~{build_name}_nt_muts.json"
@@ -36,7 +36,7 @@ task augur_ancestral {
     memory: memory + " GB"
     cpu: cpu
     disks: "local-disk " + disk_size + " HDD"
-    disk: disk_size + " GB" 
+    disk: disk_size + " GB"
     dx_instance_type: "mem3_ssd1_v2_x8"
     preemptible: 0
     maxRetries: 3

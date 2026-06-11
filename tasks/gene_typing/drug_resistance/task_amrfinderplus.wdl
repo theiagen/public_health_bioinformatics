@@ -8,7 +8,7 @@ task amrfinderplus_nuc {
     File? gff
     Boolean? use_gff = false
     String samplename
-    String? organism 
+    String? organism
     String? annotation_format
     Float min_percent_identity = 0.9 # set to mirror v4.0.23 default
     Float min_percent_coverage = 0.5 # set to mirror v4.0.23 default
@@ -24,7 +24,7 @@ task amrfinderplus_nuc {
     # logging info
     date | tee DATE
     amrfinder --version | tee AMRFINDER_VERSION
-    
+
     # capture the database version; strip out unnecessary output, remove "Database version: " that prints in front of the actual database version
     amrfinder --database_version 2>/dev/null | grep "Database version" | sed 's|Database version: ||' | tee AMRFINDER_DB_VERSION
 
@@ -52,7 +52,7 @@ task amrfinderplus_nuc {
 
     # checking bash variable
     echo "amrfinder_organism is set to: ${amrfinder_organism}"
-    
+
     # if amrfinder_organism variable is set, use --organism flag, otherwise do not use --organism flag
     if [[ -v amrfinder_organism ]] ; then
       # always use --plus flag, others may be left out if param is optional and not supplied
@@ -78,7 +78,7 @@ task amrfinderplus_nuc {
           ~{'--coverage_min ' + min_percent_coverage} \
           ~{'--ident_min ' + min_percent_identity}
       fi
-    else 
+    else
       echo "Either the organism (~{organism}) is not recognized by NCBI-AMRFinderPlus or the user did not supply an organism as input."
       echo "Skipping the use of amrfinder --organism optional parameter."
       # always use --plus flag, others may be left out if param is optional and not supplied
@@ -101,7 +101,7 @@ task amrfinderplus_nuc {
           ~{'--threads ' + cpu} \
           ~{'--coverage_min ' + min_percent_coverage} \
           ~{'--ident_min ' + min_percent_identity}
-      fi      
+      fi
     fi
 
     # remove mutations where Element subtype is "POINT"
@@ -110,7 +110,7 @@ task amrfinderplus_nuc {
       mv temp.tsv ~{samplename}_amrfinder_all.tsv
     fi
 
-    # Element Type possibilities: AMR, STRESS, and VIRULENCE 
+    # Element Type possibilities: AMR, STRESS, and VIRULENCE
     # create headers for 3 output files; tee to 3 files and redirect STDOUT to dev null so it doesn't print to log file
     head -n 1 ~{samplename}_amrfinder_all.tsv | tee ~{samplename}_amrfinder_stress.tsv ~{samplename}_amrfinder_virulence.tsv ~{samplename}_amrfinder_amr.tsv >/dev/null
     # looks for all rows with STRESS, AMR, or VIRULENCE and append to TSVs
@@ -136,8 +136,8 @@ task amrfinderplus_nuc {
     fi
 
     if [[ "~{separate_betalactam_genes}" == "true" ]]; then
-      betalactam_genes=$(awk -F '\t' '{ if($12 == "BETA-LACTAM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//') 
-      betalactam_betalactam_genes=$(awk -F '\t' '{ if($13 == "BETA-LACTAM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//') 
+      betalactam_genes=$(awk -F '\t' '{ if($12 == "BETA-LACTAM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//')
+      betalactam_betalactam_genes=$(awk -F '\t' '{ if($13 == "BETA-LACTAM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//')
       betalactam_carbapenem_genes=$(awk -F '\t' '{ if($13 == "CARBAPENEM") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//')
       betalactam_cephalosporin_genes=$(awk -F '\t' '{ if($13 == "CEPHALOSPORIN") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//')
       betalactam_cephalothin_genes=$(awk -F '\t' '{ if($13 == "CEPHALOTHIN") { print $7}}' ~{samplename}_amrfinder_amr.tsv | sort | tr '\n' ', ' | sed 's/.$//')
@@ -167,22 +167,22 @@ task amrfinderplus_nuc {
     # if variable for list of genes is EMPTY, write string saying it is empty to float to Terra table
     if [ -z "${amr_core_genes}" ]; then
        amr_core_genes="No core AMR genes detected by NCBI-AMRFinderPlus"
-    fi 
+    fi
     if [ -z "${amr_plus_genes}" ]; then
        amr_plus_genes="No plus AMR genes detected by NCBI-AMRFinderPlus"
-    fi 
+    fi
     if [ -z "${stress_genes}" ]; then
        stress_genes="No STRESS genes detected by NCBI-AMRFinderPlus"
-    fi 
+    fi
     if [ -z "${virulence_genes}" ]; then
        virulence_genes="No VIRULENCE genes detected by NCBI-AMRFinderPlus"
-    fi 
+    fi
     if [ -z "${amr_classes}" ]; then
        amr_classes="No AMR genes detected by NCBI-AMRFinderPlus"
-    fi 
+    fi
     if [ -z "${amr_subclasses}" ]; then
        amr_subclasses="No AMR genes detected by NCBI-AMRFinderPlus"
-    fi 
+    fi
 
     # create final output strings
     echo "${amr_core_genes}" > AMR_CORE_GENES
@@ -191,7 +191,7 @@ task amrfinderplus_nuc {
     echo "${virulence_genes}" > VIRULENCE_GENES
     echo "${amr_classes}" > AMR_CLASSES
     echo "${amr_subclasses}" > AMR_SUBCLASSES
-  
+
     # if separate_betalactam_genes is true, create final output strings (if false, these values will be blank)
     echo "${betalactam_genes}" > BETA_LACTAM_GENES
     echo "${betalactam_betalactam_genes}" > BETA_LACTAM_BETA_LACTAM_GENES

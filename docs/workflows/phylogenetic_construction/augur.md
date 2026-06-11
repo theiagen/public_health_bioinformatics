@@ -78,9 +78,11 @@ Some inputs will automatically bypass or trigger modules, such as populating `al
 Any metadata present in the final JSON file for Auspice visualization is determined by what metadata was provided by the user. If the `sample_metadata_tsvs` optional input parameter is **not** provided, the final tree visual will only include the distance tree. If metadata was provided, different metadata fields will trigger different steps: date information will trigger the refinement of the distance tree into a time tree; clade information will be assigned to the tree nodes; geographical information will be represented in the Auspice visual within a map. The following figure illustrates this logic.
 
 !!! caption "Augur Metadata Conditionals"
+    <div style="text-align: center;">
     ![Augur Metadata Conditionals](../../assets/figures/Augur_Metadata_Conditionals.png){data-description="The metadata and type of tree in the output JSON for Auspice will depend on the metadata that is present in input metadata file. If no metadata file is provided, the output JSON will only contain a distance tree. If date information is present, the distance tree will be replaced by a tree refined by time (time tree). If clade and/or pango lineage (for SARS-CoV-2) information is provided, the tree will display an option to color by lineage. If geographical information is present, a map will load in Auspice using the information provided."}
+    </div>
 
-##### **A Note on Optional Inputs**
+##### A Note on Optional Inputs
 
 !!! warning "Defaults change based on the specified organism input"
     Default values that mimic the Nextstrain builds for the following organisms have been preselected:
@@ -127,7 +129,7 @@ For the Augur subcommands, please view the [Nextstrain Augur documentation](http
 
 {{ include_md("common_text/augur_align_task.md") }}
 
-{{ include_md("common_text/snp_dists_task.md", condition="augur") }}
+{{ include_md("common_text/snp_dists_task.md") }}
 
 {{ include_md("common_text/augur_tree_task.md") }}
 

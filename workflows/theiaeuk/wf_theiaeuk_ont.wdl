@@ -3,7 +3,7 @@ version 1.0
 import "../utilities/wf_read_QC_trim_ont.wdl" as read_qc
 import "../utilities/wf_flye_denovo.wdl" as flye_workflow
 import "../../tasks/taxon_id/task_gambit.wdl" as gambit
-import "../utilities/wf_merlin_magic.wdl" as merlin_magic_workflow
+import "../utilities/wf_medea_magic.wdl" as medea_magic_workflow
 import "../../tasks/task_versioning.wdl" as versioning
 import "../../tasks/quality_control/basic_statistics/task_nanoplot.wdl" as nanoplot_task
 import "../../tasks/quality_control/basic_statistics/task_quast.wdl" as quast_task
@@ -14,7 +14,7 @@ workflow theiaeuk_ont {
   input {
     File read1
     String samplename
-    Int genome_length = 50000000 
+    Int genome_length = 50000000
     String workflow_series = "theiaeuk"
     Int busco_memory = 24
     String busco_docker_image = "us-docker.pkg.dev/general-theiagen/ezlabgva/busco:v5.3.2_cv1"
@@ -109,15 +109,13 @@ workflow theiaeuk_ont {
           gambit_db_genomes = gambit_db_genomes,
           gambit_db_signatures = gambit_db_signatures
       }
-      # call merlin magic for cladetyper and AMR search, snippy variants
-       call merlin_magic_workflow.merlin_magic {
+      # call medea magic for cladetyper and AMR search, snippy variants
+       call medea_magic_workflow.medea_magic {
         input:
           samplename = samplename,
-          merlin_tag = gambit.merlin_tag,
+          medea_tag = gambit.merlin_tag,
           assembly = flye_denovo.assembly_fasta,
-          assembly_only = true,
-          ont_data = true,
-          theiaeuk = true
+          assembly_only = true # can only run assembly mode on Snippy variants for long reads
       }
     }
   }
@@ -199,35 +197,35 @@ workflow theiaeuk_ont {
     String? gambit_next_taxon_rank = gambit.gambit_next_taxon_rank
     String? gambit_version = gambit.gambit_version
     String? gambit_db_version = gambit.gambit_db_version
-    String? merlin_tag = gambit.merlin_tag
+    String? medea_tag = gambit.merlin_tag
     String? gambit_docker = gambit.gambit_docker
     # C. auris specific outputs for cladetyper
-    String? cladetyper_clade = merlin_magic.clade_type
-    String? cladetyper_version = merlin_magic.cladetyper_version
-    String? cladetyper_docker_image = merlin_magic.cladetyper_docker_image
-    String? cladetype_annotated_ref = merlin_magic.cladetype_annotated_ref
+    String? cladetyper_clade = medea_magic.clade_type
+    String? cladetyper_version = medea_magic.cladetyper_version
+    String? cladetyper_docker_image = medea_magic.cladetyper_docker_image
+    String? cladetype_annotated_ref = medea_magic.cladetype_annotated_ref
     # AMR Search outputs
-    File? amr_search_results = merlin_magic.amr_search_results
-    File? amr_search_csv = merlin_magic.amr_results_csv
-    File? amr_search_results_pdf = merlin_magic.amr_results_pdf
-    String? amr_search_all_resistances = merlin_magic.amr_search_all_resistances
-    String? amr_search_associated_resistances = merlin_magic.amr_search_associated_resistances
-    String? amr_search_docker = merlin_magic.amr_search_docker
-    String? amr_search_version = merlin_magic.amr_search_version  
+    File? amr_search_results = medea_magic.amr_search_results
+    File? amr_search_csv = medea_magic.amr_results_csv
+    File? amr_search_results_pdf = medea_magic.amr_results_pdf
+    String? amr_search_all_resistances = medea_magic.amr_search_all_resistances
+    String? amr_search_associated_resistances = medea_magic.amr_search_associated_resistances
+    String? amr_search_docker = medea_magic.amr_search_docker
+    String? amr_search_version = medea_magic.amr_search_version
     # Snippy variants outputs
-    String? theiaeuk_snippy_variants_version = merlin_magic.snippy_variants_version
-    String? theiaeuk_snippy_variants_query = merlin_magic.snippy_variants_query
-    String? theiaeuk_snippy_variants_query_check = merlin_magic.snippy_variants_query_check
-    String? theiaeuk_snippy_variants_hits = merlin_magic.snippy_variants_hits
-    String? theiaeuk_snippy_variants_gene_query_results = merlin_magic.snippy_variants_gene_query_results
-    String? theiaeuk_snippy_variants_outdir_tarball = merlin_magic.snippy_variants_outdir_tarball
-    String? theiaeuk_snippy_variants_results = merlin_magic.snippy_variants_results
-    String? theiaeuk_snippy_variants_bam = merlin_magic.snippy_variants_bam
-    String? theiaeuk_snippy_variants_bai = merlin_magic.snippy_variants_bai
-    String? theiaeuk_snippy_variants_summary = merlin_magic.snippy_variants_summary
-    String? theiaeuk_snippy_variants_num_reads_aligned = merlin_magic.snippy_variants_num_reads_aligned
-    String? theiaeuk_snippy_variants_coverage_tsv = merlin_magic.snippy_variants_coverage_tsv
-    String? theiaeuk_snippy_variants_num_variants = merlin_magic.snippy_variants_num_variants
-    String? theiaeuk_snippy_variants_percent_ref_coverage = merlin_magic.snippy_variants_percent_ref_coverage
+    String? theiaeuk_snippy_variants_version = medea_magic.snippy_variants_version
+    String? theiaeuk_snippy_variants_query = medea_magic.snippy_variants_query
+    String? theiaeuk_snippy_variants_query_check = medea_magic.snippy_variants_query_check
+    String? theiaeuk_snippy_variants_hits = medea_magic.snippy_variants_hits
+    String? theiaeuk_snippy_variants_gene_query_results = medea_magic.snippy_variants_gene_query_results
+    String? theiaeuk_snippy_variants_outdir_tarball = medea_magic.snippy_variants_outdir_tarball
+    String? theiaeuk_snippy_variants_results = medea_magic.snippy_variants_results
+    String? theiaeuk_snippy_variants_bam = medea_magic.snippy_variants_bam
+    String? theiaeuk_snippy_variants_bai = medea_magic.snippy_variants_bai
+    String? theiaeuk_snippy_variants_summary = medea_magic.snippy_variants_summary
+    String? theiaeuk_snippy_variants_num_reads_aligned = medea_magic.snippy_variants_num_reads_aligned
+    String? theiaeuk_snippy_variants_coverage_tsv = medea_magic.snippy_variants_coverage_tsv
+    String? theiaeuk_snippy_variants_num_variants = medea_magic.snippy_variants_num_variants
+    String? theiaeuk_snippy_variants_percent_ref_coverage = medea_magic.snippy_variants_percent_ref_coverage
   }
 }

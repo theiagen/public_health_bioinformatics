@@ -30,7 +30,7 @@ workflow lyveset_workflow {
     File? lyveset_pairwise_matrix = lyveset.lyveset_pairwise_matrix
     File? lyveset_raxml_tree = lyveset.lyveset_raxml_tree
     File? lyveset_pooled_snps_vcf = lyveset.lyveset_pooled_snps_vcf
-    File? lyveset_alignment_fasta = lyveset.lyveset_alignment_fasta 
+    File? lyveset_alignment_fasta = lyveset.lyveset_alignment_fasta
     File lyveset_log = lyveset.lyveset_log
   }
 }

@@ -5,8 +5,8 @@ task gambit {
     File assembly
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/gambit:1.0.0"
-    File gambit_db_genomes = "gs://gambit-databases-rp/2.1.0/gambit-metadata-2.1.0-20250808.gdb"
-    File gambit_db_signatures = "gs://gambit-databases-rp/2.1.0/gambit-signatures-2.1.0-20250808.gs"
+    File gambit_db_genomes = "gs://gambit-databases-rp/2.2.0/gambit-metadata-2.2.0-20251111.gdb"
+    File gambit_db_signatures = "gs://gambit-databases-rp/2.2.0/gambit-signatures-2.2.0-20251111.gs"
     Int disk_size = 20
     Int memory = 2
     Int cpu = 1
@@ -18,10 +18,10 @@ task gambit {
     # capture date and version
     date | tee DATE
     gambit --version | tee GAMBIT_VERSION
-    
+
     # set gambit reference dir; will assume that gambit genomes and signatures will be provided by user in tandem or not at all
     # -s evaluates to TRUE if the file exists and has a size greater than zero
-    if [[ -s "~{gambit_db_genomes}" ]]; then 
+    if [[ -s "~{gambit_db_genomes}" ]]; then
       echo "User gabmit db identified; ~{gambit_db_genomes} will be utilized for alignment"
       gambit_db_version="$(basename -- '~{gambit_db_genomes}'); $(basename -- '~{gambit_db_signatures}')"
       gambit_db_dir="${PWD}/gambit_database"
@@ -29,14 +29,14 @@ task gambit {
       cp ~{gambit_db_genomes} ${gambit_db_dir}
       cp ~{gambit_db_signatures} ${gambit_db_dir}
     else
-     gambit_db_dir="/gambit-db" 
+     gambit_db_dir="/gambit-db"
      gambit_db_version="unmodified from gambit container: ~{docker}"
     fi
-    
+
     echo ${gambit_db_version} | tee GAMBIT_DB_VERSION
-    
+
     gambit -d ${gambit_db_dir} query -f json -o ~{report_path} ~{assembly} -c ~{cpu}
-    
+
     python3 <<EOF
     import json
     import csv
@@ -74,7 +74,7 @@ task gambit {
             else:
               f.write(search_item[column])
 
-    # Predicted taxon    
+    # Predicted taxon
     write_output('PREDICTED_TAXON', predicted, 'name', 'NA')
     write_output('PREDICTED_TAXON_RANK', predicted, 'rank', 'NA')
     write_output('PREDICTED_TAXON_THRESHOLD', predicted, 'distance_threshold', fmt_dist(0))
@@ -115,13 +115,13 @@ task gambit {
           '' if match_taxon is None else match_taxon['rank'],
           fmt_dist(0 if match_taxon is None else match_taxon['distance_threshold']),
         ])
-   
+
     # set merlin tags
     # The purpose of the merlin_tag output is for use as a trigger for organism-specific or taxon-specific workflows
     # One primary & important example is running NCBI amrfinderplus with the appropriate 'amrfinder --organism <organism>' option
 
     merlin_tag_designations = {"Escherichia" : "Escherichia", "Shigella" : "Escherichia", "Shigella sonnei" : "Shigella sonnei",
-        "Klebsiella" : "Klebsiella", "Klebsiella pneumoniae" : "Klebsiella pneumoniae", "Klebsiella oxytoca" : "Klebsiella oxytoca", 
+        "Klebsiella" : "Klebsiella", "Klebsiella pneumoniae" : "Klebsiella pneumoniae", "Klebsiella oxytoca" : "Klebsiella oxytoca",
         "Klebsiella aerogenes" : "Klebsiella aerogenes", "Listeria" : "Listeria", "Salmonella" : "Salmonella", "Vibrio" : "Vibrio",
         "Vibrio cholerae" : "Vibrio cholerae"
     }
@@ -150,7 +150,7 @@ task gambit {
     File gambit_report_file = report_path
     File gambit_closest_genomes_file = closest_genomes_path
     String gambit_predicted_taxon = read_string("PREDICTED_TAXON")
-    String gambit_predicted_taxon_rank = read_string("PREDICTED_TAXON_RANK") 
+    String gambit_predicted_taxon_rank = read_string("PREDICTED_TAXON_RANK")
     String gambit_next_taxon = read_string("NEXT_TAXON")
     String gambit_next_taxon_rank = read_string("NEXT_TAXON_RANK")
     String gambit_version = read_string("GAMBIT_VERSION")

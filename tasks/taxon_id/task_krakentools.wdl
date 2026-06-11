@@ -44,9 +44,9 @@ task extract_kraken_reads {
       echo "FAIL" > STATUS
     fi
 
-    gzip ~{taxon_id}_1.fastq 
+    gzip ~{taxon_id}_1.fastq
     gzip ~{taxon_id}_2.fastq
-    
+
     if grep -q "~{taxon_id}" "~{kraken2_report}"; then
       echo "Taxon ID found in report"
       # Extract organism name and store it

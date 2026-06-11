@@ -26,7 +26,7 @@ task semibin {
     # SeminBin2 requires at least two contigs greater than the min_len to run
     if [ $count -gt 1 ]; then
         echo "Running SemiBin2"
-        
+
         # run SemiBin
         SemiBin single_easy_bin \
           -i ~{assembly_fasta} \
