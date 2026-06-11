@@ -31,22 +31,22 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
         - [TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_HIV_v2_2024-04-19.json)
         - [TheiaCoV_ONT_HIV_v1_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_ONT_HIV_v1_2024-04-19.json)
         - [TheiaCoV_ONT_HIV_v2_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_ONT_HIV_v2_2024-04-19.json)
-        
+
     ??? toggle "WNV Input JSONs"
         - [TheiaCoV_Illumina_PE_WNV_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_WNV_2024-04-19.json)
         - [TheiaCoV_Illumina_SE_WNV_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_SE_WNV_2024-04-19.json)
         - [TheiaCoV_FASTA_WNV_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_WNV_2024-04-19.json)
-        
+
     ??? toggle "Flu Input JSONs"
         - [TheiaCoV_Illumina_PE_flu_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_flu_2024-04-19.json)
         - [TheiaCoV_ONT_flu_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_ONT_flu_2024-04-19.json)
         - [TheiaCoV_FASTA_flu_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_flu_2024-04-19.json)
-        
+
     ??? toggle "RSV-A Input JSONs"
         - [TheiaCoV_Illumina_PE_RSV-A_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_RSV-A_2024-04-19.json)
         - [TheiaCoV_FASTA_RSV-A_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_RSV-A_2024-04-19.json)
 
-    ??? toggle "RSV-B Input JSONs" 
+    ??? toggle "RSV-B Input JSONs"
         - [TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_Illumina_PE_RSV-B_2024-04-19.json)
         - [TheiaCoV_FASTA_RSV-B_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_RSV-B_2024-04-19.json)
 
@@ -205,7 +205,7 @@ We've provided the following information to help you set up the workflow for eac
         | vadr_mem | MPXV | `8` |
         | vadr_options | MPXV | `"--mkey mpxv --glsearch --minimap2 -s -r --nomisc --r_lowsimok --r_lowsimxd 100 --r_lowsimxl 2000 --alt_pass discontn,dupregin --s_overhang 150 --out_allfasta"` |
         | vadr_model_file | MPXV | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-mpxv-1.4.2-1.tar.gz"` |
-        
+
         </div>
 
     === "West Nile Virus"
@@ -228,6 +228,17 @@ We've provided the following information to help you set up the workflow for eac
         </div>
 
     === "Influenza"
+        !!! dna "Defaults available for several subtypes"
+            We have default Nextclade parameters available for the following subtypes:
+
+            - H1N1 (HA and NA segments)
+            - H3N2 (HA and NA segments)
+            - Victoria (HA and NA segments)
+            - Yamagata (HA segment)
+            - H5Nx (HA segment)
+
+            You can find more details below.
+
         <div class="searchable-table" markdown="block">
 
         | **Overwrite Variable Name** | **Organism** | **Flu Segment** | **Flu Subtype** | **Default Value** | **Notes** |
@@ -270,10 +281,10 @@ We've provided the following information to help you set up the workflow for eac
 
         </div>
 
-        !!! tip "H5N1 Additional Defaults"
-            If the sample is designated as H5N1 by either ABRicate or IRMA, an H5N1-specific Nextclade task will run with the following datasets depending on the GenoFLU genotype. 
-            
-            Alternatively, if a `nextclade_custom_input_dataset` variable is provided (available under the `flu_track` task name), the workflow will run that custom dataset on all H5N1 samples, regardless of the GenoFLU genotype.
+        !!! tip "H5 Additional Defaults"
+            If the HA segment of a sample is designated as H5 by either ABRicate or IRMA, an H5Nx-specific Nextclade task will run with the following datasets depending on the GenoFLU genotype.
+
+            Alternatively, if a `nextclade_custom_input_dataset` variable is provided (available under the `flu_track` task name), the workflow will run that custom dataset on all H5Nx samples, regardless of the GenoFLU genotype.
 
             | **Overwrite Variable Name** | **GenoFLU Genotype** | **Default Value** | **Notes** |
             |---|---|---|---|
@@ -331,7 +342,7 @@ We've provided the following information to help you set up the workflow for eac
         | reference_gff_file | HIV-v2 | `"gs://theiagen-public-resources-rp/reference_data/viral/hiv/AY228557.1.gff3"` | This version of HIV originates from Southern Africa |
 
         </div>
-    
+
     === "Measles"
         <div class="searchable-table" markdown="block">
 
