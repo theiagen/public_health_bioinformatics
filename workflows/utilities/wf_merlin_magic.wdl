@@ -712,7 +712,7 @@ workflow merlin_magic {
     Int? allele_caller_accessory_count = allele_caller.allele_caller_accessory_count
     Float? allele_caller_accessory_percentage = allele_caller.allele_caller_accessory_percentage
     Int? allele_caller_total_loci_count = allele_caller.allele_caller_total_loci_count
-    String allele_caller_docker = allele_caller.allele_caller_docker
+    String? allele_caller_docker = allele_caller.allele_caller_docker
     # Ecoli Typing
     File? serotypefinder_report = serotypefinder.serotypefinder_report
     String? serotypefinder_docker = serotypefinder.serotypefinder_docker
