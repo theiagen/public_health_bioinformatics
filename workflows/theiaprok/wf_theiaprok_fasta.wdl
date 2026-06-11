@@ -842,6 +842,6 @@ workflow theiaprok_fasta {
     Int? allele_caller_accessory_count = merlin_magic.allele_caller_accessory_count
     Float? allele_caller_accessory_percentage = merlin_magic.allele_caller_accessory_percentage
     Int? allele_caller_total_loci_count = merlin_magic.allele_caller_total_loci_count
-    String allele_caller_docker = merlin_magic.allele_caller_docker
+    String? allele_caller_docker = merlin_magic.allele_caller_docker
   }
 }
