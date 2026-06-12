@@ -851,6 +851,8 @@ workflow theiaprok_fasta {
     String? arln_assembly_zscore = arln_stats.assembly_zscore
     String? arln_stats_docker_version = arln_stats.docker_version
     # allele caller outputs
+    String? allele_caller_scheme = merlin_magic.allele_caller_scheme
+    String? allele_caller_result = merlin_magic.allele_caller_result
     File? allele_caller_wgmlst_json = merlin_magic.allele_caller_wgmlst_json
     File? allele_caller_cgmlst_json = merlin_magic.allele_caller_cgmlst_json
     File? allele_caller_detailed_json = merlin_magic.allele_caller_detailed_json
