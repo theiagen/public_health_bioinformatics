@@ -21,6 +21,7 @@ fragment: true
         
         - alternative primer schemes must contain an *underscored* suffix, e.g. "_alt#"
         - versions must be *hyphenated* because periods are not permitted e.g. "HIV-v2-0"
+        - primer pools *must* be consistent with the primer name's number assignment, e.g. "SARS-CoV-2_1_LEFT" must be in the same primer pool as "SARS-CoV-2_1_RIGHT"
 
     !!! info "ClearLabs"
         Read-trimming is performed on raw read data generated on the ClearLabs instrument and thus not a required step in the TheiaCoV_ClearLabs workflow.
