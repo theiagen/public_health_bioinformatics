@@ -20,8 +20,11 @@ task allele_caller {
     Int memory = 32
   }
   command <<<
+    # save original directory path for compatibility with BOTH miniwdl and cromwell
+    ORIGINAL_DIR=$(pwd)
     # extra scheme name from blast database
     SCHEME=$(basename ~{blast_db} .tar.gz | tee ALLELE_CALLER_SCHEME)
+
     # tool fails if not run in /app directory
     cd /app
 
@@ -72,10 +75,10 @@ task allele_caller {
       --organism.genus ${SCHEME} \
       --organism.species ${SPECIES}
 
-    # move all results to the expected wdl directory
+    # move all results to the original directory for miniwdl/cromwell
     # and then change to that directory for output parsing
-    cp *.gz *.json /mnt/miniwdl_task_container/work/
-    cd /mnt/miniwdl_task_container/work/
+    cp *.gz *.json ${ORIGINAL_DIR}
+    cd $ORIGINAL_DIR
 
     # parse the results file `outputs.json` for the QC metrics
     python3 <<CODE
