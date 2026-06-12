@@ -10,10 +10,17 @@ fragment: true
     Please note that the Clair3 model is set by default to `"r1041_e82_400bps_sup_v500"` which may not be suitable for your sequencing data. Please be sure to change this parameter if needed.
 
     !!! info "Primer BED formatting"
-        Artic has stringent Primer BED formatting standards that are depicted in [their documentation](https://artic.readthedocs.io/en/stable/primer-schemes/). This formatting guide is not comprehensive. Some noteworthy formatting standards:
+        ARTIC has stringent primer BED formatting standards that are depicted [here](https://chrisgkent.github.io/primalbedtools/). The "sequence" and "primerAttributes" fields are NOT necessary for this task, though a comprehensive file is depicted here:
+        
+        ```
+        # chrom     start   end     primername              pool    strand  sequence            primerAttributes       
+        MN908947.3  47      78      SARS-CoV-2_1_LEFT_1     1       +       CTCTTGTAGATCTT...   pw=1.0;ps=100
+        ```
+        
+        Some other noteworthy formatting standards include:
         
         - alternative primer schemes must contain an *underscored* suffix, e.g. "_alt#"
-        - periods are not permitted, so versions must be *hyphenated*, e.g. "HIV-v2-0"
+        - versions must be *hyphenated* because periods are not permitted e.g. "HIV-v2-0"
 
     !!! info "ClearLabs"
         Read-trimming is performed on raw read data generated on the ClearLabs instrument and thus not a required step in the TheiaCoV_ClearLabs workflow.
