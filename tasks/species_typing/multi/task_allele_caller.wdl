@@ -8,11 +8,12 @@ task allele_caller {
     String samplename
     File assembly
 
-    String organism
-    String? subspecies
-
+    String scheme
     File blast_db
+    String loci_path
     Float similarity_threshold
+    String qc_genus
+    String qc_species
 
     Int cpu = 8
     Int disk_size = 100
@@ -22,32 +23,10 @@ task allele_caller {
   command <<<
     # save original directory path for compatibility with BOTH miniwdl and cromwell
     ORIGINAL_DIR=$(pwd)
-    # extra scheme name from blast database
-    SCHEME=$(basename ~{blast_db} .tar.gz | tee ALLELE_CALLER_SCHEME)
 
     # tool fails if not run in /app directory
     cd /app
-
     tar -xzf ~{blast_db}
-
-    # parse genus and species inputs
-    GENUS=$(echo ~{organism} | cut -f1 -d' ')
-    SPECIES=$(echo ~{organism} | cut -f2 -d' ')
-    LOCI_LIST="${SCHEME}/loci.tsv"
-
-    if [[ $GENUS == $SPECIES ]]; then
-      # organism was only genus-level resolution; set SPECIES to blank
-      SPECIES=""
-    elif [[ ${GENUS} == "Vibrio" ]]; then
-      # species-specific loci list for vibrio
-      # loci list is in a separate location for vibrio and has a different naming format
-      # genus is capitalized with `^^`, which is bash 4.0+ parameter expansion
-      if [[ $SPECIES == "parahaemolyticus" || $SPECIES == "cholerae" ]]; then
-        LOCI_LIST="${SCHEME}/loci/${GENUS^^}_${SPECIES}_loci.tsv"
-      else
-        LOCI_LIST="${SCHEME}/loci/${GENUS^^}_loci.tsv"
-      fi
-    fi
 
     # check if fasta is gzipped or not; then copy to standard name
     if gzip -t ~{assembly}; then
@@ -69,16 +48,20 @@ task allele_caller {
       --assembly assembly.fasta.gz \
       --blast-kb.path tests/files/blast_kb \
       --blast-kb.similarity ~{similarity_threshold} \
-      --blast-kb.db ${SCHEME} \
-      --blast-kb.loci ${LOCI_LIST} \
+      --blast-kb.db ~{scheme} \
+      --blast-kb.loci ~{loci_path} \
       --qc-kb.path tests/files/qc_kb \
-      --organism.genus ${SCHEME} \
-      --organism.species ${SPECIES}
+      --organism.genus ~{qc_genus} \
+      ~{qc_species}
 
     # move all results to the original directory for miniwdl/cromwell
     # and then change to that directory for output parsing
     cp *.gz *.json ${ORIGINAL_DIR}
     cd $ORIGINAL_DIR
+
+    # print the outputs json to stdout for debugging purposes
+    echo "outputs.json:"
+    cat outputs.json
 
     # parse the results file `outputs.json` for the QC metrics
     python3 <<CODE
@@ -103,7 +86,7 @@ task allele_caller {
     CODE
   >>>
   output {
-    String allele_caller_scheme = read_string("ALLELE_CALLER_SCHEME")
+    String allele_caller_scheme = scheme
     String allele_caller_result = read_string("ALLELE_CALLER_RESULT")
     File allele_caller_wgmlst_json = "calls_standard.json.gz"
     File allele_caller_cgmlst_json = "calls_core_standard.csv.gz"

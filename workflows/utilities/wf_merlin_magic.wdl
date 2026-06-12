@@ -54,6 +54,7 @@ workflow merlin_magic {
     Boolean assembly_only = false
     Boolean ont_data = false
     Boolean paired_end = true
+    File? blast_db
     # activating tool logic
     Boolean call_poppunk = true
     Boolean call_shigeifinder_reads_input = false
@@ -682,15 +683,19 @@ workflow merlin_magic {
     if (merlin_tag == "Campylobacter" || merlin_tag == "Clostridium botulinum" || merlin_tag == "Cronobacter" || merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" || merlin_tag == "Listeria" || merlin_tag == "Salmonella" || merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae" || merlin_tag == "Yersinia") {
       call allele_caller_parameters_wf.allele_caller_parameters {
         input:
-          merlin_tag = merlin_tag
+          merlin_tag = merlin_tag,
+          gambit_predicted_taxon = gambit_predicted_taxon
       }
       call allele_caller_task.allele_caller {
         input:
           samplename = samplename,
           assembly = assembly,
-          organism = select_first([gambit_predicted_taxon]),
-          blast_db = allele_caller_parameters.db,
-          similarity_threshold = allele_caller_parameters.similarity
+          blast_db = select_first([blast_db, allele_caller_parameters.db]),
+          similarity_threshold = allele_caller_parameters.similarity,
+          qc_genus = allele_caller_parameters.qc_genus,
+          scheme = allele_caller_parameters.scheme,
+          loci_path = allele_caller_parameters.loci_path,
+          qc_species = allele_caller_parameters.qc_species
       }
     }
   }
