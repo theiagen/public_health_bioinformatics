@@ -32,8 +32,10 @@ task consensus {
   with open("~{primer_bed}", "r") as infile, open("primer.bed", "w") as outfile:
     for line in infile:
       parts = line.strip().split("\t")
-      if len(parts) < 7:
+      if len(parts) == 6:
         parts.append("SPOOF")
+      elif len(parts) < 6:
+        raise ValueError("Primer BED file must have at least 6 columns")
       outfile.write("\t".join(parts) + "\n")
   CODE
 
