@@ -390,8 +390,8 @@ workflow morgana_magic {
     File? quasitools_hydra_vcf = quasitools.hydra_vcf
     File? quasitools_mutations_report = quasitools.mutations_report
     # Gene Coverage Outputs
-    Map[String, Float] gene_coverage_depth_by_gene = select_first([gene_coverage.depth_by_gene, {"": 0}])
-    Map[String, Float] gene_coverage_percent_coverage_by_gene = select_first([gene_coverage.breadth_by_gene, {"": 0}])
+    Map[String, Float]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
+    Map[String, Float]? gene_coverage_percent_coverage_by_gene = gene_coverage.breadth_by_gene
     Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
     Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_coverage
     File? gene_coverage_stats = gene_coverage.gene_coverage_stats
