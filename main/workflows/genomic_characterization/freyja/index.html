@@ -7135,7 +7135,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#genomic-characterization">Genomic Characterization</a></td>
 <td>SARS-CoV-2, <a href="../../../workflows_overview/workflows_kingdom/#viral">Viral</a></td>
-<td>v4.2.0</td>
+<td>vX.X.X</td>
 <td>Yes</td>
 <td>Sample-level, Set-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_FASTQ_PHB:main?tab=info">Freyja_FASTQ_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Plot_PHB:main?tab=info">Freyja_Plot_PHB</a>, <a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Freyja_Dashboard_PHB:main?tab=info">Freyja_Dashboard_PHB</a></td>
@@ -7519,6 +7519,14 @@
 </tr>
 <tr>
 <td>freyja_fastq</td>
+<td><strong>sc2_gene_bed</strong></td>
+<td>File</td>
+<td>BED file depicting SARS-CoV-2 region / gene coordinates</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
 <td><strong>trimmomatic_min_length</strong></td>
 <td>Int</td>
 <td>The minimum length cut-off when performing read cleaning</td>
@@ -7578,7 +7586,31 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gene_coverage</td>
+<td><strong>exact_match</strong></td>
+<td>Boolean</td>
+<td>Search for exact matches to query_genes / BED file gene queries</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gene_coverage</td>
+<td><strong>feature_qualifier</strong></td>
+<td>String</td>
+<td>Feature qualifier to use in parsing GBFF for coverage calculations</td>
+<td>product</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gene_coverage</td>
+<td><strong>feature_type</strong></td>
+<td>String</td>
+<td>Feature type to use in parsing GBFF for coverage calculations</td>
+<td>CDS</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7593,24 +7625,32 @@
 <td>gene_coverage</td>
 <td><strong>min_depth</strong></td>
 <td>Int</td>
-<td>Minimum depth for coverage</td>
+<td>Minimum depth to call a base covered</td>
 <td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>gene_coverage</td>
-<td><strong>sc2_s_gene_start</strong></td>
+<td><strong>min_quality</strong></td>
 <td>Int</td>
-<td>Where the S gene starts</td>
-<td>21563</td>
+<td>Minimum base quality to call a base covered</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>gene_coverage</td>
-<td><strong>sc2_s_gene_stop</strong></td>
-<td>Int</td>
-<td>Where the S gene stops</td>
-<td>25384</td>
+<td><strong>query_genes</strong></td>
+<td>String</td>
+<td>Comma-separated list of query genes to parse GBFF/BED file for region coordinates</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gene_coverage</td>
+<td><strong>reference_gbff</strong></td>
+<td>File</td>
+<td>GenBank flat file depicting the reference genome</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9033,6 +9073,14 @@
 </tr>
 <tr>
 <td>freyja_fastq</td>
+<td><strong>sc2_gene_bed</strong></td>
+<td>File</td>
+<td>BED file depicting SARS-CoV-2 region / gene coordinates</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
 <td><strong>trimmomatic_min_length</strong></td>
 <td>Int</td>
 <td>The minimum length cut-off when performing read cleaning</td>
@@ -9092,7 +9140,31 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gene_coverage</td>
+<td><strong>exact_match</strong></td>
+<td>Boolean</td>
+<td>Search for exact matches to query_genes / BED file gene queries</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gene_coverage</td>
+<td><strong>feature_qualifier</strong></td>
+<td>String</td>
+<td>Feature qualifier to use in parsing GBFF for coverage calculations</td>
+<td>product</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gene_coverage</td>
+<td><strong>feature_type</strong></td>
+<td>String</td>
+<td>Feature type to use in parsing GBFF for coverage calculations</td>
+<td>CDS</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9107,24 +9179,32 @@
 <td>gene_coverage</td>
 <td><strong>min_depth</strong></td>
 <td>Int</td>
-<td>Minimum depth for coverage</td>
+<td>Minimum depth to call a base covered</td>
 <td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>gene_coverage</td>
-<td><strong>sc2_s_gene_start</strong></td>
+<td><strong>min_quality</strong></td>
 <td>Int</td>
-<td>Where the S gene starts</td>
-<td>21563</td>
+<td>Minimum base quality to call a base covered</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>gene_coverage</td>
-<td><strong>sc2_s_gene_stop</strong></td>
-<td>Int</td>
-<td>Where the S gene stops</td>
-<td>25384</td>
+<td><strong>query_genes</strong></td>
+<td>String</td>
+<td>Comma-separated list of query genes to parse GBFF/BED file for region coordinates</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gene_coverage</td>
+<td><strong>reference_gbff</strong></td>
+<td>File</td>
+<td>GenBank flat file depicting the reference genome</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10547,6 +10627,14 @@
 </tr>
 <tr>
 <td>freyja_fastq</td>
+<td><strong>sc2_gene_bed</strong></td>
+<td>File</td>
+<td>BED file depicting SARS-CoV-2 region / gene coordinates</td>
+<td>gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>freyja_fastq</td>
 <td><strong>trimmomatic_min_length</strong></td>
 <td>Int</td>
 <td>The minimum length cut-off when performing read cleaning</td>
@@ -10606,7 +10694,31 @@
 <td><strong>docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gene_coverage</td>
+<td><strong>exact_match</strong></td>
+<td>Boolean</td>
+<td>Search for exact matches to query_genes / BED file gene queries</td>
+<td>False</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gene_coverage</td>
+<td><strong>feature_qualifier</strong></td>
+<td>String</td>
+<td>Feature qualifier to use in parsing GBFF for coverage calculations</td>
+<td>product</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gene_coverage</td>
+<td><strong>feature_type</strong></td>
+<td>String</td>
+<td>Feature type to use in parsing GBFF for coverage calculations</td>
+<td>CDS</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10621,24 +10733,32 @@
 <td>gene_coverage</td>
 <td><strong>min_depth</strong></td>
 <td>Int</td>
-<td>Minimum depth for coverage</td>
+<td>Minimum depth to call a base covered</td>
 <td>10</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>gene_coverage</td>
-<td><strong>sc2_s_gene_start</strong></td>
+<td><strong>min_quality</strong></td>
 <td>Int</td>
-<td>Where the S gene starts</td>
-<td>21563</td>
+<td>Minimum base quality to call a base covered</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
 <td>gene_coverage</td>
-<td><strong>sc2_s_gene_stop</strong></td>
-<td>Int</td>
-<td>Where the S gene stops</td>
-<td>25384</td>
+<td><strong>query_genes</strong></td>
+<td>String</td>
+<td>Comma-separated list of query genes to parse GBFF/BED file for region coordinates</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>gene_coverage</td>
+<td><strong>reference_gbff</strong></td>
+<td>File</td>
+<td>GenBank flat file depicting the reference genome</td>
+<td></td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13451,6 +13571,66 @@ Following the trimming of primer sequences, iVar then trims the reads based on a
 </table>
 </div>
 </details>
+<details class="task">
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>{
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    &quot;GENE1&quot;: 99.5,
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    &quot;GENE2&quot;: 10
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>{
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    &quot;GENE1&quot;: 10,
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    &quot;GENE2&quot;: 1
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file. </p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Gene Coverage Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl">task_gene_coverage.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools Manual</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/gigascience/giab008">Twelve years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 </div>
 </div>
 </div>
@@ -13860,6 +14040,16 @@ Following the trimming of primer sequences, iVar then trims the reads based on a
 <td>version of Freyja used</td>
 </tr>
 <tr>
+<td>gene_coverage_depth_by_gene</td>
+<td><strong>Map[String,Float]</strong></td>
+<td>A JSON map relating gene queries to their depth of coverage</td>
+</tr>
+<tr>
+<td>gene_coverage_percent_coverage_by_gene</td>
+<td><strong>Map[String,Float]</strong></td>
+<td>A JSON map relating gene queries to their percent breadth of coverage</td>
+</tr>
+<tr>
 <td>ivar_version_primtrim</td>
 <td><strong>String</strong></td>
 <td>Version of iVar for running the iVar trim command</td>
@@ -14420,6 +14610,16 @@ Following the trimming of primer sequences, iVar then trims the reads based on a
 <td>version of Freyja used</td>
 </tr>
 <tr>
+<td>gene_coverage_depth_by_gene</td>
+<td><strong>Map[String,Float]</strong></td>
+<td>A JSON map relating gene queries to their depth of coverage</td>
+</tr>
+<tr>
+<td>gene_coverage_percent_coverage_by_gene</td>
+<td><strong>Map[String,Float]</strong></td>
+<td>A JSON map relating gene queries to their percent breadth of coverage</td>
+</tr>
+<tr>
 <td>ivar_version_primtrim</td>
 <td><strong>String</strong></td>
 <td>Version of iVar for running the iVar trim command</td>
@@ -14978,6 +15178,16 @@ Following the trimming of primer sequences, iVar then trims the reads based on a
 <td>freyja_version</td>
 <td><strong>String</strong></td>
 <td>version of Freyja used</td>
+</tr>
+<tr>
+<td>gene_coverage_depth_by_gene</td>
+<td><strong>Map[String,Float]</strong></td>
+<td>A JSON map relating gene queries to their depth of coverage</td>
+</tr>
+<tr>
+<td>gene_coverage_percent_coverage_by_gene</td>
+<td><strong>Map[String,Float]</strong></td>
+<td>A JSON map relating gene queries to their percent breadth of coverage</td>
 </tr>
 <tr>
 <td>ivar_version_primtrim</td>

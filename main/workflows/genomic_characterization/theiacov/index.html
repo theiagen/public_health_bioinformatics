@@ -7661,7 +7661,7 @@
 <td><strong>gene_coverage_docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7676,8 +7676,16 @@
 <td>morgana_magic</td>
 <td><strong>gene_coverage_min_depth</strong></td>
 <td>Int</td>
-<td>The minimum depth to determine if a position was covered.</td>
+<td>The minimum depth to determine if a position was covered</td>
 <td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>gene_coverage_min_quality</strong></td>
+<td>Int</td>
+<td>The minimum alignment quality to determine if a position was covered</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -7910,22 +7918,6 @@
 <td>Int</td>
 <td>Amount of memory/RAM (in GB) to allocate to the task</td>
 <td>4</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>sc2_s_gene_start</strong></td>
-<td>Int</td>
-<td>Start position of S gene</td>
-<td>21563</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>sc2_s_gene_stop</strong></td>
-<td>Int</td>
-<td>End position of S gene</td>
-<td>25384</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8999,7 +8991,7 @@
 <td><strong>gene_coverage_docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9014,8 +9006,16 @@
 <td>morgana_magic</td>
 <td><strong>gene_coverage_min_depth</strong></td>
 <td>Int</td>
-<td>The minimum depth to determine if a position was covered.</td>
+<td>The minimum depth to determine if a position was covered</td>
 <td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>gene_coverage_min_quality</strong></td>
+<td>Int</td>
+<td>The minimum alignment quality to determine if a position was covered</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -9256,22 +9256,6 @@
 <td>File</td>
 <td>Internal component, do not modify</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>sc2_s_gene_start</strong></td>
-<td>Int</td>
-<td>Start position of S gene</td>
-<td>21563</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>sc2_s_gene_stop</strong></td>
-<td>Int</td>
-<td>End position of S gene</td>
-<td>25384</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10489,7 +10473,7 @@
 <td><strong>gene_coverage_docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10504,8 +10488,16 @@
 <td>morgana_magic</td>
 <td><strong>gene_coverage_min_depth</strong></td>
 <td>Int</td>
-<td>The minimum depth to determine if a position was covered.</td>
+<td>The minimum depth to determine if a position was covered</td>
 <td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>gene_coverage_min_quality</strong></td>
+<td>Int</td>
+<td>The minimum alignment quality to determine if a position was covered</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -10746,22 +10738,6 @@
 <td>File</td>
 <td>Internal component, do not modify</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>sc2_s_gene_start</strong></td>
-<td>Int</td>
-<td>Start position of S gene</td>
-<td>21563</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>sc2_s_gene_stop</strong></td>
-<td>Int</td>
-<td>End position of S gene</td>
-<td>25384</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12099,7 +12075,7 @@
 <td><strong>gene_coverage_docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12114,8 +12090,16 @@
 <td>morgana_magic</td>
 <td><strong>gene_coverage_min_depth</strong></td>
 <td>Int</td>
-<td>The minimum depth to determine if a position was covered.</td>
+<td>The minimum depth to determine if a position was covered</td>
 <td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>gene_coverage_min_quality</strong></td>
+<td>Int</td>
+<td>The minimum alignment quality to determine if a position was covered</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -12372,22 +12356,6 @@
 <td>File</td>
 <td>Use to provide locations of interest where average coverage will be calculated</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>sc2_s_gene_start</strong></td>
-<td>Int</td>
-<td>Start position of S gene</td>
-<td>21563</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>sc2_s_gene_stop</strong></td>
-<td>Int</td>
-<td>End position of S gene</td>
-<td>25384</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13077,7 +13045,7 @@
 <td><strong>gene_coverage_docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13092,8 +13060,16 @@
 <td>morgana_magic</td>
 <td><strong>gene_coverage_min_depth</strong></td>
 <td>Int</td>
-<td>The minimum depth to determine if a position was covered.</td>
+<td>The minimum depth to determine if a position was covered</td>
 <td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>gene_coverage_min_quality</strong></td>
+<td>Int</td>
+<td>The minimum alignment quality to determine if a position was covered</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13334,22 +13310,6 @@
 <td>File</td>
 <td>Internal component, do not modify</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>sc2_s_gene_start</strong></td>
-<td>Int</td>
-<td>Start position of S gene</td>
-<td>21563</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>sc2_s_gene_stop</strong></td>
-<td>Int</td>
-<td>End position of S gene</td>
-<td>25384</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13935,7 +13895,7 @@
 <td><strong>gene_coverage_docker</strong></td>
 <td>String</td>
 <td>The Docker container to use for the task</td>
-<td>us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15</td>
+<td>us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -13950,8 +13910,16 @@
 <td>morgana_magic</td>
 <td><strong>gene_coverage_min_depth</strong></td>
 <td>Int</td>
-<td>The minimum depth to determine if a position was covered.</td>
+<td>The minimum depth to determine if a position was covered</td>
 <td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>morgana_magic</td>
+<td><strong>gene_coverage_min_quality</strong></td>
+<td>Int</td>
+<td>The minimum alignment quality to determine if a position was covered</td>
+<td>0</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -14216,22 +14184,6 @@
 <td>File</td>
 <td>Use to provide locations of interest where average coverage will be calculated</td>
 <td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>sc2_s_gene_start</strong></td>
-<td>Int</td>
-<td>Start position of S gene</td>
-<td>21563</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>morgana_magic</td>
-<td><strong>sc2_s_gene_stop</strong></td>
-<td>Int</td>
-<td>End position of S gene</td>
-<td>25384</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -18098,8 +18050,35 @@
 </div>
 </details>
 <details class="task">
-<summary><code>gene_coverage</code>: Breadth of Coverage Calculations</summary>
-<p>This task calculates the percent of a region (typically genes) covered above a minimum depth using samtools and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.</p>
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>{
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>    &quot;GENE1&quot;: 99.5,
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>    &quot;GENE2&quot;: 10
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>{
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a>    &quot;GENE1&quot;: 10,
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>    &quot;GENE2&quot;: 1
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file. </p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Gene Coverage Technical Details</p>
 <table>
@@ -18201,8 +18180,35 @@
 </div>
 </details>
 <details class="task">
-<summary><code>gene_coverage</code>: Breadth of Coverage Calculations</summary>
-<p>This task calculates the percent of a region (typically genes) covered above a minimum depth using samtools and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.</p>
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>{
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a>    &quot;GENE1&quot;: 99.5,
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a>    &quot;GENE2&quot;: 10
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-9-1"><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>{
+</span><span id="__span-9-2"><a id="__codelineno-9-2" name="__codelineno-9-2" href="#__codelineno-9-2"></a>    &quot;GENE1&quot;: 10,
+</span><span id="__span-9-3"><a id="__codelineno-9-3" name="__codelineno-9-3" href="#__codelineno-9-3"></a>    &quot;GENE2&quot;: 1
+</span><span id="__span-9-4"><a id="__codelineno-9-4" name="__codelineno-9-4" href="#__codelineno-9-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file. </p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Gene Coverage Technical Details</p>
 <table>
@@ -18270,8 +18276,35 @@
 </div>
 </details>
 <details class="task">
-<summary><code>gene_coverage</code>: Breadth of Coverage Calculations</summary>
-<p>This task calculates the percent of a region (typically genes) covered above a minimum depth using samtools and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.</p>
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-10-1"><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>{
+</span><span id="__span-10-2"><a id="__codelineno-10-2" name="__codelineno-10-2" href="#__codelineno-10-2"></a>    &quot;GENE1&quot;: 99.5,
+</span><span id="__span-10-3"><a id="__codelineno-10-3" name="__codelineno-10-3" href="#__codelineno-10-3"></a>    &quot;GENE2&quot;: 10
+</span><span id="__span-10-4"><a id="__codelineno-10-4" name="__codelineno-10-4" href="#__codelineno-10-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-11-1"><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a>{
+</span><span id="__span-11-2"><a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a>    &quot;GENE1&quot;: 10,
+</span><span id="__span-11-3"><a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a>    &quot;GENE2&quot;: 1
+</span><span id="__span-11-4"><a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file. </p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Gene Coverage Technical Details</p>
 <table>
@@ -18571,8 +18604,35 @@
 </div>
 </details>
 <details class="task">
-<summary><code>gene_coverage</code>: Breadth of Coverage Calculations</summary>
-<p>This task calculates the percent of a region (typically genes) covered above a minimum depth using samtools and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.</p>
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-12-1"><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>{
+</span><span id="__span-12-2"><a id="__codelineno-12-2" name="__codelineno-12-2" href="#__codelineno-12-2"></a>    &quot;GENE1&quot;: 99.5,
+</span><span id="__span-12-3"><a id="__codelineno-12-3" name="__codelineno-12-3" href="#__codelineno-12-3"></a>    &quot;GENE2&quot;: 10
+</span><span id="__span-12-4"><a id="__codelineno-12-4" name="__codelineno-12-4" href="#__codelineno-12-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-13-1"><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>{
+</span><span id="__span-13-2"><a id="__codelineno-13-2" name="__codelineno-13-2" href="#__codelineno-13-2"></a>    &quot;GENE1&quot;: 10,
+</span><span id="__span-13-3"><a id="__codelineno-13-3" name="__codelineno-13-3" href="#__codelineno-13-3"></a>    &quot;GENE2&quot;: 1
+</span><span id="__span-13-4"><a id="__codelineno-13-4" name="__codelineno-13-4" href="#__codelineno-13-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file. </p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Gene Coverage Technical Details</p>
 <table>
@@ -18674,8 +18734,35 @@
 </div>
 </details>
 <details class="task">
-<summary><code>gene_coverage</code>: Breadth of Coverage Calculations</summary>
-<p>This task calculates the percent of a region (typically genes) covered above a minimum depth using samtools and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.</p>
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-14-1"><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>{
+</span><span id="__span-14-2"><a id="__codelineno-14-2" name="__codelineno-14-2" href="#__codelineno-14-2"></a>    &quot;GENE1&quot;: 99.5,
+</span><span id="__span-14-3"><a id="__codelineno-14-3" name="__codelineno-14-3" href="#__codelineno-14-3"></a>    &quot;GENE2&quot;: 10
+</span><span id="__span-14-4"><a id="__codelineno-14-4" name="__codelineno-14-4" href="#__codelineno-14-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-15-1"><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>{
+</span><span id="__span-15-2"><a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>    &quot;GENE1&quot;: 10,
+</span><span id="__span-15-3"><a id="__codelineno-15-3" name="__codelineno-15-3" href="#__codelineno-15-3"></a>    &quot;GENE2&quot;: 1
+</span><span id="__span-15-4"><a id="__codelineno-15-4" name="__codelineno-15-4" href="#__codelineno-15-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file. </p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Gene Coverage Technical Details</p>
 <table>
@@ -18777,8 +18864,35 @@
 </div>
 </details>
 <details class="task">
-<summary><code>gene_coverage</code>: Breadth of Coverage Calculations</summary>
-<p>This task calculates the percent of a region (typically genes) covered above a minimum depth using samtools and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.</p>
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-16-1"><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>{
+</span><span id="__span-16-2"><a id="__codelineno-16-2" name="__codelineno-16-2" href="#__codelineno-16-2"></a>    &quot;GENE1&quot;: 99.5,
+</span><span id="__span-16-3"><a id="__codelineno-16-3" name="__codelineno-16-3" href="#__codelineno-16-3"></a>    &quot;GENE2&quot;: 10
+</span><span id="__span-16-4"><a id="__codelineno-16-4" name="__codelineno-16-4" href="#__codelineno-16-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-17-1"><a id="__codelineno-17-1" name="__codelineno-17-1" href="#__codelineno-17-1"></a>{
+</span><span id="__span-17-2"><a id="__codelineno-17-2" name="__codelineno-17-2" href="#__codelineno-17-2"></a>    &quot;GENE1&quot;: 10,
+</span><span id="__span-17-3"><a id="__codelineno-17-3" name="__codelineno-17-3" href="#__codelineno-17-3"></a>    &quot;GENE2&quot;: 1
+</span><span id="__span-17-4"><a id="__codelineno-17-4" name="__codelineno-17-4" href="#__codelineno-17-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file. </p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Gene Coverage Technical Details</p>
 <table>
@@ -18846,8 +18960,35 @@
 </div>
 </details>
 <details class="task">
-<summary><code>gene_coverage</code>: Breadth of Coverage Calculations</summary>
-<p>This task calculates the percent of a region (typically genes) covered above a minimum depth using samtools and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.</p>
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-18-1"><a id="__codelineno-18-1" name="__codelineno-18-1" href="#__codelineno-18-1"></a>{
+</span><span id="__span-18-2"><a id="__codelineno-18-2" name="__codelineno-18-2" href="#__codelineno-18-2"></a>    &quot;GENE1&quot;: 99.5,
+</span><span id="__span-18-3"><a id="__codelineno-18-3" name="__codelineno-18-3" href="#__codelineno-18-3"></a>    &quot;GENE2&quot;: 10
+</span><span id="__span-18-4"><a id="__codelineno-18-4" name="__codelineno-18-4" href="#__codelineno-18-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-19-1"><a id="__codelineno-19-1" name="__codelineno-19-1" href="#__codelineno-19-1"></a>{
+</span><span id="__span-19-2"><a id="__codelineno-19-2" name="__codelineno-19-2" href="#__codelineno-19-2"></a>    &quot;GENE1&quot;: 10,
+</span><span id="__span-19-3"><a id="__codelineno-19-3" name="__codelineno-19-3" href="#__codelineno-19-3"></a>    &quot;GENE2&quot;: 1
+</span><span id="__span-19-4"><a id="__codelineno-19-4" name="__codelineno-19-4" href="#__codelineno-19-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file. </p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Gene Coverage Technical Details</p>
 <table>
@@ -18949,8 +19090,35 @@
 </div>
 </details>
 <details class="task">
-<summary><code>gene_coverage</code>: Breadth of Coverage Calculations</summary>
-<p>This task calculates the percent of a region (typically genes) covered above a minimum depth using samtools and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.</p>
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-20-1"><a id="__codelineno-20-1" name="__codelineno-20-1" href="#__codelineno-20-1"></a>{
+</span><span id="__span-20-2"><a id="__codelineno-20-2" name="__codelineno-20-2" href="#__codelineno-20-2"></a>    &quot;GENE1&quot;: 99.5,
+</span><span id="__span-20-3"><a id="__codelineno-20-3" name="__codelineno-20-3" href="#__codelineno-20-3"></a>    &quot;GENE2&quot;: 10
+</span><span id="__span-20-4"><a id="__codelineno-20-4" name="__codelineno-20-4" href="#__codelineno-20-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-21-1"><a id="__codelineno-21-1" name="__codelineno-21-1" href="#__codelineno-21-1"></a>{
+</span><span id="__span-21-2"><a id="__codelineno-21-2" name="__codelineno-21-2" href="#__codelineno-21-2"></a>    &quot;GENE1&quot;: 10,
+</span><span id="__span-21-3"><a id="__codelineno-21-3" name="__codelineno-21-3" href="#__codelineno-21-3"></a>    &quot;GENE2&quot;: 1
+</span><span id="__span-21-4"><a id="__codelineno-21-4" name="__codelineno-21-4" href="#__codelineno-21-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file. </p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Gene Coverage Technical Details</p>
 <table>
@@ -19018,8 +19186,35 @@
 </div>
 </details>
 <details class="task">
-<summary><code>gene_coverage</code>: Breadth of Coverage Calculations</summary>
-<p>This task calculates the percent of a region (typically genes) covered above a minimum depth using samtools and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.</p>
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-22-1"><a id="__codelineno-22-1" name="__codelineno-22-1" href="#__codelineno-22-1"></a>{
+</span><span id="__span-22-2"><a id="__codelineno-22-2" name="__codelineno-22-2" href="#__codelineno-22-2"></a>    &quot;GENE1&quot;: 99.5,
+</span><span id="__span-22-3"><a id="__codelineno-22-3" name="__codelineno-22-3" href="#__codelineno-22-3"></a>    &quot;GENE2&quot;: 10
+</span><span id="__span-22-4"><a id="__codelineno-22-4" name="__codelineno-22-4" href="#__codelineno-22-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-23-1"><a id="__codelineno-23-1" name="__codelineno-23-1" href="#__codelineno-23-1"></a>{
+</span><span id="__span-23-2"><a id="__codelineno-23-2" name="__codelineno-23-2" href="#__codelineno-23-2"></a>    &quot;GENE1&quot;: 10,
+</span><span id="__span-23-3"><a id="__codelineno-23-3" name="__codelineno-23-3" href="#__codelineno-23-3"></a>    &quot;GENE2&quot;: 1
+</span><span id="__span-23-4"><a id="__codelineno-23-4" name="__codelineno-23-4" href="#__codelineno-23-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file. </p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Gene Coverage Technical Details</p>
 <table>
@@ -19087,8 +19282,35 @@
 </div>
 </details>
 <details class="task">
-<summary><code>gene_coverage</code>: Breadth of Coverage Calculations</summary>
-<p>This task calculates the percent of a region (typically genes) covered above a minimum depth using samtools and basic arithmetic. By default, this task runs for SARS-CoV-2 and Mpox, but if a BED file is provided with regions of interest, this task can run for other organisms as well.</p>
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-24-1"><a id="__codelineno-24-1" name="__codelineno-24-1" href="#__codelineno-24-1"></a>{
+</span><span id="__span-24-2"><a id="__codelineno-24-2" name="__codelineno-24-2" href="#__codelineno-24-2"></a>    &quot;GENE1&quot;: 99.5,
+</span><span id="__span-24-3"><a id="__codelineno-24-3" name="__codelineno-24-3" href="#__codelineno-24-3"></a>    &quot;GENE2&quot;: 10
+</span><span id="__span-24-4"><a id="__codelineno-24-4" name="__codelineno-24-4" href="#__codelineno-24-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-25-1"><a id="__codelineno-25-1" name="__codelineno-25-1" href="#__codelineno-25-1"></a>{
+</span><span id="__span-25-2"><a id="__codelineno-25-2" name="__codelineno-25-2" href="#__codelineno-25-2"></a>    &quot;GENE1&quot;: 10,
+</span><span id="__span-25-3"><a id="__codelineno-25-3" name="__codelineno-25-3" href="#__codelineno-25-3"></a>    &quot;GENE2&quot;: 1
+</span><span id="__span-25-4"><a id="__codelineno-25-4" name="__codelineno-25-4" href="#__codelineno-25-4"></a>}
+</span></code></pre></div></p>
+<p>By default, this task runs for SARS-CoV-2 and Mpox.</p>
+<div class="admonition warning">
+<p class="admonition-title">Region coordinates must be relevant to the reference genome</p>
+<p>Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).</p>
+</div>
+<details class="dna">
+<summary>BED file usage</summary>
+<p>In viral characterization workflows, gene coverage regions are supplied with a BED file. </p>
+<ul>
+<li>To extract custom regions of interest, populate the <code>reference_gene_locations_bed</code> input (task <code>theiacov</code> / <code>morgana_magic</code>)</li>
+<li>If no custom BED is provided, organism defaults are used when available</li>
+<li>BED files should include a gene name in column 4 to label output</li>
+</ul>
+</details>
 <div class="admonition techdetails">
 <p class="admonition-title">Gene Coverage Technical Details</p>
 <table>
@@ -19555,6 +19777,16 @@
 <td>flu_zanamivir_resistance</td>
 <td>String</td>
 <td>resistance mutations to zanamivir (Relenza®)</td>
+</tr>
+<tr>
+<td>gene_coverage_depth_by_gene</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating gene queries to their depth of coverage</td>
+</tr>
+<tr>
+<td>gene_coverage_percent_coverage_by_gene</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating gene queries to their percent breadth of coverage</td>
 </tr>
 <tr>
 <td>genoflu_all_segments</td>
@@ -20402,6 +20634,16 @@
 <td>Version of fastqc software used</td>
 </tr>
 <tr>
+<td>gene_coverage_depth_by_gene</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating gene queries to their depth of coverage</td>
+</tr>
+<tr>
+<td>gene_coverage_percent_coverage_by_gene</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating gene queries to their percent breadth of coverage</td>
+</tr>
+<tr>
 <td>ivar_tsv</td>
 <td>File</td>
 <td>Variant descriptor file generated by iVar variants</td>
@@ -20960,6 +21202,16 @@
 <td>flu_zanamivir_resistance</td>
 <td>String</td>
 <td>resistance mutations to zanamivir (Relenza®)</td>
+</tr>
+<tr>
+<td>gene_coverage_depth_by_gene</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating gene queries to their depth of coverage</td>
+</tr>
+<tr>
+<td>gene_coverage_percent_coverage_by_gene</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating gene queries to their percent breadth of coverage</td>
 </tr>
 <tr>
 <td>genoflu_all_segments</td>
@@ -22195,6 +22447,16 @@
 <td>fastq_scan_version</td>
 <td>String</td>
 <td>The version of fastq_scan</td>
+</tr>
+<tr>
+<td>gene_coverage_depth_by_gene</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating gene queries to their depth of coverage</td>
+</tr>
+<tr>
+<td>gene_coverage_percent_coverage_by_gene</td>
+<td>Map[String,Float]</td>
+<td>A JSON map relating gene queries to their percent breadth of coverage</td>
 </tr>
 <tr>
 <td>kraken_human</td>

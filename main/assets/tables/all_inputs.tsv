@@ -949,6 +949,7 @@ freyja_fastq	qc_check_table	File	TSV containing values to check quality control 
 freyja_fastq	read2	File	Illumina reverse read file in FASTQ file format (compression optional)		Optional	Freyja_FASTQ	general	
 freyja_fastq	reference_gff	File	The GFF file for reference; should match the reference used for alignment (Wuhan-Hu-1)		Optional	Freyja_FASTQ	general	
 freyja_fastq	run_qualimap	Boolean	When set to true, will run qualimap and provide custom visuals	True	Optional	Freyja_FASTQ	general	
+freyja_fastq	sc2_gene_bed	File	BED file depicting SARS-CoV-2 region / gene coordinates	gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed	Optional	Freyja_FASTQ	general	
 freyja_fastq	trimmomatic_min_length	Int	The minimum length cut-off when performing read cleaning	25	Optional	Freyja_FASTQ	general	
 freyja_long_format	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ, Freyja_Plot	runtime	
 freyja_long_format	disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	Freyja_FASTQ, Freyja_Plot	runtime	
@@ -994,11 +995,15 @@ gamma	output_gff	Boolean	Allows GAMMA to output gene matches in GFF format	True	
 gamma	run_gammas	Boolean	Turns on GAMMA-S which runs GAMMA on nucleotide sequences rather than translating input sequences and matches	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 gene_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
 gene_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-gene_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	Freyja_FASTQ	docker	
+gene_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1	Optional	Freyja_FASTQ	docker	
+gene_coverage	exact_match	Boolean	Search for exact matches to query_genes / BED file gene queries	False	Optional	Freyja_FASTQ	general	
+gene_coverage	feature_qualifier	String	Feature qualifier to use in parsing GBFF for coverage calculations	product	Optional	Freyja_FASTQ	general	
+gene_coverage	feature_type	String	Feature type to use in parsing GBFF for coverage calculations	CDS	Optional	Freyja_FASTQ	general	
 gene_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
-gene_coverage	min_depth	Int	Minimum depth for coverage	10	Optional	Freyja_FASTQ	general	
-gene_coverage	sc2_s_gene_start	Int	Where the S gene starts	21563	Optional	Freyja_FASTQ	general	
-gene_coverage	sc2_s_gene_stop	Int	Where the S gene stops	25384	Optional	Freyja_FASTQ	general	
+gene_coverage	min_depth	Int	Minimum depth to call a base covered	10	Optional	Freyja_FASTQ	general	
+gene_coverage	min_quality	Int	Minimum base quality to call a base covered	0	Optional	Freyja_FASTQ	general	
+gene_coverage	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	Freyja_FASTQ	general	
+gene_coverage	reference_gbff	File	GenBank flat file depicting the reference genome		Optional	Freyja_FASTQ	general	
 get_fasta_genome_size	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_FASTQ	runtime	
 get_fasta_genome_size	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	Freyja_FASTQ	runtime	
 get_fasta_genome_size	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/seqkit:2.4.0--h9ee0642_0	Optional	Freyja_FASTQ	docker	
@@ -1239,6 +1244,7 @@ mask_low_coverage	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Thei
 mask_low_coverage	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
 mask_low_coverage	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/bedtools:2.31.0	Optional	TheiaViral_ONT	docker	
 mask_low_coverage	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_ONT	runtime	
+medea_magic	afumigatus_reference_gbff	File	GenBank flat file depicting the reference genome for *Aspergillus fumigatus*	gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	runtime	
 medea_magic	amr_search_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
@@ -1259,6 +1265,12 @@ medea_magic	cladetyper_ref_clade5	File	Reference genome FASTA for *Candidozyma a
 medea_magic	cladetyper_ref_clade5_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade5	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade5_GCA_016809505.1_ASM1680950v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	cladetyper_ref_clade6	File	Reference genome FASTA for *Candidozyma auris* clade6	gs://theiagen-public-resources-rp/reference_data/eukaryotic/candidozyma/Cauris_Clade6_GCA_032714025.1_ASM3271402v1_genomic.fasta	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	cladetyper_ref_clade6_annotated	File	Reference GBFF annotation for *Candidozyma auris* clade6		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	cryptoneo_reference_gbff	File	GenBank flat file depicting the reference genome for *Cryptococcus neoformans*	gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
+medea_magic	gene_coverage_feature_qualifier	String	GenBank flat file feature qualifier to parse for query region names	product	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	gene_coverage_feature_type	String	GenBank flat file feature type to parse for query region coordinates	CDS	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	gene_coverage_min_depth	Int	Minimum read depth to consider a region covered for breadth of coverage calculations	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
+medea_magic	gene_coverage_min_quality	Int	Minimum base quality to consider a region covered for breadth of coverage calculations	0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+medea_magic	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	read1	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
 medea_magic	read2	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
 medea_magic	run_amr_search	Boolean	Set to true to run AMR_Search workflow for support taxa. See AMR_Search documentation	False	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
@@ -1269,9 +1281,6 @@ medea_magic	snippy_maxsoft	Int	Number of bases of alignment to soft-clip before 
 medea_magic	snippy_min_coverage	Int	Minimum read coverage of a position to identify a mutation	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	snippy_min_frac	Float	Minimum fraction of bases at a given position to identify a mutation	0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	snippy_min_quality	Int	Minimum VCF variant call "quality"	100	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	snippy_query_gene	String	Provide a gene to search for using Snippy		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	snippy_reference_afumigatus	File	Snippy reference for *Aspergillus fumigatus*	gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
-medea_magic	snippy_reference_cryptoneo	File	Snippy reference for *Cryptococcus neoformans*	gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	reference	
 medea_magic	snippy_variants_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/snippy:4.6.0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	docker	
 megahit	cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaViral_Illumina_PE	runtime	
 megahit	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_Illumina_PE	runtime	
@@ -1563,9 +1572,10 @@ morgana_magic	flu_track_antiviral_aa_subs	String	Additional list of antiviral re
 morgana_magic	gene_coverage_bam	File	Bam file used for calculating gene coverage		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 morgana_magic	gene_coverage_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	gene_coverage_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-morgana_magic	gene_coverage_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
+morgana_magic	gene_coverage_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker	
 morgana_magic	gene_coverage_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
-morgana_magic	gene_coverage_min_depth	Int	The minimum depth to determine if a position was covered.	10	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
+morgana_magic	gene_coverage_min_depth	Int	The minimum depth to determine if a position was covered	10	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
+morgana_magic	gene_coverage_min_quality	Int	The minimum alignment quality to determine if a position was covered	0	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 morgana_magic	genoflu_cpu	Int	Number of CPUs to allocate to the task	1	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	genoflu_cross_reference	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT	general	
 morgana_magic	genoflu_cross_reference	File	An Excel file to cross-reference BLAST findings; probably useful if novel genotypes are not in the default file used by genoflu.py		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT	general	
@@ -1613,8 +1623,6 @@ morgana_magic	quasitools_memory	Int	Amount of memory/RAM (in GB) to allocate to 
 morgana_magic	read1	File	Internal component, do not modify		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	general	
 morgana_magic	read2	File	Internal component, do not modify		Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_ONT	general	
 morgana_magic	reference_gene_locations_bed	File	Use to provide locations of interest where average coverage will be calculated		Optional	TheiaCoV_FASTA, TheiaCoV_FASTA_Batch	general	
-morgana_magic	sc2_s_gene_start	Int	Start position of S gene	21563	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
-morgana_magic	sc2_s_gene_stop	Int	End position of S gene	25384	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	general	
 morgana_magic	vadr_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	vadr_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	runtime	
 morgana_magic	vadr_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/vadr:1.6.4	Optional	TheiaCoV_ClearLabs, TheiaCoV_FASTA, TheiaCoV_FASTA_Batch, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT	docker	

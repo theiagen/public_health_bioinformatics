@@ -7224,6 +7224,14 @@
 </tr>
 <tr>
 <td>medea_magic</td>
+<td><strong>afumigatus_reference_gbff</strong></td>
+<td>File</td>
+<td>GenBank flat file depicting the reference genome for <em>Aspergillus fumigatus</em></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
 <td><strong>amr_search_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -7384,6 +7392,54 @@
 </tr>
 <tr>
 <td>medea_magic</td>
+<td><strong>cryptoneo_reference_gbff</strong></td>
+<td>File</td>
+<td>GenBank flat file depicting the reference genome for <em>Cryptococcus neoformans</em></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
+<td><strong>gene_coverage_feature_qualifier</strong></td>
+<td>String</td>
+<td>GenBank flat file feature qualifier to parse for query region names</td>
+<td>product</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
+<td><strong>gene_coverage_feature_type</strong></td>
+<td>String</td>
+<td>GenBank flat file feature type to parse for query region coordinates</td>
+<td>CDS</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
+<td><strong>gene_coverage_min_depth</strong></td>
+<td>Int</td>
+<td>Minimum read depth to consider a region covered for breadth of coverage calculations</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
+<td><strong>gene_coverage_min_quality</strong></td>
+<td>Int</td>
+<td>Minimum base quality to consider a region covered for breadth of coverage calculations</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
+<td><strong>query_genes</strong></td>
+<td>String</td>
+<td>Comma-separated list of query genes to parse GBFF/BED file for region coordinates</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
 <td><strong>run_amr_search</strong></td>
 <td>Boolean</td>
 <td>Set to true to run AMR_Search workflow for support taxa. See AMR_Search documentation</td>
@@ -7444,30 +7500,6 @@
 <td>Int</td>
 <td>Minimum VCF variant call "quality"</td>
 <td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>medea_magic</td>
-<td><strong>snippy_query_gene</strong></td>
-<td>String</td>
-<td>Provide a gene to search for using Snippy</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>medea_magic</td>
-<td><strong>snippy_reference_afumigatus</strong></td>
-<td>File</td>
-<td>Snippy reference for <em>Aspergillus fumigatus</em></td>
-<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>medea_magic</td>
-<td><strong>snippy_reference_cryptoneo</strong></td>
-<td>File</td>
-<td>Snippy reference for <em>Cryptococcus neoformans</em></td>
-<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -8594,6 +8626,14 @@
 </tr>
 <tr>
 <td>medea_magic</td>
+<td><strong>afumigatus_reference_gbff</strong></td>
+<td>File</td>
+<td>GenBank flat file depicting the reference genome for <em>Aspergillus fumigatus</em></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
 <td><strong>amr_search_cpu</strong></td>
 <td>Int</td>
 <td>Number of CPUs to allocate to the task</td>
@@ -8746,6 +8786,54 @@
 </tr>
 <tr>
 <td>medea_magic</td>
+<td><strong>cryptoneo_reference_gbff</strong></td>
+<td>File</td>
+<td>GenBank flat file depicting the reference genome for <em>Cryptococcus neoformans</em></td>
+<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
+<td><strong>gene_coverage_feature_qualifier</strong></td>
+<td>String</td>
+<td>GenBank flat file feature qualifier to parse for query region names</td>
+<td>product</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
+<td><strong>gene_coverage_feature_type</strong></td>
+<td>String</td>
+<td>GenBank flat file feature type to parse for query region coordinates</td>
+<td>CDS</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
+<td><strong>gene_coverage_min_depth</strong></td>
+<td>Int</td>
+<td>Minimum read depth to consider a region covered for breadth of coverage calculations</td>
+<td>10</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
+<td><strong>gene_coverage_min_quality</strong></td>
+<td>Int</td>
+<td>Minimum base quality to consider a region covered for breadth of coverage calculations</td>
+<td>0</td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
+<td><strong>query_genes</strong></td>
+<td>String</td>
+<td>Comma-separated list of query genes to parse GBFF/BED file for region coordinates</td>
+<td></td>
+<td>Optional</td>
+</tr>
+<tr>
+<td>medea_magic</td>
 <td><strong>read1</strong></td>
 <td>File</td>
 <td>Internal component, do not modify</td>
@@ -8822,30 +8910,6 @@
 <td>Int</td>
 <td>Minimum VCF variant call "quality"</td>
 <td>100</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>medea_magic</td>
-<td><strong>snippy_query_gene</strong></td>
-<td>String</td>
-<td>Provide a gene to search for using Snippy</td>
-<td></td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>medea_magic</td>
-<td><strong>snippy_reference_afumigatus</strong></td>
-<td>File</td>
-<td>Snippy reference for <em>Aspergillus fumigatus</em></td>
-<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff</td>
-<td>Optional</td>
-</tr>
-<tr>
-<td>medea_magic</td>
-<td><strong>snippy_reference_cryptoneo</strong></td>
-<td>File</td>
-<td>Snippy reference for <em>Cryptococcus neoformans</em></td>
-<td>gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff</td>
 <td>Optional</td>
 </tr>
 <tr>
@@ -11178,6 +11242,66 @@
 <h4 id="organism-specific-characterization">Organism-specific characterization<a class="headerlink" href="#organism-specific-characterization" title="Permanent link">&para;</a></h4>
 <div class="admonition tip">
 <p>The TheiaEuk workflow automatically activates taxa-specific tasks after identification of the relevant taxa using <code>GAMBIT</code>. Many of these taxa-specific tasks do not require any additional inputs from the user.</p>
+<details class="task">
+<summary><code>gene_coverage</code>: Depth and Breadth of Coverage Calculations</summary>
+<p>This task calculates average read depth and the percent of a region (typically genes) covered above a minimum depth and quality using samtools (Pysam) and basic arithmetic.</p>
+<p>Outputs are reported as JSON-based "maps" that relate gene names to their breadth and depth of coverage. For example:</p>
+<p><code>percent_coverage_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>{
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>    &quot;GENE1&quot;: 99.5,
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a>    &quot;GENE2&quot;: 10
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>}
+</span></code></pre></div></p>
+<p><code>depth_by_gene</code>:
+<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>{
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>    &quot;GENE1&quot;: 10,
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>    &quot;GENE2&quot;: 1
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a>}
+</span></code></pre></div></p>
+<details class="dna">
+<summary>GBFF and BED file usage</summary>
+<p>For fungal pathogens, either a GBFF or a BED file may be used for gene coverage coordinate selection.</p>
+<ul>
+<li>If a GBFF is used, a comma-delimited <code>query_genes</code> list must be provided (for example: <code>geneA,geneB,geneC</code>) to extract gene coordinates</li>
+<li>If a BED is used, gene names can be taken from the BED entries; if <code>query_genes</code> is supplied, particular regions will be extracted</li>
+</ul>
+<p>The following query genes are used by default:</p>
+<ul>
+<li><em>Aspergillus fumigatus</em>: <code>Cyp51A</code>, <code>HapE</code>, <code>AFUA_4G08340</code> (COX10 in the default reference)</li>
+<li><em>Candidozyma auris</em>: <code>FKS1</code>, <code>lanosterol.14-alpha.demethylase</code>, <code>uracil.phosphoribosyltransferase</code>, <code>B9J08_005340</code>, <code>B9J08_000401</code>, <code>B9J08_003102</code>, <code>B9J08_003737</code>, <code>B9J08_005343</code></li>
+<li><em>Cryptococcus neoformans</em>: <code>CNA00300</code> (ERG11 in the default reference)</li>
+</ul>
+</details>
+<div class="admonition techdetails">
+<p class="admonition-title">Gene Coverage Technical Details</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>Links</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Task</td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl">task_gene_coverage.wdl</a></td>
+</tr>
+<tr>
+<td>Software Source Code</td>
+<td><a href="https://github.com/samtools/samtools">samtools on GitHub</a></td>
+</tr>
+<tr>
+<td>Software Documentation</td>
+<td><a href="https://www.htslib.org/doc/samtools.html">samtools Manual</a></td>
+</tr>
+<tr>
+<td>Original Publication(s)</td>
+<td><a href="https://doi.org/10.1093/gigascience/giab008">Twelve years of SAMtools and BCFtools</a></td>
+</tr>
+</tbody>
+</table>
+</div>
+</details>
 </div>
 <details class="toggle">
 <summary><em>Candidozyma auris</em> (also known as <em>Candida auris</em>)</summary>
@@ -11533,7 +11657,7 @@
 <details class="toggle">
 <summary>Example Output Interpretation</summary>
 <p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
 </span></code></pre></div>
 <p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
 </details>
@@ -11606,7 +11730,7 @@
 <details class="toggle">
 <summary>Example Output Interpretation</summary>
 <p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
 </span></code></pre></div>
 <p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
 </details>
@@ -11674,7 +11798,7 @@
 <details class="toggle">
 <summary>Example Output Interpretation</summary>
 <p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
 </span></code></pre></div>
 <p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
 </details>
@@ -11732,7 +11856,7 @@
 <details class="toggle">
 <summary>Example Output Interpretation</summary>
 <p>For example, one sample may have the following output for the <code>theiaeuk_snippy_variants_hits</code> column:</p>
-<div class="language-text highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
+<div class="language-text highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>lanosterol.14-alpha.demethylase: lanosterol 14-alpha demethylase (missense_variant c.428A&gt;G p.Lys143Arg; C:266 T:0),B9J08_000401: hypothetical protein (stop_gained c.424C&gt;T p.Gln142*; A:70 G:0)
 </span></code></pre></div>
 <p>Based on this, we can tell that ERG11 has a missense variant at position 143 (Lysine to Arginine) and B9J08_000401 (which is FLO8) has a stop-gained variant at position 142 (Glutamine to Stop).</p>
 </details>
@@ -12164,6 +12288,21 @@
 <td>Version of GAMBIT software used</td>
 </tr>
 <tr>
+<td>gene_coverage_depth_by_gene</td>
+<td><strong>Map[String,Float]</strong></td>
+<td>A JSON map relating gene queries to their depth of coverage</td>
+</tr>
+<tr>
+<td>gene_coverage_percent_coverage_by_gene</td>
+<td><strong>Map[String,Float]</strong></td>
+<td>A JSON map relating gene queries to their percent breadth of coverage</td>
+</tr>
+<tr>
+<td>gene_coverage_stats</td>
+<td><strong>File</strong></td>
+<td>A tab-delimited table depicting gene coverage depth and breadth on a gene-by-gene basis</td>
+</tr>
+<tr>
 <td>n50_value</td>
 <td><strong>Int</strong></td>
 <td>N50 of assembly calculated by QUAST</td>
@@ -12577,6 +12716,21 @@
 <td>gambit_version</td>
 <td><strong>String</strong></td>
 <td>Version of GAMBIT software used</td>
+</tr>
+<tr>
+<td>gene_coverage_depth_by_gene</td>
+<td><strong>Map[String,Float]</strong></td>
+<td>A JSON map relating gene queries to their depth of coverage</td>
+</tr>
+<tr>
+<td>gene_coverage_percent_coverage_by_gene</td>
+<td><strong>Map[String,Float]</strong></td>
+<td>A JSON map relating gene queries to their percent breadth of coverage</td>
+</tr>
+<tr>
+<td>gene_coverage_stats</td>
+<td><strong>File</strong></td>
+<td>A tab-delimited table depicting gene coverage depth and breadth on a gene-by-gene basis</td>
 </tr>
 <tr>
 <td>medaka_model</td>
