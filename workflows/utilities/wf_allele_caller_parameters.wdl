@@ -48,7 +48,7 @@ workflow allele_caller_parameters {
   if (merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei") {
     File stec_db = "gs://theiagen-public-resources-rp/reference_data/bacterial/pn2.0-mlst-databases/STEC.tar.gz"
     String stec_scheme = "STEC"
-    String stec_loci_path = "STEC/loci.tsv"
+    String stec_loci_path = "STEC/loci/chromosomal_plasmid.tsv"
     Float stec_similarity = 85
     String stec_qc_genus = "STEC"
   }
@@ -66,15 +66,15 @@ workflow allele_caller_parameters {
     Float salm_similarity = 75
     String salm_qc_genus = "SALM"
   }
-  if (merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae") {
+  if (merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae") { # do not run vibrio vulnificus ??
     String vibrio_scheme = "VIBR"
     File vibrio_db = "gs://theiagen-public-resources-rp/reference_data/bacterial/pn2.0-mlst-databases/VIBR.tar.gz"
-    String vibrio_loci_path = "VIBR/loci/VIBRIO.tsv"
+    String vibrio_loci_path = "VIBR/loci/VIBRIO_loci.tsv"
     Float vibrio_similarity = 85
     String vibrio_qc_genus = "VIBRIO"
     # species-specific loci paths
     if (gambit_predicted_taxon == "Vibrio cholerae") {
-      String v_cholerae_loci_path = "VIBR/loci/VIBRIO_choleare_loci.tsv"
+      String v_cholerae_loci_path = "VIBR/loci/VIBRIO_cholerae_loci.tsv"
     }
     if (gambit_predicted_taxon == "Vibrio parahaemolyticus") {
       String v_parahaemolyticus_loci_path = "VIBR/loci/VIBRIO_parahaemloyticus_loci.tsv"
@@ -87,7 +87,7 @@ workflow allele_caller_parameters {
   if (merlin_tag == "Yersinia") {
     String yersinia_scheme = "YERSINIA"
     File yersinia_db = "gs://theiagen-public-resources-rp/reference_data/bacterial/pn2.0-mlst-databases/YERSINIA.tar.gz"
-    String yersinia_loci_path = "YERSINIA/loci.tsv"
+    String yersinia_loci_path = "YERSINIA/loci.csv"
     Float yersinia_similarity = 85
     String yersinia_qc_genus = "YERSINIA"
   }
