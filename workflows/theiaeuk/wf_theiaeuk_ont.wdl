@@ -227,5 +227,9 @@ workflow theiaeuk_ont {
     String? theiaeuk_snippy_variants_coverage_tsv = medea_magic.snippy_variants_coverage_tsv
     String? theiaeuk_snippy_variants_num_variants = medea_magic.snippy_variants_num_variants
     String? theiaeuk_snippy_variants_percent_ref_coverage = medea_magic.snippy_variants_percent_ref_coverage
+    # Gene Coverage Outputs
+    File? gene_coverage_stats = medea_magic.gene_coverage_stats
+    Map[String, Float]? gene_coverage_depth_by_gene = medea_magic.depth_by_gene
+    Map[String, Float]? gene_coverage_percent_coverage_by_gene = medea_magic.percent_coverage_by_gene
   }
 }
