@@ -85,11 +85,9 @@ arln_taxon_assembly_ratio_stdev	String	Reported assembely length standard deviat
 arln_taxon_gc_mean	String	Mean GC percent of the taxon.	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 arln_taxon_gc_percent_stdev	String	Reported GC percent standard deviation of the given taxonomy pulled from NCBI aggregated data.	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 artic_amplicon_depths	File	Amplicon-specific depth calculations linked to BED file primer schemes	TheiaCoV_ClearLabs, TheiaCoV_ONT
-artic_docker	String	Docker image utilized for read trimming and consensus genome assembly	TheiaCoV_ONT
-artic_pipeline_docker	String	Docker image utilized for the ARTIC pipeline	TheiaCoV_ClearLabs
-artic_pipeline_reference	String	Reference genome used for the ARTIC pipeline	TheiaCoV_ONT
-artic_reference	String	Reference genome used for the ARTIC pipeline	TheiaCoV_ClearLabs
-artic_version	String	Version of the Artic software utilized for read trimming and conesnsus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
+artic_pipeline_docker	String	Docker image used for the ARTIC pipeline	TheiaCoV_ClearLabs, TheiaCoV_ONT
+artic_pipeline_reference	String	Reference genome used for the ARTIC pipeline	TheiaCoV_ClearLabs, TheiaCoV_ONT
+artic_version	String	Version of the Artic software used for read trimming and conesnsus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
 assembled_viruses	Int	Number of viruses assembled from sample	TheiaViral_Panel
 assembler	String	Assembler used in digger_denovo subworkflow	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 assembler_version	String	Version of the assembler used in digger_denovo	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
