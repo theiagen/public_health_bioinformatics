@@ -355,15 +355,15 @@ workflow theiaprok_illumina_pe {
                 "agrvate_results": merlin_magic.agrvate_results,
                 "agrvate_summary": merlin_magic.agrvate_summary,
                 "agrvate_version": merlin_magic.agrvate_version,
-                "allele_caller_accessory_count": merlin_magic.allele_caller_accessory_count,
-                "allele_caller_accessory_percentage": merlin_magic.allele_caller_accessory_percentage,
-                "allele_caller_cgmlst_json": merlin_magic.allele_caller_cgmlst_json,
-                "allele_caller_core_count": merlin_magic.allele_caller_core_count,
-                "allele_caller_core_percentage": merlin_magic.allele_caller_core_percentage,
-                "allele_caller_detailed_json": merlin_magic.allele_caller_detailed_json,
-                "allele_caller_docker": merlin_magic.allele_caller_docker,
-                "allele_caller_total_loci_count": merlin_magic.allele_caller_total_loci_count,
-                "allele_caller_wgmlst_json": merlin_magic.allele_caller_wgmlst_json,
+                "allele_calling_accessory_count": merlin_magic.allele_calling_accessory_count,
+                "allele_calling_accessory_percentage": merlin_magic.allele_calling_accessory_percentage,
+                "allele_calling_cgmlst_json": merlin_magic.allele_calling_cgmlst_json,
+                "allele_calling_core_count": merlin_magic.allele_calling_core_count,
+                "allele_calling_core_percentage": merlin_magic.allele_calling_core_percentage,
+                "allele_calling_detailed_json": merlin_magic.allele_calling_detailed_json,
+                "allele_calling_docker": merlin_magic.allele_calling_docker,
+                "allele_calling_total_loci_count": merlin_magic.allele_calling_total_loci_count,
+                "allele_calling_wgmlst_json": merlin_magic.allele_calling_wgmlst_json,
                 "amr_search_all_resistances": merlin_magic.amr_search_all_resistances,
                 "amr_search_associated_resistances": merlin_magic.amr_search_associated_resistances,
                 "amr_search_csv": merlin_magic.amr_results_csv,
@@ -1374,16 +1374,16 @@ workflow theiaprok_illumina_pe {
     String? arln_assembly_zscore = arln_stats.assembly_zscore
     String? arln_stats_docker_version = arln_stats.docker_version
     # allele caller outputs
-    String? allele_caller_scheme = merlin_magic.allele_caller_scheme
-    String? allele_caller_result = merlin_magic.allele_caller_result
-    File? allele_caller_wgmlst_json = merlin_magic.allele_caller_wgmlst_json
-    File? allele_caller_cgmlst_json = merlin_magic.allele_caller_cgmlst_json
-    File? allele_caller_detailed_json = merlin_magic.allele_caller_detailed_json
-    Int? allele_caller_core_count = merlin_magic.allele_caller_core_count
-    Float? allele_caller_core_percentage = merlin_magic.allele_caller_core_percentage
-    Int? allele_caller_accessory_count = merlin_magic.allele_caller_accessory_count
-    Float? allele_caller_accessory_percentage = merlin_magic.allele_caller_accessory_percentage
-    Int? allele_caller_total_loci_count = merlin_magic.allele_caller_total_loci_count
-    String? allele_caller_docker = merlin_magic.allele_caller_docker
+    String? allele_calling_scheme = merlin_magic.allele_calling_scheme
+    String? allele_calling_result = merlin_magic.allele_calling_result
+    File? allele_calling_wgmlst_json = merlin_magic.allele_calling_wgmlst_json
+    File? allele_calling_cgmlst_json = merlin_magic.allele_calling_cgmlst_json
+    File? allele_calling_detailed_json = merlin_magic.allele_calling_detailed_json
+    Int? allele_calling_core_count = merlin_magic.allele_calling_core_count
+    Float? allele_calling_core_percentage = merlin_magic.allele_calling_core_percentage
+    Int? allele_calling_accessory_count = merlin_magic.allele_calling_accessory_count
+    Float? allele_calling_accessory_percentage = merlin_magic.allele_calling_accessory_percentage
+    Int? allele_calling_total_loci_count = merlin_magic.allele_calling_total_loci_count
+    String? allele_calling_docker = merlin_magic.allele_calling_docker
   }
 }

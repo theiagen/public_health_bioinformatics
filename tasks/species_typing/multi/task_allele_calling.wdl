@@ -1,6 +1,6 @@
 version 1.0
 
-task allele_caller {
+task allele_calling {
   meta {
     description: "PulseNet 2.0 Allele Calling algorithm"
   }
@@ -17,7 +17,7 @@ task allele_caller {
 
     Int cpu = 8
     Int disk_size = 100
-    String docker = "us-docker.pkg.dev/general-theiagen/pulsenet2-0/allelecaller:1.0.1"
+    String docker = "test:0.1" #"us-docker.pkg.dev/general-theiagen/pulsenet2-0/allelecaller:1.0.1"
     Int memory = 32
   }
   command <<<
@@ -75,7 +75,7 @@ task allele_caller {
     metrics = data["metrics"]
 
     # write the qc pass/fail result to a file
-    with open("ALLELE_CALLER_RESULT", "w") as outfile:
+    with open("ALLELE_CALLING_RESULT", "w") as outfile:
       outfile.write(str(qc_result))
 
     # get various qc metrics and write to file
@@ -86,19 +86,19 @@ task allele_caller {
     CODE
   >>>
   output {
-    String allele_caller_scheme = scheme
-    String allele_caller_result = read_string("ALLELE_CALLER_RESULT")
-    File allele_caller_wgmlst_json = "calls_standard.json.gz"
-    File allele_caller_cgmlst_json = "calls_core_standard.csv.gz"
-    File allele_caller_detailed_json = "allele_calls.json.gz"
+    String allele_calling_scheme = scheme
+    String allele_calling_result = read_string("ALLELE_CALLING_RESULT")
+    File allele_calling_wgmlst_json = "calls_standard.json.gz"
+    File allele_calling_cgmlst_json = "calls_core_standard.csv.gz"
+    File allele_calling_detailed_json = "allele_calls.json.gz"
     # QC metrics
-    Int allele_caller_core_count = read_int("CORECOUNT")
-    Float allele_caller_core_percentage = read_float("COREPERCENTAGE")
-    Int allele_caller_accessory_count = read_int("ACCESSORYCOUNT")
-    Float allele_caller_accessory_percentage = read_float("ACCESSORYPERCENTAGE")
-    Int allele_caller_total_loci_count = read_int("TOTALLOCICOUNT")
+    Int allele_calling_core_count = read_int("CORECOUNT")
+    Float allele_calling_core_percentage = read_float("COREPERCENTAGE")
+    Int allele_calling_accessory_count = read_int("ACCESSORYCOUNT")
+    Float allele_calling_accessory_percentage = read_float("ACCESSORYPERCENTAGE")
+    Int allele_calling_total_loci_count = read_int("TOTALLOCICOUNT")
     # Versioning
-    String allele_caller_docker = docker
+    String allele_calling_docker = docker
   }
   runtime {
     docker: docker
@@ -106,7 +106,6 @@ task allele_caller {
     cpu: cpu
     disks: "local-disk " + disk_size + " SSD"
     disk: disk_size + " GB"
- #   maxRetries: 3
     preemptible: 1
   }
 }

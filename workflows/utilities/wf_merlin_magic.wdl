@@ -18,7 +18,7 @@ import "../../tasks/species_typing/listeria/task_lissero.wdl" as lissero_task
 import "../../tasks/species_typing/mycobacterium/task_clockwork.wdl" as clockwork_task
 import "../../tasks/species_typing/mycobacterium/task_tbp_parser.wdl" as tbp_parser_task
 import "../../tasks/species_typing/mycobacterium/task_tbprofiler.wdl" as tbprofiler_task
-import "../../tasks/species_typing/multi/task_allele_caller.wdl" as allele_caller_task
+import "../../tasks/species_typing/multi/task_allele_calling.wdl" as allele_calling_task
 import "../../tasks/species_typing/neisseria/task_meningotype.wdl" as meningotype_task
 import "../../tasks/species_typing/neisseria/task_ngmaster.wdl" as ngmaster_task
 import "../../tasks/species_typing/pseudomonas/task_pasty.wdl" as pasty_task
@@ -36,7 +36,7 @@ import "../../tasks/species_typing/streptococcus/task_seroba.wdl" as seroba
 import "../../tasks/species_typing/vibrio/task_srst2_vibrio.wdl" as srst2_vibrio_task
 import "../../tasks/species_typing/vibrio/task_abricate_vibrio.wdl" as abricate_vibrio_task
 import "../../tasks/species_typing/vibrio/task_vibecheck_vibrio.wdl" as vibecheck_vibrio_task
-import "../../workflows/utilities/wf_allele_caller_parameters.wdl" as allele_caller_parameters_wf
+import "../../workflows/utilities/wf_allele_calling_parameters.wdl" as allele_calling_parameters_wf
 
 
 workflow merlin_magic {
@@ -60,12 +60,12 @@ workflow merlin_magic {
     Boolean call_shigeifinder_reads_input = false
     Boolean call_tbp_parser = false
     Boolean run_amr_search = false
-    Boolean run_allele_caller = false
+    Boolean run_allele_calling = false
     # docker options
     String? abricate_abaum_docker_image
     String? abricate_vibrio_docker_image
     String? agrvate_docker_image
-    String? allele_caller_docker_image
+    String? allele_calling_docker_image
     String? amr_search_docker_image
     String? clockwork_docker_image
     String? ectyper_docker_image
@@ -679,23 +679,23 @@ workflow merlin_magic {
       }
     }
   }
-  if (run_allele_caller) {
+  if (run_allele_calling) {
     if (merlin_tag == "Campylobacter" || merlin_tag == "Clostridium botulinum" || merlin_tag == "Cronobacter" || merlin_tag == "Escherichia" || merlin_tag == "Shigella sonnei" || merlin_tag == "Listeria" || merlin_tag == "Salmonella" || merlin_tag == "Vibrio" || merlin_tag == "Vibrio cholerae" || merlin_tag == "Yersinia") {
-      call allele_caller_parameters_wf.allele_caller_parameters {
+      call allele_calling_parameters_wf.allele_calling_parameters {
         input:
           merlin_tag = merlin_tag,
           gambit_predicted_taxon = gambit_predicted_taxon
       }
-      call allele_caller_task.allele_caller {
+      call allele_calling_task.allele_calling {
         input:
           samplename = samplename,
           assembly = assembly,
-          blast_db = select_first([blast_db, allele_caller_parameters.db]),
-          similarity_threshold = allele_caller_parameters.similarity,
-          qc_genus = allele_caller_parameters.qc_genus,
-          scheme = allele_caller_parameters.scheme,
-          loci_path = allele_caller_parameters.loci_path,
-          qc_species = allele_caller_parameters.qc_species
+          blast_db = select_first([blast_db, allele_calling_parameters.db]),
+          similarity_threshold = allele_calling_parameters.similarity,
+          qc_genus = allele_calling_parameters.qc_genus,
+          scheme = allele_calling_parameters.scheme,
+          loci_path = allele_calling_parameters.loci_path,
+          qc_species = allele_calling_parameters.qc_species
       }
     }
   }
@@ -709,17 +709,17 @@ workflow merlin_magic {
     String? amr_search_docker = amr_search.amr_search_docker_image
     String? amr_search_version = amr_search.amr_search_version
     # Allele variant_calling_params
-    String? allele_caller_scheme = allele_caller.allele_caller_scheme
-    String? allele_caller_result = allele_caller.allele_caller_result
-    File? allele_caller_wgmlst_json = allele_caller.allele_caller_wgmlst_json
-    File? allele_caller_cgmlst_json = allele_caller.allele_caller_cgmlst_json
-    File? allele_caller_detailed_json = allele_caller.allele_caller_detailed_json
-    Int? allele_caller_core_count = allele_caller.allele_caller_core_count
-    Float? allele_caller_core_percentage = allele_caller.allele_caller_core_percentage
-    Int? allele_caller_accessory_count = allele_caller.allele_caller_accessory_count
-    Float? allele_caller_accessory_percentage = allele_caller.allele_caller_accessory_percentage
-    Int? allele_caller_total_loci_count = allele_caller.allele_caller_total_loci_count
-    String? allele_caller_docker = allele_caller.allele_caller_docker
+    String? allele_calling_scheme = allele_calling.allele_calling_scheme
+    String? allele_calling_result = allele_calling.allele_calling_result
+    File? allele_calling_wgmlst_json = allele_calling.allele_calling_wgmlst_json
+    File? allele_calling_cgmlst_json = allele_calling.allele_calling_cgmlst_json
+    File? allele_calling_detailed_json = allele_calling.allele_calling_detailed_json
+    Int? allele_calling_core_count = allele_calling.allele_calling_core_count
+    Float? allele_calling_core_percentage = allele_calling.allele_calling_core_percentage
+    Int? allele_calling_accessory_count = allele_calling.allele_calling_accessory_count
+    Float? allele_calling_accessory_percentage = allele_calling.allele_calling_accessory_percentage
+    Int? allele_calling_total_loci_count = allele_calling.allele_calling_total_loci_count
+    String? allele_calling_docker = allele_calling.allele_calling_docker
     # Ecoli Typing
     File? serotypefinder_report = serotypefinder.serotypefinder_report
     String? serotypefinder_docker = serotypefinder.serotypefinder_docker

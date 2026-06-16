@@ -1,6 +1,6 @@
 version 1.0
 
-workflow allele_caller_parameters {
+workflow allele_calling_parameters {
   meta {
     description: "Organizes all PulseNet 2.0 Allele Calling parameters into a single location for easier maintainence; similarity thresholds were extracted from <https://github.com/ncezid-biome/pulsenet2.0-bfx/blob/47644186f2df27e9f01a000d47c451135a75f65d/main/utils/utils.nf#L42>"
   }
