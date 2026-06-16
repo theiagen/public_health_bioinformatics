@@ -20,7 +20,7 @@ task allele_clustering {
   command <<<
     # concatenate all JSONs into NDJSON format
     touch ~{tree_name}_concatenated_profiles.ndjson
-    file_array=(~{sep=' ' allelejsons})
+    file_array=(~{sep=' ' allele_jsons})
     for index in ${!file_array[@]}; do
       cat ${file_array[$index]} >> ~{tree_name}_concatenated_profiles.ndjson
     done
