@@ -25,7 +25,7 @@ If the **distance between the query genome assembly and the closest genome in th
 
     ---
 
-    [GAMBIT Prokaryotic GTDB Database v2.2.0](#gambit-gtdb-database-v220)
+    [GAMBIT Prokaryotic GTDB Database v3.0.0](#gambit-gtdb-database-v300)
 
     [GAMBIT Fungal Database v1.0.0](#gambit-fungal-database-v100)
 
@@ -175,6 +175,53 @@ Options:
     A billing project **must** be provided in the request to download; otherwise, the following links and GS URIs will not work.
 
 ### GAMBIT Prokaryotic Databases
+
+#### GAMBIT GTDB Database v3.0.0
+
+??? toggle "Database Details"
+
+    This database is a **major update** to the GTDB v2.2.0 database. This iteration of the GAMBIT database relies upon the [Genome Taxonomy Database](https://gtdb.ecogenomic.org/) (GTDB), an initiative to establish a standardised microbial taxonomy based on genome phylogeny. The genomes used to construct the phylogeny are obtained from [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/) and [GenBank](https://www.ncbi.nlm.nih.gov/genbank/), independently quality-controlled using [CheckM](https://github.com/Ecogenomics/CheckM/wiki) before inclusion in GTDB.
+
+    This database was computed from [GTDB Release 232](https://gtdb.ecogenomic.org/stats/r232) as of April 15th, 2025. 
+
+    - **Curation efforts**
+        
+        The following curation steps were followed for all species:
+        
+        - The candidates for an existing genus were collapsed (e.g genus_A, genus_B becomes genus)
+        
+        The following species were updated:
+        
+        - *Shigella* sp*.*
+            - This genus is not present in GTDB  as it is collapsed under *Escherichia coli;*
+            - All Shigella genomes in RefSeq were added to the database with no clustering using default quality criteria.
+        - *Mycolicibacterium/Mycolicibacter/Mycolicibacillus/Mycobacteroides/Mycobacterium* sp.
+            - All genomes available were used.
+        - *Tropheryma whipplei*
+            - This species has a low completeness score of 75%;
+            - The CheckM completeness score was lowered to 70% for genomes belonging to this species.
+
+    **Database Files**
+
+    These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:
+
+    **GS URI (for [Terra.bio](https://terra.bio) usage):**
+
+    - `gs://gambit-databases-rp/3.0.0/gambit-metadata-3.0.0-20260601.gdb`
+    - `gs://gambit-databases-rp/3.0.0/gambit-signatures-3.0.0-20260601.gs`
+
+    **HTTPS URL (for local download):**
+
+    - <https://storage.googleapis.com/gambit-databases-rp/3.0.0/gambit-metadata-3.0.0-20260601.gdb>
+    - <https://storage.googleapis.com/gambit-databases-rp/3.0.0/gambit-signatures-3.0.0-20260601.gs>
+
+    **Taxa included in the GAMBIT database**
+
+    Summary of species represented in the database with number of genomes representing each species and the species threshold:
+
+    - <https://storage.googleapis.com/gambit-databases-rp/3.0.0/gambit-taxa-3.0.0-20260601.tsv>
+    
+        Note: Species with a threshold of "0" have been sub-speciated.
 
 #### GAMBIT GTDB Database v2.2.0
 
