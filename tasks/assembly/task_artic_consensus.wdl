@@ -58,6 +58,14 @@ task consensus {
   # Grab reads from alignment
   # 0x904 means we are now filtering out unaligned, secondary, and supplemental alignments - thanks Curtis
   samtools fastq -F0x904 ~{samplename}.primertrimmed.rg.sorted.bam | gzip > ~{samplename}.fastq.gz  
+
+  # rename fasta headers to remove description; append a contig number if multiple contigs
+  # Rename FASTA headers to samplename, stripping description field; append _# suffix only if multiple sequences present
+  header_count=$(grep -c '^>' ~{samplename}.consensus.fasta)
+  awk -v sample="~{samplename}" -v count="$header_count" \
+    'BEGIN{n=0} /^>/{n++; print (count==1) ? ">"sample : ">"sample"_"n; next} {print}' \
+    ~{samplename}.consensus.fasta > renamed.fasta 
+  mv renamed.fasta ~{samplename}.consensus.fasta
   >>>
   output {
     File consensus_seq = "~{samplename}.consensus.fasta"

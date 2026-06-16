@@ -300,7 +300,7 @@ workflow theiacov_ont {
     String read1_aligned = select_first([consensus.reads_aligned, flu_track.irma_aligned_fastqs, ""])
     # Read Alignment - Artic consensus versioning outputs
     String? artic_version = consensus.artic_pipeline_version
-    String? artic_docker = consensus.artic_pipeline_docker
+    String? artic_pipeline_docker = consensus.artic_pipeline_docker
     String? artic_pipeline_reference = consensus.artic_pipeline_reference
     File? artic_amplicon_depths = consensus.artic_amplicon_depths
     String? primer_bed_name = consensus.primer_bed_name

@@ -7,10 +7,10 @@ fragment: true
 
     Input reads are aligned to the appropriate reference and only mapped reads are retained. Alignment post-processing occurs, where primers are removed and various trimming steps are undertaken. Variants are detected, and a consensus assembly file is generated.
 
-    Please note that the Clair3 model is set by default to `"r1041_e82_400bps_sup_v500"` which may not be suitable for your sequencing data. Please be sure to change this parameter if needed by selecting from [the Clair3 model library](https://github.com/HKU-BAL/Clair3#pre-trained-models) (the exact list of models is contained in `/opt/conda/bin/models/` within the [Docker container](https://console.cloud.google.com/artifacts/docker/general-theiagen/us/theiagen/artic)). 
+    Please note that the Clair3 model is set by default to `"r1041_e82_400bps_sup_v500"` which may not be suitable for your sequencing data. Please be sure to change this parameter if needed by selecting from [the Clair3 model library](https://github.com/theiagen/theiagen_docker_builds/blob/main/artic/1.9.0/README.md#clair3-models). 
 
     !!! info "Primer BED formatting"
-        ARTIC has stringent primer BED formatting standards that are depicted [here](https://chrisgkent.github.io/primalbedtools/). The "sequence" and "primerAttributes" fields are NOT necessary for this task, though a comprehensive file is depicted here:
+        ARTIC has stringent primer BED formatting standards that are briefly depicted [here](https://chrisgkent.github.io/primalbedtools/) and fully described [here](https://github.com/artic-network/primerscheme-specs/blob/main/pdf/primerscheme.pdf). The "sequence" and "primerAttributes" fields are NOT necessary for this task, though a comprehensive example is depicted here:
         
         ```
         # chrom     start   end     primername              pool    strand  sequence            primerAttributes       
