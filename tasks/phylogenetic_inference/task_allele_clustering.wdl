@@ -14,7 +14,7 @@ task allele_clustering {
 
     Int cpu = 2
     Int disk_size = 100
-    String docker = "allele-clustering:0.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/allele-clustering:1.0.0"
     Int memory = 4
   }
   command <<<
