@@ -64,7 +64,8 @@ task consensus {
   header_count=$(grep -c '^>' ~{samplename}.consensus.fasta)
   awk -v sample="~{samplename}" -v count="$header_count" \
     'BEGIN{n=0} /^>/{n++; print (count==1) ? ">"sample : ">"sample"_"n; next} {print}' \
-    ~{samplename}.consensus.fasta > renamed.fasta && mv renamed.fasta ~{samplename}.consensus.fasta
+    ~{samplename}.consensus.fasta > renamed.fasta 
+  mv renamed.fasta ~{samplename}.consensus.fasta
   >>>
   output {
     File consensus_seq = "~{samplename}.consensus.fasta"
