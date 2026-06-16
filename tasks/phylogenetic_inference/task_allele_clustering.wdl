@@ -18,12 +18,14 @@ task allele_clustering {
     Int memory = 4
   }
   command <<<
-    # concatenate all JSONs into NDJSON format
-    touch ~{tree_name}_concatenated_profiles.ndjson
+    # concatenate all GZIPPED JSONs into NDJSON format
+    touch ~{tree_name}_concatenated_profiles.ndjson.gz
     file_array=(~{sep=' ' allele_jsons})
     for index in ${!file_array[@]}; do
-      cat ${file_array[$index]} >> ~{tree_name}_concatenated_profiles.ndjson
+      cat ${file_array[$index]} >> ~{tree_name}_concatenated_profiles.ndjson.gz
     done
+
+    gunzip ~{tree_name}_concatenated_profiles.ndjson.gz
 
     # run AlleleClustering script
     python3 AlleleClustering.py concatenated_profiles.ndjson \
