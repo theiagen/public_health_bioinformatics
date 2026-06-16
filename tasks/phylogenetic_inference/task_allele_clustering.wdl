@@ -28,7 +28,7 @@ task allele_clustering {
     gunzip ~{tree_name}_concatenated_profiles.ndjson.gz
 
     # run AlleleClustering script
-    python3 /data/AlleleClustering.py concatenated_profiles.ndjson \
+    python3 /data/AlleleClustering.py ~{tree_name}_concatenated_profiles.ndjson \
       --algorithm ~{tree_building_algorithm} \
       --distance ~{distance_algorithm} \
       --output ~{tree_name}
