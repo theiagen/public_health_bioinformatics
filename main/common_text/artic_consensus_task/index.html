@@ -6321,8 +6321,22 @@
 <summary><code>artic consensus</code>: Alignment, Primer Trimming, Variant Detection, and Consensus</summary>
 <p>This task runs the <code>artic minion</code> command which is a pipeline with a number of stages, <a href="https://artic.readthedocs.io/en/latest/minion/#0">described in detail in the ARTIC documentation</a>. Briefly, these stages are as follows:</p>
 <p>Input reads are aligned to the appropriate reference and only mapped reads are retained. Alignment post-processing occurs, where primers are removed and various trimming steps are undertaken. Variants are detected, and a consensus assembly file is generated.</p>
-<p>Please note that the Medaka model is set by default to <code>"r941_min_high_g360"</code> which may not be suitable for your sequencing data. Please be sure to change this parameter if needed.</p>
+<p>Please note that the Clair3 model is set by default to <code>"r1041_e82_400bps_sup_v500"</code> which may not be suitable for your sequencing data. Please be sure to change this parameter if needed by selecting from <a href="https://github.com/HKU-BAL/Clair3#pre-trained-models">the Clair3 model library</a> (the exact list of models is contained in <code>/opt/conda/bin/models/</code> within the <a href="https://console.cloud.google.com/artifacts/docker/general-theiagen/us/theiagen/artic">Docker container</a>). </p>
 <div class="admonition info">
+<p class="admonition-title">Primer BED formatting</p>
+<p>ARTIC has stringent primer BED formatting standards that are depicted <a href="https://chrisgkent.github.io/primalbedtools/">here</a>. The "sequence" and "primerAttributes" fields are NOT necessary for this task, though a comprehensive file is depicted here:</p>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a># chrom     start   end     primername              pool    strand  sequence            primerAttributes       
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>MN908947.3  47      78      SARS-CoV-2_1_LEFT_1     1       +       CTCTTGTAGATCTT...   pw=1.0;ps=100
+</span></code></pre></div>
+<p>Some other noteworthy formatting standards include:</p>
+<ul>
+<li>alternative primer schemes must contain an <em>underscored</em> suffix, e.g. "_alt#"</li>
+<li>versions must be <em>hyphenated</em> because periods are not permitted e.g. "HIV-v2-0"</li>
+<li>primer pools <em>must</em> be consistent with the primer name's number assignment, e.g. "SARS-CoV-2_1_LEFT" must be in the same primer pool as "SARS-CoV-2_1_RIGHT"</li>
+</ul>
+</div>
+<div class="admonition info">
+<p class="admonition-title">ClearLabs</p>
 <p>Read-trimming is performed on raw read data generated on the ClearLabs instrument and thus not a required step in the TheiaCoV_ClearLabs workflow.</p>
 </div>
 <div class="admonition techdetails">
