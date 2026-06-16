@@ -182,24 +182,94 @@ Options:
 
     This database is a **major update** to the GTDB v2.2.0 database. This iteration of the GAMBIT database relies upon the [Genome Taxonomy Database](https://gtdb.ecogenomic.org/) (GTDB), an initiative to establish a standardised microbial taxonomy based on genome phylogeny. The genomes used to construct the phylogeny are obtained from [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/) and [GenBank](https://www.ncbi.nlm.nih.gov/genbank/), independently quality-controlled using [CheckM](https://github.com/Ecogenomics/CheckM/wiki) before inclusion in GTDB.
 
-    This database was computed from [GTDB Release 232](https://gtdb.ecogenomic.org/stats/r232) as of April 15th, 2025. 
+    This database was computed from [GTDB Release 232](https://gtdb.ecogenomic.org/stats/r232) as of April 15th, 2025. It contains 8661 species and 144178 genomes. 
+
+    - **Database Creation Workflow**
+         
+        The v3.0.0 GTDB GAMBIT Database was created leveraging [GAMBITdb-nf workflow](https://github.com/gambit-suite/gambitdb-nf), version 1.1.2. This workflow creates GAMBIT databases automatically from GTDB metadata spreadhseets. The process followed was:
+
+        1. The bacterial metadata spreadsheet for GTDB r232 was downloaded from <https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/bac120_metadata_r232.tsv.gz> 
+        2. Metagenomic Assembled Genomes (MAGs) were filtered out from the metadata spreadsheet by removing all genome entries that contained the word "metagenome" in the `ncbi_genome_category`column
+        3. The database was created with the following parameters:
+
+            1. _Completeness_: This parameter was left at the default value of `97`, the same as v2 database creation
+
+            2. _Contamination_: This parameter was left at the default value of `3`, the same as v2 database creation
+
+            3. _Max contigs_: This parameter was left at the default value of `100`, the same as v2 database creation
+
+            4. _Jaccard distance_: changed to `rowwise-stream` for speed
+
+            5. _Taxonomy source_: GTDB with whitelist file provided
+        
+        4. The following genus were whitelisted
+
+            1. _Escherichia_
+
+            2. _Salmonella_
+
+            3. _Mycobacterium_
+
+            4. _Proteus_
 
     - **Curation efforts**
         
-        The following curation steps were followed for all species:
+        The following curation steps were followed:
         
-        - The candidates for an existing genus were collapsed (e.g genus_A, genus_B becomes genus)
+        - *Eschrichia* and *Shigella*
+            - A new database for just genomes classified as either *Escherichia* or *Shigella* in the `ncbi_taxonomy`column was created though the following steps:
+
+                1. The metadata spreadsheet for GTDB r232 was filtered to contain only non-MAG genomes for these two genuses based on NCBI taxonomy call
+
+                2. The NCBI ANI report for prokaryotes was downloaded from <https://ftp.ncbi.nlm.nih.gov/genomes/ASSEMBLY_REPORTS/ANI_report_prokaryotes.txt> and all *Escherichia* or *Shigella* genomes with the following contiditions were removed from the GTDB metadata spreadsheet
+
+                    1. non-OK taxonomy-check-status
+
+                    2. synonym-match best-match-status
+
+                3. The database was created leveraging [GAMBITdb-nf workflow](https://github.com/gambit-suite/gambitdb-nf), version 1.1.2, with the following parameters:
+
+                    1. _Completeness_: This parameter was left at the default value of `97`, the same as v2 database creation
+
+                    2. _Contamination_: This parameter was left at the default value of `3`, the same as v2 database creation
+
+                    3. _Max contigs_: This parameter was left at the default value of `100`, the same as v2 database creation
+
+                    4. _Jaccard distance_: changed to `rowwise-stream` for speed
+
+                    5. _Taxonomy source_: NCBI
+                
+                4. This new database was merged with GAMBIT Database v3.0.0 by removing the pre-existing *Escherichia*/*Shigella* genomes and appending the new database
+
+                    a. There were 5 genomes that the original v3.0.0 DB called *Enterbacter flexneri_A*, but the *Esherichia*/*Shigella* build labeled as *Escherichia coli*. To avoid misclassifications, these were removed.
         
-        The following species were updated:
+        - *Enterbacter flexneri_A*
+
+            - The *Enterobacter flexneri_A* species was removed outright from v3.0.0 GAMBIT Database as this cluster was composed mostly of genomes that are classified *Escherichia coli* in NCBI but are low quality.
         
-        - *Shigella* sp*.*
-            - This genus is not present in GTDB  as it is collapsed under *Escherichia coli;*
-            - All Shigella genomes in RefSeq were added to the database with no clustering using default quality criteria.
-        - *Mycolicibacterium/Mycolicibacter/Mycolicibacillus/Mycobacteroides/Mycobacterium* sp.
-            - All genomes available were used.
+        - *Enterobacter* sp.
+
+            - After manual curation of the species calls, it was decided that GTDB-defined clusters were to be silenced by turning the report boolean to FALSE. An exception was made for *Enterobacter hormaechei_C* as it clusters with *Enterobacter hormaechei*.
+            
         - *Tropheryma whipplei*
-            - This species has a low completeness score of 75%;
-            - The CheckM completeness score was lowered to 70% for genomes belonging to this species.
+
+            - This species has a low completeness score of around 75% and over 100 contigs, therefore it has not been included in the original v3.0.0 database
+
+            - To add this species to the v3.0.0 database, the filtered input spreadsheet was used as a base, where MAGs have been filtered out, to produce a metadata spreadsheet containing only this species
+
+            - A new database was created with [GAMBITdb-nf workflow](https://github.com/gambit-suite/gambitdb-nf), version 1.1.2, with the following parameters:
+
+                1. _Completeness_: This parameter was adjusted to value of `70`
+
+                2. _Contamination_: This parameter was left at the default value of `3`, the same as v2 database creation
+
+                3. _Max contigs_: This parameter was adjusted to value of `200`
+
+                4. _Jaccard distance_: changed to `rowwise-stream` for speed
+
+                5. _Taxonomy source_: GTDB
+
+            - This database was merged with the existing v3.0.0 GAMBIT database
 
     **Database Files**
 
@@ -219,7 +289,7 @@ Options:
 
     Summary of species represented in the database with number of genomes representing each species and the species threshold:
 
-    - <https://storage.googleapis.com/gambit-databases-rp/3.0.0/gambit-taxa-3.0.0-20260601.tsv>
+    - <https://storage.googleapis.com/gambit-databases-rp/3.0.0/gambit-taxa-3.0.0-20260601.csv>
     
         Note: Species with a threshold of "0" have been sub-speciated.
 
