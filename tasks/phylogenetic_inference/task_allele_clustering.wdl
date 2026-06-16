@@ -22,10 +22,13 @@ task allele_clustering {
     touch ~{tree_name}_concatenated_profiles.ndjson.gz
     file_array=(~{sep=' ' allele_jsons})
     for index in ${!file_array[@]}; do
-      cat ${file_array[$index]} >> ~{tree_name}_concatenated_profiles.ndjson.gz
+      # in the case where the input files do not end in newline characters,
+      # AlleleClustering.py gets angry since it expects NDJSON
+      # also you cannot add newlines when concatenating gzipped files
+      # so we need to unzip before concatenating within an echo for newline addition
+      gunzip ${file_array[$index]} -c > temporary.json
+      echo "$(cat temporary.json)" >> ~{tree_name}_concatenated_profiles.ndjson
     done
-
-    gunzip ~{tree_name}_concatenated_profiles.ndjson.gz
 
     # run AlleleClustering script
     python3 /data/AlleleClustering.py ~{tree_name}_concatenated_profiles.ndjson \
