@@ -11,7 +11,7 @@
     ![Core Gene SNP Workflow Diagram](../../assets/figures/Core_Gene_SNP.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
-The Core_Gene_SNP workflow is intended for core genome and pangenome phylogenetic analysis using [PIRATE](https://github.com/SionBayliss/PIRATE) and [IQ-TREE2 v2.1.2](https://github.com/iqtree/iqtree2/tree/v2.1.2).
+The Core_Gene_SNP workflow is intended for core genome and pangenome phylogenetic analysis using [PIRATE](https://github.com/SionBayliss/PIRATE) and [IQ-TREE2 v2.4.0](https://github.com/iqtree/iqtree2/tree/v2.4.0).
 
 !!! info "Default Parameters"
     Please note that while default parameters for pangenome construction and phylogenetic tree generation are provided, **these default parameters may not suit every dataset and have not been validated against known phylogenies**. Users should take care to select the parameters that are most appropriate for their dataset. Please reach out to [support@theiagen.com](mailto:support@theiagen.com) or one of the other resources listed at the bottom of this page if you would like assistance with this task.

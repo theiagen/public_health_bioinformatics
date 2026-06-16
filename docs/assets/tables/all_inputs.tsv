@@ -2178,7 +2178,7 @@ snippy_tree_wf	gubbins_docker	String	The Docker container to use for the task	us
 snippy_tree_wf	gubbins_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
-snippy_tree_wf	iqtree2_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.1.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
+snippy_tree_wf	iqtree2_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.4.0	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	iqtree2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_model	String	Nucelotide substitution model to use when generating the final tree with IQ-TREE 2. By default, IQ-TREE 2 runs its ModelFinder algorithm to identify the model it thinks best fits your dataset		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	iqtree2_opts	String	Additional options to pass to IQ-TREE 2		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
