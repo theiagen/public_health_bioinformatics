@@ -296,13 +296,13 @@ workflow theiacov_ont {
     String assembly_fasta = select_first([consensus.consensus_seq, flu_track.irma_assembly_fasta, "Assembly could not be generated"])
     File? aligned_bam = consensus.trim_sorted_bam
     File? aligned_bai = consensus.trim_sorted_bai
-    File? medaka_vcf = consensus.medaka_pass_vcf
+    File? clair3_vcf = consensus.artic_clair3_pass_vcf
     String read1_aligned = select_first([consensus.reads_aligned, flu_track.irma_aligned_fastqs, ""])
-    File? read1_trimmed = consensus.trim_fastq
     # Read Alignment - Artic consensus versioning outputs
     String? artic_version = consensus.artic_pipeline_version
-    String? artic_docker = consensus.artic_pipeline_docker
-    String? medaka_reference = consensus.medaka_reference
+    String? artic_pipeline_docker = consensus.artic_pipeline_docker
+    String? artic_pipeline_reference = consensus.artic_pipeline_reference
+    File? artic_amplicon_depths = consensus.artic_amplicon_depths
     String? primer_bed_name = consensus.primer_bed_name
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): " + select_first([consensus.artic_pipeline_version, flu_track.irma_version, ""])
     # Assembly QC - consensus assembly qc outputs
@@ -322,9 +322,11 @@ workflow theiacov_ont {
     Float? est_coverage_raw = nanoplot_raw.est_coverage
     Float? est_coverage_clean = nanoplot_clean.est_coverage
     # SC2 specific coverage outputs
+    Map[String, Float]? gene_coverage_depth_by_gene = morgana_magic.gene_coverage_depth_by_gene
+    Map[String, Float]? gene_coverage_percent_coverage_by_gene = morgana_magic.gene_coverage_percent_coverage_by_gene
     Float? sc2_s_gene_mean_coverage = morgana_magic.sc2_s_gene_mean_coverage
     Float? sc2_s_gene_percent_coverage = morgana_magic.sc2_s_gene_percent_coverage
-    File? est_percent_gene_coverage_tsv = morgana_magic.est_percent_gene_coverage_tsv
+    File? est_percent_gene_coverage_tsv = morgana_magic.gene_coverage_stats
     # Pangolin outputs
     String? pango_lineage = morgana_magic.pango_lineage
     String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded

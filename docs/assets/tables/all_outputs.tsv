@@ -33,10 +33,9 @@ agrvate_results	File	A gzipped tarball of all results	TheiaProk_FASTA, TheiaProk
 agrvate_summary	File	The summary file produced	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 agrvate_version	String	The version of AgrVATE used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 aligned_bai	String	Index companion file to the bam file generated during the consensus assembly process	Freyja_FASTQ, TheiaCoV_Illumina_PE
-aligned_bai	File	Index companion file to the bam file generated during the consensus assembly process	Clair3_Variants_ONT, TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+aligned_bai	File	Index companion file to the bam file generated during the consensus assembly process	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 aligned_bam	String	Sorted BAM file containing the alignments of reads to the reference genome	Freyja_FASTQ, TheiaCoV_Illumina_PE
-aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	Clair3_Variants_ONT, TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-aligned_fai	File	Index file for the reference genome	Clair3_Variants_ONT
+aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 alignment_method	String	The method used to generate the alignment	Freyja_FASTQ
 amr_results_csv	File	CSV formatted AMR profile	AMR_Search
 amr_results_pdf	File	PDF formatted AMR profile	AMR_Search
@@ -85,8 +84,10 @@ arln_stats_docker_version	String	Docker version for task_arln_stats.wdl	TheiaPro
 arln_taxon_assembly_ratio_stdev	String	Reported assembely length standard deviation of the given taxonomy pulled from NCBI aggregated data.	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 arln_taxon_gc_mean	String	Mean GC percent of the taxon.	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 arln_taxon_gc_percent_stdev	String	Reported GC percent standard deviation of the given taxonomy pulled from NCBI aggregated data.	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
-artic_docker	String	Docker image utilized for read trimming and consensus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
-artic_version	String	Version of the Artic software utilized for read trimming and conesnsus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
+artic_amplicon_depths	File	Amplicon-specific depth calculations linked to BED file primer schemes	TheiaCoV_ClearLabs, TheiaCoV_ONT
+artic_pipeline_docker	String	Docker image used for the ARTIC pipeline	TheiaCoV_ClearLabs, TheiaCoV_ONT
+artic_pipeline_reference	String	Reference genome used for the ARTIC pipeline	TheiaCoV_ClearLabs, TheiaCoV_ONT
+artic_version	String	Version of the Artic software used for read trimming and conesnsus genome assembly	TheiaCoV_ClearLabs, TheiaCoV_ONT
 assembled_viruses	Int	Number of viruses assembled from sample	TheiaViral_Panel
 assembler	String	Assembler used in digger_denovo subworkflow	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
 assembler_version	String	Version of the assembler used in digger_denovo	TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
@@ -219,6 +220,9 @@ cladetyper_clade	String	The clade assigned to the input assembly	Cauris_CladeTyp
 cladetyper_docker_image	String	The Docker container used for the task	Cauris_CladeTyper, TheiaEuk_Illumina_PE, TheiaEuk_ONT
 cladetyper_gambit_version	String	The version of GAMBIT used for the analysis	Cauris_CladeTyper, TheiaEuk_Illumina_PE
 cladetyper_version	String	The version of Cladetyper used for the analysis	TheiaEuk_ONT
+clair3_aligned_bai	File	Index companion file to the bam file generated during the consensus assembly process	Clair3_Variants_ONT
+clair3_aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	Clair3_Variants_ONT
+clair3_aligned_fai	File	Index file for the reference genome	Clair3_Variants_ONT
 clair3_docker	String	Docker image used for Clair3	TheiaViral_ONT
 clair3_docker_image	String	Version of the Docker container used for Clair3 variant calling	Clair3_Variants_ONT
 clair3_gvcf	File	Genomic VCF file from Clair3	TheiaViral_ONT
@@ -227,7 +231,7 @@ clair3_model_used	String	Name of the Clair3 model used for variant calling	Clair
 clair3_variants_gvcf	File	Optional genome VCF file containing information about all genomic positions, including non-variant sites	Clair3_Variants_ONT
 clair3_variants_vcf	File	Final merged VCF file containing high-confidence variant calls, combining results from both pileup and full-alignment approaches	Clair3_Variants_ONT
 clair3_variants_wf_version	String	Version of the PHB workflow used	Clair3_Variants_ONT
-clair3_vcf	File	Variant calls in VCF format from Clair3	TheiaViral_ONT
+clair3_vcf	File	Variant calls in VCF format from Clair3	TheiaCoV_ONT, TheiaViral_ONT
 clair3_version	String	Clair3 Version being used	Clair3_Variants_ONT, TheiaViral_ONT
 clockwork_decontaminated_read1	File	Decontaminated forward reads by Clockwork	TBProfiler_tNGS, TheiaProk_Illumina_PE
 clockwork_decontaminated_read2	File	Decontaminated reverse reads by Clockwork	TBProfiler_tNGS, TheiaProk_Illumina_PE
@@ -486,6 +490,9 @@ gamma_results	File	The .gamma file reporting gene matches	TheiaProk_FASTA, Theia
 gamma_version	String	The version of GAMMA used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
 genbank_fasta	File	**Only for SARS-CoV-2 submission**: GenBank fasta file for upload	Mercury_Prep_N_Batch
 genbank_metadata	File	**Only for SARS-CoV-2 submission**: GenBank metadata for upload	Mercury_Prep_N_Batch
+gene_coverage_depth_by_gene	Map[String,Float]	A JSON map relating gene queries to their depth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+gene_coverage_percent_coverage_by_gene	Map[String,Float]	A JSON map relating gene queries to their percent breadth of coverage	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+gene_coverage_stats	File	A tab-delimited table depicting gene coverage depth and breadth on a gene-by-gene basis	TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 generated_accessions	File	Text file mapping the BioSample accession with its sample name.	Terra_2_NCBI
 genoflu_all_segments	String	The genotypes for each individual flu segment	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 genoflu_genotype	String	The genotype of the whole genome, based off of the individual segments types	TheiaCoV_FASTA, TheiaCoV_Illumina_PE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
@@ -679,8 +686,6 @@ meanbaseq_trim	Float	Mean quality of the nucleotide basecalls aligned to the ref
 meanmapq_trim	String	Mean quality of the mapped reads to the reference genome after primer trimming	TheiaCoV_Illumina_PE
 meanmapq_trim	Float	Mean quality of the mapped reads to the reference genome after primer trimming	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 medaka_model	String	Model used by Medaka	TheiaEuk_ONT, TheiaProk_ONT
-medaka_reference	String	Reference sequence used in medaka task	TheiaCoV_ClearLabs, TheiaCoV_ONT
-medaka_vcf	File	A VCF file containing the identified variants	TheiaCoV_ONT
 medaka_version	String	Version of Medaka used	TheiaEuk_ONT, TheiaProk_ONT
 medea_tag	String	Curated name of GAMBIT predicted taxon	TheiaEuk_ONT
 megahit_docker	String	Docker image used for MEGAHIT	TheiaViral_Illumina_PE
@@ -962,7 +967,6 @@ read1_mapped	File	The mapped forward reads to the assembly	TheiaMeta_Illumina_PE
 read1_renamed	File	New read1 FASTQ file renamed to desired filename	Rename_FASTQ
 read1_subsampled	File	Read1 FASTQ files downsampled to desired coverage	RASUSA
 read1_subsampled_raw	File	Raw read1 FASTQ files downsampled before trimming/filtering	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE
-read1_trimmed	File	Forward read file after quality trimming and adapter removal	TheiaCoV_ONT
 read1_unaligned	File	Forward read file of unaligned reads	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 read1_unmapped	File	The unmapped forwards reads to the assembly	TheiaMeta_Illumina_PE
 read2	File	File containing the reverse reads (not available for single-end or ONT data)	BaseSpace_Fetch, SRA_Fetch
@@ -1019,8 +1023,8 @@ samtools_version	String	The version of samtools used to sort and index the align
 samtools_version_consensus	String	The version of samtools used to create the pileup before running iVar consensus	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 samtools_version_primtrim	String	The version of samtools used to create the pileup before running iVar trim	Freyja_FASTQ, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
 samtools_version_stats	String	The version of samtools used to assess the quality of read mapping	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE
-sc2_s_gene_mean_coverage	Float	Mean read depth for the S gene in SARS-CoV-2	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
-sc2_s_gene_percent_coverage	Float	Percent coverage of the S gene in SARS-CoV-2	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
+sc2_s_gene_mean_coverage	Float	Mean read depth for the S gene in SARS-CoV-2	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
+sc2_s_gene_percent_coverage	Float	Percent coverage of the S gene in SARS-CoV-2	Freyja_FASTQ, TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT, TheiaViral_Illumina_PE, TheiaViral_ONT
 semibin_bins	Array[File]	An array of binned metagenomic assembled genome files	TheiaMeta_Illumina_PE
 semibin_docker	String	The Docker image of semibin	TheiaMeta_Illumina_PE
 semibin_version	String	The version of Semibin used	TheiaMeta_Illumina_PE

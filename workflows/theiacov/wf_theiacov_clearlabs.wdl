@@ -23,8 +23,8 @@ workflow theiacov_clearlabs {
     String seq_method = "OXFORD_NANOPORE"
     File primer_bed
     # assembly parameters
-    Int normalise = 20000
-    String medaka_docker = "us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3"
+    Int normalise = 0
+    String artic_docker = "us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0"
     # reference values
     File? reference_genome
     # nextclade inputs
@@ -74,7 +74,7 @@ workflow theiacov_clearlabs {
       read1 = ncbi_scrub_se.read1_dehosted,
       primer_bed = primer_bed,
       normalise = normalise,
-      docker = medaka_docker,
+      docker = artic_docker,
       reference_genome = organism_parameters.reference,
       organism = organism
   }
@@ -187,13 +187,14 @@ workflow theiacov_clearlabs {
     # Read Alignment - Artic consensus outputs
     File aligned_bam = consensus.trim_sorted_bam
     File aligned_bai = consensus.trim_sorted_bai
-    File variants_from_ref_vcf = consensus.medaka_pass_vcf
+    File variants_from_ref_vcf = consensus.artic_clair3_pass_vcf
     File assembly_fasta = consensus.consensus_seq
     File? read1_aligned = consensus.reads_aligned
     # Read Alignment - Artic consensus versioning outputs
     String artic_version = consensus.artic_pipeline_version
-    String artic_docker = consensus.artic_pipeline_docker
-    String medaka_reference = consensus.medaka_reference
+    String artic_pipeline_docker = consensus.artic_pipeline_docker
+    String artic_pipeline_reference = consensus.artic_pipeline_reference
+    File? artic_amplicon_depths = consensus.artic_amplicon_depths
     String primer_bed_name = consensus.primer_bed_name
     String assembly_method = "TheiaCoV (~{version_capture.phb_version}): ~{consensus.artic_pipeline_version}"
     # Read Alignment - consensus assembly qc outputs
@@ -212,9 +213,11 @@ workflow theiacov_clearlabs {
     # Percentage mapped reads
     Float percentage_mapped_reads = stats_n_coverage.percentage_mapped_reads
     # SC2 specific coverage outputs
+    Map[String, Float]? gene_coverage_depth_by_gene = morgana_magic.gene_coverage_depth_by_gene
+    Map[String, Float]? gene_coverage_percent_coverage_by_gene = morgana_magic.gene_coverage_percent_coverage_by_gene
     Float? sc2_s_gene_mean_coverage = morgana_magic.sc2_s_gene_mean_coverage
     Float? sc2_s_gene_percent_coverage = morgana_magic.sc2_s_gene_percent_coverage
-    File? est_percent_gene_coverage_tsv = morgana_magic.est_percent_gene_coverage_tsv
+    File? est_percent_gene_coverage_tsv = morgana_magic.gene_coverage_stats
     # Pangolin outputs
     String? pango_lineage = morgana_magic.pango_lineage
     String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded

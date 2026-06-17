@@ -26,6 +26,7 @@ task snippy_gene_query {
       echo "DEBUG: Reference genome was provided, checking that gene queries are in reference genome"
       for qgene in $(echo "~{query_gene}" | sed "s/,/ /g"); do
           echo "DEBUG: checking reference genome for ${qgene}"
+          # This grep is greedy, and will recover superstrings that contain the query
           num_lines=$(grep "${qgene}" ~{reference} | wc -l)
           if [ $num_lines -gt 0 ]; then
             echo "${QUERY_CHECK}${qgene} was found in reference genome" >> QUERY_CHECK

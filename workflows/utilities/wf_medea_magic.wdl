@@ -4,6 +4,7 @@ import "../../tasks/gene_typing/variant_detection/task_snippy_gene_query.wdl" as
 import "../../tasks/gene_typing/variant_detection/task_snippy_variants.wdl" as snippy
 import "../../tasks/species_typing/candidozyma/task_cauris_cladetyper.wdl" as cauris_cladetyper
 import "../../tasks/gene_typing/drug_resistance/task_amr_search.wdl" as amr_search_task
+import "../../tasks/quality_control/basic_statistics/task_gene_coverage.wdl" as gene_coverage_task
 
 workflow medea_magic {
   meta {
@@ -42,15 +43,20 @@ workflow medea_magic {
     File? cladetyper_ref_clade6_annotated
     Float? cladetyper_max_distance
     # snippy options - mostly files we host
-    String? snippy_query_gene
-    File snippy_reference_afumigatus = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff"
-    File snippy_reference_cryptoneo = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff"
+    String? query_genes
+    File afumigatus_reference_gbff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/aspergillus/Aspergillus_fumigatus_GCF_000002655.1_ASM265v1_genomic.gbff"
+    File cryptoneo_reference_gbff = "gs://theiagen-public-resources-rp/reference_data/eukaryotic/cryptococcus/Cryptococcus_neoformans_GCF_000091045.1_ASM9104v1_genomic.gbff"
     Int? snippy_map_qual
     Int? snippy_base_quality
     Int? snippy_min_coverage
     Float? snippy_min_frac
     Int? snippy_min_quality
     Int? snippy_maxsoft
+    # gene coverage options
+    String? gene_coverage_feature_type
+    String? gene_coverage_feature_qualifier
+    Int? gene_coverage_min_depth
+    Int? gene_coverage_min_quality
   }
   if (medea_tag == "Candidozyma auris" || medea_tag == "Candida auris") {
     call cauris_cladetyper.cauris_cladetyper as cladetyper {
@@ -111,8 +117,20 @@ workflow medea_magic {
           samplename = samplename,
           snippy_variants_results = select_first([snippy_cauris.snippy_variants_results, snippy_cauris_assembly.snippy_variants_results]),
           reference = cladetyper.annotated_reference,
-          query_gene = select_first([snippy_query_gene,"FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"]),
+          query_gene = select_first([query_genes, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"]),
           docker = snippy_gene_query_docker_image
+      }
+      call gene_coverage_task.gene_coverage as gene_coverage_cauris {
+        input:
+          samplename = samplename,
+          bam = select_first([snippy_cauris.snippy_variants_bam, snippy_cauris_assembly.snippy_variants_bam]),
+          bai = select_first([snippy_cauris.snippy_variants_bai, snippy_cauris_assembly.snippy_variants_bai]),
+          reference_gbff = cladetyper.annotated_reference,
+          query_genes = select_first([query_genes, "FKS1,lanosterol.14-alpha.demethylase,uracil.phosphoribosyltransferase,B9J08_005340,B9J08_000401,B9J08_003102,B9J08_003737,B9J08_005343"]),
+          feature_type = gene_coverage_feature_type,
+          feature_qualifier = gene_coverage_feature_qualifier,
+          min_depth = gene_coverage_min_depth,
+          min_quality = gene_coverage_min_quality
       }
     }
   }
@@ -120,7 +138,7 @@ workflow medea_magic {
     if (!assembly_only) {
       call snippy.snippy_variants as snippy_afumigatus {
         input:
-          reference_genome_file = snippy_reference_afumigatus,
+          reference_genome_file = afumigatus_reference_gbff,
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
@@ -136,7 +154,7 @@ workflow medea_magic {
     if (assembly_only) {
       call snippy.snippy_variants as snippy_afumigatus_assembly {
         input:
-          reference_genome_file = snippy_reference_afumigatus,
+          reference_genome_file = afumigatus_reference_gbff,
           assembly_fasta = assembly,
           samplename = samplename,
           map_qual = snippy_map_qual,
@@ -152,16 +170,28 @@ workflow medea_magic {
       input:
         samplename = samplename,
         snippy_variants_results = select_first([snippy_afumigatus.snippy_variants_results, snippy_afumigatus_assembly.snippy_variants_results]),
-        reference = snippy_reference_afumigatus,
-        query_gene = select_first([snippy_query_gene, "Cyp51A,HapE,AFUA_4G08340"]), # AFUA_4G08340 is COX10 according to MARDy
+        reference = afumigatus_reference_gbff,
+        query_gene = select_first([query_genes, "Cyp51A,HapE,AFUA_4G08340"]), # AFUA_4G08340 is COX10 according to MARDy
         docker = snippy_gene_query_docker_image
+    }
+    call gene_coverage_task.gene_coverage as gene_coverage_afumigatus {
+      input:
+        samplename = samplename,
+        bam = select_first([snippy_afumigatus.snippy_variants_bam, snippy_afumigatus_assembly.snippy_variants_bam]),
+        bai = select_first([snippy_afumigatus.snippy_variants_bai, snippy_afumigatus_assembly.snippy_variants_bai]),
+        reference_gbff = afumigatus_reference_gbff,
+        query_genes = select_first([query_genes, "Cyp51A,HapE,AFUA_4G08340"]),
+        feature_type = gene_coverage_feature_type,
+        feature_qualifier = gene_coverage_feature_qualifier,
+        min_depth = gene_coverage_min_depth,
+        min_quality = gene_coverage_min_quality
     }
   }
   if (medea_tag == "Cryptococcus neoformans") {
     if (!assembly_only) {
       call snippy.snippy_variants as snippy_crypto {
         input:
-          reference_genome_file = snippy_reference_cryptoneo,
+          reference_genome_file = cryptoneo_reference_gbff,
           read1 = select_first([read1]),
           read2 = read2,
           samplename = samplename,
@@ -177,7 +207,7 @@ workflow medea_magic {
     if (assembly_only) {
       call snippy.snippy_variants as snippy_crypto_assembly {
         input:
-          reference_genome_file = snippy_reference_cryptoneo,
+          reference_genome_file = cryptoneo_reference_gbff,
           assembly_fasta = assembly,
           samplename = samplename,
           map_qual = snippy_map_qual,
@@ -193,9 +223,21 @@ workflow medea_magic {
       input:
         samplename = samplename,
         snippy_variants_results = select_first([snippy_crypto.snippy_variants_results, snippy_crypto_assembly.snippy_variants_results]),
-        reference = snippy_reference_cryptoneo,
-        query_gene = select_first([snippy_query_gene, "CNA00300"]), # CNA00300 is ERG11 for this reference genome
+        reference = cryptoneo_reference_gbff,
+        query_gene = select_first([query_genes, "CNA00300"]), # CNA00300 is ERG11 for this reference genome
         docker = snippy_gene_query_docker_image
+    }
+    call gene_coverage_task.gene_coverage as gene_coverage_cryptoneo {
+      input:
+        samplename = samplename,
+        bam = select_first([snippy_crypto.snippy_variants_bam, snippy_crypto_assembly.snippy_variants_bam]),
+        bai = select_first([snippy_crypto.snippy_variants_bai, snippy_crypto_assembly.snippy_variants_bai]),
+        reference_gbff = cryptoneo_reference_gbff,
+        query_genes = select_first([query_genes, "CNA00300"]),
+        feature_type = gene_coverage_feature_type,
+        feature_qualifier = gene_coverage_feature_qualifier,
+        min_depth = gene_coverage_min_depth,
+        min_quality = gene_coverage_min_quality
     }
   }
   # Running AMR Search
@@ -249,5 +291,9 @@ workflow medea_magic {
     String snippy_variants_coverage_tsv = select_first([snippy_cauris.snippy_variants_coverage_tsv, snippy_cauris_assembly.snippy_variants_coverage_tsv, snippy_afumigatus.snippy_variants_coverage_tsv, snippy_afumigatus_assembly.snippy_variants_coverage_tsv, snippy_crypto.snippy_variants_coverage_tsv, snippy_crypto_assembly.snippy_variants_coverage_tsv, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
     String snippy_variants_num_variants = select_first([snippy_cauris.snippy_variants_num_variants, snippy_cauris_assembly.snippy_variants_num_variants, snippy_afumigatus.snippy_variants_num_variants, snippy_afumigatus_assembly.snippy_variants_num_variants, snippy_crypto.snippy_variants_num_variants, snippy_crypto_assembly.snippy_variants_num_variants, "No matching taxon detected"])
     String snippy_variants_percent_ref_coverage = select_first([snippy_cauris.snippy_variants_percent_ref_coverage, snippy_cauris_assembly.snippy_variants_percent_ref_coverage, snippy_afumigatus.snippy_variants_percent_ref_coverage, snippy_afumigatus_assembly.snippy_variants_percent_ref_coverage, snippy_crypto.snippy_variants_percent_ref_coverage, snippy_crypto_assembly.snippy_variants_percent_ref_coverage, "No matching taxon detected"])
+    # gene coverage
+    File gene_coverage_stats = select_first([gene_coverage_cauris.gene_coverage_stats, gene_coverage_afumigatus.gene_coverage_stats, gene_coverage_cryptoneo.gene_coverage_stats, "gs://theiagen-public-resources-rp/empty_files/no_match_detected.txt"])
+    Map[String, Float] depth_by_gene = select_first([gene_coverage_cauris.depth_by_gene, gene_coverage_afumigatus.depth_by_gene, gene_coverage_cryptoneo.depth_by_gene, {"": 0}])
+    Map[String, Float] percent_coverage_by_gene = select_first([gene_coverage_cauris.breadth_by_gene, gene_coverage_afumigatus.breadth_by_gene, gene_coverage_cryptoneo.breadth_by_gene, {"": 0}])
   }
 }

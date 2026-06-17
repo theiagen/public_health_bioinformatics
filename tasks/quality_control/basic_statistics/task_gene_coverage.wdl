@@ -2,64 +2,71 @@ version 1.0
 
 task gene_coverage {
   input {
-    File bamfile
-    File bedfile
+    File bam
     String samplename
-    Int sc2_s_gene_start = 21563
-    Int sc2_s_gene_stop = 25384
-    Int min_depth = 10
 
-    String organism
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/samtools:1.15"
+    File? bai
+    File? bedfile # BEDfile including region names and/or coordinates
+    File? reference_gbff # GBFF including annotated regions 
+    String? query_genes # comma-delimited list of strings
+    
+    String feature_type = "CDS" # GBFF feature type to use for coordinate extraction
+    String feature_qualifier = "product" # GBFF feature qualifier to use for comparison to query gene
+    Boolean exact_match = false # use an exact match for qualifier mapping (always case-sensitive)
+    Boolean ambiguous_contig = false # apply coordinates from BED to first identified contig in BAM
+
+    Int min_depth = 10 # minimum depth to count a base in breadth of coverage caclulations
+    Int min_quality = 0 # minimum base quality to count a base in breadth of coverage caclulations
+
+    String? organism # used to determine if S gene coverage should be reported for SARS-CoV-2
+
+    String docker = "us-docker.pkg.dev/general-theiagen/theiagen/pysam:1.23.1"
     Int disk_size = 100
     Int memory = 8
     Int cpu = 2
   }
   command <<<
-    echo "Calculating gene coverage for ~{samplename} using samtools with ~{bamfile}"
+    # fail hard
+    set -euo pipefail
 
-    samtools index ~{bamfile}
+    # run calculations
+    python3 /usr/bin/gene_coverage.py \
+      --bam ~{bam} \
+      --feature_type ~{feature_type} \
+      --feature_qualifier ~{feature_qualifier} \
+      --min_depth ~{min_depth} \
+      --min_quality ~{min_quality} \
+      ~{if defined(query_genes) then "--query_genes ~{query_genes}" else ""} \
+      ~{if exact_match then "--exact_match" else ""} \
+      ~{if defined(bedfile) then "--bedfile ~{bedfile}" else ""} \
+      ~{if defined(reference_gbff) then "--reference_gbff ~{reference_gbff}" else ""} \
+      ~{if ambiguous_contig then "--ambiguous_contig" else ""}
 
-    # extract chromosome name from bam file
-    chromosome=$(samtools idxstats ~{bamfile} | cut -f 1 | head -1)
-    export chromosome
+    mv COVERAGE_STATS.tsv ~{samplename}.coverage_stats.tsv
 
-    if [ "~{organism}" == "sars-cov-2" ]; then
-      samtools coverage -r "$chromosome:~{sc2_s_gene_start}-~{sc2_s_gene_stop}" ~{bamfile} > ~{samplename}.s_gene.coverage.txt
-      s_gene_depth=$(cut -f 7 ~{samplename}.s_gene.coverage.txt | tail -n 1)
+    # deprecated outputs v4.2.0
+    python3 <<CODE
+    import json
+    for key in ["COVERAGE", "DEPTH"]:
+      with open(f"{key}_DICT.json", "r") as f:
+        data_dict = {k.upper(): v for k, v in json.load(f).items()}
 
-      if [ -z "s_gene_depth" ] ; then s_gene_depth="0"; fi
-      echo "$s_gene_depth" | tee S_GENE_DEPTH
+      if "S" in data_dict and "~{organism}".lower() == "sars-cov-2":
+        sc2_s_gene_data = data_dict["S"]
+      else:
+        sc2_s_gene_data = 0.0
 
-      sgene=$(samtools depth -J -r "${chromosome}:~{sc2_s_gene_start}-~{sc2_s_gene_stop}" ~{bamfile} | awk -F "\t" '{if ($3 > ~{min_depth}) print;}' | wc -l )
-      sgene_pc=$(python3 -c "print ( round( ($sgene / 3822 ) * 100, 2 ) )")
-      echo "$sgene_pc" | tee S_GENE_PC
-    else
-      echo 0.0 | tee S_GENE_DEPTH
-      echo 0.0 | tee S_GENE_PC
-    fi
-
-    # add warning to file
-    echo "#Caution: results may be inaccurate if your sample is not mapped to the reference genome used to generate the bed file of gene locations." > ~{samplename}.percent_gene_coverage.tsv
-    # iterate through file and calculate coverage for each row in the bedfile
-    while read -r line; do
-      # pull out the important fields from the bedfile
-      start=$(echo "$line" | cut -f 2)
-      stop=$(echo "$line" | cut -f 3)
-      gene=$(echo "$line" | cut -f 4)
-
-      # calculate depth and coverage with samtools and python
-      depth=$(samtools depth -r "$chromosome:$start-$stop" ~{bamfile} | awk -F "\t" '{ if ($3 > ~{min_depth}) print; }' | wc -l)
-      coverage=$(python3 -c "print ( round( ($depth / ($stop - $start + 1) ) * 100, 2 ) )")
-
-      echo -e "$gene\t$coverage" >> ~{samplename}.percent_gene_coverage.tsv
-    done < ~{bedfile}
-
+      with open(f"SC2_S_GENE_{key}", "w") as f:
+        f.write(str(sc2_s_gene_data))
+    CODE
   >>>
   output {
-    Float sc2_s_gene_depth = read_float("S_GENE_DEPTH")
-    Float sc2_s_gene_percent_coverage = read_float("S_GENE_PC")
-    File est_percent_gene_coverage_tsv = "~{samplename}.percent_gene_coverage.tsv"
+    File gene_coverage_stats = "~{samplename}.coverage_stats.tsv"
+    Map[String, Float] depth_by_gene = read_json("DEPTH_DICT.json")
+    Map[String, Float] breadth_by_gene = read_json("COVERAGE_DICT.json")
+    # deprecated v4.2.0
+    Float sc2_s_gene_depth = read_string("SC2_S_GENE_DEPTH")
+    Float sc2_s_gene_coverage = read_string("SC2_S_GENE_COVERAGE")
   }
   runtime {
     docker: docker

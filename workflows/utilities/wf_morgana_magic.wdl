@@ -76,8 +76,7 @@ workflow morgana_magic {
     File? reference_gene_locations_bed
     File? gene_coverage_bam
     Int? gene_coverage_min_depth
-    Int? sc2_s_gene_start
-    Int? sc2_s_gene_stop
+    Int? gene_coverage_min_quality
     Int? gene_coverage_cpu
     Int? gene_coverage_disk_size
     Int? gene_coverage_memory
@@ -175,13 +174,13 @@ workflow morgana_magic {
       # tasks specific to either sars-cov-2, MPXV, or any organism with a user-supplied reference gene locations bed file
       call gene_coverage_task.gene_coverage {
         input:
-          bamfile = select_first([gene_coverage_bam]),
+          bam = select_first([gene_coverage_bam]),
           bedfile = organism_parameters.gene_locations_bed,
           samplename = samplename,
           organism = organism_parameters.standardized_organism,
-          sc2_s_gene_start = sc2_s_gene_start,
-          sc2_s_gene_stop = sc2_s_gene_stop,
           min_depth = gene_coverage_min_depth,
+          min_quality = gene_coverage_min_quality,
+          ambiguous_contig = true, # this allows BED files to work for coordinates w/o direct tie to the reference
           cpu = gene_coverage_cpu,
           disk_size = gene_coverage_disk_size,
           docker = gene_coverage_docker,
@@ -391,9 +390,11 @@ workflow morgana_magic {
     File? quasitools_hydra_vcf = quasitools.hydra_vcf
     File? quasitools_mutations_report = quasitools.mutations_report
     # Gene Coverage Outputs
+    Map[String, Float]? gene_coverage_depth_by_gene = gene_coverage.depth_by_gene
+    Map[String, Float]? gene_coverage_percent_coverage_by_gene = gene_coverage.breadth_by_gene
     Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
-    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
-    File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
+    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_coverage
+    File? gene_coverage_stats = gene_coverage.gene_coverage_stats
     # Flu Track Percentage Mapped Reads
     String? percentage_mapped_reads = flu_track.percentage_mapped_reads
   }

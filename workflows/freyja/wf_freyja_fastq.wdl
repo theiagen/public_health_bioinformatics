@@ -42,6 +42,7 @@ workflow freyja_fastq {
     Float? longitude
     Int freyja_min_coverage = 60
     String freyja_long_format_docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.2"
+    File sc2_gene_bed = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"
   }
   if (defined(read2)) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
@@ -135,13 +136,14 @@ workflow freyja_fastq {
       depth_cutoff = depth_cutoff
   }
   if (freyja_pathogen == "SARS-CoV-2") {
-    File sc2_gene_bed = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"
     call gene_coverage_task.gene_coverage {
       input:
-        bamfile = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
+        bam = select_first([primer_trim.trim_sorted_bam, sam_to_sorted_bam.bam, bwa.sorted_bam]),
+        bai = select_first([primer_trim.trim_sorted_bai, sam_to_sorted_bam.bai, bwa.sorted_bai]),
         bedfile = sc2_gene_bed,
+        ambiguous_contig = true,
         samplename = samplename,
-        organism = "sars-cov-2"
+        organism = freyja_pathogen
     }
   }
   if (defined(qc_check_table)) {
@@ -160,7 +162,7 @@ workflow freyja_fastq {
           "classified_human_dehosted": select_first([read_QC_trim_pe.kraken2_human_dehosted, read_QC_trim_se.kraken2_human_dehosted, read_QC_trim_ont.metabuli_percent_human_dehosted]),
           # SC2-specific gene coverage - only available when freyja_pathogen == "SARS-CoV-2"
           "sc2_s_gene_mean_coverage": gene_coverage.sc2_s_gene_depth,
-          "sc2_s_gene_percent_coverage": gene_coverage.sc2_s_gene_percent_coverage
+          "sc2_s_gene_percent_coverage": gene_coverage.sc2_s_gene_coverage
       }
     }
   }
@@ -309,9 +311,11 @@ workflow freyja_fastq {
     String freyja_lineages = freyja.freyja_lineages
     String freyja_abundances = freyja.freyja_abundances
     # Gene Coverage outputs - SARS-CoV-2 only
+    Map[String, Float]? gene_coverage_depth_by_gene = select_first([gene_coverage.depth_by_gene, {"": 0}])
+    Map[String, Float]? gene_coverage_percent_coverage_by_gene = select_first([gene_coverage.breadth_by_gene, {"": 0}])
     Float? sc2_s_gene_mean_coverage = gene_coverage.sc2_s_gene_depth
-    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_percent_coverage
-    File? est_percent_gene_coverage_tsv = gene_coverage.est_percent_gene_coverage_tsv
+    Float? sc2_s_gene_percent_coverage = gene_coverage.sc2_s_gene_coverage
+    File? est_percent_gene_coverage_tsv = gene_coverage.gene_coverage_stats
     # QC Check Results
     String? qc_check = qc_check_task.qc_check
     File? qc_standard = qc_check_task.qc_standard
