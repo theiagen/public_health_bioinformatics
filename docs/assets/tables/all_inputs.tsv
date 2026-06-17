@@ -1,7 +1,7 @@
 Terra Task Name	Variable	Type	Description	Default Value	Terra Status	Workflow	Classification	Manual Override
 allele_clustering	allele_jsons	Array[File]	The array of input WGMLST allele calls from the Allele Calling module of TheiaProk		Required	Allele_Clustering	general	
-allele_clustering	distance_algorithm	String	The distance metric algorithm for calculating distances between samples; see task documentation for options		Required	Allele_Clustering	general	
-allele_clustering	tree_building_algorithm	String	The tree building algorithm for constructing the tree; see task documentation for options		Required	Allele_Clustering	general	
+allele_clustering	distance_algorithm	String	The distance metric algorithm for calculating distances between samples; see above for options		Required	Allele_Clustering	general	
+allele_clustering	tree_building_algorithm	String	The tree building algorithm for constructing the tree; see above for options		Required	Allele_Clustering	general	
 allele_clustering	tree_name	String	The name for the output NWK file		Required	Allele_Clustering	general	
 amr_search_workflow	amr_search_database	String	NCBI taxon code of samples known taxonomy, see above supported species		Required	AMR_Search	general	
 amr_search_workflow	input_fasta	File	A microbial assembly file		Required	AMR_Search	general	
@@ -1341,7 +1341,7 @@ merlin_magic	abricate_vibrio_min_percent_coverage	Int	Minimum DNA percent covera
 merlin_magic	abricate_vibrio_min_percent_identity	Int	Minimum DNA percent identity	80	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	agrvate_agr_typing_only	Boolean	Set to true to skip agr operon extraction and frameshift detection	False	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	agrvate_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/agrvate:1.0.2--hdfd78af_0	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
-merlin_magic	allele_calling_docker_image	String	The Docker container to use for the task		Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
+merlin_magic	allele_calling_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/allele_calling:1.0.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	general	
 merlin_magic	amr_search_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 merlin_magic	amr_search_disk_size	Int	Amount of storage (in GB) to allocate to the task	50	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	runtime	
 merlin_magic	amr_search_docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/amrsearch:0.2.1	Optional	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT	docker	
