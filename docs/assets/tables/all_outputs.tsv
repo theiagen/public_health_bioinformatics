@@ -37,6 +37,20 @@ aligned_bai	File	Index companion file to the bam file generated during the conse
 aligned_bam	String	Sorted BAM file containing the alignments of reads to the reference genome	Freyja_FASTQ, TheiaCoV_Illumina_PE
 aligned_bam	File	Sorted BAM file containing the alignments of reads to the reference genome	TheiaCoV_ClearLabs, TheiaCoV_Illumina_SE, TheiaCoV_ONT
 alignment_method	String	The method used to generate the alignment	Freyja_FASTQ
+allele_calling_accessory_count	Int	The number of accessory loci detected	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+allele_calling_accessory_percentage	Float	The percentage of accessory loci detected	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+allele_calling_cgmlst_json	File	A CSV file listing the allele hashes for the core genes	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+allele_calling_core_count	Int	The number of core loci detected	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+allele_calling_core_percentage	Float	The percentage of core loci detected	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+allele_calling_detailed_json	File	A JSON file listing the allele calls with detailed information include allele sequence	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+allele_calling_docker	String	The Docker contained used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+allele_calling_result	String	Either PASS or FAIL, this describes if the results passed QC 	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+allele_calling_scheme	String	The BLAST database scheme used	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+allele_calling_total_loci_count	Int	The total number of loci	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+allele_calling_wgmlst_json	File	A JSON listing the allele hashes for all loci	TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
+allele_clustering_tree	File	The NWK file containing the resulting tree	Allele_Clustering
+allele_clustering_wf_analysis_date	String	Date of analysis	Allele_Clustering
+allele_clustering_wf_version	String	Version of PHB used for analysis	Allele_Clustering
 amr_results_csv	File	CSV formatted AMR profile	AMR_Search
 amr_results_pdf	File	PDF formatted AMR profile	AMR_Search
 amr_search_all_resistances	String	All resistances returned by AMRsearch	AMR_Search, TheiaEuk_Illumina_PE, TheiaEuk_ONT, TheiaProk_FASTA, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE, TheiaProk_ONT
@@ -244,6 +258,7 @@ concatenate_column_content_analysis_date	String	The date the workflow was run	Co
 concatenate_column_content_version	String	The version of the repository the workflow is hosted in	Concatenate_Column_Content
 concatenate_illumina_lanes_analysis_date	String	Date of analysis	Concatenate_Illumina_Lanes
 concatenate_illumina_lanes_version	String	Version of PHB used for the analysis	Concatenate_Illumina_Lanes
+concatenated_allele_jsons	File	The file containing all of the input JSONs concatenated, primarily useful for debugging	Allele_Clustering
 concatenated_files	File	The file containing all of the items from the column you selected.	Concatenate_Column_Content
 concatenated_variants	File	The concatenated variants without presence/absence	Find_Shared_Variants
 consensus_flagstat	File	Output from the `samtools flagstat` command to assess quality of the alignment file (BAM)	TheiaCoV_ClearLabs, TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaCoV_ONT
