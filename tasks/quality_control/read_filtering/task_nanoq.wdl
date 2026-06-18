@@ -17,7 +17,7 @@ task nanoq {
     # capture date and version
     nanoq --version | grep nanoq | tee VERSION
 
-    nanoq -i ~{read1} --min-len ~{min_read_length} --max-len ~{max_read_length} --min-qual ~{min_read_qual} --max-qual ~{max_read_qual} -o ~{samplename}_read1.fastq.gz --json -r ~{samplename}_summary_report.json -vvv
+    nanoq -i ~{read1} --min-len ~{min_read_length} --max-len ~{max_read_length} --min-qual ~{min_read_qual} --max-qual ~{max_read_qual} -o ~{samplename}_read1.fastq.gz --json -r ~{samplename}_summary_report.json
   >>>
   output {
     File filtered_read1 = "${samplename}_read1.fastq.gz"
