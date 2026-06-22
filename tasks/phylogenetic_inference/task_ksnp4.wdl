@@ -42,7 +42,9 @@ while true; do
   mx=$(cat /sys/fs/cgroup/memory.max 2>/dev/null || echo NA)
   ev=$(cat /sys/fs/cgroup/memory.events 2>/dev/null | tr '\n' ' ')
   dk=$(df -P /mnt/disks/cromwell_root 2>/dev/null | awk 'NR==2{print $3"/"$2" "$5}')
-  echo "[mon $ts] memAvail=$((av/1024))MB cgCur=$((cur/1048576))MB cgMax=${mx} disk=${dk} jelly=$(jelly) top=[$(top3)] events{ ${ev}}"
+  boot=$(df -P / 2>/dev/null | awk 'NR==2{print $3"/"$2" "$5}')   # DEBUG: boot disk holds $HOME cache
+  home_du=$(du -sh "$HOME/kSNP/FilteredKmersCache" 2>/dev/null | awk '{print $1}')
+  echo "[mon $ts] memAvail=$((av/1024))MB cgCur=$((cur/1048576))MB cgMax=${mx} dataDisk=${dk} bootDisk=${boot} cache=${home_du:-0} HOME=$HOME jelly=$(jelly) top=[$(top3)] events{ ${ev}}"
   sleep "$interval"
 done
 MON
@@ -87,6 +89,17 @@ MON
     echo "ksnp4_input.tsv:: "
     cat ksnp4_input.tsv
 
+    # ===== FIX (branch: debug/ksnp4-monitor) ======================================
+    # ROOT CAUSE: get_filtered_kmers caches to $HOME/kSNP/FilteredKmersCache and the
+    # kSNP4 wrapper never passes --cachedir. On Terra $HOME=/root lives on the small
+    # COS boot disk, which fills (ENOSPC, errno 28) ~genome 121/277 and kills step 2.
+    # Redirect HOME onto the task cwd (the provisioned data disk at /mnt/disks/cromwell_root),
+    # exactly as the local benchmark runs do.
+    export HOME="$PWD"
+    mkdir -p "$HOME/kSNP/FilteredKmersCache"
+    echo "=== FIX: HOME=$HOME  (cache -> $HOME/kSNP/FilteredKmersCache on data disk) ==="
+    # ===== END FIX =================================================================
+
     # run ksnp4 on input assemblies
     kSNP4 \
       -in ksnp4_input.tsv \
@@ -103,7 +116,7 @@ MON
     echo "================ kSNP4 EXIT CODE: $KSNP4_RC  @ $(date -u) ================"
     echo "===  137=SIGKILL(OOM)  139=SIGSEGV  134=SIGABRT/bad_alloc  1=internal error"
     echo "POST: memory.events = $(cat /sys/fs/cgroup/memory.events 2>/dev/null | tr '\n' ' ')"
-    echo "POST: memory.current=$(cat /sys/fs/cgroup/memory.current 2>/dev/null)/$(cat /sys/fs/cgroup/memory.max 2>/dev/null) diskUsed=$(df -P /mnt/disks/cromwell_root 2>/dev/null | awk 'NR==2{print $5}')"
+    echo "POST: memory.current=$(cat /sys/fs/cgroup/memory.current 2>/dev/null)/$(cat /sys/fs/cgroup/memory.max 2>/dev/null) dataDiskUsed=$(df -P /mnt/disks/cromwell_root 2>/dev/null | awk 'NR==2{print $5}') bootDiskUsed=$(df -P / 2>/dev/null | awk 'NR==2{print $5}') cacheSize=$(du -sh "$HOME/kSNP/FilteredKmersCache" 2>/dev/null | awk '{print $1}')"
     kill $KSNP4_MON_PID 2>/dev/null || true
     # ===== END DEBUG FOOTER ========================================================
 
