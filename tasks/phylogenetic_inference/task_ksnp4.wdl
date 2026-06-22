@@ -12,8 +12,47 @@ task ksnp4 {
     Int memory = 4
     Int cpu = 2
     Int disk_size = 100
+    Int debug_sample_interval = 15  # DEBUG: monitor sampling period (seconds)
   }
   command <<<
+    # ===== DEBUG INSTRUMENTATION (branch: debug/ksnp4-monitor) =====================
+    # Additive only: background monitor -> stdout + explicit kSNP4 exit-code capture.
+    # The kSNP4 invocation and runtime below are UNCHANGED, so the failure is
+    # identical; this only makes it observable. stdout delocalizes even on failure.
+    cat > /ksnp4_monitor.sh <<'MON'
+#!/usr/bin/env bash
+interval="${1:-15}"
+echo "=== MONITOR start @ $(date -u) interval=${interval}s ==="
+top3() {
+  if command -v ps >/dev/null 2>&1; then
+    ps -eo rss,comm --no-headers --sort=-rss 2>/dev/null | head -3 | awk '{printf "%s:%dMB ", $2, $1/1024}'
+  else
+    for p in /proc/[0-9]*; do
+      [ -r "$p/status" ] || continue
+      r=$(awk '/^VmRSS/{print $2}' "$p/status" 2>/dev/null)
+      [ -n "$r" ] && echo "$r $(cat $p/comm 2>/dev/null)"
+    done | sort -rn | head -3 | awk '{printf "%s:%dMB ", $2, $1/1024}'
+  fi
+}
+jelly() { grep -l jellyfish /proc/[0-9]*/comm 2>/dev/null | wc -l; }
+while true; do
+  ts=$(date -u +%H:%M:%S)
+  av=$(awk '/^MemAvailable/{print $2}' /proc/meminfo)
+  cur=$(cat /sys/fs/cgroup/memory.current 2>/dev/null || cat /sys/fs/cgroup/memory/memory.usage_in_bytes 2>/dev/null || echo 0)
+  mx=$(cat /sys/fs/cgroup/memory.max 2>/dev/null || echo NA)
+  ev=$(cat /sys/fs/cgroup/memory.events 2>/dev/null | tr '\n' ' ')
+  dk=$(df -P /mnt/disks/cromwell_root 2>/dev/null | awk 'NR==2{print $3"/"$2" "$5}')
+  echo "[mon $ts] memAvail=$((av/1024))MB cgCur=$((cur/1048576))MB cgMax=${mx} disk=${dk} jelly=$(jelly) top=[$(top3)] events{ ${ev}}"
+  sleep "$interval"
+done
+MON
+    chmod +x /ksnp4_monitor.sh
+    bash /ksnp4_monitor.sh ~{debug_sample_interval} &
+    KSNP4_MON_PID=$!
+    trap 'kill $KSNP4_MON_PID 2>/dev/null || true' EXIT
+    echo "=== ALLOC (container-visible): nproc=$(nproc 2>/dev/null) cpu.max=$(cat /sys/fs/cgroup/cpu.max 2>/dev/null) memTotal=$(awk '/^MemTotal/{print $2}' /proc/meminfo)kB memory.max=$(cat /sys/fs/cgroup/memory.max 2>/dev/null) disk=$(df -P /mnt/disks/cromwell_root 2>/dev/null | awk 'NR==2{print $2}')kB ==="
+    # ===== END DEBUG HEADER ========================================================
+
     assembly_array=(~{sep=' ' assembly_fasta})
     assembly_array_len=$(echo "${#assembly_array[@]}")
     samplename_array=(~{sep=' ' samplename})
@@ -58,6 +97,15 @@ task ksnp4 {
       ~{'-SNPs_all ' + previous_ksnp4_snps} \
       -CPU ~{cpu} \
       ~{ksnp4_args}
+
+    # ===== DEBUG: capture kSNP4 exit code + post-mortem cgroup state ===============
+    KSNP4_RC=$?
+    echo "================ kSNP4 EXIT CODE: $KSNP4_RC  @ $(date -u) ================"
+    echo "===  137=SIGKILL(OOM)  139=SIGSEGV  134=SIGABRT/bad_alloc  1=internal error"
+    echo "POST: memory.events = $(cat /sys/fs/cgroup/memory.events 2>/dev/null | tr '\n' ' ')"
+    echo "POST: memory.current=$(cat /sys/fs/cgroup/memory.current 2>/dev/null)/$(cat /sys/fs/cgroup/memory.max 2>/dev/null) diskUsed=$(df -P /mnt/disks/cromwell_root 2>/dev/null | awk 'NR==2{print $5}')"
+    kill $KSNP4_MON_PID 2>/dev/null || true
+    # ===== END DEBUG FOOTER ========================================================
 
     # rename ksnp4 outputs with cluster name
     # sometimes the core nwk and fasta outputs do not have content
