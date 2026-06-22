@@ -75,7 +75,7 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
 
 #### Interpretation of results
 
-The most important outputs of the Metabuli workflows are the `metabuli_report` files. These will include a breakdown of the number of sequences assigned to a particular taxon, and the percentage of reads assigned. [A complete description of the report format can be found here](https://jaebeom-kim.github.io/metabuli-doc/modules/classify/#output-file-formats).
+The most important outputs of the Metabuli workflows are the `metabuli_report` files. These will include a breakdown of the number of sequences assigned to a particular taxon, and the percentage of reads assigned. See [the Metabuli report-format documentation](https://jaebeom-kim.github.io/metabuli-doc/modules/classify/#output-file-formats).
 
 When assessing the taxonomic identity of a single isolate's sequence, it is normal that a few reads are assigned to very closely related taxa due to the shared sequence identity between them. "Very closely related taxa" may be genetically similar species in the same genus, or taxa with which the dominant species have undergone horizontal gene transfer. Unrelated taxa or a high abundance of these closely related taxa is indicative of contamination or sequencing of non-target taxa. Interpretation of the results is dependent on the biological context.
 

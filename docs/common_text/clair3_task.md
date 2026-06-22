@@ -7,6 +7,7 @@ fragment: true
 
 <!-- if: theiaviral-->
     The variant calling pipeline employs specialized neural networks trained on ONT data to accurately identify:
+
     - Single nucleotide variants (SNVs)
     - Small insertions and deletions (indels)
     - Structural variants

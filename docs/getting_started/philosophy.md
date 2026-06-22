@@ -24,7 +24,7 @@ While we’ve made a lot of progress, we’re still working on fully implementin
 
 ---
 
-**Thanks for being part of the process!** We’re always working to improve and your feedback plays a huge role in making that happen. Together, we’ll keep making things run smoother and easier for everyone.
+**Thanks for being part of the process!** We’re always working to improve and your feedback plays a huge role in making that happen. Together, we’ll keep making things run more smoothly and easily for everyone.
 
 If you experience a workflow failure related to data quality, we want to hear from you! Please reach out to us at <support@theiagen.com> with the following details:
 

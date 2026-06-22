@@ -50,7 +50,7 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 - **`hac`** (high-accuracy): This model provides a balance between speed and accuracy. This model basecalls faster than `sup`, but those basecalls will be less accurate. It is recommended for most users by the Dorado developers.
 - **`fast`** (fast model): This model is the fastest and least accurate and is recommended when speed is prioritized over accuracy, such as for initial analyses or non-critical applications.
 
-**Manual Model Input:** Alternatively, users can specify either a simplex model path or a model complex (e.g.`dna_r10.4.1_e8.2_400bps_hac@v4.2.0` or `hac,5mCG_5hmCG`). Please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/models/models/) for more details on the manual model naming conventions. You can also find the [full list of available simplex and modified basecalling models here](https://dorado-docs.readthedocs.io/en/latest/models/list/).
+**Manual Model Input:** Alternatively, users can specify either a simplex model path or a model complex (e.g.`dna_r10.4.1_e8.2_400bps_hac@v4.2.0` or `hac,5mCG_5hmCG`). Please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/models/models/) for more details on the manual model naming conventions. [A full list of simplex and modified basecalling models is available](https://dorado-docs.readthedocs.io/en/latest/models/list/).
 
 !!! tip "Example Manual Models"
     - `sup,5mCG_5hmCG,6mA`
@@ -59,7 +59,7 @@ Users can configure the basecalling model by setting the `dorado_model` input pa
 
 ### Supported Kit Names
 
-Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check if your barcoding kit is supported by the Dorado workflow by clicking the toggle below. If not, please contact <support@theiagen.com> for assistance
+Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check if your barcoding kit is supported by the Dorado workflow by clicking the toggle below. If not, please contact <support@theiagen.com> for assistance.
 
 ??? toggle "Click to see a list of currently accepted kit names"
     - EXP-NBD103
@@ -153,7 +153,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
     Please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/basecaller/basecall_overview/) for more details, but what follows is a brief overview of the basecalling process:
 
     1. POD5 files are pre-processed via signal scaling and normalization.
-    2. The machine learning algorithm decodes the sequence signals into nucleotide base calls. There are different machine learning models that can be specified as input; more details can be found above [here](#model-type-selection).
+    2. The machine learning algorithm decodes the sequence signals into nucleotide base calls. There are different machine learning models that can be specified as input; see [Model Type Selection](#model-type-selection).
     3. [Barcode classification](https://dorado-docs.readthedocs.io/en/latest/barcoding/barcoding/) is performed based on the indicated kit name to enable downstream demultiplexing.
 
         !!! info "Barcode Trimming"
@@ -172,7 +172,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
         | Software Documentation | [Dorado ReadTheDocs](https://dorado-docs.readthedocs.io/en/latest/) |
 
 ??? task "`dorado_demux`: Produces barcode-specific FASTQ files"
-    This task takes every basecalled BAM files and demultiplexes them based on the identified barcodes found during basecalling. An individual FASTQ file is generated for each barcode found per BAM file. All FASTQ files that are associated with a single barcode are then merged.
+    This task takes each basecalled BAM file and demultiplexes them based on the identified barcodes found during basecalling. An individual FASTQ file is generated for each barcode found per BAM file. All FASTQ files that are associated with a single barcode are then merged.
 
     !!! info "Disabling Barcode Trimming"
         By default, barcodes _are_ trimmed during demultiplexing.

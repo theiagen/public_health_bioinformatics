@@ -7,15 +7,15 @@ fragment: true
 
     IQ-TREE 2 is used to build the final phylogeny. It uses the alignment generated in the previous steps of the workflow. The contents of this alignment will depend on whether any sites were masked with recombination.
 
-    The phylogeny is generated using the maximum-likelihood method and a specified nucleotide substitution model. By default, the Snippy_Tree workflow will run Model Finder to determine the most appropriate nucleotide substitution model for your data, but you may specify the nucleotide substitution model yourself using the `iqtree2_model` optional input (see [here](https://iqtree.github.io/doc/Substitution-Models) for available models).
+    The phylogeny is generated using the maximum-likelihood method and a specified nucleotide substitution model. By default, the Snippy_Tree workflow will run Model Finder to determine the most appropriate nucleotide substitution model for your data, but you may specify the nucleotide substitution model yourself using the `iqtree2_model` optional input (see [the IQ-TREE substitution models documentation](https://iqtree.github.io/doc/Substitution-Models) for available models).
 
     IQ-TREE 2 will perform assessments of the tree using the Shimodaira–Hasegawa approximate likelihood-ratio test ([SH-aLRT test](https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false)), and ultrafast bootstrapping with [UFBoot2](https://academic.oup.com/mbe/article/35/2/518/4565479), a quicker but less biased alternative to standard bootstrapping. A clade should not typically be trusted if it has less than 80% support from the SH-aLRT test and less than 95% support with ultrafast bootstrapping.
 
     !!! tip "Nucleotide substitution model"
-        When `core_genome`= `true`, the default nucleotide substitution model is set to the General Time Reversible model with Gamma distribution (GTR+G). 
-        
+        When `core_genome`= `true`, the default nucleotide substitution model is set to the General Time Reversible model with Gamma distribution (GTR+G).
+
         When the user sets `core_genome`= `false`, the default nucleotide substitution model is set to the General Time Reversible model with invariant sites and Gamma distribution (`GTR+I+G`).
-                
+
     !!! techdetails "IQ-TREE 2 technical details"
         |  | Links |
         | --- | --- |

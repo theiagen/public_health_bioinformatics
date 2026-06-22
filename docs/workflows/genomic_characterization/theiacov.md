@@ -117,7 +117,7 @@ We've provided the following information to help you set up the workflow for eac
 
     === "TheiaCoV_ClearLabs"
 
-        The TheiaCoV_ClearLabs workflow takes in read data produced by the Clear Dx platform from ClearLabs. However, many users use the TheiaCoV_FASTA workflow instead of this one due to a few known issues when generating assemblies with this pipeline that are not present when using ClearLabs-generated FASTA files.
+        The TheiaCoV_ClearLabs workflow takes in read data produced by the Clear Dx platform from ClearLabs. However, many users use the TheiaCoV_FASTA workflow instead of this one due to a few known issues when generating assemblies with TheiaCoV_ClearLabs that are not present when using ClearLabs-generated FASTA files (which are corrected for ClearLabs-specific errors).
 
     === "TheiaCoV_FASTA_Batch"
 
@@ -297,7 +297,7 @@ We've provided the following information to help you set up the workflow for eac
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
         | genome_length_input | rsv_a | `16000` |
-        | kraken_target_organism | rsv_a | `"Human respiratory syncytial virus A"` |
+        | kraken_target_organism_input | rsv_a | `"Human respiratory syncytial virus A"` |
         | nextclade_dataset_name_input | rsv_a | `nextstrain/rsv/a/EPI_ISL_412866` |
         | nextclade_dataset_tag_input | rsv_a | `"2026-04-14--11-55-23Z"` |
         | reference_genome | rsv_a | `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"` |
@@ -315,7 +315,7 @@ We've provided the following information to help you set up the workflow for eac
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
         | genome_length_input | rsv_b | `16000` |
-        | kraken_target_organism | rsv_b | `"human respiratory syncytial virus"` |
+        | kraken_target_organism_input | rsv_b | `"human respiratory syncytial virus"` |
         | nextclade_dataset_name_input | rsv_b | `nextstrain/rsv/b/EPI_ISL_1653999` |
         | nextclade_dataset_tag_input | rsv_b | `"2026-04-14--11-55-23Z"` |
         | reference_genome | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"` |

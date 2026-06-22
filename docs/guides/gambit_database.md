@@ -1,6 +1,6 @@
 # GAMBIT Database Creation
 
-GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking) incorporates k-mer based strategy for the identification of taxonomic information with a highly curated searchable database.
+GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking) incorporates a k-mer based strategy for the identification of taxonomic information with a highly curated searchable database.
 
 A GAMBIT database consists of two files:
 
@@ -24,7 +24,7 @@ The goal in creating a database for GAMBIT is two-fold:
 
     ---
 
-    The full list of databases available can be consulted [here](./gambit.md#gambit-databases), with information on what curation steps were followed and what genomes are included.
+    The full list of databases available can be consulted in [the GAMBIT databases overview](./gambit.md#gambit-databases), with information on what curation steps were followed and what genomes are included.
 
 </div>
 
@@ -97,7 +97,7 @@ A collection of scripts is called by the Bash wrapper to:
 3. Generate a GAMBIT database from a directory containing assemblies in FASTA format and a CSV file containing the assembly file and path, and the species taxon ID;
 
 !!! tip "Automatic Database Curation"
-    These steps allow you to obtain a working GAMBIT database without much manual intervention, given that all dependencies are installed correctly in your system. As of v2.0.0, the [curation steps have been automated](https://github.com/gambit-suite/gambitdb/blob/main/scripts/gambitdb-manual-curation) but require deep access within the GAMBITdb software and are mostly for advanced usage. More detailed information is [available within the GAMBITdb repository](https://github.com/gambit-suite/gambitdb?tab=readme-ov-file#gambitdb).
+    These steps allow you to obtain a working GAMBIT database without much manual intervention, given that all dependencies are installed correctly in your system. As of v2.0.0, the [curation steps have been automated](https://github.com/gambit-suite/gambitdb/blob/main/scripts/gambitdb-manual-curation) but require deep access to GAMBITdb internals and are mostly for advanced usage. More detailed information is [available within the GAMBITdb repository](https://github.com/gambit-suite/gambitdb?tab=readme-ov-file#gambitdb).
 
 Sometimes repairs are required as even with curation of the GTDB spreadsheet errors can make their way to the final database. A utility is available to perform maintenance and repair operations on a GAMBIT database:
 
@@ -147,7 +147,7 @@ gambit signatures create -k 11 -p ATGAC -o signatures.gs fasta_dir/*.fna.gz
 
 After the GAMBIT signatures file is created, a pairwise distance matrix for every genome in the signatures file can be created using the `gambit dist` command:
 
-```jsx
+```bash
 gambit dist --qs signatures.gs --square -o pw_dists.csv
 ```
 

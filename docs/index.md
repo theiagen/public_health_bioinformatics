@@ -39,7 +39,7 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
 
     All workflows can be imported directly to [Terra](https://terra.bio/) via the [**Dockstore PHB collection**](https://dockstore.org/organizations/Theiagen/collections/public-health-bioinformatics)!
 
-    You can also use our workflows on the command-line. Please see our guide on how to get started [**here**](getting_started/commandline.md)!
+    You can also use our workflows on the command-line. Please see our [**command-line getting-started guide**](getting_started/commandline.md)!
 
 ### Our Workflows
 
@@ -63,7 +63,7 @@ We continuously work to improve our workflows, so changes are expected between v
 
 ## Contributing to the PHB Repository
 
-We warmly welcome contributions to this repository! Our code style guide may be found [here](contributing/code_contribution.md) for convenience of formatting and our documentation style guide may be found [here](contributing/doc_contribution.md).
+We warmly welcome contributions to this repository! Our [code style guide](contributing/code_contribution.md) and [documentation style guide](contributing/doc_contribution.md) are available for formatting conventions.
 
 If you would like to make suggested code changes to our workflows, submit pull requests to the [PHB GitHub](https://github.com/theiagen/public_health_bioinformatics) repository.
 

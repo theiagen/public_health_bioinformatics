@@ -67,7 +67,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
     !!! techdetails "samtools Technical Details"
         | | Links |
         |---|---|
-        | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
+        | Task | [task_parse_mapping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
         | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
         | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
@@ -149,7 +149,7 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
     !!! techdetails "samtools Technical Details"
         | | Links |
         |---|---|
-        | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
+        | Task | [task_parse_mapping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
         | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
         | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |

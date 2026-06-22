@@ -62,7 +62,7 @@ columnD	0.01
 columnE	EXACT
 ```
 
-Please see above for a description of all available criteria options (EXACT, IGNORE, SET, <PERCENT_DIFF>).
+Please see above for a description of all available criteria options (EXACT, IGNORE, SET, <PERCENT_DIFF>, <RANGE>, CRITERIA1,CRITERIA2).
 
 The optional `column_translation_tsv` file takes the following format (tab-delimited; _a header line is required_):
 
@@ -98,7 +98,7 @@ To help demonstrate how TheiaValidate works, please observe the following exampl
     | sample3 | option2 | item1,item2,item3 | cake | 14 | present |
     | sample4 | option1 | item2,item1 | cakebatter | 3492 |  |
     | sample5 | option2 | item1,item2 | batter | 3 | present |
-  
+
 ???+ toggle "Table2"
     | entity:example_table2_id | columnA-string | columnB-set | columnC-ignore | columnD-float | missing |
     | --- | --- | --- | --- | --- | --- |

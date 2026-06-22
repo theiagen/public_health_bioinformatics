@@ -46,13 +46,13 @@ fragment: true
         | Salmonella | salmonella_specimen |
         | Escherichia | ecoli_specimen |
         | Shigella | shigella_specimen |
-        | Streptococcus | strep_pneumo_specimen |
+        | Streptococcus | streptococcus_specimen |
         | Legionella | legionella_specimen |
         | Klebsiella | klebsiella_specimen |
         | Mycobacterium | mycobacterium_specimen |
         | Acinetobacter | acinetobacter_specimen |
         | Pseudomonas | pseudomonas_specimen |
-        | Staphylococcus | staphyloccus_specimen |
+        | Staphylococcus | staphylococcus_specimen |
         | Neisseria | neisseria_specimen |
 
 <!-- endif -->

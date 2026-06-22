@@ -33,7 +33,7 @@ This workflow runs on the sample level, and takes assembly FASTA files and assoc
 
     - Please always include the **date information** in `YYYY-MM-DD` format. Other date formats are incompatible with Augur. You can specify unknown dates or month by replacing the respective values by `XX` (e.g. `2013-01-XX` or `2011-XX-XX`), while completely unknown dates can be shown with `20XX-XX-XX` (which does not restrict the sequence to being in the 21st century - they could be earlier). Alternatively, reduced precision format can also be used (e.g. `2018`, `2018-03`).
         - Because Excel will automatically change the date formatting, we recommend not opening or preparing your metadata file in Excel. If the metadata is already in Excel, or you decide to prepare it in Excel, we recommend using another program to correct the dates afterwards (and be cautious if you open it in Excel again!).
-    - Different levels of **geographical information** can be passed to Augur. A latitude and longitude file is provided by default by Theiagen, which mirrors what can be found [here](https://github.com/nextstrain/augur/blob/master/augur/data/lat_longs.tsv). Just ensure that your spelling matches what is in the file exactly or alternatively provide your own. Augur_Prep supports the following levels:
+    - Different levels of **geographical information** can be passed to Augur. A latitude and longitude file is provided by default by Theiagen, which mirrors [Augur's default `lat_longs.tsv`](https://github.com/nextstrain/augur/blob/master/augur/data/lat_longs.tsv). Just ensure that your spelling matches what is in the file exactly or alternatively provide your own. Augur_Prep supports the following levels:
         - `region` - Lowest-level resolution, used often for continents (e.g.: `europe`, `asia`, `north america`)
         - `country` - Denotes the country where the sample originated (e.g.: `Argentina`, `Japan`, `USA`)
         - `divisions` - Denotes divisions, or states, or sometimes cities, within the country (e.g.: `California`, `Colorado`, `Cork`)
@@ -64,7 +64,7 @@ This workflow runs on the sample level, and takes assembly FASTA files and assoc
 !!! info "Before getting started"
     **Phylogenetic inference requires careful planning, quality control of sequences, and metadata curation**. You may have to generate phylogenies multiple times by running the Augur_PHB workflow, with several iterations of assessing results and amending inputs, in order to generate a final tree with sufficient diversity and high-quality data of interest. Theiagen's [Introduction to Phylogenetics](../../guides/phylogenetics.md) is one resource to give you the necessary information on the considerations you'll need to have before performing this type of analysis.
 
-**Augur_PHB** takes as input a **set of assembly/consensus files** (FASTA format), an **optional viral organism designation**, and an **optional sample metadata files** (TSV format) that have been formatted via the Augur_Prep_PHB workflow. Augur_PHB runs [Augur](https://docs.nextstrain.org/projects/augur/en/stable/) to generate a phylogenetic tree following the construction of a SNP distance matrix and alignment. Provided metadata will be used to refine the final tree and incorporated into the [Auspice](https://auspice.us/)-formatted tree visual.
+**Augur_PHB** takes as input a **set of assembly/consensus files** (FASTA format), an **optional viral organism designation**, and **optional sample metadata files** (TSV format) that have been formatted via the Augur_Prep_PHB workflow. Augur_PHB runs [Augur](https://docs.nextstrain.org/projects/augur/en/stable/) to generate a phylogenetic tree following alignment and SNP distance matrix construction. Provided metadata will be used to refine the final tree and incorporated into the [Auspice](https://auspice.us/)-formatted tree visual.
 
 #### Augur Inputs
 
@@ -155,7 +155,7 @@ For the Augur subcommands, please view the [Nextstrain Augur documentation](http
 
 The `auspice_input_json` is intended to be uploaded to [Auspice](https://auspice.us/) to view the resulting phylogenetic tree with the provided metadata. Alternatively, a phylogenetic tree in Newick format is also available for visualization in other platforms. The `metadata_merged` output can also be uploaded to either Auspice or a different visualization platform to add further context to the phylogenetic visualization. The `combined_assemblies` output can be uploaded to [UShER](https://genome.ucsc.edu/cgi-bin/hgPhyloPlace) to view the samples on a global tree of representative sequences from public repositories.
 
-The Nextstrain team hosts documentation surrounding the Augur workflow to Auspice visualization here, which details the various components of the Auspice interface: [How data is exported by Augur for visualisation in Auspice](https://docs.nextstrain.org/en/latest/learn/augur-to-auspice.html).
+The Nextstrain team hosts documentation surrounding the Augur workflow to Auspice visualization, which details the various components of the Auspice interface: [How data is exported by Augur for visualisation in Auspice](https://docs.nextstrain.org/en/latest/learn/augur-to-auspice.html).
 
 /// html | div[class="searchable-table"]
 

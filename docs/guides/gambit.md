@@ -42,7 +42,7 @@ The [**GAMBIT_Query_PHB**](https://dockstore.org/workflows/github.com/theiagen/p
 Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly and a sample name associated with the genome assembly. The default GAMBIT database used for taxonomic identification is the Prokaryotic [GAMBIT Database GTDB v2.2.0](#gambit-gtdb-database-v220), but alternate GAMBIT databases can be provided.
 
 !!! dna "Gambit_Query_PHB"
-    More information on **GAMBIT_Query_PHB** is available [**here**](../workflows/standalone/gambit_query.md).
+    More information on [**GAMBIT_Query_PHB**](../workflows/standalone/gambit_query.md) is available.
 
 !!! tip inline end "Import workflows to [Terra.bio](https://terra.bio/):"
     **GAMBIT_Query_PHB**

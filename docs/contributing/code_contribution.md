@@ -307,7 +307,7 @@ output {
         input:
           input = input,
           task3_argument = hidden_task3_argument,
-          task3_docker = hidden_task3_docker
+          task3_docker = hidden_task3_docker,
           task4_docker = hidden_task4_docker
       }
       output {

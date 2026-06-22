@@ -26,7 +26,7 @@ The [**TheiaCoV Workflow Series**](../workflows/genomic_characterization/theiaco
     - **Measles** (**`"measles"`**, `"Measles"`, `"mev"`, `"MeV"`, `"Morbillivirus"`, `"morbillivirus"`)
 
 
-These workflows currently support eight organisms (see above). The workflows are adaptable, with parameters that can be customized for specific organisms. Input JSON files with preset configurations for each supported virus are provided [here](../workflows/genomic_characterization/theiacov.md#theiacov-workflows), streamlining the setup process.
+These workflows currently support eight organisms (see above). The workflows are adaptable, with parameters that can be customized for specific organisms. Input JSON files with preset configurations for each supported virus are provided [on the TheiaCoV workflow page](../workflows/genomic_characterization/theiacov.md#theiacov-workflows), streamlining the setup process.
 
 Except for influenza, which follows a different process in TheiaCoV, **all organisms are assembled through consensus from a reference genome** (see Figure 2 below).
 

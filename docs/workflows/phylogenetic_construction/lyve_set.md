@@ -28,7 +28,7 @@ The Lyve_SET WDL workflow runs the [Lyve-SET](https://github.com/lskatz/lyve-SET
 The Lyve_SET WDL workflow is run using read data from a set of samples. The workflow will produce a pairwise SNP matrix for the sample set and a maximum likelihood phylogenetic tree. Details regarding the default implementation of Lyve_SET and optional modifications are listed below.
 
 1. Read processing
-    1. By default, the Lyve_SET WDL workflow will perform read cleaning using the CG-Pipeline "CGP". However, read cleaning can be turned off or performed using "BayesHammer" using the `read_cleaner` input variable.
+    1. By default, the Lyve_SET WDL workflow will perform read cleaning using the CG-Pipeline ("CGP"). However, read cleaning can be turned off or performed using "BayesHammer" using the `read_cleaner` input variable.
 2. Reference procurement
     1. By default, the Lyve_SET WDL workflow will **not** mask phages or cliffs in the reference genome. Cliffs refer to regions of the reference genome where read coverage rises or falls abruptly. Masking phages and cliffs is intended to remove low quality SNPs. Users can invoke phage and cliff masking by setting the `mask_cliffs` and `mask_phages` variables to "true".
 3. SNP discovery

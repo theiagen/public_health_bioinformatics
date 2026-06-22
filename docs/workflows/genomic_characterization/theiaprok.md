@@ -212,7 +212,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 {{ include_md("common_text/virulencefinder_task.md", indent=4) }}
 
     !!! tip ""
-        `ShigaPass`, `ShigaTyper`, and `ShigEiFinder` are intended for differentiation and serotype prediction for any *Shigella* species and enteroinvasive *Escherichia coli* (EIEC). You can read about differences between _Shigella_ and EIEC [here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC517479/) and [here](https://www.microbiologyresearch.org/content/journal/micro/10.1099/00221287-144-9-2667). ShigEiFinder can be run using either the assembly (default) or reads. These tasks will report if the samples are neither *Shigella* nor EIEC.
+        `ShigaPass`, `ShigaTyper`, and `ShigEiFinder` are intended for differentiation and serotype prediction for any *Shigella* species and enteroinvasive *Escherichia coli* (EIEC). You can read about differences between _Shigella_ and EIEC in [_Molecular Evolutionary Relationships of Enteroinvasive Escherichia coli and Shigella spp._](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC517479/) and [_Shigella and enteroinvasive Escherichia coli strains are derived from distinct ancestral strains of E. coli_](https://www.microbiologyresearch.org/content/journal/micro/10.1099/00221287-144-9-2667). ShigEiFinder can be run using either the assembly (default) or reads. These tasks will report if the samples are neither *Shigella* nor EIEC.
 
 {{ include_md("common_text/shigapass_task.md", indent=4) }}
 
@@ -275,7 +275,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
     ##### _Salmonella_ spp. {% raw %} {#salmonella} {% endraw %}
 
     !!! tip ""
-        Both SISTR and SeqSero2 are used for serotyping all *Salmonella* spp. Occasionally, the predicted serotypes may differ between SISTR and SeqSero2. When this occurs, differences are typically small and analogous, and are likely as a result of differing source databases. More information about Salmonella serovar nomenclature can be found [here](https://www.happykhan.com/posts/binfie-guide-serovar/).
+        Both SISTR and SeqSero2 are used for serotyping all *Salmonella* spp. Occasionally, the predicted serotypes may differ between SISTR and SeqSero2. When this occurs, differences are typically small and analogous, and are likely as a result of differing source databases. For more information, see [this guide to _Salmonella_ serovar nomenclature](https://www.happykhan.com/posts/binfie-guide-serovar/).
 
 {{ include_md("common_text/sistr_task.md", indent=4) }}
 
@@ -283,8 +283,8 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 {{ include_md("common_text/genotyphi_task.md", indent=4) }}
 
-??? toggle "_Staphyloccocus aureus_"
-    ##### _Staphyloccocus aureus_ {% raw %} {#staphyloccocus-aureus} {% endraw %}
+??? toggle "_Staphylococcus aureus_"
+    ##### _Staphylococcus aureus_ {% raw %} {#staphylococcus-aureus} {% endraw %}
 
 {{ include_md("common_text/spatyper_task.md", indent=4) }}
 

@@ -167,7 +167,7 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 - The value of `resid` corresponds to the residual of the weighted least absolute deviation problem used to estimate lineage abundances.
 - The `coverage` value provides the 10x coverage estimate (percent of sites with 10 or greater reads)
 
-!!! tip "Click "Ignore empty outputs""
+!!! tip "Click 'Ignore empty outputs'"
     When running the Freyja_FASTQ_PHB workflow, it is recommended to select the "Ignore empty outputs" option in the Terra UI. This will hide the output columns that will not be generated for your input data type.
 
 === "Illumina paired-end output data"
@@ -358,13 +358,13 @@ Allowed options:
 
 ### Providing the appropriate barcode file
 
-The appropriate barcode file for your organism of interest and reference sequence need to be downloaded and uploaded to your [Terra.bio](http://Terra.bio) workspace. When running [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq), the appropriate reference and barcodes file need to be passed as inputs. The first is a required input and will show up at the top of the workflows inputs page on [Terra.bio](http://Terra.bio) ([Figure 3](freyja.md/#figure3)).
+The appropriate barcode file for your organism of interest and reference sequence need to be downloaded and uploaded to your [Terra.bio](http://Terra.bio) workspace. When running [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq), the appropriate reference and barcodes file need to be passed as inputs. The first is a required input and will show up at the top of the workflows inputs page on [Terra.bio](http://Terra.bio) ([Figure 3](freyja.md#figure3)).
 
 !!! caption "Figure 3:  Required input for Freyja_FASTQ_PHB to provide the reference genome to be used by Freyja"
     ##### Figure 3 {% raw %} {#figure3} {% endraw %}
     ![**Figure 3:  Required input for Freyja_FASTQ_PHB to provide the reference genome to be used by Freyja.**](../../assets/figures/Freyja_figure3.png)
 
-The barcodes file can be passed directly to Freyja by the `freyja_barcodes` optional input ([Figure 4](freyja.md/#figure4)).
+The barcodes file can be passed directly to Freyja by the `freyja_barcodes` optional input ([Figure 4](freyja.md#figure4)).
 
 !!! caption "Figure 4: Optional input for Freyja_FASTQ_PHB to provide the barcodes file to be used by Freyja"
     ##### Figure 4 {% raw %} {#figure4} {% endraw %}

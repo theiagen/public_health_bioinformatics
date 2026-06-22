@@ -25,7 +25,7 @@ The Terra_2_NCBI workflow is a programmatic data submission method to share meta
 
 ??? toggle "Before running the Terra_2_NCBI workflow"
 
-    1. The user **must** have access to the NCBI FTP. To gain these credentials, we recommend emailing **`sra@ncbi.nlm.nih.gov`** a variation of the following example, including all the information:
+    1. The user **must** have access to the NCBI FTP. To gain these credentials, we recommend emailing <sra@ncbi.nlm.nih.gov> a variation of the following example, including all the information:
 
         > Hello,
         >
@@ -130,7 +130,7 @@ This workflow runs on set-level data tables.
 
     The workflow will automatically map the specified column names from your Terra table to the required workflow variables using the 'column_mapping_file'.
 
-    To find a list of the expected required and optional column names, [please refer to the code blocks that can be found here](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/submission/task_submission.wdl#L65). The required and optional metadata fields are organized by the BioSample type.
+    To find a list of the expected required and optional column names, [please refer to the column defintiions in `task_submission.wdl`](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/submission/task_submission.wdl#L65). The required and optional metadata fields are organized by the BioSample type.
 
     Below, you can find the required metadata fields for the currently supported BioSample types:
 

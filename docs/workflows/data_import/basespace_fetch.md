@@ -38,7 +38,7 @@ _If you already have a command-line environment available_, you can skip ahead t
             ![create environment](../../assets/figures/basespace_fetch/step3-create-environment.png)
 
         !!! info "Environment customization"
-            The default environment should be sufficient for retrieval of BaseSpace credentials, but if performing other tasks in the environment please modify the resource allocations appropriately. 
+            The default environment should be sufficient for retrieval of BaseSpace credentials, but if performing other tasks in the environment please modify the resource allocations appropriately.
 
         You will be returned to the main page after clicking "Create". You will notice two new icons in your right-hand side bar as the environment is being created.
 
@@ -64,21 +64,21 @@ _If you already have a command-line environment available_, you can skip ahead t
         ```bash  title="BaseSpace Fetch Authentication Instructions"
         # create bin directory
         mkdir ~/bin
-        
+
         # download the basespace cli
         wget "https://launch.basespace.illumina.com/CLI/latest/amd64-linux/bs" -O $HOME/bin/bs
-        
-        # provide proper permissions to make the bs cli executable 
+
+        # provide proper permissions to make the bs cli executable
         chmod u+x $HOME/bin/bs
-        
+
         # add the 'bs' command-line tool to the $PATH variable so that you can call the command-line tool from any directory
         export PATH="$PATH:$HOME/bin/"
-        
+
         # authenticate with BaseSpace credentials
         bs auth
-        
+
         # navigate to the link provided in stdout and accept the authentication request through BaseSpace
-        
+
         # Print the api server and access token to stdout (replace the path below with the appropriate path returned by the find command above)
         cat ~/.basespace/default.cfg
         ```
@@ -89,7 +89,7 @@ _If you already have a command-line environment available_, you can skip ahead t
 
         !!! caption narrow "Create workspace data elements"
             ![workspace data elements](../../assets/figures/basespace_fetch/info5-copy-information.png)
-        
+
 #### Preparing to retrieve a run with BaseSpace_Fetch
 
 ##### Step 1: Create a Metadata Sheet from the BaseSpace SampleSheet {% raw %} {#prep-metadata} {% endraw %}
@@ -102,13 +102,13 @@ _If you already have a command-line environment available_, you can skip ahead t
         - Avoid re-using Sample IDs. Make all sample IDs unique!
 
     1. Download the sample sheet from BaseSpace.
-   
+
         On the BaseSpace portal, you can navigate to this via: Runs → {run} → Files → SampleSheet.csv
 
         !!! caption narrow "Example SampleSheet.csv"
             ![example sample sheet](../../assets/figures/basespace_fetch/step6-sample-sheet.png)
 
-    2. In Excel or an alternative spreadsheet software, set up a metadata sheet for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.  
+    2. In Excel or an alternative spreadsheet software, set up a metadata sheet for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.
         1. In cell A1, enter the data table name with the "**entity:**TABLENAME**_id**" format
         2. Create a column called `basespace_sample_name` and populate this with the data found under the `Sample_Name` column in the BaseSpace sample sheet.
 
@@ -134,7 +134,7 @@ _If you already have a command-line environment available_, you can skip ahead t
 
         !!! caption narrow "Import Metadata"
              ![text import](../../assets/figures/basespace_fetch/step9-text-import.png)
-        
+
     You can now use the created table to run the BaseSpace_Fetch workflow.
 
 ### Inputs
@@ -143,10 +143,10 @@ _If you already have a command-line environment available_, you can skip ahead t
     If using BaseSpace_Fetch workflow version 1.3.0 or higher, the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is downloaded fresh. Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.
 
 !!! warning "Sample_Name _and_ Sample_ID"
-    If the Sample_Name and Sample_ID in the BaseSpace sample sheet are different, set the `basespace_sample_id` input attribute to "`this.basespace_sample_id"`.
+    If the Sample_Name and Sample_ID in the BaseSpace sample sheet are different, set the `basespace_sample_id` input attribute to `"this.basespace_sample_id"`.
 
 !!! warning "Nested Samplenames"
-    Erroneous matches may occur when a samplename is nested within another samplename in the same batch, separated by an underscore or space. This will occur when no lane suffix is present within the Basespace dataset. For example, "sample1" will retrieve "sample1_1", however, "sample1_L1" will NOT retrieve "sample1_1_L1". This should be taken into consideration when using certain naming conventions. 
+    Erroneous matches may occur when a samplename is nested within another samplename in the same batch, separated by an underscore or space. This will occur when no lane suffix is present within the Basespace dataset. For example, "sample1" will retrieve "sample1_1", however, "sample1_L1" will NOT retrieve "sample1_1_L1". This should be taken into consideration when using certain naming conventions.
 
 /// html | div[class="searchable-table"]
 
