@@ -18,7 +18,7 @@ fragment: true
         
     ??? toggle "Identifying novel alleles and STs"
         
-        The MLST schemes used in TheiaProk are curated on the PubMLST website.If you identify novel alleles or allelic profiles in your data using TheiaProk's MLST task, you can get these assigned via PubMLST:
+        The MLST schemes used in TheiaProk are curated on the PubMLST website. If you identify novel alleles or allelic profiles in your data using TheiaProk's MLST task, you can get these assigned via PubMLST:
         
         1. Check that the novel allele or ST has not already been assigned a type on PubMLST. 
             1. Download the assembly file from Terra for your sample with the novel allele or ST

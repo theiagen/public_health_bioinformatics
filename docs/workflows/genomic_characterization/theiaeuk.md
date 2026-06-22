@@ -22,7 +22,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
 !!! warning "Before running TheiaEuk"
 
-    For some taxa, TheiaEuk_Illumina_PE relies on [Snippy](#organism-specific-characterization) to perform variant calling on the cleaned read dataset and then queries the resulting file for specific mutations that are known to confim antifugal resistance (see [Organism-specific characterization](#organism-specific-characterization) section). This behaviour has been replicated in TheiaEuk_ONT but the variant calling is performed directly on the resulting assemblies. Therefore, the read support reported is, at the moment, non-reliable. Future improvements will include improvements on this module.
+    For some taxa, TheiaEuk_Illumina_PE relies on [Snippy](#organism-specific-characterization) to perform variant calling on the cleaned read dataset and then queries the resulting file for specific mutations that are known to confirm antifungal resistance (see [Organism-specific characterization](#organism-specific-characterization) section). This behavior has been replicated in TheiaEuk_ONT but the variant calling is performed directly on the resulting assemblies. Therefore, the read support reported is, at the moment, non-reliable. Future improvements will include improvements on this module.
 
 ### Inputs
 
@@ -61,7 +61,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 !!! dna ""
     These tasks are performed regardless of organism. They include tasks that are performed regardless of and specific for the input data type. They perform read trimming and assembly appropriate to the input data type.
 
-{{ include_md("common_text/versioning_task.md", condition="theiaprok") }}
+{{ include_md("common_text/versioning_task.md") }}
 
 !!! caption ""
     === "TheiaEuk_Illumina_PE"
@@ -101,7 +101,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 {{ include_md("common_text/gene_coverage_task.md", indent=4, condition="theiaeuk") }}
 
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
-    Three tools can be deployed when _Candidozyma auris_/_Candida auris_ is  identified.
+    Three tools can be deployed when _Candidozyma auris_/_Candida auris_ is identified.
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
 {{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaeuk") }}

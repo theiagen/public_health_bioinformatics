@@ -3,7 +3,7 @@ title: Task Fragment `trimmomatic`
 fragment: true
 ---
 ??? task "`Trimmomatic`: Read Trimming (default)"
-    Read proccessing is available via Trimmomatic by default.
+    Read processing is available via Trimmomatic by default.
 
     Trimmomatic trims low-quality regions of Illumina paired-end or single-end reads with a sliding window (with a default window size of 4, specified with `trim_window_size`), cutting once the average quality within the window falls below the `trimmomatic_window_quality` (default of 30 for both paired-end and single-end). The read is discarded if it is trimmed below `trimmomatic_min_length` (default of 75 for paired-end, 25 for single-end).
 
@@ -17,7 +17,7 @@ fragment: true
     10 = simple clip threshold
     ```
 
-    Users can optionally provide a custom adapter file or modify adapter trimming parameters using the `trimmomatic_adapter_fasta` and `trimmomatic_adapter_trim_args` respectively. See the [Trimmomatic adapter documentation](https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#the-adapter-fasta-files) for more details. The `trimmomatic_adapter_fasta` parameter should just include the path to your fasta file. The `trimmomatic_adapter_trim_args` parameter should only contain the colon-delimited values that comes after the adapter fasta file in the `ILLUMINACLIP` argument. Example usage:
+    Users can optionally provide a custom adapter file or modify adapter trimming parameters using the `trimmomatic_adapter_fasta` and `trimmomatic_adapter_trim_args` respectively. See the [Trimmomatic adapter documentation](https://github.com/usadellab/Trimmomatic?tab=readme-ov-file#the-adapter-fasta-files) for more details. The `trimmomatic_adapter_fasta` parameter should just include the path to your fasta file. The `trimmomatic_adapter_trim_args` parameter should only contain the colon-delimited values that come after the adapter fasta file in the `ILLUMINACLIP` argument. Example usage:
 
     ```
     trimmomatic_adapter_fasta="path/to/my_custom_adapters.fa"

@@ -25,7 +25,7 @@ All trailing whitespace should be removed (unless in a TSV, where a trailing tab
     String docker = "us-docker.pkg.dev/docker_image:version"
     ```
 
-- Preferentially use containers [`Google's Artifact Registry`](https://console.cloud.google.com/artifacts/docker/general-theiagen/us) rather than those from [`quay.io`](http://quay.io) or [`dockerhub`](https://hub.docker.com/)
+- Preferentially use containers from [`Google's Artifact Registry`](https://console.cloud.google.com/artifacts/docker/general-theiagen/us) rather than those from [`quay.io`](http://quay.io) or [`dockerhub`](https://hub.docker.com/)
 
 ***Indentation and Whitespace***
 
@@ -246,7 +246,7 @@ input {
 
 ### The `call` sections
 
-- Import task files as something other than the included task nam in order to avoid namespace conflicts
+- Import task files as something other than the included task name in order to avoid namespace conflicts
 
 ```bash
 call task1_task.task1 {
@@ -288,7 +288,7 @@ output {
       input {
         String input
         String task1_docker = "us-docker.pkg.dev/general-theiagen/task_1:version"
-        String task2_docker = "us-docker.pkg.dev/general-theiagen//task_2:version"
+        String task2_docker = "us-docker.pkg.dev/general-theiagen/task_2:version"
         String? hidden_task3_argument
         String? hidden_task3_docker
         String? hidden_task4_docker

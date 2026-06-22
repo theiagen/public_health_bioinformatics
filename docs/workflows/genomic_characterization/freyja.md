@@ -6,7 +6,7 @@
 
 ## Freyja Overview
 
-[Freyja](https://github.com/andersen-lab/Freyja) is a tool for analysing viral mixed sample genomic sequencing data. Developed by Joshua Levy from the [Andersen Lab](https://andersen-lab.com/), it performs two main steps:
+[Freyja](https://github.com/andersen-lab/Freyja) is a tool for analyzing viral mixed sample genomic sequencing data. Developed by Joshua Levy from the [Andersen Lab](https://andersen-lab.com/), it performs two main steps:
 
 1. **Variant Frequency Estimation:** Freyja calculates the frequencies of single nucleotide variants (SNVs) in the genomic sequencing data.
 2. **Depth-Weighted Demixing:** It separates mixed populations of viral subtypes using a depth-weighted statistical approach, estimating the proportional abundance of each subtype in the sample based on the frequencies of subtype-defining variants.
@@ -27,27 +27,27 @@ Additional post-processing steps can produce visualizations of aggregated sample
 
     Depending on the type of data (Illumina or Oxford Nanopore), the Read QC and Filtering steps, as well as the Read Alignment steps use different software. The user can specify if the barcodes and lineages file should be updated with `freyja update` before running Freyja or if bootstrapping is to be performed with `freyja boot`.
 
-Four workflows have been created that perform different parts of Freyja:
+Three workflows have been created that perform different parts of Freyja:
 
 - [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq)
 - [**Freyja_Plot_PHB**](freyja.md#freyja_plot)
-- [**Freyja_Dashboard_PHB**](freyja.md#freyja_dashboard)
+- [**Freyja_Dashboard_PHB**](freyja.md#freyja_dashboard)=
 
 The main workflow is [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq) ([Figure 1](freyja.md#figure1)). Depending on the type of input data (Illumina paired-end, Illumina single-end or ONT), it runs various QC modules before aligning the sample with either [BWA](https://github.com/lh3/bwa) (Illumina) or [minimap2](https://github.com/lh3/minimap2) (ONT) to the provided reference file, followed by iVar for primer trimming. After the preprocessing is completed, [Freyja](https://github.com/andersen-lab/Freyja) is run to generate relative lineage abundances (demix) from the sample. Optional bootstrapping may be performed.
 
-!!! dna "Data Compatability"
+!!! dna "Data Compatibility"
 
     The **Freyja_FASTQ_PHB workflow** is compatible with the following input data types:
 
-        - Ilumina Single-End
+        - Illumina Single-End
         - Illumina Paired-End
         - Oxford Nanopore
 
-Two options are available to visualize the Freyja results: [**Freyja_Plot_PHB**](freyja.md#freyja_plot) and [**Freyja_Dashboard_PHB**](freyja.md#freyja_dashboard). [Freyja_Plot_PHB](freyja.md#freyja_plot) aggregates multiple samples using output from [Freyja_FASTQ_PHB](freyja.md#freyja_fastq) to generate a plot that shows fractional abundance estimates for all samples. including the option to plot sample collection date information. Alternatively, [**Freyja_Dashboard_PHB**](freyja.md#freyja_dashboard) aggregates multiple samples using output from [Freyja_FASTQ_PHB](freyja.md#freyja_fastq) to generate an interactive visualization. This workflow requires an additional input field called viral load, which is the number of viral copies per liter.
+Two options are available to visualize the Freyja results: [**Freyja_Plot_PHB**](freyja.md#freyja_plot) and [**Freyja_Dashboard_PHB**](freyja.md#freyja_dashboard). [Freyja_Plot_PHB](freyja.md#freyja_plot) aggregates multiple samples using output from [Freyja_FASTQ_PHB](freyja.md#freyja_fastq) to generate a plot that shows fractional abundance estimates for all samples, including the option to plot sample collection date information. Alternatively, [**Freyja_Dashboard_PHB**](freyja.md#freyja_dashboard) aggregates multiple samples using output from [Freyja_FASTQ_PHB](freyja.md#freyja_fastq) to generate an interactive visualization. This workflow requires an additional input field called viral load, which is the number of viral copies per liter.
 
 ### Freyja, Sequencing Platforms and Data Quality
 
-The choice of sequencing platform and the quality of the data directly influence Freyja's performance. High-accuracy platforms like Illumina provide reliable SNV detection, enhancing the precision of lineage abundance estimates. In contrast, platforms with higher error rates, such as Nanopore, whilst it has improved greatly in the recent years, may introduce uncertainties in variant calling, affecting the deconvolution process. Sequencing depth requirements will increase as the quality of the sequencing data decreases. A rational target depth is 100X coverage for sequencing data with Q-scores in the range of 25-30.
+The choice of sequencing platform and the quality of the data directly influence Freyja's performance. High-accuracy platforms like Illumina provide reliable SNV detection, enhancing the precision of lineage abundance estimates. In contrast, platforms with higher error rates, such as ONT, may introduce uncertainties in variant calling, affecting the deconvolution process. Sequencing depth requirements will increase as the quality of the sequencing data decreases. A rational target depth is 100X coverage for sequencing data with Q-scores in the range of 25-30.
 
 Additionally, inadequate sequencing depth can hinder Freyja's ability to differentiate between lineages, leading to potential misestimations. Sequencing depth requirements will increase with the complexity of the sample composition and the diversity of lineages present. For samples containing multiple closely related lineages, higher sequencing depth is necessary to resolve subtle differences in genetic variation and accurately estimate lineage abundances. This is particularly important for pathogens with high mutation rates or a large number of cocirculating lineages, such as influenza, where distinguishing between lineages relies on detecting specific single nucleotide variants (SNVs) with high confidence.
 
@@ -57,7 +57,7 @@ Additionally, inadequate sequencing depth can hinder Freyja's ability to differe
 
 Freyja measures SNV frequency and sequencing depth at each position in the genome to return an estimate of the true lineage abundances in the sample. The method uses lineage-defining "barcodes" that, for SARS-CoV-2, are derived from the UShER global phylogenetic tree as a base set for demixing. **Freyja_FASTQ_PHB** returns as output a TSV file that includes the lineages present and their corresponding abundances, along with other values. Optionally, the workflow can also produce a long-format TSV (`freyja_parsed_format_tsv`) that pairs the demixed lineage abundances with sample metadata (collection date, collection site, latitude, longitude) for downstream visualization.
 
-The Freyja_FASTQ_PHB workflow is compatible with the multiple input data types: Ilumina Single-End, Illumina Paired-End and Oxford Nanopore. Depending on the type of input data, different input values are used.
+The Freyja_FASTQ_PHB workflow is compatible with the multiple input data types: Illumina Single-End, Illumina Paired-End and Oxford Nanopore. Depending on the type of input data, different input values are used.
 
 **Table 1:** Freyja_FASTQ_PHB input configuration for different types of input data.
 
@@ -127,7 +127,7 @@ This workflow runs on the sample level.
 
         |  | Links |
         | --- | --- |
-        | Task | [task_freyja_one_sample.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja.wdl) |
+        | Task | [task_freyja.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja.wdl) |
         | Software Source Code | <https://github.com/andersen-lab/Freyja> |
         | Software Documentation | <https://andersen-lab.github.io/Freyja/index.html#> |
 
@@ -163,7 +163,7 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 
 - The `summarized` array denotes a sum of all lineage abundances in a particular WHO designation (i.e. B.1.617.2 and AY.6 abundances are summed in the above example), otherwise they are grouped into "Other".
 - The `lineage` array lists the identified lineages in descending order
-- The `abundances` array contains the corresponding abundances estimates.
+- The `abundances` array contains the corresponding abundance estimates.
 - The value of `resid` corresponds to the residual of the weighted least absolute deviation problem used to estimate lineage abundances.
 - The `coverage` value provides the 10x coverage estimate (percent of sites with 10 or greater reads)
 
@@ -218,7 +218,7 @@ This workflow runs on the set level.
 
         |  | Links |
         | --- | --- |
-        | Task | [wf_freyja_plot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_plot.wdl) |
+        | Task | [task_freyja_plot.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_plot.wdl) |
         | Software Source Code | <https://github.com/andersen-lab/Freyja> |
         | Software Documentation | <https://github.com/andersen-lab/Freyja> |
 
@@ -264,7 +264,7 @@ This workflow runs on the set level.
 
 ### Freyja_Dashboard_PHB {% raw %} {#freyja_dashboard} {% endraw %}
 
-This workflow creates a group of interactive visualizations based off of the aggregated freyja_demixed output files produced by [Freyja_FASTQ_PHB](freyja.md#freyja_fastq) called a "dashboard". Creating this dashboard requires knowing the viral load of your samples (viral copies/litre).
+This workflow creates a group of interactive visualizations based off of the aggregated freyja_demixed output files produced by [Freyja_FASTQ_PHB](freyja.md#freyja_fastq) called a "dashboard". Creating this dashboard requires knowing the viral load of your samples (viral copies/liter).
 
 !!! warning
 
@@ -290,7 +290,7 @@ This workflow runs on the set level.
 
         |  | Links |
         | --- | --- |
-        | Task | [wf_freyja_dashboard.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_dashboard.wdl) |
+        | Task | [task_freyja_dashboard.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/taxon_id/freyja/task_freyja_dashboard.wdl) |
         | Software Source Code | <https://github.com/andersen-lab/Freyja> |
         | Software Documentation | <https://github.com/andersen-lab/Freyja> |
 

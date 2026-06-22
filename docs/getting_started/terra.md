@@ -47,7 +47,7 @@ To start using Terra for data analysis, you will first need to import your data 
 
 ### TheiaX workflows
 
-The TheiaX workflows are used for genome assembly, quality control, and characterization. The [TheiaCoV Workflow Series](../workflows/genomic_characterization/theiacov.md), [TheiaProk Workflow Series](../workflows/genomic_characterization/theiaprok.md), and [TheiaEuk Workflow Series](../workflows/genomic_characterization/theiaeuk.md) workflows are intended for viral, bacterial, and fungal pathogens, respectively. [TheiaMeta Workflow Series](../workflows/genomic_characterization/theiameta.md)  is intended for the analysis of a single taxon from metagenomic data.
+The TheiaX workflows are used for genome assembly, quality control, and characterization. The [TheiaCoV Workflow Series](../workflows/genomic_characterization/theiacov.md), [TheiaProk Workflow Series](../workflows/genomic_characterization/theiaprok.md), and [TheiaEuk Workflow Series](../workflows/genomic_characterization/theiaeuk.md) workflows are intended for viral, bacterial, and fungal pathogens, respectively. [TheiaMeta Workflow Series](../workflows/genomic_characterization/theiameta.md) is intended for the analysis of a single taxon from metagenomic data.
 
 !!! example "Current SOPs for the ==TheiaX workflows=="
 

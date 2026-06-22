@@ -10,7 +10,7 @@ Genomic characterization of pathogens is an increasing priority for public healt
 
 TheiaMeta can use one of two distinct methods for generating and processing the final assembly:
 
-- **If a reference genome is not provided**, the _de novo_  assembly will be the final assembly. Additionally, go through a binning process where the contigs are separated into distinct files ("bins") according to composition and coverage such that each bin hopefully contains a single taxon.
+- **If a reference genome is not provided**, the _de novo_  assembly will be the final assembly. A binning process separates the contigs into distinct files ("bins") according to composition and coverage such that each bin hopefully contains a single taxon.
 - **If a reference genome is provided by the user**, the _de novo_  metagenomic assembly is filtered by mapping the contigs to the reference and those constitute the final assembly. No binning is necessary as the mapping will filter contigs that are likely the same taxon as the reference.
 
 !!! caption "TheiaMeta Workflow Diagram"
@@ -47,14 +47,14 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
     !!! warning "Common errors with SPAdes v4+"
 
-        We found that MetaSPAdes v4+ can raise segmentation fault errors using our validation set of metagenomic samples, so MetaSPAdes v3+ is called by TheiaMeta. A newer version can be called by referencing a more recent container (e.g. "us-docker.pkg.dev/general-theiagen/staphb/spades:4.2.0") via the `metaspades_pe` `docker` input.
+        We found that MetaSPAdes v4+ can raise segmentation fault errors using our validation set of metagenomic samples, so MetaSPAdes v3 is called by TheiaMeta. A newer version can be called by referencing a more recent container (e.g. "us-docker.pkg.dev/general-theiagen/staphb/spades:4.2.0") via the `metaspades_pe` `docker` input.
 
     !!! techdetails "MetaSPAdes Technical Details"
-        
+
         |  | Links |
         | --- | --- |
         | Task | [task_metaspades.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_metaspades.wdl) |
-        | Software Source Code | [SPAdes on GitHub](https://github.com/ablab/spades) |        
+        | Software Source Code | [SPAdes on GitHub](https://github.com/ablab/spades) |
         | Software Documentation | [SPAdes Manual](https://ablab.github.io/spades/index.html) |
         | Original Publication(s) | [metaSPAdes: a new versatile metagenomic assembler](http://www.genome.org/cgi/doi/10.1101/gr.213959.116) |
 
@@ -99,15 +99,15 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 !!! hint ""
     This task is run on either:
 
-    - the reference-aligned contigs (if a reference was provided), or 
+    - the reference-aligned contigs (if a reference was provided), or
     - the Pilon-polished assembly_fasta (if no reference was provided).
 
 ??? task  "`quast`: Assembly Quality Assessment"
 
-    QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics without a reference being necessary. It includes useful metrics such as number of contigs, length of the largest contig and N50. 
-    
+    QUAST stands for QUality ASsessment Tool. It evaluates genome/metagenome assemblies by computing various metrics without a reference being necessary. It includes useful metrics such as number of contigs, length of the largest contig and N50.
+
     !!! techdetails "QUAST Technical Details"
-        
+
         |  | Links |
         | --- | --- |
         | Task | [task_quast.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_quast.wdl) |
@@ -124,15 +124,15 @@ The TheiaMeta_Illumina_PE workflow processes Illumina paired-end (PE) reads ge
 
 ??? task "`semibin2`: Metagenomic binning"
 
-    After the alignment, the resulting BAM file and index and the Pilon-polished assembly_fasta will be binned with `semibin2`, a command-line tool for metagenomic binning with deep learning. Specifically, it uses a semi-supervised siamese neural network that uses knowledge from reference genomes while maintaining reference-exclusive bins. By default, the `global` environemnt model is used, though a variety of options that may be better suited for your sample are available, and are listed in the relevant inputs section.
+    After the alignment, the resulting BAM file and index and the Pilon-polished assembly_fasta will be binned with `semibin2`, a command-line tool for metagenomic binning with deep learning. Specifically, it uses a semi-supervised siamese neural network that uses knowledge from reference genomes while maintaining reference-exclusive bins. By default, the `global` environment model is used, though a variety of options that may be better suited for your sample are available, and are listed in the relevant inputs section.
 
     !!! techdetails "SemiBin2 Technical Details"
-        
+
         |  | Links |
         | --- | --- |
         | Task | [task_semibin2.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/assembly/task_semibin.wdl) |
         | Software Source Code | [SemiBin2 on GitHub](https://github.com/BigDataBiology/SemiBin) |
-        | Software Documenttation | [SemiBin2 ReadTheDocs](https://semibin.readthedocs.io/en/stable/usage/) |
+        | Software Documentation | [SemiBin2 ReadTheDocs](https://semibin.readthedocs.io/en/stable/usage/) |
         | Original Publication(s) | [A deep siamese neural network improves metagenome-assembled genomes in microbiome datasets across different environments](https://doi.org/10.1038/s41467-022-29843-y) |
 
 #### Additional Outputs

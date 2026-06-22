@@ -13,7 +13,7 @@ fragment: true
     ##### Shared Variants
 <!-- endif -->
 
-    The Shared Variants task takes in the `concatenated_variants` output from the Concatenate Variants task and reshapes the data so that variants are rows and samples are columns. For each variant, samples where the variant was detected are populated with a "1" and samples were **either the variant was not detected or there was insufficient coverage to call variants** are populated with a "0". The resulting table is available as the `shared_variants_table` output.
+    The Shared Variants task takes in the `concatenated_variants` output from the Concatenate Variants task and reshapes the data so that variants are rows and samples are columns. For each variant, samples where the variant was detected are populated with a "1" and samples where **either the variant was not detected or there was insufficient coverage to call variants** are populated with a "0". The resulting table is available as the `shared_variants_table` output.
 
     The `shared_variants_table` file will be in the following format:
 

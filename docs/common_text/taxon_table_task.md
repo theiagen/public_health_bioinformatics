@@ -10,13 +10,13 @@ fragment: true
 
     Activate this task by providing a value for the `output_taxon_table` input variable. If provided, the user must also provide values to the `terra_project` and `terra_workspace` optional input variables.
 
-    The Export Taxon Table module will copy sample data to a different data table based on the taxonomic assignment. For example, if an *influenza* sample is analyzed, the module will copy the sample data to a new table for *influenza* samples or add the sample data to an existing table. 
+    The Export Taxon Table module will copy sample data to a different data table based on the taxonomic assignment. For example, if an *influenza* sample is analyzed, the module will copy the sample data to a new table for *influenza* samples or add the sample data to an existing table.
 
     !!! tip ""
         **Formatting the `output_taxon_table` file**
-        
-        The `output_taxon_table` file must be uploaded a Google storage bucket that is accessible by Terra and should be in **tab-delimited** format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column. 
-    
+
+        The `output_taxon_table` file must be uploaded a Google storage bucket that is accessible by Terra and should be in **tab-delimited** format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column.
+
         | taxon | taxon_table |
         | --- | --- |
         | influenza | influenza_panel_specimen |
@@ -35,11 +35,11 @@ fragment: true
 
     !!! tip ""
         To activate the Export Taxon Table module, provide a file indicating data table names to copy samples of each taxa to in the `taxon_tables` input variable.
-        
+
         **Formatting the `taxon_tables` file**
-        
+
         The `taxon_tables` file must be uploaded a Google storage bucket that is accessible by Terra and should be in the format below. Briefly, the bacterial genera or species should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column.
-        
+
         | taxon | taxon_table |
         | --- | --- |
         | Listeria_monocytogenes | lmonocytogenes_specimen |
@@ -58,7 +58,7 @@ fragment: true
 <!-- endif -->
 
     !!! tip ""
-        There are no output columns for the taxon table task. The only output of the task is that additional data tables will appear for in the Terra workspace for samples matching a taxa in the taxon table file.
+        There are no output columns for the taxon table task. The only output of the task is that additional data tables will appear in the Terra workspace for samples matching a taxa in the taxon table file.
 
     !!! techdetails "Export Taxon Table Technical Details"
         |  | Links |

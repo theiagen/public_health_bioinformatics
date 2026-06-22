@@ -35,7 +35,7 @@ fragment: true
 
 <!--if: theiaviral -->
     ???+ warning "Descendant taxa reads are extracted"
-        This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all subordiante taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section above for more details on the `rank` input parameter.
+        This task will extract reads classified to the input `taxon` and **all of its descendant taxa**. The `rank` input parameter controls the extraction of reads classified at the specified `rank` and all subordinate taxonomic levels. See task `ncbi_identify` under the **Taxonomic Identification** section above for more details on the `rank` input parameter.
 <!-- endif -->
 
     !!! techdetails "Metabuli Technical Details"

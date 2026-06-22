@@ -12,7 +12,7 @@ Read files associated with the SRA run accession provided as input are copied to
 
 ### Inputs
 
-The only required input for the SRA_Fetch workflow is an SRA run accession beginning "SRR", an ENA run accession beginning "ERR", or a DRA run accession which beginning "DRR".
+The only required input for the SRA_Fetch workflow is an SRA run accession beginning "SRR", an ENA run accession beginning "ERR", or a DRA run accession beginning "DRR".
 
 Please see the [NCBI Metadata and Submission Overview](https://www.ncbi.nlm.nih.gov/sra/docs/submitmeta/) for assistance with identifying accessions. Briefly, NCBI-accessioned objects have the following naming scheme:
 
@@ -32,7 +32,7 @@ Please see the [NCBI Metadata and Submission Overview](https://www.ncbi.nlm.nih.
 
 Read data are available either with full base quality scores (**SRA Normalized Format**) or with simplified quality scores (**SRA Lite**). The **SRA Normalized Format** includes full, per-base quality scores, whereas **base quality scores** **have been simplified in SRA Lite files.** This means that all quality scores have been artificially set to Q-30 or Q3. More information about these files can be found [here](https://www.ncbi.nlm.nih.gov/sra/docs/sra-data-formats/).
 
-Given the lack of usefulness of SRA Lite formatted FASTQ files, we try to avoid these by preferentially searching SRA directly (SRA-Lite is more probably to be the file synced to other repositories), but sometimes downloading these files is unavoidable. To make the user aware of this, a warning column is present that is populated when an SRA-Lite file is detected.
+Given the lack of usefulness of SRA Lite formatted FASTQ files, we try to avoid these by preferentially searching SRA directly (SRA-Lite is more likely to be the file synced to other repositories), but sometimes downloading these files is unavoidable. To make the user aware of this, a warning column is present that is populated when an SRA-Lite file is detected.
 
 /// html | div[class="searchable-table"]
 

@@ -35,7 +35,7 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
 
         Open the workflow configuration screen in Terra. Paste the copied GCS path into the `pod5_bucket_path` input field for the Dorado Basecalling Workflow.
 
-        Make sure the select the `"Run workflow with inputs defined by file paths"` option, as shown.
+        Make sure you select the `"Run workflow with inputs defined by file paths"` option, as shown.
 
         !!! caption "Workflow Inputs"
             ![Workflow Inputs](../../assets/figures/dorado_workflow_inputs.png)
@@ -132,7 +132,7 @@ Ensure you use an accepted barcoding kit name in the `kit_name` parameter. Check
 This workflow is composed of several tasks to process, basecall, and analyze Oxford Nanopore `POD5` files.
 
 ??? task "`find_files`: Identifying all POD5 files in the `pod5_bucket_path`"
-    Since this workflow only recieves a location for the POD5 files, this task was created to search the `pod5_bucket_path` location in order to create a list of all included POD5 files so that later tasks can perform basecalling on them. By default, this task is configured to search for `.pod5` files.
+    Since this workflow only receives a location for the POD5 files, this task was created to search the `pod5_bucket_path` location in order to create a list of all included POD5 files so that later tasks can perform basecalling on them. By default, this task is configured to search for `.pod5` files.
 
     !!! techdetails "Find Files Technical Details"
         |  | Links |
@@ -148,7 +148,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
         | Task | [task_chunk_files.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/file_handling/task_chunk_files.wdl) |
 
 ??? task "`dorado_basecall`: Basecalling POD5 files"
-    The basecalling task takes POD5 files as input and converts each individual POD5 into 'BAM' format using the either the default or user-specified model. This step leverages GPU acceleration for efficient processing.
+    The basecalling task takes POD5 files as input and converts each individual POD5 file into 'BAM' format using either the default or user-specified model. This step leverages GPU acceleration for efficient processing.
 
     Please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/basecaller/basecall_overview/) for more details, but what follows is a brief overview of the basecalling process:
 
@@ -187,7 +187,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
         | Software Documentation | [Dorado ReadTheDocs](https://dorado-docs.readthedocs.io/en/latest/) |
 
 ??? task "`dorado_trim`: Custom Primer Trimming (optional)"
-    If a the optional input `custom_primers` is provided, this task is activated that will trim the primer sequences from the beginning and end of the demultiplexed reads.
+    If the optional input `custom_primers` is provided, this task is activated that will trim the primer sequences from the beginning and end of the demultiplexed reads.
 
     To determine how to format the FASTA file that is expected in `custom_primers` please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/barcoding/custom_primers/), specifically the section on "Custom adapter/primer file format".
 
@@ -209,7 +209,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
     - `dorado_docker`: Docker image used in the `dorado_basecall` task
     - `dorado_version`: Version of Dorado used in the `dorado_basecall` task
     - `dorado_model_name`: Model used for basecalling
-    - `read1`: the FASTQ file containing the read name
+    - `read1`: the FASTQ file containing the reads
     - `table_created_by`: this column will indicate that this table was created by "Dorado_Basecalling_PHB"
     - `upload_date`: the date the table was uploaded to Terra
 

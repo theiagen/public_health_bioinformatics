@@ -1,6 +1,6 @@
 # Guide to Running Custom Organisms on TheiaCoV
 
-We encourage users to refer to the [TheiaViral workflow series](../workflows/genomic_characterization/theiaviral.md) for assembling viruses that are not accounted for in TheiaCoV. 
+We encourage users to refer to the [TheiaViral workflow series](../workflows/genomic_characterization/theiaviral.md) for assembling viruses that are not accounted for in TheiaCoV.
 
 ## The TheiaCoV Workflow Series
 
@@ -26,7 +26,7 @@ The [**TheiaCoV Workflow Series**](../workflows/genomic_characterization/theiaco
     - **Measles** (**`"measles"`**, `"Measles"`, `"mev"`, `"MeV"`, `"Morbillivirus"`, `"morbillivirus"`)
 
 
-These workflows currently support seven organisms (see above). The workflows are adaptable, with parameters that can be customized for specific organisms. Input JSON files with preset configurations for each supported virus are provided [here](../workflows/genomic_characterization/theiacov.md#theiacov-workflows), streamlining the setup process.
+These workflows currently support eight organisms (see above). The workflows are adaptable, with parameters that can be customized for specific organisms. Input JSON files with preset configurations for each supported virus are provided [here](../workflows/genomic_characterization/theiacov.md#theiacov-workflows), streamlining the setup process.
 
 Except for influenza, which follows a different process in TheiaCoV, **all organisms are assembled through consensus from a reference genome** (see Figure 2 below).
 
@@ -35,7 +35,7 @@ Except for influenza, which follows a different process in TheiaCoV, **all organ
 
     **Figure 2: TheiaCoV viral genome assembly flowchart.** FASTQ-formatted reads are binned into taxonomic groups, trimmed, QC’ed, mapped to the reference genome, and the consensus assembly is created with respect to the reference.
 
-All non-influenza default organisms go through read quality control and consensus assembly with [iVar](https://github.com/andersen-lab/ivar). First, the human reads are removed from the sample with [NCBI's human read removal tool (HRRT)](https://github.com/ncbi/sra-human-scrubber), and the data is taxonomically profiled with [Kraken2](https://github.com/DerrickWood/kraken2) (using a database with all viral data in RefSeq and human) before and after human read removal. The reads are then trimmed with [trimmomatic](https://github.com/timflutre/trimmomatic) (default) or [fastp](https://github.com/OpenGene/fastp). Sequencing adapters, if they exist, are removed with [bbduck](https://sourceforge.net/projects/bbmap/), and raw and clean read quality is assessed using [fastq_scan](https://github.com/rpetit3/fastq-scan) (default) or [FastQC](https://github.com/s-andrews/FastQC). The clean reads are then mapped to the reference genome after indexing with [bwa](https://github.com/lh3/bwa). Primers are trimmed from the alignment with [iVar](https://github.com/andersen-lab/ivar), and variants are called with [samtools](https://github.com/samtools/samtools). Finally, [samtools](https://github.com/samtools/samtools) and [iVar](https://github.com/andersen-lab/ivar) are called to generate the consensus assembly. 
+All non-influenza default organisms go through read quality control and consensus assembly with [iVar](https://github.com/andersen-lab/ivar). First, the human reads are removed from the sample with [NCBI's human read removal tool (HRRT)](https://github.com/ncbi/sra-human-scrubber), and the data is taxonomically profiled with [Kraken2](https://github.com/DerrickWood/kraken2) (using a database with all viral data in RefSeq and human) before and after human read removal. The reads are then trimmed with [trimmomatic](https://github.com/timflutre/trimmomatic) (default) or [fastp](https://github.com/OpenGene/fastp). Sequencing adapters, if they exist, are removed with [bbduk](https://sourceforge.net/projects/bbmap/), and raw and clean read quality is assessed using [fastq_scan](https://github.com/rpetit3/fastq-scan) (default) or [FastQC](https://github.com/s-andrews/FastQC). The clean reads are then mapped to the reference genome after indexing with [bwa](https://github.com/lh3/bwa). Primers are trimmed from the alignment with [iVar](https://github.com/andersen-lab/ivar), and variants are called with [samtools](https://github.com/samtools/samtools). Finally, [samtools](https://github.com/samtools/samtools) and [iVar](https://github.com/andersen-lab/ivar) are called to generate the consensus assembly.
 
 For default organisms, we provide all the necessary files for all of these processes. To successfully generate a consensus assembly for a non-default organism, depending on the workflow configuration, the intermediary files will need to be provided by the user. We drafted a set of recommendations below to facilitate this process.
 

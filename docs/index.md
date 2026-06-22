@@ -67,7 +67,7 @@ We warmly welcome contributions to this repository! Our code style guide may be 
 
 If you would like to make suggested code changes to our workflows, submit pull requests to the [PHB GitHub](https://github.com/theiagen/public_health_bioinformatics) repository.
 
-You can expect a careful review of every PR and recieve feedback as needed before merging, just like we do for PRs submitted by the Theiagen team. Our PR template can help prepare you for the review process. As always, reach out with any questions! We love recieving feedback and contributions from the community. When your PR is merged, we'll add your name to the contributors list below!
+You can expect a careful review of every PR and receive feedback as needed before merging, just like we do for PRs submitted by the Theiagen team. Our PR template can help prepare you for the review process. As always, reach out with any questions! We love receiving feedback and contributions from the community. When your PR is merged, we'll add your name to the contributors list below!
 
 ## Authorship & Responsibility
 
@@ -133,7 +133,7 @@ If you would like to provide feedback, please raise a [GitHub issue](https://git
 
 ### Maintaining PHB Pipelines
 
-Theiagen Genomics has committed to maintaining these workflows for the forseeable future. These workflows are written using a standard workflow language (WDL) and uses Docker images based on the [StaPH-B Docker Builds](https://github.com/StaPH-B/docker-builds). New versions that include bug fixes and additional features are released on a quarterly bases, with urgent bug fixes released as needed. Each version is accompanied by detailed release notes to lower the barrier of pipeline upkeep from the public health community at large.
+Theiagen Genomics has committed to maintaining these workflows for the foreseeable future. These workflows are written using a standard workflow language (WDL) and use Docker images based on the [StaPH-B Docker Builds](https://github.com/StaPH-B/docker-builds). New versions that include bug fixes and additional features are released on a quarterly basis, with urgent bug fixes released as needed. Each version is accompanied by detailed release notes to lower the barrier of pipeline upkeep from the public health community at large.
 
 ### Point of Contact
 

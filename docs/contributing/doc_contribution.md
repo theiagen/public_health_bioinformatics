@@ -24,7 +24,7 @@ This will prompt you to open your browser to the appropriate local host address 
 
 ### VSCode Extensions
 
-Here are some VSCode Extensions can help you write and edit your markdown files (and allow you preview changes without running the server, though formatting will suffer):
+Here are some VSCode Extensions that can help you write and edit your markdown files (and allow you preview changes without running the server, though formatting will suffer):
 
 - [Markdown Preview Enhanced (Yiyi Wang)](https://marketplace.visualstudio.com/items?itemName=shd101wyy.markdown-preview-enhanced) - This extension is good for previewing markdown files in VSCode, but is **not** good at rendering any of the more advanced features such as callouts or tables.
 - [Markdown All in One (Yu Zhang)](https://marketplace.visualstudio.com/items?itemName=yzhang.markdown-all-in-one) - This extension allows you to use regular word-processing short-cuts to format your markdown files, like Ctrl-B to bold text, Ctrl-I for italics without having to manually type the `**` or `_` characters.
@@ -83,7 +83,7 @@ The following language conventions should be followed when writing documentation
         Use this admonition when wanting to provide additional _optional_ information or details that are not strictly necessary, or take up a lot of space.
 
     ???+ task
-        This is a toggle-able section **for a workflow task**. The emoji is a gear. Use the `??? task` syntax to create this admonition. Use `!!! task` if you want to have it be permanently expanded. I have add a `+` at the end of the question marks to make this admonition open by default and still enable its collapse.
+        This is a toggle-able section **for a workflow task**. The emoji is a gear. Use the `??? task` syntax to create this admonition. Use `!!! task` if you want to have it be permanently expanded. I have added a `+` at the end of the question marks to make this admonition open by default and still enable its collapse.
 
         Use this admonition when providing details on a workflow, task, or tool.
 
@@ -131,7 +131,7 @@ The following language conventions should be followed when writing documentation
 
     Note that this is not a "pretty" markdown table. This is because the spacing would be crazy in the markdown file, especially for tables with a lot of text and/or columns. The table will render correctly in the documentation.
 
-- Links - Use the following syntax to create a link. This is works for both files and websites. If linking a file, use the relative path.
+- Links - Use the following syntax to create a link. This works for both files and websites. If linking a file, use the relative path.
 
     ```markdown
     [Link Text](https://www.example.com)
@@ -176,8 +176,8 @@ If you are adding a new workflow, there are a number of things to do in order to
      - Workflow Name - Link the name with a relative path to the workflow page in appropriate `docs/workflows/` subdirectory
      - Workflow Description - Brief description of the workflow
      - Applicable Kingdom - Link one of the following options to the corresponding heading in the `docs/workflows_overview/workflows_kingdom.md` file. Options: "Any taxa", "Bacteria", "Mycotics", "Viral"
-     - Workflow Level (_on Terra_) - Options: "Sample-level", "Set-level", or ""
-     - Workflow Type - Link one of the following options to the corresponding heading in the `docs/workflows_overview/workflows_type.md` file. Options: "Data Import", "Genomic Characterization", "Phylogenetic Construction", "Phylogenetic Placement", "Public Data Sharing", "Exporting Data from Terra", or "Standalone"; this should match the location/naming of the workflow page in `docs/workflows/`.
+     - Workflow Level (_on Terra_) - Options: "Sample-level", "Set-level", "Table-level", or ""
+     - Workflow Type - Link one of the following options to the corresponding heading in the `docs/workflows_overview/workflows_type.md` file. Options: "Data Import", "Genomic Characterization", "Phylogenetic Construction", "Phylogenetic Placement", "Public Data Sharing", "Exporting Data from Terra", "Comparative Analysis" or "Standalone"; this should match the location/naming of the workflow page in `docs/workflows/` (except Comparative Analysis, which should go in the `standalone` directory if appropriate).
      - Command-line compatibility - Options: "Yes", "No", and/or "Some optional features incompatible"
      - The version where the last known changes occurred (likely the upcoming version if it is a new workflow -- if the upcoming version number is currently unknown, please use **vX.X.X**)
      - Link to the workflow on Dockstore - Link the workflow name to the information tab on Dockstore.

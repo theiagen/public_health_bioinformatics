@@ -162,7 +162,7 @@ We've provided the following information to help you set up the workflow for eac
 
 ### Organism-Specific Parameters {% raw %} {#org-specific} {% endraw %}
 
-**The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflows**. This step automatically sets the different parameters needed for each downstream tool to the appropriate value for the user-designated organism (by default, `"sars-cov-2"` is the default organism).
+**The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflows**. This step automatically sets the different parameters needed for each downstream tool to the appropriate value for the user-designated organism (`"sars-cov-2"` is the default organism).
 
 !!! dna ""
     The following tables include the relevant organism-specific parameters; **all of these default values can be overwritten by providing a value for the "Overwrite Variable Name" field**.
@@ -214,10 +214,10 @@ We've provided the following information to help you set up the workflow for eac
         | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
         |---|---|---|---|
         | genome_length_input | WNV | `11000` | |
-        | kraken_target_organism_input | WNV | `"West Nile virus`" | |
+        | kraken_target_organism_input | WNV | `"West Nile virus"` | |
         | nextclade_dataset_name_input | WNV | `"NA"` | TheiaCoV's Nextclade currently does not support WNV |
         | nextclade_dataset_tag_input | WNV | `"NA"` | TheiaCoV's Nextclade currently does not support WNV |
-        | primer_bed_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/al/wnv/WNV-L1_primer.bed"` |  |
+        | primer_bed_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/WNV-L1_primer.bed"` |  |
         | reference_genome | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/NC_009942.1_wnv_L1.fasta"` |  |
         | vadr_max_length | WNV | `11000` |  |
         | vadr_skip_length | WNV | `3000` |  |
@@ -320,6 +320,7 @@ We've provided the following information to help you set up the workflow for eac
         | nextclade_dataset_tag_input | rsv_b | `"2026-04-14--11-55-23Z"` |
         | reference_genome | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"` |
         | vadr_max_length | rsv_b | `15500` |
+        | vadr_skip_length | rsv_b | `5000` |
         | vadr_mem | rsv_b | `32` |
         | vadr_options | rsv_b | `"--mkey rsv --xnocomp -r"` |
         | vadr_model_file | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"` |

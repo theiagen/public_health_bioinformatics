@@ -2,15 +2,15 @@
 
 GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking) incorporates k-mer based strategy for the identification of taxonomic information with a highly curated searchable database.
 
-A GAMBIT databases consist of two files:
+A GAMBIT database consists of two files:
 
-1. A **signatures file** containing the GAMBIT signatures (compressed representations) of all genomes represented in the database; 
+1. A **signatures file** containing the GAMBIT signatures (compressed representations) of all genomes represented in the database;
 2. A **metadata file** relating the represented genomes to their genome accessions, taxonomic identifications, and species thresholds.
 
 The goal in creating a database for GAMBIT is two-fold:
 
 - Genomes representing each species in the database must contain enough distinction from other species so that similarity thresholds can be extracted;
-- The highest level of confidence is obtained that a genome in the database is actually from the species that matched its labelled identification.
+- The highest level of confidence is obtained that a genome in the database is actually from the species that matched its labeled identification.
 
 <div class="grid cards" markdown>
 
@@ -97,7 +97,7 @@ A collection of scripts is called by the Bash wrapper to:
 3. Generate a GAMBIT database from a directory containing assemblies in FASTA format and a CSV file containing the assembly file and path, and the species taxon ID;
 
 !!! tip "Automatic Database Curation"
-    These steps allow you to obtain a working GAMBIT database without much manual intervention, given that all dependencies are installed correctly in your system. As of v2.0.0, the [curation steps have been automated](https://github.com/gambit-suite/gambitdb/blob/main/scripts/gambitdb-manual-curation) but require functionality deep access within the GAMBITdb software and are mostly for advanced usage. More detailed information is [available within the GAMBITdb repository](https://github.com/gambit-suite/gambitdb?tab=readme-ov-file#gambitdb).
+    These steps allow you to obtain a working GAMBIT database without much manual intervention, given that all dependencies are installed correctly in your system. As of v2.0.0, the [curation steps have been automated](https://github.com/gambit-suite/gambitdb/blob/main/scripts/gambitdb-manual-curation) but require deep access within the GAMBITdb software and are mostly for advanced usage. More detailed information is [available within the GAMBITdb repository](https://github.com/gambit-suite/gambitdb?tab=readme-ov-file#gambitdb).
 
 Sometimes repairs are required as even with curation of the GTDB spreadsheet errors can make their way to the final database. A utility is available to perform maintenance and repair operations on a GAMBIT database:
 
@@ -132,7 +132,7 @@ Example: <https://ftp.ncbi.nlm.nih.gov/genomes/refseq/fungi/assembly_summary.txt
 
 #### Step 2: Perform quality control on the sourced genomes (optional)
 
-It is advised to perform some quality assessment and control on the downloaded genomes to reduce the possibility of including low-quality and/or erroneous sequences in the database. [QUAST](https://github.com/ablab/quast) is a popular software for obtaining useful reference-free metrics such as the number of contigs, number of basepairs, length of largest contig and N50. Tools like [BUSCO](https://busco.ezlab.org/) and [CheckM](https://github.com/Ecogenomics/CheckM) provide valuable information regarding the completeness and contamination of a genome
+It is advised to perform some quality assessment and control on the downloaded genomes to reduce the possibility of including low-quality and/or erroneous sequences in the database. [QUAST](https://github.com/ablab/quast) is a popular software for obtaining useful reference-free metrics such as the number of contigs, number of basepairs, length of largest contig and N50. Tools like [BUSCO](https://busco.ezlab.org/) and [CheckM](https://github.com/Ecogenomics/CheckM) provide valuable information regarding the completeness and contamination of a genome.
 
 #### Step 3: Compress genomes into the GAMBIT signatures file and calculate pairwise distances between all genomes
 
@@ -165,8 +165,8 @@ Most GAMBIT databases are curated by examining the pairwise GAMBIT distance matr
 
 1. **Distantly related subspecies**
     1. **Manifestation:** In the pairwise-distance matrix, there are two or more groups of genomes within the species that are closely related, but are highly distant from each other.
-    2. **Solution: C**reate a subspecies taxon. 
-2. **Outlier genomes that may be labelled with the incorrect species**
+    2. **Solution**: Create a subspecies taxon.
+2. **Outlier genomes that may be labeled with the incorrect species**
     1. **Manifestation:** The genome will be distant from other genomes within its species, but highly similar to genomes of another species.
     2. **Solution:** Remove this genome. Assigning a new taxa is also possible.
 3. **Outlier genomes that are the result of poor assemblies**
@@ -229,7 +229,7 @@ while to_download:
     taxid = next(iter(to_download))
     print(taxid)
     file = outfiles['taxa'] / f'{taxid}.json'
-    
+
     if not file.exists():
         # Fetch data from NCBI
         result = Entrez.read(Entrez.efetch(db='taxonomy', id=taxid))
@@ -238,15 +238,15 @@ while to_download:
         # Save to local file
         with open(file, 'w') as f:
             json.dump(taxon, f)
-    
+
     else:
         # Already downloaded, read from the existing file
         with open(file) as f:
             taxon = json.load(f)
-            
+
     taxa[taxid] = taxon
     to_download.remove(taxid)
-            
+
     # If not a species, find the species ancestor and add to the download list
     if taxon['Rank'] != 'species':
         for ancestor in taxon['LineageEx']:
@@ -261,7 +261,7 @@ while to_download:
 
 #### Step 6: Create the database
 
-The next step is to create the SQLite database file for the GAMBIT database. [Figure 1](#figure1) depicts the database structure expected by GAMBIT. 
+The next step is to create the SQLite database file for the GAMBIT database. [Figure 1](#figure1) depicts the database structure expected by GAMBIT.
 
 We provide a Python script to accomplish this. Please add the missing information marked with `<>` to make the utility function and make sure you have all the required dependencies installed in your system, including [GAMBIT](./gambit.md) and [SQLalchemy](https://www.sqlalchemy.org/).
 
@@ -316,7 +316,7 @@ taxon_summaries = dict()
 
 for taxid in set(genomes_df['ncbi_taxid']):
     with open(infiles['taxon_esummary_dir'] / f'{taxid}.json') as f:
-        taxon_summaries[uid] = json.load(f)
+        taxon_summaries[taxid] = json.load(f)
 
 # ## Create database
 
@@ -371,10 +371,10 @@ for row in taxa_df.itertuples():
             ncbi_name=row.ncbi_name,
         ),
     )
-    
+
     taxa[row.ncbi_taxid] = taxon
     session.add(taxon)
-    
+
 session.commit()
 
 # ### Genomes
@@ -383,7 +383,7 @@ for row in genomes_df.itertuples():
     summary = genome_summaries[row.uid]
     assembly_stats = format_summary_meta(summary['meta'])
     taxon = taxa[row.ncbi_taxid]
-    
+
     genome = Genome(
         #edited next line
         key='/data/fasta/'f'{row.genbank_acc}''.fna.gz',
@@ -397,7 +397,7 @@ for row in genomes_df.itertuples():
         )
     )
     session.add(genome)
-    
+
     ag = AnnotatedGenome(
         genome=genome,
         genome_set=gset,
@@ -405,14 +405,14 @@ for row in genomes_df.itertuples():
         organism=taxon.name,
     )
     session.add(ag)
-    
+
 session.commit()
 
 ```
 
-#### Step 7: Finalise the signatures file
+#### Step 7: Finalize the signatures file
 
-The Last step is to finalise the signatures file. This last Python utility adds metadata to the database signatures file. Please add the missing information marked with `<>` to make the utility function and make sure you have all the required dependencies installed in your system, including [GAMBIT](./gambit.md) and [SQLalchemy](https://www.sqlalchemy.org/).
+The last step is to finalize the signatures file. This last Python utility adds metadata to the database signatures file. Please add the missing information marked with `<>` to make the utility function and make sure you have all the required dependencies installed in your system, including [GAMBIT](./gambit.md) and [SQLalchemy](https://www.sqlalchemy.org/).
 
 ```python linenums="1"
 #!/usr/bin/env python

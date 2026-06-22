@@ -18,7 +18,7 @@ fragment: true
 
         This database was developed via communication with Dr. Christine Lee, of the National Listeria, Yersinia, Vibrio and Enterobacterales Reference Laboratory within the Enteric Diseases Laboratory Branch at CDC. It is identical to the database used in the `abricate_vibrio` task except it is formatted for SRST2.
 
-    SRST2 works by mapping reads to the target sequences in the database and then reporting the details of all those genes that pass the quality thresholds. The presence or absence of specific genes are used to verify the species, identify cholera toxin production, and designation both the biotype and serogroup of the sample. See the table above for the genes used for each of these purposes.
+    SRST2 works by mapping reads to the target sequences in the database and then reporting the details of all those genes that pass the quality thresholds. The presence or absence of specific genes are used to verify the species, identify cholera toxin production, and designate both the biotype and serogroup of the sample. See the table above for the genes used for each of these purposes.
 
     !!! techdetails "SRST2 Technical Details"
         |  | Links |

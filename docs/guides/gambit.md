@@ -10,9 +10,9 @@ If the **distance between the query genome assembly and the closest genome in th
 !!! tip "GAMBIT includes a manually curated, high-quality database!"
     GAMBIT databases consist of two files:
 
-    1. A **signatures file** containing the GAMBIT signatures (compressed representations) of all genomes represented in the database 
+    1. A **signatures file** containing the GAMBIT signatures (compressed representations) of all genomes represented in the database
     2. A **metadata file** relating the represented genomes to their genome accessions, taxonomic identifications, and species thresholds
-  
+
 <div class="grid cards" markdown>
 
 -   :material-file-code: **Latest GAMBIT Version**
@@ -37,9 +37,9 @@ If the **distance between the query genome assembly and the closest genome in th
 
 ## Importing and using GAMBIT via the PHB workflows
 
-The [**GAMBIT_Query_PHB**](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Gambit_Query_PHB) workflow performs taxon assignment of a genome assembly using the GAMBIT. It can be imported directly to [Terra.bio](https://terra.bio) via [Dockstore](https://dockstore.org).
+The [**GAMBIT_Query_PHB**](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Gambit_Query_PHB) workflow performs taxon assignment of a genome assembly using GAMBIT. It can be imported directly to [Terra.bio](https://terra.bio) via [Dockstore](https://dockstore.org).
 
-Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly and a sample name associated with the genome assembly. The default GAMBIT database used for taxonomic identification is the Prokaryotic [GAMBIT Database GTDB v2.1.0](#gambit-gtdb-database-v210), but alternate GAMBIT databases can be provided.
+Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly and a sample name associated with the genome assembly. The default GAMBIT database used for taxonomic identification is the Prokaryotic [GAMBIT Database GTDB v2.2.0](#gambit-gtdb-database-v220), but alternate GAMBIT databases can be provided.
 
 !!! dna "Gambit_Query_PHB"
     More information on **GAMBIT_Query_PHB** is available [**here**](../workflows/standalone/gambit_query.md).
@@ -48,21 +48,21 @@ Two inputs are required for the **GAMBIT_Query_PHB** workflow: a genome assembly
     **GAMBIT_Query_PHB**
 
     - [Gambit_Query_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Gambit_Query_PHB)
-    
+
     **TheiaProk Workflow Series**
-    
+
       - [TheiaProk_Illumina_PE_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_Illumina_PE_PHB)
       - [TheiaProk_Illumina_SE_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_Illumina_SE_PHB)
       - [TheiaProk_ONT_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_ONT_PHB)
       - [TheiaProk_FASTA_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaProk_FASTA_PHB)
-    
+
     **TheiaEuk Workflow Series**
-   
+
       - [TheiaEuk_Illumina_PE_PHB](https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/TheiaEuk_Illumina_PE_PHB)
 
-Additionally, GAMBIT is also part of the **TheiaProk** and **TheiaEuk** collection of workflows, the first dedicated to the analysis of prokaryotic data, and the second data to mycotics. The TheiaProk or TheiaEuk most appropriate for your type of input data can be imported from the Dockstore links on the right.
+Additionally, GAMBIT is also part of the **TheiaProk** and **TheiaEuk** collection of workflows. TheiaProk is dedicated to the analysis of prokaryotic data, and TheiaEuk is intended for mycotics. The TheiaProk or TheiaEuk workflow most appropriate for your type of input data can be imported from the Dockstore links on the right.
 
-In both, GAMBIT is responsible for performing the taxonomic identification of the assembled sequences, which can trigger taxa-specific submodules for further genomic characterization. For TheiaProk, the default database is the Prokaryotic [GAMBIT Database GTDB v2.1.0](#gambit-gtdb-database-v210) and for TheiaEuk, the default database is the [Fungal GAMBIT Database v1.0.0](#gambit-fungal-database-v100).
+In both, GAMBIT is responsible for performing the taxonomic identification of the assembled sequences, which can trigger taxa-specific submodules for further genomic characterization. For TheiaProk, the default database is the Prokaryotic [GAMBIT Database GTDB v2.2.0](#gambit-gtdb-database-v220) and for TheiaEuk, the default database is the [Fungal GAMBIT Database v1.0.0](#gambit-fungal-database-v100).
 
 !!! dna "TheiaProk and TheiaEuk"
     More information on TheiaProk and TheiaEuk is available on the following pages:
@@ -181,11 +181,11 @@ Options:
 ??? toggle "Database Details"
 
     This database is a **minor update** to the v2.1.0 database. This database is identical to the v2.1.0 database, **except for the following modifications**.
-    
-    1. GTDB refers to _Proteus terrae_ subspecies _cibarius_ (NCBI name) as _Proteus cibarius_. This species have been renamed to align with NCBI
+
+    1. GTDB refers to _Proteus terrae_ subspecies _cibarius_ (NCBI name) as _Proteus cibarius_. This species has been renamed to align with NCBI
         a. Rationale: This GAMBIT patch database renamed the species to align with NCBI’s naming convention and public health practice.
-    2. The following genomes below were removed. 
-        a. Rationale: These genomes are currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Echerichia coli* query genomes to *Shigella* species.
+    2. The following genomes below were removed.
+        a. Rationale: These genomes are currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Escherichia coli* query genomes to *Shigella* species.
 
         GCF_020539805.1
         GCF_022494035.1
@@ -193,13 +193,13 @@ Options:
         GCF_013374815.1
         GCF_019793575.1
 
-        b. Rationale: This genome is currently named as *Klebsiella oxytoca*, but is actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Klebsiella oxytoca* query genomes to *Escherichia coli* species.
+        b. Rationale: This genome is currently named as *Klebsiella oxytoca*, but is actually *Escherichia coli* according to the best match type strain using ANI. Its removal from the database prevents false assignment of *Klebsiella oxytoca* query genomes to *Escherichia coli* species.
 
         GCA_900083935.1
 
         c. Rationale: This genome is currently named as *Clostridium perfringens*, but is actually *Enterococcus lactis* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Enterococcus lactis* query genomes to *Clostridium perfringens* species.
 
-        GCA_013390155.1   
+        GCA_013390155.1
 
     **Database Files**
 
@@ -220,13 +220,13 @@ Options:
 ??? toggle "Database Details"
 
     This database is a **minor update** to the v2.0.1 database. This database is identical to the v2.0.1 database, **except for the following modifications**.
-    
+
     1. Genomes representing *Salmonella enterica* subspecies houtenae and diarizonae were added to the database.
-        a. Rationale: In the v2.0.0 and v2.0.1 databases, no genomes representing these subspecies are present, therefore query genomes representing these subspecies were not reliably classifed as *Salmonella enterica*.
+        a. Rationale: In the v2.0.0 and v2.0.1 databases, no genomes representing these subspecies are present, therefore query genomes representing these subspecies were not reliably classified as *Salmonella enterica*.
     2. The *Salmonella arizonae* species was modified to be a subspecies of *Salmonella enterica*.
         a. Rationale: While GTDB classifies *Salmonella arizonae* as its own species due to its divergence from other Salmonella species, NCBI considers *Salmonella arizonae* a subspecies of *Salmonella enterica*. *Salmonella enterica* is also the typical naming convention within public health laboratories, therefore we have renamed the species to align with user preference.
-    3. The following genomes below were removed. 
-        a. Rationale: These genomes are currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Echerichia coli* query genomes to *Shigella* species.
+    3. The following genomes below were removed.
+        a. Rationale: These genomes are currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Escherichia coli* query genomes to *Shigella* species.
 
         GCF_002247485.1 
         GCF_002248245.1
@@ -236,7 +236,7 @@ Options:
         GCF_022494155.1
         GCF_022494015.1
         GCF_022494095.1
-        GCF_022494415.1   
+        GCF_022494415.1
 
     **Database Files**
 
@@ -256,7 +256,7 @@ Options:
 
 ??? toggle "Database Details"
 
-    This database is a **patch update** to the v2.0.0 database. This database is identical to the v2.0.0 database **except that the following genomes were removed**. 
+    This database is a **patch update** to the v2.0.0 database. This database is identical to the v2.0.0 database **except that the following genomes were removed**.
 
         GCF_003977345.1
         GCF_003977375.1
@@ -272,7 +272,7 @@ Options:
         GCF_001063095.1
         GCF_002248705.1
 
-    These genomes currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Echerichia coli* query genomes to *Shigella* species.
+    These genomes currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Escherichia coli* query genomes to *Shigella* species.
 
     **Database Files**
 
@@ -291,18 +291,18 @@ Options:
 #### GAMBIT GTDB Database v2.0.0
 
 ??? toggle "Database Details"
-    This database is a **major update** to the Curated v1.3.0 database. This iteration of the GAMBIT database relies upon the [Genome Taxonomy Database](https://gtdb.ecogenomic.org/) (GTDB), an initiative to establish a standardised microbial taxonomy based on genome phylogeny. The genomes used to construct the phylogeny are obtained from [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/) and [GenBank](https://www.ncbi.nlm.nih.gov/genbank/), independently quality-controlled using [CheckM](https://github.com/Ecogenomics/CheckM/wiki) before inclusion in GTDB.
+    This database is a **major update** to the Curated v1.3.0 database. This iteration of the GAMBIT database relies upon the [Genome Taxonomy Database](https://gtdb.ecogenomic.org/) (GTDB), an initiative to establish a standardized microbial taxonomy based on genome phylogeny. The genomes used to construct the phylogeny are obtained from [RefSeq](https://www.ncbi.nlm.nih.gov/refseq/) and [GenBank](https://www.ncbi.nlm.nih.gov/genbank/), independently quality-controlled using [CheckM](https://github.com/Ecogenomics/CheckM/wiki) before inclusion in GTDB.
 
-    This database was computed from [GTDB Release 214.1](https://gtdb.ecogenomic.org/stats/r214) as of April 28th, 2023. 
+    This database was computed from [GTDB Release 214.1](https://gtdb.ecogenomic.org/stats/r214) as of April 28th, 2023.
 
     - **Automated curation efforts**
-        
+
         The following curation steps were followed for all species:
-        
+
         - The candidates for an existing genus were collapsed (e.g genus_A, genus_B becomes genus)
-        
+
         The following species were updated:
-        
+
         - *Shigella* sp*.*
             - This genus is not present in GTDB  as it is collapsed under *Escherichia coli;*
             - All Shigella genomes in RefSeq were added to the database with no clustering using default quality criteria.
@@ -331,7 +331,7 @@ Options:
     Summary of species represented in the database with number of genomes representing each species and the species threshold:
 
     - <https://storage.cloud.google.com/gambit-databases-rp/2.0.0/gambit-taxa-2.0.0-20240628.tsv>
-    
+
         Note: Species with a threshold of "0" have been sub-speciated. Subspecies are not listed in this table.
 
 #### GAMBIT RefSeq Curated Database v1.3.0
@@ -340,9 +340,9 @@ Options:
     This database is a **patch update** to the Curated v1.2.0 database. In addition to all of the species included in the v1.2.0 database below, this database replaces all species in the **_Mycobacterium_, _Mycolicibacterium_, _Mycobacteroides_, and _Mycolicibacter_** genera with the available genomes in RefSeq as of October 16th, 2023.
 
     - **Manual curation efforts**
-        
+
         The following species were updated:
-        
+
         - *Mycolicibacterium/Mycolicibacter/Mycolicibacillus/Mycobacteroides/Mycobacterium* sp.
             - All genomes available were used
 
@@ -365,7 +365,7 @@ Options:
     Summary of species represented in the database with number of genomes representing each species and the species threshold:
 
     - <https://storage.cloud.google.com/gambit-databases-rp/1.3.0/gambit-1.3-231016-taxa-list.txt>
-        
+
         Note: Species with a threshold of "0" have been sub-speciated. Subspecies are not listed in this table.
 
 #### GAMBIT RefSeq Curated Database v1.2.0
@@ -374,19 +374,19 @@ Options:
     This database is a **patch update** to the RefSeq Curated v1.1.0 database. In addition to all of the species included in the v1.1.0 database below, this database includes new species that were under-represented as of August 11th, 2023.
 
     - **Automated curation efforts**
-       
-        Automated addition of new species to the database that are genetically distant from all current species in the v1.1.0 GAMBIT database. 
-        
+
+        Automated addition of new species to the database that are genetically distant from all current species in the v1.1.0 GAMBIT database.
+
         Genomes represented in the Genome Taxonomy Database ([GTDB](https://gtdb.ecogenomic.org/)) were added. These genomes predominantly originate from the RefSeq and GenBank databases with taxonomic metadata curated by GTDB. Any genomes added to the GAMBIT database from GTDB are added with the metadata from GTDB.
-            
+
         - Genomes added from GTDB include the following species:
-          
+
             [gambit-list-of-new-species-db-v1_2_0.txt](../assets/files/gambit-list-of-new-species-db-v1_2_0.txt)
-                
+
     - **Manual curation efforts**
-       
+
         Manually curated updates to several taxa relevant to public health. All genomes representing the taxa below were removed and replaced with the RefSeq genomes representing each species as of August 11th, 2023.
-        
+
         - *Citrobacter, Providencia, Hafnia, Neisseria, Proteus, Achromobacter, Aeromonas, Bacillus, Brucella, Afipia, Burkholderia, Paraburkholderia, Corynebacterium, Morganella*
 
     **Database Files**
@@ -434,20 +434,20 @@ Options:
     Summary of species represented in the database with number of genomes representing each species and the species threshold:
 
     - <https://storage.cloud.google.com/gambit-databases-rp/1.1.0/gambit-1.1-230417-taxa-list.txt>
-        
+
         Note: Species with a threshold of "0" have been sub-speciated. Subspecies are not listed in this table.
 
 #### GAMBIT RefSeq Curated Database v1.0.0
 
 ??? toggle "Database Details"
-    The GAMBIT RefSeq Curated v1.0.0 database was used for the analysis described in the [GAMBIT publication](https://doi.org/10.1371/journal.pone.0277575). This database was constructed based on the available genomes in RefSeq as of July 1st, 2016.  Genomes that did not have associated genus and/or species were removed. Additionally, at least two separate sequenced isolates for a given species were required in order to determine the classification threshold.  
+    The GAMBIT RefSeq Curated v1.0.0 database was used for the analysis described in the [GAMBIT publication](https://doi.org/10.1371/journal.pone.0277575). This database was constructed based on the available genomes in RefSeq as of July 1st, 2016.  Genomes that did not have associated genus and/or species were removed. Additionally, at least two separate sequenced isolates for a given species were required in order to determine the classification threshold.
 
     - **Manual curation efforts**
-        
-        Ambiguous genomes were removed if they met any of the following criteria: 
-        
+
+        Ambiguous genomes were removed if they met any of the following criteria:
+
         1. A genome that did not cluster well with the majority of the other genomes within their species;
-        2. A genome that clustered well with some members of their species but also several members of another species in the database<
+        2. A genome that clustered well with some members of their species but also several members of another species in the database;
         3. A genome that did not cluster well with any genomes in the database.
 
     **Database Files**
@@ -469,7 +469,7 @@ Options:
     Summary of species represented in the database with number of genomes representing each species and the species threshold:
 
     - <https://storage.cloud.google.com/gambit-databases-rp/1.0b2/gambit-1.0b2-rev2-211116-taxa-list.txt>
-        
+
         Note: Species with a threshold of "0" have been sub-speciated. Subspecies are not listed in this table.
 
 ---
@@ -483,9 +483,9 @@ Options:
 
     1. Species with a diameter of zero were excluded;
     2. Species with three or fewer genomes and a diameter greater than 0.75 were excluded.
-    
+
     **Manual curation efforts**
-    
+
      - Species were curated based on GAMBIT diameter:
      - The database was manually curated to remove highly distant genomes which were likely mislabeled.
      - Six species were divided into subspecies to ensure non-overlapping species diameters.
@@ -544,7 +544,7 @@ Options:
 
     245 fungal species from 138 genera are represented in the fungal database from a total of 5,667 fungal genomes. A table indicating the number of genomes and species diameter for each species represented in the database is indicated below.
 
-    [gambit-0.2.0-221130-taxa-list.tsv](../assets/files/gambit-0.2.0-221130-taxa-list.txt)
+    [gambit-0.2.0-221130-taxa-list.txt](../assets/files/gambit-0.2.0-221130-taxa-list.txt)
 
 ---
 
@@ -562,10 +562,10 @@ This allows not only thousands of genomes to be represented in a relatively smal
 ### Distance Metric Calculation
 
 /// html | div[style='float: left; width: 50%; padding: 20px;']
-The **Jaccard Index**, also known as the Jaccard Similarity Coefficient, is a statistic used for gauging the similarity and diversity between two sample sets. It ranges from 0 to 1, where if 0 the sets have no elements in common, whereas if 1 the sets are identical. In GAMBIT, the Jaccard Index is used to compare genetic sequences.
+The **Jaccard Index**, also known as the Jaccard Similarity Coefficient, is a statistic used for gauging the similarity and diversity between two sample sets. It ranges from 0 to 1, where 0 means the sets have no elements in common, while 1 means the sets are identical. In GAMBIT, the Jaccard Index is used to compare genetic sequences.
 
-!!! warning "Jacard Distance vs Index"
-    The **Jaccard Distance**, equal to one minus the Jaccard index, shares the same properties as the Jaccard index albeit inversely. It ranges from 0 to 1, where  0 the sets are identical and if 1, the sets have no elements in common.
+!!! warning "Jaccard Distance vs Index"
+    The **Jaccard Distance**, equal to one minus the Jaccard index, shares the same properties as the Jaccard index albeit inversely. It ranges from 0 to 1, where 0 means the sets are identical and 1 means the sets have no elements in common.
 
 In GAMBIT, the Jaccard Distance is calculated between two pre-computed k-mer sets in sparse coordinate format, one representing the query genome and another the GAMBIT database.
 
@@ -583,8 +583,8 @@ If the query genome distance is greater than the species diameter, GAMBIT attemp
     ##### Figure 1 {% raw %} {#figure1} {% endraw %}
     ![**Figure 1: Distribution of GAMBIT distances within a species and to the nearest sister taxon in the GAMBIT reference database.** Three histograms are shown in each panel (each normalized independently). The green histogram represents the distribution of GAMBIT distances from each reference genome in the species to the closest genome also within the same species. The blue histogram represents the distribution of GAMBIT distances for all pairwise comparisons within the species. The red histogram represents the distribution of GAMBIT distances from each genome in the species of interest to the closest genome in the species’ closest sister taxon. The dashed blue line represents the classification threshold for that species in the GAMBIT database, which in both cases was derived from the maximum intra-species distance. Panel A shows *Klebsiella pneumoniae* and its closest sister taxon *Klebsiella variicola*, panel B shows *Neisseria gonorrhoeae* and its closest sister taxon *Neisseria meningitidis*.  ****https://doi.org/10.1371/journal.pone.0277575.g004](../assets/figures/GAMBIT-distribution-of-distances.png)
 
-    **Figure 1: Distribution of GAMBIT distances within a species and to the nearest sister taxon in the GAMBIT reference database.** Three histograms are shown in each panel (each normalized independently). The green histogram represents the distribution of GAMBIT distances from each reference genome in the species to the closest genome also within the same species. The blue histogram represents the distribution of GAMBIT distances for all pairwise comparisons within the species. The red histogram represents the distribution of GAMBIT distances from each genome in the species of interest to the closest genome in the species’ closest sister taxon. The dashed blue line represents the classification threshold for that species in the GAMBIT database, which in both cases was derived from the maximum intra-species distance. Panel A shows _Klebsiella pneumoniae_ and its closest sister taxon _Klebsiella variicola_, panel B shows _Neisseria gonorrhoeae_ and its closest sister taxon _Neisseria meningitidis_. 
-    
+    **Figure 1: Distribution of GAMBIT distances within a species and to the nearest sister taxon in the GAMBIT reference database.** Three histograms are shown in each panel (each normalized independently). The green histogram represents the distribution of GAMBIT distances from each reference genome in the species to the closest genome also within the same species. The blue histogram represents the distribution of GAMBIT distances for all pairwise comparisons within the species. The red histogram represents the distribution of GAMBIT distances from each genome in the species of interest to the closest genome in the species’ closest sister taxon. The dashed blue line represents the classification threshold for that species in the GAMBIT database, which in both cases was derived from the maximum intra-species distance. Panel A shows _Klebsiella pneumoniae_ and its closest sister taxon _Klebsiella variicola_, panel B shows _Neisseria gonorrhoeae_ and its closest sister taxon _Neisseria meningitidis_.
+
     Sourced from <https://doi.org/10.1371/journal.pone.0277575.g004>.
 ///
 
@@ -603,10 +603,10 @@ The ANI values were compared against GAMBIT distances for all pairs of genomes i
     | Set | Number of Genomes | Phylogenetic Diversity | Assembly Quality | Reference |
     | --- | --- | --- | --- | ---|
     | Set 1 | 492 | Low (_E. coli_ only) | Medium | <https://doi.org/10.1186/s13059-016-0997-x> |
-    | Set 2 | 70 | High (muliple phyla) | High | <https://doi.org/10.1073/pnas.0308653100> |
+    | Set 2 | 70 | High (multiple phyla) | High | <https://doi.org/10.1073/pnas.0308653100> |
     | Set 3 | 88 | High (multiple phyla) | Medium | <https://doi.org/10.1371/journal.pone.0277575> |
     | Set 4 | 604 | High (multiple phyla) | Medium | <https://doi.org/10.1371/journal.pone.0277575> |
-  
+
 Spearman correlation was high in all four data sets ([Figure 2](#figure2)) (Set 1 = -0.977; Set 2 = -0.968; Set 3 = -0.969; Set 4 = -0.979) for comparisons in which the ANI was reported by the FastANI tool (100%, 5.59%, 7.42% and 47.4%), revealing a nearly monotonic relationship between GAMBIT distance and ANI.
 ///
 
@@ -615,8 +615,8 @@ Spearman correlation was high in all four data sets ([Figure 2](#figure2)) (Set 
     ##### Figure 2 {% raw %} {#figure2} {% endraw %}
     ![**Figure 2: Relationship between GAMBIT distance and ANI (Average Nucleotide Identity).**  The relationship is nonlinear but very close to monotonic as measured by Spearman correlation (shown in the bottom left corner of each subplot). ANI was calculated using the [FastANI](https://github.com/ParBLiSS/FastANI) tool with default parameter values. GAMBIT distances were calculated for all sets using the same parameter (k = 11, prefix = ATGAC). As FastANI only reports ANI values greater than ~80%, the fraction of total pairwise comparisons shown here were 100%, 5.5%, 7.4% and 47.4% for data sets 1–4 respectively. https://doi.org/10.1371/journal.pone.0277575.g001](../assets/figures/GAMBIT-distance-vs-ani.png)
 
-    **Figure 2: Relationship between GAMBIT distance and ANI (Average Nucleotide Identity).**  The relationship is nonlinear but very close to monotonic as measured by Spearman correlation (shown in the bottom left corner of each subplot). ANI was calculated using the [FastANI](https://github.com/ParBLiSS/FastANI) tool with default parameter values. GAMBIT distances were calculated for all sets using the same parameter (k = 11, prefix = ATGAC). As FastANI only reports ANI values greater than ~80%, the fraction of total pairwise comparisons shown here were 100%, 5.5%, 7.4% and 47.4% for data sets 1–4 respectively. 
-    
+    **Figure 2: Relationship between GAMBIT distance and ANI (Average Nucleotide Identity).**  The relationship is nonlinear but very close to monotonic as measured by Spearman correlation (shown in the bottom left corner of each subplot). ANI was calculated using the [FastANI](https://github.com/ParBLiSS/FastANI) tool with default parameter values. GAMBIT distances were calculated for all sets using the same parameter (k = 11, prefix = ATGAC). As FastANI only reports ANI values greater than ~80%, the fraction of total pairwise comparisons shown here were 100%, 5.5%, 7.4% and 47.4% for data sets 1–4 respectively.
+
     Sourced from <https://doi.org/10.1371/journal.pone.0277575.g001>.
 ///
 
@@ -635,7 +635,7 @@ As of [v2.0.0](#gambit-gtdb-database-v200), the GAMBIT Database is built iterati
 
 The creation of a GAMBIT Database usually follows these steps:
 
-- From a public repository, the genomes of interest are downloaded. Each taxa should have at least 2 genomes for GAMBIT diameters to be calculated;
+- From a public repository, the genomes of interest are downloaded. Each taxon should have at least 2 genomes for GAMBIT diameters to be calculated;
 - The downloaded genomes undergo a round of quality-control to minimize the possibility that the genomes are too fragmented, contaminated or too incomplete. Third-party tools, such as [QUAST](https://github.com/ablab/quast) and [CheckM](https://github.com/Ecogenomics/CheckM)/[BUSCO](https://busco.ezlab.org/) are used in this step;
 - GAMBIT distances are calculated for all pairs of genomes, removing overlapping sequences and misclassification to increase the accuracy of GAMBIT;
 - The database undergoes a curation to remove outliers and improve classification in underrepresented taxa and reflect public health usage and biological historical consensus more closely.
@@ -654,122 +654,122 @@ Because GAMBIT databases have built-in species thresholds, genomes are included 
 
     As a rule of thumb, we recommend the latest version of any GAMBIT Database to be used.  Instances where one might prefer to use an older database, versus the most up to date, include:
 
-    1. Maintaining use of a database that has been validated previously by your laboratory, or 
+    1. Maintaining use of a database that has been validated previously by your laboratory, or
     2. Utilizing a database that draws the genomes and their annotations from a specific source. For example, bacterial GAMBIT databases v1.0.0 through v1.3.0 draw their genome annotations predominantly from NCBI’s RefSeq database, whereas v2.0.0 draws all genome annotations from GTDB. Database v1.0.0 is also inclusive of all bacterial genomes that were available on RefSeq at the time of creation, whereas v2.0.0 excludes genomes that do not expand the diversity of their species.
 
 ??? toggle "How do I list taxa included in a GAMBIT database?"
     There are several ways to retrieve the information regarding which taxa were included in a given GAMBIT database release. The easiest way is to download the taxa list file provided [on this documentation page](./gambit_database.md) for every GAMBIT database release.
 
     Additionally, there are several programmatic ways to retrieve this information directly from the GAMBIT metadata file (which typically ends in ".gdb"). Here we present a few examples: using [SQLite3](https://www.sqlite.org/), [DBeaver](https://dbeaver.io/) or the [GAMBITtools](https://github.com/gambit-suite/gambittools) software.
-    
+
     ??? example "_Example 1:_ SQLite3"
-        To retrieve the list of taxa directly from the database, the following command can be run (after installing SQLite3 through your favourite installer). Substitute `<gambit metadata gdb file>` with your metadata file location.
-        
+        To retrieve the list of taxa directly from the database, the following command can be run (after installing SQLite3 through your favorite installer). Substitute `<gambit metadata gdb file>` with your metadata file location.
+
         ```bash
         sqlite3 <gambit metadata gdb file> "SELECT * FROM taxa;" > list-of-taxa.tsv
         ```
-        
+
         To retrieve the list of genomes, the following command can be run. Substitute `<gambit metadata gdb file>` by your metadata file location.
-        
+
         ```bash
         sqlite3 <gambit metadata gdb file> "SELECT * FROM genomes;" > list-of-genome.tsv
         ```
-        
+
     ??? example "_Example 2:_ DBeaver"
-        After downloading and installing [DBeaver](https://dbeaver.io/), open the GAMBIT metadata file by clicking on `New Database Connection` (or hitting Ctrl+Shift+N) on the top left corner of the window. Under the SQL section, select the `SQLite` option and open the path to the metadata file. If prompted, install the required drivers by DBeaver. 
-        
+        After downloading and installing [DBeaver](https://dbeaver.io/), open the GAMBIT metadata file by clicking on `New Database Connection` (or hitting Ctrl+Shift+N) on the top left corner of the window. Under the SQL section, select the `SQLite` option and open the path to the metadata file. If prompted, install the required drivers by DBeaver.
+
         !!! caption narrow "SQLite"
             ![SQLite](../assets/figures/GAMBIT-dbeaver-open-sqlite.png)
-        
-        Select `SQL Editor` in the toolbar and then click on `New SQL Script`. 
-        
+
+        Select `SQL Editor` in the toolbar and then click on `New SQL Script`.
+
         !!! caption narrow "New SQL Script"
             ![New SQL Script](../assets/figures/GAMBIT-dbeaver-new-sqlite-script.png)
-        
-        Type `SELECT * FROM taxa;` and check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel). 
-        
+
+        Type `SELECT * FROM taxa;` and check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel).
+
         !!! caption narrow "List Taxa"
             ![List Taxa](../assets/figures/GAMBIT-dbeaver-list-taxa.png)
-        
+
     ??? example "_Example 3:_ GAMBITtools"
-        The [GAMBITtools](https://github.com/gambit-suite/gambittools) suite of scripts are Python tools written for working with GAMBIT. We recommend using [Docker](https://www.docker.com/) to interact with GAMBITtools. 
-        
+        The [GAMBITtools](https://github.com/gambit-suite/gambittools) suite of scripts are Python tools written for working with GAMBIT. We recommend using [Docker](https://www.docker.com/) to interact with GAMBITtools.
+
         After building the gambittools docker image, use the `gambit-list-taxa` command as demonstrated below to generate a list of taxa included in a GAMBIT database. Substitute `<gambit metadata gdb file>` with your metadata file location
-        
+
         ```bash
         docker build -t gambittools .
         ```
-        
+
         ```bash
         docker run -v $(pwd):/data gambittools gambit-list-taxa <gambit metadata gdb file>
         ```
-        
+
 ??? toggle "How do I get the number of genomes representing a given species?"
-    Like retrieving the list of taxa, there are several ways of retrieving the number of species for a given species. 
+    Like retrieving the list of taxa, there are several ways of retrieving the number of species for a given species.
 
     ??? example "_Example 1:_ SQLite3"
-        To retrieve the list of taxa and respective number of genomes directly from the database, the following command can be run (after installing SQLite3 through your favourite installer). Substitute `<gambit metadata gdb file>` with your metadata file location.
-        
+        To retrieve the list of taxa and respective number of genomes directly from the database, the following command can be run (after installing SQLite3 through your favorite installer). Substitute `<gambit metadata gdb file>` with your metadata file location.
+
         ```bash
         sqlite3 <gambit metadata gdb file> "SELECT taxa.name,COUNT(genome_annotations.taxon_id) FROM taxa LEFT JOIN genome_annotations ON genome_annotations.taxon_id = taxa.id WHERE taxa.rank LIKE 'species' GROUP BY taxa.key ORDER BY taxa.name ASC;" > list-of-taxa-with-number-of-genomes.tsv
         ```
-        
+
     ??? example "_Example 2:_ DBeaver"
-        After downloading and installing [DBeaver](https://dbeaver.io/), open the GAMBIT metadata file by clicking on `New Database Connection` (or hitting Ctrl+Shift+N) on the top left corner of the window. Under the SQL section, select the `SQLite` option and open the path to the metadata file. If prompted, install the required drivers by DBeaver. 
-        
-        
+        After downloading and installing [DBeaver](https://dbeaver.io/), open the GAMBIT metadata file by clicking on `New Database Connection` (or hitting Ctrl+Shift+N) on the top left corner of the window. Under the SQL section, select the `SQLite` option and open the path to the metadata file. If prompted, install the required drivers by DBeaver.
+
+
         !!! caption narrow "SQLite"
             ![SQLite](../assets/figures/GAMBIT-dbeaver-open-sqlite.png)
-        
-        
-        Select `SQL Editor` in the toolbar and then click on `New SQL Script`. 
-        
+
+
+        Select `SQL Editor` in the toolbar and then click on `New SQL Script`.
+
         !!! caption narrow "New SQL Script"
             ![New SQL Script](../assets/figures/GAMBIT-dbeaver-new-sqlite-script.png)
 
-        Type `SELECT taxa.name,COUNT(genome_annotations.taxon_id) FROM taxa LEFT JOIN genome_annotations ON genome_annotations.taxon_id = taxa.id WHERE taxa.rank LIKE 'species' GROUP BY taxa.key ORDER BY taxa.name ASC;` and check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel). 
-        
+        Type `SELECT taxa.name,COUNT(genome_annotations.taxon_id) FROM taxa LEFT JOIN genome_annotations ON genome_annotations.taxon_id = taxa.id WHERE taxa.rank LIKE 'species' GROUP BY taxa.key ORDER BY taxa.name ASC;` and check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel).
+
         !!! caption narrow "Number of Genomes"
             ![Number of Genomes](../assets/figures/GAMBIT-dbeaver-number-genomes.png)
-        
+
 ??? toggle "How do I get the number of genomes and the distance threshold representing a given species?"
-    Like retrieving the list of taxa and the number of genomes representing a given species, there are several ways of retrieving the distance threshold for a given species. 
+    Like retrieving the list of taxa and the number of genomes representing a given species, there are several ways of retrieving the distance threshold for a given species.
 
     ??? example "_Example 1:_ SQLite3"
-        To retrieve the list of taxa and respective number of genomes directly from the database, the following command can be run (after installing SQLite3 through your favourite installer). Substitute `<gambit metadata gdb file>` with your metadata file location.
-        
+        To retrieve the list of taxa and respective number of genomes directly from the database, the following command can be run (after installing SQLite3 through your favorite installer). Substitute `<gambit metadata gdb file>` with your metadata file location.
+
         ```bash
         sqlite3 <gambit metadata gdb file> "SELECT taxa.name,taxa.distance_threshold,COUNT(genome_annotations.taxon_id) FROM taxa LEFT JOIN genome_annotations ON genome_annotations.taxon_id = taxa.id WHERE taxa.rank LIKE 'species' GROUP BY taxa.key ORDER BY taxa.name ASC;" > list-of-taxa-with-number-of-genomes.tsv
         ```
-        
+
     ??? example "Example 2: DBeaver"
-        After downloading and installing [DBeaver](https://dbeaver.io/), open the GAMBIT metadata file by clicking on `New Database Connection` (or hitting Ctrl+Shift+N) on the top left corner of the window. Under the SQL section, select the `SQLite` option and open the path to the metadata file. If prompted, install the required drivers by DBeaver. 
-        
+        After downloading and installing [DBeaver](https://dbeaver.io/), open the GAMBIT metadata file by clicking on `New Database Connection` (or hitting Ctrl+Shift+N) on the top left corner of the window. Under the SQL section, select the `SQLite` option and open the path to the metadata file. If prompted, install the required drivers by DBeaver.
+
         !!! caption narrow "SQLite"
             ![SQLite](../assets/figures/GAMBIT-dbeaver-open-sqlite.png)
-        
-        Select `SQL Editor` in the toolbar and then click on `New SQL Script`. 
-        
+
+        Select `SQL Editor` in the toolbar and then click on `New SQL Script`.
+
         !!! caption narrow "New SQL Script"
             ![New SQL Script](../assets/figures/GAMBIT-dbeaver-new-sqlite-script.png)
-        
-        Type `SELECT taxa.name,taxa.distance_threshold,COUNT(genome_annotations.taxon_id) FROM taxa LEFT JOIN genome_annotations ON genome_annotations.taxon_id = taxa.id WHERE taxa.rank LIKE 'species' GROUP BY taxa.key ORDER BY taxa.name ASC;` and check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel). 
-        
+
+        Type `SELECT taxa.name,taxa.distance_threshold,COUNT(genome_annotations.taxon_id) FROM taxa LEFT JOIN genome_annotations ON genome_annotations.taxon_id = taxa.id WHERE taxa.rank LIKE 'species' GROUP BY taxa.key ORDER BY taxa.name ASC;` and check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel).
+
         !!! caption narrow "Number of Genomes and Distance Threshold"
             ![Number Genomes and Distance Threshold](../assets/figures/GAMBIT-dbeaver-number-genomes-and-distance-threshold.png)
-    
+
 ??? toggle "How do I create a custom GAMBIT database?"
 
-    Creating a custom GAMBIT database can be a laborious task.  The easiest way to go about it is to reach out to Theiagen Genomics at [support@theiagen.com](mailto:support@theiagen.com) to request assistance.  A guide can be found on [GAMBIT Database Creation](./gambit_database.md) 
-    
+    Creating a custom GAMBIT database can be a laborious task.  The easiest way to go about it is to reach out to Theiagen Genomics at [support@theiagen.com](mailto:support@theiagen.com) to request assistance.  A guide can be found on [GAMBIT Database Creation](./gambit_database.md)
+
 ??? toggle "How well does GAMBIT perform discerning between _Escherichia coli_ and _Shigella_ sp?"
 
-    Escherichia coli and Shigella are closely genetically related, to the extent that they would be considered the same species if not for their distinguishing phenotypic characteristics. GAMBIT databases are curated to enable differentiation between the two groups, however, it is worth bearing in mind that these genomes are highly genetically similar thus tools that take a more granular approach to genome comparison may be more reliable. 
-    
+    Escherichia coli and Shigella are closely genetically related, to the extent that they would be considered the same species if not for their distinguishing phenotypic characteristics. GAMBIT databases are curated to enable differentiation between the two groups, however, it is worth bearing in mind that these genomes are highly genetically similar thus tools that take a more granular approach to genome comparison may be more reliable.
+
 ??? toggle "What should I do if a GAMBIT taxonomic assignment does not align with the expected results based on another bioinformatics tool or molecular testing?"
 
     In this instance, please reach out to [support@theiagen.com](mailto:support@theiagen.com) and David Hess at the Nevada State Public Health Laboratory [dhess@med.unr.edu](mailto:dhess@med.unr.edu). We will be happy to investigate your sample and improve the GAMBIT database in subsequent versions!
-    
+
 ---
 
 ## Other Resources

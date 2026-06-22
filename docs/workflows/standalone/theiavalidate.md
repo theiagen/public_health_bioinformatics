@@ -12,7 +12,7 @@
 !!! caption "TheiaValidate Workflow Diagram"
     ![TheiaValidate Workflow Diagram](../../assets/figures/TheiaValidate.png)
 
-TheiaValidate performs basic comparisons between user-designated columns in two separate tables. We anticipate this workflow being run to determine if any differences exist between version releases or two workflows, such as TheiaProk_ONT vs TheiaProk_Illumina_PE. A summary PDF report is produced in addition to a Excel spreadsheet that lists the values for any columns that do not have matching content for a sample.
+TheiaValidate performs basic comparisons between user-designated columns in two separate tables. We anticipate this workflow being run to determine if any differences exist between version releases or two workflows, such as TheiaProk_ONT vs TheiaProk_Illumina_PE. A summary PDF report is produced in addition to an Excel spreadsheet that lists the values for any columns that do not have matching content for a sample.
 
 !!! warning
     The two tables being compared **must** have both identical sample names and an equal number of samples. If not, the workflow will fail.

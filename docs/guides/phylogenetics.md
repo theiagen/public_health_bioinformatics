@@ -14,7 +14,7 @@ Phylogenetics is an approach to understanding evolutionary relationships among o
 
     - **Goal**: Determine the evolutionary relationship between a set of sequences, often to rule out likely transmission
     - **Pros**:
-        - Can be constructed form any suitable set of samples
+        - Can be constructed from any suitable set of samples
         - More accurate than phylogenetic placement when a high-quality dataset and appropriate methods are used
     - **Cons**:
         - Can be comparably slow and computationally expensive, especially for trees with a large number of sequences and large genomes

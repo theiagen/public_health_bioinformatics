@@ -17,7 +17,7 @@ fragment: true
     - Missing (M) - genes that were not recovered at all.
     - Number of genes examined (n) - the number of genes examined.
     
-    A high equity assembly will use the appropriate database for the taxa, have high complete (C) and single-copy (S) percentages, and low duplicated (D), fragmented (F) and missing (M) percentages. 
+    A high quality assembly will use the appropriate database for the taxa, have high complete (C) and single-copy (S) percentages, and low duplicated (D), fragmented (F) and missing (M) percentages. 
   
     !!! techdetails "BUSCO Technical Details"
         |  | Links |

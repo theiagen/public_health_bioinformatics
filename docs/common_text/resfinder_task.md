@@ -42,7 +42,7 @@ fragment: true
         2. Resfinder or PointFinder predicted resistance to **Ampicillin**
         3. Resfinder or PointFinder predicted resistance to **Azithromycin**
         4. Resfinder or PointFinder predicted resistance to **Ciprofloxacin**
-        5. Resfinder or PointFinder predicted resistance to **Ceftriazone**
+        5. Resfinder or PointFinder predicted resistance to **Ceftriaxone**
         6. Resfinder or PointFinder predicted resistance to **Trimethoprim**
         7. Resfinder or PointFinder predicted resistance to **Sulfamethoxazole**
 

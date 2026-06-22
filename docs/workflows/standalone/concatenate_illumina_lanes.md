@@ -18,7 +18,7 @@ Some Illumina machines produce multi-lane FASTQ files for a single sample. This 
 
 ### Workflow Tasks
 
-This workflow concatenates the Illumina lanes for forward and (if provided) reverse reads. The output files are named as followed:
+This workflow concatenates the Illumina lanes for forward and (if provided) reverse reads. The output files are named as follows:
 
 - Forward reads: `<samplename>_merged_R1.fastq.gz`
 - Reverse reads: `<samplename>_merged_R2.fastq.gz`

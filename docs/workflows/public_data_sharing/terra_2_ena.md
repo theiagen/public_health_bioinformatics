@@ -85,7 +85,7 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
             !!! warning "These fields are required for submission and must be included in the Terra data table or supplied as an input parameter"
 
-                If you cannot provide a value for a mandatory field within, set the `allow-missing` input parameter to `true` or alternatively, use one of the [INDSC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
+                If you cannot provide a value for a mandatory field within, set the `allow-missing` input parameter to `true` or alternatively, use one of the [INSDC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
 
             | <div style="width: 160px;">Terra Column Name</div> | <div style="width: 140px;">ENA Field Name</div> | Description |
             |---|---|---|
@@ -123,7 +123,7 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
             !!! warning "These fields are required for submission and must be included in the Terra data table or supplied as an input parameter"
 
-                If you cannot provide a value for a mandatory field within, set the `allow-missing` input parameter to `true` or alternatively, use one of the [INDSC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
+                If you cannot provide a value for a mandatory field within, set the `allow-missing` input parameter to `true` or alternatively, use one of the [INSDC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
 
             | <div style="width: 170px;">Terra Column Name</div> | <div style="width: 140px;">ENA Field Name</div> | Description |
             |---|---|---|
@@ -162,7 +162,7 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
             | `sample_capture_status` | sample capture status | Reason for the sample collection. |
             | `library_description` | sample_description | Description of the sample. |
             | `serotype` | serotype | Serological variety of a species characterised by its antigenic properties. For Influenza, HA subtype should be the letter H followed by a number between 1-16 unless novel subtype is identified and the NA subtype should be the letter N followed by a number between 1-9 unless novel subtype is identified. |
-            | `virus_identifier` | virus identifier | Unique laboratory identifier assigned to the virus by the investigator. Strain name is not sufficient since it might not be unique due to various passsages of the same virus. Format: up to 50 alphanumeric characters |
+            | `virus_identifier` | virus identifier | Unique laboratory identifier assigned to the virus by the investigator. Strain name is not sufficient since it might not be unique due to various passages of the same virus. Format: up to 50 alphanumeric characters |
 
     </div>
 

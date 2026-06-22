@@ -36,10 +36,10 @@ fragment: true
     | Variable  | Default Value | Rationale |
     | --- | --- | --- |
     | `skip_screen` | false | Set to true to skip the read screen from running |
-    | `min_reads` | 57 | Calculated from the minimum number of base pairs required for 10x coverage of the Hepatitis delta (of the _Deltavirus_ genus) genome, the samllest known viral genome as of 2024-04-11 (1,700 bp), divided by 300 (the longest Illumina read length) |
+    | `min_reads` | 57 | Calculated from the minimum number of base pairs required for 10x coverage of the Hepatitis delta (of the _Deltavirus_ genus) genome, the smallest known viral genome as of 2024-04-11 (1,700 bp), divided by 300 (the longest Illumina read length) |
     | `min_basepairs` | 17000 | Should be greater than 10x coverage of Hepatitis delta (of the _Deltavirus_ genus), the smallest known viral genome (1,700 bp) |
     | `min_genome_length` | 1700 | Based on the Hepatitis delta (of the _Deltavirus_ genus) genome, the smallest viral genome as of 2024-04-11 (1,700 bp) |
-    | `max_genome_length` | 2673870 | Based on the _Pandoravirus salinus_ genome, the largest known viral genome (2,473,870 bp), plus an additional 200 kbp to cater for potential extra genomic material |
+    | `max_genome_length` | 2673870 | Based on the _Pandoravirus salinus_ genome, the largest known viral genome (2,673,870 bp), plus an additional 200 kbp to cater for potential extra genomic material |
     | `min_coverage` | 10 | A bare-minimum average per base coverage across the genome required for genome characterization A Higher coverage would be required for high-quality phylogenetics. |
     | `min_proportion` | 40 | Neither read1 nor read2 files should have less than 40% of the total number of reads. For paired-end data only. |
 <!-- endif -->
@@ -81,7 +81,7 @@ fragment: true
 <!-- endif -->
 
     !!! techdetails "Screen Technical Details"
-        
+
 <!-- if: theiacov|theiaprok|theiaeuk|theiaeukont -->
         There is a single task for read screening. The screen task is run twice, once for raw reads and once for clean reads.
 <!-- endif -->

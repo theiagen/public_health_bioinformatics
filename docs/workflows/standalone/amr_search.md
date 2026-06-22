@@ -21,7 +21,7 @@ A limited number of species are currently supported and are listed below. NCBI c
 | _Staphylococcus aureus_    | 1280      |
 | _Salmonella typhi_         | 90370     |
 | _Streptococcus pneumoniae_ | 1313      |
-| _Klebisiella_              | 570       |
+| _Klebsiella_               | 570       |
 | _Klebsiella pneumoniae_    | 573       |
 | _Candida auris_            | 498019    |
 | _Vibrio cholerae_          | 666       |

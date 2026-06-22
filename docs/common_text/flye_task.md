@@ -21,7 +21,7 @@ fragment: true
         | `--pacbio-corr` | PacBio reads corrected with other methods (<3% error) |
         | `--pacbio-hifi` | PacBio HiFi reads (<1% error) |
     
-        Refer to the Flye documentation for detailed guidance on selecting the appropriate `flye_read_type` based on your sequencing data and additional optional paramaters.
+        Refer to the Flye documentation for detailed guidance on selecting the appropriate `flye_read_type` based on your sequencing data and additional optional parameters.
 
     ???+ warning "Non-deterministic output(s)"
         This task may yield non-deterministic outputs.

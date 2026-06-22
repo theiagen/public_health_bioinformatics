@@ -10,7 +10,7 @@
 
 Metabuli is suitable for classifying short reads *AND* long reads by comparing them to reference genomes. Optionally it can enable the extraction of reads from a specific NCBI taxon ID of interest. Metabuli uses a novel k-mer structure, called a "metamer", which incorporates both the DNA sequence for high specificity and amino acid conservation for sensitive homology detection.
 
-The Metabuli_PHB workflow additionally includes read trimming software, Fastp (Illumina) and fastplong (ONT), for adapter trimming (recommended) and basic read preprocessing. 
+The Metabuli_PHB workflow additionally includes read trimming software, Fastp (Illumina) and fastplong (ONT), for adapter trimming (recommended) and basic read preprocessing.
 
 !!! caption "Metabuli Workflow Diagram"
     <div style="text-align: center;">
@@ -20,7 +20,7 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
 ### Databases
 
 !!! info  "Database selection"
-    The Metabuli software is database-dependent and **taxonomic assignments are highly sensitive to the database used**. An appropriate database should contain the expected organism(s) (e.g. *Escherichia coli*) and other taxa that may be present in the reads (e.g. *Citrobacter freundii*, a common contaminant). To enable read extraction, the database taxon inputs must correspond to an appropriate compressed taxdump, e.g. NCBI taxdump for RefSeq databases and GTDB taxdump for GTDB databases (see [suggested databases](#suggested-databases) for example). 
+    The Metabuli software is database-dependent and **taxonomic assignments are highly sensitive to the database used**. An appropriate database should contain the expected organism(s) (e.g. *Escherichia coli*) and other taxa that may be present in the reads (e.g. *Citrobacter freundii*, a common contaminant). To enable read extraction, the database taxon inputs must correspond to an appropriate compressed taxdump, e.g. NCBI taxdump for RefSeq databases and GTDB taxdump for GTDB databases (see [suggested databases](#suggested-databases) for example).
 
 !!! warning "Adjusting computational resources"
     Default random-access memory (RAM) is typically sufficient for Metabuli, though this may need to be adjusted if an out-of-memory (OOM) error is returned. Additionally, the default `disk_space` is sufficient for the databases noted below, but this input must be adjusted to accommodate larger databases based on their decompressed size.
@@ -43,7 +43,7 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
 
 ??? dna "`illumina` input parameter"
     Setting `illumina` to "true" enables Illumina mode for single-end reads. Inputting a `read2` implicitly sets `illumina` to "true".
-    
+
 !!! caption ""
     === "Metabuli"
         /// html | div[class="searchable-table"]
@@ -75,15 +75,15 @@ The Metabuli_PHB workflow additionally includes read trimming software, Fastp (I
 
 #### Interpretation of results
 
-The most important outputs of the Metabuli workflows are the `metabuli_report` files. These will include a breakdown of the number of sequences assigned to a particular taxon, and the percentage of reads assigned. [A complete description of the report format can be found here](https://github.com/DerrickWood/kraken2/blob/master/docs/MANUAL.markdown#standard-kraken-output-format).
+The most important outputs of the Metabuli workflows are the `metabuli_report` files. These will include a breakdown of the number of sequences assigned to a particular taxon, and the percentage of reads assigned. [A complete description of the report format can be found here](https://jaebeom-kim.github.io/metabuli-doc/modules/classify/#output-file-formats).
 
-When assessing the taxonomic identity of a single isolate's sequence, it is normal that a few reads are assigned to very closely rated taxa due to the shared sequence identity between them. "Very closely related taxa" may be genetically similar species in the same genus, or taxa with which the dominant species have undergone horizontal gene transfer. Unrelated taxa or a high abundance of these closely related taxa is indicative of contamination or sequencing of non-target taxa. Interpretation of the results is dependent on the biological context.
+When assessing the taxonomic identity of a single isolate's sequence, it is normal that a few reads are assigned to very closely related taxa due to the shared sequence identity between them. "Very closely related taxa" may be genetically similar species in the same genus, or taxa with which the dominant species have undergone horizontal gene transfer. Unrelated taxa or a high abundance of these closely related taxa is indicative of contamination or sequencing of non-target taxa. Interpretation of the results is dependent on the biological context.
 
 ??? toggle "Example Metabuli report"
     Below is an example `metabuli_report` for a _Human immunodeficiency virus 1_ sample. Only the first 13 lines are included here since the rows near the bottom are <0.08% of the reads, which are likely human-derived contamination.
 
-    From this report, we can see that ~98.78% of the reads were assigned at the species level (`species` in the 4th column) to "_Human immunodeficiency virus 1_". ~1.15% of the reads were unclassified, and the remaining <0.08% of reads are annoated as _Homo sapiens_ (not depicted).
-    
+    From this report, we can see that ~98.78% of the reads were assigned at the species level (`species` in the 4th column) to "_Human immunodeficiency virus 1_". ~1.15% of the reads were unclassified, and the remaining <0.08% of reads are annotated as _Homo sapiens_ (not depicted).
+
     ```
      #clade_proportion	clade_count	taxon_count	rank	taxID	name
      1.1457	3045	3045	no rank	0	unclassified
@@ -107,7 +107,7 @@ When assessing the taxonomic identity of a single isolate's sequence, it is norm
 ??? toggle "Example Krona report"
 
     Below is an example of the `krona_html` for a bacterial sample. Taxonomic rank is organised from the centre of the pie chart to the edge, with each slice representing the relative abundance of a given taxa in the sample.
-    
+
     ![Example Krona Report](../../assets/figures/example_krona_report.png)
 
 !!! techdetails "Metabuli Technical Details"

@@ -27,7 +27,7 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
     !!! info "Note"
         If you click "Next" after uploading your files, it will ask for a metadata TSV. You do not have to provide this, and can instead exit the window. Your data will still be uploaded.
     
-    !!! caption narrow "Using the Terra data uiploader"
+    !!! caption narrow "Using the Terra data uploader"
         ![Data uploader](../../assets/figures/Create_Terra_Table_example1.png)
 
 ??? toggle "Using the Files section in Terra"
