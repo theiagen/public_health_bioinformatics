@@ -1604,6 +1604,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Workflow Tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iq-tree-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        IQ-TREE 2
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-tree-2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        IQ-TREE 2
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -6464,6 +6492,34 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Workflow Tasks">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iq-tree-2" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        IQ-TREE 2
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#iq-tree-2_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        IQ-TREE 2
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
         
           <li class="md-nav__item">
@@ -6655,7 +6711,7 @@
 <tr>
 <td><a href="../../../workflows_overview/workflows_type/#phylogenetic-construction">Phylogenetic Construction</a></td>
 <td><a href="../../../workflows_overview/workflows_kingdom/#bacteria">Bacteria</a></td>
-<td>v4.1.0</td>
+<td>vX.X.X</td>
 <td>Some optional features incompatible, Yes</td>
 <td>Set-level</td>
 <td><a href="https://dockstore.org/workflows/github.com/theiagen/public_health_bioinformatics/Core_Gene_SNP_PHB:main?tab=info">Core_Gene_SNP_PHB</a></td>
@@ -6669,7 +6725,7 @@
 <a class="glightbox" data-type="image" href="../../../assets/figures/Core_Gene_SNP.png"><img alt="Core Gene SNP Workflow Diagram" onload="this.width/=2;this.onload=null;" src="../../../assets/figures/Core_Gene_SNP.png" /></a>
 </div></p>
 </div>
-<p>The Core_Gene_SNP workflow is intended for core genome and pangenome phylogenetic analysis using <a href="https://github.com/SionBayliss/PIRATE">PIRATE</a> and <a href="https://github.com/iqtree/iqtree2/tree/v1.6.7">IQ-TREE v1.6.7</a>.</p>
+<p>The Core_Gene_SNP workflow is intended for core genome and pangenome phylogenetic analysis using <a href="https://github.com/SionBayliss/PIRATE">PIRATE</a> and <a href="https://github.com/iqtree/iqtree2/tree/v2.4.0">IQ-TREE2 v2.4.0</a>.</p>
 <div class="admonition info">
 <p class="admonition-title">Default Parameters</p>
 <p>Please note that while default parameters for pangenome construction and phylogenetic tree generation are provided, <strong>these default parameters may not suit every dataset and have not been validated against known phylogenies</strong>. Users should take care to select the parameters that are most appropriate for their dataset. Please reach out to <a href="mailto:support@theiagen.com">support@theiagen.com</a> or one of the other resources listed at the bottom of this page if you would like assistance with this task.</p>
@@ -6819,7 +6875,7 @@
 </tr>
 <tr>
 <td>core_iqtree</td>
-<td><strong>iqtree_model</strong></td>
+<td><strong>iqtree2_model</strong></td>
 <td>String</td>
 <td>Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad</td>
 <td>GTR+I+G</td>
@@ -6827,7 +6883,7 @@
 </tr>
 <tr>
 <td>core_iqtree</td>
-<td><strong>iqtree_opts</strong></td>
+<td><strong>iqtree2_opts</strong></td>
 <td>String</td>
 <td>Additional options for IQ-TREE, see <a href="https://iqtree.github.io/doc/Command-Reference">https://iqtree.github.io/doc/Command-Reference</a></td>
 <td></td>
@@ -6835,7 +6891,7 @@
 </tr>
 <tr>
 <td>core_iqtree</td>
-<td><strong>iqtree_ultrafast_bootstraps</strong></td>
+<td><strong>iqtree2_ultrafast_bootstraps</strong></td>
 <td>Int</td>
 <td>Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.</td>
 <td>1000</td>
@@ -6987,7 +7043,7 @@
 </tr>
 <tr>
 <td>pan_iqtree</td>
-<td><strong>iqtree_model</strong></td>
+<td><strong>iqtree2_model</strong></td>
 <td>String</td>
 <td>Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad</td>
 <td>GTR+I+G</td>
@@ -6995,7 +7051,7 @@
 </tr>
 <tr>
 <td>pan_iqtree</td>
-<td><strong>iqtree_opts</strong></td>
+<td><strong>iqtree2_opts</strong></td>
 <td>String</td>
 <td>Additional options for IQ-TREE, see <a href="https://iqtree.github.io/doc/Command-Reference">https://iqtree.github.io/doc/Command-Reference</a></td>
 <td></td>
@@ -7003,7 +7059,7 @@
 </tr>
 <tr>
 <td>pan_iqtree</td>
-<td><strong>iqtree_ultrafast_bootstraps</strong></td>
+<td><strong>iqtree2_ultrafast_bootstraps</strong></td>
 <td>Int</td>
 <td>Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.</td>
 <td>1000</td>
@@ -7297,15 +7353,18 @@
 </div>
 </details>
 <details class="task">
-<summary><code>IQ-TREE</code>: Phylogeny Construction</summary>
-<p>IQ-TREE is used to build a phylogeny using the maximum-likelihood method and a specified nucleotide substitution model.</p>
-<p>IQ-TREE will perform assessments of the tree using the Shimodaira–Hasegawa approximate likelihood-ratio test (<a href="https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false">SH-aLRT test</a>), and ultrafast bootstrapping with <a href="https://academic.oup.com/mbe/article/35/2/518/4565479">UFBoot2</a>, a quicker but less biased alternative to standard bootstrapping. A clade should not typically be trusted if it has less than 80% support from the SH-aLRT test and less than 95% support with ultrafast bootstrapping.</p>
+<summary><code>IQ-TREE 2</code>: Phylogeny Construction</summary>
+<h5 id="iq-tree-2">IQ-TREE 2<a class="headerlink" href="#iq-tree-2" title="Permanent link">&para;</a></h5>
+<p>IQ-TREE 2 is used to build the final phylogeny. It uses the alignment generated in the previous steps of the workflow. The contents of this alignment will depend on whether any sites were masked with recombination.</p>
+<p>The phylogeny is generated using the maximum-likelihood method and a specified nucleotide substitution model. By default, the Snippy_Tree workflow will run Model Finder to determine the most appropriate nucleotide substitution model for your data, but you may specify the nucleotide substitution model yourself using the <code>iqtree2_model</code> optional input (see <a href="https://iqtree.github.io/doc/Substitution-Models">here</a> for available models).</p>
+<p>IQ-TREE 2 will perform assessments of the tree using the Shimodaira–Hasegawa approximate likelihood-ratio test (<a href="https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false">SH-aLRT test</a>), and ultrafast bootstrapping with <a href="https://academic.oup.com/mbe/article/35/2/518/4565479">UFBoot2</a>, a quicker but less biased alternative to standard bootstrapping. A clade should not typically be trusted if it has less than 80% support from the SH-aLRT test and less than 95% support with ultrafast bootstrapping.</p>
 <div class="admonition tip">
 <p class="admonition-title">Nucleotide substitution model</p>
-<p>The default nucleotide substitution model is set to the General Time Reverside model with invariant sites and Gamma distribution (GTR+I+G). </p>
+<p>When <code>core_genome</code>= <code>true</code>, the default nucleotide substitution model is set to the General Time Reverside model with Gamma distribution (GTR+G). </p>
+<p>When the user sets <code>core_genome</code>= <code>false</code>, the default nucleotide substitution model is set to the General Time Reversible model with invariant sites and Gamma distribution (<code>GTR+I+G</code>).</p>
 </div>
 <div class="admonition techdetails">
-<p class="admonition-title">IQ-TREE technical details</p>
+<p class="admonition-title">IQ-TREE 2 technical details</p>
 <table>
 <thead>
 <tr>
@@ -7316,19 +7375,19 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_iqtree.wdl">task_iqtree.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_iqtree2.wdl">task_iqtree2.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/iqtree/iqtree2/tree/v1.6.7">IQ-TREE on GitHub</a></td>
+<td><a href="https://github.com/iqtree/iqtree2">IQ-TREE 2 on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/iqtree/iqtree2/tree/v1.6.7">IQ-TREE on GitHub</a></td>
+<td><a href="https://iqtree.github.io/doc/">IQ-TREE 2 documentation</a> for the latest version (not necessarily the version used in this workflow)</td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1093/molbev/msu300">IQ-TREE: A fast and effective stochastic algorithm for estimating maximum likelihood phylogenies</a><br><a href="https://doi.org/10.1093/molbev/msx281">UFBoot2: Improving the Ultrafast Bootstrap Approximation</a></td>
+<td><a href="https://academic.oup.com/mbe/article/37/5/1530/5721363">IQ-TREE 2: New Models and Efficient Methods for Phylogenetic Inference in the Genomic Era</a><br><a href="https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false">New Algorithms and Methods to Estimate Maximum-Likelihood Phylogenies: Assessing the Performance of PhyML 3.0</a><br><a href="https://academic.oup.com/mbe/article/30/5/1188/997508?login=false">Ultrafast Approximation for Phylogenetic Bootstrap</a><br> <a href="https://academic.oup.com/mbe/article/35/2/518/4565479?login=false">UFBoot2: Improving the Ultrafast Bootstrap Approximation</a><br><a href="https://www.nature.com/articles/nmeth.4285">ModelFinder: fast model selection for accurate phylogenetic estimates</a></td>
 </tr>
 </tbody>
 </table>
@@ -7436,15 +7495,18 @@
 </div>
 </details>
 <details class="task">
-<summary><code>IQ-TREE</code>: Phylogeny Construction</summary>
-<p>IQ-TREE is used to build a phylogeny using the maximum-likelihood method and a specified nucleotide substitution model.</p>
-<p>IQ-TREE will perform assessments of the tree using the Shimodaira–Hasegawa approximate likelihood-ratio test (<a href="https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false">SH-aLRT test</a>), and ultrafast bootstrapping with <a href="https://academic.oup.com/mbe/article/35/2/518/4565479">UFBoot2</a>, a quicker but less biased alternative to standard bootstrapping. A clade should not typically be trusted if it has less than 80% support from the SH-aLRT test and less than 95% support with ultrafast bootstrapping.</p>
+<summary><code>IQ-TREE 2</code>: Phylogeny Construction</summary>
+<h5 id="iq-tree-2_1">IQ-TREE 2<a class="headerlink" href="#iq-tree-2_1" title="Permanent link">&para;</a></h5>
+<p>IQ-TREE 2 is used to build the final phylogeny. It uses the alignment generated in the previous steps of the workflow. The contents of this alignment will depend on whether any sites were masked with recombination.</p>
+<p>The phylogeny is generated using the maximum-likelihood method and a specified nucleotide substitution model. By default, the Snippy_Tree workflow will run Model Finder to determine the most appropriate nucleotide substitution model for your data, but you may specify the nucleotide substitution model yourself using the <code>iqtree2_model</code> optional input (see <a href="https://iqtree.github.io/doc/Substitution-Models">here</a> for available models).</p>
+<p>IQ-TREE 2 will perform assessments of the tree using the Shimodaira–Hasegawa approximate likelihood-ratio test (<a href="https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false">SH-aLRT test</a>), and ultrafast bootstrapping with <a href="https://academic.oup.com/mbe/article/35/2/518/4565479">UFBoot2</a>, a quicker but less biased alternative to standard bootstrapping. A clade should not typically be trusted if it has less than 80% support from the SH-aLRT test and less than 95% support with ultrafast bootstrapping.</p>
 <div class="admonition tip">
 <p class="admonition-title">Nucleotide substitution model</p>
-<p>The default nucleotide substitution model is set to the General Time Reverside model with invariant sites and Gamma distribution (GTR+I+G). </p>
+<p>When <code>core_genome</code>= <code>true</code>, the default nucleotide substitution model is set to the General Time Reverside model with Gamma distribution (GTR+G). </p>
+<p>When the user sets <code>core_genome</code>= <code>false</code>, the default nucleotide substitution model is set to the General Time Reversible model with invariant sites and Gamma distribution (<code>GTR+I+G</code>).</p>
 </div>
 <div class="admonition techdetails">
-<p class="admonition-title">IQ-TREE technical details</p>
+<p class="admonition-title">IQ-TREE 2 technical details</p>
 <table>
 <thead>
 <tr>
@@ -7455,19 +7517,19 @@
 <tbody>
 <tr>
 <td>Task</td>
-<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_iqtree.wdl">task_iqtree.wdl</a></td>
+<td><a href="https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/task_iqtree2.wdl">task_iqtree2.wdl</a></td>
 </tr>
 <tr>
 <td>Software Source Code</td>
-<td><a href="https://github.com/iqtree/iqtree2/tree/v1.6.7">IQ-TREE on GitHub</a></td>
+<td><a href="https://github.com/iqtree/iqtree2">IQ-TREE 2 on GitHub</a></td>
 </tr>
 <tr>
 <td>Software Documentation</td>
-<td><a href="https://github.com/iqtree/iqtree2/tree/v1.6.7">IQ-TREE on GitHub</a></td>
+<td><a href="https://iqtree.github.io/doc/">IQ-TREE 2 documentation</a> for the latest version (not necessarily the version used in this workflow)</td>
 </tr>
 <tr>
 <td>Original Publication(s)</td>
-<td><a href="https://doi.org/10.1093/molbev/msu300">IQ-TREE: A fast and effective stochastic algorithm for estimating maximum likelihood phylogenies</a><br><a href="https://doi.org/10.1093/molbev/msx281">UFBoot2: Improving the Ultrafast Bootstrap Approximation</a></td>
+<td><a href="https://academic.oup.com/mbe/article/37/5/1530/5721363">IQ-TREE 2: New Models and Efficient Methods for Phylogenetic Inference in the Genomic Era</a><br><a href="https://academic.oup.com/sysbio/article/59/3/307/1702850?login=false">New Algorithms and Methods to Estimate Maximum-Likelihood Phylogenies: Assessing the Performance of PhyML 3.0</a><br><a href="https://academic.oup.com/mbe/article/30/5/1188/997508?login=false">Ultrafast Approximation for Phylogenetic Bootstrap</a><br> <a href="https://academic.oup.com/mbe/article/35/2/518/4565479?login=false">UFBoot2: Improving the Ultrafast Bootstrap Approximation</a><br><a href="https://www.nature.com/articles/nmeth.4285">ModelFinder: fast model selection for accurate phylogenetic estimates</a></td>
 </tr>
 </tbody>
 </table>
