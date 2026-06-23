@@ -51,12 +51,12 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
         - [TheiaCoV_FASTA_RSV-B_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_RSV-B_2024-04-19.json)
 
 === "TheiaCoV_Illumina_PE"
-    !!! caption "TheiaCoV Illumina PE and SE Workflow Diagram"
-        ![TheiaCoV Workflow Diagram](../../assets/figures/TheiaCoV_Illumina.png)
+    !!! caption "TheiaCoV Illumina PE Workflow Overview"
+        ![TheiaCoV Illumina workflow(s) taking FASTQ input through read screening, host depletion, quality control, alignment, and consensus assembly, with pathogen-specific outputs for SARS-CoV-2, Influenza, and other respiratory viruses.](../../assets/figures/TheiaCoV_Illumina.png)
 
 === "TheiaCoV_ONT"
     !!! caption "TheiaCoV ONT Workflow Diagram"
-        ![TheiaCoV Workflow Diagram](../../assets/figures/TheiaCoV_ONT.png)
+        ![TheiaCoV ONT workflow taking FASTQ input through read screening, host depletion, quality control, and read alignment before organism-specific assembly and clade assignment for SARS-CoV-2, Influenza, HIV, RSV, and Mpox.](../../assets/figures/TheiaCoV_ONT.png)
 
 ### Supported Organisms
 
@@ -93,7 +93,7 @@ We've provided the following information to help you set up the workflow for eac
 
         The TheiaCoV_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time.
 
-        By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
+        By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
     === "TheiaCoV_Illumina_SE"
 

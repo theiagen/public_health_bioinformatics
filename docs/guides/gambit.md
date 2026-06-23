@@ -80,7 +80,7 @@ This guide assumes you have prior knowledge of how to install software locally i
 
 #### Installation from Bioconda
 
-The recommended way to install the tool is through the [Conda](https://www.anaconda.com/products/distribution) package manager from the [Bioconda](https://bioconda.github.io/) channel. You can simply run the following command to download GAMBIT’s latest version:
+The recommended way to install the tool is through the [Conda](https://www.anaconda.com/products/distribution) package manager from the [Bioconda](https://bioconda.github.io/) channel. You can simply run the following command to download GAMBIT’s latest version:
 
 ```bash
 conda install -c bioconda gambit
@@ -116,7 +116,7 @@ pip install .
 
 ### Usage
 
-Positional arguments are one or more FASTA files containing query genome assemblies. You must provide the path to the directory containing the database files using either the `-d` option (*before* the `query` subcommand) or by setting the `GAMBIT_DB_PATH` environment variable. The results can be optionally outputted to a file, but by default, they are written to the terminal.
+Positional arguments are one or more FASTA files containing query genome assemblies. You must provide the path to the directory containing the database files using either the `-d` option (*before* the `query` subcommand) or by setting the `GAMBIT_DB_PATH` environment variable. The results can be optionally outputted to a file, but by default, they are written to the terminal.
 
 ```bash
 gambit [-d </path/to/database/>] query [-o results.csv] genome1.fasta genome2.fasta ...
@@ -228,7 +228,7 @@ Options:
     3. The following genomes below were removed.
         a. Rationale: These genomes are currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Escherichia coli* query genomes to *Shigella* species.
 
-        GCF_002247485.1 
+        GCF_002247485.1
         GCF_002248245.1
         GCF_002249025.1
         GCF_002246815.1
@@ -489,7 +489,7 @@ Options:
      - Species were curated based on GAMBIT diameter:
      - The database was manually curated to remove highly distant genomes which were likely mislabeled.
      - Six species were divided into subspecies to ensure non-overlapping species diameters.
-     - Two pairs of species were too closely related to distinguish (*Aspergillus flavus/Aspergillus oryzae* and *Aspergillus niger/Aspergillus welwitschiae*), therefore were combined.
+     - Two pairs of species were too closely related to distinguish (*Aspergillus flavus/Aspergillus oryzae* and *Aspergillus niger/Aspergillus welwitschiae*), therefore were combined.
 
     **Database Files**
 
@@ -524,7 +524,7 @@ Options:
     - Species were curated based on GAMBIT diameter:
     - The database was manually curated to remove highly distant genomes which were likely mislabeled.
     - Nine species were divided into subspecies to ensure non-overlapping species diameters.
-    - Two pairs of species were too closely related to distinguish (*Aspergillus flavus/Aspergillus oryzae* and *Aspergillus niger/Aspergillus welwitschiae*), therefore were combined.
+    - Two pairs of species were too closely related to distinguish (*Aspergillus flavus/Aspergillus oryzae* and *Aspergillus niger/Aspergillus welwitschiae*), therefore were combined.
 
     **Database Files**
 
@@ -579,9 +579,9 @@ If the query genome distance is greater than the species diameter, GAMBIT attemp
 ///
 
 /// html | div[style='float: right; width: 50%; padding: 20px;']
-!!! caption "Distribution of GAMBIT distances"
+!!! caption "GAMBIT Intra- vs. Inter-Species Distance Distributions"
     ##### Figure 1 {% raw %} {#figure1} {% endraw %}
-    ![**Figure 1: Distribution of GAMBIT distances within a species and to the nearest sister taxon in the GAMBIT reference database.** Three histograms are shown in each panel (each normalized independently). The green histogram represents the distribution of GAMBIT distances from each reference genome in the species to the closest genome also within the same species. The blue histogram represents the distribution of GAMBIT distances for all pairwise comparisons within the species. The red histogram represents the distribution of GAMBIT distances from each genome in the species of interest to the closest genome in the species’ closest sister taxon. The dashed blue line represents the classification threshold for that species in the GAMBIT database, which in both cases was derived from the maximum intra-species distance. Panel A shows *Klebsiella pneumoniae* and its closest sister taxon *Klebsiella variicola*, panel B shows *Neisseria gonorrhoeae* and its closest sister taxon *Neisseria meningitidis*.  ****https://doi.org/10.1371/journal.pone.0277575.g004](../assets/figures/GAMBIT-distribution-of-distances.png)
+    ![Histograms for Neisseria gonorrhoeae and Klebsiella pneumoniae showing GAMBIT distance distributions for intra-species (blue/green) versus inter-species (red) comparisons, with a threshold line separating same-species from different-species calls.](../assets/figures/GAMBIT-distribution-of-distances.png){data-description="Figure 1: Distribution of GAMBIT distances within a species and to the nearest sister taxon in the GAMBIT reference database."}
 
     **Figure 1: Distribution of GAMBIT distances within a species and to the nearest sister taxon in the GAMBIT reference database.** Three histograms are shown in each panel (each normalized independently). The green histogram represents the distribution of GAMBIT distances from each reference genome in the species to the closest genome also within the same species. The blue histogram represents the distribution of GAMBIT distances for all pairwise comparisons within the species. The red histogram represents the distribution of GAMBIT distances from each genome in the species of interest to the closest genome in the species’ closest sister taxon. The dashed blue line represents the classification threshold for that species in the GAMBIT database, which in both cases was derived from the maximum intra-species distance. Panel A shows _Klebsiella pneumoniae_ and its closest sister taxon _Klebsiella variicola_, panel B shows _Neisseria gonorrhoeae_ and its closest sister taxon _Neisseria meningitidis_.
 
@@ -611,9 +611,9 @@ Spearman correlation was high in all four data sets ([Figure 2](#figure2)) (Set 
 ///
 
 /// html | div[style='float: right; width: 50%; padding: 20px;']
-!!! caption "Relationship between GAMBIT distance and ANI"
+!!! caption "GAMBIT Distance vs. Average Nucleotide Identity"
     ##### Figure 2 {% raw %} {#figure2} {% endraw %}
-    ![**Figure 2: Relationship between GAMBIT distance and ANI (Average Nucleotide Identity).**  The relationship is nonlinear but very close to monotonic as measured by Spearman correlation (shown in the bottom left corner of each subplot). ANI was calculated using the [FastANI](https://github.com/ParBLiSS/FastANI) tool with default parameter values. GAMBIT distances were calculated for all sets using the same parameter (k = 11, prefix = ATGAC). As FastANI only reports ANI values greater than ~80%, the fraction of total pairwise comparisons shown here were 100%, 5.5%, 7.4% and 47.4% for data sets 1–4 respectively. https://doi.org/10.1371/journal.pone.0277575.g001](../assets/figures/GAMBIT-distance-vs-ani.png)
+    ![Four scatter plots showing GAMBIT distance (y-axis) versus Average Nucleotide Identity (x-axis, 75–100%) across four genome sets, each demonstrating a strong negative correlation (rho near −0.97): higher ANI corresponds to lower GAMBIT distance.](../assets/figures/GAMBIT-distance-vs-ani.png){data-description="Figure 2: Relationship between GAMBIT distance and ANI."}
 
     **Figure 2: Relationship between GAMBIT distance and ANI (Average Nucleotide Identity).**  The relationship is nonlinear but very close to monotonic as measured by Spearman correlation (shown in the bottom left corner of each subplot). ANI was calculated using the [FastANI](https://github.com/ParBLiSS/FastANI) tool with default parameter values. GAMBIT distances were calculated for all sets using the same parameter (k = 11, prefix = ATGAC). As FastANI only reports ANI values greater than ~80%, the fraction of total pairwise comparisons shown here were 100%, 5.5%, 7.4% and 47.4% for data sets 1–4 respectively.
 
@@ -678,18 +678,24 @@ Because GAMBIT databases have built-in species thresholds, genomes are included 
     ??? example "_Example 2:_ DBeaver"
         After downloading and installing [DBeaver](https://dbeaver.io/), open the GAMBIT metadata file by clicking on `New Database Connection` (or hitting Ctrl+Shift+N) on the top left corner of the window. Under the SQL section, select the `SQLite` option and open the path to the metadata file. If prompted, install the required drivers by DBeaver.
 
-        !!! caption narrow "SQLite"
-            ![SQLite](../assets/figures/GAMBIT-dbeaver-open-sqlite.png)
+        !!! caption narrow "DBeaver: Opening the GAMBIT SQLite Database"
+            ![DBeaver 24.1.1 database application open with an SQLite connection listed in the left panel.](../assets/figures/GAMBIT-dbeaver-open-sqlite.png)
 
         Select `SQL Editor` in the toolbar and then click on `New SQL Script`.
 
-        !!! caption narrow "New SQL Script"
-            ![New SQL Script](../assets/figures/GAMBIT-dbeaver-new-sqlite-script.png)
+        !!! caption narrow "DBeaver: Opening a New SQL Script"
+            ![DBeaver SQL Editor menu open with "New SQL script" option highlighted, showing keyboard shortcut Ctrl\+\].](../assets/figures/GAMBIT-dbeaver-new-sqlite-script.png)
 
-        Type `SELECT * FROM taxa;` and check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel).
+        Type
 
-        !!! caption narrow "List Taxa"
-            ![List Taxa](../assets/figures/GAMBIT-dbeaver-list-taxa.png)
+        ```sql
+        SELECT * FROM taxa;
+        ```
+
+        Check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel).
+
+        !!! caption narrow "DBeaver: Listing Taxa in the GAMBIT Database"
+            ![DBeaver showing results of "select \* from taxa;" run against the GAMBIT metadata database, listing bacterial taxa with id, key, name, and rank columns.](../assets/figures/GAMBIT-dbeaver-list-taxa.png)
 
     ??? example "_Example 3:_ GAMBITtools"
         The [GAMBITtools](https://github.com/gambit-suite/gambittools) suite of scripts are Python tools written for working with GAMBIT. We recommend using [Docker](https://www.docker.com/) to interact with GAMBITtools.
@@ -717,20 +723,24 @@ Because GAMBIT databases have built-in species thresholds, genomes are included 
     ??? example "_Example 2:_ DBeaver"
         After downloading and installing [DBeaver](https://dbeaver.io/), open the GAMBIT metadata file by clicking on `New Database Connection` (or hitting Ctrl+Shift+N) on the top left corner of the window. Under the SQL section, select the `SQLite` option and open the path to the metadata file. If prompted, install the required drivers by DBeaver.
 
-
-        !!! caption narrow "SQLite"
-            ![SQLite](../assets/figures/GAMBIT-dbeaver-open-sqlite.png)
-
+        !!! caption narrow "DBeaver: Opening the GAMBIT SQLite Database"
+            ![DBeaver 24.1.1 database application open with an SQLite connection listed in the left panel.](../assets/figures/GAMBIT-dbeaver-open-sqlite.png)
 
         Select `SQL Editor` in the toolbar and then click on `New SQL Script`.
 
-        !!! caption narrow "New SQL Script"
-            ![New SQL Script](../assets/figures/GAMBIT-dbeaver-new-sqlite-script.png)
+        !!! caption narrow "DBeaver: Opening a New SQL Script"
+            ![DBeaver SQL Editor menu open with "New SQL script" option highlighted, showing keyboard shortcut Ctrl\+\].](../assets/figures/GAMBIT-dbeaver-new-sqlite-script.png)
 
-        Type `SELECT taxa.name,COUNT(genome_annotations.taxon_id) FROM taxa LEFT JOIN genome_annotations ON genome_annotations.taxon_id = taxa.id WHERE taxa.rank LIKE 'species' GROUP BY taxa.key ORDER BY taxa.name ASC;` and check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel).
+        Type:
 
-        !!! caption narrow "Number of Genomes"
-            ![Number of Genomes](../assets/figures/GAMBIT-dbeaver-number-genomes.png)
+        ```sql
+        SELECT taxa.name,COUNT(genome_annotations.taxon_id) FROM taxa LEFT JOIN genome_annotations ON genome_annotations.taxon_id = taxa.id WHERE taxa.rank LIKE 'species' GROUP BY taxa.key ORDER BY taxa.name ASC;
+        ```
+
+        Check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel).
+
+        !!! caption narrow "DBeaver: Counting Genomes per Species"
+            ![DBeaver showing a SQL query that counts genome annotations per species in the GAMBIT database, with results listing taxon names and genome counts per species.](../assets/figures/GAMBIT-dbeaver-number-genomes.png)
 
 ??? toggle "How do I get the number of genomes and the distance threshold representing a given species?"
     Like retrieving the list of taxa and the number of genomes representing a given species, there are several ways of retrieving the distance threshold for a given species.
@@ -745,29 +755,33 @@ Because GAMBIT databases have built-in species thresholds, genomes are included 
     ??? example "Example 2: DBeaver"
         After downloading and installing [DBeaver](https://dbeaver.io/), open the GAMBIT metadata file by clicking on `New Database Connection` (or hitting Ctrl+Shift+N) on the top left corner of the window. Under the SQL section, select the `SQLite` option and open the path to the metadata file. If prompted, install the required drivers by DBeaver.
 
-        !!! caption narrow "SQLite"
-            ![SQLite](../assets/figures/GAMBIT-dbeaver-open-sqlite.png)
+        !!! caption narrow "DBeaver: Opening the GAMBIT SQLite Database"
+            ![DBeaver 24.1.1 database application open with an SQLite connection listed in the left panel.](../assets/figures/GAMBIT-dbeaver-open-sqlite.png)
 
         Select `SQL Editor` in the toolbar and then click on `New SQL Script`.
 
-        !!! caption narrow "New SQL Script"
-            ![New SQL Script](../assets/figures/GAMBIT-dbeaver-new-sqlite-script.png)
+        !!! caption narrow "DBeaver: Opening a New SQL Script"
+            ![DBeaver SQL Editor menu open with "New SQL script" option highlighted, showing keyboard shortcut Ctrl\+\].](../assets/figures/GAMBIT-dbeaver-new-sqlite-script.png)
 
-        Type `SELECT taxa.name,taxa.distance_threshold,COUNT(genome_annotations.taxon_id) FROM taxa LEFT JOIN genome_annotations ON genome_annotations.taxon_id = taxa.id WHERE taxa.rank LIKE 'species' GROUP BY taxa.key ORDER BY taxa.name ASC;` and check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel).
+        Type:
 
-        !!! caption narrow "Number of Genomes and Distance Threshold"
-            ![Number Genomes and Distance Threshold](../assets/figures/GAMBIT-dbeaver-number-genomes-and-distance-threshold.png)
+        ```
+        SELECT taxa.name,taxa.distance_threshold,COUNT(genome_annotations.taxon_id) FROM taxa LEFT JOIN genome_annotations ON genome_annotations.taxon_id = taxa.id WHERE taxa.rank LIKE 'species' GROUP BY taxa.key ORDER BY taxa.name ASC;
+        ```
+
+        Check that you get the results (press `CTRL+Enter` or click the orange arrow to execute SQL statements). To save the results click on `Export data`  on the bottom right corner and select what file format to save the information in (we recommend **CSV format** that can then be loaded onto Excel).
+
+        !!! caption narrow "DBeaver: Querying Genome Counts and Distance Thresholds"
+            ![DBeaver SQL editor querying a GAMBIT database, showing results with species name, distance threshold, and genome count columns for each taxon.](../assets/figures/GAMBIT-dbeaver-number-genomes-and-distance-threshold.png)
 
 ??? toggle "How do I create a custom GAMBIT database?"
-
-    Creating a custom GAMBIT database can be a laborious task.  The easiest way to go about it is to reach out to Theiagen Genomics at [support@theiagen.com](mailto:support@theiagen.com) to request assistance.  A guide can be found on [GAMBIT Database Creation](./gambit_database.md)
+    Creating a custom GAMBIT database can be a laborious task. The easiest way to go about it is to reach out to Theiagen Genomics at [support@theiagen.com](mailto:support@theiagen.com) to request assistance. A guide can be found on [GAMBIT Database Creation](./gambit_database.md)
 
 ??? toggle "How well does GAMBIT perform discerning between _Escherichia coli_ and _Shigella_ sp?"
 
     Escherichia coli and Shigella are closely genetically related, to the extent that they would be considered the same species if not for their distinguishing phenotypic characteristics. GAMBIT databases are curated to enable differentiation between the two groups, however, it is worth bearing in mind that these genomes are highly genetically similar thus tools that take a more granular approach to genome comparison may be more reliable.
 
 ??? toggle "What should I do if a GAMBIT taxonomic assignment does not align with the expected results based on another bioinformatics tool or molecular testing?"
-
     In this instance, please reach out to [support@theiagen.com](mailto:support@theiagen.com) and David Hess at the Nevada State Public Health Laboratory [dhess@med.unr.edu](mailto:dhess@med.unr.edu). We will be happy to investigate your sample and improve the GAMBIT database in subsequent versions!
 
 ---
@@ -785,8 +799,8 @@ Because GAMBIT databases have built-in species thresholds, genomes are included 
 
 Please cite the article below when using the **GAMBIT software and/or GAMBIT RefSeq Curated Database v1.0.0:**
 
-> Lumpe J, Gumbleton L, Gorzalski A, Libuit K, Varghese V, et al. (2023) GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification. PLOS ONE 18(2): e0277575. <https://doi.org/10.1371/journal.pone.0277575>
+> Lumpe J, Gumbleton L, Gorzalski A, Libuit K, Varghese V, et al. (2023) GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking): A methodology to rapidly leverage whole genome sequencing of bacterial isolates for clinical identification. PLOS ONE 18(2): e0277575. <https://doi.org/10.1371/journal.pone.0277575>
 
 Please cite the reference below when using the **GAMBIT Fungal Database v0.2.0:**
 
-> Ambrosio III, F. J., Scribner, M. R., Wright, S. M., Otieno, J. R., Doughty, E. L., Gorzalski, A., ... & Hess, D. (2023). TheiaEuk: a species-agnostic bioinformatics workflow for fungal genomic characterization. _Frontiers in Public Health_, _11_. <https://doi.org/10.3389/fpubh.2023.1198213>
+> Ambrosio III, F. J., Scribner, M. R., Wright, S. M., Otieno, J. R., Doughty, E. L., Gorzalski, A., ... & Hess, D. (2023). TheiaEuk: a species-agnostic bioinformatics workflow for fungal genomic characterization. _Frontiers in Public Health_, _11_. <https://doi.org/10.3389/fpubh.2023.1198213>

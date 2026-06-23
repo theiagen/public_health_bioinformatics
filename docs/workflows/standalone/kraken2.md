@@ -17,9 +17,9 @@ There are two Kraken2 workflows:
 
 Besides the data input types, there are minimal differences between these two workflows.
 
-!!! caption "Kraken2 Workflow Diagram"
+!!! caption "Kraken2 Workflow Overview"
     <div style="text-align: center;">
-    ![Kraken2 Workflow Diagram](../../assets/figures/Kraken2.png){: onload="this.width/=2;this.onload=null;" }
+    ![Workflow diagram showing FASTQ reads and a Kraken2 database as inputs, processed sequentially through Kraken2, Bracken, and Krona modules for taxonomic classification.](../../assets/figures/Kraken2.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 ### Databases
@@ -133,7 +133,7 @@ When assessing the taxonomic identity of a single isolate's sequence, it is norm
 
     Below is an example of the `krona_html` for a bacterial sample. Taxonomic rank is organised from the centre of the pie chart to the edge, with each slice representing the relative abundance of a given taxa in the sample.
 
-    ![Example Krona Report](../../assets/figures/example_krona_report.png)
+    ![Krona interactive radial chart showing taxonomic composition of a sample: roughly 75% Bacteria (dominated by Enterobacteriaceae), 25% unclassified, and trace human and viral reads.](../../assets/figures/example_krona_report.png){data-description="Example Krona taxonomic composition report"}
 
 !!! techdetails "Kraken2 Technical Details"
     |  | Links |

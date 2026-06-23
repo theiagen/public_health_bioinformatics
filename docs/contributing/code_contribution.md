@@ -1,10 +1,10 @@
 # PHB Code Contributions
 
-Theiagen Genomics’ [**Public Health Bioinformatics (PHB)**](https://github.com/theiagen/public_health_bioinformatics) workflows are written in [WDL](https://github.com/openwdl/wdl), a language for specifying data processing workflows with a human-readable and writable syntax. Contributions to the workflows contained in the repository are warmly welcomed.
+Theiagen Genomics’ [**Public Health Bioinformatics (PHB)**](https://github.com/theiagen/public_health_bioinformatics) workflows are written in [WDL](https://github.com/openwdl/wdl), a language for specifying data processing workflows with a human-readable and writable syntax. Contributions to the workflows contained in the repository are warmly welcomed.
 
 This document gives coding conventions for the WDL code comprising the workflow and task development for PHB. This style guide evolves over time as additional conventions are identified and past conventions are rendered obsolete by changes in the language itself.
 
-Style guide inspired by Scott Frazer’s [WDL Best Practices Style Guide](https://gist.github.com/scottfrazer/aa4ab1945a6a4c331211).
+Style guide inspired by Scott Frazer’s [WDL Best Practices Style Guide](https://gist.github.com/scottfrazer/aa4ab1945a6a4c331211).
 
 ## General Guidelines
 

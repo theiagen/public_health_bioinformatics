@@ -54,20 +54,20 @@
 
 === "TheiaViral_Illumina_PE"
 
-    !!! caption "TheiaViral_Illumina_PE Workflow Diagram"
+    !!! caption "TheiaViral_Illumina_PE Workflow Overview"
 
-        ![TheiaViral_Illumina_PE Workflow Diagram](../../assets/figures/TheiaViral_Illumina_PE.png)
+        ![TheiaViral workflow for Illumina paired-end data, taking TAXON and FASTQ inputs through QC, host removal, read classification, assembly, reference mapping, and variant calling to produce a consensus FASTA output.](../../assets/figures/TheiaViral_Illumina_PE.png)
 
 === "TheiaViral_ONT"
 
-    !!! caption "TheiaViral_ONT Workflow Diagram"
+    !!! caption "TheiaViral_ONT Workflow Overview"
 
-        ![TheiaViral_ONT Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
+        ![TheiaViral ONT workflow taking TAXON and FASTQ inputs through read QC, host removal, classification, assembly, and reference mapping to produce a consensus FASTA file, with a sample termination path at the read screen step.](../../assets/figures/TheiaViral_ONT.png)
 
 === "TheiaViral_Panel"
-    !!! caption "TheiaViral_Panel Workflow Diagram"
+    !!! caption "TheiaViral_Panel Workflow Overview"
 
-        ![TheiaViral_Panel Workflow Diagram](../../assets/figures/TheiaViral_Panel_PHB.png)
+        ![Workflow diagram for TheiaViral_Panel, showing FASTQ input processed through read QC, taxonomic classification with Kraken2, de novo assembly, and viral characterization to produce sample-level outputs.](../../assets/figures/TheiaViral_Panel_PHB.png)
 
 ### Inputs
 

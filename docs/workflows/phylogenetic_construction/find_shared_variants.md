@@ -8,9 +8,9 @@
 
 `Find_Shared_Variants_PHB` is a workflow for concatenating the variant results produced by the `Snippy_Variants_PHB` workflow across multiple samples and reshaping the data to illustrate variants that are shared among multiple samples.
 
-!!! caption "Find_Shared_Variants Workflow Diagram"
+!!! caption "Find_Shared_Variants Workflow Overview"
     <div style="text-align: center;">
-    ![Find_Shared_Variants Workflow Diagram](../../assets/figures/Find_Shared_Variants_PHB.png){: onload="this.width/=2.25;this.onload=null;" }
+    ![Workflow diagram showing Find_Shared_Variants, which takes Snippy_Variants results, concatenates them, and outputs a concatenated variants file and a shared variants table.](../../assets/figures/Find_Shared_Variants_PHB.png){: onload="this.width/=2.25;this.onload=null;" }
     </div>
 
 ### Inputs

@@ -31,7 +31,7 @@ fragment: true
     The ResFinder task also has the ability to predict whether or not a sample meets the CDC's definition for extensively drug-resistant (XDR) _Shigella_.
 
     ???+ caption "How does TheiaProk predict XDR _Shigella_?"
-        ![XDR Shigella Identification](../../assets/figures/TheiaProk_XDR_Shigella_Identification.png){data-description="CDC defines XDR Shigella bacteria as strains that are resistant to all commonly recommended empiric and alternative antibiotics — azithromycin, ciprofloxacin, ceftriaxone, trimethoprim-sulfamethoxazole (TMP-SMX), and ampicillin."}
+        ![Decision tree for XDR Shigella prediction in TheiaProk: takes taxon and resistance gene inputs, checks for required antibiotic resistances, and outputs a resfinder_predicted_xdr_shigella classification.](../../assets/figures/TheiaProk_XDR_Shigella_Identification.png){data-description="CDC defines XDR Shigella bacteria as strains that are resistant to all commonly recommended empiric and alternative antibiotics — azithromycin, ciprofloxacin, ceftriaxone, trimethoprim-sulfamethoxazole (TMP-SMX), and ampicillin."}
 
         See also the CDC Health Network Alert titled [_Increase in Extensively Drug-Resistant Shigellosis in the United States_](https://emergency.cdc.gov/han/2023/han00486.asp) where this definition can be found.
 
@@ -49,7 +49,7 @@ fragment: true
     There are 3 potential outputs for the **`resfinder_predicted_xdr_shigella`** output string:
 
     - **`Not Shigella based on gambit_predicted_taxon or user input`**
-    - **`Not XDR Shigella`** for samples indicated as _Shigella_ by either GAMBIT or user input _**BUT**_ ResFinder did **NOT** predict resistance to **all 6 drugs in the XDR definition above**
+    - **`Not XDR Shigella`** for samples indicated as _Shigella_ by either GAMBIT or user input _**BUT**_ ResFinder did **NOT** predict resistance to **all 6 drugs in the XDR definition above**
     - **`Potentially XDR Shigella`** for samples indicated as _Shigella_ _**AND**_ ResFinder/PointFinder **DID** predict resistance to **all 6 drugs in the XDR definition above**
 
     !!! tip "What should I do if I see "Potentially XDR Shigella"?"

@@ -15,13 +15,13 @@
 
 === "TheiaProk_Illumina_PE"
 
-    !!! caption "TheiaProk Illumina PE Workflow Diagram"
-        ![TheiaProk Illumina PE Workflow Diagram](../../assets/figures/TheiaProk_Illumina.png)
+    !!! caption "TheiaProk Illumina Workflow Overview"
+        ![TheiaProk Illumina workflow taking raw paired-end reads through quality control, assembly, taxonomy assignment, and organism-specific characterization, with outputs including genome assembly metrics, species identification, and AMR profiling.](../../assets/figures/TheiaProk_Illumina.png)
 
 === "TheiaProk_ONT"
 
-    !!! caption "TheiaProk ONT Workflow Diagram"
-        ![TheiaProk ONT Workflow Diagram](../../assets/figures/TheiaProk_ONT.png)
+    !!! caption "TheiaProk ONT Workflow Overview"
+        ![TheiaProk ONT workflow for bacterial genomics, taking ONT sequencing reads through quality control, assembly, and taxonomic assignment to produce species identification, AMR characterization, and pathogen-specific outputs.](../../assets/figures/TheiaProk_ONT.png)
 
 All input reads are processed through "[core tasks](#core-tasks)" in the TheiaProk Illumina and ONT workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaProk workflows subsequently launch default genome characterization modules for quality assessment, species identification, antimicrobial resistance gene detection, sequence typing, and more. **For some taxa identified, "[taxa-specific sub-workflows](#taxa-specific-tasks)" will be automatically activated, undertaking additional taxa-specific characterization steps**. When setting up each workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
 
@@ -32,7 +32,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
         The TheiaProk_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time.
 
-        By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
+        By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
     === "TheiaProk_Illumina_SE"
 

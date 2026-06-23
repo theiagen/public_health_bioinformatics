@@ -42,13 +42,13 @@ You can expect a careful review of every PR and feedback as needed before mergin
 
 ### Authorship
 
-<!-- 
+<!--
 A Public Service Announcement regarding calculating the contribution math:
 
-Andrew Hale added a .txt database file to docs/assets that artifically inflates his line 
-count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract 
-55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt 
-database in a later commit, so also please subtract 55,316 from Sage Wright's line count as 
+Andrew Hale added a .txt database file to docs/assets that artifically inflates his line
+count by 55,316 lmao. This was not code and shouldn't be considered as such. Please subtract
+55,316 from his line count when updating this list. Sage Wright subsequently deleted that .txt
+database in a later commit, so also please subtract 55,316 from Sage Wright's line count as
 well. please see index.md for the math
 
 okay thanks byee.
@@ -116,4 +116,4 @@ Alternatively, please cite this paper if using the TheiaEuk workflow:
 
 ## About Theiagen
 
-Theiagen develops bioinformatics solutions for public health labs, and then trains and supports scientists to use these. If you would like to work with Theiagen, please [get in contact](https://theiagen.com/team-up-with-theiagen/).
+Theiagen develops bioinformatics solutions for public health labs, and then trains and supports scientists to use these. If you would like to work with Theiagen, please [get in contact](https://theiagen.com/team-up-with-theiagen/).

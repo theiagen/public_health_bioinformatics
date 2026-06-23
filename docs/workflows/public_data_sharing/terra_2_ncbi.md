@@ -29,7 +29,7 @@ The Terra_2_NCBI workflow is a programmatic data submission method to share meta
 
         > Hello,
         >
-        >We would like to automate submissions to the Submission Portal using XML metadata to accompany our cloud-hosted data files.  We would like to upload via FTP and need to create a submission group.
+        >We would like to automate submissions to the Submission Portal using XML metadata to accompany our cloud-hosted data files.  We would like to upload via FTP and need to create a submission group.
         >
         >Here is the relevant information:
         >
@@ -40,7 +40,7 @@ The Terra_2_NCBI workflow is a programmatic data submission method to share meta
         >5. Contact email:
         >6. Mailing address (including country and postcode):
         >
-        >We will be using an existing submission pipeline that is known to work and would like to request that the production folder be activated. Thank you for your assistance!
+        >We will be using an existing submission pipeline that is known to work and would like to request that the production folder be activated. Thank you for your assistance!
 
     2. From NCBI, you will need to get in response:
         1. an FTP address (it will likely be ftp-private.ncbi.nih.gov)

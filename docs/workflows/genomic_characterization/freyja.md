@@ -19,10 +19,10 @@ Additional post-processing steps can produce visualizations of aggregated sample
     !!! warning "Default Values"
         The defaults included in the Freyja workflows reflect this use case but **can be adjusted for other pathogens**. See the [**Running Freyja on other pathogens**](freyja.md#running-freyja-on-other-pathogens) section for more information. Please be aware this is an ==_experimental feature_== and we cannot guarantee complete functionality at this time.
 
-!!! caption "Figure 1: Workflow diagram for Freyja Suite of workflows"
+!!! caption "Figure 1: Freyja Suite Workflow Overview"
     ##### Figure 1 { #figure1 }
     <div style="text-align: center;">
-    ![**Figure 1: Workflow diagram for Freyja Suite of workflows.**](../../assets/figures/Freyja_Suite.png){: onload="this.width/=2;this.onload=null;" }
+    ![Freyja Suite workflow showing three related workflows: FREYJA_FASTQ takes FASTQ files, a reference genome, barcodes, lineages, and primer files as input, performs read QC, alignment, trimming, and variant calling, then feeds results into FREYJA_PLOT for a static PNG or FREYJA_DASHBOARD for an interactive dashboard.](../../assets/figures/Freyja_Suite.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
     Depending on the type of data (Illumina or Oxford Nanopore), the Read QC and Filtering steps, as well as the Read Alignment steps use different software. The user can specify if the barcodes and lineages file should be updated with `freyja update` before running Freyja or if bootstrapping is to be performed with `freyja boot`.
@@ -161,11 +161,11 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 | resid | 3.14159 |
 | coverage | 95.8 |
 
-- The `summarized` array denotes a sum of all lineage abundances in a particular WHO designation (i.e. B.1.617.2 and AY.6 abundances are summed in the above example), otherwise they are grouped into "Other".
-- The `lineage` array lists the identified lineages in descending order
-- The `abundances` array contains the corresponding abundance estimates.
-- The value of `resid` corresponds to the residual of the weighted least absolute deviation problem used to estimate lineage abundances.
-- The `coverage` value provides the 10x coverage estimate (percent of sites with 10 or greater reads)
+- The `summarized` array denotes a sum of all lineage abundances in a particular WHO designation (i.e. B.1.617.2 and AY.6 abundances are summed in the above example), otherwise they are grouped into "Other".
+- The `lineage` array lists the identified lineages in descending order
+- The `abundances` array contains the corresponding abundance estimates.
+- The value of `resid` corresponds to the residual of the weighted least absolute deviation problem used to estimate lineage abundances.
+- The `coverage` value provides the 10x coverage estimate (percent of sites with 10 or greater reads)
 
 !!! tip "Click 'Ignore empty outputs'"
     When running the Freyja_FASTQ_PHB workflow, it is recommended to select the "Ignore empty outputs" option in the Terra UI. This will hide the output columns that will not be generated for your input data type.
@@ -323,7 +323,7 @@ The main requirement to run Freyja on other pathogens is **the existence of a ba
 
 !!! dna "Freyja barcodes for other pathogens"
 
-    Data for various pathogens can be found in the following repository: [Freyja Barcodes](https://github.com/gp201/Freyja-barcodes)
+    Data for various pathogens can be found in the following repository: [Freyja Barcodes](https://github.com/gp201/Freyja-barcodes)
 
     Folders are organized by pathogen, with each subfolder named after the date the barcode was generated, using the format YYYY-MM-DD, as well as a "latest" folder. Barcode files are named `barcode.csv`, and reference genome files are named `reference.fasta`.
 
@@ -338,7 +338,7 @@ When using the `freyja_pathogen` flag, the user must set the optional `update_db
 
 !!! caption "Figure 2:  Optional input for Freyja_FASTQ_PHB to provide the pathogen to be used by Freyja"
     ##### Figure 2 { #figure2 }
-    ![**Figure 2:  Optional input for Freyja_FASTQ_PHB to provide the pathogen to be used by Freyja.**](../../assets/figures/Freyja_figure2.png)
+    ![Terra workflow inputs table showing the optional freyja_pathogen string variable for the freyja task, with an empty input value field.](../../assets/figures/Freyja_figure2.png)
 
 Allowed options:
 
@@ -362,19 +362,19 @@ The appropriate barcode file for your organism of interest and reference sequenc
 
 !!! caption "Figure 3:  Required input for Freyja_FASTQ_PHB to provide the reference genome to be used by Freyja"
     ##### Figure 3 {% raw %} {#figure3} {% endraw %}
-    ![**Figure 3:  Required input for Freyja_FASTQ_PHB to provide the reference genome to be used by Freyja.**](../../assets/figures/Freyja_figure3.png)
+    ![Terra input configuration table showing the required reference_genome file input for the freyja_fastq workflow, with a file upload field marked as Required.](../../assets/figures/Freyja_figure3.png)
 
 The barcodes file can be passed directly to Freyja by the `freyja_barcodes` optional input ([Figure 4](freyja.md#figure4)).
 
 !!! caption "Figure 4: Optional input for Freyja_FASTQ_PHB to provide the barcodes file to be used by Freyja"
     ##### Figure 4 {% raw %} {#figure4} {% endraw %}
-    ![**Figure 4: Optional input for Freyja_FASTQ_PHB to provide the barcodes file to be used by Freyja.**](../../assets/figures/Freyja_figure4.png)
+    ![Terra workflow input table showing the freyja_barcodes optional File input field for the freyja task, left empty to use the default barcodes.](../../assets/figures/Freyja_figure4.png)
 
 ## References
 
 If you use any of the Freyja workflows, please cite:
 
-> Karthikeyan, S., Levy, J.I., De Hoff, P. *et al.* Wastewater sequencing reveals early cryptic SARS-CoV-2 variant transmission. *Nature* **609**, 101–108 (2022). <https://doi.org/10.1038/s41586-022-05049-6>
+> Karthikeyan, S., Levy, J.I., De Hoff, P. *et al.* Wastewater sequencing reveals early cryptic SARS-CoV-2 variant transmission. *Nature* **609**, 101–108 (2022). <https://doi.org/10.1038/s41586-022-05049-6>
 <!-- -->
 > Freyja source code can be found at <https://github.com/andersen-lab/Freyja>
 <!-- -->

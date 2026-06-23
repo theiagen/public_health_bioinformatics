@@ -48,14 +48,16 @@ All workflows in the PHB repository end with `_PHB` in order to differentiate th
     We have a number of workflows available to help you perform genomic analysis. Take a look below to learn how our workflows are related and how they cooperate with each other.
 
     === "General Workflow Relationships"
-        ![The relationship between the various PHB workflows](assets/figures/WorkflowRelationships.png){data-description="This diagram shows the workflows in the PHB repository. The workflows are grouped in boxes that represent the type of analysis they perform. The arrows between the boxes and the large underlying arrow represent the directional and sequential nature of the workflows."}
-
+        ![Flowchart showing how PHB workflows connect across five stages: data import (e.g. SRA_Fetch), genomic characterization (e.g. TheiaCoV), phylogenetic construction, phylogenetic placement, and public data sharing (e.g. Terra_2_NCBI).](assets/figures/WorkflowRelationships.png){data-description="This diagram shows the workflows in the PHB repository. The workflows are grouped in boxes that represent the type of analysis they perform. The arrows between the boxes and the large underlying arrow represent the directional and sequential nature of the workflows."}
+        /// caption
         This diagram shows the available workflows in the PHB repository. The workflows are grouped in boxes that represent what type of analysis they perform. The arrows between the boxes and the large underlying arrow represent the directional and sequential nature of the workflows.
+        ///
 
     === "Available Standalone Workflows"
-        ![All available standalone workflows can be used to supplement the major workflows](assets/figures/WorkflowRelationships_Standalone.png){data-description="This diagram shows all standalone workflows in the PHB repository that are available for genomic analysis. Workflows are grouped by colors that represent the type of analysis they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives."}
-
+        ![A catalog of standalone workflow modules grouped by color-coded type: data import and file manipulation, genomic characterization, phylogenetic construction, exporting data from Terra, and comparative analysis.](assets/figures/WorkflowRelationships_Standalone.png){data-description="This diagram shows all standalone workflows in the PHB repository that are available for genomic analysis. Workflows are grouped by colors that represent the type of analysis they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives."}
+        /// caption
         This diagram shows all standalone workflows in the PHB repository that are available for genomic analysis. Workflows are grouped by colors that represent the type of analysis they perform. These workflows can be used independently of the major workflow groupings as either supplements or alternatives.
+        ///
 
 ### PHB development is a cycle
 
@@ -155,4 +157,4 @@ Please cite this paper if using the TheiaEuk workflow:
 
 ## About Theiagen
 
-Theiagen develops bioinformatics solutions for public health labs, and then trains and supports scientists to use these. If you would like to work with Theiagen, please [get in contact](https://theiagen.com/team-up-with-theiagen/).
+Theiagen develops bioinformatics solutions for public health labs, and then trains and supports scientists to use these. If you would like to work with Theiagen, please [get in contact](https://theiagen.com/team-up-with-theiagen/).

@@ -6,9 +6,9 @@
 
 ## Snippy_Streamline_PHB
 
-!!! caption "Snippy_Streamline_PHB Workflow Diagram"
+!!! caption "Snippy_Streamline_PHB Workflow Overview"
     <div style="text-align: center;">
-    ![Snippy_Streamline_PHB Workflow Diagram](../../assets/figures/Snippy_Streamline.png){: onload="this.width/=2;this.onload=null;" }
+    ![Workflow diagram showing Snippy_Streamline, which takes FASTQ reads and a reference genome through Snippy_Variants and Snippy_Tree modules to produce a phylogenetic tree, SNP-distance matrix, final alignment, and recombination predictions.](../../assets/figures/Snippy_Streamline.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 The `Snippy_Streamline` workflow is an all-in-one approach to generating a reference-based phylogenetic tree and associated SNP-distance matrix. The workflow can be run in multiple ways.

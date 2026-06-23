@@ -25,17 +25,17 @@ _If you already have a command-line environment available_, you can skip ahead t
     1. Select the "Environment Configuration" cloud icon on the right side of the workspace dashboard tab
 
         !!! caption narrow "Click on the cloud icon to access the environment configuration"
-            ![environment configuration](../../assets/figures/basespace_fetch/step1-environment-configuration.png)
+            ![Terra workspace sidebar showing the Environment Configuration button (cloud icon) highlighted with a tooltip label.](../../assets/figures/basespace_fetch/step1-environment-configuration.png)
 
     2. Select the "Settings" button under Jupyter
 
         !!! caption narrow "Click on Settings underneath the Jupyter icon"
-            ![settings](../../assets/figures/basespace_fetch/step2-jupyter-settings.png)
+            ![Terra Cloud Environment Details panel showing the Jupyter Settings button selected, with a "Create new Environment" dropdown option visible.](../../assets/figures/basespace_fetch/step2-jupyter-settings.png)
 
     3. Click "CREATE" at the bottom of the "Jupyter Cloud Environment" page. There is no need to alter the default environment configuration.
 
         !!! caption narrow "Click on Create at the bottom of the page"
-            ![create environment](../../assets/figures/basespace_fetch/step3-create-environment.png)
+            ![Terra's Jupyter Cloud Environment setup panel showing default application configuration, cloud compute profile settings, and a Create button to launch the environment.](../../assets/figures/basespace_fetch/step3-create-environment.png)
 
         !!! info "Environment customization"
             The default environment should be sufficient for retrieval of BaseSpace credentials, but if performing other tasks in the environment please modify the resource allocations appropriately.
@@ -43,7 +43,7 @@ _If you already have a command-line environment available_, you can skip ahead t
         You will be returned to the main page after clicking "Create". You will notice two new icons in your right-hand side bar as the environment is being created.
 
         !!! caption narrow "Environment creation in progress"
-            ![environment creation](../../assets/figures/basespace_fetch/info3-creation-in-progress.png)
+            ![Terra sidebar showing a Jupyter environment being created, with a tooltip displaying the cost rate of $0.06 per hour for compute and under $0.01 per hour for disk.](../../assets/figures/basespace_fetch/info3-creation-in-progress.png)
 
 ##### Step 2: Install the BaseSpace Command-Line Tool to Retrieve the Access Token and API Server Address {% raw %} {#install-bs-cli} {% endraw %}
 
@@ -52,12 +52,12 @@ _If you already have a command-line environment available_, you can skip ahead t
     1. When the environment is created and active, you should see a green dot in the bottom right corner of the Jupyter icon. Click on the "Terminal" icon in the right side-bar of the Terra dashboard to open the terminal.
 
         !!! caption narrow "Open the terminal"
-            ![open the terminal](../../assets/figures/basespace_fetch/step4-open-the-terminal.png)
+            ![Terra cloud environment sidebar with the Terminal icon (command prompt symbol) highlighted and a tooltip reading "Terminal".](../../assets/figures/basespace_fetch/step4-open-the-terminal.png)
 
         The open terminal will appear in a new tab in your browser and will look similar to this:
 
         !!! caption narrow "The terminal window"
-            ![terminal window](../../assets/figures/basespace_fetch/info4-open-terminal.png)
+            ![A Jupyter environment with an open terminal window showing a bash prompt, ready to accept commands.](../../assets/figures/basespace_fetch/info4-open-terminal.png)
 
     2. Download and setup the BaseSpace (BS) command line interface (CLI) tool (as per [the Illumina documentation](https://developer.basespace.illumina.com/docs/content/documentation/cli/cli-overview)) by following the commands below. The lines beginning with `#` are comments, the following lines are the commands to be copy/pasted into the terminal
 
@@ -88,7 +88,7 @@ _If you already have a command-line environment available_, you can skip ahead t
         2. Click on "Edit" and then "Add variable" to add the new workspace data elements as in the examples below.
 
         !!! caption narrow "Create workspace data elements"
-            ![workspace data elements](../../assets/figures/basespace_fetch/info5-copy-information.png)
+            ![Workspace data table showing the basespace_access_token and basespace_api_server key-value pairs required for BaseSpace configuration.](../../assets/figures/basespace_fetch/info5-copy-information.png)
 
 #### Preparing to retrieve a run with BaseSpace_Fetch
 
@@ -106,7 +106,7 @@ _If you already have a command-line environment available_, you can skip ahead t
         On the BaseSpace portal, you can navigate to this via: Runs → {run} → Files → SampleSheet.csv
 
         !!! caption narrow "Example SampleSheet.csv"
-            ![example sample sheet](../../assets/figures/basespace_fetch/step6-sample-sheet.png)
+            ![A dialog box previewing SampleSheet.csv contents, showing sample IDs, names, and index sequences, with Cancel and Download buttons.](../../assets/figures/basespace_fetch/step6-sample-sheet.png)
 
     2. In Excel or an alternative spreadsheet software, set up a metadata sheet for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.
         1. In cell A1, enter the data table name with the "**entity:**TABLENAME**_id**" format
@@ -119,7 +119,7 @@ _If you already have a command-line environment available_, you can skip ahead t
         4. Populate column A of the spreadsheet with the sample names as seen in the sample sheet
 
             !!! caption narrow "Example Metadata Sheet"
-                ![example metadata sheet](../../assets/figures/basespace_fetch/step7-metadata-sheet.png)
+                ![A spreadsheet with columns for bs_fetch_sample_id, basespace_sample_name, and basespace_collection_id, populated with six example sample rows all belonging to Run_01.](../../assets/figures/basespace_fetch/step7-metadata-sheet.png)
 
 ##### Step 2: Upload the metadata spreadsheet to the destination workspace in Terra.bio {% raw %} {#upload-metadata} {% endraw %}
 
@@ -128,12 +128,12 @@ _If you already have a command-line environment available_, you can skip ahead t
     1. In Terra, navigate to the "DATA" tab, click "IMPORT DATA" then "Upload TSV"
 
         !!! caption narrow "Upload TSV"
-            ![upload tsv](../../assets/figures/basespace_fetch/step8-upload-tsv.png)
+            ![Terra Data tab showing the Import Data dropdown menu with "Upload TSV" highlighted as the selected option.](../../assets/figures/basespace_fetch/step8-upload-tsv.png)
 
     2. Copy and paste the contents of the whole spreadsheet into the "TEXT IMPORT" tab and click "START IMPORT JOB"
 
         !!! caption narrow "Import Metadata"
-             ![text import](../../assets/figures/basespace_fetch/step9-text-import.png)
+             ![Terra's Import Table Data dialog with the TEXT IMPORT tab selected, showing a text area for pasting tab-separated data and a Start Import Job button.](../../assets/figures/basespace_fetch/step9-text-import.png)
 
     You can now use the created table to run the BaseSpace_Fetch workflow.
 

@@ -9,8 +9,8 @@
 !!! tip "Command-line incompatible"
     This _workflow_ is not compatible with command-line use, but the underlying tool ([`theiavalidate`](https://github.com/theiagen/theiavalidate)) is. If you want to run TheiaValidate on the command-line, please see the tool's [README](https://github.com/theiagen/theiavalidate/blob/main/README.md) for more details.
 
-!!! caption "TheiaValidate Workflow Diagram"
-    ![TheiaValidate Workflow Diagram](../../assets/figures/TheiaValidate.png)
+!!! caption "TheiaValidate Workflow Overview"
+    ![TheiaValidate workflow taking two data tables and optional comparison criteria as inputs, filtering and comparing columns, and producing a summary report PDF and TSV files showing match differences.](../../assets/figures/TheiaValidate.png)
 
 TheiaValidate performs basic comparisons between user-designated columns in two separate tables. We anticipate this workflow being run to determine if any differences exist between version releases or two workflows, such as TheiaProk_ONT vs TheiaProk_Illumina_PE. A summary PDF report is produced in addition to an Excel spreadsheet that lists the values for any columns that do not have matching content for a sample.
 

@@ -8,9 +8,9 @@
 
 This workflow allows users to submit Terra data tables as metadata and phylogenetic trees resulting from other Terra run workflows directly to Microreact using their Access Token. A user can also update an existing Microreact project with a new metadata file or additional tree files. If an access token is unavailable users can manually upload the output project file to Microreact.
 
-!!! caption "Microreact_Export Diagram"
+!!! caption "Microreact_Export Workflow Overview"
     <div style="text-align: center;">
-    ![Microreact_Export Workflow Diagram](../../assets/figures/Microreact_Export.png){: onload="this.width/=1.5;this.onload=null;" }
+    ![Microreact_Export workflow diagram showing how a Terra table is downloaded and used to either update an existing Microreact project or create a new one, producing a Microreact Project Input file and Submission Response JSON.](../../assets/figures/Microreact_Export.png){: onload="this.width/=1.5;this.onload=null;" }
     </div>
 
 !!! tip "Updating Projects"

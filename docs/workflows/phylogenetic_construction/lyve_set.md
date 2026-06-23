@@ -12,7 +12,7 @@ The Lyve_SET WDL workflow runs the [Lyve-SET](https://github.com/lskatz/lyve-SET
 
 !!! caption "Lyve-SET Workflow Diagram"
     <div style="text-align: center;">
-    ![Lyve-SET Workflow Diagram](../../assets/figures/Lyve_Set.png)
+    ![Lyve-SET workflow taking genomic DNA reads through reference procurement, SNP discovery, and filtering steps to produce a multiple sequence alignment used for phylogenetic inference and pairwise distance comparison.](../../assets/figures/Lyve_Set.png)
     </div>
 
 ### Inputs

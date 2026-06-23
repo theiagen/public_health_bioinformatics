@@ -8,9 +8,9 @@
 
 This workflow is a FASTA-compatible version of [Snippy_Streamline](./snippy_streamline.md). Please see the [Snippy_Streamline](./snippy_streamline.md) documentation for more information regarding the workflow tasks.
 
-!!! caption "Snippy_Streamline_FASTA_PHB Workflow Diagram"
+!!! caption "Snippy_Streamline_FASTA_PHB Workflow Overview"
     <div style="text-align: center;">
-    ![Snippy_Streamline_FASTA_PHB Workflow Diagram](../../assets/figures/Snippy_Streamline_FASTA.png){: onload="this.width/=2;this.onload=null;" }
+    ![Workflow diagram for Snippy_Streamline_FASTA: genome assemblies (FASTA) and an optional reference genome feed into Snippy_Variants and Snippy_Tree modules, producing recombination predictions, a SNP-distance matrix, a final alignment, and a phylogenetic tree.](../../assets/figures/Snippy_Streamline_FASTA.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a reference-based phylogenetic tree and associated SNP-distance matrix. The workflow can be run in multiple ways.

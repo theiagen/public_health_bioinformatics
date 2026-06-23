@@ -5,7 +5,7 @@ fragment: true
 ??? task "`ABRicate`: AMR Genotyping (optional)"
     To activate this task, set `call_abricate` to `true`.
 
-    ABRicate performs mass screening of contigs for antimicrobial resistance or virulence genes using the database defined in `abricate_db`. It comes bundled with multiple databases: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB. It only detects acquired resistance genes, **NOT** point mutations.
+    ABRicate performs mass screening of contigs for antimicrobial resistance or virulence genes using the database defined in `abricate_db`. It comes bundled with multiple databases: NCBI, CARD, ARG-ANNOT, Resfinder, MEGARES, EcOH, PlasmidFinder, Ecoli_VF and VFDB. It only detects acquired resistance genes, **NOT** point mutations.
 
     By default, the "vfdb" database is used. The [virulence factor database (VFDB)](https://www.mgc.ac.cn/VFs/) is a comprehensive resource for bacterial pathogen virulence factors.
 

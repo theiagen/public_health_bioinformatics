@@ -10,7 +10,7 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
 
 !!! caption "Clair3_Variants Workflow Diagram"
     <div style="text-align: center;">
-    ![Clair3_Variants Workflow Diagram](../../assets/figures/Clair3_Variants.png){: onload="this.width/=2;this.onload=null;" }
+    ![Workflow diagram showing FASTQ reads and a reference genome as inputs, processed through alignment with minimap2 and variant calling with Clair3, producing VCF results as output.](../../assets/figures/Clair3_Variants.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 !!! tip "Example Use Cases"

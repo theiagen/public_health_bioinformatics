@@ -76,7 +76,7 @@ Curation is included in the post-processing steps of [GAMBITdb](https://github.c
 
 #### Using GAMBITdb
 
-The [GAMBIT-suite](https://github.com/gambit-suite) organization provides multiple repositories for tools for [GAMBIT](https://github.com/jlumpe/gambit). It includes the [GAMBITdb](https://github.com/gambit-suite/gambitdb) repository which features several tools to generate a GAMBIT database from a GTDB’s release spreadsheet.
+The [GAMBIT-suite](https://github.com/gambit-suite) organization provides multiple repositories for tools for [GAMBIT](https://github.com/jlumpe/gambit). It includes the [GAMBITdb](https://github.com/gambit-suite/gambitdb) repository which features several tools to generate a GAMBIT database from a GTDB’s release spreadsheet.
 
 To run [GAMBITdb](https://github.com/gambit-suite/gambitdb), the following dependencies are required:
 
@@ -151,11 +151,11 @@ After the GAMBIT signatures file is created, a pairwise distance matrix for ever
 gambit dist --qs signatures.gs --square -o pw_dists.csv
 ```
 
-!!! caption narrow "GAMBIT Metadata Database Scheme"
-    ##### Figure 1 {% raw %} {#figure1} {% endraw %}
-    ![**Figure 1:** Scheme for GAMBIT’s metadata database.](../assets/figures/GAMBIT-metadata-database.png)
-
-    **Figure 1:** Scheme for GAMBIT’s metadata database
+!!! caption narrow "GAMBIT Metadata Database Schema"
+    ![Entity-relationship diagram of the GAMBIT metadata database, showing four linked tables: taxa, genomes, genome_sets, and genome_annotations, with their fields and relationships.](../assets/figures/GAMBIT-metadata-database.png){data-description="GAMBIT Metadata Database Schema"}
+    /// figure-caption | #figure1
+    Scheme for GAMBIT’s metadata database
+    ///
 
 #### Step 4: Calculate diameters for taxa and resolve overlaps
 

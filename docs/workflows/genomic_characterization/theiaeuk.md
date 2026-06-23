@@ -12,13 +12,13 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
 === "TheiaEuk_Illumina_PE"
 
-    !!! caption "TheiaEuk Illumina PE Workflow Diagram"
-        ![TheiaEuk Illumina PE Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PE.png)
+    !!! caption "TheiaEuk Illumina PE Workflow Overview"
+        ![Workflow diagram for TheiaEuk Illumina PE, showing FASTQ inputs processed through read screening, quality control, and de novo assembly, leading to taxonomic assignment, AMR characterization, and organism-specific gene query and variant calling outputs.](../../assets/figures/TheiaEuk_Illumina_PE.png)
 
 === "TheiaEuk_ONT"
 
-    !!! caption "TheiaEuk ONT Workflow Diagram"
-        ![TheiaEuk ONT Workflow Diagram](../../assets/figures/TheiaEuk_ONT.png)
+    !!! caption "TheiaEuk ONT Workflow Overview"
+        ![TheiaEuk ONT workflow taking ONT FASTQ reads through quality control, adapter trimming, de novo assembly, and taxonomic assignment, with species-specific outputs for fungal pathogens including gene queries and variant calling.](../../assets/figures/TheiaEuk_ONT.png)
 
 !!! warning "Before running TheiaEuk"
 
@@ -31,7 +31,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
         The TheiaEuk_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time.
 
-        By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
+        By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
     === "TheiaEuk_ONT"
 

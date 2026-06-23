@@ -10,7 +10,7 @@ The Dorado Basecalling workflow is used to convert Oxford Nanopore `POD5` sequen
 
 !!! caption "Dorado_Basecalling_PHB Workflow Diagram"
     <div style="text-align: center;">
-    ![Dorado_Basecalling_PHB Workflow Diagram](../../assets/figures/Dorado_Basecalling_PHB.png){: onload="this.width/=2;this.onload=null;" }
+    ![Workflow taking POD5 files from Google Cloud storage through Dorado basecalling and demultiplexing, with optional trimming using custom FASTA primers, and outputting a data table of FASTQ files.](../../assets/figures/Dorado_Basecalling_PHB.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 ### Configuring Workflow in Terra
@@ -29,7 +29,7 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
         After the upload is complete, right-click the collection name and select "Copy link address"
 
         !!! caption "Copy link address"
-            ![Data Uploader](../../assets/figures/dorado_pod5_bucket_path.png)
+            ![Terra Data Uploader showing a right-click context menu on the collection bucket path link, with "Copy link address" highlighted to copy the POD5 bucket path.](../../assets/figures/dorado_pod5_bucket_path.png)
 
     3. **Paste the GCS Path into the Workflow Input**
 
@@ -37,8 +37,8 @@ We recommend running this workflow with **"Run workflow with inputs defined by f
 
         Make sure you select the `"Run workflow with inputs defined by file paths"` option, as shown.
 
-        !!! caption "Workflow Inputs"
-            ![Workflow Inputs](../../assets/figures/dorado_workflow_inputs.png)
+        !!! caption "Dorado Basecalling Workflow Inputs in Terra"
+            ![Terra workflow configuration page for Dorado_Basecalling_PHB showing the Inputs tab with required fields including kit_name, pod5_bucket_path, and terra_project, with the pod5_bucket_path field highlighted.](../../assets/figures/dorado_workflow_inputs.png)
 
 ### Model Type Selection
 

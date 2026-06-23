@@ -6,9 +6,9 @@
 
 ## AMR_Search_PHB
 
-!!! caption "AMR_Search Workflow Diagram"    
+!!! caption "AMR_Search Workflow Overview"
     <div style="text-align: center;">
-    ![AMR_Search Workflow Diagram](../../assets/figures/AMR_Search.png){: onload="this.width/=2;this.onload=null;" }
+    ![AMR_Search workflow taking a FASTA sequence and NCBI Taxon Code as inputs, running paarsnp and parse_amr_json tools, and producing JSON, CSV, and PNG results files.](../../assets/figures/AMR_Search.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 The AMR_Search workflow is a standalone version of Pathogenwatch's AMR profiling functionality utilizing `AMRsearch` tool from Pathogenwatch.
