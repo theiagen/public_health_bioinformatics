@@ -26,7 +26,8 @@ workflow read_QC_trim_pe {
     Int bbduk_memory = 8
     File? read_decontaminate_fasta
     Int? read_decontaminate_memory
-    String? expected_contaminants
+    String? expected_contaminants # comma-delimited list of expected contaminant sequences, OR a key into expected_contaminants_json when that is provided
+    File? expected_contaminants_json # optional JSON mapping of {"<NAME>": ["<CONTAMINANT_SEQUENCE1>", "<CONTAMINANT_SEQUENCE2>", ...]}; when provided, expected_contaminants is used as the key to look up the list of contaminant sequences
     Float? min_contaminant_coverage
     Int? min_contaminant_depth
     Int? min_contaminant_reads_mapped
@@ -89,6 +90,7 @@ workflow read_QC_trim_pe {
         refseq = false,
         complete_only = false,
         expected_sequences = expected_contaminants,
+        expected_sequences_json = expected_contaminants_json,
         min_expected_coverage = min_contaminant_coverage,
         min_expected_depth = min_contaminant_depth,
         min_expected_reads_mapped = min_contaminant_reads_mapped,

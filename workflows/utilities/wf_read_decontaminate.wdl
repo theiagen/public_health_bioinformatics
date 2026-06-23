@@ -21,7 +21,8 @@ workflow read_decontaminate {
     Boolean refseq = true
     Boolean complete_only = false
 
-    String? expected_sequences
+    String? expected_sequences # comma-delimited list of expected sequences, OR a key into expected_sequences_json when that is provided
+    File? expected_sequences_json # optional JSON mapping of {"<NAME>": ["<SEQ1>", "<SEQ2>", ...]}; when provided, expected_sequences is used as the key to look up the list of expected sequences
     Float min_expected_coverage = 0
     Int min_expected_depth = 0
     Int min_expected_reads_mapped = 0
@@ -106,6 +107,7 @@ workflow read_decontaminate {
       call contaminant_check_task.contaminant_check {
         input:
           expected_sequences = select_first([expected_sequences]),
+          expected_sequences_json = expected_sequences_json,
           coverage_by_sequence_json = select_first([read_mapping_stats.coverage_by_sequence_json]),
           depth_by_sequence_json = select_first([read_mapping_stats.depth_by_sequence_json]),
           reads_by_sequence_json = select_first([read_mapping_stats.reads_by_sequence_json]),
