@@ -123,9 +123,9 @@ workflow core_gene_snp_workflow {
     String? snp_sites_version = core_snp_sites.snp_sites_version
     String? snp_sites_docker = core_snp_sites.snp_sites_docker
     # snp_dists outputs
-    String? pirate_snps_dists_version = select_first([core_snp_dists.snp_dists_version,pan_snp_dists.snp_dists_version,""])
+    String? pirate_snps_dists_version = select_first([core_snp_dists.snp_dists_version, pan_snp_dists.snp_dists_version, ""])
     # iqtree outputs
-    String? pirate_iqtree_version = select_first([core_iqtree.iqtree2_version,pan_iqtree.iqtree2_version,""])
+    String? pirate_iqtree_version = select_first([core_iqtree.iqtree2_version, pan_iqtree.iqtree2_version, ""])
     # reorder matrix outputs
     File? pirate_core_snp_matrix = core_reorder_matrix.ordered_matrix
     File? pirate_iqtree_core_tree = core_reorder_matrix.tree
