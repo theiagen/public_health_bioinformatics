@@ -12,7 +12,7 @@ fragment: true
     - G→A or C→T fraction
     - NGA/TCN context of G→A or C→T mutations.
 
-    An example Mpox tree with these "Color By" options can be viewed in [this example Nextstrain Mpox tree](https://nextstrain.org/mpox/clade-IIb?c=GA_CT_fraction)
+    An example Mpox tree with these "Color By" options can be viewed in [this example Nextstrain Mpox tree](https://nextstrain.org/mpox/clade-IIb?c=GA_CT_fraction).
 
     !!! techdetails "Extract Mutation Context Technical Details"
         |  | Links |

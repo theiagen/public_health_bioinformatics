@@ -70,7 +70,7 @@ The following language conventions should be followed when writing documentation
 
     Please see the [Admonition documentation](https://zensical.org/docs/authoring/admonitions/) for more information on how to change the title, enable toggles, and more.
 
-    The following custom callout types are supported _in addition to the standard admonitions supported by our theme_ ([The Zeniscal documentation offers more information on the standard admonitions](https://zensical.org/docs/authoring/admonitions/#supported-types)):
+    The following custom callout types are supported _in addition to the standard admonitions supported by our theme_ ([The Zensical documentation offers more information on the standard admonitions](https://zensical.org/docs/authoring/admonitions/#supported-types)):
 
     !!! dna
         This is a DNA admonition. Admire the cute green DNA emoji. You can create this with the `!!! dna` syntax.
@@ -151,7 +151,7 @@ A brief description of the documentation structure is as follows:
         - `metadata_formatters/` - Contains the most up-to-date metadata formatters for our submission workflows.
         - `sops/` - Contains any Standard Operating Procedures (SOPs) that correspond to workflows in the documentation.
         - `tables/` - Contains TSV files used to generate tables in the documentation. These are used to generate the overview tables for workflows, as well as the input and output tables for workflows.
-        - `new_workflow_template.md` - [A template for adding a new workflow page to the documentation.](../assets/new_workflow_template.md)
+        - `new_workflow_template.md` - [A template for adding a new workflow page to the documentation](../assets/new_workflow_template.md).
     - `common_text/` - Contains the Markdown files for common text used in the documentation. This includes task descriptions, workflow descriptions, and other common text. This is where you will put any new task descriptions or workflow descriptions that are not specific to a single workflow. This enables modular and reusable documentation.
     - `contributing/` - Contains the Markdown files for our contribution guides, such as this file
     - `javascripts/` - Contains JavaScript files used in the documentation.

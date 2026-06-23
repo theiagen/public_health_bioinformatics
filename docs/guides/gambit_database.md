@@ -1,6 +1,6 @@
 # GAMBIT Database Creation
 
-GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking) incorporates a k-mer based strategy for the identification of taxonomic information with a highly curated searchable database.
+GAMBIT (Genomic Approximation Method for Bacterial Identification and Tracking) incorporates a k-mer-based strategy for the identification of taxonomic information with a highly curated searchable database.
 
 A GAMBIT database consists of two files:
 

@@ -85,7 +85,7 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
             !!! warning "These fields are required for submission and must be included in the Terra data table or supplied as an input parameter"
 
-                If you cannot provide a value for a mandatory field within, set the `allow_missing` input parameter to `true` or alternatively, use one of the [INSDC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
+                If you cannot provide a value for a mandatory field, set the `allow_missing` input parameter to `true` or alternatively use one of the [INSDC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
 
             | <div style="width: 160px;">Terra Column Name</div> | <div style="width: 140px;">ENA Field Name</div> | Description |
             |---|---|---|
@@ -123,7 +123,7 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
             !!! warning "These fields are required for submission and must be included in the Terra data table or supplied as an input parameter"
 
-                If you cannot provide a value for a mandatory field within, set the `allow-missing` input parameter to `true` or alternatively, use one of the [INSDC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
+                If you cannot provide a value for a mandatory field, set the `allow_missing` input parameter to `true` or alternatively use one of the [INSDC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
 
             | <div style="width: 170px;">Terra Column Name</div> | <div style="width: 140px;">ENA Field Name</div> | Description |
             |---|---|---|

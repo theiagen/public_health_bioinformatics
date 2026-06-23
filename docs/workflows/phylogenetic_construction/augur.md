@@ -153,9 +153,9 @@ For the Augur subcommands, please view the [Nextstrain Augur documentation](http
 
 #### Augur Outputs
 
-The `auspice_input_json` is intended to be uploaded to [Auspice](https://auspice.us/) to view the resulting phylogenetic tree with the provided metadata. Alternatively, a phylogenetic tree in Newick format is also available for visualization in other platforms. The `metadata_merged` output can also be uploaded to either Auspice or a different visualization platform to add further context to the phylogenetic visualization. The `combined_assemblies` output can be uploaded to [UShER](https://genome.ucsc.edu/cgi-bin/hgPhyloPlace) to view the samples on a global tree of representative sequences from public repositories.
+The `auspice_input_json` is intended to be uploaded to [Auspice](https://auspice.us/) to view the resulting phylogenetic tree with the provided metadata. Alternatively, a phylogenetic tree in Newick format is also available for visualization in other platforms. The `metadata_merged` output can also be uploaded to either Auspice or a different visualization platform to add further context to the phylogenetic visualization. The `combined_assemblies` output can be uploaded to [UShER](https://genome.ucsc.edu/cgi-bin/hgPhyloPlace) to view the samples on a global tree of representative sequences from public repositories.
 
-The Nextstrain team hosts documentation surrounding the Augur workflow to Auspice visualization, which details the various components of the Auspice interface: [How data is exported by Augur for visualisation in Auspice](https://docs.nextstrain.org/en/latest/learn/augur-to-auspice.html).
+The Nextstrain team provides documentation detailing the Auspice interface and how Augur exports data for visualization: [How data is exported by Augur for visualization in Auspice](https://docs.nextstrain.org/en/latest/learn/augur-to-auspice.html).
 
 /// html | div[class="searchable-table"]
 
