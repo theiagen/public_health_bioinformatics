@@ -36,10 +36,17 @@ task contaminant_check {
   if json_path:
     with open(json_path) as infile:
       mapping = json.load(infile)
-    if expected not in mapping:
-      raise SystemExit("Key '{}' not found in expected_sequences_json mapping".format(expected))
-    value = mapping[expected]
-    resolved = ",".join(str(sequence) for sequence in value) if isinstance(value, list) else str(value)
+    # enable comma-delimited input of expected contaminant sets
+    expected_list = expected.replace(" ", "").split(",")
+    resolved_list = []
+    for exp in expected_list:
+      if exp not in mapping:
+        raise KeyError(f"Key '{exp}'' not found in expected_sequences_json mapping")
+      value = mapping[exp]
+      temp_resolved = ",".join(str(sequence) for sequence in value) if isinstance(value, list) else str(value)
+      resolved_list.append(temp_resolved)
+    # join all resolved sequences together
+    resolved = ",".join(resolved_list)
   else:
     resolved = expected
 
