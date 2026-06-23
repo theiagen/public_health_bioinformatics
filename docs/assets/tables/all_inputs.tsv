@@ -2015,7 +2015,7 @@ read_QC_trim_pe	call_bracken	Boolean	Call Bracken kraken2 report refinement	True
 read_QC_trim_pe	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	call_rasusa	Boolean	True/False variable that determines if the RASUSA task should be called.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	expected_contaminants	String	Internal component, do not modify		Optional	Freyja_FASTQ	general	
-read_QC_trim_pe	expected_contaminants_json	File	A JSON map relating contaminant sequence sets to their contaminant sequence headers, e.g. "{SET_NAME: [seq1, seq2, seqn]}"		Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	expected_contaminants_json	File	Internal component, do not modify		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	Freyja_FASTQ	database	
