@@ -100,13 +100,13 @@ When assessing the taxonomic identity of a single isolate's sequence, it is norm
      **98.7843	262536	262536	species	11676	                    Human immunodeficiency virus 1**
     ```
 
-#### Krona visualisation of Metabuli report
+#### Krona visualization of Metabuli report
 
 [Krona](https://github.com/marbl/Krona) produces an interactive report that allows hierarchical data, such as the one from Metabuli, to be explored with zooming, multi-layered pie charts. These pie charts are intuitive and highly responsive.
 
 ??? toggle "Example Krona report"
 
-    Below is an example of the `krona_html` for a bacterial sample. Taxonomic rank is organised from the centre of the pie chart to the edge, with each slice representing the relative abundance of a given taxa in the sample.
+    Below is an example of the `krona_html` for a bacterial sample. Taxonomic rank is organized from the center of the pie chart to the edge, with each slice representing the relative abundance of a given taxa in the sample.
 
     ![Krona interactive radial chart showing taxonomic composition of a sample: roughly 75% Bacteria (dominated by Enterobacteriaceae), 25% unclassified, and trace human and viral reads.](../../assets/figures/example_krona_report.png){data-description="Example Krona taxonomic composition report"}
 

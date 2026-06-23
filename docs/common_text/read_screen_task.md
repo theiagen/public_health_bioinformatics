@@ -6,7 +6,7 @@ fragment: true
     The screen task ensures the quantity of sequence data is sufficient to undertake genomic analysis. It uses [fastq-scan](https://github.com/rpetit3/fastq-scan) and bash commands for quantification of reads and base pairs, and [Mash](https://mash.readthedocs.io/en/latest/index.html) sketching to estimate the genome size and its coverage. At each step, the results are assessed relative to pass/fail criteria and thresholds that may be defined by optional user inputs. Samples are run through all threshold checks, regardless of failures, and the workflow will terminate after the screen task if any thresholds are not met:
 
     1. Total number of reads: A sample will fail the read screening task if its total number of reads is less than or equal to `min_reads`.
-    2. The proportion of basepairs reads in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
+    2. The proportion of basepairs in the forward and reverse read files: A sample will fail the read screening if fewer than `min_proportion` basepairs are in either the reads1 or read2 files.
     3. Number of basepairs: A sample will fail the read screening if there are fewer than `min_basepairs` basepairs
     4. Estimated genome size:  A sample will fail the read screening if the estimated genome size is smaller than `min_genome_size` or bigger than `max_genome_size`.
     5. Estimated genome coverage: A sample will fail the read screening if the estimated genome coverage is less than the `min_coverage`.
@@ -40,7 +40,7 @@ fragment: true
     | `min_basepairs` | 17000 | Should be greater than 10x coverage of Hepatitis delta (of the _Deltavirus_ genus), the smallest known viral genome (1,700 bp) |
     | `min_genome_length` | 1700 | Based on the Hepatitis delta (of the _Deltavirus_ genus) genome, the smallest viral genome as of 2024-04-11 (1,700 bp) |
     | `max_genome_length` | 2673870 | Based on the _Pandoravirus salinus_ genome, the largest known viral genome (2,673,870 bp), plus an additional 200 kbp to cater for potential extra genomic material |
-    | `min_coverage` | 10 | A bare-minimum average per base coverage across the genome required for genome characterization A Higher coverage would be required for high-quality phylogenetics. |
+    | `min_coverage` | 10 | A bare-minimum average per base coverage across the genome required for genome characterization. Higher coverage would be required for high-quality phylogenetics. |
     | `min_proportion` | 40 | Neither read1 nor read2 files should have less than 40% of the total number of reads. For paired-end data only. |
 <!-- endif -->
 

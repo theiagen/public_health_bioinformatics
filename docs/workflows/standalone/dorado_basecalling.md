@@ -187,7 +187,7 @@ This workflow is composed of several tasks to process, basecall, and analyze Oxf
         | Software Documentation | [Dorado ReadTheDocs](https://dorado-docs.readthedocs.io/en/latest/) |
 
 ??? task "`dorado_trim`: Custom Primer Trimming (optional)"
-    If the optional input `custom_primers` is provided, this task is activated that will trim the primer sequences from the beginning and end of the demultiplexed reads.
+    If the optional input `custom_primers` is provided, this task is activated to trim the primer sequences from the beginning and end of the demultiplexed reads.
 
     To determine how to format the FASTA file that is expected in `custom_primers` please see the [Dorado documentation](https://dorado-docs.readthedocs.io/en/latest/barcoding/custom_primers/), specifically the section on "Custom adapter/primer file format".
 

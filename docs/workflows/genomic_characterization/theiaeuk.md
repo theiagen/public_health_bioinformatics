@@ -113,12 +113,12 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 {{ include_md("common_text/snippy_variants_task.md", indent=4, condition="calbicans") }}
 
 ??? toggle "_Aspergillus fumigatus_"
-    When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed.
+    When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed.
 
 {{ include_md("common_text/snippy_variants_task.md", indent=4, condition="afumigatus") }}
 
 ??? toggle "_Cryptococcus neoformans_"
-    When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed.
+    When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed.
 
 {{ include_md("common_text/snippy_variants_task.md", indent=4, condition="cneoformans") }}
 

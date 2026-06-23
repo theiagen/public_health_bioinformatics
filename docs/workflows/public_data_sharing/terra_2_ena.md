@@ -161,7 +161,7 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
             | `receipt_date` | receipt date | Date on which the sample was received. Format:YYYY-MM-DD. Please provide the highest precision possible. If the sample was received by the institution and not collected, the 'receipt date' must be provided instead. |
             | `sample_capture_status` | sample capture status | Reason for the sample collection. |
             | `library_description` | sample_description | Description of the sample. |
-            | `serotype` | serotype | Serological variety of a species characterised by its antigenic properties. For Influenza, HA subtype should be the letter H followed by a number between 1-16 unless novel subtype is identified and the NA subtype should be the letter N followed by a number between 1-9 unless novel subtype is identified. |
+            | `serotype` | serotype | Serological variety of a species characterized by its antigenic properties. For Influenza, HA subtype should be the letter H followed by a number between 1-16 unless novel subtype is identified and the NA subtype should be the letter N followed by a number between 1-9 unless novel subtype is identified. |
             | `virus_identifier` | virus identifier | Unique laboratory identifier assigned to the virus by the investigator. Strain name is not sufficient since it might not be unique due to various passages of the same virus. Format: up to 50 alphanumeric characters |
 
     </div>

@@ -69,7 +69,7 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
 
 ??? task "`samtools faidx`: Reference Genome Indexing"
 
-    `samtools faidx` creates necessary index files for the reference. This indexing step is    essential for enabling efficient random access to the reference sequence during variant calling.
+    `samtools faidx` creates necessary index files for the reference. This indexing step is essential for enabling efficient random access to the reference sequence during variant calling.
 
     !!! techdetails "samtools Technical Details"
         | | Links |

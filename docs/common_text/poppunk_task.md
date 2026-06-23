@@ -8,7 +8,7 @@ fragment: true
     PopPUNK works by using variable-length k-mers to distinguish between sample divergences in shared genomic content. Clusters are assigned based on the resulting pairwise distance distributions.
 
     !!! tip "Interpreting GPSC results"
-        - In the `*_external_clusters.csv` novel clusters are assigned NA. For isolates that are assigned a novel cluster and pass QC, you can email [globalpneumoseq@gmail.com](mailto:globalpneumoseq@gmail.com) to have these novel clusters added to the database.
+        - In the `*_external_clusters.csv`, novel clusters are assigned NA. For isolates that are assigned a novel cluster and pass QC, you can email [globalpneumoseq@gmail.com](mailto:globalpneumoseq@gmail.com) to have these novel clusters added to the database.
         - Unsampled diversity in the pneumococcal population may represent missing variation that links two GPS clusters. When this is discovered, GPSCs are merged and the merge history is indicated. For example, if GPSC23 and GPSC362 merged, the GPSC would be reported as GPSC23, with a merge history of GPSC23;362.
 
     !!! techdetails "PopPUNK Technical Details"

@@ -8,7 +8,7 @@ fragment: true
 
     Databases that can be used with ReferenceSeeker are as follows, and can be used by pasting the GSURI in double quotation marks `""` into the `referenceseeker_db` optional input:
 
-      - **archea**:  `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-archaea-refseq-205.v20210406.tar.gz`
+      - **archaea**:  `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-archaea-refseq-205.v20210406.tar.gz`
       - **bacterial** (**default**): `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-bacteria-refseq-205.v20210406.tar.gz`
       - **fungi**: `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-fungi-refseq-205.v20210406.tar.gz`
       - **plasmids**: `gs://theiagen-public-resources-rp/reference_data/databases/referenceseeker/referenceseeker-plasmids-refseq-205.v20210406.tar.gz`

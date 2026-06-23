@@ -196,7 +196,7 @@ This workflow runs on set-level data tables.
 
     The workflow will perform the following tasks, each highlighted as `code`
 
-    1. `prune_table`formats all incoming metadata for submission.
+    1. `prune_table` formats all incoming metadata for submission.
     2. If you are submitting BioSamples:
         1. `biosample_submit_tsv_ftp_upload` will
             1. format the BioSample table into XML format

@@ -272,7 +272,7 @@ Options:
         GCF_001063095.1
         GCF_002248705.1
 
-    These genomes currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Escherichia coli* query genomes to *Shigella* species.
+    These genomes are currently named as *Shigella* species in NCBI, but are actually *Escherichia coli* according to the best match type strain using ANI. Their removal from the database prevents false assignment of *Escherichia coli* query genomes to *Shigella* species.
 
     **Database Files**
 

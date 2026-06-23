@@ -5,7 +5,7 @@ fragment: true
 ??? task "`parse_mapping`: BAM File Handling"
 
 <!-- if: sam_to_sorted_bam-->
-    The `sam_to_sorted_bam` sub-task converts the output SAM file from Minimap2 and converts it to a BAM file. It then sorts the BAM file by coordinate, and creates a BAM index file.
+    The `sam_to_sorted_bam` sub-task takes the output SAM file from Minimap2 and converts it to a BAM file. It then sorts the BAM file by coordinate, and creates a BAM index file.
 
     ??? dna "`min_map_quality` input parameter"
         This parameter accepts an integer value to set the minimum mapping quality for variant calling and subsequent consensus sequence generation. The default value is `20`.

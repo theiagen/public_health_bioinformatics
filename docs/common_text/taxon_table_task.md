@@ -15,7 +15,7 @@ fragment: true
     !!! tip ""
         **Formatting the `output_taxon_table` file**
 
-        The `output_taxon_table` file must be uploaded a Google storage bucket that is accessible by Terra and should be in **tab-delimited** format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column.
+        The `output_taxon_table` file must be uploaded to a Google storage bucket that is accessible by Terra and should be in **tab-delimited** format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column.
 
         | taxon | taxon_table |
         | --- | --- |
@@ -38,7 +38,7 @@ fragment: true
 
         **Formatting the `taxon_tables` file**
 
-        The `taxon_tables` file must be uploaded a Google storage bucket that is accessible by Terra and should be in the format below. Briefly, the bacterial genera or species should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column.
+        The `taxon_tables` file must be uploaded to a Google storage bucket that is accessible by Terra and should be in the format below. Briefly, the bacterial genera or species should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column.
 
         | taxon | taxon_table |
         | --- | --- |
