@@ -15,6 +15,7 @@ fragment: true
 
         - `filter_contigs_skip_length_filter`
         - `filter_contigs_skip_coverage_filter`
+        - `filter_contigs_skip_homopolymer_filter`
 
     The minimum length and coverage thresholds can be adjusted using the `filter_contigs_min_length` and `filter_contigs_min_coverage` parameters, respectively.
 <!-- endif -->
