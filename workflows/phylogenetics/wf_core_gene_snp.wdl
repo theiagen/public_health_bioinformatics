@@ -1,6 +1,6 @@
 version 1.0
 
-import "../../tasks/phylogenetic_inference/task_iqtree.wdl" as iqtree
+import "../../tasks/phylogenetic_inference/task_iqtree2.wdl" as iqtree2
 import "../../tasks/phylogenetic_inference/task_pirate.wdl" as pirate_task
 import "../../tasks/phylogenetic_inference/utilities/task_reorder_matrix.wdl" as reorder_matrix
 import "../../tasks/phylogenetic_inference/utilities/task_snp_dists.wdl" as snp_dists
@@ -50,7 +50,7 @@ workflow core_gene_snp_workflow {
           output_pseudo_ref = false,
           output_monomorphic = false
       }
-      call iqtree.iqtree as core_iqtree {
+      call iqtree2.iqtree2 as core_iqtree {
         input:
           alignment = select_first([core_snp_sites.snp_sites_multifasta]),
           cluster_name = cluster_name_updated
@@ -70,7 +70,7 @@ workflow core_gene_snp_workflow {
       }
     }
     if (pan_tree) {
-      call iqtree.iqtree as pan_iqtree {
+      call iqtree2.iqtree2 as pan_iqtree {
         input:
           alignment = select_first([pirate.pirate_pangenome_alignment_fasta]),
           cluster_name = cluster_name_updated
@@ -123,9 +123,9 @@ workflow core_gene_snp_workflow {
     String? snp_sites_version = core_snp_sites.snp_sites_version
     String? snp_sites_docker = core_snp_sites.snp_sites_docker
     # snp_dists outputs
-    String? pirate_snps_dists_version = select_first([core_snp_dists.snp_dists_version,pan_snp_dists.snp_dists_version,""])
+    String? pirate_snps_dists_version = select_first([core_snp_dists.snp_dists_version, pan_snp_dists.snp_dists_version, ""])
     # iqtree outputs
-    String? pirate_iqtree_version = select_first([core_iqtree.version,pan_iqtree.version,""])
+    String? pirate_iqtree_version = select_first([core_iqtree.iqtree2_version, pan_iqtree.iqtree2_version, ""])
     # reorder matrix outputs
     File? pirate_core_snp_matrix = core_reorder_matrix.ordered_matrix
     File? pirate_iqtree_core_tree = core_reorder_matrix.tree
