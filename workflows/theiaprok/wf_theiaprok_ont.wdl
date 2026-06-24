@@ -91,7 +91,7 @@ workflow theiaprok_ont {
       input:
         samplename = samplename,
         read1 = read1,
-        genome_length = genome_length,
+        genome_length = select_first([genome_length, 5000000]),
         workflow_series = "theiaprok"
     }
     if (! skip_screen) {

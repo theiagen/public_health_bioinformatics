@@ -5,7 +5,7 @@ task nanoplot {
     File read1 # intended for ONT data only
     String samplename
     Int max_length = 100000
-    Int est_genome_length
+    Int? est_genome_length
 
     Int disk_size = 100
     String docker = "us-docker.pkg.dev/general-theiagen/staphb/nanoplot:1.40.0"
@@ -42,9 +42,11 @@ task nanoplot {
     grep "mean_qual" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEAN_QUAL
     grep "median_qual" ~{samplename}_NanoStats.txt | cut -f 2 | tee MEDIAN_QUAL
 
-    # estimate coverage
-    # using math: C = N / G where N is number of bases, and G is estimated genome size
-    python3 -c "print(round(${NUM_BASES} / ~{est_genome_length}, 2))" | tee EST_COVERAGE
+    if [ ~{if defined(est_genome_length)  then "true" else "false" } == true ]; then 
+      # estimate coverage
+      # using math: C = N / G where N is number of bases, and G is estimated genome size
+      python3 -c "print(round(${NUM_BASES} / ~{est_genome_length}, 2))" | tee EST_COVERAGE
+
   >>>
   output {
     File nanoplot_html = "~{samplename}_NanoPlot-report.html"
@@ -56,7 +58,7 @@ task nanoplot {
     Float n50 = read_float("N50")
     Float mean_q = read_float("MEAN_QUAL")
     Float median_q = read_float("MEDIAN_QUAL")
-    Float est_coverage = read_float("EST_COVERAGE")
+    Float? est_coverage = read_float("EST_COVERAGE")
     String nanoplot_version = read_string("VERSION")
     String nanoplot_docker = docker
   }
