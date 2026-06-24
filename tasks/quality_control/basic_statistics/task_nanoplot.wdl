@@ -46,7 +46,8 @@ task nanoplot {
       # estimate coverage
       # using math: C = N / G where N is number of bases, and G is estimated genome size
       python3 -c "print(round(${NUM_BASES} / ~{est_genome_length}, 2))" | tee EST_COVERAGE
-
+    fi
+    
   >>>
   output {
     File nanoplot_html = "~{samplename}_NanoPlot-report.html"
