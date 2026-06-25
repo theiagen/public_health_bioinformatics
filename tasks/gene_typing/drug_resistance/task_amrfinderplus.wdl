@@ -67,7 +67,8 @@ task amrfinderplus_nuc {
           ~{'--gff ' + gff} \
           ~{'--annotation_format '+ annotation_format} \
           ~{'--coverage_min ' + min_percent_coverage} \
-          ~{'--ident_min ' + min_percent_identity}
+          ~{'--ident_min ' + min_percent_identity} \
+          --mutation_all ~{samplename}_amrfinder_all_mutations.tsv
       else
         amrfinder --plus \
           --organism "${amrfinder_organism}" \
@@ -76,7 +77,8 @@ task amrfinderplus_nuc {
           ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
           ~{'--threads ' + cpu} \
           ~{'--coverage_min ' + min_percent_coverage} \
-          ~{'--ident_min ' + min_percent_identity}
+          ~{'--ident_min ' + min_percent_identity} \
+          --mutation_all ~{samplename}_amrfinder_all_mutations.tsv
       fi
     else
       echo "Either the organism (~{organism}) is not recognized by NCBI-AMRFinderPlus or the user did not supply an organism as input."
@@ -92,7 +94,8 @@ task amrfinderplus_nuc {
           ~{'--gff ' + gff} \
           ~{'--annotation_format '+ annotation_format} \
           ~{'--coverage_min ' + min_percent_coverage} \
-          ~{'--ident_min ' + min_percent_identity}
+          ~{'--ident_min ' + min_percent_identity} \
+          --mutation_all ~{samplename}_amrfinder_all_mutations.tsv
       else
         amrfinder --plus \
           ~{'--name ' + samplename} \
@@ -100,7 +103,8 @@ task amrfinderplus_nuc {
           ~{'-o ' + samplename + '_amrfinder_all.tsv'} \
           ~{'--threads ' + cpu} \
           ~{'--coverage_min ' + min_percent_coverage} \
-          ~{'--ident_min ' + min_percent_identity}
+          ~{'--ident_min ' + min_percent_identity} \
+          --mutation_all ~{samplename}_amrfinder_all_mutations.tsv
       fi
     fi
 
@@ -205,6 +209,7 @@ task amrfinderplus_nuc {
     File amrfinderplus_amr_report = "~{samplename}_amrfinder_amr.tsv"
     File amrfinderplus_stress_report = "~{samplename}_amrfinder_stress.tsv"
     File amrfinderplus_virulence_report = "~{samplename}_amrfinder_virulence.tsv"
+    File amrfinderplus_mutations_report = "~{samplename}_amrfinder_all_mutations.tsv"
     String amrfinderplus_amr_core_genes = read_string("AMR_CORE_GENES")
     String amrfinderplus_amr_plus_genes = read_string("AMR_PLUS_GENES")
     String amrfinderplus_stress_genes = read_string("STRESS_GENES")
