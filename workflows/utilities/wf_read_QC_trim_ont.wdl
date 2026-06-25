@@ -128,7 +128,7 @@ workflow read_QC_trim_ont {
   }
   if ( "~{workflow_series}" == "theiaprok" || "~{workflow_series}" == "theiaeuk" ) {
     # rasusa for random downsampling
-    if ( defined(genome_length) ) {
+    if ( defined(genome_length) ||  defined(rasusa_fraction_of_reads) || defined(rasusa_num_bases) || defined(rasusa_num_reads) ) {
       call rasusa_task.rasusa {
         input:
           read1 = read1,
