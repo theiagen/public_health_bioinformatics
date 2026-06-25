@@ -11,7 +11,7 @@ task freyja_plot_task {
     Int plot_day_window=14
     String freyja_plot_name
     Int mincov
-    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1"
+    String docker = "us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3"
     Int disk_size = 100
     Int memory = 2
     Int cpu = 1

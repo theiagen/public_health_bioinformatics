@@ -30,6 +30,7 @@ workflow freyja_fastq {
     File? freyja_lineage_metadata
     Int? depth_cutoff
     Boolean ont = false
+    Boolean read_qc_trim = true
     String kraken2_target_organism = "Severe acute respiratory syndrome coronavirus 2"
     # qc check parameters
     File? qc_check_table
@@ -44,7 +45,7 @@ workflow freyja_fastq {
     String freyja_long_format_docker = "us-docker.pkg.dev/general-theiagen/theiagen/freyja-microreact:1.0.2"
     File sc2_gene_bed = "gs://theiagen-public-resources-rp/reference_data/viral/sars-cov-2/sc2_gene_locations.bed"
   }
-  if (defined(read2)) {
+  if (defined(read2) && read_qc_trim) {
     call read_qc_pe.read_QC_trim_pe as read_QC_trim_pe {
       input:
         samplename = samplename,
@@ -56,7 +57,7 @@ workflow freyja_fastq {
         call_kraken = true
     }
   }
-  if (! defined(read2) && ! ont) {
+  if (! defined(read2) && ! ont && read_qc_trim) {
     call read_qc_se.read_QC_trim_se as read_QC_trim_se {
       input:
         samplename = samplename,
@@ -78,16 +79,18 @@ workflow freyja_fastq {
         samplename = samplename,
         est_genome_length = get_fasta_genome_size.fasta_length
     }
-    call read_qc_ont.read_QC_trim_ont {
-      input:
-        samplename = samplename,
-        read1 = read1,
-        workflow_series = "theiacov",
-        target_organism = kraken2_target_organism
+    if (read_qc_trim){
+      call read_qc_ont.read_QC_trim_ont {
+        input:
+          samplename = samplename,
+          read1 = read1,
+          workflow_series = "theiacov",
+          target_organism = kraken2_target_organism
+      }
     }
     call nanoplot_task.nanoplot as nanoplot_clean {
       input:
-        read1 = read_QC_trim_ont.read1_clean,
+        read1 = select_first([read_QC_trim_ont.read1_clean, read1]),
         samplename = samplename,
         est_genome_length = get_fasta_genome_size.fasta_length
       }
@@ -95,7 +98,7 @@ workflow freyja_fastq {
       input:
         samplename = samplename,
         reference = reference_genome,
-        query1 = read_QC_trim_ont.read1_clean,
+        query1 = select_first([read_QC_trim_ont.read1_clean,read1]),
         output_sam = true,
         mode = "map-ont",
         long_read_flags = false
@@ -111,8 +114,8 @@ workflow freyja_fastq {
       input:
         samplename = samplename,
         reference_genome = reference_genome,
-        read1 = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean]),
-        read2 = read_QC_trim_pe.read2_clean
+        read1 = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean, read1]),
+        read2 = select_first([read_QC_trim_pe.read2_clean, read2])
     }
   }
   # Called when the primer_bed file is present, primers are trimmed and trimmed bam is passed to freyja
@@ -198,29 +201,29 @@ workflow freyja_fastq {
     String freyja_fastq_wf_version = version_capture.phb_version
     String freyja_fastq_wf_analysis_date = version_capture.date
     # Read QC - fastq_scan outputs - Illumina PE and SE
-    String fastq_scan_num_reads_raw1 = select_first([read_QC_trim_pe.fastq_scan_raw1, read_QC_trim_se.fastq_scan_raw1, ""])
+    String? fastq_scan_num_reads_raw1 = select_first([read_QC_trim_pe.fastq_scan_raw1, read_QC_trim_se.fastq_scan_raw1, ""])
     Int? fastq_scan_num_reads_raw2 = read_QC_trim_pe.fastq_scan_raw2
     String? fastq_scan_num_reads_raw_pairs = read_QC_trim_pe.fastq_scan_raw_pairs
-    String fastq_scan_raw1_json = select_first([read_QC_trim_pe.fastq_scan_raw1_json, read_QC_trim_se.fastq_scan_raw1_json, ""])
+    String? fastq_scan_raw1_json = select_first([read_QC_trim_pe.fastq_scan_raw1_json, read_QC_trim_se.fastq_scan_raw1_json, ""])
     File? fastq_scan_raw2_json = read_QC_trim_pe.fastq_scan_raw2_json
-    String fastq_scan_version = select_first([read_QC_trim_pe.fastq_scan_version, read_QC_trim_se.fastq_scan_version, ""])
-    String fastq_scan_num_reads_clean1 = select_first([read_QC_trim_pe.fastq_scan_clean1, read_QC_trim_se.fastq_scan_clean1, ""])
+    String? fastq_scan_version = select_first([read_QC_trim_pe.fastq_scan_version, read_QC_trim_se.fastq_scan_version, ""])
+    String? fastq_scan_num_reads_clean1 = select_first([read_QC_trim_pe.fastq_scan_clean1, read_QC_trim_se.fastq_scan_clean1, ""])
     Int? fastq_scan_num_reads_clean2 = read_QC_trim_pe.fastq_scan_clean2
     String? fastq_scan_num_reads_clean_pairs = read_QC_trim_pe.fastq_scan_clean_pairs
-    String fastq_scan_clean1_json = select_first([read_QC_trim_pe.fastq_scan_clean1_json, read_QC_trim_se.fastq_scan_clean1_json, ""])
+    String? fastq_scan_clean1_json = select_first([read_QC_trim_pe.fastq_scan_clean1_json, read_QC_trim_se.fastq_scan_clean1_json, ""])
     File? fastq_scan_clean2_json = read_QC_trim_pe.fastq_scan_clean2_json
     # Read QC - fastqc outputs - Illumina PE and SE
-    String fastqc_num_reads_raw1 = select_first([read_QC_trim_pe.fastqc_raw1, read_QC_trim_se.fastqc_raw1, ""])
+    String? fastqc_num_reads_raw1 = select_first([read_QC_trim_pe.fastqc_raw1, read_QC_trim_se.fastqc_raw1, ""])
     Int? fastqc_num_reads_raw2 = read_QC_trim_pe.fastqc_raw2
-    String fastqc_num_reads_raw_pairs = select_first([read_QC_trim_pe.fastqc_raw_pairs, ""])
-    String fastqc_raw1_html = select_first([read_QC_trim_pe.fastqc_raw1_html, read_QC_trim_se.fastqc_raw1_html, ""])
+    String? fastqc_num_reads_raw_pairs = select_first([read_QC_trim_pe.fastqc_raw_pairs, ""])
+    String? fastqc_raw1_html = select_first([read_QC_trim_pe.fastqc_raw1_html, read_QC_trim_se.fastqc_raw1_html, ""])
     File? fastqc_raw2_html = read_QC_trim_pe.fastqc_raw2_html
-    String fastqc_version = select_first([read_QC_trim_pe.fastqc_version, read_QC_trim_se.fastqc_version, ""])
-    String fastqc_docker = select_first([read_QC_trim_pe.fastqc_docker, read_QC_trim_se.fastqc_docker, ""])
-    String fastqc_num_reads_clean1 = select_first([read_QC_trim_pe.fastqc_clean1, read_QC_trim_se.fastqc_clean1, ""])
+    String? fastqc_version = select_first([read_QC_trim_pe.fastqc_version, read_QC_trim_se.fastqc_version, ""])
+    String? fastqc_docker = select_first([read_QC_trim_pe.fastqc_docker, read_QC_trim_se.fastqc_docker, ""])
+    String? fastqc_num_reads_clean1 = select_first([read_QC_trim_pe.fastqc_clean1, read_QC_trim_se.fastqc_clean1, ""])
     Int? fastqc_num_reads_clean2 = read_QC_trim_pe.fastqc_clean2
     String? fastqc_num_reads_clean_pairs = read_QC_trim_pe.fastqc_clean_pairs
-    String fastqc_clean1_html = select_first([read_QC_trim_pe.fastqc_clean1_html, read_QC_trim_se.fastqc_clean1_html, ""])
+    String? fastqc_clean1_html = select_first([read_QC_trim_pe.fastqc_clean1_html, read_QC_trim_se.fastqc_clean1_html, ""])
     File? fastqc_clean2_html = read_QC_trim_pe.fastqc_clean2_html
     # Read QC - nanoplot outputs - ONT
     File? nanoplot_html_raw = nanoplot_raw.nanoplot_html
@@ -244,31 +247,31 @@ workflow freyja_fastq {
     Float? nanoplot_r1_median_q_clean = nanoplot_clean.median_q
     Float? nanoplot_r1_est_coverage_clean = nanoplot_clean.est_coverage
     # Read QC - trimmomatic outputs - Illumina PE and SE
-    String trimmomatic_version = select_first([read_QC_trim_pe.trimmomatic_version, read_QC_trim_se.trimmomatic_version, ""])
-    String trimmomatic_docker = select_first([read_QC_trim_pe.trimmomatic_docker, read_QC_trim_se.trimmomatic_docker, ""])
+    String? trimmomatic_version = select_first([read_QC_trim_pe.trimmomatic_version, read_QC_trim_se.trimmomatic_version, ""])
+    String? trimmomatic_docker = select_first([read_QC_trim_pe.trimmomatic_docker, read_QC_trim_se.trimmomatic_docker, ""])
     # Read QC - fastp outputs  - Illumina PE and SE
-    String fastp_version = select_first([read_QC_trim_pe.fastp_version, read_QC_trim_se.fastp_version, ""])
-    String fastp_docker = select_first([read_QC_trim_pe.fastp_docker, read_QC_trim_se.fastp_docker, ""])
-    String fastp_html_report = select_first([read_QC_trim_pe.fastp_html_report, read_QC_trim_se.fastp_html_report, ""])
-    String fastp_json_report = select_first([read_QC_trim_pe.fastp_json_report, read_QC_trim_se.fastp_json_report, ""])
+    String? fastp_version = select_first([read_QC_trim_pe.fastp_version, read_QC_trim_se.fastp_version, ""])
+    String? fastp_docker = select_first([read_QC_trim_pe.fastp_docker, read_QC_trim_se.fastp_docker, ""])
+    String? fastp_html_report = select_first([read_QC_trim_pe.fastp_html_report, read_QC_trim_se.fastp_html_report, ""])
+    String? fastp_json_report = select_first([read_QC_trim_pe.fastp_json_report, read_QC_trim_se.fastp_json_report, ""])
     # Read QC - nanoq - ONT
     String? nanoq_version = read_QC_trim_ont.nanoq_version
     # Read QC - bbduk outputs - Illumina PE and SE
-    String bbduk_docker = select_first([read_QC_trim_pe.bbduk_docker, read_QC_trim_se.bbduk_docker, ""])
+    String? bbduk_docker = select_first([read_QC_trim_pe.bbduk_docker, read_QC_trim_se.bbduk_docker, ""])
     # Read QC - clean reads - all
-    File read1_clean = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean, read_QC_trim_ont.read1_clean])
-    File? read2_clean = read_QC_trim_pe.read2_clean
+    File read1_clean = select_first([read_QC_trim_pe.read1_clean, read_QC_trim_se.read1_clean, read_QC_trim_ont.read1_clean, read1, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
+    File? read2_clean = select_first([read_QC_trim_pe.read2_clean, read2, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
     # Read QC - dehosting outputs - all
-    File read1_dehosted = select_first([read_QC_trim_pe.read1_dehosted, read_QC_trim_se.read1_dehosted, read_QC_trim_ont.read1_dehosted])
-    File? read2_dehosted = read_QC_trim_pe.read2_dehosted
+    File read1_dehosted = select_first([read_QC_trim_pe.read1_dehosted, read_QC_trim_se.read1_dehosted, read_QC_trim_ont.read1_dehosted, read1, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
+    File? read2_dehosted = select_first([read_QC_trim_pe.read2_dehosted, read2, "gs://theiagen-public-resources-rp/empty_files/empty.fastq"])
     # Read QC - kraken outputs - all
-    String kraken_version = select_first([read_QC_trim_pe.kraken2_version, read_QC_trim_se.kraken2_version, ""])
-    String kraken_human = select_first([read_QC_trim_pe.kraken2_human, read_QC_trim_se.kraken2_human, ""])
-    String kraken_report = select_first([read_QC_trim_pe.kraken2_report, read_QC_trim_se.kraken2_report, ""])
-    String bracken_report = select_first([read_QC_trim_pe.bracken_report, read_QC_trim_se.bracken_report, ""])
-    String kraken_human_dehosted = select_first([read_QC_trim_pe.kraken2_human_dehosted, read_QC_trim_se.kraken2_human_dehosted, ""])
-    String kraken_report_dehosted = select_first([read_QC_trim_pe.kraken2_report_dehosted, read_QC_trim_se.kraken2_report_dehosted, ""])
-    String bracken_report_dehosted = select_first([read_QC_trim_pe.bracken_report_dehosted, read_QC_trim_se.bracken_report_dehosted, ""])
+    String? kraken_version = select_first([read_QC_trim_pe.kraken2_version, read_QC_trim_se.kraken2_version, ""])
+    String? kraken_human = select_first([read_QC_trim_pe.kraken2_human, read_QC_trim_se.kraken2_human, ""])
+    String? kraken_report = select_first([read_QC_trim_pe.kraken2_report, read_QC_trim_se.kraken2_report, ""])
+    String? bracken_report = select_first([read_QC_trim_pe.bracken_report, read_QC_trim_se.bracken_report, ""])
+    String? kraken_human_dehosted = select_first([read_QC_trim_pe.kraken2_human_dehosted, read_QC_trim_se.kraken2_human_dehosted, ""])
+    String? kraken_report_dehosted = select_first([read_QC_trim_pe.kraken2_report_dehosted, read_QC_trim_se.kraken2_report_dehosted, ""])
+    String? bracken_report_dehosted = select_first([read_QC_trim_pe.bracken_report_dehosted, read_QC_trim_se.bracken_report_dehosted, ""])
     # Read QC - metabuli outputs - ONT
     String? metabuli_version = read_QC_trim_ont.metabuli_version
     Float? metabuli_human = read_QC_trim_ont.metabuli_percent_human

@@ -917,7 +917,7 @@ freyja	bootstrap	Boolean	Perform bootstrapping	False	Optional	Freyja_FASTQ	gener
 freyja	confirmed_only	Boolean	Include only confirmed SARS-CoV-2 lineages	False	Optional	Freyja_FASTQ	general	
 freyja	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
 freyja	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-freyja	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1	Optional	Freyja_FASTQ	docker	
+freyja	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3	Optional	Freyja_FASTQ	docker	
 freyja	eps	Float	The minimum lineage abundance cut-off value	0.001	Optional	Freyja_FASTQ	general	
 freyja	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 freyja	number_bootstraps	Int	The number of bootstraps to perform (only used if bootstrap = true)	100	Optional	Freyja_FASTQ	general	
@@ -926,7 +926,7 @@ freyja_dashboard	dashboard_intro_text	File	A file containing the text to be cont
 freyja_dashboard_task	config	File	(found in the optional section, but is required) A yaml file that applies various configurations to the dashboard, such as grouping lineages together, applying colorings, etc. See also <https://github.com/andersen-lab/Freyja/blob/main/freyja/data/plot_config.yml>.		Optional, Required	Freyja_Dashboard	general	True
 freyja_dashboard_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_Dashboard	runtime	
 freyja_dashboard_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_Dashboard	runtime	
-freyja_dashboard_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1	Optional	Freyja_Dashboard	docker	
+freyja_dashboard_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3	Optional	Freyja_Dashboard	docker	
 freyja_dashboard_task	headerColor	String	A hex color code to change the color of the header		Optional	Freyja_Dashboard	general	
 freyja_dashboard_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Freyja_Dashboard	runtime	
 freyja_dashboard_task	mincov	Float	The minimum genome coverage used as a cut-off of data to include in the dashboard. Default is set to 60 by the freyja command-line tool (not a WDL task default, per se)		Optional	Freyja_Dashboard	general	
@@ -970,7 +970,7 @@ freyja_plot	latitude	Array[Float]	An array containing the latitudes for the samp
 freyja_plot	longitude	Array[Float]	An array containing the longitudes for the sample collection sites		Optional	Freyja_Plot	general	
 freyja_plot_task	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Freyja_Plot	runtime	
 freyja_plot_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_Plot	runtime	
-freyja_plot_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.1	Optional	Freyja_Plot	docker	
+freyja_plot_task	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/freyja:2.0.3	Optional	Freyja_Plot	docker	
 freyja_plot_task	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Freyja_Plot	runtime	
 freyja_plot_task	plot_day_window	Int	The width of the rolling average window; only used if plot_time_interval is "D"	14	Optional	Freyja_Plot	general	
 freyja_plot_task	plot_lineages	Boolean	If true, will plot a lineage-specific breakdown	False	Optional	Freyja_Plot	general	
