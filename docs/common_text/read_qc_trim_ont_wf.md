@@ -14,9 +14,9 @@ fragment: true
 <!-- endif -->
   
 <!-- if: theiaprok -->
-    !!! dna "A note on estimated genome length"
+    !!! dna "A note on estimated genome length and Rasusa"
 
-        By default, the estimated genome length is set to 5 Mb, which is around 0.7 Mb higher than the average bacterial genome length, according to [the information of thousands of NCBI bacterial assemblies collated here](https://github.com/CDCgov/phoenix/blob/717d19c19338373fc0f89eba30757fe5cfb3e18a/assets/databases/NCBI_Assembly_stats_20240124.txt). This estimate can be overwritten by the user and is used by `Rasusa`.
+        Genome length is no longer set to 5 mb by default. This results in `Rasusa` being optional unless one of the following inputs are provided; `genome_length`, `rasusa_num_bases`, `rasusa_fraction_of_reads`, or `rasusa_num_reads`.
 
 {{ include_md("common_text/rasusa_task.md", indent=4, condition="ont") }}
 
@@ -24,6 +24,10 @@ fragment: true
 
 {{ include_md("common_text/metabuli_task.md", indent=4, condition="theiaprok") }}
 <!-- endif -->
+
+!!! dna "Nanoplot and genome length"
+
+    If `genome_length` is not provided Nanoplot will utilize the Quast assembly length to calculate the estimated coverage. 
 
 {{ include_md("common_text/nanoplot_task.md", indent=4, condition="ont") }}
 
