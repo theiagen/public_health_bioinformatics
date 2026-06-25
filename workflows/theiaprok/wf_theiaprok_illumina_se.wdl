@@ -333,13 +333,13 @@ workflow theiaprok_illumina_se {
                 "agrvate_version": merlin_magic.agrvate_version,
                 "allele_calling_accessory_count": merlin_magic.allele_calling_accessory_count,
                 "allele_calling_accessory_percentage": merlin_magic.allele_calling_accessory_percentage,
-                "allele_calling_cgmlst_json": merlin_magic.allele_calling_cgmlst_json,
                 "allele_calling_core_count": merlin_magic.allele_calling_core_count,
                 "allele_calling_core_percentage": merlin_magic.allele_calling_core_percentage,
-                "allele_calling_detailed_json": merlin_magic.allele_calling_detailed_json,
                 "allele_calling_docker": merlin_magic.allele_calling_docker,
+                "allele_calling_result": merlin_magic.allele_calling_result,
+                "allele_calling_scheme": merlin_magic.allele_calling_scheme,
+                "allele_calling_standard_json": merlin_magic.allele_calling_standard_json,
                 "allele_calling_total_loci_count": merlin_magic.allele_calling_total_loci_count,
-                "allele_calling_wgmlst_json": merlin_magic.allele_calling_wgmlst_json,
                 "amr_search_all_resistances": merlin_magic.amr_search_all_resistances,
                 "amr_search_associated_resistances": merlin_magic.amr_search_associated_resistances,
                 "amr_search_csv": merlin_magic.amr_results_csv,
@@ -1221,9 +1221,7 @@ workflow theiaprok_illumina_se {
     # allele caller outputs
     String? allele_calling_scheme = merlin_magic.allele_calling_scheme
     String? allele_calling_result = merlin_magic.allele_calling_result
-    File? allele_calling_wgmlst_json = merlin_magic.allele_calling_wgmlst_json
-    File? allele_calling_cgmlst_json = merlin_magic.allele_calling_cgmlst_json
-    File? allele_calling_detailed_json = merlin_magic.allele_calling_detailed_json
+    File? allele_calling_standard_json = merlin_magic.allele_calling_standard_json
     Int? allele_calling_core_count = merlin_magic.allele_calling_core_count
     Float? allele_calling_core_percentage = merlin_magic.allele_calling_core_percentage
     Int? allele_calling_accessory_count = merlin_magic.allele_calling_accessory_count

@@ -88,9 +88,8 @@ task allele_calling {
   output {
     String allele_calling_scheme = scheme
     String allele_calling_result = read_string("ALLELE_CALLING_RESULT")
-    File allele_calling_wgmlst_json = "calls_standard.json.gz"
-    File allele_calling_cgmlst_json = "calls_core_standard.csv.gz"
-    File allele_calling_detailed_json = "allele_calls.json.gz"
+    File allele_calling_standard_json = "calls_standard.json.gz"
+    File allele_calling_bam = "allele_calls.bam"
     # QC metrics
     Int allele_calling_core_count = read_int("CORECOUNT")
     Float allele_calling_core_percentage = read_float("COREPERCENTAGE")

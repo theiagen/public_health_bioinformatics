@@ -711,9 +711,7 @@ workflow merlin_magic {
     # Allele variant_calling_params
     String? allele_calling_scheme = allele_calling.allele_calling_scheme
     String? allele_calling_result = allele_calling.allele_calling_result
-    File? allele_calling_wgmlst_json = allele_calling.allele_calling_wgmlst_json
-    File? allele_calling_cgmlst_json = allele_calling.allele_calling_cgmlst_json
-    File? allele_calling_detailed_json = allele_calling.allele_calling_detailed_json
+    File? allele_calling_standard_json = allele_calling.allele_calling_standard_json
     Int? allele_calling_core_count = allele_calling.allele_calling_core_count
     Float? allele_calling_core_percentage = allele_calling.allele_calling_core_percentage
     Int? allele_calling_accessory_count = allele_calling.allele_calling_accessory_count
