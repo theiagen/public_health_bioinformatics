@@ -595,8 +595,8 @@ core_gene_snp_workflow	sample_names	Array[String]	Array of sample_ids from the d
 core_iqtree	alrt	Int	Number of replicates to use for the SH-like approximate likelihood ratio test (Minimum recommended= 1000). Follows IQ-TREE "-alrt" option	1000	Optional	Core_Gene_SNP	general	
 core_iqtree	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Core_Gene_SNP	runtime	
 core_iqtree	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime	
-core_iqtree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7	Optional	Core_Gene_SNP	docker	
-core_iqtree	iqtree2_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
+core_iqtree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.4.0	Optional	Core_Gene_SNP	docker	
+core_iqtree	iqtree2_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad		Optional	Core_Gene_SNP	general	
 core_iqtree	iqtree2_opts	String	Additional options for IQ-TREE, see <https://iqtree.github.io/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
 core_iqtree	iqtree2_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 core_iqtree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Core_Gene_SNP	runtime	
@@ -1022,6 +1022,7 @@ gubbins	tree_args	String	Quoted string of further arguments passed to tree build
 gubbins	tree_builder	String	Application to use for Gubbins tree building algorithm: "raxml", "raxmlng", "iqtree", "iqtree-fast", "fasttree", "hybrid" (fasttree is used for the first tree, and raxml is used for later iterations), "rapidnj"	raxml	Optional	Snippy_Tree	general	
 host_decontaminate	complete_only	Boolean	Only download genomes labeled "complete"	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	expected_sequences	String	Internal component, do not modify 		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
+host_decontaminate	expected_sequences_json	File	Internal component, do not modify		Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	is_accession	Boolean	Inputted "host" is an accession	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	is_genome	Boolean	Inputted "host" is an assembly FASTA	False	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
 host_decontaminate	max_unexpected_seq	Int	Internal component, do not modify	0	Optional	TheiaViral_Illumina_PE, TheiaViral_ONT, TheiaViral_Panel	general	
@@ -1269,7 +1270,7 @@ medea_magic	cryptoneo_reference_gbff	File	GenBank flat file depicting the refere
 medea_magic	gene_coverage_feature_qualifier	String	GenBank flat file feature qualifier to parse for query region names	product	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	gene_coverage_feature_type	String	GenBank flat file feature type to parse for query region coordinates	CDS	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	gene_coverage_min_depth	Int	Minimum read depth to consider a region covered for breadth of coverage calculations	10	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
-medea_magic	gene_coverage_min_quality	Int	Minimum base quality to consider a region covered for breadth of coverage calculations	0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general
+medea_magic	gene_coverage_min_quality	Int	Minimum base quality to consider a region covered for breadth of coverage calculations	0	Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	query_genes	String	Comma-separated list of query genes to parse GBFF/BED file for region coordinates		Optional	TheiaEuk_Illumina_PE, TheiaEuk_ONT	general	
 medea_magic	read1	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
 medea_magic	read2	File	Internal component, do not modify		Optional	TheiaEuk_ONT	general	
@@ -1730,8 +1731,8 @@ organism_parameters	vadr_skip_length	Int	Minimum assembly length (unambiguous) t
 pan_iqtree	alrt	Int	Number of replicates to use for the SH-like approximate likelihood ratio test (Minimum recommended= 1000). Follows IQ-TREE "-alrt" option	1000	Optional	Core_Gene_SNP	general	
 pan_iqtree	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Core_Gene_SNP	runtime	
 pan_iqtree	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime	
-pan_iqtree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7	Optional	Core_Gene_SNP	docker	
-pan_iqtree	iqtree2_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
+pan_iqtree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.4.0	Optional	Core_Gene_SNP	docker	
+pan_iqtree	iqtree2_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad		Optional	Core_Gene_SNP	general	
 pan_iqtree	iqtree2_opts	String	Additional options for IQ-TREE, see <https://iqtree.github.io/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
 pan_iqtree	iqtree2_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 pan_iqtree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Core_Gene_SNP	runtime	
@@ -1904,7 +1905,8 @@ read_QC_trim	call_kraken	Boolean	True/False variable that determines if the Krak
 read_QC_trim	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim	call_midas	Boolean	Internal component, do not modify	False	Optional	TheiaEuk_Illumina_PE	general	
 read_QC_trim	call_rasusa	Boolean	True/False variable that determines if the RASUSA task should be called.	False	Optional	TheiaMeta_Illumina_PE	general	
-read_QC_trim	expected_contaminants	String	Comma-delimited list of expected contaminant sequences to trigger status check. These must match "read_decontaminate_fasta" sequence headers		Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
+read_QC_trim	expected_contaminants	String	Comma-delimited list of expected contaminant sequences to trigger status check. Alternatively, this can be a key into the expected_contaminants_json mapping. These must match "read_decontaminate_fasta" sequence headers		Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general
+read_QC_trim	expected_contaminants_json	File	A JSON map relating contaminant sequence sets to their contaminant sequence headers, e.g. "{SET_NAME: [seq1, seq2, seqn]}"		Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general
 read_QC_trim	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	TheiaCoV_Illumina_PE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE	general	
 read_QC_trim	fastp_args	String	Additional arguments to use with fastp	-g -5 20 -3 20	Optional	TheiaCoV_Illumina_SE, TheiaProk_Illumina_SE	general	
 read_QC_trim	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
@@ -2013,6 +2015,7 @@ read_QC_trim_pe	call_bracken	Boolean	Call Bracken kraken2 report refinement	True
 read_QC_trim_pe	call_midas	Boolean	True/False variable that determines if the MIDAS task should be called.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	call_rasusa	Boolean	True/False variable that determines if the RASUSA task should be called.	False	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	expected_contaminants	String	Internal component, do not modify		Optional	Freyja_FASTQ	general	
+read_QC_trim_pe	expected_contaminants_json	File	Internal component, do not modify		Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	fastp_args	String	Additional arguments to use with fastp	--detect_adapter_for_pe -g -5 20 -3 20	Optional	Freyja_FASTQ	general	
 read_QC_trim_pe	kraken_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_pe	kraken_db	File	A kraken2 database to use with the kraken2 optional task. The file must be a .tar.gz kraken2 database.	gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz	Optional	Freyja_FASTQ	database	

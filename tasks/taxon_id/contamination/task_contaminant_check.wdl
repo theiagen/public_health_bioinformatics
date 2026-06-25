@@ -2,7 +2,8 @@ version 1.0
 
 task contaminant_check {
   input {
-    String expected_sequences # comma-delimited list of expected sequences
+    String expected_sequences # comma-delimited list of expected sequences, OR a key into expected_sequences_json when that is provided
+    File? expected_sequences_json # optional JSON mapping of {"<NAME>": ["<SEQ1>", "<SEQ2>", ...]}; when provided, expected_sequences is used as the key to look up the list of expected sequences
     File coverage_by_sequence_json # task_mapping_stats output: coverage_by_sequence_json
     File depth_by_sequence_json # task_mapping_stats output: depth_by_sequence_json
     File reads_by_sequence_json # task_mapping_stats output: reads_by_sequence_json
@@ -20,8 +21,47 @@ task contaminant_check {
     Int disk_size = 100
   }
   command <<<
+  set -euo pipefail
+
+  # Resolve the list of expected contaminant sequences.
+  # If expected_sequences_json is provided, treat expected_sequences as a key into
+  # that JSON mapping (key -> list of sequence names) and resolve it to a
+  # comma-delimited list. Otherwise, use expected_sequences verbatim.
+  python3 <<CODE
+  import json
+
+  expected = """~{expected_sequences}"""
+  json_path = """~{default="" expected_sequences_json}"""
+
+  if json_path:
+    with open(json_path) as infile:
+      mapping = {k.strip().lower(): v for k, v in json.load(infile).items()}
+    # enable comma-delimited input of expected contaminant sets
+    expected_list = expected.replace(" ", "").split(",")
+    resolved_list = []
+    for exp in expected_list:
+      exp_clean = exp.strip().lower()
+      if exp_clean not in mapping:
+        raise KeyError(f"Key '{exp} ({exp_clean})'' not found in expected_sequences_json mapping")
+      value = mapping[exp_clean]
+      # if it's a json list, append as a comma-delimited string
+      if isinstance(value, list):
+        temp_resolved = ",".join(str(sequence) for sequence in value)
+      # otherwise coerce into a compatible comma-delimited string by removing spaces
+      else:
+        temp_resolved = str(value).replace(" ", "")
+      resolved_list.append(temp_resolved)
+    # join all resolved sequences together
+    resolved = ",".join(resolved_list)
+  else:
+    resolved = expected
+
+  with open("EXPECTED_SEQUENCES", "w") as outfile:
+    outfile.write(resolved)
+  CODE
+
   python3 /usr/bin/contaminant_check.py \
-    --expected_sequences ~{expected_sequences} \
+    --expected_sequences "$(cat EXPECTED_SEQUENCES)" \
     --coverage_by_sequence_json ~{coverage_by_sequence_json} \
     --depth_by_sequence_json ~{depth_by_sequence_json} \
     --reads_by_sequence_json ~{reads_by_sequence_json} \
