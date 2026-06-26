@@ -3,7 +3,7 @@ title: Task Fragment `emmtypingtool`
 fragment: true
 ---
 ??? task "`emm-typing-tool`: _Streptococcus pyogenes_ Sequence Typing ==_for Illumina_PE only_=="
-    The _Streptococcus pyogenes_ M protein (encoded by _emm_) is used for sequencing typing and disease surveillence as it is a major virulence factor. There are over 275 _emm_ types.
+    The _Streptococcus pyogenes_ M protein (encoded by _emm_) is used for sequence typing and disease surveillance as it is a major virulence factor. There are over 275 _emm_ types.
 
     emm-typing-tool maps the reads to a CDC-curated _emm_ type database using bowtie2 to identify any _emm_ genes. Alleles with 100% coverage and over 90% identity are selected, and the allele with the highest percent identity is generally reported (see the [decision tree](https://github.com/ukhsa-collaboration/emm-typing-tool/blob/master/decision_algorithm.png) for the nuances).
 

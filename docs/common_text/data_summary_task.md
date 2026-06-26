@@ -3,9 +3,9 @@ title: Task Fragment `summarize_data`
 fragment: true
 ---
 ??? task "`summarize_data`: Presence/Absence Data Summary  (optional)"
-<!-- if: snippy -->  
+<!-- if: snippy -->
     ##### Data Summary (optional)
-<!-- endif -->  
+<!-- endif -->
     !!! tip "Command-line incompatible"
         This task is not compatible with command-line use, even with modifications. It is engineered to run on Terra. To run this workflow on the command line, you must leave the `data_summary_*` and `sample_names` optional variables blank to prevent this task from running.
 
@@ -24,8 +24,8 @@ fragment: true
 
         Data summary produced using the `phandango_coloring` option, visualized alongside Newick tree at <http://jameshadfield.github.io/phandango/#/main>
 
-        !!! caption "Example phandango_coloring output"
-            ![Phandango coloring example](../../assets/figures/example_phandango_coloring.png)
+        !!! caption "Phandango: Phylogenetic Tree with AMR Gene Heatmap"
+            ![Phandango visualization showing a phylogenetic tree of 10 samples alongside a heatmap of antimicrobial resistance gene presence, with purple blocks indicating gene detection for aph(3')-IIa, blaCTX-M-65, blaOXA-193, and tet(O).](../../assets/figures/example_phandango_coloring.png)
 
     !!! techdetails "Data summary technical details"
 

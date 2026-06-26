@@ -11,14 +11,14 @@ PhyloCompare will generate a cophylogeny plot that visualizes the differences in
 It is recommended to root a phylogeny and PhyloCompare can root upon an outgroup tip or the midpoint.
 
 ??? dna "Tree rooting"
-    If no rooting options are supplied PhyloCompare will determine if the trees are rooted or unrooted. 
+    If no rooting options are supplied PhyloCompare will determine if the trees are rooted or unrooted.
 
-    `outgroup` and `midpoint` are incompatible options and the `outgroups` input will take precedence.
+    `outgroup` and `midpoint` are incompatible options and the `outgroup` input will take precedence.
 
 ??? warning "`phylovalidate_flag` errors"
     The `phylovalidate_flag` flags information that may confound distance calculation; e.g. "polytomy" can confound tree comparison if there are non-0 length branches descending from a polytomy, which may lead to erroneous distances if tips are reported in different order. In other words, phylogenies with the same topology may be reported with a non-0 distance if the tips within a polytomy are rearranged within the tree file.
 
-    If flags are accompanied by a ">0" `phylocompare_distance`, then this indicates no distance was calculated; e.g. the "edge_count_mismatch" flag is raised when the number of edges differs between trees and a distance could not be calculated.  
+    If flags are accompanied by a ">0" `phylocompare_distance`, then this indicates no distance was calculated; e.g. the "edge_count_mismatch" flag is raised when the number of edges differs between trees and a distance could not be calculated.
 
 ### Inputs
 

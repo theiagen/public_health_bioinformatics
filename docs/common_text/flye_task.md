@@ -3,7 +3,7 @@ title: Task Fragment `flye`
 fragment: true
 ---
 ??? task "`Flye`: _De novo_ Assembly"
-    Flye is a _de novo_ assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerates the error rate of ONT data.
+    Flye is a _de novo_ assembler for long read data using repeat graphs. Compared to de Bruijn graphs, which require exact k-mer matches, repeat graphs can use approximate matches which better tolerate the error rate of ONT data.
 
 <!-- if: theiaviral -->
     It can be enabled by setting the `call_raven` parameter to `false`. Flye is used as a fallback option if Raven fails during execution (see the Raven task for more details).
@@ -21,7 +21,7 @@ fragment: true
         | `--pacbio-corr` | PacBio reads corrected with other methods (<3% error) |
         | `--pacbio-hifi` | PacBio HiFi reads (<1% error) |
     
-        Refer to the Flye documentation for detailed guidance on selecting the appropriate `flye_read_type` based on your sequencing data and additional optional paramaters.
+        Refer to the Flye documentation for detailed guidance on selecting the appropriate `flye_read_type` based on your sequencing data and additional optional parameters.
 
     ???+ warning "Non-deterministic output(s)"
         This task may yield non-deterministic outputs.

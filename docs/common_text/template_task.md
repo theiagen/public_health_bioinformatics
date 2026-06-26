@@ -8,7 +8,7 @@ fragment: true
 
     _Be sure any links within this file are written relative to the destination file. For example, if this file is in `docs/common_text/` but is being included in `docs/workflows/standalone/` and you want to link to a file in `docs/assets/figures/`, **the link should be written as `[link_name](../../assets/figures/link_destination.md)`**._
 
-    _If your task is used slighly differently in different contexts, you can provide conditionals inside of comments._
+    _If your task is used slightly differently in different contexts, you can provide conditionals inside of comments._
 
     _To include any conditional information in the destination page, add the `condition="condition_name"` parameter to the `include_md` macro call on the destination page. Please note that the `if: <condition_name>` and `endif` syntax within the markdown comment (`<!-- -->`) is required for a conditional statement to work._ 
 

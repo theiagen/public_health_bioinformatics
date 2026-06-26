@@ -39,6 +39,6 @@ You can learn more about the kSNP3 workflow, including how to visualize the outp
 
 ## References
 
->Shea N Gardner, Tom Slezak, Barry G. Hall, kSNP3.0: SNP detection and phylogenetic analysis of genomes without genome alignment or reference genome, _Bioinformatics_, Volume 31, Issue 17, 1 September 2015, Pages 2877–2878, <https://doi.org/10.1093/bioinformatics/btv271>
+>Shea N Gardner, Tom Slezak, Barry G. Hall, kSNP3.0: SNP detection and phylogenetic analysis of genomes without genome alignment or reference genome, _Bioinformatics_, Volume 31, Issue 17, 1 September 2015, Pages 2877–2878, <https://doi.org/10.1093/bioinformatics/btv271>
 <!-- -->
 <https://github.com/tseemann/snp-dists>

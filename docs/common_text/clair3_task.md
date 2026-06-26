@@ -7,6 +7,7 @@ fragment: true
 
 <!-- if: theiaviral-->
     The variant calling pipeline employs specialized neural networks trained on ONT data to accurately identify:
+
     - Single nucleotide variants (SNVs)
     - Small insertions and deletions (indels)
     - Structural variants
@@ -35,7 +36,7 @@ fragment: true
     !!! techdetails "Clair3 Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_clair3.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_clair3_variants.wdl) |
+        | Task | [task_clair3_variants.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/gene_typing/variant_detection/task_clair3_variants.wdl) |
         | Software Source Code | [Clair3 on GitHub](https://github.com/HKU-BAL/Clair3) |
         | Software Documentation | [Clair3 Documentation](https://github.com/HKU-BAL/Clair3?tab=readme-ov-file#usage) |
         | Original Publication(s) | [Symphonizing pileup and full-alignment for deep learning-based long-read variant calling](https://doi.org/10.1101/2021.12.29.474431) |

@@ -5,7 +5,7 @@ fragment: true
 <!-- if: freyja -->
 ??? task "`iVar trim`: Primer Trimming"
     The optional input, `keep_noprimer_reads`, does not have to be modified.
-<!-- enfif -->
+<!-- endif -->
 <!-- if: theiacov -->
 ??? task "`iVar trim`: Primer Trimming (optional)"
     To deactivate this task, set `trim_primers` to `false`.

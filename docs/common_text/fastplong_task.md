@@ -7,12 +7,12 @@ fragment: true
 
     Adapter trimming is enabled by default and can be disabled by setting `fastplong_trim_adapters` to "false". Automatic adapter detection is enabled by default, though a FASTA, a string of start, or a string of end adapters can be specified with `fastplong_adapter_fasta`, `fastplong_start_adapter`, or `fastplong_end_adapter` inputs respectively.
 
-    Additional arguments can be passed using the `fastplong_args` optional parameter. Please reference the [fastp GitHub](https://github.com/OpenGene/fastplong) for a comprehensive list of arguments.
+    Additional arguments can be passed using the `fastplong_args` optional parameter. Please reference the [fastplong GitHub](https://github.com/OpenGene/fastplong) for a comprehensive list of arguments.
 
     !!! techdetails "fastplong Technical Details"
         |  | Links |
         | --- | --- |
-        | Task | [task_fastp.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastplong.wdl) |
+        | Task | [task_fastplong.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/read_filtering/task_fastplong.wdl) |
         | Software Source Code | [fastplong on GitHub](https://github.com/OpenGene/fastplong) |
         | Software Documentation | [fastplong on GitHub](https://github.com/OpenGene/fastplong) |
         | Original Publication(s) | [Ultrafast one-pass FASTQ data preprocessing, quality control, and deduplication using fastp](https://doi.org/10.1002/imt2.107) |

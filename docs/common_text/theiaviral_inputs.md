@@ -11,7 +11,7 @@ fragment: true
 ??? dna "`extract_unclassified` optional input parameter"
     By default, the `extract_unclassified` parameter is set to `true`, which indicates that reads that are **not** classified by Kraken2 (Illumina) or Metabuli (ONT) **will** be included with reads classified as the input `taxon`.
 
-    These classification software most often do not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. Host decontamination occurs in TheiaViral using NCBI HRRT, read classification to the human genome, and/or via mapping reads to the inputted `host`. Contaminant viral reads are mostly excluded because they will be often be classified against the default RefSeq classification databases. 
+    These classification software most often do not comprehensively classify reads using the default RefSeq databases, so extracting unclassified reads is desirable when host and contaminant reads have been sufficiently decontaminated. Host decontamination occurs in TheiaViral using NCBI HRRT, read classification to the human genome, and/or via mapping reads to the inputted `host`. Contaminant viral reads are mostly excluded because they will often be classified against the default RefSeq classification databases. 
     
     Consider setting `extract_unclassified` to false if *de novo* assembly or Skani reference selection is failing.
 

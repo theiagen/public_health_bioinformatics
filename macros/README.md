@@ -122,7 +122,7 @@ ENDIF_RE = re.compile(r'<!--\s*endif\s*-->') # conditional end
 1. Make sure to install Zensical with `pip install zensical`.
 2. Use `render_tsv_table()` to render TSV tables dynamically, avoiding copy-paste duplication. Add the TSV table to `docs/assets/tables/`. If you are adding inputs and outputs, make sure to add them to the `all_inputs.tsv` and `all_outputs.tsv` files, respectively. If you have an input and output that already exists for a different workflow, add your new workflow to the comma-separated list in the `Workflow` column of the TSV file. If you are adding a new input or output that does not exist in the other workflow, add it to the bottom of the appropriate TSV file. The `render_tsv_table()` function will automatically filter the table based on the workflow you specify in the `filter_values` parameter.
 3. Use `include_md()` to reuse content fragments, adjusting them per workflow with `condition` and `replacements`.
-     - add new content fragments to `common_text/` using the template fragment (`template_task.md`) as a starting point. This template also contains a header that is needed for optimal search functionality.    
+     - add new content fragments to `common_text/` using the template fragment (`template_task.md`) as a starting point. This template also contains a header that is needed for optimal search functionality.
           - include the header which contains a "title" and the tag `fragment: true` at the top of the file.
      - make sure any **assets** in the included Markdown file are prefixed with `../../` to ensure they are correctly resolved relative to the final output location. This is important for images, files, and other assets to ensure they are correctly displayed in the final documentation. You may recieve a "WARNING" but this is expected and can be ignored if the assets are correctly displayed in the rendered documentation.
 
@@ -131,13 +131,11 @@ ENDIF_RE = re.compile(r'<!--\s*endif\s*-->') # conditional end
 
 ## For Developers
 
-This section is for devs extending the macros or debugging their behavior. The code is garbage because I used Claude to write it, but here you go:
+This section is for devs extending the macros or debugging their behavior.
 
 ### Macro Registration
 
 Macros are defined in a `define_env(env)` function. This is the entry point that `zensical` calls to register the Python logic.
-
-I also have a cache function but I have no idea how that works and honestly this entire macro is basically vibe coded no shame here 
 
 ### Macro Internals
 

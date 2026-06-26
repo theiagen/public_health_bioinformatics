@@ -12,17 +12,17 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
 === "TheiaEuk_Illumina_PE"
 
-    !!! caption "TheiaEuk Illumina PE Workflow Diagram"
-        ![TheiaEuk Illumina PE Workflow Diagram](../../assets/figures/TheiaEuk_Illumina_PE.png)
+    !!! caption "TheiaEuk Illumina PE Workflow Overview"
+        ![Workflow diagram for TheiaEuk Illumina PE, showing FASTQ inputs processed through read screening, quality control, and de novo assembly, leading to taxonomic assignment, AMR characterization, and organism-specific gene query and variant calling outputs.](../../assets/figures/TheiaEuk_Illumina_PE.png)
 
 === "TheiaEuk_ONT"
 
-    !!! caption "TheiaEuk ONT Workflow Diagram"
-        ![TheiaEuk ONT Workflow Diagram](../../assets/figures/TheiaEuk_ONT.png)
+    !!! caption "TheiaEuk ONT Workflow Overview"
+        ![TheiaEuk ONT workflow taking ONT FASTQ reads through quality control, adapter trimming, de novo assembly, and taxonomic assignment, with species-specific outputs for fungal pathogens including gene queries and variant calling.](../../assets/figures/TheiaEuk_ONT.png)
 
 !!! warning "Before running TheiaEuk"
 
-    For some taxa, TheiaEuk_Illumina_PE relies on [Snippy](#organism-specific-characterization) to perform variant calling on the cleaned read dataset and then queries the resulting file for specific mutations that are known to confim antifugal resistance (see [Organism-specific characterization](#organism-specific-characterization) section). This behaviour has been replicated in TheiaEuk_ONT but the variant calling is performed directly on the resulting assemblies. Therefore, the read support reported is, at the moment, non-reliable. Future improvements will include improvements on this module.
+    For some taxa, TheiaEuk_Illumina_PE relies on [Snippy](#organism-specific-characterization) to perform variant calling on the cleaned read dataset and then queries the resulting file for specific mutations that are known to confirm antifungal resistance (see [Organism-specific characterization](#organism-specific-characterization) section). This behavior has been replicated in TheiaEuk_ONT but the variant calling is performed directly on the resulting assemblies. Therefore, the read support reported is, at the moment, non-reliable. Future improvements will include improvements on this module.
 
 ### Inputs
 
@@ -31,7 +31,7 @@ All input reads are processed through "core tasks" in each workflow. The core ta
 
         The TheiaEuk_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time.
 
-        By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
+        By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
     === "TheiaEuk_ONT"
 
@@ -61,7 +61,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 !!! dna ""
     These tasks are performed regardless of organism. They include tasks that are performed regardless of and specific for the input data type. They perform read trimming and assembly appropriate to the input data type.
 
-{{ include_md("common_text/versioning_task.md", condition="theiaprok") }}
+{{ include_md("common_text/versioning_task.md") }}
 
 !!! caption ""
     === "TheiaEuk_Illumina_PE"
@@ -101,7 +101,7 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 {{ include_md("common_text/gene_coverage_task.md", indent=4, condition="theiaeuk") }}
 
 ??? toggle "_Candidozyma auris_ (also known as _Candida auris_)"
-    Three tools can be deployed when _Candidozyma auris_/_Candida auris_ is  identified.
+    Three tools can be deployed when _Candidozyma auris_/_Candida auris_ is identified.
 
 {{ include_md("common_text/cauris_cladetyper.md", indent=4) }}
 {{ include_md("common_text/amr_search_task.md", indent=4, condition="theiaeuk") }}
@@ -113,12 +113,12 @@ All input reads are processed through "core tasks" in the TheiaEuk workflows. Th
 {{ include_md("common_text/snippy_variants_task.md", indent=4, condition="calbicans") }}
 
 ??? toggle "_Aspergillus fumigatus_"
-    When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed.
+    When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed.
 
 {{ include_md("common_text/snippy_variants_task.md", indent=4, condition="afumigatus") }}
 
 ??? toggle "_Cryptococcus neoformans_"
-    When this species is detected by the taxon ID tool an antifungal resistance detection task is deployed.
+    When this species is detected by the taxon ID tool, an antifungal resistance detection task is deployed.
 
 {{ include_md("common_text/snippy_variants_task.md", indent=4, condition="cneoformans") }}
 

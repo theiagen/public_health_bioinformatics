@@ -5,7 +5,7 @@ fragment: true
 ??? task "`BWA`: Read Alignment to the Assembly"
     
 <!-- if: theiameta -->
-    ==If a reference is _not_ provided==, BWA (Burrow-Wheeler Aligner) is used to align the cleanned reads to the Pilon-polished assembly_fasta.
+    ==If a reference is _not_ provided==, BWA (Burrow-Wheeler Aligner) is used to align the cleaned reads to the Pilon-polished assembly_fasta.
 <!-- endif -->
 <!-- if: digger -->
     BWA (Burrow-Wheeler Aligner) is used to align the cleaned read files to a generated assembly file. The resulting BAM file is directly passed to the Pilon task to polish the assembly for errors.

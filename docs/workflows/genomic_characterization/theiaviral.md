@@ -6,7 +6,7 @@
 
 ## TheiaViral Workflows
 
-**The TheiaViral workflows are for the assembly, quality assessment, and characterization of viral genomes from diverse data sources, including metagenomic samples.** There are currently three TheiaViral workflows designed to accomodate different kinds of input data:
+**The TheiaViral workflows are for the assembly, quality assessment, and characterization of viral genomes from diverse data sources, including metagenomic samples.** There are currently three TheiaViral workflows designed to accommodate different kinds of input data:
 
 - Illumina paired-end sequencing (**TheiaViral_Illumina_PE**)
 - Oxford Nanopore Technology (ONT) sequencing (**TheiaViral_ONT**)
@@ -30,7 +30,7 @@
         ---
 
         * For amplicon-derived viral sequencing methods
-        * Supports a limited number of [pathogens](../../workflows/genomic_characterization/theiacov.md/#supported-organisms)
+        * Supports a limited number of [pathogens](../../workflows/genomic_characterization/theiacov.md#supported-organisms)
         * Uses manually curated, static reference genomes
         * Uses IRMA assembler for influenza
 
@@ -54,20 +54,20 @@
 
 === "TheiaViral_Illumina_PE"
 
-    !!! caption "TheiaViral_Illumina_PE Workflow Diagram"
+    !!! caption "TheiaViral_Illumina_PE Workflow Overview"
 
-        ![TheiaViral_Illumina_PE Workflow Diagram](../../assets/figures/TheiaViral_Illumina_PE.png)
+        ![TheiaViral workflow for Illumina paired-end data, taking TAXON and FASTQ inputs through QC, host removal, read classification, assembly, reference mapping, and variant calling to produce a consensus FASTA output.](../../assets/figures/TheiaViral_Illumina_PE.png)
 
 === "TheiaViral_ONT"
 
-    !!! caption "TheiaViral_ONT Workflow Diagram"
+    !!! caption "TheiaViral_ONT Workflow Overview"
 
-        ![TheiaViral_ONT Workflow Diagram](../../assets/figures/TheiaViral_ONT.png)
+        ![TheiaViral ONT workflow taking TAXON and FASTQ inputs through read QC, host removal, classification, assembly, and reference mapping to produce a consensus FASTA file, with a sample termination path at the read screen step.](../../assets/figures/TheiaViral_ONT.png)
 
 === "TheiaViral_Panel"
-    !!! caption "TheiaViral_Panel Workflow Diagram"
+    !!! caption "TheiaViral_Panel Workflow Overview"
 
-        ![TheiaViral_Panel Workflow Diagram](../../assets/figures/TheiaViral_Panel_PHB.png)
+        ![Workflow diagram for TheiaViral_Panel, showing FASTQ input processed through read QC, taxonomic classification with Kraken2, de novo assembly, and viral characterization to produce sample-level outputs.](../../assets/figures/TheiaViral_Panel_PHB.png)
 
 ### Inputs
 
@@ -84,10 +84,10 @@
 
         The TheiaViral_ONT workflow inputs base-called Oxford Nanopore Technology (ONT) read data. Read file extensions should be `.fastq` or `.fq`, and can optionally include the `.gz` compression extension. Theiagen recommends compressing files with [gzip](https://www.gnu.org/software/gzip/) to minimize data upload time and storage costs.
 
-        It is recommended to trim adapter sequencings via Dorado basecalling prior to running TheiaViral_ONT, though Porechop can optionally be called to trim adapters within the workflow.
+        It is recommended to trim adapter sequences via Dorado basecalling prior to running TheiaViral_ONT, though Porechop can optionally be called to trim adapters within the workflow.
 
         **The ONT sequencing kit and base-calling approach can produce substantial variability in the amount and quality of read data. Genome assemblies produced by the TheiaViral_ONT workflow must be quality assessed before reporting results. We recommend using the [Dorado_Basecalling_PHB](../standalone/dorado_basecalling.md) workflow if applicable.**
-        
+
 {{ include_md("common_text/theiaviral_inputs.md", indent=8) }}
 
     === "TheiaViral_Panel"
@@ -96,15 +96,15 @@
 
         TheiaViral_Panel is tailored toward high-throughput analysis of multiple viral lineages within a single sample. It is recommended to use TheiaViral_Illumina_PE for targeted analysis of a single viral lineage, even if reads are derived from a panel assay.
 
-        For RSV characterization, it is recommended to use TheiaCoV or TheiaViral Illumina PE. RSV-A and RSV-B-specific modules are not available in TheiaViral Panel, due to limitations with distinguishing RSV-A and B during read extraction. Subtypes may be inferred from the best retrieved skani reference depending on the resolution of the NCBI metadata corresponding to that accession. 
+        For RSV characterization, it is recommended to use TheiaCoV or TheiaViral Illumina PE. RSV-A and RSV-B-specific modules are not available in TheiaViral Panel, due to limitations with distinguishing RSV-A and B during read extraction. Subtypes may be inferred from the best retrieved skani reference depending on the resolution of the NCBI metadata corresponding to that accession.
 
         ???+ dna_blue "`taxon_ids` optional input parameter"
-            **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly, but is optional in Terra.** 
-            
+            **The `taxon_ids` parameter is required for TheiaViral_Panel to run correctly, but is optional in Terra.**
+
             By default, TheiaViral_Panel uses a list of **172** taxon IDs derived from a list of targeted viruses and subtypes in the [Viral Surveillance Panel version 2 (VSP v2) produced by Illumina](https://www.illumina.com/products/by-type/sequencing-kits/library-prep-kits/viral-surveillance-panel.html), though this workflow is not specific to that assay. This list can be modified to include or exclude any taxon IDs of interest; however, the taxon IDs _must_ be present in the Kraken2 database used for read classification. Changing this parameter will change what organisms are extracted for assembly and characterization. Keep in mind that these IDs must be available in the passed Kraken DB. The list of default taxon IDs can be found below:
 
             /// html | div[class="searchable-table"]
-            {{ render_tsv_table("docs/assets/tables/2025-11-10_default-taxon-ids.tsv", indent=12 )}} 
+            {{ render_tsv_table("docs/assets/tables/2025-11-10_default-taxon-ids.tsv", indent=12 )}}
             ///
 
         ??? dna "`output_taxon_table` optional input parameter"
@@ -113,23 +113,23 @@
             The `output_taxon_table` parameter is an **optional** input file with a set default that specifies which taxon are output to what taxon table in Terra.
 
             **Formatting the `output_taxon_table` file**
-            
+
             The `output_taxon_table` file must be uploaded to a Google storage bucket that is accessible by Terra and should be in **tab-delimited** format and include a header. Briefly, the viral taxon name should be listed in the leftmost column with the name of the data table to copy samples of that taxon to in the rightmost column. This will result in any taxonomy classification identified as "influenza" being added to a Terra table named "influenza_panel_specimen". The default table is shown below. For best results, edit your taxon table in a text editor such as Notepad.
- 
+
             /// html | div[class="searchable-table"]
-            {{ render_tsv_table("docs/assets/tables/theiaviral_panel_taxon_table_20251111.tsv", indent=12 )}} 
+            {{ render_tsv_table("docs/assets/tables/theiaviral_panel_taxon_table_20251111.tsv", indent=12 )}}
             ///
-        
+
         ??? dna "`kraken_db` optional input parameter"
-            To ensure reliable read extraction, taxon ID inputs must be concordant with the contents of the Kraken database. When making changes to this parameter keep in mind the relationship between these two inputs. The default database can be accessed [here](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz).  
+            To ensure reliable read extraction, taxon ID inputs must be concordant with the contents of the Kraken database. When making changes to this parameter keep in mind the relationship between these two inputs. The default database can be [downloaded directly (`k2_viral-refseq_human-GRCh38_20260220.tar.gz`)](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz).
 
         ??? dna "`extract_unclassified` optional input parameter"
-            By default, `extract_unclassifed` is set to `false`, which indicates that reads that are **not** classified by Kraken2 **will NOT** be included with reads classified as the input `taxon`. 
-                        
+            By default, `extract_unclassifed` is set to `false`, which indicates that reads that are **not** classified by Kraken2 **will NOT** be included with reads classified as the input `taxon`.
+
             If the extracted read data is lacking and assemblies are not generated, consider setting this parameter to `true` to increase the available read count to make assembly generation more probable. Please note this will introduce reads that are not aligned with the identified `taxon` and can introduce significant noise and misclassifications.
 
         ??? dna "`min_read_count` optional input parameter"
-            By default, `min_read_count` is set to 1000. This value is the number of reads that are required to pass the binning threshold to proceed onto assembly and characterization. 
+            By default, `min_read_count` is set to 1000. This value is the number of reads that are required to pass the binning threshold to proceed onto assembly and characterization.
 
 === "TheiaViral_Illumina_PE"
     /// html | div[class="searchable-table"]
@@ -188,8 +188,8 @@
 
     ??? toggle "*De novo* Assembly and Reference Selection"
         ???+ warning "These tasks are only performed if no reference genome is provided"
-            In this workflow, *de novo* assembly is primarily used to facilitate the selection of a closely related reference genome, though high quality *de novo* assemblies can be used for downstream analysis. If the user provides an input `reference_fasta`, the following assembly generation, assembly evaluation, and reference selections tasks will be **skipped**:
-           
+            In this workflow, *de novo* assembly is primarily used to facilitate the selection of a closely related reference genome, though high quality *de novo* assemblies can be used for downstream analysis. If the user provides an input `reference_fasta`, the following assembly generation, assembly evaluation, and reference selection tasks will be **skipped**:
+
             - `spades`
             - `megahit`
             - `checkv_denovo`
@@ -257,7 +257,7 @@
     ??? toggle "*De novo* Assembly and Reference Selection"
 
         ???+ warning "These tasks are only performed if no reference genome is provided"
-            In this workflow, *de novo* assembly is used solely to facilitate the selection of a closely related reference genome. If the user provides an input `reference_fasta`, the following assembly generation, assembly evaluation, and reference selections tasks will be **skipped**:
+            In this workflow, *de novo* assembly is used solely to facilitate the selection of a closely related reference genome. If the user provides an input `reference_fasta`, the following assembly generation, assembly evaluation, and reference selection tasks will be **skipped**:
 
             - `raven`
             - `flye`
@@ -326,7 +326,7 @@
 
     ??? toggle "Taxonomic Identification"
 
-{{ include_md("common_text/ete4_identify_task.md", condition="theiaviral_panel", indent=8) }} 
+{{ include_md("common_text/ete4_identify_task.md", condition="theiaviral_panel", indent=8) }}
 
 {{ include_md("common_text/estimate_genome_length_task.md", indent=8) }}
 
@@ -415,8 +415,8 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
 
 ??? question "What are the differences between the *de novo* and consensus assemblies?"
 
-    *De novo* genomes are generated from scratch without a reference to guide read assembly, while consensus genomes are generated by mapping reads to a reference and replacing reference positions with identified variants (structural and nucleotide). *De novo* assemblies are thus not biased by requiring reads map to the reference, though they may be more fragmented. Consensus assembly can generate more robust assemblies from lower coverage samples if the reference genome is sufficient quality and sufficiently closely related to the inputted sequence, though consensus assembly may not perform well in instances of significant structural variation. TheiaViral uses *de novo* assemblies as an intermediate to acquire the best reference genome for consensus assembly.     
-    
+    *De novo* genomes are generated from scratch without a reference to guide read assembly, while consensus genomes are generated by mapping reads to a reference and replacing reference positions with identified variants (structural and nucleotide). *De novo* assemblies are thus not biased by requiring reads map to the reference, though they may be more fragmented. Consensus assembly can generate more robust assemblies from lower coverage samples if the reference genome is sufficient quality and sufficiently closely related to the inputted sequence, though consensus assembly may not perform well in instances of significant structural variation. TheiaViral uses *de novo* assemblies as an intermediate to acquire the best reference genome for consensus assembly.
+
     **We generally recommend TheiaViral users focus on the consensus assembly as the desired assembly output**. While we chose the best *de novo* assemblers for TheiaViral based on internal benchmarking, the consensus assembly will often be higher quality than the *de novo* assembly. However, the *de novo* assembly can approach or exceed consensus quality if the read inputs largely comprise one virus, have high depth of coverage, and/or are derived from a virus with high potential for recombination. TheiaViral does conduct assembly contiguity and viral completeness quality control for *de novo* assemblies, so *de novo* assembly that meets quality control standards can certainly be used for downstream analysis.
 
 ??? question "How is *de novo* assembly quality evaluated?"
@@ -424,7 +424,7 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
     *De novo* assembly quality evaluation focuses on the completeness and contiguity of the genome. While a ground truth genome does not truly exist for quality comparison, reference genome selection can help contextualize quality if the reference is sufficiently similar to the *de novo* assembly. TheiaViral uses QUAST to acquire basic contiguity statistics and CheckV to assess viral genome completeness and contamination. Additionally, the reference selection software, Skani, can provide a quantitative comparison between the *de novo* assembly and the best reference genome.
 
     **Completeness and contamination**
-    <br> 
+    <br>
 
     - `checkv_denovo_summary`: The summary file reports CheckV results on a contig-by-contig basis. Ideally completeness is 100% for a single contig, or 100% for all segments. If there are multiple extraneous contigs in the assembly, one is ideally 100%. The same principles apply to contamination, though it ideally is 0%.
     - `checkv_denovo_total_genes`: The total genes is ideally the same number of genes as expected from the inputted viral taxon. Sometimes CheckV can fail to recover all the genes from a complete genome, so other statistics should be weighted more heavily in quality evaluation.
@@ -443,8 +443,8 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
     <br>
 
     - `skani_top_ani`: The percent average nucleotide identity (ANI) for the top Skani hit is ideally 100% if the sequenced virus is highly similar to a reference genome. However, if the virus is divergent, ANI is not a good indication of assembly quality.
-    - `skani_top_query_coverage`: The percent query coverage for the top Skani hit is ideally 100% if the sequenced virus has not undergone significant recombination/structural variation. 
-    - `skani_top_score`: The score for the top Skani hit is the ANI x Query (*de novo* assembly) coverage and is ideally 100% if the sequenced virus is not substantially divergent from the reference dataset.
+    - `skani_top_query_coverage`: The percent query coverage for the top Skani hit is ideally 100% if the sequenced virus has not undergone significant recombination/structural variation.
+    - `skani_top_score`: The score for the top Skani hit is the ANI multiplied by query coverage (of the _de novo_ assembly) and is ideally 100% if the sequenced virus is not substantially divergent from the reference dataset.
 
 ??? question "How is consensus assembly quality evaluated?"
 
@@ -452,7 +452,7 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
 
     **Completeness and contamination**
     <br>
-    
+
     - `checkv_consensus_weighted_completeness`: The weighted completeness is ideally 100%.
 
     **Consensus variant calls**
@@ -471,16 +471,15 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
     - `read_mapping_meanmapq`: The average mean mapping alignment quality is ideally as high as possible.
     - `read_mapping_percentage_mapped_reads`: The percent of mapped reads is ideally 100% of the reads classified as the lineage of interest. Some unclassified reads may also map, which may indicate they were erroneously unclassified. Alternatively, these reads could have been erroneously mapped.
 
-??? question "Why did the workflow complete without generating a consensus?" 
+??? question "Why did the workflow complete without generating a consensus?"
 
     TheiaViral is designed to "soft fail" when specific steps do not succeed due to input data quality. This means the workflow will be reported as successful, with an output that delineates the step that failed. If the workflow fails, please look for the following status outputs in this order (sorted by timing of failure, latest first), and note if the status is populated with something other than "PASS":
 
-    - `skani_status`: If `skani_top_accession` is populated with "N/A", this indicates that Skani did not identify a sufficiently similar reference genome. The Skani database comprises a broad array of NCBI viral genomes, so a failure here likely indicates poor read quality because viral contigs are not found in the *de novo* assembly or are too small. It may be useful to BLAST whatever contigs do exist in the *de novo* to determine if there is contamination that can be removed via the `host` input parameter. Additionally, review CheckV *de novo* outputs to assess if viral contigs were retrieved. Finally, consider keeping `extract_unclassified` to "true", using a higher `read_extraction_rank` if it will not introduce contaminant viruses, and invoking a `host` input to remove host reads if host contigs are present.
+    - `skani_status`: If `skani_top_accession` is populated with "N/A", this indicates that Skani did not identify a sufficiently similar reference genome. The Skani database comprises a broad array of NCBI viral genomes, so a failure here likely indicates poor read quality because viral contigs are not found in the *de novo* assembly or are too small. It may be useful to BLAST whatever contigs do exist in the *de novo* to determine if there is contamination that can be removed via the `host` input parameter. Additionally, review CheckV *de novo* outputs to assess if viral contigs were retrieved. Finally, consider setting `extract_unclassified` to "true", using a higher `read_extraction_rank` if it will not introduce contaminant viruses, and invoking a `host` input to remove host reads if host contigs are present.
     - `checkv_status`: CheckV failed, often due to not detecting sufficient viral sequence in the *de novo* assembly. The source of this error can be confirmed by submitting the *de novo* assembly to [NCBI BLAST](https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome) and checking if the expected virus is present in the results. If the expected host is retrieved from BLAST, consider removing host reads by mapping to a host genome via `host_decontaminate` module.
     - `megahit_status` / `flye_status`: The fallback assembler did not successfully complete. The fallback assemblers are permissive, so failure here likely indicates poor read quality. Review read QC to check read quality, particularly following read classification. If read classification is dispensing with a significant number of reads, consider `extract_unclassified`, `read_extraction_rank`, and `host` input adjustment. Otherwise, sequencing quality may be poor.
     - `metaviralspades_status` / `raven_denovo_status`: The default assembler did not successfully complete or extract viral contigs (MetaviralSPAdes). On their own, these statuses do not correspond directly to workflow failure because fallback *de novo* assemblers are implemented for both TheiaViral workflows.
-    - `kraken2_extraction_status`: No reads could be extracted, likely because no reads correspond to the inputted taxon. Check the `kraken2_report`
-    - `metabuli_status`: Reads could not be classified or extracted, likely because no reads correspond to the inputted taxon. Check the `metabuli_report` 
+    - `kraken2_extraction_status`: No reads could be extracted, likely because no reads correspond to the inputted taxon. Check the `kraken2_report`.
     - `read_screen_clean`: Reads did not pass the imposed thresholds. Either the reads are poor quality or the thresholds are too stringent, in which case the thresholds can be relaxed or `skip_screen` can be set to "true".
     - `dehost_wf_download_status`: A host genome could not be retrieved for decontamination. See the `host` input explanation for more information and review the `download_accession`/`download_taxonomy` task output logs for advanced error parsing.
     - `ete4_status`: A refined taxon ID could not be retrieved for the inputted `taxon`. Ensure the taxon name is a valid, complete name/Taxon ID listed in [NCBI's Taxonomy Browser](https://www.ncbi.nlm.nih.gov/datasets/taxonomy/tree/) and the `read_extraction_rank` is a taxonomic rank above the inputted `taxon`.
@@ -490,6 +489,6 @@ The TheiaViral workflows activate taxa-specific sub-workflows after the identifi
     - ONT workflows may fail at Metabuli if no reads are classified as the `taxon`. Check the Metabuli `classification.tsv` or `krona` report for the read extraction taxon ID to determine if any reads were classified. This error will report `out of memory (OOM)`, which can be a bonafide memory issue that is resolved by increasing memory, but in some instances, memory increase will not resolve this. Try increasing memory to 128 GB.
     - Illumina workflows may fail at CheckV (*de novo*) with `Error: 80 hmmsearch tasks failed. Program should be rerun` if no viral contigs were identified in the *de novo* assembly.
 
-### Acknowlegments
+### Acknowledgments
 
-We would like to thank Danny Park at the Broad institute and Jared Johnson at the Washington State Department of Public Health for correspondence during the development of TheiaViral. TheiaViral was built referencing [viral-assemble](https://github.com/broadinstitute/viral-assemble/), [VAPER](https://github.com/DOH-JDJ0303/vaper), and [Artic](https://github.com/artic-network/fieldbioinformatics).
+We would like to thank Danny Park at the Broad Institute and Jared Johnson at the Washington State Department of Public Health for correspondence during the development of TheiaViral. TheiaViral was built referencing [viral-assemble](https://github.com/broadinstitute/viral-assemble/), [VAPER](https://github.com/DOH-JDJ0303/vaper), and [Artic](https://github.com/artic-network/fieldbioinformatics).

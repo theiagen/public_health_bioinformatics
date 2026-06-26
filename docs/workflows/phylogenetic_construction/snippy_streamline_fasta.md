@@ -8,9 +8,9 @@
 
 This workflow is a FASTA-compatible version of [Snippy_Streamline](./snippy_streamline.md). Please see the [Snippy_Streamline](./snippy_streamline.md) documentation for more information regarding the workflow tasks.
 
-!!! caption "Snippy_Streamline_FASTA_PHB Workflow Diagram"
+!!! caption "Snippy_Streamline_FASTA_PHB Workflow Overview"
     <div style="text-align: center;">
-    ![Snippy_Streamline_FASTA_PHB Workflow Diagram](../../assets/figures/Snippy_Streamline_FASTA.png){: onload="this.width/=2;this.onload=null;" }
+    ![Workflow diagram for Snippy_Streamline_FASTA: genome assemblies (FASTA) and an optional reference genome feed into Snippy_Variants and Snippy_Tree modules, producing recombination predictions, a SNP-distance matrix, a final alignment, and a phylogenetic tree.](../../assets/figures/Snippy_Streamline_FASTA.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a reference-based phylogenetic tree and associated SNP-distance matrix. The workflow can be run in multiple ways.
@@ -22,7 +22,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
     1. provided by the user by filling the `reference_genome_file` input variable
     2. the identified `centroid` genome by setting `use_centroid_as_reference` to true
     3. automatically selected using the `centroid` task and `reference_seeker` task to find a close reference genome to your dataset by leaving the `reference_genome_file` and `use_centroid_as_reference` fields blank
-    
+
 
 !!! dna "Phylogenetic Tree Construction Options"
     There are several options that can be used to customize the phylogenetic tree, including:
@@ -50,19 +50,19 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
 !!! tip "Guidance for optional inputs"
 
     Several core and optional tasks can be used to generate the Snippy phylogenetic tree, making it highly flexible and suited to a wide range of datasets. You will need to decide which tasks to use depending on the genomes that you are analyzing. Some guidelines for the optional tasks to use for different genome types are provided below.
-    
+
     ??? toggle "Default settings (suitable for most bacteria)"
-    
+
         The default settings are as follows and are suitable for generating phylogenies for most bacteria
-        
+
         - `core_genome` = true (creates core genome phylogeny)
         - `use_gubbins` = true (recombination masked)
         - nucleotide substitution model will be defined by IQ-TREE 2's Model Finder
-    
+
     ??? toggle "Phylogenies of _Mycobacterium tuberculosis_ complex"
-    
+
         Phylogenies of MTBC are typically constructed with the following options:
-        
+
         - Using the H37Rv reference genome
             - `reference_genome_file` = `"gs://theiagen-public-resources-rp/reference_data/bacterial/mycobacterium/MTB-NC_000962.3.fasta"`
         - Masking repetitive regions of the genome (e.g. PE/PPE genes) that are often misaligned
@@ -106,7 +106,7 @@ The `Snippy_Streamline_FASTA` workflow is an all-in-one approach to generating a
     ==**Please see the full documentation for [Snippy_Tree](./snippy_tree.md) for more information.**==
 
 !!! tip "Gubbins Nucleotide Substitution Model"
-    In Snippy Streamline, the nucleotide substitution model used by gubbins will always be **GTR+GAMMA**.
+    In Snippy_Streamline_FASTA, the nucleotide substitution model used by gubbins will always be **GTR+GAMMA**.
 
 {{ include_md("common_text/snippy_core_task.md", condition="snippy_streamline") }}
 {{ include_md("common_text/gubbins_task.md", condition="snippy_streamline") }}

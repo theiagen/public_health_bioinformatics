@@ -10,7 +10,7 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
 
 !!! caption "Clair3_Variants Workflow Diagram"
     <div style="text-align: center;">
-    ![Clair3_Variants Workflow Diagram](../../assets/figures/Clair3_Variants.png){: onload="this.width/=2;this.onload=null;" }
+    ![Workflow diagram showing FASTQ reads and a reference genome as inputs, processed through alignment with minimap2 and variant calling with Clair3, producing VCF results as output.](../../assets/figures/Clair3_Variants.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 !!! tip "Example Use Cases"
@@ -34,7 +34,7 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
 | `ont_guppy5` | Various | Legacy (For Guppy5 data) |
 
 !!! hint ""
-    The latest models for ONT are downloaded from the [nanoporetech/rerio github](https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models). Please let us know if there is a model not included you would like to see added. 
+    The latest models for ONT are downloaded from the [nanoporetech/rerio github](https://github.com/nanoporetech/rerio?tab=readme-ov-file#clair3-models). Please let us know if there is a model not included you would like to see added.
 
 ### Inputs
 
@@ -62,19 +62,19 @@ The `Clair3_Variants` workflow processes Oxford Nanopore Technologies (ONT) sequ
     !!! techdetails "samtools Technical Details"
         | | Links |
         |---|---|
-        | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
+        | Task | [task_parse_mapping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
         | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
         | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |
 
 ??? task "`samtools faidx`: Reference Genome Indexing"
 
-    `samtools faidx` creates necessary index files for the reference. This indexing step is    essential for enabling efficient random access to the reference sequence during variant calling.
+    `samtools faidx` creates necessary index files for the reference. This indexing step is essential for enabling efficient random access to the reference sequence during variant calling.
 
     !!! techdetails "samtools Technical Details"
         | | Links |
         |---|---|
-        | Task | [task_samtools.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
+        | Task | [task_parse_mapping.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/utilities/data_handling/task_parse_mapping.wdl) |
         | Software Source Code | [samtools on GitHub](https://github.com/samtools/samtools) |
         | Software Documentation | [samtools](https://www.htslib.org/doc/samtools.html) |
         | Original Publication(s) | [The Sequence Alignment/Map format and SAMtools](https://doi.org/10.1093/bioinformatics/btp352)<br>[Twelve Years of SAMtools and BCFtools](https://doi.org/10.1093/gigascience/giab008) |

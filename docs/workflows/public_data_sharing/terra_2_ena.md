@@ -8,11 +8,11 @@
 
 This workflow utilizes the [ENA Webin-CLI Bulk Submission Tool](https://github.com/enasequence/ena-bulk-webincli) to bulk submit read data to the ENA.
 
-## ENA Submissions
+### ENA Submissions
 
 Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/submit/webin/login) a Webin submission account. ENA allows submissions via the Webin-CLI program which validates your submissions entirely before you complete them. Submissions made through Webin are represented using a number of different [metadata objects](https://ena-docs.readthedocs.io/en/latest/submit/general-guide/metadata.html). Submissions to ENA result in [accession numbers](https://ena-docs.readthedocs.io/en/latest/submit/general-guide/accessions.html) and these accessions can be used to identify each unique part of your submission. See the [ENA submission documentation](https://ena-docs.readthedocs.io/en/latest/submit/general-guide.html) for more information.
 
-## Pre-requisites
+### Prerequisites
 
 !!! warning "Before running the `Terra_2_ENA` workflow, make sure you have registered a study and are using the correct study accession number"
 
@@ -20,9 +20,9 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
 - Additionally, before submitting most types of data to ENA, samples must be [registered](https://ena-docs.readthedocs.io/en/latest/submit/samples.html#). To register samples, ensure that your Terra data table includes all the samples you intend to submit, along with their raw read data (`FASTQ`, `BAM`, or `CRAM` format) and associated metadata. To meet ENA’s requirements, each sample must include a minimum set of metadata. See below for the mandatory and recommended metadata fields, as well as the default column names used to identify them in your Terra data table.
 
-## What needs to be included in your Terra data table?
+### What needs to be included in your Terra data table?
 
-### Read Data Fields
+#### Read Data Fields
 
 <div class="grid cards" markdown>
 
@@ -53,7 +53,7 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
 </div>
 
-### Sample Metadata Fields
+#### Sample Metadata Fields
 ??? tip "Using Customized Column Names in Terra Tables"
 
     In some cases, users may have data tables in Terra with column names that differ from the field names expected by ENA. The `Terra_2_ENA` workflow allows users to supply a **custom column mapping file**, enabling them to specify how their columns map to the required/mandatory field names.
@@ -85,7 +85,7 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
             !!! warning "These fields are required for submission and must be included in the Terra data table or supplied as an input parameter"
 
-                If you cannot provide a value for a mandatory field within, set the `allow-missing` input parameter to `true` or alternatively, use one of the [INDSC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
+                If you cannot provide a value for a mandatory field, set the `allow_missing` input parameter to `true` or alternatively use one of the [INSDC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
 
             | <div style="width: 160px;">Terra Column Name</div> | <div style="width: 140px;">ENA Field Name</div> | Description |
             |---|---|---|
@@ -123,7 +123,7 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
 
             !!! warning "These fields are required for submission and must be included in the Terra data table or supplied as an input parameter"
 
-                If you cannot provide a value for a mandatory field within, set the `allow-missing` input parameter to `true` or alternatively, use one of the [INDSC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
+                If you cannot provide a value for a mandatory field, set the `allow_missing` input parameter to `true` or alternatively use one of the [INSDC accepted terms](https://ena-docs.readthedocs.io/en/latest/submit/samples/missing-values.html) for missing value reporting.
 
             | <div style="width: 170px;">Terra Column Name</div> | <div style="width: 140px;">ENA Field Name</div> | Description |
             |---|---|---|
@@ -161,15 +161,15 @@ Before you can submit data to ENA you must [register](https://www.ebi.ac.uk/ena/
             | `receipt_date` | receipt date | Date on which the sample was received. Format:YYYY-MM-DD. Please provide the highest precision possible. If the sample was received by the institution and not collected, the 'receipt date' must be provided instead. |
             | `sample_capture_status` | sample capture status | Reason for the sample collection. |
             | `library_description` | sample_description | Description of the sample. |
-            | `serotype` | serotype | Serological variety of a species characterised by its antigenic properties. For Influenza, HA subtype should be the letter H followed by a number between 1-16 unless novel subtype is identified and the NA subtype should be the letter N followed by a number between 1-9 unless novel subtype is identified. |
-            | `virus_identifier` | virus identifier | Unique laboratory identifier assigned to the virus by the investigator. Strain name is not sufficient since it might not be unique due to various passsages of the same virus. Format: up to 50 alphanumeric characters |
+            | `serotype` | serotype | Serological variety of a species characterized by its antigenic properties. For Influenza, HA subtype should be the letter H followed by a number between 1-16 unless novel subtype is identified and the NA subtype should be the letter N followed by a number between 1-9 unless novel subtype is identified. |
+            | `virus_identifier` | virus identifier | Unique laboratory identifier assigned to the virus by the investigator. Strain name is not sufficient since it might not be unique due to various passages of the same virus. Format: up to 50 alphanumeric characters |
 
     </div>
 
     Reference: [ENA viral minimal sample checklist](https://www.ebi.ac.uk/ena/browser/view/ERC000033)
 
 
-## Workflow Inputs
+### Inputs
 
 It's important to note that the `Terra_2_ENA` workflow is designed to run on set-level data tables. This means that the workflow will process all samples within a set together, rather than handling each sample individually. The `samples` input variable expects an array of sample IDs, corresponding to a set table. In most cases, set tables are generated automatically when running a workflow. However, if you need to create one manually, refer to this guide on [how to create a set table](https://support.terra.bio/hc/en-us/articles/6660506445339-How-to-make-a-set-table).
 
@@ -181,7 +181,7 @@ It's important to note that the `Terra_2_ENA` workflow is designed to run on set
 
 ///
 
-## Workflow Outputs
+### Outputs
 
 /// html | div[class="searchable-table"]
 

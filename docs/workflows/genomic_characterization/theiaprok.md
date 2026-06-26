@@ -8,20 +8,20 @@
 
 **The TheiaProk workflows are for the assembly, quality assessment, and characterization of bacterial genomes.** There are currently four TheiaProk workflows designed to accommodate different kinds of input data:
 
-1. Illumina paired-end sequencing **(TheiaProk_Illumina_PE**)
-2. Illumina single-end sequencing (**TheiaProk_Illumina_SE)**
+1. Illumina paired-end sequencing (**TheiaProk_Illumina_PE**)
+2. Illumina single-end sequencing (**TheiaProk_Illumina_SE**)
 3. ONT sequencing (**TheiaProk_ONT**)
 4. Genome assemblies (**TheiaProk_FASTA**)
 
 === "TheiaProk_Illumina_PE"
 
-    !!! caption "TheiaProk Illumina PE Workflow Diagram"
-        ![TheiaProk Illumina PE Workflow Diagram](../../assets/figures/TheiaProk_Illumina.png)
+    !!! caption "TheiaProk Illumina Workflow Overview"
+        ![TheiaProk Illumina workflow taking raw paired-end reads through quality control, assembly, taxonomy assignment, and organism-specific characterization, with outputs including genome assembly metrics, species identification, and AMR profiling.](../../assets/figures/TheiaProk_Illumina.png)
 
 === "TheiaProk_ONT"
 
-    !!! caption "TheiaProk ONT Workflow Diagram"
-        ![TheiaProk ONT Workflow Diagram](../../assets/figures/TheiaProk_ONT.png)
+    !!! caption "TheiaProk ONT Workflow Overview"
+        ![TheiaProk ONT workflow for bacterial genomics, taking ONT sequencing reads through quality control, assembly, and taxonomic assignment to produce species identification, AMR characterization, and pathogen-specific outputs.](../../assets/figures/TheiaProk_ONT.png)
 
 All input reads are processed through "[core tasks](#core-tasks)" in the TheiaProk Illumina and ONT workflows. These undertake read trimming and assembly appropriate to the input data type. TheiaProk workflows subsequently launch default genome characterization modules for quality assessment, species identification, antimicrobial resistance gene detection, sequence typing, and more. **For some taxa identified, "[taxa-specific sub-workflows](#taxa-specific-tasks)" will be automatically activated, undertaking additional taxa-specific characterization steps**. When setting up each workflow, users may choose to use "optional tasks" as additions or alternatives to tasks run in the workflow by default.
 
@@ -32,7 +32,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
         The TheiaProk_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time.
 
-        By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
+        By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
     === "TheiaProk_Illumina_SE"
 
@@ -183,7 +183,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 !!! dna ""
     The TheiaProk workflows automatically activate taxa-specific sub-workflows after the identification of relevant taxa using `GAMBIT`. Alternatively, the user can provide the expected taxa in the `expected_taxon` workflow input to override the taxonomic assignment made by GAMBIT. Modules are launched for all TheiaProk workflows unless otherwise indicated.
 
-    Please note that some modules require specific input data that may render it incompatible with every workflow. For example, ShigaTyper (a _Shigella_/EIEC serotyping tool) is not available for TheiaProk_FASTA as it requires read data as input. We have made a note next to each module to indicate which workflows are compatible with the module if there are restrictions.
+    Please note that some modules require specific input data which may not be compatible with every workflow. For example, ShigaTyper (a _Shigella_/EIEC serotyping tool) is not available for TheiaProk_FASTA as it requires read data as input. We have made a note next to each module to indicate which workflows are compatible with the module if there are restrictions.
 
 {{ include_md("common_text/taxon_table_task.md", condition="theiaprok") }}
 
@@ -197,7 +197,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 ??? toggle "_Escherichia_ or _Shigella_ spp."
     ##### _Escherichia_ or _Shigella_ spp. {% raw %} {#escherichia-or-shigella} {% endraw %}
 
-    The *Escherichia* and *Shigella* genera are [difficult to differentiate as they do not comply with genomic definitions of genera and species](https://www.sciencedirect.com/science/article/abs/pii/S1286457902016374). Consequently, when either _Escherichia_ or _Shigella_ are identified by GAMBIT, all tools intended for these taxa are used. 
+    The *Escherichia* and *Shigella* genera are [difficult to differentiate as they do not comply with genomic definitions of genera and species](https://www.sciencedirect.com/science/article/abs/pii/S1286457902016374). Consequently, when either _Escherichia_ or _Shigella_ are identified by GAMBIT, all tools intended for these taxa are used.
 
     !!! tip ""
         `SerotypeFinder` and `ECTyper` are intended for analysis of *E. coli*. Both tools are used as there are occasional discrepancies between the serotypes predicted. This primarily arises due to differences in the databases used by each tool.
@@ -207,12 +207,12 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 {{ include_md("common_text/ectyper_task.md", indent=4)}}
 
     !!! tip ""
-        `VirulenceFinder` identifies virulence genes in total or partial sequenced isolates of bacteria. Currently, only *E. coli* is supported in TheiaProk workflows. 
+        `VirulenceFinder` identifies virulence genes in total or partial sequenced isolates of bacteria. Currently, only *E. coli* is supported in TheiaProk workflows.
 
 {{ include_md("common_text/virulencefinder_task.md", indent=4) }}
 
     !!! tip ""
-        `ShigaPass`, `ShigaTyper`, and `ShigEiFinder` are intended for differentiation and serotype prediction for any *Shigella* species and enteroinvasive *Escherichia coli* (EIEC). You can read about differences between _Shigella_ and EIEC [here](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC517479/) and [here](https://www.microbiologyresearch.org/content/journal/micro/10.1099/00221287-144-9-2667). ShigEiFinder can be run using either the assembly (default) or reads. These tasks will report if the samples are neither *Shigella* nor EIEC.
+        `ShigaPass`, `ShigaTyper`, and `ShigEiFinder` are intended for differentiation and serotype prediction for any *Shigella* species and enteroinvasive *Escherichia coli* (EIEC). You can read about differences between _Shigella_ and EIEC in [_Molecular Evolutionary Relationships of Enteroinvasive Escherichia coli and Shigella spp._](https://www.ncbi.nlm.nih.gov/pmc/articles/PMC517479/) and [_Shigella and enteroinvasive Escherichia coli strains are derived from distinct ancestral strains of E. coli_](https://www.microbiologyresearch.org/content/journal/micro/10.1099/00221287-144-9-2667). ShigEiFinder can be run using either the assembly (default) or reads. These tasks will report if the samples are neither *Shigella* nor EIEC.
 
 {{ include_md("common_text/shigapass_task.md", indent=4) }}
 
@@ -226,7 +226,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 {{ include_md("common_text/sonneityper_task.md", indent=4)}}
 
     !!! tip ""
-        **Shigella XDR prediction.** Please see [the documentation section above for ResFinder](#amr-characterization) for details regarding this taxa-specific analysis. 
+        **Shigella XDR prediction.** Please see [the documentation section above for ResFinder](#amr-characterization) for details regarding this taxa-specific analysis.
 
 {{ include_md("common_text/stxtyper_task.md", indent=4) }}
 
@@ -275,7 +275,7 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
     ##### _Salmonella_ spp. {% raw %} {#salmonella} {% endraw %}
 
     !!! tip ""
-        Both SISTR and SeqSero2 are used for serotyping all *Salmonella* spp. Occasionally, the predicted serotypes may differ between SISTR and SeqSero2. When this occurs, differences are typically small and analogous, and are likely as a result of differing source databases. More information about Salmonella serovar nomenclature can be found [here](https://www.happykhan.com/posts/binfie-guide-serovar/).
+        Both SISTR and SeqSero2 are used for serotyping all *Salmonella* spp. Occasionally, the predicted serotypes may differ between SISTR and SeqSero2. When this occurs, differences are typically small and analogous, and are likely as a result of differing source databases. For more information, see [this guide to _Salmonella_ serovar nomenclature](https://www.happykhan.com/posts/binfie-guide-serovar/).
 
 {{ include_md("common_text/sistr_task.md", indent=4) }}
 
@@ -283,8 +283,8 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
 
 {{ include_md("common_text/genotyphi_task.md", indent=4) }}
 
-??? toggle "_Staphyloccocus aureus_"
-    ##### _Staphyloccocus aureus_ {% raw %} {#staphyloccocus-aureus} {% endraw %}
+??? toggle "_Staphylococcus aureus_"
+    ##### _Staphylococcus aureus_ {% raw %} {#staphylococcus-aureus} {% endraw %}
 
 {{ include_md("common_text/spatyper_task.md", indent=4) }}
 
@@ -330,14 +330,14 @@ All input reads are processed through "[core tasks](#core-tasks)" in the TheiaPr
     /// html | div[class="searchable-table"]
 
     {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaProk_Illumina_SE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
-    
+
     ///
 
 === "TheiaProk_ONT"
     /// html | div[class="searchable-table"]
 
-    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaProk_FASTA"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
-    
+    {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "TheiaProk_ONT"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=4) }}
+
     ///
 
 === "TheiaProk_FASTA"

@@ -51,12 +51,12 @@ Additionally, the **TheiaCoV_FASTA_Batch** workflow is available to process seve
         - [TheiaCoV_FASTA_RSV-B_2024-04-19.json](../../assets/files/input_jsons/TheiaCoV_FASTA_RSV-B_2024-04-19.json)
 
 === "TheiaCoV_Illumina_PE"
-    !!! caption "TheiaCoV Illumina PE and SE Workflow Diagram"
-        ![TheiaCoV Workflow Diagram](../../assets/figures/TheiaCoV_Illumina.png)
+    !!! caption "TheiaCoV Illumina PE Workflow Overview"
+        ![TheiaCoV Illumina workflow(s) taking FASTQ input through read screening, host depletion, quality control, alignment, and consensus assembly, with pathogen-specific outputs for SARS-CoV-2, Influenza, and other respiratory viruses.](../../assets/figures/TheiaCoV_Illumina.png)
 
 === "TheiaCoV_ONT"
     !!! caption "TheiaCoV ONT Workflow Diagram"
-        ![TheiaCoV Workflow Diagram](../../assets/figures/TheiaCoV_ONT.png)
+        ![TheiaCoV ONT workflow taking FASTQ input through read screening, host depletion, quality control, and read alignment before organism-specific assembly and clade assignment for SARS-CoV-2, Influenza, HIV, RSV, and Mpox.](../../assets/figures/TheiaCoV_ONT.png)
 
 ### Supported Organisms
 
@@ -93,7 +93,7 @@ We've provided the following information to help you set up the workflow for eac
 
         The TheiaCoV_Illumina_PE workflow takes in Illumina paired-end read data. Read file names should end with `.fastq` or `.fq`, with the optional addition of `.gz`. When possible, Theiagen recommends zipping files with [gzip](https://www.gnu.org/software/gzip/) before Terra uploads to minimize data upload time.
 
-        By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
+        By default, the workflow anticipates **2 x 150bp** reads (i.e. the input reads were generated using a 300-cycle sequencing kit). Modifications to the optional parameter for `trim_minlen` may be required to accommodate shorter read data, such as the 2 x 75bp reads generated using a 150-cycle sequencing kit.
 
     === "TheiaCoV_Illumina_SE"
 
@@ -117,7 +117,7 @@ We've provided the following information to help you set up the workflow for eac
 
     === "TheiaCoV_ClearLabs"
 
-        The TheiaCoV_ClearLabs workflow takes in read data produced by the Clear Dx platform from ClearLabs. However, many users use the TheiaCoV_FASTA workflow instead of this one due to a few known issues when generating assemblies with this pipeline that are not present when using ClearLabs-generated FASTA files.
+        The TheiaCoV_ClearLabs workflow takes in read data produced by the Clear Dx platform from ClearLabs. However, many users use the TheiaCoV_FASTA workflow instead of this one due to a few known issues when generating assemblies with TheiaCoV_ClearLabs that are not present when using ClearLabs-generated FASTA files (which are corrected for ClearLabs-specific errors).
 
     === "TheiaCoV_FASTA_Batch"
 
@@ -162,7 +162,7 @@ We've provided the following information to help you set up the workflow for eac
 
 ### Organism-Specific Parameters {% raw %} {#org-specific} {% endraw %}
 
-**The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflows**. This step automatically sets the different parameters needed for each downstream tool to the appropriate value for the user-designated organism (by default, `"sars-cov-2"` is the default organism).
+**The `organism_parameters` sub-workflow is the first step in all TheiaCoV workflows**. This step automatically sets the different parameters needed for each downstream tool to the appropriate value for the user-designated organism (`"sars-cov-2"` is the default organism).
 
 !!! dna ""
     The following tables include the relevant organism-specific parameters; **all of these default values can be overwritten by providing a value for the "Overwrite Variable Name" field**.
@@ -214,10 +214,10 @@ We've provided the following information to help you set up the workflow for eac
         | **Overwrite Variable Name** | **Organism** | **Default Value** | **Notes** |
         |---|---|---|---|
         | genome_length_input | WNV | `11000` | |
-        | kraken_target_organism_input | WNV | `"West Nile virus`" | |
+        | kraken_target_organism_input | WNV | `"West Nile virus"` | |
         | nextclade_dataset_name_input | WNV | `"NA"` | TheiaCoV's Nextclade currently does not support WNV |
         | nextclade_dataset_tag_input | WNV | `"NA"` | TheiaCoV's Nextclade currently does not support WNV |
-        | primer_bed_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/al/wnv/WNV-L1_primer.bed"` |  |
+        | primer_bed_file | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/WNV-L1_primer.bed"` |  |
         | reference_genome | WNV | `"gs://theiagen-public-resources-rp/reference_data/viral/wnv/NC_009942.1_wnv_L1.fasta"` |  |
         | vadr_max_length | WNV | `11000` |  |
         | vadr_skip_length | WNV | `3000` |  |
@@ -297,7 +297,7 @@ We've provided the following information to help you set up the workflow for eac
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
         | genome_length_input | rsv_a | `16000` |
-        | kraken_target_organism | rsv_a | `"Human respiratory syncytial virus A"` |
+        | kraken_target_organism_input | rsv_a | `"Human respiratory syncytial virus A"` |
         | nextclade_dataset_name_input | rsv_a | `nextstrain/rsv/a/EPI_ISL_412866` |
         | nextclade_dataset_tag_input | rsv_a | `"2026-04-14--11-55-23Z"` |
         | reference_genome | rsv_a | `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_a.EPI_ISL_412866.fasta"` |
@@ -315,11 +315,12 @@ We've provided the following information to help you set up the workflow for eac
         | **Overwrite Variable Name** | **Organism** | **Default Value** |
         |---|---|---|
         | genome_length_input | rsv_b | `16000` |
-        | kraken_target_organism | rsv_b | `"human respiratory syncytial virus"` |
+        | kraken_target_organism_input | rsv_b | `"human respiratory syncytial virus"` |
         | nextclade_dataset_name_input | rsv_b | `nextstrain/rsv/b/EPI_ISL_1653999` |
         | nextclade_dataset_tag_input | rsv_b | `"2026-04-14--11-55-23Z"` |
         | reference_genome | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/viral/rsv/reference_rsv_b.EPI_ISL_1653999.fasta"` |
         | vadr_max_length | rsv_b | `15500` |
+        | vadr_skip_length | rsv_b | `5000` |
         | vadr_mem | rsv_b | `32` |
         | vadr_options | rsv_b | `"--mkey rsv --xnocomp -r"` |
         | vadr_model_file | rsv_b | `"gs://theiagen-public-resources-rp/reference_data/databases/vadr_models/vadr-models-rsv-1.5-2.tar.gz"` |

@@ -54,7 +54,7 @@ fragment: true
     TheiaProk and TheiaEuk use the pre-loaded MIDAS database in Terra (see input table for current version) by default for bacterial species detection in metagenomic data, requiring no additional setup.
 
     !!! tip "Create a Custom MIDAS Database"
-        Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the [MIDAS GitHub guide on building a custom database](https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md). Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workkspace and provide the link to the database in the `midas_db` input variable.
+        Users can also build their own custom MIDAS database if they want to include specific genomes or configurations. This custom database can replace the default MIDAS database used in Terra. To build a custom MIDAS database, follow the [MIDAS GitHub guide on building a custom database](https://github.com/snayfach/MIDAS/blob/master/docs/build_db.md). Once the database is built, users can upload it to a Google Cloud Storage bucket or Terra workspace and provide the link to the database in the `midas_db` input variable.
 
     ---
 

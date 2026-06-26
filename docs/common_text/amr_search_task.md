@@ -26,7 +26,7 @@ fragment: true
         | _Staphylococcus aureus_      | 1280      |
         | _Salmonella_ Typhi           | 90370     |
         | _Streptococcus pneumoniae_   | 1313      |
-        | _Klebisiella_                | 570       |
+        | _Klebsiella_                | 570       |
         | _Escherichia_                | 561       |
         | _Mycobacterium tuberculosis_ | 1773      |
         | _Candida auris_              | 498019    |

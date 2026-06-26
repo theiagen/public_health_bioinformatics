@@ -25,25 +25,25 @@ _If you already have a command-line environment available_, you can skip ahead t
     1. Select the "Environment Configuration" cloud icon on the right side of the workspace dashboard tab
 
         !!! caption narrow "Click on the cloud icon to access the environment configuration"
-            ![environment configuration](../../assets/figures/basespace_fetch/step1-environment-configuration.png)
+            ![Terra workspace sidebar showing the Environment Configuration button (cloud icon) highlighted with a tooltip label.](../../assets/figures/basespace_fetch/step1-environment-configuration.png)
 
     2. Select the "Settings" button under Jupyter
 
         !!! caption narrow "Click on Settings underneath the Jupyter icon"
-            ![settings](../../assets/figures/basespace_fetch/step2-jupyter-settings.png)
+            ![Terra Cloud Environment Details panel showing the Jupyter Settings button selected, with a "Create new Environment" dropdown option visible.](../../assets/figures/basespace_fetch/step2-jupyter-settings.png)
 
     3. Click "CREATE" at the bottom of the "Jupyter Cloud Environment" page. There is no need to alter the default environment configuration.
 
         !!! caption narrow "Click on Create at the bottom of the page"
-            ![create environment](../../assets/figures/basespace_fetch/step3-create-environment.png)
+            ![Terra's Jupyter Cloud Environment setup panel showing default application configuration, cloud compute profile settings, and a Create button to launch the environment.](../../assets/figures/basespace_fetch/step3-create-environment.png)
 
         !!! info "Environment customization"
-            The default environment should be sufficient for retrieval of BaseSpace credentials, but if performing other tasks in the environment please modify the resource allocations appropriately. 
+            The default environment should be sufficient for retrieval of BaseSpace credentials, but if performing other tasks in the environment please modify the resource allocations appropriately.
 
         You will be returned to the main page after clicking "Create". You will notice two new icons in your right-hand side bar as the environment is being created.
 
         !!! caption narrow "Environment creation in progress"
-            ![environment creation](../../assets/figures/basespace_fetch/info3-creation-in-progress.png)
+            ![Terra sidebar showing a Jupyter environment being created, with a tooltip displaying the cost rate of $0.06 per hour for compute and under $0.01 per hour for disk.](../../assets/figures/basespace_fetch/info3-creation-in-progress.png)
 
 ##### Step 2: Install the BaseSpace Command-Line Tool to Retrieve the Access Token and API Server Address {% raw %} {#install-bs-cli} {% endraw %}
 
@@ -52,33 +52,33 @@ _If you already have a command-line environment available_, you can skip ahead t
     1. When the environment is created and active, you should see a green dot in the bottom right corner of the Jupyter icon. Click on the "Terminal" icon in the right side-bar of the Terra dashboard to open the terminal.
 
         !!! caption narrow "Open the terminal"
-            ![open the terminal](../../assets/figures/basespace_fetch/step4-open-the-terminal.png)
+            ![Terra cloud environment sidebar with the Terminal icon (command prompt symbol) highlighted and a tooltip reading "Terminal".](../../assets/figures/basespace_fetch/step4-open-the-terminal.png)
 
         The open terminal will appear in a new tab in your browser and will look similar to this:
 
         !!! caption narrow "The terminal window"
-            ![terminal window](../../assets/figures/basespace_fetch/info4-open-terminal.png)
+            ![A Jupyter environment with an open terminal window showing a bash prompt, ready to accept commands.](../../assets/figures/basespace_fetch/info4-open-terminal.png)
 
     2. Download and setup the BaseSpace (BS) command line interface (CLI) tool (as per [the Illumina documentation](https://developer.basespace.illumina.com/docs/content/documentation/cli/cli-overview)) by following the commands below. The lines beginning with `#` are comments, the following lines are the commands to be copy/pasted into the terminal
 
         ```bash  title="BaseSpace Fetch Authentication Instructions"
         # create bin directory
         mkdir ~/bin
-        
+
         # download the basespace cli
         wget "https://launch.basespace.illumina.com/CLI/latest/amd64-linux/bs" -O $HOME/bin/bs
-        
-        # provide proper permissions to make the bs cli executable 
+
+        # provide proper permissions to make the bs cli executable
         chmod u+x $HOME/bin/bs
-        
+
         # add the 'bs' command-line tool to the $PATH variable so that you can call the command-line tool from any directory
         export PATH="$PATH:$HOME/bin/"
-        
+
         # authenticate with BaseSpace credentials
         bs auth
-        
+
         # navigate to the link provided in stdout and accept the authentication request through BaseSpace
-        
+
         # Print the api server and access token to stdout (replace the path below with the appropriate path returned by the find command above)
         cat ~/.basespace/default.cfg
         ```
@@ -88,8 +88,8 @@ _If you already have a command-line environment available_, you can skip ahead t
         2. Click on "Edit" and then "Add variable" to add the new workspace data elements as in the examples below.
 
         !!! caption narrow "Create workspace data elements"
-            ![workspace data elements](../../assets/figures/basespace_fetch/info5-copy-information.png)
-        
+            ![Workspace data table showing the basespace_access_token and basespace_api_server key-value pairs required for BaseSpace configuration.](../../assets/figures/basespace_fetch/info5-copy-information.png)
+
 #### Preparing to retrieve a run with BaseSpace_Fetch
 
 ##### Step 1: Create a Metadata Sheet from the BaseSpace SampleSheet {% raw %} {#prep-metadata} {% endraw %}
@@ -102,13 +102,13 @@ _If you already have a command-line environment available_, you can skip ahead t
         - Avoid re-using Sample IDs. Make all sample IDs unique!
 
     1. Download the sample sheet from BaseSpace.
-   
+
         On the BaseSpace portal, you can navigate to this via: Runs → {run} → Files → SampleSheet.csv
 
         !!! caption narrow "Example SampleSheet.csv"
-            ![example sample sheet](../../assets/figures/basespace_fetch/step6-sample-sheet.png)
+            ![A dialog box previewing SampleSheet.csv contents, showing sample IDs, names, and index sequences, with Cancel and Download buttons.](../../assets/figures/basespace_fetch/step6-sample-sheet.png)
 
-    2. In Excel or an alternative spreadsheet software, set up a metadata sheet for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.  
+    2. In Excel or an alternative spreadsheet software, set up a metadata sheet for Terra, with a row for each sample. Please feel free to use our [BaseSpace_Fetch Template](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/family_agnostic/bs_fetch_template_20231103.tsv) to help ensure the file is formatted correctly.
         1. In cell A1, enter the data table name with the "**entity:**TABLENAME**_id**" format
         2. Create a column called `basespace_sample_name` and populate this with the data found under the `Sample_Name` column in the BaseSpace sample sheet.
 
@@ -119,7 +119,7 @@ _If you already have a command-line environment available_, you can skip ahead t
         4. Populate column A of the spreadsheet with the sample names as seen in the sample sheet
 
             !!! caption narrow "Example Metadata Sheet"
-                ![example metadata sheet](../../assets/figures/basespace_fetch/step7-metadata-sheet.png)
+                ![A spreadsheet with columns for bs_fetch_sample_id, basespace_sample_name, and basespace_collection_id, populated with six example sample rows all belonging to Run_01.](../../assets/figures/basespace_fetch/step7-metadata-sheet.png)
 
 ##### Step 2: Upload the metadata spreadsheet to the destination workspace in Terra.bio {% raw %} {#upload-metadata} {% endraw %}
 
@@ -128,13 +128,13 @@ _If you already have a command-line environment available_, you can skip ahead t
     1. In Terra, navigate to the "DATA" tab, click "IMPORT DATA" then "Upload TSV"
 
         !!! caption narrow "Upload TSV"
-            ![upload tsv](../../assets/figures/basespace_fetch/step8-upload-tsv.png)
+            ![Terra Data tab showing the Import Data dropdown menu with "Upload TSV" highlighted as the selected option.](../../assets/figures/basespace_fetch/step8-upload-tsv.png)
 
     2. Copy and paste the contents of the whole spreadsheet into the "TEXT IMPORT" tab and click "START IMPORT JOB"
 
         !!! caption narrow "Import Metadata"
-             ![text import](../../assets/figures/basespace_fetch/step9-text-import.png)
-        
+             ![Terra's Import Table Data dialog with the TEXT IMPORT tab selected, showing a text area for pasting tab-separated data and a Start Import Job button.](../../assets/figures/basespace_fetch/step9-text-import.png)
+
     You can now use the created table to run the BaseSpace_Fetch workflow.
 
 ### Inputs
@@ -143,10 +143,10 @@ _If you already have a command-line environment available_, you can skip ahead t
     If using BaseSpace_Fetch workflow version 1.3.0 or higher, the call-caching feature of Terra has been DISABLED to ensure that the workflow is run from the beginning and data is downloaded fresh. Call-caching will not be enabled, even if the user checks the box ✅ in the Terra workflow interface.
 
 !!! warning "Sample_Name _and_ Sample_ID"
-    If the Sample_Name and Sample_ID in the BaseSpace sample sheet are different, set the `basespace_sample_id` input attribute to "`this.basespace_sample_id"`.
+    If the Sample_Name and Sample_ID in the BaseSpace sample sheet are different, set the `basespace_sample_id` input attribute to `"this.basespace_sample_id"`.
 
 !!! warning "Nested Samplenames"
-    Erroneous matches may occur when a samplename is nested within another samplename in the same batch, separated by an underscore or space. This will occur when no lane suffix is present within the Basespace dataset. For example, "sample1" will retrieve "sample1_1", however, "sample1_L1" will NOT retrieve "sample1_1_L1". This should be taken into consideration when using certain naming conventions. 
+    Erroneous matches may occur when a samplename is nested within another samplename in the same batch, separated by an underscore or space. This will occur when no lane suffix is present within the Basespace dataset. For example, "sample1" will retrieve "sample1_1", however, "sample1_L1" will NOT retrieve "sample1_1_L1". This should be taken into consideration when using certain naming conventions.
 
 /// html | div[class="searchable-table"]
 

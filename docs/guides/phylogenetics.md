@@ -14,7 +14,7 @@ Phylogenetics is an approach to understanding evolutionary relationships among o
 
     - **Goal**: Determine the evolutionary relationship between a set of sequences, often to rule out likely transmission
     - **Pros**:
-        - Can be constructed form any suitable set of samples
+        - Can be constructed from any suitable set of samples
         - More accurate than phylogenetic placement when a high-quality dataset and appropriate methods are used
     - **Cons**:
         - Can be comparably slow and computationally expensive, especially for trees with a large number of sequences and large genomes
@@ -54,7 +54,7 @@ Phylogenetics is an approach to understanding evolutionary relationships among o
     - Snippy_Variants & Snippy_Tree: Similar to Snippy_Streamline, but for when you want more control over the workflow parameters or if you want to generate the tree multiple times using different combinations of sequences aligned against the same reference
     - Mashtree_FASTA: For very quick trees
     - Core_Gene_SNP: For generation of a pangenome analysis, with an additional core- or pan-gene phylogeny to visualize the pangenome against
-  
+
 ??? toggle "Full comparison of Theiagen phylogenetic construction workflows"
     |  | **Genome suitability** | **Input files** | **Method** | **Use cases** | **Pros** | **Cons** |
     | --- | --- | --- | --- | --- | --- | --- |
@@ -84,7 +84,7 @@ It can be difficult to determine SNP thresholds because of:
     - variable mutation rates between strains, in different environments, and/or in different regions of the genome
     - imprecise removal of recombination or erroneous SNPs
 
-The comparison of SNP distances between potentially related strains and background strains can be helpful for source attribution (e.g. foodborne outbreaks). Combination with epidemiological data can help identify suitable thresholds to rule out transmission. In addition, mutation rates can be calculated based on SNPs at different time points, allowing inference of start of outbreak. Be aware of incomplete sampling as SNP distances don't reveal if there were other infected individuals that weren’t sampled
+The comparison of SNP distances between potentially related strains and background strains can be helpful for source attribution (e.g. foodborne outbreaks). Combination with epidemiological data can help identify suitable thresholds to rule out transmission. In addition, mutation rates can be calculated based on SNPs at different time points, allowing inference of start of outbreak. Be aware of incomplete sampling as SNP distances don’t reveal if there were other infected individuals that weren’t sampled.
 
 ## Visualizing phylogenetic trees
 
@@ -104,10 +104,10 @@ The comparison of SNP distances between potentially related strains and backgrou
     | **Metadata visualization** | Terminal nodes color-coded to metadata | Metadata visualized alongside a phylogeny | Branches, internal, and tips color-coded to metadata | Difficult to add metadata | Terminal nodes color-coded to metadata | Terminal nodes color-coded,  shape-coded, or sized according to metadata, can also add labels |
     | **Input tree type** | JSON | Newick | Newick and Nexus | Newick | Newick | Newick |
     | **Metadata files supported** | CSV of sample characteristics | CSV of sample characteristics, .gff for recombination or pangenome  | TXT of sample characteristics | N/a | CSV of sample characteristics | CSV of sample characteristics |
-    | **Saving tree views** | ? | Image files only | Nexus, image files (PNG, SVG, JPEG), and PDF | Export options are limited in the free version | JSON, Newick, SVG | Save the MicrobeTrace session as a zip file on the computer, then drag & drop to restore |
+    | **Saving tree views** | Unknown | Image files only | Nexus, image files (PNG, SVG, JPEG), and PDF | Export options are limited in the free version | JSON, Newick, SVG | Save the MicrobeTrace session as a zip file on the computer, then drag & drop to restore |
     | **Availability** | Browser-based, but does not share data | Browser-based, but does not share data | Installed on the local computer, requires Java | Browser-based, but does not share data | Browser-based, but does not share data, or installed on the local computer | Browser-based, but does not share data |
-    | **Other considerations**  | Highly interactive; a great all-rounder | Great quickly assessing associations between tree topology and metadata, e.g. cluster association with a given characteristic; can also visualize recombination and pangenome assessments relative to tree | No longer under active development, so some bugs may not be fixed, very useful for rearranging tree view and viewing dates of nodes | Very useful for rearranging tree view |  | Primarily intended for visualization of transmission networks with steep learning curve; actively maintained by CDC |
+    | **Other considerations**  | Highly interactive; a great all-rounder | Great for quickly assessing associations between tree topology and metadata, e.g. cluster association with a given characteristic; can also visualize recombination and pangenome assessments relative to tree | No longer under active development, so some bugs may not be fixed, very useful for rearranging tree view and viewing dates of nodes | Very useful for rearranging tree view |  | Primarily intended for visualization of transmission networks with steep learning curve; actively maintained by CDC |
     | **Limitations** | Difficult to quickly assess which metadata characteristics may be associated with tree topology | No scale; no ability to rearrange tree file; limitations to interactive views | Difficult to visualize additional metadata | Difficult to visualize additional metadata | Minimum-spanning trees only | No (useful) scale |
     | **Maintained** | Yes | No | No | Yes | No? | Yes |
 
-To learn more about MicrobeTrace, please see the following video: **📺 [Using KSNP3 in Terra and Visualizing Bacterial Genomic Networks in MicrobeTrace](https://www.youtube.com/watch?v=iRpNDun46R8)**
+To learn more about MicrobeTrace, please see the following video: **📺 [Using kSNP3 in Terra and Visualizing Bacterial Genomic Networks in MicrobeTrace](https://www.youtube.com/watch?v=iRpNDun46R8)**

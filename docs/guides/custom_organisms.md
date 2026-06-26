@@ -1,41 +1,47 @@
 # Guide to Running Custom Organisms on TheiaCoV
 
-We encourage users to refer to the [TheiaViral workflow series](../workflows/genomic_characterization/theiaviral.md) for assembling viruses that are not accounted for in TheiaCoV. 
+We encourage users to refer to the [TheiaViral workflow series](../workflows/genomic_characterization/theiaviral.md) for assembling viruses that are not accounted for in TheiaCoV.
 
 ## The TheiaCoV Workflow Series
 
 The [**TheiaCoV Workflow Series**](../workflows/genomic_characterization/theiacov.md#theiacov-workflows) is a suite of bioinformatics workflows designed for the **assembly, quality assessment, and characterization of viral genomes**. These workflows accommodate various input data types and **support multiple viral organisms**, facilitating comprehensive genomic analyses for public health applications.
 
-!!! caption "TheiaCoV Workflow Diagram"
-    ![***Figure 1: The TheiaCoV workflow diagram.** SARS-CoV-2 is the default organism, but compatibility with several others is directly implemented and custom viruses can be submitted for reference-based genome assembly. Depending on the organism provided, which is controlled by the `organism` optional input, independent and tailored genomic characterization modules are triggered. All organisms follow a consensus assembly approach computed by [iVar](https://github.com/andersen-lab/ivar), with the exception of flu which is assembled by [IRMA](https://wonder.cdc.gov/amd/flu/irma/).* ](../assets/figures/TheiaCoV_Illumina.png)
+!!! caption "TheiaCoV Illumina Workflow Overview"
+    ![TheiaCoV Illumina workflow(s) taking FASTQ input through read screening, host depletion, quality control, alignment, and consensus assembly, with pathogen-specific outputs for SARS-CoV-2, Influenza, and other respiratory viruses.](../assets/figures/TheiaCoV_Illumina.png){data-description="SARS-CoV-2 is the default organism, but compatibility with several others is directly implemented and custom viruses can be submitted for reference-based genome assembly. Depending on the organism provided, which is controlled by the \`organism\` optional input, independent and tailored genomic characterization modules are triggered. All organisms follow a consensus assembly approach computed by iVar, with the exception of flu which is assembled by IRMA"}
+    /// figure-caption | #figure-1
+    TheiaCoV Illumina Workflow Overview.
 
-    **Figure 1: The TheiaCoV workflow diagram.** SARS-CoV-2 is the default organism, but compatibility with several others is directly implemented and custom viruses can be submitted for reference-based genome assembly. Depending on the organism provided, which is controlled by the `organism` optional input, independent and tailored genomic characterization modules are triggered. All organisms follow a consensus assembly approach computed by [iVar](https://github.com/andersen-lab/ivar), with the exception of flu which is assembled by [IRMA](https://wonder.cdc.gov/amd/flu/irma/).
+    SARS-CoV-2 is the default organism, but compatibility with several others is directly implemented and custom viruses can be submitted for reference-based genome assembly. Depending on the organism provided, which is controlled by the `organism` optional input, independent and tailored genomic characterization modules are triggered. All organisms follow a consensus assembly approach computed by [iVar](https://github.com/andersen-lab/ivar), with the exception of flu which is assembled by [IRMA](https://wonder.cdc.gov/amd/flu/irma/).
+    ///
 
 ### TheiaCoV Default Organisms
 
 !!! dna "Supported Organisms"
     These workflows currently support the following organisms:
 
-    - **SARS-CoV-2** (`"sars-cov-2"`, `"SARS-CoV-2"`) - *default organism input*
-    - **Mpox virus** (`"MPXV"`, `"mpox"`, `"monkeypox"`, `"Monkeypox virus"`, `"Mpox"`)
-    - **Human Immunodeficiency Virus** (`"HIV"`)
-    - **West Nile Virus** (`"WNV"`, `"wnv"`, `"West Nile virus"`)
-    - **Influenza** (`"flu"`, `"influenza"`, `"Flu"`, `"Influenza"`)
-    - **RSV-A** (`"rsv_a"`, `"rsv-a"`, `"RSV-A"`, `"RSV_A"`)
-    - **RSV-B** (`"rsv_b"`, `"rsv-b"`, `"RSV-B"`, `"RSV_B"`)
+    - **SARS-CoV-2** (`"sars-cov-2"`, `"SARS-CoV-2"`) - *default organism input*
+    - **Mpox virus** (`"MPXV"`, `"mpox"`, `"monkeypox"`, `"Monkeypox virus"`, `"Mpox"`)
+    - **Human Immunodeficiency Virus** (`"HIV"`)
+    - **West Nile Virus** (`"WNV"`, `"wnv"`, `"West Nile virus"`)
+    - **Influenza** (`"flu"`, `"influenza"`, `"Flu"`, `"Influenza"`)
+    - **RSV-A** (`"rsv_a"`, `"rsv-a"`, `"RSV-A"`, `"RSV_A"`)
+    - **RSV-B** (`"rsv_b"`, `"rsv-b"`, `"RSV-B"`, `"RSV_B"`)
     - **Measles** (**`"measles"`**, `"Measles"`, `"mev"`, `"MeV"`, `"Morbillivirus"`, `"morbillivirus"`)
 
 
-These workflows currently support seven organisms (see above). The workflows are adaptable, with parameters that can be customized for specific organisms. Input JSON files with preset configurations for each supported virus are provided [here](../workflows/genomic_characterization/theiacov.md#theiacov-workflows), streamlining the setup process.
+These workflows currently support eight organisms (see above). The workflows are adaptable, with parameters that can be customized for specific organisms. Input JSON files with preset configurations for each supported virus are provided [on the TheiaCoV workflow page](../workflows/genomic_characterization/theiacov.md#theiacov-workflows), streamlining the setup process.
 
 Except for influenza, which follows a different process in TheiaCoV, **all organisms are assembled through consensus from a reference genome** (see Figure 2 below).
 
-!!! caption "Assembly process in TheiaCoV"
-    ![***Figure 2: TheiaCoV viral genome assembly flowchart.** FASTQ-formatted reads are binned into taxonomic groups, trimmed, QC’ed, mapped to the reference genome, and the consensus assembly is created with respect to the reference.*](../assets/figures/theiacov-viral-genome-assembly-flowchart.png)
+!!! caption "TheiaCoV Genome Assembly Flowchart"
+    ![Flowchart showing TheiaCoV viral genome assembly: FASTQ reads undergo host removal, taxonomic profiling, and quality cleaning; a reference FASTA is indexed; then reads are mapped, primers trimmed, and variants called to produce a consensus FASTA.](../assets/figures/theiacov-viral-genome-assembly-flowchart.png){data-description="FASTQ-formatted reads are binned into taxonomic groups, trimmed, QC’ed, mapped to the reference genome, and the consensus assembly is created with respect to the reference."}
+    /// figure-caption | #figure-2
+    TheiaCoV Viral Genome Assembly Flowchart
 
-    **Figure 2: TheiaCoV viral genome assembly flowchart.** FASTQ-formatted reads are binned into taxonomic groups, trimmed, QC’ed, mapped to the reference genome, and the consensus assembly is created with respect to the reference.
+    FASTQ-formatted reads are binned into taxonomic groups, trimmed, QC’ed, mapped to the reference genome, and the consensus assembly is created with respect to the reference.
+    ///
 
-All non-influenza default organisms go through read quality control and consensus assembly with [iVar](https://github.com/andersen-lab/ivar). First, the human reads are removed from the sample with [NCBI's human read removal tool (HRRT)](https://github.com/ncbi/sra-human-scrubber), and the data is taxonomically profiled with [Kraken2](https://github.com/DerrickWood/kraken2) (using a database with all viral data in RefSeq and human) before and after human read removal. The reads are then trimmed with [trimmomatic](https://github.com/timflutre/trimmomatic) (default) or [fastp](https://github.com/OpenGene/fastp). Sequencing adapters, if they exist, are removed with [bbduck](https://sourceforge.net/projects/bbmap/), and raw and clean read quality is assessed using [fastq_scan](https://github.com/rpetit3/fastq-scan) (default) or [FastQC](https://github.com/s-andrews/FastQC). The clean reads are then mapped to the reference genome after indexing with [bwa](https://github.com/lh3/bwa). Primers are trimmed from the alignment with [iVar](https://github.com/andersen-lab/ivar), and variants are called with [samtools](https://github.com/samtools/samtools). Finally, [samtools](https://github.com/samtools/samtools) and [iVar](https://github.com/andersen-lab/ivar) are called to generate the consensus assembly. 
+All non-influenza default organisms go through read quality control and consensus assembly with [iVar](https://github.com/andersen-lab/ivar). First, the human reads are removed from the sample with [NCBI's human read removal tool (HRRT)](https://github.com/ncbi/sra-human-scrubber), and the data is taxonomically profiled with [Kraken2](https://github.com/DerrickWood/kraken2) (using a database with all viral data in RefSeq and human) before and after human read removal. The reads are then trimmed with [trimmomatic](https://github.com/timflutre/trimmomatic) (default) or [fastp](https://github.com/OpenGene/fastp). Sequencing adapters, if they exist, are removed with [bbduk](https://sourceforge.net/projects/bbmap/), and raw and clean read quality is assessed using [fastq_scan](https://github.com/rpetit3/fastq-scan) (default) or [FastQC](https://github.com/s-andrews/FastQC). The clean reads are then mapped to the reference genome after indexing with [bwa](https://github.com/lh3/bwa). Primers are trimmed from the alignment with [iVar](https://github.com/andersen-lab/ivar), and variants are called with [samtools](https://github.com/samtools/samtools). Finally, [samtools](https://github.com/samtools/samtools) and [iVar](https://github.com/andersen-lab/ivar) are called to generate the consensus assembly.
 
 For default organisms, we provide all the necessary files for all of these processes. To successfully generate a consensus assembly for a non-default organism, depending on the workflow configuration, the intermediary files will need to be provided by the user. We drafted a set of recommendations below to facilitate this process.
 

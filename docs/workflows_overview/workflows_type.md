@@ -6,14 +6,6 @@ title: Workflows by Type
 
 ---
 
-### Comparative Analysis
-
-/// html | div[class="searchable-table"]
-
-{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Workflow Type": "[Comparative Analysis](../../workflows_overview/workflows_type.md#comparative-analysis)"}, columns=["Name", "Description", "Applicable Kingdom", "Workflow Level", "Command-line Compatibility", "Last Known Changes", "Dockstore"], replacements={"../../workflows_overview/": ""}) }}
-
-///
-
 ### Data Import
 
 /// html | div[class="searchable-table"]
@@ -67,6 +59,14 @@ title: Workflows by Type
 /// html | div[class="searchable-table"]
 
 {{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Workflow Type": "[Standalone](../../workflows_overview/workflows_type.md#standalone)"}, columns=["Name", "Description", "Applicable Kingdom", "Workflow Level", "Command-line Compatibility", "Last Known Changes", "Dockstore"], replacements={"../../workflows_overview/": ""}) }}
+
+///
+
+### Comparative Analysis
+
+/// html | div[class="searchable-table"]
+
+{{ render_tsv_table("docs/assets/tables/all_workflows.tsv", sort_by="Name", filters={"Workflow Type": "[Comparative Analysis](../../workflows_overview/workflows_type.md#comparative-analysis)"}, columns=["Name", "Description", "Applicable Kingdom", "Workflow Level", "Command-line Compatibility", "Last Known Changes", "Dockstore"], replacements={"../../workflows_overview/": ""}) }}
 
 ///
 

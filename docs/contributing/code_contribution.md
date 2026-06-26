@@ -1,10 +1,10 @@
 # PHB Code Contributions
 
-Theiagen Genomics’ [**Public Health Bioinformatics (PHB)**](https://github.com/theiagen/public_health_bioinformatics) workflows are written in [WDL](https://github.com/openwdl/wdl), a language for specifying data processing workflows with a human-readable and writable syntax. Contributions to the workflows contained in the repository are warmly welcomed.
+Theiagen Genomics’ [**Public Health Bioinformatics (PHB)**](https://github.com/theiagen/public_health_bioinformatics) workflows are written in [WDL](https://github.com/openwdl/wdl), a language for specifying data processing workflows with a human-readable and writable syntax. Contributions to the workflows contained in the repository are warmly welcomed.
 
 This document gives coding conventions for the WDL code comprising the workflow and task development for PHB. This style guide evolves over time as additional conventions are identified and past conventions are rendered obsolete by changes in the language itself.
 
-Style guide inspired by Scott Frazer’s [WDL Best Practices Style Guide](https://gist.github.com/scottfrazer/aa4ab1945a6a4c331211).
+Style guide inspired by Scott Frazer’s [WDL Best Practices Style Guide](https://gist.github.com/scottfrazer/aa4ab1945a6a4c331211).
 
 ## General Guidelines
 
@@ -25,7 +25,7 @@ All trailing whitespace should be removed (unless in a TSV, where a trailing tab
     String docker = "us-docker.pkg.dev/docker_image:version"
     ```
 
-- Preferentially use containers [`Google's Artifact Registry`](https://console.cloud.google.com/artifacts/docker/general-theiagen/us) rather than those from [`quay.io`](http://quay.io) or [`dockerhub`](https://hub.docker.com/)
+- Preferentially use containers from [`Google's Artifact Registry`](https://console.cloud.google.com/artifacts/docker/general-theiagen/us) rather than those from [`quay.io`](http://quay.io) or [`dockerhub`](https://hub.docker.com/)
 
 ***Indentation and Whitespace***
 
@@ -246,7 +246,7 @@ input {
 
 ### The `call` sections
 
-- Import task files as something other than the included task nam in order to avoid namespace conflicts
+- Import task files as something other than the included task name in order to avoid namespace conflicts
 
 ```bash
 call task1_task.task1 {
@@ -288,7 +288,7 @@ output {
       input {
         String input
         String task1_docker = "us-docker.pkg.dev/general-theiagen/task_1:version"
-        String task2_docker = "us-docker.pkg.dev/general-theiagen//task_2:version"
+        String task2_docker = "us-docker.pkg.dev/general-theiagen/task_2:version"
         String? hidden_task3_argument
         String? hidden_task3_docker
         String? hidden_task4_docker
@@ -307,7 +307,7 @@ output {
         input:
           input = input,
           task3_argument = hidden_task3_argument,
-          task3_docker = hidden_task3_docker
+          task3_docker = hidden_task3_docker,
           task4_docker = hidden_task4_docker
       }
       output {

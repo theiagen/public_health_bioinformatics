@@ -3,7 +3,7 @@ title: Task Fragment `racon`
 fragment: true
 ---
 ??? task "`Racon`: Polishing of Flye assembly (alternative; optional)"
-    Polishing is optional and can be skipped by setting the `skip_polishing` variable to true. If polishing is skipped, then neither Medaka or Racon will run.
+    Polishing is optional and can be skipped by setting the `skip_polishing` variable to true. If polishing is skipped, then neither Medaka nor Racon will run.
 
     Racon is an alternative to using Medaka for assembly polishing, and can be run by setting the `polisher` input to "racon". Racon is a consensus algorithm designed for refining raw de novo DNA assemblies generated from long, uncorrected sequencing reads.
 

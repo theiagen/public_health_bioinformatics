@@ -6,9 +6,9 @@
 
 ## Snippy_Streamline_PHB
 
-!!! caption "Snippy_Streamline_PHB Workflow Diagram"
+!!! caption "Snippy_Streamline_PHB Workflow Overview"
     <div style="text-align: center;">
-    ![Snippy_Streamline_PHB Workflow Diagram](../../assets/figures/Snippy_Streamline.png){: onload="this.width/=2;this.onload=null;" }
+    ![Workflow diagram showing Snippy_Streamline, which takes FASTQ reads and a reference genome through Snippy_Variants and Snippy_Tree modules to produce a phylogenetic tree, SNP-distance matrix, final alignment, and recombination predictions.](../../assets/figures/Snippy_Streamline.png){: onload="this.width/=2;this.onload=null;" }
     </div>
 
 The `Snippy_Streamline` workflow is an all-in-one approach to generating a reference-based phylogenetic tree and associated SNP-distance matrix. The workflow can be run in multiple ways.
@@ -52,19 +52,19 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
 !!! tip "Guidance for optional inputs"
 
     Several core and optional tasks can be used to generate the Snippy phylogenetic tree, making it highly flexible and suited to a wide range of datasets. You will need to decide which tasks to use depending on the genomes that you are analyzing. Some guidelines for the optional tasks to use for different genome types are provided below.
-    
+
     ??? toggle "Default settings (suitable for most bacteria)"
-    
+
         The default settings are as follows and are suitable for generating phylogenies for most bacteria
-        
+
         - `core_genome` = true (creates core genome phylogeny)
         - `use_gubbins` = true (recombination masked)
         - nucleotide substitution model will be defined by IQTree's Model Finder
-    
+
     ??? toggle "Phylogenies of _Mycobacterium tuberculosis_ complex"
-    
+
         Phylogenies of MTBC are typically constructed with the following options:
-        
+
         - Using the H37Rv reference genome
             - `reference_genome_file` = `"gs://theiagen-public-resources-rp/reference_data/bacterial/mycobacterium/MTB-NC_000962.3.fasta"`
         - Masking repetitive regions of the genome (e.g. PE/PPE genes) that are often misaligned
@@ -108,7 +108,7 @@ To run Snippy_Streamline, either a reference genome must be provided (`reference
     ==**Please see the full documentation for [Snippy_Tree](./snippy_tree.md) for more information.**==
 
 !!! tip "Gubbins Nucleotide Substitution Model"
-    In Snippy Streamline, the nucleotide substitution model used by gubbins will always be **GTR+GAMMA**.
+    In Snippy_Streamline, the nucleotide substitution model used by gubbins will always be **GTR+GAMMA**.
 
 {{ include_md("common_text/snippy_core_task.md", condition="snippy_streamline") }}
 {{ include_md("common_text/gubbins_task.md", condition="snippy_streamline") }}

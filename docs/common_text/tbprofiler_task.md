@@ -7,7 +7,7 @@ fragment: true
 
     TBProfiler aligns the input reads to the H37Rv (NC_000962.3/AL123456.3) reference genome with BWA `mem` (or Minimap2) and then calls variants using GATK (default), though other options are available (BCFtools, FreeBayes, LoFreq, Pilon). After mutations are called and filtered, they are compared against [TBProfiler's database (TBDB)](https://github.com/jodyphelan/tbdb).
 
-    A number of outputs are made available from TBProfiler, all of which can be found in the summary results JSON file. Although the JSON file contains the most information, it is not very human readable, which is why the results CSV and TXT files have been made available to the user as outputs. TBProfiler is able to detect the identified lineage and any sublineages, determine the predicted type of drug resistance, a lists the genes that are associated with resistance, along with several other useful outputs.     
+    A number of outputs are made available from TBProfiler, all of which can be found in the summary results JSON file. Although the JSON file contains the most information, it is not very human readable, which is why the results CSV and TXT files have been made available to the user as outputs. TBProfiler is able to detect the identified lineage and any sublineages, determine the predicted type of drug resistance, list the genes that are associated with resistance, along with several other useful outputs.     
 
     !!! techdetails "TBProfiler Technical Details"
         |  | Links |
