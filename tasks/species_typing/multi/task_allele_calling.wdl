@@ -56,7 +56,7 @@ task allele_calling {
 
     # move all results to the original directory for miniwdl/cromwell
     # and then change to that directory for output parsing
-    cp *.gz *.json ${ORIGINAL_DIR}
+    cp *.gz *.json *.bam ${ORIGINAL_DIR}
     cd $ORIGINAL_DIR
 
     # print the outputs json to stdout for debugging purposes
