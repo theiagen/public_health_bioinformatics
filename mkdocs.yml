@@ -132,7 +132,6 @@ nav:
                   - kSNP3: workflows/phylogenetic_construction/ksnp3.md
                   - kSNP4: workflows/phylogenetic_construction/ksnp4.md
                   - MashTree_FASTA: workflows/phylogenetic_construction/mashtree_fasta.md
-                  - NCBI-AMRFinderPlus: workflows/standalone/ncbi_amrfinderplus.md
                   - Snippy_Variants: workflows/phylogenetic_construction/snippy_variants.md
                   - Terra_2_NCBI: workflows/public_data_sharing/terra_2_ncbi.md
                   - TheiaEuk Workflow Series: workflows/genomic_characterization/theiaeuk.md
