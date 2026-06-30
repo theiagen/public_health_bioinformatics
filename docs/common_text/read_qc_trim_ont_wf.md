@@ -16,7 +16,7 @@ fragment: true
 <!-- if: theiaprok -->
     !!! dna "A note on estimated genome length and Rasusa"
 
-        Genome length is no longer set to 5 mb by default. This results in `Rasusa` being optional unless one of the following inputs are provided; `genome_length`, `rasusa_num_bases`, `rasusa_fraction_of_reads`, or `rasusa_num_reads`.
+        Previously, `genome_length` was defaulted to 5 Mb, which caused Rasusa to run on every sample. That default has been removed, so Rasusa is now skipped unless the user explicitly requests downsampling by setting one of the following: `genome_length`, `rasusa_num_bases`, `rasusa_fraction_of_reads`, or `rasusa_num_reads`. To downsample by coverage, please provide the genome length of your expected taxa. Downsampling is beneficial when coverage exceeds ~150x as this can increase assembly time, computational costs, and can introduce errors. 
 
 {{ include_md("common_text/rasusa_task.md", indent=4, condition="ont") }}
 
