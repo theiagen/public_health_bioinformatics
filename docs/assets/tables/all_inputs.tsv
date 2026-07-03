@@ -559,15 +559,15 @@ concatenate_qc_metrics	docker_image	String	The Docker container to use for the t
 concatenate_qc_metrics	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	Snippy_Tree	runtime	
 concatenate_variants	docker_image	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/utility:1.1	Optional	Snippy_Tree	docker	
 consensus	char_unknown	String	Character used to represent unknown bases in the consensus sequence	N	Optional	TheiaViral_Illumina_PE	general	
+consensus	clair3_model	String	Default variant calling model	r1041_e82_400bps_sup_v500	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	general	
 consensus	count_orphans	Boolean	True/False that determines if anomalous read pairs are NOT skipped in variant calling. Anomalous read pairs are those marked in the FLAG field as paired in sequencing but without the properly-paired flag set.	True	Optional	TheiaViral_Illumina_PE	general	
 consensus	cpu	Int	Number of CPUs to allocate to the task	8	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 consensus	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_Illumina_PE	runtime	
 consensus	disable_baq	Boolean	True/False that determines if base alignment quality (BAQ) computation should be disabled during `samtools mpileup` before consensus generation	True	Optional	TheiaViral_Illumina_PE	general	
 consensus	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT, TheiaViral_Illumina_PE	runtime	
-consensus	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019-epi2me	Optional	TheiaCoV_ONT	docker	
+consensus	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0	Optional	TheiaCoV_ONT	docker	
 consensus	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/ivar:1.3.1-titan	Optional	TheiaViral_Illumina_PE	docker	
 consensus	max_depth	Int	For a given position, read at maximum INT number of reads per input file during `samtools mpileup` before consensus generation	600000	Optional	TheiaViral_Illumina_PE	general	
-consensus	medaka_model	String	In order to obtain the best results, the appropriate model must be set to match the sequencer's basecaller model; this string takes the format of {pore}{device}{caller variant}_{caller_version}. See also <https://github.com/nanoporetech/medaka?tab=readme-ov-file#models>.	r941_min_high_g360	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	general	
 consensus	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaCoV_ClearLabs, TheiaCoV_ONT	runtime	
 consensus	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaViral_Illumina_PE	runtime	
 consensus	min_bq	Int	Minimum base quality required for a base to be considered during `samtools mpileup` before consensus generation	0	Optional	TheiaViral_Illumina_PE	general	
@@ -596,9 +596,9 @@ core_iqtree	alrt	Int	Number of replicates to use for the SH-like approximate lik
 core_iqtree	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Core_Gene_SNP	runtime	
 core_iqtree	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime	
 core_iqtree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7	Optional	Core_Gene_SNP	docker	
-core_iqtree	iqtree_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
-core_iqtree	iqtree_opts	String	Additional options for IQ-TREE, see <https://iqtree.github.io/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
-core_iqtree	iqtree_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
+core_iqtree	iqtree2_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
+core_iqtree	iqtree2_opts	String	Additional options for IQ-TREE, see <https://iqtree.github.io/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
+core_iqtree	iqtree2_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 core_iqtree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Core_Gene_SNP	runtime	
 core_ksnp3_shared_snps_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	kSNP3	runtime	
 core_ksnp4_shared_snps_task	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	kSNP4	runtime	
@@ -617,7 +617,7 @@ core_snp_sites	docker	String	Docker image to use for the task	us-docker.pkg.dev/
 core_snp_sites	memory	Int	Amount of memory (in GB) to allocate to the task	2	Optional	Core_Gene_SNP	runtime	
 create_microreact_project	cpu	Int	Number of CPUs to allocate to the task	2	Optional	Microreact_Export	runtime	
 create_microreact_project	disk_size	Int	Amount of storage (in GB) to allocate to the task	10	Optional	Microreact_Export	runtime	
-create_microreact_project	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/microreact_export:1.0.0	Optional	Microreact_Export	docker	
+create_microreact_project	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/microreact_export:1.0.1	Optional	Microreact_Export	docker	
 create_microreact_project	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	4	Optional	Microreact_Export	runtime	
 create_table_from_array	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Dorado_Basecalling	runtime	
 create_table_from_array	disk_size	Int	Amount of storage (in GB) to allocate to the task	25	Optional	Dorado_Basecalling	runtime	
@@ -1648,7 +1648,7 @@ nanoplot_raw	max_length	Int	The maximum length of clean reads, for which reads l
 nanoplot_raw	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Freyja_FASTQ, TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT, TheiaViral_ONT	runtime	
 nanoq	cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaViral_ONT	runtime	
 nanoq	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaViral_ONT	runtime	
-nanoq	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1	Optional	TheiaViral_ONT	docker	
+nanoq	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.10.0--hc1c3326_4	Optional	TheiaViral_ONT	docker	
 nanoq	max_read_length	Int	Maximum read length to keep	100000	Optional	TheiaViral_ONT	general	
 nanoq	max_read_qual	Int	Maximum read quality to keep	100	Optional	TheiaViral_ONT	general	
 nanoq	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaViral_ONT	runtime	
@@ -1731,9 +1731,9 @@ pan_iqtree	alrt	Int	Number of replicates to use for the SH-like approximate like
 pan_iqtree	cpu	Int	Number of CPUs to allocate to the task	4	Optional	Core_Gene_SNP	runtime	
 pan_iqtree	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP	runtime	
 pan_iqtree	docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree:1.6.7	Optional	Core_Gene_SNP	docker	
-pan_iqtree	iqtree_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
-pan_iqtree	iqtree_opts	String	Additional options for IQ-TREE, see <https://iqtree.github.io/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
-pan_iqtree	iqtree_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
+pan_iqtree	iqtree2_model	String	Substitution model, frequency type (optional) and rate heterogeneity type (optional) used by IQ-TREE. This string follows the IQ-TREE "-m" option. For comparison to other tools use HKY for Bactopia, GTR+F+I for Grandeur, GTR+G4 for Nullarbor, GTR+G for Dryad	GTR+I+G	Optional	Core_Gene_SNP	general	
+pan_iqtree	iqtree2_opts	String	Additional options for IQ-TREE, see <https://iqtree.github.io/doc/Command-Reference>		Optional	Core_Gene_SNP	general	
+pan_iqtree	iqtree2_ultrafast_bootstraps	Int	Number of ultrafast bootstrap replicates. Follows IQ-TREE "-bb" option.	1000	Optional	Core_Gene_SNP	general	
 pan_iqtree	memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Core_Gene_SNP	runtime	
 pan_reorder_matrix	cpu	Int	Number of CPUs to allocate to the task	1	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
 pan_reorder_matrix	disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Core_Gene_SNP, kSNP3, kSNP4	runtime	
@@ -1892,8 +1892,8 @@ read_QC_trim	artic_guppyplex_cpu	Int	Number of CPUs to allocate to the task	8	Op
 read_QC_trim	artic_guppyplex_cpu	Int	Internal component, do not modify	8	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	artic_guppyplex_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT	runtime	
 read_QC_trim	artic_guppyplex_disk_size	Int	Internal component, do not modify	100	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
-read_QC_trim	artic_guppyplex_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3	Optional	TheiaCoV_ONT	docker	
-read_QC_trim	artic_guppyplex_docker	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
+read_QC_trim	artic_guppyplex_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0	Optional	TheiaCoV_ONT	docker	
+read_QC_trim	artic_guppyplex_docker	String	Internal component, do not modify	us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	artic_guppyplex_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	TheiaCoV_ONT	runtime	
 read_QC_trim	artic_guppyplex_memory	Int	Internal component, do not modify	16	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	bbduk_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	8	Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	runtime	
@@ -1929,7 +1929,7 @@ read_QC_trim	min_expected_contaminants	Int	Minimum expected sequences detected f
 read_QC_trim	min_length	Int	Internal component, do not modify	400	Optional	TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	nanoq_cpu	Int	Number of CPUs to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
 read_QC_trim	nanoq_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
-read_QC_trim	nanoq_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	docker	
+read_QC_trim	nanoq_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.10.0--hc1c3326_4	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	docker	
 read_QC_trim	nanoq_max_read_length	Int	The maximum read length to keep after trimming	100000	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	nanoq_max_read_qual	Int	The maximum read quality to keep after trimming	100	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	general	
 read_QC_trim	nanoq_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	TheiaCoV_ONT, TheiaEuk_ONT, TheiaProk_ONT	runtime	
@@ -1973,7 +1973,7 @@ read_QC_trim	trim_window_size	Int	Specifies window size for trimming (the number
 read_QC_trim	trimmomatic_override_args	String	Additional arguments to pass to trimmomatic. Can be used to override all trimming parameters		Optional	TheiaCoV_Illumina_PE, TheiaCoV_Illumina_SE, TheiaEuk_Illumina_PE, TheiaMeta_Illumina_PE, TheiaProk_Illumina_PE, TheiaProk_Illumina_SE	general	
 read_QC_trim_ont	artic_guppyplex_cpu	Int	Number of CPUs to allocate to the task	8	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	artic_guppyplex_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_ont	artic_guppyplex_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3	Optional	Freyja_FASTQ	docker	
+read_QC_trim_ont	artic_guppyplex_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0	Optional	Freyja_FASTQ	docker	
 read_QC_trim_ont	artic_guppyplex_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	16	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	genome_length	Int	Length of the genome	5000000	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	max_length	Int	Internal component, do not modify	700	Optional	Freyja_FASTQ	general	
@@ -1986,7 +1986,7 @@ read_QC_trim_ont	metabuli_taxdump_path	File	Path to taxonkit-generated taxdump f
 read_QC_trim_ont	min_length	Int	Internal component, do not modify	400	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	nanoq_cpu	Int	Number of CPUs to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
 read_QC_trim_ont	nanoq_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Freyja_FASTQ	runtime	
-read_QC_trim_ont	nanoq_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.9.0--hec16e2b_1	Optional	Freyja_FASTQ	docker	
+read_QC_trim_ont	nanoq_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/biocontainers/nanoq:0.10.0--hc1c3326_4	Optional	Freyja_FASTQ	docker	
 read_QC_trim_ont	nanoq_max_read_length	Int	Maximum read length to use for filtering	100000	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	nanoq_max_read_qual	Int	Maximum read quality to use for filtering	100	Optional	Freyja_FASTQ	general	
 read_QC_trim_ont	nanoq_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	2	Optional	Freyja_FASTQ	runtime	
@@ -2178,7 +2178,7 @@ snippy_tree_wf	gubbins_docker	String	The Docker container to use for the task	us
 snippy_tree_wf	gubbins_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_cpu	Int	Number of CPUs to allocate to the task	4	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_disk_size	Int	Amount of storage (in GB) to allocate to the task	100	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
-snippy_tree_wf	iqtree2_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.1.2	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
+snippy_tree_wf	iqtree2_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/iqtree2:2.4.0	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	docker	
 snippy_tree_wf	iqtree2_memory	Int	Amount of memory/RAM (in GB) to allocate to the task	32	Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	runtime	
 snippy_tree_wf	iqtree2_model	String	Nucelotide substitution model to use when generating the final tree with IQ-TREE 2. By default, IQ-TREE 2 runs its ModelFinder algorithm to identify the model it thinks best fits your dataset		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
 snippy_tree_wf	iqtree2_opts	String	Additional options to pass to IQ-TREE 2		Optional	Snippy_Streamline, Snippy_Streamline_FASTA, Snippy_Tree	general	
@@ -2315,10 +2315,10 @@ Terra_2_NCBI	column_mapping_file	File	TSV file mapping Terra table columns to NC
 Terra_2_NCBI	input_table	File	Internal component, do not modify		Optional	Terra_2_NCBI	general	
 Terra_2_NCBI	skip_biosample	Boolean	Boolean switch to turn on actual production level submission	False	Optional	Terra_2_NCBI	general	
 Terra_2_NCBI	submit_to_production	Boolean	Used to indicate whether or not the workflow should submit to NCBI's production environment. If set to true, then a Production submission will occur. Otherwise, by default (false), it will perform a Test submission.	False	Optional, Required	Terra_2_NCBI	general	True
-theiacov_clearlabs	medaka_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/staphb/artic-ncov2019:1.3.0-medaka-1.4.3	Optional	TheiaCoV_ClearLabs	docker	
+theiacov_clearlabs	artic_docker	String	The Docker container to use for the task	us-docker.pkg.dev/general-theiagen/theiagen/artic:1.9.0	Optional	TheiaCoV_ClearLabs	docker	
 theiacov_clearlabs	nextclade_dataset_name	String	Nextclade organism dataset names. However, if organism input is set correctly, this input will be automatically assigned the corresponding dataset name. See organism defaults for more information	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_ClearLabs	general	True
 theiacov_clearlabs	nextclade_dataset_tag	String	Nextclade dataset tag. Used for pulling up-to-date reference genomes and associated information specific to nextclade datasets (QC thresholds, organism-specific information like SARS-CoV-2 clade & lineage information, etc.) that is required for running the Nextclade tool.	Defaults are organism-specific. Please find default values for all organisms (and for Flu - their respective genome segments) here: <https://github.com/theiagen/public_health_bioinformatics/blob/main/workflows/utilities/wf_organism_parameters.wdl>	Optional	TheiaCoV_ClearLabs	general	True
-theiacov_clearlabs	normalise	Int	Used to normalize the amount of reads to the indicated level before variant calling	20000	Optional	TheiaCoV_ClearLabs	general	
+theiacov_clearlabs	normalise	Int	Used to normalize the amount of reads to the indicated level before variant calling - "0" disables downsampling	0	Optional	TheiaCoV_ClearLabs	general	
 theiacov_clearlabs	organism	String	The organism that is being analyzed. Options: "sars-cov-2", "MPXV", "WNV", "HIV", "flu", "rsv_a", "rsv_b". However, "flu" is not available for TheiaCoV_Illumina_SE	sars-cov-2	Optional	TheiaCoV_ClearLabs	general	
 theiacov_clearlabs	qc_check_table	File	TSV value with taxons for rows and QC values for columns; internal cells represent user-determined QC thresholds; if provided, turns on the QC Check task. See below for an example QC Check table.		Optional	TheiaCoV_ClearLabs	general	
 theiacov_clearlabs	reference_genome	File	An optional reference genome used for consensus assembly and QC		Optional	TheiaCoV_ClearLabs	general	
