@@ -186,7 +186,7 @@ Options:
 
     - **Database Creation Workflow**
          
-        The v3.0.0 GTDB GAMBIT Database was created leveraging [GAMBITdb-nf workflow](https://github.com/gambit-suite/gambitdb-nf), version 1.1.2. This workflow creates GAMBIT databases automatically from GTDB metadata spreadhseets. The process followed was:
+        The v3.0.0 GTDB GAMBIT Database was created leveraging [GAMBITdb-nf workflow](), version 1.1.2. This workflow creates GAMBIT databases automatically from GTDB metadata spreadhseets. The process followed was:
 
         1. The bacterial metadata spreadsheet for GTDB r232 was downloaded from <https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/bac120_metadata_r232.tsv.gz> 
         2. Metagenomic Assembled Genomes (MAGs) were filtered out from the metadata spreadsheet by removing all genome entries that contained the word "metagenome" in the `ncbi_genome_category`column
@@ -227,7 +227,7 @@ Options:
 
                     2. synonym-match best-match-status
 
-                3. The database was created leveraging [GAMBITdb-nf workflow](https://github.com/gambit-suite/gambitdb-nf), version 1.1.2, with the following parameters:
+                3. The database was created leveraging [GAMBITdb-nf workflow](), version 1.1.2, with the following parameters:
 
                     1. _Completeness_: This parameter was left at the default value of `97`, the same as v2 database creation
 
@@ -257,7 +257,7 @@ Options:
 
             - To add this species to the v3.0.0 database, the filtered input spreadsheet was used as a base, where MAGs have been filtered out, to produce a metadata spreadsheet containing only this species
 
-            - A new database was created with [GAMBITdb-nf workflow](https://github.com/gambit-suite/gambitdb-nf), version 1.1.2, with the following parameters:
+            - A new database was created with [GAMBITdb-nf workflow](), version 1.1.2, with the following parameters:
 
                 1. _Completeness_: This parameter was adjusted to value of `70`
 
