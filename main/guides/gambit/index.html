@@ -895,6 +895,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#gambit-gtdb-database-v300" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        GAMBIT GTDB Database v3.0.0
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gambit-gtdb-database-v220" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -6904,6 +6915,17 @@
       <ul class="md-nav__list">
         
           <li class="md-nav__item">
+  <a href="#gambit-gtdb-database-v300" class="md-nav__link">
+    <span class="md-ellipsis">
+      <span class="md-typeset">
+        GAMBIT GTDB Database v3.0.0
+      </span>
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
   <a href="#gambit-gtdb-database-v220" class="md-nav__link">
     <span class="md-ellipsis">
       <span class="md-typeset">
@@ -7294,7 +7316,7 @@
 <li>
 <p><span class="twemoji"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 3C7.58 3 4 4.79 4 7s3.58 4 8 4 8-1.79 8-4-3.58-4-8-4M4 9v3c0 2.21 3.58 4 8 4s8-1.79 8-4V9c0 2.21-3.58 4-8 4s-8-1.79-8-4m0 5v3c0 2.21 3.58 4 8 4s8-1.79 8-4v-3c0 2.21-3.58 4-8 4s-8-1.79-8-4"/></svg></span> <strong>Latest Database Version</strong></p>
 <hr />
-<p><a href="#gambit-gtdb-database-v220">GAMBIT Prokaryotic GTDB Database v2.2.0</a></p>
+<p><a href="#gambit-gtdb-database-v300">GAMBIT Prokaryotic GTDB Database v3.0.0</a></p>
 <p><a href="#gambit-fungal-database-v100">GAMBIT Fungal Database v1.0.0</a></p>
 </li>
 </ul>
@@ -7406,6 +7428,179 @@
 <p>A billing project <strong>must</strong> be provided in the request to download; otherwise, the following links and GS URIs will not work.</p>
 </div>
 <h3 id="gambit-prokaryotic-databases">GAMBIT Prokaryotic Databases<a class="headerlink" href="#gambit-prokaryotic-databases" title="Permanent link">&para;</a></h3>
+<h4 id="gambit-gtdb-database-v300">GAMBIT GTDB Database v3.0.0<a class="headerlink" href="#gambit-gtdb-database-v300" title="Permanent link">&para;</a></h4>
+<details class="toggle">
+<summary>Database Details</summary>
+<p>This database is a <strong>major update</strong> to the GTDB v2.2.0 database. This iteration of the GAMBIT database relies upon the <a href="https://gtdb.ecogenomic.org/">Genome Taxonomy Database</a> (GTDB), an initiative to establish a standardised microbial taxonomy based on genome phylogeny. The genomes used to construct the phylogeny are obtained from <a href="https://www.ncbi.nlm.nih.gov/refseq/">RefSeq</a> and <a href="https://www.ncbi.nlm.nih.gov/genbank/">GenBank</a>, independently quality-controlled using <a href="https://github.com/Ecogenomics/CheckM/wiki">CheckM</a> before inclusion in GTDB.</p>
+<p>This database was computed from <a href="https://gtdb.ecogenomic.org/stats/r232">GTDB Release 232</a> as of April 15th, 2025. It contains 8661 species and 144178 genomes. </p>
+<ul>
+<li>
+<p><strong>Database Creation Workflow</strong></p>
+<p>The v3.0.0 GTDB GAMBIT Database was created leveraging <a href="">GAMBITdb-nf workflow</a>, version 1.1.2. This workflow creates GAMBIT databases automatically from GTDB metadata spreadhseets. The process followed was:</p>
+<ol>
+<li>The bacterial metadata spreadsheet for GTDB r232 was downloaded from <a href="https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/bac120_metadata_r232.tsv.gz">https://data.gtdb.aau.ecogenomic.org/releases/release232/232.0/bac120_metadata_r232.tsv.gz</a> </li>
+<li>Metagenomic Assembled Genomes (MAGs) were filtered out from the metadata spreadsheet by removing all genome entries that contained the word "metagenome" in the <code>ncbi_genome_category</code>column</li>
+<li>
+<p>The database was created with the following parameters:</p>
+<ol>
+<li>
+<p><em>Completeness</em>: This parameter was left at the default value of <code>97</code>, the same as v2 database creation</p>
+</li>
+<li>
+<p><em>Contamination</em>: This parameter was left at the default value of <code>3</code>, the same as v2 database creation</p>
+</li>
+<li>
+<p><em>Max contigs</em>: This parameter was left at the default value of <code>100</code>, the same as v2 database creation</p>
+</li>
+<li>
+<p><em>Jaccard distance</em>: changed to <code>rowwise-stream</code> for speed</p>
+</li>
+<li>
+<p><em>Taxonomy source</em>: GTDB with whitelist file provided</p>
+</li>
+</ol>
+</li>
+<li>
+<p>The following genus were whitelisted</p>
+<ol>
+<li>
+<p><em>Escherichia</em></p>
+</li>
+<li>
+<p><em>Salmonella</em></p>
+</li>
+<li>
+<p><em>Mycobacterium</em></p>
+</li>
+<li>
+<p><em>Proteus</em></p>
+</li>
+</ol>
+</li>
+</ol>
+</li>
+<li>
+<p><strong>Curation efforts</strong></p>
+<p>The following curation steps were followed:</p>
+<ul>
+<li>
+<p><em>Eschrichia</em> and <em>Shigella</em></p>
+<ul>
+<li>
+<p>A new database for just genomes classified as either <em>Escherichia</em> or <em>Shigella</em> in the <code>ncbi_taxonomy</code>column was created though the following steps:</p>
+<ol>
+<li>
+<p>The metadata spreadsheet for GTDB r232 was filtered to contain only non-MAG genomes for these two genuses based on NCBI taxonomy call</p>
+</li>
+<li>
+<p>The NCBI ANI report for prokaryotes was downloaded from <a href="https://ftp.ncbi.nlm.nih.gov/genomes/ASSEMBLY_REPORTS/ANI_report_prokaryotes.txt">https://ftp.ncbi.nlm.nih.gov/genomes/ASSEMBLY_REPORTS/ANI_report_prokaryotes.txt</a> and all <em>Escherichia</em> or <em>Shigella</em> genomes with the following contiditions were removed from the GTDB metadata spreadsheet</p>
+<ol>
+<li>
+<p>non-OK taxonomy-check-status</p>
+</li>
+<li>
+<p>synonym-match best-match-status</p>
+</li>
+</ol>
+</li>
+<li>
+<p>The database was created leveraging <a href="">GAMBITdb-nf workflow</a>, version 1.1.2, with the following parameters:</p>
+<ol>
+<li>
+<p><em>Completeness</em>: This parameter was left at the default value of <code>97</code>, the same as v2 database creation</p>
+</li>
+<li>
+<p><em>Contamination</em>: This parameter was left at the default value of <code>3</code>, the same as v2 database creation</p>
+</li>
+<li>
+<p><em>Max contigs</em>: This parameter was left at the default value of <code>100</code>, the same as v2 database creation</p>
+</li>
+<li>
+<p><em>Jaccard distance</em>: changed to <code>rowwise-stream</code> for speed</p>
+</li>
+<li>
+<p><em>Taxonomy source</em>: NCBI</p>
+</li>
+</ol>
+</li>
+<li>
+<p>This new database was merged with GAMBIT Database v3.0.0 by removing the pre-existing <em>Escherichia</em>/<em>Shigella</em> genomes and appending the new database</p>
+<p>a. There were 5 genomes that the original v3.0.0 DB called <em>Enterbacter flexneri_A</em>, but the <em>Esherichia</em>/<em>Shigella</em> build labeled as <em>Escherichia coli</em>. To avoid misclassifications, these were removed.</p>
+</li>
+</ol>
+</li>
+</ul>
+</li>
+<li>
+<p><em>Enterbacter flexneri_A</em></p>
+<ul>
+<li>The <em>Enterobacter flexneri_A</em> species was removed outright from v3.0.0 GAMBIT Database as this cluster was composed mostly of genomes that are classified <em>Escherichia coli</em> in NCBI but are low quality.</li>
+</ul>
+</li>
+<li>
+<p><em>Enterobacter</em> sp.</p>
+<ul>
+<li>After manual curation of the species calls, it was decided that GTDB-defined clusters were to be silenced by turning the report boolean to FALSE. An exception was made for <em>Enterobacter hormaechei_C</em> as it clusters with <em>Enterobacter hormaechei</em>.</li>
+</ul>
+</li>
+<li>
+<p><em>Tropheryma whipplei</em></p>
+<ul>
+<li>
+<p>This species has a low completeness score of around 75% and over 100 contigs, therefore it has not been included in the original v3.0.0 database</p>
+</li>
+<li>
+<p>To add this species to the v3.0.0 database, the filtered input spreadsheet was used as a base, where MAGs have been filtered out, to produce a metadata spreadsheet containing only this species</p>
+</li>
+<li>
+<p>A new database was created with <a href="">GAMBITdb-nf workflow</a>, version 1.1.2, with the following parameters:</p>
+<ol>
+<li>
+<p><em>Completeness</em>: This parameter was adjusted to value of <code>70</code></p>
+</li>
+<li>
+<p><em>Contamination</em>: This parameter was left at the default value of <code>3</code>, the same as v2 database creation</p>
+</li>
+<li>
+<p><em>Max contigs</em>: This parameter was adjusted to value of <code>200</code></p>
+</li>
+<li>
+<p><em>Jaccard distance</em>: changed to <code>rowwise-stream</code> for speed</p>
+</li>
+<li>
+<p><em>Taxonomy source</em>: GTDB</p>
+</li>
+</ol>
+</li>
+<li>
+<p>This database was merged with the existing v3.0.0 GAMBIT database</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p><strong>Database Files</strong></p>
+<p>These database files are hosted in a public "Requester Pays" Google bucket by Theiagen Genomics:</p>
+<p><strong>GS URI (for <a href="https://terra.bio">Terra.bio</a> usage):</strong></p>
+<ul>
+<li><code>gs://gambit-databases-rp/3.0.0/gambit-metadata-3.0.0-20260601.gdb</code></li>
+<li><code>gs://gambit-databases-rp/3.0.0/gambit-signatures-3.0.0-20260601.gs</code></li>
+</ul>
+<p><strong>HTTPS URL (for local download):</strong></p>
+<ul>
+<li><a href="https://storage.googleapis.com/gambit-databases-rp/3.0.0/gambit-metadata-3.0.0-20260601.gdb">https://storage.googleapis.com/gambit-databases-rp/3.0.0/gambit-metadata-3.0.0-20260601.gdb</a></li>
+<li><a href="https://storage.googleapis.com/gambit-databases-rp/3.0.0/gambit-signatures-3.0.0-20260601.gs">https://storage.googleapis.com/gambit-databases-rp/3.0.0/gambit-signatures-3.0.0-20260601.gs</a></li>
+</ul>
+<p><strong>Taxa included in the GAMBIT database</strong></p>
+<p>Summary of species represented in the database with number of genomes representing each species and the species threshold:</p>
+<ul>
+<li>
+<p><a href="https://storage.googleapis.com/gambit-databases-rp/3.0.0/gambit-taxa-3.0.0-20260601.csv">https://storage.googleapis.com/gambit-databases-rp/3.0.0/gambit-taxa-3.0.0-20260601.csv</a></p>
+<p>Note: Species with a threshold of "0" have been sub-speciated.</p>
+</li>
+</ul>
+</details>
 <h4 id="gambit-gtdb-database-v220">GAMBIT GTDB Database v2.2.0<a class="headerlink" href="#gambit-gtdb-database-v220" title="Permanent link">&para;</a></h4>
 <details class="toggle">
 <summary>Database Details</summary>
