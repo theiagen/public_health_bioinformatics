@@ -15,16 +15,16 @@ fragment: true
 
     | Sample Name | my_input_column |
     | --- | --- |
-    | sample1 | aph(3')-IIa,blacOXA-193,tet(0) |
-    | sample2 | tet(0) |
+    | sample1 | aph(3')-IIa,blacOXA-193 |
+    | sample2 | blaCTX-M-65,tet(0) |
     | sample3 | blaCTX-M-65 |
 
     The output CSV would appear as follows:
 
     ```text linenums="1"
     Sample_Name,aph(3')-IIa,blaCTX-M-65,blaOXA-193,tet(O)
-    sample1,TRUE,,TRUE,TRUE
-    sample2,,,,TRUE
+    sample1,TRUE,,TRUE,
+    sample2,,TRUE,,TRUE
     sample3,,TRUE,,
     ```
 

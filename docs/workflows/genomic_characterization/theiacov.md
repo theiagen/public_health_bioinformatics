@@ -1,4 +1,4 @@
-# TheiaCoV Workflow Series
+# TheiaCoV™ Workflow Series
 
 ## Quick Facts
 

@@ -1,4 +1,4 @@
-# TheiaProk Workflow Series
+# TheiaProk™ Workflow Series
 
 ## Quick Facts
 

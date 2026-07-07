@@ -1,4 +1,4 @@
-# TheiaViral Workflow Series
+# TheiaViral™ Workflow Series
 
 ## Quick Facts
 

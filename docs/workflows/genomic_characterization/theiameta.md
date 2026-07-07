@@ -1,4 +1,4 @@
-# TheiaMeta
+# TheiaMeta™
 
 ## Quick Facts
 

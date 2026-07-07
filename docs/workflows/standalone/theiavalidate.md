@@ -1,4 +1,4 @@
-# TheiaValidate
+# TheiaValidate™
 
 ## Quick Facts
 

@@ -1,4 +1,4 @@
-# TheiaEuk Workflow Series
+# TheiaEuk™ Workflow Series
 
 ## Quick Facts
 
