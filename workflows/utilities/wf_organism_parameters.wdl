@@ -168,7 +168,7 @@ workflow organism_parameters {
         String yam_ha_clades_tsv = "gs://theiagen-public-resources-rp/reference_data/viral/flu/clades_yam_ha.tsv"
         String yam_ha_auspice_config = "gs://theiagen-public-resources-rp/reference_data/viral/flu/auspice_config_yam_20251030.json"
       }
-      if (flu_subtype == "H5N1") {
+      if (sub(flu_subtype, "^H5N.*$", "MATCH") == "MATCH" || flu_subtype == "H5") {
         # H5N1 is a special case where the dataset used is the h5nx all clades dataset
         String h5n1_ha_reference = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.fasta"
         String h5n1_ha_reference_gbk = "gs://theiagen-public-resources-rp/reference_data/viral/flu/reference_h5n1_ha.gb"

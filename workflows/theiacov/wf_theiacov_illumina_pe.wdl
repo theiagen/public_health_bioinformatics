@@ -369,10 +369,12 @@ workflow theiacov_illumina_pe {
     Int? number_Degenerate =  consensus_qc.number_Degenerate
     Int? number_Total = consensus_qc.number_Total
     Float? percent_reference_coverage =  consensus_qc.percent_reference_coverage
-    # SC2 specific coverage outputs
+    # Gene coverage outputs
+    Map[String, Float]? gene_coverage_depth_by_gene = morgana_magic.gene_coverage_depth_by_gene
+    Map[String, Float]? gene_coverage_percent_coverage_by_gene = morgana_magic.gene_coverage_percent_coverage_by_gene
     Float? sc2_s_gene_mean_coverage = morgana_magic.sc2_s_gene_mean_coverage
     Float? sc2_s_gene_percent_coverage = morgana_magic.sc2_s_gene_percent_coverage
-    File? est_percent_gene_coverage_tsv = morgana_magic.est_percent_gene_coverage_tsv
+    File? est_percent_gene_coverage_tsv = morgana_magic.gene_coverage_stats
     # Pangolin outputs
     String? pango_lineage = morgana_magic.pango_lineage
     String? pango_lineage_expanded = morgana_magic.pango_lineage_expanded
@@ -396,13 +398,13 @@ workflow theiacov_illumina_pe {
     String? nextclade_lineage = morgana_magic.nextclade_lineage
     String? nextclade_qc = morgana_magic.nextclade_qc
     # Nextclade outputs for flu H5N1
-    File? nextclade_json_flu_h5n1 = flu_track.nextclade_json_flu_h5n1
-    File? auspice_json_flu_h5n1 = flu_track.auspice_json_flu_h5n1
-    File? nextclade_tsv_flu_h5n1 = flu_track.nextclade_tsv_flu_h5n1
-    String? nextclade_aa_subs_flu_h5n1 = flu_track.nextclade_aa_subs_flu_h5n1
-    String? nextclade_aa_dels_flu_h5n1 = flu_track.nextclade_aa_dels_flu_h5n1
-    String? nextclade_clade_flu_h5n1 = flu_track.nextclade_clade_flu_h5n1
-    String? nextclade_qc_flu_h5n1 = flu_track.nextclade_qc_flu_h5n1
+    File? nextclade_json_flu_h5 = flu_track.nextclade_json_flu_h5
+    File? auspice_json_flu_h5 = flu_track.auspice_json_flu_h5
+    File? nextclade_tsv_flu_h5 = flu_track.nextclade_tsv_flu_h5
+    String? nextclade_aa_subs_flu_h5 = flu_track.nextclade_aa_subs_flu_h5
+    String? nextclade_aa_dels_flu_h5 = flu_track.nextclade_aa_dels_flu_h5
+    String? nextclade_clade_flu_h5 = flu_track.nextclade_clade_flu_h5
+    String? nextclade_qc_flu_h5 = flu_track.nextclade_qc_flu_h5
     # Nextclade outputs for flu HA
     File? nextclade_json_flu_ha = flu_track.nextclade_json_flu_ha
     File? auspice_json_flu_ha = flu_track.auspice_json_flu_ha

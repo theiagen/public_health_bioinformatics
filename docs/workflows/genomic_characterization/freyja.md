@@ -118,6 +118,8 @@ This workflow runs on the sample level.
 {{ include_md("common_text/qualimap_task.md", condition="freyja", indent=4) }}
 {{ include_md("common_text/qc_check_task.md", condition="freyja", indent=4) }}
 
+{{ include_md("common_text/gene_coverage_task.md", indent=4, condition="viral") }}
+
 ??? task "`freyja` Details"
     The Freyja task will call variants and capture sequencing depth information to identify the relative abundance of lineages present. Optionally, if `bootstrap` is set to true, bootstrapping will be performed. After the optional bootstrapping step, the variants are demixed.
 

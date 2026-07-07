@@ -75,10 +75,10 @@ workflow clair3_variants_ont {
   output {
     # Data handling - Read Alignment- samtools version
     String samtools_version = sam_to_sorted_bam.samtools_version
-    File aligned_bam = sam_to_sorted_bam.bam
-    File aligned_bai = sam_to_sorted_bam.bai
+    File clair3_aligned_bam = sam_to_sorted_bam.bam
+    File clair3_aligned_bai = sam_to_sorted_bam.bai
     # Data handling - Reference genome - samtools version
-    File aligned_fai = samtools_faidx.fai
+    File clair3_aligned_fai = samtools_faidx.fai
     #Clair3 variant calling
     String clair3_variants_wf_version = version_capture.phb_version
     String clair3_version = clair3_variants.clair3_version
