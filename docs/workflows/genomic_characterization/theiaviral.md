@@ -124,7 +124,7 @@
             To ensure reliable read extraction, taxon ID inputs must be concordant with the contents of the Kraken database. When making changes to this parameter keep in mind the relationship between these two inputs. The default database can be [downloaded directly (`k2_viral-refseq_human-GRCh38_20260220.tar.gz`)](https://storage.cloud.google.com/theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz).
 
         ??? dna "`extract_unclassified` optional input parameter"
-            By default, `extract_unclassifed` is set to `false`, which indicates that reads that are **not** classified by Kraken2 **will NOT** be included with reads classified as the input `taxon`.
+            By default, `extract_unclassified` is set to `false`, which indicates that reads that are **not** classified by Kraken2 **will NOT** be included with reads classified as the input `taxon`.
 
             If the extracted read data is lacking and assemblies are not generated, consider setting this parameter to `true` to increase the available read count to make assembly generation more probable. Please note this will introduce reads that are not aligned with the identified `taxon` and can introduce significant noise and misclassifications.
 

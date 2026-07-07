@@ -7,7 +7,7 @@ fragment: true
 
     NG-STAR offers a standardized method of classifying seven well-characterized genes associated with antimicrobial resistance in _N. gonorrhoeae_ (_penA_, _mtrR_, _porB_, _ponA_, _gyrA_, _parC_ and 23S rRNA) to three classes of antibiotics (cephalosporins, macrolides and fluoroquinolones).
 
-    NGMASTER combines two tools: NG-MAST (_in silico_ multi-antigen sequencing typing) and NG-STAR (sequencing typing for antimicrobial resistance) and returns the results from both tools.
+    NGMASTER combines two tools: NG-MAST (_in silico_ multi-antigen sequence typing) and NG-STAR (sequence typing for antimicrobial resistance) and returns the results from both tools.
 
     !!! techdetails "NGMASTER Technical Details"
         |  | Links |

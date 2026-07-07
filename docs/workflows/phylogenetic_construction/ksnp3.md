@@ -13,7 +13,7 @@ The kSNP3 workflow is for phylogenetic analysis of bacterial genomes using singl
 
 This workflow also features an optional module, `summarize_data` that creates a presence/absence matrix for the analyzed samples from a list of indicated columns (such as AMR genes, plasmid types etc.). If the `phandango_coloring` variable is set to `true`, this will be formatted for visualization in [Phandango](https://jameshadfield.github.io/phandango/#/), else it can be viewed in Excel.
 
-You can learn more about the kSNP3 workflow, including how to visualize the outputs with MicrobeTrace in the following video: **📺 [Using KSNP3 in Terra and Visualizing Bacterial Genomic Networks in MicrobeTrace](https://www.youtube.com/watch?v=iRpNDun46R8)**
+You can learn more about the kSNP3 workflow, including how to visualize the outputs with MicrobeTrace in the following video: **[Using kSNP3 in Terra and Visualizing Bacterial Genomic Networks in MicrobeTrace](https://www.youtube.com/watch?v=iRpNDun46R8)**
 
 ### Inputs
 

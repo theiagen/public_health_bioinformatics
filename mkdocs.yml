@@ -18,6 +18,7 @@ nav:
           - Available SOPs: guides/sops.md
           - All Tools: guides/all_tools.md
           - Database and Docker Versions: guides/versions.md
+          - Glossary: guides/glossary.md
       - Guides:
           - Guide to GAMBIT: guides/gambit.md
           - Guide to GAMBIT Database Creation: guides/gambit_database.md
@@ -267,7 +268,11 @@ markdown_extensions:
   - pymdownx.inlinehilite
   - pymdownx.keys
   - pymdownx.mark
-  - pymdownx.snippets
+  - pymdownx.snippets:
+      # Append the glossary abbreviations to every page so terms render as
+      # hover tooltips site-wide. See includes/abbreviations.md.
+      auto_append:
+        - includes/abbreviations.md
   - pymdownx.superfences
   - pymdownx.tabbed:
       alternate_style: true

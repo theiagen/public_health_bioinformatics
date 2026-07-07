@@ -31,7 +31,7 @@ Three workflows have been created that perform different parts of Freyja:
 
 - [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq)
 - [**Freyja_Plot_PHB**](freyja.md#freyja_plot)
-- [**Freyja_Dashboard_PHB**](freyja.md#freyja_dashboard)=
+- [**Freyja_Dashboard_PHB**](freyja.md#freyja_dashboard)
 
 The main workflow is [**Freyja_FASTQ_PHB**](freyja.md#freyja_fastq) ([Figure 1](freyja.md#figure1)). Depending on the type of input data (Illumina paired-end, Illumina single-end or ONT), it runs various QC modules before aligning the sample with either [BWA](https://github.com/lh3/bwa) (Illumina) or [minimap2](https://github.com/lh3/minimap2) (ONT) to the provided reference file, followed by iVar for primer trimming. After the preprocessing is completed, [Freyja](https://github.com/andersen-lab/Freyja) is run to generate relative lineage abundances (demix) from the sample. Optional bootstrapping may be performed.
 
@@ -155,7 +155,7 @@ The main output file used in subsequent Freyja workflows is found under the `fre
 
 |  | sample name |
 | --- | --- |
-| summarized | [('Delta', 0.65), ('Other', 0.25), ('Alpha', 0.1')] |
+| summarized | [('Delta', 0.65), ('Other', 0.25), ('Alpha', 0.1)] |
 | lineages | ['B.1.617.2' 'B.1.2' 'AY.6' 'Q.3'] |
 | abundances | "[0.5 0.25 0.15 0.1]" |
 | resid | 3.14159 |

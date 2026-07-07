@@ -139,6 +139,62 @@ The following language conventions should be followed when writing documentation
 
 - End all pages with an empty line
 
+## Glossary and Abbreviations
+
+PHB documentation serves a public health audience that may not be familiar with bioinformatics jargon. To keep terminology consistent and approachable, we maintain a single glossary and surface it automatically across the site.
+
+There are two files, with a clear division of labor:
+
+- **`includes/abbreviations.md`** (repository root) — the machine-readable source of hover tooltips. It holds **only organization abbreviations** (repositories, databases, and networks, e.g. `ENA`, `GISAID`, `INSDC`). Each line is an [abbreviation definition](https://zensical.org/docs/authoring/tooltips/#adding-a-glossary) in the form `*[ABBR]: short definition`. This file is **automatically appended to every page** (via the `pymdownx.snippets` `auto_append` setting in `mkdocs.yml`), so wherever an organization abbreviation appears in the rendered docs it becomes a hover tooltip — no per-page work is required.
+- **`docs/guides/glossary.md`** — the human-readable [Glossary](../guides/glossary.md) page and the complete reference for **every** term. It is organized into these sections: **Sequencing and analysis terms**, **File formats**, **Genomic characterization terms**, **Platforms and tools**, **Databases, repositories, and organizations**, **Pathogens and organisms**, and **Acronyms and abbreviations**.
+
+To add or change an entry:
+
+1. Always add or edit the entry in `docs/guides/glossary.md`, under the section that best fits it.
+2. **Only if it is an organization abbreviation**, also add or edit the matching one-line tooltip in `includes/abbreviations.md`.
+
+!!! tip "Why only organizations get tooltips"
+    Tooltip matching is **case-sensitive** and **whole-word only**, so full words like "read" or "coverage" would create misleading tooltips on unrelated text, and very common acronyms (e.g. `SNP`, `QC`) would underline nearly every page. Limiting tooltips to organization abbreviations keeps them useful and unobtrusive, while the Glossary page remains the complete reference.
+
+**Expand each abbreviation on first use per page**, then rely on the Glossary (and, for organizations, the tooltip) thereafter.
+
+## Linting and Automated Checks
+
+Documentation is checked automatically to catch typos, spelling, formatting, and naming inconsistencies. The same checks run locally (via [pre-commit](https://pre-commit.com/)) and in CI (the `docs-lint` GitHub Actions workflow) on any pull request that touches `docs/`.
+
+Four categories of checks are enforced:
+
+| Check | Tool | Config | What it catches |
+| --- | --- | --- | --- |
+| Tool-name consistency | [Vale](https://vale.sh/) | `styles/PHB/ToolNames.yml` | Inconsistent capitalization/spelling of tools (e.g. `IQTree` → `IQ-TREE`, `Github` → `GitHub`) |
+| American spelling | Vale | `styles/PHB/AmericanSpelling.yml` | British spellings (e.g. `characterise` → `characterize`, `colour` → `color`) |
+| Spelling & doubled words | Vale | `.vale.ini` + `styles/config/vocabularies/PHB/` | Typos and repeated words; domain terms are whitelisted in `accept.txt` |
+| Whitespace hygiene | pre-commit hooks | `.pre-commit-config.yaml` | Trailing whitespace, missing final newline, space before `%`, double spaces |
+| Markdown formatting | [markdownlint](https://github.com/DavidAnson/markdownlint) | `.markdownlint.yaml` | Skipped heading levels, bare URLs, list/heading spacing, etc. |
+
+### Running the checks locally
+
+The whitespace and Markdown tools install themselves through pre-commit; only Vale needs to be [installed separately](https://vale.sh/docs/vale-cli/installation/) (it is a standalone binary).
+
+```bash
+# one-time setup
+pip install pre-commit
+pre-commit install          # run the checks automatically on every commit
+
+# run all checks against everything at any time
+pre-commit run --all-files
+
+# or run an individual tool directly
+vale docs/
+markdownlint "docs/**/*.md"                # add --fix to auto-correct
+```
+
+The whitespace hooks and `markdownlint --fix` correct issues automatically; Vale reports each issue with the suggested replacement so you can apply it.
+
+!!! dna "Adding an accepted term or tool name"
+    - If Vale flags a valid domain term as a misspelling, add it to `styles/config/vocabularies/PHB/accept.txt`.
+    - To standardize a new tool name, add the incorrect → correct mapping to `styles/PHB/ToolNames.yml`.
+
 ## Documentation Structure
 
 A brief description of the documentation structure is as follows:
