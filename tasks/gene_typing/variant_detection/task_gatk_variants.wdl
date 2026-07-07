@@ -2,12 +2,19 @@ version 1.0
 
 task gatk_variants {
   input {
+    String samplename
     File bam
     File bai
     File reference_genome
-    File? intervals_file
     Int ploidy = 1 # integer indicating ploidy (N); default to haploid
-    String samplename
+    File? intervals_file
+
+    Int? min_variant_quality
+    Int? min_depth
+    Float? min_map_quality
+    Int? min_quality_by_depth
+    String? filter_expression
+
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0-dev"
     Int cpu = 8
     Int memory = 32
@@ -50,11 +57,23 @@ task gatk_variants {
       ~{if defined(intervals_file) then "-L ~{intervals_file}" else ""} \
       -O ~{samplename}_genotype.g.vcf.gz \
 
+    # sequentially prepare variant filter expression
+    FILTER_EXPRESSION="~{filter_expression}"
+    ~{if defined(min_variant_quality) then "FILTER_EXPRESSION=$FILTER_EXPRESSION && QUAL < ~{min_variant_quality}" else ""}
+    ~{if defined(min_depth) then "FILTER_EXPRESSION=$FILTER_EXPRESSION && DP < ~{min_depth}" else ""}
+    ~{if defined(min_map_quality) then "FILTER_EXPRESSION=$FILTER_EXPRESSION && MQ < ~{min_map_quality}" else ""}
+    ~{if defined(min_quality_by_depth) then "FILTER_EXPRESSION=$FILTER_EXPRESSION && QD < ~{min_quality_by_depth}" else ""}
+    if [[ ! -z "$FILTER_EXPRESSION" ]]; then
+      echo 'Filtering variants with the following expression: "${FILTER_EXPRESSION}"'
+      FILTER_EXPRESSION="-filter ${FILTER_EXPRESSION}"
+    fi
+
     # call VariantFiltration
     gatk --java-options "-Xmx~{memory}G" VariantFiltration \
       -R ~{reference_genome} \
       -V ~{samplename}_genotype.g.vcf.gz \
-      -O ~{samplename}_filtered.g.vcf.gz
+      -O ~{samplename}_filtered.g.vcf.gz \
+      $FILTER_EXPRESSION
 
     # call SelectVariants
     gatk --java-options "-Xmx~{memory}G" SelectVariants \
@@ -63,6 +82,8 @@ task gatk_variants {
   >>>
   output {
     String gatk_version = read_string("VERSION")
+    File gatk_filtered_vcf = "~{samplename}_filtered.g.vcf.gz"
+    File gatk_selected_vcf = "~{samplename}_selected.g.vcf.gz"
   }
   runtime {
       docker: "~{docker}"
