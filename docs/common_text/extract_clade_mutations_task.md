@@ -7,7 +7,7 @@ fragment: true
 
     Clade-defining signatures can only be extracted from monophyletic clades with unique mutation signatures. If no clade-defining mutations are reported, an error is raised. If the clade metadata column does not exist, then an error is raised as well.
 
-    !!! techdetails "Extract Clade Mutations Technical Details"        
+    !!! techdetails "Extract Clade Mutations Technical Details"  
         |  | Links |
         | --- | --- |
         | Task | [task_extract_clade_mutations.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/phylogenetic_inference/augur/task_extract_clade_mutations.wdl) |

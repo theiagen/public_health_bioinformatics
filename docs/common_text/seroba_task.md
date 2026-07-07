@@ -7,7 +7,7 @@ fragment: true
 
     By adapting a database from [PneumoCaT (Pneumococcal Capsular Typing)](https://github.com/ukhsa-collaboration/PneumoCaT), SeroBA uses [KMC](https://github.com/refresh-bio/KMC) to generate a k-mer database and then uses a capsular type variant database and an [ARIBA](https://github.com/sanger-pathogens/ariba)-compatible database that clusters all serotypes by serogroups. A k-mer analysis is performed and the serotype with the highest normalized sequence coverage is selected. ARIBA then is used to build an assembly to confirm the selected serotype from the read data and aligns the _cps_ sequence against a reference to identify variants.
 
-    !!! techdetails "SeroBA Technical Details"        
+    !!! techdetails "SeroBA Technical Details"  
         |  | Links |
         | --- | --- |
         | Task | [task_seroba.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_seroba.wdl) |

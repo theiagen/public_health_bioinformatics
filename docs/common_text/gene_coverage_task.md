@@ -30,7 +30,7 @@ fragment: true
         Please note that default BEDfiles contain gene coordinates that may not directly match user-provided or dynamically-selected reference genomes (TheiaViral).
 
     ??? dna "BED file usage"
-        In viral characterization workflows, gene coverage regions are supplied with a BED file. 
+        In viral characterization workflows, gene coverage regions are supplied with a BED file.
 
         - To extract custom regions of interest, populate the `reference_gene_locations_bed` input (task `theiacov` / `morgana_magic`)
         - If no custom BED is provided, organism defaults are used when available
@@ -51,7 +51,7 @@ fragment: true
         - *Cryptococcus neoformans*: `CNA00300` (ERG11 in the default reference)
 <!-- endif -->
 
-    !!! techdetails "Gene Coverage Technical Details"        
+    !!! techdetails "Gene Coverage Technical Details"  
         |  | Links |
         | --- | --- |
         | Task | [task_gene_coverage.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/quality_control/basic_statistics/task_gene_coverage.wdl) |

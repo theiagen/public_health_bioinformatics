@@ -7,7 +7,7 @@ fragment: true
 
 <!-- if: theiacov -->
     For TheiaCoV, the following default parameters are used:
-    
+
     - minimum quality: 20
     - minimum depth: 100
     - minimum allele frequency: 0.6

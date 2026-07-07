@@ -10,22 +10,22 @@ fragment: true
 
     _If your task is used slightly differently in different contexts, you can provide conditionals inside of comments._
 
-    _To include any conditional information in the destination page, add the `condition="condition_name"` parameter to the `include_md` macro call on the destination page. Please note that the `if: <condition_name>` and `endif` syntax within the markdown comment (`<!-- -->`) is required for a conditional statement to work._ 
+    _To include any conditional information in the destination page, add the `condition="condition_name"` parameter to the `include_md` macro call on the destination page. Please note that the `if: <condition_name>` and `endif` syntax within the markdown comment (`<!-- -->`) is required for a conditional statement to work._
 
     _Here is an example:_
-    
+
     <!-- if: condition -->
 
     `<!-- if: <condition_name> -->`
-    
+
     !!! tip "Conditional Content"
-        _This is content that is only shown if <condition_name\> is provided. See the `kraken_task.md` common_text file for examples on conditional usage._ 
-    
+        _This is content that is only shown if <condition_name\> is provided. See the `kraken_task.md` common_text file for examples on conditional usage._
+
     `<!-- endif -->`
-        
+
     <!-- endif -->
-  
-    !!! techdetails "<tool_name> Technical Details"        
+
+    !!! techdetails "<tool_name> Technical Details"  
         _This section is required for all tasks. If the Software Source Code, Software Documentation, and/or Original Publication(s) fields are not applicable, they may be removed._
 
         |  | Links |

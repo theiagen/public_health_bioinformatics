@@ -12,7 +12,7 @@ fragment: true
 <!-- endif -->
 
 <!-- if: bam_to_unaligned_fastq-->
-    The `bam_to_unaligned_fastq` sub-task will extract a FASTQ file of reads that failed to align, while removing unpaired reads. 
+    The `bam_to_unaligned_fastq` sub-task will extract a FASTQ file of reads that failed to align, while removing unpaired reads.
 <!-- endif -->
 
 <!-- if: theiaviral_mask_low_coverage-->

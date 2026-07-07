@@ -7,7 +7,7 @@ fragment: true
 
     emmtyper uses BLAST to compare the genome assembly to the CDC-curated trimmed _emm_ type database (by default). An _in silico_ PCR method is also available. The BLAST results are then processed to distinguish between _emm_ and _emm_-like alleles to derive the isolates' M-type. The predicted _emm_-type is reported in addition to any possible _emm_-like alleles and the functional _emm_ cluster.
 
-    !!! techdetails "emmtyper Technical Details"            
+    !!! techdetails "emmtyper Technical Details"  
         |  | Links |
         | --- | --- |
         | Task | [task_emmtyper.wdl](https://github.com/theiagen/public_health_bioinformatics/blob/main/tasks/species_typing/streptococcus/task_emmtyper.wdl) |

@@ -4,7 +4,7 @@ fragment: true
 ---
 ??? task "`readlength`: Average Read Length Calculation"
     This task calculates the average forward and reverse read lengths, and then returns the average of the two.
-    
+
     !!! techdetails "Average Read Length Technical Details"
     |  | Links |
     | --- | --- |

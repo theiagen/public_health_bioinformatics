@@ -27,7 +27,7 @@ fragment: true
     !!! info "Database-dependent"
         This workflow automatically uses a viral-specific Kraken2 database. This database was generated in-house from RefSeq's viral sequence collection and human genome GRCh38. It's available at `gs://theiagen-public-resources-rp/reference_data/databases/kraken2/k2_viral-refseq_human-GRCh38_20260220.tar.gz`.
 <!-- endif -->
-  
+
 <!-- if: kraken -->
     This workflow is database dependent, and one is required to run this task. Please [see above](../standalone/kraken2.md#databases) for a list of suggested databases to provide through the `kraken2_db` input variable.
 <!-- endif -->
@@ -45,8 +45,8 @@ fragment: true
         - will *not* be used in downstream `percent_human` and `percent_target_organism` calculations
         - inputted in place of Kraken reports in downstream tasks, such as `qc_check` and `krona`
         - outputted separate of the `kraken/kraken2_report`
-        
-         By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the `bracken_kmer_length` input, though it MUST correspond to an available k-mer database within the Kraken2 database (named `database<KMER_LENGTH>mers.kmer_distrib`). Bracken will be skipped if there are no k-mer libraries in the Kraken2 database. 
+
+         By default, Bracken will reference the k-mer database that is closest to the mean read length of the input. This reference k-mer database size can be directly set using the `bracken_kmer_length` input, though it MUST correspond to an available k-mer database within the Kraken2 database (named `database<KMER_LENGTH>mers.kmer_distrib`). Bracken will be skipped if there are no k-mer libraries in the Kraken2 database.
 
     !!! techdetails "Kraken2 Technical Details"
         |  | Links |

@@ -8,13 +8,13 @@ fragment: true
 
 <!-- if: theiaviral -->
     By default, the reference genome is selected from a database of approximately 200,000 viral genomes. This database was constructed with the following methodology:
-    
+
     1. Extracting all [complete NCBI viral genomes](https://ftp.ncbi.nlm.nih.gov/genomes/Viruses/AllNuclMetadata/), excluding RefSeq accessions (redundancy), SARS-CoV-2 accessions, and segmented families (Orthomyxoviridae, Hantaviridae, Arenaviridae, and Phenuiviridae). Some complete gene accessions, and not complete genomes, are included because NCBI Datasets completeness parameters are susceptible to metadata errors.
-    
+
     2. Adding complete RefSeq segmented viral assembly accessions, which represent segments as individual contigs within the FASTA
 
     3. Adding one SARS-CoV-2 genome for each [major pangolin lineage](https://github.com/cov-lineages/lineages-website/raw/refs/heads/master/_data/lineage_data.full.json)
-    
+
 <!-- endif -->
     !!! techdetails "skani Technical Details"
         |  | Links |

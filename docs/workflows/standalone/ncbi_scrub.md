@@ -48,5 +48,5 @@ This workflow is composed of two tasks, one to dehost the input reads and anothe
         /// html | div[class="searchable-table"]
 
         {{ render_tsv_table("docs/assets/tables/all_outputs.tsv", input_table=False, filters={"Workflow": "NCBI_Scrub_SE"}, columns=["Variable", "Type", "Description"], sort_by=["Variable"], indent=8) }}
-        
+
         ///

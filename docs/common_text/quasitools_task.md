@@ -5,8 +5,8 @@ fragment: true
 ??? task "`Quasitools`: HIV Characterization"
     Quasitools performs genomic characterization for HIV by using the HyDRA module for identifying drug resistance mutations in HIV-1 samples based on the [Stanford HIV Drug Resistance Database](https://hivdb.stanford.edu/) and the [2009 WHO list for Surveillance of Transmitted HIVDR](https://hivdb.stanford.edu/page/who-sdrm-list/); see also the papers linked below.
 
-    The HyDRA module in Quasitools maps the sample sequence against an annotated HIV-1 reference and performs variant calling. Those variants are compared to the databases described above, and any matches are reported, along with the complete list of variants. 
-    
+    The HyDRA module in Quasitools maps the sample sequence against an annotated HIV-1 reference and performs variant calling. Those variants are compared to the databases described above, and any matches are reported, along with the complete list of variants.
+
     !!! techdetails "Quasitools Technical Details"
         |  | Links |
         | --- | --- |
