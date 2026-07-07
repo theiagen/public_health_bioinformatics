@@ -11,14 +11,6 @@ task gatk_variants {
     Int cpu = 8
     Int memory = 32
     Int disk_size = 100
-
-
-    Int map_qual = 60 # set to mirror v4.6.0 default
-    Int base_quality = 13 # set to mirror v4.6.0 default
-    Int min_coverage = 10 # set to mirror v4.6.0 default
-    Float min_frac = 0 # set to mirror v4.6.0 default
-    Int min_quality = 100 # set to mirror v4.6.0 default
-    Int maxsoft = 10 # set to mirror v4.6.0 default
   }
   command <<<
     # fail hard
@@ -27,15 +19,24 @@ task gatk_variants {
     # obtain version
     gatk --version | grep GATK | grep -Po "v[^ ]+$" | tee VERSION
 
-    # call HaplotypeCaller
+    # index reference FASTA
+    samtools faidx ~{reference_genome}
+
+    # create reference dictionary
+    gatk CreateSequenceDictionary -R ~{reference_genome}
+
+    # call HaplotypeCaller to generate an intermediate GVCF output depicting 
+    # single-nucleotide polymorphisms (SNPs) and structural variants (SVs)
+    # via local de-novo assembly of haplotypes in variant regions 
     gatk \
       --java-options "-Xms~{memory}G -Xmx~{memory}G" \
       HaplotypeCaller \
       -R ~{reference_genome} \
       -I ~{bam} \
-      -o ~{samplename}_haplotypecall.g.vcf.gz
+      -O ~{samplename}_haplotypecall.g.vcf.gz \
       ~{if defined(intervals_file) then "-L ~{intervals_file}" else ""} \
-      --tmp-dir .
+      --tmp-dir . \
+      -ERC GVCF
 
     # call GenotypeGVCFs
     gatk --java-options "-Xmx~{memory}G" \
