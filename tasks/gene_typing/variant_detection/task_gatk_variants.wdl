@@ -6,6 +6,7 @@ task gatk_variants {
     File bai
     File reference_genome
     File? intervals_file
+    Int ploidy = 1 # integer indicating ploidy (N); default to haploid
     String samplename
     String docker = "us-docker.pkg.dev/general-theiagen/theiagen/gatk:4.6.2.0-dev"
     Int cpu = 8
@@ -34,11 +35,14 @@ task gatk_variants {
       -R ~{reference_genome} \
       -I ~{bam} \
       -O ~{samplename}_haplotypecall.g.vcf.gz \
+      -ploidy ~{ploidy} \
       ~{if defined(intervals_file) then "-L ~{intervals_file}" else ""} \
       --tmp-dir . \
       -ERC GVCF
 
     # call GenotypeGVCFs
+    # "This tool is able to handle any ploidy (or mix of ploidies) intelligently; 
+    # there is no need to specify ploidy for non-diploid organisms."
     gatk --java-options "-Xmx~{memory}G" \
       GenotypeGVCFs \
       -R ~{reference_genome} \
